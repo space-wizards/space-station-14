@@ -373,7 +373,7 @@ namespace Content.Server.GameObjects.Components
                         return;
                     }
 
-                    if (!player.TryGetComponent(out IHandsComponent handsComponent))
+                    if (!player.TryGetComponent(out IHandsComponent? handsComponent))
                     {
                         _notifyManager.PopupMessage(Owner.Transform.GridPosition, player,
                             Loc.GetString("You have no hands."));

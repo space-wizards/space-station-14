@@ -19,7 +19,7 @@ namespace Content.Server.Body.Mechanisms.Behaviors
             base.PreMetabolism(frameTime);
 
             if (Mechanism.Body == null ||
-                !Mechanism.Body.Owner.TryGetComponent(out BloodstreamComponent bloodstream))
+                !Mechanism.Body.Owner.TryGetComponent(out BloodstreamComponent? bloodstream))
             {
                 return;
             }

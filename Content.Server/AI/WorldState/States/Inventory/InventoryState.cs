@@ -16,6 +16,9 @@ namespace Content.Server.AI.WorldState.States.Inventory
             {
                 foreach (var item in handsComponent.GetAllHeldItems())
                 {
+                    if (item.Owner.Deleted)
+                        continue;
+                    
                     yield return item.Owner;
                 }
             }

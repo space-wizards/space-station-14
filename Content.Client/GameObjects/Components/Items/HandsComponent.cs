@@ -148,7 +148,7 @@ namespace Content.Client.GameObjects.Components.Items
                 return;
             }
 
-            if (!entity.TryGetComponent(out ItemComponent item)) return;
+            if (!entity.TryGetComponent(out ItemComponent? item)) return;
 
             var maybeInHands = item.GetInHandStateInfo(hand.Location);
 

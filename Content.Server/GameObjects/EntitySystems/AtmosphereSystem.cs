@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             if (!EntityManager.TryGetEntity(grid.GridEntityId, out var gridEnt)) return null;
 
-            return gridEnt.TryGetComponent(out IGridAtmosphereComponent atmos) ? atmos : null;
+            return gridEnt.TryGetComponent(out IGridAtmosphereComponent? atmos) ? atmos : null;
         }
 
         public override void Update(float frameTime)

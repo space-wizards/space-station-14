@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Serialization;
@@ -108,7 +108,7 @@ namespace Content.Shared.GameObjects.Components.PDA
     [NetSerializable, Serializable]
     public enum PDAVisuals
     {
-        ScreenLit,
+        FlashlightLit,
     }
 
     [NetSerializable, Serializable]

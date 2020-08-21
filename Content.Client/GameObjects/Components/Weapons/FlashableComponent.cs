@@ -141,7 +141,7 @@ namespace Content.Client.GameObjects.Components.Weapons
             const float xOffset = 0.0f;
 
             // Overkill but easy to adjust if you want to mess around with the design
-            var result = (float) FloatMath.Clamp(slope * (float) Math.Pow(ratio - xOffset, exponent) + yOffset, 0.0, 1.0);
+            var result = (float) MathHelper.Clamp(slope * (float) Math.Pow(ratio - xOffset, exponent) + yOffset, 0.0, 1.0);
             DebugTools.Assert(!float.IsNaN(result));
             return result;
         }
