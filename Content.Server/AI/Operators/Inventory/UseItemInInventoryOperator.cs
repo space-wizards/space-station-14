@@ -22,12 +22,12 @@ namespace Content.Server.AI.Operators.Inventory
         public override Outcome Execute(float frameTime)
         {
             // TODO: Also have this check storage a la backpack etc.
-            if (!_owner.TryGetComponent(out HandsComponent handsComponent))
+            if (!_owner.TryGetComponent(out HandsComponent? handsComponent))
             {
                 return Outcome.Failed;
             }
 
-            if (!_target.TryGetComponent(out ItemComponent itemComponent))
+            if (!_target.TryGetComponent(out ItemComponent? itemComponent))
             {
                 return Outcome.Failed;
             }

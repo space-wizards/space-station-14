@@ -21,7 +21,7 @@ namespace Content.Server.AI.Operators.Nutrition
             _owner = owner;
             _target = target;
         }
-        
+
         public override Outcome Execute(float frameTime)
         {
             if (_interactionCooldown >= 0)
@@ -29,11 +29,11 @@ namespace Content.Server.AI.Operators.Nutrition
                 _interactionCooldown -= frameTime;
                 return Outcome.Continuing;
             }
-            
+
             // TODO: Also have this check storage a la backpack etc.
-            if (_target.Deleted || 
-                !_owner.TryGetComponent(out HandsComponent handsComponent) ||
-                !_target.TryGetComponent(out ItemComponent itemComponent))
+            if (_target.Deleted ||
+                !_owner.TryGetComponent(out HandsComponent? handsComponent) ||
+                !_target.TryGetComponent(out ItemComponent? itemComponent))
             {
                 return Outcome.Failed;
             }
@@ -58,10 +58,10 @@ namespace Content.Server.AI.Operators.Nutrition
             {
                 return Outcome.Failed;
             }
-            
-            if (drinkComponent.Deleted || 
-                drinkComponent.Empty || 
-                _owner.TryGetComponent(out ThirstComponent thirstComponent) && 
+
+            if (drinkComponent.Deleted ||
+                drinkComponent.Empty ||
+                _owner.TryGetComponent(out ThirstComponent? thirstComponent) &&
                 thirstComponent.CurrentThirst >= thirstComponent.ThirstThresholds[ThirstThreshold.Okay])
             {
                 return Outcome.Success;
