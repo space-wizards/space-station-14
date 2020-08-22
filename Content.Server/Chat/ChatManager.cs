@@ -74,12 +74,12 @@ namespace Content.Server.Chat
             var pos = source.Transform.GridPosition;
             var clients = _playerManager.GetPlayersInRange(pos, VoiceRange).Select(p => p.ConnectedClient);
 
-            if (message.StartsWith(';') && source.TryGetComponent<InventoryComponent>(out InventoryComponent inventory))
+            if (message.StartsWith(';') && source.TryGetComponent(out InventoryComponent inventory))
             {
                 message = message.Substring(1);
-                if (inventory.TryGetSlotItem<ItemComponent>(EquipmentSlotDefines.Slots.EARS, out ItemComponent item))
+                if (inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.EARS, out ItemComponent item))
                 {
-                    if (item.Owner.TryGetComponent<HeadsetComponent>(out HeadsetComponent headset))
+                    if (item.Owner.TryGetComponent(out HeadsetComponent headset))
                     {
                         headset.RadioRequested = true;
                     }
