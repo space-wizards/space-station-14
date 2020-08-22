@@ -299,6 +299,10 @@ namespace Content.Shared.GameObjects.Components.Damage
             {
                 CurrentDamageState = DamageState.Critical;
             }
+            else
+            {
+                CurrentDamageState = DamageState.Alive;
+            }
 
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, e);
             HealthChangedEvent?.Invoke(e);
