@@ -69,8 +69,8 @@ namespace Content.Client.UserInterface
             scrollContainer.SizeFlagsVertical = SizeFlags.FillExpand;
             var innerScrollContainer = new VBoxContainer();
 
-            //Put antags on top of the list.
-            var manifestSortedList = info.OrderBy(p => !p.Antag);
+            //Put observers at the bottom of the list. Put antags on top.
+            var manifestSortedList = info.OrderBy(p => p.Observer).ThenBy(p => !p.Antag);
             //Create labels for each player info.
             foreach (var plyinfo in manifestSortedList)
             {
@@ -79,12 +79,21 @@ namespace Content.Client.UserInterface
                     SizeFlagsVertical = SizeFlags.Fill,
                 };
 
-                //TODO: On Hover display a popup detailing more play info.
-                //For example: their antag goals and if they completed them sucessfully.
-                var icNameColor = plyinfo.Antag ? "red" : "white";
-                playerInfoText.SetMarkup(
-                    Loc.GetString("[color=gray]{0}[/color] was [color={1}]{2}[/color] playing role of [color=orange]{3}[/color].",
-                                    plyinfo.PlayerOOCName, icNameColor, plyinfo.PlayerICName, Loc.GetString(plyinfo.Role)));
+                if (plyinfo.Observer)
+                {
+                    playerInfoText.SetMarkup(
+                        Loc.GetString("[color=gray]{0}[/color] was [color=lightblue]{1}[/color], an observer.",
+                                        plyinfo.PlayerOOCName, plyinfo.PlayerICName));
+                }
+                else
+                {
+                    //TODO: On Hover display a popup detailing more play info.
+                    //For example: their antag goals and if they completed them sucessfully.
+                    var icNameColor = plyinfo.Antag ? "red" : "white";
+                    playerInfoText.SetMarkup(
+                        Loc.GetString("[color=gray]{0}[/color] was [color={1}]{2}[/color] playing role of [color=orange]{3}[/color].",
+                                        plyinfo.PlayerOOCName, icNameColor, plyinfo.PlayerICName, Loc.GetString(plyinfo.Role)));
+                }
                 innerScrollContainer.AddChild(playerInfoText);
             }
 

@@ -44,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         [ViewVariables]
         public ReagentUnit TransferAmount { get; private set; } = ReagentUnit.New(2);
         [ViewVariables]
-        protected bool Opened { get; set; }
+        public bool Opened { get; protected set; }
         [ViewVariables]
         public bool Empty => _contents.CurrentVolume.Float() <= 0;
 

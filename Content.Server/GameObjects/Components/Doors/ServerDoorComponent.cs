@@ -34,10 +34,10 @@ namespace Content.Server.GameObjects.Components.Doors
 
         private DoorState _state = DoorState.Closed;
 
-        protected virtual DoorState State
+        public virtual DoorState State
         {
             get => _state;
-            set => _state = value;
+            protected set => _state = value;
         }
 
         protected float OpenTimeCounter;
@@ -45,7 +45,7 @@ namespace Content.Server.GameObjects.Components.Doors
         protected const float AutoCloseDelay = 5;
         protected float CloseSpeed = AutoCloseDelay;
 
-        private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
+        private CancellationTokenSource? _cancellationTokenSource = new CancellationTokenSource();
 
         private static readonly TimeSpan CloseTimeOne = TimeSpan.FromSeconds(0.3f);
         private static readonly TimeSpan CloseTimeTwo = TimeSpan.FromSeconds(0.9f);
@@ -68,7 +68,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
         public override void OnRemove()
         {
-            _cancellationTokenSource.Cancel();
+            _cancellationTokenSource?.Cancel();
 
             base.OnRemove();
         }
@@ -342,7 +342,7 @@ namespace Content.Server.GameObjects.Components.Doors
             }
         }
 
-        protected enum DoorState
+        public enum DoorState
         {
             Closed,
             Open,

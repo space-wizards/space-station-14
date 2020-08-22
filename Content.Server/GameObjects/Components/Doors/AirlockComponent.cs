@@ -165,9 +165,9 @@ namespace Content.Server.GameObjects.Components.Doors
             }
         }
 
-        protected override DoorState State
+        public override DoorState State
         {
-            set
+            protected set
             {
                 base.State = value;
                 // Only show the maintenance panel if the airlock is closed

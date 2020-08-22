@@ -60,7 +60,7 @@ using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameTicking
 {
-    public partial class GameTicker : SharedGameTicker, IGameTicker
+    public partial class GameTicker : GameTickerBase, IGameTicker
     {
         private static readonly Counter RoundNumberMetric = Metrics.CreateCounter(
             "ss14_round_number",
@@ -124,8 +124,10 @@ namespace Content.Server.GameTicking
         private TimeSpan LobbyDuration =>
             TimeSpan.FromSeconds(_configurationManager.GetCVar<int>("game.lobbyduration"));
 
-        public void Initialize()
+        public override void Initialize()
         {
+            base.Initialize();
+
             DebugTools.Assert(!_initialized);
 
             _configurationManager.RegisterCVar("game.lobbyenabled", false, CVar.ARCHIVE);
@@ -134,8 +136,6 @@ namespace Content.Server.GameTicking
             _configurationManager.RegisterCVar("game.fallbackpreset", "Sandbox", CVar.ARCHIVE);
 
             PresetSuspicion.RegisterCVars(_configurationManager);
-
-            _playerManager.PlayerStatusChanged += _handlePlayerStatusChanged;
 
             _netManager.RegisterNetMessage<MsgTickerJoinLobby>(nameof(MsgTickerJoinLobby));
             _netManager.RegisterNetMessage<MsgTickerJoinGame>(nameof(MsgTickerJoinGame));
@@ -209,7 +209,7 @@ namespace Content.Server.GameTicking
             }
             else
             {
-                if (_playerManager.PlayerCount == 0)
+                if (PlayerManager.PlayerCount == 0)
                     _roundStartCountdownHasNotStartedYetDueToNoPlayers = true;
                 else
                     _roundStartTimeUtc = DateTime.UtcNow + LobbyDuration;
@@ -222,7 +222,7 @@ namespace Content.Server.GameTicking
 
         private void ReqWindowAttentionAll()
         {
-            foreach (var player in _playerManager.GetAllPlayers())
+            foreach (var player in PlayerManager.GetAllPlayers())
             {
                 player.RequestWindowAttention();
             }
@@ -347,11 +347,12 @@ namespace Content.Server.GameTicking
 
             //Generate a list of basic player info to display in the end round summary.
             var listOfPlayerInfo = new List<RoundEndPlayerInfo>();
-            foreach (var ply in _playerManager.GetAllPlayers().OrderBy(p => p.Name))
+            foreach (var ply in PlayerManager.GetAllPlayers().OrderBy(p => p.Name))
             {
                 var mind = ply.ContentData().Mind;
                 if (mind != null)
                 {
+                    _playersInLobby.TryGetValue(ply, out var status);
                     var antag = mind.AllRoles.Any(role => role.Antagonist);
                     var playerEndRoundInfo = new RoundEndPlayerInfo()
                     {
@@ -360,7 +361,8 @@ namespace Content.Server.GameTicking
                         Role = antag
                             ? mind.AllRoles.First(role => role.Antagonist).Name
                             : mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("Unknown"),
-                        Antag = antag
+                        Antag = antag,
+                        Observer = status == PlayerStatus.Observer,
                     };
                     listOfPlayerInfo.Add(playerEndRoundInfo);
                 }
@@ -643,7 +645,7 @@ namespace Content.Server.GameTicking
 
             // Delete the minds of everybody.
             // TODO: Maybe move this into a separate manager?
-            foreach (var unCastData in _playerManager.GetAllPlayerData()) unCastData.ContentData().WipeMind();
+            foreach (var unCastData in PlayerManager.GetAllPlayerData()) unCastData.ContentData().WipeMind();
 
             // Clear up any game rules.
             foreach (var rule in _gameRules) rule.Removed();
@@ -651,7 +653,7 @@ namespace Content.Server.GameTicking
             _gameRules.Clear();
 
             // Move everybody currently in the server to lobby.
-            foreach (var player in _playerManager.GetAllPlayers())
+            foreach (var player in PlayerManager.GetAllPlayers())
             {
                 if (_playersInLobby.ContainsKey(player)) continue;
 
@@ -681,8 +683,10 @@ namespace Content.Server.GameTicking
             Logger.InfoS("ticker", $"Loaded map in {timeSpan.TotalMilliseconds:N2}ms.");
         }
 
-        private void _handlePlayerStatusChanged(object sender, SessionStatusEventArgs args)
+        protected override void PlayerStatusChanged(object sender, SessionStatusEventArgs args)
         {
+            base.PlayerStatusChanged(sender, args);
+
             var session = args.Session;
 
             switch (args.NewStatus)
@@ -694,13 +698,6 @@ namespace Content.Server.GameTicking
 
                 case SessionStatus.Connected:
                 {
-                    // Always make sure the client has player data. Mind gets assigned on spawn.
-                    if (session.Data.ContentDataUncast == null)
-                        session.Data.ContentDataUncast = new PlayerData(session.SessionId);
-
-                    // timer time must be > tick length
-                    Timer.Spawn(0, args.Session.JoinGame);
-
                     _chatManager.DispatchServerAnnouncement($"Player {args.Session.SessionId} joined server!");
 
                     if (LobbyEnabled && _roundStartCountdownHasNotStartedYetDueToNoPlayers)
@@ -761,7 +758,7 @@ namespace Content.Server.GameTicking
             // Can't simple check the current connected player count since that doesn't update
             // before PlayerStatusChanged gets fired.
             // So in the disconnect handler we'd still see a single player otherwise.
-            var playersOnline = _playerManager.GetAllPlayers().Any(p => p.Status != SessionStatus.Disconnected);
+            var playersOnline = PlayerManager.GetAllPlayers().Any(p => p.Status != SessionStatus.Disconnected);
             if (playersOnline || !_updateOnRoundEnd)
             {
                 // Still somebody online.
@@ -989,7 +986,6 @@ The current game mode is: [color=white]{0}[/color].
         [Dependency] private IMapLoader _mapLoader;
         [Dependency] private IGameTiming _gameTiming;
         [Dependency] private IConfigurationManager _configurationManager;
-        [Dependency] private IPlayerManager _playerManager;
         [Dependency] private IChatManager _chatManager;
         [Dependency] private IServerNetManager _netManager;
         [Dependency] private IDynamicTypeFactory _dynamicTypeFactory;
