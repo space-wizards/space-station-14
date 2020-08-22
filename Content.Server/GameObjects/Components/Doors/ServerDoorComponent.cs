@@ -33,10 +33,10 @@ namespace Content.Server.GameObjects.Components.Doors
 
         private DoorState _state = DoorState.Closed;
 
-        protected virtual DoorState State
+        public virtual DoorState State
         {
             get => _state;
-            set => _state = value;
+            protected set => _state = value;
         }
 
         protected float OpenTimeCounter;
@@ -80,7 +80,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
         public override void OnRemove()
         {
-            _cancellationTokenSource.Cancel();
+            _cancellationTokenSource?.Cancel();
             _collidableComponent = null;
             _appearance = null;
 
@@ -336,7 +336,7 @@ namespace Content.Server.GameObjects.Components.Doors
             }
         }
 
-        protected enum DoorState
+        public enum DoorState
         {
             Closed,
             Open,
