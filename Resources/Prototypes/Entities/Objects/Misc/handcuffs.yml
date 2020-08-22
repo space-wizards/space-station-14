@@ -5,6 +5,11 @@
   parent: BaseItem
   components:
   - type: Handcuff
+    cuffTime: 5.0
+    uncuffTime: 5.0
+    breakoutTime: 30.0
+    cuffedTexture: /Textures/Objects/Misc/hand_tele.png # this should use RSI or something
+
   - type: Sprite
     sprite: Objects/Misc/handcuffs.rsi
     state: handcuff
@@ -20,10 +25,17 @@
 
 - type: entity
   name: cable restraints
+  description: Makeshift handcuffs crafted from spare cables.
   id: Cablecuffs
   parent: Handcuffs
   components:
   - type: Handcuff
+    cuffTime: 5.0
+    uncuffTime: 5.0
+    breakoutTime: 20.0
+    cuffedTexture: /Textures/Objects/Misc/hand_tele.png # this should use RSI or something
+    prototypeOverride: CablecuffsBroken
+
   - type: Sprite
     sprite: Objects/Misc/cablecuffs.rsi
     state: cuff
@@ -36,3 +48,19 @@
   - type: Clothing
     sprite: Objects/Misc/cablecuffs.rsi
     Slots: [belt]
+
+
+- type: entity
+  name: broken cable restraints
+  description: Makeshift handcuffs crafted from spare cables. It looks like someone broke out of these.
+  id: CablecuffsBroken
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/cablecuffs.rsi
+    state: cuff_broken
+    color: red
+
+  - type: Icon
+    sprite: Objects/Misc/cablecuffs.rsi
+    state: cuff_broken

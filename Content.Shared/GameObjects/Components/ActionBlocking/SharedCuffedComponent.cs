@@ -32,11 +32,13 @@ namespace Content.Shared.GameObjects.Components.ActionBlocking
         {
             public bool CanStillInteract { get; }
             public int NumHandsCuffed { get; }
+            public string TexturePath { get; }
 
-            public CuffedComponentState(int numHandsCuffed, bool canStillInteract) : base(ContentNetIDs.HANDCUFF)
+            public CuffedComponentState(int numHandsCuffed, bool canStillInteract, string texturePath) : base(ContentNetIDs.HANDCUFF)
             {
                 NumHandsCuffed = numHandsCuffed;
                 CanStillInteract = canStillInteract;
+                TexturePath = texturePath;
             }
         }
     }

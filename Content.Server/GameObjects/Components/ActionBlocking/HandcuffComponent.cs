@@ -11,6 +11,7 @@ using Content.Server.GameObjects.Components.GUI;
 using Robust.Shared.Serialization;
 using Robust.Shared.Log;
 using Robust.Shared.ViewVariables;
+using Robust.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.ActionBlocking;
 
 namespace Content.Server.GameObjects.Components.ActionBlocking
@@ -20,6 +21,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
     {
 #pragma warning disable 649
         [Dependency] private readonly ISharedNotifyManager _notifyManager;
+        [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
 #pragma warning restore 649
 
         private const string FALLBACK_CUFF_PROTOTYPE = "Handcuffs";
@@ -52,11 +54,19 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
         private float _interactRange;
         private DoAfterSystem _doAfterSystem;
+        private AudioSystem _audioSystem;
+        private string _startCuffSound = default;
+        private string _endCuffSound = default;
+        private string _startUncuffSound = default;
+        private string _startBreakoutSound = default;
+        private string _endUncuffSound = default;
+        private string _cuffedTexture = default;
 
         public override void Initialize()
         {
             base.Initialize();
 
+            _audioSystem = EntitySystem.Get<AudioSystem>();
             _doAfterSystem = EntitySystem.Get<DoAfterSystem>();
             _interactRange = SharedInteractionSystem.InteractionRange / 2;
         }
@@ -67,6 +77,13 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             serializer.DataField(ref _cuffTime, "cuffTime", 5.0f);
             serializer.DataField(ref _breakoutTime, "breakoutTime", 30.0f);
             serializer.DataField(ref _uncuffTime, "uncuffTime", 5.0f);
+            serializer.DataField(ref _startCuffSound, "startCuffSound", "/Audio/Items/Handcuffs/cuff_start.ogg");
+            serializer.DataField(ref _endCuffSound, "endCuffSound", "/Audio/Items/Handcuffs/cuff_end.ogg");
+            serializer.DataField(ref _startUncuffSound, "startUncuffSound", "/Audio/Items/Handcuffs/cuff_takeoff_start.ogg");
+            serializer.DataField(ref _endUncuffSound, "endUncuffSound", "/Audio/Items/Handcuffs/cuff_takeoff_end.ogg");
+            serializer.DataField(ref _startBreakoutSound, "startBreakoutSound", "/Audio/Items/Handcuffs/cuff_breakout_start.ogg");
+            serializer.DataField(ref _cuffedTexture, "cuffedTexture", "/Textures/Objects/Misc/cuff.png"); // this should probably be an RSI
+            serializer.DataField(ref _prototypeOverride, "prototypeOverride", string.Empty);
         }
 
         void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
@@ -106,8 +123,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
             _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, $"You start cuffing {eventArgs.Target.Name}.");
             _notifyManager.PopupMessage(eventArgs.User, eventArgs.Target, $"{eventArgs.User.Name} starts cuffing you!");
-
-            // TODO: play initial cuff sound effect
+            _audioSystem.PlayFromEntity(_startCuffSound, Owner);
 
             if (cuffed != null)
             {
@@ -135,15 +151,18 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
             if (result != DoAfterStatus.Cancelled)
             {
-                // TODO: play final cuff sound effect
-
+                _audioSystem.PlayFromEntity(_endCuffSound, Owner);
                 _notifyManager.PopupMessage(user, user, $"You successfully cuff {target.Name}.");
                 _notifyManager.PopupMessage(target, target, $"You have been cuffed by {user.Name}!");
 
                 var config = new CuffedComponent.CuffConfig()
                 {
                     BreakoutTime = _breakoutTime,
-                    UncuffTime = _uncuffTime
+                    UncuffTime = _uncuffTime,
+                    CuffedTexture = _cuffedTexture,
+                    StartUncuffSound = _startUncuffSound,
+                    EndUncuffSound = _endUncuffSound,
+                    BreakoutSound = _startBreakoutSound
                 };
 
                 if (_prototypeOverride != string.Empty)
@@ -156,7 +175,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
                     config.PrototypeId = Owner.Prototype.ID;
                     cuffs.AddNewCuffs(config);
                 }
-                else // if the cuffs have no prototype we need to use a fallback value. this shouldn't happen but lets be careful.
+                else // if the cuffs have no prototype we need to use a fallback value. 
                 {
                     config.PrototypeId = FALLBACK_CUFF_PROTOTYPE;
                     cuffs.AddNewCuffs(config);
@@ -188,8 +207,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
             if (result != DoAfterStatus.Cancelled)
             {
-                // TODO: play final cuff sound effect
-
+                _audioSystem.PlayFromEntity(_endCuffSound, Owner);
                 _notifyManager.PopupMessage(user, user, $"You successfully cuff {target.Name}.");
                 _notifyManager.PopupMessage(target, target, $"You have been cuffed by {user.Name}!");
 
@@ -197,7 +215,11 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
                 var config = new CuffedComponent.CuffConfig()
                 {
                     BreakoutTime = _breakoutTime,
-                    UncuffTime = _uncuffTime
+                    UncuffTime = _uncuffTime,
+                    CuffedTexture = _cuffedTexture,
+                    StartUncuffSound = _startUncuffSound,
+                    EndUncuffSound = _endUncuffSound,
+                    BreakoutSound = _startBreakoutSound
                 };
 
                 if (_prototypeOverride != string.Empty)

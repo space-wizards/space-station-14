@@ -14,6 +14,15 @@
         ]
       ]
     },
+	{
+      "name": "cuff_broken",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
     {
       "name": "inhand-left",
       "directions": 4,
