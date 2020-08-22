@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -15,6 +16,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 {
@@ -22,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
     /// Bolt-action rifles
     /// </summary>
     [RegisterComponent]
-    public sealed class PumpBarrelComponent : ServerRangedBarrelComponent, IMapInit
+    public sealed class PumpBarrelComponent : ServerRangedBarrelComponent, IMapInit, IExamine
     {
         public override string Name => "PumpBarrel";
 
@@ -210,6 +212,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             return TryInsertBullet(eventArgs);
+        }
+
+        public override void Examine(FormattedMessage message, bool inDetailsRange)
+        {
+            base.Examine(message, inDetailsRange);
+
+            message.AddMarkup(Loc.GetString("\nIt uses [color=white]{0}[/color] ammo.", _caliber));
         }
     }
 }

@@ -5,6 +5,7 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -14,11 +15,12 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
 {
     [RegisterComponent]
-    public class RangedMagazineComponent : Component, IMapInit, IInteractUsing, IUse
+    public class RangedMagazineComponent : Component, IMapInit, IInteractUsing, IUse, IExamine
     {
         public override string Name => "RangedMagazine";
 
@@ -167,6 +169,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             }
 
             return true;
+        }
+
+        public void Examine(FormattedMessage message, bool inDetailsRange)
+        {
+            var text = Loc.GetString("It's a [color=white]{0}[/color] magazine of [color=white]{1}[/color] caliber.", MagazineType, Caliber);
+            message.AddMarkup(text);
         }
     }
 }
