@@ -263,20 +263,6 @@ namespace Content.Client.UserInterface
         private ScrollContainer _scoll;
         private VBoxContainer _vBox;
 
-        public const string StylePropertyBackground = "itemlist-background";
-        public StyleBox ActualBackground
-        {
-            get
-            {
-                if (TryGetStyleProperty<StyleBox>(StylePropertyBackground, out var bg))
-                {
-                    return bg;
-                }
-
-                return new StyleBoxFlat();
-            }
-        }
-
         public LobbyPlayerList()
         {
             var panel = new PanelContainer()
@@ -288,20 +274,6 @@ namespace Content.Client.UserInterface
             _scoll.AddChild(_vBox);
             panel.AddChild(_scoll);
             AddChild(panel);
-        }
-
-        public const string StylePropertyItemBackground = "item-background";
-        public StyleBox ActualItemBackground
-        {
-            get
-            {
-                if (TryGetStyleProperty<StyleBox>(StylePropertyItemBackground, out var bg))
-                {
-                    return bg;
-                }
-
-                return new StyleBoxFlat();
-            }
         }
 
         // Adds a row
