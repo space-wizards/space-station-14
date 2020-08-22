@@ -55,12 +55,12 @@ namespace Content.Shared.GameObjects.Components.Damage
             {
                 var states = new List<DamageState> {DamageState.Alive};
 
-                if (CriticalThreshold == -1)
+                if (CriticalThreshold != null)
                 {
                     states.Add(DamageState.Critical);
                 }
 
-                if (DeadThreshold == -1)
+                if (DeadThreshold != null)
                 {
                     states.Add(DamageState.Dead);
                 }
