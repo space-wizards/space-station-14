@@ -261,7 +261,12 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
             // and if not then we won't bother sending the data.
             foreach (var (gridId, indices) in _invalidTiles)
             {
-                var gridEntityId = _mapManager.GetGrid(gridId).GridEntityId;
+                if (!_mapManager.TryGetGrid(gridId, out var grid))
+                {
+                    return;
+                }
+
+                var gridEntityId = grid.GridEntityId;
 
                 if (!EntityManager.GetEntity(gridEntityId).TryGetComponent(out GridAtmosphereComponent? gam))
                 {

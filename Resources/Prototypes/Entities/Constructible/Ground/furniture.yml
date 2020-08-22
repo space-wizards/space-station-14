@@ -17,6 +17,8 @@
     position: Stand
   - type: Anchorable
   - type: Pullable
+  - type: Destructible
+    maxHP: 50
 
 - type: entity
   name: bar stool
@@ -48,6 +50,8 @@
     position: Stand
   - type: Anchorable
   - type: Pullable
+  - type: Destructible
+    maxHP: 50
 
 - type: entity
   name: dark office chair
@@ -81,6 +85,8 @@
     position: Stand
   - type: Anchorable
   - type: Pullable
+  - type: Destructible
+    maxHP: 50
 
 - type: entity
   parent: Chair
@@ -94,6 +100,7 @@
   - type: Icon
     sprite: Constructible/Misc/furniture.rsi
     state: comfychair_preview
+
 
 
 - type: entity
@@ -126,5 +133,7 @@
   - type: Strap
     position: Down
     rotation: -90
+  - type: Destructible
+    maxHP: 75
   placement:
     mode: SnapgridCenter

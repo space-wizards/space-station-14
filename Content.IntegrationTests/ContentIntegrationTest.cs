@@ -1,13 +1,20 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Content.Client;
 using Content.Client.Interfaces.Parallax;
 using Content.Server;
 using Content.Server.Interfaces.GameTicking;
 using NUnit.Framework;
+using Robust.Server.Interfaces.Maps;
+using Robust.Server.Interfaces.Timing;
 using Robust.Shared.ContentPack;
+using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.UnitTesting;
 using EntryPoint = Content.Client.EntryPoint;
 
@@ -97,13 +104,72 @@ namespace Content.IntegrationTests
             return (client, server);
         }
 
+        protected async Task<IMapGrid> InitializeMap(ServerIntegrationInstance server, string mapPath)
+        {
+            await server.WaitIdleAsync();
+
+            var mapManager = server.ResolveDependency<IMapManager>();
+            var pauseManager = server.ResolveDependency<IPauseManager>();
+            var mapLoader = server.ResolveDependency<IMapLoader>();
+
+            IMapGrid grid = null;
+
+            server.Post(() =>
+            {
+                var mapId = mapManager.CreateMap();
+
+                pauseManager.AddUninitializedMap(mapId);
+
+                grid = mapLoader.LoadBlueprint(mapId, mapPath);
+
+                pauseManager.DoMapInitialize(mapId);
+            });
+
+            await server.WaitIdleAsync();
+
+            return grid;
+        }
+
+        protected async Task TryLoadEntities(IntegrationInstance instance, params string[] yamls)
+        {
+            await instance.WaitIdleAsync();
+
+            var prototypeManager = instance.ResolveDependency<IPrototypeManager>();
+
+            instance.Post(() =>
+            {
+                foreach (var yaml in yamls)
+                {
+                    using var reader = new StringReader(yaml);
+
+                    prototypeManager.LoadFromStream(reader);
+                }
+            });
+
+            await instance.WaitIdleAsync();
+        }
+
+        protected async Task WaitUntil(IntegrationInstance instance, Func<IntegrationInstance, bool> predicate, int tickStep = 10, int maxTicks = 600)
+        {
+            var ticksAwaited = 0;
+
+            while (!predicate(instance) && ticksAwaited < maxTicks)
+            {
+                await instance.WaitIdleAsync();
+                instance.RunTicks(tickStep);
+                ticksAwaited += tickStep;
+            }
+
+            await instance.WaitIdleAsync();
+        }
+
         private static async Task StartConnectedPairShared(ClientIntegrationInstance client, ServerIntegrationInstance server)
         {
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
 
             client.SetConnectTarget(server);
 
-            client.Post(() => IoCManager.Resolve<IClientNetManager>().ClientConnect(null, 0, null));
+            client.Post(() => IoCManager.Resolve<IClientNetManager>().ClientConnect(null!, 0, null!));
 
             await RunTicksSync(client, server, 10);
         }

@@ -58,6 +58,8 @@
   - type: Occluder
   - type: SnapGrid
     offset: Center
+  - type: Destructible
+    maxHP: 500
   placement:
     mode: SnapgridCenter
 
