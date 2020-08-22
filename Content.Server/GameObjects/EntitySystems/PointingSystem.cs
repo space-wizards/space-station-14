@@ -3,12 +3,10 @@ using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Pointing;
 using Content.Server.Players;
-using Content.Server.Utility;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Interfaces;
 using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Robust.Server.GameObjects.Components;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
@@ -84,7 +82,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public bool TryPoint(ICommonSession? session, GridCoordinates coords, EntityUid uid)
         {
-            var player = (session as IPlayerSession)?.ContentData().Mind.CurrentEntity;
+            var player = (session as IPlayerSession)?.ContentData()?.Mind?.CurrentEntity;
             if (player == null)
             {
                 return false;
@@ -132,7 +130,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 if ((playerSession.VisibilityMask & layer) == 0)
                     return false;
 
-                var ent = playerSession.ContentData().Mind.CurrentEntity;
+                var ent = playerSession.ContentData()?.Mind?.CurrentEntity;
 
                 return ent != null
                        && ent.Transform.MapPosition.InRange(player.Transform.MapPosition, PointingRange);

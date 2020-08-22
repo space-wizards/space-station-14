@@ -104,21 +104,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             serializer.DataReadWriteFunction(
                 "magazineTypes",
                 new List<MagazineType>(),
-                types => types.ForEach(mag => _magazineTypes |= mag),
-                () =>
-                {
-                    var types = new List<MagazineType>();
-
-                    foreach (MagazineType mag in Enum.GetValues(typeof(MagazineType)))
-                    {
-                        if ((_magazineTypes & mag) != 0)
-                        {
-                            types.Add(mag);
-                        }
-                    }
-
-                    return types;
-                });
+                types => types.ForEach(mag => _magazineTypes |= mag), GetMagazineTypes);
             serializer.DataField(ref _caliber, "caliber", BallisticCaliber.Unspecified);
             serializer.DataField(ref _magFillPrototype, "magFillPrototype", null);
             serializer.DataField(ref _autoEjectMag, "autoEjectMag", false);
@@ -129,6 +115,21 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             serializer.DataField(ref _soundMagInsert, "soundMagInsert", null);
             serializer.DataField(ref _soundMagEject, "soundMagEject", null);
             serializer.DataField(ref _soundAutoEject, "soundAutoEject", "/Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg");
+        }
+
+        private List<MagazineType> GetMagazineTypes()
+        {
+            var types = new List<MagazineType>();
+
+            foreach (MagazineType mag in Enum.GetValues(typeof(MagazineType)))
+            {
+                if ((_magazineTypes & mag) != 0)
+                {
+                    types.Add(mag);
+                }
+            }
+
+            return types;
         }
 
         public override ComponentState GetComponentState()
@@ -420,8 +421,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         {
             base.Examine(message, inDetailsRange);
 
-            var text = Loc.GetString("\nIt uses {0} ammo.", Caliber);
-            message.AddText(text);
+            message.AddMarkup(Loc.GetString("\nIt uses [color=white]{0}[/color] ammo.", Caliber));
+
+            foreach (var magazineType in GetMagazineTypes())
+            {
+                message.AddMarkup(Loc.GetString("\nIt accepts [color=white]{0}[/color] magazines.", magazineType));
+            }
         }
 
         [Verb]

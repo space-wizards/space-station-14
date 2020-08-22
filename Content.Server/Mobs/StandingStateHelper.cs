@@ -21,6 +21,11 @@ namespace Content.Server.Mobs
         /// <returns>False if the mob was already downed or couldn't set the state</returns>
         public static bool Down(IEntity entity, bool playSound = true, bool dropItems = true, bool force = false)
         {
+            if (dropItems)
+            {
+                DropAllItemsInHands(entity, false);
+            }
+
             if (!force && !EffectBlockerSystem.CanFall(entity))
             {
                 return false;
@@ -43,11 +48,6 @@ namespace Content.Server.Mobs
             {
                 IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>()
                     .PlayFromEntity(AudioHelpers.GetRandomFileFromSoundCollection("bodyfall"), entity, AudioHelpers.WithVariation(0.25f));
-            }
-
-            if(dropItems)
-            {
-                DropAllItemsInHands(entity, false);
             }
 
             return true;
