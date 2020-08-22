@@ -5,7 +5,6 @@ using Content.Server.AI.Operators.Combat.Melee;
 using Content.Server.AI.Operators.Movement;
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.Utility.Considerations.Combat;
-using Content.Server.AI.Utility.Considerations.Combat.Melee;
 using Content.Server.AI.Utility.Considerations.Containers;
 using Content.Server.AI.Utility.Considerations.Movement;
 using Content.Server.AI.WorldState;
@@ -64,16 +63,14 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
             
             return new[]
             {
-                considerationsManager.Get<CanUnarmedCombatCon>()
-                    .BoolCurve(context),
                 considerationsManager.Get<TargetIsDeadCon>()
                     .InverseBoolCurve(context),
                 considerationsManager.Get<TargetIsCritCon>()
                     .QuadraticCurve(context, -0.8f, 1.0f, 1.0f, 0.0f),
-                considerationsManager.Get<DistanceCon>()
-                    .QuadraticCurve(context, -1.0f, 1.0f, 1.02f, 0.0f),
+                considerationsManager.Get<TargetDistanceCon>()
+                    .PresetCurve(context, PresetCurve.Distance),
                 considerationsManager.Get<TargetHealthCon>()
-                    .QuadraticCurve(context, 1.0f, 0.4f, 0.0f, -0.02f),
+                    .PresetCurve(context, PresetCurve.TargetHealth),
                 considerationsManager.Get<TargetAccessibleCon>()
                     .BoolCurve(context),
                 // TODO: Consider our Speed and Damage to compare this to using a weapon

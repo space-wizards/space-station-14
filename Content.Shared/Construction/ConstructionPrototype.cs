@@ -181,11 +181,13 @@ namespace Content.Shared.Construction
 
     public abstract class ConstructionStep
     {
-        public readonly int Amount = 1;
+        public readonly int Amount;
+        public readonly float DoAfterDelay;
 
-        protected ConstructionStep(int amount)
+        protected ConstructionStep(int amount, float doAfterDelay = 0f)
         {
             Amount = amount;
+            DoAfterDelay = doAfterDelay;
         }
     }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
@@ -12,6 +13,7 @@ using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
+using Content.Shared.Physics.Pull;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.Player;
@@ -437,7 +439,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// Uses a weapon/object on an entity
         /// Finds components with the InteractUsing interface and calls their function
         /// </summary>
-        public void Interaction(IEntity user, IEntity weapon, IEntity attacked, GridCoordinates clickLocation)
+        public async Task Interaction(IEntity user, IEntity weapon, IEntity attacked, GridCoordinates clickLocation)
         {
             var attackMsg = new InteractUsingMessage(user, weapon, attacked, clickLocation);
             RaiseLocalEvent(attackMsg);
@@ -446,7 +448,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return;
             }
 
-            var attackBys = attacked.GetAllComponents<IInteractUsing>().ToList();
+            var attackBys = attacked.GetAllComponents<IInteractUsing>().OrderByDescending(x => x.Priority);
             var attackByEventArgs = new InteractUsingEventArgs
             {
                 User = user, ClickLocation = clickLocation, Using = weapon, Target = attacked
@@ -457,7 +459,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             {
                 foreach (var attackBy in attackBys)
                 {
-                    if (attackBy.InteractUsing(attackByEventArgs))
+                    if (await attackBy.InteractUsing(attackByEventArgs))
                     {
                         // If an InteractUsing returns a status completion we finish our attack
                         return;

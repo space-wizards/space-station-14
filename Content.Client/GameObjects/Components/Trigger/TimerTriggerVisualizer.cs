@@ -1,5 +1,5 @@
 ﻿using System;
-using Content.Shared.GameObjects.Components.Triggers;
+using Content.Shared.GameObjects.Components.Trigger;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.Components.Animations;
@@ -8,7 +8,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
-namespace Content.Client.GameObjects.Components.Doors
+namespace Content.Client.GameObjects.Components.Trigger
 {
     public class TimerTriggerVisualizer : AppearanceVisualizer
     {

@@ -28,9 +28,8 @@
         - VaultImpassable
   - type: Clickable
   - type: InteractionOutline
-  - type: Damageable
   - type: Breakable
-    threshold: 150
+    deadThreshold: 150
   - type: GravityGenerator
   - type: UserInterface
     interfaces:

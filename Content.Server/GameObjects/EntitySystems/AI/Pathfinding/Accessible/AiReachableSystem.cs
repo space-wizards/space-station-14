@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders;
-using Content.Server.GameObjects.EntitySystems.Pathfinding;
 using Content.Shared.AI;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -75,7 +73,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         // Plus this way we can check if everything is equal except for vision so an entity with a lower vision radius can use an entity with a higher vision radius' cached result
         private Dictionary<ReachableArgs, Dictionary<PathfindingRegion, (TimeSpan CacheTime, HashSet<PathfindingRegion> Regions)>> _cachedAccessible =
             new Dictionary<ReachableArgs, Dictionary<PathfindingRegion, (TimeSpan, HashSet<PathfindingRegion>)>>();
-        
+
         private readonly List<PathfindingRegion> _queuedCacheDeletions = new List<PathfindingRegion>();
 
 #if DEBUG
@@ -91,7 +89,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
 #endif
             _mapmanager.OnGridRemoved += GridRemoved;
         }
-        
+
         private void GridRemoved(GridId gridId)
         {
             _regions.Remove(gridId);
@@ -123,7 +121,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
             {
                 ClearCache(region);
             }
-            
+
             _queuedCacheDeletions.Clear();
         }
 
@@ -228,7 +226,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         public HashSet<PathfindingRegion> GetReachableRegions(ReachableArgs reachableArgs, PathfindingRegion region)
         {
             // if we're on a node that's not tracked at all atm then region will be null
-            if (region == null || region.Deleted)
+            if (region == null)
             {
                 return new HashSet<PathfindingRegion>();
             }
@@ -357,7 +355,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
 
                 foreach (var neighbor in region.Neighbors)
                 {
-                    if (closedSet.Contains(neighbor) || neighbor.Deleted)
+                    if (closedSet.Contains(neighbor))
                     {
                         continue;
                     }
@@ -457,7 +455,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         /// <param name="y">This is already calculated in advance so may as well re-use it</param>
         /// <returns></returns>
         private PathfindingRegion CalculateNode(
-            PathfindingNode node, 
+            PathfindingNode node,
             Dictionary<PathfindingNode, PathfindingRegion> existingRegions,
             HashSet<PathfindingRegion> chunkRegions,
             int x, int y)
@@ -497,15 +495,15 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
                 !leftRegion.IsDoor)
             {
                 // We'll try and connect the left node's region to the bottom region if they're separate (yay merge)
-                if (bottomNeighbor != null && 
+                if (bottomNeighbor != null &&
                     existingRegions.TryGetValue(bottomNeighbor, out bottomRegion) &&
-                    bottomRegion != leftRegion && 
+                    bottomRegion != leftRegion &&
                     !bottomRegion.IsDoor)
                 {
                     bottomRegion.Add(node);
                     existingRegions.Add(node, bottomRegion);
-                    MergeInto(leftRegion, bottomRegion);
-                    
+                    MergeInto(leftRegion, bottomRegion, existingRegions);
+
                     // Cleanup leftRegion
                     // MergeInto will remove it from the overall region chunk cache while we need to remove it from
                     // our short-term ones (chunkRegions and existingRegions)
@@ -515,7 +513,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
                     {
                         existingRegions[leftNode] = bottomRegion;
                     }
-                    
+
                     return bottomRegion;
                 }
 
@@ -541,7 +539,6 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
             _regions[parentChunk.GridId][parentChunk].Add(newRegion);
             existingRegions.Add(node, newRegion);
             UpdateRegionEdge(newRegion, node);
-            
             return newRegion;
         }
 
@@ -550,7 +547,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         /// </summary>
         /// <param name="source"></param>
         /// <param name="target"></param>
-        private void MergeInto(PathfindingRegion source, PathfindingRegion target) 
+        private void MergeInto(PathfindingRegion source, PathfindingRegion target, Dictionary<PathfindingNode, PathfindingRegion> existingRegions = null)
         {
             DebugTools.AssertNotNull(source);
             DebugTools.AssertNotNull(target);
@@ -558,6 +555,14 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
             foreach (var node in source.Nodes)
             {
                 target.Add(node);
+            }
+
+            if (existingRegions != null)
+            {
+                foreach (var node in source.Nodes)
+                {
+                    existingRegions[node] = target;
+                }
             }
 
             source.Shutdown();
@@ -578,6 +583,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         /// <param name="region"></param>
         private void ClearCache(PathfindingRegion region)
         {
+            DebugTools.Assert(region.Deleted);
+
             // Need to forcibly clear cache for ourself and anything that includes us
             foreach (var (_, cachedRegions) in _cachedAccessible)
             {
@@ -590,7 +597,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
                 // We could just have GetVisionAccessible remove us if it can tell we're deleted but that
                 // seems like it could be unreliable
                 var regionsToClear = new List<PathfindingRegion>();
-                        
+
                 foreach (var (otherRegion, cache) in cachedRegions)
                 {
                     if (cache.Regions.Contains(region))
@@ -604,6 +611,14 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
                     cachedRegions.Remove(otherRegion);
                 }
             }
+
+#if DEBUG
+            if (_regions.TryGetValue(region.ParentChunk.GridId, out var chunks) &&
+                chunks.TryGetValue(region.ParentChunk, out var regions))
+            {
+                DebugTools.Assert(!regions.Contains(region));
+            }
+#endif
         }
 
         /// <summary>
@@ -625,7 +640,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
                     _queuedCacheDeletions.Add(region);
                     region.Shutdown();
                 }
-                
+
                 _regions[chunk.GridId].Remove(chunk);
             }
 
@@ -647,14 +662,19 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
                     {
                         continue;
                     }
-                    
+
                     chunkRegions.Add(region);
                 }
             }
 #if DEBUG
+            foreach (var region in chunkRegions)
+            {
+                DebugTools.Assert(!region.Deleted);
+            }
+
+            DebugTools.Assert(chunkRegions.Count < Math.Pow(PathfindingChunk.ChunkSize, 2));
             SendRegionsDebugMessage(chunk.GridId);
 #endif
-            DebugTools.Assert(chunkRegions.Count(region => region.Deleted) == 0);
         }
 
 #if DEBUG

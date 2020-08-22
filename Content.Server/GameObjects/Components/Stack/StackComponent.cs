@@ -1,5 +1,5 @@
 ﻿using System;
-using Content.Server.GameObjects.EntitySystems.Click;
+using System.Threading.Tasks;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
@@ -28,15 +28,7 @@ namespace Content.Server.GameObjects.Components.Stack
         public override int Count
         {
             get => base.Count;
-            set
-            {
-                base.Count = value;
-
-                if (Count <= 0)
-                {
-                    Owner.Delete();
-                }
-            }
+            set => base.Count = value;
         }
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -70,7 +62,7 @@ namespace Content.Server.GameObjects.Components.Stack
             return false;
         }
 
-        public bool InteractUsing(InteractUsingEventArgs eventArgs)
+        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (eventArgs.Using.TryGetComponent<StackComponent>(out var stack))
             {

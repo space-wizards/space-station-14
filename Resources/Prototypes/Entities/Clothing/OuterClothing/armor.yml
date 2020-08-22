@@ -31,7 +31,7 @@
   parent: OuterclothingBase
   id: OuterclothingArmorreflec
   name: armor (reflective)
-  description: ''
+  description: An armored vest with advanced shielding to protect against energy weapons.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/armor_reflec.rsi
@@ -44,7 +44,7 @@
   parent: OuterclothingBase
   id: OuterclothingBulletproof
   name: bulletproof
-  description: ''
+  description: An armored vest with heavy plates to protect against ballistic projectiles.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/bulletproof.rsi
@@ -57,7 +57,7 @@
   parent: OuterclothingBase
   id: OuterclothingCaparmor
   name: captain's armor
-  description: ''
+  description: A suit of protective formal armor made for the station's captain.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/caparmor.rsi
@@ -70,7 +70,7 @@
   parent: OuterclothingBase
   id: OuterclothingAcolyte
   name: acolyte
-  description: ''
+  description: An armored suit for acolytes of the cult.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/acolyte.rsi
@@ -83,7 +83,7 @@
   parent: OuterclothingBase
   id: OuterclothingCultarmour
   name: cult armor
-  description: ''
+  description: An evil-looking cult armor, made of bones.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/cult_armour.rsi
@@ -96,7 +96,7 @@
   parent: OuterclothingBase
   id: OuterclothingCustodian
   name: custodian
-  description: ''
+  description: A special armormed custodian suit for cleaning trash in very dangerous places.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/custodian.rsi
@@ -109,7 +109,7 @@
   parent: OuterclothingBase
   id: OuterclothingHeavy
   name: heavy
-  description: ''
+  description: A heavily armored suit that protects against excessive damage.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/heavy.rsi
@@ -122,7 +122,7 @@
   parent: OuterclothingBase
   id: OuterclothingHmarmorvest
   name: HM armor vest
-  description: ''
+  description: A handmade armor vest with a big and thick steel plate.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/hm_armorvest.rsi
@@ -135,7 +135,7 @@
   parent: OuterclothingBase
   id: OuterclothingHos
   name: HoS armor vest
-  description: ''
+  description: A synthetic armor vest with COMMANDER printed in gold lettering on the chest. This one has added webbing and ballistic plates.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/hos.rsi
@@ -148,7 +148,7 @@
   parent: OuterclothingBase
   id: OuterclothingKvest
   name: kvest
-  description: ''
+  description: An armor vest made of synthetic fibers.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/kvest.rsi
@@ -161,7 +161,7 @@
   parent: OuterclothingBase
   id: OuterclothingMagusblue
   name: magus blue
-  description: ''
+  description: An blue armored suit that provides good protection.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/magusblue.rsi
@@ -174,7 +174,7 @@
   parent: OuterclothingBase
   id: OuterclothingMagusred
   name: magus red
-  description: ''
+  description: A red armored suit that provides good protection.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/magusred.rsi
@@ -187,7 +187,7 @@
   parent: OuterclothingBase
   id: OuterclothingMercwebvest
   name: merc web vest
-  description: ''
+  description: A high-quality armored vest made from a hard synthetic material. It is surprisingly flexible and light, despite formidable armor plating.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/mercwebvest.rsi
@@ -200,7 +200,7 @@
   parent: OuterclothingBase
   id: OuterclothingReactive
   name: reactive
-  description: ''
+  description: An experimental suit with a reactive armor that stops very fast projectiles. Currently on.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/reactive.rsi
@@ -213,7 +213,7 @@
   parent: OuterclothingBase
   id: OuterclothingReactiveoff
   name: reactive (off)
-  description: ''
+  description: An experimental suit with a reactive armor that stops very fast projectiles. Currently off.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/reactiveoff.rsi
@@ -226,7 +226,7 @@
   parent: OuterclothingBase
   id: OuterclothingRiot
   name: riot
-  description: ''
+  description: An armored vest with heavy padding to protect against melee attacks.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/riot.rsi
@@ -239,7 +239,7 @@
   parent: OuterclothingBase
   id: OuterclothingScaf
   name: scaf
-  description: ''
+  description: A green and brown tactical suit for combat situations.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/scaf.rsi
@@ -252,7 +252,7 @@
   parent: OuterclothingBase
   id: OuterclothingSwat
   name: swat
-  description: ''
+  description: Very durable vest that provides excellent protection from ranged and melee weapons.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/swat.rsi
@@ -265,7 +265,7 @@
   parent: OuterclothingBase
   id: OuterclothingSninja
   name: S ninja
-  description: ''
+  description: This black technologically advanced, cybernetically-enhanced suit provides good protection and many abilities like invisibility or teleportation.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/s_ninja.rsi
@@ -278,7 +278,7 @@
   parent: OuterclothingBase
   id: OuterclothingWebvest
   name: web vest
-  description: ''
+  description: A synthetic armor vest. This one has added webbing and ballistic plates.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/webvest.rsi

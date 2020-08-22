@@ -1,1 +1,25 @@
-{"version": 1, "size": {"x": 96, "y": 96}, "states": [{"name": "explosionfast", "directions": 1, "delays": [[0.06, 0.06, 0.06, 0.06, 0.06, 0.06, 0.06, 0.06]]}]}
+{
+    "version": 1,
+    "size": {
+        "x": 96,
+        "y": 96
+    },
+    "states": [
+        {
+            "name": "explosionfast",
+            "directions": 1,
+            "delays": [
+                [
+                    0.06,
+                    0.06,
+                    0.06,
+                    0.06,
+                    0.06,
+                    0.06,
+                    0.06,
+                    0.06
+                ]
+            ]
+        }
+    ]
+}

@@ -1,7 +1,6 @@
 ﻿#nullable enable
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Client.Physics;
 using Robust.Client.Player;
@@ -26,16 +25,15 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             var playerEnt = _playerManager.LocalPlayer?.ControlledEntity;
 
-            if (playerEnt == null || !playerEnt.TryGetComponent(out IMoverComponent mover))
+            if (playerEnt == null || !playerEnt.TryGetComponent(out IMoverComponent? mover))
             {
                 return;
             }
 
-            var physics = playerEnt.GetComponent<IPhysicsComponent>();
-            playerEnt.TryGetComponent(out ICollidableComponent? collidable);
-            physics.Predict = true;
+            var collidable = playerEnt.GetComponent<ICollidableComponent>();
+            collidable.Predict = true;
 
-            UpdateKinematics(playerEnt.Transform, mover, physics, collidable);
+            UpdateKinematics(playerEnt.Transform, mover, collidable);
         }
 
         public override void Update(float frameTime)

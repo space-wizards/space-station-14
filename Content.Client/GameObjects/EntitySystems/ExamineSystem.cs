@@ -5,7 +5,6 @@ using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.UserInterface;
@@ -13,7 +12,6 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -109,7 +107,7 @@ namespace Content.Client.GameObjects.EntitySystems
             FormattedMessage message;
             if (entity.Uid.IsClientSide())
             {
-                message = ExamineSystem.GetExamineText(entity, _playerManager.LocalPlayer.ControlledEntity);
+                message = GetExamineText(entity, _playerManager.LocalPlayer.ControlledEntity);
             }
             else
             {
