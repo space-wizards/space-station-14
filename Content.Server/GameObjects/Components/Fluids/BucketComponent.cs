@@ -62,11 +62,18 @@ namespace Content.Server.GameObjects.Components.Fluids
                 return false;
             }
 
+            var mopContents = mopComponent.Contents;
+
+            if (mopContents == null)
+            {
+                return false;
+            }
+
             // Let's fill 'er up
             // If this is called the mop should be empty but just in case we'll do Max - Current
             var transferAmount = ReagentUnit.Min(mopComponent.MaxVolume - mopComponent.CurrentVolume, CurrentVolume);
             var solution = contents.SplitSolution(transferAmount);
-            if (!mopComponent.Contents.TryAddSolution(solution) || mopComponent.CurrentVolume == 0)
+            if (!mopContents.TryAddSolution(solution) || mopComponent.CurrentVolume == 0)
             {
                 return false;
             }
@@ -111,7 +118,14 @@ namespace Content.Server.GameObjects.Components.Fluids
                 return false;
             }
 
-            var solution = mopComponent.Contents.SplitSolution(transferAmount);
+            var mopContents = mopComponent.Contents;
+
+            if (mopContents == null)
+            {
+                return false;
+            }
+
+            var solution = mopContents.SplitSolution(transferAmount);
             if (!contents.TryAddSolution(solution))
             {
                 //This really shouldn't happen
@@ -129,7 +143,6 @@ namespace Content.Server.GameObjects.Components.Fluids
             EntitySystem.Get<AudioSystem>().PlayFromEntity(_sound, Owner);
 
             return true;
-
         }
     }
 }
