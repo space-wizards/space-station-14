@@ -73,7 +73,7 @@ namespace Content.Server.GameObjects.Components.Research
             base.Initialize();
             Id = ServerCount++;
             EntitySystem.Get<ResearchSystem>()?.RegisterServer(this);
-            Database = Owner.GetComponent<TechnologyDatabaseComponent>();
+            Database = Owner.EnsureComponent<TechnologyDatabaseComponent>();
             Owner.TryGetComponent(out _powerReceiver);
         }
 

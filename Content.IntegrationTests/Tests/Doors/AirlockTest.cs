@@ -1,16 +1,11 @@
-﻿using System.IO;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Doors;
-using Content.Shared.Physics;
 using NUnit.Framework;
-using Robust.Server.Console.Commands;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
-using Robust.Shared.Prototypes;
 using static Content.Server.GameObjects.Components.Doors.ServerDoorComponent;
 
 namespace Content.IntegrationTests.Tests.Doors

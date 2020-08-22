@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -6,6 +7,7 @@ using Content.Server.Body;
 using Content.Shared.Body.Surgery;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
+using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -21,20 +23,23 @@ namespace Content.Server.GameObjects.Components.Body
     [RegisterComponent]
     public class DroppedBodyPartComponent : Component, IAfterInteract, IBodyPartContainer
     {
-#pragma warning disable 649
-        [Dependency] private readonly ISharedNotifyManager _sharedNotifyManager;
-#pragma warning restore 649
+        [Dependency] private readonly ISharedNotifyManager _sharedNotifyManager = default!;
 
         private readonly Dictionary<int, object> _optionsCache = new Dictionary<int, object>();
-        private BodyManagerComponent _bodyManagerComponentCache;
+        private BodyManagerComponent? _bodyManagerComponentCache;
         private int _idHash;
-        private IEntity _performerCache;
-
-        private BoundUserInterface _userInterface;
+        private IEntity? _performerCache;
 
         public sealed override string Name => "DroppedBodyPart";
 
-        [ViewVariables] public BodyPart ContainedBodyPart { get; private set; }
+        [ViewVariables] public BodyPart ContainedBodyPart { get; private set; } = default!;
+
+        [ViewVariables]
+        private BoundUserInterface? UserInterface =>
+            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
+            ui.TryGetBoundUserInterface(GenericSurgeryUiKey.Key, out var boundUi)
+                ? boundUi
+                : null;
 
         void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
@@ -48,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Body
             _performerCache = null;
             _bodyManagerComponentCache = null;
 
-            if (eventArgs.Target.TryGetComponent(out BodyManagerComponent bodyManager))
+            if (eventArgs.Target.TryGetComponent(out BodyManagerComponent? bodyManager))
             {
                 SendBodySlotListToUser(eventArgs, bodyManager);
             }
@@ -58,9 +63,10 @@ namespace Content.Server.GameObjects.Components.Body
         {
             base.Initialize();
 
-            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
-                .GetBoundUserInterface(GenericSurgeryUiKey.Key);
-            _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
+            }
         }
 
         public void TransferBodyPartData(BodyPart data)
@@ -68,7 +74,7 @@ namespace Content.Server.GameObjects.Components.Body
             ContainedBodyPart = data;
             Owner.Name = Loc.GetString(ContainedBodyPart.Name);
 
-            if (Owner.TryGetComponent(out SpriteComponent component))
+            if (Owner.TryGetComponent(out SpriteComponent? component))
             {
                 component.LayerSetRSI(0, data.RSIPath);
                 component.LayerSetState(0, data.RSIState);
@@ -91,7 +97,7 @@ namespace Content.Server.GameObjects.Components.Body
             foreach (var slot in unoccupiedSlots)
             {
                 if (!bodyManager.TryGetSlotType(slot, out var typeResult) ||
-                    typeResult != ContainedBodyPart.PartType ||
+                    typeResult != ContainedBodyPart?.PartType ||
                     !bodyManager.TryGetBodyPartConnections(slot, out var parts))
                 {
                     continue;
@@ -129,7 +135,18 @@ namespace Content.Server.GameObjects.Components.Body
         /// </summary>
         private void HandleReceiveBodyPartSlot(int key)
         {
-            CloseSurgeryUI(_performerCache.GetComponent<BasicActorComponent>().playerSession);
+            if (_performerCache == null ||
+                !_performerCache.TryGetComponent(out IActorComponent? actor))
+            {
+                return;
+            }
+
+            CloseSurgeryUI(actor.playerSession);
+
+            if (_bodyManagerComponentCache == null)
+            {
+                return;
+            }
 
             // TODO: sanity checks to see whether user is in range, user is still able-bodied, target is still the same, etc etc
             if (!_optionsCache.TryGetValue(key, out var targetObject))
@@ -138,34 +155,42 @@ namespace Content.Server.GameObjects.Components.Body
                     Loc.GetString("You see no useful way to attach {0:theName} anymore.", Owner));
             }
 
-            var target = targetObject as string;
+            var target = (string) targetObject!;
+            string message;
+
+            if (_bodyManagerComponentCache.InstallDroppedBodyPart(this, target))
+            {
+                message = Loc.GetString("You attach {0:theName}.", ContainedBodyPart);
+            }
+            else
+            {
+                message = Loc.GetString("You can't attach it!");
+            }
 
             _sharedNotifyManager.PopupMessage(
                 _bodyManagerComponentCache.Owner,
                 _performerCache,
-                !_bodyManagerComponentCache.InstallDroppedBodyPart(this, target)
-                    ? Loc.GetString("You can't attach it!")
-                    : Loc.GetString("You attach {0:theName}.", ContainedBodyPart));
+                message);
         }
 
         private void OpenSurgeryUI(IPlayerSession session)
         {
-            _userInterface.Open(session);
+            UserInterface?.Open(session);
         }
 
         private void UpdateSurgeryUIBodyPartSlotRequest(IPlayerSession session, Dictionary<string, int> options)
         {
-            _userInterface.SendMessage(new RequestBodyPartSlotSurgeryUIMessage(options), session);
+            UserInterface?.SendMessage(new RequestBodyPartSlotSurgeryUIMessage(options), session);
         }
 
         private void CloseSurgeryUI(IPlayerSession session)
         {
-            _userInterface.Close(session);
+            UserInterface?.Close(session);
         }
 
         private void CloseAllSurgeryUIs()
         {
-            _userInterface.CloseAll();
+            UserInterface?.CloseAll();
         }
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)

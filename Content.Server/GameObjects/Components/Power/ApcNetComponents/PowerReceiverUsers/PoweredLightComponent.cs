@@ -225,14 +225,18 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         {
             base.Initialize();
 
-            Owner.GetComponent<PowerReceiverComponent>().OnPowerStateChanged += UpdateLight;
+            Owner.EnsureComponent<PowerReceiverComponent>().OnPowerStateChanged += UpdateLight;
 
             _lightBulbContainer = ContainerManagerComponent.Ensure<ContainerSlot>("light_bulb", Owner);
         }
 
         public override void OnRemove()
         {
-            Owner.GetComponent<PowerReceiverComponent>().OnPowerStateChanged -= UpdateLight;
+            if (Owner.TryGetComponent(out PowerReceiverComponent receiver))
+            {
+                receiver.OnPowerStateChanged -= UpdateLight;
+            }
+
             base.OnRemove();
         }
 

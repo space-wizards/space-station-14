@@ -10,6 +10,7 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -19,20 +20,10 @@ namespace Content.Server.GameObjects.Components.Cargo
     [ComponentReference(typeof(IActivate))]
     public class CargoConsoleComponent : SharedCargoConsoleComponent, IActivate
     {
-#pragma warning disable 649
         [Dependency] private readonly ICargoOrderDataManager _cargoOrderDataManager = default!;
-#pragma warning restore 649
 
         [ViewVariables]
         public int Points = 1000;
-
-        private BoundUserInterface _userInterface  = default!;
-
-        [ViewVariables]
-        public GalacticMarketComponent Market { get; private set; } = default!;
-
-        [ViewVariables]
-        public CargoOrderDatabaseComponent Orders { get; private set; } = default!;
 
         private CargoBankAccount? _bankAccount;
 
@@ -65,20 +56,47 @@ namespace Content.Server.GameObjects.Components.Cargo
 
         private bool _requestOnly = false;
 
-        private PowerReceiverComponent _powerReceiver = default!;
-        private bool Powered => _powerReceiver.Powered;
+        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
         private CargoConsoleSystem _cargoConsoleSystem = default!;
+
+        [ViewVariables]
+        private BoundUserInterface? UserInterface =>
+            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
+            ui.TryGetBoundUserInterface(CargoConsoleUiKey.Key, out var boundUi)
+                ? boundUi
+                : null;
 
         public override void Initialize()
         {
             base.Initialize();
-            Market = Owner.GetComponent<GalacticMarketComponent>();
-            Orders = Owner.GetComponent<CargoOrderDatabaseComponent>();
-            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>().GetBoundUserInterface(CargoConsoleUiKey.Key);
-            _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
-            _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
+
+            if (!Owner.EnsureComponent(out GalacticMarketComponent _))
+            {
+                Logger.Warning($"Entity {Owner} at {Owner.Transform.MapPosition} had no {nameof(GalacticMarketComponent)}");
+            }
+
+            if (!Owner.EnsureComponent(out CargoOrderDatabaseComponent _))
+            {
+                Logger.Warning($"Entity {Owner} at {Owner.Transform.MapPosition} had no {nameof(GalacticMarketComponent)}");
+            }
+
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
+            }
+
             _cargoConsoleSystem = EntitySystem.Get<CargoConsoleSystem>();
             BankAccount = _cargoConsoleSystem.StationAccount;
+        }
+
+        public override void OnRemove()
+        {
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
+            }
+
+            base.OnRemove();
         }
 
         /// <summary>
@@ -93,8 +111,13 @@ namespace Content.Server.GameObjects.Components.Cargo
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
         {
+            if (!Owner.TryGetComponent(out CargoOrderDatabaseComponent? orders))
+            {
+                return;
+            }
+
             var message = serverMsg.Message;
-            if (!Orders.ConnectedToDatabase)
+            if (!orders.ConnectedToDatabase)
                 return;
             if (!Powered)
                 return;
@@ -107,39 +130,39 @@ namespace Content.Server.GameObjects.Components.Cargo
                         break;
                     }
 
-                    _cargoOrderDataManager.AddOrder(Orders.Database.Id, msg.Requester, msg.Reason, msg.ProductId, msg.Amount, _bankAccount.Id);
+                    _cargoOrderDataManager.AddOrder(orders.Database.Id, msg.Requester, msg.Reason, msg.ProductId, msg.Amount, _bankAccount.Id);
                     break;
                 }
                 case CargoConsoleRemoveOrderMessage msg:
                 {
-                    _cargoOrderDataManager.RemoveOrder(Orders.Database.Id, msg.OrderNumber);
+                    _cargoOrderDataManager.RemoveOrder(orders.Database.Id, msg.OrderNumber);
                     break;
                 }
                 case CargoConsoleApproveOrderMessage msg:
                 {
                     if (_requestOnly ||
-                        !Orders.Database.TryGetOrder(msg.OrderNumber, out var order) ||
+                        !orders.Database.TryGetOrder(msg.OrderNumber, out var order) ||
                         _bankAccount == null)
                     {
                         break;
                     }
 
                     _prototypeManager.TryIndex(order.ProductId, out CargoProductPrototype product);
-                    if (product == null)
+                    if (product == null!)
                         break;
-                    var capacity = _cargoOrderDataManager.GetCapacity(Orders.Database.Id);
+                    var capacity = _cargoOrderDataManager.GetCapacity(orders.Database.Id);
                     if (capacity.CurrentCapacity == capacity.MaxCapacity)
                         break;
                     if (!_cargoConsoleSystem.ChangeBalance(_bankAccount.Id, (-product.PointCost) * order.Amount))
                         break;
-                    _cargoOrderDataManager.ApproveOrder(Orders.Database.Id, msg.OrderNumber);
+                    _cargoOrderDataManager.ApproveOrder(orders.Database.Id, msg.OrderNumber);
                     UpdateUIState();
                     break;
                 }
                 case CargoConsoleShuttleMessage _:
                 {
-                    var approvedOrders = _cargoOrderDataManager.RemoveAndGetApprovedFrom(Orders.Database);
-                    Orders.Database.ClearOrderCapacity();
+                    var approvedOrders = _cargoOrderDataManager.RemoveAndGetApprovedFrom(orders.Database);
+                    orders.Database.ClearOrderCapacity();
                     // TODO replace with shuttle code
 
                     // TEMPORARY loop for spawning stuff on top of console
@@ -166,12 +189,12 @@ namespace Content.Server.GameObjects.Components.Cargo
             if (!Powered)
                 return;
 
-            _userInterface.Open(actor.playerSession);
+            UserInterface?.Open(actor.playerSession);
         }
 
         private void UpdateUIState()
         {
-            if (_bankAccount == null)
+            if (_bankAccount == null || !Owner.IsValid())
             {
                 return;
             }
@@ -180,7 +203,7 @@ namespace Content.Server.GameObjects.Components.Cargo
             var name = _bankAccount.Name;
             var balance = _bankAccount.Balance;
             var capacity = _cargoOrderDataManager.GetCapacity(id);
-            _userInterface.SetState(new CargoConsoleInterfaceState(_requestOnly, id, name, balance, capacity));
+            UserInterface?.SetState(new CargoConsoleInterfaceState(_requestOnly, id, name, balance, capacity));
         }
     }
 }

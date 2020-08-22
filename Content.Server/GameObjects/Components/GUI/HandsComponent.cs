@@ -37,9 +37,7 @@ namespace Content.Server.GameObjects.Components.GUI
     [ComponentReference(typeof(ISharedHandsComponent))]
     public class HandsComponent : SharedHandsComponent, IHandsComponent, IBodyPartAdded, IBodyPartRemoved
     {
-#pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
-#pragma warning restore 649
 
         private string? _activeHand;
         private uint _nextHand;

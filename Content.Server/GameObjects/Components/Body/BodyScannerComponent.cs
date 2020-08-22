@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using Content.Server.Body;
 using Content.Shared.Body.Scanner;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Log;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Body
 {
@@ -12,32 +15,44 @@ namespace Content.Server.GameObjects.Components.Body
     [ComponentReference(typeof(IActivate))]
     public class BodyScannerComponent : Component, IActivate
     {
-        private BoundUserInterface _userInterface;
         public sealed override string Name => "BodyScanner";
+
+        [ViewVariables]
+        private BoundUserInterface? UserInterface =>
+            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
+            ui.TryGetBoundUserInterface(BodyScannerUiKey.Key, out var boundUi)
+                ? boundUi
+                : null;
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent actor) ||
+            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor) ||
                 actor.playerSession.AttachedEntity == null)
             {
                 return;
             }
 
-            if (actor.playerSession.AttachedEntity.TryGetComponent(out BodyManagerComponent attempt))
+            if (actor.playerSession.AttachedEntity.TryGetComponent(out BodyManagerComponent? attempt))
             {
                 var state = InterfaceState(attempt.Template, attempt.Parts);
-                _userInterface.SetState(state);
+                UserInterface?.SetState(state);
             }
 
-            _userInterface.Open(actor.playerSession);
+            UserInterface?.Open(actor.playerSession);
         }
 
         public override void Initialize()
         {
             base.Initialize();
-            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
-                .GetBoundUserInterface(BodyScannerUiKey.Key);
-            _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
+
+            if (UserInterface == null)
+            {
+                Logger.Warning($"Entity {Owner} at {Owner.Transform.MapPosition} doesn't have a {nameof(ServerUserInterfaceComponent)}");
+            }
+            else
+            {
+                UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
+            }
         }
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg) { }

@@ -16,10 +16,9 @@ namespace Content.Server.GameObjects.Components.Fluids
     [RegisterComponent]
     class SprayComponent : Component, IAfterInteract
     {
-#pragma warning disable 649
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
         [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
-#pragma warning restore 649
+
         public override string Name => "Spray";
 
         private ReagentUnit _transferAmount;
