@@ -27,19 +27,23 @@ namespace Content.Shared.GameObjects.Components.Damage
 
         public override string Name => "Damageable";
 
+        private DamageState _currentDamageState;
+
+        public event Action<HealthChangedEventArgs>? HealthChangedEvent;
+
         /// <summary>
         ///     The threshold of damage, if any, above which the entity enters crit.
+        ///     -1 means that this entity cannot go into crit.
         /// </summary>
-        [ViewVariables]
-        private int _criticalThreshold;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public int? CriticalThreshold { get; set; }
 
         /// <summary>
         ///     The threshold of damage, if any, above which the entity dies.
+        ///     -1 means that this entity cannot die.
         /// </summary>
-        [ViewVariables]
-        private int _deadThreshold;
-
-        public event Action<HealthChangedEventArgs>? HealthChangedEvent;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public int? DeadThreshold { get; set; }
 
         [ViewVariables] private ResistanceSet Resistance { get; set; } = default!;
 
@@ -51,12 +55,12 @@ namespace Content.Shared.GameObjects.Components.Damage
             {
                 var states = new List<DamageState>();
 
-                if (_criticalThreshold == -1)
+                if (CriticalThreshold == -1)
                 {
                     states.Add(DamageState.Critical);
                 }
 
-                if (_deadThreshold == -1)
+                if (DeadThreshold == -1)
                 {
                     states.Add(DamageState.Dead);
                 }
@@ -65,7 +69,20 @@ namespace Content.Shared.GameObjects.Components.Damage
             }
         }
 
-        public virtual DamageState CurrentDamageState { get; protected set; }
+        public virtual DamageState CurrentDamageState
+        {
+            get => _currentDamageState;
+            set
+            {
+                var old = _currentDamageState;
+                _currentDamageState = value;
+
+                if (old != value)
+                {
+                    EnterState(value);
+                }
+            }
+        }
 
         [ViewVariables] public int TotalDamage => Damage.TotalDamage;
 
@@ -77,8 +94,17 @@ namespace Content.Shared.GameObjects.Components.Damage
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(ref _criticalThreshold, "criticalThreshold", -1);
-            serializer.DataField(ref _deadThreshold, "deadThreshold", -1);
+            serializer.DataReadWriteFunction(
+                "criticalThreshold",
+                -1,
+                t => CriticalThreshold = t == -1 ? (int?) null : t,
+                () => CriticalThreshold ?? -1);
+
+            serializer.DataReadWriteFunction(
+                "deadThreshold",
+                -1,
+                t => DeadThreshold = t == -1 ? (int?) null : t,
+                () => DeadThreshold ?? -1);
 
             if (serializer.Reading)
             {
@@ -261,13 +287,15 @@ namespace Content.Shared.GameObjects.Components.Damage
             OnHealthChanged(args);
         }
 
+        protected virtual void EnterState(DamageState state) { }
+
         protected virtual void OnHealthChanged(HealthChangedEventArgs e)
         {
-            if (_deadThreshold != -1 && TotalDamage > _deadThreshold)
+            if (DeadThreshold != -1 && TotalDamage > DeadThreshold)
             {
                 CurrentDamageState = DamageState.Dead;
             }
-            else if (_criticalThreshold != -1 && TotalDamage > _criticalThreshold)
+            else if (CriticalThreshold != -1 && TotalDamage > CriticalThreshold)
             {
                 CurrentDamageState = DamageState.Critical;
             }
