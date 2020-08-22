@@ -260,23 +260,48 @@ namespace Content.Client.UserInterface
 
     public class LobbyPlayerList : Control
     {
-        private ScrollBar _scrollBar;
+        private ScrollContainer _scoll;
         private VBoxContainer _vBox;
+
+        public const string StylePropertyBackground = "itemlist-background";
+        public StyleBox ActualBackground
+        {
+            get
+            {
+                if (TryGetStyleProperty<StyleBox>(StylePropertyBackground, out var bg))
+                {
+                    return bg;
+                }
+
+                return new StyleBoxFlat();
+            }
+        }
 
         public LobbyPlayerList()
         {
-            _vBox = new VBoxContainer
+            var panel = new PanelContainer()
             {
-                //SizeFlagsVertical = SizeFlags.FillExpand,
-                //SizeFlagsHorizontal = SizeFlags.FillExpand,
+                PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#202028") },
             };
-            _scrollBar = new VScrollBar
+            _vBox = new VBoxContainer();
+            _scoll = new ScrollContainer();
+            _scoll.AddChild(_vBox);
+            panel.AddChild(_scoll);
+            AddChild(panel);
+        }
+
+        public const string StylePropertyItemBackground = "item-background";
+        public StyleBox ActualItemBackground
+        {
+            get
             {
-                SizeFlagsVertical = SizeFlags.Fill,
-                SizeFlagsHorizontal = SizeFlags.ShrinkEnd
-            };
-            AddChild(_vBox);
-            AddChild(_scrollBar);
+                if (TryGetStyleProperty<StyleBox>(StylePropertyItemBackground, out var bg))
+                {
+                    return bg;
+                }
+
+                return new StyleBoxFlat();
+            }
         }
 
         // Adds a row
@@ -284,21 +309,47 @@ namespace Content.Client.UserInterface
         {
             var hbox = new HBoxContainer
             {
-                //SizeFlagsVertical = SizeFlags.FillExpand,
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
-                
             };
 
             // Player Name
-            hbox.AddChild(new Label
+            hbox.AddChild(new PanelContainer()
             {
-                Text = name,
+                PanelOverride = new StyleBoxFlat
+                {
+                    BackgroundColor = Color.FromHex("#373744"),
+                    ContentMarginBottomOverride = 2,
+                    ContentMarginLeftOverride = 4,
+                    ContentMarginRightOverride = 4,
+                    ContentMarginTopOverride = 2
+                },
+                Children =
+                {
+                    new Label
+                    {
+                        Text = name
+                    }
+                },
                 SizeFlagsHorizontal = SizeFlags.FillExpand
             });
             // Status
-            hbox.AddChild(new Label
+            hbox.AddChild(new PanelContainer()
             {
-                Text = status,
+                PanelOverride = new StyleBoxFlat
+                {
+                    BackgroundColor = Color.FromHex("#373744"),
+                    ContentMarginBottomOverride = 2,
+                    ContentMarginLeftOverride = 4,
+                    ContentMarginRightOverride = 4,
+                    ContentMarginTopOverride = 2
+                },
+                Children =
+                {
+                    new Label
+                    {
+                        Text = status
+                    }
+                },
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                 SizeFlagsStretchRatio = 0.2f,
             });
