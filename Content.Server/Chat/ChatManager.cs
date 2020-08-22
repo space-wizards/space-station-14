@@ -22,6 +22,7 @@ using Robust.Shared.Interfaces.Map;
 using Content.Server.GameObjects;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Inventory;
+using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.Chat
 {
@@ -33,7 +34,6 @@ namespace Content.Server.Chat
         private const int VoiceRange = 7; // how far voice goes in world units
 
 #pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly IServerNetManager _netManager;
         [Dependency] private readonly IPlayerManager _playerManager;
         [Dependency] private readonly ILocalizationManager _localizationManager;
@@ -86,7 +86,7 @@ namespace Content.Server.Chat
                 }
             }
 
-            var listeners = _entitySystemManager.GetEntitySystem<ListeningSystem>();
+            var listeners = EntitySystem.Get<ListeningSystem>();
             listeners.PingListeners(source, pos, message);
 
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
