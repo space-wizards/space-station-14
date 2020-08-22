@@ -14,20 +14,10 @@ namespace Content.Client.GameObjects.Components
     [UsedImplicitly]
     public class LanternVisualizer : AppearanceVisualizer
     {
-        private string _powerSource;
 
-        public override void LoadData(YamlMappingNode node)
+        private readonly Animation _radiatingLightAnimation = new Animation
         {
-            base.LoadData(node);
-            if (node.TryGetNode("PowerSource", out var powerSource))
-            {
-                _powerSource = powerSource.AsString();
-            }
-        }
-
-        private Animation radiatingLightAnimation = new Animation
-        {
-            Length = TimeSpan.FromSeconds(1),
+            Length = TimeSpan.FromSeconds(4),
             AnimationTracks =
             {
                 new AnimationTrackComponentProperty
@@ -38,8 +28,8 @@ namespace Content.Client.GameObjects.Components
                     KeyFrames =
                     {
                         new AnimationTrackProperty.KeyFrame(3.0f, 0),
-                        new AnimationTrackProperty.KeyFrame(2.0f, 0.5f),
-                        new AnimationTrackProperty.KeyFrame(3.0f, 1)
+                        new AnimationTrackProperty.KeyFrame(2.0f, 1.5f),
+                        new AnimationTrackProperty.KeyFrame(3.0f, 3f)
                     }
                 }
             }
@@ -56,14 +46,12 @@ namespace Content.Client.GameObjects.Components
             PlayAnimation(component);
         }
 
-        public void PlayAnimation(AppearanceComponent component)
+        private void PlayAnimation(AppearanceComponent component)
         {
             component.Owner.EnsureComponent(out AnimationPlayerComponent animationPlayer);
-            if (!animationPlayer.HasRunningAnimation("radiatingLight"))
-            {
-                animationPlayer.Play(radiatingLightAnimation, "radiatingLight");
-                animationPlayer.AnimationCompleted += s => animationPlayer.Play(radiatingLightAnimation, s);
-            }
+            if (animationPlayer.HasRunningAnimation("radiatingLight")) return;
+            animationPlayer.Play(_radiatingLightAnimation, "radiatingLight");
+            animationPlayer.AnimationCompleted += s => animationPlayer.Play(_radiatingLightAnimation, s);
         }
     }
 }

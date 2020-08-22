@@ -35,7 +35,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         [Dependency] private readonly ILocalizationManager _localizationManager;
 #pragma warning restore 649
 
-        [ViewVariables(VVAccess.ReadWrite)] public float Wattage { get; set; } = 1000;
+        [ViewVariables(VVAccess.ReadWrite)] public float Wattage { get; set; } = 10;
         [ViewVariables] private ContainerSlot _cellContainer;
         private PointLightComponent _pointLight;
         private SpriteComponent _spriteComponent;
@@ -48,12 +48,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             {
                 if (_cellContainer.ContainedEntity == null) return null;
 
-                if (_cellContainer.ContainedEntity.TryGetComponent(out BatteryComponent cell))
-                {
-                    return cell;
-                }
-
-                return null;
+                return _cellContainer.ContainedEntity.TryGetComponent(out BatteryComponent cell) ? cell : null;
             }
         }
 
@@ -193,8 +188,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         {
             if (!Activated || Cell == null) return;
 
-            AppearanceComponent appearanceComponent = Owner.GetComponent<AppearanceComponent>();
-            appearanceComponent.SetData(HandheldLightVisuals.Power, HandheldLightPowerStates.Dying);
+            var appearanceComponent = Owner.GetComponent<AppearanceComponent>();
 
             if (Cell.MaxCharge - Cell.CurrentCharge < Cell.MaxCharge * 0.70)
             {
@@ -209,7 +203,6 @@ namespace Content.Server.GameObjects.Components.Interactable
                 appearanceComponent.SetData(HandheldLightVisuals.Power, HandheldLightPowerStates.Dying);
             }
 
-            //var cell = Cell;
             if (Cell == null || !Cell.TryUseCharge(Wattage * frameTime)) TurnOff();
 
             Dirty();
