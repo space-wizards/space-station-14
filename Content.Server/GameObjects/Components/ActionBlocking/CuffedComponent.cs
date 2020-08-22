@@ -8,7 +8,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Robust.Shared.ViewVariables;
-using Content.Server.GameObjects.Components.GUI;
+using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.ActionBlocking;
 using Content.Shared.GameObjects.Verbs;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -48,7 +48,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         private float _interactRange;
         private DoAfterSystem _doAfterSystem;
         private AudioSystem _audioSystem;
-        private HandsComponent _hands;
+        private IHandsComponent _hands;
 
         public override void Initialize()
         {
@@ -61,8 +61,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
             if (!Owner.TryGetComponent(out _hands))
             {
-                Logger.Warning($"CuffedComponent was added to an entity that does not have a HandsComponent!");
-                Owner.RemoveComponent<CuffedComponent>();
+                Logger.Warning("Player does not have an IHandsComponent!");
             }
         }
 
@@ -102,7 +101,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         public void AddNewCuffs(IEntity handcuff)
         {
             _container.Insert(handcuff);
-            CanStillInteract = _hands.Count > CuffedHandCount;
+            CanStillInteract = _hands.Hands.Count() > CuffedHandCount;
 
             UpdateStatusEffect();
             UpdateHeldItems();
@@ -121,7 +120,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         {
             _dirtyThisFrame = false;
 
-            while (CuffedHandCount > _hands.Count && CuffedHandCount > 0)
+            while (CuffedHandCount > _hands.Hands.Count() && CuffedHandCount > 0)
             {
                 _dirtyThisFrame = true;
 
@@ -132,7 +131,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
             if (_dirtyThisFrame)
             {
-                CanStillInteract = _hands.Count > CuffedHandCount;
+                CanStillInteract = _hands.Hands.Count() > CuffedHandCount;
                 Dirty();
             }
         }
@@ -143,7 +142,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         public void UpdateHeldItems()
         {
             var itemCount = _hands.GetAllHeldItems().Count();
-            var freeHandCount = _hands.Count - CuffedHandCount;
+            var freeHandCount = _hands.Hands.Count() - CuffedHandCount;
 
             if (freeHandCount < itemCount)
             {
@@ -176,12 +175,14 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
         /// <summary>
         /// Attempt to uncuff a cuffed entity. Can be called by the cuffed entity, or another entity trying to help uncuff them.
-        /// If the uncuffing succeeds, a prototype will be spawned on the floor.
+        /// If the uncuffing succeeds, the cuffs will drop on the floor.
         /// </summary>
         /// <param name="user">The cuffed entity</param>
         /// <param name="isOwner">Is the cuffed entity the owner of the CuffedComponent?</param>
-        public async void TryUncuff(IEntity user, bool isOwner)
+        public async void TryUncuff(IEntity user)
         {
+            var isOwner = user == Owner;
+
             if (!LastAddedCuffs.TryGetComponent<HandcuffComponent>(out var cuff))
             {
                 Logger.Warning($"A user is trying to remove handcuffs without a ${nameof(HandcuffComponent)}. This should never happen!");
@@ -241,7 +242,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
                     }
                 }
 
-                CanStillInteract = _hands.Count > CuffedHandCount;
+                CanStillInteract = _hands.Hands.Count() > CuffedHandCount;
                 UpdateStatusEffect();
                 Dirty();
 
@@ -298,7 +299,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             {
                 if (component.CuffedHandCount > 0)
                 {
-                    component.TryUncuff(user, isOwner: user.Uid == component.Owner.Uid);
+                    component.TryUncuff(user);
                 }
             }
         }
