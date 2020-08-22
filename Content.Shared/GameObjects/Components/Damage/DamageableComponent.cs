@@ -27,15 +27,62 @@ namespace Content.Shared.GameObjects.Components.Damage
 
         public override string Name => "Damageable";
 
-        public event Action<HealthChangedEventArgs> HealthChangedEvent = default!;
+        private DamageState _currentDamageState;
+
+        public event Action<HealthChangedEventArgs>? HealthChangedEvent;
+
+        /// <summary>
+        ///     The threshold of damage, if any, above which the entity enters crit.
+        ///     -1 means that this entity cannot go into crit.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public int? CriticalThreshold { get; set; }
+
+        /// <summary>
+        ///     The threshold of damage, if any, above which the entity dies.
+        ///     -1 means that this entity cannot die.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public int? DeadThreshold { get; set; }
 
         [ViewVariables] private ResistanceSet Resistance { get; set; } = default!;
 
         [ViewVariables] private DamageContainer Damage { get; set; } = default!;
 
-        public virtual List<DamageState> SupportedDamageStates => new List<DamageState> {DamageState.Alive};
+        public virtual List<DamageState> SupportedDamageStates
+        {
+            get
+            {
+                var states = new List<DamageState> {DamageState.Alive};
 
-        public virtual DamageState CurrentDamageState { get; protected set; } = DamageState.Alive;
+                if (CriticalThreshold != null)
+                {
+                    states.Add(DamageState.Critical);
+                }
+
+                if (DeadThreshold != null)
+                {
+                    states.Add(DamageState.Dead);
+                }
+
+                return states;
+            }
+        }
+
+        public virtual DamageState CurrentDamageState
+        {
+            get => _currentDamageState;
+            set
+            {
+                var old = _currentDamageState;
+                _currentDamageState = value;
+
+                if (old != value)
+                {
+                    EnterState(value);
+                }
+            }
+        }
 
         [ViewVariables] public int TotalDamage => Damage.TotalDamage;
 
@@ -46,6 +93,18 @@ namespace Content.Shared.GameObjects.Components.Damage
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
+
+            serializer.DataReadWriteFunction(
+                "criticalThreshold",
+                -1,
+                t => CriticalThreshold = t == -1 ? (int?) null : t,
+                () => CriticalThreshold ?? -1);
+
+            serializer.DataReadWriteFunction(
+                "deadThreshold",
+                -1,
+                t => DeadThreshold = t == -1 ? (int?) null : t,
+                () => DeadThreshold ?? -1);
 
             if (serializer.Reading)
             {
@@ -72,6 +131,16 @@ namespace Content.Shared.GameObjects.Components.Damage
                 }
 
                 Resistance = new ResistanceSet(resistance);
+            }
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            foreach (var behavior in Owner.GetAllComponents<IOnHealthChangedBehavior>())
+            {
+                HealthChangedEvent += behavior.OnHealthChanged;
             }
         }
 
@@ -218,10 +287,26 @@ namespace Content.Shared.GameObjects.Components.Damage
             OnHealthChanged(args);
         }
 
+        protected virtual void EnterState(DamageState state) { }
+
         protected virtual void OnHealthChanged(HealthChangedEventArgs e)
         {
+            if (DeadThreshold != -1 && TotalDamage > DeadThreshold)
+            {
+                CurrentDamageState = DamageState.Dead;
+            }
+            else if (CriticalThreshold != -1 && TotalDamage > CriticalThreshold)
+            {
+                CurrentDamageState = DamageState.Critical;
+            }
+            else
+            {
+                CurrentDamageState = DamageState.Alive;
+            }
+
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, e);
             HealthChangedEvent?.Invoke(e);
+
             Dirty();
         }
     }

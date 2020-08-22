@@ -238,6 +238,7 @@ namespace Content.Shared
             public string PlayerICName;
             public string Role;
             public bool Antag;
+            public bool Observer;
         }
 
         protected class MsgRoundEndMessage : NetMessage
@@ -279,7 +280,8 @@ namespace Content.Shared
                         PlayerOOCName = buffer.ReadString(),
                         PlayerICName = buffer.ReadString(),
                         Role = buffer.ReadString(),
-                        Antag = buffer.ReadBoolean()
+                        Antag = buffer.ReadBoolean(),
+                        Observer = buffer.ReadBoolean(),
                     };
 
                     AllPlayersEndInfo.Add(readPlayerData);
@@ -303,6 +305,7 @@ namespace Content.Shared
                     buffer.Write(playerEndInfo.PlayerICName);
                     buffer.Write(playerEndInfo.Role);
                     buffer.Write(playerEndInfo.Antag);
+                    buffer.Write(playerEndInfo.Observer);
                 }
             }
 
