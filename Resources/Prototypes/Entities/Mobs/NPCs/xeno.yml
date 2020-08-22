@@ -39,6 +39,7 @@
   - type: Damageable
     criticalThreshold: 150
     deadThreshold: 200
+  - type: MobStateManager
   - type: Metabolism
   - type: MobStateManager
   - type: HeatResistance
