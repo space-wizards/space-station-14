@@ -1,4 +1,5 @@
-﻿using Content.Server.AI.Utility;
+﻿#nullable enable
+using Content.Server.AI.Utility;
 using Content.Server.AI.WorldState.States.Inventory;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.Utility;
