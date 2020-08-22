@@ -24,10 +24,8 @@ namespace Content.Server.GameObjects.Components
     [ComponentReference(typeof(IListen))]
     public class HeadsetComponent : Component, IListen, IRadio
     {
-#pragma warning disable 649
-        [Dependency] private readonly IServerNetManager _netManager;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-#pragma warning restore 649
+        [Dependency] private readonly IServerNetManager _netManager = default!;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
         public override string Name => "Headset";
 
