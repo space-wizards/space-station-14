@@ -83,7 +83,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 ev.Entity.RemoveComponent<PlayerInputMoverComponent>();
             }
 
-            if (ev.Entity.TryGetComponent(out ICollidableComponent physics) &&
+            if (ev.Entity.TryGetComponent(out ICollidableComponent? physics) &&
                 physics.TryGetController(out MoverController controller))
             {
                 controller.StopMoving();

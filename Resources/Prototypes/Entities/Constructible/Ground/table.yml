@@ -22,6 +22,7 @@
   - type: IconSmooth
     key: generic
     base: solid_
+  - type: Climbable
   - type: Destructible
     maxHP: 50
     spawnOnDestroy: SteelSheet1
