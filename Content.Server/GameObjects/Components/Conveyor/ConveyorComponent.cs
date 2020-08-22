@@ -60,7 +60,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
             {
                 _state = value;
 
-                if (!Owner.TryGetComponent(out AppearanceComponent appearance))
+                if (!Owner.TryGetComponent(out AppearanceComponent? appearance))
                 {
                     return;
                 }
@@ -93,7 +93,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
                 return false;
             }
 
-            if (Owner.TryGetComponent(out PowerReceiverComponent receiver) &&
+            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver) &&
                 !receiver.Powered)
             {
                 return false;
@@ -114,7 +114,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
                 return false;
             }
 
-            if (!entity.TryGetComponent(out ICollidableComponent collidable) ||
+            if (!entity.TryGetComponent(out ICollidableComponent? collidable) ||
                 collidable.Anchored)
             {
                 return false;
@@ -155,7 +155,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
                     continue;
                 }
 
-                if (entity.TryGetComponent(out ICollidableComponent collidable))
+                if (entity.TryGetComponent(out ICollidableComponent? collidable))
                 {
                     var controller = collidable.EnsureController<ConveyedController>();
                     controller.Move(direction, _speed * frameTime);
@@ -225,7 +225,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
                             continue;
                         }
 
-                        if (!@switch.TryGetComponent(out ConveyorSwitchComponent component))
+                        if (!@switch.TryGetComponent(out ConveyorSwitchComponent? component))
                         {
                             continue;
                         }
@@ -247,13 +247,13 @@ namespace Content.Server.GameObjects.Components.Conveyor
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (eventArgs.Using.TryGetComponent(out ConveyorSwitchComponent conveyorSwitch))
+            if (eventArgs.Using.TryGetComponent(out ConveyorSwitchComponent? conveyorSwitch))
             {
                 conveyorSwitch.Connect(this, eventArgs.User);
                 return true;
             }
 
-            if (eventArgs.Using.TryGetComponent(out ToolComponent tool))
+            if (eventArgs.Using.TryGetComponent(out ToolComponent? tool))
             {
                 return await ToolUsed(eventArgs.User, tool);
             }

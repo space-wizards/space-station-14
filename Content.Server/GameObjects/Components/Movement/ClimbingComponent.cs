@@ -1,15 +1,8 @@
 ﻿using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
-using Robust.Shared.GameObjects.Components;
 using Content.Shared.Physics;
-using Content.Shared.Maps;
-using Robust.Shared.IoC;
-using Robust.Shared.Interfaces.GameObjects;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
-using System.Collections.Generic;
-using Robust.Shared.Physics;
-using System.Diagnostics;
 
 namespace Content.Server.GameObjects.Components.Movement
 {
@@ -59,6 +52,11 @@ namespace Content.Server.GameObjects.Components.Movement
                     {
                         _climbController = null;
                     }
+                }
+
+                if (IsClimbing)
+                {
+                    Body.WakeBody();
                 }
 
                 if (!IsOnClimbableThisFrame && IsClimbing && _climbController == null)

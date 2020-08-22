@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Pointing;
+using Content.Server.Players;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Interfaces;
@@ -39,6 +40,8 @@ namespace Content.Server.GameObjects.EntitySystems
         ///     pointed at something.
         /// </summary>
         private readonly Dictionary<ICommonSession, TimeSpan> _pointers = new Dictionary<ICommonSession, TimeSpan>();
+
+        private const float PointingRange = 15f;
 
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
         {
@@ -79,7 +82,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public bool TryPoint(ICommonSession? session, GridCoordinates coords, EntityUid uid)
         {
-            var player = session?.AttachedEntity;
+            var player = (session as IPlayerSession)?.ContentData()?.Mind?.CurrentEntity;
             if (player == null)
             {
                 return false;
@@ -112,15 +115,26 @@ namespace Content.Server.GameObjects.EntitySystems
                 }
             }
 
-            var viewers = _playerManager.GetPlayersInRange(player.Transform.GridPosition, 15);
-
             var arrow = EntityManager.SpawnEntity("pointingarrow", coords);
 
-            if (player.TryGetComponent(out VisibilityComponent playerVisibility))
+            var layer = (int)VisibilityFlags.Normal;
+            if (player.TryGetComponent(out VisibilityComponent? playerVisibility))
             {
                 var arrowVisibility = arrow.EnsureComponent<VisibilityComponent>();
-                arrowVisibility.Layer = playerVisibility.Layer;
+                layer = arrowVisibility.Layer = playerVisibility.Layer;
             }
+
+            // Get players that are in range and whose visibility layer matches the arrow's.
+            var viewers = _playerManager.GetPlayersBy((playerSession) =>
+            {
+                if ((playerSession.VisibilityMask & layer) == 0)
+                    return false;
+
+                var ent = playerSession.ContentData()?.Mind?.CurrentEntity;
+
+                return ent != null
+                       && ent.Transform.MapPosition.InRange(player.Transform.MapPosition, PointingRange);
+            });
 
             string selfMessage;
             string viewerMessage;

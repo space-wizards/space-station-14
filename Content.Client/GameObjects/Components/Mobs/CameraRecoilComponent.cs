@@ -87,7 +87,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             // Continually restore camera to 0.
             var normalized = _currentKick.Normalized;
             _lastKickTime += frameTime;     
-            var restoreRate = FloatMath.Lerp(RestoreRateMin, RestoreRateMax, Math.Min(1, _lastKickTime/RestoreRateRamp));
+            var restoreRate = MathHelper.Lerp(RestoreRateMin, RestoreRateMax, Math.Min(1, _lastKickTime/RestoreRateRamp));
             var restore = normalized * restoreRate * frameTime;
             var (x, y) = _currentKick - restore;
             if (Math.Sign(x) != Math.Sign(_currentKick.X))

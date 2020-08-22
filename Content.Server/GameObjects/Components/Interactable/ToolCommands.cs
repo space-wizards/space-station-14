@@ -106,7 +106,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             foreach (var entity in entities)
             {
-                if (entity.TryGetComponent(out AnchorableComponent anchorable))
+                if (entity.TryGetComponent(out AnchorableComponent? anchorable))
                 {
                     anchorable.TryAnchor(player.AttachedEntity, force: true);
                 }
@@ -151,7 +151,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             foreach (var entity in entities)
             {
-                if (entity.TryGetComponent(out AnchorableComponent anchorable))
+                if (entity.TryGetComponent(out AnchorableComponent? anchorable))
                 {
                     anchorable.TryUnAnchor(player.AttachedEntity, force: true);
                 }

@@ -18,7 +18,7 @@ namespace Content.Server.Body.Mechanisms.Behaviors
             base.PreMetabolism(frameTime);
 
             if (Mechanism.Body == null ||
-                !Mechanism.Body.Owner.TryGetComponent(out StomachComponent stomach))
+                !Mechanism.Body.Owner.TryGetComponent(out StomachComponent? stomach))
             {
                 return;
             }
