@@ -299,18 +299,21 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
                     if (!isOwner)
                     {
-                        _notifyManager.PopupMessage(user, Owner, $"{user.Name} removes your cuffs.");
+                        _notifyManager.PopupMessage(user, Owner, $"{user.Name} uncuffs your hands.");
                     }
 
                     _deleteThisFrame = true; // need a better way to do this.
                 }
                 else
                 {
-                    _notifyManager.PopupMessage(user, user, $"You successfully remove the cuffs. {CuffedHandCount} of your hands remain cuffed.");
-
                     if (!isOwner)
                     {
+                        _notifyManager.PopupMessage(user, user, $"You successfully remove the cuffs. {CuffedHandCount} of {user.Name}'s hands remain cuffed.");
                         _notifyManager.PopupMessage(user, Owner, $"{user.Name} removes your cuffs. {CuffedHandCount} of your hands remain cuffed.");
+                    }
+                    else
+                    {
+                        _notifyManager.PopupMessage(user, user, $"You successfully remove the cuffs. {CuffedHandCount} of your hands remain cuffed.");
                     }
                 }
             }

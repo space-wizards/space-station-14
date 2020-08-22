@@ -1,5 +1,4 @@
 ﻿
-using Content.Client.Utility;
 using Robust.Client.Graphics;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Shared.IoC;
