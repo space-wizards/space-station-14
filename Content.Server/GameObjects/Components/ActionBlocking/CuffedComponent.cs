@@ -214,7 +214,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         /// </summary>
         private void UpdateStatusEffect()
         {
-            if (Owner.TryGetComponent(out ServerStatusEffectsComponent? status))
+            if (Owner.TryGetComponent(out ServerStatusEffectsComponent status))
             {
                 status.ChangeStatusEffectIcon(StatusEffect.Cuffed,
                     IsFullyCuffed ? "/Textures/Interface/StatusEffects/Handcuffed/Handcuffed.png" : "/Textures/Interface/StatusEffects/Handcuffed/Uncuffed.png");
