@@ -19,7 +19,6 @@ using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.EntitySystems;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Robust.Shared.Interfaces.Map;
-using System.Diagnostics.Tracing;
 using Content.Server.GameObjects;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Inventory;
