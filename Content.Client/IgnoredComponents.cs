@@ -154,7 +154,6 @@
             "Flippable",
             "Airtight",
             "MovedByPressure",
-            "Headset",
             "Spray",
             "Vapor",
             "DamageOnHighSpeedImpact",
@@ -163,6 +162,7 @@
             "GasVapor",
             "MobStateManager",
             "Metabolism",
+            "Headset",
         };
     }
 }
