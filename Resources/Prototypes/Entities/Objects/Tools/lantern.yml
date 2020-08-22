@@ -26,5 +26,5 @@
     - type: LoopingSound
     - type: Appearance
       visuals:
-        - type: RadiatingLightVisualizer
+        - type: LanternVisualizer
           PowerSource: oil

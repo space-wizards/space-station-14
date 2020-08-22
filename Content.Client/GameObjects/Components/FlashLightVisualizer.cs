@@ -1,25 +1,18 @@
 using System;
-using System.Diagnostics;
-using System.Linq.Expressions;
-using System.Runtime.InteropServices.ComTypes;
 using Content.Shared.GameObjects.Components;
 using JetBrains.Annotations;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Namotion.Reflection;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.Components.Animations;
-using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Animations;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components
 {
     [UsedImplicitly]
-    public class RadiatingLightVisualizer : AppearanceVisualizer
+    public class FlashLightVisualizer : AppearanceVisualizer
     {
         private string _powerSource;
 
@@ -54,11 +47,10 @@ namespace Content.Client.GameObjects.Components
 
         Action<string> RadiatingCallback;
 
-        private void RadiatingLightAnimationCallback(string s, AnimationPlayerComponent ap, Animation animation) {
+        private void RadiatingLightAnimationCallback(string s, AnimationPlayerComponent ap, Animation animation)
+        {
             ap.Play(animation, s);
         }
-
-
 
         private Animation blinkingLightAnimation = new Animation
         {
@@ -68,6 +60,8 @@ namespace Content.Client.GameObjects.Components
                 new AnimationTrackComponentProperty()
                 {
                     ComponentType = typeof(PointLightComponent),
+                    //To create the blinking effect we go from nearly zero radius, to the light radius, and back
+                    //We do this instead of messing with the `PointLightComponent.enabled` because we don't want the animation to affect component behavior
                     InterpolationMode = AnimationInterpolationMode.Nearest,
                     Property = nameof(PointLightComponent.Radius),
                     KeyFrames =
@@ -80,10 +74,6 @@ namespace Content.Client.GameObjects.Components
             }
         };
 
-        private void BlinkingLightAnimationCallback(string s, AnimationPlayerComponent ap, Animation animation) {
-            ap.Play(animation, s);
-        }
-
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
@@ -93,7 +83,7 @@ namespace Content.Client.GameObjects.Components
             }
 
             if (component.TryGetData(HandheldLightVisuals.Power,
-                    out HandheldLightPowerStates state))
+                out HandheldLightPowerStates state))
             {
                 PlayAnimation(component, state);
             }
@@ -103,61 +93,38 @@ namespace Content.Client.GameObjects.Components
         {
             component.Owner.EnsureComponent(out AnimationPlayerComponent animationPlayer);
 
-            switch (_powerSource)
+            switch (state)
             {
-                case "oil":
+                case HandheldLightPowerStates.LowPower:
                     if (!animationPlayer.HasRunningAnimation("radiatingLight"))
                     {
                         animationPlayer.Play(radiatingLightAnimation, "radiatingLight");
                         RadiatingCallback = (s) => animationPlayer.Play(radiatingLightAnimation, s);
-                        animationPlayer.AnimationCompleted += s => animationPlayer.Play(radiatingLightAnimation, s);
+                        animationPlayer.AnimationCompleted += RadiatingCallback;
                     }
 
                     break;
-                case "electrical":
-                    switch (state)
+                case HandheldLightPowerStates.Dying:
+                    animationPlayer.Stop("radiatingLight");
+                    animationPlayer.AnimationCompleted -= RadiatingCallback;
+                    if (!animationPlayer.HasRunningAnimation("blinkingLight"))
                     {
-                        case HandheldLightPowerStates.LowPower:
-                            if (!animationPlayer.HasRunningAnimation("radiatingLight"))
-                            {
-                                animationPlayer.Play(radiatingLightAnimation, "radiatingLight");
-                                RadiatingCallback = (s) => animationPlayer.Play(radiatingLightAnimation, s);
-                                animationPlayer.AnimationCompleted += RadiatingCallback;
-                            }
-                            break;
-                        case HandheldLightPowerStates.Dying:
-                            animationPlayer.Stop("radiatingLight");
-                            animationPlayer.AnimationCompleted -= RadiatingCallback;
-                            if (!animationPlayer.HasRunningAnimation("blinkingLight"))
-                            {
-                                animationPlayer.Play(blinkingLightAnimation, "blinkingLight");
-                                animationPlayer.AnimationCompleted +=
-                                    s =>
-                                    {
-                                        if (!animationPlayer.HasRunningAnimation("blinkingLight"))
-                                        {
-                                            animationPlayer.Play(blinkingLightAnimation, s);
-                                        }
-                                    };
-                            }
-
-                            break;
-                        default:
-                            if (animationPlayer.HasRunningAnimation("blinkingLight"))
-                            {
-                                animationPlayer.Stop("blinkingLight");
-                            }
-
-                            if (animationPlayer.HasRunningAnimation("radiatingLight"))
-                            {
-                                animationPlayer.Stop("radiatingLight");
-                            }
-
-                            break;
+                        animationPlayer.Play(blinkingLightAnimation, "blinkingLight");
+                        animationPlayer.AnimationCompleted +=
+                            s => animationPlayer.Play(blinkingLightAnimation, s);
                     }
-
                     break;
                 default:
+                    if (animationPlayer.HasRunningAnimation("blinkingLight"))
+                    {
+                        animationPlayer.Stop("blinkingLight");
+                    }
+
+                    if (animationPlayer.HasRunningAnimation("radiatingLight"))
+                    {
+                        animationPlayer.Stop("radiatingLight");
+                    }
+
                     break;
             }
         }
