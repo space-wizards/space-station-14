@@ -42,7 +42,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
     {
 #pragma warning disable 649
         [Dependency] private readonly IServerNotifyManager _notifyManager;
-        [Dependency] private readonly ILocalizationManager _localizationManager;
 #pragma warning restore 649
 
         [ViewVariables] private BoundUserInterface _userInterface;
@@ -359,7 +358,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if (!args.User.TryGetComponent(out IHandsComponent hands))
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                    _localizationManager.GetString("You have no hands."));
+                    Loc.GetString("You have no hands."));
                 return;
             }
 
@@ -382,7 +381,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if (!args.User.TryGetComponent(out IHandsComponent hands))
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                    _localizationManager.GetString("You have no hands."));
+                    Loc.GetString("You have no hands."));
                 return true;
             }
 
@@ -392,13 +391,13 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 if (HasBeaker)
                 {
                     _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                        _localizationManager.GetString("This ChemMaster already has a container in it."));
+                        Loc.GetString("This ChemMaster already has a container in it."));
                 }
                 else if ((solution.Capabilities & SolutionCaps.FitsInDispenser) == 0) //Close enough to a chem master...
                 {
                     //If it can't fit in the chem master, don't put it in. For example, buckets and mop buckets can't fit.
                     _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                        _localizationManager.GetString("That can't fit in the ChemMaster."));
+                        Loc.GetString("That can't fit in the ChemMaster."));
                 }
                 else
                 {
@@ -409,7 +408,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             else
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                    _localizationManager.GetString("You can't put this in the ChemMaster."));
+                    Loc.GetString("You can't put this in the ChemMaster."));
             }
 
             return true;

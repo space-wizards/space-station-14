@@ -19,10 +19,6 @@ namespace Content.Server.GameObjects.Components.Fluids
     [RegisterComponent]
     public class BucketComponent : Component, IInteractUsing
     {
-#pragma warning disable 649
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-#pragma warning restore 649
-
         public override string Name => "Bucket";
 
         public ReagentUnit MaxVolume
@@ -86,7 +82,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                     return false;
                 }
 
-                Owner.PopupMessage(eventArgs.User, _localizationManager.GetString("Splish"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("Splish"));
                 return true;
             }
 
@@ -104,7 +100,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             }
 
             // Give some visual feedback shit's happening (for anyone who can't hear sound)
-            Owner.PopupMessage(eventArgs.User, _localizationManager.GetString("Sploosh"));
+            Owner.PopupMessage(eventArgs.User, Loc.GetString("Sploosh"));
 
             if (_sound == null)
             {

@@ -24,7 +24,6 @@ namespace Content.Server.GameObjects.Components.Access
     {
 #pragma warning disable 649
         [Dependency] private readonly IServerNotifyManager _notifyManager;
-        [Dependency] private readonly ILocalizationManager _localizationManager;
         [Dependency] private readonly IPrototypeManager _prototypeManager;
 #pragma warning restore 649
 
@@ -112,7 +111,7 @@ namespace Content.Server.GameObjects.Components.Access
         {
             if (!user.TryGetComponent(out IHandsComponent hands))
             {
-                _notifyManager.PopupMessage(Owner.Transform.GridPosition, user, _localizationManager.GetString("You have no hands."));
+                _notifyManager.PopupMessage(Owner.Transform.GridPosition, user, Loc.GetString("You have no hands."));
                 return;
             }
 
@@ -135,7 +134,7 @@ namespace Content.Server.GameObjects.Components.Access
             }
             if(!hands.Drop(hands.ActiveHand, container))
             {
-                _notifyManager.PopupMessage(Owner.Transform.GridPosition, user, _localizationManager.GetString("You can't let go of the ID card!"));
+                _notifyManager.PopupMessage(Owner.Transform.GridPosition, user, Loc.GetString("You can't let go of the ID card!"));
                 return;
             }
             UpdateUserInterface();

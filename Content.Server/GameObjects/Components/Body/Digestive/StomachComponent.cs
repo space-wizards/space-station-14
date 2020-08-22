@@ -5,9 +5,6 @@ using Content.Server.GameObjects.Components.Chemistry;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Nutrition;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -20,9 +17,6 @@ namespace Content.Server.GameObjects.Components.Body.Digestive
     [RegisterComponent]
     public class StomachComponent : SharedStomachComponent
     {
-#pragma warning disable 649
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-#pragma warning restore 649
 
         /// <summary>
         ///     Max volume of internal solution storage
