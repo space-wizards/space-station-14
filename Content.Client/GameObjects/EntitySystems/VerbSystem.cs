@@ -207,11 +207,10 @@ namespace Content.Client.GameObjects.EntitySystems
             //Get verbs, component dependent.
             foreach (var (component, verb) in VerbUtility.GetVerbs(entity))
             {
-                if (verb.RequireInteractionRange && !VerbUtility.InVerbUseRange(user, entity))
+                if (!VerbUtility.VerbAccessChecks(user, entity, verb))
+                {
                     continue;
-
-                if (verb.BlockedByContainers && !user.IsInSameOrNoContainer(entity))
-                    continue;
+                }
 
                 var verbData = verb.GetData(user, component);
 
@@ -232,11 +231,10 @@ namespace Content.Client.GameObjects.EntitySystems
             //Get global verbs. Visible for all entities regardless of their components.
             foreach (var globalVerb in VerbUtility.GetGlobalVerbs(Assembly.GetExecutingAssembly()))
             {
-                if (globalVerb.RequireInteractionRange && !VerbUtility.InVerbUseRange(user, entity))
+                if (!VerbUtility.VerbAccessChecks(user, entity, globalVerb))
+                {
                     continue;
-
-                if (globalVerb.BlockedByContainers && !user.IsInSameOrNoContainer(entity))
-                    continue;
+                }
 
                 var verbData = globalVerb.GetData(user, entity);
 

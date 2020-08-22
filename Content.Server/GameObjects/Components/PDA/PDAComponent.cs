@@ -141,7 +141,7 @@ namespace Content.Server.GameObjects.Components.PDA
 
         private void UpdatePDAAppearance()
         {
-            _appearance?.SetData(PDAVisuals.ScreenLit, _lightOn);
+            _appearance?.SetData(PDAVisuals.FlashlightLit, _lightOn);
         }
 
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
@@ -164,7 +164,7 @@ namespace Content.Server.GameObjects.Components.PDA
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
+            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
                 return;
             }
@@ -175,7 +175,7 @@ namespace Content.Server.GameObjects.Components.PDA
 
         public bool UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
+            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
                 return false;
             }

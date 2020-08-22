@@ -20,7 +20,7 @@ namespace Content.Client.GameObjects.Components.Nutrition
 
             _currentHungerThreshold = hunger.CurrentThreshold;
 
-            if (Owner.TryGetComponent(out MovementSpeedModifierComponent movement))
+            if (Owner.TryGetComponent(out MovementSpeedModifierComponent? movement))
             {
                 movement.RefreshMovementSpeedModifiers();
             }

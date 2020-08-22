@@ -68,12 +68,12 @@ namespace Content.Server.GameObjects.Components.Disposal
             if (!PlayerCanUseDisposalTagger(obj.Session.AttachedEntity))
                 return;
 
-            if (msg.Action == UiAction.Ok)
+            //Check for correct message and ignore maleformed strings
+            if (msg.Action == UiAction.Ok && TagRegex.IsMatch(msg.Tag))
             {   
                     _tag = msg.Tag;
+                    ClickSound();
             }
-
-            ClickSound();
         }
 
         /// <summary>

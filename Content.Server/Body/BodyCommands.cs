@@ -32,7 +32,7 @@ namespace Content.Server.Body
                 return;
             }
 
-            if (!player.AttachedEntity.TryGetComponent(out BodyManagerComponent body))
+            if (!player.AttachedEntity.TryGetComponent(out BodyManagerComponent? body))
             {
                 var random = IoCManager.Resolve<IRobustRandom>();
                 var text = $"You have no body{(random.Prob(0.2f) ? " and you must scream." : ".")}";
@@ -72,7 +72,7 @@ namespace Content.Server.Body
                 return;
             }
 
-            if (!player.AttachedEntity.TryGetComponent(out BodyManagerComponent body))
+            if (!player.AttachedEntity.TryGetComponent(out BodyManagerComponent? body))
             {
                 var random = IoCManager.Resolve<IRobustRandom>();
                 var text = $"You have no body{(random.Prob(0.2f) ? " and you must scream." : ".")}";
@@ -119,7 +119,7 @@ namespace Content.Server.Body
                 return;
             }
 
-            if (!player.AttachedEntity.TryGetComponent(out BodyManagerComponent body))
+            if (!player.AttachedEntity.TryGetComponent(out BodyManagerComponent? body))
             {
                 var random = IoCManager.Resolve<IRobustRandom>();
                 var text = $"You have no body{(random.Prob(0.2f) ? " and you must scream." : ".")}";
