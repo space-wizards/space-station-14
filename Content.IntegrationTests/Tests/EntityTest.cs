@@ -99,6 +99,92 @@ namespace Content.IntegrationTests.Tests
         }
 
         [Test]
+        public async Task AllComponentsOneToOneDeleteTest()
+        {
+            var skipComponents = new[]
+            {
+                "DebugExceptionOnAdd", // Debug components that explicitly throw exceptions
+                "DebugExceptionExposeData",
+                "DebugExceptionInitialize",
+                "DebugExceptionStartup",
+                "Map", // We aren't testing a map entity in this test
+                "MapGrid"
+            };
+
+            var testEntity = @"
+- type: entity
+  id: AllComponentsOneToOneDeleteTestEntity";
+
+            var server = StartServerDummyTicker();
+            await server.WaitIdleAsync();
+
+            var mapManager = server.ResolveDependency<IMapManager>();
+            var entityManager = server.ResolveDependency<IEntityManager>();
+            var mapLoader = server.ResolveDependency<IMapLoader>();
+            var pauseManager = server.ResolveDependency<IPauseManager>();
+            var componentFactory = server.ResolveDependency<IComponentFactory>();
+            var prototypeManager = server.ResolveDependency<IPrototypeManager>();
+
+            IMapGrid grid = default;
+
+            server.Post(() =>
+            {
+                // Load test entity
+                using var reader = new StringReader(testEntity);
+                prototypeManager.LoadFromStream(reader);
+
+                // Load test map
+                var mapId = mapManager.CreateMap();
+                pauseManager.AddUninitializedMap(mapId);
+                grid = mapLoader.LoadBlueprint(mapId, "Maps/stationstation.yml");
+                pauseManager.DoMapInitialize(mapId);
+            });
+
+            server.Assert(() =>
+            {
+                var testLocation = new GridCoordinates(new Vector2(0, 0), grid);
+
+                foreach (var type in componentFactory.AllRegisteredTypes)
+                {
+                    var component = (Component) componentFactory.GetComponent(type);
+
+                    // If this component is ignored
+                    if (skipComponents.Contains(component.Name))
+                    {
+                        continue;
+                    }
+
+                    var entity = entityManager.SpawnEntity("AllComponentsOneToOneDeleteTestEntity", testLocation);
+
+                    Assert.That(entity.Initialized);
+
+                    // The component may already exist if it is a mandatory component
+                    // such as MetaData or Transform
+                    if (entity.HasComponent(type))
+                    {
+                        continue;
+                    }
+
+                    component.Owner = entity;
+
+                    Logger.LogS(LogLevel.Debug, "EntityTest", $"Adding component: {component.Name}");
+
+                    Assert.DoesNotThrow(() =>
+                        {
+                            entityManager.ComponentManager.AddComponent(entity, component);
+                        }, "Component '{0}' threw an exception.",
+                        component.Name);
+
+                    server.RunTicks(10);
+
+                    entityManager.DeleteEntity(entity.Uid);
+                }
+            });
+
+            await server.WaitIdleAsync();
+        }
+
+        [Test]
         public async Task AllComponentsOneEntityDeleteTest()
         {
             var skipComponents = new[]
@@ -211,92 +297,6 @@ namespace Content.IntegrationTests.Tests
                     }
 
                     server.RunTicks(48); // Run one full second on the server
-
-                    entityManager.DeleteEntity(entity.Uid);
-                }
-            });
-
-            await server.WaitIdleAsync();
-        }
-
-        [Test]
-        public async Task AllComponentsOneToOneDeleteTest()
-        {
-            var skipComponents = new[]
-            {
-                "DebugExceptionOnAdd", // Debug components that explicitly throw exceptions
-                "DebugExceptionExposeData",
-                "DebugExceptionInitialize",
-                "DebugExceptionStartup",
-                "Map", // We aren't testing a map entity in this test
-                "MapGrid"
-            };
-
-            var testEntity = @"
-- type: entity
-  id: AllComponentsOneToOneDeleteTestEntity";
-
-            var server = StartServerDummyTicker();
-            await server.WaitIdleAsync();
-
-            var mapManager = server.ResolveDependency<IMapManager>();
-            var entityManager = server.ResolveDependency<IEntityManager>();
-            var mapLoader = server.ResolveDependency<IMapLoader>();
-            var pauseManager = server.ResolveDependency<IPauseManager>();
-            var componentFactory = server.ResolveDependency<IComponentFactory>();
-            var prototypeManager = server.ResolveDependency<IPrototypeManager>();
-
-            IMapGrid grid = default;
-
-            server.Post(() =>
-            {
-                // Load test entity
-                using var reader = new StringReader(testEntity);
-                prototypeManager.LoadFromStream(reader);
-
-                // Load test map
-                var mapId = mapManager.CreateMap();
-                pauseManager.AddUninitializedMap(mapId);
-                grid = mapLoader.LoadBlueprint(mapId, "Maps/stationstation.yml");
-                pauseManager.DoMapInitialize(mapId);
-            });
-
-            server.Assert(() =>
-            {
-                var testLocation = new GridCoordinates(new Vector2(0, 0), grid);
-
-                foreach (var type in componentFactory.AllRegisteredTypes)
-                {
-                    var component = (Component) componentFactory.GetComponent(type);
-
-                    // If this component is ignored
-                    if (skipComponents.Contains(component.Name))
-                    {
-                        continue;
-                    }
-
-                    var entity = entityManager.SpawnEntity("AllComponentsOneToOneDeleteTestEntity", testLocation);
-
-                    Assert.That(entity.Initialized);
-
-                    // The component may already exist if it is a mandatory component
-                    // such as MetaData or Transform
-                    if (entity.HasComponent(type))
-                    {
-                        continue;
-                    }
-
-                    component.Owner = entity;
-
-                    Logger.LogS(LogLevel.Debug, "EntityTest", $"Adding component: {component.Name}");
-
-                    Assert.DoesNotThrow(() =>
-                        {
-                            entityManager.ComponentManager.AddComponent(entity, component);
-                        }, "Component '{0}' threw an exception.",
-                        component.Name);
-
-                    server.RunTicks(10);
 
                     entityManager.DeleteEntity(entity.Uid);
                 }
