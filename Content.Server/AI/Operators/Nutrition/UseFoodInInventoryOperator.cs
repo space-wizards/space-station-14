@@ -29,11 +29,11 @@ namespace Content.Server.AI.Operators.Nutrition
                 _interactionCooldown -= frameTime;
                 return Outcome.Continuing;
             }
-            
+
             // TODO: Also have this check storage a la backpack etc.
-            if (_target.Deleted || 
-                !_owner.TryGetComponent(out HandsComponent handsComponent) ||
-                !_target.TryGetComponent(out ItemComponent itemComponent))
+            if (_target.Deleted ||
+                !_owner.TryGetComponent(out HandsComponent? handsComponent) ||
+                !_target.TryGetComponent(out ItemComponent? itemComponent))
             {
                 return Outcome.Failed;
             }
@@ -58,10 +58,10 @@ namespace Content.Server.AI.Operators.Nutrition
             {
                 return Outcome.Failed;
             }
-            
-            if (_target.Deleted || 
-                foodComponent.UsesRemaining == 0 || 
-                _owner.TryGetComponent(out HungerComponent hungerComponent) && 
+
+            if (_target.Deleted ||
+                foodComponent.UsesRemaining == 0 ||
+                _owner.TryGetComponent(out HungerComponent? hungerComponent) &&
                 hungerComponent.CurrentHunger >= hungerComponent.HungerThresholds[HungerThreshold.Okay])
             {
                 return Outcome.Success;

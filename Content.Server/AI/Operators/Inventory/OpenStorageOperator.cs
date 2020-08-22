@@ -35,7 +35,7 @@ namespace Content.Server.AI.Operators.Inventory
                 return Outcome.Failed;
             }
 
-            if (!container.Owner.TryGetComponent(out EntityStorageComponent storageComponent) ||
+            if (!container.Owner.TryGetComponent(out EntityStorageComponent? storageComponent) ||
                 storageComponent.IsWeldedShut)
             {
                 return Outcome.Failed;

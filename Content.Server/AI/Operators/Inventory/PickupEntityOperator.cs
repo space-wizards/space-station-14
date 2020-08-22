@@ -31,7 +31,7 @@ namespace Content.Server.AI.Operators.Inventory
                 return Outcome.Failed;
             }
 
-            if (!_owner.TryGetComponent(out HandsComponent handsComponent))
+            if (!_owner.TryGetComponent(out HandsComponent? handsComponent))
             {
                 return Outcome.Failed;
             }
