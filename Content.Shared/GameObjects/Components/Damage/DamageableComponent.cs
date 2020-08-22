@@ -53,7 +53,7 @@ namespace Content.Shared.GameObjects.Components.Damage
         {
             get
             {
-                var states = new List<DamageState>();
+                var states = new List<DamageState> {DamageState.Alive};
 
                 if (CriticalThreshold == -1)
                 {
