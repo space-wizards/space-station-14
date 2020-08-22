@@ -23,6 +23,42 @@
         ]
       ]
     },
+	{
+      "name": "body-overlay-2",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+	{
+      "name": "body-overlay-4",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
     {
       "name": "inhand-left",
       "directions": 4,

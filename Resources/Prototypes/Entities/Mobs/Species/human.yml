@@ -92,8 +92,8 @@
       state: r_foot
     - map: ["enum.HumanoidVisualLayers.Handcuffs"]
       color: "#ffffff"
-      sprite: Mobs/Species/Human/parts.rsi # todo: get the proper RSI for this 
-      state: l_leg
+      sprite: Objects/Misc/handcuffs.rsi 
+      state: body-overlay-2
     - map: ["enum.Slots.IDCARD"]
     - map: ["enum.Slots.GLOVES"]
     - map: ["enum.Slots.SHOES"]

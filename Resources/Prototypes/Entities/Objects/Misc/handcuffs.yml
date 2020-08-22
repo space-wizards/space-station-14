@@ -5,10 +5,12 @@
   parent: BaseItem
   components:
   - type: Handcuff
-    cuffTime: 5.0
-    uncuffTime: 5.0
-    breakoutTime: 30.0
-    cuffedTexture: /Textures/Objects/Misc/hand_tele.png # this should use RSI or something
+    cuffTime: 3.0
+    uncuffTime: 3.0
+    stunBonus: 2.0
+    breakoutTime: 20.0
+    cuffedRSI: Objects/Misc/handcuffs.rsi 
+    iconState: body-overlay
 
   - type: Sprite
     sprite: Objects/Misc/handcuffs.rsi
@@ -30,11 +32,19 @@
   parent: Handcuffs
   components:
   - type: Handcuff
-    cuffTime: 5.0
-    uncuffTime: 5.0
-    breakoutTime: 20.0
-    cuffedTexture: /Textures/Objects/Misc/hand_tele.png # this should use RSI or something
+    cuffTime: 3.5
+    uncuffTime: 3.5
+    stunBonus: 2.0
+    breakoutTime: 15.0
+    cuffedRSI: Objects/Misc/cablecuffs.rsi 
+    iconState: body-overlay
+    color: red
     prototypeOverride: CablecuffsBroken
+    startCuffSound: /Audio/Items/Handcuffs/rope_start.ogg
+    endCuffSound: /Audio/Items/Handcuffs/rope_end.ogg
+    startUncuffSound: /Audio/Items/Handcuffs/rope_takeoff.ogg
+    endUncuffSound: /Audio/Items/Handcuffs/rope_breakout.ogg
+    startBreakoutSound: /Audio/Items/Handcuffs/rope_takeoff.ogg
 
   - type: Sprite
     sprite: Objects/Misc/cablecuffs.rsi
@@ -44,9 +54,11 @@
   - type: Icon
     sprite: Objects/Misc/cablecuffs.rsi
     state: cuff
+    color: red
 
   - type: Clothing
     sprite: Objects/Misc/cablecuffs.rsi
+    color: red
     Slots: [belt]
 
 
@@ -64,3 +76,9 @@
   - type: Icon
     sprite: Objects/Misc/cablecuffs.rsi
     state: cuff_broken
+    color: red
+
+  - type: Clothing
+    sprite: Objects/Misc/cablecuffs.rsi
+    color: red
+    Slots: [belt]

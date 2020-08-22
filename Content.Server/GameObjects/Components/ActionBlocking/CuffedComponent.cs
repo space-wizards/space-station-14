@@ -18,6 +18,7 @@ using Content.Server.GameObjects.Components.Items.Storage;
 using Robust.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs;
+using Robust.Shared.Maths;
 
 namespace Content.Server.GameObjects.Components.ActionBlocking
 {
@@ -48,10 +49,22 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             public string PrototypeId { get; set; }
 
             /// <summary>
-            /// The texture used by these handcuffs
+            /// The RSI file used by these handcuffs
             /// </summary>
             [ViewVariables]
-            public string CuffedTexture { get; set; }
+            public string RSI { get; set; }
+
+            /// <summary>
+            /// The iconstate name from the RSI to be used by the handcuffs
+            /// </summary>
+            [ViewVariables]
+            public string IconState { get; set; }
+
+            /// <summary>
+            /// The color to tint the overlay with
+            /// </summary>
+            [ViewVariables]
+            public Color Color { get; set; }
 
             /// <summary>
             /// Sound file to play when uncuffing begins.
@@ -77,16 +90,10 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 #pragma warning restore 649
 
         /// <summary>
-        /// In cases where an entity has >2 hands, we use this variable to track how many are currently cuffed.
+        /// How many of this entity's hands are currently cuffed.
         /// </summary>
         [ViewVariables]
         public int CuffedHandCount => _cuffConfigs.Count * 2;
-
-        /// <summary>
-        /// Is the entity fully cuffed with no free hands?
-        /// </summary>
-        [ViewVariables]
-        public bool IsFullyCuffed => (CuffedHandCount >= _hands.Count);
 
         /// <summary>
         /// Every set of hands tracks its own handcuff config. This is used in cases where an entity with >2 hands is cuffed using different types of cuffs.
@@ -119,15 +126,29 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
         public override ComponentState GetComponentState()
         {
-            // handling multiple hand cuff textures is fucked atm, will need refactoring in future
+            // there are 2 approaches i can think of to handle the handcuff overlay on players
+            // 1 - make the current RSI the handcuff type that's currently active. all handcuffs on the player will appear the same.
+            // 2 - allow for several different player overlays for each different cuff type.
+            // approach #2 would be more difficult/time consuming to do and the payoff doesn't make it worth it.
+            // right now we're doing approach #1.
 
-            if (_cuffConfigs.Count == 0)
+            if (CuffedHandCount == 0)
             {
-                return new CuffedComponentState(CuffedHandCount, CanStillInteract, "/Textures/Objects/Misc/hand_tele.png");
+                return new CuffedComponentState(CuffedHandCount,
+                    CanStillInteract,
+                    "/Objects/Misc/handcuffs.rsi",
+                    "body-overlay-2",
+                    Color.White);
             }
             else
             {
-                return new CuffedComponentState(CuffedHandCount, CanStillInteract, _cuffConfigs[0].CuffedTexture);
+                return new CuffedComponentState(CuffedHandCount,
+                    CanStillInteract,
+                    _cuffConfigs[_cuffConfigs.Count - 1].RSI,
+                    $"{_cuffConfigs[_cuffConfigs.Count - 1].IconState}-{CuffedHandCount}",
+                    _cuffConfigs[_cuffConfigs.Count - 1].Color);
+                // the iconstate is formatted as blah-2, blah-4, blah-6, etc.
+                // the number corresponds to how many hands are cuffed.
             }
         }
 
@@ -164,6 +185,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
             while (CuffedHandCount > _hands.Count && CuffedHandCount > 0)
             {
+                Logger.Warning("Need to remove some cuffs because too few hands");
                 _dirtyThisFrame = true;
 
                 var config = _cuffConfigs[_cuffConfigs.Count - 1];
@@ -175,7 +197,6 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             if (CuffedHandCount == 0)
             {
                 _deleteThisFrame = true;
-                //Owner.RemoveComponent<CuffedComponent>();
             }
             else if (_dirtyThisFrame)
             {
@@ -217,7 +238,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             if (Owner.TryGetComponent(out ServerStatusEffectsComponent status))
             {
                 status.ChangeStatusEffectIcon(StatusEffect.Cuffed,
-                    IsFullyCuffed ? "/Textures/Interface/StatusEffects/Handcuffed/Handcuffed.png" : "/Textures/Interface/StatusEffects/Handcuffed/Uncuffed.png");
+                    CanStillInteract ? "/Textures/Interface/StatusEffects/Handcuffed/Uncuffed.png" : "/Textures/Interface/StatusEffects/Handcuffed/Handcuffed.png");
             }
         }
 
@@ -282,7 +303,6 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
                     }
 
                     _deleteThisFrame = true; // need a better way to do this.
-                    //Owner.RemoveComponent<CuffedComponent>();
                 }
                 else
                 {

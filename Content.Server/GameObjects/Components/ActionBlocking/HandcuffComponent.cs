@@ -13,6 +13,9 @@ using Robust.Shared.Log;
 using Robust.Shared.ViewVariables;
 using Robust.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.ActionBlocking;
+using Content.Server.GameObjects.Components.Mobs;
+using Robust.Shared.Maths;
+using System;
 
 namespace Content.Server.GameObjects.Components.ActionBlocking
 {
@@ -45,12 +48,30 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         private float _breakoutTime;
 
         /// <summary>
+        ///     If an entity being cuffed is stunned, this amount of time is subtracted from the time it takes to add/remove their cuffs.
+        /// </summary>
+        [ViewVariables]
+        private float _stunBonus = default;
+
+        /// <summary>
         ///     Override the prototype that gets spawned when the cuffs are removed from an entity.
         ///     This is useful for situations where you want to make handcuffs single-use (ie. zipties).
         ///     Leave this value empty to make the cuffs behave normally.
         /// </summary>
         [ViewVariables]
         private string _prototypeOverride = string.Empty;
+
+        /// <summary>
+        ///     The path of the RSI file used for the player cuffed overlay.
+        /// </summary>
+        [ViewVariables]
+        private string _cuffedRSI = default;
+
+        /// <summary>
+        ///     The iconstate used with the RSI file for the player cuffed overlay.
+        /// </summary>
+        [ViewVariables]
+        private string _iconState = default;
 
         private float _interactRange;
         private DoAfterSystem _doAfterSystem;
@@ -60,7 +81,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         private string _startUncuffSound = default;
         private string _startBreakoutSound = default;
         private string _endUncuffSound = default;
-        private string _cuffedTexture = default;
+        private Color _color;
 
         public override void Initialize()
         {
@@ -77,12 +98,15 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             serializer.DataField(ref _cuffTime, "cuffTime", 5.0f);
             serializer.DataField(ref _breakoutTime, "breakoutTime", 30.0f);
             serializer.DataField(ref _uncuffTime, "uncuffTime", 5.0f);
+            serializer.DataField(ref _stunBonus, "stunBonus", 2.0f);
             serializer.DataField(ref _startCuffSound, "startCuffSound", "/Audio/Items/Handcuffs/cuff_start.ogg");
             serializer.DataField(ref _endCuffSound, "endCuffSound", "/Audio/Items/Handcuffs/cuff_end.ogg");
             serializer.DataField(ref _startUncuffSound, "startUncuffSound", "/Audio/Items/Handcuffs/cuff_takeoff_start.ogg");
             serializer.DataField(ref _endUncuffSound, "endUncuffSound", "/Audio/Items/Handcuffs/cuff_takeoff_end.ogg");
             serializer.DataField(ref _startBreakoutSound, "startBreakoutSound", "/Audio/Items/Handcuffs/cuff_breakout_start.ogg");
-            serializer.DataField(ref _cuffedTexture, "cuffedTexture", "/Textures/Objects/Misc/cuff.png"); // this should probably be an RSI
+            serializer.DataField(ref _cuffedRSI, "cuffedRSI", "Objects/Misc/handcuffs.rsi");
+            serializer.DataField(ref _iconState, "iconState", "body-overlay");
+            serializer.DataField(ref _color, "color", Color.White);
             serializer.DataField(ref _prototypeOverride, "prototypeOverride", string.Empty);
         }
 
@@ -138,7 +162,14 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         // User has existing CuffedComponent so we add a new cuff entry to it.
         private async void TryUpdateCuff(IEntity user, IEntity target, CuffedComponent cuffs)
         {
-            var doAfterEventArgs = new DoAfterEventArgs(user, _cuffTime, default, target)
+            var cuffTime = _cuffTime;
+
+            if (target.TryGetComponent<StunnableComponent>(out var stun) && stun.Stunned)
+            {
+                cuffTime = MathF.Max(0.1f, cuffTime - _stunBonus);
+            }
+
+            var doAfterEventArgs = new DoAfterEventArgs(user, cuffTime, default, target)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
@@ -159,7 +190,9 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
                 {
                     BreakoutTime = _breakoutTime,
                     UncuffTime = _uncuffTime,
-                    CuffedTexture = _cuffedTexture,
+                    RSI = _cuffedRSI,
+                    IconState = _iconState,
+                    Color = _color,
                     StartUncuffSound = _startUncuffSound,
                     EndUncuffSound = _endUncuffSound,
                     BreakoutSound = _startBreakoutSound
@@ -194,7 +227,14 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         // User has no CuffedComponent yet so we add one.
         private async void TryAddCuff(IEntity user, IEntity target)
         {
-            var doAfterEventArgs = new DoAfterEventArgs(user, _cuffTime, default, target)
+            var cuffTime = _cuffTime;
+
+            if (target.TryGetComponent<StunnableComponent>(out var stun) && stun.Stunned)
+            {
+                cuffTime = MathF.Max(0.1f, cuffTime - _stunBonus);
+            }
+
+            var doAfterEventArgs = new DoAfterEventArgs(user, cuffTime, default, target)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
@@ -216,7 +256,9 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
                 {
                     BreakoutTime = _breakoutTime,
                     UncuffTime = _uncuffTime,
-                    CuffedTexture = _cuffedTexture,
+                    RSI = _cuffedRSI,
+                    IconState = _iconState,
+                    Color = _color,
                     StartUncuffSound = _startUncuffSound,
                     EndUncuffSound = _endUncuffSound,
                     BreakoutSound = _startBreakoutSound

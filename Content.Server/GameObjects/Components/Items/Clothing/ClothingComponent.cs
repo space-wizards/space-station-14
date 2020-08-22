@@ -63,7 +63,6 @@ namespace Content.Server.GameObjects.Components.Items.Clothing
             });
 
             serializer.DataField(ref _quickEquipEnabled, "QuickEquip", true);
-
             serializer.DataFieldCached(ref _heatResistance, "HeatResistance", 323);
         }
 
