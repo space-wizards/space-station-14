@@ -65,7 +65,8 @@
         public const uint RADIATION_PULSE = 1059;
         public const uint BODY_MANAGER = 1060;
         public const uint CLIMBING = 1061;
-        public const uint HANDCUFF = 1062;
+        public const uint CUFFED = 1062;
+        public const uint HANDCUFFS = 1063;
 
         // Net IDs for integration tests.
         public const uint PREDICTION_TEST = 10001;

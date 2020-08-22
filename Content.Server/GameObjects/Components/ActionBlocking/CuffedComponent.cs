@@ -1,5 +1,4 @@
-﻿
-using System.Collections.Generic;
+﻿using Robust.Server.GameObjects;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Robust.Shared.GameObjects;
@@ -12,9 +11,10 @@ using Robust.Shared.ViewVariables;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Shared.GameObjects.Components.ActionBlocking;
 using Content.Shared.GameObjects.Verbs;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Robust.Shared.Log;
 using System.Linq;
-using Content.Server.GameObjects.Components.Items.Storage;
+using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs;
@@ -25,66 +25,6 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
     [RegisterComponent]
     public class CuffedComponent : SharedCuffedComponent
     {
-        /// <summary>
-        /// Data class used to track the type of handcuff used on each set of hands.
-        /// </summary>
-        public class CuffConfig
-        {
-            /// <summary>
-            /// How long it takes to uncuff the entity with the CuffedComponent
-            /// </summary>
-            [ViewVariables]
-            public float UncuffTime { get; set; }
-
-            /// <summary>
-            /// How long it takes for the cuffed entity to break out of the CuffedComponent
-            /// </summary>
-            [ViewVariables]
-            public float BreakoutTime { get; set; }
-
-            /// <summary>
-            /// The ID of the prototype that spawns when the CuffedComponent is removed
-            /// </summary>
-            [ViewVariables]
-            public string PrototypeId { get; set; }
-
-            /// <summary>
-            /// The RSI file used by these handcuffs
-            /// </summary>
-            [ViewVariables]
-            public string RSI { get; set; }
-
-            /// <summary>
-            /// The iconstate name from the RSI to be used by the handcuffs
-            /// </summary>
-            [ViewVariables]
-            public string IconState { get; set; }
-
-            /// <summary>
-            /// The color to tint the overlay with
-            /// </summary>
-            [ViewVariables]
-            public Color Color { get; set; }
-
-            /// <summary>
-            /// Sound file to play when uncuffing begins.
-            /// </summary>
-            [ViewVariables]
-            public string StartUncuffSound { get; set; }
-
-            /// <summary>
-            /// Sound file to play when uncuffing ends.
-            /// </summary>
-            [ViewVariables]
-            public string EndUncuffSound { get; set; }
-
-            /// <summary>
-            /// Sound file to play when breaking out of cuffs
-            /// </summary>
-            [ViewVariables]
-            public string BreakoutSound { get; set; }
-        }
-
 #pragma warning disable 649
         [Dependency] private readonly ISharedNotifyManager _notifyManager;
 #pragma warning restore 649
@@ -93,13 +33,15 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         /// How many of this entity's hands are currently cuffed.
         /// </summary>
         [ViewVariables]
-        public int CuffedHandCount => _cuffConfigs.Count * 2;
+        public int CuffedHandCount => _container.ContainedEntities.Count * 2;
+
+        protected IEntity LastAddedCuffs => _container.ContainedEntities[_container.ContainedEntities.Count - 1];
 
         /// <summary>
-        /// Every set of hands tracks its own handcuff config. This is used in cases where an entity with >2 hands is cuffed using different types of cuffs.
+        ///     Container of various handcuffs currently applied to the entity.
         /// </summary>
-        [ViewVariables]
-        private List<CuffConfig> _cuffConfigs;
+        [ViewVariables(VVAccess.ReadOnly)]
+        private Container _container = default!;
 
         private bool _deleteThisFrame = false;
         private bool _dirtyThisFrame = false;
@@ -112,10 +54,10 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         {
             base.Initialize();
 
+            _container = ContainerManagerComponent.Ensure<Container>(Name, Owner);
             _audioSystem = EntitySystem.Get<AudioSystem>();
             _doAfterSystem = EntitySystem.Get<DoAfterSystem>();
             _interactRange = SharedInteractionSystem.InteractionRange / 2;
-            _cuffConfigs = new List<CuffConfig>();
 
             if (!Owner.TryGetComponent(out _hands))
             {
@@ -132,33 +74,34 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             // approach #2 would be more difficult/time consuming to do and the payoff doesn't make it worth it.
             // right now we're doing approach #1.
 
-            if (CuffedHandCount == 0)
+            if (CuffedHandCount > 0)
             {
-                return new CuffedComponentState(CuffedHandCount,
-                    CanStillInteract,
-                    "/Objects/Misc/handcuffs.rsi",
-                    "body-overlay-2",
-                    Color.White);
+                if (LastAddedCuffs.TryGetComponent<HandcuffComponent>(out var cuffs))
+                {
+                    return new CuffedComponentState(CuffedHandCount,
+                       CanStillInteract,
+                       cuffs.CuffedRSI,
+                       $"{cuffs.OverlayIconState}-{CuffedHandCount}",
+                       cuffs.Color);
+                    // the iconstate is formatted as blah-2, blah-4, blah-6, etc.
+                    // the number corresponds to how many hands are cuffed.
+                }
             }
-            else
-            {
-                return new CuffedComponentState(CuffedHandCount,
-                    CanStillInteract,
-                    _cuffConfigs[_cuffConfigs.Count - 1].RSI,
-                    $"{_cuffConfigs[_cuffConfigs.Count - 1].IconState}-{CuffedHandCount}",
-                    _cuffConfigs[_cuffConfigs.Count - 1].Color);
-                // the iconstate is formatted as blah-2, blah-4, blah-6, etc.
-                // the number corresponds to how many hands are cuffed.
-            }
+
+            return new CuffedComponentState(CuffedHandCount,
+               CanStillInteract,
+               "/Objects/Misc/handcuffs.rsi",
+               "body-overlay-2",
+               Color.White);
         }
 
         /// <summary>
         /// Add a set of cuffs to an existing CuffedComponent.
         /// </summary>
         /// <param name="prototype"></param>
-        public void AddNewCuffs(CuffConfig config)
+        public void AddNewCuffs(IEntity handcuff)
         {
-            _cuffConfigs.Add(config);
+            _container.Insert(handcuff);
             CanStillInteract = _hands.Count > CuffedHandCount;
 
             UpdateStatusEffect();
@@ -168,11 +111,6 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
         public void Update(float frameTime)
         {
-            if (_deleteThisFrame && Owner.HasComponent<CuffedComponent>())
-            {
-                Owner.RemoveComponent<CuffedComponent>();
-            }
-
             UpdateHandCount();
         }
 
@@ -185,20 +123,14 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
             while (CuffedHandCount > _hands.Count && CuffedHandCount > 0)
             {
-                Logger.Warning("Need to remove some cuffs because too few hands");
                 _dirtyThisFrame = true;
 
-                var config = _cuffConfigs[_cuffConfigs.Count - 1];
-                _cuffConfigs.Remove(config);
-                
-                Owner.EntityManager.SpawnEntity(config.PrototypeId, Owner.Transform.GridPosition);
+                var entity = _container.ContainedEntities[_container.ContainedEntities.Count - 1];
+                _container.Remove(entity);
+                entity.Transform.WorldPosition = Owner.Transform.GridPosition.Position;
             }
 
-            if (CuffedHandCount == 0)
-            {
-                _deleteThisFrame = true;
-            }
-            else if (_dirtyThisFrame)
+            if (_dirtyThisFrame)
             {
                 CanStillInteract = _hands.Count > CuffedHandCount;
                 Dirty();
@@ -250,7 +182,11 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         /// <param name="isOwner">Is the cuffed entity the owner of the CuffedComponent?</param>
         public async void TryUncuff(IEntity user, bool isOwner)
         {
-            var config = _cuffConfigs[_cuffConfigs.Count - 1];
+            if (!LastAddedCuffs.TryGetComponent<HandcuffComponent>(out var cuff))
+            {
+                Logger.Warning($"A user is trying to remove handcuffs without a ${nameof(HandcuffComponent)}. This should never happen!");
+                return;
+            }
 
             if (!isOwner && !ActionBlockerSystem.CanInteract(user))
             {
@@ -270,9 +206,9 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             }
 
             _notifyManager.PopupMessage(user, user, "You start removing the cuffs.");
-            _audioSystem.PlayFromEntity(isOwner ? config.BreakoutSound : config.StartUncuffSound, Owner);
+            _audioSystem.PlayFromEntity(isOwner ? cuff.StartBreakoutSound : cuff.StartUncuffSound, Owner);
 
-            var uncuffTime = isOwner ? config.BreakoutTime : config.UncuffTime;
+            var uncuffTime = isOwner ? cuff.BreakoutTime : cuff.UncuffTime;
             var doAfterEventArgs = new DoAfterEventArgs(user, uncuffTime)
             {
                 BreakOnUserMove = true,
@@ -285,13 +221,29 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
             if (result != DoAfterStatus.Cancelled)
             {
-                _audioSystem.PlayFromEntity(config.EndUncuffSound, Owner);
-                _cuffConfigs.Remove(config);
+                _audioSystem.PlayFromEntity(cuff.EndUncuffSound, Owner);
+
+                var cuffEntity = LastAddedCuffs;
+                _container.ForceRemove(cuffEntity);
+                cuffEntity.Transform.AttachToGridOrMap();
+                cuffEntity.Transform.WorldPosition = Owner.Transform.WorldPosition;
+
+                if (cuff.BreakOnRemove)
+                {
+                    cuff.Broken = true;
+
+                    cuffEntity.Name = cuff.BrokenName;
+                    cuffEntity.Description = cuff.BrokenDesc;
+
+                    if (cuffEntity.TryGetComponent<SpriteComponent>(out var sprite))
+                    {
+                        sprite.LayerSetState(0, cuff.BrokenState); // TODO: safety check to see if RSI contains the state?
+                    }
+                }
+
                 CanStillInteract = _hands.Count > CuffedHandCount;
                 UpdateStatusEffect();
                 Dirty();
-
-                Owner.EntityManager.SpawnEntity(config.PrototypeId, Owner.Transform.GridPosition);
 
                 if (CuffedHandCount == 0)
                 {
@@ -333,7 +285,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         {
             protected override void GetData(IEntity user, CuffedComponent component, VerbData data)
             {
-                if (user != component.Owner && !ActionBlockerSystem.CanInteract(user))
+                if ((user != component.Owner && !ActionBlockerSystem.CanInteract(user)) || component.CuffedHandCount == 0)
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
@@ -344,7 +296,10 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
             protected override void Activate(IEntity user, CuffedComponent component)
             {
-                component.TryUncuff(user, isOwner: user.Uid == component.Owner.Uid);
+                if (component.CuffedHandCount > 0)
+                {
+                    component.TryUncuff(user, isOwner: user.Uid == component.Owner.Uid);
+                }
             }
         }
     }

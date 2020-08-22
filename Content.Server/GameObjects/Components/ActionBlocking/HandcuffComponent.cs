@@ -1,5 +1,4 @@
-﻿
-using Content.Server.GameObjects.EntitySystems.DoAfter;
+﻿using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -27,62 +26,96 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
 #pragma warning restore 649
 
-        private const string FALLBACK_CUFF_PROTOTYPE = "Handcuffs";
-
         /// <summary>
         ///     The time it takes to apply a <see cref="CuffedComponent"/> to an entity.
         /// </summary>
         [ViewVariables]
-        private float _cuffTime;
+        public float CuffTime;
 
         /// <summary>
         ///     The time it takes to remove a <see cref="CuffedComponent"/> from an entity.
         /// </summary>
         [ViewVariables]
-        private float _uncuffTime;
+        public float UncuffTime;
 
         /// <summary>
         ///     The time it takes for a cuffed entity to remove <see cref="CuffedComponent"/> from itself.
         /// </summary>
         [ViewVariables]
-        private float _breakoutTime;
+        public float BreakoutTime;
 
         /// <summary>
         ///     If an entity being cuffed is stunned, this amount of time is subtracted from the time it takes to add/remove their cuffs.
         /// </summary>
         [ViewVariables]
-        private float _stunBonus = default;
+        public float StunBonus;
 
         /// <summary>
-        ///     Override the prototype that gets spawned when the cuffs are removed from an entity.
-        ///     This is useful for situations where you want to make handcuffs single-use (ie. zipties).
-        ///     Leave this value empty to make the cuffs behave normally.
+        ///     Will the cuffs break when removed?
         /// </summary>
         [ViewVariables]
-        private string _prototypeOverride = string.Empty;
+        public bool BreakOnRemove = false;
 
         /// <summary>
         ///     The path of the RSI file used for the player cuffed overlay.
         /// </summary>
         [ViewVariables]
-        private string _cuffedRSI = default;
+        public string CuffedRSI = default;
 
         /// <summary>
         ///     The iconstate used with the RSI file for the player cuffed overlay.
         /// </summary>
         [ViewVariables]
-        private string _iconState = default;
+        public string OverlayIconState = default;
 
+        /// <summary>
+        ///     The iconstate used for broken handcuffs
+        /// </summary>
+        [ViewVariables]
+        public string BrokenState = default;
+
+        /// <summary>
+        ///     The iconstate used for broken handcuffs
+        /// </summary>
+        [ViewVariables]
+        public string BrokenName = default;
+
+        /// <summary>
+        ///     The iconstate used for broken handcuffs
+        /// </summary>
+        [ViewVariables]
+        public string BrokenDesc = default;
+
+        [ViewVariables]
+        public bool Broken
+        {
+            get
+            {
+                return _isBroken;
+            }
+            set
+            {
+                if (_isBroken != value)
+                {
+                    _isBroken = value;
+
+                    Dirty();
+                }
+            }
+        }
+
+        public string StartCuffSound = default;
+        public string EndCuffSound = default;
+        public string StartBreakoutSound = default;
+        public string StartUncuffSound = default;
+        public string EndUncuffSound = default;
+        public Color Color = default;
+
+        private bool _isBroken = false;
         private float _interactRange;
         private DoAfterSystem _doAfterSystem;
         private AudioSystem _audioSystem;
-        private string _startCuffSound = default;
-        private string _endCuffSound = default;
-        private string _startUncuffSound = default;
-        private string _startBreakoutSound = default;
-        private string _endUncuffSound = default;
-        private Color _color;
-
+        
         public override void Initialize()
         {
             base.Initialize();
@@ -95,19 +128,27 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _cuffTime, "cuffTime", 5.0f);
-            serializer.DataField(ref _breakoutTime, "breakoutTime", 30.0f);
-            serializer.DataField(ref _uncuffTime, "uncuffTime", 5.0f);
-            serializer.DataField(ref _stunBonus, "stunBonus", 2.0f);
-            serializer.DataField(ref _startCuffSound, "startCuffSound", "/Audio/Items/Handcuffs/cuff_start.ogg");
-            serializer.DataField(ref _endCuffSound, "endCuffSound", "/Audio/Items/Handcuffs/cuff_end.ogg");
-            serializer.DataField(ref _startUncuffSound, "startUncuffSound", "/Audio/Items/Handcuffs/cuff_takeoff_start.ogg");
-            serializer.DataField(ref _endUncuffSound, "endUncuffSound", "/Audio/Items/Handcuffs/cuff_takeoff_end.ogg");
-            serializer.DataField(ref _startBreakoutSound, "startBreakoutSound", "/Audio/Items/Handcuffs/cuff_breakout_start.ogg");
-            serializer.DataField(ref _cuffedRSI, "cuffedRSI", "Objects/Misc/handcuffs.rsi");
-            serializer.DataField(ref _iconState, "iconState", "body-overlay");
-            serializer.DataField(ref _color, "color", Color.White);
-            serializer.DataField(ref _prototypeOverride, "prototypeOverride", string.Empty);
+            serializer.DataField(ref CuffTime, "cuffTime", 5.0f);
+            serializer.DataField(ref BreakoutTime, "breakoutTime", 30.0f);
+            serializer.DataField(ref UncuffTime, "uncuffTime", 5.0f);
+            serializer.DataField(ref StunBonus, "stunBonus", 2.0f);
+            serializer.DataField(ref StartCuffSound, "startCuffSound", "/Audio/Items/Handcuffs/cuff_start.ogg");
+            serializer.DataField(ref EndCuffSound, "endCuffSound", "/Audio/Items/Handcuffs/cuff_end.ogg");
+            serializer.DataField(ref StartUncuffSound, "startUncuffSound", "/Audio/Items/Handcuffs/cuff_takeoff_start.ogg");
+            serializer.DataField(ref EndUncuffSound, "endUncuffSound", "/Audio/Items/Handcuffs/cuff_takeoff_end.ogg");
+            serializer.DataField(ref StartBreakoutSound, "startBreakoutSound", "/Audio/Items/Handcuffs/cuff_breakout_start.ogg");
+            serializer.DataField(ref CuffedRSI, "cuffedRSI", "Objects/Misc/handcuffs.rsi");
+            serializer.DataField(ref OverlayIconState, "bodyIconState", "body-overlay");
+            serializer.DataField(ref Color, "color", Color.White);
+            serializer.DataField(ref BreakOnRemove, "breakOnRemove", false);
+            serializer.DataField(ref BrokenState, "brokenIconState", string.Empty);
+            serializer.DataField(ref BrokenName, "brokenName", string.Empty);
+            serializer.DataField(ref BrokenDesc, "brokenDesc", string.Empty);
+        }
+
+        public override ComponentState GetComponentState()
+        {
+            return new HandcuffedComponentState(Broken ? BrokenState : string.Empty);
         }
 
         void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
@@ -123,15 +164,27 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
                 return;
             }
 
+            if (Broken)
+            {
+                _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, "The cuffs are broken!");
+                return;
+            }
+
             if (!eventArgs.Target.TryGetComponent<HandsComponent>(out var hands))
             {
                 _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, $"{eventArgs.Target.Name} has no hands!");
                 return;
             }
 
-            if (eventArgs.Target.TryGetComponent<CuffedComponent>(out var cuffed) && cuffed.CuffedHandCount == hands.Count)
+            if (!eventArgs.Target.TryGetComponent<CuffedComponent>(out var cuffed))
             {
-                _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, $"{eventArgs.Target.Name} does not have any free hands to handcuff!");
+                _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, $"{eventArgs.Target.Name} can't be handcuffed!");
+                return;
+            }
+
+            if (cuffed.CuffedHandCount == hands.Count)
+            {
+                _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, $"{eventArgs.Target.Name} has no free hands to handcuff!");
                 return;
             }
 
@@ -147,26 +200,21 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
             _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, $"You start cuffing {eventArgs.Target.Name}.");
             _notifyManager.PopupMessage(eventArgs.User, eventArgs.Target, $"{eventArgs.User.Name} starts cuffing you!");
-            _audioSystem.PlayFromEntity(_startCuffSound, Owner);
+            _audioSystem.PlayFromEntity(StartCuffSound, Owner);
 
-            if (cuffed != null)
-            {
-                TryUpdateCuff(eventArgs.User, eventArgs.Target, cuffed); // add a new set of cuffs to an existing component
-            }
-            else
-            {
-                TryAddCuff(eventArgs.User, eventArgs.Target); // component doesn't exist yet, so add it
-            }
+            TryUpdateCuff(eventArgs.User, eventArgs.Target, cuffed); 
         }
 
-        // User has existing CuffedComponent so we add a new cuff entry to it.
+        /// <summary>
+        /// Update the cuffed state of an entity
+        /// </summary>
         private async void TryUpdateCuff(IEntity user, IEntity target, CuffedComponent cuffs)
         {
-            var cuffTime = _cuffTime;
+            var cuffTime = CuffTime;
 
             if (target.TryGetComponent<StunnableComponent>(out var stun) && stun.Stunned)
             {
-                cuffTime = MathF.Max(0.1f, cuffTime - _stunBonus);
+                cuffTime = MathF.Max(0.1f, cuffTime - StunBonus);
             }
 
             var doAfterEventArgs = new DoAfterEventArgs(user, cuffTime, default, target)
@@ -182,112 +230,25 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
             if (result != DoAfterStatus.Cancelled)
             {
-                _audioSystem.PlayFromEntity(_endCuffSound, Owner);
+                _audioSystem.PlayFromEntity(EndCuffSound, Owner);
                 _notifyManager.PopupMessage(user, user, $"You successfully cuff {target.Name}.");
                 _notifyManager.PopupMessage(target, target, $"You have been cuffed by {user.Name}!");
 
-                var config = new CuffedComponent.CuffConfig()
+                if (user.TryGetComponent<HandsComponent>(out var hands))
                 {
-                    BreakoutTime = _breakoutTime,
-                    UncuffTime = _uncuffTime,
-                    RSI = _cuffedRSI,
-                    IconState = _iconState,
-                    Color = _color,
-                    StartUncuffSound = _startUncuffSound,
-                    EndUncuffSound = _endUncuffSound,
-                    BreakoutSound = _startBreakoutSound
-                };
-
-                if (_prototypeOverride != string.Empty)
-                {
-                    config.PrototypeId = _prototypeOverride;
-                    cuffs.AddNewCuffs(config);
+                    hands.Drop(Owner);
+                    cuffs.AddNewCuffs(Owner);
                 }
-                else if (Owner.Prototype != null)
+                else
                 {
-                    config.PrototypeId = Owner.Prototype.ID;
-                    cuffs.AddNewCuffs(config);
+                    Logger.Warning("Unable to remove handcuffs from player's hands! This should not happen!");
                 }
-                else // if the cuffs have no prototype we need to use a fallback value. 
-                {
-                    config.PrototypeId = FALLBACK_CUFF_PROTOTYPE;
-                    cuffs.AddNewCuffs(config);
-                    Logger.Warning($"Handcuff entity {Owner.Name} has no prototype!");
-                }
-
-                Owner.Delete();
             }
             else
             {
                 _notifyManager.PopupMessage(user, user, $"You fail to cuff {target.Name}!");
                 _notifyManager.PopupMessage(target, target, $"You interrupt {user.Name} while they are cuffing you!");
             }
-        }
-
-        // User has no CuffedComponent yet so we add one.
-        private async void TryAddCuff(IEntity user, IEntity target)
-        {
-            var cuffTime = _cuffTime;
-
-            if (target.TryGetComponent<StunnableComponent>(out var stun) && stun.Stunned)
-            {
-                cuffTime = MathF.Max(0.1f, cuffTime - _stunBonus);
-            }
-
-            var doAfterEventArgs = new DoAfterEventArgs(user, cuffTime, default, target)
-            {
-                BreakOnTargetMove = true,
-                BreakOnUserMove = true,
-                BreakOnDamage = true,
-                BreakOnStun = true,
-                NeedHand = true
-            };
-
-            var result = await _doAfterSystem.DoAfter(doAfterEventArgs);
-
-            if (result != DoAfterStatus.Cancelled)
-            {
-                _audioSystem.PlayFromEntity(_endCuffSound, Owner);
-                _notifyManager.PopupMessage(user, user, $"You successfully cuff {target.Name}.");
-                _notifyManager.PopupMessage(target, target, $"You have been cuffed by {user.Name}!");
-
-                var cuffs = target.AddComponent<CuffedComponent>();
-                var config = new CuffedComponent.CuffConfig()
-                {
-                    BreakoutTime = _breakoutTime,
-                    UncuffTime = _uncuffTime,
-                    RSI = _cuffedRSI,
-                    IconState = _iconState,
-                    Color = _color,
-                    StartUncuffSound = _startUncuffSound,
-                    EndUncuffSound = _endUncuffSound,
-                    BreakoutSound = _startBreakoutSound
-                };
-
-                if (_prototypeOverride != string.Empty)
-                {
-                    config.PrototypeId = _prototypeOverride;
-                    cuffs.AddNewCuffs(config);
-                }
-                else if (Owner.Prototype != null)
-                {
-                    config.PrototypeId = Owner.Prototype.ID;
-                    cuffs.AddNewCuffs(config);
-                }
-                else // if the cuffs have no prototype we need to use a fallback value. this shouldn't happen but lets be careful.
-                {
-                    config.PrototypeId = FALLBACK_CUFF_PROTOTYPE;
-                    cuffs.AddNewCuffs(config);
-                    Logger.Warning($"Handcuff entity {Owner.Name} has no prototype!");
-                }
-
-                Owner.Delete();
-            }
-            else
-            {
-                _notifyManager.PopupMessage(user, user, $"You fail to cuff {target.Name}!");
-                _notifyManager.PopupMessage(target, target, $"You interrupt {user.Name} while they are cuffing you!");
-            }  
         }
     }
 }

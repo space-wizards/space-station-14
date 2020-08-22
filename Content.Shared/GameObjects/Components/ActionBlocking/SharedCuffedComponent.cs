@@ -1,5 +1,4 @@
-﻿
-using Content.Shared.GameObjects.EntitySystems;
+﻿using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Maths;
@@ -11,7 +10,7 @@ namespace Content.Shared.GameObjects.Components.ActionBlocking
     public class SharedCuffedComponent : Component, IActionBlocker
     {
         public override string Name => "Cuffed";
-        public override uint? NetID => ContentNetIDs.HANDCUFF;
+        public override uint? NetID => ContentNetIDs.CUFFED;
 
         [ViewVariables]
         public bool CanStillInteract = true;
@@ -37,7 +36,7 @@ namespace Content.Shared.GameObjects.Components.ActionBlocking
             public string IconState { get; }
             public Color Color { get; }
 
-            public CuffedComponentState(int numHandsCuffed, bool canStillInteract, string rsiPath, string iconState, Color color) : base(ContentNetIDs.HANDCUFF)
+            public CuffedComponentState(int numHandsCuffed, bool canStillInteract, string rsiPath, string iconState, Color color) : base(ContentNetIDs.CUFFED)
             {
                 NumHandsCuffed = numHandsCuffed;
                 CanStillInteract = canStillInteract;
