@@ -31,7 +31,12 @@ namespace Content.Server.GameObjects.Components.Damage
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(this, r => r.DeadThreshold, "deadThreshold", 100);
+            serializer.DataReadWriteFunction(
+                "deadThreshold",
+                100,
+                t => DeadThreshold = t ,
+                () => DeadThreshold ?? -1);
+
             serializer.DataField(this, ruinable => ruinable.DestroySound, "destroySound", string.Empty);
         }
 
