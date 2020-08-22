@@ -9,22 +9,30 @@ namespace Content.Server.GameObjects.EntitySystems
     public class SingularitySystem : EntitySystem
     {
         private int tick;
-        float curTime;
+        float curTimeSingulo;
+        float curTimeGen;
         public override void Update(float frameTime)
         {
-            tick++;
             base.Update(frameTime);
 
-            curTime += frameTime;
+            curTimeSingulo += frameTime;
+            curTimeGen += frameTime;
 
-            if (curTime >= 1f)
+            tick++;
+
+
+            if (curTimeSingulo >= 1f)
             {
-                curTime -= 1f;
+                curTimeSingulo -= 1f;
                 foreach (var singulo in ComponentManager.EntityQuery<SingularityComponent>())
                 {
                     singulo.Update();
                 }
+            }
 
+            if (curTimeGen >= 3f)
+            {
+                curTimeGen -= 3f;
                 foreach (var containment in ComponentManager.EntityQuery<ContainmentFieldGeneratorComponent>())
                 {
                     containment.Update();

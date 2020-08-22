@@ -155,3 +155,4 @@
     sprite: Constructible/Power/emitter.rsi
     state: emitter_projectile
   - type: Projectile
+  - type: EmitterBoltComponent

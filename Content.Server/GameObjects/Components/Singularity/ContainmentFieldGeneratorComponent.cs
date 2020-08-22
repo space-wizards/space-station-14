@@ -11,6 +11,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Singularity
 {
@@ -19,7 +20,14 @@ namespace Content.Server.GameObjects.Components.Singularity
     {
         public override string Name => "ContainmentFieldGenerator";
 
-        public int Power = 5;
+        private int _power;
+
+        [ViewVariables]
+        public int Power
+        {
+            get => _power;
+            set => _power = Math.Clamp(value, 0, 6);
+        }
 
         public Dictionary<IEntity, IEntity> OwnedFields = new Dictionary<IEntity, IEntity>();
         public HashSet<IEntity> ConnectedGenerators = new HashSet<IEntity>();
@@ -62,6 +70,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                 OwnedFields.Clear();
 
                 ConnectedGenerators.Clear();
+
             }
 
             HashSet<IEntity> remove = new HashSet<IEntity>();
@@ -86,6 +95,17 @@ namespace Content.Server.GameObjects.Components.Singularity
             foreach (var ent in remove)
             {
                 ConnectedGenerators.Remove(ent);
+            }
+
+            if(Power != 0)
+            {
+                Power--;
+            }
+
+            //Require at least 2 power to generate new fields
+            if (Power < 2)
+            {
+                return;
             }
 
             if (_pos.X % 0.5f != 0 || _pos.Y % 0.5f != 0) return;
