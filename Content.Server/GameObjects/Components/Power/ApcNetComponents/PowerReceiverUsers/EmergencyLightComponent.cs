@@ -1,15 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Localization;
+using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers
 {
     /// <summary>
-    ///     Component that represents a wall light. It has a light bulb that can be replaced when broken.
+    ///     Component that represents an emergency light, it has an internal battery that charges when the power is on.
     /// </summary>
     [RegisterComponent]
-    public class EmergencyLightComponent : Component
+    public class EmergencyLightComponent : Component, IExamine
     {
         public override string Name => "EmergencyLight";
 
@@ -25,14 +31,22 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         private SpriteComponent Sprite => Owner.GetComponent<SpriteComponent>();
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public float Wattage { get; set; } = 5;
+        private float _wattage;
         [ViewVariables(VVAccess.ReadWrite)]
-        public float ChargingWattage { get; set; } = 60;
+        private float _chargingWattage;
         [ViewVariables(VVAccess.ReadWrite)]
-        public float ChargingEfficiency { get; set; } = 85;
+        private float _chargingEfficiency;
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+            serializer.DataField(ref _wattage, "wattage", 5);
+            serializer.DataField(ref _chargingWattage, "chargingWattage", 60);
+            serializer.DataField(ref _chargingEfficiency, "chargingEfficiency", 0.85f);
+        }
 
         /// <summary>
-        ///     For attaching UpdateLight() to events.
+        ///     For attaching UpdateState() to events.
         /// </summary>
         public void UpdateState(object sender, EventArgs e)
         {
@@ -40,13 +54,13 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         }
 
         /// <summary>
-        ///     Updates the light's power drain, sprite and actual light state.
+        ///     Updates the light's power drain, battery drain, sprite and actual light state.
         /// </summary>
         public void UpdateState()
         {
             if (PowerReceiver.Powered)
             {
-                PowerReceiver.Load = (int) Math.Abs(Wattage);
+                PowerReceiver.Load = (int) Math.Abs(_wattage);
                 TurnOff();
                 _lightState = EmergencyLightState.Charging;
             }
@@ -64,7 +78,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
             if(_lightState == EmergencyLightState.On)
             {
-                if (!Battery.TryUseCharge(Wattage * frameTime))
+                if (!Battery.TryUseCharge(_wattage * frameTime))
                 {
                     _lightState = EmergencyLightState.Empty;
                     TurnOff();
@@ -72,7 +86,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             }
             else
             {
-                Battery.CurrentCharge += ChargingWattage * frameTime * ChargingEfficiency;
+                Battery.CurrentCharge += _chargingWattage * frameTime * _chargingEfficiency;
                 if (Battery.BatteryState == BatteryState.Full)
                 {
                     PowerReceiver.Load = 1;
@@ -105,6 +119,11 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             base.OnRemove();
         }
 
+        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
+        {
+            message.AddMarkup(Loc.GetString($"The battery indicator displays: {BatteryStateText[_lightState]}."));
+        }
+
         public enum EmergencyLightState
         {
             Charging,
@@ -112,5 +131,13 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             Empty,
             On
         }
+
+        public Dictionary<EmergencyLightState, string> BatteryStateText = new Dictionary<EmergencyLightState, String>
+        {
+            { EmergencyLightState.Full, "[color=darkgreen]Full[/color]"},
+            { EmergencyLightState.Empty, "[color=darkred]Empty[/color]"},
+            { EmergencyLightState.Charging, "[color=darkorange]Charging[/color]"},
+            { EmergencyLightState.On, "[color=darkorange]Discharging[/color]"}
+        };
     }
 }
