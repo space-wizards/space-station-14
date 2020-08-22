@@ -27,3 +27,4 @@
     - type: Appearance
       visuals:
         - type: RadiatingLightVisualizer
+          PowerSource: oil

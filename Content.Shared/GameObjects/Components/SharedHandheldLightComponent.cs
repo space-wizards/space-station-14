@@ -24,9 +24,15 @@ namespace Content.Shared.GameObjects.Components
     [Serializable, NetSerializable]
     public enum HandheldLightVisuals
     {
+        Power
+    }
+
+    [Serializable, NetSerializable]
+    public enum HandheldLightPowerStates
+    {
         FullPower,
         LowPower,
-        Dying
+        Dying,
     }
 
 

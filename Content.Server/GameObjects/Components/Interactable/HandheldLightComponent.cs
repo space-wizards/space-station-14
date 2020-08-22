@@ -35,7 +35,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         [Dependency] private readonly ILocalizationManager _localizationManager;
 #pragma warning restore 649
 
-        [ViewVariables(VVAccess.ReadWrite)] public float Wattage { get; set; } = 10;
+        [ViewVariables(VVAccess.ReadWrite)] public float Wattage { get; set; } = 1000;
         [ViewVariables] private ContainerSlot _cellContainer;
         private PointLightComponent _pointLight;
         private SpriteComponent _spriteComponent;
@@ -48,8 +48,12 @@ namespace Content.Server.GameObjects.Components.Interactable
             {
                 if (_cellContainer.ContainedEntity == null) return null;
 
-                _cellContainer.ContainedEntity.TryGetComponent(out BatteryComponent cell);
-                return cell;
+                if (_cellContainer.ContainedEntity.TryGetComponent(out BatteryComponent cell))
+                {
+                    return cell;
+                }
+
+                return null;
             }
         }
 
@@ -187,14 +191,26 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         public void OnUpdate(float frameTime)
         {
-            if (!Activated) return;
+            if (!Activated || Cell == null) return;
 
-            var cell = Cell;
-            if (cell == null || !cell.TryUseCharge(Wattage * frameTime)) TurnOff();
+            AppearanceComponent appearanceComponent = Owner.GetComponent<AppearanceComponent>();
+            appearanceComponent.SetData(HandheldLightVisuals.Power, HandheldLightPowerStates.Dying);
 
+            if (Cell.MaxCharge - Cell.CurrentCharge < Cell.MaxCharge * 0.70)
+            {
+                appearanceComponent.SetData(HandheldLightVisuals.Power, HandheldLightPowerStates.FullPower);
+            }
+            else if (Cell.MaxCharge - Cell.CurrentCharge < Cell.MaxCharge * 0.90)
+            {
+                appearanceComponent.SetData(HandheldLightVisuals.Power, HandheldLightPowerStates.LowPower);
+            }
+            else
+            {
+                appearanceComponent.SetData(HandheldLightVisuals.Power, HandheldLightPowerStates.Dying);
+            }
 
-            var foo = Owner.GetComponent<AppearanceComponent>();
-            foo.SetData(HandheldLightVisuals.LowPower, true);
+            //var cell = Cell;
+            if (Cell == null || !Cell.TryUseCharge(Wattage * frameTime)) TurnOff();
 
             Dirty();
         }
