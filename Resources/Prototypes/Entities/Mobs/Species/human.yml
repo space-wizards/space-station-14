@@ -126,6 +126,8 @@
       - Opaque
       - MobImpassable
   - type: BodyManager
+    criticalThreshold: 100
+    deadThreshold: 200
     baseTemplate: bodyTemplate.Humanoid
     basePreset: bodyPreset.BasicHuman
   - type: Metabolism
@@ -256,6 +258,8 @@
           layer:
           - MobImpassable
     - type: BodyManager
+      criticalThreshold: 100
+      deadThreshold: 200
       baseTemplate: bodyTemplate.Humanoid
       basePreset: bodyPreset.BasicHuman
     - type: MobStateManager

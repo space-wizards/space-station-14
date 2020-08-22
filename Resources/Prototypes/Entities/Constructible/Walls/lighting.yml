@@ -46,7 +46,7 @@
     bulb: Tube
   - type: PowerReceiver
   - type: Destructible
-    maxHP: 50
+    deadThreshold: 50
 
 - type: entity
   name: small light
@@ -69,4 +69,4 @@
     bulb: Bulb
   - type: PowerReceiver
   - type: Destructible
-    maxHP: 25
+    deadThreshold: 25

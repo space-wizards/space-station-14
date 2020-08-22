@@ -42,7 +42,7 @@
   - type: EntityStorage
   - type: PlaceableSurface
   - type: Destructible
-    maxHP: 100
+    deadThreshold: 100
   - type: Appearance
     visuals:
     - type: StorageVisualizer

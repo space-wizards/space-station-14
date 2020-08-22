@@ -18,7 +18,7 @@
   - type: Anchorable
   - type: Pullable
   - type: Destructible
-    maxHP: 50
+    deadThreshold: 50
 
 - type: entity
   name: bar stool
@@ -51,7 +51,7 @@
   - type: Anchorable
   - type: Pullable
   - type: Destructible
-    maxHP: 50
+    deadThreshold: 50
 
 - type: entity
   name: dark office chair
@@ -86,7 +86,7 @@
   - type: Anchorable
   - type: Pullable
   - type: Destructible
-    maxHP: 50
+    deadThreshold: 50
 
 - type: entity
   parent: Chair
@@ -134,6 +134,6 @@
     position: Down
     rotation: -90
   - type: Destructible
-    maxHP: 75
+    deadThreshold: 75
   placement:
     mode: SnapgridCenter

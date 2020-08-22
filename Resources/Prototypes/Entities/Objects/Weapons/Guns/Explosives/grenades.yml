@@ -22,7 +22,7 @@
     lightImpactRange: 4
     flashRange: 7
   - type: Destructible
-    maxHP: 10
+    deadThreshold: 10
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer
@@ -48,7 +48,7 @@
     delay: 3.5
   - type: FlashExplosive
   - type: Destructible
-    maxHP: 10
+    deadThreshold: 10
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer
@@ -78,7 +78,7 @@
     lightImpactRange: 7
     flashRange: 10
   - type: Destructible
-    maxHP: 10
+    deadThreshold: 10
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer

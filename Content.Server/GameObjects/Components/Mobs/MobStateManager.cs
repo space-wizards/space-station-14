@@ -187,7 +187,12 @@ namespace Content.Server.GameObjects.Components.Mobs
             {
                 case RuinableComponent ruinable:
                 {
-                    var modifier = (int) (ruinable.TotalDamage / (ruinable.MaxHp / 7f));
+                    if (ruinable.DeadThreshold == null)
+                    {
+                        break;
+                    }
+
+                    var modifier = (int) (ruinable.TotalDamage / (ruinable.DeadThreshold / 7f));
 
                     status.ChangeStatusEffectIcon(StatusEffect.Health,
                         "/Textures/Interface/StatusEffects/Human/human" + modifier + ".png");
@@ -196,8 +201,12 @@ namespace Content.Server.GameObjects.Components.Mobs
                 }
                 case BodyManagerComponent body:
                 {
-                    // TODO: Declare body max normal damage (currently 100)
-                    var modifier = (int) (body.TotalDamage / (100f / 7f));
+                    if (body.CriticalThreshold == null)
+                    {
+                        return;
+                    }
+
+                    var modifier = (int) (body.TotalDamage / (body.CriticalThreshold / 7f));
 
                     status.ChangeStatusEffectIcon(StatusEffect.Health,
                         "/Textures/Interface/StatusEffects/Human/human" + modifier + ".png");
