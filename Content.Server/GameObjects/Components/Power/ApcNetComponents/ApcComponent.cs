@@ -52,6 +52,8 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
                 ? boundUi
                 : null;
 
+        public BatteryComponent? Battery => Owner.TryGetComponent(out BatteryComponent? batteryComponent) ? batteryComponent : null;
+
         public override void Initialize()
         {
             base.Initialize();

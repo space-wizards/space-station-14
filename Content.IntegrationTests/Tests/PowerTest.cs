@@ -49,7 +49,7 @@ namespace Content.IntegrationTests.Tests
             });
 
             server.RunTicks(1); //let run a tick for PowerNet to process power
-             
+
             server.Assert(() =>
             {
                 Assert.That(consumer1.DrawRate, Is.EqualTo(consumer1.ReceivedPower)); //first should be fully powered
@@ -127,6 +127,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(apcEnt.TryGetComponent<ApcComponent>(out var apc));
                 Assert.That(apcExtensionEnt.TryGetComponent<PowerProviderComponent>(out var provider));
                 Assert.That(powerReceiverEnt.TryGetComponent(out receiver));
+                Assert.NotNull(apc.Battery);
 
                 provider.PowerTransferRange = 5; //arbitrary range to reach receiver
                 receiver.PowerReceptionRange = 5; //arbitrary range to reach provider
