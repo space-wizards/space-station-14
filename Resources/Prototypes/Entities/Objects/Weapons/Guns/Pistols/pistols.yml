@@ -149,17 +149,20 @@
     size: 24
     sprite: Objects/Weapons/Guns/Pistols/hm_pistol.rsi
   - type: RangedWeapon
-  - type: BoltActionBarrel
+  - type: MagazineBarrel
     caliber: Pistol
     currentSelector: Single
     allSelectors:
     - Single
+    magazineTypes:
+    - Pistol
     capacity: 1
     fireRate: 8
     minAngle: 10
     maxAngle: 60
     angleIncrease: 10
     angleDecay: 60
+    magFillPrototype: MagazinePistol
     soundGunshot: /Audio/Weapons/Guns/Gunshots/pistol.ogg
     soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
     soundRack: /Audio/Weapons/Guns/Cock/pistol_cock.ogg
