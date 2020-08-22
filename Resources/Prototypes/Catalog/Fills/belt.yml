@@ -4,3 +4,10 @@
   suffix: Filled
   components:
   - type: UtilityBeltClothingFill
+  
+- type: entity
+  id: UtilityBeltClothingFilledEvent
+  parent: UtilityBeltClothing
+  suffix: Filled
+  components:
+  - type: UtilityBeltClothingFillEvent
