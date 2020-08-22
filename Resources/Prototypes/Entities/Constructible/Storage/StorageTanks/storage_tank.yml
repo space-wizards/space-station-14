@@ -26,7 +26,7 @@
     mass: 15
     Anchored: false
   - type: Destructible
-    maxHP: 10
+    deadThreshold: 10
   - type: Solution
     maxVol: 1500
     caps: 2
