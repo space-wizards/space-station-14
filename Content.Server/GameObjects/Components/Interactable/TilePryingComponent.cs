@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             serializer.DataField(ref _toolComponentNeeded, "toolComponentNeeded", true);
         }
 
-        public async void TryPryTile(IEntity user, GridCoordinates clickLocation)
+        public void TryPryTile(IEntity user, GridCoordinates clickLocation)
         {
             if (!Owner.TryGetComponent<ToolComponent>(out var tool) && _toolComponentNeeded)
                 return;
@@ -51,7 +51,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             if (!tileDef.CanCrowbar) return;
 
-            if (_toolComponentNeeded && !await tool!.UseTool(user, null, 0f,  ToolQuality.Prying))
+            if (_toolComponentNeeded && !tool.UseTool(user, null, ToolQuality.Prying))
                 return;
 
             var underplating = _tileDefinitionManager["underplating"];

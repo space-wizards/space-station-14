@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using Content.Server.GameObjects.EntitySystems.Pathfinding;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -20,7 +23,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             Chunk = chunk;
         }
     }
-
+    
     public class PathfindingChunk
     {
         public TimeSpan LastUpdate { get; private set; }
@@ -50,7 +53,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
                     CreateNode(tileRef);
                 }
             }
-
+            
             Dirty();
         }
 
@@ -68,7 +71,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         {
             var pathfindingSystem = EntitySystem.Get<PathfindingSystem>();
             var chunkGrid = pathfindingSystem.Graph[GridId];
-
+            
             for (var x = -1; x <= 1; x++)
             {
                 for (var y = -1; y <= 1; y++)
@@ -156,7 +159,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
                 }
 
                 yield break;
-
+                
             }
             // South edge
             if (node.TileRef.Y == _indices.Y)

@@ -1,5 +1,6 @@
 using Content.Client.GameObjects.Components.Instruments;
 using JetBrains.Annotations;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -11,6 +12,12 @@ namespace Content.Client.GameObjects.EntitySystems
     {
         [Dependency] private readonly IGameTiming _gameTiming = default;
 
+        public override void Initialize()
+        {
+            base.Initialize();
+            EntityQuery = new TypeEntityQuery(typeof(InstrumentComponent));
+        }
+
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
@@ -20,9 +27,9 @@ namespace Content.Client.GameObjects.EntitySystems
                 return;
             }
 
-            foreach (var instrumentComponent in EntityManager.ComponentManager.EntityQuery<InstrumentComponent>())
+            foreach (var entity in RelevantEntities)
             {
-                instrumentComponent.Update(frameTime);
+                entity.GetComponent<InstrumentComponent>().Update(frameTime);
             }
         }
     }

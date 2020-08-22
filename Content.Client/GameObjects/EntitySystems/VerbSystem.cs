@@ -6,8 +6,8 @@ using System.Threading;
 using Content.Client.State;
 using Content.Client.UserInterface;
 using Content.Client.Utility;
+using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.EntitySystemMessages;
-using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects.EntitySystems;
@@ -207,10 +207,8 @@ namespace Content.Client.GameObjects.EntitySystems
             //Get verbs, component dependent.
             foreach (var (component, verb) in VerbUtility.GetVerbs(entity))
             {
-                if (!VerbUtility.VerbAccessChecks(user, entity, verb))
-                {
+                if (verb.RequireInteractionRange && !VerbUtility.InVerbUseRange(user, entity))
                     continue;
-                }
 
                 var verbData = verb.GetData(user, component);
 
@@ -231,10 +229,8 @@ namespace Content.Client.GameObjects.EntitySystems
             //Get global verbs. Visible for all entities regardless of their components.
             foreach (var globalVerb in VerbUtility.GetGlobalVerbs(Assembly.GetExecutingAssembly()))
             {
-                if (!VerbUtility.VerbAccessChecks(user, entity, globalVerb))
-                {
+                if (globalVerb.RequireInteractionRange && !VerbUtility.InVerbUseRange(user, entity))
                     continue;
-                }
 
                 var verbData = globalVerb.GetData(user, entity);
 

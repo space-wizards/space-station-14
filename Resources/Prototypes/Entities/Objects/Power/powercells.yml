@@ -27,8 +27,8 @@
     sprite: Objects/Power/PowerCells/power_cell_small_st.rsi
     state: s_st
   - type: PowerCell
-    maxCharge: 15000
-    startingCharge: 15000
+    capacity: 1500
+    charge: 1500
   - type: Appearance
     visuals:
     - type: PowerCellVisualizer
@@ -48,8 +48,8 @@
     sprite: Objects/Power/PowerCells/power_cell_small_hi.rsi
     state: s_hi
   - type: PowerCell
-    maxCharge: 30000
-    startingCharge: 30000
+    capacity: 3000
+    charge: 3000
   - type: Appearance
     visuals:
     - type: PowerCellVisualizer
@@ -69,8 +69,8 @@
     sprite: Objects/Power/PowerCells/power_cell_small_sup.rsi
     state: s_sup
   - type: PowerCell
-    maxCharge: 60000
-    startingCharge: 60000
+    capacity: 6000
+    charge: 6000
   - type: Appearance
     visuals:
     - type: PowerCellVisualizer
@@ -90,8 +90,8 @@
     sprite: Objects/Power/PowerCells/power_cell_small_hy.rsi
     state: s_hy
   - type: PowerCell
-    maxCharge: 80000
-    startingCharge: 80000
+    capacity: 10000
+    charge: 10000
   - type: Appearance
     visuals:
     - type: PowerCellVisualizer

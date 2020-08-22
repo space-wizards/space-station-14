@@ -1,10 +1,8 @@
 ﻿#nullable enable
 using System;
-using System.Threading.Tasks;
-using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Chemistry;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects;
@@ -98,37 +96,16 @@ namespace Content.Server.GameObjects.Components.Interactable
             return new WelderComponentState(FuelCapacity, Fuel, WelderLit);
         }
 
-        public override async Task<bool> UseTool(IEntity user, IEntity target, float doAfterDelay, ToolQuality toolQualityNeeded, Func<bool>? doAfterCheck = null)
+        public override bool UseTool(IEntity user, IEntity target, ToolQuality toolQualityNeeded)
         {
-            bool ExtraCheck()
-            {
-                var extraCheck = doAfterCheck?.Invoke() ?? true;
-
-                if (!CanWeld(DefaultFuelCost))
-                {
-                    _notifyManager.PopupMessage(target, user, "Can't weld!");
-
-                    return false;
-                }
-
-                return extraCheck;
-            }
-
-            var canUse = await base.UseTool(user, target, doAfterDelay, toolQualityNeeded, ExtraCheck);
+            var canUse = base.UseTool(user, target, toolQualityNeeded);
 
             return toolQualityNeeded.HasFlag(ToolQuality.Welding) ? canUse && TryWeld(DefaultFuelCost, user) : canUse;
         }
 
-        public async Task<bool> UseTool(IEntity user, IEntity target, float doAfterDelay, ToolQuality toolQualityNeeded, float fuelConsumed, Func<bool>? doAfterCheck = null)
+        public bool UseTool(IEntity user, IEntity target, ToolQuality toolQualityNeeded, float fuelConsumed)
         {
-            bool ExtraCheck()
-            {
-                var extraCheck = doAfterCheck?.Invoke() ?? true;
-
-                return extraCheck && CanWeld(fuelConsumed);
-            }
-
-            return await base.UseTool(user, target, doAfterDelay, toolQualityNeeded, ExtraCheck) && TryWeld(fuelConsumed, user);
+            return base.UseTool(user, target, toolQualityNeeded) && TryWeld(fuelConsumed, user);
         }
 
         private bool TryWeld(float value, IEntity? user = null, bool silent = false)
@@ -202,10 +179,6 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             PlaySoundCollection("WelderOn", -5);
             _welderSystem.Subscribe(this);
-
-            Owner.Transform.GridPosition
-                .GetTileAtmosphere()?.HotspotExpose(700f, 50f, true);
-
             return true;
         }
 
@@ -232,21 +205,12 @@ namespace Content.Server.GameObjects.Components.Interactable
             }
         }
 
-        protected override void Shutdown()
-        {
-            base.Shutdown();
-            _welderSystem.Unsubscribe(this);
-        }
-
         public void OnUpdate(float frameTime)
         {
-            if (!HasQuality(ToolQuality.Welding) || !WelderLit || Owner.Deleted)
+            if (!HasQuality(ToolQuality.Welding) || !WelderLit)
                 return;
 
             _solutionComponent?.TryRemoveReagent("chem.WeldingFuel", ReagentUnit.New(FuelLossRate * frameTime));
-
-            Owner.Transform.GridPosition
-                .GetTileAtmosphere()?.HotspotExpose(700f, 50f, true);
 
             if (Fuel == 0)
                 ToggleWelderStatus();
@@ -258,12 +222,11 @@ namespace Content.Server.GameObjects.Components.Interactable
             if (TryWeld(5, victim, silent: true))
             {
                 PlaySoundCollection(WeldSoundCollection);
-                chat.EntityMe(victim, Loc.GetString("welds {0:their} every orifice closed! It looks like {0:theyre} trying to commit suicide!", victim));
+                chat.EntityMe(victim, Loc.GetString("welds {0:their} every orifice closed! It looks like {0:theyre} trying to commit suicide!", victim)); //TODO: theyre macro
                 return SuicideKind.Heat;
             }
-
             chat.EntityMe(victim, Loc.GetString("bashes {0:themselves} with the {1}!", victim, Owner.Name));
-            return SuicideKind.Blunt;
+            return SuicideKind.Brute;
         }
 
         public void SolutionChanged(SolutionChangeEventArgs eventArgs)

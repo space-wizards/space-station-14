@@ -1,12 +1,12 @@
 ﻿using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Throw;
 using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Containers;
@@ -14,10 +14,11 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
+using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 
-namespace Content.Server.GameObjects.Components.Items.Storage
+namespace Content.Server.GameObjects.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(StorableComponent))]
@@ -28,6 +29,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         public override uint? NetID => ContentNetIDs.ITEM;
 
         #pragma warning disable 649
+        [Dependency] private readonly IRobustRandom _robustRandom;
         [Dependency] private readonly IMapManager _mapManager;
         #pragma warning restore 649
 
@@ -91,7 +93,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 return false;
             }
 
-            if (Owner.TryGetComponent(out ICollidableComponent physics) &&
+            if (Owner.TryGetComponent(out PhysicsComponent physics) &&
                 physics.Anchored)
             {
                 return false;

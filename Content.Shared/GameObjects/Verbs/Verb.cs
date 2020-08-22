@@ -2,7 +2,7 @@
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
 
-namespace Content.Shared.GameObjects.Verbs
+namespace Content.Shared.GameObjects
 {
     /// <summary>
     ///     A verb is an action in the right click menu of an entity.
@@ -12,8 +12,14 @@ namespace Content.Shared.GameObjects.Verbs
     ///     and mark it with <see cref="VerbAttribute"/>
     /// </remarks>
     [UsedImplicitly]
-    public abstract class Verb : VerbBase
+    public abstract class Verb
     {
+        /// <summary>
+        ///     If true, this verb requires the user to be inside within
+        ///     <see cref="VerbUtility.InteractionRange"/> meters from the entity on which this verb resides.
+        /// </summary>
+        public virtual bool RequireInteractionRange => true;
+
         /// <summary>
         ///     Gets the visible verb data for the user.
         /// </summary>
@@ -42,7 +48,7 @@ namespace Content.Shared.GameObjects.Verbs
 
     /// <inheritdoc />
     /// <summary>
-    ///     Sub class of <see cref="T:Content.Shared.GameObjects.Verbs.Verb" /> that works on a specific type of component,
+    ///     Sub class of <see cref="T:Content.Shared.GameObjects.Verb" /> that works on a specific type of component,
     ///     to reduce casting boiler plate for implementations.
     /// </summary>
     /// <typeparam name="T">The type of component that this verb will run on.</typeparam>

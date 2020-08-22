@@ -1,6 +1,5 @@
 ﻿using Content.Server.GameObjects.Components.Stack;
 using Content.Server.Utility;
-using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
@@ -8,6 +7,7 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using Content.Shared.Interfaces.GameObjects.Components;
 
 namespace Content.Server.GameObjects.Components.Power
 {

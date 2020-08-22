@@ -2,7 +2,6 @@
   parent: BackpackClothing
   id: Satchel
   name: satchel
-  description: A trendy looking satchel.
   components:
   - type: Sprite
     sprite: Clothing/Back/Satchels/satchel.rsi
@@ -20,7 +19,6 @@
   parent: BackpackClothing
   id: SatchelEngineering
   name: engineering satchel
-  description: A tough satchel with extra pockets.
   components:
   - type: Sprite
     sprite: Clothing/Back/Satchels/satchel_engineering.rsi
@@ -37,7 +35,6 @@
   parent: BackpackClothing
   id: SatchelMedical
   name: medical satchel
-  description: A sterile satchel used in medical departments.
   components:
   - type: Sprite
     sprite: Clothing/Back/Satchels/satchel_medical.rsi
@@ -54,7 +51,6 @@
   parent: BackpackClothing
   id: SatchelChemistry
   name: chemistry satchel
-  description: A sterile satchel with chemist colours.
   components:
   - type: Sprite
     sprite: Clothing/Back/Satchels/satchel_chemistry.rsi
@@ -71,7 +67,6 @@
   parent: BackpackClothing
   id: SatchelGenetics
   name: genetics satchel
-  description: A sterile satchel with geneticist colours.
   components:
   - type: Sprite
     sprite: Clothing/Back/Satchels/satchel_genetics.rsi
@@ -88,7 +83,6 @@
   parent: BackpackClothing
   id: SatchelVirology
   name: virology satchel
-  description: A sterile satchel with virologist colours.
   components:
   - type: Sprite
     sprite: Clothing/Back/Satchels/satchel_virology.rsi
@@ -105,7 +99,6 @@
   parent: BackpackClothing
   id: SatchelScience
   name: science satchel
-  description: Useful for holding research materials.
   components:
   - type: Sprite
     sprite: Clothing/Back/Satchels/satchel_science.rsi
@@ -121,7 +114,6 @@
   parent: BackpackClothing
   id: SatchelSecurity
   name: security satchel
-  description: A robust satchel for security related needs.
   components:
   - type: Sprite
     sprite: Clothing/Back/Satchels/satchel_security.rsi
@@ -138,7 +130,6 @@
   parent: BackpackClothing
   id: SatchelCaptain
   name: captain's satchel
-  description: An exclusive satchel for Nanotrasen officers.
   components:
   - type: Sprite
     sprite: Clothing/Back/Satchels/satchel_captain.rsi
@@ -155,7 +146,6 @@
   parent: BackpackClothing
   id: SatchelHydroponics
   name: hydroponics satchel
-  description: A satchel made of all natural fibers.
   components:
   - type: Sprite
     sprite: Clothing/Back/Satchels/satchel_hydroponics.rsi

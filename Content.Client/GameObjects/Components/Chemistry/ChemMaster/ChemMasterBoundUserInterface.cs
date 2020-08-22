@@ -1,12 +1,13 @@
 #nullable enable
-using Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser;
+using Content.Client.GameObjects.Components.Chemistry.ChemMaster;
+using Content.Shared.GameObjects.Components.Chemistry;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Localization;
-using static Content.Shared.GameObjects.Components.Chemistry.ChemMaster.SharedChemMasterComponent;
+using static Content.Shared.GameObjects.Components.Chemistry.SharedChemMasterComponent;
 
-namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
+namespace Content.Client.GameObjects.Components.Chemistry
 {
     /// <summary>
     /// Initializes a <see cref="ChemMasterWindow"/> and updates it when new server messages are received.

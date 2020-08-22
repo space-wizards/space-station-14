@@ -1,6 +1,8 @@
+using Content.Server.GameObjects;
 using Content.Server.Interfaces.Chat;
-using Content.Shared.Roles;
 using Robust.Shared.IoC;
+using Robust.Shared.Utility;
+using Content.Shared.Antags;
 
 namespace Content.Server.Mobs.Roles
 {
@@ -24,7 +26,7 @@ namespace Content.Server.Mobs.Roles
             base.Greet();
 
             var chat = IoCManager.Resolve<IChatManager>();
-            chat.DispatchServerMessage(Mind.Session, $"You're an {Name}!");
+            chat.DispatchServerMessage(Mind.Session, $"You're a {Name}!");
             chat.DispatchServerMessage(Mind.Session, $"Objective: {Objective}");
         }
     }

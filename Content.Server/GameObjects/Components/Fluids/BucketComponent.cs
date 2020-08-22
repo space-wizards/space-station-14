@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Shared.Chemistry;
 using Content.Shared.Interfaces;
@@ -71,7 +70,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             return true;
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!eventArgs.Using.TryGetComponent(out MopComponent mopComponent))
             {

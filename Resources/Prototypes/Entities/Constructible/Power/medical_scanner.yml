@@ -34,8 +34,9 @@
   - type: SnapGrid
     offset: Center
   - type: MedicalScanner
+  - type: Damageable
   - type: Destructible
-    deadThreshold: 100
+    thresholdvalue: 100
   - type: Appearance
     visuals:
     - type: MedicalScannerVisualizer

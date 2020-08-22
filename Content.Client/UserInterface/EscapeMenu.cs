@@ -1,4 +1,5 @@
-﻿using Robust.Client.Console;
+﻿using Content.Client.Sandbox;
+using Robust.Client.Console;
 using Robust.Client.Interfaces.Placement;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
@@ -14,16 +15,21 @@ namespace Content.Client.UserInterface
     internal sealed class EscapeMenu : SS14Window
     {
         private readonly IClientConsole _console;
-        private readonly ITileDefinitionManager _tileDefinitionManager;
+        private readonly ITileDefinitionManager __tileDefinitionManager;
         private readonly IPlacementManager _placementManager;
         private readonly IPrototypeManager _prototypeManager;
         private readonly IResourceCache _resourceCache;
         private readonly IConfigurationManager _configSystem;
         private readonly ILocalizationManager _localizationManager;
+#pragma warning disable 649
+        [Dependency] private readonly ISandboxManager _sandboxManager;
+        [Dependency] private readonly IClientConGroupController _conGroupController;
+#pragma warning restore 649
 
-        private BaseButton DisconnectButton;
         private BaseButton QuitButton;
         private BaseButton OptionsButton;
+        private BaseButton SpawnEntitiesButton;
+        private BaseButton SpawnTilesButton;
         private OptionsMenu optionsMenu;
 
         public EscapeMenu(IClientConsole console,
@@ -36,14 +42,19 @@ namespace Content.Client.UserInterface
             _configSystem = configSystem;
             _localizationManager = localizationManager;
             _console = console;
-            _tileDefinitionManager = tileDefinitionManager;
+            __tileDefinitionManager = tileDefinitionManager;
             _placementManager = placementManager;
             _prototypeManager = prototypeManager;
             _resourceCache = resourceCache;
 
             IoCManager.InjectDependencies(this);
 
+            _sandboxManager.AllowedChanged += AllowedChanged;
+            _conGroupController.ConGroupUpdated += UpdateSpawnButtonStates;
+
             PerformLayout();
+
+            UpdateSpawnButtonStates();
         }
 
         private void PerformLayout()
@@ -52,31 +63,32 @@ namespace Content.Client.UserInterface
 
             Resizable = false;
 
-            Title = "Esc Menu";
+            Title = "Menu";
 
-            var vBox = new VBoxContainer {SeparationOverride = 4};
+            var vBox = new VBoxContainer {SeparationOverride = 6};
             Contents.AddChild(vBox);
 
-            OptionsButton = new Button {Text = _localizationManager.GetString("Options")};
+            SpawnEntitiesButton = new Button {Text = "Spawn Entities"};
+            SpawnEntitiesButton.OnPressed += OnSpawnEntitiesButtonClicked;
+            vBox.AddChild(SpawnEntitiesButton);
+
+            SpawnTilesButton = new Button {Text = "Spawn Tiles"};
+            SpawnTilesButton.OnPressed += OnSpawnTilesButtonClicked;
+            vBox.AddChild(SpawnTilesButton);
+
+            // Add a spacer.
+            //vBox.AddChild(new Control { CustomMinimumSize = (0, 5)});
+
+            OptionsButton = new Button {Text = "Options"};
             OptionsButton.OnPressed += OnOptionsButtonClicked;
             vBox.AddChild(OptionsButton);
 
-            DisconnectButton = new Button {Text = _localizationManager.GetString("Disconnect")};
-            DisconnectButton.OnPressed += OnDisconnectButtonClicked;
-            vBox.AddChild(DisconnectButton);
-
-            QuitButton = new Button {Text = _localizationManager.GetString("Quit Game")};
+            QuitButton = new Button {Text = "Quit"};
             QuitButton.OnPressed += OnQuitButtonClicked;
             vBox.AddChild(QuitButton);
         }
 
         private void OnQuitButtonClicked(BaseButton.ButtonEventArgs args)
-        {
-            _console.ProcessCommand("quit");
-            Dispose();
-        }
-
-        private void OnDisconnectButtonClicked(BaseButton.ButtonEventArgs args)
         {
             _console.ProcessCommand("disconnect");
             Dispose();
@@ -85,6 +97,33 @@ namespace Content.Client.UserInterface
         private void OnOptionsButtonClicked(BaseButton.ButtonEventArgs args)
         {
             optionsMenu.OpenCentered();
+        }
+
+        private void OnSpawnEntitiesButtonClicked(BaseButton.ButtonEventArgs args)
+        {
+            var window = new EntitySpawnWindow(_placementManager, _prototypeManager, _resourceCache,
+                _localizationManager);
+            window.OpenToLeft();
+        }
+
+        private void OnSpawnTilesButtonClicked(BaseButton.ButtonEventArgs args)
+        {
+            var window = new TileSpawnWindow(__tileDefinitionManager, _placementManager, _resourceCache);
+            window.OpenToLeft();
+        }
+
+        private void UpdateSpawnButtonStates()
+        {
+            if (_conGroupController.CanAdminPlace() || _sandboxManager.SandboxAllowed)
+            {
+                SpawnEntitiesButton.Disabled = false;
+                SpawnTilesButton.Disabled = false;
+            }
+            else
+            {
+                SpawnEntitiesButton.Disabled = true;
+                SpawnTilesButton.Disabled = true;
+            }
         }
 
         protected override void Dispose(bool disposing)
@@ -99,6 +138,11 @@ namespace Content.Client.UserInterface
         public override void Close()
         {
             base.Close();
+
+            _sandboxManager.AllowedChanged -= AllowedChanged;
+            _conGroupController.ConGroupUpdated -= UpdateSpawnButtonStates;
         }
+
+        private void AllowedChanged(bool newAllowed) => UpdateSpawnButtonStates();
     }
 }

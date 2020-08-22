@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Content.Server.AI.Operators.Sequences;
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.Utility.Considerations.Containers;
+using Content.Server.AI.Utility.Considerations.Hands;
 using Content.Server.AI.Utility.Considerations.Movement;
 using Content.Server.AI.Utility.Considerations.Nutrition.Food;
 using Content.Server.AI.WorldState;
@@ -39,8 +40,12 @@ namespace Content.Server.AI.Utility.Actions.Nutrition.Food
 
             return new[]
             {
-                considerationsManager.Get<TargetDistanceCon>()
-                    .PresetCurve(context, PresetCurve.Distance),
+                considerationsManager.Get<FreeHandCon>()
+                    .BoolCurve(context),
+                considerationsManager.Get<HungerCon>()
+                    .LogisticCurve(context, 1000f, 1.3f, -1.0f, 0.5f),
+                considerationsManager.Get<DistanceCon>()
+                    .QuadraticCurve(context, 1.0f, 1.0f, 0.02f, 0.0f),
                 considerationsManager.Get<FoodValueCon>()
                     .QuadraticCurve(context, 1.0f, 0.4f, 0.0f, 0.0f),
                 considerationsManager.Get<TargetAccessibleCon>()

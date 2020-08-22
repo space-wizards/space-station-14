@@ -2,13 +2,14 @@ using System;
 using System.Collections.Generic;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
+using Content.Shared;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests
 {
-    public class DummyGameTicker : GameTickerBase, IGameTicker
+    public class DummyGameTicker : SharedGameTicker, IGameTicker
     {
         public GameRunLevel RunLevel { get; } = GameRunLevel.InRound;
 
@@ -24,6 +25,10 @@ namespace Content.IntegrationTests
             remove { }
         }
 
+        public void Initialize()
+        {
+        }
+
         public void Update(FrameEventArgs frameEventArgs)
         {
         }
@@ -36,7 +41,7 @@ namespace Content.IntegrationTests
         {
         }
 
-        public void EndRound(string roundEnd)
+        public void EndRound()
         {
         }
 

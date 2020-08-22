@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders;
+using Content.Server.GameObjects.EntitySystems.Pathfinding;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Map;
 
@@ -35,7 +36,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
             {
                 startNode = pathfindingSystem.GetNode(pathfindingArgs.End);
             }
-
+            
             PathfindingNode currentNode;
             openTiles.Enqueue(startNode);
 
@@ -48,13 +49,13 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
                     // No distances stored so can just check closed tiles here
                     if (closedTiles.Contains(neighbor.TileRef)) continue;
                     closedTiles.Add(currentNode.TileRef);
-
+                    
                     // So currently tileCost gets the octile distance between the 2 so we'll also use that for our range check
                     var tileCost = PathfindingHelpers.GetTileCost(pathfindingArgs, startNode, neighbor);
                     var direction = PathfindingHelpers.RelativeDirection(neighbor, currentNode);
-
-                    if (tileCost == null ||
-                        tileCost > pathfindingArgs.Proximity ||
+                    
+                    if (tileCost == null || 
+                        tileCost > pathfindingArgs.Proximity || 
                         !PathfindingHelpers.DirectionTraversable(pathfindingArgs.CollisionMask, pathfindingArgs.Access, currentNode, direction))
                     {
                         continue;

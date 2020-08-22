@@ -1,7 +1,5 @@
-﻿using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Weapon.Melee;
-using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.Damage;
+﻿using Content.Server.GameObjects.Components.Weapon.Melee;
+using Content.Shared.GameObjects;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
@@ -31,12 +29,12 @@ namespace Content.Server.GameObjects.Components.Mining
             spriteComponent.LayerSetState(0, _random.Pick(SpriteStates));
         }
 
-        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             var item = eventArgs.Using;
             if (!item.TryGetComponent(out MeleeWeaponComponent meleeWeaponComponent)) return false;
 
-            Owner.GetComponent<IDamageableComponent>().ChangeDamage(DamageType.Blunt, meleeWeaponComponent.Damage, false, item);
+            Owner.GetComponent<DamageableComponent>().TakeDamage(DamageType.Brute, meleeWeaponComponent.Damage, item, eventArgs.User);
 
             if (!item.TryGetComponent(out PickaxeComponent pickaxeComponent)) return true;
             if (!string.IsNullOrWhiteSpace(pickaxeComponent.MiningSound))

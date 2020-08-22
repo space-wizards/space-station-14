@@ -1,9 +1,7 @@
-﻿using Content.Server.GameObjects.EntitySystems.AI;
-using Content.Shared.GameObjects.Components.Movement;
+﻿using Content.Shared.GameObjects.Components.Movement;
 using Robust.Server.AI;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
@@ -44,11 +42,9 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             base.Initialize();
 
-            // This component requires a collidable component.
-            if (!Owner.HasComponent<ICollidableComponent>())
-                Owner.AddComponent<CollidableComponent>();
-            
-            EntitySystem.Get<AiSystem>().ProcessorInitialize(this);
+            // This component requires a physics component.
+            if (!Owner.HasComponent<IPhysicsComponent>())
+                Owner.AddComponent<PhysicsComponent>();
         }
 
         /// <inheritdoc />

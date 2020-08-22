@@ -24,9 +24,10 @@
     IsScrapingFloor: true
   - type: Physics
     mass: 15
-    Anchored: false
+    anchored: false
+  - type: Damageable
   - type: Destructible
-    deadThreshold: 10
+    thresholdvalue: 10
   - type: Solution
     maxVol: 1500
     caps: 2

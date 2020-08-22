@@ -1,7 +1,6 @@
-﻿- type: entity
+- type: entity
   abstract: true
   id: WireBase
-  description: A flexible superconducting cable for heavy-duty power transfer
   placement:
     mode: SnapgridCenter
   components:
@@ -19,6 +18,8 @@
   - type: Destructible
     thresholdvalue: 100
   - type: SubFloorHide
+  - type: Physics
+    anchored: true
 
 - type: entity
   parent: WireBase
@@ -32,9 +33,7 @@
     base: hvcable_
     key: hv_cables
   - type: NodeContainer
-    nodes:
-    - !type:AdjacentNode
-      nodeGroupID: HVPower
+    nodeTypes: { HVPower : ["AdjacentNode"] }
   - type: Wire
     wireDroppedOnCutPrototype: HVWireStack1
     wireType: HighVoltage
@@ -54,9 +53,7 @@
     base: mvcable_
     key: mv_cables
   - type: NodeContainer
-    nodes:
-    - !type:AdjacentNode
-      nodeGroupID: MVPower
+    nodeTypes: { MVPower : ["AdjacentNode"] }
   - type: Wire
     wireDroppedOnCutPrototype: MVWireStack1
     wireType: MediumVoltage
@@ -76,9 +73,7 @@
     base: lvcable_
     key: lv_cables
   - type: NodeContainer
-    nodes:
-    - !type:AdjacentNode
-      nodeGroupID: Apc
+    nodeTypes: { Apc : ["AdjacentNode"] }
   - type: PowerProvider
     voltage: Apc
   - type: Wire
@@ -95,8 +90,14 @@
   parent: ApcExtensionCable
   components:
   - type: NodeContainer
-    nodes:
-    - !type:AdjacentNode
-      nodeGroupID: HVPower
-    - !type:AdjacentNode
-      nodeGroupID: Apc
+    nodeTypes: { HVPower : ["AdjacentNode"], Apc : ["AdjacentNode"] }
+
+- type: entity
+  id: Generator
+  name: Depriciated Generator
+  parent: DebugGenerator
+  components:
+  - type: PowerSupplier
+    voltage: High
+    supplyRate: 100000
+

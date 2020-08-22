@@ -1,6 +1,7 @@
 #nullable enable
 using Content.Shared.Chemistry;
 using Robust.Server.Interfaces.GameObjects;
+
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
@@ -17,11 +18,10 @@ namespace Content.Server.GameObjects.Components.Fluids
         /// <param name="entity">Entity location to spill at</param>
         /// <param name="solution">Initial solution for the prototype</param>
         /// <param name="prototype">Prototype to use</param>
-        /// <param name="sound">Play the spill sound</param>
-        internal static void SpillAt(IEntity entity, Solution solution, string prototype, bool sound = true)
+        internal static void SpillAt(IEntity entity, Solution solution, string prototype)
         {
             var entityLocation = entity.Transform.GridPosition;
-            SpillAt(entityLocation, solution, prototype, sound);
+            SpillAt(entityLocation, solution, prototype);
         }
 
         // Other functions will be calling this one
@@ -32,8 +32,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         /// <param name="gridCoordinates"></param>
         /// <param name="solution">Initial solution for the prototype</param>
         /// <param name="prototype">Prototype to use</param>
-        /// <param name="sound">Play the spill sound</param>
-        internal static PuddleComponent? SpillAt(GridCoordinates gridCoordinates, Solution solution, string prototype, bool sound = true)
+        internal static PuddleComponent? SpillAt(GridCoordinates gridCoordinates, Solution solution, string prototype)
         {
             if (solution.TotalVolume == 0)
             {
@@ -63,12 +62,12 @@ namespace Content.Server.GameObjects.Components.Fluids
 
             foreach (var spillEntity in entityManager.GetEntitiesAt(spillTileMapGrid.ParentMapId, spillGridCoords.Position))
             {
-                if (!spillEntity.TryGetComponent(out PuddleComponent? puddleComponent))
+                if (!spillEntity.TryGetComponent(out PuddleComponent puddleComponent))
                 {
                     continue;
                 }
 
-                if (!puddleComponent.TryAddSolution(solution, sound))
+                if (!puddleComponent.TryAddSolution(solution))
                 {
                     continue;
                 }
@@ -85,7 +84,7 @@ namespace Content.Server.GameObjects.Components.Fluids
 
             var puddle = serverEntityManager.SpawnEntity(prototype, spillGridCoords);
             var newPuddleComponent = puddle.GetComponent<PuddleComponent>();
-            newPuddleComponent.TryAddSolution(solution, sound);
+            newPuddleComponent.TryAddSolution(solution);
             return newPuddleComponent;
         }
 

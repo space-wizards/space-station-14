@@ -1,29 +1,27 @@
 ﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
-using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser;
+using Content.Shared.GameObjects.Components.Chemistry;
 using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using Robust.Server.GameObjects.EntitySystems;
+using Robust.Shared.GameObjects.Systems;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Interfaces.GameObjects.Components.Items;
 
 namespace Content.Server.GameObjects.Components.Chemistry
 {
@@ -82,7 +80,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
             _beakerContainer =
                 ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-reagentContainerContainer", Owner);
             _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
-            _powerReceiver.OnPowerStateChanged += OnPowerChanged;
 
             InitializeFromPrototype();
             UpdateUserInterface();
@@ -108,11 +105,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
         }
 
-        private void OnPowerChanged(object sender, PowerStateEventArgs e)
-        {
-            UpdateUserInterface();
-        }
-
         /// <summary>
         /// Handles ui messages from the client. For things such as button presses
         /// which interact with the world and require server action.
@@ -120,16 +112,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// <param name="obj">A user interface message from the client.</param>
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
-            var msg = (UiButtonPressedMessage) obj.Message;
-            var needsPower = msg.Button switch
-            {
-                UiButton.Eject => false,
-                _ => true,
-            };
-
-            if(!PlayerCanUseDispenser(obj.Session.AttachedEntity, needsPower))
+            if(!PlayerCanUseDispenser(obj.Session.AttachedEntity))
                 return;
 
+            var msg = (UiButtonPressedMessage) obj.Message;
             switch (msg.Button)
             {
                 case UiButton.Eject:
@@ -175,7 +161,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// </summary>
         /// <param name="playerEntity">The player entity.</param>
         /// <returns>Returns true if the entity can use the dispenser, and false if it cannot.</returns>
-        private bool PlayerCanUseDispenser(IEntity playerEntity, bool needsPower = true)
+        private bool PlayerCanUseDispenser(IEntity playerEntity)
         {
             //Need player entity to check if they are still able to use the dispenser
             if (playerEntity == null)
@@ -184,7 +170,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if (!ActionBlockerSystem.CanInteract(playerEntity) || !ActionBlockerSystem.CanUse(playerEntity))
                 return false;
             //Check if device is powered
-            if (needsPower && !Powered)
+            if (!Powered)
                 return false;
 
             return true;
@@ -199,12 +185,12 @@ namespace Content.Server.GameObjects.Components.Chemistry
             var beaker = _beakerContainer.ContainedEntity;
             if (beaker == null)
             {
-                return new ReagentDispenserBoundUserInterfaceState(Powered, false, ReagentUnit.New(0), ReagentUnit.New(0),
+                return new ReagentDispenserBoundUserInterfaceState(false, ReagentUnit.New(0), ReagentUnit.New(0),
                     "", Inventory, Owner.Name, null, _dispenseAmount);
             }
 
             var solution = beaker.GetComponent<SolutionComponent>();
-            return new ReagentDispenserBoundUserInterfaceState(Powered, true, solution.CurrentVolume, solution.MaxVolume,
+            return new ReagentDispenserBoundUserInterfaceState(true, solution.CurrentVolume, solution.MaxVolume,
                 beaker.Name, Inventory, Owner.Name, solution.ReagentList.ToList(), _dispenseAmount);
         }
 
@@ -277,6 +263,9 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return;
             }
 
+            if (!Powered)
+                return;
+
             var activeHandEntity = hands.GetActiveHand?.Owner;
             if (activeHandEntity == null)
             {
@@ -291,7 +280,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// </summary>
         /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
         /// <returns></returns>
-        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)
+        bool IInteractUsing.InteractUsing(InteractUsingEventArgs args)
         {
             if (!args.User.TryGetComponent(out IHandsComponent hands))
             {

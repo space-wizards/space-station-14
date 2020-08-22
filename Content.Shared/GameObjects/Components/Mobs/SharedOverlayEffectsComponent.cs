@@ -1,12 +1,19 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Threading;
+using System.Timers;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using YamlDotNet.RepresentationModel;
+using Component = Robust.Shared.GameObjects.Component;
 
 namespace Content.Shared.GameObjects.Components.Mobs
 {
@@ -114,7 +121,6 @@ namespace Content.Shared.GameObjects.Components.Mobs
     {
         GradientCircleMaskOverlay,
         CircleMaskOverlay,
-        FlashOverlay,
-        RadiationPulseOverlay,
+        FlashOverlay
     }
 }

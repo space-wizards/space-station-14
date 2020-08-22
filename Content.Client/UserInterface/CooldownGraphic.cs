@@ -1,12 +1,16 @@
-﻿using System;
-using Robust.Client.Graphics.Drawing;
-using Robust.Client.Graphics.Shaders;
-using Robust.Client.UserInterface;
-using Robust.Shared.IoC;
+﻿using Robust.Client.Graphics.Drawing;
+using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Client.Interfaces.Graphics;
 using Robust.Shared.Maths;
+using System;
+using Robust.Client.Graphics.Shaders;
+using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
+using CannyFastMath;
+using Math = CannyFastMath.Math;
+using MathF = CannyFastMath.MathF;
 
-namespace Content.Client.UserInterface
+namespace Robust.Client.UserInterface.Controls
 {
 
     public class CooldownGraphic : Control
@@ -30,7 +34,6 @@ namespace Content.Client.UserInterface
 
         protected override void Draw(DrawingHandleScreen handle)
         {
-            Span<float> x = stackalloc float[10];
             Color color;
 
             var lerp = 1f - MathF.Abs(Progress); // for future bikeshedding purposes
@@ -42,7 +45,7 @@ namespace Content.Client.UserInterface
             }
             else
             {
-                var alpha = MathHelper.Clamp(0.5f * lerp, 0f, 0.5f);
+                var alpha = MathF.Clamp(0.5f * lerp, 0f, 0.5f);
                 color = new Color(1f, 1f, 1f, alpha);
             }
 

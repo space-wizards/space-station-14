@@ -1,4 +1,4 @@
-﻿# TODO: Find remaining cans and move to drinks_cans
+# TODO: Find remaining cans and move to drinks_cans
 # TODO: Find empty containers (e.g. mug, pitcher) and move to their own yml
 # TODO: Move bottles to their own yml
 - type: entity
@@ -1353,7 +1353,7 @@
   parent: DrinkGlassBase
   id: DrinkScrewdriverGlass
   name: screwdriver glass
-  description: "Vodka, mixed with plain ol' orange juice. The result is surprisingly delicious."
+  description: Vodka, mixed with plain ol' orange juice. The result is surprisingly delicious.
   components:
   - type: Drink
   - type: Sprite

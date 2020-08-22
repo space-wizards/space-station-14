@@ -1,9 +1,10 @@
-using Content.Client.GameObjects.Components.HUD.Inventory;
 using Content.Client.UserInterface;
 using Content.Shared.Input;
+using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Player;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 

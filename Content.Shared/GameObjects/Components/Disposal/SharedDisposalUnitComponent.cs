@@ -22,8 +22,7 @@ namespace Content.Shared.GameObjects.Components.Disposal
         {
             UnAnchored,
             Anchored,
-            Flushing,
-            Charging
+            Flushing
         }
 
         [Serializable, NetSerializable]
@@ -51,7 +50,7 @@ namespace Content.Shared.GameObjects.Components.Disposal
         }
 
         [Serializable, NetSerializable]
-        public enum PressureState
+        public enum State
         {
             Ready,
             Pressurizing

@@ -2,11 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.VendingMachines;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
+using Content.Server.Interfaces.GameObjects;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Interactable;
@@ -373,7 +374,7 @@ namespace Content.Server.GameObjects.Components
                         return;
                     }
 
-                    if (!player.TryGetComponent(out IHandsComponent? handsComponent))
+                    if (!player.TryGetComponent(out IHandsComponent handsComponent))
                     {
                         _notifyManager.PopupMessage(Owner.Transform.GridPosition, player,
                             Loc.GetString("You have no hands."));
@@ -469,11 +470,11 @@ namespace Content.Server.GameObjects.Components
             serializer.DataField(ref _layoutId, "LayoutId", null);
         }
 
-        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!eventArgs.Using.TryGetComponent<ToolComponent>(out var tool))
                 return false;
-            if (!await tool.UseTool(eventArgs.User, Owner, 0.5f, ToolQuality.Screwing))
+            if (!tool.UseTool(eventArgs.User, Owner, ToolQuality.Screwing))
                 return false;
 
             IsPanelOpen = !IsPanelOpen;

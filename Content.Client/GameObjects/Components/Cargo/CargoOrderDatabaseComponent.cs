@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using Content.Shared.GameObjects.Components.Cargo;
+﻿using Content.Shared.GameObjects.Components.Cargo;
 using Content.Shared.Prototypes.Cargo;
 using Robust.Shared.GameObjects;
+using System;
+using System.Collections.Generic;
 
 namespace Content.Client.GameObjects.Components.Cargo
 {

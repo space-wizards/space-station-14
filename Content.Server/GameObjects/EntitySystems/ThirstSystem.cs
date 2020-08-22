@@ -1,25 +1,30 @@
 using Content.Server.GameObjects.Components.Nutrition;
 using JetBrains.Annotations;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 {
     [UsedImplicitly]
     public class ThirstSystem : EntitySystem
     {
         private float _accumulatedFrameTime;
+        public override void Initialize()
+        {
+            EntityQuery = new TypeEntityQuery(typeof(ThirstComponent));
+        }
 
         public override void Update(float frameTime)
         {
             _accumulatedFrameTime += frameTime;
-
-            if (_accumulatedFrameTime > 1)
+            if (_accumulatedFrameTime > 1.0f)
             {
-                foreach (var component in ComponentManager.EntityQuery<ThirstComponent>())
+                foreach (var entity in RelevantEntities)
                 {
-                    component.OnUpdate(_accumulatedFrameTime);
+                    var comp = entity.GetComponent<ThirstComponent>();
+                    comp.OnUpdate(_accumulatedFrameTime);
                 }
-                _accumulatedFrameTime -= 1;
+                _accumulatedFrameTime = 0.0f;
             }
         }
     }

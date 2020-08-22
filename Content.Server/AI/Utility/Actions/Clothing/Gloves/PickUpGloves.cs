@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using Content.Server.AI.Operators.Sequences;
 using Content.Server.AI.Utility.Considerations;
+using Content.Server.AI.Utility.Considerations.Clothing;
 using Content.Server.AI.Utility.Considerations.Containers;
 using Content.Server.AI.Utility.Considerations.Inventory;
-using Content.Server.AI.Utility.Considerations.Movement;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
+using Content.Shared.GameObjects.Components.Inventory;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
@@ -39,11 +40,13 @@ namespace Content.Server.AI.Utility.Actions.Clothing.Gloves
 
             return new[]
             {
-                considerationsManager.Get<CanPutTargetInInventoryCon>()
+                considerationsManager.Get<ClothingInSlotCon>().Slot(EquipmentSlotDefines.Slots.GLOVES, context)
+                    .InverseBoolCurve(context),
+                considerationsManager.Get<CanPutTargetInHandsCon>()
                     .BoolCurve(context),
-                considerationsManager.Get<TargetDistanceCon>()
-                    .PresetCurve(context, PresetCurve.Distance),
-				considerationsManager.Get<TargetAccessibleCon>()
+                considerationsManager.Get<ClothingInInventoryCon>().Slot(EquipmentSlotDefines.SlotFlags.GLOVES, context)
+                    .InverseBoolCurve(context),
+                considerationsManager.Get<TargetAccessibleCon>()
                     .BoolCurve(context),
             };
         }

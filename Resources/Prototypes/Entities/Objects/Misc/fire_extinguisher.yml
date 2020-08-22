@@ -4,26 +4,9 @@
   id: FireExtinguisher
   description: Extinguishes fires.
   components:
-    - type: Sprite
-      sprite: Objects/Misc/fire_extinguisher.rsi
-      layers:
-        - state: fire_extinguisher_open
-    - type: Icon
-      sprite: Objects/Misc/fire_extinguisher.rsi
-      state: fire_extinguisher_open
-    - type: Item
-      sprite: Objects/Misc/fire_extinguisher.rsi
-      size: 10
-    - type: Solution
-      maxVol: 1000
-      caps: 9
-      contents:
-        reagents:
-          - ReagentId: chem.H2O
-            Quantity: 1000
-    - type: GasSprayer
-      spraySound: /Audio/Effects/spray.ogg
-      sprayType: ExtinguisherSpray
-      fuelType: chem.H2O
-      fuelName: water
-      fuelCost: 50
+  - type: Sprite
+    texture: Objects/Misc/fire_extinguisher.png
+  - type: Icon
+    texture: Objects/Misc/fire_extinguisher.png
+  - type: Item
+    size: 10

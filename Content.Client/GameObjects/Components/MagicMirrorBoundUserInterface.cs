@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Content.Client.UserInterface;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Preferences.Appearance;
 using JetBrains.Annotations;
@@ -243,7 +244,7 @@ namespace Content.Client.GameObjects.Components
 
                     if (int.TryParse(ev.Text, out var result))
                     {
-                        result = MathHelper.Clamp(result, 0, byte.MaxValue);
+                        result = result.Clamp(0, byte.MaxValue);
 
                         _ignoreEvents = true;
                         _colorValue = (byte) result;

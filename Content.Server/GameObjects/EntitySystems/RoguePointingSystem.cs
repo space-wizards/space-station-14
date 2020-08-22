@@ -1,17 +1,25 @@
 ﻿using Content.Server.GameObjects.Components.Pointing;
 using JetBrains.Annotations;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    internal sealed class RoguePointingSystem : EntitySystem
+    public class RoguePointingSystem : EntitySystem
     {
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            EntityQuery = new TypeEntityQuery(typeof(RoguePointingArrowComponent));
+        }
+
         public override void Update(float frameTime)
         {
-            foreach (var component in ComponentManager.EntityQuery<RoguePointingArrowComponent>())
+            foreach (var entity in RelevantEntities)
             {
-                component.Update(frameTime);
+                entity.GetComponent<RoguePointingArrowComponent>().Update(frameTime);
             }
         }
     }

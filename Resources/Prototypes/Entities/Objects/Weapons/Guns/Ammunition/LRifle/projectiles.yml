@@ -6,7 +6,7 @@
   components:
   - type: Projectile
     damages:
-      Piercing: 28
+      Brute: 28
 
 - type: entity
   id: BulletLRifleFlash
@@ -16,7 +16,7 @@
   components:
   - type: Projectile
     damages:
-      Piercing: 28
+      Brute: 28
 
 - type: entity
   id: BulletLRifleHV
@@ -26,7 +26,7 @@
   components:
   - type: Projectile
     damages:
-      Piercing: 30
+      Brute: 30
 
 - type: entity
   id: BulletLRiflePractice
@@ -36,7 +36,7 @@
   components:
   - type: Projectile
     damages:
-      Blunt: 2
+      Brute: 2
 
 - type: entity
   id: BulletLRifleRubber
@@ -46,4 +46,4 @@
   components:
   - type: Projectile
     damages:
-      Blunt: 3
+      Brute: 3

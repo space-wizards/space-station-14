@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Shared.Damage;
-using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Projectiles;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
@@ -71,11 +70,9 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 return;
             }
             else
-            {
                 _deleteOnCollide = true;
-            }
 
-            if (_soundHitSpecies != null && entity.HasComponent<IDamageableComponent>())
+            if (_soundHitSpecies != null && entity.HasComponent<SpeciesComponent>())
             {
                 EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHitSpecies, entity.Transform.GridPosition);
             } else if (_soundHit != null)
@@ -83,20 +80,20 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHit, entity.Transform.GridPosition);
             }
 
-            if (entity.TryGetComponent(out IDamageableComponent damage))
+            if (entity.TryGetComponent(out DamageableComponent damage))
             {
                 Owner.EntityManager.TryGetEntity(_shooter, out var shooter);
 
                 foreach (var (damageType, amount) in _damages)
                 {
-                    damage.ChangeDamage(damageType, amount, false, shooter);
+                    damage.TakeDamage(damageType, amount, Owner, shooter);
                 }
             }
 
             if (!entity.Deleted && entity.TryGetComponent(out CameraRecoilComponent recoilComponent)
-                                && Owner.TryGetComponent(out ICollidableComponent collidableComponent))
+                                && Owner.TryGetComponent(out IPhysicsComponent physicsComponent))
             {
-                var direction = collidableComponent.LinearVelocity.Normalized;
+                var direction = physicsComponent.LinearVelocity.Normalized;
                 recoilComponent.Kick(direction);
             }
         }

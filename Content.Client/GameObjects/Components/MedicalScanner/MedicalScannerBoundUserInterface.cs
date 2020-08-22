@@ -1,11 +1,9 @@
-using JetBrains.Annotations;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using static Content.Shared.GameObjects.Components.Medical.SharedMedicalScannerComponent;
 
 namespace Content.Client.GameObjects.Components.MedicalScanner
 {
-    [UsedImplicitly]
     public class MedicalScannerBoundUserInterface : BoundUserInterface
     {
         public MedicalScannerBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
@@ -22,7 +20,6 @@ namespace Content.Client.GameObjects.Components.MedicalScanner
                 Title = Owner.Owner.Name,
             };
             _window.OnClose += Close;
-            _window.ScanButton.OnPressed += _ => SendMessage(new UiButtonPressedMessage(UiButton.ScanDNA));
             _window.OpenCentered();
         }
 

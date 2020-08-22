@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Shared.Chemistry;
@@ -6,7 +6,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Chemistry.ChemMaster
+namespace Content.Shared.GameObjects.Components.Chemistry
 {
 
     /// <summary>
@@ -19,7 +19,6 @@ namespace Content.Shared.GameObjects.Components.Chemistry.ChemMaster
         [Serializable, NetSerializable]
         public class ChemMasterBoundUserInterfaceState : BoundUserInterfaceState
         {
-            public readonly bool HasPower;
             public readonly bool HasBeaker;
             public readonly ReagentUnit BeakerCurrentVolume;
             public readonly ReagentUnit BeakerMaxVolume;
@@ -40,10 +39,9 @@ namespace Content.Shared.GameObjects.Components.Chemistry.ChemMaster
             public readonly ReagentUnit BufferCurrentVolume;
             public readonly ReagentUnit BufferMaxVolume;
 
-            public ChemMasterBoundUserInterfaceState(bool hasPower, bool hasBeaker, ReagentUnit beakerCurrentVolume, ReagentUnit beakerMaxVolume, string containerName,
+            public ChemMasterBoundUserInterfaceState(bool hasBeaker, ReagentUnit beakerCurrentVolume, ReagentUnit beakerMaxVolume, string containerName,
                 string dispenserName, List<Solution.ReagentQuantity> containerReagents, List<Solution.ReagentQuantity> bufferReagents, bool bufferModeTransfer, ReagentUnit bufferCurrentVolume, ReagentUnit bufferMaxVolume)
             {
-                HasPower = hasPower;
                 HasBeaker = hasBeaker;
                 BeakerCurrentVolume = beakerCurrentVolume;
                 BeakerMaxVolume = beakerMaxVolume;

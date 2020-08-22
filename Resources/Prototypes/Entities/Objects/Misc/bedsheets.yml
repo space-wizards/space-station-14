@@ -1,9 +1,8 @@
-﻿- type: entity
+- type: entity
   parent: BaseItem
   id: BedsheetBase
   name: BedsheetBase
   abstract: true
-  description: A surprisingly soft linen bedsheet.
   placement:
     mode: SnapgridCenter
     snap:
@@ -76,7 +75,6 @@
   id: BedsheetCaptain
   parent: BedsheetBase
   name: captain's bedsheet
-  description: It has a Nanotrasen symbol on it, and was woven with a revolutionary new kind of thread guaranteed to have 0.01% permeability for most non-chemical substances, popular among most modern captains.
   components:
   - type: Sprite
     state: sheetcaptain

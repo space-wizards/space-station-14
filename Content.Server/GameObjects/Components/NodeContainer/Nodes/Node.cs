@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+using Robust.Server.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.ViewVariables;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Robust.Shared.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
-using Robust.Shared.IoC;
-using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 {
@@ -15,7 +14,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
     ///     Organizes themselves into distinct <see cref="INodeGroup"/>s with other <see cref="Node"/>s
     ///     that they can "reach" and have the same <see cref="Node.NodeGroupID"/>.
     /// </summary>
-    public abstract class Node : IExposeData
+    public abstract class Node
     {
         /// <summary>
         ///     An ID used as a criteria for combining into groups. Determines which <see cref="INodeGroup"/>
@@ -46,20 +45,17 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         /// </summary>
         private bool _deleting = false;
 
-        private INodeGroupFactory _nodeGroupFactory;
+#pragma warning disable 649
+        [Dependency] private readonly INodeGroupFactory _nodeGroupFactory;
+#pragma warning restore 649
 
-        public virtual void ExposeData(ObjectSerializer serializer)
+        public void Initialize(NodeGroupID nodeGroupID, IEntity owner)
         {
-            serializer.DataField(this, x => NodeGroupID, "nodeGroupID", NodeGroupID.Default);
-        }
-
-        public void Initialize(IEntity owner)
-        {
+            NodeGroupID = nodeGroupID;
             Owner = owner;
-            _nodeGroupFactory = IoCManager.Resolve<INodeGroupFactory>();
         }
 
-        public void OnContainerStartup()
+        public void OnContainerInitialize()
         {
             TryAssignGroupIfNeeded();
             CombineGroupWithReachable();

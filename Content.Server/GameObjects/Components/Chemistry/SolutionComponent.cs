@@ -1,17 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Content.Server.Chemistry;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.EntitySystems;
+﻿using Content.Server.Chemistry;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.Chemistry;
+using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Chemistry;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -20,6 +15,12 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
+using System.Collections.Generic;
+using System.Linq;
+using Content.Server.GameObjects.Components.GUI;
+using Content.Shared.GameObjects.EntitySystems;
+using Robust.Shared.GameObjects.Systems;
+using Content.Server.GameObjects.EntitySystems.Click;
 
 namespace Content.Server.GameObjects.Components.Chemistry
 {
@@ -27,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
     ///    ECS component that manages a liquid solution of reagents.
     /// </summary>
     [RegisterComponent]
-    public class SolutionComponent : SharedSolutionComponent, IExamine
+    internal class SolutionComponent : SharedSolutionComponent, IExamine
     {
 #pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;

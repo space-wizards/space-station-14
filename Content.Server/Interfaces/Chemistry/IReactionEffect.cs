@@ -1,7 +1,7 @@
 ﻿using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
 
-namespace Content.Server.Interfaces.Chemistry
+namespace Content.Shared.Interfaces
 {
     /// <summary>
     /// Chemical reaction effect on the world such as an explosion, EMP, or fire.

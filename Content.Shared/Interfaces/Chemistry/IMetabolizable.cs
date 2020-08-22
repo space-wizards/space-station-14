@@ -1,4 +1,5 @@
-﻿using Content.Shared.Chemistry;
+﻿using System.Collections.Generic;
+using Content.Shared.Chemistry;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
 

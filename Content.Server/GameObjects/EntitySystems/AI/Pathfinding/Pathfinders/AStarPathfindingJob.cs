@@ -1,8 +1,10 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.EntitySystems.JobQueues;
+using Content.Server.GameObjects.EntitySystems.Pathfinding;
 using Content.Shared.AI;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
@@ -53,7 +55,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
             costSoFar[_startNode] = 0.0f;
             var routeFound = false;
             var count = 0;
-
+            
             while (frontier.Count > 0)
             {
                 // Handle whether we need to pause if we've taken too long
@@ -67,7 +69,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
                         return null;
                     }
                 }
-
+                
                 // Actual pathfinding here
                 (_, currentNode) = frontier.Take();
                 if (currentNode.Equals(_endNode))

@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
+using System;
 
-namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
+namespace Content.Server.GameObjects.Components.Power
 {
     /// <summary>
     ///     Handles the "user-facing" side of the actual SMES object.
@@ -59,7 +60,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
                 _lastChargeState = newChargeState;
                 _lastChargeStateChange = _gameTiming.CurTime;
                 _appearance.SetData(SmesVisuals.LastChargeState, newChargeState);
-            }
+            }            
         }
 
         private int GetNewChargeLevel()

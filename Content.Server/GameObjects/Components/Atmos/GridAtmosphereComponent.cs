@@ -24,10 +24,10 @@ namespace Content.Server.GameObjects.Components.Atmos
     /// <summary>
     ///     This is our SSAir equivalent.
     /// </summary>
-    [ComponentReference(typeof(IGridAtmosphereComponent))]
     [RegisterComponent, Serializable]
     public class GridAtmosphereComponent : Component, IGridAtmosphereComponent
     {
+        [Robust.Shared.IoC.Dependency] private IGameTiming _gameTiming = default!;
         [Robust.Shared.IoC.Dependency] private IMapManager _mapManager = default!;
 
         /// <summary>
@@ -65,9 +65,6 @@ namespace Content.Server.GameObjects.Components.Atmos
         private readonly HashSet<TileAtmosphere> _hotspotTiles = new HashSet<TileAtmosphere>(1000);
 
         [ViewVariables]
-        private readonly HashSet<TileAtmosphere> _superconductivityTiles = new HashSet<TileAtmosphere>(1000);
-
-        [ViewVariables]
         private readonly HashSet<MapIndices> _invalidatedCoords = new HashSet<MapIndices>(1000);
 
         [ViewVariables]
@@ -83,7 +80,6 @@ namespace Content.Server.GameObjects.Components.Atmos
             ExcitedGroups,
             HighPressureDelta,
             Hotspots,
-            Superconductivity,
         }
 
         /// <inheritdoc />
@@ -124,6 +120,8 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public void RepopulateTiles()
         {
+            _tiles.Clear();
+
             foreach (var tile in _grid.GetAllTiles())
             {
                 if(!_tiles.ContainsKey(tile.GridIndices))
@@ -153,38 +151,26 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (tile == null)
                 {
                     tile = new TileAtmosphere(this, _grid.Index, indices, new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C});
-                    _tiles[indices] = tile;
+                    _tiles.Add(indices, tile);
                 }
 
                 if (IsSpace(indices))
                 {
                     tile.Air = new GasMixture(GetVolumeForCells(1));
                     tile.Air.MarkImmutable();
-                    _tiles[indices] = tile;
-
                 } else if (IsAirBlocked(indices))
                 {
                     tile.Air = null;
                 }
                 else
                 {
-                    var obs = GetObstructingComponent(indices);
-
-                    if (obs != null)
-                    {
-                        if (tile.Air == null && obs.FixVacuum)
-                        {
-                            FixVacuum(tile.GridIndices);
-                        }
-                    }
-
-                    tile.Air ??= new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C};
+                    tile.Air ??= new GasMixture(GetVolumeForCells(1));
                 }
 
                 tile.UpdateAdjacent();
                 tile.UpdateVisuals();
 
-                foreach (var direction in Cardinal)
+                foreach (var direction in Cardinal())
                 {
                     var otherIndices = indices.Offset(direction);
                     var otherTile = GetTile(otherIndices);
@@ -194,25 +180,6 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
 
             _invalidatedCoords.Clear();
-        }
-
-        /// <inheritdoc />
-        public void FixVacuum(MapIndices indices)
-        {
-            var tile = GetTile(indices);
-            if (tile?.GridIndex != _grid.Index) return;
-            var adjacent = GetAdjacentTiles(indices);
-            tile.Air = new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C};
-            _tiles[indices] = tile;
-
-            var ratio = 1f / adjacent.Count;
-
-            foreach (var (direction, adj) in adjacent)
-            {
-                var mix = adj.Air.RemoveRatio(ratio);
-                tile.Air.Merge(mix);
-                adj.Air.Merge(mix);
-            }
         }
 
         /// <inheritdoc />
@@ -248,18 +215,6 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             if (tile == null) return;
             _hotspotTiles.Remove(tile);
-        }
-
-        public void AddSuperconductivityTile(TileAtmosphere tile)
-        {
-            if (tile?.GridIndex != _grid.Index) return;
-            _superconductivityTiles.Add(tile);
-        }
-
-        public void RemoveSuperconductivityTile(TileAtmosphere tile)
-        {
-            if (tile == null) return;
-            _superconductivityTiles.Remove(tile);
         }
 
         /// <inheritdoc />
@@ -327,15 +282,13 @@ namespace Content.Server.GameObjects.Components.Atmos
             return _grid.GetTileRef(indices).Tile.IsEmpty;
         }
 
-        public Dictionary<Direction, TileAtmosphere> GetAdjacentTiles(MapIndices indices, bool includeAirBlocked = false)
+        public Dictionary<Direction, TileAtmosphere> GetAdjacentTiles(MapIndices indices)
         {
             var sides = new Dictionary<Direction, TileAtmosphere>();
-            foreach (var dir in Cardinal)
+            foreach (var dir in Cardinal())
             {
                 var side = indices.Offset(dir);
-                var tile = GetTile(side);
-                if(tile?.Air != null || includeAirBlocked)
-                    sides[dir] = tile;
+                sides[dir] = GetTile(side);
             }
 
             return sides;
@@ -369,35 +322,31 @@ namespace Content.Server.GameObjects.Components.Atmos
             switch (_state)
             {
                 case ProcessState.TileEqualize:
-                    ProcessTileEqualize();
-                    _state = ProcessState.ActiveTiles;
+                    if(ProcessTileEqualize())
+                        _state = ProcessState.ActiveTiles;
                     return;
                 case ProcessState.ActiveTiles:
-                    ProcessActiveTiles();
-                    _state = ProcessState.ExcitedGroups;
+                    if(ProcessActiveTiles())
+                        _state = ProcessState.ExcitedGroups;
                     return;
                 case ProcessState.ExcitedGroups:
-                    ProcessExcitedGroups();
-                    _state = ProcessState.HighPressureDelta;
+                    if(ProcessExcitedGroups())
+                        _state = ProcessState.HighPressureDelta;
                     return;
                 case ProcessState.HighPressureDelta:
-                    ProcessHighPressureDelta();
-                    _state = ProcessState.Hotspots;
+                    if(ProcessHighPressureDelta())
+                        _state = ProcessState.Hotspots;
                     break;
                 case ProcessState.Hotspots:
-                    ProcessHotspots();
-                    _state = ProcessState.Superconductivity;
-                    break;
-                case ProcessState.Superconductivity:
-                    ProcessSuperconductivity();
-                    _state = ProcessState.TileEqualize;
+                    if(ProcessHotspots())
+                        _state = ProcessState.TileEqualize;
                     break;
             }
 
             UpdateCounter++;
         }
 
-        public void ProcessTileEqualize()
+        public bool ProcessTileEqualize()
         {
             _stopwatch.Restart();
 
@@ -410,11 +359,13 @@ namespace Content.Server.GameObjects.Components.Atmos
                 number = 0;
                 // Process the rest next time.
                 if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
-                    return;
+                    return false;
             }
+
+            return true;
         }
 
-        public void ProcessActiveTiles()
+        public bool ProcessActiveTiles()
         {
             _stopwatch.Restart();
 
@@ -427,11 +378,13 @@ namespace Content.Server.GameObjects.Components.Atmos
                 number = 0;
                 // Process the rest next time.
                 if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
-                    return;
+                    return false;
             }
+
+            return true;
         }
 
-        public void ProcessExcitedGroups()
+        public bool ProcessExcitedGroups()
         {
             _stopwatch.Restart();
 
@@ -451,11 +404,13 @@ namespace Content.Server.GameObjects.Components.Atmos
                 number = 0;
                 // Process the rest next time.
                 if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
-                    return;
+                    return false;
             }
+
+            return true;
         }
 
-        public void ProcessHighPressureDelta()
+        public bool ProcessHighPressureDelta()
         {
             _stopwatch.Restart();
 
@@ -471,11 +426,13 @@ namespace Content.Server.GameObjects.Components.Atmos
                 number = 0;
                 // Process the rest next time.
                 if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
-                    return;
+                    return false;
             }
+
+            return true;
         }
 
-        private void ProcessHotspots()
+        private bool ProcessHotspots()
         {
             _stopwatch.Restart();
 
@@ -488,25 +445,10 @@ namespace Content.Server.GameObjects.Components.Atmos
                 number = 0;
                 // Process the rest next time.
                 if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
-                    return;
+                    return false;
             }
-        }
 
-        private void ProcessSuperconductivity()
-        {
-            _stopwatch.Restart();
-
-            var number = 0;
-            foreach (var superconductivity in _superconductivityTiles.ToArray())
-            {
-                superconductivity.Superconduct();
-
-                if (number++ < LagCheckIterations) continue;
-                number = 0;
-                // Process the rest next time.
-                if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
-                    return;
-            }
+            return true;
         }
 
         private AirtightComponent GetObstructingComponent(MapIndices indices)
@@ -520,8 +462,8 @@ namespace Content.Server.GameObjects.Components.Atmos
             return null;
         }
 
-        private static readonly Direction[] Cardinal =
-            new []
+        private static IEnumerable<Direction> Cardinal() =>
+            new[]
             {
                 Direction.North, Direction.East, Direction.South, Direction.West
             };
@@ -541,9 +483,6 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (!serializer.TryReadDataField("uniqueMixes", out List<GasMixture> uniqueMixes) ||
                     !serializer.TryReadDataField("tiles", out Dictionary<MapIndices, int> tiles))
                     return;
-
-                _tiles.Clear();
-
                 foreach (var (indices, mix) in tiles)
                 {
                     _tiles.Add(indices, new TileAtmosphere(this, gridId, indices, (GasMixture)uniqueMixes[mix].Clone()));
@@ -552,22 +491,12 @@ namespace Content.Server.GameObjects.Components.Atmos
             } else if (serializer.Writing)
             {
                 var uniqueMixes = new List<GasMixture>();
-                var uniqueMixHash = new Dictionary<GasMixture, int>();
                 var tiles = new Dictionary<MapIndices, int>();
                 foreach (var (indices, tile) in _tiles)
                 {
                     if (tile.Air == null) continue;
-
-                    if (uniqueMixHash.TryGetValue(tile.Air, out var index))
-                    {
-                        tiles[indices] = index;
-                        continue;
-                    }
-
                     uniqueMixes.Add(tile.Air);
-                    var newIndex = uniqueMixes.Count - 1;
-                    uniqueMixHash[tile.Air] = newIndex;
-                    tiles[indices] = newIndex;
+                    tiles[indices] = uniqueMixes.Count - 1;
                 }
 
                 serializer.DataField(ref uniqueMixes, "uniqueMixes", new List<GasMixture>());

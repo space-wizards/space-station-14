@@ -1,12 +1,10 @@
-﻿using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Damage;
+﻿using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
 using Content.Shared.GameObjects.Components.Gravity;
 using Content.Shared.GameObjects.Components.Interactable;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
@@ -20,7 +18,7 @@ using Robust.Shared.Serialization;
 namespace Content.Server.GameObjects.Components.Gravity
 {
     [RegisterComponent]
-    public class GravityGeneratorComponent : SharedGravityGeneratorComponent, IInteractUsing, IBreakAct, IInteractHand
+    public class GravityGeneratorComponent: SharedGravityGeneratorComponent, IInteractUsing, IBreakAct, IInteractHand
     {
         private BoundUserInterface _userInterface;
 
@@ -99,17 +97,19 @@ namespace Content.Server.GameObjects.Components.Gravity
             return true;
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!eventArgs.Using.TryGetComponent(out WelderComponent tool))
                 return false;
 
-            if (!await tool.UseTool(eventArgs.User, Owner, 2f, ToolQuality.Welding, 5f))
+            if (!tool.UseTool(eventArgs.User, Owner, ToolQuality.Welding, 5f))
                 return false;
 
             // Repair generator
+            var damageable = Owner.GetComponent<DamageableComponent>();
             var breakable = Owner.GetComponent<BreakableComponent>();
-            breakable.FixAllDamage();
+            damageable.HealAllDamage();
+            breakable.broken = false;
             _intact = true;
 
             var notifyManager = IoCManager.Resolve<IServerNotifyManager>();
@@ -130,16 +130,13 @@ namespace Content.Server.GameObjects.Components.Gravity
             if (!Intact)
             {
                 MakeBroken();
-            }
-            else if (!Powered)
+            } else if (!Powered)
             {
                 MakeUnpowered();
-            }
-            else if (!SwitchedOn)
+            } else if (!SwitchedOn)
             {
                 MakeOff();
-            }
-            else
+            } else
             {
                 MakeOn();
             }

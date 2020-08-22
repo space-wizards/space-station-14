@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using Content.Server.AI.Operators;
 using Content.Server.AI.Operators.Inventory;
-using Content.Server.AI.Operators.Nutrition;
 using Content.Server.AI.Utility.Considerations;
-using Content.Server.AI.Utility.Considerations.Inventory;
+using Content.Server.AI.Utility.Considerations.Containers;
+using Content.Server.AI.Utility.Considerations.Hands;
 using Content.Server.AI.Utility.Considerations.Nutrition.Food;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
@@ -28,7 +28,7 @@ namespace Content.Server.AI.Utility.Actions.Nutrition.Food
             ActionOperators = new Queue<AiOperator>(new AiOperator[]
             {
                 new EquipEntityOperator(Owner, _entity),
-                new UseFoodInInventoryOperator(Owner, _entity), 
+                new UseItemInHandsOperator(Owner, _entity),
             });
         }
 
@@ -44,10 +44,13 @@ namespace Content.Server.AI.Utility.Actions.Nutrition.Food
 
             return new[]
             {
-                considerationsManager.Get<TargetInOurInventoryCon>()
+                considerationsManager.Get<TargetInOurHandsCon>()
                     .BoolCurve(context),
+                considerationsManager.Get<HungerCon>()
+                    .LogisticCurve(context, 1000f, 1.3f, -0.3f, 0.5f),
                 considerationsManager.Get<FoodValueCon>()
                     .QuadraticCurve(context, 1.0f, 0.4f, 0.0f, 0.0f),
+
             };
         }
     }

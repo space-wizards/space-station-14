@@ -1,5 +1,4 @@
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Shared.Roles;
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
 

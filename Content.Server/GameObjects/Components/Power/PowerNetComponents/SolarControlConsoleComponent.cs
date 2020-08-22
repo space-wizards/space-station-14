@@ -1,5 +1,5 @@
-﻿using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.EntitySystems;
+﻿using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.Components.UserInterface;
@@ -8,7 +8,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
+namespace Content.Server.GameObjects.Components.Power
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]

@@ -1,9 +1,9 @@
-﻿using System.Linq;
-using Content.Server.GameObjects.Components.NodeContainer;
+﻿using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using System.Linq;
 
 namespace Content.Server.GameObjects.Components.Power
 {

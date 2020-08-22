@@ -1,5 +1,7 @@
+using System;
+using System.Collections.Generic;
 using Content.Server.Interfaces.Chat;
-using Content.Shared.Roles;
+using Content.Shared.Jobs;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Mobs.Roles

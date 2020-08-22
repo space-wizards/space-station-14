@@ -1,7 +1,7 @@
 ﻿using System;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Trigger
+namespace Content.Shared.GameObjects.Components.Triggers
 {
     [NetSerializable]
     [Serializable]

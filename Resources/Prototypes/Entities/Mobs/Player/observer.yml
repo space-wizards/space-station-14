@@ -1,19 +1,12 @@
 - type: entity
   id: MobObserver
   name: observer
-  abstract: true
   save: false
   description: Boo!
   components:
   - type: Mind
   - type: Physics
     mass: 5
-  - type: Collidable
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.35,-0.35,0.35,0.35"
-      mask:
-      - GhostImpassable
   - type: Eye
     zoom: 0.5, 0.5
     drawFov: false
@@ -23,6 +16,7 @@
     DoRangeCheck: false
   - type: IgnorePause
   - type: Ghost
+  - type: CanSeeGases
   - type: Sprite
     netsync: false
     drawdepth: Ghosts

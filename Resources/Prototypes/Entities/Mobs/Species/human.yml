@@ -12,9 +12,6 @@
   - type: Hands
   - type: MovementSpeedModifier
   - type: MovedByPressure
-  - type: Barotrauma
-  - type: DamageOnHighSpeedImpact
-    soundHit: /Audio/Effects/hit_kick.ogg
   - type: Hunger
   - type: Thirst
   # Organs
@@ -28,7 +25,7 @@
     digestionDelay: 20
   # StatusEffects
   - type: Stunnable
-  # Other
+  # EndStatusEffects
   - type: Inventory
   - type: Clickable
   - type: InteractionOutline
@@ -38,35 +35,34 @@
     layers:
     - map: ["enum.HumanoidVisualLayers.Chest"]
       color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
-      state: torso_m
+      sprite: Mobs/Species/human.rsi
+      state: human_chest_m
     - map: ["enum.HumanoidVisualLayers.Head"]
       color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
-      state: head_m
-    - map: ["enum.HumanoidVisualLayers.Eyes"]
-      color: "#008800"
-      sprite: Mobs/Customization/eyes.rsi
+      sprite: Mobs/Species/human.rsi
+      state: human_head_m
+    - sprite: Mobs/Customization/eyes.rsi
       state: eyes
+      color: "#008800"
     - map: ["enum.HumanoidVisualLayers.RArm"]
       color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
-      state: r_arm
+      sprite: Mobs/Species/human.rsi
+      state: human_r_arm
     - map: ["enum.HumanoidVisualLayers.LArm"]
       color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
-      state: l_arm
+      sprite: Mobs/Species/human.rsi
+      state: human_l_arm
     - map: ["enum.HumanoidVisualLayers.RLeg"]
       color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
-      state: r_leg
+      sprite: Mobs/Species/human.rsi
+      state: human_r_leg
     - map: ["enum.HumanoidVisualLayers.LLeg"]
       color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
-      state: l_leg
+      sprite: Mobs/Species/human.rsi
+      state: human_l_leg
     - shader: StencilClear
-      sprite: Mobs/Species/Human/parts.rsi
-      state: l_leg
+      sprite: Mobs/Species/human.rsi
+      state: human_l_leg
     - shader: StencilMask
       map: ["enum.HumanoidVisualLayers.StencilMask"]
       sprite: Mobs/Customization/masking_helpers.rsi
@@ -76,20 +72,12 @@
       shader: StencilDraw
     - map: ["enum.HumanoidVisualLayers.LHand"]
       color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
-      state: l_hand
+      sprite: Mobs/Species/human.rsi
+      state: human_l_hand
     - map: ["enum.HumanoidVisualLayers.RHand"]
       color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
-      state: r_hand
-    - map: ["enum.HumanoidVisualLayers.LFoot"]
-      color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
-      state: l_foot
-    - map: ["enum.HumanoidVisualLayers.RFoot"]
-      color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
-      state: r_foot
+      sprite: Mobs/Species/human.rsi
+      state: human_r_hand
     - map: ["enum.Slots.IDCARD"]
     - map: ["enum.Slots.GLOVES"]
     - map: ["enum.Slots.SHOES"]
@@ -110,40 +98,35 @@
     - map: ["hand-left"]
     - map: ["hand-right"]
   - type: Icon
-    sprite: Mobs/Species/Human/parts.rsi
-    state: full
+    sprite: Mobs/Species/human.rsi
+    state: human_basic
   - type: Physics
     mass: 85
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.50,-0.30,0.40,0.30"
+      bounds: "-0.35,-0.35,0.35,0.35"
       mask:
       - Impassable
       - MobImpassable
       - VaultImpassable
+      - SmallImpassable
       layer:
       - Opaque
       - MobImpassable
+  - type: Species
+    Template: Human
+    HeatResistance: 323
   - type: BodyManager
-    criticalThreshold: 100
-    deadThreshold: 200
-    baseTemplate: bodyTemplate.Humanoid
-    basePreset: bodyPreset.BasicHuman
-  - type: Metabolism
-    needsGases:
-      Oxygen: 0.006365740
-    producesGases:
-      Oxygen: 0.004774305
-      CarbonDioxide: 0.001591435
-  - type: MobStateManager
+    BaseTemplate: bodyTemplate.Humanoid
+    BasePreset: bodyPreset.BasicHuman
   - type: HeatResistance
+  - type: Damageable
   - type: Appearance
     visuals:
-    - type: RotationVisualizer
+    - type: SpeciesVisualizer
     - type: BuckleVisualizer
   - type: CombatMode
-  - type: Climbing
   - type: Teleportable
   - type: CharacterInfo
   - type: FootstepSound
@@ -157,13 +140,7 @@
   - type: Grammar
     proper: true
   - type: Pullable
-  - type: DoAfter
-  - type: Strippable
-  - type: UserInterface
-    interfaces:
-      - key: enum.StrippingUiKey.Key
-        type: StrippableBoundUserInterface
-
+  - type: CanSeeGases
 
 - type: entity
   save: false
@@ -177,51 +154,55 @@
     - type: Sprite
       netsync: false
       drawdepth: Mobs
+
       layers:
       - map: ["enum.HumanoidVisualLayers.Chest"]
         color: "#e8b59b"
-        sprite: Mobs/Species/Human/parts.rsi
-        state: torso_m
+        sprite: Mobs/Species/human.rsi
+        state: human_chest_m
       - map: ["enum.HumanoidVisualLayers.Head"]
         color: "#e8b59b"
-        sprite: Mobs/Species/Human/parts.rsi
-        state: head_m
-      - map: ["enum.HumanoidVisualLayers.Eyes"]
-        color: "#008800"
-        sprite: Mobs/Customization/eyes.rsi
+        sprite: Mobs/Species/human.rsi
+        state: human_head_m
+      - sprite: Mobs/Customization/eyes.rsi
         state: eyes
+        color: "#008800"
       - map: ["enum.HumanoidVisualLayers.RArm"]
         color: "#e8b59b"
-        sprite: Mobs/Species/Human/parts.rsi
-        state: r_arm
+        sprite: Mobs/Species/human.rsi
+        state: human_r_arm
       - map: ["enum.HumanoidVisualLayers.LArm"]
         color: "#e8b59b"
-        sprite: Mobs/Species/Human/parts.rsi
-        state: l_arm
+        sprite: Mobs/Species/human.rsi
+        state: human_l_arm
       - map: ["enum.HumanoidVisualLayers.RLeg"]
         color: "#e8b59b"
-        sprite: Mobs/Species/Human/parts.rsi
-        state: r_leg
+        sprite: Mobs/Species/human.rsi
+        state: human_r_leg
       - map: ["enum.HumanoidVisualLayers.LLeg"]
         color: "#e8b59b"
-        sprite: Mobs/Species/Human/parts.rsi
-        state: l_leg
+        sprite: Mobs/Species/human.rsi
+        state: human_l_leg
+
       - shader: StencilClear
       - shader: StencilMask
         map: ["enum.HumanoidVisualLayers.StencilMask"]
         sprite: Mobs/Customization/masking_helpers.rsi
         state: female_full
         visible: false
+
       - map: ["enum.Slots.INNERCLOTHING"]
         shader: StencilDraw
+
       - map: ["enum.HumanoidVisualLayers.LHand"]
         color: "#e8b59b"
-        sprite: Mobs/Species/Human/parts.rsi
-        state: l_hand
+        sprite: Mobs/Species/human.rsi
+        state: human_l_hand
       - map: ["enum.HumanoidVisualLayers.RHand"]
         color: "#e8b59b"
-        sprite: Mobs/Species/Human/parts.rsi
-        state: r_hand
+        sprite: Mobs/Species/human.rsi
+        state: human_r_hand
+
       - map: ["enum.Slots.IDCARD"]
       - map: ["enum.Slots.GLOVES"]
       - map: ["enum.Slots.SHOES"]
@@ -241,11 +222,14 @@
       - map: ["enum.Slots.HEAD"]
       - map: ["hand-left"]
       - map: ["hand-right"]
+
     - type: Icon
-      sprite: Mobs/Species/Human/parts.rsi
-      state: full
+      sprite: Mobs/Species/human.rsi
+      state: human_basic
+
     - type: Physics
       mass: 85
+
     - type: Collidable
       shapes:
         - !type:PhysShapeAabb
@@ -257,15 +241,17 @@
           - SmallImpassable
           layer:
           - MobImpassable
-    - type: BodyManager
-      criticalThreshold: 100
-      deadThreshold: 200
-      baseTemplate: bodyTemplate.Humanoid
-      basePreset: bodyPreset.BasicHuman
-    - type: MobStateManager
+
+    - type: Species
+      Template: Human
+      HeatResistance: 323
+    - type: Damageable
+
     - type: Appearance
       visuals:
-        - type: RotationVisualizer
+        - type: SpeciesVisualizer
+
     - type: HumanoidAppearance
+
     - type: Grammar
       proper: true

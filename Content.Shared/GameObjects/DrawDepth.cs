@@ -1,5 +1,5 @@
-using Robust.Shared.Serialization;
 using DrawDepthTag = Robust.Shared.GameObjects.DrawDepth;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects
 {

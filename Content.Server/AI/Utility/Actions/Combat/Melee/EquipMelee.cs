@@ -44,7 +44,9 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
 
             return new[]
             {
-                considerationsManager.Get<CanPutTargetInInventoryCon>()
+                considerationsManager.Get<MeleeWeaponEquippedCon>()
+                    .InverseBoolCurve(context),
+                considerationsManager.Get<CanPutTargetInHandsCon>()
                     .BoolCurve(context),
                 considerationsManager.Get<MeleeWeaponSpeedCon>()
                     .QuadraticCurve(context, 1.0f, 0.5f, 0.0f, 0.0f),

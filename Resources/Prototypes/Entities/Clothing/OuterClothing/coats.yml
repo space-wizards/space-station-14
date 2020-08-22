@@ -2,7 +2,7 @@
   parent: OuterclothingBase
   id: OuterclothingBomber
   name: bomber
-  description: A thick, well-worn WW2 leather bomber jacket.
+  description: ''
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/bomber.rsi
@@ -15,7 +15,7 @@
   parent: OuterclothingBase
   id: OuterclothingBomberopen
   name: bomber (open)
-  description: A thick, well-worn WW2 leather bomber jacket.
+  description: ''
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/bomber_open.rsi
@@ -28,7 +28,7 @@
   parent: OuterclothingBase
   id: OuterclothingCargojacket
   name: cargo jacket
-  description: A cargo jacket.
+  description: ''
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/cargo_jacket.rsi
@@ -41,7 +41,7 @@
   parent: OuterclothingBase
   id: OuterclothingChurchcoat
   name: church coat
-  description: A piety, blessed church coat.
+  description: ''
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/church_coat.rsi
@@ -54,7 +54,7 @@
   parent: OuterclothingBase
   id: OuterclothingDetective
   name: detective
-  description: A rugged canvas trenchcoat, designed and created by TX Fabrication Corp. The coat is externally impact resistant - perfect for your next act of autodefenestration!
+  description: ''
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/detective.rsi
@@ -67,7 +67,7 @@
   parent: OuterclothingBase
   id: OuterclothingGentlecoat
   name: gentle coat
-  description: A gentle coat for a gentle man, or woman.
+  description: ''
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/gentlecoat.rsi
@@ -80,7 +80,7 @@
   parent: OuterclothingBase
   id: OuterclothingGreyhoodie
   name: grey hoodie
-  description: A grey hoodie.
+  description: ''
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/grey_hoodie.rsi
@@ -93,7 +93,7 @@
   parent: OuterclothingBase
   id: OuterclothingGreyhoodieopen
   name: grey hoodie (open)
-  description: A grey hoodie.
+  description: ''
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/grey_hoodie_open.rsi
@@ -106,7 +106,7 @@
   parent: OuterclothingBase
   id: OuterclothingInspcoat
   name: inspector coat
-  description: A strict inspector coat for being intimidating during inspections.
+  description: ''
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/insp_coat.rsi
@@ -119,7 +119,7 @@
   parent: OuterclothingBase
   id: OuterclothingJensencoat
   name: jensen coat
-  description: A jensen coat.
+  description: ''
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/jensencoat.rsi
@@ -132,7 +132,7 @@
   parent: OuterclothingBase
   id: OuterclothingLabcoat
   name: lab coat
-  description: A suit that protects against minor chemical spills.
+  description: ''
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/labcoat.rsi
@@ -145,7 +145,7 @@
   parent: OuterclothingBase
   id: OuterclothingLabcoatopen
   name: lab coat (open)
-  description: A suit that protects against minor chemical spills.
+  description: ''
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/labcoat_open.rsi
@@ -158,7 +158,7 @@
   parent: OuterclothingBase
   id: OuterclothingLabcoatchem
   name: lab coat (chem)
-  description: A suit that protects against minor chemical spills. Has an orange stripe on the shoulder.
+  description: ''
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/labcoat_chem.rsi
@@ -171,7 +171,7 @@
   parent: OuterclothingBase
   id: OuterclothingLabcoatchemopen
   name: lab coat (chem open)
-  description: A suit that protects against minor chemical spills. Has an orange stripe on the shoulder.
+  description: ''
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/labcoat_chem_open.rsi
@@ -184,7 +184,7 @@
   parent: OuterclothingBase
   id: OuterclothingLabcoatcmo
   name: lab coat (CMO)
-  description: Bluer than the standard model.
+  description: ''
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/labcoat_cmo.rsi
@@ -197,7 +197,7 @@
   parent: OuterclothingBase
   id: OuterclothingLabcoatcmoopen
   name: lab coat (CMO open)
-  description: Bluer than the standard model.
+  description: ''
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/labcoat_cmo_open.rsi
@@ -210,7 +210,7 @@
   parent: OuterclothingBase
   id: OuterclothingLabcoatmedspec
   name: lab coat (medical)
-  description: A snow-white, sterilised coat that protects against minor chemical spills.
+  description: ''
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/labcoat_medspec.rsi
@@ -223,7 +223,7 @@
   parent: OuterclothingBase
   id: OuterclothingLabcoatmedspecopen
   name: lab coat (medical open)
-  description: A snow-white, sterilised coat that protects against minor chemical spills.
+  description: ''
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/labcoat_medspec_open.rsi
@@ -236,7 +236,7 @@
   parent: OuterclothingBase
   id: OuterclothingLeatherjacket
   name: leather jacket
-  description: A badass leather jacket.
+  description: ''
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/leather_jacket.rsi
@@ -249,7 +249,7 @@
   parent: OuterclothingBase
   id: OuterclothingPirate
   name: pirate
-  description: Yarr.
+  description: ''
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/pirate.rsi
@@ -262,7 +262,7 @@
   parent: OuterclothingBase
   id: OuterclothingQmcoat
   name: QM coat
-  description: A robust and comfy coat for quartermasters.
+  description: ''
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/qm_coat.rsi
@@ -275,7 +275,7 @@
   parent: OuterclothingBase
   id: OuterclothingRedwizard
   name: red wizard
-  description: Strange-looking, red, hat-wear that most certainly belongs to a real magic user.
+  description: ''
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/redwizard.rsi
@@ -288,7 +288,7 @@
   parent: OuterclothingBase
   id: OuterclothingHoSTrenchcoat
   name: head of security trenchcoat
-  description: This trenchcoat was specifically designed for asserting superior authority.
+  description: ''
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/hos_trenchcoat.rsi

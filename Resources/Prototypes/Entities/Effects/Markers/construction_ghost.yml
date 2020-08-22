@@ -1,7 +1,6 @@
 - type: entity
-  name: construction ghost
+  name: spooky ghost
   id: constructionghost
-  abstract: true
   components:
   - type: Sprite
     color: '#3F38'
@@ -13,7 +12,6 @@
 - type: entity
   name: somebody-messed-up frame
   id: structureconstructionframe
-  abstract: true
   components:
   - type: Sprite
   - type: Construction

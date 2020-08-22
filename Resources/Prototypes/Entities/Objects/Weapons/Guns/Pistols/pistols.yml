@@ -17,7 +17,7 @@
   - type: Icon
     state: icon
   - type: Item
-    size: 12
+    size: 24
     state: icon
   - type: MagazineBarrel
     caliber: Pistol
@@ -58,7 +58,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
   - type: Item
-    size: 12
+    size: 24
     sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -88,7 +88,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Pistols/colt.rsi
   - type: Item
-    size: 12
+    size: 24
     sprite: Objects/Weapons/Guns/Pistols/colt.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -115,7 +115,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Pistols/giskard.rsi
   - type: Item
-    size: 12
+    size: 24
     sprite: Objects/Weapons/Guns/Pistols/giskard.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -146,23 +146,20 @@
     sprite: Objects/Weapons/Guns/Pistols/hm_pistol.rsi
     state: icon
   - type: Item
-    size: 12
+    size: 24
     sprite: Objects/Weapons/Guns/Pistols/hm_pistol.rsi
   - type: RangedWeapon
-  - type: MagazineBarrel
+  - type: BoltActionBarrel
     caliber: Pistol
     currentSelector: Single
     allSelectors:
     - Single
-    magazineTypes:
-    - Pistol
     capacity: 1
     fireRate: 8
     minAngle: 10
     maxAngle: 60
     angleIncrease: 10
     angleDecay: 60
-    magFillPrototype: MagazinePistol
     soundGunshot: /Audio/Weapons/Guns/Gunshots/pistol.ogg
     soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
     soundRack: /Audio/Weapons/Guns/Cock/pistol_cock.ogg
@@ -190,7 +187,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Pistols/gyro_pistol.rsi
   - type: Item
-    size: 12
+    size: 24
     sprite: Objects/Weapons/Guns/Pistols/gyro_pistol.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -234,7 +231,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Pistols/mandella.rsi
   - type: Item
-    size: 12
+    size: 24
     sprite: Objects/Weapons/Guns/Pistols/mandella.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -266,7 +263,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
   - type: Item
-    size: 12
+    size: 24
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -298,7 +295,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Pistols/mk58_wood.rsi
   - type: Item
-    size: 12
+    size: 24
     sprite: Objects/Weapons/Guns/Pistols/mk58_wood.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -325,7 +322,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Pistols/molly.rsi
   - type: Item
-    size: 12
+    size: 24
     sprite: Objects/Weapons/Guns/Pistols/molly.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -360,7 +357,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Pistols/olivaw_civil.rsi
   - type: Item
-    size: 12
+    size: 24
     sprite: Objects/Weapons/Guns/Pistols/olivaw_civil.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -388,7 +385,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Pistols/paco.rsi
   - type: Item
-    size: 12
+    size: 24
     sprite: Objects/Weapons/Guns/Pistols/paco.rsi
   - type: RangedWeapon
   - type: MagazineBarrel

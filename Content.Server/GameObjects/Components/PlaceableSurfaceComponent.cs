@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -13,8 +12,6 @@ namespace Content.Server.GameObjects.Components
         private bool _isPlaceable;
         public bool IsPlaceable { get => _isPlaceable; set => _isPlaceable = value; }
 
-        int IInteractUsing.Priority => 1;
-
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -22,8 +19,7 @@ namespace Content.Server.GameObjects.Components
             serializer.DataField(ref _isPlaceable, "IsPlaceable", true);
         }
 
-
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!IsPlaceable)
                 return false;

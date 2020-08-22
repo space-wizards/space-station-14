@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
+using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -17,7 +16,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers
+namespace Content.Server.GameObjects.Components.Power.Chargers
 {
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IInteractUsing))]
@@ -66,7 +65,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             base.OnRemove();
         }
 
-        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             var result = TryInsertItem(eventArgs.Using);
             if (!result)

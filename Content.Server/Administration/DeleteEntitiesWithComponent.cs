@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using Robust.Server.Interfaces.Console;
+﻿using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Content.Server.Administration
 {

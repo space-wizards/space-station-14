@@ -8,7 +8,6 @@
   - type: Clickable
   - type: InteractionOutline
   - type: MovedByPressure
-  - type: DamageOnHighSpeedImpact
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb

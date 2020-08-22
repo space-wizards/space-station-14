@@ -1,4 +1,5 @@
-﻿using Robust.Client.UserInterface;
+﻿using Content.Client.GameObjects;
+using Robust.Client.UserInterface;
 using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Client.UserInterface

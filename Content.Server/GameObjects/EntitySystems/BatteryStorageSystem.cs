@@ -1,26 +1,31 @@
 ﻿using Content.Server.GameObjects.Components.Power.PowerNetComponents;
-using JetBrains.Annotations;
 using Robust.Server.Interfaces.Timing;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.IoC;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
-    [UsedImplicitly]
-    internal sealed class BatteryStorageSystem : EntitySystem
+    internal class BatteryStorageSystem : EntitySystem
     {
-        [Dependency] private readonly IPauseManager _pauseManager = default!;
+#pragma warning disable 649
+        [Dependency] private readonly IPauseManager _pauseManager;
+#pragma warning restore 649
+
+        public override void Initialize()
+        {
+            EntityQuery = new TypeEntityQuery(typeof(BatteryStorageComponent));
+        }
 
         public override void Update(float frameTime)
         {
-            foreach (var comp in ComponentManager.EntityQuery<BatteryStorageComponent>())
+            foreach (var entity in RelevantEntities)
             {
-                if (_pauseManager.IsEntityPaused(comp.Owner))
+                if (_pauseManager.IsEntityPaused(entity))
                 {
                     continue;
                 }
-                
-                comp.Update(frameTime);
+                entity.GetComponent<BatteryStorageComponent>().Update(frameTime);
             }
         }
     }

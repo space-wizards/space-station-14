@@ -1,17 +1,23 @@
-﻿using Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers;
+﻿using Content.Server.GameObjects.Components.Power.Chargers;
 using JetBrains.Annotations;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 {
     [UsedImplicitly]
-    internal sealed class BaseChargerSystem : EntitySystem
+    internal class BaseChargerSystem : EntitySystem
     {
+        public override void Initialize()
+        {
+            EntityQuery = new TypeEntityQuery(typeof(BaseCharger));
+        }
+
         public override void Update(float frameTime)
         {
-            foreach (var comp in ComponentManager.EntityQuery<BaseCharger>())
+            foreach (var entity in RelevantEntities)
             {
-                comp.OnUpdate(frameTime);
+                entity.GetComponent<BaseCharger>().OnUpdate(frameTime);
             }
         }
     }

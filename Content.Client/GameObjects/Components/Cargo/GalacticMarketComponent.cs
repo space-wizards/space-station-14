@@ -1,9 +1,9 @@
-﻿using System;
-using Content.Shared.GameObjects.Components.Cargo;
+﻿using Content.Shared.GameObjects.Components.Cargo;
 using Content.Shared.Prototypes.Cargo;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
+using System;
 
 namespace Content.Client.GameObjects.Components.Cargo
 {

@@ -1,6 +1,6 @@
 ﻿using System;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.Components.Trigger;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Shared.GameObjects.Components.Triggers;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -8,7 +8,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 
-namespace Content.Server.GameObjects.Components.Trigger.TimerTrigger
+namespace Content.Server.GameObjects.Components.Triggers
 {
     [RegisterComponent]
     public class OnUseTimerTriggerComponent : Component, IUse

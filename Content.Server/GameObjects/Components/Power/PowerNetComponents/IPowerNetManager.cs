@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+﻿using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+using System.Collections.Generic;
 
 namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 {

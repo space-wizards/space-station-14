@@ -14,12 +14,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         /// <inheritdoc />
         public float PathfindingProximity { get; }
 
-        public bool RequiresInRangeUnobstructed { get; }
-
-        public float TimeUntilInteractionCheck { get; set; } = 0.0f;
-
-
-        public GridTargetSteeringRequest(GridCoordinates targetGrid, float arrivalDistance, float pathfindingProximity = 0.5f, bool requiresInRangeUnobstructed = false)
+        public GridTargetSteeringRequest(GridCoordinates targetGrid, float arrivalDistance, float pathfindingProximity = 0.5f)
         {
             // Get it once up front so we the manager doesn't have to continuously get it
             var mapManager = IoCManager.Resolve<IMapManager>();
@@ -27,7 +22,6 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             TargetGrid = targetGrid;
             ArrivalDistance = arrivalDistance;
             PathfindingProximity = pathfindingProximity;
-            RequiresInRangeUnobstructed = requiresInRangeUnobstructed;
         }
     }
 }

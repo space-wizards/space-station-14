@@ -95,8 +95,8 @@ namespace Content.Client.GameObjects.EntitySystems
 
             _dropTargetInRangeShader = _prototypeManager.Index<ShaderPrototype>(ShaderDropTargetInRange).Instance();
             _dropTargetOutOfRangeShader = _prototypeManager.Index<ShaderPrototype>(ShaderDropTargetOutOfRange).Instance();
-            _interactionSystem = Get<SharedInteractionSystem>();
-            _inputSystem = Get<InputSystem>();
+            _interactionSystem = EntitySystem.Get<SharedInteractionSystem>();
+            _inputSystem = EntitySystem.Get<InputSystem>();
             // needs to fire on mouseup and mousedown so we can detect a drag / drop
             CommandBinds.Builder
                 .Bind(EngineKeyFunctions.Use, new PointerInputCmdHandler(OnUse, false))

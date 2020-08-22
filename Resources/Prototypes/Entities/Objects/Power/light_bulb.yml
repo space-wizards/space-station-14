@@ -1,8 +1,7 @@
-﻿- type: entity
+- type: entity
   parent: BaseLightbulb
   name: light bulb
   id: LightBulb
-  description: That's a light bulb
   components:
   - type: LightBulb
     bulb: Bulb
@@ -27,7 +26,6 @@
   parent: BaseLightbulb
   name: light tube
   id: LightTube
-  description: That's a light fixture.
   components:
   - type: LightBulb
     bulb: Tube

@@ -2,7 +2,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Roles
+namespace Content.Server.Jobs
 {
     /// <summary>
     ///     Provides special hooks for when jobs get spawned in/equipped.

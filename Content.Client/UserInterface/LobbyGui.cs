@@ -1,4 +1,4 @@
-﻿using Content.Client.Chat;
+using Content.Client.Chat;
 using Content.Client.Interfaces;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
@@ -22,7 +22,6 @@ namespace Content.Client.UserInterface
         public Button LeaveButton { get; }
         public ChatBox Chat { get; }
         public ItemList OnlinePlayerItemList { get; }
-        public ItemList PlayerReadyList { get; }
         public ServerInfo ServerInfo { get; }
         public LobbyCharacterPreviewPanel CharacterPreview { get; }
 
@@ -220,25 +219,7 @@ namespace Content.Client.UserInterface
                             MarginBottomOverride = 3,
                             Children =
                             {
-                                new HBoxContainer
-                                {
-                                    SizeFlagsHorizontal = SizeFlags.FillExpand,
-                                    CustomMinimumSize = (50,50),
-                                    Children =
-                                    {
-                                        (OnlinePlayerItemList = new ItemList
-                                        {
-                                            SizeFlagsVertical = SizeFlags.FillExpand,
-                                            SizeFlagsHorizontal = SizeFlags.FillExpand,
-                                        }),
-                                        (PlayerReadyList = new ItemList
-                                        {
-                                            SizeFlagsVertical = SizeFlags.FillExpand,
-                                            SizeFlagsHorizontal = SizeFlags.FillExpand,
-                                            SizeFlagsStretchRatio = 0.2f
-                                        }),
-                                    }
-                                }
+                                (OnlinePlayerItemList = new ItemList())
                             }
                         },
                         new NanoHeading

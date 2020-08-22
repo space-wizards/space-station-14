@@ -79,11 +79,6 @@ namespace Content.Server.GameObjects.EntitySystems.AI.LoadBalancer
                 switch (action)
                 {
                     case ExpandableUtilityAction expandableUtilityAction:
-                        if (!expandableUtilityAction.IsValid(_request.Context))
-                        {
-                            break;
-                        }
-                        
                         foreach (var expanded in expandableUtilityAction.GetActions(_request.Context))
                         {
                             actions.Push(expanded);
@@ -91,7 +86,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.LoadBalancer
                         break;
                     case UtilityAction utilityAction:
                         consideredTaskCount++;
-                        var bonus = utilityAction.Bonus;
+                        var bonus = (float) utilityAction.Bonus;
 
                         if (bonus < cutoff)
                         {

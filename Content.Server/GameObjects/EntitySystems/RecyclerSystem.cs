@@ -1,17 +1,25 @@
 ﻿using Content.Server.GameObjects.Components.Recycling;
 using JetBrains.Annotations;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    internal sealed class RecyclerSystem : EntitySystem
+    public class RecyclerSystem : EntitySystem
     {
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            EntityQuery = new TypeEntityQuery(typeof(RecyclerComponent));
+        }
+
         public override void Update(float frameTime)
         {
-            foreach (var component in ComponentManager.EntityQuery<RecyclerComponent>())
+            foreach (var entity in RelevantEntities)
             {
-                component.Update(frameTime);
+                entity.GetComponent<RecyclerComponent>().Update(frameTime);
             }
         }
     }

@@ -1,8 +1,8 @@
-﻿using System.Diagnostics;
-using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+﻿using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using System.Diagnostics;
 
 namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 {

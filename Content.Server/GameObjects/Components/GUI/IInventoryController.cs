@@ -1,7 +1,7 @@
 using Robust.Shared.Interfaces.GameObjects;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
-namespace Content.Server.GameObjects.Components.GUI
+namespace Content.Server.GameObjects
 {
     /// <summary>
     ///     Allows for overriding inventory-related behavior on an entity.

@@ -1,18 +1,19 @@
-using System;
-using System.Linq;
-using Content.Shared.Roles;
 using Robust.Client.Console;
 using Robust.Client.UserInterface.Controls;
-using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Utility;
+using Content.Shared.Jobs;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace Content.Client.UserInterface
+
+namespace Robust.Client.UserInterface.CustomControls
 {
     public sealed class LateJoinGui : SS14Window
     {

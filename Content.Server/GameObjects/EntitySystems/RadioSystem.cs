@@ -5,12 +5,16 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
-    internal sealed class RadioSystem : EntitySystem
+    class RadioSystem : EntitySystem
     {
-        private readonly List<string> _messages = new List<string>();
+        private List<string> _messages;
 
         public override void Initialize()
         {

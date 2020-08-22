@@ -2,7 +2,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.GameObjects.Verbs
+namespace Content.Shared.GameObjects
 {
     /// <summary>
     ///     Stores visual data for a verb.

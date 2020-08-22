@@ -3,24 +3,21 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
-using Content.Server.GameObjects.EntitySystems.Click;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
-using Content.Shared.GameObjects.Components.Body;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Items;
+using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Shared.BodySystem;
 using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Physics.Pull;
+using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystemMessages;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
@@ -44,8 +41,6 @@ namespace Content.Server.GameObjects.Components.GUI
         private string? _activeHand;
         private uint _nextHand;
 
-        public event Action? OnItemChanged;
-
         [ViewVariables(VVAccess.ReadWrite)]
         public string? ActiveHand
         {
@@ -63,8 +58,6 @@ namespace Content.Server.GameObjects.Components.GUI
         }
 
         [ViewVariables] private readonly List<Hand> _hands = new List<Hand>();
-
-        public IEnumerable<string> Hands => _hands.Select(h => h.Name);
 
         // Mostly arbitrary.
         public const float PickupRange = 2;
@@ -111,12 +104,6 @@ namespace Content.Server.GameObjects.Components.GUI
             return GetHand(handName)?.Entity?.GetComponent<ItemComponent>();
         }
 
-        public bool TryGetItem(string handName, [MaybeNullWhen(false)] out ItemComponent item)
-        {
-            item = GetItem(handName);
-            return item != null;
-        }
-
         public ItemComponent? GetActiveHand => ActiveHand == null
             ? null
             : GetItem(ActiveHand);
@@ -142,14 +129,12 @@ namespace Content.Server.GameObjects.Components.GUI
             }
         }
 
-        public bool PutInHand(ItemComponent item, bool mobCheck = true)
+        public bool PutInHand(ItemComponent item)
         {
             foreach (var hand in ActivePriorityEnumerable())
             {
-                if (PutInHand(item, hand, false, mobCheck))
+                if (PutInHand(item, hand, false))
                 {
-                    OnItemChanged?.Invoke();
-
                     return true;
                 }
             }
@@ -157,10 +142,10 @@ namespace Content.Server.GameObjects.Components.GUI
             return false;
         }
 
-        public bool PutInHand(ItemComponent item, string index, bool fallback = true, bool mobChecks = true)
+        public bool PutInHand(ItemComponent item, string index, bool fallback = true)
         {
             var hand = GetHand(index);
-            if (!CanPutInHand(item, index, mobChecks) || hand == null)
+            if (!CanPutInHand(item, index) || hand == null)
             {
                 return fallback && PutInHand(item);
             }
@@ -170,7 +155,6 @@ namespace Content.Server.GameObjects.Components.GUI
             if (success)
             {
                 item.Owner.Transform.LocalPosition = Vector2.Zero;
-                OnItemChanged?.Invoke();
             }
 
             _entitySystemManager.GetEntitySystem<InteractionSystem>().HandSelectedInteraction(Owner, item.Owner);
@@ -178,23 +162,19 @@ namespace Content.Server.GameObjects.Components.GUI
             return success;
         }
 
-        public void PutInHandOrDrop(ItemComponent item, bool mobCheck = true)
+        public void PutInHandOrDrop(ItemComponent item)
         {
-            if (!PutInHand(item, mobCheck))
+            if (!PutInHand(item))
             {
                 item.Owner.Transform.GridPosition = Owner.Transform.GridPosition;
             }
         }
 
-        public bool CanPutInHand(ItemComponent item, bool mobCheck = true)
+        public bool CanPutInHand(ItemComponent item)
         {
-            if (mobCheck && !ActionBlockerSystem.CanPickup(Owner))
-                return false;
-
             foreach (var handName in ActivePriorityEnumerable())
             {
-                // We already did a mobCheck, so let's not waste cycles.
-                if (CanPutInHand(item, handName, false))
+                if (CanPutInHand(item, handName))
                 {
                     return true;
                 }
@@ -203,31 +183,9 @@ namespace Content.Server.GameObjects.Components.GUI
             return false;
         }
 
-        public bool CanPutInHand(ItemComponent item, string index, bool mobCheck = true)
+        public bool CanPutInHand(ItemComponent item, string index)
         {
-            if (mobCheck && !ActionBlockerSystem.CanPickup(Owner))
-                return false;
-
             return GetHand(index)?.Container.CanInsert(item.Owner) == true;
-        }
-
-        /// <summary>
-        /// Calls the Dropped Interaction with the item.
-        /// </summary>
-        /// <param name="item">The itemcomponent of the item to be dropped</param>
-        /// <param name="doMobChecks">Check if the item can be dropped</param>
-        /// <returns>True if IDropped.Dropped was called, otherwise false</returns>
-        private bool DroppedInteraction(ItemComponent item, bool doMobChecks)
-        {
-            var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
-            if (doMobChecks)
-            {
-                if (!interactionSystem.TryDroppedInteraction(Owner, item.Owner))
-                    return false;
-            }
-
-            interactionSystem.DroppedInteraction(Owner, item.Owner);
-            return true;
         }
 
         public bool TryHand(IEntity entity, [MaybeNullWhen(false)] out string handName)
@@ -261,8 +219,11 @@ namespace Content.Server.GameObjects.Components.GUI
                 return false;
             }
 
-            if (!DroppedInteraction(item, doMobChecks))
+            if (doMobChecks &&
+                !_entitySystemManager.GetEntitySystem<InteractionSystem>().TryDroppedInteraction(Owner, item.Owner))
+            {
                 return false;
+            }
 
             item.RemovedFromSlot();
             item.Owner.Transform.GridPosition = coords;
@@ -271,8 +232,6 @@ namespace Content.Server.GameObjects.Components.GUI
             {
                 container.Insert(item.Owner);
             }
-
-            OnItemChanged?.Invoke();
 
             Dirty();
             return true;
@@ -293,18 +252,21 @@ namespace Content.Server.GameObjects.Components.GUI
             return Drop(slot, coords, doMobChecks);
         }
 
-        public bool Drop(string slot, bool mobChecks = true)
+        public bool Drop(string slot, bool doMobChecks = true)
         {
             var hand = GetHand(slot);
-            if (!CanDrop(slot, mobChecks) || hand?.Entity == null)
+            if (!CanDrop(slot) || hand?.Entity == null)
             {
                 return false;
             }
 
             var item = hand.Entity.GetComponent<ItemComponent>();
 
-            if (!DroppedInteraction(item, mobChecks))
+            if (doMobChecks &&
+                !_entitySystemManager.GetEntitySystem<InteractionSystem>().TryDroppedInteraction(Owner, item.Owner))
+            {
                 return false;
+            }
 
             if (!hand.Container.Remove(hand.Entity))
             {
@@ -324,13 +286,11 @@ namespace Content.Server.GameObjects.Components.GUI
                 container.Insert(item.Owner);
             }
 
-            OnItemChanged?.Invoke();
-
             Dirty();
             return true;
         }
 
-        public bool Drop(IEntity entity, bool mobChecks = true)
+        public bool Drop(IEntity entity, bool doMobChecks = true)
         {
             if (entity == null)
             {
@@ -342,7 +302,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 throw new ArgumentException("Entity must be held in one of our hands.", nameof(entity));
             }
 
-            return Drop(slot, mobChecks);
+            return Drop(slot, doMobChecks);
         }
 
         public bool Drop(string slot, BaseContainer targetContainer, bool doMobChecks = true)
@@ -365,8 +325,10 @@ namespace Content.Server.GameObjects.Components.GUI
 
             var item = hand.Entity.GetComponent<ItemComponent>();
 
-            if (!DroppedInteraction(item, doMobChecks))
+            if (doMobChecks && !_entitySystemManager.GetEntitySystem<InteractionSystem>().TryDroppedInteraction(Owner, item.Owner))
+            {
                 return false;
+            }
 
             if (!hand.Container.CanRemove(hand.Entity))
             {
@@ -389,8 +351,6 @@ namespace Content.Server.GameObjects.Components.GUI
             {
                 throw new InvalidOperationException();
             }
-
-            OnItemChanged?.Invoke();
 
             Dirty();
             return true;
@@ -418,15 +378,13 @@ namespace Content.Server.GameObjects.Components.GUI
         /// <returns>
         ///     True if there is an item in the slot and it can be dropped, false otherwise.
         /// </returns>
-        public bool CanDrop(string name, bool mobCheck = true)
+        public bool CanDrop(string name)
         {
             var hand = GetHand(name);
-
-            if (mobCheck && !ActionBlockerSystem.CanDrop(Owner))
-                return false;
-
             if (hand?.Entity == null)
+            {
                 return false;
+            }
 
             return hand.Container.CanRemove(hand.Entity);
         }
@@ -444,8 +402,6 @@ namespace Content.Server.GameObjects.Components.GUI
             _hands.Add(hand);
 
             ActiveHand ??= name;
-
-            OnItemChanged?.Invoke();
 
             Dirty();
         }
@@ -466,8 +422,6 @@ namespace Content.Server.GameObjects.Components.GUI
             {
                 _activeHand = _hands.FirstOrDefault()?.Name;
             }
-
-            OnItemChanged?.Invoke();
 
             Dirty();
         }
@@ -548,9 +502,15 @@ namespace Content.Server.GameObjects.Components.GUI
                 return;
             }
 
-            if (!Owner.IsInSameOrNoContainer(pullable.Owner))
+            var isOwnerContained = ContainerHelpers.TryGetContainer(Owner, out var ownerContainer);
+            var isPullableContained = ContainerHelpers.TryGetContainer(pullable.Owner, out var pullableContainer);
+
+            if (isOwnerContained || isPullableContained)
             {
-                return;
+                if (ownerContainer != pullableContainer)
+                {
+                    return;
+                }
             }
 
             if (IsPulling)
@@ -559,8 +519,10 @@ namespace Content.Server.GameObjects.Components.GUI
             }
 
             PulledObject = pullable.Owner.GetComponent<ICollidableComponent>();
-            var controller = PulledObject.EnsureController<PullController>();
-            controller.StartPull(Owner.GetComponent<ICollidableComponent>());
+            var controller = PulledObject!.EnsureController<PullController>();
+            controller!.StartPull(Owner.GetComponent<ICollidableComponent>());
+
+            AddPullingStatuses();
         }
 
         public void MovePulledObject(GridCoordinates puller, GridCoordinates to)
@@ -569,46 +531,6 @@ namespace Content.Server.GameObjects.Components.GUI
                 PulledObject.TryGetController(out PullController controller))
             {
                 controller.TryMoveTo(puller, to);
-            }
-        }
-
-        private void MoveEvent(MoveEvent moveEvent)
-        {
-            if (moveEvent.Sender != Owner)
-            {
-                return;
-            }
-
-            if (!IsPulling)
-            {
-                return;
-            }
-
-            PulledObject!.WakeBody();
-        }
-
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-
-            if (!(message is PullMessage pullMessage) ||
-                pullMessage.Puller.Owner != Owner)
-            {
-                return;
-            }
-
-            switch (message)
-            {
-                case PullStartedMessage msg:
-                    Owner.EntityManager.EventBus.SubscribeEvent<MoveEvent>(EventSource.Local, this, MoveEvent);
-
-                    AddPullingStatuses(msg.Pulled.Owner);
-                    break;
-                case PullStoppedMessage msg:
-                    Owner.EntityManager.EventBus.UnsubscribeEvent<MoveEvent>(EventSource.Local, this);
-
-                    RemovePullingStatuses(msg.Pulled.Owner);
-                    break;
             }
         }
 
@@ -711,43 +633,51 @@ namespace Content.Server.GameObjects.Components.GUI
 
                 Dirty();
 
-                if (!message.Entity.TryGetComponent(out ICollidableComponent? collidable))
+                if (!message.Entity.TryGetComponent(out IPhysicsComponent physics))
                 {
                     return;
                 }
 
                 // set velocity to zero
-                collidable.Stop();
+                physics.Stop();
                 return;
             }
         }
 
-        private void AddPullingStatuses(IEntity pulled)
+        private void AddPullingStatuses()
         {
-            if (pulled.TryGetComponent(out ServerStatusEffectsComponent? pulledStatus))
+            if (PulledObject?.Owner != null &&
+                PulledObject.Owner.TryGetComponent(out ServerStatusEffectsComponent pulledStatus))
             {
                 pulledStatus.ChangeStatusEffectIcon(StatusEffect.Pulled,
                     "/Textures/Interface/StatusEffects/Pull/pulled.png");
             }
 
-            if (Owner.TryGetComponent(out ServerStatusEffectsComponent? ownerStatus))
+            if (Owner.TryGetComponent(out ServerStatusEffectsComponent ownerStatus))
             {
                 ownerStatus.ChangeStatusEffectIcon(StatusEffect.Pulling,
                     "/Textures/Interface/StatusEffects/Pull/pulling.png");
             }
         }
 
-        private void RemovePullingStatuses(IEntity pulled)
+        private void RemovePullingStatuses()
         {
-            if (pulled.TryGetComponent(out ServerStatusEffectsComponent? pulledStatus))
+            if (PulledObject?.Owner != null &&
+                PulledObject.Owner.TryGetComponent(out ServerStatusEffectsComponent pulledStatus))
             {
                 pulledStatus.RemoveStatusEffect(StatusEffect.Pulled);
             }
 
-            if (Owner.TryGetComponent(out ServerStatusEffectsComponent? ownerStatus))
+            if (Owner.TryGetComponent(out ServerStatusEffectsComponent ownerStatus))
             {
                 ownerStatus.RemoveStatusEffect(StatusEffect.Pulling);
             }
+        }
+
+        public override void StopPull()
+        {
+            RemovePullingStatuses();
+            base.StopPull();
         }
 
         void IBodyPartAdded.BodyPartAdded(BodyPartAddedEventArgs eventArgs)

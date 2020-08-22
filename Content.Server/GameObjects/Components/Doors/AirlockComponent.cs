@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading;
-using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.VendingMachines;
@@ -144,9 +143,9 @@ namespace Content.Server.GameObjects.Components.Doors
             }
         }
 
-        public override DoorState State
+        protected override DoorState State
         {
-            protected set
+            set
             {
                 base.State = value;
                 // Only show the maintenance panel if the airlock is closed
@@ -171,11 +170,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
         public override void OnRemove()
         {
-            if (Owner.TryGetComponent(out _powerReceiver))
-            {
-                _powerReceiver.OnPowerStateChanged -= PowerDeviceOnOnPowerStateChanged;
-            }
-
+            _powerReceiver.OnPowerStateChanged -= PowerDeviceOnOnPowerStateChanged;
             base.OnRemove();
         }
 
@@ -384,7 +379,7 @@ namespace Content.Server.GameObjects.Components.Doors
             return _powerReceiver.Powered;
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!eventArgs.Using.TryGetComponent<ToolComponent>(out var tool))
                 return false;
@@ -402,27 +397,22 @@ namespace Content.Server.GameObjects.Components.Doors
                 }
             }
 
-            bool AirlockCheck()
+            if (!tool.UseTool(eventArgs.User, Owner, ToolQuality.Prying)) return false;
+
+            if (IsBolted())
             {
-                if (IsBolted())
-                {
-                    var notify = IoCManager.Resolve<IServerNotifyManager>();
-                    notify.PopupMessage(Owner, eventArgs.User,
-                        Loc.GetString("The airlock's bolts prevent it from being forced!"));
-                    return false;
-                }
-
-                if (IsPowered())
-                {
-                    var notify = IoCManager.Resolve<IServerNotifyManager>();
-                    notify.PopupMessage(Owner, eventArgs.User, Loc.GetString("The powered motors block your efforts!"));
-                    return false;
-                }
-
+                var notify = IoCManager.Resolve<IServerNotifyManager>();
+                notify.PopupMessage(Owner, eventArgs.User,
+                    Loc.GetString("The airlock's bolts prevent it from being forced!"));
                 return true;
             }
 
-            if (!await tool.UseTool(eventArgs.User, Owner, 0.2f, ToolQuality.Prying, AirlockCheck)) return false;
+            if (IsPowered())
+            {
+                var notify = IoCManager.Resolve<IServerNotifyManager>();
+                notify.PopupMessage(Owner, eventArgs.User, Loc.GetString("The powered motors block your efforts!"));
+                return true;
+            }
 
             if (State == DoorState.Closed)
                 Open();

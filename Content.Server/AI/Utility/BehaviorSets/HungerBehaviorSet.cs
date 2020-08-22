@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using Content.Server.AI.Utility.Actions;
+using Content.Server.AI.Utility.Actions.Nutrition;
 using Content.Server.AI.Utility.ExpandableActions.Nutrition;
 using Robust.Shared.Interfaces.GameObjects;
 

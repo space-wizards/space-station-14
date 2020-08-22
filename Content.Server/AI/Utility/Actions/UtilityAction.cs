@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.AI.Operators;
+using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States.Utility;
 using Robust.Shared.Interfaces.GameObjects;
@@ -105,6 +106,7 @@ namespace Content.Server.AI.Utility.Actions
         /// This is where the magic happens
         /// </summary>
         /// <param name="context"></param>
+        /// <param name="bonus"></param>
         /// <param name="min"></param>
         /// <returns></returns>
         public float GetScore(Blackboard context, float min)
@@ -112,14 +114,19 @@ namespace Content.Server.AI.Utility.Actions
             UpdateBlackboard(context);
             var considerations = GetConsiderations(context);
             DebugTools.Assert(considerations.Count > 0);
+            // I used the IAUS video although I did have some confusion on how to structure it overall
+            // as some of the slides seemed contradictory
 
-            // Overall structure is based on Building a better centaur
-            // Ideally we should early-out each action as cheaply as possible if it's not valid, thus
-            // the finalScore can only go down over time.
-            
+            // Ideally we should early-out each action as cheaply as possible if it's not valid
+
+            // We also need some way to tell if the action isn't going to
+            // have a better score than the current action (if applicable) and early-out that way as well.
+
+            // 23:00 Building a better centaur
             var finalScore = 1.0f;
             var minThreshold = min / Bonus;
             context.GetState<ConsiderationState>().SetValue(considerations.Count);
+            // See 10:09 for this and the adjustments
 
             foreach (var consideration in considerations)
             {

@@ -1,8 +1,10 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using Content.Client.UserInterface;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.Components.Chemistry.ChemMaster;
+using Content.Shared.GameObjects.Components.Chemistry;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -10,9 +12,10 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using static Content.Shared.GameObjects.Components.Chemistry.ChemMaster.SharedChemMasterComponent;
+using static Content.Shared.GameObjects.Components.Chemistry.SharedChemMasterComponent;
 
 namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
 {
@@ -270,34 +273,6 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
             var castState = (ChemMasterBoundUserInterfaceState) state;
             Title = castState.DispenserName;
             UpdatePanelInfo(castState);
-            if (Contents.Children != null)
-            {
-                SetButtonDisabledRecursive(Contents, !castState.HasPower);
-                EjectButton.Disabled = !castState.HasBeaker;
-            }
-        }
-
-        /// <summary>
-        /// This searches recursively through all the children of "parent"
-        /// and sets the Disabled value of any buttons found to "val"
-        /// </summary>
-        /// <param name="parent">The control which childrens get searched</param>
-        /// <param name="val">The value to which disabled gets set</param>
-        private void SetButtonDisabledRecursive(Control parent, bool val)
-        {
-            foreach (var child in parent.Children)
-            {
-                if (child is Button but)
-                {
-                    but.Disabled = val;
-                    continue;
-                }
-
-                if (child.Children != null)
-                {
-                    SetButtonDisabledRecursive(child, val);
-                }
-            }
         }
 
         /// <summary>

@@ -4,7 +4,6 @@
   description: It opens, it closes, and maybe crushes you.
   components:
   - type: Clickable
-  - type: RCDDeconstructWhitelist
   - type: InteractionOutline
   - type: Sprite
     netsync: false
@@ -53,13 +52,10 @@
     - key: enum.WiresUiKey.Key
       type: WiresBoundUserInterface
   - type: Airtight
-    fixVacuum: true
     adjacentAtmosphere: true
   - type: Occluder
   - type: SnapGrid
     offset: Center
-  - type: Destructible
-    deadThreshold: 500
   placement:
     mode: SnapgridCenter
 

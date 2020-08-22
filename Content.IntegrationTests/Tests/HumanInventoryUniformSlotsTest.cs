@@ -1,10 +1,11 @@
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects;
 using NUnit.Framework;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.IntegrationTests.Tests

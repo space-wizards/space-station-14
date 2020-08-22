@@ -1,16 +1,21 @@
-﻿using Content.Server.GameObjects.Components.Temperature;
-using JetBrains.Annotations;
+﻿using Content.Server.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 {
-    [UsedImplicitly]
-    internal sealed class TemperatureSystem : EntitySystem
+    class TemperatureSystem : EntitySystem
     {
+        public override void Initialize()
+        {
+            EntityQuery = new TypeEntityQuery(typeof(TemperatureComponent));
+        }
+
         public override void Update(float frameTime)
         {
-            foreach (var comp in ComponentManager.EntityQuery<TemperatureComponent>())
+            foreach (var entity in RelevantEntities)
             {
+                var comp = entity.GetComponent<TemperatureComponent>();
                 comp.OnUpdate(frameTime);
             }
         }

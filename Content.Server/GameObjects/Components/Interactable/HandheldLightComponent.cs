@@ -1,12 +1,10 @@
-﻿using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Clothing;
-using Content.Server.GameObjects.Components.Items.Storage;
+﻿using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Power;
+using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -58,7 +56,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         [ViewVariables]
         public bool Activated { get; private set; }
 
-        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!eventArgs.Using.HasComponent<BatteryComponent>()) return false;
 
@@ -277,7 +275,7 @@ namespace Content.Server.GameObjects.Components.Interactable
                 return;
             }
 
-            var cell = Owner.EntityManager.SpawnEntity("PowerCellSmallStandard", Owner.Transform.GridPosition);
+            var cell = Owner.EntityManager.SpawnEntity("PowerCellSmallHyper", Owner.Transform.GridPosition);
             _cellContainer.Insert(cell);
         }
     }

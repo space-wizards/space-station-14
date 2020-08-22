@@ -78,7 +78,7 @@ namespace Content.Client.GameObjects.Components
 
                 int level;
 
-                if (MathHelper.CloseTo(charge, 0))
+                if (FloatMath.CloseTo(charge, 0))
                 {
                     level = 0;
                 }

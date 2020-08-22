@@ -5,7 +5,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser
+namespace Content.Shared.GameObjects.Components.Chemistry
 {
 
     /// <summary>
@@ -25,7 +25,6 @@ namespace Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser
         [Serializable, NetSerializable]
         public class ReagentDispenserBoundUserInterfaceState : BoundUserInterfaceState
         {
-            public readonly bool HasPower;
             public readonly bool HasBeaker;
             public readonly ReagentUnit BeakerCurrentVolume;
             public readonly ReagentUnit BeakerMaxVolume;
@@ -41,10 +40,9 @@ namespace Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser
             public readonly string DispenserName;
             public readonly ReagentUnit SelectedDispenseAmount;
 
-            public ReagentDispenserBoundUserInterfaceState(bool hasPower, bool hasBeaker, ReagentUnit beakerCurrentVolume, ReagentUnit beakerMaxVolume, string containerName,
+            public ReagentDispenserBoundUserInterfaceState(bool hasBeaker, ReagentUnit beakerCurrentVolume, ReagentUnit beakerMaxVolume, string containerName,
                 List<ReagentDispenserInventoryEntry> inventory, string dispenserName, List<Solution.ReagentQuantity> containerReagents, ReagentUnit selectedDispenseAmount)
             {
-                HasPower = hasPower;
                 HasBeaker = hasBeaker;
                 BeakerCurrentVolume = beakerCurrentVolume;
                 BeakerMaxVolume = beakerMaxVolume;

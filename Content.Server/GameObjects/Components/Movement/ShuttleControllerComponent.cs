@@ -71,15 +71,22 @@ namespace Content.Server.GameObjects.Components.Movement
                 _entityManager.TryGetEntity(grid.GridEntityId, out var gridEntity))
             {
                 //TODO: Switch to shuttle component
-                if (!gridEntity.TryGetComponent(out ICollidableComponent? collidable))
+                if (!gridEntity.TryGetComponent(out IPhysicsComponent physComp))
                 {
-                    collidable = gridEntity.AddComponent<CollidableComponent>();
-                    collidable.Mass = 1;
-                    collidable.CanCollide = true;
-                    collidable.PhysicsShapes.Add(new PhysShapeGrid(grid));
+                    physComp = gridEntity.AddComponent<PhysicsComponent>();
+                    physComp.Mass = 1;
                 }
 
-                var controller = collidable.EnsureController<ShuttleController>();
+                //TODO: Is this always true?
+                if (!gridEntity.HasComponent<ICollidableComponent>())
+                {
+                    var collideComp = gridEntity.AddComponent<CollidableComponent>();
+                    collideComp.CanCollide = true;
+                    //collideComp.IsHardCollidable = true;
+                    collideComp.PhysicsShapes.Add(new PhysShapeGrid(grid));
+                }
+
+                var controller = physComp.EnsureController<ShuttleController>();
                 controller.Push(CalcNewVelocity(direction, enabled), CurrentWalkSpeed);
             }
         }
@@ -137,9 +144,9 @@ namespace Content.Server.GameObjects.Components.Movement
         private void SetController(IEntity entity)
         {
             if (_controller != null ||
-                !entity.TryGetComponent(out MindComponent? mind) ||
+                !entity.TryGetComponent(out MindComponent mind) ||
                 mind.Mind == null ||
-                !Owner.TryGetComponent(out ServerStatusEffectsComponent? status))
+                !Owner.TryGetComponent(out ServerStatusEffectsComponent status))
             {
                 return;
             }
@@ -179,17 +186,17 @@ namespace Content.Server.GameObjects.Components.Movement
         /// <param name="entity">The entity to update</param>
         private void UpdateRemovedEntity(IEntity entity)
         {
-            if (Owner.TryGetComponent(out ServerStatusEffectsComponent? status))
+            if (Owner.TryGetComponent(out ServerStatusEffectsComponent status))
             {
                 status.RemoveStatusEffect(StatusEffect.Piloting);
             }
 
-            if (entity.TryGetComponent(out MindComponent? mind))
+            if (entity.TryGetComponent(out MindComponent mind))
             {
                 mind.Mind?.UnVisit();
             }
 
-            if (entity.TryGetComponent(out BuckleComponent? buckle))
+            if (entity.TryGetComponent(out BuckleComponent buckle))
             {
                 buckle.TryUnbuckle(entity, true);
             }

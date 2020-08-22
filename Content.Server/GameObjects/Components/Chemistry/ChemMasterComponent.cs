@@ -1,31 +1,30 @@
 ﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
-using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Server.Interfaces.GameObjects;
 using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.Components.Chemistry.ChemMaster;
+using Content.Shared.GameObjects.Components.Chemistry;
 using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Maths;
-using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using Robust.Server.GameObjects.EntitySystems;
+using Robust.Shared.GameObjects.Systems;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.Interfaces.Random;
+using Robust.Shared.Maths;
+using Robust.Shared.Random;
 
 namespace Content.Server.GameObjects.Components.Chemistry
 {
@@ -84,17 +83,11 @@ namespace Content.Server.GameObjects.Components.Chemistry
             _beakerContainer =
                 ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-reagentContainerContainer", Owner);
             _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
-            _powerReceiver.OnPowerStateChanged += OnPowerChanged;
 
             //BufferSolution = Owner.BufferSolution
             BufferSolution.Solution = new Solution();
             BufferSolution.MaxVolume = ReagentUnit.New(1000);
 
-            UpdateUserInterface();
-        }
-
-        private void OnPowerChanged(object sender, PowerStateEventArgs e)
-        {
             UpdateUserInterface();
         }
 
@@ -105,16 +98,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// <param name="obj">A user interface message from the client.</param>
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
-            var msg = (UiActionMessage) obj.Message;
-            var needsPower = msg.action switch
-            {
-                UiAction.Eject => false,
-                _ => true,
-            };
-
-            if (!PlayerCanUseChemMaster(obj.Session.AttachedEntity, needsPower))
+            if (!PlayerCanUseChemMaster(obj.Session.AttachedEntity))
                 return;
 
+            var msg = (UiActionMessage) obj.Message;
             switch (msg.action)
             {
                 case UiAction.Eject:
@@ -147,7 +134,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// </summary>
         /// <param name="playerEntity">The player entity.</param>
         /// <returns>Returns true if the entity can use the chem master, and false if it cannot.</returns>
-        private bool PlayerCanUseChemMaster(IEntity playerEntity, bool needsPower = true)
+        private bool PlayerCanUseChemMaster(IEntity playerEntity)
         {
             //Need player entity to check if they are still able to use the chem master
             if (playerEntity == null)
@@ -156,7 +143,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if (!ActionBlockerSystem.CanInteract(playerEntity) || !ActionBlockerSystem.CanUse(playerEntity))
                 return false;
             //Check if device is powered
-            if (needsPower && !Powered)
+            if (!Powered)
                 return false;
 
             return true;
@@ -171,12 +158,12 @@ namespace Content.Server.GameObjects.Components.Chemistry
             var beaker = _beakerContainer.ContainedEntity;
             if (beaker == null)
             {
-                return new ChemMasterBoundUserInterfaceState(Powered, false, ReagentUnit.New(0), ReagentUnit.New(0),
+                return new ChemMasterBoundUserInterfaceState(false, ReagentUnit.New(0), ReagentUnit.New(0),
                     "", Owner.Name, null, BufferSolution.ReagentList.ToList(), BufferModeTransfer, BufferSolution.CurrentVolume, BufferSolution.MaxVolume);
             }
 
             var solution = beaker.GetComponent<SolutionComponent>();
-            return new ChemMasterBoundUserInterfaceState(Powered, true, solution.CurrentVolume, solution.MaxVolume,
+            return new ChemMasterBoundUserInterfaceState(true, solution.CurrentVolume, solution.MaxVolume,
                 beaker.Name, Owner.Name, solution.ReagentList.ToList(), BufferSolution.ReagentList.ToList(), BufferModeTransfer, BufferSolution.CurrentVolume, BufferSolution.MaxVolume);
         }
 
@@ -265,15 +252,9 @@ namespace Content.Server.GameObjects.Components.Chemistry
         {
             var random = IoCManager.Resolve<IRobustRandom>();
 
-            if (BufferSolution.CurrentVolume == 0)
-                return;
-
             if (action == UiAction.CreateBottles)
             {
                 var individualVolume = BufferSolution.CurrentVolume / ReagentUnit.New(bottleAmount);
-                if (individualVolume < ReagentUnit.New(1))
-                    return;
-
                 var actualVolume = ReagentUnit.Min(individualVolume, ReagentUnit.New(30));
                 for (int i = 0; i < bottleAmount; i++)
                 {
@@ -308,9 +289,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
             else //Pills
             {
                 var individualVolume = BufferSolution.CurrentVolume / ReagentUnit.New(pillAmount);
-                if (individualVolume < ReagentUnit.New(1))
-                    return;
-
                 var actualVolume = ReagentUnit.Min(individualVolume, ReagentUnit.New(50));
                 for (int i = 0; i < pillAmount; i++)
                 {
@@ -363,6 +341,9 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return;
             }
 
+            if (!Powered)
+                return;
+
             var activeHandEntity = hands.GetActiveHand?.Owner;
             if (activeHandEntity == null)
             {
@@ -377,7 +358,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// </summary>
         /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
         /// <returns></returns>
-        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)
+        bool IInteractUsing.InteractUsing(InteractUsingEventArgs args)
         {
             if (!args.User.TryGetComponent(out IHandsComponent hands))
             {

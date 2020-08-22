@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Content.Server.Interfaces.Chemistry;
 using Content.Shared.Chemistry;
+using Content.Shared.Interfaces;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;

@@ -1,7 +1,6 @@
 ﻿- type: entity
   id: VendingMachine
   name: vending machine
-  abstract: true
   components:
   - type: Physics
     anchored: true
@@ -9,10 +8,14 @@
   - type: InteractionOutline
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/empty.rsi
-    netsync: false
+    layers:
+    - state: normal
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Icon
     sprite: Constructible/Power/VendingMachines/empty.rsi
-    state: "off"
+    state: normal
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -30,8 +33,12 @@
       - SmallImpassable
   - type: SnapGrid
     offset: Center
+  - type: Damageable
   - type: Breakable
-    deadThreshold: 50
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+    - type: WiresVisualizer
   - type: UserInterface
     interfaces:
     - key: enum.VendingMachineUiKey.Key
@@ -47,6 +54,18 @@
 
 - type: entity
   parent: VendingMachine
+  id: VendingMachineAmmo
+  name: AmmoVend
+  components:
+  - type: VendingMachine
+    pack: AmmoVend
+  - type: Icon
+    sprite: Constructible/Power/VendingMachines/ammo.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/ammo.rsi
+
+- type: entity
+  parent: VendingMachine
   id: VendingMachineBooze
   name: Booze-O-Mat
   components:
@@ -56,20 +75,6 @@
     sprite: Constructible/Power/VendingMachines/boozeomat.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/boozeomat.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
-    - type: WiresVisualizer
 
 - type: entity
   parent: VendingMachine
@@ -82,22 +87,6 @@
     sprite: Constructible/Power/VendingMachines/cart.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/cart.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      ejectUnshaded: true
-      denyUnshaded: true
-      broken: true
-    - type: WiresVisualizer
 
 - type: entity
   parent: VendingMachine
@@ -110,21 +99,6 @@
     sprite: Constructible/Power/VendingMachines/chapel.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/chapel.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      denyUnshaded: true
-      broken: true
-    - type: WiresVisualizer
 
 - type: entity
   parent: VendingMachine
@@ -137,22 +111,6 @@
     sprite: Constructible/Power/VendingMachines/cigs.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/cigs.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      ejectUnshaded: true
-      denyUnshaded: true
-      broken: true
-    - type: WiresVisualizer
 
 - type: entity
   parent: VendingMachine
@@ -166,25 +124,13 @@
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/coffee.rsi
     layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+    - state: normal
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: screen
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
       shader: unshaded
-    - state: "screen"
-      map: ["enum.VendingMachineVisualLayers.Screen"]
-      shader: unshaded
-    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      screen: true
-      normalUnshaded: true
-      ejectUnshaded: true
-      denyUnshaded: true
-      broken: true
-    - type: WiresVisualizer
+    - map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      state: panel
 
 - type: entity
   parent: VendingMachine
@@ -197,22 +143,6 @@
     sprite: Constructible/Power/VendingMachines/cola.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/cola.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      ejectUnshaded: true
-      denyUnshaded: true
-      broken: true
-    - type: WiresVisualizer
 
 - type: entity
   parent: VendingMachine
@@ -225,21 +155,6 @@
     sprite: Constructible/Power/VendingMachines/dinnerware.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/dinnerware.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      ejectUnshaded: true
-      broken: true
-    - type: WiresVisualizer
 
 - type: entity
   parent: VendingMachine
@@ -252,20 +167,6 @@
     sprite: Constructible/Power/VendingMachines/discount.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/discount.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
-    - type: WiresVisualizer
 
 - type: entity
   parent: VendingMachine
@@ -278,22 +179,6 @@
     sprite: Constructible/Power/VendingMachines/engivend.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/engivend.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      ejectUnshaded: true
-      denyUnshaded: true
-      broken: true
-    - type: WiresVisualizer
 
 - type: entity
   parent: VendingMachine
@@ -306,20 +191,6 @@
     sprite: Constructible/Power/VendingMachines/hats.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/hats.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
-    - type: WiresVisualizer
 
 - type: entity
   parent: VendingMachine
@@ -332,20 +203,6 @@
     sprite: Constructible/Power/VendingMachines/magivend.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/magivend.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
-    - type: WiresVisualizer
 
 - type: entity
   parent: VendingMachine
@@ -358,22 +215,6 @@
     sprite: Constructible/Power/VendingMachines/medical.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/medical.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      ejectUnshaded: true
-      denyUnshaded: true
-      broken: true
-    - type: WiresVisualizer
 
 - type: entity
   parent: VendingMachine
@@ -386,21 +227,6 @@
     sprite: Constructible/Power/VendingMachines/mining.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/mining.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      denyUnshaded: true
-      broken: true
-    - type: WiresVisualizer
 
 - type: entity
   parent: VendingMachine
@@ -413,22 +239,6 @@
     sprite: Constructible/Power/VendingMachines/nutri.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/nutri.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      ejectUnshaded: true
-      denyUnshaded: true
-      broken: true
-    - type: WiresVisualizer
 
 - type: entity
   parent: VendingMachine
@@ -441,21 +251,6 @@
     sprite: Constructible/Power/VendingMachines/robotics.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/robotics.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      denyUnshaded: true
-      broken: true
-    - type: WiresVisualizer
 
 - type: entity
   parent: VendingMachine
@@ -468,21 +263,6 @@
     sprite: Constructible/Power/VendingMachines/sale.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/sale.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
-      brokenUnshaded: true
-    - type: WiresVisualizer
 
 - type: entity
   parent: VendingMachine
@@ -495,22 +275,6 @@
     sprite: Constructible/Power/VendingMachines/sec.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/sec.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      ejectUnshaded: true
-      denyUnshaded: true
-      broken: true
-    - type: WiresVisualizer
 
 - type: entity
   parent: VendingMachine
@@ -523,21 +287,6 @@
     sprite: Constructible/Power/VendingMachines/seeds.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/seeds.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      ejectUnshaded: true
-      broken: true
-    - type: WiresVisualizer
 
 - type: entity
   parent: VendingMachine
@@ -550,20 +299,6 @@
     sprite: Constructible/Power/VendingMachines/shoes.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/shoes.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
-    - type: WiresVisualizer
 
 - type: entity
   parent: VendingMachine
@@ -576,20 +311,6 @@
     sprite: Constructible/Power/VendingMachines/smartfridge.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/smartfridge.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
-    - type: WiresVisualizer
 
 - type: entity
   parent: VendingMachine
@@ -602,22 +323,18 @@
     sprite: Constructible/Power/VendingMachines/snack.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/snack.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      ejectUnshaded: true
-      denyUnshaded: true
-      broken: true
-    - type: WiresVisualizer
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineSoviet
+  name: Товарищ-vend
+  components:
+  - type: VendingMachine
+    pack: soviet
+  - type: Icon
+    sprite: Constructible/Power/VendingMachines/soviet.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/soviet.rsi
 
 - type: entity
   parent: VendingMachine
@@ -630,22 +347,6 @@
     sprite: Constructible/Power/VendingMachines/sovietsoda.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/sovietsoda.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      ejectUnshaded: true
-      denyUnshaded: true
-      broken: true
-    - type: WiresVisualizer
 
 - type: entity
   parent: VendingMachine
@@ -658,20 +359,6 @@
     sprite: Constructible/Power/VendingMachines/suits.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/suits.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
-    - type: WiresVisualizer
 
 - type: entity
   parent: VendingMachine
@@ -684,26 +371,6 @@
     sprite: Constructible/Power/VendingMachines/theater.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/theater.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-    - state: "screen"
-      map: ["enum.VendingMachineVisualLayers.Screen"]
-      shader: unshaded
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      screen: true
-      normalUnshaded: true
-      ejectUnshaded: true
-      denyUnshaded: true
-      broken: true
-    - type: WiresVisualizer
 
 - type: entity
   parent: VendingMachine
@@ -716,23 +383,6 @@
     sprite: Constructible/Power/VendingMachines/vendomat.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/vendomat.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      eject: true
-      ejectUnshaded: true
-      denyUnshaded: true
-      broken: true
-    - type: WiresVisualizer
 
 - type: entity
   parent: VendingMachine
@@ -745,20 +395,6 @@
     sprite: Constructible/Power/VendingMachines/vox.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/vox.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      broken: true
-    - type: WiresVisualizer
 
 - type: entity
   parent: VendingMachine
@@ -771,21 +407,6 @@
     sprite: Constructible/Power/VendingMachines/wallmed.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/wallmed.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      denyUnshaded: true
-      broken: true
-    - type: WiresVisualizer
 
 - type: entity
   parent: VendingMachine
@@ -798,22 +419,3 @@
     sprite: Constructible/Power/VendingMachines/youtool.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/youtool.rsi
-    layers:
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Base"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Appearance
-    visuals:
-    - type: VendingMachineVisualizer
-      normalUnshaded: true
-      eject: true
-      ejectUnshaded: true
-      denyUnshaded: true
-      broken: true
-    - type: WiresVisualizer

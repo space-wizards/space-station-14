@@ -22,7 +22,7 @@ namespace Content.Server.Interfaces.GameTicking
 
         void RestartRound();
         void StartRound(bool force = false);
-        void EndRound(string roundEndText = "");
+        void EndRound();
 
         void Respawn(IPlayerSession targetPlayer);
         void MakeObserve(IPlayerSession player);

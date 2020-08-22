@@ -1,5 +1,4 @@
-﻿using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
 namespace Content.Server.Database
@@ -51,10 +50,9 @@ namespace Content.Server.Database
 
     public class SqliteConfiguration : IDatabaseConfiguration
     {
-        private readonly string? _databaseFilePath;
+        private readonly string _databaseFilePath;
 
-        /// <param name="databaseFilePath">If null, an in-memory database is used.</param>
-        public SqliteConfiguration(string? databaseFilePath)
+        public SqliteConfiguration(string databaseFilePath)
         {
             _databaseFilePath = databaseFilePath;
         }
@@ -64,20 +62,7 @@ namespace Content.Server.Database
             get
             {
                 var optionsBuilder = new DbContextOptionsBuilder<PreferencesDbContext>();
-                SqliteConnection connection;
-                if (_databaseFilePath != null)
-                {
-                    connection = new SqliteConnection($"Data Source={_databaseFilePath}");
-                }
-                else
-                {
-                    connection = new SqliteConnection("Data Source=:memory:");
-                    // When using an in-memory DB we have to open it manually
-                    // so EFCore doesn't open, close and wipe it.
-                    connection.Open();
-                }
-
-                optionsBuilder.UseSqlite(connection);
+                optionsBuilder.UseSqlite($"Data Source={_databaseFilePath}");
                 return optionsBuilder.Options;
             }
         }

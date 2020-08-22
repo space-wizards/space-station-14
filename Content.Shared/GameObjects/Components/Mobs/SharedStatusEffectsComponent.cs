@@ -56,7 +56,6 @@ namespace Content.Shared.GameObjects.Components.Mobs
         Health,
         Hunger,
         Thirst,
-        Pressure,
         Stun,
         Buckled,
         Piloting,

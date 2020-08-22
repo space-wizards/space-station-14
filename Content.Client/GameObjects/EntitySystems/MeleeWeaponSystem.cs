@@ -24,15 +24,16 @@ namespace Content.Client.GameObjects.EntitySystems
         public override void Initialize()
         {
             SubscribeNetworkEvent<PlayMeleeWeaponAnimationMessage>(PlayWeaponArc);
+            EntityQuery = new TypeEntityQuery(typeof(MeleeWeaponArcAnimationComponent));
         }
 
         public override void FrameUpdate(float frameTime)
         {
             base.FrameUpdate(frameTime);
 
-            foreach (var arcAnimationComponent in EntityManager.ComponentManager.EntityQuery<MeleeWeaponArcAnimationComponent>())
+            foreach (var entity in RelevantEntities)
             {
-                arcAnimationComponent.Update(frameTime);
+                entity.GetComponent<MeleeWeaponArcAnimationComponent>().Update(frameTime);
             }
         }
 

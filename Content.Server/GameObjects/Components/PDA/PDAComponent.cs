@@ -3,15 +3,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.PDA;
+using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.PDA;
 using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -141,10 +139,10 @@ namespace Content.Server.GameObjects.Components.PDA
 
         private void UpdatePDAAppearance()
         {
-            _appearance?.SetData(PDAVisuals.FlashlightLit, _lightOn);
+            _appearance?.SetData(PDAVisuals.ScreenLit, _lightOn);
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
             var item = eventArgs.Using;
             if (!IdSlotEmpty)
@@ -164,7 +162,7 @@ namespace Content.Server.GameObjects.Components.PDA
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
             {
                 return;
             }
@@ -175,7 +173,7 @@ namespace Content.Server.GameObjects.Components.PDA
 
         public bool UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
             {
                 return false;
             }

@@ -1,7 +1,6 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Reactions;
 using Content.Server.Interfaces;
@@ -11,6 +10,8 @@ using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using Math = CannyFastMath.Math;
+using MathF = CannyFastMath.MathF;
 
 namespace Content.Server.Atmos
 {
@@ -33,13 +34,6 @@ namespace Content.Server.Atmos
 
         [ViewVariables]
         public float LastShare { get; private set; } = 0;
-
-        [ViewVariables]
-        public readonly Dictionary<GasReaction, float> ReactionResults = new Dictionary<GasReaction, float>()
-        {
-            // We initialize the dictionary here.
-            { GasReaction.Fire, 0f }
-        };
 
         [ViewVariables]
         public float HeatCapacity
@@ -112,6 +106,8 @@ namespace Content.Server.Atmos
                 _temperature = MathF.Max(value, Atmospherics.TCMB);
             }
         }
+
+        public float ReactionResultFire { get; set; }
 
         [ViewVariables]
         public float ThermalEnergy => Temperature * HeatCapacity;
@@ -330,7 +326,7 @@ namespace Content.Server.Atmos
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public float TemperatureShare(GasMixture sharer, float conductionCoefficient)
+        public void TemperatureShare(GasMixture sharer, float conductionCoefficient)
         {
             var temperatureDelta = TemperatureArchived - sharer.TemperatureArchived;
             if (MathF.Abs(temperatureDelta) > Atmospherics.MinimumTemperatureDeltaToConsider)
@@ -349,30 +345,6 @@ namespace Content.Server.Atmos
                         sharer.Temperature = MathF.Abs(MathF.Max(sharer.Temperature + heat / sharerHeatCapacity, Atmospherics.TCMB));
                 }
             }
-
-            return sharer.Temperature;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public float TemperatureShare(float conductionCoefficient, float sharerTemperature, float sharerHeatCapacity)
-        {
-            var temperatureDelta = TemperatureArchived - sharerTemperature;
-            if (MathF.Abs(temperatureDelta) > Atmospherics.MinimumTemperatureDeltaToConsider)
-            {
-                var heatCapacity = HeatCapacityArchived;
-
-                if (sharerHeatCapacity > Atmospherics.MinimumHeatCapacity && heatCapacity > Atmospherics.MinimumHeatCapacity)
-                {
-                    var heat = conductionCoefficient * temperatureDelta * (heatCapacity * sharerHeatCapacity / (heatCapacity + sharerHeatCapacity));
-
-                    if (!Immutable)
-                        Temperature = MathF.Abs(MathF.Max(Temperature - heat / heatCapacity, Atmospherics.TCMB));
-
-                    sharerTemperature = MathF.Abs(MathF.Max(sharerTemperature + heat / sharerHeatCapacity, Atmospherics.TCMB));
-                }
-            }
-
-            return sharerTemperature;
         }
 
         public enum GasCompareResult
@@ -381,9 +353,6 @@ namespace Content.Server.Atmos
             TemperatureExchange = -1,
         }
 
-        /// <summary>
-        ///     Compares sample to self to see if within acceptable ranges that group processing may be enabled.
-        /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GasCompareResult Compare(GasMixture sample)
         {
@@ -483,25 +452,19 @@ namespace Content.Server.Atmos
                     temperature < prototype.MinimumTemperatureRequirement)
                     continue;
 
-                var doReaction = true;
                 for (var i = 0; i < prototype.MinimumRequirements.Length; i++)
                 {
                     if(i > Atmospherics.TotalNumberOfGases)
                         throw new IndexOutOfRangeException("Reaction Gas Minimum Requirements Array Prototype exceeds total number of gases!");
 
                     var req = prototype.MinimumRequirements[i];
+                    if (GetMoles(i) < req)
+                        continue;
 
-                    if (!(GetMoles(i) < req)) continue;
-                    doReaction = false;
-                    break;
+                    reaction = prototype.React(this, holder);
+                    if(reaction.HasFlag(ReactionResult.NoReaction))
+                        break;
                 }
-
-                if (!doReaction)
-                    continue;
-
-                reaction = prototype.React(this, holder);
-                if(reaction.HasFlag(ReactionResult.StopReactions))
-                    break;
             }
 
             return reaction;
@@ -546,10 +509,9 @@ namespace Content.Server.Atmos
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return _moles.SequenceEqual(other._moles)
-                   && _molesArchived.SequenceEqual(other._molesArchived)
+            return Equals(_moles, other._moles)
+                   && Equals(_molesArchived, other._molesArchived)
                    && _temperature.Equals(other._temperature)
-                   && ReactionResults.SequenceEqual(other.ReactionResults)
                    && Immutable == other.Immutable
                    && LastShare.Equals(other.LastShare)
                    && TemperatureArchived.Equals(other.TemperatureArchived)
@@ -558,28 +520,12 @@ namespace Content.Server.Atmos
 
         public override int GetHashCode()
         {
-            var hashCode = new HashCode();
-
-            for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
-            {
-                var moles = _moles[i];
-                var molesArchived = _molesArchived[i];
-                hashCode.Add(moles);
-                hashCode.Add(molesArchived);
-            }
-
-            hashCode.Add(_temperature);
-            hashCode.Add(TemperatureArchived);
-            hashCode.Add(Immutable);
-            hashCode.Add(LastShare);
-            hashCode.Add(Volume);
-
-            return hashCode.ToHashCode();
+            return HashCode.Combine(_moles, _molesArchived, _temperature, Immutable, LastShare, TemperatureArchived, Volume);
         }
 
         public object Clone()
         {
-            var newMixture = new GasMixture()
+            return new GasMixture()
             {
                 _moles = (float[])_moles.Clone(),
                 _molesArchived = (float[])_molesArchived.Clone(),
@@ -589,7 +535,6 @@ namespace Content.Server.Atmos
                 TemperatureArchived = TemperatureArchived,
                 Volume = Volume,
             };
-            return newMixture;
         }
     }
 }

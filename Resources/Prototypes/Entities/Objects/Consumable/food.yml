@@ -3047,22 +3047,3 @@
       sprite: Objects/Consumable/Food/banana.rsi
     - type: Icon
       sprite: Objects/Consumable/Food/banana.rsi
-
-- type: entity
-  name: memory leek
-  parent: FoodBase
-  id: FoodMemoryLeek
-  description: It makes you irrationally angry just looking at it.
-  components:
-    - type: Food
-    - type: Solution
-      contents:
-        reagents:
-          - ReagentId: chem.Nutriment
-            Quantity: 9999999999
-    - type: Sprite
-      sprite: Objects/Consumable/Food/memoryleek.rsi
-      state: memoryLeek
-    - type: Icon
-      sprite: Objects/Consumable/Food/memoryleek.rsi
-      state: memoryLeek

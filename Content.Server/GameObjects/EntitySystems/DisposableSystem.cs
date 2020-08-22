@@ -1,18 +1,25 @@
 ﻿using Content.Server.GameObjects.Components.Disposal;
 using JetBrains.Annotations;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    internal sealed class DisposableSystem : EntitySystem
+    public class DisposableSystem : EntitySystem
     {
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            EntityQuery = new TypeEntityQuery(typeof(DisposalHolderComponent));
+        }
 
         public override void Update(float frameTime)
         {
-            foreach (var comp in ComponentManager.EntityQuery<DisposalHolderComponent>())
+            foreach (var disposable in RelevantEntities)
             {
-                comp.Update(frameTime);
+                disposable.GetComponent<DisposalHolderComponent>().Update(frameTime);
             }
         }
     }

@@ -4,16 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.GameObjects.Components.Instruments;
 using Content.Shared.Physics;
-using Robust.Client.Audio.Midi;
-using Robust.Shared.Audio.Midi;
 using Robust.Shared.GameObjects;
+using Robust.Client.Audio.Midi;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
-using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
+using MidiEvent = Robust.Shared.Audio.Midi.MidiEvent;
+using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Client.GameObjects.Components.Instruments
 {

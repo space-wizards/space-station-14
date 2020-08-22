@@ -1,4 +1,4 @@
-﻿using Content.Shared.GameObjects.Verbs;
+﻿using Content.Shared.GameObjects;
 using Robust.Client.Console;
 using Robust.Client.ViewVariables;
 using Robust.Shared.Interfaces.GameObjects;
@@ -13,7 +13,6 @@ namespace Content.Client.GlobalVerbs
     class ViewVariablesVerb : GlobalVerb
     {
         public override bool RequireInteractionRange => false;
-        public override bool BlockedByContainers => false;
 
         public override void GetData(IEntity user, IEntity target, VerbData data)
         {

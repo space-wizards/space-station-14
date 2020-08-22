@@ -1,17 +1,21 @@
-﻿using Content.Server.GameObjects.Components.Power.PowerNetComponents;
-using JetBrains.Annotations;
+﻿using Content.Server.GameObjects.Components.Power;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 {
-    [UsedImplicitly]
     internal class PowerSmesSystem : EntitySystem
     {
+        public override void Initialize()
+        {
+            EntityQuery = new TypeEntityQuery(typeof(SmesComponent));
+        }
+
         public override void Update(float frameTime)
         {
-            foreach (var comp in ComponentManager.EntityQuery<SmesComponent>())
+            foreach (var entity in RelevantEntities)
             {
-                comp.OnUpdate();
+                entity.GetComponent<SmesComponent>().OnUpdate();
             }
         }
     }

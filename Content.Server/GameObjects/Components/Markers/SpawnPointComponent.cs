@@ -1,5 +1,5 @@
 using Content.Shared.GameObjects.Components.Markers;
-using Content.Shared.Roles;
+using Content.Shared.Jobs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;

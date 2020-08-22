@@ -50,11 +50,11 @@ namespace Content.Server.Preferences
             {
                 case "sqlite":
                     var configPreferencesDbPath = _configuration.GetCVar<string>("database.prefs_sqlite_dbpath");
-                    var inMemory = _resourceManager.UserData.RootDir == null;
-                    var finalPreferencesDbPath = inMemory ?
-                        null :
+                    var finalPreferencesDbPath =
                         Path.Combine(_resourceManager.UserData.RootDir, configPreferencesDbPath);
-                    dbConfig = new SqliteConfiguration(finalPreferencesDbPath);
+                    dbConfig = new SqliteConfiguration(
+                        finalPreferencesDbPath
+                    );
                     break;
                 case "postgres":
                     dbConfig = new PostgresConfiguration(

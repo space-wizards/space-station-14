@@ -1,10 +1,10 @@
 ﻿using System.Linq;
-using Content.Client.GameObjects.Components.HUD.Inventory;
+using Content.Client.GameObjects;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.Interfaces;
 using Content.Shared;
+using Content.Shared.Jobs;
 using Content.Shared.Preferences;
-using Content.Shared.Roles;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -82,8 +82,6 @@ namespace Content.Client.UserInterface
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-            _preferencesManager.OnServerDataLoaded -= UpdateUI;
-
             if (!disposing) return;
             _previewDummy.Delete();
             _previewDummy = null;

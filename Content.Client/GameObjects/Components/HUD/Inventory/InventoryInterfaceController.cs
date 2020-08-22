@@ -8,7 +8,7 @@ using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Client.GameObjects.Components.HUD.Inventory
+namespace Content.Client.GameObjects
 {
     public abstract class InventoryInterfaceController : IDisposable
     {

@@ -45,8 +45,6 @@
   - type: PoweredLight
     bulb: Tube
   - type: PowerReceiver
-  - type: Destructible
-    deadThreshold: 50
 
 - type: entity
   name: small light
@@ -68,5 +66,3 @@
   - type: PoweredLight
     bulb: Bulb
   - type: PowerReceiver
-  - type: Destructible
-    deadThreshold: 25

@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
-using Content.Server.GameObjects.Components.Power;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 {

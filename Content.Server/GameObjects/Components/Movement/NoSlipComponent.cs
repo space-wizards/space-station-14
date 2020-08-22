@@ -1,5 +1,5 @@
-using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Content.Shared.GameObjects.EntitySystems;
 
 namespace Content.Server.GameObjects.Components.Movement
 {

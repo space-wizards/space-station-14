@@ -10,19 +10,24 @@ namespace Content.Shared.GameObjects.EntitySystems
     public interface IActionBlocker
     {
         bool CanMove() => true;
+
         bool CanInteract() => true;
+
         bool CanUse() => true;
+
         bool CanThrow() => true;
+
         bool CanSpeak() => true;
+
         bool CanDrop() => true;
+
         bool CanPickup() => true;
+
         bool CanEmote() => true;
+
         bool CanAttack() => true;
-
         bool CanEquip() => true;
-
         bool CanUnequip() => true;
-
         bool CanChangeDirection() => true;
     }
 

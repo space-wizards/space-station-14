@@ -1,16 +1,25 @@
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.UserInterface;
+using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Client.GameObjects.EntitySystems;
+using Robust.Client.Graphics.Drawing;
+using Robust.Client.Graphics.Overlays;
+using Robust.Client.Interfaces.Graphics.Overlays;
+using Robust.Client.Interfaces.Input;
 using Robust.Client.Player;
+using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
+using Robust.Shared.Maths;
 using Robust.Shared.Players;
+using static Content.Client.StaticIoC;
 
 namespace Content.Client.GameObjects.EntitySystems
 {

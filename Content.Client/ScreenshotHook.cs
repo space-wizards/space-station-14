@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Content.Shared.Input;
 using Robust.Client.Interfaces.Graphics;
 using Robust.Client.Interfaces.Input;
+using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.Resources;
 using Robust.Shared.IoC;
@@ -57,7 +58,7 @@ namespace Content.Client
                     }
 
                     await using var file =
-                        _resourceManager.UserData.Open(BaseScreenshotPath / $"{filename}.png", FileMode.CreateNew, FileAccess.Read, FileShare.None);
+                        _resourceManager.UserData.Open(BaseScreenshotPath / $"{filename}.png", FileMode.CreateNew);
 
                     await Task.Run(() =>
                     {

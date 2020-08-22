@@ -1,5 +1,4 @@
-﻿using System;
-using Content.Server.GameObjects.Components.Projectiles;
+﻿using Content.Server.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects.Components;
@@ -13,6 +12,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Random;
 using Robust.Shared.Interfaces.Physics;
+using MathF = CannyFastMath.MathF;
 
 namespace Content.Server.Throw
 {
@@ -85,7 +85,7 @@ namespace Content.Server.Throw
             projComp.StartThrow(angle.ToVec(), spd);
 
             if (throwSourceEnt != null &&
-                throwSourceEnt.TryGetComponent<ICollidableComponent>(out var physics) &&
+                throwSourceEnt.TryGetComponent<IPhysicsComponent>(out var physics) &&
                 physics.TryGetController(out MoverController mover))
             {
                 var physicsMgr = IoCManager.Resolve<IPhysicsManager>();
@@ -136,7 +136,7 @@ namespace Content.Server.Throw
             var distance = (targetLoc.ToMapPos(mapManager) - sourceLoc.ToMapPos(mapManager)).Length;
             var throwDuration = ThrownItemComponent.DefaultThrowTime;
             var mass = 1f;
-            if (thrownEnt.TryGetComponent(out ICollidableComponent physicsComponent))
+            if (thrownEnt.TryGetComponent(out IPhysicsComponent physicsComponent))
             {
                 mass = physicsComponent.Mass;
             }

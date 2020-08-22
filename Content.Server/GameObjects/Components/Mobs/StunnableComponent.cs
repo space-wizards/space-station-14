@@ -1,10 +1,11 @@
 ﻿using Content.Server.Mobs;
 using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.Components.Movement;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
-using Robust.Shared.Timers;
+using Robust.Shared.ViewVariables;
+using Timer = Robust.Shared.Timers.Timer;
+using Content.Shared.GameObjects.Components.Movement;
 
 namespace Content.Server.GameObjects.Components.Mobs
 {

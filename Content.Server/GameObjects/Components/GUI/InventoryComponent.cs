@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components.Items.Clothing;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.GameObjects.EntitySystems.Click;
-using Content.Server.Interfaces;
-using Content.Server.Interfaces.GameObjects;
+using Content.Server.GameObjects.Components;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Shared.GameObjects.Components.Inventory;
+using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Server.Interfaces;
+using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.Components.Container;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
@@ -21,12 +21,12 @@ using Robust.Shared.Map;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
-using static Content.Shared.GameObjects.Components.Inventory.SharedInventoryComponent.ClientInventoryMessage;
+using static Content.Shared.GameObjects.SharedInventoryComponent.ClientInventoryMessage;
 
-namespace Content.Server.GameObjects.Components.GUI
+namespace Content.Server.GameObjects
 {
     [RegisterComponent]
-    public class InventoryComponent : SharedInventoryComponent, IExAct, IEffectBlocker, IPressureProtection
+    public class InventoryComponent : SharedInventoryComponent, IExAct, IEffectBlocker
     {
 #pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
@@ -34,13 +34,9 @@ namespace Content.Server.GameObjects.Components.GUI
 #pragma warning restore 649
 
         [ViewVariables]
-        private readonly Dictionary<Slots, ContainerSlot> _slotContainers = new Dictionary<Slots, ContainerSlot>();
+        private readonly Dictionary<Slots, ContainerSlot> SlotContainers = new Dictionary<Slots, ContainerSlot>();
 
-        private KeyValuePair<Slots, (EntityUid entity, bool fits)>? _hoverEntity;
-
-        public IEnumerable<Slots> Slots => _slotContainers.Keys;
-
-        public event Action OnItemChanged;
+        private KeyValuePair<Slots, (EntityUid entity, bool fits)>? HoverEntity;
 
         public override void Initialize()
         {
@@ -48,56 +44,10 @@ namespace Content.Server.GameObjects.Components.GUI
 
             foreach (var slotName in InventoryInstance.SlotMasks)
             {
-                if (slotName != EquipmentSlotDefines.Slots.NONE)
+                if (slotName != Slots.NONE)
                 {
                     AddSlot(slotName);
                 }
-            }
-        }
-
-        // Optimization: Cache this
-        [ViewVariables]
-        public float HighPressureMultiplier
-        {
-            get
-            {
-                var multiplier = 1f;
-
-                foreach (var (slot, containerSlot) in _slotContainers)
-                {
-                    foreach (var entity in containerSlot.ContainedEntities)
-                    {
-                        foreach (var protection in entity.GetAllComponents<IPressureProtection>())
-                        {
-                            multiplier *= protection.HighPressureMultiplier;
-                        }
-                    }
-                }
-
-                return multiplier;
-            }
-        }
-
-        // Optimization: Cache this
-        [ViewVariables]
-        public float LowPressureMultiplier
-        {
-            get
-            {
-                var multiplier = 1f;
-
-                foreach (var (slot, containerSlot) in _slotContainers)
-                {
-                    foreach (var entity in containerSlot.ContainedEntities)
-                    {
-                        foreach (var protection in entity.GetAllComponents<IPressureProtection>())
-                        {
-                            multiplier *= protection.LowPressureMultiplier;
-                        }
-                    }
-                }
-
-                return multiplier;
             }
         }
 
@@ -115,15 +65,9 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public override void OnRemove()
         {
-            var slots = _slotContainers.Keys.ToList();
-
+            var slots = SlotContainers.Keys.ToList();
             foreach (var slot in slots)
             {
-                if (TryGetSlotItem(slot, out ItemComponent item))
-                {
-                    item.Owner.Delete();
-                }
-
                 RemoveSlot(slot);
             }
 
@@ -151,15 +95,15 @@ namespace Content.Server.GameObjects.Components.GUI
         }
         public T GetSlotItem<T>(Slots slot) where T : ItemComponent
         {
-            if (!_slotContainers.ContainsKey(slot))
+            if (!SlotContainers.ContainsKey(slot))
             {
                 return null;
             }
 
-            var containedEntity = _slotContainers[slot].ContainedEntity;
+            var containedEntity = SlotContainers[slot].ContainedEntity;
             if (containedEntity?.Deleted == true)
             {
-                _slotContainers[slot] = null;
+                SlotContainers[slot] = null;
                 containedEntity = null;
                 Dirty();
             }
@@ -180,10 +124,9 @@ namespace Content.Server.GameObjects.Components.GUI
         /// </remarks>
         /// <param name="slot">The slot to put the item in.</param>
         /// <param name="item">The item to insert into the slot.</param>
-        /// <param name="mobCheck">Whether to perform an ActionBlocker check to the entity.</param>
-        /// <param name="reason">The translated reason why the item cannot be equipped, if this function returns false. Can be null.</param>
+        /// <param name="reason">The translated reason why the item cannot be equiped, if this function returns false. Can be null.</param>
         /// <returns>True if the item was successfully inserted, false otherwise.</returns>
-        public bool Equip(Slots slot, ItemComponent item, bool mobCheck, out string reason)
+        public bool Equip(Slots slot, ItemComponent item, out string reason)
         {
             if (item == null)
             {
@@ -191,12 +134,12 @@ namespace Content.Server.GameObjects.Components.GUI
                     "Clothing must be passed here. To remove some clothing from a slot, use Unequip()");
             }
 
-            if (!CanEquip(slot, item, mobCheck, out reason))
+            if (!CanEquip(slot, item, out reason))
             {
                 return false;
             }
 
-            var inventorySlot = _slotContainers[slot];
+            var inventorySlot = SlotContainers[slot];
             if (!inventorySlot.Insert(item.Owner))
             {
                 return false;
@@ -204,16 +147,14 @@ namespace Content.Server.GameObjects.Components.GUI
 
             _entitySystemManager.GetEntitySystem<InteractionSystem>().EquippedInteraction(Owner, item.Owner, slot);
 
-            OnItemChanged?.Invoke();
-
             Dirty();
 
             return true;
         }
 
-        public bool Equip(Slots slot, ItemComponent item, bool mobCheck = true) => Equip(slot, item, mobCheck, out var _);
+        public bool Equip(Slots slot, ItemComponent item) => Equip(slot, item, out var _);
 
-        public bool Equip(Slots slot, IEntity entity, bool mobCheck = true) => Equip(slot, entity.GetComponent<ItemComponent>(), mobCheck);
+        public bool Equip(Slots slot, IEntity entity) => Equip(slot, entity.GetComponent<ItemComponent>());
 
         /// <summary>
         ///     Checks whether an item can be put in the specified slot.
@@ -222,12 +163,12 @@ namespace Content.Server.GameObjects.Components.GUI
         /// <param name="item">The item to check for.</param>
         /// <param name="reason">The translated reason why the item cannot be equiped, if this function returns false. Can be null.</param>
         /// <returns>True if the item can be inserted into the specified slot.</returns>
-        public bool CanEquip(Slots slot, ItemComponent item, bool mobCheck, out string reason)
+        public bool CanEquip(Slots slot, ItemComponent item, out string reason)
         {
             var pass = false;
             reason = null;
 
-            if (mobCheck && !ActionBlockerSystem.CanEquip(Owner))
+            if (!ActionBlockerSystem.CanEquip(Owner))
                 return false;
 
             if (item is ClothingComponent clothing)
@@ -253,84 +194,57 @@ namespace Content.Server.GameObjects.Components.GUI
                 reason = Loc.GetString("You can't equip this!");
             }
 
-            return pass && _slotContainers[slot].CanInsert(item.Owner);
+            return pass && SlotContainers[slot].CanInsert(item.Owner);
         }
 
-        public bool CanEquip(Slots slot, ItemComponent item, bool mobCheck = true) => CanEquip(slot, item, mobCheck, out var _);
+        public bool CanEquip(Slots slot, ItemComponent item) => CanEquip(slot, item, out var _);
 
-        public bool CanEquip(Slots slot, IEntity entity, bool mobCheck = true) => CanEquip(slot, entity.GetComponent<ItemComponent>(), mobCheck);
+        public bool CanEquip(Slots slot, IEntity entity) => CanEquip(slot, entity.GetComponent<ItemComponent>());
 
         /// <summary>
         ///     Drops the item in a slot.
         /// </summary>
         /// <param name="slot">The slot to drop the item from.</param>
         /// <returns>True if an item was dropped, false otherwise.</returns>
-        /// <param name="mobCheck">Whether to perform an ActionBlocker check to the entity.</param>
-        public bool Unequip(Slots slot, bool mobCheck = true)
+        public bool Unequip(Slots slot)
         {
-            if (!CanUnequip(slot, mobCheck))
+            if (!CanUnequip(slot))
             {
                 return false;
             }
 
-            var inventorySlot = _slotContainers[slot];
-            var entity = inventorySlot.ContainedEntity;
-            var item = entity.GetComponent<ItemComponent>();
-            if (!inventorySlot.Remove(entity))
+            var inventorySlot = SlotContainers[slot];
+            var item = inventorySlot.ContainedEntity.GetComponent<ItemComponent>();
+            if (!inventorySlot.Remove(inventorySlot.ContainedEntity))
             {
                 return false;
             }
 
             // TODO: The item should be dropped to the container our owner is in, if any.
-            ContainerHelpers.AttachParentToContainerOrGrid(entity.Transform);
+            var itemTransform = item.Owner.GetComponent<ITransformComponent>();
+            itemTransform.GridPosition = Owner.GetComponent<ITransformComponent>().GridPosition;
 
-            _entitySystemManager.GetEntitySystem<InteractionSystem>().UnequippedInteraction(Owner, entity, slot);
-
-            OnItemChanged?.Invoke();
+            _entitySystemManager.GetEntitySystem<InteractionSystem>().UnequippedInteraction(Owner, item.Owner, slot);
 
             Dirty();
 
             return true;
         }
 
-        public void ForceUnequip(Slots slot)
-        {
-            var inventorySlot = _slotContainers[slot];
-            var entity = inventorySlot.ContainedEntity;
-            if (entity == null)
-            {
-                return;
-            }
-
-            var item = entity.GetComponent<ItemComponent>();
-            inventorySlot.ForceRemove(entity);
-
-            var itemTransform = entity.Transform;
-
-            ContainerHelpers.AttachParentToContainerOrGrid(itemTransform);
-
-            _entitySystemManager.GetEntitySystem<InteractionSystem>().UnequippedInteraction(Owner, item.Owner, slot);
-
-            OnItemChanged?.Invoke();
-
-            Dirty();
-        }
-
         /// <summary>
         ///     Checks whether an item can be dropped from the specified slot.
         /// </summary>
         /// <param name="slot">The slot to check for.</param>
-        /// <param name="mobCheck">Whether to perform an ActionBlocker check to the entity.</param>
         /// <returns>
         ///     True if there is an item in the slot and it can be dropped, false otherwise.
         /// </returns>
-        public bool CanUnequip(Slots slot, bool mobCheck = true)
+        public bool CanUnequip(Slots slot)
         {
-            if (mobCheck && !ActionBlockerSystem.CanUnequip(Owner))
+            if (!ActionBlockerSystem.CanUnequip(Owner))
                 return false;
 
-            var inventorySlot = _slotContainers[slot];
-            return inventorySlot.ContainedEntity != null && inventorySlot.CanRemove(inventorySlot.ContainedEntity);
+            var InventorySlot = SlotContainers[slot];
+            return InventorySlot.ContainedEntity != null && InventorySlot.CanRemove(InventorySlot.ContainedEntity);
         }
 
         /// <summary>
@@ -348,12 +262,7 @@ namespace Content.Server.GameObjects.Components.GUI
             }
 
             Dirty();
-
-            _slotContainers[slot] = ContainerManagerComponent.Create<ContainerSlot>(GetSlotString(slot), Owner);
-
-            OnItemChanged?.Invoke();
-
-            return _slotContainers[slot];
+            return SlotContainers[slot] = ContainerManagerComponent.Create<ContainerSlot>(GetSlotString(slot), Owner);
         }
 
         /// <summary>
@@ -370,15 +279,14 @@ namespace Content.Server.GameObjects.Components.GUI
                 throw new InvalidOperationException($"Slow '{slot}' does not exist.");
             }
 
-            ForceUnequip(slot);
+            if (GetSlotItem(slot) != null && !Unequip(slot))
+            {
+                // TODO: Handle this potential failiure better.
+                throw new InvalidOperationException(
+                    "Unable to remove slot as the contained clothing could not be dropped");
+            }
 
-            var container = _slotContainers[slot];
-
-            container.Shutdown();
-            _slotContainers.Remove(slot);
-
-            OnItemChanged?.Invoke();
-
+            SlotContainers.Remove(slot);
             Dirty();
         }
 
@@ -389,7 +297,7 @@ namespace Content.Server.GameObjects.Components.GUI
         /// <returns>True if the slot exists, false otherwise.</returns>
         public bool HasSlot(Slots slot)
         {
-            return _slotContainers.ContainsKey(slot);
+            return SlotContainers.ContainsKey(slot);
         }
 
         /// <summary>
@@ -401,15 +309,13 @@ namespace Content.Server.GameObjects.Components.GUI
             // make sure this is one of our containers.
             // Technically the correct way would be to enumerate the possible slot names
             // comparing with this container, but I might as well put the dictionary to good use.
-            if (!(container is ContainerSlot slot) || !_slotContainers.ContainsValue(slot))
+            if (!(container is ContainerSlot slot) || !SlotContainers.ContainsValue(slot))
                 return;
 
             if (entity.TryGetComponent(out ItemComponent itemComp))
             {
                 itemComp.RemovedFromSlot();
             }
-
-            OnItemChanged?.Invoke();
 
             Dirty();
         }
@@ -429,7 +335,7 @@ namespace Content.Server.GameObjects.Components.GUI
                     if (activeHand != null && activeHand.Owner.TryGetComponent(out ItemComponent clothing))
                     {
                         hands.Drop(hands.ActiveHand);
-                        if (!Equip(msg.Inventoryslot, clothing, true, out var reason))
+                        if (!Equip(msg.Inventoryslot, clothing, out var reason))
                         {
                             hands.PutInHand(clothing);
 
@@ -465,8 +371,8 @@ namespace Content.Server.GameObjects.Components.GUI
                     var activeHand = hands.GetActiveHand;
                     if (activeHand != null && GetSlotItem(msg.Inventoryslot) == null)
                     {
-                        var canEquip = CanEquip(msg.Inventoryslot, activeHand, true, out var reason);
-                        _hoverEntity = new KeyValuePair<Slots, (EntityUid entity, bool fits)>(msg.Inventoryslot, (activeHand.Owner.Uid, canEquip));
+                        var canEquip = CanEquip(msg.Inventoryslot, activeHand, out var reason);
+                        HoverEntity = new KeyValuePair<Slots, (EntityUid entity, bool fits)>(msg.Inventoryslot, (activeHand.Owner.Uid, canEquip));
 
                         Dirty();
                     }
@@ -525,7 +431,7 @@ namespace Content.Server.GameObjects.Components.GUI
         public override ComponentState GetComponentState()
         {
             var list = new List<KeyValuePair<Slots, EntityUid>>();
-            foreach (var (slot, container) in _slotContainers)
+            foreach (var (slot, container) in SlotContainers)
             {
                 if (container.ContainedEntity != null)
                 {
@@ -533,8 +439,8 @@ namespace Content.Server.GameObjects.Components.GUI
                 }
             }
 
-            var hover = _hoverEntity;
-            _hoverEntity = null;
+            var hover = HoverEntity;
+            HoverEntity = null;
 
             return new InventoryComponentState(list, hover);
         }
@@ -546,7 +452,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 return;
             }
 
-            foreach (var slot in _slotContainers.Values.ToList())
+            foreach (var slot in SlotContainers.Values.ToList())
             {
                 foreach (var entity in slot.ContainedEntities)
                 {

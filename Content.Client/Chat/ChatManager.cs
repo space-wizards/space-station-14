@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Content.Client.Interfaces.Chat;
 using Content.Shared.Chat;
 using Robust.Client.Console;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Interfaces.UserInterface;
-using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
-using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -48,11 +44,6 @@ namespace Content.Client.Chat
         ///     The max amount of speech bubbles over a single entity at once.
         /// </summary>
         private const int SpeechBubbleCap = 4;
-
-        /// <summary>
-        ///     The max amount of characters an entity can send in one message
-        /// </summary>
-        private int _maxMessageLength = 1000;
 
         private const char ConCmdSlash = '/';
         private const char OOCAlias = '[';
@@ -98,15 +89,11 @@ namespace Content.Client.Chat
         public void Initialize()
         {
             _netManager.RegisterNetMessage<MsgChatMessage>(MsgChatMessage.NAME, _onChatMessage);
-            _netManager.RegisterNetMessage<ChatMaxMsgLengthMessage>(ChatMaxMsgLengthMessage.NAME, _onMaxLengthReceived);
 
             _speechBubbleRoot = new LayoutContainer();
             LayoutContainer.SetAnchorPreset(_speechBubbleRoot, LayoutContainer.LayoutPreset.Wide);
             _userInterfaceManager.StateRoot.AddChild(_speechBubbleRoot);
             _speechBubbleRoot.SetPositionFirst();
-
-            // When connexion is achieved, request the max chat message length
-            _netManager.Connected += new EventHandler<NetChannelArgs>(RequestMaxLength);
         }
 
         public void FrameUpdate(FrameEventArgs delta)
@@ -229,15 +216,6 @@ namespace Content.Client.Chat
             if (string.IsNullOrWhiteSpace(text))
                 return;
 
-            // Check if message is longer than the character limit
-            if (text.Length > _maxMessageLength)
-            {
-                string locWarning = Loc.GetString("Your message exceeds {0} character limit", _maxMessageLength);
-                _currentChatBox?.AddLine(locWarning, ChatChannel.Server, Color.Orange);
-                _currentChatBox.ClearOnEnter = false;   // The text shouldn't be cleared if it hasn't been sent 
-                return;
-            }
-
             switch (text[0])
             {
                 case ConCmdSlash:
@@ -250,17 +228,13 @@ namespace Content.Client.Chat
                 case OOCAlias:
                 {
                     var conInput = text.Substring(1);
-                    if (string.IsNullOrWhiteSpace(conInput))
-                        return;
                     _console.ProcessCommand($"ooc \"{CommandParsing.Escape(conInput)}\"");
                     break;
                 }
                 case AdminChatAlias:
                 {
                     var conInput = text.Substring(1);
-                    if (string.IsNullOrWhiteSpace(conInput))
-                        return;
-                    if (_groupController.CanCommand("asay")){
+                    if(_groupController.CanCommand("asay")){
                         _console.ProcessCommand($"asay \"{CommandParsing.Escape(conInput)}\"");
                     }
                     else
@@ -272,8 +246,6 @@ namespace Content.Client.Chat
                 case MeAlias:
                 {
                     var conInput = text.Substring(1);
-                    if (string.IsNullOrWhiteSpace(conInput))
-                        return;
                     _console.ProcessCommand($"me \"{CommandParsing.Escape(conInput)}\"");
                     break;
                 }
@@ -333,8 +305,7 @@ namespace Content.Client.Chat
                 case "ALL":
                     chatBox.LocalButton.Pressed ^= true;
                     chatBox.OOCButton.Pressed ^= true;
-                    if (chatBox.AdminButton != null)
-                        chatBox.AdminButton.Pressed ^= true;
+                    chatBox.AdminButton.Pressed ^= true;
                     _allState = !_allState;
                     break;
             }
@@ -354,6 +325,8 @@ namespace Content.Client.Chat
 
         private void _onChatMessage(MsgChatMessage msg)
         {
+            Logger.Debug($"{msg.Channel}: {msg.Message}");
+
             // Log all incoming chat to repopulate when filter is un-toggled
             var storedMessage = new StoredChatMessage(msg);
             filteredHistory.Add(storedMessage);
@@ -374,17 +347,6 @@ namespace Content.Client.Chat
                     AddSpeechBubble(msg, SpeechBubble.SpeechType.Emote);
                     break;
             }
-        }
-
-        private void _onMaxLengthReceived(ChatMaxMsgLengthMessage msg)
-        {
-            _maxMessageLength = msg.MaxMessageLength;
-        }
-
-        private void RequestMaxLength(object sender, NetChannelArgs args)
-        {
-            ChatMaxMsgLengthMessage msg = _netManager.CreateNetMessage<ChatMaxMsgLengthMessage>();
-            _netManager.ClientSendMessage(msg);
         }
 
         private void AddSpeechBubble(MsgChatMessage msg, SpeechBubble.SpeechType speechType)

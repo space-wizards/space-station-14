@@ -1,13 +1,12 @@
 ﻿using System;
-using Content.Shared.Damage;
-using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects;
 using Content.Shared.Maths;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Temperature
+namespace Content.Server.GameObjects
 {
     public interface ITemperatureComponent : IComponent
     {
@@ -44,16 +43,16 @@ namespace Content.Server.GameObjects.Components.Temperature
         /// <inheritdoc />
         public void OnUpdate(float frameTime)
         {
-            var fireDamage =
+            int fireDamage =
                 (int) Math.Floor(Math.Max(0, CurrentTemperature - _fireDamageThreshold) / _fireDamageCoefficient);
 
             _secondsSinceLastDamageUpdate += frameTime;
 
-            Owner.TryGetComponent(out IDamageableComponent component);
+            Owner.TryGetComponent(out DamageableComponent component);
 
             while (_secondsSinceLastDamageUpdate >= 1)
             {
-                component?.ChangeDamage(DamageType.Heat, fireDamage, false, null);
+                component?.TakeDamage(DamageType.Heat, fireDamage);
                 _secondsSinceLastDamageUpdate -= 1;
             }
         }

@@ -11,7 +11,6 @@ using Robust.Shared.Input;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
-using Robust.Shared.Map;
 
 namespace Content.Client.GameObjects.EntitySystems
 {
@@ -97,13 +96,9 @@ namespace Content.Client.GameObjects.EntitySystems
             var worldPos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
 
             if (!_mapManager.TryFindGridAt(worldPos, out var grid))
-            {
-                weapon.SyncFirePos(GridId.Invalid, worldPos.Position);
-            }
-            else
-            {
-                weapon.SyncFirePos(grid.Index, grid.MapToGrid(worldPos).Position);
-            }
+                grid = _mapManager.GetDefaultGrid(worldPos.MapId);
+
+            weapon.SyncFirePos(grid.MapToGrid(worldPos));
         }
     }
 }

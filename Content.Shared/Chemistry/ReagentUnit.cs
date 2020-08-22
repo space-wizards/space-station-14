@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Robust.Shared.Interfaces.Serialization;
+using System;
 using System.Globalization;
 using System.Linq;
-using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Shared.Chemistry
 {

@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Linq;
-using System.Threading;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Shared.Damage;
-using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Damage;
+using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects.Components.Doors;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -20,10 +17,11 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
-using Timer = Robust.Shared.Timers.Timer;
+using CancellationTokenSource = System.Threading.CancellationTokenSource;
 
-namespace Content.Server.GameObjects.Components.Doors
+namespace Content.Server.GameObjects
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
@@ -33,10 +31,10 @@ namespace Content.Server.GameObjects.Components.Doors
 
         private DoorState _state = DoorState.Closed;
 
-        public virtual DoorState State
+        protected virtual DoorState State
         {
             get => _state;
-            protected set => _state = value;
+            set => _state = value;
         }
 
         protected float OpenTimeCounter;
@@ -59,7 +57,8 @@ namespace Content.Server.GameObjects.Components.Doors
         private const float DoorStunTime = 5f;
         protected bool Safety = true;
 
-        [ViewVariables] private bool _occludes;
+        [ViewVariables]
+        private bool _occludes;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -80,7 +79,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
         public override void OnRemove()
         {
-            _cancellationTokenSource?.Cancel();
+            _cancellationTokenSource.Cancel();
             _collidableComponent = null;
             _appearance = null;
 
@@ -111,25 +110,18 @@ namespace Content.Server.GameObjects.Components.Doors
             {
                 return;
             }
-
-            // Disabled because it makes it suck hard to walk through double doors.
-
-            if (entity.HasComponent<IBodyManagerComponent>())
+            if (entity.HasComponent(typeof(SpeciesComponent)))
             {
                 if (!entity.TryGetComponent<IMoverComponent>(out var mover)) return;
 
-                /*
                 // TODO: temporary hack to fix the physics system raising collision events akwardly.
                 // E.g. when moving parallel to a door by going off the side of a wall.
                 var (walking, sprinting) = mover.VelocityDir;
                 // Also TODO: walking and sprint dir are added together here
                 // instead of calculating their contribution correctly.
                 var dotProduct = Vector2.Dot((sprinting + walking).Normalized, (entity.Transform.WorldPosition - Owner.Transform.WorldPosition).Normalized);
-                if (dotProduct <= -0.85f)
+                if (dotProduct <= -0.9f)
                     TryOpen(entity);
-                */
-
-                TryOpen(entity);
             }
         }
 
@@ -151,7 +143,6 @@ namespace Content.Server.GameObjects.Components.Doors
             {
                 return true;
             }
-
             return accessReader.IsAllowed(user);
         }
 
@@ -197,7 +188,7 @@ namespace Content.Server.GameObjects.Components.Doors
                 SetAppearance(DoorVisualState.Open);
             }, _cancellationTokenSource.Token);
 
-            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new AccessReaderChangeMessage(Owner, false));
+            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new AccessReaderChangeMessage(Owner.Uid, false));
         }
 
         public virtual bool CanClose()
@@ -212,7 +203,6 @@ namespace Content.Server.GameObjects.Components.Doors
             {
                 return true;
             }
-
             return accessReader.IsAllowed(user);
         }
 
@@ -223,7 +213,6 @@ namespace Content.Server.GameObjects.Components.Doors
                 Deny();
                 return;
             }
-
             Close();
         }
 
@@ -238,7 +227,7 @@ namespace Content.Server.GameObjects.Components.Doors
                 foreach (var e in collidesWith)
                 {
                     if (!e.TryGetComponent(out StunnableComponent stun)
-                        || !e.TryGetComponent(out IDamageableComponent damage)
+                        || !e.TryGetComponent(out DamageableComponent damage)
                         || !e.TryGetComponent(out ICollidableComponent otherBody)
                         || !Owner.TryGetComponent(out ICollidableComponent body))
                         continue;
@@ -248,11 +237,10 @@ namespace Content.Server.GameObjects.Components.Doors
                     if (percentage < 0.1f)
                         continue;
 
-                    damage.ChangeDamage(DamageType.Blunt, DoorCrushDamage, false, Owner);
+                    damage.TakeDamage(Shared.GameObjects.DamageType.Brute, DoorCrushDamage);
                     stun.Paralyze(DoorStunTime);
                     hitSomeone = true;
                 }
-
                 // If we hit someone, open up after stun (opens right when stun ends)
                 if (hitSomeone)
                 {
@@ -296,7 +284,7 @@ namespace Content.Server.GameObjects.Components.Doors
                 State = DoorState.Closed;
                 SetAppearance(DoorVisualState.Closed);
             }, _cancellationTokenSource.Token);
-            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new AccessReaderChangeMessage(Owner, true));
+            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new AccessReaderChangeMessage(Owner.Uid, true));
             return true;
         }
 
@@ -336,7 +324,7 @@ namespace Content.Server.GameObjects.Components.Doors
             }
         }
 
-        public enum DoorState
+        protected enum DoorState
         {
             Closed,
             Open,

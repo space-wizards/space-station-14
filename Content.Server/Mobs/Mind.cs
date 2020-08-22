@@ -231,9 +231,6 @@ namespace Content.Server.Mobs
         {
             Session?.AttachToEntity(entity);
             VisitingEntity = entity;
-
-            var comp = entity.AddComponent<VisitingMindComponent>();
-            comp.Mind = this;
         }
 
         public void UnVisit()
@@ -244,14 +241,7 @@ namespace Content.Server.Mobs
             }
 
             Session?.AttachToEntity(OwnedEntity);
-            var oldVisitingEnt = VisitingEntity;
-            // Null this before removing the component to avoid any infinite loops.
             VisitingEntity = null;
-
-            if (oldVisitingEnt.HasComponent<VisitingMindComponent>())
-            {
-                oldVisitingEnt.RemoveComponent<VisitingMindComponent>();
-            }
         }
     }
 }

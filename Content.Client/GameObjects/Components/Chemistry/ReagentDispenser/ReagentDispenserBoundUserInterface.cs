@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser;
+using Content.Shared.GameObjects.Components.Chemistry;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using static Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser.SharedReagentDispenserComponent;
+using static Content.Shared.GameObjects.Components.Chemistry.SharedReagentDispenserComponent;
 
-namespace Content.Client.GameObjects.Components.Chemistry.ReagentDispenser
+namespace Content.Client.GameObjects.Components.Chemistry
 {
     /// <summary>
     /// Initializes a <see cref="ReagentDispenserWindow"/> and updates it when new server messages are received.
@@ -44,7 +44,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ReagentDispenser
                 Title = _localizationManager.GetString("Reagent dispenser"),
             };
 
-            _window.OpenCentered();
+            _window.OpenCenteredMinSize();
             _window.OnClose += Close;
 
             //Setup static button actions.
@@ -72,8 +72,8 @@ namespace Content.Client.GameObjects.Components.Chemistry.ReagentDispenser
             var castState = (ReagentDispenserBoundUserInterfaceState)state;
             _lastState = castState;
 
-            UpdateReagentsList(castState.Inventory); //Update reagents list & reagent button actions
             _window?.UpdateState(castState); //Update window state
+            UpdateReagentsList(castState.Inventory); //Update reagents list & reagent button actions
         }
 
         /// <summary>

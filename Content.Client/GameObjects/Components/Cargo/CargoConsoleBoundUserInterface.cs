@@ -69,7 +69,7 @@ namespace Content.Client.GameObjects.Components.Cargo
                 _orderMenu.Requester.Text = null;
                 _orderMenu.Reason.Text = null;
                 _orderMenu.Amount.Value = 1;
-                _orderMenu.OpenCentered();
+                _orderMenu.OpenCenteredMinSize();
             };
             _menu.OnOrderApproved += ApproveOrder;
             _menu.OnOrderCanceled += RemoveOrder;

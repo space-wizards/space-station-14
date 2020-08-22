@@ -8,7 +8,6 @@ using Robust.Client.Graphics;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.Log;
-using Robust.Shared.Interfaces.Resources;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Utility;
@@ -60,11 +59,16 @@ namespace Content.Client.Parallax
 
                 if (!debugParallax && _resourceCache.UserData.Exists(ParallaxConfigOld))
                 {
-                    var match = _resourceCache.UserData.ReadAllText(ParallaxConfigOld) == contents;
+                    bool match;
+                    using (var data = _resourceCache.UserData.Open(ParallaxConfigOld, FileMode.Open))
+                    using (var reader = new StreamReader(data, EncodingHelpers.UTF8))
+                    {
+                        match = reader.ReadToEnd() == contents;
+                    }
 
                     if (match)
                     {
-                        using (var stream = _resourceCache.UserData.OpenRead(ParallaxPath))
+                        using (var stream = _resourceCache.UserData.Open(ParallaxPath, FileMode.Open))
                         {
                             ParallaxTexture = Texture.LoadFromPNGStream(stream, "Parallax");
                         }
@@ -91,7 +95,7 @@ namespace Content.Client.Parallax
             ParallaxTexture = Texture.LoadFromImage(image, "Parallax");
 
             // Store it and CRC so further game starts don't need to regenerate it.
-            using (var stream = _resourceCache.UserData.Create(ParallaxPath))
+            using (var stream = _resourceCache.UserData.Open(ParallaxPath, FileMode.Create))
             {
                 image.SaveAsPng(stream);
             }
@@ -101,7 +105,8 @@ namespace Content.Client.Parallax
                 var i = 0;
                 foreach (var debugImage in debugImages)
                 {
-                    using (var stream = _resourceCache.UserData.Create(new ResourcePath($"/parallax_debug_{i}.png")))
+                    using (var stream = _resourceCache.UserData.Open(new ResourcePath($"/parallax_debug_{i}.png"),
+                        FileMode.Create))
                     {
                         debugImage.SaveAsPng(stream);
                     }
@@ -112,7 +117,7 @@ namespace Content.Client.Parallax
 
             image.Dispose();
 
-            using (var stream = _resourceCache.UserData.Create(ParallaxConfigOld))
+            using (var stream = _resourceCache.UserData.Open(ParallaxConfigOld, FileMode.Create))
             using (var writer = new StreamWriter(stream, EncodingHelpers.UTF8))
             {
                 writer.Write(contents);

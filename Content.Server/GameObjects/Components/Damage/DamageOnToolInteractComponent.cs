@@ -1,16 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Interactable;
-using Content.Shared.Damage;
+﻿using Content.Server.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.Components.Interactable;
-using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
+using System.Collections.Generic;
+using Content.Shared.Interfaces.GameObjects.Components;
 
 namespace Content.Server.GameObjects.Components.Damage
 {
     [RegisterComponent]
-    public class DamageOnToolInteractComponent : Component, IInteractUsing
+    class DamageOnToolInteractComponent : Component, IInteractUsing
     {
         public override string Name => "DamageOnToolInteract";
 
@@ -30,10 +28,10 @@ namespace Content.Server.GameObjects.Components.Damage
         public override void Initialize()
         {
             base.Initialize();
-            Owner.EnsureComponent<DestructibleComponent>();
+            Owner.EnsureComponent<DamageableComponent>();
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (eventArgs.Using.TryGetComponent<ToolComponent>(out var tool))
             {
@@ -41,12 +39,12 @@ namespace Content.Server.GameObjects.Components.Damage
                 {
                     if (tool.HasQuality(ToolQuality.Welding) && toolQuality == ToolQuality.Welding)
                     {
-                        if (eventArgs.Using.TryGetComponent(out WelderComponent welder))
-                        {
+                    if (eventArgs.Using.TryGetComponent<WelderComponent>(out WelderComponent welder))
+                    {
                             if (welder.WelderLit) return CallDamage(eventArgs, tool);
-                        }
-                        break; //If the tool quality is welding and its not lit or its not actually a welder that can be lit then its pointless to continue.
                     }
+                        break; //If the tool quality is welding and its not lit or its not actually a welder that can be lit then its pointless to continue.
+                }
 
                     if (tool.HasQuality(toolQuality)) return CallDamage(eventArgs, tool);
                 }
@@ -56,17 +54,14 @@ namespace Content.Server.GameObjects.Components.Damage
 
         protected bool CallDamage(InteractUsingEventArgs eventArgs, ToolComponent tool)
         {
-            if (eventArgs.Target.TryGetComponent<DestructibleComponent>(out var damageable))
+            if (eventArgs.Target.TryGetComponent<DamageableComponent>(out var damageable))
             {
-                damageable.ChangeDamage(tool.HasQuality(ToolQuality.Welding)
-                        ? DamageType.Heat
-                        : DamageType.Blunt,
-                    Damage, false, eventArgs.User);
-
+                if(tool.HasQuality(ToolQuality.Welding)) damageable.TakeDamage(Shared.GameObjects.DamageType.Heat, Damage, eventArgs.Using, eventArgs.User);
+                else
+                damageable.TakeDamage(Shared.GameObjects.DamageType.Brute, Damage, eventArgs.Using, eventArgs.User);
                 return true;
             }
-
-            return false;
+                return false;
         }
     }
 }

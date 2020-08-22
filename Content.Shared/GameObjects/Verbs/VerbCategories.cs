@@ -1,4 +1,4 @@
-namespace Content.Shared.GameObjects.Verbs
+namespace Content.Shared.GameObjects
 {
     /// <summary>
     ///     Standard verb categories.

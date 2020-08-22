@@ -1,8 +1,6 @@
-﻿using System;
+﻿using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
-using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Content.Shared.GameObjects.Components.Power;
-using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.GameObjects.EntitySystems;
@@ -10,9 +8,11 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Timing;
-using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
+using System;
+using Content.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.IoC;
+using Robust.Shared.Interfaces.Timing;
 
 namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 {

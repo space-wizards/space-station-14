@@ -19,7 +19,6 @@ namespace Content.Client.GameObjects.Components.Disposal
 
         private string _stateAnchored;
         private string _stateUnAnchored;
-        private string _stateCharging;
         private string _overlayCharging;
         private string _overlayReady;
         private string _overlayFull;
@@ -47,9 +46,6 @@ namespace Content.Client.GameObjects.Components.Disposal
                     break;
                 case VisualState.Anchored:
                     sprite.LayerSetState(DisposalUnitVisualLayers.Base, _stateAnchored);
-                    break;
-                case VisualState.Charging:
-                    sprite.LayerSetState(DisposalUnitVisualLayers.Base, _stateCharging);
                     break;
                 case VisualState.Flushing:
                     sprite.LayerSetState(DisposalUnitVisualLayers.Base, _stateAnchored);
@@ -115,7 +111,6 @@ namespace Content.Client.GameObjects.Components.Disposal
 
             _stateAnchored = node.GetNode("state_anchored").AsString();
             _stateUnAnchored = node.GetNode("state_unanchored").AsString();
-            _stateCharging = node.GetNode("state_charging").AsString();
             _overlayCharging = node.GetNode("overlay_charging").AsString();
             _overlayReady = node.GetNode("overlay_ready").AsString();
             _overlayFull = node.GetNode("overlay_full").AsString();

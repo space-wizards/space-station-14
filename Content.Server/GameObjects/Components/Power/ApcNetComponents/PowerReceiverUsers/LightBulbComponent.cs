@@ -13,7 +13,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers
+namespace Content.Server.GameObjects.Components.Power
 {
     public enum LightBulbState
     {

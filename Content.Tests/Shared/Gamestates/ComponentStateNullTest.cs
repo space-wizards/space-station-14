@@ -8,7 +8,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.Reflection;
 
-namespace Content.Tests.Shared.Gamestates
+namespace Content.Tests.Shared.GameStates
 {
     [TestFixture]
     public class ComponentStateNullTest

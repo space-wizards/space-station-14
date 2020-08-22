@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.AI.Operators;
+using Content.Server.AI.Operators.Combat;
 using Content.Server.AI.Operators.Combat.Melee;
 using Content.Server.AI.Operators.Movement;
 using Content.Server.AI.Utility.Considerations;
@@ -65,14 +66,16 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
 
             return new[]
             {
+                considerationsManager.Get<MeleeWeaponEquippedCon>()
+                    .BoolCurve(context),
                 considerationsManager.Get<TargetIsDeadCon>()
                     .InverseBoolCurve(context),
                 considerationsManager.Get<TargetIsCritCon>()
                     .QuadraticCurve(context, -0.8f, 1.0f, 1.0f, 0.0f),
-                considerationsManager.Get<TargetDistanceCon>()
-                    .PresetCurve(context, PresetCurve.Distance),
+                considerationsManager.Get<DistanceCon>()
+                    .QuadraticCurve(context, 1.0f, 1.0f, 0.02f, 0.0f),
                 considerationsManager.Get<TargetHealthCon>()
-                    .PresetCurve(context, PresetCurve.TargetHealth),
+                    .QuadraticCurve(context, 1.0f, 0.4f, 0.0f, -0.02f),
                 considerationsManager.Get<MeleeWeaponSpeedCon>()
                     .QuadraticCurve(context, 1.0f, 0.5f, 0.0f, 0.0f),
                 considerationsManager.Get<MeleeWeaponDamageCon>()

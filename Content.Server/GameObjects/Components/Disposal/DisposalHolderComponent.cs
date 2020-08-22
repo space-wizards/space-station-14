@@ -1,12 +1,8 @@
 #nullable enable
-using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Shared.GameObjects.Components.Body;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
@@ -43,12 +39,6 @@ namespace Content.Server.GameObjects.Components.Disposal
         [ViewVariables]
         public IDisposalTubeComponent? NextTube { get; set; }
 
-        /// <summary>
-        ///     A list of tags attached to the content, used for sorting
-        /// </summary>
-        [ViewVariables]
-        public HashSet<string> Tags { get; set; } = new HashSet<string>();
-
         private bool CanInsert(IEntity entity)
         {
             if (!_contents.CanInsert(entity))
@@ -56,14 +46,8 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
-            if (!entity.TryGetComponent(out ICollidableComponent? collidable) ||
-                !collidable.CanCollide)
-            {
-                return false;
-            }
-
             return entity.HasComponent<ItemComponent>() ||
-                   entity.HasComponent<IBodyManagerComponent>();
+                   entity.HasComponent<SpeciesComponent>();
         }
 
         public bool TryInsert(IEntity entity)
@@ -71,11 +55,6 @@ namespace Content.Server.GameObjects.Components.Disposal
             if (!CanInsert(entity) || !_contents.Insert(entity))
             {
                 return false;
-            }
-
-            if (entity.TryGetComponent(out ICollidableComponent? collidable))
-            {
-                collidable.CanCollide = false;
             }
 
             return true;
@@ -105,11 +84,6 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             foreach (var entity in _contents.ContainedEntities.ToArray())
             {
-                if (entity.TryGetComponent(out ICollidableComponent? collidable))
-                {
-                    collidable.CanCollide = true;
-                }
-
                 _contents.ForceRemove(entity);
 
                 if (entity.Transform.Parent == Owner.Transform)

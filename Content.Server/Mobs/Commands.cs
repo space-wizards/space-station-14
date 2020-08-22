@@ -2,9 +2,10 @@
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Mobs.Roles;
 using Content.Server.Players;
-using Content.Shared.Roles;
+using Content.Shared.Jobs;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;

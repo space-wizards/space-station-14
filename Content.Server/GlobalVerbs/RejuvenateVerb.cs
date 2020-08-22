@@ -1,7 +1,7 @@
-﻿using Content.Server.GameObjects.Components.Mobs;
+﻿using Content.Server.GameObjects;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Nutrition;
-using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.Verbs;
+using Content.Shared.GameObjects;
 using Robust.Server.Console;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -16,7 +16,6 @@ namespace Content.Server.GlobalVerbs
     class RejuvenateVerb : GlobalVerb
     {
         public override bool RequireInteractionRange => false;
-        public override bool BlockedByContainers => false;
 
         public override void GetData(IEntity user, IEntity target, VerbData data)
         {
@@ -28,7 +27,7 @@ namespace Content.Server.GlobalVerbs
 
             if (user.TryGetComponent<IActorComponent>(out var player))
             {
-                if (!target.HasComponent<IDamageableComponent>() && !target.HasComponent<HungerComponent>() &&
+                if (!target.HasComponent<DamageableComponent>() && !target.HasComponent<HungerComponent>() &&
                     !target.HasComponent<ThirstComponent>())
                 {
                     return;
@@ -50,24 +49,20 @@ namespace Content.Server.GlobalVerbs
                     PerformRejuvenate(target);
             }
         }
-
         public static void PerformRejuvenate(IEntity target)
         {
-            if (target.TryGetComponent(out IDamageableComponent damage))
+            if (target.TryGetComponent(out DamageableComponent damage))
             {
-                damage.Heal();
+                damage.HealAllDamage();
             }
-
             if (target.TryGetComponent(out HungerComponent hunger))
             {
                 hunger.ResetFood();
             }
-
             if (target.TryGetComponent(out ThirstComponent thirst))
             {
                 thirst.ResetThirst();
             }
-
             if (target.TryGetComponent(out StunnableComponent stun))
             {
                 stun.ResetStuns();

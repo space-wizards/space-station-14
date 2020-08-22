@@ -1,20 +1,18 @@
-﻿using System;
-using System.Linq;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
+﻿using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects;
-using Content.Server.Observer;
 using Content.Server.Players;
-using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Content.Shared.Damage;
+using System.Linq;
+using Content.Server.GameObjects.Components;
+using Content.Server.GameObjects.Components.GUI;
 
 namespace Content.Server.Chat
 {
@@ -32,11 +30,9 @@ namespace Content.Server.Chat
             if (args.Length < 1)
                 return;
 
-            var message = string.Join(" ", args).Trim();
-            if (string.IsNullOrEmpty(message))
-                return;
-
             var chat = IoCManager.Resolve<IChatManager>();
+
+            var message = string.Join(" ", args);
 
             if (player.AttachedEntity.HasComponent<GhostComponent>())
                 chat.SendDeadChat(player, message);
@@ -63,11 +59,9 @@ namespace Content.Server.Chat
             if (args.Length < 1)
                 return;
 
-            var action = string.Join(" ", args).Trim();
-            if (string.IsNullOrEmpty(action))
-                return;
-
             var chat = IoCManager.Resolve<IChatManager>();
+
+            var action = string.Join(" ", args);
 
             var mindComponent = player.ContentData().Mind;
             chat.EntityMe(mindComponent.OwnedEntity, action);
@@ -82,15 +76,8 @@ namespace Content.Server.Chat
 
         public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
         {
-            if (args.Length < 1)
-                return;
-
-            var message = string.Join(" ", args).Trim();
-            if (string.IsNullOrEmpty(message))
-                return;
-
             var chat = IoCManager.Resolve<IChatManager>();
-            chat.SendOOC(player, message);
+            chat.SendOOC(player, string.Join(" ", args));
         }
     }
 
@@ -102,15 +89,8 @@ namespace Content.Server.Chat
 
         public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
         {
-            if (args.Length < 1)
-                return;
-
-            var message = string.Join(" ", args).Trim();
-            if (string.IsNullOrEmpty(message))
-                return;
-
             var chat = IoCManager.Resolve<IChatManager>();
-            chat.SendAdminChat(player, message);
+            chat.SendAdminChat(player, string.Join(" ", args));
         }
     }
 
@@ -125,24 +105,24 @@ namespace Content.Server.Chat
             "If that fails, it will attempt to use an object in the environment.\n" +
             "Finally, if neither of the above worked, you will die by biting your tongue.";
 
-        private void DealDamage(ISuicideAct suicide, IChatManager chat, IDamageableComponent damageableComponent, IEntity source, IEntity target)
+        private void DealDamage(ISuicideAct suicide, IChatManager chat, DamageableComponent damageableComponent, IEntity source, IEntity target)
         {
             SuicideKind kind = suicide.Suicide(target, chat);
             if (kind != SuicideKind.Special)
             {
-                damageableComponent.ChangeDamage(kind switch
-                    {
-                        SuicideKind.Blunt => DamageType.Blunt,
-                        SuicideKind.Piercing => DamageType.Piercing,
-                        SuicideKind.Heat => DamageType.Heat,
-                        SuicideKind.Disintegration => DamageType.Disintegration,
-                        SuicideKind.Cellular => DamageType.Cellular,
-                        SuicideKind.DNA => DamageType.DNA,
-                        SuicideKind.Asphyxiation => DamageType.Asphyxiation,
-                        _ => DamageType.Blunt
-                    },
-                500,
-                true, source);
+                damageableComponent.TakeDamage(kind switch
+                {
+                    SuicideKind.Brute    => DamageType.Brute,
+                    SuicideKind.Heat     => DamageType.Heat,
+                    SuicideKind.Cold     => DamageType.Cold,
+                    SuicideKind.Acid     => DamageType.Acid,
+                    SuicideKind.Toxic    => DamageType.Toxic,
+                    SuicideKind.Electric => DamageType.Electric,
+                                       _ => DamageType.Brute
+                },
+                500, //TODO: needs to be a max damage of some sorts
+                source,
+                target);
             }
         }
 
@@ -153,7 +133,7 @@ namespace Content.Server.Chat
 
             var chat = IoCManager.Resolve<IChatManager>();
             var owner = player.ContentData().Mind.OwnedMob.Owner;
-            var dmgComponent = owner.GetComponent<IDamageableComponent>();
+            var dmgComponent = owner.GetComponent<DamageableComponent>();
             //TODO: needs to check if the mob is actually alive
             //TODO: maybe set a suicided flag to prevent ressurection?
 
@@ -187,11 +167,7 @@ namespace Content.Server.Chat
             }
             // Default suicide, bite your tongue
             chat.EntityMe(owner, Loc.GetString("is attempting to bite {0:their} own tongue, looks like {0:theyre} trying to commit suicide!", owner)); //TODO: theyre macro
-            dmgComponent.ChangeDamage(DamageType.Piercing, 500, true, owner);
-
-            // Prevent the player from returning to the body. Yes, this is an ugly hack.
-            var ghost = new Ghost(){CanReturn = false};
-            ghost.Execute(shell, player, Array.Empty<string>());
+            dmgComponent.TakeDamage(DamageType.Brute, 500, owner, owner); //TODO: dmg value needs to be a max damage of some sorts
         }
     }
 }

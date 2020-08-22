@@ -1,9 +1,9 @@
 ﻿#nullable enable
 using System;
 using System.Linq;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Disposal;
-using Content.Shared.GameObjects.Verbs;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
@@ -44,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         [ViewVariables]
         private bool Anchored =>
-            !Owner.TryGetComponent(out CollidableComponent? collidable) ||
+            !Owner.TryGetComponent(out CollidableComponent collidable) ||
             collidable.Anchored;
 
         /// <summary>
@@ -69,11 +69,21 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             var nextDirection = NextDirection(holder);
             var snapGrid = Owner.GetComponent<SnapGridComponent>();
-            var oppositeDirection = new Angle(nextDirection.ToAngle().Theta + Math.PI).GetDir();
             var tube = snapGrid
                 .GetInDir(nextDirection)
-                .Select(x => x.TryGetComponent(out IDisposalTubeComponent? c) ? c : null)
-                .FirstOrDefault(x => x != null && x != this && x.CanConnect(oppositeDirection, this));
+                .Select(x => x.TryGetComponent(out IDisposalTubeComponent c) ? c : null)
+                .FirstOrDefault(x => x != null && x != this);
+
+            if (tube == null)
+            {
+                return null;
+            }
+
+            var oppositeDirection = new Angle(nextDirection.ToAngle().Theta + Math.PI).GetDir();
+            if (!tube.CanConnect(oppositeDirection, this))
+            {
+                return null;
+            }
 
             return tube;
         }
@@ -143,7 +153,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             foreach (var entity in Contents.ContainedEntities.ToArray())
             {
-                if (!entity.TryGetComponent(out DisposalHolderComponent? holder))
+                if (!entity.TryGetComponent(out DisposalHolderComponent holder))
                 {
                     continue;
                 }
@@ -161,7 +171,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private void UpdateVisualState()
         {
-            if (!Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (!Owner.TryGetComponent(out AppearanceComponent appearance))
             {
                 return;
             }
@@ -177,7 +187,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private void AnchoredChanged()
         {
-            if (!Owner.TryGetComponent(out CollidableComponent? collidable))
+            if (!Owner.TryGetComponent(out CollidableComponent collidable))
             {
                 return;
             }
@@ -207,7 +217,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _clangSound, "clangSound", "/Audio/Effects/clang.ogg");
+            serializer.DataField(ref _clangSound, "clangSound", "/Audio/effects/clang.ogg");
         }
 
         public override void Initialize()

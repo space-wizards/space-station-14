@@ -8,4 +8,12 @@ namespace Content.Shared.GameObjects.Components.Mobs
     {
         State
     }
+    
+    [Serializable, NetSerializable]
+    public enum DamageStateVisualData
+    {
+        Normal,
+        Crit,
+        Dead
+    }
 }

@@ -44,8 +44,8 @@ namespace Content.Client.GameObjects.Components.Mobs
             sprite.LayerSetColor(HumanoidVisualLayers.Hair, Appearance.HairColor);
             sprite.LayerSetColor(HumanoidVisualLayers.FacialHair, Appearance.FacialHairColor);
 
-            sprite.LayerSetState(HumanoidVisualLayers.Chest, Sex == Sex.Male ? "torso_m" : "torso_f");
-            sprite.LayerSetState(HumanoidVisualLayers.Head, Sex == Sex.Male ? "head_m" : "head_f");
+            sprite.LayerSetState(HumanoidVisualLayers.Chest, Sex == Sex.Male ? "human_chest_m" : "human_chest_f");
+            sprite.LayerSetState(HumanoidVisualLayers.Head, Sex == Sex.Male ? "human_head_m" : "human_head_f");
 
             sprite.LayerSetVisible(HumanoidVisualLayers.StencilMask, Sex == Sex.Female);
 

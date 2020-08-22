@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using Content.Shared.Prototypes.Cargo;
+﻿using Content.Shared.Prototypes.Cargo;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
+using System;
+using System.Collections.Generic;
 
 namespace Content.Shared.GameObjects.Components.Cargo
 {

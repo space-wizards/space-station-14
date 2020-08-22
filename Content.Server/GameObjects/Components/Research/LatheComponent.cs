@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Shared.GameObjects.Components.Materials;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.GameObjects.Components.Research;
-using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Research;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
@@ -16,6 +13,8 @@ using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Shared.Interfaces.GameObjects.Components;
 
 namespace Content.Server.GameObjects.Components.Research
 {
@@ -150,8 +149,7 @@ namespace Content.Server.GameObjects.Components.Research
 
             OpenUserInterface(actor.playerSession);
         }
-
-        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!Owner.TryGetComponent(out MaterialStorageComponent storage)
                 ||  !eventArgs.Using.TryGetComponent(out MaterialComponent material)) return false;

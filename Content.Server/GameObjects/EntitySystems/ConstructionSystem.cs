@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Construction;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Interactable;
-using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Utility;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Interactable;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -34,7 +32,7 @@ namespace Content.Server.GameObjects.EntitySystems
     /// The server-side implementation of the construction system, which is used for constructing entities in game.
     /// </summary>
     [UsedImplicitly]
-    internal class ConstructionSystem : SharedConstructionSystem
+    internal class ConstructionSystem : Shared.GameObjects.EntitySystems.SharedConstructionSystem
     {
 #pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
@@ -77,7 +75,7 @@ namespace Content.Server.GameObjects.EntitySystems
             TryStartItemConstruction(placingEnt, msg.PrototypeName);
         }
 
-        private async void HandleToolInteraction(AfterInteractMessage msg)
+        private void HandleToolInteraction(AfterInteractMessage msg)
         {
             if(msg.Handled)
                 return;
@@ -105,7 +103,7 @@ namespace Content.Server.GameObjects.EntitySystems
             // the target entity is in the process of being constructed/deconstructed
             if (msg.Attacked.TryGetComponent<ConstructionComponent>(out var constructComp))
             {
-                var result = await TryConstructEntity(constructComp, handEnt, msg.User);
+                var result = TryConstructEntity(constructComp, handEnt, msg.User);
 
                 // TryConstructEntity may delete the existing entity
 
@@ -339,7 +337,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             // OK WE'RE GOOD CONSTRUCTION STARTED.
-            Get<AudioSystem>().PlayFromEntity("/Audio/Items/deconstruct.ogg", placingEnt);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/deconstruct.ogg", placingEnt);
             if (prototype.Stages.Count == 2)
             {
                 // Exactly 2 stages, so don't make an intermediate frame.
@@ -368,7 +366,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        private async Task<bool> TryConstructEntity(ConstructionComponent constructionComponent, IEntity handTool, IEntity user)
+        private bool TryConstructEntity(ConstructionComponent constructionComponent, IEntity handTool, IEntity user)
         {
             var constructEntity = constructionComponent.Owner;
             var spriteComponent = constructEntity.GetComponent<SpriteComponent>();
@@ -385,7 +383,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             var stage = constructPrototype.Stages[constructionComponent.Stage];
 
-            if (await TryProcessStep(constructEntity, stage.Forward, handTool, user, transformComponent.GridPosition))
+            if (TryProcessStep(constructEntity, stage.Forward, handTool, user, transformComponent.GridPosition))
             {
                 constructionComponent.Stage++;
                 if (constructionComponent.Stage == constructPrototype.Stages.Count - 1)
@@ -407,7 +405,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 }
             }
 
-            else if (await TryProcessStep(constructEntity, stage.Backward, handTool, user, transformComponent.GridPosition))
+            else if (TryProcessStep(constructEntity, stage.Backward, handTool, user, transformComponent.GridPosition))
             {
                 constructionComponent.Stage--;
                 stage = constructPrototype.Stages[constructionComponent.Stage];
@@ -444,7 +442,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        private async Task<bool> TryProcessStep(IEntity constructEntity, ConstructionStep step, IEntity slapped, IEntity user, GridCoordinates gridCoords)
+        private bool TryProcessStep(IEntity constructEntity, ConstructionStep step, IEntity slapped, IEntity user, GridCoordinates gridCoords)
         {
             if (step == null)
             {
@@ -474,9 +472,9 @@ namespace Content.Server.GameObjects.EntitySystems
                     // Handle welder manually since tool steps specify fuel amount needed, for some reason.
                     if (toolStep.ToolQuality.HasFlag(ToolQuality.Welding))
                         return slapped.TryGetComponent<WelderComponent>(out var welder)
-                               && await welder.UseTool(user, constructEntity, toolStep.DoAfterDelay, toolStep.ToolQuality, toolStep.Amount);
+                               && welder.UseTool(user, constructEntity, toolStep.ToolQuality, toolStep.Amount);
 
-                    return await tool.UseTool(user, constructEntity, toolStep.DoAfterDelay, toolStep.ToolQuality);
+                    return tool.UseTool(user, constructEntity, toolStep.ToolQuality);
 
                 default:
                     throw new NotImplementedException();

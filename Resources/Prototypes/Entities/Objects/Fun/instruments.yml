@@ -1,9 +1,8 @@
-﻿- type: entity
+- type: entity
   name: basehandheldinstrument
   parent: BaseItem
   id: BaseHandheldInstrument
   abstract: true
-  description: That's a Instrument
   components:
   - type: Instrument
     handheld: true

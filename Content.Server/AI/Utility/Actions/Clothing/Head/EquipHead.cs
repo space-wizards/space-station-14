@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using Content.Server.AI.Operators;
 using Content.Server.AI.Operators.Inventory;
 using Content.Server.AI.Utility.Considerations;
+using Content.Server.AI.Utility.Considerations.Clothing;
 using Content.Server.AI.Utility.Considerations.Inventory;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
+using Content.Shared.GameObjects.Components.Inventory;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
@@ -26,7 +28,7 @@ namespace Content.Server.AI.Utility.Actions.Clothing.Head
             ActionOperators = new Queue<AiOperator>(new AiOperator[]
             {
                 new EquipEntityOperator(Owner, _entity),
-                new UseItemInInventoryOperator(Owner, _entity),
+                new UseItemInHandsOperator(Owner, _entity),
             });
         }
 
@@ -42,7 +44,9 @@ namespace Content.Server.AI.Utility.Actions.Clothing.Head
 
             return new[]
             {
-                considerationsManager.Get<CanPutTargetInInventoryCon>()
+                considerationsManager.Get<ClothingInSlotCon>().Slot(EquipmentSlotDefines.Slots.HEAD, context)
+                    .InverseBoolCurve(context),
+                considerationsManager.Get<CanPutTargetInHandsCon>()
                     .BoolCurve(context),
             };
 

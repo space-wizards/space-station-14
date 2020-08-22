@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using Content.Server.Interfaces;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
@@ -41,7 +42,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return;
             }
 
-            if (!entity.TryGetComponent(out IDisposalTubeComponent? tube))
+            if (!entity.TryGetComponent(out IDisposalTubeComponent tube))
             {
                 shell.SendText(player, Loc.GetString("Entity with uid {0} doesn't have a {1} component", id, nameof(IDisposalTubeComponent)));
                 return;

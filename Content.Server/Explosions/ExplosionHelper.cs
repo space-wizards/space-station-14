@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.Maps;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
@@ -83,25 +83,29 @@ namespace Content.Server.Explosions
                     continue;
                 }
                 var distanceFromTile = (int) tileLoc.Distance(mapManager, coords);
-
-                var zeroTile = new Tile(tileDefinitionManager[baseTurfs[0]].TileId);
-                var previousTile = new Tile(tileDefinitionManager[baseTurfs[^1]].TileId);
-
-                switch (distanceFromTile)
+                if (distanceFromTile < devastationRange)
                 {
-                    case var d when d < devastationRange:
-                        mapGrid.SetTile(tileLoc, zeroTile);
-                        break;
-                    case var d when d < heavyImpactRange
-                                    && !previousTile.IsEmpty
-                                    && robustRandom.Prob(0.8f):
-                        mapGrid.SetTile(tileLoc, previousTile);
-                        break;
-                    case var d when d < lightImpactRange
-                                    && !previousTile.IsEmpty
-                                    && robustRandom.Prob(0.5f):
-                        mapGrid.SetTile(tileLoc, previousTile);
-                        break;
+                    mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager[baseTurfs[0]].TileId));
+                }
+
+                else if (distanceFromTile < heavyImpactRange)
+                {
+                    if (robustRandom.Prob(0.8f))
+                    {
+                        mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager[baseTurfs[^1]].TileId));
+                    }
+                    else
+                    {
+                        mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager[baseTurfs[0]].TileId));
+                    }
+                }
+
+                else if (distanceFromTile < lightImpactRange)
+                {
+                    if (robustRandom.Prob(0.5f))
+                    {
+                        mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager[baseTurfs[^1]].TileId));
+                    }
                 }
             }
 
@@ -143,7 +147,7 @@ namespace Content.Server.Explosions
                     delta = _epicenterDistance;
 
                 var distance = delta.LengthSquared;
-                var effect = 10 * (1 / (1 + distance));
+                var effect = 1 / (1 + 0.2f * distance);
                 if (effect > 0.01f)
                 {
                     var kick = -delta.Normalized * effect;
