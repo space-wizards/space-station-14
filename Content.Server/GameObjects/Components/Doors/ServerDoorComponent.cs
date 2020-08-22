@@ -45,7 +45,7 @@ namespace Content.Server.GameObjects.Components.Doors
         protected const float AutoCloseDelay = 5;
         protected float CloseSpeed = AutoCloseDelay;
 
-        private CancellationTokenSource? _cancellationTokenSource = new CancellationTokenSource();
+        private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
         private static readonly TimeSpan CloseTimeOne = TimeSpan.FromSeconds(0.3f);
         private static readonly TimeSpan CloseTimeTwo = TimeSpan.FromSeconds(0.9f);
