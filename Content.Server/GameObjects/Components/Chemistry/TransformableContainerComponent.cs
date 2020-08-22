@@ -23,15 +23,14 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         public bool Transformed { get; private set; }
 
-        private SpriteComponent? Sprite => Owner.TryGetComponent(out SpriteComponent? sprite) ? sprite : null;
-
         public override void Initialize()
         {
             base.Initialize();
 
-            if (Sprite?.BaseRSIPath != null)
+            if (Owner.TryGetComponent(out SpriteComponent? sprite) &&
+                sprite.BaseRSIPath != null)
             {
-                _initialSprite = new SpriteSpecifier.Rsi(new ResourcePath(Sprite.BaseRSIPath), "icon");
+                _initialSprite = new SpriteSpecifier.Rsi(new ResourcePath(sprite.BaseRSIPath), "icon");
             }
 
             _initialName = Owner.Name;
@@ -49,9 +48,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
             _currentReagent = null;
             Transformed = false;
 
-            if (_initialSprite != null)
+            if (Owner.TryGetComponent(out SpriteComponent? sprite) &&
+                _initialSprite != null)
             {
-                Sprite?.LayerSetSprite(0, _initialSprite);
+                sprite.LayerSetSprite(0, _initialSprite);
             }
 
             Owner.Name = _initialName;
@@ -82,7 +82,12 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 !string.IsNullOrWhiteSpace(proto.SpriteReplacementPath))
             {
                 var spriteSpec = new SpriteSpecifier.Rsi(new ResourcePath("Objects/Drinks/" + proto.SpriteReplacementPath),"icon");
-                Sprite?.LayerSetSprite(0, spriteSpec);
+
+                if (Owner.TryGetComponent(out SpriteComponent? sprite))
+                {
+                    sprite?.LayerSetSprite(0, spriteSpec);
+                }
+
                 Owner.Name = proto.Name + " glass";
                 Owner.Description = proto.Description;
                 _currentReagent = proto;

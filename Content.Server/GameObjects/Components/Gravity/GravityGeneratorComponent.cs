@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Shared.GameObjects.Components.Gravity;
 using Content.Shared.GameObjects.Components.Interactable;
@@ -30,7 +29,7 @@ namespace Content.Server.GameObjects.Components.Gravity
 
         private GravityGeneratorStatus _status;
 
-        public bool Powered => PowerReceiver == null || PowerReceiver.Powered;
+        public bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
 
         public bool SwitchedOn => _switchedOn;
 
@@ -65,11 +64,6 @@ namespace Content.Server.GameObjects.Components.Gravity
             ui.TryGetBoundUserInterface(GravityGeneratorUiKey.Key, out var boundUi)
                 ? boundUi
                 : null;
-
-        private PowerReceiverComponent? PowerReceiver =>
-            Owner.TryGetComponent(out PowerReceiverComponent? receiver) ? receiver : null;
-
-        private SpriteComponent? Sprite => Owner.TryGetComponent(out SpriteComponent? sprite) ? sprite : null;
 
         public override void Initialize()
         {
@@ -176,29 +170,45 @@ namespace Content.Server.GameObjects.Components.Gravity
         private void MakeBroken()
         {
             _status = GravityGeneratorStatus.Broken;
-            Sprite?.LayerSetState(0, "broken");
-            Sprite?.LayerSetVisible(1, false);
+
+            if (Owner.TryGetComponent(out SpriteComponent? sprite))
+            {
+                sprite.LayerSetState(0, "broken");
+                sprite.LayerSetVisible(1, false);
+            }
         }
 
         private void MakeUnpowered()
         {
             _status = GravityGeneratorStatus.Unpowered;
-            Sprite?.LayerSetState(0, "off");
-            Sprite?.LayerSetVisible(1, false);
+
+            if (Owner.TryGetComponent(out SpriteComponent? sprite))
+            {
+                sprite.LayerSetState(0, "off");
+                sprite.LayerSetVisible(1, false);
+            }
         }
 
         private void MakeOff()
         {
             _status = GravityGeneratorStatus.Off;
-            Sprite?.LayerSetState(0, "off");
-            Sprite?.LayerSetVisible(1, false);
+
+            if (Owner.TryGetComponent(out SpriteComponent? sprite))
+            {
+                sprite.LayerSetState(0, "off");
+                sprite.LayerSetVisible(1, false);
+            }
         }
 
         private void MakeOn()
         {
             _status = GravityGeneratorStatus.On;
-            Sprite?.LayerSetState(0, "on");
-            Sprite?.LayerSetVisible(1, true);
+
+            if (Owner.TryGetComponent(out SpriteComponent? sprite))
+            {
+                sprite.LayerSetState(0, "on");
+                sprite.LayerSetVisible(1, true);
+            }
         }
     }
 

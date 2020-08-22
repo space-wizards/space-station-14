@@ -51,7 +51,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         [ViewVariables]
         private SolutionComponent Solution => _beakerContainer.ContainedEntity.GetComponent<SolutionComponent>();
 
-        private bool Powered => PowerReceiver == null || PowerReceiver.Powered;
+        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
 
         [ViewVariables]
         private BoundUserInterface? UserInterface =>
@@ -59,9 +59,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
             ui.TryGetBoundUserInterface(ReagentDispenserUiKey.Key, out var boundUi)
                 ? boundUi
                 : null;
-
-        [ViewVariables]
-        private PowerReceiverComponent? PowerReceiver => Owner.TryGetComponent(out PowerReceiverComponent? receiver) ? receiver : null;
 
         /// <summary>
         /// Shows the serializer how to save/load this components yaml prototype.
@@ -90,9 +87,9 @@ namespace Content.Server.GameObjects.Components.Chemistry
             _beakerContainer =
                 ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-reagentContainerContainer", Owner);
 
-            if (PowerReceiver != null)
+            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
             {
-                PowerReceiver.OnPowerStateChanged += OnPowerChanged;
+                receiver.OnPowerStateChanged += OnPowerChanged;
             }
 
             InitializeFromPrototype();

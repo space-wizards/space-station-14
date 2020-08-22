@@ -59,17 +59,6 @@ namespace Content.Server.GameObjects.Components.Doors
 
         [ViewVariables] private bool _occludes;
 
-        [ViewVariables]
-        private AirtightComponent? Airtight =>
-            Owner.TryGetComponent(out AirtightComponent? airtight) ? airtight : null;
-
-        [ViewVariables]
-        private ICollidableComponent? Collidable =>
-            Owner.TryGetComponent(out ICollidableComponent? collidable) ? collidable : null;
-
-        [ViewVariables]
-        private AppearanceComponent? Appearance => Owner.TryGetComponent(out AppearanceComponent? appearance) ? appearance : null;
-
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -131,7 +120,10 @@ namespace Content.Server.GameObjects.Components.Doors
 
         private void SetAppearance(DoorVisualState state)
         {
-            Appearance?.SetData(DoorVisuals.VisualState, state);
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            {
+                appearance.SetData(DoorVisuals.VisualState, state);
+            }
         }
 
         public virtual bool CanOpen()
@@ -183,14 +175,14 @@ namespace Content.Server.GameObjects.Components.Doors
 
             Timer.Spawn(OpenTimeOne, async () =>
             {
-                if (Airtight != null)
+                if (Owner.TryGetComponent(out AirtightComponent? airtight))
                 {
-                    Airtight.AirBlocked = false;
+                    airtight.AirBlocked = false;
                 }
 
-                if (Collidable != null)
+                if (Owner.TryGetComponent(out ICollidableComponent? collidable))
                 {
-                    Collidable.Hard = false;
+                    collidable.Hard = false;
                 }
 
                 await Timer.Delay(OpenTimeTwo, _cancellationTokenSource.Token);
@@ -231,13 +223,13 @@ namespace Content.Server.GameObjects.Components.Doors
 
         private void CheckCrush()
         {
-            if (Collidable == null)
+            if (!Owner.TryGetComponent(out ICollidableComponent? body))
             {
                 return;
             }
 
             // Check if collides with something
-            var collidesWith = Collidable.GetCollidingEntities(Vector2.Zero, false);
+            var collidesWith = body.GetCollidingEntities(Vector2.Zero, false);
             if (collidesWith.Count() != 0)
             {
                 // Crush
@@ -246,8 +238,7 @@ namespace Content.Server.GameObjects.Components.Doors
                 {
                     if (!e.TryGetComponent(out StunnableComponent? stun)
                         || !e.TryGetComponent(out IDamageableComponent? damage)
-                        || !e.TryGetComponent(out ICollidableComponent? otherBody)
-                        || !Owner.TryGetComponent(out ICollidableComponent? body))
+                        || !e.TryGetComponent(out ICollidableComponent? otherBody))
                         continue;
 
                     var percentage = otherBody.WorldAABB.IntersectPercentage(body.WorldAABB);
@@ -271,7 +262,8 @@ namespace Content.Server.GameObjects.Components.Doors
         public bool Close()
         {
             bool shouldCheckCrush = false;
-            if (Collidable != null && Collidable.IsColliding(Vector2.Zero, false))
+
+            if (Owner.TryGetComponent(out ICollidableComponent? collidable) && collidable.IsColliding(Vector2.Zero, false))
             {
                 if (Safety)
                     return false;
@@ -295,14 +287,14 @@ namespace Content.Server.GameObjects.Components.Doors
                     CheckCrush();
                 }
 
-                if (Airtight != null)
+                if (Owner.TryGetComponent(out AirtightComponent? airtight))
                 {
-                    Airtight.AirBlocked = true;
+                    airtight.AirBlocked = true;
                 }
 
-                if (Collidable != null)
+                if (Owner.TryGetComponent(out ICollidableComponent? body))
                 {
-                    Collidable.Hard = true;
+                    body.Hard = true;
                 }
 
                 await Timer.Delay(CloseTimeTwo, _cancellationTokenSource.Token);

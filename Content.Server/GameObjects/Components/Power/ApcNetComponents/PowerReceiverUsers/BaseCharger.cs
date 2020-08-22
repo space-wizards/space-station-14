@@ -39,14 +39,6 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         [ViewVariables]
         private float _transferEfficiency;
 
-        [ViewVariables]
-        private PowerReceiverComponent? PowerReceiver =>
-            Owner.TryGetComponent(out PowerReceiverComponent? receiver) ? receiver : null;
-
-        [ViewVariables]
-        private AppearanceComponent? AppearanceComponent =>
-            Owner.TryGetComponent(out AppearanceComponent? appearance) ? appearance : null;
-
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -61,17 +53,17 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             Owner.EnsureComponent<PowerReceiverComponent>();
             _container = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-powerCellContainer", Owner);
             // Default state in the visualizer is OFF, so when this gets powered on during initialization it will generally show empty
-            if (PowerReceiver != null)
+            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
             {
-                PowerReceiver.OnPowerStateChanged += PowerUpdate;
+                receiver.OnPowerStateChanged += PowerUpdate;
             }
         }
 
         public override void OnRemove()
         {
-            if (PowerReceiver != null)
+            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
             {
-                PowerReceiver.OnPowerStateChanged -= PowerUpdate;
+                receiver.OnPowerStateChanged -= PowerUpdate;
             }
 
             _heldBattery = null;
@@ -199,7 +191,8 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
         private CellChargerStatus GetStatus()
         {
-            if (PowerReceiver != null && !PowerReceiver.Powered)
+            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver) &&
+                !receiver.Powered)
             {
                 return CellChargerStatus.Off;
             }
@@ -240,36 +233,39 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         {
             // Not called UpdateAppearance just because it messes with the load
             var status = GetStatus();
-            if (_status == status || PowerReceiver == null)
+            if (_status == status ||
+                !Owner.TryGetComponent(out PowerReceiverComponent? receiver))
             {
                 return;
             }
 
             _status = status;
+            Owner.TryGetComponent(out AppearanceComponent? appearance);
 
             switch (_status)
             {
                 // Update load just in case
                 case CellChargerStatus.Off:
-                    PowerReceiver.Load = 0;
-                    AppearanceComponent?.SetData(CellVisual.Light, CellChargerStatus.Off);
+                    receiver.Load = 0;
+                    appearance?.SetData(CellVisual.Light, CellChargerStatus.Off);
                     break;
                 case CellChargerStatus.Empty:
-                    PowerReceiver.Load = 0;
-                    AppearanceComponent?.SetData(CellVisual.Light, CellChargerStatus.Empty);
+                    receiver.Load = 0;
+                    appearance?.SetData(CellVisual.Light, CellChargerStatus.Empty);
                     break;
                 case CellChargerStatus.Charging:
-                    PowerReceiver.Load = (int) (_chargeRate / _transferEfficiency);
-                    AppearanceComponent?.SetData(CellVisual.Light, CellChargerStatus.Charging);
+                    receiver.Load = (int) (_chargeRate / _transferEfficiency);
+                    appearance?.SetData(CellVisual.Light, CellChargerStatus.Charging);
                     break;
                 case CellChargerStatus.Charged:
-                    PowerReceiver.Load = 0;
-                    AppearanceComponent?.SetData(CellVisual.Light, CellChargerStatus.Charged);
+                    receiver.Load = 0;
+                    appearance?.SetData(CellVisual.Light, CellChargerStatus.Charged);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            AppearanceComponent?.SetData(CellVisual.Occupied, _container.ContainedEntity != null);
+
+            appearance?.SetData(CellVisual.Occupied, _container.ContainedEntity != null);
         }
 
         public void OnUpdate(float frameTime) //todo: make single system for this
@@ -283,7 +279,8 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
         private void TransferPower(float frameTime)
         {
-            if (PowerReceiver != null && !PowerReceiver.Powered)
+            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver) &&
+                !receiver.Powered)
             {
                 return;
             }

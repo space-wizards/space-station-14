@@ -55,13 +55,6 @@ namespace Content.Server.GameObjects.Components.PDA
                 ? boundUi
                 : null;
 
-        [ViewVariables]
-        private PointLightComponent? PdaLight => Owner.TryGetComponent(out PointLightComponent? light) ? light : null;
-
-        [ViewVariables]
-        private AppearanceComponent? Appearance =>
-            Owner.TryGetComponent(out AppearanceComponent? appearance) ? appearance : null;
-
         public PDAComponent()
         {
             _accessSet = new PdaAccessSet(this);
@@ -152,7 +145,10 @@ namespace Content.Server.GameObjects.Components.PDA
 
         private void UpdatePDAAppearance()
         {
-            Appearance?.SetData(PDAVisuals.FlashlightLit, _lightOn);
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            {
+                appearance.SetData(PDAVisuals.FlashlightLit, _lightOn);
+            }
         }
 
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
@@ -228,13 +224,13 @@ namespace Content.Server.GameObjects.Components.PDA
 
         private void ToggleLight()
         {
-            if (PdaLight == null)
+            if (!Owner.TryGetComponent(out PointLightComponent? light))
             {
                 return;
             }
 
             _lightOn = !_lightOn;
-            PdaLight.Enabled = _lightOn;
+            light.Enabled = _lightOn;
             EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/flashlight_toggle.ogg", Owner);
             UpdatePDAUserInterface();
         }

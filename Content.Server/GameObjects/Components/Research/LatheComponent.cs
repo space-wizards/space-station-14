@@ -41,7 +41,7 @@ namespace Content.Server.GameObjects.Components.Research
         }
 
         private LatheRecipePrototype? _producingRecipe;
-        private bool Powered => PowerReceiver == null || PowerReceiver.Powered;
+        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
 
         private static readonly TimeSpan InsertionTime = TimeSpan.FromSeconds(0.9f);
 
@@ -51,12 +51,6 @@ namespace Content.Server.GameObjects.Components.Research
             ui.TryGetBoundUserInterface(LatheUiKey.Key, out var boundUi)
                 ? boundUi
                 : null;
-
-        private PowerReceiverComponent? PowerReceiver =>
-            Owner.TryGetComponent(out PowerReceiverComponent? receiver) ? receiver : null;
-
-        private AppearanceComponent? Appearance =>
-            Owner.TryGetComponent(out AppearanceComponent? appearance) ? appearance : null;
 
         public override void Initialize()
         {
@@ -216,7 +210,10 @@ namespace Content.Server.GameObjects.Components.Research
 
         private void SetAppearance(LatheVisualState state)
         {
-            Appearance?.SetData(PowerDeviceVisuals.VisualState, state);
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            {
+                appearance.SetData(PowerDeviceVisuals.VisualState, state);
+            }
         }
 
         private Queue<string> GetIdQueue()

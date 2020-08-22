@@ -30,7 +30,7 @@ namespace Content.Server.GameObjects.Components.Medical
         public bool IsOccupied => _bodyContainer.ContainedEntity != null;
 
         [ViewVariables]
-        private bool Powered => PowerReceiver == null || PowerReceiver.Powered;
+        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
 
         [ViewVariables]
         private BoundUserInterface? UserInterface =>
@@ -38,14 +38,6 @@ namespace Content.Server.GameObjects.Components.Medical
             ui.TryGetBoundUserInterface(MedicalScannerUiKey.Key, out var boundUi)
                 ? boundUi
                 : null;
-
-        [ViewVariables]
-        private PowerReceiverComponent? PowerReceiver =>
-            Owner.TryGetComponent(out PowerReceiverComponent? receiver) ? receiver : null;
-
-        [ViewVariables]
-        private AppearanceComponent? Appearance =>
-            Owner.TryGetComponent(out AppearanceComponent? appearance) ? appearance : null;
 
         public override void Initialize()
         {
@@ -77,7 +69,11 @@ namespace Content.Server.GameObjects.Components.Medical
             var body = _bodyContainer.ContainedEntity;
             if (body == null)
             {
-                Appearance?.SetData(MedicalScannerVisuals.Status, MedicalScannerStatus.Open);
+                if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+                {
+                    appearance?.SetData(MedicalScannerVisuals.Status, MedicalScannerStatus.Open);
+                };
+
                 return EmptyUIState;
             }
 
@@ -130,7 +126,10 @@ namespace Content.Server.GameObjects.Components.Medical
 
         private void UpdateAppearance()
         {
-            Appearance?.SetData(MedicalScannerVisuals.Status, GetStatus());
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            {
+                appearance.SetData(MedicalScannerVisuals.Status, GetStatus());
+            }
         }
 
         public void Activate(ActivateEventArgs args)

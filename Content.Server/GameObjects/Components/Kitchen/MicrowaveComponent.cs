@@ -63,8 +63,8 @@ namespace Content.Server.GameObjects.Components.Kitchen
         [ViewVariables]
         private uint _currentCookTimerTime = 1;
 
-        private bool Powered => PowerReceiver == null || PowerReceiver.Powered;
-        private bool _hasContents => Solution != null && (Solution.ReagentList.Count > 0 || _storage.ContainedEntities.Count > 0);
+        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+        private bool _hasContents => Owner.TryGetComponent(out SolutionComponent? solution) && (solution.ReagentList.Count > 0 || _storage.ContainedEntities.Count > 0);
         private bool _uiDirty = true;
         private bool _lostPower = false;
         private int _currentCookTimeButtonIndex = 0;
@@ -79,15 +79,6 @@ namespace Content.Server.GameObjects.Components.Kitchen
             ui.TryGetBoundUserInterface(MicrowaveUiKey.Key, out var boundUi)
                 ? boundUi
                 : null;
-
-        [ViewVariables]
-        private SolutionComponent? Solution => Owner.TryGetComponent(out SolutionComponent? solution) ? solution : null;
-
-        private AppearanceComponent? Appearance =>
-            Owner.TryGetComponent(out AppearanceComponent? appearance) ? appearance : null;
-
-        private PowerReceiverComponent? PowerReceiver =>
-            Owner.TryGetComponent(out PowerReceiverComponent? receiver) ? receiver : null;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -180,11 +171,11 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 _uiDirty = true;
             }
 
-            if (_uiDirty && Solution != null)
+            if (_uiDirty && Owner.TryGetComponent(out SolutionComponent? solution))
             {
                 UserInterface?.SetState(new MicrowaveUpdateUserInterfaceState
                 (
-                    Solution.Solution.Contents.ToArray(),
+                    solution.Solution.Contents.ToArray(),
                     _storage.ContainedEntities.Select(item => item.Uid).ToArray(),
                     _busy,
                     _currentCookTimeButtonIndex,
@@ -196,7 +187,10 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         private void SetAppearance(MicrowaveVisualState state)
         {
-            Appearance?.SetData(PowerDeviceVisuals.VisualState, state);
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            {
+                appearance.SetData(PowerDeviceVisuals.VisualState, state);
+            }
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
@@ -235,13 +229,13 @@ namespace Content.Server.GameObjects.Components.Kitchen
                     return false;
                 }
 
-                if (Solution == null)
+                if (!Owner.TryGetComponent(out SolutionComponent? solution))
                 {
                     return false;
                 }
 
                 //Get transfer amount. May be smaller than _transferAmount if not enough room
-                var realTransferAmount = ReagentUnit.Min(attackPourable.TransferAmount, Solution.EmptyVolume);
+                var realTransferAmount = ReagentUnit.Min(attackPourable.TransferAmount, solution.EmptyVolume);
                 if (realTransferAmount <= 0) //Special message if container is full
                 {
                     _notifyManager.PopupMessage(Owner.Transform.GridPosition, eventArgs.User,
@@ -251,7 +245,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
                 //Move units from attackSolution to targetSolution
                 var removedSolution = attackSolution.SplitSolution(realTransferAmount);
-                if (!Solution.TryAddSolution(removedSolution))
+                if (!solution.TryAddSolution(removedSolution))
                 {
                     return false;
                 }
@@ -370,12 +364,18 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         private void VaporizeReagents()
         {
-            Solution?.RemoveAllSolution();
+            if (Owner.TryGetComponent(out SolutionComponent? solution))
+            {
+                solution.RemoveAllSolution();
+            }
         }
 
         private void VaporizeReagentQuantity(Solution.ReagentQuantity reagentQuantity)
         {
-            Solution?.TryRemoveReagent(reagentQuantity.ReagentId, reagentQuantity.Quantity);
+            if (Owner.TryGetComponent(out SolutionComponent? solution))
+            {
+                solution?.TryRemoveReagent(reagentQuantity.ReagentId, reagentQuantity.Quantity);
+            }
         }
 
         private void VaporizeSolids()
@@ -408,9 +408,14 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         private void SubtractContents(FoodRecipePrototype recipe)
         {
+            if (!Owner.TryGetComponent(out SolutionComponent? solution))
+            {
+                return;
+            }
+
             foreach(var recipeReagent in recipe.IngredientsReagents)
             {
-                Solution?.TryRemoveReagent(recipeReagent.Key, ReagentUnit.New(recipeReagent.Value));
+                solution?.TryRemoveReagent(recipeReagent.Key, ReagentUnit.New(recipeReagent.Value));
             }
 
             foreach (var recipeSolid in recipe.IngredientsSolids)
@@ -438,14 +443,14 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         private MicrowaveSuccessState CanSatisfyRecipe(FoodRecipePrototype recipe, Dictionary<string,int> solids)
         {
-            if (Solution == null)
+            if (!Owner.TryGetComponent(out SolutionComponent? solution))
             {
                 return MicrowaveSuccessState.RecipeFail;
             }
 
             foreach (var reagent in recipe.IngredientsReagents)
             {
-                if (!Solution.ContainsReagent(reagent.Key, out var amount))
+                if (!solution.ContainsReagent(reagent.Key, out var amount))
                 {
                     return MicrowaveSuccessState.RecipeFail;
                 }

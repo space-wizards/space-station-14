@@ -29,17 +29,15 @@ namespace Content.Server.GameObjects.Components.Atmos
             {
                 _airBlocked = value;
 
-                if (SnapGrid != null)
+                if (Owner.TryGetComponent(out SnapGridComponent? snapGrid))
                 {
-                    EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(Owner.Transform.GridID)?.Invalidate(SnapGrid.Position);
+                    EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(Owner.Transform.GridID)?.Invalidate(snapGrid.Position);
                 }
             }
         }
 
         [ViewVariables]
         public bool FixVacuum => _fixVacuum;
-
-        private SnapGridComponent? SnapGrid => Owner.TryGetComponent(out SnapGridComponent? snapGrid) ? snapGrid : null;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -65,10 +63,10 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public void MapInit()
         {
-            if (SnapGrid != null)
+            if (Owner.TryGetComponent(out SnapGridComponent? snapGrid))
             {
-                SnapGrid.OnPositionChanged += OnTransformMove;
-                _lastPosition = (Owner.Transform.GridID, SnapGrid.Position);
+                snapGrid.OnPositionChanged += OnTransformMove;
+                _lastPosition = (Owner.Transform.GridID, snapGrid.Position);
             }
 
             UpdatePosition();
@@ -80,13 +78,13 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             _airBlocked = false;
 
-            if (SnapGrid != null)
+            if (Owner.TryGetComponent(out SnapGridComponent? snapGrid))
             {
-                SnapGrid.OnPositionChanged -= OnTransformMove;
+                snapGrid.OnPositionChanged -= OnTransformMove;
 
                 if (_fixVacuum)
                     EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(Owner.Transform.GridID)?
-                        .FixVacuum(SnapGrid.Position);
+                        .FixVacuum(snapGrid.Position);
             }
 
 
@@ -98,17 +96,17 @@ namespace Content.Server.GameObjects.Components.Atmos
             UpdatePosition(_lastPosition.Item1, _lastPosition.Item2);
             UpdatePosition();
 
-            if (SnapGrid != null)
+            if (Owner.TryGetComponent(out SnapGridComponent? snapGrid))
             {
-                _lastPosition = (Owner.Transform.GridID, SnapGrid.Position);
+                _lastPosition = (Owner.Transform.GridID, snapGrid.Position);
             }
         }
 
         private void UpdatePosition()
         {
-            if (SnapGrid != null)
+            if (Owner.TryGetComponent(out SnapGridComponent? snapGrid))
             {
-                UpdatePosition(Owner.Transform.GridID, SnapGrid.Position);
+                UpdatePosition(Owner.Transform.GridID, snapGrid.Position);
             }
         }
 

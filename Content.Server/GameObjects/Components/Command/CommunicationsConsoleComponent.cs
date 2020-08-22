@@ -19,7 +19,8 @@ namespace Content.Server.GameObjects.Components.Command
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
-        private bool Powered => PowerReceiver == null || PowerReceiver.Powered;
+        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+
         private RoundEndSystem RoundEndSystem => _entitySystemManager.GetEntitySystem<RoundEndSystem>();
 
         [ViewVariables]
@@ -28,10 +29,6 @@ namespace Content.Server.GameObjects.Components.Command
             ui.TryGetBoundUserInterface(CommunicationsConsoleUiKey.Key, out var boundUi)
                 ? boundUi
                 : null;
-
-        [ViewVariables]
-        private PowerReceiverComponent? PowerReceiver =>
-            Owner.TryGetComponent(out PowerReceiverComponent? receiver) ? receiver : null;
 
         public override void Initialize()
         {

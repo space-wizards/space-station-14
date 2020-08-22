@@ -53,13 +53,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
         [ViewVariables(VVAccess.ReadWrite)]
         private InjectorToggleMode _toggleState;
 
-        /// <summary>
-        /// Internal solution container
-        /// </summary>
-        [ViewVariables]
-        private SolutionComponent? InternalContents =>
-            Owner.TryGetComponent(out SolutionComponent? solution) ? solution : null;
-
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -73,9 +66,9 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             Owner.EnsureComponent<SolutionComponent>();
 
-            if (InternalContents != null)
+            if (Owner.TryGetComponent(out SolutionComponent? solution))
             {
-                InternalContents.Capabilities |= SolutionCaps.Injector;
+                solution.Capabilities |= SolutionCaps.Injector;
             }
 
             // Set _toggleState based on prototype
@@ -121,7 +114,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
 
             //Make sure we have the attacking entity
-            if (eventArgs.Target == null || InternalContents == null || !InternalContents.Injector)
+            if (eventArgs.Target == null || !Owner.TryGetComponent(out SolutionComponent? solution) || !solution.Injector)
             {
                 return;
             }
@@ -162,7 +155,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         private void TryInjectIntoBloodstream(BloodstreamComponent targetBloodstream, IEntity user)
         {
-            if (InternalContents == null || InternalContents.CurrentVolume == 0)
+            if (!Owner.TryGetComponent(out SolutionComponent? solution) ||
+                solution.CurrentVolume == 0)
             {
                 return;
             }
@@ -177,7 +171,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
 
             //Move units from attackSolution to targetSolution
-            var removedSolution = InternalContents.SplitSolution(realTransferAmount);
+            var removedSolution = solution.SplitSolution(realTransferAmount);
             if (!targetBloodstream.TryTransferSolution(removedSolution))
             {
                 return;
@@ -190,7 +184,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         private void TryInject(SolutionComponent targetSolution, IEntity user)
         {
-            if (InternalContents == null || InternalContents.CurrentVolume == 0)
+            if (!Owner.TryGetComponent(out SolutionComponent? solution) ||
+                solution.CurrentVolume == 0)
             {
                 return;
             }
@@ -205,7 +200,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
 
             //Move units from attackSolution to targetSolution
-            var removedSolution = InternalContents.SplitSolution(realTransferAmount);
+            var removedSolution = solution.SplitSolution(realTransferAmount);
             if (!targetSolution.TryAddSolution(removedSolution))
             {
                 return;
@@ -218,7 +213,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         private void TryDraw(SolutionComponent targetSolution, IEntity user)
         {
-            if (InternalContents == null || InternalContents.EmptyVolume == 0)
+            if (!Owner.TryGetComponent(out SolutionComponent? solution) ||
+                solution.EmptyVolume == 0)
             {
                 return;
             }
@@ -234,7 +230,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             //Move units from attackSolution to targetSolution
             var removedSolution = targetSolution.SplitSolution(realTransferAmount);
-            if (!InternalContents.TryAddSolution(removedSolution))
+            if (!solution.TryAddSolution(removedSolution))
             {
                 return;
             }
@@ -246,7 +242,12 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         public override ComponentState GetComponentState()
         {
-            return new InjectorComponentState(InternalContents?.CurrentVolume ?? ReagentUnit.Zero, InternalContents?.MaxVolume ?? ReagentUnit.Zero, _toggleState);
+            Owner.TryGetComponent(out SolutionComponent? solution);
+
+            var currentVolume = solution?.CurrentVolume ?? ReagentUnit.Zero;
+            var maxVolume = solution?.MaxVolume ?? ReagentUnit.Zero;
+
+            return new InjectorComponentState(currentVolume, maxVolume, _toggleState);
         }
     }
 }

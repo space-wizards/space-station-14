@@ -38,8 +38,6 @@ namespace Content.Server.GameObjects.Components.Access
                 ? boundUi
                 : null;
 
-        private AccessReader? AccessReader => Owner.TryGetComponent(out AccessReader? reader) ? reader : null;
-
         public override void Initialize()
         {
             base.Initialize();
@@ -49,7 +47,7 @@ namespace Content.Server.GameObjects.Components.Access
 
             if (!Owner.EnsureComponent(out AccessReader _))
             {
-                Logger.Warning($"Entity {Owner} at {Owner.Transform.MapPosition} didn't have a {nameof(Access.AccessReader)}");
+                Logger.Warning($"Entity {Owner} at {Owner.Transform.MapPosition} didn't have a {nameof(AccessReader)}");
             }
 
             if (UserInterface == null)
@@ -97,14 +95,15 @@ namespace Content.Server.GameObjects.Components.Access
         /// </summary>
         private bool PrivilegedIdIsAuthorized()
         {
-            if (AccessReader == null)
+            if (!Owner.TryGetComponent(out AccessReader? reader))
             {
                 return true;
             }
 
             var privilegedIdEntity = _privilegedIdContainer.ContainedEntity;
-            return privilegedIdEntity != null && AccessReader.IsAllowed(privilegedIdEntity);
+            return privilegedIdEntity != null && reader.IsAllowed(privilegedIdEntity);
         }
+
         /// <summary>
         /// Called when the "Submit" button in the UI gets pressed.
         /// Writes data passed from the UI into the ID stored in <see cref="_targetIdContainer"/>, if present.

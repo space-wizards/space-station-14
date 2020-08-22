@@ -36,12 +36,7 @@ namespace Content.Server.GameObjects.Components.BarSign
             }
         }
 
-        private bool Powered => PowerReceiver == null || PowerReceiver.Powered;
-
-        private PowerReceiverComponent? PowerReceiver =>
-            Owner.TryGetComponent(out PowerReceiverComponent? receiver) ? receiver : null;
-
-        private SpriteComponent? Sprite => Owner.TryGetComponent(out SpriteComponent? sprite) ? sprite : null;
+        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
 
         private void UpdateSignInfo()
         {
@@ -56,15 +51,18 @@ namespace Content.Server.GameObjects.Components.BarSign
                 return;
             }
 
-            if (!Powered)
+            if (Owner.TryGetComponent(out SpriteComponent? sprite))
             {
-                Sprite?.LayerSetState(0, "empty");
-                Sprite?.LayerSetShader(0, "shaded");
-            }
-            else
-            {
-                Sprite?.LayerSetState(0, prototype.Icon);
-                Sprite?.LayerSetShader(0, "unshaded");
+                if (!Powered)
+                {
+                    sprite.LayerSetState(0, "empty");
+                    sprite.LayerSetShader(0, "shaded");
+                }
+                else
+                {
+                    sprite.LayerSetState(0, prototype.Icon);
+                    sprite.LayerSetShader(0, "unshaded");
+                }
             }
 
             if (!string.IsNullOrEmpty(prototype.Name))
@@ -83,9 +81,9 @@ namespace Content.Server.GameObjects.Components.BarSign
         {
             base.Initialize();
 
-            if (PowerReceiver != null)
+            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
             {
-                PowerReceiver.OnPowerStateChanged += PowerOnOnPowerStateChanged;
+                receiver.OnPowerStateChanged += PowerOnOnPowerStateChanged;
             }
 
             UpdateSignInfo();
@@ -93,9 +91,9 @@ namespace Content.Server.GameObjects.Components.BarSign
 
         public override void OnRemove()
         {
-            if (PowerReceiver != null)
+            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
             {
-                PowerReceiver.OnPowerStateChanged -= PowerOnOnPowerStateChanged;
+                receiver.OnPowerStateChanged -= PowerOnOnPowerStateChanged;
             }
 
             base.OnRemove();

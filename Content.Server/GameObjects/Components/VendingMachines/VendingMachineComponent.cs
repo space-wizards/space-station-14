@@ -37,22 +37,16 @@ namespace Content.Server.GameObjects.Components.VendingMachines
         private string? _description;
         private string _spriteName = "";
 
-        private bool Powered => PowerReceiver == null || PowerReceiver.Powered;
+        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
         private bool _broken;
 
         private string _soundVend = "";
-
-        private AppearanceComponent? Appearance =>
-            Owner.TryGetComponent(out AppearanceComponent? appearance) ? appearance : null;
 
         private BoundUserInterface? UserInterface =>
             Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
             ui.TryGetBoundUserInterface(VendingMachineUiKey.Key, out var boundUi)
                 ? boundUi
                 : null;
-
-        private PowerReceiverComponent? PowerReceiver =>
-            Owner.TryGetComponent(out PowerReceiverComponent? appearance) ? appearance : null;
 
         public void Activate(ActivateEventArgs eventArgs)
         {
@@ -119,10 +113,10 @@ namespace Content.Server.GameObjects.Components.VendingMachines
                 UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
             }
 
-            if (PowerReceiver != null)
+            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
             {
-                PowerReceiver.OnPowerStateChanged += UpdatePower;
-                TrySetVisualState(PowerReceiver.Powered ? VendingMachineVisualState.Normal : VendingMachineVisualState.Off);
+                receiver.OnPowerStateChanged += UpdatePower;
+                TrySetVisualState(receiver.Powered ? VendingMachineVisualState.Normal : VendingMachineVisualState.Off);
             }
 
             InitializeFromPrototype();
@@ -130,9 +124,9 @@ namespace Content.Server.GameObjects.Components.VendingMachines
 
         public override void OnRemove()
         {
-            if (PowerReceiver != null)
+            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
             {
-                PowerReceiver.OnPowerStateChanged -= UpdatePower;
+                receiver.OnPowerStateChanged -= UpdatePower;
             }
 
             base.OnRemove();
@@ -228,7 +222,10 @@ namespace Content.Server.GameObjects.Components.VendingMachines
                 finalState = VendingMachineVisualState.Off;
             }
 
-            Appearance?.SetData(VendingMachineVisuals.VisualState, finalState);
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            {
+                appearance.SetData(VendingMachineVisuals.VisualState, finalState);
+            }
         }
 
         public void OnBreak(BreakageEventArgs eventArgs)

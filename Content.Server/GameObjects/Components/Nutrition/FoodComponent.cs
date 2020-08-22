@@ -40,19 +40,16 @@ namespace Content.Server.GameObjects.Components.Nutrition
         {
             get
             {
-                if (Contents == null)
+                if (!Owner.TryGetComponent(out SolutionComponent? solution))
                 {
                     return 0;
                 }
 
-                return Contents.CurrentVolume == 0
+                return solution.CurrentVolume == 0
                     ? 0
-                    : Math.Max(1, (int)Math.Ceiling((Contents.CurrentVolume / _transferAmount).Float()));
+                    : Math.Max(1, (int)Math.Ceiling((solution.CurrentVolume / _transferAmount).Float()));
             }
         }
-
-        [ViewVariables]
-        private SolutionComponent? Contents => Owner.TryGetComponent(out SolutionComponent? solution) ? solution : null;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -112,7 +109,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         public virtual bool TryUseFood(IEntity? user, IEntity? target, UtensilComponent? utensilUsed = null)
         {
-            if (Contents == null)
+            if (!Owner.TryGetComponent(out SolutionComponent? solution))
             {
                 return false;
             }
@@ -170,11 +167,11 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 return false;
             }
 
-            var transferAmount = ReagentUnit.Min(_transferAmount, Contents.CurrentVolume);
-            var split = Contents.SplitSolution(transferAmount);
+            var transferAmount = ReagentUnit.Min(_transferAmount, solution.CurrentVolume);
+            var split = solution.SplitSolution(transferAmount);
             if (!stomach.TryTransferSolution(split))
             {
-                Contents.TryAddSolution(split);
+                solution.TryAddSolution(split);
                 trueTarget.PopupMessage(user, Loc.GetString("You can't eat any more!"));
                 return false;
             }

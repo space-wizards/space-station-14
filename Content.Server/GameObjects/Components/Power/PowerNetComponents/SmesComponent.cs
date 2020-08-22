@@ -31,11 +31,6 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 
         private const int VisualsChangeDelay = 1;
 
-        private BatteryComponent? Battery => Owner.TryGetComponent(out BatteryComponent? appearance) ? appearance : null;
-
-        private AppearanceComponent? Appearance =>
-            Owner.TryGetComponent(out AppearanceComponent? appearance) ? appearance : null;
-
         public override void Initialize()
         {
             base.Initialize();
@@ -51,7 +46,11 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
             {
                 _lastChargeLevel = newLevel;
                 _lastChargeLevelChange = _gameTiming.CurTime;
-                Appearance?.SetData(SmesVisuals.LastChargeLevel, newLevel);
+
+                if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+                {
+                    appearance.SetData(SmesVisuals.LastChargeLevel, newLevel);
+                }
             }
 
             var newChargeState = GetNewChargeState();
@@ -59,18 +58,22 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
             {
                 _lastChargeState = newChargeState;
                 _lastChargeStateChange = _gameTiming.CurTime;
-                Appearance?.SetData(SmesVisuals.LastChargeState, newChargeState);
+
+                if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+                {
+                    appearance.SetData(SmesVisuals.LastChargeState, newChargeState);
+                }
             }
         }
 
         private int GetNewChargeLevel()
         {
-            if (Battery == null)
+            if (!Owner.TryGetComponent(out BatteryComponent? battery))
             {
                 return 0;
             }
 
-            return ContentHelpers.RoundToLevels(Battery.CurrentCharge, Battery.MaxCharge, 6);
+            return ContentHelpers.RoundToLevels(battery.CurrentCharge, battery.MaxCharge, 6);
         }
 
         private ChargeState GetNewChargeState()

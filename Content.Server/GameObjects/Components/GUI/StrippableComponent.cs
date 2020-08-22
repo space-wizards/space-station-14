@@ -34,13 +34,6 @@ namespace Content.Server.GameObjects.Components.GUI
                 ? boundUi
                 : null;
 
-        [ViewVariables]
-        private InventoryComponent? InventoryComponent =>
-            Owner.TryGetComponent(out InventoryComponent? inventory) ? inventory : null;
-
-        [ViewVariables]
-        private HandsComponent? HandsComponent => Owner.TryGetComponent(out HandsComponent? hands) ? hands : null;
-
         public override void Initialize()
         {
             base.Initialize();
@@ -53,9 +46,9 @@ namespace Content.Server.GameObjects.Components.GUI
             Owner.EnsureComponent<InventoryComponent>();
             Owner.EnsureComponent<HandsComponent>();
 
-            if (InventoryComponent != null)
+            if (Owner.TryGetComponent(out InventoryComponent? inventory))
             {
-                InventoryComponent.OnItemChanged += UpdateSubscribed;
+                inventory.OnItemChanged += UpdateSubscribed;
             }
 
             // Initial update.
@@ -93,14 +86,14 @@ namespace Content.Server.GameObjects.Components.GUI
         {
             var dictionary = new Dictionary<Slots, string>();
 
-            if (InventoryComponent == null)
+            if (!Owner.TryGetComponent(out InventoryComponent? inventory))
             {
                 return dictionary;
             }
 
-            foreach (var slot in InventoryComponent.Slots)
+            foreach (var slot in inventory.Slots)
             {
-                dictionary[slot] = InventoryComponent.GetSlotItem(slot)?.Owner.Name ?? "None";
+                dictionary[slot] = inventory.GetSlotItem(slot)?.Owner.Name ?? "None";
             }
 
             return dictionary;
@@ -110,14 +103,14 @@ namespace Content.Server.GameObjects.Components.GUI
         {
             var dictionary = new Dictionary<string, string>();
 
-            if (HandsComponent == null)
+            if (!Owner.TryGetComponent(out HandsComponent? hands))
             {
                 return dictionary;
             }
 
-            foreach (var hand in HandsComponent.Hands)
+            foreach (var hand in hands.Hands)
             {
-                dictionary[hand] = HandsComponent.GetItem(hand)?.Owner.Name ?? "None";
+                dictionary[hand] = hands.GetItem(hand)?.Owner.Name ?? "None";
             }
 
             return dictionary;

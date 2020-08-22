@@ -52,13 +52,6 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
                 ? boundUi
                 : null;
 
-        [ViewVariables]
-        private AppearanceComponent? Appearance =>
-            Owner.TryGetComponent(out AppearanceComponent? appearance) ? appearance : null;
-
-        [ViewVariables]
-        public BatteryComponent? Battery => Owner.TryGetComponent(out BatteryComponent? battery) ? battery : null;
-
         public override void Initialize()
         {
             base.Initialize();
@@ -101,10 +94,16 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
             {
                 _lastChargeState = newState;
                 _lastChargeStateChange = _gameTiming.CurTime;
-                Appearance?.SetData(ApcVisuals.ChargeState, newState);
+
+                if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+                {
+                    appearance.SetData(ApcVisuals.ChargeState, newState);
+                }
             }
 
-            var newCharge = Battery?.CurrentCharge;
+            Owner.TryGetComponent(out BatteryComponent? battery);
+
+            var newCharge = battery?.CurrentCharge;
             if (newCharge != null && newCharge != _lastCharge && _lastChargeChange + TimeSpan.FromSeconds(VisualsChangeDelay) < _gameTiming.CurTime)
             {
                 _lastCharge = newCharge.Value;
@@ -120,16 +119,21 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
                 _uiDirty = true;
             }
 
-            if (_uiDirty && Battery != null && newCharge != null)
+            if (_uiDirty && battery != null && newCharge != null)
             {
-                UserInterface?.SetState(new ApcBoundInterfaceState(MainBreakerEnabled, extPowerState, newCharge.Value / Battery.MaxCharge));
+                UserInterface?.SetState(new ApcBoundInterfaceState(MainBreakerEnabled, extPowerState, newCharge.Value / battery.MaxCharge));
                 _uiDirty = false;
             }
         }
 
         private ApcChargeState CalcChargeState()
         {
-            var chargeFraction = Battery?.CurrentCharge / Battery?.MaxCharge;
+            if (!Owner.TryGetComponent(out BatteryComponent? battery))
+            {
+                return ApcChargeState.Lack;
+            }
+
+            var chargeFraction = battery.CurrentCharge / battery.MaxCharge;
 
             if (chargeFraction > HighPowerThreshold)
             {

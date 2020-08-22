@@ -37,10 +37,6 @@ namespace Content.Server.GameObjects.Components.Movement
         public readonly List<IEntity> ImmuneEntities = new List<IEntity>(); // K
         [ViewVariables(VVAccess.ReadWrite)] private float _aliveTime;
 
-        [ViewVariables]
-        private AppearanceComponent? AppearanceComponent =>
-            Owner.TryGetComponent(out AppearanceComponent? appearance) ? appearance : null;
-
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -97,7 +93,11 @@ namespace Content.Server.GameObjects.Components.Movement
             }
 
             _state = targetState;
-            AppearanceComponent?.SetData(PortalVisuals.State, _state);
+
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            {
+                appearance.SetData(PortalVisuals.State, _state);
+            }
         }
 
         private void ReleaseCooldown(IEntity entity)

@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Research
 
         private const string SoundCollectionName = "keyboard";
 
-        private bool Powered => PowerReceiver == null || PowerReceiver.Powered;
+        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
 
         [ViewVariables]
         private BoundUserInterface? UserInterface =>
@@ -36,12 +36,6 @@ namespace Content.Server.GameObjects.Components.Research
             ui.TryGetBoundUserInterface(ResearchConsoleUiKey.Key, out var boundUi)
                 ? boundUi
                 : null;
-
-        private ResearchClientComponent? Client =>
-            Owner.TryGetComponent(out ResearchClientComponent? research) ? research : null;
-
-        private PowerReceiverComponent? PowerReceiver =>
-            Owner.TryGetComponent(out PowerReceiverComponent? receiver) ? receiver : null;
 
         public override void Initialize()
         {
@@ -57,7 +51,10 @@ namespace Content.Server.GameObjects.Components.Research
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)
         {
-            if (!Owner.TryGetComponent(out TechnologyDatabaseComponent? database)) return;
+            if (!Owner.TryGetComponent(out TechnologyDatabaseComponent? database))
+                return;
+            if (!Owner.TryGetComponent(out ResearchClientComponent? client))
+                return;
             if (!Powered)
                 return;
 
@@ -66,9 +63,9 @@ namespace Content.Server.GameObjects.Components.Research
                 case ConsoleUnlockTechnologyMessage msg:
                     var protoMan = IoCManager.Resolve<IPrototypeManager>();
                     if (!protoMan.TryIndex(msg.Id, out TechnologyPrototype tech)) break;
-                    if (Client?.Server == null) break;
-                    if (!Client.Server.CanUnlockTechnology(tech)) break;
-                    if (Client.Server.UnlockTechnology(tech))
+                    if (client.Server == null) break;
+                    if (!client.Server.CanUnlockTechnology(tech)) break;
+                    if (client.Server.UnlockTechnology(tech))
                     {
                         database.SyncWithServer();
                         database.Dirty();
@@ -83,7 +80,6 @@ namespace Content.Server.GameObjects.Components.Research
                     break;
 
                 case ConsoleServerSelectionMessage _:
-                    if (!Owner.TryGetComponent(out ResearchClientComponent? client)) break;
                     client.OpenUserInterface(message.Session);
                     break;
             }
@@ -99,11 +95,12 @@ namespace Content.Server.GameObjects.Components.Research
 
         private ResearchConsoleBoundInterfaceState GetNewUiState()
         {
-            if (Client?.Server == null)
+            if (!Owner.TryGetComponent(out ResearchClientComponent? client) ||
+                client.Server == null)
                 return new ResearchConsoleBoundInterfaceState(default, default);
 
-            var points = Client.ConnectedToServer ? Client.Server.Point : 0;
-            var pointsPerSecond = Client.ConnectedToServer ? Client.Server.PointsPerSecond : 0;
+            var points = client.ConnectedToServer ? client.Server.Point : 0;
+            var pointsPerSecond = client.ConnectedToServer ? client.Server.PointsPerSecond : 0;
 
             return new ResearchConsoleBoundInterfaceState(points, pointsPerSecond);
         }

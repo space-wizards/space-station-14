@@ -13,9 +13,6 @@ namespace Content.Server.GameObjects.Components.Power
     {
         public override string Name => "PowerCell";
 
-        private AppearanceComponent Appearance =>
-            Owner.TryGetComponent(out AppearanceComponent appearance) ? appearance : null;
-
         public override void Initialize()
         {
             base.Initialize();
@@ -31,7 +28,10 @@ namespace Content.Server.GameObjects.Components.Power
 
         private void UpdateVisuals()
         {
-            Appearance?.SetData(PowerCellVisuals.ChargeLevel, CurrentCharge / MaxCharge);
+            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            {
+                appearance.SetData(PowerCellVisuals.ChargeLevel, CurrentCharge / MaxCharge);
+            }
         }
     }
 }

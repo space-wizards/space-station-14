@@ -54,12 +54,6 @@ namespace Content.Server.GameObjects.Components.Interactable
         [ViewVariables]
         public bool Activated { get; private set; }
 
-        private PointLightComponent? PointLight =>
-            Owner.TryGetComponent(out PointLightComponent? light) ? light : null;
-
-        private ClothingComponent? ClothingComponent =>
-            Owner.TryGetComponent(out ClothingComponent? clothing) ? clothing : null;
-
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!eventArgs.Using.HasComponent<BatteryComponent>()) return false;
@@ -185,14 +179,14 @@ namespace Content.Server.GameObjects.Components.Interactable
                 sprite.LayerSetVisible(1, on);
             }
 
-            if (PointLight != null)
+            if (Owner.TryGetComponent(out PointLightComponent? light))
             {
-                PointLight.Enabled = on;
+                light.Enabled = on;
             }
 
-            if (ClothingComponent != null)
+            if (Owner.TryGetComponent(out ClothingComponent? clothing))
             {
-                ClothingComponent.ClothingEquippedPrefix = on ? "On" : "Off";
+                clothing.ClothingEquippedPrefix = on ? "On" : "Off";
             }
         }
 

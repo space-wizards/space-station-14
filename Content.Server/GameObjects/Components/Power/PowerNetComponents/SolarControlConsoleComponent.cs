@@ -19,7 +19,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
         private PowerSolarSystem _powerSolarSystem = default!;
-        private bool Powered => PowerReceiver == null || PowerReceiver.Powered;
+        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
 
         [ViewVariables]
         private BoundUserInterface? UserInterface =>
@@ -27,9 +27,6 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
             ui.TryGetBoundUserInterface(SolarControlConsoleUiKey.Key, out var boundUi)
                 ? boundUi
                 : null;
-
-        private PowerReceiverComponent? PowerReceiver =>
-            Owner.TryGetComponent(out PowerReceiverComponent? receiver) ? receiver : null;
 
         public override void Initialize()
         {

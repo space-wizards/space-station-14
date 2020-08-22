@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         [ViewVariables]
         public bool Anchored =>
-            !Owner.TryGetComponent(out CollidableComponent? collidable) ||
+            !Owner.TryGetComponent(out ICollidableComponent? collidable) ||
             collidable.Anchored;
 
         [ViewVariables]

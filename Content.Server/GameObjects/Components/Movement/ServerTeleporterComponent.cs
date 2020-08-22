@@ -46,9 +46,6 @@ namespace Content.Server.GameObjects.Components.Movement
         [ViewVariables] private bool _avoidCollidable;
         [ViewVariables] private float _portalAliveTime;
 
-        private AppearanceComponent? AppearanceComponent =>
-            Owner.TryGetComponent(out AppearanceComponent? appearance) ? appearance : null;
-
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -66,13 +63,18 @@ namespace Content.Server.GameObjects.Components.Movement
 
         private void SetState(ItemTeleporterState newState)
         {
+            if (!Owner.TryGetComponent(out AppearanceComponent? appearance))
+            {
+                return;
+            }
+
             if (newState == ItemTeleporterState.Cooldown)
             {
-                AppearanceComponent?.SetData(TeleporterVisuals.VisualState, TeleporterVisualState.Charging);
+                appearance.SetData(TeleporterVisuals.VisualState, TeleporterVisualState.Charging);
             }
             else
             {
-                AppearanceComponent?.SetData(TeleporterVisuals.VisualState, TeleporterVisualState.Ready);
+                appearance.SetData(TeleporterVisuals.VisualState, TeleporterVisualState.Ready);
             }
             _state = newState;
         }

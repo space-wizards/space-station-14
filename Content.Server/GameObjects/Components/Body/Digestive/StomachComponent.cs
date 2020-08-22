@@ -24,12 +24,12 @@ namespace Content.Server.GameObjects.Components.Body.Digestive
         /// </summary>
         public ReagentUnit MaxVolume
         {
-            get => StomachContents?.MaxVolume ?? ReagentUnit.Zero;
+            get => Owner.TryGetComponent(out SolutionComponent? solution) ? solution.MaxVolume : ReagentUnit.Zero;
             set
             {
-                if (StomachContents != null)
+                if (Owner.TryGetComponent(out SolutionComponent? solution))
                 {
-                    StomachContents.MaxVolume = value;
+                    solution.MaxVolume = value;
                 }
             }
         }
@@ -52,13 +52,6 @@ namespace Content.Server.GameObjects.Components.Body.Digestive
         /// </summary>
         private readonly List<ReagentDelta> _reagentDeltas = new List<ReagentDelta>();
 
-        /// <summary>
-        ///     Internal solution storage
-        /// </summary>
-        [ViewVariables]
-        private SolutionComponent? StomachContents =>
-            Owner.TryGetComponent(out SolutionComponent? solution) ? solution : null;
-
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -70,31 +63,29 @@ namespace Content.Server.GameObjects.Components.Body.Digestive
         {
             base.Startup();
 
-            if (Owner.EnsureComponent(out SolutionComponent solution))
-            {
-                solution.MaxVolume = _initialMaxVolume;
-            }
-            else
+            if (!Owner.EnsureComponent(out SolutionComponent solution))
             {
                 Logger.Warning($"Entity {Owner} at {Owner.Transform.MapPosition} didn't have a {nameof(SolutionComponent)}");
             }
+
+            solution.MaxVolume = _initialMaxVolume;
         }
 
         public bool TryTransferSolution(Solution solution)
         {
-            if (StomachContents == null)
+            if (!Owner.TryGetComponent(out SolutionComponent? solutionComponent))
             {
                 return false;
             }
 
             // TODO: For now no partial transfers. Potentially change by design
-            if (solution.TotalVolume + StomachContents.CurrentVolume > StomachContents.MaxVolume)
+            if (solution.TotalVolume + solutionComponent.CurrentVolume > solutionComponent.MaxVolume)
             {
                 return false;
             }
 
             // Add solution to _stomachContents
-            StomachContents.TryAddSolution(solution, false, true);
+            solutionComponent.TryAddSolution(solution, false, true);
             // Add each reagent to _reagentDeltas. Used to track how long each reagent has been in the stomach
             foreach (var reagent in solution.Contents)
             {
@@ -112,7 +103,7 @@ namespace Content.Server.GameObjects.Components.Body.Digestive
         /// <param name="frameTime">The time since the last update in seconds.</param>
         public void Update(float frameTime)
         {
-            if (StomachContents == null ||
+            if (!Owner.TryGetComponent(out SolutionComponent? solutionComponent) ||
                 !Owner.TryGetComponent(out BloodstreamComponent? bloodstream))
             {
                 return;
@@ -128,7 +119,7 @@ namespace Content.Server.GameObjects.Components.Body.Digestive
                 delta.Increment(frameTime);
                 if (delta.Lifetime > _digestionDelay)
                 {
-                    StomachContents.TryRemoveReagent(delta.ReagentId, delta.Quantity);
+                    solutionComponent.TryRemoveReagent(delta.ReagentId, delta.Quantity);
                     transferSolution.AddReagent(delta.ReagentId, delta.Quantity);
                     _reagentDeltas.Remove(delta);
                 }

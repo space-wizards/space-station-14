@@ -56,7 +56,7 @@ namespace Content.Server.GameObjects.Components.Cargo
 
         private bool _requestOnly = false;
 
-        private bool Powered => PowerReceiver == null || PowerReceiver.Powered;
+        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
         private CargoConsoleSystem _cargoConsoleSystem = default!;
 
         [ViewVariables]
@@ -65,17 +65,6 @@ namespace Content.Server.GameObjects.Components.Cargo
             ui.TryGetBoundUserInterface(CargoConsoleUiKey.Key, out var boundUi)
                 ? boundUi
                 : null;
-
-        [ViewVariables]
-        public GalacticMarketComponent? Market =>
-            Owner.TryGetComponent(out GalacticMarketComponent? market) ? market : null;
-
-        [ViewVariables]
-        public CargoOrderDatabaseComponent? Orders =>
-            Owner.TryGetComponent(out CargoOrderDatabaseComponent? orders) ? orders : null;
-
-        private PowerReceiverComponent? PowerReceiver =>
-            Owner.TryGetComponent(out PowerReceiverComponent? receiver) ? receiver : null;
 
         public override void Initialize()
         {
@@ -122,13 +111,13 @@ namespace Content.Server.GameObjects.Components.Cargo
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
         {
-            if (Orders == null)
+            if (!Owner.TryGetComponent(out CargoOrderDatabaseComponent? orders))
             {
                 return;
             }
 
             var message = serverMsg.Message;
-            if (!Orders.ConnectedToDatabase)
+            if (!orders.ConnectedToDatabase)
                 return;
             if (!Powered)
                 return;
@@ -141,18 +130,18 @@ namespace Content.Server.GameObjects.Components.Cargo
                         break;
                     }
 
-                    _cargoOrderDataManager.AddOrder(Orders.Database.Id, msg.Requester, msg.Reason, msg.ProductId, msg.Amount, _bankAccount.Id);
+                    _cargoOrderDataManager.AddOrder(orders.Database.Id, msg.Requester, msg.Reason, msg.ProductId, msg.Amount, _bankAccount.Id);
                     break;
                 }
                 case CargoConsoleRemoveOrderMessage msg:
                 {
-                    _cargoOrderDataManager.RemoveOrder(Orders.Database.Id, msg.OrderNumber);
+                    _cargoOrderDataManager.RemoveOrder(orders.Database.Id, msg.OrderNumber);
                     break;
                 }
                 case CargoConsoleApproveOrderMessage msg:
                 {
                     if (_requestOnly ||
-                        !Orders.Database.TryGetOrder(msg.OrderNumber, out var order) ||
+                        !orders.Database.TryGetOrder(msg.OrderNumber, out var order) ||
                         _bankAccount == null)
                     {
                         break;
@@ -161,19 +150,19 @@ namespace Content.Server.GameObjects.Components.Cargo
                     _prototypeManager.TryIndex(order.ProductId, out CargoProductPrototype product);
                     if (product == null!)
                         break;
-                    var capacity = _cargoOrderDataManager.GetCapacity(Orders.Database.Id);
+                    var capacity = _cargoOrderDataManager.GetCapacity(orders.Database.Id);
                     if (capacity.CurrentCapacity == capacity.MaxCapacity)
                         break;
                     if (!_cargoConsoleSystem.ChangeBalance(_bankAccount.Id, (-product.PointCost) * order.Amount))
                         break;
-                    _cargoOrderDataManager.ApproveOrder(Orders.Database.Id, msg.OrderNumber);
+                    _cargoOrderDataManager.ApproveOrder(orders.Database.Id, msg.OrderNumber);
                     UpdateUIState();
                     break;
                 }
                 case CargoConsoleShuttleMessage _:
                 {
-                    var approvedOrders = _cargoOrderDataManager.RemoveAndGetApprovedFrom(Orders.Database);
-                    Orders.Database.ClearOrderCapacity();
+                    var approvedOrders = _cargoOrderDataManager.RemoveAndGetApprovedFrom(orders.Database);
+                    orders.Database.ClearOrderCapacity();
                     // TODO replace with shuttle code
 
                     // TEMPORARY loop for spawning stuff on top of console
