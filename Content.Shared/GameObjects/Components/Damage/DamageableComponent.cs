@@ -27,15 +27,45 @@ namespace Content.Shared.GameObjects.Components.Damage
 
         public override string Name => "Damageable";
 
+        /// <summary>
+        ///     The threshold of damage, if any, above which the entity enters crit.
+        /// </summary>
+        [ViewVariables]
+        private int _criticalThreshold;
+
+        /// <summary>
+        ///     The threshold of damage, if any, above which the entity dies.
+        /// </summary>
+        [ViewVariables]
+        private int _deadThreshold;
+
         public event Action<HealthChangedEventArgs>? HealthChangedEvent;
 
         [ViewVariables] private ResistanceSet Resistance { get; set; } = default!;
 
         [ViewVariables] private DamageContainer Damage { get; set; } = default!;
 
-        public virtual List<DamageState> SupportedDamageStates => new List<DamageState> {DamageState.Alive};
+        public virtual List<DamageState> SupportedDamageStates
+        {
+            get
+            {
+                var states = new List<DamageState>();
 
-        public virtual DamageState CurrentDamageState { get; } = DamageState.Alive;
+                if (_criticalThreshold == -1)
+                {
+                    states.Add(DamageState.Critical);
+                }
+
+                if (_deadThreshold == -1)
+                {
+                    states.Add(DamageState.Dead);
+                }
+
+                return states;
+            }
+        }
+
+        public virtual DamageState CurrentDamageState { get; protected set; }
 
         [ViewVariables] public int TotalDamage => Damage.TotalDamage;
 
@@ -46,6 +76,9 @@ namespace Content.Shared.GameObjects.Components.Damage
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
+
+            serializer.DataField(ref _criticalThreshold, "criticalThreshold", -1);
+            serializer.DataField(ref _deadThreshold, "deadThreshold", -1);
 
             if (serializer.Reading)
             {
@@ -230,8 +263,18 @@ namespace Content.Shared.GameObjects.Components.Damage
 
         protected virtual void OnHealthChanged(HealthChangedEventArgs e)
         {
+            if (_deadThreshold != -1 && TotalDamage > _deadThreshold)
+            {
+                CurrentDamageState = DamageState.Dead;
+            }
+            else if (_criticalThreshold != -1 && TotalDamage > _criticalThreshold)
+            {
+                CurrentDamageState = DamageState.Critical;
+            }
+
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, e);
             HealthChangedEvent?.Invoke(e);
+
             Dirty();
         }
     }

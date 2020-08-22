@@ -36,7 +36,9 @@
       layer:
       - Opaque
       - MobImpassable
-  - type: LivingDamageable
+  - type: Damageable
+    criticalThreshold: 150
+    deadThreshold: 200
   - type: Metabolism
   - type: MobStateManager
   - type: HeatResistance
