@@ -117,7 +117,7 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.35,-0.35,0.35,0.35"
+      bounds: "-0.50,-0.30,0.40,0.30"
       mask:
       - Impassable
       - MobImpassable
@@ -126,6 +126,8 @@
       - Opaque
       - MobImpassable
   - type: BodyManager
+    criticalThreshold: 100
+    deadThreshold: 200
     baseTemplate: bodyTemplate.Humanoid
     basePreset: bodyPreset.BasicHuman
   - type: Metabolism
@@ -141,6 +143,7 @@
     - type: RotationVisualizer
     - type: BuckleVisualizer
   - type: CombatMode
+  - type: Climbing
   - type: Teleportable
   - type: CharacterInfo
   - type: FootstepSound
@@ -154,7 +157,6 @@
   - type: Grammar
     proper: true
   - type: Pullable
-  - type: CanSeeGases
   - type: DoAfter
   - type: Strippable
   - type: UserInterface
@@ -256,10 +258,11 @@
           layer:
           - MobImpassable
     - type: BodyManager
+      criticalThreshold: 100
+      deadThreshold: 200
       baseTemplate: bodyTemplate.Humanoid
       basePreset: bodyPreset.BasicHuman
     - type: MobStateManager
-    - type: Damageable
     - type: Appearance
       visuals:
         - type: RotationVisualizer

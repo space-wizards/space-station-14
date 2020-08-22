@@ -116,7 +116,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             {
                 _pressureDanger = GasAnalyzerDanger.Nominal;
             }
-            
+
             Dirty();
             _timeSinceSync = 0f;
         }
@@ -131,11 +131,11 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (session.AttachedEntity == null)
                     return;
 
-                if (!session.AttachedEntity.TryGetComponent(out IHandsComponent handsComponent))
+                if (!session.AttachedEntity.TryGetComponent(out IHandsComponent? handsComponent))
                     return;
 
                 var activeHandEntity = handsComponent?.GetActiveHand?.Owner;
-                if (activeHandEntity == null || !activeHandEntity.TryGetComponent(out GasAnalyzerComponent gasAnalyzer))
+                if (activeHandEntity == null || !activeHandEntity.TryGetComponent(out GasAnalyzerComponent? gasAnalyzer))
                 {
                     return;
                 }
@@ -147,7 +147,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 // Check if position is out of range => don't update
                 if (!_position.Value.InRange(_mapManager, pos, SharedInteractionSystem.InteractionRange))
                     return;
-                
+
                 pos = _position.Value;
             }
 
@@ -195,7 +195,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                         return;
                     }
 
-                    if (!player.TryGetComponent(out IHandsComponent handsComponent))
+                    if (!player.TryGetComponent(out IHandsComponent? handsComponent))
                     {
                         _notifyManager.PopupMessage(Owner.Transform.GridPosition, player,
                             Loc.GetString("You have no hands."));
@@ -203,7 +203,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                     }
 
                     var activeHandEntity = handsComponent.GetActiveHand?.Owner;
-                    if (activeHandEntity == null || !activeHandEntity.TryGetComponent(out GasAnalyzerComponent gasAnalyzer))
+                    if (activeHandEntity == null || !activeHandEntity.TryGetComponent(out GasAnalyzerComponent? gasAnalyzer))
                     {
                         _notifyManager.PopupMessage(serverMsg.Session.AttachedEntity,
                             serverMsg.Session.AttachedEntity,
@@ -225,7 +225,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 return;
             }
 
-            if (eventArgs.User.TryGetComponent(out IActorComponent actor))
+            if (eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
                 OpenInterface(actor.playerSession, eventArgs.ClickLocation);
                 //TODO: show other sprite when ui open?
@@ -236,7 +236,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         void IDropped.Dropped(DroppedEventArgs eventArgs)
         {
-            if (eventArgs.User.TryGetComponent(out IActorComponent actor))
+            if (eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
                 CloseInterface(actor.playerSession);
                 //TODO: if other sprite is shown, change again
@@ -245,7 +245,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (eventArgs.User.TryGetComponent(out IActorComponent actor))
+            if (eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
                 OpenInterface(actor.playerSession);
                 //TODO: show other sprite when ui open?

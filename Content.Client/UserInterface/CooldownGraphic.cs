@@ -30,6 +30,7 @@ namespace Content.Client.UserInterface
 
         protected override void Draw(DrawingHandleScreen handle)
         {
+            Span<float> x = stackalloc float[10];
             Color color;
 
             var lerp = 1f - MathF.Abs(Progress); // for future bikeshedding purposes
@@ -41,7 +42,7 @@ namespace Content.Client.UserInterface
             }
             else
             {
-                var alpha = FloatMath.Clamp(0.5f * lerp, 0f, 0.5f);
+                var alpha = MathHelper.Clamp(0.5f * lerp, 0f, 0.5f);
                 color = new Color(1f, 1f, 1f, alpha);
             }
 

@@ -54,7 +54,7 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
 
             // For this we need to stay on the same hand slot and need the same item in that hand slot
             // (or if there is no item there we need to keep it free).
-            if (eventArgs.NeedHand && eventArgs.User.TryGetComponent(out HandsComponent handsComponent))
+            if (eventArgs.NeedHand && eventArgs.User.TryGetComponent(out HandsComponent? handsComponent))
             {
                 _activeHand = handsComponent.ActiveHand;
                 _activeItem = handsComponent.GetActiveHand;
@@ -126,7 +126,7 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
             }
 
             if (EventArgs.BreakOnStun &&
-                EventArgs.User.TryGetComponent(out StunnableComponent stunnableComponent) &&
+                EventArgs.User.TryGetComponent(out StunnableComponent? stunnableComponent) &&
                 stunnableComponent.Stunned)
             {
                 return true;
@@ -134,7 +134,7 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
 
             if (EventArgs.NeedHand)
             {
-                if (!EventArgs.User.TryGetComponent(out HandsComponent handsComponent))
+                if (!EventArgs.User.TryGetComponent(out HandsComponent? handsComponent))
                 {
                     // If we had a hand but no longer have it that's still a paddlin'
                     if (_activeHand != null)

@@ -143,7 +143,7 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
         {
             base.FrameUpdate(args);
 
-            if (AttachedEntity?.IsValid() != true || !AttachedEntity.TryGetComponent(out DoAfterComponent doAfterComponent))
+            if (AttachedEntity?.IsValid() != true || !AttachedEntity.TryGetComponent(out DoAfterComponent? doAfterComponent))
             {
                 return;
             }

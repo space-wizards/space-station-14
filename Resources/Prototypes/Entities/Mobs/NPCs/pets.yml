@@ -31,14 +31,11 @@
       layer:
       - Opaque
       - MobImpassable
-  - type: Species
-    Template: Human
-    HeatResistance: 50
-  - type: BodyManager
-    BaseTemplate: bodyTemplate.Humanoid
-    BasePreset: bodyPreset.BasicHuman
-  - type: HeatResistance
   - type: Damageable
+    criticalThreshold: 50
+    deadThreshold: 100
+  - type: MobStateManager
+  - type: HeatResistance
   - type: CombatMode
   - type: Teleportable
   - type: Stunnable
@@ -64,7 +61,6 @@
   drawdepth: Mobs
   suffix: AI
   components:
-  - type: Damageable
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/corgi.rsi

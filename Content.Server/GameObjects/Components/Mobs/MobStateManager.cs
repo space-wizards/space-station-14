@@ -5,6 +5,7 @@ using Content.Server.Mobs;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
@@ -163,6 +164,11 @@ namespace Content.Server.GameObjects.Components.Mobs
     {
         public void EnterState(IEntity entity)
         {
+            if (entity.TryGetComponent(out AppearanceComponent appearance))
+            {
+                appearance.SetData(DamageStateVisuals.State, DamageState.Alive);
+            }
+
             UpdateState(entity);
         }
 
@@ -187,7 +193,12 @@ namespace Content.Server.GameObjects.Components.Mobs
             {
                 case RuinableComponent ruinable:
                 {
-                    var modifier = (int) (ruinable.TotalDamage / (ruinable.MaxHp / 7f));
+                    if (ruinable.DeadThreshold == null)
+                    {
+                        break;
+                    }
+
+                    var modifier = (int) (ruinable.TotalDamage / (ruinable.DeadThreshold / 7f));
 
                     status.ChangeStatusEffectIcon(StatusEffect.Health,
                         "/Textures/Interface/StatusEffects/Human/human" + modifier + ".png");
@@ -196,8 +207,12 @@ namespace Content.Server.GameObjects.Components.Mobs
                 }
                 case BodyManagerComponent body:
                 {
-                    // TODO: Declare body max normal damage (currently 100)
-                    var modifier = (int) (body.TotalDamage / (100f / 7f));
+                    if (body.CriticalThreshold == null)
+                    {
+                        return;
+                    }
+
+                    var modifier = (int) (body.TotalDamage / (body.CriticalThreshold / 7f));
 
                     status.ChangeStatusEffectIcon(StatusEffect.Health,
                         "/Textures/Interface/StatusEffects/Human/human" + modifier + ".png");
@@ -281,6 +296,11 @@ namespace Content.Server.GameObjects.Components.Mobs
     {
         public void EnterState(IEntity entity)
         {
+            if (entity.TryGetComponent(out AppearanceComponent appearance))
+            {
+                appearance.SetData(DamageStateVisuals.State, DamageState.Critical);
+            }
+
             if (entity.TryGetComponent(out ServerStatusEffectsComponent status))
             {
                 status.ChangeStatusEffectIcon(StatusEffect.Health,
@@ -382,6 +402,11 @@ namespace Content.Server.GameObjects.Components.Mobs
     {
         public void EnterState(IEntity entity)
         {
+            if (entity.TryGetComponent(out AppearanceComponent appearance))
+            {
+                appearance.SetData(DamageStateVisuals.State, DamageState.Dead);
+            }
+
             if (entity.TryGetComponent(out ServerStatusEffectsComponent status))
             {
                 status.ChangeStatusEffectIcon(StatusEffect.Health,

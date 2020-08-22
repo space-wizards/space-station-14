@@ -142,6 +142,8 @@
             "Listening",
             "Radio",
             "DisposalHolder",
+            "DisposalTagger",
+            "DisposalRouter",
             "DisposalTransit",
             "DisposalEntry",
             "DisposalJunction",
@@ -156,7 +158,10 @@
             "Vapor",
             "DamageOnHighSpeedImpact",
             "Barotrauma",
+            "GasSprayer",
+            "GasVapor",
             "MobStateManager",
+            "Metabolism",
         };
     }
 }
