@@ -21,10 +21,8 @@ namespace Content.Server.GameObjects.Components.Interactable
     [ComponentReference(typeof(IListen))]
     class HandheldRadioComponent : Component, IUse, IListen, IRadio
     {
-#pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
-#pragma warning restore 649
 
         public override string Name => "Radio";
 
@@ -105,11 +103,6 @@ namespace Content.Server.GameObjects.Components.Interactable
         public List<int> GetChannels()
         {
             return _channels;
-        }
-
-        public GridCoordinates GetListenerPosition()
-        {
-            return Owner.Transform.GridPosition;
         }
     }
 }

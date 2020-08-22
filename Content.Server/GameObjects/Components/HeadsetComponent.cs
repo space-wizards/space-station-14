@@ -59,11 +59,6 @@ namespace Content.Server.GameObjects.Components
             RadioRequested = false;
         }
 
-        public GridCoordinates GetListenerPosition()
-        {
-            return Owner.Transform.GridPosition;
-        }
-
         public void Receiver(string message, int channel, IEntity source)
         {
             if (ContainerHelpers.TryGetContainer(Owner, out IContainer container))
