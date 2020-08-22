@@ -14,10 +14,9 @@ namespace Content.Client.GameObjects.Components
     [UsedImplicitly]
     public class LanternVisualizer : AppearanceVisualizer
     {
-
         private readonly Animation _radiatingLightAnimation = new Animation
         {
-            Length = TimeSpan.FromSeconds(4),
+            Length = TimeSpan.FromSeconds(5),
             AnimationTracks =
             {
                 new AnimationTrackComponentProperty
