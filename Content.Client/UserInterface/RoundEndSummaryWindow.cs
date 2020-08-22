@@ -82,7 +82,7 @@ namespace Content.Client.UserInterface
                 if (plyinfo.Observer)
                 {
                     playerInfoText.SetMarkup(
-                        Loc.GetString("[color=gray]{0}[/color] was [color=lightblue]{1}[/color], a observer.",
+                        Loc.GetString("[color=gray]{0}[/color] was [color=lightblue]{1}[/color], an observer.",
                                         plyinfo.PlayerOOCName, plyinfo.PlayerICName));
                 }
                 else
