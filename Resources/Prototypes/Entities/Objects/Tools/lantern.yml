@@ -27,4 +27,3 @@
     - type: Appearance
       visuals:
         - type: LanternVisualizer
-          PowerSource: oil

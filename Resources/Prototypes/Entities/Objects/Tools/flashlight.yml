@@ -25,4 +25,3 @@
     - type: Appearance
       visuals:
         - type: FlashLightVisualizer
-          PowerSource: electrical
