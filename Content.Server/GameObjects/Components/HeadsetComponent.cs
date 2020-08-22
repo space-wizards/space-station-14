@@ -68,7 +68,7 @@ namespace Content.Server.GameObjects.Components
         {
             if (ContainerHelpers.TryGetContainer(Owner, out IContainer container))
             {
-                if (!container.Owner.TryGetComponent<IActorComponent>(out IActorComponent actor)) { return; }
+                if (!container.Owner.TryGetComponent(out IActorComponent actor)) { return; }
 
                 var playerChannel = actor.playerSession.ConnectedClient;
                 if (playerChannel == null) { return; }
