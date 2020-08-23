@@ -1,4 +1,6 @@
-﻿using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+﻿using System;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Medical;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -27,6 +29,7 @@ namespace Content.Server.GameObjects.Components.Medical
             _appearance = Owner.GetComponent<AppearanceComponent>();
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
                 .GetBoundUserInterface(CloningMachineUIKey.Key);
+            _userInterface.OnReceiveMessage += OnUiReceiveMessage;
             _bodyContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-bodyContainer", Owner);
             _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
 
@@ -68,6 +71,27 @@ namespace Content.Server.GameObjects.Components.Medical
 
 
             _userInterface.Open(actor.playerSession);
+        }
+
+        private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
+        {
+            if (!(obj.Message is UiButtonPressedMessage message))
+            {
+                return;
+            }
+
+            switch (message.Button)
+            {
+                case UiButton.Clone:
+
+                    /*if (_bodyContainer.ContainedEntity != null)
+                    {
+                        CloningSystem.AddToScannedUids(_bodyContainer.ContainedEntity.Uid);
+                    }*/
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }

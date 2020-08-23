@@ -33,8 +33,7 @@ namespace Content.Client.GameObjects.Components.CloningMachine
 
             _window = new CloningMachineWindow(foo, _localization);
             _window.OnClose += Close;
-            //TODO: RE-enable once the scan button is back
-            //_window.ScanButton.OnPressed += _ => SendMessage(new UiButtonPressedMessage(UiButton.Clone));
+            _window.CloneButton.OnPressed += _ => SendMessage(new UiButtonPressedMessage(UiButton.Clone,_window.SelectedScan));
             _window.OpenCentered();
         }
 

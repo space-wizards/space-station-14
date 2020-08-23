@@ -27,8 +27,8 @@ namespace Content.Client.GameObjects.Components.CloningMachine
         private OptionButton OverrideMenu;
         private Button ClearButton;
         private Button EraseButton;
-        private Button CloneButton;
-        private EntitySpawnButton MeasureButton;
+        public Button CloneButton;
+        private CloningScanButton MeasureButton;
         protected override Vector2 ContentsMinimumSize => MainVBox?.CombinedMinimumSize ?? Vector2.Zero;
 
         // List of scans that are visible based on current filter criteria.
@@ -38,8 +38,8 @@ namespace Content.Client.GameObjects.Components.CloningMachine
         // This is inclusive, so end is the index of the last scan, not right after it.
         private (int start, int end) _lastScanIndices;
 
-        private EntitySpawnButton? SelectedButton;
-        private EntityUid? SelectedScan;
+        private CloningScanButton? SelectedButton;
+        public EntityUid? SelectedScan;
 
         protected override Vector2? CustomSize => (250, 300);
 
@@ -51,7 +51,7 @@ namespace Content.Client.GameObjects.Components.CloningMachine
 
             _loc = loc;
 
-            Title = _loc.GetString("Entity Spawn Panel");
+            Title = _loc.GetString("Cloning Machine");
 
             Contents.AddChild(MainVBox = new VBoxContainer
             {
@@ -83,17 +83,17 @@ namespace Content.Client.GameObjects.Components.CloningMachine
                             (ScanList = new ScanListContainer())
                         }
                     },
-                    new HBoxContainer
+                    new VBoxContainer
                     {
                         Children =
                         {
                             (CloneButton = new Button
                             {
-                               Text = "Clone"
+                                Text = "Clone"
                             })
                         }
                     },
-                    (MeasureButton = new EntitySpawnButton {Visible = false})
+                    (MeasureButton = new CloningScanButton {Visible = false})
                 }
             });
 
@@ -120,10 +120,10 @@ namespace Content.Client.GameObjects.Components.CloningMachine
             ClearButton.Disabled = string.IsNullOrEmpty(args.Text);
         }
 
-        private void OnOverrideMenuItemSelected(OptionButton.ItemSelectedEventArgs args)
+        /*private void OnOverrideMenuItemSelected(OptionButton.ItemSelectedEventArgs args)
         {
             OverrideMenu.SelectId(args.Id);
-        }
+        }*/
 
         private void OnClearButtonPressed(BaseButton.ButtonEventArgs args)
         {
@@ -192,7 +192,7 @@ namespace Content.Client.GameObjects.Components.CloningMachine
             // Delete buttons at the start of the list that are no longer visible (scrolling down).
             for (var i = prevStart; i < startIndex && i <= prevEnd; i++)
             {
-                var control = (EntitySpawnButton) ScanList.GetChild(0);
+                var control = (CloningScanButton) ScanList.GetChild(0);
                 DebugTools.Assert(control.Index == i);
                 ScanList.RemoveChild(control);
             }
@@ -200,7 +200,7 @@ namespace Content.Client.GameObjects.Components.CloningMachine
             // Delete buttons at the end of the list that are no longer visible (scrolling up).
             for (var i = prevEnd; i > endIndex && i >= prevStart; i--)
             {
-                var control = (EntitySpawnButton) ScanList.GetChild(ScanList.ChildCount - 1);
+                var control = (CloningScanButton) ScanList.GetChild(ScanList.ChildCount - 1);
                 DebugTools.Assert(control.Index == i);
                 ScanList.RemoveChild(control);
             }
@@ -221,7 +221,7 @@ namespace Content.Client.GameObjects.Components.CloningMachine
         // Create a spawn button and insert it into the start or end of the list.
         private void InsertEntityButton(EntityUid scan, bool insertFirst, int index)
         {
-            var button = new EntitySpawnButton
+            var button = new CloningScanButton
             {
                 Scan = scan,
                 Index = index // We track this index purely for debugging.
@@ -261,34 +261,17 @@ namespace Content.Client.GameObjects.Components.CloningMachine
 
         private static bool _doesScanMatchSearch(EntityUid scan, string searchStr)
         {
-            if (scan.ToString().ToLowerInvariant().Contains(searchStr))
-            {
-                return true;
-            }
-
-            if (string.IsNullOrEmpty(scan.ToString()))
-            {
-                return false;
-            }
-
-            if (scan.ToString().ToLowerInvariant().Contains(searchStr))
-            {
-                return true;
-            }
-
-            return false;
+            return scan.ToString().ToLowerInvariant().Contains(searchStr);
         }
 
         //TODO: Here is were we have the item toggle logic
         private void OnItemButtonToggled(BaseButton.ButtonToggledEventArgs args)
         {
-            /*
-            var item = (EntitySpawnButton) args.Button.Parent!;
+            var item = (CloningScanButton) args.Button.Parent!;
             if (SelectedButton == item)
             {
                 SelectedButton = null;
                 SelectedScan = null;
-                placementManager.Clear();
                 return;
             }
             else if (SelectedButton != null)
@@ -299,18 +282,8 @@ namespace Content.Client.GameObjects.Components.CloningMachine
             SelectedButton = null;
             SelectedScan = null;
 
-            var overrideMode = initOpts[OverrideMenu.SelectedId];
-            var newObjInfo = new PlacementInformation
-            {
-                PlacementOption = overrideMode != "Default" ? overrideMode : item.Scan.PlacementMode,
-                EntityType = item.ScanID,
-                Range = 2,
-                IsTile = false
-            };
-
             SelectedButton = item;
             SelectedScan = item.Scan;
-            */
         }
 
         protected override void FrameUpdate(FrameEventArgs args)
@@ -383,8 +356,8 @@ namespace Content.Client.GameObjects.Components.CloningMachine
             }
         }
 
-        [DebuggerDisplay("spawnbutton {" + nameof(Index) + "}")]
-        private class EntitySpawnButton : Control
+        [DebuggerDisplay("cloningbutton {" + nameof(Index) + "}")]
+        private class CloningScanButton : Control
         {
             public EntityUid Scan { get; set; } = default!;
             public Button ActualButton { get; private set; }
@@ -392,7 +365,7 @@ namespace Content.Client.GameObjects.Components.CloningMachine
             public TextureRect EntityTextureRect { get; private set; }
             public int Index { get; set; }
 
-            public EntitySpawnButton()
+            public CloningScanButton()
             {
                 AddChild(ActualButton = new Button
                 {

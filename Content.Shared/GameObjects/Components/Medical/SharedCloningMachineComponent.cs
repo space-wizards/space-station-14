@@ -52,10 +52,12 @@ namespace Content.Shared.GameObjects.Components.Medical
         public class UiButtonPressedMessage : BoundUserInterfaceMessage
         {
             public readonly UiButton Button;
+            public readonly EntityUid? ScanId;
 
-            public UiButtonPressedMessage(UiButton button)
+            public UiButtonPressedMessage(UiButton button, EntityUid? scanId)
             {
                 Button = button;
+                ScanId = scanId;
             }
         }
     }
