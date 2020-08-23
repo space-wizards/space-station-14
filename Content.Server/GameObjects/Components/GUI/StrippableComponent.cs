@@ -36,10 +36,6 @@ namespace Content.Server.GameObjects.Components.GUI
                 ? boundUi
                 : null;
 
-        private InventoryComponent _inventoryComponent;
-        private HandsComponent _handsComponent;
-        private CuffedComponent _cuffedComponent;
-
         public override void Initialize()
         {
             base.Initialize();
