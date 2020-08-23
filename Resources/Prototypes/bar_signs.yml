@@ -65,12 +65,6 @@
   description: "All right, buddy. I think you've had EI NATH. Time to get a cab."
 
 - type: barSign
-  id: TheFemboyBar
-  name: "Femboy Hooters"
-  icon: "femboy"
-  description: "There's something off about the waitresses, you just can't tell what..."
-
-- type: barSign
   id: TheNet
   name: "The Net"
   icon: "thenet"
