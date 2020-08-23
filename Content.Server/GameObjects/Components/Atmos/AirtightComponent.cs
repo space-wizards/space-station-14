@@ -4,6 +4,8 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.Map;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
@@ -14,6 +16,8 @@ namespace Content.Server.GameObjects.Components.Atmos
     [RegisterComponent]
     public class AirtightComponent : Component, IMapInit
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
+
         private (GridId, MapIndices) _lastPosition;
 
         public override string Name => "Airtight";
@@ -56,7 +60,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             // down than the object magically not being airtight, so log one if the SnapGrid component
             // is missing.
             if (!Owner.EnsureComponent(out SnapGridComponent _))
-                Logger.Warning($"Entity {Owner} at {Owner.Transform.MapPosition.ToString()} doesn't have a {nameof(SnapGridComponent)}");
+                Logger.Warning($"Entity {Owner} at {Owner.Transform.MapPosition.ToString()} didn't have a {nameof(SnapGridComponent)}");
 
             UpdatePosition();
         }
@@ -81,12 +85,13 @@ namespace Content.Server.GameObjects.Components.Atmos
             if (Owner.TryGetComponent(out SnapGridComponent? snapGrid))
             {
                 snapGrid.OnPositionChanged -= OnTransformMove;
-
-                if (_fixVacuum)
-                    EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(Owner.Transform.GridID)?
-                        .FixVacuum(snapGrid.Position);
             }
 
+            if (_fixVacuum)
+            {
+                var mapIndices = Owner.Transform.GridPosition.ToMapIndices(_mapManager);
+                EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(Owner.Transform.GridID)?.FixVacuum(mapIndices);
+            }
 
             UpdatePosition();
         }
@@ -104,10 +109,8 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         private void UpdatePosition()
         {
-            if (Owner.TryGetComponent(out SnapGridComponent? snapGrid))
-            {
-                UpdatePosition(Owner.Transform.GridID, snapGrid.Position);
-            }
+            var mapIndices = Owner.Transform.GridPosition.ToMapIndices(_mapManager);
+            UpdatePosition(Owner.Transform.GridID, mapIndices);
         }
 
         private void UpdatePosition(GridId gridId, MapIndices pos)
