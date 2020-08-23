@@ -19,15 +19,7 @@ namespace Content.Server.GameObjects.Components.AI
             serializer.DataReadWriteFunction(
                 "factions",
                 new List<Faction>(),
-                factions =>
-                {
-                    Factions = Faction.None;
-                    
-                    foreach (var faction in factions)
-                    {
-                        Factions |= faction;
-                    }
-                },
+                factions => factions.ForEach(faction => Factions |= faction),
                 () =>
                 {
                     var writeFactions = new List<Faction>();
