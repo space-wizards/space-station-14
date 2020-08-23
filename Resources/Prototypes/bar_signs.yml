@@ -80,7 +80,13 @@
   id: MalteseFalcon
   name: "Maltese Falcon"
   icon: "maltesefalcon"
-  description: "Welcome to the Maltese Falcon Bar & Grill!"
+  description: "Play it again, sam."
+
+- type: barSign
+  id: WiggleRoom
+  name: "The Wiggle Roomm"
+  icon: "thewiggleroom"
+  description: "MoMMIs got moves."
 
 - type: barSign
   id: TheLightbulb
