@@ -91,7 +91,7 @@
 - type: barSign
   id: TheBirdCage
   name: "The Birdcage"
-  icon: "thebirdcage"
+  icon: "birdcage"
   description: "Caw caw!"
 
 - type: barSign

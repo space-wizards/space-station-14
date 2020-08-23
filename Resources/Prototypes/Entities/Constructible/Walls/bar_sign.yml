@@ -16,9 +16,34 @@
   - type: BarSign
 
 - type: entity
+  id: LargeBarSign
+  name: large bar sign
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Misc/sylphs.rsi
+    state: sylph
+  - type: Icon
+    sprite: Constructible/Misc/sylphs.rsi
+    state: sylph
+  - type: PowerReceiver
+  - type: BarSign
+
+- type: entity
   id: BarSignEngineChange
   name: The Engine Change
   parent: BarSign
   components:
   - type: BarSign
     current: EngineChange
+
+- type: entity
+  id: BarSignCyberSylph
+  name: Cyber Sylph
+  parent: LargeBarSign
+  components:
+  - type: BarSign
+    current: CyberSylph
