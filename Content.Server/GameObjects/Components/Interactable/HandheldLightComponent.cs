@@ -31,7 +31,6 @@ namespace Content.Server.GameObjects.Components.Interactable
     internal sealed class HandheldLightComponent : SharedHandheldLightComponent, IUse, IExamine, IInteractUsing, IMapInit
     {
         [Dependency] private readonly ISharedNotifyManager _notifyManager = default!;
-        [Dependency] private readonly ILocalizationManager _localizationManager = default!;
 
         [ViewVariables(VVAccess.ReadWrite)] public float Wattage { get; set; } = 10;
         [ViewVariables] private ContainerSlot _cellContainer = default!;
@@ -77,11 +76,9 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
-            var loc = IoCManager.Resolve<ILocalizationManager>();
-
             if (Activated)
             {
-                message.AddMarkup(loc.GetString("The light is currently [color=darkgreen]on[/color]."));
+                message.AddMarkup(Loc.GetString("The light is currently [color=darkgreen]on[/color]."));
             }
         }
 
@@ -151,7 +148,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
                 EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/button.ogg", Owner);
 
-                _notifyManager.PopupMessage(Owner, user, _localizationManager.GetString("Cell missing..."));
+                _notifyManager.PopupMessage(Owner, user, Loc.GetString("Cell missing..."));
                 return;
             }
 
@@ -161,7 +158,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             if (Wattage > cell.CurrentCharge)
             {
                 EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/button.ogg", Owner);
-                _notifyManager.PopupMessage(Owner, user, _localizationManager.GetString("Dead cell..."));
+                _notifyManager.PopupMessage(Owner, user, Loc.GetString("Dead cell..."));
                 return;
             }
 

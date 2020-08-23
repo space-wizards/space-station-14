@@ -13,7 +13,6 @@ using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -76,8 +75,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             var result = TryInsertItem(eventArgs.Using);
             if (!result)
             {
-                var localizationManager = IoCManager.Resolve<ILocalizationManager>();
-                eventArgs.User.PopupMessage(Owner, localizationManager.GetString("Unable to insert capacitor"));
+                eventArgs.User.PopupMessage(Owner, Loc.GetString("Unable to insert capacitor"));
             }
 
             return result;

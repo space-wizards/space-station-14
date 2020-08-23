@@ -31,7 +31,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
     {
 #pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly ILocalizationManager _loc;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
 #pragma warning restore 649
 
@@ -276,7 +275,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return;
             }
 
-            message.AddText(_loc.GetString("Contains:\n"));
+            message.AddText(Loc.GetString("Contains:\n"));
             if (ReagentList.Count == 0)
             {
                 message.AddText("Nothing.\n");
@@ -303,12 +302,12 @@ namespace Content.Server.GameObjects.Components.Chemistry
                             colorIsh = "Blue";
                         }
 
-                        message.AddText(_loc.GetString("A {0} liquid\n", colorIsh));
+                        message.AddText(Loc.GetString("A {0} liquid\n", colorIsh));
                     }
                 }
                 else
                 {
-                    message.AddText(_loc.GetString("Unknown reagent: {0}u\n", reagent.Quantity));
+                    message.AddText(Loc.GetString("Unknown reagent: {0}u\n", reagent.Quantity));
                 }
             }
         }
