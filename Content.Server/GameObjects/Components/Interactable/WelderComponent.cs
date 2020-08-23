@@ -29,10 +29,8 @@ namespace Content.Server.GameObjects.Components.Interactable
     [ComponentReference(typeof(IToolComponent))]
     public class WelderComponent : ToolComponent, IExamine, IUse, ISuicideAct, ISolutionChange
     {
-#pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
-#pragma warning restore 649
 
         public override string Name => "Welder";
         public override uint? NetID => ContentNetIDs.WELDER;

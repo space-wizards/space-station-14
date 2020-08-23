@@ -33,13 +33,11 @@ namespace Content.Server.GameObjects.Components
     [RegisterComponent]
     public class WiresComponent : SharedWiresComponent, IInteractUsing, IExamine, IMapInit
     {
-#pragma warning disable 649
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
-#pragma warning restore 649
+
         private AudioSystem _audioSystem = default!;
         private AppearanceComponent _appearance = default!;
-        private BoundUserInterface _userInterface = default!;
 
         private bool _isPanelOpen;
 
@@ -140,15 +138,23 @@ namespace Content.Server.GameObjects.Components
         [ViewVariables]
         private string? _layoutId;
 
+        private BoundUserInterface? UserInterface =>
+            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
+            ui.TryGetBoundUserInterface(WiresUiKey.Key, out var boundUi)
+                ? boundUi
+                : null;
+
         public override void Initialize()
         {
             base.Initialize();
             _audioSystem = EntitySystem.Get<AudioSystem>();
             _appearance = Owner.GetComponent<AppearanceComponent>();
             _appearance.SetData(WiresVisuals.MaintenancePanelState, IsPanelOpen);
-            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
-                .GetBoundUserInterface(WiresUiKey.Key);
-            _userInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
+
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
+            }
         }
 
         private void GenerateSerialNumber()
@@ -357,7 +363,7 @@ namespace Content.Server.GameObjects.Components
         /// </summary>
         public void OpenInterface(IPlayerSession session)
         {
-            _userInterface.Open(session);
+            UserInterface?.Open(session);
         }
 
         private void UserInterfaceOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
@@ -450,7 +456,7 @@ namespace Content.Server.GameObjects.Components
                     entry.Letter));
             }
 
-            _userInterface.SetState(
+            UserInterface?.SetState(
                 new WiresBoundUserInterfaceState(
                     clientList.ToArray(),
                     _statuses.Select(p => new StatusEntry(p.Key, p.Value)).ToArray(),

@@ -20,10 +20,8 @@ namespace Content.Server.Atmos
     [RegisterComponent]
     public class GasSprayerComponent : Component, IAfterInteract
     {
-#pragma warning disable 649
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
         [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
-#pragma warning restore 649
 
         //TODO: create a function that can create a gas based on a solution mix
         public override string Name => "GasSprayer";

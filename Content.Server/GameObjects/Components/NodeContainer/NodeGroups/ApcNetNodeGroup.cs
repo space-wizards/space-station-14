@@ -48,7 +48,12 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         public void AddApc(ApcComponent apc)
         {
-            _apcBatteries.Add(apc, apc.Battery);
+            if (!apc.Owner.TryGetComponent(out BatteryComponent battery))
+            {
+                return;
+            }
+
+            _apcBatteries.Add(apc, battery);
         }
 
         public void RemoveApc(ApcComponent apc)

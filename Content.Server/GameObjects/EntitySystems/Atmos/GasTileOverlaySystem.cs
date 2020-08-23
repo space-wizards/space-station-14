@@ -153,13 +153,20 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
         private bool TryRefreshTile(GridAtmosphereComponent gam, GasOverlayData oldTile, MapIndices indices, out GasOverlayData overlayData)
         {
             var tile = gam.GetTile(indices);
+
+            if (tile == null)
+            {
+                overlayData = default;
+                return false;
+            }
+
             var tileData = new List<GasData>();
 
             for (byte i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
                 var gas = Atmospherics.GetGas(i);
                 var overlay = Atmospherics.GetOverlay(i);
-                if (overlay == null || tile.Air == null) continue;
+                if (overlay == null || tile?.Air == null) continue;
 
                 var moles = tile.Air.Gases[i];
 
@@ -169,7 +176,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
                 tileData.Add(data);
             }
 
-            overlayData = new GasOverlayData(tile.Hotspot.State, tile.Hotspot.Temperature, tileData.Count == 0 ? null : tileData.ToArray());
+            overlayData = new GasOverlayData(tile!.Hotspot.State, tile.Hotspot.Temperature, tileData.Count == 0 ? null : tileData.ToArray());
 
             if (overlayData.Equals(oldTile))
             {
