@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿#nullable enable
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Clothing;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -30,24 +31,18 @@ namespace Content.Server.GameObjects.Components.Interactable
     internal sealed class HandheldLightComponent : SharedHandheldLightComponent, IUse, IExamine, IInteractUsing,
         IMapInit
     {
-#pragma warning disable 649
-        [Dependency] private readonly ISharedNotifyManager _notifyManager;
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-#pragma warning restore 649
+        [Dependency] private readonly ISharedNotifyManager _notifyManager = default!;
 
         [ViewVariables(VVAccess.ReadWrite)] public float Wattage { get; set; } = 10;
-        [ViewVariables] private ContainerSlot _cellContainer;
-        private PointLightComponent _pointLight;
-        private SpriteComponent _spriteComponent;
-        private ClothingComponent _clothingComponent;
+        [ViewVariables] private ContainerSlot _cellContainer = default!;
 
         [ViewVariables]
-        private BatteryComponent Cell
+        private BatteryComponent? Cell
         {
             get
             {
                 if (_cellContainer.ContainedEntity == null) return null;
-                if (_cellContainer.ContainedEntity.TryGetComponent(out BatteryComponent cell))
+                if (_cellContainer.ContainedEntity.TryGetComponent(out BatteryComponent? cell))
                 {
                     return cell;
                 }
@@ -61,6 +56,8 @@ namespace Content.Server.GameObjects.Components.Interactable
         /// </summary>
         [ViewVariables]
         public bool Activated { get; private set; }
+
+        [ViewVariables] protected override bool HasCell => Cell != null;
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
@@ -85,11 +82,9 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
-            var loc = IoCManager.Resolve<ILocalizationManager>();
-
             if (Activated)
             {
-                message.AddMarkup(loc.GetString("The light is currently [color=darkgreen]on[/color]."));
+                message.AddMarkup(Loc.GetString("The light is currently [color=darkgreen]on[/color]."));
             }
         }
 
@@ -102,11 +97,10 @@ namespace Content.Server.GameObjects.Components.Interactable
         {
             base.Initialize();
 
-            _pointLight = Owner.GetComponent<PointLightComponent>();
-            _spriteComponent = Owner.GetComponent<SpriteComponent>();
-            Owner.TryGetComponent(out _clothingComponent);
+            Owner.EnsureComponent<PointLightComponent>();
             _cellContainer =
                 ContainerManagerComponent.Ensure<ContainerSlot>("flashlight_cell_container", Owner, out _);
+
             Dirty();
         }
 
@@ -158,7 +152,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             {
                 EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/button.ogg", Owner);
 
-                _notifyManager.PopupMessage(Owner, user, _localizationManager.GetString("Cell missing..."));
+                _notifyManager.PopupMessage(Owner, user, Loc.GetString("Cell missing..."));
                 return;
             }
 
@@ -168,7 +162,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             if (Wattage > cell.CurrentCharge)
             {
                 EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/button.ogg", Owner);
-                _notifyManager.PopupMessage(Owner, user, _localizationManager.GetString("Dead cell..."));
+                _notifyManager.PopupMessage(Owner, user, Loc.GetString("Dead cell..."));
                 return;
             }
 
@@ -180,11 +174,19 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         private void SetState(bool on)
         {
-            _spriteComponent.LayerSetVisible(1, on);
-            _pointLight.Enabled = on;
-            if (_clothingComponent != null)
+            if (Owner.TryGetComponent(out SpriteComponent? sprite))
             {
-                _clothingComponent.ClothingEquippedPrefix = on ? "On" : "Off";
+                sprite.LayerSetVisible(1, on);
+            }
+
+            if (Owner.TryGetComponent(out PointLightComponent? light))
+            {
+                light.Enabled = on;
+            }
+
+            if (Owner.TryGetComponent(out ClothingComponent? clothing))
+            {
+                clothing.ClothingEquippedPrefix = on ? "On" : "Off";
             }
         }
 
@@ -226,7 +228,9 @@ namespace Content.Server.GameObjects.Components.Interactable
                 return;
             }
 
-            if (!user.TryGetComponent(out HandsComponent hands))
+            Dirty();
+
+            if (!user.TryGetComponent(out HandsComponent? hands))
             {
                 return;
             }
@@ -243,17 +247,17 @@ namespace Content.Server.GameObjects.Components.Interactable
         {
             if (Cell == null)
             {
-                return new HandheldLightComponentState(null);
+                return new HandheldLightComponentState(null, false);
             }
 
             if (Wattage > Cell.CurrentCharge)
             {
                 // Practically zero.
                 // This is so the item status works correctly.
-                return new HandheldLightComponentState(0);
+                return new HandheldLightComponentState(0, HasCell);
             }
 
-            return new HandheldLightComponentState(Cell.CurrentCharge / Cell.MaxCharge);
+            return new HandheldLightComponentState(Cell.CurrentCharge / Cell.MaxCharge, HasCell);
         }
 
         [Verb]

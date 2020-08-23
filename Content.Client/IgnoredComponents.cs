@@ -162,6 +162,7 @@
             "GasVapor",
             "MobStateManager",
             "Metabolism",
+            "PressureProtection",
         };
     }
 }
