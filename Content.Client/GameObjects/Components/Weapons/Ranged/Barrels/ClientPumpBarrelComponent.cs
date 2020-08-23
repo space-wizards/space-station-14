@@ -9,14 +9,16 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
 {
     [RegisterComponent]
-    public class ClientBoltActionBarrelComponent : Component, IItemStatus
+    public class ClientPumpBarrelComponent : Component, IItemStatus
     {
-        public override string Name => "BoltActionBarrel";
-        public override uint? NetID => ContentNetIDs.BOLTACTION_BARREL;
+        public override string Name => "PumpBarrel";
+        public override uint? NetID => ContentNetIDs.PUMP_BARREL;
 
         private StatusControl _statusControl;
 
@@ -38,7 +40,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-           if (!(curState is BoltActionBarrelComponentState cast))
+            if (!(curState is PumpBarrelComponentState cast))
                 return;
 
             Chamber = cast.Chamber;
@@ -63,13 +65,13 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
 
         private sealed class StatusControl : Control
         {
-            private readonly ClientBoltActionBarrelComponent _parent;
+            private readonly ClientPumpBarrelComponent _parent;
             private readonly HBoxContainer _bulletsListTop;
             private readonly HBoxContainer _bulletsListBottom;
             private readonly TextureRect _chamberedBullet;
             private readonly Label _noMagazineLabel;
 
-            public StatusControl(ClientBoltActionBarrelComponent parent)
+            public StatusControl(ClientPumpBarrelComponent parent)
             {
                 _parent = parent;
                 SizeFlagsHorizontal = SizeFlags.FillExpand;
