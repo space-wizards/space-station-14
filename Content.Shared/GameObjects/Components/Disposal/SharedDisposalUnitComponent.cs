@@ -1,11 +1,16 @@
 ﻿using System;
+using System.Linq;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.UserInterface;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Disposal
 {
-    public abstract class SharedDisposalUnitComponent : Component
+    public abstract class SharedDisposalUnitComponent : Component, ICollideSpecial
     {
         public override string Name => "DisposalUnit";
 
@@ -75,6 +80,22 @@ namespace Content.Shared.GameObjects.Components.Disposal
                 Powered = powered;
                 Engaged = engaged;
             }
+        }
+
+        bool ICollideSpecial.PreventCollide(IPhysBody collided)
+        {
+            if(!Owner.TryGetComponent(out IContainerManager manager))
+            {
+                return false;
+            }
+
+            var containedEntities = manager.GetContainer(Name).ContainedEntities.ToList<IEntity>();
+
+            if (containedEntities != null && containedEntities.Contains(collided.Entity))
+            {
+                return true;
+            }
+            return false;
         }
 
         /// <summary>

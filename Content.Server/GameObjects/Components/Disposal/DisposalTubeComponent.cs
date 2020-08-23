@@ -24,7 +24,6 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Disposal
 {
-    // TODO: Make unanchored pipes pullable
     public abstract class DisposalTubeComponent : Component, IDisposalTubeComponent, IBreakAct
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -182,6 +181,8 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return;
             }
 
+            collidable.CanCollide = !collidable.Anchored;
+
             if (collidable.Anchored)
             {
                 OnAnchor();
@@ -220,6 +221,8 @@ namespace Content.Server.GameObjects.Components.Disposal
             var collidable = Owner.EnsureComponent<CollidableComponent>();
 
             collidable.AnchoredChanged += AnchoredChanged;
+
+            collidable.CanCollide = !collidable.Anchored;
         }
 
         protected override void Startup()

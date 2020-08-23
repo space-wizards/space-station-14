@@ -483,10 +483,10 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             base.Startup();
 
-            Owner.EnsureComponent<AnchorableComponent>();
-
-            var collidable = Owner.EnsureComponent<CollidableComponent>();
-            collidable.AnchoredChanged += UpdateVisualState;
+            if (Owner.TryGetComponent(out CollidableComponent? collidable))
+            {
+                collidable.AnchoredChanged += UpdateVisualState;
+            }
 
             if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
             {
