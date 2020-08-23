@@ -119,7 +119,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI
                 return;
             }
 
-            if (!Enum.TryParse(args[0], out Faction faction))
+            if (!Enum.TryParse(args[0], true, out Faction faction))
             {
                 shell.SendText(player, Loc.GetString("Invalid faction"));
                 return;
@@ -136,7 +136,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI
                         return;
                     }
 
-                    if (!Enum.TryParse(args[2], out targetFaction))
+                    if (!Enum.TryParse(args[2], true, out targetFaction))
                     {
                         shell.SendText(player, Loc.GetString("Invalid target faction"));
                         return;
@@ -152,7 +152,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI
                         return;
                     }
 
-                    if (!Enum.TryParse(args[2], out targetFaction))
+                    if (!Enum.TryParse(args[2], true, out targetFaction))
                     {
                         shell.SendText(player, Loc.GetString("Invalid target faction"));
                         return;

@@ -15,12 +15,32 @@ namespace Content.Server.GameObjects.Components.AI
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            var factions = serializer.ReadDataField("factions", new List<Faction>());
+            
+            serializer.DataReadWriteFunction(
+                "factions",
+                new List<Faction>(),
+                factions =>
+                {
+                    Factions = Faction.None;
+                    
+                    foreach (var faction in factions)
+                    {
+                        Factions |= faction;
+                    }
+                },
+                () =>
+                {
+                    var writeFactions = new List<Faction>();
+                    foreach (Faction fac in Enum.GetValues(typeof(Faction)))
+                    {
+                        if ((Factions & fac) != 0)
+                        {
+                            writeFactions.Add(fac);
+                        }
+                    }
 
-            foreach (var faction in factions)
-            {
-                Factions |= faction;
-            }
+                    return writeFactions;
+                });
         }
     }
 
