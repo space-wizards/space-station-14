@@ -28,10 +28,8 @@ namespace Content.Server.GameObjects.Components.Conveyor
     [RegisterComponent]
     public class ConveyorComponent : Component, IInteractUsing
     {
-#pragma warning disable 649
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-#pragma warning restore 649
 
         public override string Name => "Conveyor";
 

@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Shared.Damage;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
@@ -27,12 +28,6 @@ namespace Content.Server.GameObjects.Components.Damage
             serializer.DataField(ref _tools, "tools", new List<ToolQuality>());
         }
 
-        public override void Initialize()
-        {
-            base.Initialize();
-            Owner.EnsureComponent<DestructibleComponent>();
-        }
-
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (eventArgs.Using.TryGetComponent<ToolComponent>(out var tool))
@@ -56,7 +51,7 @@ namespace Content.Server.GameObjects.Components.Damage
 
         protected bool CallDamage(InteractUsingEventArgs eventArgs, ToolComponent tool)
         {
-            if (eventArgs.Target.TryGetComponent<DestructibleComponent>(out var damageable))
+            if (eventArgs.Target.TryGetComponent<IDamageableComponent>(out var damageable))
             {
                 damageable.ChangeDamage(tool.HasQuality(ToolQuality.Welding)
                         ? DamageType.Heat

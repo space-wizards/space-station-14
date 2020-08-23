@@ -1,7 +1,11 @@
 ﻿using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Buckle;
+using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Strap;
+using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Buckle;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.EntitySystems;
 using NUnit.Framework;
 using Robust.Shared.Interfaces.GameObjects;
@@ -162,6 +166,94 @@ namespace Content.IntegrationTests.Tests
                 Assert.False(buckle.Buckled);
                 Assert.Null(buckle.BuckledTo);
                 Assert.IsEmpty(strap.BuckledEntities);
+            });
+
+            await server.WaitIdleAsync();
+        }
+
+        [Test]
+        public async Task BuckledDyingDropItemsTest()
+        {
+            var server = StartServer();
+
+            IEntity human = null;
+            IEntity chair = null;
+            BuckleComponent buckle = null;
+            StrapComponent strap = null;
+            HandsComponent hands = null;
+            IDamageableComponent humanDamageable = null;
+
+            server.Assert(() =>
+            {
+                var mapManager = IoCManager.Resolve<IMapManager>();
+
+                var mapId = new MapId(1);
+                mapManager.CreateNewMapEntity(mapId);
+
+                var entityManager = IoCManager.Resolve<IEntityManager>();
+                var gridId = new GridId(1);
+                var grid = mapManager.CreateGrid(mapId, gridId);
+                var coordinates = new GridCoordinates((0, 0), gridId);
+                var tileManager = IoCManager.Resolve<ITileDefinitionManager>();
+                var tileId = tileManager["underplating"].TileId;
+                var tile = new Tile(tileId);
+
+                grid.SetTile(coordinates, tile);
+
+                human = entityManager.SpawnEntity("HumanMob_Content", coordinates);
+                chair = entityManager.SpawnEntity("ChairWood", coordinates);
+
+                // Component sanity check
+                Assert.True(human.TryGetComponent(out buckle));
+                Assert.True(chair.TryGetComponent(out strap));
+                Assert.True(human.TryGetComponent(out hands));
+                Assert.True(human.TryGetComponent(out humanDamageable));
+
+                // Buckle
+                Assert.True(buckle.TryBuckle(human, chair));
+                Assert.NotNull(buckle.BuckledTo);
+                Assert.True(buckle.Buckled);
+
+                // Put an item into every hand
+                for (var i = 0; i < hands.Count; i++)
+                {
+                    var akms = entityManager.SpawnEntity("RifleAk", coordinates);
+
+                    // Equip items
+                    Assert.True(akms.TryGetComponent(out ItemComponent item));
+                    Assert.True(hands.PutInHand(item));
+                }
+            });
+
+            server.RunTicks(10);
+
+            server.Assert(() =>
+            {
+                // Still buckled
+                Assert.True(buckle.Buckled);
+
+                // With items in all hands
+                foreach (var slot in hands.Hands)
+                {
+                    Assert.NotNull(hands.GetItem(slot));
+                }
+
+                // Banish our guy into the shadow realm
+                humanDamageable.ChangeDamage(DamageClass.Brute, 1000000, true);
+            });
+
+            server.RunTicks(10);
+
+            server.Assert(() =>
+            {
+                // Still buckled
+                Assert.True(buckle.Buckled);
+
+                // Now with no item in any hand
+                foreach (var slot in hands.Hands)
+                {
+                    Assert.Null(hands.GetItem(slot));
+                }
             });
 
             await server.WaitIdleAsync();

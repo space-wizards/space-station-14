@@ -24,10 +24,8 @@ namespace Content.Server.GameObjects.Components.Movement
     [ComponentReference(typeof(IClimbable))]
     public class ClimbableComponent : SharedClimbableComponent, IDragDropOn
     {
-#pragma warning disable 649
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-#pragma warning restore 649
 
         /// <summary>
         ///     The range from which this entity can be climbed.
@@ -81,7 +79,7 @@ namespace Content.Server.GameObjects.Components.Movement
                 var bodyManager = eventArgs.User.GetComponent<BodyManagerComponent>();
 
                 if (bodyManager.GetBodyPartsOfType(Shared.GameObjects.Components.Body.BodyPartType.Leg).Count == 0 ||
-                    bodyManager.GetBodyPartsOfType(Shared.GameObjects.Components.Body.BodyPartType.Foot).Count == 0) 
+                    bodyManager.GetBodyPartsOfType(Shared.GameObjects.Components.Body.BodyPartType.Foot).Count == 0)
                 {
                     _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, Loc.GetString("You are unable to climb!"));
 
@@ -102,10 +100,10 @@ namespace Content.Server.GameObjects.Components.Movement
             }
             else // user is dragging some other entity onto a climbable
             {
-                if (eventArgs.Target == null || !eventArgs.Dropped.HasComponent<ClimbingComponent>()) 
+                if (eventArgs.Target == null || !eventArgs.Dropped.HasComponent<ClimbingComponent>())
                 {
                     _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, Loc.GetString("You can't do that!"));
-                    
+
                     return false;
                 }
 
