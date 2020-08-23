@@ -23,7 +23,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
     public class FlashComponent : MeleeWeaponComponent, IUse, IExamine
     {
 #pragma warning disable 649
-        [Dependency] private readonly ILocalizationManager _localizationManager;
         [Dependency] private readonly IEntityManager _entityManager;
         [Dependency] private readonly ISharedNotifyManager _notifyManager;
 #pragma warning restore 649
@@ -173,10 +172,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             if (inDetailsRange)
             {
                 message.AddMarkup(
-                    _localizationManager.GetString(
+                    Loc.GetString(
                         "The flash has [color=green]{0}[/color] {1} remaining.",
                         Uses,
-                        _localizationManager.GetPluralString("use", "uses", Uses)
+                        Loc.GetPluralString("use", "uses", Uses)
                     )
                 );
             }

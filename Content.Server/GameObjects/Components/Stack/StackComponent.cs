@@ -107,8 +107,7 @@ namespace Content.Server.GameObjects.Components.Stack
         {
             if (inDetailsRange)
             {
-                var loc = IoCManager.Resolve<ILocalizationManager>();
-                message.AddMarkup(loc.GetPluralString(
+                message.AddMarkup(Loc.GetPluralString(
                     "There is [color=lightgray]1[/color] thing in the stack",
                     "There are [color=lightgray]{0}[/color] things in the stack.", Count, Count));
             }
