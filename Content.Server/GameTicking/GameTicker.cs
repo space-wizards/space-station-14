@@ -541,6 +541,13 @@ namespace Content.Server.GameTicking
             GridCoordinates coordinates = lateJoin ? GetLateJoinSpawnPoint() : GetJobSpawnPoint(job.Prototype.ID);
             var entity = _entityManager.SpawnEntity(PlayerPrototypeName, coordinates);
             var startingGear = _prototypeManager.Index<StartingGearPrototype>(job.StartingGear);
+            EquipStartingGear(entity, startingGear);
+
+            return entity;
+        }
+
+        public void EquipStartingGear(IEntity entity, StartingGearPrototype startingGear)
+        {
             if (entity.TryGetComponent(out InventoryComponent inventory))
             {
                 var gear = startingGear.Equipment;
@@ -561,8 +568,6 @@ namespace Content.Server.GameTicking
                     handsComponent.PutInHand(inhandEntity.GetComponent<ItemComponent>(), hand);
                 }
             }
-
-            return entity;
         }
 
         private void ApplyCharacterProfile(IEntity entity, ICharacterProfile profile)
