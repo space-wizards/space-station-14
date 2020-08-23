@@ -86,7 +86,6 @@
             "CanSpill",
             "SpeedLoader",
             "Hitscan",
-            "RevolverBarrel",
             "ExplosiveProjectile",
             "StunnableProjectile",
             "RandomPottedPlant",

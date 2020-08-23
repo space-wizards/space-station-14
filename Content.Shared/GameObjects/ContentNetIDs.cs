@@ -67,6 +67,7 @@
         public const uint CLIMBING = 1061;
         public const uint BOLTACTION_BARREL = 1062;
         public const uint PUMP_BARREL = 1063;
+        public const uint REVOLVER_BARREL = 1064;
 
         // Net IDs for integration tests.
         public const uint PREDICTION_TEST = 10001;
