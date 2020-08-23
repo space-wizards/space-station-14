@@ -491,9 +491,7 @@ namespace Content.Server.GameObjects.Components
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
-            var loc = IoCManager.Resolve<ILocalizationManager>();
-
-            message.AddMarkup(loc.GetString(IsPanelOpen
+            message.AddMarkup(Loc.GetString(IsPanelOpen
                 ? "The [color=lightgray]maintenance panel[/color] is [color=darkgreen]open[/color]."
                 : "The [color=lightgray]maintenance panel[/color] is [color=darkred]closed[/color]."));
         }

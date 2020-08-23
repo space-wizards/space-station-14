@@ -44,7 +44,7 @@ namespace Content.Server.GameObjects.Components.GUI
             {
                 UserInterface.OnReceiveMessage += HandleUserInterfaceMessage;
             }
-            
+
             Owner.EnsureComponent<InventoryComponent>();
             Owner.EnsureComponent<HandsComponent>();
             Owner.EnsureComponent<CuffedComponent>();
@@ -57,6 +57,11 @@ namespace Content.Server.GameObjects.Components.GUI
             if (Owner.TryGetComponent(out InventoryComponent? inventory))
             {
                 inventory.OnItemChanged += UpdateSubscribed;
+            }
+
+            if (Owner.TryGetComponent(out HandsComponent? hands))
+            {
+                hands.OnItemChanged += UpdateSubscribed;
             }
 
             // Initial update.

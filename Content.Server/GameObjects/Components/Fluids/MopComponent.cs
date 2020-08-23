@@ -6,7 +6,6 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 
@@ -18,10 +17,6 @@ namespace Content.Server.GameObjects.Components.Fluids
     [RegisterComponent]
     public class MopComponent : Component, IAfterInteract
     {
-#pragma warning disable 649
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-#pragma warning restore 649
-
         public override string Name => "Mop";
         internal SolutionComponent Contents => _contents;
         private SolutionComponent _contents;
@@ -115,7 +110,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             }
 
             // Give some visual feedback shit's happening (for anyone who can't hear sound)
-            Owner.PopupMessage(eventArgs.User, _localizationManager.GetString("Swish"));
+            Owner.PopupMessage(eventArgs.User, Loc.GetString("Swish"));
 
             if (_pickupSound == null)
             {
