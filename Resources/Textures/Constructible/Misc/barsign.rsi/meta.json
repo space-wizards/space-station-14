@@ -71,6 +71,26 @@
       ]
     },
     {
+      "name": "birdcage",
+      "directions": 1,
+      "delays": [
+        [
+          0.4,
+          0.8
+        ]
+      ]
+    },
+    {
+      "name": "zocalo",
+      "directions": 1,
+      "delays": [
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    {
       "name": "emergencyrumparty",
       "directions": 1,
       "delays": [

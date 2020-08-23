@@ -89,6 +89,18 @@
   description: "Ironically bright for such a shady bar."
 
 - type: barSign
+  id: TheBirdCage
+  name: "The Birdcage"
+  icon: "thebirdcage"
+  description: "Caw caw!"
+
+- type: barSign
+  id: Zocalo
+  name: "Zocalo"
+  icon: "zocalo"
+  description: "Anteriormente ubicado en Spessmerica."
+
+- type: barSign
   id: LV426
   name: "LV-426"
   icon: "lv426"
@@ -117,6 +129,12 @@
   name: "The Engine Change"
   icon: "enginechange"
   description: "Still waiting."
+
+- type: barSign
+  id: Emprah
+  name: "4 The Emprah"
+  icon: "emprah"
+  description: "Enjoyed by fanatics, heretics, and brain-damaged patrons alike."
 
 # Hidden signs list below this point
 - type: barSign
