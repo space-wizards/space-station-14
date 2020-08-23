@@ -77,6 +77,12 @@
   description: "Welcome back, master!"
 
 - type: barSign
+  id: MalteseFalcon
+  name: "Maltese Falcon"
+  icon: "maltesefalcon"
+  description: "Welcome to the Maltese Falcon Bar & Grill!"
+
+- type: barSign
   id: TheLightbulb
   name: "The Lightbulb"
   icon: "the_lightbulb"

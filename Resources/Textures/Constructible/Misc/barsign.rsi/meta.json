@@ -410,6 +410,22 @@
       ]
     },
     {
+      "name": "maltesefalcon",
+      "directions": 1,
+      "delays": [
+        [
+          3.8,
+          0.4,
+          1.6,
+          0.1,
+          5.6,
+          0.1,
+          0.4,
+          0.1
+        ]
+      ]
+    },
+    {
       "name": "thewretchedhive",
       "directions": 1,
       "delays": [
