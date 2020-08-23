@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Shared.Chemistry;
@@ -19,23 +20,27 @@ namespace Content.Server.GameObjects.Components.Fluids
     [RegisterComponent]
     public class BucketComponent : Component, IInteractUsing
     {
-#pragma warning disable 649
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-#pragma warning restore 649
+        [Dependency] private readonly ILocalizationManager _localizationManager = default!;
 
         public override string Name => "Bucket";
 
         public ReagentUnit MaxVolume
         {
-            get => _contents.MaxVolume;
-            set => _contents.MaxVolume = value;
+            get => Owner.TryGetComponent(out SolutionComponent? solution) ? solution.MaxVolume : ReagentUnit.Zero;
+            set
+            {
+                if (Owner.TryGetComponent(out SolutionComponent? solution))
+                {
+                    solution.MaxVolume = value;
+                }
+            }
         }
 
-        public ReagentUnit CurrentVolume => _contents.CurrentVolume;
+        public ReagentUnit CurrentVolume => Owner.TryGetComponent(out SolutionComponent? solution)
+            ? solution.CurrentVolume
+            : ReagentUnit.Zero;
 
-        private SolutionComponent _contents;
-
-        private string _sound;
+        private string? _sound;
 
         /// <inheritdoc />
         public override void ExposeData(ObjectSerializer serializer)
@@ -47,15 +52,20 @@ namespace Content.Server.GameObjects.Components.Fluids
         public override void Initialize()
         {
             base.Initialize();
-            _contents = Owner.GetComponent<SolutionComponent>();
+            Owner.EnsureComponent<SolutionComponent>();
         }
 
         private bool TryGiveToMop(MopComponent mopComponent)
         {
+            if (!Owner.TryGetComponent(out SolutionComponent? contents))
+            {
+                return false;
+            }
+
             // Let's fill 'er up
             // If this is called the mop should be empty but just in case we'll do Max - Current
             var transferAmount = ReagentUnit.Min(mopComponent.MaxVolume - mopComponent.CurrentVolume, CurrentVolume);
-            var solution = _contents.SplitSolution(transferAmount);
+            var solution = contents.SplitSolution(transferAmount);
             if (!mopComponent.Contents.TryAddSolution(solution) || mopComponent.CurrentVolume == 0)
             {
                 return false;
@@ -73,7 +83,12 @@ namespace Content.Server.GameObjects.Components.Fluids
 
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.Using.TryGetComponent(out MopComponent mopComponent))
+            if (!Owner.TryGetComponent(out SolutionComponent? contents))
+            {
+                return false;
+            }
+
+            if (!eventArgs.Using.TryGetComponent(out MopComponent? mopComponent))
             {
                 return false;
             }
@@ -97,7 +112,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             }
 
             var solution = mopComponent.Contents.SplitSolution(transferAmount);
-            if (!_contents.TryAddSolution(solution))
+            if (!contents.TryAddSolution(solution))
             {
                 //This really shouldn't happen
                 throw new InvalidOperationException();

@@ -158,7 +158,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         {
             base.OnAdd();
             var rangedWeaponComponent = Owner.GetComponent<ServerRangedWeaponComponent>();
-            rangedWeaponComponent.Barrel = this;
+
+            rangedWeaponComponent.Barrel ??= this;
             rangedWeaponComponent.FireHandler += Fire;
             rangedWeaponComponent.WeaponCanFireHandler += WeaponCanFire;
         }

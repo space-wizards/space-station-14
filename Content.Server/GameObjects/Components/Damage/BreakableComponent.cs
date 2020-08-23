@@ -41,8 +41,6 @@ namespace Content.Server.GameObjects.Components.Damage
             switch (eventArgs.Severity)
             {
                 case ExplosionSeverity.Destruction:
-                    PerformDestruction();
-                    break;
                 case ExplosionSeverity.Heavy:
                     PerformDestruction();
                     break;

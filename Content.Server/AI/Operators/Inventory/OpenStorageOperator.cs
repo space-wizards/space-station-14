@@ -1,4 +1,5 @@
-﻿using Content.Server.AI.Utility;
+﻿#nullable enable
+using Content.Server.AI.Utility;
 using Content.Server.AI.WorldState.States.Inventory;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.Utility;
@@ -34,7 +35,7 @@ namespace Content.Server.AI.Operators.Inventory
                 return Outcome.Failed;
             }
 
-            if (!container.Owner.TryGetComponent(out EntityStorageComponent storageComponent) ||
+            if (!container.Owner.TryGetComponent(out EntityStorageComponent? storageComponent) ||
                 storageComponent.IsWeldedShut)
             {
                 return Outcome.Failed;

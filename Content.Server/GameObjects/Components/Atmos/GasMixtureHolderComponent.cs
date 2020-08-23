@@ -6,16 +6,21 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Atmos
 {
     [RegisterComponent]
-    public class GasMixtureComponent : Component
+    public class GasMixtureHolderComponent : Component
     {
-        public override string Name => "GasMixture";
+        public override string Name => "GasMixtureHolder";
 
         [ViewVariables] public GasMixture GasMixture { get; set; } = new GasMixture();
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(this, x => GasMixture.Volume, "volume", 0f);
+
+            serializer.DataReadWriteFunction(
+                "volume",
+                0f,
+                vol => GasMixture.Volume = vol,
+                () => GasMixture.Volume);
         }
     }
 }
