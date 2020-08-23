@@ -17,9 +17,9 @@
 
 
 - type: entity
-  id: BarSignMalteseFalcon
-  name: Maltese Falcon
+  id: BarSignEngineChange
+  name: The Engine Change
   parent: BarSign
   components:
   - type: BarSign
-    current: MalteseFalcon
+    current: EngineChange

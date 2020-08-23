@@ -1,16 +1,4 @@
 - type: barSign
-  id: MalteseFalcon
-  name: "Maltese Falcon"
-  icon: "maltesefalcon"
-  description: "The Maltese Falcon, Space Bar and Grill."
-
-- type: barSign
-  id: TheBark
-  name: "The Bark"
-  icon: "thebark"
-  description: "Ian's bar of choice."
-
-- type: barSign
   id: Harmbaton
   name: "The Harmbaton"
   icon: "theharmbaton"
@@ -29,22 +17,10 @@
   description: "Don't drink and swim."
 
 - type: barSign
-  id: ScotchServinWill
-  name: "Scotch Servin Willy's"
-  icon: "scotchservinwill"
-  description: "Willy sure moved up in the world from clown to bartender."
-
-- type: barSign
   id: OfficerBeersky
   name: "Officer Beersky's"
   icon: "officerbeersky"
   description: "Man eat a dong, these drinks are great."
-
-- type: barSign
-  id: TheCavern
-  name: "The Cavern"
-  icon: "thecavern"
-  description: "Fine drinks while listening to some fine tunes."
 
 - type: barSign
   id: TheOuterSpess
@@ -53,46 +29,10 @@
   description: "This bar isn't actually located in outer space."
 
 - type: barSign
-  id: SlipperyShots
-  name: "Slippery Shots"
-  icon: "slipperyshots"
-  description: "Slippery slope to drunkeness with our shots!"
-
-- type: barSign
-  id: TheGreyTide
-  name: "The Grey Tide"
-  icon: "thegreytide"
-  description: "Abandon your toolboxing ways and enjoy a lazy beer!"
-
-- type: barSign
-  id: HonkednLoaded
-  name: "Honked 'n' Loaded"
-  icon: "honkednloaded"
-  description: "Honk."
-
-- type: barSign
-  id: TheNest
-  name: "The Nest"
-  icon: "thenest"
-  description: "A good place to retire for a drink after a long night of crime fighting."
-
-- type: barSign
   id: TheCoderbus
   name: "The Coderbus"
   icon: "thecoderbus"
   description: "A very controversial bar known for its wide variety of constantly-changing drinks."
-
-- type: barSign
-  id: TheAdminbus
-  name: "The Adminbus"
-  icon: "theadminbus"
-  description: "An establishment visited mainly by space-judges. It isn't bombed nearly as much as court hearings."
-
-- type: barSign
-  id: OldCockInn
-  name: "The Old Cock Inn"
-  icon: "oldcockinn"
-  description: "Something about this sign fills you with despair."
 
 - type: barSign
   id: TheWretchedHive
@@ -119,28 +59,16 @@
   description: "Renowned system-wide for their utterly uncreative drink combinations."
 
 - type: barSign
-  id: VladsSaladBar
-  name: "Vlad's Salad Bar"
-  icon: "vladssaladbar"
-  description: "Under new management. Vlad was always a bit too trigger happy with that shotgun."
-
-- type: barSign
-  id: TheShaken
-  name: "The Shaken"
-  icon: "theshaken"
-  description: "This establishment does not serve stirred drinks."
-
-- type: barSign
   id: TheAleNath
   name: "The Ale' Nath"
   icon: "thealenath"
   description: "All right, buddy. I think you've had EI NATH. Time to get a cab."
 
 - type: barSign
-  id: TheAlohaAnackbar
-  name: "The Aloha Snackbar"
-  icon: "alohasnackbar"
-  description: "A tasteful, inoffensive tiki bar sign."
+  id: TheFemboyBar
+  name: "Femboy Hooters"
+  icon: "femboy"
+  description: "There's something off about the waitresses, you just can't tell what..."
 
 - type: barSign
   id: TheNet
@@ -179,13 +107,6 @@
   icon: "empbarsign"
   description: "Something has gone very wrong."
   rename_area: false
-  hidden: true
-
-- type: barSign
-  id: SyndiBarSign
-  name: "Syndi Cat"
-  icon: "syndibarsign"
-  description: "Syndicate or die."
   hidden: true
 
 - type: barSign
