@@ -1,42 +1,428 @@
-﻿using System.Text;
-using Content.Shared.Damage;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 using static Content.Shared.GameObjects.Components.Medical.SharedCloningMachineComponent;
 
 namespace Content.Client.GameObjects.Components.CloningMachine
 {
-    public class CloningMachineWindow : SS14Window
+    public sealed class CloningMachineWindow : SS14Window
     {
-        public readonly Button ScanButton;
-        private readonly Label _diagnostics;
-        protected override Vector2? CustomSize => (485, 90);
+        //Todo: delete if we don't need
+        //private readonly IScanManager scanManager;
+        //private readonly IResourceCache resourceCache;
+        private readonly ILocalizationManager _loc;
 
-        public CloningMachineWindow()
+        private VBoxContainer MainVBox;
+        private ScanListContainer ScanList;
+        private List<EntityUid> scanManager;
+        private LineEdit SearchBar;
+        private OptionButton OverrideMenu;
+        private Button ClearButton;
+        private Button EraseButton;
+        private Button CloneButton;
+        private EntitySpawnButton MeasureButton;
+        protected override Vector2 ContentsMinimumSize => MainVBox?.CombinedMinimumSize ?? Vector2.Zero;
+
+        // List of scans that are visible based on current filter criteria.
+        private readonly List<EntityUid> _filteredScans = new List<EntityUid>();
+
+        // The indices of the visible scans last time UpdateVisibleScans was ran.
+        // This is inclusive, so end is the index of the last scan, not right after it.
+        private (int start, int end) _lastScanIndices;
+
+        private EntitySpawnButton? SelectedButton;
+        private EntityUid? SelectedScan;
+
+        protected override Vector2? CustomSize => (250, 300);
+
+        public CloningMachineWindow(
+            List<EntityUid> scanManager,
+            ILocalizationManager loc)
         {
-            Contents.AddChild(new VBoxContainer
+            this.scanManager = scanManager;
+
+            _loc = loc;
+
+            Title = _loc.GetString("Entity Spawn Panel");
+
+            Contents.AddChild(MainVBox = new VBoxContainer
             {
                 Children =
                 {
-                    (ScanButton = new Button
+                    new HBoxContainer
                     {
-                        Text = "Clone"
-                    }),
-                    (_diagnostics = new Label
+                        Children =
+                        {
+                            (SearchBar = new LineEdit
+                            {
+                                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                                PlaceHolder = _loc.GetString("Search")
+                            }),
+
+                            (ClearButton = new Button
+                            {
+                                Disabled = true,
+                                Text = _loc.GetString("Clear"),
+                            })
+                        }
+                    },
+                    new ScrollContainer
                     {
-                        Text = ""
-                    })
+                        CustomMinimumSize = new Vector2(200.0f, 0.0f),
+                        SizeFlagsVertical = SizeFlags.FillExpand,
+                        Children =
+                        {
+                            (ScanList = new ScanListContainer())
+                        }
+                    },
+                    new HBoxContainer
+                    {
+                        Children =
+                        {
+                            (CloneButton = new Button
+                            {
+                               Text = "Clone"
+                            })
+                        }
+                    },
+                    (MeasureButton = new EntitySpawnButton {Visible = false})
                 }
             });
+
+
+            SearchBar.OnTextChanged += OnSearchBarTextChanged;
+            ClearButton.OnPressed += OnClearButtonPressed;
+
+            BuildEntityList();
+
+            SearchBar.GrabKeyboardFocus();
         }
 
-        public void Populate(CloningMachineBoundUserInterfaceState state)
+        public override void Close()
         {
+            base.Close();
 
+            Dispose();
+        }
+
+
+        private void OnSearchBarTextChanged(LineEdit.LineEditEventArgs args)
+        {
+            BuildEntityList(args.Text);
+            ClearButton.Disabled = string.IsNullOrEmpty(args.Text);
+        }
+
+        private void OnOverrideMenuItemSelected(OptionButton.ItemSelectedEventArgs args)
+        {
+            OverrideMenu.SelectId(args.Id);
+        }
+
+        private void OnClearButtonPressed(BaseButton.ButtonEventArgs args)
+        {
+            SearchBar.Clear();
+            BuildEntityList("");
+        }
+
+
+        private void BuildEntityList(string? searchStr = null)
+        {
+            _filteredScans.Clear();
+            ScanList.RemoveAllChildren();
+            // Reset last scan indices so it automatically updates the entire list.
+            _lastScanIndices = (0, -1);
+            ScanList.RemoveAllChildren();
+            SelectedButton = null;
+            searchStr = searchStr?.ToLowerInvariant();
+
+            foreach (var scan in scanManager)
+            {
+                if (searchStr != null && !_doesScanMatchSearch(scan, searchStr))
+                {
+                    continue;
+                }
+
+                _filteredScans.Add(scan);
+            }
+
+            _filteredScans.Sort((a, b) => string.Compare(a.ToString(), b.ToString(), StringComparison.Ordinal));
+
+            ScanList.TotalItemCount = _filteredScans.Count;
+        }
+
+        private void UpdateVisibleScans()
+        {
+            // Update visible buttons in the scan list.
+
+            // Calculate index of first scan to render based on current scroll.
+            var height = MeasureButton.CombinedMinimumSize.Y + ScanListContainer.Separation;
+            var offset = -ScanList.Position.Y;
+            var startIndex = (int) Math.Floor(offset / height);
+            ScanList.ItemOffset = startIndex;
+
+            var (prevStart, prevEnd) = _lastScanIndices;
+
+            // Calculate index of final one.
+            var endIndex = startIndex - 1;
+            var spaceUsed = -height; // -height instead of 0 because else it cuts off the last button.
+
+            while (spaceUsed < ScanList.Parent!.Height)
+            {
+                spaceUsed += height;
+                endIndex += 1;
+            }
+
+            endIndex = Math.Min(endIndex, _filteredScans.Count - 1);
+
+            if (endIndex == prevEnd && startIndex == prevStart)
+            {
+                // Nothing changed so bye.
+                return;
+            }
+
+            _lastScanIndices = (startIndex, endIndex);
+
+            // Delete buttons at the start of the list that are no longer visible (scrolling down).
+            for (var i = prevStart; i < startIndex && i <= prevEnd; i++)
+            {
+                var control = (EntitySpawnButton) ScanList.GetChild(0);
+                DebugTools.Assert(control.Index == i);
+                ScanList.RemoveChild(control);
+            }
+
+            // Delete buttons at the end of the list that are no longer visible (scrolling up).
+            for (var i = prevEnd; i > endIndex && i >= prevStart; i--)
+            {
+                var control = (EntitySpawnButton) ScanList.GetChild(ScanList.ChildCount - 1);
+                DebugTools.Assert(control.Index == i);
+                ScanList.RemoveChild(control);
+            }
+
+            // Create buttons at the start of the list that are now visible (scrolling up).
+            for (var i = Math.Min(prevStart - 1, endIndex); i >= startIndex; i--)
+            {
+                InsertEntityButton(_filteredScans[i], true, i);
+            }
+
+            // Create buttons at the end of the list that are now visible (scrolling down).
+            for (var i = Math.Max(prevEnd + 1, startIndex); i <= endIndex; i++)
+            {
+                InsertEntityButton(_filteredScans[i], false, i);
+            }
+        }
+
+        // Create a spawn button and insert it into the start or end of the list.
+        private void InsertEntityButton(EntityUid scan, bool insertFirst, int index)
+        {
+            var button = new EntitySpawnButton
+            {
+                Scan = scan,
+                Index = index // We track this index purely for debugging.
+            };
+            button.ActualButton.OnToggled += OnItemButtonToggled;
+            var entityLabelText = scan.ToString();
+
+            button.EntityLabel.Text = entityLabelText;
+
+            if (scan == SelectedScan)
+            {
+                SelectedButton = button;
+                SelectedButton.ActualButton.Pressed = true;
+            }
+
+            //TODO: replace with body's face?
+            /*var tex = IconComponent.GetScanIcon(scan, resourceCache);
+            var rect = button.EntityTextureRect;
+            if (tex != null)
+            {
+                rect.Texture = tex.Default;
+            }
+            else
+            {
+                rect.Dispose();
+            }
+
+            rect.Dispose();
+            */
+
+            ScanList.AddChild(button);
+            if (insertFirst)
+            {
+                button.SetPositionInParent(0);
+            }
+        }
+
+        private static bool _doesScanMatchSearch(EntityUid scan, string searchStr)
+        {
+            if (scan.ToString().ToLowerInvariant().Contains(searchStr))
+            {
+                return true;
+            }
+
+            if (string.IsNullOrEmpty(scan.ToString()))
+            {
+                return false;
+            }
+
+            if (scan.ToString().ToLowerInvariant().Contains(searchStr))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        //TODO: Here is were we have the item toggle logic
+        private void OnItemButtonToggled(BaseButton.ButtonToggledEventArgs args)
+        {
+            /*
+            var item = (EntitySpawnButton) args.Button.Parent!;
+            if (SelectedButton == item)
+            {
+                SelectedButton = null;
+                SelectedScan = null;
+                placementManager.Clear();
+                return;
+            }
+            else if (SelectedButton != null)
+            {
+                SelectedButton.ActualButton.Pressed = false;
+            }
+
+            SelectedButton = null;
+            SelectedScan = null;
+
+            var overrideMode = initOpts[OverrideMenu.SelectedId];
+            var newObjInfo = new PlacementInformation
+            {
+                PlacementOption = overrideMode != "Default" ? overrideMode : item.Scan.PlacementMode,
+                EntityType = item.ScanID,
+                Range = 2,
+                IsTile = false
+            };
+
+            SelectedButton = item;
+            SelectedScan = item.Scan;
+            */
+        }
+
+        protected override void FrameUpdate(FrameEventArgs args)
+        {
+            base.FrameUpdate(args);
+            UpdateVisibleScans();
+        }
+
+        private class ScanListContainer : Container
+        {
+            // Quick and dirty container to do virtualization of the list.
+            // Basically, get total item count and offset to put the current buttons at.
+            // Get a constant minimum height and move the buttons in the list up to match the scrollbar.
+            private int _totalItemCount;
+            private int _itemOffset;
+
+            public int TotalItemCount
+            {
+                get => _totalItemCount;
+                set
+                {
+                    _totalItemCount = value;
+                    MinimumSizeChanged();
+                }
+            }
+
+            public int ItemOffset
+            {
+                get => _itemOffset;
+                set
+                {
+                    _itemOffset = value;
+                    UpdateLayout();
+                }
+            }
+
+            public const float Separation = 2;
+
+            protected override Vector2 CalculateMinimumSize()
+            {
+                if (ChildCount == 0)
+                {
+                    return Vector2.Zero;
+                }
+
+                var first = GetChild(0);
+
+                var (minX, minY) = first.CombinedMinimumSize;
+
+                return (minX, minY * TotalItemCount + (TotalItemCount - 1) * Separation);
+            }
+
+            protected override void LayoutUpdateOverride()
+            {
+                if (ChildCount == 0)
+                {
+                    return;
+                }
+
+                var first = GetChild(0);
+
+                var height = first.CombinedMinimumSize.Y;
+                var offset = ItemOffset * height + (ItemOffset - 1) * Separation;
+
+                foreach (var child in Children)
+                {
+                    FitChildInBox(child, UIBox2.FromDimensions(0, offset, Width, height));
+                    offset += Separation + height;
+                }
+            }
+        }
+
+        [DebuggerDisplay("spawnbutton {" + nameof(Index) + "}")]
+        private class EntitySpawnButton : Control
+        {
+            public EntityUid Scan { get; set; } = default!;
+            public Button ActualButton { get; private set; }
+            public Label EntityLabel { get; private set; }
+            public TextureRect EntityTextureRect { get; private set; }
+            public int Index { get; set; }
+
+            public EntitySpawnButton()
+            {
+                AddChild(ActualButton = new Button
+                {
+                    SizeFlagsHorizontal = SizeFlags.FillExpand,
+                    SizeFlagsVertical = SizeFlags.FillExpand,
+                    ToggleMode = true,
+                });
+
+                AddChild(new HBoxContainer
+                {
+                    Children =
+                    {
+                        (EntityTextureRect = new TextureRect
+                        {
+                            CustomMinimumSize = (32, 32),
+                            SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
+                            SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                            Stretch = TextureRect.StretchMode.KeepAspectCentered,
+                            CanShrink = true
+                        }),
+                        (EntityLabel = new Label
+                        {
+                            SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                            SizeFlagsHorizontal = SizeFlags.FillExpand,
+                            Text = "Backpack",
+                            ClipText = true
+                        })
+                    }
+                });
+            }
         }
     }
 }

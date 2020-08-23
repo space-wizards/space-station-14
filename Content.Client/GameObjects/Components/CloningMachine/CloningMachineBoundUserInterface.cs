@@ -1,7 +1,12 @@
-﻿using Content.Shared.GameObjects.Components.Medical;
+﻿using System;
+using System.Collections.Generic;
+using Content.Shared.GameObjects.Components.Medical;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects.Components.UserInterface;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
+using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using static Content.Shared.GameObjects.Components.Medical.SharedCloningMachineComponent;
 
 namespace Content.Client.GameObjects.Components.CloningMachine
@@ -9,6 +14,8 @@ namespace Content.Client.GameObjects.Components.CloningMachine
     [UsedImplicitly]
     public class CloningMachineBoundUserInterface : BoundUserInterface
     {
+        [Dependency] private readonly ILocalizationManager _localization;
+
         public CloningMachineBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
         }
@@ -18,19 +25,27 @@ namespace Content.Client.GameObjects.Components.CloningMachine
         protected override void Open()
         {
             base.Open();
-            _window = new CloningMachineWindow
+            var foo = new List<EntityUid>();
+            for (int i =1; i <= 20; i++)
             {
-                Title = Owner.Owner.Name,
-            };
+                foo.Add(new EntityUid(i));
+            }
+
+            _window = new CloningMachineWindow(foo, _localization);
             _window.OnClose += Close;
-            _window.ScanButton.OnPressed += _ => SendMessage(new UiButtonPressedMessage(UiButton.Clone));
+            //TODO: RE-enable once the scan button is back
+            //_window.ScanButton.OnPressed += _ => SendMessage(new UiButtonPressedMessage(UiButton.Clone));
             _window.OpenCentered();
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-            _window.Populate((CloningMachineBoundUserInterfaceState) state);
+            //TODO:Update with new entity UIDs
         }
+    }
+
+    public class Enumberable
+    {
     }
 }
