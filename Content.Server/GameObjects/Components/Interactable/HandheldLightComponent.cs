@@ -47,8 +47,12 @@ namespace Content.Server.GameObjects.Components.Interactable
             get
             {
                 if (_cellContainer.ContainedEntity == null) return null;
+                if (_cellContainer.ContainedEntity.TryGetComponent(out BatteryComponent cell))
+                {
+                    return cell;
+                }
 
-                return _cellContainer.ContainedEntity.TryGetComponent(out BatteryComponent cell) ? cell : null;
+                return null;
             }
         }
 
