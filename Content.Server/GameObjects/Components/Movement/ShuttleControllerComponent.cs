@@ -22,10 +22,8 @@ namespace Content.Server.GameObjects.Components.Movement
     [ComponentReference(typeof(IMoverComponent))]
     internal class ShuttleControllerComponent : Component, IMoverComponent
     {
-#pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-#pragma warning restore 649
 
         private bool _movingUp;
         private bool _movingDown;

@@ -108,7 +108,11 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
         public void UpdateColor()
         {
-            var sprite = Owner.GetComponent<SpriteComponent>();
+            if (!Owner.TryGetComponent(out SpriteComponent sprite))
+            {
+                return;
+            }
+
             sprite.Color = Color;
         }
 

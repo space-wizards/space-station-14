@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Interactable;
@@ -34,10 +35,7 @@ namespace Content.Server.GameObjects.Components.Doors
         /// </summary>
         private static readonly TimeSpan PowerWiresTimeout = TimeSpan.FromSeconds(5.0);
 
-        private PowerReceiverComponent _powerReceiver;
-        private WiresComponent _wires;
-
-        private CancellationTokenSource _powerWiresPulsedTimerCancel;
+        private CancellationTokenSource _powerWiresPulsedTimerCancel = new CancellationTokenSource();
 
         private bool _powerWiresPulsed;
 
@@ -89,13 +87,15 @@ namespace Content.Server.GameObjects.Components.Doors
 
         private void UpdateWiresStatus()
         {
+            WiresComponent? wires;
             var powerLight = new StatusLightData(Color.Yellow, StatusLightState.On, "POWR");
             if (PowerWiresPulsed)
             {
                 powerLight = new StatusLightData(Color.Yellow, StatusLightState.BlinkingFast, "POWR");
             }
-            else if (_wires.IsWireCut(Wires.MainPower) &&
-                     _wires.IsWireCut(Wires.BackupPower))
+            else if (Owner.TryGetComponent(out wires) &&
+                     wires.IsWireCut(Wires.MainPower) &&
+                     wires.IsWireCut(Wires.BackupPower))
             {
                 powerLight = new StatusLightData(Color.Red, StatusLightState.On, "POWR");
             }
@@ -114,12 +114,17 @@ namespace Content.Server.GameObjects.Components.Doors
             var safetyStatus =
                 new StatusLightData(Color.Red, Safety ? StatusLightState.On : StatusLightState.Off, "SAFE");
 
-            _wires.SetStatus(AirlockWireStatus.PowerIndicator, powerLight);
-            _wires.SetStatus(AirlockWireStatus.BoltIndicator, boltStatus);
-            _wires.SetStatus(AirlockWireStatus.BoltLightIndicator, boltLightsStatus);
-            _wires.SetStatus(AirlockWireStatus.AIControlIndicator, new StatusLightData(Color.Purple, StatusLightState.BlinkingSlow, "AICT"));
-            _wires.SetStatus(AirlockWireStatus.TimingIndicator, timingStatus);
-            _wires.SetStatus(AirlockWireStatus.SafetyIndicator, safetyStatus);
+            if (!Owner.TryGetComponent(out wires))
+            {
+                return;
+            }
+
+            wires.SetStatus(AirlockWireStatus.PowerIndicator, powerLight);
+            wires.SetStatus(AirlockWireStatus.BoltIndicator, boltStatus);
+            wires.SetStatus(AirlockWireStatus.BoltLightIndicator, boltLightsStatus);
+            wires.SetStatus(AirlockWireStatus.AIControlIndicator, new StatusLightData(Color.Purple, StatusLightState.BlinkingSlow, "AICT"));
+            wires.SetStatus(AirlockWireStatus.TimingIndicator, timingStatus);
+            wires.SetStatus(AirlockWireStatus.SafetyIndicator, safetyStatus);
             /*
             _wires.SetStatus(6, powerLight);
             _wires.SetStatus(7, powerLight);
@@ -131,14 +136,30 @@ namespace Content.Server.GameObjects.Components.Doors
 
         private void UpdatePowerCutStatus()
         {
-            _powerReceiver.PowerDisabled = PowerWiresPulsed ||
-                                           _wires.IsWireCut(Wires.MainPower) ||
-                                           _wires.IsWireCut(Wires.BackupPower);
+            if (!Owner.TryGetComponent(out PowerReceiverComponent? receiver))
+            {
+                return;
+            }
+
+            if (PowerWiresPulsed)
+            {
+                receiver.PowerDisabled = true;
+                return;
+            }
+
+            if (!Owner.TryGetComponent(out WiresComponent? wires))
+            {
+                return;
+            }
+
+            receiver.PowerDisabled =
+                wires.IsWireCut(Wires.MainPower) ||
+                wires.IsWireCut(Wires.BackupPower);
         }
 
         private void UpdateBoltLightStatus()
         {
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(DoorVisuals.BoltLights, BoltLightsVisible);
             }
@@ -150,7 +171,10 @@ namespace Content.Server.GameObjects.Components.Doors
             {
                 base.State = value;
                 // Only show the maintenance panel if the airlock is closed
-                _wires.IsPanelVisible = value != DoorState.Open;
+                if (Owner.TryGetComponent(out WiresComponent? wires))
+                {
+                    wires.IsPanelVisible = value != DoorState.Open;
+                }
                 // If the door is closed, we should look if the bolt was locked while closing
                 UpdateBoltLightStatus();
             }
@@ -159,29 +183,32 @@ namespace Content.Server.GameObjects.Components.Doors
         public override void Initialize()
         {
             base.Initialize();
-            _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
-            _wires = Owner.GetComponent<WiresComponent>();
 
-            _powerReceiver.OnPowerStateChanged += PowerDeviceOnOnPowerStateChanged;
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
             {
-                appearance.SetData(DoorVisuals.Powered, _powerReceiver.Powered);
+                receiver.OnPowerStateChanged += PowerDeviceOnOnPowerStateChanged;
+
+                if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+                {
+
+                    appearance.SetData(DoorVisuals.Powered, receiver.Powered);
+                }
             }
         }
 
         public override void OnRemove()
         {
-            if (Owner.TryGetComponent(out _powerReceiver))
+            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
             {
-                _powerReceiver.OnPowerStateChanged -= PowerDeviceOnOnPowerStateChanged;
+                receiver.OnPowerStateChanged -= PowerDeviceOnOnPowerStateChanged;
             }
 
             base.OnRemove();
         }
 
-        private void PowerDeviceOnOnPowerStateChanged(object sender, PowerStateEventArgs e)
+        private void PowerDeviceOnOnPowerStateChanged(object? sender, PowerStateEventArgs e)
         {
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(DoorVisuals.Powered, e.Powered);
             }
@@ -192,11 +219,12 @@ namespace Content.Server.GameObjects.Components.Doors
 
         protected override void ActivateImpl(ActivateEventArgs args)
         {
-            if (_wires.IsPanelOpen)
+            if (Owner.TryGetComponent(out WiresComponent? wires) &&
+                wires.IsPanelOpen)
             {
-                if (args.User.TryGetComponent(out IActorComponent actor))
+                if (args.User.TryGetComponent(out IActorComponent? actor))
                 {
-                    _wires.OpenInterface(actor.playerSession);
+                    wires.OpenInterface(actor.playerSession);
                 }
             }
             else
@@ -276,8 +304,7 @@ namespace Content.Server.GameObjects.Components.Doors
                     case Wires.MainPower:
                     case Wires.BackupPower:
                         PowerWiresPulsed = true;
-                        _powerWiresPulsedTimerCancel?.Cancel();
-                        _powerWiresPulsedTimerCancel = new CancellationTokenSource();
+                        _powerWiresPulsedTimerCancel.Cancel();
                         Timer.Spawn(PowerWiresTimeout,
                             () => PowerWiresPulsed = false,
                             _powerWiresPulsedTimerCancel.Token);
@@ -381,7 +408,8 @@ namespace Content.Server.GameObjects.Components.Doors
 
         private bool IsPowered()
         {
-            return _powerReceiver.Powered;
+            return !Owner.TryGetComponent(out PowerReceiverComponent? receiver)
+                   || receiver.Powered;
         }
 
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
@@ -392,11 +420,12 @@ namespace Content.Server.GameObjects.Components.Doors
             if (tool.HasQuality(ToolQuality.Cutting)
                 || tool.HasQuality(ToolQuality.Multitool))
             {
-                if (_wires.IsPanelOpen)
+                if (Owner.TryGetComponent(out WiresComponent? wires)
+                    && wires.IsPanelOpen)
                 {
-                    if (eventArgs.User.TryGetComponent(out IActorComponent actor))
+                    if (eventArgs.User.TryGetComponent(out IActorComponent? actor))
                     {
-                        _wires.OpenInterface(actor.playerSession);
+                        wires.OpenInterface(actor.playerSession);
                         return true;
                     }
                 }
