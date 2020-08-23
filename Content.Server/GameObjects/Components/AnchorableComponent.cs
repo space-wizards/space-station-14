@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.Components
             if (!force)
             {
                 if (utilizing == null ||
-                    !utilizing.TryGetComponent(out ToolComponent tool) ||
+                    !utilizing.TryGetComponent(out ToolComponent? tool) ||
                     !(await tool.UseTool(user, Owner, 0.5f, ToolQuality.Anchoring)))
                 {
                     return false;
@@ -93,7 +93,7 @@ namespace Content.Server.GameObjects.Components
         /// <returns>true if toggled, false otherwise</returns>
         private async Task<bool> TryToggleAnchor(IEntity user, IEntity? utilizing = null, bool force = false)
         {
-            if (!Owner.TryGetComponent(out ICollidableComponent collidable))
+            if (!Owner.TryGetComponent(out ICollidableComponent? collidable))
             {
                 return false;
             }

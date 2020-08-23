@@ -25,7 +25,7 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             var playerEnt = _playerManager.LocalPlayer?.ControlledEntity;
 
-            if (playerEnt == null || !playerEnt.TryGetComponent(out IMoverComponent mover))
+            if (playerEnt == null || !playerEnt.TryGetComponent(out IMoverComponent? mover))
             {
                 return;
             }

@@ -28,9 +28,7 @@ namespace Content.Server.GameObjects.Components.Recycling
     [RegisterComponent]
     public class RecyclerComponent : Component, ICollideBehavior
     {
-#pragma warning disable 649
         [Dependency] private readonly IEntityManager _entityManager = default!;
-#pragma warning restore 649
 
         public override string Name => "Recycler";
 

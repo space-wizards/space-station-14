@@ -19,9 +19,7 @@ namespace Content.Client.GameObjects.Components.Items
     {
         private HandsGui? _gui;
 
-#pragma warning disable 649
         [Dependency] private readonly IGameHud _gameHud = default!;
-#pragma warning restore 649
 
         /// <inheritdoc />
         private readonly List<Hand> _hands = new List<Hand>();
@@ -148,7 +146,7 @@ namespace Content.Client.GameObjects.Components.Items
                 return;
             }
 
-            if (!entity.TryGetComponent(out ItemComponent item)) return;
+            if (!entity.TryGetComponent(out ItemComponent? item)) return;
 
             var maybeInHands = item.GetInHandStateInfo(hand.Location);
 

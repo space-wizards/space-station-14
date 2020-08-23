@@ -45,6 +45,31 @@
       state_broken: pipe-b
 
 - type: entity
+  id: DisposalTagger
+  parent: DisposalPipeBase
+  name: disposal pipe tagger
+  description: A pipe that tags entities for routing
+  components:
+  - type: Sprite
+    drawdepth: BelowFloor
+    sprite: Constructible/Power/disposal.rsi
+    state: conpipe-tagger
+  - type: Icon
+    sprite: Constructible/Power/disposal.rsi
+    state: conpipe-tagger
+  - type: DisposalTagger
+  - type: Appearance
+    visuals:
+    - type: DisposalVisualizer
+      state_free: conpipe-tagger
+      state_anchored: pipe-tagger
+      state_broken: pipe-b
+  - type: UserInterface
+    interfaces:
+    - key: enum.DisposalTaggerUiKey.Key
+      type: DisposalTaggerBoundUserInterface
+
+- type: entity
   id: DisposalTrunk
   parent: DisposalPipeBase
   name: disposal trunk
@@ -130,6 +155,63 @@
     interfaces:
     - key: enum.DisposalUnitUiKey.Key
       type: DisposalUnitBoundUserInterface
+
+- type: entity
+  id: DisposalRouter
+  parent: DisposalPipeBase
+  name: disposal router
+  description: A three-way router. Entities with matching tags get routed to the side
+  components:
+  - type: Sprite
+    drawdepth: BelowFloor
+    sprite: Constructible/Power/disposal.rsi
+    state: conpipe-j1s
+  - type: Icon
+    sprite: Constructible/Power/disposal.rsi
+    state: conpipe-j1s
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - -90
+    - 180
+  - type: Appearance
+    visuals:
+    - type: DisposalVisualizer
+      state_free: conpipe-j1s
+      state_anchored: pipe-j1s
+      state_broken: pipe-b
+  - type: Flippable
+    entity: DisposalRouterFlipped
+  - type: UserInterface
+    interfaces:
+    - key: enum.DisposalRouterUiKey.Key
+      type: DisposalRouterBoundUserInterface
+
+- type: entity
+  id: DisposalRouterFlipped
+  parent: DisposalRouter
+  name: flipped router junction
+  components:
+  - type: Sprite
+    drawdepth: BelowFloor
+    sprite: Constructible/Power/disposal.rsi
+    state: conpipe-j2s
+  - type: Icon
+    sprite: Constructible/Power/disposal.rsi
+    state: conpipe-j2s
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+  - type: Appearance
+    visuals:
+    - type: DisposalVisualizer
+      state_free: conpipe-j2s
+      state_anchored: pipe-j2s
+      state_broken: pipe-b
+  - type: Flippable
+    entity: DisposalRouter
 
 - type: entity
   id: DisposalJunction

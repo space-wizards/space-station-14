@@ -25,9 +25,10 @@
       - VaultImpassable
       - SmallImpassable
   - type: Destructible
-    maxHP: 100
+    deadThreshold: 100
   - type: SnapGrid
     offset: Center
+  - type: Climbable
   - type: LowWall
     key: walls
     base: metal_

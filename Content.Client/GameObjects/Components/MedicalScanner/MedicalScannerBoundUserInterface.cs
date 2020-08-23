@@ -22,6 +22,7 @@ namespace Content.Client.GameObjects.Components.MedicalScanner
                 Title = Owner.Owner.Name,
             };
             _window.OnClose += Close;
+            _window.ScanButton.OnPressed += _ => SendMessage(new UiButtonPressedMessage(UiButton.ScanDNA));
             _window.OpenCentered();
         }
 

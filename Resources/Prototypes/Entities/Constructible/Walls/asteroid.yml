@@ -17,7 +17,7 @@
     - !type:PhysShapeAabb
       layer: [MobMask]
   - type: Destructible
-    maxHP: 100
+    deadThreshold: 100
   - type: Occluder
     sizeX: 32
     sizeY: 32

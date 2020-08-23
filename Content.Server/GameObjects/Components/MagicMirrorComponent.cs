@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.Mobs;
+﻿#nullable enable
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -8,6 +9,7 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components
 {
@@ -15,19 +17,41 @@ namespace Content.Server.GameObjects.Components
     [ComponentReference(typeof(IActivate))]
     public class MagicMirrorComponent : SharedMagicMirrorComponent, IActivate
     {
-        private BoundUserInterface _userInterface;
+        [ViewVariables]
+        private BoundUserInterface? UserInterface =>
+            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
+            ui.TryGetBoundUserInterface(MagicMirrorUiKey.Key, out var boundUi)
+                ? boundUi
+                : null;
 
         public override void Initialize()
         {
             base.Initialize();
-            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
-                .GetBoundUserInterface(MagicMirrorUiKey.Key);
-            _userInterface.OnReceiveMessage += OnUiReceiveMessage;
+
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += OnUiReceiveMessage;
+            }
+        }
+
+        public override void OnRemove()
+        {
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage -= OnUiReceiveMessage;
+            }
+
+            base.OnRemove();
         }
 
         private static void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
-            if (!obj.Session.AttachedEntity.TryGetComponent(out HumanoidAppearanceComponent looks))
+            if (obj.Session.AttachedEntity == null)
+            {
+                return;
+            }
+
+            if (!obj.Session.AttachedEntity.TryGetComponent(out HumanoidAppearanceComponent? looks))
             {
                 return;
             }
@@ -70,23 +94,23 @@ namespace Content.Server.GameObjects.Components
 
         public void Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
+            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
                 return;
             }
 
-            if (!eventArgs.User.TryGetComponent(out HumanoidAppearanceComponent looks))
+            if (!eventArgs.User.TryGetComponent(out HumanoidAppearanceComponent? looks))
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("You can't have any hair!"));
                 return;
             }
 
-            _userInterface.Open(actor.playerSession);
+            UserInterface?.Open(actor.playerSession);
 
             var msg = new MagicMirrorInitialDataMessage(looks.Appearance.HairColor, looks.Appearance.FacialHairColor, looks.Appearance.HairStyleName,
                 looks.Appearance.FacialHairStyleName);
 
-            _userInterface.SendMessage(msg, actor.playerSession);
+            UserInterface?.SendMessage(msg, actor.playerSession);
         }
     }
 }

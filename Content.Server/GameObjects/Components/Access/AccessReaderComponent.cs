@@ -71,16 +71,16 @@ namespace Content.Server.GameObjects.Components.Access
 
         public static ICollection<string> FindAccessTags(IEntity entity)
         {
-            if (entity.TryGetComponent(out IAccess accessComponent))
+            if (entity.TryGetComponent(out IAccess? accessComponent))
             {
                 return accessComponent.Tags;
             }
 
-            if (entity.TryGetComponent(out IHandsComponent handsComponent))
+            if (entity.TryGetComponent(out IHandsComponent? handsComponent))
             {
                 var activeHandEntity = handsComponent.GetActiveHand?.Owner;
                 if (activeHandEntity != null &&
-                    activeHandEntity.TryGetComponent(out IAccess handAccessComponent))
+                    activeHandEntity.TryGetComponent(out IAccess? handAccessComponent))
                 {
                     return handAccessComponent.Tags;
                 }
@@ -90,11 +90,11 @@ namespace Content.Server.GameObjects.Components.Access
                 return Array.Empty<string>();
             }
 
-            if (entity.TryGetComponent(out InventoryComponent inventoryComponent))
+            if (entity.TryGetComponent(out InventoryComponent? inventoryComponent))
             {
                 if (inventoryComponent.HasSlot(EquipmentSlotDefines.Slots.IDCARD) &&
                     inventoryComponent.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent item) &&
-                    item.Owner.TryGetComponent(out IAccess idAccessComponent)
+                    item.Owner.TryGetComponent(out IAccess? idAccessComponent)
                 )
                 {
                     return idAccessComponent.Tags;
