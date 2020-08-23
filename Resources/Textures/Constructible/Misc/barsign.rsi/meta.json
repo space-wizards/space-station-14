@@ -33,6 +33,44 @@
       ]
     },
     {
+      "name": "thewiggleroom",
+      "directions": 1,
+      "delays": [
+        [
+          0.4,
+          0.8,
+          0.4,
+          0.8
+        ]
+      ]
+    },
+    {
+      "name": "thesun",
+      "directions": 1,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "lv426",
+      "directions": 1,
+      "delays": [
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    {
       "name": "emergencyrumparty",
       "directions": 1,
       "delays": [

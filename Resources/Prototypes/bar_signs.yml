@@ -83,6 +83,18 @@
   description: "Play it again, sam."
 
 - type: barSign
+  id: TheSun
+  name: "The Sun"
+  icon: "thesun"
+  description: "Ironically bright for such a shady bar."
+
+- type: barSign
+  id: LV426
+  name: "LV-426"
+  icon: "lv426"
+  description: "Drinking with fancy facemasks is clearly more important than going to medbay."
+
+- type: barSign
   id: WiggleRoom
   name: "The Wiggle Roomm"
   icon: "thewiggleroom"
