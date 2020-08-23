@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Client.Animations;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
@@ -138,54 +138,52 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
         private sealed class StatusControl : Control
         {
             private readonly ClientMagazineBarrelComponent _parent;
-            private readonly HBoxContainer _bulletsListTop;
-            private readonly HBoxContainer _bulletsListBottom;
+            private readonly HBoxContainer _bulletsList;
             private readonly TextureRect _chamberedBullet;
             private readonly Label _noMagazineLabel;
+            private readonly Label _ammoCount;
 
             public StatusControl(ClientMagazineBarrelComponent parent)
             {
                 _parent = parent;
                 SizeFlagsHorizontal = SizeFlags.FillExpand;
                 SizeFlagsVertical = SizeFlags.ShrinkCenter;
-                AddChild(new VBoxContainer
+
+                AddChild(new HBoxContainer
                 {
                     SizeFlagsHorizontal = SizeFlags.FillExpand,
-                    SizeFlagsVertical = SizeFlags.ShrinkCenter,
-                    SeparationOverride = 0,
                     Children =
                     {
-                        (_bulletsListTop = new HBoxContainer {SeparationOverride = 0}),
-                        new HBoxContainer
+                        (_chamberedBullet = new TextureRect
+                        {
+                            Texture = StaticIoC.ResC.GetTexture("/Textures/Interface/ItemStatus/Bullets/chambered_rotated.png"),
+                            SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                            SizeFlagsHorizontal = SizeFlags.ShrinkEnd | SizeFlags.Fill,
+                        }),
+                        new Control() { CustomMinimumSize = (5,0) },
+                        new Control
                         {
                             SizeFlagsHorizontal = SizeFlags.FillExpand,
                             Children =
                             {
-                                new Control
+                                (_bulletsList = new HBoxContainer
                                 {
-                                    SizeFlagsHorizontal = SizeFlags.FillExpand,
-                                    Children =
-                                    {
-                                        (_bulletsListBottom = new HBoxContainer
-                                        {
-                                            SizeFlagsVertical = SizeFlags.ShrinkCenter,
-                                            SeparationOverride = 0
-                                        }),
-                                        (_noMagazineLabel = new Label
-                                        {
-                                            Text = "No Magazine!",
-                                            StyleClasses = {StyleNano.StyleClassItemStatus}
-                                        })
-                                    }
-                                },
-                                (_chamberedBullet = new TextureRect
-                                {
-                                    Texture = StaticIoC.ResC.GetTexture("/Textures/Interface/ItemStatus/Bullets/chambered.png"),
                                     SizeFlagsVertical = SizeFlags.ShrinkCenter,
-                                    SizeFlagsHorizontal = SizeFlags.ShrinkEnd | SizeFlags.Fill,
+                                    SeparationOverride = 0
+                                }),
+                                (_noMagazineLabel = new Label
+                                {
+                                    Text = "No Magazine!",
+                                    StyleClasses = {StyleNano.StyleClassItemStatus}
                                 })
                             }
-                        }
+                        },
+                        new Control() { CustomMinimumSize = (5,0) },
+                        (_ammoCount = new Label
+                        {
+                            StyleClasses = {StyleNano.StyleClassItemStatus},
+                            SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
+                        }),
                     }
                 });
             }
@@ -195,46 +193,26 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
                 _chamberedBullet.ModulateSelfOverride =
                     _parent.Chambered ? Color.FromHex("#d7df60") : Color.Black;
 
-                _bulletsListTop.RemoveAllChildren();
-                _bulletsListBottom.RemoveAllChildren();
+                _bulletsList.RemoveAllChildren();
 
                 if (_parent.MagazineCount == null)
                 {
                     _noMagazineLabel.Visible = true;
+                    _ammoCount.Visible = false;
                     return;
                 }
 
                 var (count, capacity) = _parent.MagazineCount.Value;
 
                 _noMagazineLabel.Visible = false;
+                _ammoCount.Visible = true;
 
-                string texturePath;
-                if (capacity <= 20)
-                {
-                    texturePath = "/Textures/Interface/ItemStatus/Bullets/normal.png";
-                }
-                else if (capacity <= 30)
-                {
-                    texturePath = "/Textures/Interface/ItemStatus/Bullets/small.png";
-                }
-                else
-                {
-                    texturePath = "/Textures/Interface/ItemStatus/Bullets/tiny.png";
-                }
-
+                var texturePath = "/Textures/Interface/ItemStatus/Bullets/normal.png";
                 var texture = StaticIoC.ResC.GetTexture(texturePath);
 
-                const int tinyMaxRow = 60;
-
-                if (capacity > tinyMaxRow)
-                {
-                    FillBulletRow(_bulletsListBottom, Math.Min(tinyMaxRow, count), tinyMaxRow, texture);
-                    FillBulletRow(_bulletsListTop, Math.Max(0, count - tinyMaxRow), capacity - tinyMaxRow, texture);
-                }
-                else
-                {
-                    FillBulletRow(_bulletsListBottom, count, capacity, texture);
-                }
+                _ammoCount.Text = $"x{count:00}";
+                capacity = Math.Min(capacity, 20);
+                FillBulletRow(_bulletsList, count, capacity, texture);
             }
 
             private static void FillBulletRow(Control container, int count, int capacity, Texture texture)
@@ -246,23 +224,32 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
 
                 var altColor = false;
 
+                // Draw the empty ones
                 for (var i = count; i < capacity; i++)
                 {
                     container.AddChild(new TextureRect
                     {
                         Texture = texture,
-                        ModulateSelfOverride = altColor ? colorGoneA : colorGoneB
+                        ModulateSelfOverride = altColor ? colorGoneA : colorGoneB,
+                        SizeFlagsHorizontal = SizeFlags.Fill,
+                        SizeFlagsVertical = SizeFlags.Fill,
+                        Stretch = TextureRect.StretchMode.KeepCentered
                     });
 
                     altColor ^= true;
                 }
 
+                // Draw the full ones, but limit the count to the capacity
+                count = Math.Min(count, capacity);
                 for (var i = 0; i < count; i++)
                 {
                     container.AddChild(new TextureRect
                     {
                         Texture = texture,
-                        ModulateSelfOverride = altColor ? colorA : colorB
+                        ModulateSelfOverride = altColor ? colorA : colorB,
+                        SizeFlagsHorizontal = SizeFlags.Fill,
+                        SizeFlagsVertical = SizeFlags.Fill,
+                        Stretch = TextureRect.StretchMode.KeepCentered
                     });
 
                     altColor ^= true;
