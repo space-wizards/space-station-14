@@ -30,61 +30,61 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         ///     The time it takes to apply a <see cref="CuffedComponent"/> to an entity.
         /// </summary>
         [ViewVariables]
-        public float CuffTime { get { return _cuffTime; } set { _cuffTime = value; } }
+        public float CuffTime { get; set; }
 
         /// <summary>
         ///     The time it takes to remove a <see cref="CuffedComponent"/> from an entity.
         /// </summary>
         [ViewVariables]
-        public float UncuffTime { get { return _uncuffTime; } set { _uncuffTime = value; } }
+        public float UncuffTime { get; set; }
 
         /// <summary>
         ///     The time it takes for a cuffed entity to remove <see cref="CuffedComponent"/> from itself.
         /// </summary>
         [ViewVariables]
-        public float BreakoutTime { get { return _breakoutTime; } set { _breakoutTime = value; } }
+        public float BreakoutTime { get; set; }
 
         /// <summary>
         ///     If an entity being cuffed is stunned, this amount of time is subtracted from the time it takes to add/remove their cuffs.
         /// </summary>
         [ViewVariables]
-        public float StunBonus { get { return _stunBonus; } set { _stunBonus = value; } }
+        public float StunBonus { get; set; }
 
         /// <summary>
         ///     Will the cuffs break when removed?
         /// </summary>
         [ViewVariables]
-        public bool BreakOnRemove { get { return _breakOnRemove; } set { _breakOnRemove = value; } }
+        public bool BreakOnRemove { get; set; }
 
         /// <summary>
         ///     The path of the RSI file used for the player cuffed overlay.
         /// </summary>
         [ViewVariables]
-        public string CuffedRSI { get { return _cuffedRSI; } set { _cuffedRSI = value; } }
+        public string CuffedRSI { get; set; }
 
         /// <summary>
         ///     The iconstate used with the RSI file for the player cuffed overlay.
         /// </summary>
         [ViewVariables]
-        public string OverlayIconState { get { return _overlayIconState; } set { _overlayIconState = value; } }
+        public string OverlayIconState { get; set; }
 
         /// <summary>
         ///     The iconstate used for broken handcuffs
         /// </summary>
         [ViewVariables]
-        public string BrokenState { get { return _brokenState; } set { _brokenState = value; } }
+        public string BrokenState { get; set; }
 
         /// <summary>
         ///     The iconstate used for broken handcuffs
         /// </summary>
         [ViewVariables]
-        public string BrokenName { get { return _brokenName; } set { _brokenName = value; } }
+        public string BrokenName { get; set; }
 
         /// <summary>
         ///     The iconstate used for broken handcuffs
         /// </summary>
         [ViewVariables]
-        public string BrokenDesc { get { return _brokenDesc; } set { _brokenDesc = value; } }
+        public string BrokenDesc { get; set; }
 
         [ViewVariables]
         public bool Broken
@@ -104,30 +104,12 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             }
         }
 
-        public string StartCuffSound { get { return _startCuffSound; } set { _startCuffSound = value; } }
-        public string EndCuffSound { get { return _endCuffSound; } set { _endCuffSound = value; } }
-        public string StartBreakoutSound { get { return _startBreakoutSound; } set { _startBreakoutSound = value; } }
-        public string StartUncuffSound { get { return _startUncuffSound; } set { _startUncuffSound = value; } }
-        public string EndUncuffSound { get { return _endUncuffSound; } set { _endUncuffSound = value; } }
-        public Color Color { get { return _color; } set { _color = value; } }
-
-        // Exposed data fields
-        private float _cuffTime;
-        private float _breakoutTime;
-        private float _uncuffTime;
-        private float _stunBonus;
-        private string _startUncuffSound;
-        private string _endCuffSound;
-        private string _startCuffSound;
-        private string _endUncuffSound;
-        private string _startBreakoutSound;
-        private string _cuffedRSI;
-        private string _overlayIconState;
-        private Color _color;
-        private bool _breakOnRemove;
-        private string _brokenState;
-        private string _brokenName;
-        private string _brokenDesc;
+        public string StartCuffSound { get; set; }
+        public string EndCuffSound { get; set; }
+        public string StartBreakoutSound { get; set; }
+        public string StartUncuffSound { get; set; }
+        public string EndUncuffSound { get; set; }
+        public Color Color { get; set; }
 
         // Non-exposed data fields
         private bool _isBroken = false;
@@ -147,22 +129,22 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _cuffTime, "cuffTime", 5.0f);
-            serializer.DataField(ref _breakoutTime, "breakoutTime", 30.0f);
-            serializer.DataField(ref _uncuffTime, "uncuffTime", 5.0f);
-            serializer.DataField(ref _stunBonus, "stunBonus", 2.0f);
-            serializer.DataField(ref _startCuffSound, "startCuffSound", "/Audio/Items/Handcuffs/cuff_start.ogg");
-            serializer.DataField(ref _endCuffSound, "endCuffSound", "/Audio/Items/Handcuffs/cuff_end.ogg");
-            serializer.DataField(ref _startUncuffSound, "startUncuffSound", "/Audio/Items/Handcuffs/cuff_takeoff_start.ogg");
-            serializer.DataField(ref _endUncuffSound, "endUncuffSound", "/Audio/Items/Handcuffs/cuff_takeoff_end.ogg");
-            serializer.DataField(ref _startBreakoutSound, "startBreakoutSound", "/Audio/Items/Handcuffs/cuff_breakout_start.ogg");
-            serializer.DataField(ref _cuffedRSI, "cuffedRSI", "Objects/Misc/handcuffs.rsi");
-            serializer.DataField(ref _overlayIconState, "bodyIconState", "body-overlay");
-            serializer.DataField(ref _color, "color", Color.White);
-            serializer.DataField(ref _breakOnRemove, "breakOnRemove", false);
-            serializer.DataField(ref _brokenState, "brokenIconState", string.Empty);
-            serializer.DataField(ref _brokenName, "brokenName", string.Empty);
-            serializer.DataField(ref _brokenDesc, "brokenDesc", string.Empty);
+            serializer.DataField(this, x => x.CuffTime, "cuffTime", 5.0f);
+            serializer.DataField(this, x => x.BreakoutTime, "breakoutTime", 30.0f);
+            serializer.DataField(this, x => x.UncuffTime, "uncuffTime", 5.0f);
+            serializer.DataField(this, x => x.StunBonus, "stunBonus", 2.0f);
+            serializer.DataField(this, x => x.StartCuffSound, "startCuffSound", "/Audio/Items/Handcuffs/cuff_start.ogg");
+            serializer.DataField(this, x => x.EndCuffSound, "endCuffSound", "/Audio/Items/Handcuffs/cuff_end.ogg");
+            serializer.DataField(this, x => x.StartUncuffSound, "startUncuffSound", "/Audio/Items/Handcuffs/cuff_takeoff_start.ogg");
+            serializer.DataField(this, x => x.EndUncuffSound, "endUncuffSound", "/Audio/Items/Handcuffs/cuff_takeoff_end.ogg");
+            serializer.DataField(this, x => x.StartBreakoutSound, "startBreakoutSound", "/Audio/Items/Handcuffs/cuff_breakout_start.ogg");
+            serializer.DataField(this, x => x.CuffedRSI, "cuffedRSI", "Objects/Misc/handcuffs.rsi");
+            serializer.DataField(this, x => x.OverlayIconState, "bodyIconState", "body-overlay");
+            serializer.DataField(this, x => x.Color, "color", Color.White);
+            serializer.DataField(this, x => x.BreakOnRemove, "breakOnRemove", false);
+            serializer.DataField(this, x => x.BrokenState, "brokenIconState", string.Empty);
+            serializer.DataField(this, x => x.BrokenName, "brokenName", string.Empty);
+            serializer.DataField(this, x => x.BrokenDesc, "brokenDesc", string.Empty);
         }
 
         public override ComponentState GetComponentState()
