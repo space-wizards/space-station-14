@@ -1,4 +1,5 @@
-﻿using Robust.Server.GameObjects;
+﻿
+using Robust.Server.GameObjects;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Robust.Shared.GameObjects;
@@ -19,6 +20,8 @@ using Robust.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Shared.Maths;
+using System;
+using System.Collections.Generic;
 
 namespace Content.Server.GameObjects.Components.ActionBlocking
 {
@@ -37,6 +40,8 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
         protected IEntity LastAddedCuffs => _container.ContainedEntities[_container.ContainedEntities.Count - 1];
 
+        public IReadOnlyList<IEntity> StoredEntities => _container.ContainedEntities;
+
         /// <summary>
         ///     Container of various handcuffs currently applied to the entity.
         /// </summary>
@@ -49,6 +54,8 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         private DoAfterSystem _doAfterSystem;
         private AudioSystem _audioSystem;
         private IHandsComponent _hands;
+
+        public event Action OnCuffedStateChanged;
 
         public override void Initialize()
         {
@@ -103,6 +110,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             _container.Insert(handcuff);
             CanStillInteract = _hands.Hands.Count() > CuffedHandCount;
 
+            OnCuffedStateChanged.Invoke();
             UpdateStatusEffect();
             UpdateHeldItems();
             Dirty();
@@ -132,6 +140,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             if (_dirtyThisFrame)
             {
                 CanStillInteract = _hands.Hands.Count() > CuffedHandCount;
+                OnCuffedStateChanged.Invoke();
                 Dirty();
             }
         }
@@ -178,12 +187,17 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         /// If the uncuffing succeeds, the cuffs will drop on the floor.
         /// </summary>
         /// <param name="user">The cuffed entity</param>
-        /// <param name="isOwner">Is the cuffed entity the owner of the CuffedComponent?</param>
-        public async void TryUncuff(IEntity user)
+        /// <param name="cuffsToRemove">Optional param for the handcuff entity to remove from the cuffed entity. If null, uses the most recently added handcuff entity.</param>
+        public async void TryUncuff(IEntity user, IEntity cuffsToRemove = null)
         {
             var isOwner = user == Owner;
 
-            if (!LastAddedCuffs.TryGetComponent<HandcuffComponent>(out var cuff))
+            if (cuffsToRemove == null)
+            {
+                cuffsToRemove = LastAddedCuffs;
+            }
+
+            if (!cuffsToRemove.TryGetComponent<HandcuffComponent>(out var cuff))
             {
                 Logger.Warning($"A user is trying to remove handcuffs without a ${nameof(HandcuffComponent)}. This should never happen!");
                 return;
@@ -224,25 +238,25 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             {
                 _audioSystem.PlayFromEntity(cuff.EndUncuffSound, Owner);
 
-                var cuffEntity = LastAddedCuffs;
-                _container.ForceRemove(cuffEntity);
-                cuffEntity.Transform.AttachToGridOrMap();
-                cuffEntity.Transform.WorldPosition = Owner.Transform.WorldPosition;
+                _container.ForceRemove(cuffsToRemove);
+                cuffsToRemove.Transform.AttachToGridOrMap();
+                cuffsToRemove.Transform.WorldPosition = Owner.Transform.WorldPosition;
 
                 if (cuff.BreakOnRemove)
                 {
                     cuff.Broken = true;
 
-                    cuffEntity.Name = cuff.BrokenName;
-                    cuffEntity.Description = cuff.BrokenDesc;
+                    cuffsToRemove.Name = cuff.BrokenName;
+                    cuffsToRemove.Description = cuff.BrokenDesc;
 
-                    if (cuffEntity.TryGetComponent<SpriteComponent>(out var sprite))
+                    if (cuffsToRemove.TryGetComponent<SpriteComponent>(out var sprite))
                     {
                         sprite.LayerSetState(0, cuff.BrokenState); // TODO: safety check to see if RSI contains the state?
                     }
                 }
 
                 CanStillInteract = _hands.Hands.Count() > CuffedHandCount;
+                OnCuffedStateChanged.Invoke();
                 UpdateStatusEffect();
                 Dirty();
 
