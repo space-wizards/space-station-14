@@ -110,7 +110,7 @@ namespace Content.Server.GameObjects.Components.Singularity
 
             if (_pos.X % 0.5f != 0 || _pos.Y % 0.5f != 0) return;
 
-            foreach (IEntity ent in _entityManager.GetEntitiesInRange(Owner, 4.5f))
+            foreach (var ent in _entityManager.GetEntitiesInRange(Owner, 4.5f))
             {
                 if (ent.TryGetComponent<ContainmentFieldGeneratorComponent>(out var component) &&
                     component.Owner != Owner &&
@@ -169,16 +169,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                         var ray = new CollisionRay(Owner.Transform.WorldPosition, off, (int) CollisionGroup.MobMask);
                         var rayCastResults = IoCManager.Resolve<IPhysicsManager>().IntersectRay(Owner.Transform.MapID, ray, MathF.Abs(toPos.Y - localPos.Y), Owner, false);
 
-                        bool didFindObstruction = false;
-
-                        foreach (var result in rayCastResults)
-                        {
-                                if (result.HitEntity != ent)
-                            {
-                                didFindObstruction = true;
-                                break;
-                            }
-                        }
+                        bool didFindObstruction = rayCastResults.Any(result => result.HitEntity != ent);
 
                         if (didFindObstruction)
                         {
