@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
+using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
@@ -32,6 +33,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         // but it felt a lot messier to play around with, especially when adding verbs
 
         public override string Name => "BoltActionBarrel";
+        public override uint? NetID => ContentNetIDs.BOLTACTION_BARREL;
 
         public override int ShotsLeft
         {
@@ -123,6 +125,24 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             UpdateAppearance();
         }
 
+        public override ComponentState GetComponentState()
+        {
+            (int, int)? count = (ShotsLeft, Capacity);
+            var chamberedExists = _chamberContainer.ContainedEntity != null;
+            // (Is one chambered?, is the bullet spend)
+            var chamber = (chamberedExists, false);
+            if (chamberedExists && _chamberContainer.ContainedEntity.TryGetComponent<AmmoComponent>(out var ammo))
+            {
+                chamber.Item2 = ammo.Spent;
+            }
+
+            return new BoltActionBarrelComponentState(
+                chamber,
+                FireRateSelector,
+                count,
+                SoundGunshot);
+        }
+
         public override void Initialize()
         {
             // TODO: Add existing ammo support on revolvers
@@ -170,6 +190,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             {
                 Cycle();
             }
+            else
+            {
+                Dirty();
+            }
+
             return chamberEntity?.GetComponent<AmmoComponent>().TakeBullet(spawnAtGrid, spawnAtMap);
         }
 
@@ -256,7 +281,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 {
                     EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundInsert, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
                 }
-                // Dirty();
+                Dirty();
                 UpdateAppearance();
                 return true;
             }
@@ -269,7 +294,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 {
                     EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundInsert, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
                 }
-                // Dirty();
+                Dirty();
                 UpdateAppearance();
                 return true;
             }

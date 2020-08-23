@@ -86,7 +86,6 @@
             "CanSpill",
             "SpeedLoader",
             "Hitscan",
-            "BoltActionBarrel",
             "PumpBarrel",
             "RevolverBarrel",
             "ExplosiveProjectile",
