@@ -36,6 +36,7 @@ using Timer = Robust.Shared.Timers.Timer;
 namespace Content.Server.GameObjects.Components.Disposal
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedDisposalUnitComponent))]
     [ComponentReference(typeof(IInteractUsing))]
     public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IInteractUsing, IDragDropOn
     {
@@ -402,8 +403,9 @@ namespace Content.Server.GameObjects.Components.Disposal
                 : LightState.Ready);
         }
 
-        public void Update(float frameTime)
+        public override void Update(float frameTime)
         {
+            base.Update(frameTime);
             if (!Powered)
             {
                 return;
