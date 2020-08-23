@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Serialization;
@@ -12,11 +13,13 @@ namespace Content.Shared.GameObjects.Components.Medical
         [Serializable, NetSerializable]
         public class CloningMachineBoundUserInterfaceState : BoundUserInterfaceState
         {
+            public readonly List<EntityUid> Scans;
             public readonly float Progress;
             public readonly bool Working;
 
-            public CloningMachineBoundUserInterfaceState(float progress, bool working)
+            public CloningMachineBoundUserInterfaceState(List<EntityUid> scans, float progress, bool working)
             {
+                Scans = scans;
                 Progress = progress;
                 Working = working;
             }

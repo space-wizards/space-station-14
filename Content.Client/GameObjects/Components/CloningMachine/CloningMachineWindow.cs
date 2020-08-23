@@ -106,6 +106,12 @@ namespace Content.Client.GameObjects.Components.CloningMachine
             SearchBar.GrabKeyboardFocus();
         }
 
+        public void Populate(CloningMachineBoundUserInterfaceState state)
+        {
+            scanManager = state.Scans;
+            BuildEntityList();
+        }
+
         public override void Close()
         {
             base.Close();

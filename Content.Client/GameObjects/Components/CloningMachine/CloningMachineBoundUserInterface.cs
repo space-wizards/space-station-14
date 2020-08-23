@@ -25,13 +25,9 @@ namespace Content.Client.GameObjects.Components.CloningMachine
         protected override void Open()
         {
             base.Open();
-            var foo = new List<EntityUid>();
-            for (int i =1; i <= 20; i++)
-            {
-                foo.Add(new EntityUid(i));
-            }
 
-            _window = new CloningMachineWindow(foo, _localization);
+
+            _window = new CloningMachineWindow(new List<EntityUid>(), _localization);
             _window.OnClose += Close;
             _window.CloneButton.OnPressed += _ => SendMessage(new UiButtonPressedMessage(UiButton.Clone,_window.SelectedScan));
             _window.OpenCentered();
@@ -40,11 +36,7 @@ namespace Content.Client.GameObjects.Components.CloningMachine
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-            //TODO:Update with new entity UIDs
+            _window.Populate((CloningMachineBoundUserInterfaceState) state);
         }
-    }
-
-    public class Enumberable
-    {
     }
 }

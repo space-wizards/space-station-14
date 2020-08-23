@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Medical;
@@ -53,11 +54,11 @@ namespace Content.Server.GameObjects.Components.Medical
 
 
         private static readonly CloningMachineBoundUserInterfaceState EmptyUIState =
-            new CloningMachineBoundUserInterfaceState(0, false);
+            new CloningMachineBoundUserInterfaceState(new List<EntityUid>(),0, false);
 
         private CloningMachineBoundUserInterfaceState GetUserInterfaceState()
         {
-            return EmptyUIState;
+            return new CloningMachineBoundUserInterfaceState(CloningSystem.scannedUids,0, false);
         }
 
 
