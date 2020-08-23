@@ -53,6 +53,8 @@ namespace Content.Server.GameObjects.Components.Interactable
         [ViewVariables]
         public bool Activated { get; private set; }
 
+        [ViewVariables] protected override bool HasCell => Cell != null;
+
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!eventArgs.Using.HasComponent<BatteryComponent>()) return false;
@@ -211,6 +213,8 @@ namespace Content.Server.GameObjects.Components.Interactable
                 return;
             }
 
+            Dirty();
+
             if (!user.TryGetComponent(out HandsComponent? hands))
             {
                 return;
@@ -229,17 +233,17 @@ namespace Content.Server.GameObjects.Components.Interactable
         {
             if (Cell == null)
             {
-                return new HandheldLightComponentState(null);
+                return new HandheldLightComponentState(null, false);
             }
 
             if (Wattage > Cell.CurrentCharge)
             {
                 // Practically zero.
                 // This is so the item status works correctly.
-                return new HandheldLightComponentState(0);
+                return new HandheldLightComponentState(0, HasCell);
             }
 
-            return new HandheldLightComponentState(Cell.CurrentCharge / Cell.MaxCharge);
+            return new HandheldLightComponentState(Cell.CurrentCharge / Cell.MaxCharge, HasCell);
         }
 
         [Verb]
