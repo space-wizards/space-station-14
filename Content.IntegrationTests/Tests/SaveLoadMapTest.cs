@@ -3,8 +3,11 @@ using NUnit.Framework;
 using Robust.Server.Interfaces.Maps;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
+using Robust.Shared.Interfaces.Resources;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -14,7 +17,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task SaveLoadMultiGridMap()
         {
-            const string mapPath = @"Maps/Test/TestMap.yml";
+            const string mapPath = @"/Maps/Test/TestMap.yml";
 
             var server = StartServer();
             await server.WaitIdleAsync();
@@ -24,6 +27,10 @@ namespace Content.IntegrationTests.Tests
 
             server.Post(() =>
             {
+                var dir = new ResourcePath(mapPath).Directory;
+                IoCManager.Resolve<IResourceManager>()
+                    .UserData.CreateDir(dir);
+
                 var mapId = mapManager.CreateMap(new MapId(5));
 
                 {

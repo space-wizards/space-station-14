@@ -24,10 +24,8 @@ namespace Content.Server.GameObjects.Components.Movement
     [ComponentReference(typeof(IClimbable))]
     public class ClimbableComponent : SharedClimbableComponent, IDragDropOn
     {
-#pragma warning disable 649
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-#pragma warning restore 649
 
         /// <summary>
         ///     The range from which this entity can be climbed.
@@ -81,7 +79,7 @@ namespace Content.Server.GameObjects.Components.Movement
                 var bodyManager = eventArgs.User.GetComponent<BodyManagerComponent>();
 
                 if (bodyManager.GetBodyPartsOfType(Shared.GameObjects.Components.Body.BodyPartType.Leg).Count == 0 ||
-                    bodyManager.GetBodyPartsOfType(Shared.GameObjects.Components.Body.BodyPartType.Foot).Count == 0) 
+                    bodyManager.GetBodyPartsOfType(Shared.GameObjects.Components.Body.BodyPartType.Foot).Count == 0)
                 {
                     _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, Loc.GetString("You are unable to climb!"));
 
@@ -102,10 +100,10 @@ namespace Content.Server.GameObjects.Components.Movement
             }
             else // user is dragging some other entity onto a climbable
             {
-                if (eventArgs.Target == null || !eventArgs.Dropped.HasComponent<ClimbingComponent>()) 
+                if (eventArgs.Target == null || !eventArgs.Dropped.HasComponent<ClimbingComponent>())
                 {
                     _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, Loc.GetString("You can't do that!"));
-                    
+
                     return false;
                 }
 
@@ -174,8 +172,8 @@ namespace Content.Server.GameObjects.Components.Movement
                 // we may potentially need additional logic since we're forcing a player onto a climbable
                 // there's also the cases where the user might collide with the person they are forcing onto the climbable that i haven't accounted for
 
-                PopupMessageOtherClientsInRange(user, Loc.GetString("{0:them} forces {1:them} onto {2:theName}!", user, entityToMove, Owner), 15);
-                _notifyManager.PopupMessage(user, user, Loc.GetString("You force {0:them} onto {1:theName}!", entityToMove, Owner));
+                PopupMessageOtherClientsInRange(user, Loc.GetString("{0:theName} forces {1:theName} onto {2:theName}!", user, entityToMove, Owner), 15);
+                _notifyManager.PopupMessage(user, user, Loc.GetString("You force {0:theName} onto {1:theName}!", entityToMove, Owner));
             }
         }
 
@@ -210,7 +208,7 @@ namespace Content.Server.GameObjects.Components.Movement
 
                 climbMode.TryMoveTo(user.Transform.WorldPosition, endPoint);
 
-                PopupMessageOtherClientsInRange(user, Loc.GetString("{0:them} jumps onto {1:theName}!", user, Owner), 15);
+                PopupMessageOtherClientsInRange(user, Loc.GetString("{0:theName} jumps onto {1:theName}!", user, Owner), 15);
                 _notifyManager.PopupMessage(user, user, Loc.GetString("You jump onto {0:theName}!", Owner));
             }
         }

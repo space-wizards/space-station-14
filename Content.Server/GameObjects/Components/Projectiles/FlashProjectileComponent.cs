@@ -31,10 +31,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
         {
             base.Initialize();
             // Shouldn't be using this without a ProjectileComponent because it will just immediately collide with thrower
-            if (!Owner.HasComponent<ProjectileComponent>())
-            {
-                throw new InvalidOperationException();
-            }
+            Owner.EnsureComponent<ProjectileComponent>();
         }
 
         void ICollideBehavior.CollideWith(IEntity entity)

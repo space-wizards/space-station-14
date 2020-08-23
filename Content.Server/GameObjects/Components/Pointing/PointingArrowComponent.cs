@@ -64,7 +64,7 @@ namespace Content.Server.GameObjects.Components.Pointing
         {
             base.Startup();
 
-            if (Owner.TryGetComponent(out SpriteComponent sprite))
+            if (Owner.TryGetComponent(out SpriteComponent? sprite))
             {
                 sprite.DrawDepth = (int) DrawDepth.Overlays;
             }

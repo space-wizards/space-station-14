@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
             {
                 _state = value;
 
-                if (Owner.TryGetComponent(out AppearanceComponent appearance))
+                if (Owner.TryGetComponent(out AppearanceComponent? appearance))
                 {
                     appearance.SetData(ConveyorVisuals.State, value);
                 }
@@ -145,7 +145,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
                             continue;
                         }
 
-                        if (!conveyor.TryGetComponent(out ConveyorComponent component))
+                        if (!conveyor.TryGetComponent(out ConveyorComponent? component))
                         {
                             continue;
                         }
@@ -172,7 +172,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
                             continue;
                         }
 
-                        if (!@switch.TryGetComponent(out ConveyorSwitchComponent component))
+                        if (!@switch.TryGetComponent(out ConveyorSwitchComponent? component))
                         {
                             continue;
                         }
@@ -196,13 +196,13 @@ namespace Content.Server.GameObjects.Components.Conveyor
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (eventArgs.Using.TryGetComponent(out ConveyorComponent conveyor))
+            if (eventArgs.Using.TryGetComponent(out ConveyorComponent? conveyor))
             {
                 Connect(conveyor, eventArgs.User);
                 return true;
             }
 
-            if (eventArgs.Using.TryGetComponent(out ConveyorSwitchComponent otherSwitch))
+            if (eventArgs.Using.TryGetComponent(out ConveyorSwitchComponent? otherSwitch))
             {
                 SyncWith(otherSwitch, eventArgs.User);
                 return true;
