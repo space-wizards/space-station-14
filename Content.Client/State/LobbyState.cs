@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using Content.Client.Interfaces;
+﻿using Content.Client.Interfaces;
 using Content.Client.Interfaces.Chat;
 using Content.Client.UserInterface;
 using Content.Shared.Input;
@@ -18,6 +16,8 @@ using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
+using System;
+using System.Linq;
 using static Content.Shared.SharedGameTicker;
 
 namespace Content.Client.State
@@ -211,12 +211,11 @@ namespace Content.Client.State
 
         private void UpdatePlayerList()
         {
-            _lobby.OnlinePlayerItemList.Clear();
-            _lobby.PlayerReadyList.Clear();
+            _lobby.OnlinePlayerList.Clear();
 
             foreach (var session in _playerManager.Sessions.OrderBy(s => s.Name))
             {
-                _lobby.OnlinePlayerItemList.AddItem(session.Name);
+                
 
                 var readyState = "";
                 // Don't show ready state if we're ingame
@@ -236,7 +235,7 @@ namespace Content.Client.State
                         _ => "",
                     };
                 }
-                _lobby.PlayerReadyList.AddItem(readyState, null, false);
+                _lobby.OnlinePlayerList.AddItem(session.Name, readyState);
             }
         }
 
