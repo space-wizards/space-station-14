@@ -99,7 +99,7 @@ namespace Content.Server.GameTicking
         }
     }
 
-    class NewRoundCommand : IClientCommand
+    public class NewRoundCommand : IClientCommand
     {
         public string Command => "restartround";
         public string Description => "Moves the server from PostRound to a new PreRoundLobby.";
