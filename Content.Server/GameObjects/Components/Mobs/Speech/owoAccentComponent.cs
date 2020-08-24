@@ -19,8 +19,17 @@ namespace Content.Server.GameObjects.Components.Mobs.Speech
         }.AsReadOnly();
         private string RandomFace => IoCManager.Resolve<IRobustRandom>().Pick(Faces);
 
+        private static readonly Dictionary<string, string> SpecialWords = new Dictionary<string, string>
+        {
+            { "you", "wu" },
+        };
+
         public string Accentuate(string message)
         {
+            foreach ((var word,var repl) in SpecialWords)
+            {
+                message = message.Replace(word, repl);
+            }
             return message.Replace("!", RandomFace)
                 .Replace("r", "w").Replace("R", "W")
                 .Replace("l", "w").Replace("L", "W");
