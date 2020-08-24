@@ -69,6 +69,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
                 if (value)
                 {
+                    TryEjectChamber();
                     if (_soundBoltOpen != null)
                     {
                         soundSystem.PlayAtCoords(_soundBoltOpen, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
@@ -76,6 +77,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 }
                 else
                 {
+                    TryFeedChamber();
                     if (_soundBoltClosed != null)
                     {
                         soundSystem.PlayAtCoords(_soundBoltClosed, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
@@ -84,6 +86,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
                 _boltOpen = value;
                 UpdateAppearance();
+                Dirty();
             }
         }
         private bool _boltOpen;
@@ -210,29 +213,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
         private void Cycle(bool manual = false)
         {
-            var chamberedEntity = _chamberContainer.ContainedEntity;
-            if (chamberedEntity != null)
-            {
-                _chamberContainer.Remove(chamberedEntity);
-                var ammoComponent = chamberedEntity.GetComponent<AmmoComponent>();
-                if (!ammoComponent.Caseless)
-                {
-                    EjectCasing(chamberedEntity);
-                }
-            }
-
-            if (_spawnedAmmo.TryPop(out var next))
-            {
-                _ammoContainer.Remove(next);
-                _chamberContainer.Insert(next);
-            }
-
-            if (_unspawnedCount > 0)
-            {
-                _unspawnedCount--;
-                var ammoEntity = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.GridPosition);
-                _chamberContainer.Insert(ammoEntity);
-            }
+            TryEjectChamber();
+            TryFeedChamber();
 
             if (_chamberContainer.ContainedEntity == null && manual)
             {
@@ -241,9 +223,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 {
                     Owner.PopupMessage(container.Owner, Loc.GetString("Bolt opened"));
                 }
+                return;
             }
-
-            if (manual)
+            else
             {
                 if (_soundCycle != null)
                 {
@@ -310,17 +292,57 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             {
                 BoltOpen = false;
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("Bolt closed"));
-                // Dirty();
                 return true;
             }
 
             Cycle(true);
+
             return true;
         }
 
         public override async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             return TryInsertBullet(eventArgs.User, eventArgs.Using);
+        }
+
+        private bool TryEjectChamber()
+        {
+            var chamberedEntity = _chamberContainer.ContainedEntity;
+            if (chamberedEntity != null)
+            {
+                if (!_chamberContainer.Remove(chamberedEntity))
+                {
+                    return false;
+                }
+                if (!chamberedEntity.GetComponent<AmmoComponent>().Caseless)
+                {
+                    EjectCasing(chamberedEntity);
+                }
+                return true;
+            }
+            return false;
+        }
+
+        private bool TryFeedChamber()
+        {
+            if (_chamberContainer.ContainedEntity != null)
+            {
+                return false;
+            }
+            if (_spawnedAmmo.TryPop(out var next))
+            {
+                _ammoContainer.Remove(next);
+                _chamberContainer.Insert(next);
+                return true;
+            }
+            else if (_unspawnedCount > 0)
+            {
+                _unspawnedCount--;
+                var ammoEntity = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.GridPosition);
+                _chamberContainer.Insert(ammoEntity);
+                return true;
+            }
+            return false;
         }
 
         public override void Examine(FormattedMessage message, bool inDetailsRange)
@@ -342,7 +364,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 }
 
                 data.Text = Loc.GetString("Open bolt");
-                data.Visibility = component.BoltOpen ? VerbVisibility.Disabled : VerbVisibility.Visible;
+                data.Visibility = component.BoltOpen ? VerbVisibility.Invisible : VerbVisibility.Visible;
             }
 
             protected override void Activate(IEntity user, BoltActionBarrelComponent component)
@@ -363,7 +385,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 }
 
                 data.Text = Loc.GetString("Close bolt");
-                data.Visibility = component.BoltOpen ? VerbVisibility.Visible : VerbVisibility.Disabled;
+                data.Visibility = component.BoltOpen ? VerbVisibility.Visible : VerbVisibility.Invisible;
             }
 
             protected override void Activate(IEntity user, BoltActionBarrelComponent component)
