@@ -260,7 +260,7 @@ namespace Content.Client.UserInterface
 
     public class LobbyPlayerList : Control
     {
-        private ScrollContainer _scoll;
+        private ScrollContainer _scroll;
         private VBoxContainer _vBox;
 
         public LobbyPlayerList()
@@ -270,9 +270,9 @@ namespace Content.Client.UserInterface
                 PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#202028") },
             };
             _vBox = new VBoxContainer();
-            _scoll = new ScrollContainer();
-            _scoll.AddChild(_vBox);
-            panel.AddChild(_scoll);
+            _scroll = new ScrollContainer();
+            _scroll.AddChild(_vBox);
+            panel.AddChild(_scroll);
             AddChild(panel);
         }
 
