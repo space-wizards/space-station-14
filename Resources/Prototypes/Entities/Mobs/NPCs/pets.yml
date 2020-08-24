@@ -184,8 +184,6 @@
   - type: Icon
     sprite: Mobs/Pets/cat.rsi
     state: cat
-  - type: Physics
-    mass: 10
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
