@@ -24,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Speech
 
         public string Description => "Add a speech component to the current player";
 
-        public string Help => $"{Command} <component>/list";
+        public string Help => $"{Command} <component>/?";
 
         public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
         {
@@ -42,7 +42,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Speech
             
             var compFactory = IoCManager.Resolve<IComponentFactory>();
             
-            if (args[0] == "list")
+            if (args[0] == "?")
             {
                 // Get all components that implement the ISpeechComponent except 
                 var speeches = compFactory.GetAllRefTypes()
@@ -64,19 +64,25 @@ namespace Content.Server.GameObjects.Components.Mobs.Speech
                     var comp = compFactory.GetComponent(name);
                     type = comp.GetType();
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    shell.SendText(player, $"Accent {name} not found. Try {Command} list to get a list of all appliable accents.");
+                    shell.SendText(player, $"Accent {name} not found. Try {Command} ? to get a list of all appliable accents.");
                     return;
                 }
 
-                //TODO: check if that already exists
-                /*if (player.AttachedEntity.TryGetComponent(out ValueType(type) speech))
+                // Check if that already exists
+                try
                 {
-                    shell.SendText(player, "You already have a accent!");
+                    var comp = player.AttachedEntity.GetComponent(type);
+                    shell.SendText(player, "You already have this accent!");
                     return;
-                }*/
+                }
+                catch (Exception)
+                {
+                    // Accent not found
+                }
 
+                // Generic fuckery
                 var ensure = typeof(IEntity).GetMethod("AddComponent");
                 if (ensure == null)
                     return;

@@ -8,7 +8,7 @@ using System.Text;
 namespace Content.Server.GameObjects.Components.Mobs.Speech
 {
     [RegisterComponent]
-    class SpanishAccentComponent : Component, IAccentComponent
+    public class SpanishAccentComponent : Component, IAccentComponent
     {
         public override string Name => "SpanishAccent";
 
