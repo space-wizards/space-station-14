@@ -162,6 +162,7 @@
             "GasVapor",
             "MobStateManager",
             "Metabolism",
+            "AiFactionTag",
             "PressureProtection",
         };
     }

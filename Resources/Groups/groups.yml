@@ -37,6 +37,7 @@
   - loc
   - hostlogin
   - events
+  - factions
 
 - Index: 100
   Name: Administrator
@@ -97,6 +98,7 @@
   - events
   - destroymechanism
   - readyall
+  - factions
   CanViewVar: true
   CanAdminPlace: true
 
@@ -188,6 +190,7 @@
   - events
   - destroymechanism
   - readyall
+  - factions
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true
