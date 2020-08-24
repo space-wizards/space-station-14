@@ -9,6 +9,7 @@ using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Disposal;
 using Content.Shared.GameObjects.EntitySystems;
@@ -112,15 +113,10 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
         }
 
-        [ViewVariables]
-        private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
-            ui.TryGetBoundUserInterface(DisposalUnitUiKey.Key, out var boundUi)
-                ? boundUi
-                : null;
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(DisposalUnitUiKey.Key);
 
         private DisposalUnitBoundUserInterfaceState? _lastUiState;
-        
+
         /// <summary>
         ///     Store the translated state.
         /// </summary>
@@ -296,7 +292,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         private DisposalUnitBoundUserInterfaceState GetInterfaceState()
         {
             string stateString;
-            
+
             if (_locState.State != State)
             {
                 stateString = Loc.GetString($"{State}");
@@ -306,7 +302,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             {
                 stateString = _locState.Localized;
             }
-            
+
             return new DisposalUnitBoundUserInterfaceState(Owner.Name, stateString, _pressure, Powered, Engaged);
         }
 

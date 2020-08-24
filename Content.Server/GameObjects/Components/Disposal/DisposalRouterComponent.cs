@@ -17,6 +17,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 using System;
 using System.Collections.Generic;
+using Content.Server.Utility;
 using static Content.Shared.GameObjects.Components.Disposal.SharedDisposalRouterComponent;
 
 namespace Content.Server.GameObjects.Components.Disposal
@@ -37,12 +38,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             !Owner.TryGetComponent(out ICollidableComponent? collidable) ||
             collidable.Anchored;
 
-        [ViewVariables]
-        private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
-            ui.TryGetBoundUserInterface(DisposalRouterUiKey.Key, out var boundUi)
-                ? boundUi
-                : null;
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(DisposalRouterUiKey.Key);
 
         public override Direction NextDirection(DisposalHolderComponent holder)
         {
