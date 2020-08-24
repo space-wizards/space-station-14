@@ -6,6 +6,7 @@ using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Interfaces;
 using Content.Shared.GameObjects.Components.GUI;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
@@ -385,6 +386,44 @@ namespace Content.Server.GameObjects.Components.GUI
                     else
                         TakeItemFromHands(user, handMessage.Hand);
                     break;
+            }
+        }
+
+        [Verb]
+        private sealed class StripVerb : Verb<StrippableComponent>
+        {
+            protected override void GetData(IEntity user, StrippableComponent component, VerbData data)
+            {
+                if (user == component.Owner)
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
+                if (!user.HasComponent<IActorComponent>())
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
+                data.Visibility = VerbVisibility.Visible;
+                data.Text = Loc.GetString("Strip");
+            }
+
+            protected override void Activate(IEntity user, StrippableComponent component)
+            {
+                if (!user.TryGetComponent(out IActorComponent? actor))
+                {
+                    return;
+                }
+
+                component.OpenUserInterface(actor.playerSession);
             }
         }
     }
