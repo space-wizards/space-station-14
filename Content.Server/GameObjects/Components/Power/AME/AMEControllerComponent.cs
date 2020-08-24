@@ -44,10 +44,9 @@ namespace Content.Server.GameObjects.Components.Power.AME
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(AMEControllerUiKey.Key);
         [ViewVariables] private bool _injecting;
-        [ViewVariables] private int _injectionAmount;
+        [ViewVariables] public int InjectionAmount;
 
         private AppearanceComponent? _appearance;
-        private PowerReceiverComponent? _powerReceiver;
         private PowerSupplierComponent? _powerSupplier;
 
         private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
@@ -77,7 +76,7 @@ namespace Content.Server.GameObjects.Components.Power.AME
             Owner.TryGetComponent(out _powerSupplier);
 
             _injecting = false;
-            _injectionAmount = 2;
+            InjectionAmount = 2;
             _jarSlot = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-fuelJarContainer", Owner);
         }
 
@@ -91,8 +90,8 @@ namespace Content.Server.GameObjects.Components.Power.AME
             _jarSlot.ContainedEntity.TryGetComponent<AMEFuelContainerComponent>(out var fuelJar);
             if(fuelJar != null && _powerSupplier != null)
             {
-                _powerSupplier.SupplyRate = GetAMENodeGroup().InjectFuel(_injectionAmount);
-                fuelJar.FuelAmount -= _injectionAmount;
+                _powerSupplier.SupplyRate = GetAMENodeGroup().InjectFuel(InjectionAmount);
+                fuelJar.FuelAmount -= InjectionAmount;
                 UpdateUserInterface();
             }
 
@@ -139,11 +138,11 @@ namespace Content.Server.GameObjects.Components.Power.AME
             var jar = _jarSlot.ContainedEntity;
             if (jar == null)
             {
-                return new AMEControllerBoundUserInterfaceState(Powered, IsMasterController(), false, HasJar, 0, _injectionAmount, GetCoreCount());
+                return new AMEControllerBoundUserInterfaceState(Powered, IsMasterController(), false, HasJar, 0, InjectionAmount, GetCoreCount());
             }
 
             var jarcomponent = jar.GetComponent<AMEFuelContainerComponent>();
-            return new AMEControllerBoundUserInterfaceState(Powered, IsMasterController(), _injecting, HasJar, jarcomponent.FuelAmount, _injectionAmount, GetCoreCount());
+            return new AMEControllerBoundUserInterfaceState(Powered, IsMasterController(), _injecting, HasJar, jarcomponent.FuelAmount, InjectionAmount, GetCoreCount());
         }
 
         /// <summary>
@@ -203,17 +202,17 @@ namespace Content.Server.GameObjects.Components.Power.AME
                     ToggleInjection();
                     break;
                 case UiButton.IncreaseFuel:
-                    _injectionAmount += 2;
+                    InjectionAmount += 2;
                     break;
                 case UiButton.DecreaseFuel:
-                    _injectionAmount = _injectionAmount > 0 ? _injectionAmount -= 2 : 0;
+                    InjectionAmount = InjectionAmount > 0 ? InjectionAmount -= 2 : 0;
                     break;
                 case UiButton.RefreshParts:
                     RefreshParts();
                     break;
             }
 
-                GetAMENodeGroup().UpdateCoreVisuals(_injectionAmount, _injecting);
+                GetAMENodeGroup().UpdateCoreVisuals(InjectionAmount, _injecting);
 
             UpdateUserInterface();
             ClickSound();

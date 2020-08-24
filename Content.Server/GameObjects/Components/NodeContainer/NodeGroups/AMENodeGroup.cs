@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.NodeContainer.Nodes;
+﻿using Content.Server.Explosions;
+using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.GameObjects.Components.Power.AME;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.ViewVariables;
@@ -126,6 +127,19 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         public void ExplodeCores()
         {
+            if(_cores.Count < 1 || MasterController == null) { return; }
+
+            var intensity = 0;
+            foreach (AMEShieldComponent core in _cores)
+            {
+                intensity += MasterController.InjectionAmount;
+            }
+
+            intensity = intensity > 16 ? 16 : intensity;
+
+            var epicenter = _cores.First();
+
+            ExplosionHelper.SpawnExplosion(epicenter.Owner.Transform.GridPosition, intensity / 2, intensity, intensity * 2, intensity * 3);
 
         }
 
