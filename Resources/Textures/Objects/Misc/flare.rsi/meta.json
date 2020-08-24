@@ -80,8 +80,17 @@
                 ]
             ]
         },
+		{
+            "name": "flare_spent",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
         {
-            "name": "glowstick_base",
+            "name": "flare_base",
             "directions": 1,
             "delays": [
                 [
@@ -90,7 +99,7 @@
             ]
         },
                 {
-            "name": "glowstick_lit",
+            "name": "flare_lit",
             "directions": 1,
             "delays": [
                 [
@@ -99,7 +108,7 @@
             ]
         },
                 {
-            "name": "glowstick_unlit",
+            "name": "flare_unlit",
             "directions": 1,
             "delays": [
                 [

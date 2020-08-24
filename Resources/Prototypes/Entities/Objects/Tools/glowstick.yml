@@ -1,0 +1,292 @@
+﻿- type: entity
+  name: green glowstick
+  parent: BaseItem
+  id: GlowstickBase
+  description: Useful for raves and emergencies.
+  components:
+    - type: Glowstick
+      spentName: spent green glowstick
+      spentDesc: It looks like this glowstick has stopped glowing. How tragic.
+      glowRadius: 3
+      glowEnergy: 2.2
+      glowDuration: 900 # time in seconds
+      fadeOutDuration: 300
+      iconStateOn: glowstick_lit
+      iconStateSpent: glowstick_unlit
+    - type: Sprite
+      sprite: Objects/Misc/glowstick.rsi
+      layers:
+        - state: glowstick_base
+        - state: glowstick_unlit
+          shader: unshaded
+          color: "#00FF00"
+    - type: Icon
+      sprite: Objects/Misc/glowstick.rsi
+      state: glowstick_unlit
+    - type: Item
+      sprite: Objects/Misc/glowstick.rsi
+      # color: "#00FF00" this won't work until handcuffs PR is merged
+      HeldPrefix: off
+    - type: PointLight
+      enabled: false
+      color: "#00FF00"
+
+
+- type: entity
+  name: red glowstick
+  parent: GlowstickBase
+  id: GlowstickRed
+  components:
+    - type: Glowstick
+      spentName: spent red glowstick
+      spentDesc: It looks like this glowstick has stopped glowing. How tragic.
+      glowRadius: 3
+      glowEnergy: 2.2
+      glowDuration: 900
+      fadeOutDuration: 300
+      iconStateOn: glowstick_lit
+      iconStateSpent: glowstick_unlit
+    - type: Sprite
+      sprite: Objects/Misc/glowstick.rsi
+      layers:
+        - state: glowstick_base
+        - state: glowstick_unlit
+          shader: unshaded
+          color: "#FF0000"
+    - type: Item
+      sprite: Objects/Misc/glowstick.rsi
+      # color: "#00FF00" this won't work until handcuffs PR is merged
+      HeldPrefix: off
+    - type: PointLight
+      enabled: false
+      color: "#FF0000"
+
+# AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+# THESE ARE ALL DUMMY ENTITIES USED TO TEST THE LIGHT BEHAVIOUR SYSTEM
+- type: entity
+  name: color sequence smooth test
+  parent: GlowstickBase
+  id: GlowstickTest1
+  components:
+    - type: Glowstick
+      spentName: spent glowstick
+      spentDesc: It looks like this glowstick has stopped glowing. How tragic.
+      glowRadius: 3
+      glowEnergy: 2.2
+      glowDuration: 900
+      fadeOutDuration: 300
+      iconStateOn: glowstick_lit
+      iconStateSpent: glowstick_unlit
+    - type: Sprite
+      sprite: Objects/Misc/glowstick.rsi
+      layers:
+        - state: glowstick_base
+        - state: glowstick_unlit
+          shader: unshaded
+          color: "#FF0000"
+    - type: Item
+      sprite: Objects/Misc/glowstick.rsi
+      # color: "#00FF00" this won't work until handcuffs PR is merged
+      HeldPrefix: off
+    - type: PointLight
+      enabled: false
+      color: "#FF0000"
+    - type: LightBehaviour
+      behaviours:
+        - type: ColorSequenceSmooth
+          maxDuration: 0.5
+          minValue: 2.0
+          maxValue: 4.0
+          colorsToCycle:
+            - "#FF0000"
+            - "#FFFF00"
+            - "#00FF00"
+            - "#00FFFF"
+            - "#0000FF"
+            - "#FF00FF"
+
+- type: entity
+  name: color sequence test
+  parent: GlowstickBase
+  id: GlowstickTest11
+  components:
+    - type: Glowstick
+      spentName: spent glowstick
+      spentDesc: It looks like this glowstick has stopped glowing. How tragic.
+      glowRadius: 3
+      glowEnergy: 2.2
+      glowDuration: 900
+      fadeOutDuration: 300
+      iconStateOn: glowstick_lit
+      iconStateSpent: glowstick_unlit
+    - type: Sprite
+      sprite: Objects/Misc/glowstick.rsi
+      layers:
+        - state: glowstick_base
+        - state: glowstick_unlit
+          shader: unshaded
+          color: "#FF0000"
+    - type: Item
+      sprite: Objects/Misc/glowstick.rsi
+      # color: "#00FF00" this won't work until handcuffs PR is merged
+      HeldPrefix: off
+    - type: PointLight
+      enabled: false
+      color: "#FF0000"
+    - type: LightBehaviour
+      behaviours:
+        - type: ColorSequence
+          maxDuration: 0.5
+          minValue: 2.0
+          maxValue: 4.0
+          colorsToCycle:
+            - "#FF0000"
+            - "#FFFF00"
+            - "#00FF00"
+            - "#00FFFF"
+            - "#0000FF"
+            - "#FF00FF"
+
+- type: entity
+  name: toggling on-off light test
+  parent: GlowstickBase
+  id: GlowstickTest2
+  components:
+    - type: Glowstick
+      spentName: spent glowstick
+      spentDesc: It looks like this glowstick has stopped glowing. How tragic.
+      glowRadius: 3
+      glowEnergy: 2.2
+      glowDuration: 900
+      fadeOutDuration: 300
+      iconStateOn: glowstick_lit
+      iconStateSpent: glowstick_unlit
+    - type: Sprite
+      sprite: Objects/Misc/glowstick.rsi
+      layers:
+        - state: glowstick_base
+        - state: glowstick_unlit
+          shader: unshaded
+          color: "#FF0000"
+    - type: Item
+      sprite: Objects/Misc/glowstick.rsi
+      # color: "#00FF00" this won't work until handcuffs PR is merged
+      HeldPrefix: off
+    - type: PointLight
+      enabled: false
+      color: "#FF0000"
+    - type: LightBehaviour
+      behaviours:
+        - type: Toggle
+          minDuration: 1.0
+          maxDuration: 2.0
+          minValue: 2.0
+          maxValue: 4.0
+
+- type: entity
+  name: flicker briefly light test
+  parent: GlowstickBase
+  id: GlowstickTest3
+  components:
+    - type: Glowstick
+      spentName: spent glowstick
+      spentDesc: It looks like this glowstick has stopped glowing. How tragic.
+      glowRadius: 3
+      glowEnergy: 2.2
+      glowDuration: 900
+      fadeOutDuration: 300
+      iconStateOn: glowstick_lit
+      iconStateSpent: glowstick_unlit
+    - type: Sprite
+      sprite: Objects/Misc/glowstick.rsi
+      layers:
+        - state: glowstick_base
+        - state: glowstick_unlit
+          shader: unshaded
+          color: "#FF0000"
+    - type: Item
+      sprite: Objects/Misc/glowstick.rsi
+      # color: "#00FF00" this won't work until handcuffs PR is merged
+      HeldPrefix: off
+    - type: PointLight
+      enabled: false
+      color: "#FF0000"
+    - type: LightBehaviour
+      behaviours:
+        - type: Flicker
+          minDuration: 1.0
+          maxDuration: 2.0
+          minValue: 2.0
+          maxValue: 4.0
+
+- type: entity
+  name: pulse light test
+  parent: GlowstickBase
+  id: GlowstickTest4
+  components:
+    - type: Glowstick
+      spentName: spent glowstick
+      spentDesc: It looks like this glowstick has stopped glowing. How tragic.
+      glowRadius: 3
+      glowEnergy: 2.2
+      glowDuration: 900
+      fadeOutDuration: 300
+      iconStateOn: glowstick_lit
+      iconStateSpent: glowstick_unlit
+    - type: Sprite
+      sprite: Objects/Misc/glowstick.rsi
+      layers:
+        - state: glowstick_base
+        - state: glowstick_unlit
+          shader: unshaded
+          color: "#FF0000"
+    - type: Item
+      sprite: Objects/Misc/glowstick.rsi
+      # color: "#00FF00" this won't work until handcuffs PR is merged
+      HeldPrefix: off
+    - type: PointLight
+      enabled: false
+      color: "#FF0000"
+    - type: LightBehaviour
+      behaviours:
+        - type: PulseBrightness
+          minDuration: 1.0
+          maxDuration: 2.0
+          minValue: 2.0
+          maxValue: 4.0
+
+- type: entity
+  name: randomized brightness light test
+  parent: GlowstickBase
+  id: GlowstickTest5
+  components:
+    - type: Glowstick
+      spentName: spent glowstick
+      spentDesc: It looks like this glowstick has stopped glowing. How tragic.
+      glowRadius: 3
+      glowEnergy: 2.2
+      glowDuration: 900
+      fadeOutDuration: 300
+      iconStateOn: glowstick_lit
+      iconStateSpent: glowstick_unlit
+    - type: Sprite
+      sprite: Objects/Misc/glowstick.rsi
+      layers:
+        - state: glowstick_base
+        - state: glowstick_unlit
+          shader: unshaded
+          color: "#FF0000"
+    - type: Item
+      sprite: Objects/Misc/glowstick.rsi
+      # color: "#00FF00" this won't work until handcuffs PR is merged
+      HeldPrefix: off
+    - type: PointLight
+      enabled: false
+      color: "#FF0000"
+    - type: LightBehaviour
+      behaviours:
+        - type: RandomBrightness
+          minDuration: 1.0
+          maxDuration: 2.0
+          minValue: 1.0
+          maxValue: 4.0

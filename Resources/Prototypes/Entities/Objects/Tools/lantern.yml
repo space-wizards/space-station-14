@@ -23,5 +23,10 @@
       radius: 3
       energy: 2.5
       color: "#FFC458"
-    - type: RadiatingLight
     - type: LoopingSound
+    - type: LightBehaviour
+      behaviours:
+        - type: PulseSize
+          maxDuration: 4.0
+          minValue: 2.0
+          maxValue: 4.0
