@@ -29,6 +29,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timers.Timer;
@@ -484,6 +485,11 @@ namespace Content.Server.GameObjects.Components.Disposal
         protected override void Startup()
         {
             base.Startup();
+
+            if(!Owner.HasComponent<AnchorableComponent>())
+            {
+                Logger.WarningS("VitalComponentMissing", $"Disposal unit {Owner.Uid} is missing an anchorable component");
+            }
 
             if (Owner.TryGetComponent(out CollidableComponent? collidable))
             {

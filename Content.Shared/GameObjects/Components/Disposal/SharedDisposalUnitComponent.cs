@@ -73,8 +73,7 @@ namespace Content.Shared.GameObjects.Components.Disposal
             if (IsExiting(collided.Entity)) return true;
             if (!Owner.TryGetComponent(out IContainerManager manager)) return false;
 
-            var containedEntities = manager.GetContainer(Name).ContainedEntities.ToList<IEntity>();
-            if (containedEntities != null && containedEntities.Contains(collided.Entity))
+            if (manager.ContainsEntity(collided.Entity))
             {
                 if (!_intersecting.Contains(collided.Entity))
                 {
