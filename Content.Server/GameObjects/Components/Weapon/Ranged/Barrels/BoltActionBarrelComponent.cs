@@ -197,8 +197,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                     Owner.PopupMessage(container.Owner, Loc.GetString("Bolt opened"));
                 }
             }
-
-            if (manual)
+            else
             {
                 if (_soundCycle != null)
                 {
