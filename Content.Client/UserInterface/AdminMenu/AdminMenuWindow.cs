@@ -287,11 +287,7 @@ namespace Content.Client.UserInterface
                     IoCManager.Resolve<IClientConGroupController>().CanCommand(RequiredCommand);
             }
 
-            public CommandButton()
-            {
-                Name = string.Empty;
-                RequiredCommand = string.Empty;
-            }
+            public CommandButton() : this(string.Empty, string.Empty) {}
             public CommandButton(string name, string command)
             {
                 Name = name;
