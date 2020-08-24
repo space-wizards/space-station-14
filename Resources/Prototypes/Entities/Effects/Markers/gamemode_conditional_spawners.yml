@@ -290,6 +290,7 @@
         - MagazineClRifle10x24
         - MagazineClRiflePistol
         - MagazineLRifle
+        - MagazinePistolCalicoTopMounted
       chance: 0.95
       gameRules:
         - RuleSuspicion
