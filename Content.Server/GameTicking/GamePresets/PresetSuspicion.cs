@@ -92,6 +92,11 @@ namespace Content.Server.GameTicking.GamePresets
                 IPlayerSession traitor;
                 if(prefList.Count == 0)
                 {
+                    if (list.Count == 0)
+                    {
+                        Logger.InfoS("preset", "Insufficient ready players to fill up with traitors, stopping the selection.");
+                        break;
+                    }
                     traitor = _random.PickAndTake(list);
                     Logger.InfoS("preset", "Insufficient preferred traitors, picking at random.");
                 }

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using Content.Client.Interfaces;
+﻿using Content.Client.Interfaces;
 using Content.Client.Interfaces.Chat;
 using Content.Client.UserInterface;
 using Content.Shared.Input;
@@ -18,6 +16,9 @@ using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
+using System;
+using System.Linq;
+using static Content.Shared.SharedGameTicker;
 
 namespace Content.Client.State
 {
@@ -112,7 +113,7 @@ namespace Content.Client.State
             _clientGameTicker.LobbyReadyUpdated -= LobbyReadyUpdated;
             _clientGameTicker.LobbyLateJoinStatusUpdated -= LobbyLateJoinStatusUpdated;
 
-            _clientGameTicker.Ready.Clear();
+            _clientGameTicker.Status.Clear();
 
             _lobby.Dispose();
             _characterSetup.Dispose();
@@ -158,11 +159,14 @@ namespace Content.Client.State
         private void PlayerManagerOnPlayerListUpdated(object sender, EventArgs e)
         {
             // Remove disconnected sessions from the Ready Dict
-            foreach (var p in _clientGameTicker.Ready)
+            foreach (var p in _clientGameTicker.Status)
             {
                 if (!_playerManager.SessionsDict.TryGetValue(p.Key, out _))
                 {
-                    _clientGameTicker.Ready.Remove(p.Key);
+                    // This is a shitty fix. Observers can rejoin because they are already in the game.
+                    // So we don't delete them, but keep them if they decide to rejoin
+                    if (p.Value != PlayerStatus.Observer)
+                        _clientGameTicker.Status.Remove(p.Key);
                 }
             }
             UpdatePlayerList();
@@ -207,25 +211,31 @@ namespace Content.Client.State
 
         private void UpdatePlayerList()
         {
-            _lobby.OnlinePlayerItemList.Clear();
-            _lobby.PlayerReadyList.Clear();
+            _lobby.OnlinePlayerList.Clear();
 
             foreach (var session in _playerManager.Sessions.OrderBy(s => s.Name))
             {
-                _lobby.OnlinePlayerItemList.AddItem(session.Name);
+                
 
                 var readyState = "";
                 // Don't show ready state if we're ingame
                 if (!_clientGameTicker.IsGameStarted)
                 {
-                    var ready = false;
+                    var status = PlayerStatus.NotReady;
                     if (session.SessionId == _playerManager.LocalPlayer.SessionId)
-                        ready = _clientGameTicker.AreWeReady;
+                        status = _clientGameTicker.AreWeReady ? PlayerStatus.Ready : PlayerStatus.NotReady;
                     else
-                        _clientGameTicker.Ready.TryGetValue(session.SessionId, out ready);
-                    readyState = ready ? Loc.GetString("Ready") : Loc.GetString("Not Ready");
+                        _clientGameTicker.Status.TryGetValue(session.SessionId, out status);
+
+                    readyState = status switch
+                    {
+                        PlayerStatus.NotReady => Loc.GetString("Not Ready"),
+                        PlayerStatus.Ready => Loc.GetString("Ready"),
+                        PlayerStatus.Observer => Loc.GetString("Observer"),
+                        _ => "",
+                    };
                 }
-                _lobby.PlayerReadyList.AddItem(readyState, null, false);
+                _lobby.OnlinePlayerList.AddItem(session.Name, readyState);
             }
         }
 

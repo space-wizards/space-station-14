@@ -86,9 +86,6 @@
             "CanSpill",
             "SpeedLoader",
             "Hitscan",
-            "BoltActionBarrel",
-            "PumpBarrel",
-            "RevolverBarrel",
             "ExplosiveProjectile",
             "StunnableProjectile",
             "RandomPottedPlant",
@@ -162,6 +159,8 @@
             "GasVapor",
             "MobStateManager",
             "Metabolism",
+            "AiFactionTag",
+            "PressureProtection",
         };
     }
 }

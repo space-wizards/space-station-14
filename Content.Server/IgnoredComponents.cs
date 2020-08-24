@@ -17,7 +17,6 @@
             "AnimationsTest",
             "ItemStatus",
             "Marker",
-            "EmergencyLight",
             "Clickable",
             "RadiatingLight",
         };

@@ -1,4 +1,3 @@
-using System;
 using Content.Server.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
@@ -32,10 +31,11 @@ namespace Content.Server.GameObjects.Components.Projectiles
         public override void Initialize()
         {
             base.Initialize();
-            if (!Owner.HasComponent<ProjectileComponent>())
+
+            if (!Owner.EnsureComponent(out ProjectileComponent _))
             {
-                Logger.Error("StunProjectile entity must have a ProjectileComponent");
-                throw new InvalidOperationException();
+                Logger.Warning(
+                    $"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(ProjectileComponent)}");
             }
         }
 

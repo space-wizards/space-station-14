@@ -1,6 +1,7 @@
 ﻿using Robust.Shared.Network;
 using System;
 using System.Collections.Generic;
+using static Content.Shared.SharedGameTicker;
 
 namespace Content.Client.Interfaces
 {
@@ -12,7 +13,7 @@ namespace Content.Client.Interfaces
         bool DisallowedLateJoin { get; }
         DateTime StartTime { get; }
         bool Paused { get; }
-        Dictionary<NetSessionId, bool> Ready { get; }
+        Dictionary<NetSessionId, PlayerStatus> Status { get; }
 
         void Initialize();
         event Action InfoBlobUpdated;
