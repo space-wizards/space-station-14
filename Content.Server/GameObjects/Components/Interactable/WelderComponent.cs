@@ -8,12 +8,16 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects;
+using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
+using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -31,6 +35,7 @@ namespace Content.Server.GameObjects.Components.Interactable
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
 
         public override string Name => "Welder";
         public override uint? NetID => ContentNetIDs.WELDER;
@@ -50,6 +55,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         private SpriteComponent? _spriteComponent;
         private SolutionComponent? _solutionComponent;
         private PointLightComponent? _pointLightComponent;
+        private DoAfterSystem _doAfterSystem;
 
         public string? WeldSoundCollection { get; set; }
 
@@ -84,6 +90,8 @@ namespace Content.Server.GameObjects.Components.Interactable
             Owner.TryGetComponent(out _solutionComponent);
             Owner.TryGetComponent(out _spriteComponent);
             Owner.TryGetComponent(out _pointLightComponent);
+
+            _doAfterSystem = EntitySystem.Get<DoAfterSystem>();
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -251,22 +259,50 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         }
 
-        public SuicideKind Suicide(IEntity victim, IChatManager chat)
+        public async SuicideKind Suicide(IEntity victim, IChatManager chat)
         {
-            if (TryWeld(5, victim, silent: true))
+            var doAfterEventArgs = new DoAfterEventArgs(victim, default)
+            {
+                BreakOnTargetMove = true,
+                BreakOnUserMove = true,
+                BreakOnDamage = true,
+                BreakOnStun = true
+            };
+
+            var result = await _doAfterSystem.DoAfter(doAfterEventArgs);
+
+            if (result != DoAfterStatus.Cancelled && TryWeld(5, victim, silent: true))
             {
                 PlaySoundCollection(WeldSoundCollection);
-                chat.EntityMe(victim, Loc.GetString("welds {0:their} every orifice closed! It looks like {0:theyre} trying to commit suicide!", victim));
+                PopupMessageOtherClientsInRange(victim, Loc.GetString("{0:theName} welds {0:their} every orifice closed! It looks like {0:theyre} trying to commit suicide!", victim), 15);
+                _notifyManager.PopupMessage(victim, victim, Loc.GetString("You weld your every orific closed!", Owner));
                 return SuicideKind.Heat;
             }
 
-            chat.EntityMe(victim, Loc.GetString("bashes {0:themselves} with the {1}!", victim, Owner.Name));
+            PopupMessageOtherClientsInRange(victim, Loc.GetString("{0:theName} bashes {0:themselves} with the {1}!", victim), 15);
+            _notifyManager.PopupMessage(victim, victim, Loc.GetString("You bash yourself with the {1}!", Owner));
             return SuicideKind.Blunt;
         }
 
         public void SolutionChanged(SolutionChangeEventArgs eventArgs)
         {
             Dirty();
+        }
+        private void PopupMessageOtherClientsInRange(IEntity source, string message, int maxReceiveDistance)
+        {
+            var viewers = _playerManager.GetPlayersInRange(source.Transform.GridPosition, maxReceiveDistance);
+
+            foreach (var viewer in viewers)
+            {
+                var viewerEntity = viewer.AttachedEntity;
+
+                if (viewerEntity == null || source == viewerEntity)
+                {
+                    continue;
+                }
+
+                source.PopupMessage(viewer.AttachedEntity, message);
+            }
         }
     }
 }
