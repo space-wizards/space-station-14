@@ -50,7 +50,7 @@ namespace Content.Server.GameObjects.Components.Power.AME
         private PowerReceiverComponent? _powerReceiver;
         private PowerSupplierComponent? _powerSupplier;
 
-        private bool Powered => _powerReceiver?.Powered ?? false;
+        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
 
         [ViewVariables]
         private int _stability = 100;
@@ -69,11 +69,11 @@ namespace Content.Server.GameObjects.Components.Power.AME
 
             Owner.TryGetComponent(out _appearance);
 
-            if (Owner.TryGetComponent(out _powerReceiver))
+            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
             {
-                _powerReceiver.OnPowerStateChanged += OnPowerChanged;
+                receiver.OnPowerStateChanged += OnPowerChanged;
             }
-            
+
             Owner.TryGetComponent(out _powerSupplier);
 
             _injecting = false;
@@ -129,7 +129,7 @@ namespace Content.Server.GameObjects.Components.Power.AME
             }
         }
 
-        private void OnPowerChanged(object sender, PowerStateEventArgs e)
+        private void OnPowerChanged(object? sender, PowerStateEventArgs e)
         {
             UpdateUserInterface();
         }
@@ -179,6 +179,11 @@ namespace Content.Server.GameObjects.Components.Power.AME
         /// <param name="obj">A user interface message from the client.</param>
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
+            if (obj.Session.AttachedEntity == null)
+            {
+                return;
+            }
+
             var msg = (UiButtonPressedMessage) obj.Message;
             var needsPower = msg.Button switch
             {
@@ -250,16 +255,17 @@ namespace Content.Server.GameObjects.Components.Power.AME
 
         private void UpdateDisplay(int stability)
         {
-            _appearance?.TryGetData<string>(AMEControllerVisuals.DisplayState, out var state);
+            if(_appearance == null) { return; }
+
+            _appearance.TryGetData<string>(AMEControllerVisuals.DisplayState, out var state);
 
             var newState = "on";
-
-            if(stability < 50) { newState = "critical"; }
-            if(stability < 10) { newState = "fuck"; }
+            if (stability < 50) { newState = "critical"; }
+            if (stability < 10) { newState = "fuck"; }
 
             if (state != newState)
             {
-                _appearance.SetData(AMEControllerVisuals.DisplayState, newState);
+                _appearance?.SetData(AMEControllerVisuals.DisplayState, newState);
             }
 
         }
@@ -314,11 +320,18 @@ namespace Content.Server.GameObjects.Components.Power.AME
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)
         {
-            if (!args.User.TryGetComponent(out IHandsComponent hands))
+            if (!args.User.TryGetComponent(out IHandsComponent? hands))
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
                     Loc.GetString("You have no hands."));
                 return true;
+            }
+
+            if (hands.GetActiveHand == null)
+            {
+                _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
+                    Loc.GetString("You have nothing on your hand."));
+                return false;
             }
 
             var activeHandEntity = hands.GetActiveHand.Owner;
