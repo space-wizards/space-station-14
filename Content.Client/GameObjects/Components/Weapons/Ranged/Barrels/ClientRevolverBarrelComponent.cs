@@ -63,35 +63,24 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
         private sealed class StatusControl : Control
         {
             private readonly ClientRevolverBarrelComponent _parent;
-            private readonly HBoxContainer _bulletsListTop;
-            private readonly HBoxContainer _bulletsListBottom;
+            private readonly HBoxContainer _bulletsList;
 
             public StatusControl(ClientRevolverBarrelComponent parent)
             {
                 _parent = parent;
                 SizeFlagsHorizontal = SizeFlags.FillExpand;
                 SizeFlagsVertical = SizeFlags.ShrinkCenter;
-                AddChild(new VBoxContainer
+                AddChild((_bulletsList = new HBoxContainer
                 {
                     SizeFlagsHorizontal = SizeFlags.FillExpand,
                     SizeFlagsVertical = SizeFlags.ShrinkCenter,
-                    SeparationOverride = 0,
-                    Children =
-                    {
-                        (_bulletsListTop = new HBoxContainer {SeparationOverride = 0}),
-                         (_bulletsListBottom = new HBoxContainer
-                         {
-                             SizeFlagsVertical = SizeFlags.ShrinkCenter,
-                             SeparationOverride = 0
-                         })
-                    }
-                });
+                    SeparationOverride = 0
+                }));
             }
 
             public void Update()
             {
-                _bulletsListTop.RemoveAllChildren();
-                _bulletsListBottom.RemoveAllChildren();
+                _bulletsList.RemoveAllChildren();
 
                 var capacity = _parent.Bullets.Length;
 
@@ -110,11 +99,12 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
                 }
 
                 var texture = StaticIoC.ResC.GetTexture(texturePath);
+                var spentTexture = StaticIoC.ResC.GetTexture("/Textures/Interface/ItemStatus/Bullets/empty.png");
 
-                FillBulletRow(_bulletsListBottom, texture);
+                FillBulletRow(_bulletsList, texture, spentTexture);
             }
 
-            private void FillBulletRow(Control container, Texture texture)
+            private void FillBulletRow(Control container, Texture texture, Texture emptyTexture)
             {
                 var colorA = Color.FromHex("#b68f0e");
                 var colorB = Color.FromHex("#d7df60");
@@ -125,7 +115,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
 
                 var altColor = false;
                 var scale = 1.3f;
-                
+
                 for (var i = 0; i < _parent.Bullets.Length; i++)
                 {
                     var bulletSpent = _parent.Bullets[i];
@@ -144,12 +134,19 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
                         });
                     }
                     Color color;
+                    Texture bulletTexture = texture;
 
                     if (bulletSpent.HasValue)
                     {
-                        color = bulletSpent.Value ?
-                            altColor ? colorSpentA : colorSpentB
-                            : altColor ? colorA : colorB;
+                        if (bulletSpent.Value)
+                        {
+                            color = altColor ? colorSpentA : colorSpentB;
+                            bulletTexture = emptyTexture;
+                        }
+                        else
+                        {
+                            color = altColor ? colorA : colorB;
+                        }
                     }
                     else
                     {
@@ -161,7 +158,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
                         SizeFlagsHorizontal = SizeFlags.Fill,
                         SizeFlagsVertical = SizeFlags.Fill,
                         Stretch = TextureRect.StretchMode.KeepCentered,
-                        Texture = texture,
+                        Texture = bulletTexture,
                         ModulateSelfOverride = color,
                     });
                     altColor ^= true;
