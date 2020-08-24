@@ -115,6 +115,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         public override void Initialize()
         {
             base.Initialize();
+
             if (Owner.TryGetComponent(out SolutionComponent solutionComponent))
             {
                 _contents = solutionComponent;
@@ -122,7 +123,6 @@ namespace Content.Server.GameObjects.Components.Fluids
             else
             {
                 _contents = Owner.AddComponent<SolutionComponent>();
-                _contents.Initialize();
             }
 
             _snapGrid = Owner.EnsureComponent<SnapGridComponent>();

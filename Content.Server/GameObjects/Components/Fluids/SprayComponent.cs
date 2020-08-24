@@ -8,6 +8,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -45,13 +46,17 @@ namespace Content.Server.GameObjects.Components.Fluids
             set => _sprayVelocity = value;
         }
 
-        private SolutionComponent _contents;
-        public ReagentUnit CurrentVolume => _contents.CurrentVolume;
+        public ReagentUnit CurrentVolume => Owner.GetComponentOrNull<SolutionComponent>()?.CurrentVolume ?? ReagentUnit.Zero;
 
         public override void Initialize()
         {
             base.Initialize();
-            _contents = Owner.GetComponent<SolutionComponent>();
+
+            if (!Owner.EnsureComponent(out SolutionComponent _))
+            {
+                Logger.Warning(
+                    $"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(SolutionComponent)}");
+            }
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -74,8 +79,11 @@ namespace Content.Server.GameObjects.Components.Fluids
             if (eventArgs.ClickLocation.GridID != playerPos.GridID)
                 return;
 
+            if (!Owner.TryGetComponent(out SolutionComponent contents))
+                return;
+
             var direction = (eventArgs.ClickLocation.Position - playerPos.Position).Normalized;
-            var solution = _contents.SplitSolution(_transferAmount);
+            var solution = contents.SplitSolution(_transferAmount);
 
             playerPos = playerPos.Offset(direction); // Move a bit so we don't hit the player
             //TODO: check for wall?

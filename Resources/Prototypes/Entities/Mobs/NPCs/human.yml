@@ -10,6 +10,9 @@
   - type: AiController
     logic: Civilian
     startingGear: AssistantGear
+  - type: AiFactionTag
+    factions:
+    - NanoTransen
 
 - type: entity
   save: false

@@ -8,8 +8,10 @@ using Content.Server.AI.Utils;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Content.Server.GameObjects.Components.Movement;
+using Content.Server.GameObjects.EntitySystems.AI;
 using Content.Shared.GameObjects.Components.Body;
 using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.ExpandableActions.Combat.Melee
@@ -37,13 +39,10 @@ namespace Content.Server.AI.Utility.ExpandableActions.Combat.Melee
                 throw new InvalidOperationException();
             }
 
-            foreach (var entity in Visibility.GetEntitiesInRange(owner.Transform.GridPosition, typeof(IBodyManagerComponent),
-                controller.VisionRadius))
+            foreach (var target in EntitySystem.Get<AiFactionTagSystem>()
+                .GetNearbyHostiles(owner, controller.VisionRadius))
             {
-                if (entity.HasComponent<BasicActorComponent>() && entity != owner)
-                {
-                    yield return new UnarmedAttackEntity(owner, entity, Bonus);
-                }
+                yield return new UnarmedAttackEntity(owner, target, Bonus);
             }
         }
     }

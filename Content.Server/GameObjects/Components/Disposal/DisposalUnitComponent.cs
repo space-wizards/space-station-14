@@ -117,6 +117,13 @@ namespace Content.Server.GameObjects.Components.Disposal
                 ? boundUi
                 : null;
 
+        private DisposalUnitBoundUserInterfaceState? _lastUiState;
+        
+        /// <summary>
+        ///     Store the translated state.
+        /// </summary>
+        private (PressureState State, string Localized) _locState;
+
         public bool CanInsert(IEntity entity)
         {
             if (!Anchored)
@@ -286,13 +293,31 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private DisposalUnitBoundUserInterfaceState GetInterfaceState()
         {
-            var state = Loc.GetString($"{State}");
-            return new DisposalUnitBoundUserInterfaceState(Owner.Name, state, _pressure, Powered, Engaged);
+            string stateString;
+            
+            if (_locState.State != State)
+            {
+                stateString = Loc.GetString($"{State}");
+                _locState = (State, stateString);
+            }
+            else
+            {
+                stateString = _locState.Localized;
+            }
+            
+            return new DisposalUnitBoundUserInterfaceState(Owner.Name, stateString, _pressure, Powered, Engaged);
         }
 
         private void UpdateInterface()
         {
             var state = GetInterfaceState();
+
+            if (_lastUiState != null && _lastUiState.Equals(state))
+            {
+                return;
+            }
+
+            _lastUiState = state;
             UserInterface?.SetState(state);
         }
 
