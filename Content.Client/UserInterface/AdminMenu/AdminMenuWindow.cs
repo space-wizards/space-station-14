@@ -273,7 +273,7 @@ namespace Content.Client.UserInterface
             MasterTabContainer.SetTabTitle(5, Loc.GetString("Players"));
             Contents.AddChild(MasterTabContainer);
             //Request station events, so we can use them later
-            var a = IoCManager.Resolve<IStationEventManager>().StationEvents;
+            IoCManager.Resolve<IStationEventManager>().RequestEvents();
         }
 
         private abstract class CommandButton
