@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.Stack;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Materials;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.GameObjects.Components.Research;
@@ -45,12 +46,7 @@ namespace Content.Server.GameObjects.Components.Research
 
         private static readonly TimeSpan InsertionTime = TimeSpan.FromSeconds(0.9f);
 
-        [ViewVariables]
-        private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
-            ui.TryGetBoundUserInterface(LatheUiKey.Key, out var boundUi)
-                ? boundUi
-                : null;
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(LatheUiKey.Key);
 
         public override void Initialize()
         {

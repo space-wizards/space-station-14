@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.Components.UserInterface;
@@ -35,12 +36,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             !Owner.TryGetComponent(out CollidableComponent? collidable) ||
             collidable.Anchored;
 
-        [ViewVariables]
-        private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
-            ui.TryGetBoundUserInterface(DisposalTaggerUiKey.Key, out var boundUi)
-                ? boundUi
-                : null;
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(DisposalTaggerUiKey.Key);
 
         public override Direction NextDirection(DisposalHolderComponent holder)
         {

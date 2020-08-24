@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Content.Server.Body;
 using Content.Server.Body.Mechanisms;
+using Content.Server.Utility;
 using Content.Shared.Body.Mechanism;
 using Content.Shared.Body.Surgery;
 using Content.Shared.Interfaces;
@@ -42,12 +43,7 @@ namespace Content.Server.GameObjects.Components.Body
 
         [ViewVariables] public Mechanism ContainedMechanism { get; private set; } = default!;
 
-        [ViewVariables]
-        private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
-            ui.TryGetBoundUserInterface(GenericSurgeryUiKey.Key, out var boundUi)
-                ? boundUi
-                : null;
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(GenericSurgeryUiKey.Key);
 
         void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {

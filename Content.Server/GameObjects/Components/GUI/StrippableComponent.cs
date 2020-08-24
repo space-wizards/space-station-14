@@ -4,6 +4,7 @@ using System.Threading;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Interfaces;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.GUI;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -27,12 +28,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public const float StripDelay = 2f;
 
-        [ViewVariables]
-        private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
-            ui.TryGetBoundUserInterface(StrippingUiKey.Key, out var boundUi)
-                ? boundUi
-                : null;
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(StrippingUiKey.Key);
 
         public override void Initialize()
         {
