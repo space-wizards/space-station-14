@@ -17,6 +17,7 @@ using Content.Server.GameObjects.Components.Body;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Robust.Shared.Maths;
 using System;
+using Robust.Shared.Log;
 
 namespace Content.Server.GameObjects.Components.Movement
 {
@@ -39,14 +40,17 @@ namespace Content.Server.GameObjects.Components.Movement
         [ViewVariables]
         private float _climbDelay;
 
-        private ICollidableComponent _collidableComponent;
         private DoAfterSystem _doAfterSystem;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            _collidableComponent = Owner.GetComponent<ICollidableComponent>();
+            if (!Owner.EnsureComponent(out CollidableComponent _))
+            {
+                Logger.Warning($"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(CollidableComponent)}");
+            }
+
             _doAfterSystem = EntitySystem.Get<DoAfterSystem>();
         }
 

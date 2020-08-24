@@ -28,6 +28,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Content.Shared.GameObjects.Components.Damage;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 {
@@ -157,7 +158,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override void OnAdd()
         {
             base.OnAdd();
-            var rangedWeaponComponent = Owner.GetComponent<ServerRangedWeaponComponent>();
+
+            if (!Owner.EnsureComponent(out ServerRangedWeaponComponent rangedWeaponComponent))
+            {
+                Logger.Warning(
+                    $"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(ServerRangedWeaponComponent)}");
+            }
 
             rangedWeaponComponent.Barrel ??= this;
             rangedWeaponComponent.FireHandler += Fire;

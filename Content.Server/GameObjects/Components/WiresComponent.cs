@@ -37,7 +37,6 @@ namespace Content.Server.GameObjects.Components
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
 
         private AudioSystem _audioSystem = default!;
-        private AppearanceComponent _appearance = default!;
 
         private bool _isPanelOpen;
 
@@ -105,7 +104,10 @@ namespace Content.Server.GameObjects.Components
 
         private void UpdateAppearance()
         {
-            _appearance.SetData(WiresVisuals.MaintenancePanelState, IsPanelOpen && IsPanelVisible);
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            {
+                appearance.SetData(WiresVisuals.MaintenancePanelState, IsPanelOpen && IsPanelVisible);
+            }
         }
 
         /// <summary>
@@ -148,8 +150,11 @@ namespace Content.Server.GameObjects.Components
         {
             base.Initialize();
             _audioSystem = EntitySystem.Get<AudioSystem>();
-            _appearance = Owner.GetComponent<AppearanceComponent>();
-            _appearance.SetData(WiresVisuals.MaintenancePanelState, IsPanelOpen);
+
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            {
+                appearance.SetData(WiresVisuals.MaintenancePanelState, IsPanelOpen);
+            }
 
             if (UserInterface != null)
             {
