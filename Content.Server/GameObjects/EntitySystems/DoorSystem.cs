@@ -8,8 +8,7 @@ namespace Content.Server.GameObjects.EntitySystems
     class DoorSystem : EntitySystem
     {
         /// <summary>
-        /// Allows all players to open airlocks, despite not having access. External airlocks, so airlocks that are
-        /// open to space, are not included.
+        ///     Determines the base access behavior of all doors on the station.
         /// </summary>
         public AccessTypes AccessType { get; set; }
 
