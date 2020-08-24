@@ -465,7 +465,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 }
 
                 data.Text = Loc.GetString("Open bolt");
-                data.Visibility = component.BoltOpen ? VerbVisibility.Disabled : VerbVisibility.Visible;
+                data.Visibility = component.BoltOpen ? VerbVisibility.Invisible : VerbVisibility.Visible;
             }
 
             protected override void Activate(IEntity user, ServerMagazineBarrelComponent component)
@@ -486,7 +486,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 }
 
                 data.Text = Loc.GetString("Close bolt");
-                data.Visibility = component.BoltOpen ? VerbVisibility.Visible : VerbVisibility.Disabled;
+                data.Visibility = component.BoltOpen ? VerbVisibility.Visible : VerbVisibility.Invisible;
             }
 
             protected override void Activate(IEntity user, ServerMagazineBarrelComponent component)
