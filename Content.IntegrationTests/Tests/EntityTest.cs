@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -61,22 +60,15 @@ namespace Content.IntegrationTests.Tests
                 //Iterate list of prototypes to spawn
                 foreach (var prototype in prototypes)
                 {
-                    try
-                    {
-                        Logger.LogS(LogLevel.Debug, "EntityTest", $"Testing: {prototype.ID}");
-                        testEntity = entityMan.SpawnEntity(prototype.ID, testLocation);
-                        server.RunTicks(2);
-                        Assert.That(testEntity.Initialized);
-                        entityMan.DeleteEntity(testEntity.Uid);
-                    }
-
-                    //Fail any exceptions thrown on spawn
-                    catch (Exception e)
-                    {
-                        Logger.LogS(LogLevel.Error, "EntityTest", $"Entity '{prototype.ID}' threw: {e.Message}");
-                        Assert.Fail();
-                        throw;
-                    }
+                    Assert.DoesNotThrow(() =>
+                        {
+                            Logger.LogS(LogLevel.Debug, "EntityTest", $"Testing: {prototype.ID}");
+                            testEntity = entityMan.SpawnEntity(prototype.ID, testLocation);
+                            server.RunTicks(2);
+                            Assert.That(testEntity.Initialized);
+                            entityMan.DeleteEntity(testEntity.Uid);
+                        }, "Entity '{0}' threw an exception.",
+                        prototype.ID);
                 }
             });
 
@@ -104,6 +96,92 @@ namespace Content.IntegrationTests.Tests
             });
 
             await client.WaitIdleAsync();
+        }
+
+        [Test]
+        public async Task AllComponentsOneToOneDeleteTest()
+        {
+            var skipComponents = new[]
+            {
+                "DebugExceptionOnAdd", // Debug components that explicitly throw exceptions
+                "DebugExceptionExposeData",
+                "DebugExceptionInitialize",
+                "DebugExceptionStartup",
+                "Map", // We aren't testing a map entity in this test
+                "MapGrid"
+            };
+
+            var testEntity = @"
+- type: entity
+  id: AllComponentsOneToOneDeleteTestEntity";
+
+            var server = StartServerDummyTicker();
+            await server.WaitIdleAsync();
+
+            var mapManager = server.ResolveDependency<IMapManager>();
+            var entityManager = server.ResolveDependency<IEntityManager>();
+            var mapLoader = server.ResolveDependency<IMapLoader>();
+            var pauseManager = server.ResolveDependency<IPauseManager>();
+            var componentFactory = server.ResolveDependency<IComponentFactory>();
+            var prototypeManager = server.ResolveDependency<IPrototypeManager>();
+
+            IMapGrid grid = default;
+
+            server.Post(() =>
+            {
+                // Load test entity
+                using var reader = new StringReader(testEntity);
+                prototypeManager.LoadFromStream(reader);
+
+                // Load test map
+                var mapId = mapManager.CreateMap();
+                pauseManager.AddUninitializedMap(mapId);
+                grid = mapLoader.LoadBlueprint(mapId, "Maps/stationstation.yml");
+                pauseManager.DoMapInitialize(mapId);
+            });
+
+            server.Assert(() =>
+            {
+                var testLocation = new GridCoordinates(new Vector2(0, 0), grid);
+
+                foreach (var type in componentFactory.AllRegisteredTypes)
+                {
+                    var component = (Component) componentFactory.GetComponent(type);
+
+                    // If this component is ignored
+                    if (skipComponents.Contains(component.Name))
+                    {
+                        continue;
+                    }
+
+                    var entity = entityManager.SpawnEntity("AllComponentsOneToOneDeleteTestEntity", testLocation);
+
+                    Assert.That(entity.Initialized);
+
+                    // The component may already exist if it is a mandatory component
+                    // such as MetaData or Transform
+                    if (entity.HasComponent(type))
+                    {
+                        continue;
+                    }
+
+                    component.Owner = entity;
+
+                    Logger.LogS(LogLevel.Debug, "EntityTest", $"Adding component: {component.Name}");
+
+                    Assert.DoesNotThrow(() =>
+                        {
+                            entityManager.ComponentManager.AddComponent(entity, component);
+                        }, "Component '{0}' threw an exception.",
+                        component.Name);
+
+                    server.RunTicks(10);
+
+                    entityManager.DeleteEntity(entity.Uid);
+                }
+            });
+
+            await server.WaitIdleAsync();
         }
 
         [Test]
@@ -184,43 +262,44 @@ namespace Content.IntegrationTests.Tests
 
             server.Assert(() =>
             {
-                Assert.DoesNotThrow(() =>
+                foreach (var distinct in distinctComponents)
                 {
-                    foreach (var distinct in distinctComponents)
+                    var testLocation = new GridCoordinates(new Vector2(0, 0), grid);
+                    var entity = entityManager.SpawnEntity("AllComponentsOneEntityDeleteTestEntity", testLocation);
+
+                    Assert.That(entity.Initialized);
+
+                    foreach (var type in distinct.components)
                     {
-                        var testLocation = new GridCoordinates(new Vector2(0, 0), grid);
-                        var entity = entityManager.SpawnEntity("AllComponentsOneEntityDeleteTestEntity", testLocation);
+                        var component = (Component) componentFactory.GetComponent(type);
 
-                        Assert.That(entity.Initialized);
-
-                        foreach (var type in distinct.components)
+                        // If the entity already has this component, if it was ensured or added by another
+                        if (entity.HasComponent(component.GetType()))
                         {
-                            var component = (Component) componentFactory.GetComponent(type);
-
-                            // If the entity already has this component, if it was ensured or added by another
-                            if (entity.HasComponent(component.GetType()))
-                            {
-                                continue;
-                            }
-
-                            // If this component is ignored
-                            if (skipComponents.Contains(component.Name))
-                            {
-                                continue;
-                            }
-
-                            component.Owner = entity;
-
-                            Logger.LogS(LogLevel.Debug, "EntityTest", $"Adding component: {component.Name}");
-
-                            entityManager.ComponentManager.AddComponent(entity, component);
+                            continue;
                         }
 
-                        server.RunTicks(48); // Run one full second on the server
+                        // If this component is ignored
+                        if (skipComponents.Contains(component.Name))
+                        {
+                            continue;
+                        }
 
-                        entityManager.DeleteEntity(entity.Uid);
+                        component.Owner = entity;
+
+                        Logger.LogS(LogLevel.Debug, "EntityTest", $"Adding component: {component.Name}");
+
+                        Assert.DoesNotThrow(() =>
+                            {
+                                entityManager.ComponentManager.AddComponent(entity, component);
+                            }, "Component '{0}' threw an exception.",
+                            component.Name);
                     }
-                });
+
+                    server.RunTicks(48); // Run one full second on the server
+
+                    entityManager.DeleteEntity(entity.Uid);
+                }
             });
 
             await server.WaitIdleAsync();

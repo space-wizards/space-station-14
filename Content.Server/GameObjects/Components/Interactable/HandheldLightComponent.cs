@@ -28,7 +28,8 @@ namespace Content.Server.GameObjects.Components.Interactable
     ///     Component that represents a handheld lightsource which can be toggled on and off.
     /// </summary>
     [RegisterComponent]
-    internal sealed class HandheldLightComponent : SharedHandheldLightComponent, IUse, IExamine, IInteractUsing, IMapInit
+    internal sealed class HandheldLightComponent : SharedHandheldLightComponent, IUse, IExamine, IInteractUsing,
+        IMapInit
     {
         [Dependency] private readonly ISharedNotifyManager _notifyManager = default!;
 
@@ -41,9 +42,12 @@ namespace Content.Server.GameObjects.Components.Interactable
             get
             {
                 if (_cellContainer.ContainedEntity == null) return null;
+                if (_cellContainer.ContainedEntity.TryGetComponent(out BatteryComponent? cell))
+                {
+                    return cell;
+                }
 
-                _cellContainer.ContainedEntity.TryGetComponent(out BatteryComponent? cell);
-                return cell;
+                return null;
             }
         }
 
@@ -134,7 +138,6 @@ namespace Content.Server.GameObjects.Components.Interactable
             Activated = false;
 
             EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/flashlight_toggle.ogg", Owner);
-
         }
 
         private void TurnOn(IEntity user)
@@ -147,7 +150,6 @@ namespace Content.Server.GameObjects.Components.Interactable
             var cell = Cell;
             if (cell == null)
             {
-
                 EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/button.ogg", Owner);
 
                 _notifyManager.PopupMessage(Owner, user, Loc.GetString("Cell missing..."));
@@ -168,7 +170,6 @@ namespace Content.Server.GameObjects.Components.Interactable
             SetState(true);
 
             EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/flashlight_toggle.ogg", Owner);
-
         }
 
         private void SetState(bool on)
@@ -191,10 +192,24 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         public void OnUpdate(float frameTime)
         {
-            if (!Activated) return;
+            if (!Activated || Cell == null) return;
 
-            var cell = Cell;
-            if (cell == null || !cell.TryUseCharge(Wattage * frameTime)) TurnOff();
+            var appearanceComponent = Owner.GetComponent<AppearanceComponent>();
+
+            if (Cell.MaxCharge - Cell.CurrentCharge < Cell.MaxCharge * 0.70)
+            {
+                appearanceComponent.SetData(HandheldLightVisuals.Power, HandheldLightPowerStates.FullPower);
+            }
+            else if (Cell.MaxCharge - Cell.CurrentCharge < Cell.MaxCharge * 0.90)
+            {
+                appearanceComponent.SetData(HandheldLightVisuals.Power, HandheldLightPowerStates.LowPower);
+            }
+            else
+            {
+                appearanceComponent.SetData(HandheldLightVisuals.Power, HandheldLightPowerStates.Dying);
+            }
+
+            if (Cell == null || !Cell.TryUseCharge(Wattage * frameTime)) TurnOff();
 
             Dirty();
         }
@@ -226,7 +241,6 @@ namespace Content.Server.GameObjects.Components.Interactable
             }
 
             EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/pistol_magout.ogg", Owner);
-
         }
 
         public override ComponentState GetComponentState()
