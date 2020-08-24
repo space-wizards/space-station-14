@@ -12,6 +12,9 @@
   components:
   - type: AiController
     logic: Civilian
+  - type: AiFactionTag
+    factions:
+    - SimpleNeutral
   - type: MovementSpeedModifier
     baseWalkSpeed : 5
     baseSprintSpeed : 5

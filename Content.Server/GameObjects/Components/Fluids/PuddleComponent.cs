@@ -48,7 +48,6 @@ namespace Content.Server.GameObjects.Components.Fluids
 
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
-        [Dependency] private readonly ILocalizationManager _loc;
 #pragma warning restore 649
 
         public override string Name => "Puddle";
@@ -160,7 +159,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         {
             if(_slippery)
             {
-                message.AddText(_loc.GetString("It looks slippery."));
+                message.AddText(Loc.GetString("It looks slippery."));
             }
         }
 

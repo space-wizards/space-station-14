@@ -8,6 +8,10 @@
   components:
   - type: AiController
     logic: Civilian
+  - type: AiFactionTag
+    factions:
+    - NanoTransen
+
 
 - type: entity
   save: false
