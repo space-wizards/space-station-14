@@ -11,16 +11,15 @@ namespace Content.Server.GameObjects.Components.Power
     {
         public override string Name => "Battery";
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public int MaxCharge { get => _maxCharge; set => SetMaxCharge(value); }
+        [ViewVariables(VVAccess.ReadWrite)] public int MaxCharge { get => _maxCharge; set => SetMaxCharge(value); }
         private int _maxCharge;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float CurrentCharge { get => _currentCharge; set => SetCurrentCharge(value); }
+
         private float _currentCharge;
 
-        [ViewVariables]
-        public BatteryState BatteryState { get; private set; }
+        [ViewVariables] public BatteryState BatteryState { get; private set; }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -93,7 +92,7 @@ namespace Content.Server.GameObjects.Components.Power
         private void SetMaxCharge(int newMax)
         {
             _maxCharge = Math.Max(newMax, 0);
-            _currentCharge = Math.Min( _currentCharge, MaxCharge);
+            _currentCharge = Math.Min(_currentCharge, MaxCharge);
             UpdateStorageState();
             OnChargeChanged();
         }
