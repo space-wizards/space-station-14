@@ -55,7 +55,6 @@ namespace Content.Server.GameObjects.Components.Interactable
         private SpriteComponent? _spriteComponent;
         private SolutionComponent? _solutionComponent;
         private PointLightComponent? _pointLightComponent;
-        private DoAfterSystem _doAfterSystem;
 
         public string? WeldSoundCollection { get; set; }
 
@@ -90,8 +89,6 @@ namespace Content.Server.GameObjects.Components.Interactable
             Owner.TryGetComponent(out _solutionComponent);
             Owner.TryGetComponent(out _spriteComponent);
             Owner.TryGetComponent(out _pointLightComponent);
-
-            _doAfterSystem = EntitySystem.Get<DoAfterSystem>();
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -261,17 +258,16 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         public SuicideKind Suicide(IEntity victim, IChatManager chat)
         {
-
             if (TryWeld(5, victim, silent: true))
             {
                 PlaySoundCollection(WeldSoundCollection);
                 PopupMessageOtherClientsInRange(victim, Loc.GetString("{0:theName} welds {0:their} every orifice closed! It looks like {0:theyre} trying to commit suicide!", victim), 15);
-                _notifyManager.PopupMessage(victim, victim, Loc.GetString("You weld your every orific closed!", Owner));
+                _notifyManager.PopupMessage(victim, victim, Loc.GetString("You weld your every orific closed!"));
                 return SuicideKind.Heat;
             }
 
-            PopupMessageOtherClientsInRange(victim, Loc.GetString("{0:theName} bashes {0:themselves} with the {1}!", victim), 15);
-            _notifyManager.PopupMessage(victim, victim, Loc.GetString("You bash yourself with the {1}!", Owner));
+            PopupMessageOtherClientsInRange(victim, Loc.GetString("{0:theName} bashes {0:themselves} with the {0}!", victim), 15);
+            _notifyManager.PopupMessage(victim, victim, Loc.GetString("You bash yourself with the {0}!"));
             return SuicideKind.Blunt;
         }
 
