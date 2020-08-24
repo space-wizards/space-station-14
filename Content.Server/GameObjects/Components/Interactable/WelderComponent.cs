@@ -1,8 +1,10 @@
 ﻿#nullable enable
 using System;
+using System.Threading.Tasks;
+using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Chemistry;
-using Content.Server.GameObjects.EntitySystems.Click;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects;
@@ -18,6 +20,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using Robust.Shared.Serialization;
+using Content.Shared.GameObjects.EntitySystems;
 
 namespace Content.Server.GameObjects.Components.Interactable
 {
@@ -26,10 +29,8 @@ namespace Content.Server.GameObjects.Components.Interactable
     [ComponentReference(typeof(IToolComponent))]
     public class WelderComponent : ToolComponent, IExamine, IUse, ISuicideAct, ISolutionChange
     {
-#pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
-#pragma warning restore 649
 
         public override string Name => "Welder";
         public override uint? NetID => ContentNetIDs.WELDER;
@@ -95,16 +96,37 @@ namespace Content.Server.GameObjects.Components.Interactable
             return new WelderComponentState(FuelCapacity, Fuel, WelderLit);
         }
 
-        public override bool UseTool(IEntity user, IEntity target, ToolQuality toolQualityNeeded)
+        public override async Task<bool> UseTool(IEntity user, IEntity target, float doAfterDelay, ToolQuality toolQualityNeeded, Func<bool>? doAfterCheck = null)
         {
-            var canUse = base.UseTool(user, target, toolQualityNeeded);
+            bool ExtraCheck()
+            {
+                var extraCheck = doAfterCheck?.Invoke() ?? true;
+
+                if (!CanWeld(DefaultFuelCost))
+                {
+                    _notifyManager.PopupMessage(target, user, "Can't weld!");
+
+                    return false;
+                }
+
+                return extraCheck;
+            }
+
+            var canUse = await base.UseTool(user, target, doAfterDelay, toolQualityNeeded, ExtraCheck);
 
             return toolQualityNeeded.HasFlag(ToolQuality.Welding) ? canUse && TryWeld(DefaultFuelCost, user) : canUse;
         }
 
-        public bool UseTool(IEntity user, IEntity target, ToolQuality toolQualityNeeded, float fuelConsumed)
+        public async Task<bool> UseTool(IEntity user, IEntity target, float doAfterDelay, ToolQuality toolQualityNeeded, float fuelConsumed, Func<bool>? doAfterCheck = null)
         {
-            return base.UseTool(user, target, toolQualityNeeded) && TryWeld(fuelConsumed, user);
+            bool ExtraCheck()
+            {
+                var extraCheck = doAfterCheck?.Invoke() ?? true;
+
+                return extraCheck && CanWeld(fuelConsumed);
+            }
+
+            return await base.UseTool(user, target, doAfterDelay, toolQualityNeeded, ExtraCheck) && TryWeld(fuelConsumed, user);
         }
 
         private bool TryWeld(float value, IEntity? user = null, bool silent = false)
@@ -178,6 +200,10 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             PlaySoundCollection("WelderOn", -5);
             _welderSystem.Subscribe(this);
+
+            Owner.Transform.GridPosition
+                .GetTileAtmosphere()?.HotspotExpose(700f, 50f, true);
+
             return true;
         }
 
@@ -204,12 +230,21 @@ namespace Content.Server.GameObjects.Components.Interactable
             }
         }
 
+        protected override void Shutdown()
+        {
+            base.Shutdown();
+            _welderSystem.Unsubscribe(this);
+        }
+
         public void OnUpdate(float frameTime)
         {
-            if (!HasQuality(ToolQuality.Welding) || !WelderLit)
+            if (!HasQuality(ToolQuality.Welding) || !WelderLit || Owner.Deleted)
                 return;
 
             _solutionComponent?.TryRemoveReagent("chem.WeldingFuel", ReagentUnit.New(FuelLossRate * frameTime));
+
+            Owner.Transform.GridPosition
+                .GetTileAtmosphere()?.HotspotExpose(700f, 50f, true);
 
             if (Fuel == 0)
                 ToggleWelderStatus();
@@ -221,11 +256,12 @@ namespace Content.Server.GameObjects.Components.Interactable
             if (TryWeld(5, victim, silent: true))
             {
                 PlaySoundCollection(WeldSoundCollection);
-                chat.EntityMe(victim, Loc.GetString("welds {0:their} every orifice closed! It looks like {0:theyre} trying to commit suicide!", victim)); //TODO: theyre macro
+                chat.EntityMe(victim, Loc.GetString("welds {0:their} every orifice closed! It looks like {0:theyre} trying to commit suicide!", victim));
                 return SuicideKind.Heat;
             }
+
             chat.EntityMe(victim, Loc.GetString("bashes {0:themselves} with the {1}!", victim, Owner.Name));
-            return SuicideKind.Brute;
+            return SuicideKind.Blunt;
         }
 
         public void SolutionChanged(SolutionChangeEventArgs eventArgs)

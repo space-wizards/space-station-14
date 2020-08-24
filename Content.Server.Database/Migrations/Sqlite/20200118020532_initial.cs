@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Content.Server.Database.Migrations
+namespace Content.Server.Database.Migrations.Sqlite
 {
     public partial class initial : Migration
     {

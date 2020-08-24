@@ -23,14 +23,12 @@
       mask:
       - Impassable
       - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
   - type: Physics
     edgeslide: false
   - type: Projectile
     soundHit: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
     damages:
-      Brute: 20
+      Piercing: 20
 
 - type: entity
   id: BulletBaseFlash
@@ -41,7 +39,7 @@
   - type: Projectile
     soundHit: /Audio/Weapons/Guns/Hits/snap.ogg
     damages:
-      Brute: 10
+      Piercing: 10
   - type: FlashProjectile
     range: 1
 
@@ -53,7 +51,7 @@
   components:
   - type: Projectile
     damages:
-      Brute: 12
+      Piercing: 12
 
 - type: entity
   id: BulletBasePractice
@@ -63,7 +61,7 @@
   components:
   - type: Projectile
     damages:
-      Brute: 2
+      Blunt: 2
 
 - type: entity
   id: BulletBaseRubber
@@ -74,7 +72,7 @@
   - type: Projectile
     soundHit: /Audio/Weapons/Guns/Hits/snap.ogg
     damages:
-      Brute: 3
+      Blunt: 3
   - type: StunnableProjectile
     paralyzeAmount: 2
 
@@ -224,7 +222,7 @@
     deleteOnCollide: true
     soundHit: /Audio/Guns/Hits/snap.ogg
     damages:
-      Brute: 2
+      Blunt: 2
 
 - type: entity
   id: BulletCap

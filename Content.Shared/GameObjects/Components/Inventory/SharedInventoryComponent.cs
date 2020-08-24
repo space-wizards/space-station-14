@@ -8,7 +8,7 @@ using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
-namespace Content.Shared.GameObjects
+namespace Content.Shared.GameObjects.Components.Inventory
 {
     public abstract class SharedInventoryComponent : Component
     {

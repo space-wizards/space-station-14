@@ -19,11 +19,10 @@ namespace Content.Server.Preferences
     /// </summary>
     public class ServerPreferencesManager : SharedPreferencesManager, IServerPreferencesManager
     {
-#pragma warning disable 649
-        [Dependency] private readonly IServerNetManager _netManager;
-        [Dependency] private readonly IConfigurationManager _configuration;
-        [Dependency] private readonly IResourceManager _resourceManager;
-#pragma warning restore 649
+        [Dependency] private readonly IServerNetManager _netManager = default!;
+        [Dependency] private readonly IConfigurationManager _configuration = default!;
+        [Dependency] private readonly IResourceManager _resourceManager = default!;
+
         private PreferencesDatabase _preferencesDb;
         private Task<PreferencesDatabase> _prefsDbLoadTask;
 
@@ -50,11 +49,11 @@ namespace Content.Server.Preferences
             {
                 case "sqlite":
                     var configPreferencesDbPath = _configuration.GetCVar<string>("database.prefs_sqlite_dbpath");
-                    var finalPreferencesDbPath =
+                    var inMemory = _resourceManager.UserData.RootDir == null;
+                    var finalPreferencesDbPath = inMemory ?
+                        null :
                         Path.Combine(_resourceManager.UserData.RootDir, configPreferencesDbPath);
-                    dbConfig = new SqliteConfiguration(
-                        finalPreferencesDbPath
-                    );
+                    dbConfig = new SqliteConfiguration(finalPreferencesDbPath);
                     break;
                 case "postgres":
                     dbConfig = new PostgresConfiguration(

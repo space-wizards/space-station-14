@@ -1,11 +1,9 @@
 using Content.Client.GameObjects.Components.Actor;
 using Content.Client.UserInterface;
 using Content.Shared.Input;
-using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Player;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 
@@ -13,10 +11,8 @@ namespace Content.Client.GameObjects.EntitySystems
 {
     public sealed class CharacterInterfaceSystem : EntitySystem
     {
-#pragma warning disable 649
-        [Dependency] private readonly IGameHud _gameHud;
-        [Dependency] private readonly IPlayerManager _playerManager;
-#pragma warning restore 649
+        [Dependency] private readonly IGameHud _gameHud = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
 
         public override void Initialize()
         {

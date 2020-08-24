@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using Content.Server.AI.Operators;
 using Content.Server.AI.Operators.Inventory;
+using Content.Server.AI.Operators.Nutrition;
 using Content.Server.AI.Utility.Considerations;
-using Content.Server.AI.Utility.Considerations.Hands;
+using Content.Server.AI.Utility.Considerations.Inventory;
 using Content.Server.AI.Utility.Considerations.Nutrition.Drink;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
@@ -27,7 +28,7 @@ namespace Content.Server.AI.Utility.Actions.Nutrition.Drink
             ActionOperators = new Queue<AiOperator>(new AiOperator[]
             {
                 new EquipEntityOperator(Owner, _entity),
-                new UseItemInHandsOperator(Owner, _entity),
+                new UseDrinkInInventoryOperator(Owner, _entity),
             });
         }
  
@@ -43,10 +44,8 @@ namespace Content.Server.AI.Utility.Actions.Nutrition.Drink
 
             return new[]
             {
-                considerationsManager.Get<TargetInOurHandsCon>()
+                considerationsManager.Get<TargetInOurInventoryCon>()
                     .BoolCurve(context),
-                considerationsManager.Get<ThirstCon>()
-                    .LogisticCurve(context, 1000f, 1.3f, -0.3f, 0.5f),
                 considerationsManager.Get<DrinkValueCon>()
                     .QuadraticCurve(context, 1.0f, 0.4f, 0.0f, 0.0f),
             };

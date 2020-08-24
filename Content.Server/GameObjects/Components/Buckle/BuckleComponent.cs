@@ -7,11 +7,11 @@ using Content.Server.GameObjects.Components.Strap;
 using Content.Server.Interfaces;
 using Content.Server.Mobs;
 using Content.Server.Utility;
-using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Buckle;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Strap;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystemMessages;
@@ -34,13 +34,11 @@ namespace Content.Server.GameObjects.Components.Buckle
     [RegisterComponent]
     public class BuckleComponent : SharedBuckleComponent, IInteractHand, IDragDrop
     {
-#pragma warning disable 649
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
-#pragma warning restore 649
 
         private int _size;
 
@@ -112,7 +110,7 @@ namespace Content.Server.GameObjects.Components.Buckle
         /// </summary>
         private void BuckleStatus()
         {
-            if (Owner.TryGetComponent(out ServerStatusEffectsComponent status))
+            if (Owner.TryGetComponent(out ServerStatusEffectsComponent? status))
             {
                 status.ChangeStatusEffectIcon(StatusEffect.Buckled,
                     Buckled
@@ -291,7 +289,7 @@ namespace Content.Server.GameObjects.Components.Buckle
                 return false;
             }
 
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(BuckleVisuals.Buckled, true);
             }
@@ -359,12 +357,12 @@ namespace Content.Server.GameObjects.Components.Buckle
                 Owner.Transform.WorldRotation = oldBuckledTo.Owner.Transform.WorldRotation;
             }
 
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(BuckleVisuals.Buckled, false);
             }
 
-            if (Owner.TryGetComponent(out StunnableComponent stunnable) && stunnable.KnockedDown)
+            if (Owner.TryGetComponent(out StunnableComponent? stunnable) && stunnable.KnockedDown)
             {
                 StandingStateHelper.Down(Owner);
             }
@@ -373,14 +371,14 @@ namespace Content.Server.GameObjects.Components.Buckle
                 StandingStateHelper.Standing(Owner);
             }
 
-            if (Owner.TryGetComponent(out SpeciesComponent species))
+            if (Owner.TryGetComponent(out MobStateManagerComponent? stateManager))
             {
-                species.CurrentDamageState.EnterState(Owner);
+                stateManager.CurrentMobState.EnterState(Owner);
             }
 
             BuckleStatus();
 
-            if (oldBuckledTo.Owner.TryGetComponent(out StrapComponent strap))
+            if (oldBuckledTo.Owner.TryGetComponent(out StrapComponent? strap))
             {
                 strap.Remove(this);
                 _entitySystem.GetEntitySystem<AudioSystem>()
@@ -535,7 +533,7 @@ namespace Content.Server.GameObjects.Components.Buckle
             _entityManager.EventBus.UnsubscribeEvents(this);
 
             if (BuckledTo != null &&
-                BuckledTo.Owner.TryGetComponent(out StrapComponent strap))
+                BuckledTo.Owner.TryGetComponent(out StrapComponent? strap))
             {
                 strap.Remove(this);
             }
@@ -552,7 +550,7 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             if (BuckledTo != null &&
                 Owner.Transform.WorldRotation.GetCardinalDir() == Direction.North &&
-                BuckledTo.Owner.TryGetComponent(out SpriteComponent strapSprite))
+                BuckledTo.Owner.TryGetComponent(out SpriteComponent? strapSprite))
             {
                 drawDepth = strapSprite.DrawDepth - 1;
             }

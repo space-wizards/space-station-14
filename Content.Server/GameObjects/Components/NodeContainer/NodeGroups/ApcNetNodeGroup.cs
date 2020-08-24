@@ -1,9 +1,9 @@
-﻿using Content.Server.GameObjects.Components.Power;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Robust.Shared.ViewVariables;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Content.Server.GameObjects.Components.Power;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 {
@@ -48,7 +48,12 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         public void AddApc(ApcComponent apc)
         {
-            _apcBatteries.Add(apc, apc.Battery);
+            if (!apc.Owner.TryGetComponent(out BatteryComponent battery))
+            {
+                return;
+            }
+
+            _apcBatteries.Add(apc, battery);
         }
 
         public void RemoveApc(ApcComponent apc)

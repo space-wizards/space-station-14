@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -13,20 +13,17 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timers;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameObjects.Components.Weapon.Melee
 {
     [RegisterComponent]
     public class FlashComponent : MeleeWeaponComponent, IUse, IExamine
     {
-#pragma warning disable 649
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-        [Dependency] private readonly IEntityManager _entityManager;
-        [Dependency] private readonly ISharedNotifyManager _notifyManager;
-#pragma warning restore 649
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly ISharedNotifyManager _notifyManager = default!;
 
         public override string Name => "Flash";
 
@@ -173,10 +170,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             if (inDetailsRange)
             {
                 message.AddMarkup(
-                    _localizationManager.GetString(
+                    Loc.GetString(
                         "The flash has [color=green]{0}[/color] {1} remaining.",
                         Uses,
-                        _localizationManager.GetPluralString("use", "uses", Uses)
+                        Loc.GetPluralString("use", "uses", Uses)
                     )
                 );
             }

@@ -22,7 +22,8 @@ namespace Content.Shared.GameObjects.Components.Disposal
         {
             UnAnchored,
             Anchored,
-            Flushing
+            Flushing,
+            Charging
         }
 
         [Serializable, NetSerializable]
@@ -50,14 +51,14 @@ namespace Content.Shared.GameObjects.Components.Disposal
         }
 
         [Serializable, NetSerializable]
-        public enum State
+        public enum PressureState
         {
             Ready,
             Pressurizing
         }
 
         [Serializable, NetSerializable]
-        public class DisposalUnitBoundUserInterfaceState : BoundUserInterfaceState
+        public class DisposalUnitBoundUserInterfaceState : BoundUserInterfaceState, IEquatable<DisposalUnitBoundUserInterfaceState>
         {
             public readonly string UnitName;
             public readonly string UnitState;
@@ -73,6 +74,17 @@ namespace Content.Shared.GameObjects.Components.Disposal
                 Pressure = pressure;
                 Powered = powered;
                 Engaged = engaged;
+            }
+
+            public bool Equals(DisposalUnitBoundUserInterfaceState other)
+            {
+                if (ReferenceEquals(null, other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return UnitName == other.UnitName && 
+                       UnitState == other.UnitState && 
+                       Powered == other.Powered && 
+                       Engaged == other.Engaged && 
+                       Pressure.Equals(other.Pressure);
             }
         }
 

@@ -1,18 +1,14 @@
-﻿using Robust.Client.UserInterface.Controls;
+﻿using System.Collections.Generic;
+using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Maths;
-using System;
-using System.Collections.Generic;
 
 namespace Content.Client.UserInterface.Cargo
 {
     class CargoConsoleOrderMenu : SS14Window
     {
-#pragma warning disable 649
-        [Dependency] private readonly ILocalizationManager _loc;
-#pragma warning restore 649
+        [Dependency] private readonly ILocalizationManager _loc = default!;
 
         public LineEdit Requester { get; set; }
         public LineEdit Reason { get; set; }

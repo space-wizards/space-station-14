@@ -1,4 +1,7 @@
-﻿using Content.Client.GameObjects.Components.Cargo;
+﻿using System;
+using System.Collections.Generic;
+using Content.Client.GameObjects.Components.Cargo;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Prototypes.Cargo;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface.Controls;
@@ -7,17 +10,12 @@ using Robust.Client.Utility;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using System;
-using System.Collections.Generic;
-using Content.Client.UserInterface.Stylesheets;
 
 namespace Content.Client.UserInterface.Cargo
 {
     public class CargoConsoleMenu : SS14Window
     {
-#pragma warning disable 649
-        [Dependency] private readonly ILocalizationManager _loc;
-#pragma warning restore 649
+        [Dependency] private readonly ILocalizationManager _loc = default!;
 
         protected override Vector2? CustomSize => (400, 600);
 
@@ -287,7 +285,7 @@ namespace Content.Client.UserInterface.Cargo
         public void PopulateOrders()
         {
             _orders.RemoveAllChildren();
-            _requests.RemoveAllChildren();            
+            _requests.RemoveAllChildren();
             foreach (var order in Owner.Orders.Orders)
             {
                 var row = new CargoOrderRow();

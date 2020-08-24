@@ -5,7 +5,6 @@ using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.UserInterface;
@@ -13,7 +12,6 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -27,14 +25,12 @@ namespace Content.Client.GameObjects.EntitySystems
     [UsedImplicitly]
     internal sealed class ExamineSystem : ExamineSystemShared
     {
-        public const string StyleClassEntityTooltip = "entity-tooltip";
+        [Dependency] private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
 
-#pragma warning disable 649
-        [Dependency] private IInputManager _inputManager;
-        [Dependency] private IUserInterfaceManager _userInterfaceManager;
-        [Dependency] private IEntityManager _entityManager;
-        [Dependency] private IPlayerManager _playerManager;
-#pragma warning restore 649
+        public const string StyleClassEntityTooltip = "entity-tooltip";
 
         private Popup _examineTooltipOpen;
         private CancellationTokenSource _requestCancelTokenSource;
@@ -106,37 +102,43 @@ namespace Content.Client.GameObjects.EntitySystems
 
             _examineTooltipOpen.Open(UIBox2.FromDimensions(popupPos, size));
 
+            FormattedMessage message;
             if (entity.Uid.IsClientSide())
             {
-                return;
+                message = GetExamineText(entity, _playerManager.LocalPlayer.ControlledEntity);
+            }
+            else
+            {
+
+                // Ask server for extra examine info.
+                RaiseNetworkEvent(new ExamineSystemMessages.RequestExamineInfoMessage(entity.Uid));
+
+                ExamineSystemMessages.ExamineInfoResponseMessage response;
+                try
+                {
+                    _requestCancelTokenSource = new CancellationTokenSource();
+                    response =
+                        await AwaitNetworkEvent<ExamineSystemMessages.ExamineInfoResponseMessage>(_requestCancelTokenSource
+                            .Token);
+                }
+                catch (TaskCanceledException)
+                {
+                    return;
+                }
+                finally
+                {
+                    _requestCancelTokenSource = null;
+                }
+
+                message = response.Message;
             }
 
-            // Ask server for extra examine info.
-            RaiseNetworkEvent(new ExamineSystemMessages.RequestExamineInfoMessage(entity.Uid));
-
-            ExamineSystemMessages.ExamineInfoResponseMessage response;
-            try
-            {
-                _requestCancelTokenSource = new CancellationTokenSource();
-                response =
-                    await AwaitNetworkEvent<ExamineSystemMessages.ExamineInfoResponseMessage>(_requestCancelTokenSource
-                        .Token);
-            }
-            catch (TaskCanceledException)
-            {
-                return;
-            }
-            finally
-            {
-                _requestCancelTokenSource = null;
-            }
-
-            foreach (var msg in response.Message.Tags.OfType<FormattedMessage.TagText>())
+            foreach (var msg in message.Tags.OfType<FormattedMessage.TagText>())
             {
                 if (!string.IsNullOrWhiteSpace(msg.Text))
                 {
                     var richLabel = new RichTextLabel();
-                    richLabel.SetMessage(response.Message);
+                    richLabel.SetMessage(message);
                     vBox.AddChild(richLabel);
                     break;
                 }

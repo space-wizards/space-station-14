@@ -60,7 +60,7 @@ namespace Content.Server.Preferences
             await _prefsSemaphore.WaitAsync();
             try
             {
-                index = index.Clamp(0, _maxCharacterSlots - 1);
+                index = MathHelper.Clamp(index, 0, _maxCharacterSlots - 1);
                 await _prefsDb.SaveSelectedCharacterIndex(username, index);
             }
             finally

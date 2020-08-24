@@ -1,6 +1,7 @@
 - type: entity
   id: Girder
   name: girder
+  description: A large structural assembly made out of metal; It requires a layer of metal before it can be considered a wall.
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -13,10 +14,9 @@
     shapes:
     - !type:PhysShapeAabb
       layer: [MobMask, Opaque]
-  - type: Damageable
   - type: Destructible
-    thresholdvalue: 50
-    spawnondestroy: SteelSheet1
+    deadThreshold: 50
+    spawnOnDestroy: SteelSheet1
   - type: SnapGrid
     offset: Edge
 

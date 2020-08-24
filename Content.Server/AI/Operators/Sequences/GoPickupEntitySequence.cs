@@ -11,7 +11,7 @@ namespace Content.Server.AI.Operators.Sequences
         {
             Sequence = new Queue<AiOperator>(new AiOperator[]
             {
-                new MoveToEntityOperator(owner, target),
+                new MoveToEntityOperator(owner, target, requiresInRangeUnobstructed: true),
                 new OpenStorageOperator(owner, target),
                 new PickupEntityOperator(owner, target),
             });

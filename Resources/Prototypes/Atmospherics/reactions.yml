@@ -1,0 +1,24 @@
+﻿- type: gasReaction
+  id: PhoronFire
+  priority: -2
+  minimumTemperature: 373.149 # Same as Atmospherics.FireMinimumTemperatureToExist
+  minimumRequirements: # In this case, same as minimum mole count.
+    - 0.01  # oxygen
+    - 0     # nitrogen
+    - 0     # carbon dioxide
+    - 0.01  # phoron
+  effects:
+    - !type:PhoronFireReaction {}
+
+- type: gasReaction
+  id: TritiumFire
+  priority: -1
+  minimumTemperature: 373.149 # Same as Atmospherics.FireMinimumTemperatureToExist
+  minimumRequirements: # In this case, same as minimum mole count.
+    - 0.01  # oxygen
+    - 0     # nitrogen
+    - 0     # carbon dioxide
+    - 0     # phoron
+    - 0.01  # tritium
+  effects:
+    - !type:TritiumFireReaction {}

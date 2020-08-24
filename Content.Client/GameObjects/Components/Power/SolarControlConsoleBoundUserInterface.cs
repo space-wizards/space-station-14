@@ -1,6 +1,4 @@
 using System;
-using Content.Client.UserInterface;
-using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.GameObjects.Components.Power;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Client.Graphics.Drawing;
@@ -48,7 +46,7 @@ namespace Content.Client.GameObjects.Components.Power
                     SendMessage(msg);
                 }
             };
-            _window.OpenCenteredMinSize();
+            _window.OpenCentered();
         }
 
         public SolarControlConsoleBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)

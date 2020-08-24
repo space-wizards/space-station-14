@@ -1,5 +1,7 @@
-﻿using Content.Server.GameObjects.EntitySystems.Click;
+﻿#nullable enable
+using System.Threading.Tasks;
 using Content.Shared.GameObjects.Components;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
@@ -7,29 +9,35 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Utility;
 
-namespace Content.Server.GameObjects.Components.Interactable
+namespace Content.Server.GameObjects.Components.Paper
 {
     [RegisterComponent]
     public class PaperComponent : SharedPaperComponent, IExamine, IInteractUsing, IUse
     {
-
-        private BoundUserInterface _userInterface;
-        private string _content;
+        private string _content = "";
         private PaperAction _mode;
+
+        private BoundUserInterface? UserInterface =>
+            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
+            ui.TryGetBoundUserInterface(PaperUiKey.Key, out var boundUi)
+                ? boundUi
+                : null;
 
         public override void Initialize()
         {
             base.Initialize();
-            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
-                .GetBoundUserInterface(PaperUiKey.Key);
-            _userInterface.OnReceiveMessage += OnUiReceiveMessage;
-            _content = "";
+
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += OnUiReceiveMessage;
+            }
+
             _mode = PaperAction.Read;
             UpdateUserInterface();
         }
         private void UpdateUserInterface()
         {
-            _userInterface.SetState(new PaperBoundUserInterfaceState(_content, _mode));
+            UserInterface?.SetState(new PaperBoundUserInterfaceState(_content, _mode));
         }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
@@ -42,11 +50,12 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         public bool UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
+            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
                 return false;
+
             _mode = PaperAction.Read;
             UpdateUserInterface();
-            _userInterface.Open(actor.playerSession);
+            UserInterface?.Open(actor.playerSession);
             return true;
         }
 
@@ -58,7 +67,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             _content += msg.Text + '\n';
 
-            if (Owner.TryGetComponent(out SpriteComponent sprite))
+            if (Owner.TryGetComponent(out SpriteComponent? sprite))
             {
                 sprite.LayerSetState(1, "paper_words");
             }
@@ -66,16 +75,16 @@ namespace Content.Server.GameObjects.Components.Interactable
             UpdateUserInterface();
         }
 
-        public bool InteractUsing(InteractUsingEventArgs eventArgs)
+        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!eventArgs.Using.HasComponent<WriteComponent>())
                 return false;
-            if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
+            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
                 return false;
 
             _mode = PaperAction.Write;
             UpdateUserInterface();
-            _userInterface.Open(actor.playerSession);
+            UserInterface?.Open(actor.playerSession);
             return true;
         }
     }

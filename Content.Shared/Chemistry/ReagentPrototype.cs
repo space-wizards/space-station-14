@@ -12,9 +12,9 @@ namespace Content.Shared.Chemistry
     [Prototype("reagent")]
     public class ReagentPrototype : IPrototype, IIndexedPrototype
     {
-#pragma warning disable 649
-        [Dependency] private readonly IModuleManager _moduleManager;
-#pragma warning restore 649
+        private const float CelsiusToKelvin = 273.15f;
+
+        [Dependency] private readonly IModuleManager _moduleManager = default!;
 
         private string _id;
         private string _name;
@@ -29,7 +29,6 @@ namespace Content.Shared.Chemistry
         public Color SubstanceColor => _substanceColor;
         //List of metabolism effects this reagent has, should really only be used server-side.
         public List<IMetabolizable> Metabolism => _metabolism;
-
         public string SpriteReplacementPath => _spritePath;
 
         public ReagentPrototype()

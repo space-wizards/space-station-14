@@ -5,7 +5,6 @@ using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Disposal;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using NUnit.Framework;
-using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
@@ -67,7 +66,7 @@ namespace Content.IntegrationTests.Tests.Disposal
             DisposalUnitComponent unit;
             DisposalEntryComponent entry;
 
-            server.Assert(() =>
+            server.Assert(async () =>
             {
                 var mapManager = IoCManager.Resolve<IMapManager>();
 
@@ -82,19 +81,19 @@ namespace Content.IntegrationTests.Tests.Disposal
                 var disposalTrunk = entityManager.SpawnEntity("DisposalTrunk", disposalUnit.Transform.MapPosition);
 
                 // Test for components existing
-                Assert.True(disposalUnit.TryGetComponent(out unit));
-                Assert.True(disposalTrunk.TryGetComponent(out entry));
+                Assert.True(disposalUnit.TryGetComponent(out unit!));
+                Assert.True(disposalTrunk.TryGetComponent(out entry!));
 
                 // Can't insert, unanchored and unpowered
                 var disposalUnitAnchorable = disposalUnit.GetComponent<AnchorableComponent>();
-                disposalUnitAnchorable.TryUnAnchor(human, null, true);
+                await disposalUnitAnchorable.TryUnAnchor(human, null, true);
                 Assert.False(unit.Anchored);
                 UnitInsertContains(unit, false, human, wrench, disposalUnit, disposalTrunk);
 
                 // Anchor the disposal unit
-                disposalUnitAnchorable.TryAnchor(human, null, true);
-                Assert.True(disposalUnit.TryGetComponent(out AnchorableComponent anchorableUnit));
-                Assert.True(anchorableUnit.TryAnchor(human, wrench));
+                await disposalUnitAnchorable.TryAnchor(human, null, true);
+                Assert.True(disposalUnit.TryGetComponent(out AnchorableComponent? anchorableUnit));
+                Assert.True(await anchorableUnit!.TryAnchor(human, wrench));
                 Assert.True(unit.Anchored);
 
                 // No power
@@ -119,8 +118,8 @@ namespace Content.IntegrationTests.Tests.Disposal
                 Flush(unit, false, entry, human, wrench);
 
                 // Remove power need
-                Assert.True(disposalUnit.TryGetComponent(out PowerReceiverComponent power));
-                power.NeedsPower = false;
+                Assert.True(disposalUnit.TryGetComponent(out PowerReceiverComponent? power));
+                power!.NeedsPower = false;
                 Assert.True(unit.Powered);
 
                 // Flush with a mob and an item

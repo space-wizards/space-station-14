@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects;
-using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Interfaces.PDA;
 using Content.Shared.GameObjects.Components.PDA;
@@ -15,10 +14,8 @@ namespace Content.Server.PDA
 {
     public class PDAUplinkManager : IPDAUplinkManager
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly IEntityManager _entityManager;
-#pragma warning restore 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private List<UplinkAccount> _accounts;
         private List<UplinkListingData> _listings;

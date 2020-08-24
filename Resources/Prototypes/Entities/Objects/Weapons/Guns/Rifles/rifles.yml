@@ -174,7 +174,7 @@
     caliber: ClRifle
     magazineTypes:
     - Rifle
-    magFillPrototype: MagazineClRifle10x24
+    magFillPrototype: MagazineClRifle
     fireRate: 8
     minAngle: 10
     maxAngle: 60

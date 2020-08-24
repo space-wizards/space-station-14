@@ -1,4 +1,6 @@
-﻿using Content.Client.Utility;
+﻿using System.Collections.Generic;
+using Content.Client.UserInterface;
+using Content.Client.Utility;
 using JetBrains.Annotations;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -9,20 +11,16 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
-using Content.Client.UserInterface;
-using System.Collections.Generic;
 
-namespace Content.Client.GameObjects
+namespace Content.Client.GameObjects.Components.HUD.Inventory
 {
     // Dynamically instantiated by ClientInventoryComponent.
     [UsedImplicitly]
     public class HumanInventoryInterfaceController : InventoryInterfaceController
     {
-#pragma warning disable 649
-        [Dependency] private readonly ILocalizationManager _loc;
-        [Dependency] private readonly IResourceCache _resourceCache;
-        [Dependency] private readonly IItemSlotManager _itemSlotManager;
-#pragma warning restore 649
+        [Dependency] private readonly ILocalizationManager _loc = default!;
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
 
         private readonly Dictionary<Slots, List<ItemSlotButton>> _inventoryButtons
             = new Dictionary<Slots, List<ItemSlotButton>>();
@@ -43,7 +41,7 @@ namespace Content.Client.GameObjects
             base.Initialize();
 
             _window = new HumanInventoryWindow(_loc, _resourceCache);
-            _window.OnClose += () => _gameHud.InventoryButtonDown = false;
+            _window.OnClose += () => GameHud.InventoryButtonDown = false;
             foreach (var (slot, button) in _window.Buttons)
             {
                 button.OnPressed = (e) => AddToInventory(e, slot);
@@ -153,7 +151,7 @@ namespace Content.Client.GameObjects
         {
             base.PlayerAttached();
 
-            _gameHud.InventoryQuickButtonContainer.AddChild(_quickButtonsContainer);
+            GameHud.InventoryQuickButtonContainer.AddChild(_quickButtonsContainer);
 
             // Update all the buttons to make sure they check out.
 
@@ -175,7 +173,7 @@ namespace Content.Client.GameObjects
         {
             base.PlayerDetached();
 
-            _gameHud.InventoryQuickButtonContainer.RemoveChild(_quickButtonsContainer);
+            GameHud.InventoryQuickButtonContainer.RemoveChild(_quickButtonsContainer);
 
             foreach (var (slot, list) in _inventoryButtons)
             {

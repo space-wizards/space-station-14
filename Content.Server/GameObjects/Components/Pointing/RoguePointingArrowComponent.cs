@@ -1,5 +1,4 @@
 ﻿#nullable enable
-using System;
 using System.Linq;
 using Content.Server.Explosions;
 using Content.Shared.GameObjects.Components.Pointing;
@@ -58,7 +57,7 @@ namespace Content.Server.GameObjects.Components.Pointing
         private void UpdateAppearance()
         {
             if (_chasing == null ||
-                !Owner.TryGetComponent(out AppearanceComponent appearance))
+                !Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 return;
             }
@@ -70,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Pointing
         {
             base.Startup();
 
-            if (Owner.TryGetComponent(out SpriteComponent sprite))
+            if (Owner.TryGetComponent(out SpriteComponent? sprite))
             {
                 sprite.DrawDepth = (int) DrawDepth.Overlays;
             }

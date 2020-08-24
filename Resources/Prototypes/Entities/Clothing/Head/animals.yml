@@ -2,7 +2,7 @@
   parent: HatBase
   id: HatMonkey
   name: monkey
-  description: ''
+  description: That's a monkey head. It has a hole on a mouth to eat bananas.
   components:
   - type: Sprite
     sprite: Clothing/Head/monkey.rsi
@@ -15,7 +15,7 @@
   parent: HatBase
   id: HatMouseBrown
   name: mouse brown
-  description: ''
+  description: This is a head of a brown mouse. Squeak!
   components:
   - type: Sprite
     sprite: Clothing/Head/mouse_brown.rsi
@@ -28,7 +28,7 @@
   parent: HatBase
   id: HatMouseGray
   name: mouse gray
-  description: ''
+  description: This is a head of a gray mouse. Squeak!
   components:
   - type: Sprite
     sprite: Clothing/Head/mouse_gray.rsi
@@ -41,7 +41,7 @@
   parent: HatBase
   id: HatMouseWhite
   name: mouse white
-  description: ''
+  description: This is a head of a white mouse. Squeak!
   components:
   - type: Sprite
     sprite: Clothing/Head/mouse_white.rsi
@@ -54,7 +54,7 @@
   parent: HatBase
   id: HatNymph
   name: nymph
-  description: ''
+  description: It's a nymph. You can put it on your head.
   components:
   - type: Sprite
     sprite: Clothing/Head/nymph.rsi
@@ -67,7 +67,7 @@
   parent: HatBase
   id: HatPai-cat
   name: pai-cat
-  description: ''
+  description: Personal AI in a cat form.
   components:
   - type: Sprite
     sprite: Clothing/Head/pai-cat.rsi
@@ -80,7 +80,7 @@
   parent: HatBase
   id: HatPai-monkey
   name: pai-monkey
-  description: ''
+  description: Personal AI in a monkey form.
   components:
   - type: Sprite
     sprite: Clothing/Head/pai-monkey.rsi
@@ -93,7 +93,7 @@
   parent: HatBase
   id: HatPai-mouse
   name: pai-mouse
-  description: ''
+  description: Personal AI in a mouse form.
   components:
   - type: Sprite
     sprite: Clothing/Head/pai-mouse.rsi
@@ -106,7 +106,7 @@
   parent: HatBase
   id: HatCatGrey
   name: grey cat
-  description: ''
+  description: A cute and fluffy head of a grey cat.
   components:
   - type: Sprite
     sprite: Clothing/Head/cat.rsi
@@ -119,7 +119,7 @@
   parent: HatBase
   id: HatCatBrown
   name: brown cat
-  description: ''
+  description: A cute and fluffy head of a brown cat.
   components:
   - type: Sprite
     sprite: Clothing/Head/cat2.rsi
@@ -132,7 +132,7 @@
   parent: HatBase
   id: HatCatBlack
   name: black cat
-  description: ''
+  description: A cute and fluffy head of a black cat.
   components:
   - type: Sprite
     sprite: Clothing/Head/cat3.rsi

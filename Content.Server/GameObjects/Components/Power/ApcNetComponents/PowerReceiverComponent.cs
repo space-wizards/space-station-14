@@ -1,17 +1,17 @@
-﻿using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+﻿using System;
+using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Shared.GameObjects.Components.Power;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
-using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
-using System;
-using Content.Server.GameObjects.EntitySystems.Click;
-using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Localization;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 {

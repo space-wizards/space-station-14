@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using Content.Shared.GameObjects.Components.Disposal;
+﻿using Content.Shared.GameObjects.Components.Disposal;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -114,12 +113,12 @@ namespace Content.Client.GameObjects.Components.Disposal
             if (normalized <= leftSideSize)
             {
                 normalized /= leftSideSize; // Adjust range to 0.0 to 1.0
-                finalHue = FloatMath.Lerp(leftHue, middleHue, normalized);
+                finalHue = MathHelper.Lerp(leftHue, middleHue, normalized);
             }
             else
             {
                 normalized = (normalized - leftSideSize) / rightSideSize; // Adjust range to 0.0 to 1.0.
-                finalHue = FloatMath.Lerp(middleHue, rightHue, normalized);
+                finalHue = MathHelper.Lerp(middleHue, rightHue, normalized);
             }
 
             // Check if null first to avoid repeatedly creating this.

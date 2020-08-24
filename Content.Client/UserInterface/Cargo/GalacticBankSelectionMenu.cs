@@ -5,22 +5,18 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using System;
-using static Robust.Client.UserInterface.Controls.ItemList;
 
 namespace Content.Client.UserInterface.Cargo
 {
     public class GalacticBankSelectionMenu : SS14Window
     {
+        [Dependency] private readonly ILocalizationManager _loc = default!;
+
         private ItemList _accounts;
         private int _accountCount = 0;
         private string[] _accountNames = new string[] { };
         private int[] _accountIds = new int[] { };
         private int _selectedAccountId = -1;
-
-#pragma warning disable 649
-        [Dependency] private readonly ILocalizationManager _loc;
-#pragma warning restore 649
 
         protected override Vector2? CustomSize => (300, 300);
 

@@ -1,21 +1,18 @@
-using System;
-using System.Linq;
+﻿using System;
 using System.Threading;
-using Content.Server.GameObjects;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Observer;
+using Content.Server.GameObjects.Components.Suspicion;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
+using Content.Server.Mobs;
 using Content.Server.Mobs.Roles;
 using Content.Server.Players;
-using NFluidsynth;
+using Content.Shared.GameObjects.Components.Damage;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
-using Robust.Server.Player;
-using Robust.Shared.Enums;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.IoC;
-using Logger = Robust.Shared.Log.Logger;
 using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameTicking.GameRules
@@ -28,37 +25,20 @@ namespace Content.Server.GameTicking.GameRules
     {
         private static readonly TimeSpan DeadCheckDelay = TimeSpan.FromSeconds(1);
 
-#pragma warning disable 649
-        [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private readonly IChatManager _chatManager;
-        [Dependency] private readonly IEntityManager _entityManager;
-        [Dependency] private readonly IGameTicker _gameTicker;
-#pragma warning restore 649
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly IGameTicker _gameTicker = default!;
 
         private readonly CancellationTokenSource _checkTimerCancel = new CancellationTokenSource();
 
         public override void Added()
         {
-            _entityManager.EventBus.SubscribeEvent<MobDamageStateChangedMessage>(EventSource.Local, this, _onMobDamageStateChanged);
+            _chatManager.DispatchServerAnnouncement("There are traitors on the station! Find them, and kill them!");
+
+            EntitySystem.Get<AudioSystem>().PlayGlobal("/Audio/Misc/tatoralert.ogg", AudioParams.Default,
+                (session) => session.ContentData().Mind?.HasRole<SuspicionTraitorRole>() ?? false);
 
             Timer.SpawnRepeating(DeadCheckDelay, _checkWinConditions, _checkTimerCancel.Token);
-        }
-
-        private void _onMobDamageStateChanged(MobDamageStateChangedMessage message)
-        {
-            var owner = message.Species.Owner;
-
-            if (!(message.Species.CurrentDamageState is DeadState))
-                return;
-
-            if (!owner.TryGetComponent<MindComponent>(out var mind))
-                return;
-
-            if (!mind.HasMind)
-                return;
-
-            message.Species.Owner.Description +=
-                mind.Mind.HasRole<SuspicionTraitorRole>() ? "\nThey were a traitor!" : "\nThey were an innocent!";
         }
 
         public override void Removed()
@@ -76,15 +56,17 @@ namespace Content.Server.GameTicking.GameRules
             foreach (var playerSession in _playerManager.GetAllPlayers())
             {
                 if (playerSession.AttachedEntity == null
-                    || !playerSession.AttachedEntity.TryGetComponent(out SpeciesComponent species))
+                    || !playerSession.AttachedEntity.TryGetComponent(out IDamageableComponent damageable)
+                    || !playerSession.AttachedEntity.TryGetComponent(out SuspicionRoleComponent suspicionRole))
                 {
                     continue;
                 }
 
-                if (!species.CurrentDamageState.IsConscious)
+                if (damageable.CurrentDamageState != DamageState.Alive)
                 {
                     continue;
                 }
+
                 if (playerSession.ContentData().Mind.HasRole<SuspicionTraitorRole>())
                     traitorsAlive++;
                 else
@@ -94,24 +76,46 @@ namespace Content.Server.GameTicking.GameRules
             if ((innocentsAlive + traitorsAlive) == 0)
             {
                 _chatManager.DispatchServerAnnouncement("Everybody is dead, it's a stalemate!");
-                EndRound();
+                EndRound(Victory.Stalemate);
             }
 
             else if (traitorsAlive == 0)
             {
                 _chatManager.DispatchServerAnnouncement("The traitors are dead! The innocents win.");
-                EndRound();
+                EndRound(Victory.Innocents);
             }
             else if (innocentsAlive == 0)
             {
                 _chatManager.DispatchServerAnnouncement("The innocents are dead! The traitors win.");
-                EndRound();
+                EndRound(Victory.Traitors);
             }
         }
 
-        private void EndRound()
+        private enum Victory
         {
-            _gameTicker.EndRound();
+            Stalemate,
+            Innocents,
+            Traitors
+        }
+
+        private void EndRound(Victory victory)
+        {
+            string text;
+
+            switch (victory)
+            {
+                case Victory.Innocents:
+                    text = "The innocents have won!";
+                    break;
+                case Victory.Traitors:
+                    text = "The traitors have won!";
+                    break;
+                default:
+                    text = "Nobody wins!";
+                    break;
+            }
+
+            _gameTicker.EndRound(text);
             _chatManager.DispatchServerAnnouncement($"Restarting in 10 seconds.");
             _checkTimerCancel.Cancel();
             Timer.Spawn(TimeSpan.FromSeconds(10), () => _gameTicker.RestartRound());
