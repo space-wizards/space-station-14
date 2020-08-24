@@ -112,6 +112,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
                 _boltOpen = value;
                 UpdateAppearance();
+                Dirty();
             }
         }
         private bool _boltOpen = true;
@@ -245,8 +246,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                     Owner.PopupMessage(container.Owner, Loc.GetString("Bolt open"));
                 }
                 BoltOpen = true;
-                Dirty();
-                UpdateAppearance();
                 return;
             }
 
@@ -286,8 +285,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 }
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("Bolt closed"));
                 BoltOpen = false;
-                Dirty();
-                UpdateAppearance();
                 return true;
             }
 
