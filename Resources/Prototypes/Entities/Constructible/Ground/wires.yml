@@ -86,8 +86,6 @@
     wireType: Apc
   - type: Destructible
     spawnondestroy: ApcExtensionCableStack1
-<<<<<<< HEAD
-=======
 
 #Depriciated, to be removed from maps
 
@@ -97,9 +95,13 @@
   parent: ApcExtensionCable
   components:
   - type: NodeContainer
-    nodes:
-    - !type:AdjacentNode
-      nodeGroupID: HVPower
-    - !type:AdjacentNode
-      nodeGroupID: Apc
->>>>>>> master
+    nodeTypes: { HVPower : ["AdjacentNode"], Apc : ["AdjacentNode"] }
+
+- type: entity
+  id: Generator
+  name: Depriciated Generator
+  parent: DebugGenerator
+  components:
+  - type: PowerSupplier
+    voltage: High
+    supplyRate: 100000

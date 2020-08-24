@@ -290,21 +290,9 @@
   - type: SnapGrid
     offset: Center
   - type: Breakable
-<<<<<<< HEAD
     thresholdvalue: 100
-=======
-    deadThreshold: 100
 
 #Depriciated, to be removed from maps
-
-- type: entity
-  id: Generator
-  name: Depriciated Generator
-  parent: DebugGenerator
-  components:
-  - type: PowerSupplier
-    voltage: High
-    supplyRate: 100000
 
 - type: entity
   id: APC
@@ -312,11 +300,7 @@
   parent: DebugApc
   components:
   - type: NodeContainer
-    nodes:
-    - !type:AdjacentNode
-      nodeGroupID: HVPower
-    - !type:AdjacentNode
-      nodeGroupID: Apc
+    nodeTypes: { HVPower : ["AdjacentNode"], Apc : ["AdjacentNode"] }
   - type: PowerConsumer
     voltage: High
   - type: BatteryStorage
@@ -341,4 +325,3 @@
   id: WirelessMachine
   name: Depriciated WirelessMachine
   parent: DebugPowerReceiver
->>>>>>> master
