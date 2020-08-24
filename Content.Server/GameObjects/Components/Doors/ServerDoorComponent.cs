@@ -6,6 +6,7 @@ using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Damage;
@@ -142,20 +143,46 @@ namespace Content.Server.GameObjects.Components.Doors
             return accessReader.IsAllowed(user);
         }
 
-        public void TryOpen(IEntity user)
+        /// <summary>
+        /// Returns whether a door has a certain access type. For example, maintenance doors will have access type
+        /// "Maintenance" in their AccessReader.
+        /// </summary>
+        private bool HasAccessType(string accesType)
         {
-            if (!CanOpen(user))
+            if(Owner.TryGetComponent<AccessReader>(out var accessReader))
             {
-                Deny();
-                return;
+                return accessReader.AccessLists.Any(list => list.Contains(accesType));
             }
 
-            Open();
+            return false;
+        }
 
-            if (user.TryGetComponent(out HandsComponent? hands) && hands.Count == 0)
+        public void TryOpen(IEntity user)
+        {
+            var doorSystem = EntitySystem.Get<DoorSystem>();
+            var isAirlockExternal = HasAccessType("External");
+
+            var access = doorSystem.AccessType switch
             {
-                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/bang.ogg", Owner,
-                    AudioParams.Default.WithVolume(-2));
+                DoorSystem.AccessTypes.AllowAll => true,
+                DoorSystem.AccessTypes.AllowAllIdExternal => isAirlockExternal ? CanOpen(user) : true,
+                DoorSystem.AccessTypes.AllowAllNoExternal => !isAirlockExternal,
+                _ => CanOpen(user)
+            };
+
+            if (access)
+            {
+                Open();
+
+                if (user.TryGetComponent(out HandsComponent? hands) && hands.Count == 0)
+                {
+                    EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/bang.ogg", Owner,
+                                                                   AudioParams.Default.WithVolume(-2));
+                }
+            }
+            else
+            {
+                Deny();
             }
         }
 
