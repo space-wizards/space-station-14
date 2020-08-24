@@ -70,7 +70,7 @@ namespace Content.Server.GameObjects.Components.Research
             switch (message.Message)
             {
                 case LatheQueueRecipeMessage msg:
-                    _prototypeManager.TryIndex(msg.ID, out LatheRecipePrototype recipe);
+                    PrototypeManager.TryIndex(msg.ID, out LatheRecipePrototype recipe);
                     if (recipe != null!)
                         for (var i = 0; i < msg.Quantity; i++)
                         {

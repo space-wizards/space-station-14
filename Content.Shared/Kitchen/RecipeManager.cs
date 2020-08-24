@@ -5,12 +5,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Kitchen
 {
-
     public class RecipeManager
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-#pragma warning restore 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         public List<FoodRecipePrototype> Recipes { get; private set; }
 
         public void Initialize()

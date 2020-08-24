@@ -980,22 +980,20 @@ The current game mode is: [color=white]{0}[/color].
             return preset;
         }
 
-#pragma warning disable 649
-        [Dependency] private IEntityManager _entityManager;
-        [Dependency] private IMapManager _mapManager;
-        [Dependency] private IMapLoader _mapLoader;
-        [Dependency] private IGameTiming _gameTiming;
-        [Dependency] private IConfigurationManager _configurationManager;
-        [Dependency] private IChatManager _chatManager;
-        [Dependency] private IServerNetManager _netManager;
-        [Dependency] private IDynamicTypeFactory _dynamicTypeFactory;
-        [Dependency] private IPrototypeManager _prototypeManager;
-        [Dependency] private readonly ILocalizationManager _localization;
-        [Dependency] private readonly IRobustRandom _robustRandom;
-        [Dependency] private readonly IServerPreferencesManager _prefsManager;
-        [Dependency] private readonly IBaseServer _baseServer;
-        [Dependency] private readonly IWatchdogApi _watchdogApi;
-#pragma warning restore 649
+        [Dependency] private IEntityManager _entityManager = default!;
+        [Dependency] private IMapManager _mapManager = default!;
+        [Dependency] private IMapLoader _mapLoader = default!;
+        [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private IConfigurationManager _configurationManager = default!;
+        [Dependency] private IChatManager _chatManager = default!;
+        [Dependency] private IServerNetManager _netManager = default!;
+        [Dependency] private IDynamicTypeFactory _dynamicTypeFactory = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly ILocalizationManager _localization = default!;
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly IServerPreferencesManager _prefsManager = default!;
+        [Dependency] private readonly IBaseServer _baseServer = default!;
+        [Dependency] private readonly IWatchdogApi _watchdogApi = default!;
     }
 
     public enum GameRunLevel

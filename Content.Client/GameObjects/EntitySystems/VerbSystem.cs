@@ -42,16 +42,14 @@ namespace Content.Client.GameObjects.EntitySystems
     [UsedImplicitly]
     public sealed class VerbSystem : EntitySystem
     {
-#pragma warning disable 649
-        [Dependency] private readonly IStateManager _stateManager;
-        [Dependency] private readonly IEntityManager _entityManager;
-        [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private readonly IInputManager _inputManager;
-        [Dependency] private readonly IItemSlotManager _itemSlotManager;
-        [Dependency] private readonly IGameTiming _gameTiming;
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
-        [Dependency] private readonly IMapManager _mapManager;
-#pragma warning restore 649
+        [Dependency] private readonly IStateManager _stateManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         private EntityList _currentEntityList;
         private VerbPopup _currentVerbListRoot;

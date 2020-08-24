@@ -15,12 +15,10 @@ namespace Content.Client.GameObjects.EntitySystems
     /// </summary>
     internal sealed class SubFloorHideSystem : EntitySystem
     {
-        private bool _enableAll;
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
 
-#pragma warning disable 649
-        [Dependency] private readonly IMapManager _mapManager;
-        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
-#pragma warning restore 649
+        private bool _enableAll;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool EnableAll

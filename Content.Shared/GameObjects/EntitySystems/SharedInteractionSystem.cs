@@ -17,9 +17,7 @@ namespace Content.Shared.GameObjects.EntitySystems
     [UsedImplicitly]
     public class SharedInteractionSystem : EntitySystem
     {
-        #pragma warning disable 649
-        [Dependency] private readonly IPhysicsManager _physicsManager;
-        #pragma warning restore 649
+        [Dependency] private readonly IPhysicsManager _physicsManager = default!;
 
         public const float InteractionRange = 2;
         public const float InteractionRangeSquared = InteractionRange * InteractionRange;

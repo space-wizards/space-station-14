@@ -16,11 +16,10 @@ namespace Content.Client.GameObjects.Components.Sound
     [RegisterComponent]
     public class LoopingSoundComponent : SharedLoopingSoundComponent
     {
+        [Dependency] private readonly IRobustRandom _random = default!;
+
         private readonly Dictionary<ScheduledSound, IPlayingAudioStream> _audioStreams = new Dictionary<ScheduledSound, IPlayingAudioStream>();
         private AudioSystem _audioSystem;
-        #pragma warning disable 649
-        [Dependency] private readonly IRobustRandom _random;
-        #pragma warning restore 649
 
         public override void StopAllSounds()
         {

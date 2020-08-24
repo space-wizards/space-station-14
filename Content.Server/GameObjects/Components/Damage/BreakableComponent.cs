@@ -21,10 +21,8 @@ namespace Content.Server.GameObjects.Components.Damage
     [ComponentReference(typeof(IDamageableComponent))]
     public class BreakableComponent : RuinableComponent, IExAct
     {
-#pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-        [Dependency] private readonly IRobustRandom _random;
-#pragma warning restore 649
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         public override string Name => "Breakable";
 

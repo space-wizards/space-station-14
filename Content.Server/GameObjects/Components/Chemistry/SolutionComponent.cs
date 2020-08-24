@@ -29,10 +29,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
     [RegisterComponent]
     public class SolutionComponent : SharedSolutionComponent, IExamine
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-#pragma warning restore 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
         private IEnumerable<ReactionPrototype> _reactions;
         private AudioSystem _audioSystem;
