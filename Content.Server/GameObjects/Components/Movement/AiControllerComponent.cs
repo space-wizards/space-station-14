@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.EntitySystems.AI;
+﻿#nullable enable
+using Content.Server.GameObjects.EntitySystems.AI;
 using Content.Shared.GameObjects.Components.Movement;
 using Robust.Server.AI;
 using Robust.Shared.GameObjects;
@@ -14,23 +15,23 @@ namespace Content.Server.GameObjects.Components.Movement
     [RegisterComponent, ComponentReference(typeof(IMoverComponent))]
     public class AiControllerComponent : Component, IMoverComponent
     {
-        private string _logicName;
+        private string? _logicName;
         private float _visionRadius;
 
         public override string Name => "AiController";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public string LogicName
+        public string? LogicName
         {
             get => _logicName;
             set
             {
                 _logicName = value;
-                Processor = null;
+                Processor = null!;
             }
         }
 
-        public AiLogicProcessor Processor { get; set; }
+        public AiLogicProcessor? Processor { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float VisionRadius
@@ -45,9 +46,8 @@ namespace Content.Server.GameObjects.Components.Movement
             base.Initialize();
 
             // This component requires a collidable component.
-            if (!Owner.HasComponent<ICollidableComponent>())
-                Owner.AddComponent<CollidableComponent>();
-            
+            Owner.EnsureComponent<CollidableComponent>();
+
             EntitySystem.Get<AiSystem>().ProcessorInitialize(this);
         }
 
@@ -74,7 +74,7 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             get
             {
-                if (Owner.TryGetComponent(out MovementSpeedModifierComponent component))
+                if (Owner.TryGetComponent(out MovementSpeedModifierComponent? component))
                 {
                     return component.CurrentWalkSpeed;
                 }
@@ -91,7 +91,7 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             get
             {
-                if (Owner.TryGetComponent(out MovementSpeedModifierComponent component))
+                if (Owner.TryGetComponent(out MovementSpeedModifierComponent? component))
                 {
                     return component.CurrentSprintSpeed;
                 }

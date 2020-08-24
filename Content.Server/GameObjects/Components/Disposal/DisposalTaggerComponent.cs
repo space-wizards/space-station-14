@@ -1,4 +1,5 @@
-﻿using Content.Server.Interfaces;
+﻿#nullable enable
+using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -23,21 +24,23 @@ namespace Content.Server.GameObjects.Components.Disposal
     [ComponentReference(typeof(IDisposalTubeComponent))]
     public class DisposalTaggerComponent : DisposalTransitComponent, IActivate
     {
-#pragma warning disable 649
-        [Dependency] private readonly IServerNotifyManager _notifyManager;
-#pragma warning restore 649
+        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
         public override string Name => "DisposalTagger";
-
-        [ViewVariables]
-        private BoundUserInterface _userInterface;
 
         [ViewVariables(VVAccess.ReadWrite)]
         private string _tag = "";
 
         [ViewVariables]
         public bool Anchored =>
-            !Owner.TryGetComponent(out CollidableComponent collidable) ||
+            !Owner.TryGetComponent(out CollidableComponent? collidable) ||
             collidable.Anchored;
+
+        [ViewVariables]
+        private BoundUserInterface? UserInterface =>
+            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
+            ui.TryGetBoundUserInterface(DisposalTaggerUiKey.Key, out var boundUi)
+                ? boundUi
+                : null;
 
         public override Direction NextDirection(DisposalHolderComponent holder)
         {
@@ -45,13 +48,14 @@ namespace Content.Server.GameObjects.Components.Disposal
             return base.NextDirection(holder);
         }
 
-
         public override void Initialize()
         {
             base.Initialize();
-            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
-                .GetBoundUserInterface(DisposalTaggerUiKey.Key);
-            _userInterface.OnReceiveMessage += OnUiReceiveMessage;
+
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += OnUiReceiveMessage;
+            }
 
             UpdateUserInterface();
         }
@@ -70,7 +74,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             //Check for correct message and ignore maleformed strings
             if (msg.Action == UiAction.Ok && TagRegex.IsMatch(msg.Tag))
-            {   
+            {
                     _tag = msg.Tag;
                     ClickSound();
             }
@@ -81,7 +85,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         /// </summary>
         /// <param name="playerEntity">The player entity.</param>
         /// <returns>Returns true if the entity can use the configuration interface, and false if it cannot.</returns>
-        private bool PlayerCanUseDisposalTagger(IEntity playerEntity)
+        private bool PlayerCanUseDisposalTagger(IEntity? playerEntity)
         {
             //Need player entity to check if they are still able to use the configuration interface
             if (playerEntity == null)
@@ -98,7 +102,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         /// <summary>
         /// Gets component data to be used to update the user interface client-side.
         /// </summary>
-        /// <returns>Returns a <see cref="SharedDisposalTaggerComponent.DisposalTaggerBoundUserInterfaceState"/></returns>
+        /// <returns>Returns a <see cref="DisposalTaggerUserInterfaceState"/></returns>
         private DisposalTaggerUserInterfaceState GetUserInterfaceState()
         {
             return new DisposalTaggerUserInterfaceState(_tag);
@@ -107,7 +111,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         private void UpdateUserInterface()
         {
             var state = GetUserInterfaceState();
-            _userInterface.SetState(state);
+            UserInterface?.SetState(state);
         }
 
         private void ClickSound()
@@ -121,12 +125,12 @@ namespace Content.Server.GameObjects.Components.Disposal
         /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
         void IActivate.Activate(ActivateEventArgs args)
         {
-            if (!args.User.TryGetComponent(out IActorComponent actor))
+            if (!args.User.TryGetComponent(out IActorComponent? actor))
             {
                 return;
             }
 
-            if (!args.User.TryGetComponent(out IHandsComponent hands))
+            if (!args.User.TryGetComponent(out IHandsComponent? hands))
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
                     Loc.GetString("You have no hands."));
@@ -137,14 +141,14 @@ namespace Content.Server.GameObjects.Components.Disposal
             if (activeHandEntity == null)
             {
                 UpdateUserInterface();
-                _userInterface.Open(actor.playerSession);
+                UserInterface?.Open(actor.playerSession);
             }
         }
 
         public override void OnRemove()
         {
             base.OnRemove();
-            _userInterface.CloseAll();
+            UserInterface?.CloseAll();
         }
     }
 }

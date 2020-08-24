@@ -34,13 +34,11 @@ namespace Content.Server.GameObjects.Components.Buckle
     [RegisterComponent]
     public class BuckleComponent : SharedBuckleComponent, IInteractHand, IDragDrop
     {
-#pragma warning disable 649
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
-#pragma warning restore 649
 
         private int _size;
 

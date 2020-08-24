@@ -31,9 +31,10 @@
       layer:
       - Opaque
       - MobImpassable
-  - type: BodyManager
-    BaseTemplate: bodyTemplate.Humanoid
-    BasePreset: bodyPreset.BasicHuman
+  - type: Damageable
+    criticalThreshold: 50
+    deadThreshold: 100
+  - type: MobStateManager
   - type: HeatResistance
   - type: CombatMode
   - type: Teleportable

@@ -18,6 +18,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 {
@@ -25,7 +26,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
     /// Shotguns mostly
     /// </summary>
     [RegisterComponent]
-    public sealed class BoltActionBarrelComponent : ServerRangedBarrelComponent, IMapInit
+    public sealed class BoltActionBarrelComponent : ServerRangedBarrelComponent, IMapInit, IExamine
     {
         // Originally I had this logic shared with PumpBarrel and used a couple of variables to control things
         // but it felt a lot messier to play around with, especially when adding verbs
@@ -319,6 +320,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             return false;
         }
 
+        public override void Examine(FormattedMessage message, bool inDetailsRange)
+        {
+            base.Examine(message, inDetailsRange);
+
+            message.AddMarkup(Loc.GetString("\nIt uses [color=white]{0}[/color] ammo.", _caliber));
+        }
 
         [Verb]
         private sealed class OpenBoltVerb : Verb<BoltActionBarrelComponent>

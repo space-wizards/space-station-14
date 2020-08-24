@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
@@ -16,6 +17,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
 using Content.Shared.Damage;
 using Robust.Shared.Localization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Medical
 {
@@ -23,29 +25,34 @@ namespace Content.Server.GameObjects.Components.Medical
     [ComponentReference(typeof(IActivate))]
     public class MedicalScannerComponent : SharedMedicalScannerComponent, IActivate
     {
-        private AppearanceComponent _appearance;
-        private BoundUserInterface _userInterface;
-        private ContainerSlot _bodyContainer;
+        private ContainerSlot _bodyContainer = default!;
         private readonly Vector2 _ejectOffset = new Vector2(-0.5f, 0f);
         public bool IsOccupied => _bodyContainer.ContainedEntity != null;
 
-        private PowerReceiverComponent _powerReceiver;
-        private bool Powered => _powerReceiver.Powered;
+        [ViewVariables]
+        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+
+        [ViewVariables]
+        private BoundUserInterface? UserInterface =>
+            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
+            ui.TryGetBoundUserInterface(MedicalScannerUiKey.Key, out var boundUi)
+                ? boundUi
+                : null;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            _appearance = Owner.GetComponent<AppearanceComponent>();
-            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
-                .GetBoundUserInterface(MedicalScannerUiKey.Key);
-            _userInterface.OnReceiveMessage += OnUiReceiveMessage;
-            _bodyContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-bodyContainer", Owner);
-            _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += OnUiReceiveMessage;
+            }
 
-            //TODO: write this so that it checks for a change in power events and acts accordingly.
+            _bodyContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-bodyContainer", Owner);
+
+            // TODO: write this so that it checks for a change in power events and acts accordingly.
             var newState = GetUserInterfaceState();
-            _userInterface.SetState(newState);
+            UserInterface?.SetState(newState);
 
             UpdateUserInterface();
         }
@@ -62,11 +69,15 @@ namespace Content.Server.GameObjects.Components.Medical
             var body = _bodyContainer.ContainedEntity;
             if (body == null)
             {
-                _appearance.SetData(MedicalScannerVisuals.Status, MedicalScannerStatus.Open);
+                if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+                {
+                    appearance?.SetData(MedicalScannerVisuals.Status, MedicalScannerStatus.Open);
+                };
+
                 return EmptyUIState;
             }
 
-            if (!body.TryGetComponent(out IDamageableComponent damageable) ||
+            if (!body.TryGetComponent(out IDamageableComponent? damageable) ||
                 damageable.CurrentDamageState == DamageState.Dead)
             {
                 return EmptyUIState;
@@ -86,7 +97,7 @@ namespace Content.Server.GameObjects.Components.Medical
             }
 
             var newState = GetUserInterfaceState();
-            _userInterface.SetState(newState);
+            UserInterface?.SetState(newState);
         }
 
         private MedicalScannerStatus GetStatusFromDamageState(DamageState damageState)
@@ -115,12 +126,15 @@ namespace Content.Server.GameObjects.Components.Medical
 
         private void UpdateAppearance()
         {
-            _appearance.SetData(MedicalScannerVisuals.Status, GetStatus());
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            {
+                appearance.SetData(MedicalScannerVisuals.Status, GetStatus());
+            }
         }
 
         public void Activate(ActivateEventArgs args)
         {
-            if (!args.User.TryGetComponent(out IActorComponent actor))
+            if (!args.User.TryGetComponent(out IActorComponent? actor))
             {
                 return;
             }
@@ -128,7 +142,7 @@ namespace Content.Server.GameObjects.Components.Medical
             if (!Powered)
                 return;
 
-            _userInterface.Open(actor.playerSession);
+            UserInterface?.Open(actor.playerSession);
         }
 
         [Verb]

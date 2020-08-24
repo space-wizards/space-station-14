@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Content.Shared.GameObjects.Components.Power;
@@ -20,16 +21,11 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
     [ComponentReference(typeof(IActivate))]
     public class ApcComponent : BaseApcNetComponent, IActivate
     {
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+
         public override string Name => "Apc";
 
-        [ViewVariables]
-        public BatteryComponent Battery { get; private set; }
-
         public bool MainBreakerEnabled { get; private set; } = true;
-
-        private BoundUserInterface _userInterface;
-
-        private AppearanceComponent _appearance;
 
         private ApcChargeState _lastChargeState;
 
@@ -39,7 +35,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         private TimeSpan _lastExternalPowerStateChange;
 
-        private float _lastCharge = 0f;
+        private float _lastCharge;
 
         private TimeSpan _lastChargeChange;
 
@@ -49,17 +45,27 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         private const int VisualsChangeDelay = 1;
 
-#pragma warning disable 649
-        [Dependency] private readonly IGameTiming _gameTiming;
-#pragma warning restore 649
+        [ViewVariables]
+        private BoundUserInterface? UserInterface =>
+            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
+            ui.TryGetBoundUserInterface(ApcUiKey.Key, out var boundUi)
+                ? boundUi
+                : null;
+
+        public BatteryComponent? Battery => Owner.TryGetComponent(out BatteryComponent? batteryComponent) ? batteryComponent : null;
 
         public override void Initialize()
         {
             base.Initialize();
-            Battery = Owner.GetComponent<BatteryComponent>();
-            _appearance = Owner.GetComponent<AppearanceComponent>();
-            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>().GetBoundUserInterface(ApcUiKey.Key);
-            _userInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
+
+            Owner.EnsureComponent<BatteryComponent>();
+            Owner.EnsureComponent<PowerConsumerComponent>();
+
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
+            }
+
             Update();
         }
 
@@ -90,15 +96,23 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
             {
                 _lastChargeState = newState;
                 _lastChargeStateChange = _gameTiming.CurTime;
-                _appearance.SetData(ApcVisuals.ChargeState, newState);
+
+                if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+                {
+                    appearance.SetData(ApcVisuals.ChargeState, newState);
+                }
             }
-            var newCharge = Battery.CurrentCharge;
-            if (newCharge != _lastCharge && _lastChargeChange + TimeSpan.FromSeconds(VisualsChangeDelay) < _gameTiming.CurTime)
+
+            Owner.TryGetComponent(out BatteryComponent? battery);
+
+            var newCharge = battery?.CurrentCharge;
+            if (newCharge != null && newCharge != _lastCharge && _lastChargeChange + TimeSpan.FromSeconds(VisualsChangeDelay) < _gameTiming.CurTime)
             {
-                _lastCharge = newCharge;
+                _lastCharge = newCharge.Value;
                 _lastChargeChange = _gameTiming.CurTime;
                 _uiDirty = true;
             }
+
             var extPowerState = CalcExtPowerState();
             if (extPowerState != _lastExternalPowerState && _lastExternalPowerStateChange + TimeSpan.FromSeconds(VisualsChangeDelay) < _gameTiming.CurTime)
             {
@@ -106,21 +120,33 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
                 _lastExternalPowerStateChange = _gameTiming.CurTime;
                 _uiDirty = true;
             }
-            if (_uiDirty)
+
+            if (_uiDirty && battery != null && newCharge != null)
             {
-                _userInterface.SetState(new ApcBoundInterfaceState(MainBreakerEnabled, extPowerState, newCharge / Battery.MaxCharge));
+                UserInterface?.SetState(new ApcBoundInterfaceState(MainBreakerEnabled, extPowerState, newCharge.Value / battery.MaxCharge));
                 _uiDirty = false;
             }
         }
 
         private ApcChargeState CalcChargeState()
         {
-            var chargeFraction = Battery.CurrentCharge / Battery.MaxCharge;
+            if (!Owner.TryGetComponent(out BatteryComponent? battery))
+            {
+                return ApcChargeState.Lack;
+            }
+
+            var chargeFraction = battery.CurrentCharge / battery.MaxCharge;
+
             if (chargeFraction > HighPowerThreshold)
             {
                 return ApcChargeState.Full;
             }
-            var consumer = Owner.GetComponent<PowerConsumerComponent>();
+
+            if (!Owner.TryGetComponent(out PowerConsumerComponent? consumer))
+            {
+                return ApcChargeState.Full;
+            }
+
             if (consumer.DrawRate == consumer.ReceivedPower)
             {
                 return ApcChargeState.Charging;
@@ -133,7 +159,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         private ApcExternalPowerState CalcExtPowerState()
         {
-            if (!Owner.TryGetComponent(out BatteryStorageComponent batteryStorage))
+            if (!Owner.TryGetComponent(out BatteryStorageComponent? batteryStorage))
             {
                 return ApcExternalPowerState.None;
             }
@@ -154,11 +180,12 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
+            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
                 return;
             }
-            _userInterface.Open(actor.playerSession);
+
+            UserInterface?.Open(actor.playerSession);
         }
     }
 }

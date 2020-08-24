@@ -69,21 +69,11 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             var nextDirection = NextDirection(holder);
             var snapGrid = Owner.GetComponent<SnapGridComponent>();
+            var oppositeDirection = new Angle(nextDirection.ToAngle().Theta + Math.PI).GetDir();
             var tube = snapGrid
                 .GetInDir(nextDirection)
                 .Select(x => x.TryGetComponent(out IDisposalTubeComponent? c) ? c : null)
-                .FirstOrDefault(x => x != null && x != this);
-
-            if (tube == null)
-            {
-                return null;
-            }
-
-            var oppositeDirection = new Angle(nextDirection.ToAngle().Theta + Math.PI).GetDir();
-            if (!tube.CanConnect(oppositeDirection, this))
-            {
-                return null;
-            }
+                .FirstOrDefault(x => x != null && x != this && x.CanConnect(oppositeDirection, this));
 
             return tube;
         }
