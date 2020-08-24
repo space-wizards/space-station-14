@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.GUI;
+﻿#nullable enable
+using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
@@ -7,6 +8,7 @@ using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Power.AME;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -39,38 +41,40 @@ namespace Content.Server.GameObjects.Components.Power.AME
     public class AMEControllerComponent : SharedAMEControllerComponent, IActivate, IInteractUsing
     {
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
-        [Dependency] private readonly ILocalizationManager _localizationManager = default!;
 
-        [ViewVariables] private BoundUserInterface _userInterface;
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(AMEControllerUiKey.Key);
         [ViewVariables] private bool _injecting;
         [ViewVariables] private int _injectionAmount;
 
-        private AppearanceComponent _appearance;
-        private PowerReceiverComponent _powerReceiver;
-        private PowerSupplierComponent _powerSupplier;
+        private AppearanceComponent? _appearance;
+        private PowerReceiverComponent? _powerReceiver;
+        private PowerSupplierComponent? _powerSupplier;
 
-        private bool Powered => _powerReceiver.Powered;
+        private bool Powered => _powerReceiver?.Powered ?? false;
 
         [ViewVariables]
         private int _stability = 100;
 
-        private ContainerSlot _jarSlot;
+        private ContainerSlot _jarSlot = default!;
         [ViewVariables] private bool HasJar => _jarSlot.ContainedEntity != null;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
-                .GetBoundUserInterface(AMEControllerUiKey.Key);
-            _userInterface.OnReceiveMessage += OnUiReceiveMessage;
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += OnUiReceiveMessage;
+            }
 
-            _appearance = Owner.GetComponent<AppearanceComponent>();
+            Owner.TryGetComponent(out _appearance);
 
-            _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
-            _powerReceiver.OnPowerStateChanged += OnPowerChanged;
-
-            _powerSupplier = Owner.GetComponent<PowerSupplierComponent>();
+            if (Owner.TryGetComponent(out _powerReceiver))
+            {
+                _powerReceiver.OnPowerStateChanged += OnPowerChanged;
+            }
+            
+            Owner.TryGetComponent(out _powerSupplier);
 
             _injecting = false;
             _injectionAmount = 2;
@@ -85,7 +89,7 @@ namespace Content.Server.GameObjects.Components.Power.AME
             }
 
             _jarSlot.ContainedEntity.TryGetComponent<AMEFuelContainerComponent>(out var fuelJar);
-            if(fuelJar != null)
+            if(fuelJar != null && _powerSupplier != null)
             {
                 _powerSupplier.SupplyRate = GetAMENodeGroup().InjectFuel(_injectionAmount);
                 fuelJar.FuelAmount -= _injectionAmount;
@@ -106,22 +110,22 @@ namespace Content.Server.GameObjects.Components.Power.AME
         /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
         void IActivate.Activate(ActivateEventArgs args)
         {
-            if (!args.User.TryGetComponent(out IActorComponent actor))
+            if (!args.User.TryGetComponent(out IActorComponent? actor))
             {
                 return;
             }
 
-            if (!args.User.TryGetComponent(out IHandsComponent hands))
+            if (!args.User.TryGetComponent(out IHandsComponent? hands))
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                    _localizationManager.GetString("You have no hands."));
+                    Loc.GetString("You have no hands."));
                 return;
             }
 
             var activeHandEntity = hands.GetActiveHand?.Owner;
             if (activeHandEntity == null)
             {
-                _userInterface.Open(actor.playerSession);
+                UserInterface?.Open(actor.playerSession);
             }
         }
 
@@ -165,7 +169,7 @@ namespace Content.Server.GameObjects.Components.Power.AME
         private void UpdateUserInterface()
         {
             var state = GetUserInterfaceState();
-            _userInterface.SetState(state);
+            UserInterface?.SetState(state);
         }
 
         /// <summary>
@@ -229,12 +233,15 @@ namespace Content.Server.GameObjects.Components.Power.AME
         {
             if (!_injecting)
             {
-                _appearance.SetData(AMEControllerVisuals.DisplayState, "on");
+                _appearance?.SetData(AMEControllerVisuals.DisplayState, "on");
             }
             else
             {
-                _appearance.SetData(AMEControllerVisuals.DisplayState, "off");
-                _powerSupplier.SupplyRate = 0;
+                _appearance?.SetData(AMEControllerVisuals.DisplayState, "off");
+                if (_powerSupplier != null)
+                {
+                    _powerSupplier.SupplyRate = 0;
+                }
             }
             _injecting = !_injecting;
             UpdateUserInterface();
@@ -243,7 +250,7 @@ namespace Content.Server.GameObjects.Components.Power.AME
 
         private void UpdateDisplay(int stability)
         {
-            _appearance.TryGetData<string>(AMEControllerVisuals.DisplayState, out var state);
+            _appearance?.TryGetData<string>(AMEControllerVisuals.DisplayState, out var state);
 
             var newState = "on";
 
@@ -265,14 +272,14 @@ namespace Content.Server.GameObjects.Components.Power.AME
 
         private AMENodeGroup GetAMENodeGroup()
         {
-            Owner.TryGetComponent(out NodeContainerComponent nodeContainer);
+            Owner.TryGetComponent(out NodeContainerComponent? nodeContainer);
 
-            var engineNodeGroup = nodeContainer.Nodes
+            var engineNodeGroup = nodeContainer?.Nodes
             .Select(node => node.NodeGroup)
             .OfType<AMENodeGroup>()
             .First();
 
-            return engineNodeGroup;
+            return engineNodeGroup ?? default!;
         }
 
         private bool IsMasterController()
@@ -310,7 +317,7 @@ namespace Content.Server.GameObjects.Components.Power.AME
             if (!args.User.TryGetComponent(out IHandsComponent hands))
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                    _localizationManager.GetString("You have no hands."));
+                    Loc.GetString("You have no hands."));
                 return true;
             }
 
@@ -320,21 +327,21 @@ namespace Content.Server.GameObjects.Components.Power.AME
                 if (HasJar)
                 {
                     _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                        _localizationManager.GetString("The controller already has a jar loaded."));
+                        Loc.GetString("The controller already has a jar loaded."));
                 }
 
                 else
                 {
                     _jarSlot.Insert(activeHandEntity);
                     _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                        _localizationManager.GetString("You insert the jar into the fuel slot."));
+                        Loc.GetString("You insert the jar into the fuel slot."));
                     UpdateUserInterface();
                 }
             }
             else
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                    _localizationManager.GetString("You can't put that in the controller..."));
+                    Loc.GetString("You can't put that in the controller..."));
             }
 
             return true;

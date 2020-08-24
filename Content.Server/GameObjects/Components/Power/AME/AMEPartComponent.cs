@@ -20,7 +20,6 @@ namespace Content.Server.GameObjects.Components.Power.AME
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
-        [Dependency] private readonly ILocalizationManager _localizationManager = default!;
         public override string Name => "AMEPart";
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)
@@ -28,7 +27,7 @@ namespace Content.Server.GameObjects.Components.Power.AME
             if (!args.User.TryGetComponent(out IHandsComponent hands))
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                    _localizationManager.GetString("You have no hands."));
+                    Loc.GetString("You have no hands."));
                 return true;
             }
 

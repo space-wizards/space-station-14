@@ -22,7 +22,7 @@ namespace Content.Server.GameObjects.Components.Power.AME
         public override void Initialize()
         {
             base.Initialize();
-            _appearance = Owner.GetComponent<AppearanceComponent>();
+            Owner.TryGetComponent(out _appearance);
         }
 
         internal void OnUpdate(float frameTime)
