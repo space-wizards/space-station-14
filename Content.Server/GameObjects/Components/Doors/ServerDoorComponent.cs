@@ -135,12 +135,22 @@ namespace Content.Server.GameObjects.Components.Doors
         public bool CanOpen(IEntity user)
         {
             if (!CanOpen()) return false;
-            if (!Owner.TryGetComponent(out AccessReader? accessReader))
+
+            if (!Owner.TryGetComponent<AccessReader>(out var accessReader))
             {
                 return true;
             }
 
-            return accessReader.IsAllowed(user);
+            var doorSystem = EntitySystem.Get<DoorSystem>();
+            var isAirlockExternal = HasAccessType("External");
+
+            return doorSystem.AccessType switch
+            {
+                DoorSystem.AccessTypes.AllowAll => true,
+                DoorSystem.AccessTypes.AllowAllIdExternal => isAirlockExternal ? accessReader.IsAllowed(user) : true,
+                DoorSystem.AccessTypes.AllowAllNoExternal => !isAirlockExternal,
+                _ => accessReader.IsAllowed(user)
+            };
         }
 
         /// <summary>
@@ -154,23 +164,12 @@ namespace Content.Server.GameObjects.Components.Doors
                 return accessReader.AccessLists.Any(list => list.Contains(accesType));
             }
 
-            return false;
+            return true;
         }
 
         public void TryOpen(IEntity user)
         {
-            var doorSystem = EntitySystem.Get<DoorSystem>();
-            var isAirlockExternal = HasAccessType("External");
-
-            var access = doorSystem.AccessType switch
-            {
-                DoorSystem.AccessTypes.AllowAll => true,
-                DoorSystem.AccessTypes.AllowAllIdExternal => isAirlockExternal ? CanOpen(user) : true,
-                DoorSystem.AccessTypes.AllowAllNoExternal => !isAirlockExternal,
-                _ => CanOpen(user)
-            };
-
-            if (access)
+            if (CanOpen(user))
             {
                 Open();
 
