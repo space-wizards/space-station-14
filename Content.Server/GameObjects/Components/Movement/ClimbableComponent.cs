@@ -1,5 +1,4 @@
-﻿
-using Robust.Shared.GameObjects;
+﻿using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
@@ -25,7 +24,6 @@ namespace Content.Server.GameObjects.Components.Movement
     [ComponentReference(typeof(IClimbable))]
     public class ClimbableComponent : SharedClimbableComponent, IDragDropOn
     {
-        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
         /// <summary>
@@ -70,7 +68,7 @@ namespace Content.Server.GameObjects.Components.Movement
                 canVault = CanVault(eventArgs.User, eventArgs.Dropped, eventArgs.Target, out reason);
 
             if (!canVault)
-                _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, reason);
+                eventArgs.User.PopupMessage(eventArgs.User, reason);
 
             return canVault;
         }
@@ -155,7 +153,7 @@ namespace Content.Server.GameObjects.Components.Movement
                 return false;
             }
 
-            reason = "";
+            reason = string.Empty;
             return true;
         }
 
@@ -207,7 +205,7 @@ namespace Content.Server.GameObjects.Components.Movement
                 // there's also the cases where the user might collide with the person they are forcing onto the climbable that i haven't accounted for
 
                 PopupMessageOtherClientsInRange(user, Loc.GetString("{0:theName} forces {1:theName} onto {2:theName}!", user, entityToMove, Owner), 15);
-                _notifyManager.PopupMessage(user, user, Loc.GetString("You force {0:theName} onto {1:theName}!", entityToMove, Owner));
+                user.PopupMessage(user, Loc.GetString("You force {0:theName} onto {1:theName}!", entityToMove, Owner));
             }
         }
 
@@ -243,7 +241,7 @@ namespace Content.Server.GameObjects.Components.Movement
                 climbMode.TryMoveTo(user.Transform.WorldPosition, endPoint);
 
                 PopupMessageOtherClientsInRange(user, Loc.GetString("{0:theName} jumps onto {1:theName}!", user, Owner), 15);
-                _notifyManager.PopupMessage(user, user, Loc.GetString("You jump onto {0:theName}!", Owner));
+                user.PopupMessage(user, Loc.GetString("You jump onto {0:theName}!", Owner));
             }
         }
 
@@ -265,7 +263,7 @@ namespace Content.Server.GameObjects.Components.Movement
         }
 
         /// <summary>
-        ///     Allows to vault a object with the ClimbableComponent through right click
+        ///     Allows you to vault an object with the ClimbableComponent through right click
         /// </summary>
         [Verb]
         private sealed class ClimbVerb : Verb<ClimbableComponent>
