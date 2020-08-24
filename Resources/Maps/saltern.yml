@@ -310,7 +310,10 @@ entities:
     type: Transform
   - index: 0
     type: MapGrid
-  
+  - shapes:
+    - !type:PhysShapeGrid
+      grid: 0
+    type: Collidable
   - uniqueMixes:
     - volume: 2500
       moles:
