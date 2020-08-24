@@ -17,11 +17,11 @@ namespace Content.Client.GameObjects.Components.Items
     [ComponentReference(typeof(ISharedHandsComponent))]
     public class HandsComponent : SharedHandsComponent
     {
-        private HandsGui? _gui;
-
 #pragma warning disable 649
         [Dependency] private readonly IGameHud _gameHud = default!;
 #pragma warning restore 649
+
+        private HandsGui? _gui;
 
         /// <inheritdoc />
         private readonly List<Hand> _hands = new List<Hand>();

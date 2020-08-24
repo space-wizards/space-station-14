@@ -1,7 +1,6 @@
 ﻿using Content.Server.GameTicking.GameRules;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
-using Content.Server.Mobs.Roles;
 using Content.Server.Players;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.Random;
@@ -11,6 +10,8 @@ using Robust.Shared.Random;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Suspicion;
+using Content.Server.Mobs.Roles;
+using Content.Server.Mobs.Roles.Suspicion;
 using Content.Shared.Roles;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Configuration;
