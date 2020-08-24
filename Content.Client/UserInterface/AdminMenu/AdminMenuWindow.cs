@@ -15,6 +15,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,7 +44,6 @@ namespace Content.Client.UserInterface
         {
             new AddAtmosCommandButton(),
             new FillGasCommandButton(),
-            new TestCommandButton(),
         };
         private List<CommandButton> _roundButtons = new List<CommandButton>
         {
@@ -276,6 +276,7 @@ namespace Content.Client.UserInterface
             IoCManager.Resolve<IStationEventManager>().RequestEvents();
         }
 
+        #region CommandButtonBaseClass
         private abstract class CommandButton
         {
             public virtual string Name { get; }
@@ -304,7 +305,7 @@ namespace Content.Client.UserInterface
             /// Called when the Submit button is pressed
             /// </summary>
             /// <param name="val">Dictionary of the parameter names and values</param>
-            public abstract void Submit(Dictionary<string, string> val);
+            public abstract void Submit();
             public override void ButtonPressed(ButtonEventArgs args)
             {
                 var manager = IoCManager.Resolve<IAdminMenuManager>();
@@ -326,7 +327,9 @@ namespace Content.Client.UserInterface
                 IoCManager.Resolve<IClientConsole>().ProcessCommand(RequiredCommand);
             }
         }
+        #endregion
 
+        #region CommandButtons
         private class SpawnEntitiesCommandButton : CommandButton
         {
             public override string Name => "Spawn Entities";
@@ -362,26 +365,28 @@ namespace Content.Client.UserInterface
             public override string RequiredCommand => "events";
             public override string? SubmitText => "Run";
 
+            private CommandUIDropDown _eventsDropDown = new CommandUIDropDown
+            {
+                Name = "Event",
+                GetData = () =>
+                {
+                    var events = IoCManager.Resolve<IStationEventManager>().StationEvents;
+                    if (events == null)
+                        return new List<object> { "Not loaded" };
+                    events.Add("Random");
+                    return events.ToList<object>();
+                },
+                GetDisplayName = (obj) => (string) obj,
+                GetValueFromData = (obj) => ((string) obj).ToLower(),
+            };
+
             public override List<CommandUIControl> UI => new List<CommandUIControl>
             {
-                new CommandUIDropDown
-                {
-                    Name = "Event",
-                    GetData = () =>
-                    {
-                        var events = IoCManager.Resolve<IStationEventManager>().StationEvents;
-                        if (events == null)
-                            return new List<object>{"Not loaded"};
-                        events.Add("Random");
-                        return events.ToList<object>();
-                    },
-                    GetDisplayName = (obj) => (string)obj,
-                    GetValueFromData = (obj) => ((string)obj).ToLower(),
-                },
+                _eventsDropDown,
                 new CommandUIButton
                 {
                     Name = "Pause",
-                    Handler = (val) =>
+                    Handler = () =>
                     {
                         IoCManager.Resolve<IClientConsole>().ProcessCommand($"events pause");
                     },
@@ -389,16 +394,16 @@ namespace Content.Client.UserInterface
                 new CommandUIButton
                 {
                     Name = "Resume",
-                    Handler = (val) =>
+                    Handler = () =>
                     {
                         IoCManager.Resolve<IClientConsole>().ProcessCommand($"events resume");
                     },
                 },
             };
 
-            public override void Submit(Dictionary<string, string> val)
+            public override void Submit()
             {
-                IoCManager.Resolve<IClientConsole>().ProcessCommand($"events run \"{val["Event"]}\"");
+                IoCManager.Resolve<IClientConsole>().ProcessCommand($"events run \"{_eventsDropDown.GetValue()}\"");
             }
         }
 
@@ -407,61 +412,27 @@ namespace Content.Client.UserInterface
             public override string Name => "Kick";
             public override string RequiredCommand => "kick";
 
-            public override List<CommandUIControl> UI => new List<CommandUIControl>
+            private CommandUIDropDown _playerDropDown = new CommandUIDropDown
             {
-                new CommandUIDropDown
-                {
-                    Name = "Player",
-                    GetData = () => IoCManager.Resolve<IPlayerManager>().Sessions.ToList<object>(),
-                    GetDisplayName = (obj) => $"{((IPlayerSession)obj).Name} ({((IPlayerSession)obj).AttachedEntity?.Name})",
-                    GetValueFromData = (obj) => ((IPlayerSession)obj).Name,
-                },
-                new CommandUILineEdit
-                {
-                    Name = "Reason"
-                }
+                Name = "Player",
+                GetData = () => IoCManager.Resolve<IPlayerManager>().Sessions.ToList<object>(),
+                GetDisplayName = (obj) => $"{((IPlayerSession) obj).Name} ({((IPlayerSession) obj).AttachedEntity?.Name})",
+                GetValueFromData = (obj) => ((IPlayerSession) obj).Name,
             };
-
-            public override void Submit(Dictionary<string,string> val)
+            private CommandUILineEdit _reason = new CommandUILineEdit
             {
-                IoCManager.Resolve<IClientConsole>().ProcessCommand($"kick \"{val["Player"]}\" \"{val["Reason"].Replace("\\", "\\\\").Replace("\"", "\\\"")}\"");
-            }
-        }
-
-        private class TestCommandButton : UICommandButton
-        {
-            public override string Name => "Test";
+                Name = "Reason"
+            };
 
             public override List<CommandUIControl> UI => new List<CommandUIControl>
             {
-                new CommandUIDropDown
-                {
-                    Name = "DropDown",
-                    GetData = () => new List<object>
-                    {
-                        "1",
-                        "2"
-                    },
-                    GetDisplayName = (obj) => (string)obj,
-                    GetValueFromData = (obj) => (string)obj
-                },
-                new CommandUILineEdit
-                {
-                    Name = "LineEdit"
-                },
-                new CommandUICheckBox
-                {
-                    Name = "CheckBox"
-                },
-                new CommandUISpinBox
-                {
-                    Name = "SpinBox"
-                },
+                _playerDropDown,
+                _reason
             };
 
-            public override void Submit(Dictionary<string, string> val)
+            public override void Submit()
             {
-                IoCManager.Resolve<IClientConsole>().ProcessCommand($"say \"Dropdown: {val["DropDown"]}\nLineEdit: {val["LineEdit"]}\nCheckBox: {val["CheckBox"]}\nSpinBox: {val["SpinBox"]}\"");
+                IoCManager.Resolve<IClientConsole>().ProcessCommand($"kick \"{_playerDropDown.GetValue()}\" \"{CommandParsing.Escape(_reason.GetValue())}\"");
             }
         }
 
@@ -470,20 +441,22 @@ namespace Content.Client.UserInterface
             public override string Name => "Add Atmos";
             public override string RequiredCommand => "addatmos";
 
-            public override List<CommandUIControl> UI => new List<CommandUIControl>
+            private CommandUIDropDown _grid = new CommandUIDropDown
             {
-                new CommandUIDropDown
-                {
-                    Name = "Grid",
-                    GetData = () => IoCManager.Resolve<IMapManager>().GetAllGrids().Where(g => (int)g.Index != 0).ToList<object>(),
-                    GetDisplayName = (obj) => $"{((IMapGrid)obj).Index}{(IoCManager.Resolve<IPlayerManager>().LocalPlayer?.ControlledEntity?.Transform.GridID == ((IMapGrid)obj).Index ? " (Current)" : "" )}",
-                    GetValueFromData = (obj) => ((IMapGrid)obj).Index.ToString(),
-                },
+                Name = "Grid",
+                GetData = () => IoCManager.Resolve<IMapManager>().GetAllGrids().Where(g => (int) g.Index != 0).ToList<object>(),
+                GetDisplayName = (obj) => $"{((IMapGrid) obj).Index}{(IoCManager.Resolve<IPlayerManager>().LocalPlayer?.ControlledEntity?.Transform.GridID == ((IMapGrid) obj).Index ? " (Current)" : "")}",
+                GetValueFromData = (obj) => ((IMapGrid) obj).Index.ToString(),
             };
 
-            public override void Submit(Dictionary<string, string> val)
+            public override List<CommandUIControl> UI => new List<CommandUIControl>
             {
-                IoCManager.Resolve<IClientConsole>().ProcessCommand($"addatmos {val["Grid"]}");
+                _grid,
+            };
+
+            public override void Submit()
+            {
+                IoCManager.Resolve<IClientConsole>().ProcessCommand($"addatmos {_grid.GetValue()}");
             }
         }
 
@@ -492,34 +465,42 @@ namespace Content.Client.UserInterface
             public override string Name => "Fill Gas";
             public override string RequiredCommand => "fillgas";
 
-            public override List<CommandUIControl> UI => new List<CommandUIControl>
+            private CommandUIDropDown _grid = new CommandUIDropDown
             {
-                new CommandUIDropDown
-                {
-                    Name = "Grid",
-                    GetData = () => IoCManager.Resolve<IMapManager>().GetAllGrids().Where(g => (int)g.Index != 0).ToList<object>(),
-                    GetDisplayName = (obj) => $"{((IMapGrid)obj).Index}{(IoCManager.Resolve<IPlayerManager>().LocalPlayer?.ControlledEntity?.Transform.GridID == ((IMapGrid)obj).Index ? " (Current)" : "" )}",
-                    GetValueFromData = (obj) => ((IMapGrid)obj).Index.ToString(),
-                },
-                new CommandUIDropDown
-                {
-                    Name = "Gas",
-                    GetData = () =>  Atmospherics.Gases.ToList<object>(),
-                    GetDisplayName = (obj) => $"{((GasPrototype)obj).Name} ({((GasPrototype)obj).ID})",
-                    GetValueFromData = (obj) => ((GasPrototype)obj).ID.ToString(),
-                },
-                new CommandUISpinBox
-                {
-                    Name = "Amount"
-                },
+                Name = "Grid",
+                GetData = () => IoCManager.Resolve<IMapManager>().GetAllGrids().Where(g => (int) g.Index != 0).ToList<object>(),
+                GetDisplayName = (obj) => $"{((IMapGrid) obj).Index}{(IoCManager.Resolve<IPlayerManager>().LocalPlayer?.ControlledEntity?.Transform.GridID == ((IMapGrid) obj).Index ? " (Current)" : "")}",
+                GetValueFromData = (obj) => ((IMapGrid) obj).Index.ToString(),
             };
 
-            public override void Submit(Dictionary<string, string> val)
+            private CommandUIDropDown _gas = new CommandUIDropDown
             {
-                IoCManager.Resolve<IClientConsole>().ProcessCommand($"fillgas {val["Grid"]} {val["Gas"]} {val["Amount"]}");
+                Name = "Gas",
+                GetData = () => Atmospherics.Gases.ToList<object>(),
+                GetDisplayName = (obj) => $"{((GasPrototype) obj).Name} ({((GasPrototype) obj).ID})",
+                GetValueFromData = (obj) => ((GasPrototype) obj).ID.ToString(),
+            };
+
+            private CommandUISpinBox _amount = new CommandUISpinBox
+            {
+                Name = "Amount"
+            };
+
+            public override List<CommandUIControl> UI => new List<CommandUIControl>
+            {
+                _grid,
+                _gas,
+                _amount,
+            };
+
+            public override void Submit()
+            {
+                IoCManager.Resolve<IClientConsole>().ProcessCommand($"fillgas {_grid.GetValue()} {_gas.GetValue()} {_amount.GetValue()}");
             }
         }
+        #endregion
 
+        #region CommandUIControls
         private abstract class CommandUIControl
         {
             public string? Name;
@@ -597,7 +578,7 @@ namespace Content.Client.UserInterface
 
         private class CommandUIButton : CommandUIControl
         {
-            public Action<Dictionary<string,string>>? Handler { get; set; }
+            public Action? Handler { get; set; }
 
             public override Control GetControl()
             {
@@ -613,11 +594,13 @@ namespace Content.Client.UserInterface
                 return "";
             }
         }
+        #endregion
 
+        #region CommandWindow
         private class CommandWindow : SS14Window
         {
             List<CommandUIControl> _controls;
-            public Action<Dictionary<string, string>>? Submit { get; set; }
+            public Action? Submit { get; set; }
             public CommandWindow(UICommandButton button)
             {
                 Title = button.Name;
@@ -633,7 +616,7 @@ namespace Content.Client.UserInterface
                     {
                         ((Button) c).OnPressed += (args) =>
                          {
-                             ((CommandUIButton) control).Handler?.Invoke(GetValues());
+                             ((CommandUIButton) control).Handler?.Invoke();
                          };
                         container.AddChild(c);
                     }
@@ -673,23 +656,11 @@ namespace Content.Client.UserInterface
                 Contents.AddChild(container);
             }
 
-            public Dictionary<string, string> GetValues()
-            {
-                Dictionary<string, string> val = new Dictionary<string, string>();
-                foreach (var control in _controls)
-                {
-                    if (control.Control == null)
-                        continue;
-
-                    val.Add(control.Name ?? "Empty", control.GetValue());
-                }
-                return val;
-            }
-
             public void SubmitPressed(ButtonEventArgs args)
             {
-                Submit?.Invoke(GetValues());
+                Submit?.Invoke();
             }
         }
+        #endregion
     }
 }
