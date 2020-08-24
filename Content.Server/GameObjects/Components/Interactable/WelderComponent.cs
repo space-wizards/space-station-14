@@ -259,19 +259,10 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         }
 
-        public async SuicideKind Suicide(IEntity victim, IChatManager chat)
+        public SuicideKind Suicide(IEntity victim, IChatManager chat)
         {
-            var doAfterEventArgs = new DoAfterEventArgs(victim, default)
-            {
-                BreakOnTargetMove = true,
-                BreakOnUserMove = true,
-                BreakOnDamage = true,
-                BreakOnStun = true
-            };
 
-            var result = await _doAfterSystem.DoAfter(doAfterEventArgs);
-
-            if (result != DoAfterStatus.Cancelled && TryWeld(5, victim, silent: true))
+            if (TryWeld(5, victim, silent: true))
             {
                 PlaySoundCollection(WeldSoundCollection);
                 PopupMessageOtherClientsInRange(victim, Loc.GetString("{0:theName} welds {0:their} every orifice closed! It looks like {0:theyre} trying to commit suicide!", victim), 15);
@@ -288,6 +279,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         {
             Dirty();
         }
+
         private void PopupMessageOtherClientsInRange(IEntity source, string message, int maxReceiveDistance)
         {
             var viewers = _playerManager.GetPlayersInRange(source.Transform.GridPosition, maxReceiveDistance);
