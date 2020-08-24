@@ -15,10 +15,8 @@ namespace Content.Server.GameObjects.Components.Items.RCD
     [RegisterComponent]
     public class RCDAmmoComponent : Component, IAfterInteract, IExamine
     {
+        [Dependency] private IServerNotifyManager _serverNotifyManager = default!;
 
-#pragma warning disable 649
-        [Dependency] private IServerNotifyManager _serverNotifyManager;
-#pragma warning restore 649
         public override string Name => "RCDAmmo";
 
         //How much ammo we refill

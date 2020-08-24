@@ -17,11 +17,9 @@ namespace Content.Client.UserInterface
 {
     public class HandsGui : Control
     {
-#pragma warning disable 0649
-        [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private readonly IResourceCache _resourceCache;
-        [Dependency] private readonly IItemSlotManager _itemSlotManager;
-#pragma warning restore 0649
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
 
         private readonly TextureRect _activeHandRect;
 

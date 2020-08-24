@@ -183,9 +183,8 @@ namespace Content.Server.GameTicking
 
     class JoinGameCommand : IClientCommand
     {
-#pragma warning disable 649
-        [Dependency] private IPrototypeManager _prototypeManager;
-#pragma warning restore 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         public string Command => "joingame";
         public string Description => "";
         public string Help => "";

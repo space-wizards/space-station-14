@@ -14,10 +14,8 @@ namespace Content.Server.PDA
 {
     public class PDAUplinkManager : IPDAUplinkManager
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly IEntityManager _entityManager;
-#pragma warning restore 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private List<UplinkAccount> _accounts;
         private List<UplinkListingData> _listings;

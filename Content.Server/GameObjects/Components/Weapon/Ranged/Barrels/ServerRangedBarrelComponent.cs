@@ -39,10 +39,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
     {
         // There's still some of py01 and PJB's work left over, especially in underlying shooting logic,
         // it's just when I re-organised it changed me as the contributor
-#pragma warning disable 649
-        [Dependency] private IGameTiming _gameTiming;
-        [Dependency] private IRobustRandom _robustRandom;
-#pragma warning restore 649
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         public override FireRateSelector FireRateSelector => _fireRateSelector;
         private FireRateSelector _fireRateSelector;

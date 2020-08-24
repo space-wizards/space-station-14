@@ -24,6 +24,10 @@ namespace Content.Client.GameObjects.Components.Mobs
     [ComponentReference(typeof(SharedOverlayEffectsComponent))]
     public sealed class ClientOverlayEffectsComponent : SharedOverlayEffectsComponent//, ICharacterUI
     {
+        [Dependency] private readonly IOverlayManager _overlayManager = default!;
+        [Dependency] private readonly IReflectionManager _reflectionManager = default!;
+        [Dependency] private readonly IClientNetManager _netManager = default!;
+
         /// <summary>
         /// A list of overlay containers representing the current overlays applied
         /// </summary>
@@ -35,13 +39,6 @@ namespace Content.Client.GameObjects.Components.Mobs
             get => _currentEffects;
             set => SetEffects(value);
         }
-
-#pragma warning disable 649
-        // Required dependencies
-        [Dependency] private readonly IOverlayManager _overlayManager;
-        [Dependency] private readonly IReflectionManager _reflectionManager;
-        [Dependency] private readonly IClientNetManager _netManager;
-#pragma warning restore 649
 
         public override void Initialize()
         {

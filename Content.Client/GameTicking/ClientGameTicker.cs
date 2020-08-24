@@ -17,10 +17,8 @@ namespace Content.Client.GameTicking
 {
     public class ClientGameTicker : SharedGameTicker, IClientGameTicker
     {
-#pragma warning disable 649
-        [Dependency] private IClientNetManager _netManager;
-        [Dependency] private IStateManager _stateManager;
-#pragma warning restore 649
+        [Dependency] private readonly IClientNetManager _netManager = default!;
+        [Dependency] private readonly IStateManager _stateManager = default!;
 
         [ViewVariables] private bool _initialized;
 

@@ -27,10 +27,8 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     internal sealed class HandsSystem : EntitySystem
     {
-#pragma warning disable 649
-        [Dependency] private readonly IMapManager _mapManager;
-        [Dependency] private readonly IServerNotifyManager _notifyManager;
-#pragma warning restore 649
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
 
         private const float ThrowForce = 1.5f; // Throwing force of mobs in Newtons
 

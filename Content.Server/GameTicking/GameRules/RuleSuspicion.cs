@@ -25,11 +25,9 @@ namespace Content.Server.GameTicking.GameRules
     {
         private static readonly TimeSpan DeadCheckDelay = TimeSpan.FromSeconds(1);
 
-#pragma warning disable 649
-        [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private readonly IChatManager _chatManager;
-        [Dependency] private readonly IGameTicker _gameTicker;
-#pragma warning restore 649
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly IGameTicker _gameTicker = default!;
 
         private readonly CancellationTokenSource _checkTimerCancel = new CancellationTokenSource();
 

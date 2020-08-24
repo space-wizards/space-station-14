@@ -74,11 +74,9 @@ namespace Content.Client.UserInterface
         private Button _combatModeButton;
         private VBoxContainer _combatPanelContainer;
 
-#pragma warning disable 649
-        [Dependency] private readonly IResourceCache _resourceCache;
-        [Dependency] private readonly ILocalizationManager _loc;
-        [Dependency] private readonly IInputManager _inputManager;
-#pragma warning restore 649
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private readonly ILocalizationManager _loc = default!;
+        [Dependency] private readonly IInputManager _inputManager = default!;
 
         public Control HandsContainer { get; private set; }
         public Control InventoryQuickButtonContainer { get; private set; }
