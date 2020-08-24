@@ -40,7 +40,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
     public class ReagentDispenserComponent : SharedReagentDispenserComponent, IActivate, IInteractUsing, ISolutionChange
     {
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
-        [Dependency] private readonly ILocalizationManager _localizationManager = default!;
 
         [ViewVariables] private ContainerSlot _beakerContainer = default!;
         [ViewVariables] private string _packPrototypeId = "";
@@ -286,7 +285,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if (!args.User.TryGetComponent(out IHandsComponent? hands))
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                    _localizationManager.GetString("You have no hands."));
+                    Loc.GetString("You have no hands."));
                 return;
             }
 
@@ -309,7 +308,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if (!args.User.TryGetComponent(out IHandsComponent? hands))
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                    _localizationManager.GetString("You have no hands."));
+                    Loc.GetString("You have no hands."));
                 return true;
             }
 
@@ -326,13 +325,13 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 if (HasBeaker)
                 {
                     _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                        _localizationManager.GetString("This dispenser already has a container in it."));
+                        Loc.GetString("This dispenser already has a container in it."));
                 }
                 else if ((solution.Capabilities & SolutionCaps.FitsInDispenser) == 0)
                 {
                     //If it can't fit in the dispenser, don't put it in. For example, buckets and mop buckets can't fit.
                     _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                        _localizationManager.GetString("That can't fit in the dispenser."));
+                        Loc.GetString("That can't fit in the dispenser."));
                 }
                 else
                 {
@@ -343,7 +342,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             else
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                    _localizationManager.GetString("You can't put this in the dispenser."));
+                    Loc.GetString("You can't put this in the dispenser."));
             }
 
             return true;

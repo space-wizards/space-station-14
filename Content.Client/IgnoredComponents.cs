@@ -163,6 +163,7 @@
             "MobStateManager",
             "Metabolism",
             "AiFactionTag",
+            "PressureProtection",
         };
     }
 }
