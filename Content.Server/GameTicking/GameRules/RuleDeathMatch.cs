@@ -55,7 +55,7 @@ namespace Content.Server.GameTicking.GameRules
         {
             _checkTimerCancel = null;
 
-            if (_cfg.GetCVar<bool>("game.disablewin"))
+            if (!_cfg.GetCVar<bool>("game.enablewin"))
                 return;
 
             IPlayerSession winner = null;

@@ -52,7 +52,7 @@ namespace Content.Server.GameTicking.GameRules
 
         private void _checkWinConditions()
         {
-            if (_cfg.GetCVar<bool>("game.disablewin"))
+            if (!_cfg.GetCVar<bool>("game.enablewin"))
                 return;
 
             var traitorsAlive = 0;
