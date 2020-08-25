@@ -38,6 +38,7 @@
   - hostlogin
   - events
   - factions
+  CanAdminMenu: true
 
 - Index: 100
   Name: Administrator
@@ -102,6 +103,7 @@
   - factions
   CanViewVar: true
   CanAdminPlace: true
+  CanAdminMenu: true
 
 - Index: 200
   Name: Host
@@ -196,3 +198,4 @@
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true
+  CanAdminMenu: true
