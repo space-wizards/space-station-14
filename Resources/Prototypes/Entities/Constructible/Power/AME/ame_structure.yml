@@ -36,6 +36,11 @@
     nodes:
     - !type:AdjacentNode
       nodeGroupID: AMEngine
+  - type: PointLight
+    enabled: false
+    radius: 5
+    energy: 0.5
+    color: "#00AAFF"
   - type: Appearance
     visuals:
     - type: AMEVisualizer

@@ -88,7 +88,7 @@ namespace Content.Server.GameObjects.Components.Power.AME
             }
 
             _jarSlot.ContainedEntity.TryGetComponent<AMEFuelContainerComponent>(out var fuelJar);
-            if(fuelJar != null && _powerSupplier != null)
+            if(fuelJar != null && _powerSupplier != null && fuelJar.FuelAmount > InjectionAmount)
             {
                 _powerSupplier.SupplyRate = GetAMENodeGroup().InjectFuel(InjectionAmount);
                 fuelJar.FuelAmount -= InjectionAmount;
