@@ -25,7 +25,13 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
         {
             base.Initialize();
             _atmosSystem = EntitySystem.Get<AtmosphereSystem>();
-            _ventInlet = Owner.GetComponent<NodeContainerComponent>().Nodes.OfType<PipeNode>().FirstOrDefault();
+            if (!Owner.TryGetComponent<NodeContainerComponent>(out var container))
+            {
+                JoinedGridAtmos?.RemovePipeNetDevice(this);
+                Logger.Error($"{typeof(BaseVentComponent)} on entity {Owner.Uid} did not have a {nameof(NodeContainerComponent)}.");
+                return;
+            }
+            _ventInlet = container.Nodes.OfType<PipeNode>().FirstOrDefault();
             if (_ventInlet == null)
             {
                 JoinedGridAtmos?.RemovePipeNetDevice(this);
