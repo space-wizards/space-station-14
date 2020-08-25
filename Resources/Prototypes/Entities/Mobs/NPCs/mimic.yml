@@ -9,6 +9,9 @@
   components:
   - type: AiController
     logic: Mimic
+  - type: AiFactionTag
+    factions:
+    - SimpleHostile
   - type: Hands
   - type: MovementSpeedModifier
   - type: InteractionOutline

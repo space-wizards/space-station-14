@@ -9,6 +9,7 @@ using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Disposal;
 using Content.Shared.GameObjects.EntitySystems;
@@ -29,6 +30,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timers.Timer;
@@ -36,13 +38,12 @@ using Timer = Robust.Shared.Timers.Timer;
 namespace Content.Server.GameObjects.Components.Disposal
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedDisposalUnitComponent))]
     [ComponentReference(typeof(IInteractUsing))]
     public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IInteractUsing, IDragDropOn
     {
-#pragma warning disable 649
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-#pragma warning restore 649
 
         public override string Name => "DisposalUnit";
 
@@ -82,9 +83,6 @@ namespace Content.Server.GameObjects.Components.Disposal
         [ViewVariables] public IReadOnlyList<IEntity> ContainedEntities => _container.ContainedEntities;
 
         [ViewVariables]
-        private BoundUserInterface _userInterface = default!;
-
-        [ViewVariables]
         public bool Powered =>
             !Owner.TryGetComponent(out PowerReceiverComponent? receiver) ||
             receiver.Powered;
@@ -114,6 +112,15 @@ namespace Content.Server.GameObjects.Components.Disposal
                 UpdateVisualState();
             }
         }
+
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(DisposalUnitUiKey.Key);
+
+        private DisposalUnitBoundUserInterfaceState? _lastUiState;
+
+        /// <summary>
+        ///     Store the translated state.
+        /// </summary>
+        private (PressureState State, string Localized) _locState;
 
         public bool CanInsert(IEntity entity)
         {
@@ -161,7 +168,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             if (entity.TryGetComponent(out IActorComponent? actor))
             {
-                _userInterface.Close(actor.playerSession);
+                UserInterface?.Close(actor.playerSession);
             }
 
             UpdateVisualState();
@@ -284,17 +291,35 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private DisposalUnitBoundUserInterfaceState GetInterfaceState()
         {
-            var state = Loc.GetString($"{State}");
-            return new DisposalUnitBoundUserInterfaceState(Owner.Name, state, _pressure, Powered, Engaged);
+            string stateString;
+
+            if (_locState.State != State)
+            {
+                stateString = Loc.GetString($"{State}");
+                _locState = (State, stateString);
+            }
+            else
+            {
+                stateString = _locState.Localized;
+            }
+
+            return new DisposalUnitBoundUserInterfaceState(Owner.Name, stateString, _pressure, Powered, Engaged);
         }
 
         private void UpdateInterface()
         {
             var state = GetInterfaceState();
-            _userInterface.SetState(state);
+
+            if (_lastUiState != null && _lastUiState.Equals(state))
+            {
+                return;
+            }
+
+            _lastUiState = state;
+            UserInterface?.SetState(state);
         }
 
-        private bool PlayerCanUse(IEntity player)
+        private bool PlayerCanUse(IEntity? player)
         {
             if (player == null)
             {
@@ -402,8 +427,9 @@ namespace Content.Server.GameObjects.Components.Disposal
                 : LightState.Ready);
         }
 
-        public void Update(float frameTime)
+        public override void Update(float frameTime)
         {
+            base.Update(frameTime);
             if (!Powered)
             {
                 return;
@@ -472,9 +498,11 @@ namespace Content.Server.GameObjects.Components.Disposal
             base.Initialize();
 
             _container = ContainerManagerComponent.Ensure<Container>(Name, Owner);
-            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
-                .GetBoundUserInterface(DisposalUnitUiKey.Key);
-            _userInterface.OnReceiveMessage += OnUiReceiveMessage;
+
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += OnUiReceiveMessage;
+            }
 
             UpdateInterface();
         }
@@ -483,10 +511,15 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             base.Startup();
 
-            Owner.EnsureComponent<AnchorableComponent>();
+            if(!Owner.HasComponent<AnchorableComponent>())
+            {
+                Logger.WarningS("VitalComponentMissing", $"Disposal unit {Owner.Uid} is missing an anchorable component");
+            }
 
-            var collidable = Owner.EnsureComponent<CollidableComponent>();
-            collidable.AnchoredChanged += UpdateVisualState;
+            if (Owner.TryGetComponent(out CollidableComponent? collidable))
+            {
+                collidable.AnchoredChanged += UpdateVisualState;
+            }
 
             if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
             {
@@ -513,7 +546,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 _container.ForceRemove(entity);
             }
 
-            _userInterface.CloseAll();
+            UserInterface?.CloseAll();
 
             _automaticEngageToken?.Cancel();
             _automaticEngageToken = null;
@@ -571,7 +604,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
-            _userInterface.Open(actor.playerSession);
+            UserInterface?.Open(actor.playerSession);
             return true;
         }
 

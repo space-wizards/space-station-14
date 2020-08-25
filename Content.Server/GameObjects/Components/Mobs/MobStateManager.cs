@@ -5,6 +5,7 @@ using Content.Server.Mobs;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
@@ -163,6 +164,11 @@ namespace Content.Server.GameObjects.Components.Mobs
     {
         public void EnterState(IEntity entity)
         {
+            if (entity.TryGetComponent(out AppearanceComponent appearance))
+            {
+                appearance.SetData(DamageStateVisuals.State, DamageState.Alive);
+            }
+
             UpdateState(entity);
         }
 
@@ -290,6 +296,11 @@ namespace Content.Server.GameObjects.Components.Mobs
     {
         public void EnterState(IEntity entity)
         {
+            if (entity.TryGetComponent(out AppearanceComponent appearance))
+            {
+                appearance.SetData(DamageStateVisuals.State, DamageState.Critical);
+            }
+
             if (entity.TryGetComponent(out ServerStatusEffectsComponent status))
             {
                 status.ChangeStatusEffectIcon(StatusEffect.Health,
@@ -391,6 +402,11 @@ namespace Content.Server.GameObjects.Components.Mobs
     {
         public void EnterState(IEntity entity)
         {
+            if (entity.TryGetComponent(out AppearanceComponent appearance))
+            {
+                appearance.SetData(DamageStateVisuals.State, DamageState.Dead);
+            }
+
             if (entity.TryGetComponent(out ServerStatusEffectsComponent status))
             {
                 status.ChangeStatusEffectIcon(StatusEffect.Health,

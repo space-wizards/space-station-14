@@ -11,10 +11,8 @@ namespace Content.Client.GameObjects.EntitySystems
 {
     public sealed class CharacterInterfaceSystem : EntitySystem
     {
-#pragma warning disable 649
-        [Dependency] private readonly IGameHud _gameHud;
-        [Dependency] private readonly IPlayerManager _playerManager;
-#pragma warning restore 649
+        [Dependency] private readonly IGameHud _gameHud = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
 
         public override void Initialize()
         {

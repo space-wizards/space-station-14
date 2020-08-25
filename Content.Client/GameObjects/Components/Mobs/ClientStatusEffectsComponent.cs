@@ -23,12 +23,10 @@ namespace Content.Client.GameObjects.Components.Mobs
     [ComponentReference(typeof(SharedStatusEffectsComponent))]
     public sealed class ClientStatusEffectsComponent : SharedStatusEffectsComponent
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private readonly IResourceCache _resourceCache;
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
-        [Dependency] private readonly IGameTiming _gameTiming;
-#pragma warning restore 649
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         private StatusEffectsUI _ui;
         private Dictionary<StatusEffect, StatusEffectStatus> _status = new Dictionary<StatusEffect, StatusEffectStatus>();

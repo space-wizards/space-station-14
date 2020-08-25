@@ -70,14 +70,12 @@ namespace Content.Client.Chat
         // Flag Enums for holding filtered channels
         private ChatChannel _filteredChannels;
 
-#pragma warning disable 649
-        [Dependency] private readonly IClientNetManager _netManager;
-        [Dependency] private readonly IClientConsole _console;
-        [Dependency] private readonly IEntityManager _entityManager;
-        [Dependency] private readonly IEyeManager _eyeManager;
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
+        [Dependency] private readonly IClientNetManager _netManager = default!;
+        [Dependency] private readonly IClientConsole _console = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IEyeManager _eyeManager = default!;
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IClientConGroupController _groupController = default!;
-#pragma warning restore 649
 
         private ChatBox _currentChatBox;
         private Control _speechBubbleRoot;
@@ -231,7 +229,7 @@ namespace Content.Client.Chat
             {
                 string locWarning = Loc.GetString("Your message exceeds {0} character limit", _maxMessageLength);
                 _currentChatBox?.AddLine(locWarning, ChatChannel.Server, Color.Orange);
-                _currentChatBox.ClearOnEnter = false;   // The text shouldn't be cleared if it hasn't been sent 
+                _currentChatBox.ClearOnEnter = false;   // The text shouldn't be cleared if it hasn't been sent
                 return;
             }
 

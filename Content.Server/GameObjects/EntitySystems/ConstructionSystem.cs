@@ -36,10 +36,8 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     internal class ConstructionSystem : SharedConstructionSystem
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly IMapManager _mapManager;
-#pragma warning restore 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         private readonly Dictionary<string, ConstructionPrototype> _craftRecipes = new Dictionary<string, ConstructionPrototype>();
 
