@@ -1,6 +1,8 @@
-﻿using Content.Shared.Interfaces.GameObjects.Components;
+﻿using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Localization;
 
 namespace Content.Server.GameObjects.Components.MachineLinking
 {
@@ -27,7 +29,11 @@ namespace Content.Server.GameObjects.Components.MachineLinking
                 return;
             }
 
-            transmitter.TransmitSignal(SignalState.Toggle);
+            if (transmitter.TransmitSignal(user, SignalState.Toggle))
+            {
+                // Since the button doesn't have an animation, I'm going to use a popup message
+                Owner.PopupMessage(user, Loc.GetString("Click."));
+            }
         }
 
     }

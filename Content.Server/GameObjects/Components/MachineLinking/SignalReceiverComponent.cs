@@ -1,6 +1,6 @@
 ﻿using Content.Server.GameObjects.Components.Interactable;
-using Content.Server.Interfaces;
 using Content.Shared.GameObjects.Components.Interactable;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -15,10 +15,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
     [RegisterComponent]
     public class SignalReceiverComponent : Component, IInteractUsing
     {
-#pragma warning disable 649
-        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
-        [Dependency] private readonly IMapManager _mapManager;
-#pragma warning restore 649
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         public override string Name => "SignalReceiver";
 
@@ -66,25 +63,25 @@ namespace Content.Server.GameObjects.Components.MachineLinking
         {
             if (transmitter == null)
             {
-                _notifyManager.PopupMessage(user, user, Loc.GetString("Signal not set."));
+                user.PopupMessage(user, Loc.GetString("Signal not set."));
                 return false;
             }
 
             if (_transmitters.Contains(transmitter))
             {
                 Unsubscribe(transmitter);
-                _notifyManager.PopupMessage(Owner, user, Loc.GetString("Unlinked."));
+                Owner.PopupMessage(user, Loc.GetString("Unlinked."));
                 return true;
             }
 
             if (transmitter.Range > 0 && !Owner.Transform.GridPosition.InRange(_mapManager, transmitter.Owner.Transform.GridPosition, transmitter.Range))
             {
-                _notifyManager.PopupMessage(Owner, user, Loc.GetString("Out of range."));
+                Owner.PopupMessage(user, Loc.GetString("Out of range."));
                 return false;
             }
 
             Subscribe(transmitter);
-            _notifyManager.PopupMessage(Owner, user, Loc.GetString("Linked!"));
+            Owner.PopupMessage(user, Loc.GetString("Linked!"));
             return true;
         }
 

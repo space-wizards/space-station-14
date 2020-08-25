@@ -1,6 +1,6 @@
 ﻿using Content.Server.GameObjects.Components.Interactable;
-using Content.Server.Interfaces;
 using Content.Shared.GameObjects.Components.Interactable;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -17,11 +17,8 @@ namespace Content.Server.GameObjects.Components.MachineLinking
     [RegisterComponent]
     public class SignalTransmitterComponent : Component, IInteractUsing
     {
-#pragma warning disable 649
-        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
-        [Dependency] private readonly IMapManager _mapManager;
-        [Dependency] private readonly IEntityManager _entityManager;
-#pragma warning restore 649
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public override string Name => "SignalTransmitter";
 
@@ -91,8 +88,14 @@ namespace Content.Server.GameObjects.Components.MachineLinking
             }
         }
 
-        public void TransmitSignal(SignalState state)
+        public bool TransmitSignal(IEntity user, SignalState state)
         {
+            if (_receivers.Count == 0)
+            {
+                Owner.PopupMessage(user, Loc.GetString("No receivers connected."));
+                return false;
+            }
+
             foreach (var receiver in _receivers)
             {
                 if (Range > 0 && !Owner.Transform.GridPosition.InRange(_mapManager, receiver.Owner.Transform.GridPosition, Range))
@@ -102,6 +105,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
 
                 receiver.DistributeSignal(state);
             }
+            return true;
         }
 
         public void Subscribe(SignalReceiverComponent receiver)
@@ -123,7 +127,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
         {
             if (user != null)
             {
-                _notifyManager.PopupMessage(Owner, user, Loc.GetString("Signal fetched."));
+                Owner.PopupMessage(user, Loc.GetString("Signal fetched."));
             }
 
             return this;
