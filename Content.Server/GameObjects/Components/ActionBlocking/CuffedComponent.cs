@@ -298,15 +298,15 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
                     if (!isOwner)
                     {
-                        _notifyManager.PopupMessage(user, Owner, Loc.GetString($"{0:theName} uncuffs your hands.", user));
+                        _notifyManager.PopupMessage(user, Owner, Loc.GetString($"{0} uncuffs your hands.", user.Name));
                     }
                 }
                 else
                 {
                     if (!isOwner)
                     {
-                        _notifyManager.PopupMessage(user, user, Loc.GetString($"You successfully remove the cuffs. {0} of {1:theName}'s hands remain cuffed.", CuffedHandCount, user));
-                        _notifyManager.PopupMessage(user, Owner, Loc.GetString($"{0:theName} removes your cuffs. {1} of your hands remain cuffed.", user, CuffedHandCount));
+                        _notifyManager.PopupMessage(user, user, Loc.GetString($"You successfully remove the cuffs. {0} of {1}'s hands remain cuffed.", CuffedHandCount, user.Name));
+                        _notifyManager.PopupMessage(user, Owner, Loc.GetString($"{0} removes your cuffs. {1} of your hands remain cuffed.", user.Name, CuffedHandCount));
                     }
                     else
                     {
