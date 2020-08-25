@@ -10,10 +10,7 @@ namespace Content.Client.GameObjects.Components.Research
     [ComponentReference(typeof(SharedLatheDatabaseComponent))]
     public class LatheDatabaseComponent : SharedLatheDatabaseComponent
     {
-#pragma warning disable CS0649
-        [Dependency]
-        private IPrototypeManager _prototypeManager;
-#pragma warning restore
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {

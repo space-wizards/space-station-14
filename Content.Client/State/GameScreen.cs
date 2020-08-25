@@ -14,12 +14,10 @@ namespace Content.Client.State
 {
     public class GameScreen : GameScreenBase
     {
-#pragma warning disable 649
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
-        [Dependency] private readonly IGameHud _gameHud;
-        [Dependency] private readonly IInputManager _inputManager;
-        [Dependency] private readonly IChatManager _chatManager;
-#pragma warning restore 649
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+        [Dependency] private readonly IGameHud _gameHud = default!;
+        [Dependency] private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly IChatManager _chatManager = default!;
 
         [ViewVariables] private ChatBox _gameChat;
 

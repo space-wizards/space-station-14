@@ -19,11 +19,9 @@ namespace Content.Client.Parallax
 {
     internal sealed class ParallaxManager : IParallaxManager, IPostInjectInit
     {
-#pragma warning disable 649
-        [Dependency] private readonly IResourceCache _resourceCache;
-        [Dependency] private readonly ILogManager _logManager;
-        [Dependency] private readonly IConfigurationManager _configurationManager;
-#pragma warning restore 649
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private readonly ILogManager _logManager = default!;
+        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
         private static readonly ResourcePath ParallaxConfigPath = new ResourcePath("/parallax_config.toml");
 

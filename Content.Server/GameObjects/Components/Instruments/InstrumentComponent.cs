@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Interfaces;
 using Content.Server.Mobs;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Instruments;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -106,12 +107,7 @@ namespace Content.Server.GameObjects.Components.Instruments
             }
         }
 
-        [ViewVariables]
-        private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
-            ui.TryGetBoundUserInterface(InstrumentUiKey.Key, out var boundUi)
-                ? boundUi
-                : null;
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(InstrumentUiKey.Key);
 
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
         {

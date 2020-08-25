@@ -21,13 +21,11 @@ namespace Content.Server.GameTicking.GamePresets
 {
     public class PresetSuspicion : GamePreset
     {
-#pragma warning disable 649
-        [Dependency] private readonly IChatManager _chatManager;
-        [Dependency] private readonly IGameTicker _gameTicker;
-        [Dependency] private readonly IRobustRandom _random;
-        [Dependency] private readonly IConfigurationManager _cfg;
-        [Dependency] private IPrototypeManager _prototypeManager;
-#pragma warning restore 649
+        [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly IGameTicker _gameTicker = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public int MinPlayers { get; set; }
         public int MinTraitors { get; set; }

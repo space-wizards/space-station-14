@@ -13,12 +13,10 @@ namespace Content.Client.Parallax
 {
     public class ParallaxOverlay : Overlay
     {
-#pragma warning disable 649
-        [Dependency] private readonly IParallaxManager _parallaxManager;
-        [Dependency] private readonly IEyeManager _eyeManager;
-        [Dependency] private readonly IClyde _displayManager;
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-#pragma warning restore 649
+        [Dependency] private readonly IParallaxManager _parallaxManager = default!;
+        [Dependency] private readonly IEyeManager _eyeManager = default!;
+        [Dependency] private readonly IClyde _displayManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override bool AlwaysDirty => true;
         private const float Slowness = 0.5f;

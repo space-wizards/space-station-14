@@ -8,9 +8,7 @@ namespace Content.Client.UserInterface.Cargo
 {
     class CargoConsoleOrderMenu : SS14Window
     {
-#pragma warning disable 649
-        [Dependency] private readonly ILocalizationManager _loc;
-#pragma warning restore 649
+        [Dependency] private readonly ILocalizationManager _loc = default!;
 
         public LineEdit Requester { get; set; }
         public LineEdit Reason { get; set; }

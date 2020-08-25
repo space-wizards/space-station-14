@@ -9,6 +9,7 @@ using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Disposal;
 using Content.Shared.GameObjects.EntitySystems;
@@ -29,6 +30,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timers.Timer;
@@ -36,6 +38,7 @@ using Timer = Robust.Shared.Timers.Timer;
 namespace Content.Server.GameObjects.Components.Disposal
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedDisposalUnitComponent))]
     [ComponentReference(typeof(IInteractUsing))]
     public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IInteractUsing, IDragDropOn
     {
@@ -110,15 +113,10 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
         }
 
-        [ViewVariables]
-        private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
-            ui.TryGetBoundUserInterface(DisposalUnitUiKey.Key, out var boundUi)
-                ? boundUi
-                : null;
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(DisposalUnitUiKey.Key);
 
         private DisposalUnitBoundUserInterfaceState? _lastUiState;
-        
+
         /// <summary>
         ///     Store the translated state.
         /// </summary>
@@ -294,7 +292,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         private DisposalUnitBoundUserInterfaceState GetInterfaceState()
         {
             string stateString;
-            
+
             if (_locState.State != State)
             {
                 stateString = Loc.GetString($"{State}");
@@ -304,7 +302,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             {
                 stateString = _locState.Localized;
             }
-            
+
             return new DisposalUnitBoundUserInterfaceState(Owner.Name, stateString, _pressure, Powered, Engaged);
         }
 
@@ -429,8 +427,9 @@ namespace Content.Server.GameObjects.Components.Disposal
                 : LightState.Ready);
         }
 
-        public void Update(float frameTime)
+        public override void Update(float frameTime)
         {
+            base.Update(frameTime);
             if (!Powered)
             {
                 return;
@@ -512,10 +511,15 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             base.Startup();
 
-            Owner.EnsureComponent<AnchorableComponent>();
+            if(!Owner.HasComponent<AnchorableComponent>())
+            {
+                Logger.WarningS("VitalComponentMissing", $"Disposal unit {Owner.Uid} is missing an anchorable component");
+            }
 
-            var collidable = Owner.EnsureComponent<CollidableComponent>();
-            collidable.AnchoredChanged += UpdateVisualState;
+            if (Owner.TryGetComponent(out CollidableComponent? collidable))
+            {
+                collidable.AnchoredChanged += UpdateVisualState;
+            }
 
             if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
             {

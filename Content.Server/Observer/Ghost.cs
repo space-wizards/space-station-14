@@ -28,6 +28,12 @@ namespace Content.Server.Observer
             }
 
             var mind = player.ContentData().Mind;
+            if (mind == null)
+            {
+                shell.SendText(player, "You can't ghost here!");
+                return;
+            }
+
             var canReturn = player.AttachedEntity != null && CanReturn;
             var name = player.AttachedEntity?.Name ?? player.Name;
 

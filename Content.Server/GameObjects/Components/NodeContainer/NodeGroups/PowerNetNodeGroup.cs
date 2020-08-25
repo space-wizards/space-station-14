@@ -29,6 +29,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
     [NodeGroup(NodeGroupID.HVPower, NodeGroupID.MVPower)]
     public class PowerNetNodeGroup : BaseNetConnectorNodeGroup<BasePowerNetComponent, IPowerNet>, IPowerNet
     {
+        [Dependency] private readonly IPowerNetManager _powerNetManager = default!;
+
         [ViewVariables]
         private readonly List<PowerSupplierComponent> _suppliers = new List<PowerSupplierComponent>();
 
@@ -42,10 +44,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         private readonly Dictionary<Priority, int> _drawByPriority = new Dictionary<Priority, int>();
 
         public static readonly IPowerNet NullNet = new NullPowerNet();
-
-#pragma warning disable 649
-        [Dependency] private readonly IPowerNetManager _powerNetManager;
-#pragma warning restore 649
 
         public PowerNetNodeGroup()
         {

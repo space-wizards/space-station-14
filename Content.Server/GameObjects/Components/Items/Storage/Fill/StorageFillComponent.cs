@@ -10,13 +10,11 @@ namespace Content.Server.GameObjects.Components.Items.Storage.Fill
     [RegisterComponent]
     internal sealed class StorageFillComponent : Component, IMapInit
     {
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+
         public override string Name => "StorageFill";
 
         private List<string> _contents = new List<string>();
-
-#pragma warning disable 649
-        [Dependency] private readonly IEntityManager _entityManager;
-#pragma warning restore 649
 
         public override void ExposeData(ObjectSerializer serializer)
         {
