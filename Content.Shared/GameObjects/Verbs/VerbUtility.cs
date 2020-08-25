@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Robust.Shared.Containers;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Utility;
 
@@ -50,6 +51,21 @@ namespace Content.Shared.GameObjects.Verbs
             }
         }
 
+        public static bool VerbAccessChecks(IEntity user, IEntity target, VerbBase verb)
+        {
+            if (verb.RequireInteractionRange && !InVerbUseRange(user, target))
+            {
+                return false;
+            }
+
+            if (verb.BlockedByContainers && !VerbContainerCheck(user, target))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public static bool InVerbUseRange(IEntity user, IEntity target)
         {
             var distanceSquared = (user.Transform.WorldPosition - target.Transform.WorldPosition)
@@ -58,6 +74,20 @@ namespace Content.Shared.GameObjects.Verbs
             {
                 return false;
             }
+            return true;
+        }
+
+        public static bool VerbContainerCheck(IEntity user, IEntity target)
+        {
+            if (!user.IsInSameOrNoContainer(target))
+            {
+                if (!ContainerHelpers.TryGetContainer(target, out var container) ||
+                    container.Owner != user)
+                {
+                    return false;
+                }
+            }
+
             return true;
         }
     }

@@ -15,17 +15,16 @@ namespace Content.Server.GameObjects.Components.Projectiles
         public override void Initialize()
         {
             base.Initialize();
-            if (!Owner.HasComponent<ExplosiveComponent>())
-            {
-                Logger.Error("ExplosiveProjectiles need an ExplosiveComponent");
-                throw new InvalidOperationException();
-            }
+
+            Owner.EnsureComponent<ExplosiveComponent>();
         }
 
         void ICollideBehavior.CollideWith(IEntity entity)
         {
-            var explosiveComponent = Owner.GetComponent<ExplosiveComponent>();
-            explosiveComponent.Explosion();
+            if (Owner.TryGetComponent(out ExplosiveComponent explosive))
+            {
+                explosive.Explosion();
+            }
         }
 
         // Projectile should handle the deleting

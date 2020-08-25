@@ -24,7 +24,6 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Disposal
 {
-    // TODO: Make unanchored pipes pullable
     public abstract class DisposalTubeComponent : Component, IDisposalTubeComponent, IBreakAct
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -44,7 +43,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         [ViewVariables]
         private bool Anchored =>
-            !Owner.TryGetComponent(out CollidableComponent collidable) ||
+            !Owner.TryGetComponent(out CollidableComponent? collidable) ||
             collidable.Anchored;
 
         /// <summary>
@@ -69,21 +68,11 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             var nextDirection = NextDirection(holder);
             var snapGrid = Owner.GetComponent<SnapGridComponent>();
+            var oppositeDirection = new Angle(nextDirection.ToAngle().Theta + Math.PI).GetDir();
             var tube = snapGrid
                 .GetInDir(nextDirection)
-                .Select(x => x.TryGetComponent(out IDisposalTubeComponent c) ? c : null)
-                .FirstOrDefault(x => x != null && x != this);
-
-            if (tube == null)
-            {
-                return null;
-            }
-
-            var oppositeDirection = new Angle(nextDirection.ToAngle().Theta + Math.PI).GetDir();
-            if (!tube.CanConnect(oppositeDirection, this))
-            {
-                return null;
-            }
+                .Select(x => x.TryGetComponent(out IDisposalTubeComponent? c) ? c : null)
+                .FirstOrDefault(x => x != null && x != this && x.CanConnect(oppositeDirection, this));
 
             return tube;
         }
@@ -153,7 +142,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             foreach (var entity in Contents.ContainedEntities.ToArray())
             {
-                if (!entity.TryGetComponent(out DisposalHolderComponent holder))
+                if (!entity.TryGetComponent(out DisposalHolderComponent? holder))
                 {
                     continue;
                 }
@@ -171,7 +160,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private void UpdateVisualState()
         {
-            if (!Owner.TryGetComponent(out AppearanceComponent appearance))
+            if (!Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 return;
             }
@@ -187,10 +176,12 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private void AnchoredChanged()
         {
-            if (!Owner.TryGetComponent(out CollidableComponent collidable))
+            if (!Owner.TryGetComponent(out CollidableComponent? collidable))
             {
                 return;
             }
+
+            collidable.CanCollide = !collidable.Anchored;
 
             if (collidable.Anchored)
             {
@@ -230,6 +221,8 @@ namespace Content.Server.GameObjects.Components.Disposal
             var collidable = Owner.EnsureComponent<CollidableComponent>();
 
             collidable.AnchoredChanged += AnchoredChanged;
+
+            collidable.CanCollide = !collidable.Anchored;
         }
 
         protected override void Startup()

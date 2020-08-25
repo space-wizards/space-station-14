@@ -25,14 +25,12 @@ namespace Content.Client.GameObjects.EntitySystems
     [UsedImplicitly]
     internal sealed class ExamineSystem : ExamineSystemShared
     {
-        public const string StyleClassEntityTooltip = "entity-tooltip";
+        [Dependency] private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
 
-#pragma warning disable 649
-        [Dependency] private IInputManager _inputManager;
-        [Dependency] private IUserInterfaceManager _userInterfaceManager;
-        [Dependency] private IEntityManager _entityManager;
-        [Dependency] private IPlayerManager _playerManager;
-#pragma warning restore 649
+        public const string StyleClassEntityTooltip = "entity-tooltip";
 
         private Popup _examineTooltipOpen;
         private CancellationTokenSource _requestCancelTokenSource;

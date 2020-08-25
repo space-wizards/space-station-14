@@ -18,14 +18,12 @@ namespace Content.Server.GameObjects.Components.Markers
     [RegisterComponent]
     public class ConditionalSpawnerComponent : Component, IMapInit
     {
-        public override string Name => "ConditionalSpawner";
+        [Dependency] private readonly IGameTicker _gameTicker = default!;
+        [Dependency] private readonly IReflectionManager _reflectionManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
-#pragma warning disable 649
-        [Dependency] private IGameTicker _gameTicker;
-        [Dependency] private IReflectionManager _reflectionManager;
-        [Dependency] private IEntityManager _entityManager;
-        [Dependency] private IRobustRandom _robustRandom;
-#pragma warning restore 649
+        public override string Name => "ConditionalSpawner";
 
         [ViewVariables(VVAccess.ReadWrite)]
         public List<string> Prototypes { get; set; } = new List<string>();

@@ -1,4 +1,6 @@
-﻿using Robust.Shared.Interfaces.GameObjects;
+﻿using System;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Damage
 {
@@ -11,6 +13,7 @@ namespace Content.Shared.GameObjects.Components.Damage
     ///     <see cref="DamageState.Alive"/> and <see cref="DamageState.Dead"/>,
     ///     as inanimate objects don't go into crit.
     /// </summary>
+    [Serializable, NetSerializable]
     public enum DamageState
     {
         Alive,

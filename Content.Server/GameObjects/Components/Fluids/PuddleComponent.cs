@@ -46,10 +46,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         // based on behaviour (e.g. someone being punched vs slashed with a sword would have different blood sprite)
         // to check for low volumes for evaporation or whatever
 
-#pragma warning disable 649
-        [Dependency] private readonly IMapManager _mapManager;
-        [Dependency] private readonly ILocalizationManager _loc;
-#pragma warning restore 649
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         public override string Name => "Puddle";
 
@@ -116,6 +113,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         public override void Initialize()
         {
             base.Initialize();
+
             if (Owner.TryGetComponent(out SolutionComponent solutionComponent))
             {
                 _contents = solutionComponent;
@@ -123,21 +121,27 @@ namespace Content.Server.GameObjects.Components.Fluids
             else
             {
                 _contents = Owner.AddComponent<SolutionComponent>();
-                _contents.Initialize();
             }
 
-            _snapGrid = Owner.GetComponent<SnapGridComponent>();
+            _snapGrid = Owner.EnsureComponent<SnapGridComponent>();
 
             // Smaller than 1m^3 for now but realistically this shouldn't be hit
             MaxVolume = ReagentUnit.New(1000);
 
             // Random sprite state set server-side so it's consistent across all clients
-            _spriteComponent = Owner.GetComponent<SpriteComponent>();
+            _spriteComponent = Owner.EnsureComponent<SpriteComponent>();
+
             var robustRandom = IoCManager.Resolve<IRobustRandom>();
             var randomVariant = robustRandom.Next(0, _spriteVariants - 1);
-            var baseName = new ResourcePath(_spriteComponent.BaseRSIPath).FilenameWithoutExtension;
 
-            _spriteComponent.LayerSetState(0, $"{baseName}-{randomVariant}"); // TODO: Remove hardcode
+            if (_spriteComponent.BaseRSIPath != null)
+            {
+                var baseName = new ResourcePath(_spriteComponent.BaseRSIPath).FilenameWithoutExtension;
+
+                _spriteComponent.LayerSetState(0, $"{baseName}-{randomVariant}"); // TODO: Remove hardcode
+
+            }
+
             // UpdateAppearance should get called soon after this so shouldn't need to call Dirty() here
 
             UpdateStatus();
@@ -153,7 +157,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         {
             if(_slippery)
             {
-                message.AddText(_loc.GetString("It looks slippery."));
+                message.AddText(Loc.GetString("It looks slippery."));
             }
         }
 

@@ -86,9 +86,6 @@
             "CanSpill",
             "SpeedLoader",
             "Hitscan",
-            "BoltActionBarrel",
-            "PumpBarrel",
-            "RevolverBarrel",
             "ExplosiveProjectile",
             "StunnableProjectile",
             "RandomPottedPlant",
@@ -142,6 +139,8 @@
             "Listening",
             "Radio",
             "DisposalHolder",
+            "DisposalTagger",
+            "DisposalRouter",
             "DisposalTransit",
             "DisposalEntry",
             "DisposalJunction",
@@ -160,6 +159,8 @@
             "GasVapor",
             "MobStateManager",
             "Metabolism",
+            "AiFactionTag",
+            "PressureProtection",
         };
     }
 }

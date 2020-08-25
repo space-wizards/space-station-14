@@ -11,9 +11,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 {
     public class ExamineSystem : ExamineSystemShared
     {
-#pragma warning disable 649
-        [Dependency] private IEntityManager _entityManager;
-#pragma warning restore 649
+        [Dependency] private IEntityManager _entityManager = default!;
 
         private static readonly FormattedMessage _entityNotFoundMessage;
 

@@ -51,7 +51,7 @@
   - type: PowerConsumer
     drawRate: 50
   - type: Breakable
-    maxHP: 100
+    deadThreshold: 100
   - type: Anchorable
 
 - type: entity
@@ -290,7 +290,7 @@
   - type: SnapGrid
     offset: Center
   - type: Breakable
-    maxHP: 100
+    deadThreshold: 100
 
 #Depriciated, to be removed from maps
 

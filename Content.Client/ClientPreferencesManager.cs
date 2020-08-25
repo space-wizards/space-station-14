@@ -14,9 +14,7 @@ namespace Content.Client
     /// </summary>
     public class ClientPreferencesManager : SharedPreferencesManager, IClientPreferencesManager
     {
-#pragma warning disable 649
-        [Dependency] private readonly IClientNetManager _netManager;
-#pragma warning restore 649
+        [Dependency] private readonly IClientNetManager _netManager = default!;
 
         public event Action OnServerDataLoaded;
         public GameSettings Settings { get; private set; }

@@ -41,6 +41,7 @@
         - RifleSTS
         - RifleVintorez
         - RifleWintermute
+        - RifleCalico
       chance: 0.75
       gameRules:
         - RuleSuspicion
@@ -264,6 +265,7 @@
         - GrenadeBlast
         - GrenadeFrag
         - GrenadeBaton
+        - SoapSyndie # shhh!
       chance: 0.75
       gameRules:
         - RuleSuspicion
@@ -285,7 +287,10 @@
       prototypes:
         - MagazineSRifle
         - MagazineClRifle
+        - MagazineClRifle10x24
+        - MagazineClRiflePistol
         - MagazineLRifle
+        - MagazinePistolCalicoTopMounted
       chance: 0.95
       gameRules:
         - RuleSuspicion
@@ -327,8 +332,6 @@
       prototypes:
         - MagazinePistol
         - MagazineHCPistol
-        - MagazinePistolSmg
-        - MagazineClRiflePistol
       chance: 0.95
       gameRules:
         - RuleSuspicion
