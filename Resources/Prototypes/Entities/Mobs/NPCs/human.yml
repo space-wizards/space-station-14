@@ -5,9 +5,14 @@
   id: HumanMob_Civilian
   description: A miserable pile of secrets
   drawdepth: Mobs
+  suffix: AI
   components:
   - type: AiController
     logic: Civilian
+    startingGear: AssistantGear
+  - type: AiFactionTag
+    factions:
+    - NanoTransen
 
 - type: entity
   save: false
@@ -15,6 +20,7 @@
   parent: BaseHumanMob_Content
   id: HumanMob_Spirate
   description: Yarr
+  suffix: AI
   components:
   - type: AiController
     logic: Spirate

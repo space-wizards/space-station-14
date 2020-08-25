@@ -1,10 +1,8 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using Content.Server.GameObjects.Components.Atmos;
-using Content.Server.Interfaces.GameTicking;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
 using JetBrains.Annotations;
@@ -15,8 +13,6 @@ using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
@@ -58,10 +54,13 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
         /// </summary>
         private float _updateCooldown;
 
+        private AtmosphereSystem _atmosphereSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
 
+            _atmosphereSystem = Get<AtmosphereSystem>();
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
             _mapManager.OnGridRemoved += OnGridRemoved;
             _configManager.RegisterCVar("net.gasoverlaytickrate", 3.0f);
@@ -164,8 +163,8 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
 
             for (byte i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
-                var gas = Atmospherics.GetGas(i);
-                var overlay = Atmospherics.GetOverlay(i);
+                var gas = _atmosphereSystem.GetGas(i);
+                var overlay = _atmosphereSystem.GetOverlay(i);
                 if (overlay == null || tile?.Air == null) continue;
 
                 var moles = tile.Air.Gases[i];

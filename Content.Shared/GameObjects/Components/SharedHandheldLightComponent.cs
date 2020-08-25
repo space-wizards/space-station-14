@@ -25,4 +25,20 @@ namespace Content.Shared.GameObjects.Components
             public bool HasCell { get; }
         }
     }
+
+    [Serializable, NetSerializable]
+    public enum HandheldLightVisuals
+    {
+        Power
+    }
+
+    [Serializable, NetSerializable]
+    public enum HandheldLightPowerStates
+    {
+        FullPower,
+        LowPower,
+        Dying,
+    }
+
+
 }

@@ -8,6 +8,7 @@ using Content.Server.GameObjects.Components.VendingMachines;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.EntitySystems;
@@ -37,7 +38,6 @@ namespace Content.Server.GameObjects.Components
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
 
         private AudioSystem _audioSystem = default!;
-        private AppearanceComponent _appearance = default!;
 
         private bool _isPanelOpen;
 
@@ -105,7 +105,10 @@ namespace Content.Server.GameObjects.Components
 
         private void UpdateAppearance()
         {
-            _appearance.SetData(WiresVisuals.MaintenancePanelState, IsPanelOpen && IsPanelVisible);
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            {
+                appearance.SetData(WiresVisuals.MaintenancePanelState, IsPanelOpen && IsPanelVisible);
+            }
         }
 
         /// <summary>
@@ -138,18 +141,17 @@ namespace Content.Server.GameObjects.Components
         [ViewVariables]
         private string? _layoutId;
 
-        private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
-            ui.TryGetBoundUserInterface(WiresUiKey.Key, out var boundUi)
-                ? boundUi
-                : null;
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(WiresUiKey.Key);
 
         public override void Initialize()
         {
             base.Initialize();
             _audioSystem = EntitySystem.Get<AudioSystem>();
-            _appearance = Owner.GetComponent<AppearanceComponent>();
-            _appearance.SetData(WiresVisuals.MaintenancePanelState, IsPanelOpen);
+
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            {
+                appearance.SetData(WiresVisuals.MaintenancePanelState, IsPanelOpen);
+            }
 
             if (UserInterface != null)
             {

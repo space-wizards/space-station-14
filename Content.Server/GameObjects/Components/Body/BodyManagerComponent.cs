@@ -41,11 +41,9 @@ namespace Content.Server.GameObjects.Components.Body
     [ComponentReference(typeof(IBodyManagerComponent))]
     public class BodyManagerComponent : SharedBodyManagerComponent, IBodyPartContainer, IRelayMoveInput
     {
-#pragma warning disable CS0649
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IBodyNetworkFactory _bodyNetworkFactory = default!;
         [Dependency] private readonly IReflectionManager _reflectionManager = default!;
-#pragma warning restore
 
         [ViewVariables] private string _presetName = default!;
 

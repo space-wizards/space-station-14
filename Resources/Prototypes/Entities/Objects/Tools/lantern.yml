@@ -30,3 +30,6 @@
           maxDuration: 4.0
           minValue: 2.0
           maxValue: 4.0
+    - type: Appearance
+      visuals:
+        - type: LanternVisualizer

@@ -17,9 +17,7 @@ namespace Content.Client.GameObjects.EntitySystems
     [UsedImplicitly]
     public sealed class MeleeWeaponSystem : EntitySystem
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-#pragma warning restore 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override void Initialize()
         {

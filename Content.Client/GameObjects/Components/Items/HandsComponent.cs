@@ -156,7 +156,8 @@ namespace Content.Client.GameObjects.Components.Items
             }
             else
             {
-                var (rsi, state) = maybeInHands.Value;
+                var (rsi, state, color) = maybeInHands.Value;
+                _sprite.LayerSetColor($"hand-{name}", color);
                 _sprite.LayerSetVisible($"hand-{name}", true);
                 _sprite.LayerSetState($"hand-{name}", state, rsi);
             }

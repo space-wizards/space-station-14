@@ -17,13 +17,10 @@ namespace Content.Server.GameObjects.Components.Sound
     [RegisterComponent]
     public class FootstepModifierComponent : Component
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly IRobustRandom _footstepRandom;
-#pragma warning restore 649
-        /// <inheritdoc />
-        ///
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IRobustRandom _footstepRandom = default!;
 
+        /// <inheritdoc />
         public override string Name => "FootstepModifier";
 
         public string _soundCollectionName;

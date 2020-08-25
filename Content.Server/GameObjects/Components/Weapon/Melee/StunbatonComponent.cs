@@ -30,10 +30,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
     [RegisterComponent]
     public class StunbatonComponent : MeleeWeaponComponent, IUse, IExamine, IMapInit, IInteractUsing
     {
-#pragma warning disable 649
-        [Dependency] private IRobustRandom _robustRandom;
-        [Dependency] private readonly ISharedNotifyManager _notifyManager;
-#pragma warning restore 649
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly ISharedNotifyManager _notifyManager = default!;
 
         public override string Name => "Stunbaton";
 

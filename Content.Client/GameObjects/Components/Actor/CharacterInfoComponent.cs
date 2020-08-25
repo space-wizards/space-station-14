@@ -14,12 +14,10 @@ namespace Content.Client.GameObjects.Components.Actor
     [RegisterComponent]
     public sealed class CharacterInfoComponent : Component, ICharacterUI
     {
-        private CharacterInfoControl _control;
+        [Dependency] private readonly ILocalizationManager _loc = default!;
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
 
-#pragma warning disable 649
-        [Dependency] private readonly ILocalizationManager _loc;
-        [Dependency] private readonly IResourceCache _resourceCache;
-#pragma warning restore 649
+        private CharacterInfoControl _control;
 
         public override string Name => "CharacterInfo";
 
