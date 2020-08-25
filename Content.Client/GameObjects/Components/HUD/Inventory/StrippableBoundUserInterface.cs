@@ -28,6 +28,8 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             base.Open();
 
             _strippingMenu = new StrippingMenu($"{Owner.Owner.Name}'s inventory");
+
+            _strippingMenu.OnClose += Close;
             _strippingMenu.OpenCentered();
             UpdateMenu();
         }
