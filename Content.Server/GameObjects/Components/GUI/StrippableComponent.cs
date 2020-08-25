@@ -30,7 +30,8 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public const float StripDelay = 2f;
 
-        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(StrippingUiKey.Key);
+        [ViewVariables] 
+		private BoundUserInterface? UserInterface => Owner.GetUIOrNull(StrippingUiKey.Key);
 
         public override void Initialize()
         {
