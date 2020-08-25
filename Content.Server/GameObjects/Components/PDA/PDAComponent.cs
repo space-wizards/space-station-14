@@ -102,7 +102,7 @@ namespace Content.Server.GameObjects.Components.PDA
 
                 case PDAUplinkBuyListingMessage buyMsg:
                 {
-                    if (!_uplinkManager.TryPurchaseItem(_syndicateUplinkAccount, buyMsg.ListingToBuy))
+                    if (!_uplinkManager.TryPurchaseItem(_syndicateUplinkAccount, buyMsg.ItemId))
                     {
                         SendNetworkMessage(new PDAUplinkInsufficientFundsMessage(), message.Session.ConnectedClient);
                         break;
@@ -128,7 +128,7 @@ namespace Content.Server.GameObjects.Components.PDA
             {
                 var accData = new UplinkAccountData(_syndicateUplinkAccount.AccountHolder,
                     _syndicateUplinkAccount.Balance);
-                var listings = _uplinkManager.FetchListings.ToArray();
+                var listings = _uplinkManager.FetchListings.Values.ToArray();
                 UserInterface?.SetState(new PDAUpdateState(_lightOn, ownerInfo, accData, listings));
             }
             else
