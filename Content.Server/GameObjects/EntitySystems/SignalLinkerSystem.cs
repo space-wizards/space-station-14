@@ -107,7 +107,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public string Description => "Turns on signal linker mode. Click a transmitter to tune that signal and then click on each receiver to tune them to the transmitter signal.";
 
-        public string Help => "singallink";
+        public string Help => "signallink (on/off)";
 
         public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
         {
