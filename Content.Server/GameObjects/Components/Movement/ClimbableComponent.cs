@@ -1,4 +1,4 @@
-﻿using Content.Server.GameObjects.Components.Body;
+using Content.Server.GameObjects.Components.Body;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;

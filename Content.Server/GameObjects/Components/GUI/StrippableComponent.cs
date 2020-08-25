@@ -1,6 +1,8 @@
 ﻿#nullable enable
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
+using Content.Server.GameObjects.Components.ActionBlocking;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Interfaces;
@@ -28,7 +30,8 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public const float StripDelay = 2f;
 
-        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(StrippingUiKey.Key);
+        [ViewVariables] 
+		private BoundUserInterface? UserInterface => Owner.GetUIOrNull(StrippingUiKey.Key);
 
         public override void Initialize()
         {
@@ -39,6 +42,14 @@ namespace Content.Server.GameObjects.Components.GUI
                 UserInterface.OnReceiveMessage += HandleUserInterfaceMessage;
             }
 
+            Owner.EnsureComponent<InventoryComponent>();
+            Owner.EnsureComponent<HandsComponent>();
+            Owner.EnsureComponent<CuffableComponent>();
+            
+            if (Owner.TryGetComponent(out CuffableComponent? cuffed))
+            {
+                cuffed.OnCuffedStateChanged += UpdateSubscribed;
+            }
             if (Owner.TryGetComponent(out InventoryComponent? inventory))
             {
                 inventory.OnItemChanged += UpdateSubscribed;
@@ -62,8 +73,9 @@ namespace Content.Server.GameObjects.Components.GUI
 
             var inventory = GetInventorySlots();
             var hands = GetHandSlots();
+            var cuffs = GetHandcuffs();
 
-            UserInterface.SetState(new StrippingBoundUserInterfaceState(inventory, hands));
+            UserInterface.SetState(new StrippingBoundUserInterfaceState(inventory, hands, cuffs));
         }
 
         public bool CanDragDrop(DragDropEventArgs eventArgs)
@@ -78,6 +90,23 @@ namespace Content.Server.GameObjects.Components.GUI
 
             OpenUserInterface(actor.playerSession);
             return true;
+        }
+
+        private Dictionary<EntityUid, string> GetHandcuffs()
+        {
+            var dictionary = new Dictionary<EntityUid, string>();
+            
+            if (!Owner.TryGetComponent(out CuffableComponent? cuffed))
+            {
+                return dictionary;
+            }
+
+            foreach (IEntity entity in cuffed.StoredEntities)
+            {
+                dictionary.Add(entity.Uid, entity.Name);
+            }
+
+            return dictionary;
         }
 
         private Dictionary<Slots, string> GetInventorySlots()
@@ -360,26 +389,46 @@ namespace Content.Server.GameObjects.Components.GUI
             switch (obj.Message)
             {
                 case StrippingInventoryButtonPressed inventoryMessage:
-                    var inventory = Owner.GetComponent<InventoryComponent>();
 
-                    if (inventory.TryGetSlotItem(inventoryMessage.Slot, out ItemComponent _))
-                        placingItem = false;
+                    if (Owner.TryGetComponent<InventoryComponent>(out var inventory))
+                    {
+                        if (inventory.TryGetSlotItem(inventoryMessage.Slot, out ItemComponent _))
+                            placingItem = false;
 
-                    if(placingItem)
-                        PlaceActiveHandItemInInventory(user, inventoryMessage.Slot);
-                    else
-                        TakeItemFromInventory(user, inventoryMessage.Slot);
+                        if (placingItem)
+                            PlaceActiveHandItemInInventory(user, inventoryMessage.Slot);
+                        else
+                            TakeItemFromInventory(user, inventoryMessage.Slot);
+                    }
                     break;
+
                 case StrippingHandButtonPressed handMessage:
-                    var hands = Owner.GetComponent<HandsComponent>();
 
-                    if (hands.TryGetItem(handMessage.Hand, out _))
-                        placingItem = false;
+                    if (Owner.TryGetComponent<HandsComponent>(out var hands))
+                    {
+                        if (hands.TryGetItem(handMessage.Hand, out _))
+                            placingItem = false;
 
-                    if(placingItem)
-                        PlaceActiveHandItemInHands(user, handMessage.Hand);
-                    else
-                        TakeItemFromHands(user, handMessage.Hand);
+                        if (placingItem)
+                            PlaceActiveHandItemInHands(user, handMessage.Hand);
+                        else
+                            TakeItemFromHands(user, handMessage.Hand);
+                    }
+                    break;
+
+                case StrippingHandcuffButtonPressed handcuffMessage:
+
+                    if (Owner.TryGetComponent<CuffableComponent>(out var cuffed))
+                    {
+                        foreach (var entity in cuffed.StoredEntities)
+                        {
+                            if (entity.Uid == handcuffMessage.Handcuff)
+                            {
+                                cuffed.TryUncuff(user, entity);
+                                return;
+                            }
+                        }
+                    }
                     break;
             }
         }

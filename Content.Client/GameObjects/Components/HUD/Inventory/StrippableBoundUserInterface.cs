@@ -4,8 +4,10 @@ using Content.Shared.GameObjects.Components.GUI;
 using Content.Shared.GameObjects.Components.Inventory;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects.Components.UserInterface;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Localization;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.Client.GameObjects.Components.HUD.Inventory
@@ -15,6 +17,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
     {
         public Dictionary<Slots, string> Inventory { get; private set; }
         public Dictionary<string, string> Hands { get; private set; }
+        public Dictionary<EntityUid, string> Handcuffs { get; private set; }
 
         [ViewVariables]
         private StrippingMenu _strippingMenu;
@@ -49,7 +52,8 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
 
             _strippingMenu.ClearButtons();
 
-            if(Inventory != null)
+            if (Inventory != null)
+            {
                 foreach (var (slot, name) in Inventory)
                 {
                     _strippingMenu.AddButton(EquipmentSlotDefines.SlotNames[slot], name, (ev) =>
@@ -57,8 +61,10 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
                         SendMessage(new StrippingInventoryButtonPressed(slot));
                     });
                 }
+            }
 
-            if(Hands != null)
+            if (Hands != null)
+            {
                 foreach (var (hand, name) in Hands)
                 {
                     _strippingMenu.AddButton(hand, name, (ev) =>
@@ -66,6 +72,18 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
                         SendMessage(new StrippingHandButtonPressed(hand));
                     });
                 }
+            }
+
+            if (Handcuffs != null)
+            {
+                foreach (var (id, name) in Handcuffs)
+                {
+                    _strippingMenu.AddButton(Loc.GetString("Restraints"), name, (ev) =>
+                    {
+                        SendMessage(new StrippingHandcuffButtonPressed(id));
+                    });
+                }
+            }
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
@@ -76,6 +94,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
 
             Inventory = stripState.Inventory;
             Hands = stripState.Hands;
+            Handcuffs = stripState.Handcuffs;
 
             UpdateMenu();
         }
