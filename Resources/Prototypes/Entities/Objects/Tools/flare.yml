@@ -4,13 +4,13 @@
   id: FlareBase
   description: An emergency flare that produces a very bright light for a short while. Point the flame away from yourself.
   components:
-    - type: Glowstick
+    - type: ExpendableLight
       spentName: spent red flare
       spentDesc: It looks like this flare has burnt out. What a bummer.
       glowRadius: 3.5
-      glowEnergy: 3.0
-      glowDuration: 5 # this should be like 300, 5 is for testing
-      fadeOutDuration: 30
+      glowEnergy: 3.5
+      glowDuration: 15 # this should be like 300, 15 is for testing
+      fadeOutDuration: 2
       iconStateOn: flare_lit
       iconStateSpent: flare_spent
     - type: Sprite
@@ -18,11 +18,10 @@
       layers:
         - state: flare_base
         - state: flare_unlit
-          shader: unshaded
           color: "#FF0000"
     - type: Icon
       sprite: Objects/Misc/flare.rsi
-      state: flare_unlit
+      state: flare_spent
     - type: Item
       sprite: Objects/Misc/flare.rsi
       # color: "#00FF00" this won't work until handcuffs PR is merged
@@ -31,9 +30,10 @@
       enabled: false
       color: "#FF0000"
     - type: LightBehaviour
+      enabled: false
       behaviours:
         - type: RandomBrightness
-          minDuration: 0.1
-          maxDuration: 0.2
-          minValue: 1.0
+          minDuration: 0.02
+          maxDuration: 0.04
+          minValue: 2.0
           maxValue: 4.0  

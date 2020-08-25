@@ -34,6 +34,7 @@ namespace Content.Client.GameObjects.Components
         private float _originalEnergy = default;
         private Color _originalColor = default;
         private bool _originalEnabled = default;
+        private bool _startEnabled = false;
 
         private Animation GenerateAnimation(LightBehaviourData data)
         {
@@ -114,7 +115,7 @@ namespace Content.Client.GameObjects.Components
                         }
                     };
 
-                case LightBehaviourType.RandomBrightness: // todo: we don't need animator for this anymore
+                case LightBehaviourType.RandomBrightness: 
 
                     var brightness = _random.NextDouble() * (data.MaxValue - data.MinValue) + data.MinValue;
                     return new Animation
@@ -211,7 +212,11 @@ namespace Content.Client.GameObjects.Components
             playerComponent.AnimationCompleted += (key => PlayNewAnimation(playerComponent, key));
 
             CopyLightSettings();
-            StartLightBehaviour(); //this is for testing
+
+            if (_startEnabled)
+            {
+                StartLightBehaviour(); 
+            }
         }
 
         private void CopyLightSettings()
@@ -336,6 +341,7 @@ namespace Content.Client.GameObjects.Components
         {
             base.ExposeData(serializer);
 
+            serializer.DataField(this, x => _startEnabled, "enabled", false);
             var list = serializer.ReadDataField("behaviours", new List<LightBehaviourData>());
             int idx = 0;
 

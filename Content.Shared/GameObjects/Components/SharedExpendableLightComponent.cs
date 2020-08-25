@@ -5,9 +5,9 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components
 {
-    public abstract class SharedGlowstickComponent: Component
+    public abstract class SharedExpendableLightComponent: Component
     {
-        protected enum GlowstickState
+        protected enum LightState
         {
             BrandNew,
             Lit,
@@ -15,11 +15,11 @@ namespace Content.Shared.GameObjects.Components
             Dead
         }
 
-        public sealed override string Name => "Glowstick";
-        public sealed override uint? NetID => ContentNetIDs.GLOWSTICK;
+        public sealed override string Name => "ExpendableLight";
+        public sealed override uint? NetID => ContentNetIDs.EXPENDABLE_LIGHT;
 
         [ViewVariables(VVAccess.ReadOnly)]
-        protected GlowstickState CurrentState { get; set; }
+        protected LightState CurrentState { get; set; }
 
         [ViewVariables]
         protected float GlowRadius { get; set; }
@@ -46,16 +46,16 @@ namespace Content.Shared.GameObjects.Components
         protected string IconStateLit { get; set; }
 
         [Serializable, NetSerializable]
-        protected sealed class GlowstickComponentState : ComponentState
+        protected sealed class ExpendableLightComponentState : ComponentState
         {
-            public GlowstickComponentState(GlowstickState state, float stateExpiryTime) : base(ContentNetIDs.GLOWSTICK)
+            public ExpendableLightComponentState(LightState state, float stateExpiryTime) : base(ContentNetIDs.EXPENDABLE_LIGHT)
             {
                 StateExpiryTime = stateExpiryTime;
                 State = state;
             }
 
             public float StateExpiryTime { get; set; }
-            public GlowstickState State { get; set; }
+            public LightState State { get; set; }
         }
 
         public override void ExposeData(ObjectSerializer serializer)

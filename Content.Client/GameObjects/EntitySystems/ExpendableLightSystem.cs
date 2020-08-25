@@ -5,13 +5,13 @@ using Content.Client.GameObjects.Components.Interactable;
 
 namespace Content.Client.GameObjects.EntitySystems
 {
-    public class GlowstickSystem : EntitySystem
+    public class ExpendableLightSystem : EntitySystem
     {
         public override void FrameUpdate(float frameTime)
         {
-            foreach (var glowstick in ComponentManager.EntityQuery<GlowstickComponent>())
+            foreach (var light in ComponentManager.EntityQuery<ExpendableLightComponent>())
             {
-                glowstick.Update(frameTime);
+                light.Update(frameTime);
             }
         }
     }

@@ -10,7 +10,7 @@ namespace Content.Client.GameObjects.Components.Interactable
     ///     Component that represents a handheld glowstick which can be activated and eventually dies over time.
     /// </summary>
     [RegisterComponent]
-    internal sealed class GlowstickComponent : SharedGlowstickComponent
+    internal sealed class ExpendableLightComponent : SharedExpendableLightComponent
     {
         private float _expiryTime = default;
         private float _fullExpiryTime = default;
@@ -18,7 +18,7 @@ namespace Content.Client.GameObjects.Components.Interactable
 
         public void Update(float frameTime)
         {
-            if (CurrentState == GlowstickState.Fading && _light != null && _expiryTime >= 0f)
+            if (CurrentState == LightState.Fading && _light != null && _expiryTime >= 0f)
             {
                 var fade = MathF.Max(_expiryTime / _fullExpiryTime, 0.08f);
 
@@ -31,7 +31,7 @@ namespace Content.Client.GameObjects.Components.Interactable
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            if (!(curState is GlowstickComponentState state))
+            if (!(curState is ExpendableLightComponentState state))
             {
                 return;
             }
@@ -42,26 +42,38 @@ namespace Content.Client.GameObjects.Components.Interactable
             _expiryTime = state.StateExpiryTime;
             _fullExpiryTime = state.StateExpiryTime;
 
-            UpdateVisuals(CurrentState == GlowstickState.Lit || CurrentState == GlowstickState.Fading);
+            UpdateVisuals();
         }
 
-        private void UpdateVisuals(bool on)
+        private void UpdateVisuals()
         {
             if (Owner.TryGetComponent(out SpriteComponent? sprite))
             {
                 switch (CurrentState)
                 {
                     default:
-                    case GlowstickState.BrandNew:
+                    case LightState.BrandNew:
                         break;
 
-                    case GlowstickState.Lit:
-                    case GlowstickState.Fading:
+                    case LightState.Lit:
+                    case LightState.Fading:
+
+                        if (Owner.TryGetComponent<LightBehaviourComponent>(out var lightBehaviour))
+                        {
+                            lightBehaviour.StartLightBehaviour();
+                        }
 
                         sprite.LayerSetState(1, IconStateLit);
                         break;
 
-                    case GlowstickState.Dead:
+                    case LightState.Dead:
+
+                        if (Owner.TryGetComponent<LightBehaviourComponent>(out var light))
+                        {
+                            light.StopLightBehaviour();
+                        }
+
+                        _light.Enabled = false;
 
                         sprite.LayerSetState(1, IconStateSpent);
                         break;

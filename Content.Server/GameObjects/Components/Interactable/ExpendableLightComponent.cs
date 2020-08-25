@@ -20,18 +20,16 @@ using System;
 namespace Content.Server.GameObjects.Components.Interactable
 {
     /// <summary>
-    ///     Component that represents a handheld glowstick which can be activated and eventually dies over time.
+    ///     Component that represents a handheld light which can be activated and eventually dies over time.
     /// </summary>
     [RegisterComponent]
-    internal sealed class GlowstickComponent : SharedGlowstickComponent, IUse
+    internal sealed class ExpendableLightComponent : SharedExpendableLightComponent, IUse
     { 
-        [Dependency] private readonly ISharedNotifyManager _notifyManager = default!;
-
         /// <summary>
         ///     Status of light, whether or not it is emitting light.
         /// </summary>
         [ViewVariables]
-        public bool Activated => CurrentState == GlowstickState.Lit || CurrentState == GlowstickState.Fading;
+        public bool Activated => CurrentState == LightState.Lit || CurrentState == LightState.Fading;
 
         [ViewVariables]
         private float _stateExpiryTime = default;
@@ -51,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Interactable
                 item.EquippedPrefix = "off";
             }
 
-            CurrentState = GlowstickState.BrandNew;
+            CurrentState = LightState.BrandNew;
             Owner.EnsureComponent<PointLightComponent>();
             Dirty();
         }
@@ -59,7 +57,6 @@ namespace Content.Server.GameObjects.Components.Interactable
         /// <summary>
         ///     Enables the light if it is not active. Once active it cannot be turned off.
         /// </summary>
-        /// <returns>True if the light's status was toggled, false otherwise.</returns>
         private bool TryActivate(IEntity user)
         {
             if (!Activated)
@@ -69,7 +66,7 @@ namespace Content.Server.GameObjects.Components.Interactable
                     item.EquippedPrefix = "on";
                 }
 
-                CurrentState = GlowstickState.Lit;
+                CurrentState = LightState.Lit;
                 _stateExpiryTime = GlowDuration;
 
                 UpdateVisuals(Activated);
@@ -89,16 +86,18 @@ namespace Content.Server.GameObjects.Components.Interactable
             {
                 switch (CurrentState)
                 {
-                    case GlowstickState.Lit:
-                    case GlowstickState.Fading:
+                    case LightState.Lit:
+                    case LightState.Fading:
 
                         sprite.LayerSetState(1, IconStateLit);
+                        sprite.LayerSetShader(1, "unshaded");
                         break;
 
                     default:
-                    case GlowstickState.Dead:
+                    case LightState.Dead:
 
                         sprite.LayerSetState(1, IconStateSpent);
+                        sprite.LayerSetShader(1, "shaded");
                         break;
                 }
             }
@@ -125,9 +124,9 @@ namespace Content.Server.GameObjects.Components.Interactable
             {
                 switch (CurrentState)
                 {
-                    case GlowstickState.Lit:
+                    case LightState.Lit:
 
-                        CurrentState = GlowstickState.Fading;
+                        CurrentState = LightState.Fading;
                         _stateExpiryTime = FadeOutDuration;
 
                         Dirty();
@@ -135,9 +134,9 @@ namespace Content.Server.GameObjects.Components.Interactable
                         break;
 
                     default:
-                    case GlowstickState.Fading:
+                    case LightState.Fading:
 
-                        CurrentState = GlowstickState.Dead;
+                        CurrentState = LightState.Dead;
                         Owner.Name = SpentName;
                         Owner.Description = SpentDesc;
 
@@ -156,13 +155,13 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         public override ComponentState GetComponentState()
         {
-            return new GlowstickComponentState(CurrentState, _stateExpiryTime);
+            return new ExpendableLightComponentState(CurrentState, _stateExpiryTime);
         }
 
         [Verb]
-        public sealed class ActivateVerb : Verb<GlowstickComponent>
+        public sealed class ActivateVerb : Verb<ExpendableLightComponent>
         {
-            protected override void GetData(IEntity user, GlowstickComponent component, VerbData data)
+            protected override void GetData(IEntity user, ExpendableLightComponent component, VerbData data)
             {
                 if (!ActionBlockerSystem.CanInteract(user))
                 {
@@ -170,7 +169,7 @@ namespace Content.Server.GameObjects.Components.Interactable
                     return;
                 }
 
-                if (component.CurrentState == GlowstickState.BrandNew)
+                if (component.CurrentState == LightState.BrandNew)
                 {
                     data.Text = "Activate";
                     data.Visibility = VerbVisibility.Visible;
@@ -181,7 +180,7 @@ namespace Content.Server.GameObjects.Components.Interactable
                 }
             }
 
-            protected override void Activate(IEntity user, GlowstickComponent component)
+            protected override void Activate(IEntity user, ExpendableLightComponent component)
             {
                 component.TryActivate(user);
             }
