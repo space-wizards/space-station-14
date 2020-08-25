@@ -50,7 +50,7 @@ namespace Content.Client.GameObjects.Components.Mobs
 
             sprite.LayerSetVisible(HumanoidVisualLayers.StencilMask, Sex == Sex.Female);
 
-            if (Owner.TryGetComponent<CuffedComponent>(out var cuffed))
+            if (Owner.TryGetComponent<CuffableComponent>(out var cuffed))
             {
                 sprite.LayerSetVisible(HumanoidVisualLayers.Handcuffs, !cuffed.CanStillInteract);
             }

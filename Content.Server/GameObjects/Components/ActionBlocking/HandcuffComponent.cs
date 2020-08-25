@@ -153,7 +153,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
         void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (eventArgs.Target == null || !ActionBlockerSystem.CanUse(eventArgs.User) || !eventArgs.Target.TryGetComponent<CuffedComponent>(out var cuffed))
+            if (eventArgs.Target == null || !ActionBlockerSystem.CanUse(eventArgs.User) || !eventArgs.Target.TryGetComponent<CuffableComponent>(out var cuffed))
             {
                 return;
             }
@@ -172,13 +172,13 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
             if (!eventArgs.Target.TryGetComponent<HandsComponent>(out var hands))
             {
-                _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, Loc.GetString($"{0} has no hands!", eventArgs.Target.Name));
+                _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, Loc.GetString("{0:theName} has no hands!", eventArgs.Target));
                 return;
             }
 
             if (cuffed.CuffedHandCount == hands.Count)
             {
-                _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, Loc.GetString($"{0} has no free hands to handcuff!", eventArgs.Target.Name));
+                _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, Loc.GetString("{0:theName} has no free hands to handcuff!", eventArgs.Target));
                 return;
             }
 
@@ -192,8 +192,8 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
                 return;
             }
 
-            _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, Loc.GetString($"You start cuffing {0}.", eventArgs.Target.Name));
-            _notifyManager.PopupMessage(eventArgs.User, eventArgs.Target, Loc.GetString($"{0}starts cuffing you!", eventArgs.User.Name));
+            _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, Loc.GetString("You start cuffing {0:theName}.", eventArgs.Target));
+            _notifyManager.PopupMessage(eventArgs.User, eventArgs.Target, Loc.GetString("{0:theName} starts cuffing you!", eventArgs.User));
             _audioSystem.PlayFromEntity(StartCuffSound, Owner);
 
             TryUpdateCuff(eventArgs.User, eventArgs.Target, cuffed); 
@@ -202,7 +202,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         /// <summary>
         /// Update the cuffed state of an entity
         /// </summary>
-        private async void TryUpdateCuff(IEntity user, IEntity target, CuffedComponent cuffs)
+        private async void TryUpdateCuff(IEntity user, IEntity target, CuffableComponent cuffs)
         {
             var cuffTime = CuffTime;
 
@@ -225,8 +225,8 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             if (result != DoAfterStatus.Cancelled)
             {
                 _audioSystem.PlayFromEntity(EndCuffSound, Owner);
-                _notifyManager.PopupMessage(user, user, Loc.GetString($"You successfully cuff {0}.", target.Name));
-                _notifyManager.PopupMessage(target, target, Loc.GetString($"You have been cuffed by {0}!", user.Name));
+                _notifyManager.PopupMessage(user, user, Loc.GetString("You successfully cuff {0}.", target.Name));
+                _notifyManager.PopupMessage(target, target, Loc.GetString("You have been cuffed by {0}!", user.Name));
 
                 if (user.TryGetComponent<HandsComponent>(out var hands))
                 {
@@ -240,8 +240,8 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             }
             else
             {
-                user.PopupMessage(user, Loc.GetString($"You were interrupted while cuffing {0}!", target.Name));
-                target.PopupMessage(target, Loc.GetString($"You interrupt {0} while they are cuffing you!", user.Name));
+                user.PopupMessage(user, Loc.GetString("You were interrupted while cuffing {0}!", target.Name));
+                target.PopupMessage(target, Loc.GetString("You interrupt {0} while they are cuffing you!", user.Name));
             }
         }
     }

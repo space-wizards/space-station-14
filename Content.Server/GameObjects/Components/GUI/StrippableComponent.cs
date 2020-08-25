@@ -44,9 +44,9 @@ namespace Content.Server.GameObjects.Components.GUI
 
             Owner.EnsureComponent<InventoryComponent>();
             Owner.EnsureComponent<HandsComponent>();
-            Owner.EnsureComponent<CuffedComponent>();
+            Owner.EnsureComponent<CuffableComponent>();
             
-            if (Owner.TryGetComponent(out CuffedComponent? cuffed))
+            if (Owner.TryGetComponent(out CuffableComponent? cuffed))
             {
                 cuffed.OnCuffedStateChanged += UpdateSubscribed;
             }
@@ -96,7 +96,7 @@ namespace Content.Server.GameObjects.Components.GUI
         {
             var dictionary = new Dictionary<EntityUid, string>();
             
-            if (!Owner.TryGetComponent(out CuffedComponent? cuffed))
+            if (!Owner.TryGetComponent(out CuffableComponent? cuffed))
             {
                 return dictionary;
             }
@@ -418,7 +418,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
                 case StrippingHandcuffButtonPressed handcuffMessage:
 
-                    if (Owner.TryGetComponent<CuffedComponent>(out var cuffed))
+                    if (Owner.TryGetComponent<CuffableComponent>(out var cuffed))
                     {
                         foreach (var entity in cuffed.StoredEntities)
                         {

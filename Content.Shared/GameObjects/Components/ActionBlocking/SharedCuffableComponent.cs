@@ -7,9 +7,9 @@ using System;
 
 namespace Content.Shared.GameObjects.Components.ActionBlocking
 {
-    public class SharedCuffedComponent : Component, IActionBlocker
+    public class SharedCuffableComponent : Component, IActionBlocker
     {
-        public override string Name => "Cuffed";
+        public override string Name => "Cuffable";
         public override uint? NetID => ContentNetIDs.CUFFED;
 
         [ViewVariables]
@@ -28,7 +28,7 @@ namespace Content.Shared.GameObjects.Components.ActionBlocking
         #endregion
 
         [Serializable, NetSerializable]
-        protected sealed class CuffedComponentState : ComponentState
+        protected sealed class CuffableComponentState : ComponentState
         {
             public bool CanStillInteract { get; }
             public int NumHandsCuffed { get; }
@@ -36,7 +36,7 @@ namespace Content.Shared.GameObjects.Components.ActionBlocking
             public string IconState { get; }
             public Color Color { get; }
 
-            public CuffedComponentState(int numHandsCuffed, bool canStillInteract, string rsiPath, string iconState, Color color) : base(ContentNetIDs.CUFFED)
+            public CuffableComponentState(int numHandsCuffed, bool canStillInteract, string rsiPath, string iconState, Color color) : base(ContentNetIDs.CUFFED)
             {
                 NumHandsCuffed = numHandsCuffed;
                 CanStillInteract = canStillInteract;

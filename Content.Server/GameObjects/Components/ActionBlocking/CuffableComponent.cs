@@ -27,7 +27,7 @@ using Serilog;
 namespace Content.Server.GameObjects.Components.ActionBlocking
 {
     [RegisterComponent]
-    public class CuffedComponent : SharedCuffedComponent
+    public class CuffableComponent : SharedCuffableComponent
     {
         [Dependency]
         private readonly ISharedNotifyManager _notifyManager;
@@ -79,7 +79,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             {
                 if (LastAddedCuffs.TryGetComponent<HandcuffComponent>(out var cuffs))
                 {
-                    return new CuffedComponentState(CuffedHandCount,
+                    return new CuffableComponentState(CuffedHandCount,
                        CanStillInteract,
                        cuffs.CuffedRSI,
                        $"{cuffs.OverlayIconState}-{CuffedHandCount}",
@@ -89,7 +89,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
                 }
             }
 
-            return new CuffedComponentState(CuffedHandCount,
+            return new CuffableComponentState(CuffedHandCount,
                CanStillInteract,
                "/Objects/Misc/handcuffs.rsi",
                "body-overlay-2",
@@ -114,7 +114,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
                     _interactRange,
                     ignoredEnt: Owner))
             {
-                Logger.Warning($"Handcuffs being applied to player are obstructed or too far away! This should not happen!");
+                Logger.Warning("Handcuffs being applied to player are obstructed or too far away! This should not happen!");
                 return;
             }
 
@@ -212,13 +212,13 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             {
                 if (!_container.ContainedEntities.Contains(cuffsToRemove))
                 {
-                    Logger.Warning($"A user is trying to remove handcuffs that aren't in the owner's container. This should never happen!");
+                    Logger.Warning("A user is trying to remove handcuffs that aren't in the owner's container. This should never happen!");
                 }
             }
 
             if (!cuffsToRemove.TryGetComponent<HandcuffComponent>(out var cuff))
             {
-                Logger.Warning($"A user is trying to remove handcuffs without a ${nameof(HandcuffComponent)}. This should never happen!");
+                Logger.Warning($"A user is trying to remove handcuffs without a {nameof(HandcuffComponent)}. This should never happen!");
                 return;
             }
 
@@ -245,7 +245,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
                     _interactRange,
                     ignoredEnt: Owner))
             {
-                Logger.Warning($"Handcuffs being removed from player are obstructed or too far away! This should not happen!");
+                Logger.Warning("Handcuffs being removed from player are obstructed or too far away! This should not happen!");
                 return;
             }
 
@@ -298,19 +298,19 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
                     if (!isOwner)
                     {
-                        _notifyManager.PopupMessage(user, Owner, Loc.GetString($"{0} uncuffs your hands.", user.Name));
+                        _notifyManager.PopupMessage(user, Owner, Loc.GetString("{0:theName} uncuffs your hands.", user));
                     }
                 }
                 else
                 {
                     if (!isOwner)
                     {
-                        _notifyManager.PopupMessage(user, user, Loc.GetString($"You successfully remove the cuffs. {0} of {1}'s hands remain cuffed.", CuffedHandCount, user.Name));
-                        _notifyManager.PopupMessage(user, Owner, Loc.GetString($"{0} removes your cuffs. {1} of your hands remain cuffed.", user.Name, CuffedHandCount));
+                        _notifyManager.PopupMessage(user, user, Loc.GetString("You successfully remove the cuffs. {0} of {0:theName}'s hands remain cuffed.", CuffedHandCount, user));
+                        _notifyManager.PopupMessage(user, Owner, Loc.GetString("{0:theName} removes your cuffs. {1} of your hands remain cuffed.", user, CuffedHandCount));
                     }
                     else
                     {
-                        _notifyManager.PopupMessage(user, user, Loc.GetString($"You successfully remove the cuffs. {0} of your hands remain cuffed.", CuffedHandCount));
+                        _notifyManager.PopupMessage(user, user, Loc.GetString("You successfully remove the cuffs. {0} of your hands remain cuffed.", CuffedHandCount));
                     }
                 }
             }
@@ -326,9 +326,9 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         /// Allows the uncuffing of a cuffed person. Used by other people and by the component owner to break out of cuffs.
         /// </summary>
         [Verb]
-        private sealed class UncuffVerb : Verb<CuffedComponent>
+        private sealed class UncuffVerb : Verb<CuffableComponent>
         {
-            protected override void GetData(IEntity user, CuffedComponent component, VerbData data)
+            protected override void GetData(IEntity user, CuffableComponent component, VerbData data)
             {
                 if ((user != component.Owner && !ActionBlockerSystem.CanInteract(user)) || component.CuffedHandCount == 0)
                 {
@@ -339,7 +339,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
                 data.Text = Loc.GetString("Uncuff");
             }
 
-            protected override void Activate(IEntity user, CuffedComponent component)
+            protected override void Activate(IEntity user, CuffableComponent component)
             {
                 if (component.CuffedHandCount > 0)
                 {

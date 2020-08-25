@@ -148,7 +148,7 @@
     - type: BuckleVisualizer
   - type: CombatMode
   - type: Climbing
-  - type: Cuffed
+  - type: Cuffable
   - type: Teleportable
   - type: CharacterInfo
   - type: FootstepSound

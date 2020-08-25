@@ -11,18 +11,17 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.GameObjects.Components.ActionBlocking
 {
     [RegisterComponent]
-    public class CuffedComponent : SharedCuffedComponent
+    public class CuffableComponent : SharedCuffableComponent
     {
-#pragma warning disable 0649
-        [Dependency] private readonly IResourceCache _resourceCache;
-#pragma warning restore 0649
+        [Dependency]
+        private readonly IResourceCache _resourceCache;
 
         [ViewVariables]
         private string _currentRSI = default;
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            if (!(curState is CuffedComponentState cuffState))
+            if (!(curState is CuffableComponentState cuffState))
             {
                 return;
             }
