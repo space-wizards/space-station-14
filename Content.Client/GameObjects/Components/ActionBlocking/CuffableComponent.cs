@@ -13,9 +13,6 @@ namespace Content.Client.GameObjects.Components.ActionBlocking
     [RegisterComponent]
     public class CuffableComponent : SharedCuffableComponent
     {
-        [Dependency]
-        private readonly IResourceCache _resourceCache;
-
         [ViewVariables]
         private string _currentRSI = default;
 
