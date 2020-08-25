@@ -11,6 +11,7 @@ using JetBrains.Annotations;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
@@ -161,11 +162,12 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
             }
 
             var tileData = new List<GasData>();
+            var atmosSystem = Get<AtmosphereSystem>();
 
             for (byte i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
-                var gas = Atmospherics.GetGas(i);
-                var overlay = Atmospherics.GetOverlay(i);
+                var gas = atmosSystem.GetGas(i);
+                var overlay = atmosSystem.GetOverlay(i);
                 if (overlay == null || tile?.Air == null) continue;
 
                 var moles = tile.Air.Gases[i];

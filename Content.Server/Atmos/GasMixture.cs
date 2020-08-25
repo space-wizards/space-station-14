@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Reactions;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Shared.Atmos;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
@@ -48,10 +50,11 @@ namespace Content.Server.Atmos
             get
             {
                 var capacity = 0f;
+                var atmosSystem = EntitySystem.Get<AtmosphereSystem>();
 
                 for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
                 {
-                    capacity += Atmospherics.GetGas(i).SpecificHeat * _moles[i];
+                    capacity += atmosSystem.GetGas(i).SpecificHeat * _moles[i];
                 }
 
                 return MathF.Max(capacity, Atmospherics.MinimumHeatCapacity);
@@ -65,10 +68,11 @@ namespace Content.Server.Atmos
             get
             {
                 var capacity = 0f;
+                var atmosSystem = EntitySystem.Get<AtmosphereSystem>();
 
                 for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
                 {
-                    capacity += Atmospherics.GetGas(i).SpecificHeat * _molesArchived[i];
+                    capacity += atmosSystem.GetGas(i).SpecificHeat * _molesArchived[i];
                 }
 
                 return MathF.Max(capacity, Atmospherics.MinimumHeatCapacity);
@@ -265,6 +269,7 @@ namespace Content.Server.Atmos
             var heatCapacitySharerToThis = 0f;
             var movedMoles = 0f;
             var absMovedMoles = 0f;
+            var atmosSystem = EntitySystem.Get<AtmosphereSystem>();
 
             for(var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
@@ -274,7 +279,7 @@ namespace Content.Server.Atmos
                 if (!(MathF.Abs(delta) >= Atmospherics.GasMinMoles)) continue;
                 if (absTemperatureDelta > Atmospherics.MinimumTemperatureDeltaToConsider)
                 {
-                    var gasHeatCapacity = delta * Atmospherics.GetGas(i).SpecificHeat;
+                    var gasHeatCapacity = delta * atmosSystem.GetGas(i).SpecificHeat;
                     if (delta > 0)
                     {
                         heatCapacityToSharer += gasHeatCapacity;
