@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading;
 using Content.Server.GameObjects.Components.Suspicion;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
-using Content.Server.Mobs;
 using Content.Server.Mobs.Roles;
 using Content.Server.Players;
 using Content.Shared.GameObjects.Components.Damage;
@@ -38,12 +38,16 @@ namespace Content.Server.GameTicking.GameRules
             EntitySystem.Get<AudioSystem>().PlayGlobal("/Audio/Misc/tatoralert.ogg", AudioParams.Default,
                 (session) => session.ContentData().Mind?.HasRole<SuspicionTraitorRole>() ?? false);
 
+            EntitySystem.Get<DoorSystem>().AccessType = DoorSystem.AccessTypes.AllowAllNoExternal;
+
             Timer.SpawnRepeating(DeadCheckDelay, _checkWinConditions, _checkTimerCancel.Token);
         }
 
         public override void Removed()
         {
             base.Removed();
+
+            EntitySystem.Get<DoorSystem>().AccessType = DoorSystem.AccessTypes.Id;
 
             _checkTimerCancel.Cancel();
         }
