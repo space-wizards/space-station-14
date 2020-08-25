@@ -159,7 +159,8 @@ namespace Content.Server.GameObjects.Components.Atmos
                 pos = _position.Value;
             }
 
-            var gam = EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(pos.GridID);
+            var atmosSystem = EntitySystem.Get<AtmosphereSystem>();
+            var gam = atmosSystem.GetGridAtmosphere(pos.GridID);
             var tile = gam?.GetTile(pos).Air;
             if (tile == null)
             {
@@ -174,9 +175,10 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
 
             var gases = new List<GasEntry>();
+
             for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
-                var gas = Atmospherics.GetGas(i);
+                var gas = atmosSystem.GetGas(i);
 
                 if (tile.Gases[i] <= Atmospherics.GasMinMoles) continue;
 
