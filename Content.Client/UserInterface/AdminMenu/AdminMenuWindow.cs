@@ -1,6 +1,9 @@
 ﻿#nullable enable
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Content.Client.GameObjects.EntitySystems;
 using Content.Client.StationEvents;
-using Content.Client.UserInterface.AdminMenu;
 using Content.Shared.Atmos;
 using Robust.Client.Console;
 using Robust.Client.Interfaces.Placement;
@@ -9,19 +12,16 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.Input;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
-namespace Content.Client.UserInterface
+namespace Content.Client.UserInterface.AdminMenu
 {
     public class AdminMenuWindow : SS14Window
     {
@@ -476,7 +476,11 @@ namespace Content.Client.UserInterface
             private CommandUIDropDown _gas = new CommandUIDropDown
             {
                 Name = "Gas",
-                GetData = () => Atmospherics.Gases.ToList<object>(),
+                GetData = () =>
+                {
+                    var atmosSystem = EntitySystem.Get<AtmosphereSystem>();
+                    return atmosSystem.Gases.ToList<object>();
+                },
                 GetDisplayName = (obj) => $"{((GasPrototype) obj).Name} ({((GasPrototype) obj).ID})",
                 GetValueFromData = (obj) => ((GasPrototype) obj).ID.ToString(),
             };
@@ -643,7 +647,7 @@ namespace Content.Client.UserInterface
                         container.AddChild(hbox);
                     }
 
-                    
+
                 }
                 // Init Submit Button
                 var submitButton = new Button
