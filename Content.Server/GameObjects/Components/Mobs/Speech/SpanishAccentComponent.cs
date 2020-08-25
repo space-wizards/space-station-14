@@ -23,7 +23,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Speech
             return message;
         }
 
-        private static string InsertS(string message)
+        private string InsertS(string message)
         {
             // Replace every new Word that starts with s/S
             var msg = message.Replace(" s", " es").Replace(" S", "Es");
@@ -41,10 +41,9 @@ namespace Content.Server.GameObjects.Components.Mobs.Speech
             return msg;
         }
 
-        private static readonly Regex SentenceRegex = new Regex(@"(?<=[\.!\?])");
-        private static string ReplaceQuestionMark(string message)
+        private string ReplaceQuestionMark(string message)
         {
-            var sentences = SentenceRegex.Split(message);
+            var sentences = AccentManager.SentenceRegex.Split(message);
             var msg = "";
             foreach (var s in sentences)
             {

@@ -14,6 +14,7 @@ using Robust.Shared.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static Content.Server.Interfaces.Chat.IChatManager;
 
 namespace Content.Server.Chat
 {
@@ -35,7 +36,7 @@ namespace Content.Server.Chat
         private const string MaxLengthExceededMessage = "Your message exceeded {0} character limit";
 
         //TODO: make prio based?
-        private List<Func<IEntity, string, string>> _chatTransformHandlers;
+        private List<TransformChat> _chatTransformHandlers;
 #pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly IServerNetManager _netManager;
@@ -55,7 +56,7 @@ namespace Content.Server.Chat
             msg.MaxMessageLength = MaxMessageLength;
             _netManager.ServerSendToAll(msg);
 
-            _chatTransformHandlers = new List<Func<IEntity, string, string>>();
+            _chatTransformHandlers = new List<TransformChat>();
         }
 
         public void DispatchServerAnnouncement(string message)
@@ -229,7 +230,7 @@ namespace Content.Server.Chat
             _netManager.ServerSendMessage(response, msg.MsgChannel);
         }
 
-        public void RegisterChatTransform(Func<IEntity, string, string> handler)
+        public void RegisterChatTransform(TransformChat handler)
         {
             _chatTransformHandlers.Add(handler);
         }

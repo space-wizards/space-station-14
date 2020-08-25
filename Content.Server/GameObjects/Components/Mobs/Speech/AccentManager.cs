@@ -4,6 +4,7 @@ using Robust.Shared.IoC;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Content.Server.GameObjects.Components.Mobs.Speech
 {
@@ -14,6 +15,8 @@ namespace Content.Server.GameObjects.Components.Mobs.Speech
 
     public class AccentManager : IAccentManager
     {
+        public static readonly Regex SentenceRegex = new Regex(@"(?<=[\.!\?])");
+
         public void Initialize()
         {
             IoCManager.Resolve<IChatManager>().RegisterChatTransform(AccentHandler);

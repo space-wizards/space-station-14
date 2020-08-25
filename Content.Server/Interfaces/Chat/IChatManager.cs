@@ -30,6 +30,7 @@ namespace Content.Server.Interfaces.Chat
 
         void SendHookOOC(string sender, string message);
 
-        void RegisterChatTransform(Func<IEntity, string, string> handler);
+        delegate string TransformChat(IEntity speaker, string message);
+        void RegisterChatTransform(TransformChat handler);
     }
 }
