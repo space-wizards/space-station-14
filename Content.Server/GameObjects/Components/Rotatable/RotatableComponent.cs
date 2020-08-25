@@ -13,10 +13,8 @@ namespace Content.Server.GameObjects.Components.Rotatable
     [RegisterComponent]
     public class RotatableComponent : Component
     {
-#pragma warning disable 649
-        [Dependency] private readonly IServerNotifyManager _notifyManager;
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-#pragma warning restore 649
+        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
+
         public override string Name => "Rotatable";
 
         private void TryRotate(IEntity user, Angle angle)
@@ -25,7 +23,7 @@ namespace Content.Server.GameObjects.Components.Rotatable
             {
                 if (collidable.Anchored)
                 {
-                    _notifyManager.PopupMessage(Owner.Transform.GridPosition, user, _localizationManager.GetString("It's stuck."));
+                    _notifyManager.PopupMessage(Owner.Transform.GridPosition, user, Loc.GetString("It's stuck."));
                     return;
                 }
             }

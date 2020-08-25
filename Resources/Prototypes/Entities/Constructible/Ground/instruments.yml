@@ -18,7 +18,7 @@
    - type: SnapGrid
      offset: Center
    - type: Destructible
-     maxHP: 50
+     deadThreshold: 50
    - type: UserInterface
      interfaces:
      - key: enum.InstrumentUiKey.Key
@@ -43,7 +43,7 @@
    name: minimoog
    parent: BasePlaceableInstrument
    id: MinimoogInstrument
-   description: 'This is a minimoog, like a space piano, but more spacey!' 
+   description: 'This is a minimoog, like a space piano, but more spacey!'
    components:
    - type: Instrument
      program: 81

@@ -14,9 +14,7 @@ namespace Content.Server.GameObjects.EntitySystems
 {
     public class VerbSystem : EntitySystem
     {
-#pragma warning disable 649
-        [Dependency] private readonly IEntityManager _entityManager;
-#pragma warning restore 649
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public override void Initialize()
         {
@@ -51,12 +49,7 @@ namespace Content.Server.GameObjects.EntitySystems
                     continue;
                 }
 
-                if (verb.RequireInteractionRange && !VerbUtility.InVerbUseRange(userEntity, entity))
-                {
-                    break;
-                }
-
-                if (verb.BlockedByContainers && !userEntity.IsInSameOrNoContainer(entity))
+                if (!VerbUtility.VerbAccessChecks(userEntity, entity, verb))
                 {
                     break;
                 }
@@ -72,13 +65,7 @@ namespace Content.Server.GameObjects.EntitySystems
                     continue;
                 }
 
-                if (globalVerb.RequireInteractionRange &&
-                    !VerbUtility.InVerbUseRange(userEntity, entity))
-                {
-                    break;
-                }
-
-                if (globalVerb.BlockedByContainers && !userEntity.IsInSameOrNoContainer(entity))
+                if (!VerbUtility.VerbAccessChecks(userEntity, entity, globalVerb))
                 {
                     break;
                 }
@@ -110,19 +97,9 @@ namespace Content.Server.GameObjects.EntitySystems
             //Get verbs, component dependent.
             foreach (var (component, verb) in VerbUtility.GetVerbs(entity))
             {
-                if (verb.RequireInteractionRange && !VerbUtility.InVerbUseRange(userEntity, entity))
-                    continue;
-
-                if (verb.BlockedByContainers)
+                if (!VerbUtility.VerbAccessChecks(userEntity, entity, verb))
                 {
-                    if (!userEntity.IsInSameOrNoContainer(entity))
-                    {
-                        if (!ContainerHelpers.TryGetContainer(entity, out var container) ||
-                            container.Owner != userEntity)
-                        {
-                            continue;
-                        }
-                    }
+                    continue;
                 }
 
                 var verbData = verb.GetData(userEntity, component);
@@ -136,11 +113,10 @@ namespace Content.Server.GameObjects.EntitySystems
             //Get global verbs. Visible for all entities regardless of their components.
             foreach (var globalVerb in VerbUtility.GetGlobalVerbs(Assembly.GetExecutingAssembly()))
             {
-                if (globalVerb.RequireInteractionRange && !VerbUtility.InVerbUseRange(userEntity, entity))
+                if (!VerbUtility.VerbAccessChecks(userEntity, entity, globalVerb))
+                {
                     continue;
-
-                if (globalVerb.BlockedByContainers && !userEntity.IsInSameOrNoContainer(entity))
-                    continue;
+                }
 
                 var verbData = globalVerb.GetData(userEntity, entity);
                 if (verbData.IsInvisible)

@@ -11,6 +11,9 @@
   components:
   - type: AiController
     logic: Civilian
+  - type: AiFactionTag
+    factions:
+    - SimpleNeutral
   - type: MovementSpeedModifier
     baseWalkSpeed : 4
     baseSprintSpeed : 4
@@ -39,9 +42,10 @@
       layer:
       - Opaque
       - MobImpassable
-  - type: BodyManager
-    BaseTemplate: bodyTemplate.Humanoid
-    BasePreset: bodyPreset.BasicHuman
+  - type: Damageable
+    criticalThreshold: 50
+    deadThreshold: 100
+  - type: MobStateManager
   - type: HeatResistance
   - type: CombatMode
   - type: Teleportable

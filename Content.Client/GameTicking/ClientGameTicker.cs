@@ -17,23 +17,23 @@ namespace Content.Client.GameTicking
 {
     public class ClientGameTicker : SharedGameTicker, IClientGameTicker
     {
-#pragma warning disable 649
-        [Dependency] private IClientNetManager _netManager;
-        [Dependency] private IStateManager _stateManager;
-#pragma warning restore 649
+        [Dependency] private readonly IClientNetManager _netManager = default!;
+        [Dependency] private readonly IStateManager _stateManager = default!;
 
         [ViewVariables] private bool _initialized;
 
         [ViewVariables] public bool AreWeReady { get; private set; }
         [ViewVariables] public bool IsGameStarted { get; private set; }
+        [ViewVariables] public bool DisallowedLateJoin { get; private set; }
         [ViewVariables] public string ServerInfoBlob { get; private set; }
         [ViewVariables] public DateTime StartTime { get; private set; }
         [ViewVariables] public bool Paused { get; private set; }
-        [ViewVariables] public Dictionary<NetSessionId, bool> Ready { get; private set; }
+        [ViewVariables] public Dictionary<NetSessionId, PlayerStatus> Status { get; private set; }
 
         public event Action InfoBlobUpdated;
         public event Action LobbyStatusUpdated;
         public event Action LobbyReadyUpdated;
+        public event Action LobbyLateJoinStatusUpdated;
 
         public void Initialize()
         {
@@ -50,11 +50,17 @@ namespace Content.Client.GameTicking
             {
                 IoCManager.Resolve<IClyde>().RequestWindowAttention();
             });
+            _netManager.RegisterNetMessage<MsgTickerLateJoinStatus>(nameof(MsgTickerLateJoinStatus), LateJoinStatus);
 
-            Ready = new Dictionary<NetSessionId, bool>();
+            Status = new Dictionary<NetSessionId, PlayerStatus>();
             _initialized = true;
         }
 
+        private void LateJoinStatus(MsgTickerLateJoinStatus message)
+        {
+            DisallowedLateJoin = message.Disallowed;
+            LobbyLateJoinStatusUpdated?.Invoke();
+        }
 
 
         private void JoinLobby(MsgTickerJoinLobby message)
@@ -69,7 +75,7 @@ namespace Content.Client.GameTicking
             AreWeReady = message.YouAreReady;
             Paused = message.Paused;
             if (IsGameStarted)
-                Ready.Clear();
+                Status.Clear();
 
             LobbyStatusUpdated?.Invoke();
         }
@@ -95,9 +101,9 @@ namespace Content.Client.GameTicking
         private void LobbyReady(MsgTickerLobbyReady message)
         {
             // Merge the Dictionaries
-            foreach (var p in message.PlayerReady)
+            foreach (var p in message.PlayerStatus)
             {
-                Ready[p.Key] = p.Value;
+                Status[p.Key] = p.Value;
             }
             LobbyReadyUpdated?.Invoke();
         }
@@ -105,7 +111,7 @@ namespace Content.Client.GameTicking
         private void RoundEnd(MsgRoundEndMessage message)
         {
             //This is not ideal at all, but I don't see an immediately better fit anywhere else.
-            var roundEnd = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundDuration, message.AllPlayersEndInfo);
+            var roundEnd = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText, message.RoundDuration, message.AllPlayersEndInfo);
 
         }
     }

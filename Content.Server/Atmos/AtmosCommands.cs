@@ -1,9 +1,11 @@
 ﻿#nullable enable
 using System;
 using Content.Server.GameObjects.Components.Atmos;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Atmos;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
@@ -58,7 +60,9 @@ namespace Content.Server.Atmos
         public string Help => "listgases";
         public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
         {
-            foreach (var gasPrototype in Atmospherics.Gases)
+            var atmosSystem = EntitySystem.Get<AtmosphereSystem>();
+
+            foreach (var gasPrototype in atmosSystem.Gases)
             {
                 shell.SendText(player, $"{gasPrototype.Name} ID: {gasPrototype.ID}");
             }

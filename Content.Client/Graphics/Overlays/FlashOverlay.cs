@@ -16,11 +16,9 @@ namespace Content.Client.Graphics.Overlays
 {
     public class FlashOverlay : Overlay, IConfigurable<TimedOverlayParameter>
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly IClyde _displayManager;
-        [Dependency] private readonly IGameTiming _gameTiming;
-#pragma warning restore 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IClyde _displayManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override OverlaySpace Space => OverlaySpace.ScreenSpace;
         private readonly ShaderInstance _shader;

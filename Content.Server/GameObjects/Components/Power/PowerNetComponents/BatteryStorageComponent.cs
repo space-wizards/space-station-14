@@ -31,8 +31,9 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         public override void Initialize()
         {
             base.Initialize();
-            _battery = Owner.GetComponent<BatteryComponent>();
-            Consumer = Owner.GetComponent<PowerConsumerComponent>();
+
+            _battery = Owner.EnsureComponent<BatteryComponent>();
+            Consumer = Owner.EnsureComponent<PowerConsumerComponent>();
             UpdateDrawRate();
         }
 

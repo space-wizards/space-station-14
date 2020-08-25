@@ -14,7 +14,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Destructible
-    maxHP: 100
+    deadThreshold: 100
   - type: Physics
   - type: ShuttleController
   - type: Strap

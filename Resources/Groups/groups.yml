@@ -37,6 +37,7 @@
   - loc
   - hostlogin
   - events
+  - factions
   CanAdminMenu: true
 
 - Index: 100
@@ -97,6 +98,8 @@
   - tilewalls
   - events
   - destroymechanism
+  - readyall
+  - factions
   CanViewVar: true
   CanAdminPlace: true
   CanAdminMenu: true
@@ -188,6 +191,8 @@
   - tilewalls
   - events
   - destroymechanism
+  - readyall
+  - factions
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true

@@ -22,11 +22,9 @@ namespace Content.Client.Construction
 {
     public class ConstructionMenu : SS14Window
     {
-#pragma warning disable CS0649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly IResourceCache _resourceCache;
-        [Dependency] private readonly IEntitySystemManager _systemManager;
-#pragma warning restore
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private readonly IEntitySystemManager _systemManager = default!;
 
         private readonly Button BuildButton;
         private readonly Button EraseButton;

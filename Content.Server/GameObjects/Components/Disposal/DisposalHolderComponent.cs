@@ -56,7 +56,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
-            if (!entity.TryGetComponent(out ICollidableComponent collidable) ||
+            if (!entity.TryGetComponent(out ICollidableComponent? collidable) ||
                 !collidable.CanCollide)
             {
                 return false;
@@ -73,7 +73,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
-            if (entity.TryGetComponent(out ICollidableComponent collidable))
+            if (entity.TryGetComponent(out ICollidableComponent? collidable))
             {
                 collidable.CanCollide = false;
             }
@@ -105,7 +105,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             foreach (var entity in _contents.ContainedEntities.ToArray())
             {
-                if (entity.TryGetComponent(out ICollidableComponent collidable))
+                if (entity.TryGetComponent(out ICollidableComponent? collidable))
                 {
                     collidable.CanCollide = true;
                 }

@@ -5,7 +5,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Damage
 {
@@ -19,13 +18,6 @@ namespace Content.Server.GameObjects.Components.Damage
         private DamageState _currentDamageState;
 
         /// <summary>
-        ///     How much HP this component can sustain before triggering
-        ///     <see cref="PerformDestruction"/>.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public int MaxHp { get; private set; }
-
-        /// <summary>
         ///     Sound played upon destruction.
         /// </summary>
         protected string DestroySound { get; private set; }
@@ -35,29 +27,24 @@ namespace Content.Server.GameObjects.Components.Damage
 
         public override DamageState CurrentDamageState => _currentDamageState;
 
-        public override void Initialize()
-        {
-            base.Initialize();
-            HealthChangedEvent += OnHealthChanged;
-        }
-
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(this, ruinable => ruinable.MaxHp, "maxHP", 100);
+            serializer.DataReadWriteFunction(
+                "deadThreshold",
+                100,
+                t => DeadThreshold = t ,
+                () => DeadThreshold ?? -1);
+
             serializer.DataField(this, ruinable => ruinable.DestroySound, "destroySound", string.Empty);
         }
 
-        public override void OnRemove()
+        protected override void EnterState(DamageState state)
         {
-            base.OnRemove();
-            HealthChangedEvent -= OnHealthChanged;
-        }
+            base.EnterState(state);
 
-        private void OnHealthChanged(HealthChangedEventArgs e)
-        {
-            if (CurrentDamageState != DamageState.Dead && TotalDamage >= MaxHp)
+            if (state == DamageState.Dead)
             {
                 PerformDestruction();
             }

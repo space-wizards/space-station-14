@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Shared.Chemistry;
@@ -19,23 +20,25 @@ namespace Content.Server.GameObjects.Components.Fluids
     [RegisterComponent]
     public class BucketComponent : Component, IInteractUsing
     {
-#pragma warning disable 649
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-#pragma warning restore 649
-
         public override string Name => "Bucket";
 
         public ReagentUnit MaxVolume
         {
-            get => _contents.MaxVolume;
-            set => _contents.MaxVolume = value;
+            get => Owner.TryGetComponent(out SolutionComponent? solution) ? solution.MaxVolume : ReagentUnit.Zero;
+            set
+            {
+                if (Owner.TryGetComponent(out SolutionComponent? solution))
+                {
+                    solution.MaxVolume = value;
+                }
+            }
         }
 
-        public ReagentUnit CurrentVolume => _contents.CurrentVolume;
+        public ReagentUnit CurrentVolume => Owner.TryGetComponent(out SolutionComponent? solution)
+            ? solution.CurrentVolume
+            : ReagentUnit.Zero;
 
-        private SolutionComponent _contents;
-
-        private string _sound;
+        private string? _sound;
 
         /// <inheritdoc />
         public override void ExposeData(ObjectSerializer serializer)
@@ -47,16 +50,28 @@ namespace Content.Server.GameObjects.Components.Fluids
         public override void Initialize()
         {
             base.Initialize();
-            _contents = Owner.GetComponent<SolutionComponent>();
+            Owner.EnsureComponent<SolutionComponent>();
         }
 
         private bool TryGiveToMop(MopComponent mopComponent)
         {
+            if (!Owner.TryGetComponent(out SolutionComponent? contents))
+            {
+                return false;
+            }
+
+            var mopContents = mopComponent.Contents;
+
+            if (mopContents == null)
+            {
+                return false;
+            }
+
             // Let's fill 'er up
             // If this is called the mop should be empty but just in case we'll do Max - Current
             var transferAmount = ReagentUnit.Min(mopComponent.MaxVolume - mopComponent.CurrentVolume, CurrentVolume);
-            var solution = _contents.SplitSolution(transferAmount);
-            if (!mopComponent.Contents.TryAddSolution(solution) || mopComponent.CurrentVolume == 0)
+            var solution = contents.SplitSolution(transferAmount);
+            if (!mopContents.TryAddSolution(solution) || mopComponent.CurrentVolume == 0)
             {
                 return false;
             }
@@ -73,7 +88,12 @@ namespace Content.Server.GameObjects.Components.Fluids
 
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.Using.TryGetComponent(out MopComponent mopComponent))
+            if (!Owner.TryGetComponent(out SolutionComponent? contents))
+            {
+                return false;
+            }
+
+            if (!eventArgs.Using.TryGetComponent(out MopComponent? mopComponent))
             {
                 return false;
             }
@@ -86,7 +106,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                     return false;
                 }
 
-                Owner.PopupMessage(eventArgs.User, _localizationManager.GetString("Splish"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("Splish"));
                 return true;
             }
 
@@ -96,15 +116,22 @@ namespace Content.Server.GameObjects.Components.Fluids
                 return false;
             }
 
-            var solution = mopComponent.Contents.SplitSolution(transferAmount);
-            if (!_contents.TryAddSolution(solution))
+            var mopContents = mopComponent.Contents;
+
+            if (mopContents == null)
+            {
+                return false;
+            }
+
+            var solution = mopContents.SplitSolution(transferAmount);
+            if (!contents.TryAddSolution(solution))
             {
                 //This really shouldn't happen
                 throw new InvalidOperationException();
             }
 
             // Give some visual feedback shit's happening (for anyone who can't hear sound)
-            Owner.PopupMessage(eventArgs.User, _localizationManager.GetString("Sploosh"));
+            Owner.PopupMessage(eventArgs.User, Loc.GetString("Sploosh"));
 
             if (_sound == null)
             {
@@ -114,7 +141,6 @@ namespace Content.Server.GameObjects.Components.Fluids
             EntitySystem.Get<AudioSystem>().PlayFromEntity(_sound, Owner);
 
             return true;
-
         }
     }
 }

@@ -16,13 +16,11 @@ namespace Content.Client.State
 {
     public class LauncherConnecting : Robust.Client.State.State
     {
-#pragma warning disable 649
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
-        [Dependency] private readonly IStylesheetManager _stylesheetManager;
-        [Dependency] private readonly IClientNetManager _clientNetManager;
-        [Dependency] private readonly IGameController _gameController;
-        [Dependency] private readonly IBaseClient _baseClient;
-#pragma warning restore 649
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+        [Dependency] private readonly IStylesheetManager _stylesheetManager = default!;
+        [Dependency] private readonly IClientNetManager _clientNetManager = default!;
+        [Dependency] private readonly IGameController _gameController = default!;
+        [Dependency] private readonly IBaseClient _baseClient = default!;
 
         private Control _control;
         private Label _connectStatus;

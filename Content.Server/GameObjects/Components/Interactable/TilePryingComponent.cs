@@ -14,11 +14,9 @@ namespace Content.Server.GameObjects.Components.Interactable
     [RegisterComponent]
     public class TilePryingComponent : Component, IAfterInteract
     {
-#pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
-        [Dependency] private readonly IMapManager _mapManager;
-#pragma warning restore 649
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         public override string Name => "TilePrying";
         private bool _toolComponentNeeded = true;

@@ -21,6 +21,8 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
     /// </summary>
     public class ChemMasterWindow : SS14Window
     {
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         /// <summary>Contains info about the reagent container such as it's contents, if one is loaded into the dispenser.</summary>
         private readonly VBoxContainer ContainerInfo;
 
@@ -45,11 +47,6 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
         public Button CreatePills { get; }
         public Button CreateBottles { get; }
 
-#pragma warning disable 649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-#pragma warning restore 649
-
         protected override Vector2? CustomSize => (400, 200);
 
         /// <summary>
@@ -69,9 +66,9 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
                     {
                         Children =
                         {
-                            new Label {Text = _localizationManager.GetString("Container")},
+                            new Label {Text = Loc.GetString("Container")},
                             new Control {SizeFlagsHorizontal = SizeFlags.FillExpand},
-                            (EjectButton = new Button {Text = _localizationManager.GetString("Eject")})
+                            (EjectButton = new Button {Text = Loc.GetString("Eject")})
                         }
                     },
                     //Wrap the container info in a PanelContainer so we can color it's background differently.
@@ -94,7 +91,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
                                 {
                                     new Label
                                     {
-                                        Text = _localizationManager.GetString("No container loaded.")
+                                        Text = Loc.GetString("No container loaded.")
                                     }
                                 }
                             }),
@@ -109,10 +106,10 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
                     {
                         Children =
                         {
-                            new Label {Text = _localizationManager.GetString("Buffer")},
+                            new Label {Text = Loc.GetString("Buffer")},
                             new Control {SizeFlagsHorizontal = SizeFlags.FillExpand},
-                            (BufferTransferButton = new Button {Text = _localizationManager.GetString("Transfer"), Pressed = BufferModeTransfer, StyleClasses = { StyleBase.ButtonOpenRight }}),
-                            (BufferDiscardButton = new Button {Text = _localizationManager.GetString("Discard"), Pressed = !BufferModeTransfer, StyleClasses = { StyleBase.ButtonOpenLeft }})
+                            (BufferTransferButton = new Button {Text = Loc.GetString("Transfer"), Pressed = BufferModeTransfer, StyleClasses = { StyleBase.ButtonOpenRight }}),
+                            (BufferDiscardButton = new Button {Text = Loc.GetString("Discard"), Pressed = !BufferModeTransfer, StyleClasses = { StyleBase.ButtonOpenLeft }})
                         }
                     },
 
@@ -136,7 +133,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
                                 {
                                     new Label
                                     {
-                                        Text = _localizationManager.GetString("Buffer empty.")
+                                        Text = Loc.GetString("Buffer empty.")
                                     }
                                 }
                             }),
@@ -151,7 +148,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
                     {
                         Children =
                         {
-                            new Label {Text = _localizationManager.GetString("Packaging ")},
+                            new Label {Text = Loc.GetString("Packaging ")},
                         }
                     },
 
@@ -185,7 +182,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
                 {
                     new Label
                     {
-                        Text = _localizationManager.GetString("Pills:")
+                        Text = Loc.GetString("Pills:")
                     },
 
                 },
@@ -212,7 +209,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
             };
             PillInfo.AddChild((pillVolume));
 
-            CreatePills = new Button {Text = _localizationManager.GetString("Create")};
+            CreatePills = new Button {Text = Loc.GetString("Create")};
             PillInfo.AddChild(CreatePills);
 
             //Bottles
@@ -222,7 +219,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
                 {
                     new Label
                     {
-                        Text = _localizationManager.GetString("Bottles:")
+                        Text = Loc.GetString("Bottles:")
                     },
 
                 },
@@ -249,7 +246,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
             };
             BottleInfo.AddChild((bottleVolume));
 
-            CreateBottles = new Button {Text = _localizationManager.GetString("Create")};
+            CreateBottles = new Button {Text = Loc.GetString("Create")};
             BottleInfo.AddChild(CreateBottles);
         }
 
@@ -314,7 +311,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
 
             if (!state.HasBeaker)
             {
-                ContainerInfo.Children.Add(new Label {Text = _localizationManager.GetString("No container loaded.")});
+                ContainerInfo.Children.Add(new Label {Text = Loc.GetString("No container loaded.")});
                 return;
             }
 
@@ -333,7 +330,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
 
             foreach (var reagent in state.ContainerReagents)
             {
-                var name = _localizationManager.GetString("Unknown reagent");
+                var name = Loc.GetString("Unknown reagent");
                 //Try to the prototype for the given reagent. This gives us it's name.
                 if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype proto))
                 {
@@ -370,7 +367,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
 
             if (!state.BufferReagents.Any())
             {
-                BufferInfo.Children.Add(new Label {Text = _localizationManager.GetString("Buffer empty.")});
+                BufferInfo.Children.Add(new Label {Text = Loc.GetString("Buffer empty.")});
                 return;
             }
 
@@ -388,7 +385,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
 
             foreach (var reagent in state.BufferReagents)
             {
-                var name = _localizationManager.GetString("Unknown reagent");
+                var name = Loc.GetString("Unknown reagent");
                 //Try to the prototype for the given reagent. This gives us it's name.
                 if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype proto))
                 {

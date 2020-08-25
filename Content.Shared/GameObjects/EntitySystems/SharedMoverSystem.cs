@@ -179,7 +179,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         }
 
         private static bool TryGetAttachedComponent<T>(ICommonSession? session, [MaybeNullWhen(false)] out T component)
-            where T : IComponent
+            where T : class, IComponent
         {
             component = default;
 
@@ -188,7 +188,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             if (ent == null || !ent.IsValid())
                 return false;
 
-            if (!ent.TryGetComponent(out T comp))
+            if (!ent.TryGetComponent(out T? comp))
                 return false;
 
             component = comp;

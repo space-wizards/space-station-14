@@ -2,12 +2,9 @@
 using System;
 using System.Collections.Generic;
 using Content.Client.Atmos;
-using Content.Client.GameObjects.Components.Atmos;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
-using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Graphics;
 using Robust.Client.Interfaces.Graphics.Overlays;
 using Robust.Client.Interfaces.ResourceManagement;
@@ -43,9 +40,11 @@ namespace Content.Client.GameObjects.EntitySystems
         private readonly float[][] _fireFrameDelays = new float[FireStates][];
         private readonly int[] _fireFrameCounter = new int[FireStates];
         private readonly Texture[][] _fireFrames = new Texture[FireStates][];
-        
-        private Dictionary<GridId, Dictionary<MapIndices, GasOverlayChunk>> _tileData = 
+
+        private Dictionary<GridId, Dictionary<MapIndices, GasOverlayChunk>> _tileData =
             new Dictionary<GridId, Dictionary<MapIndices, GasOverlayChunk>>();
+
+        private AtmosphereSystem _atmosphereSystem = default!;
 
         public override void Initialize()
         {
@@ -53,9 +52,11 @@ namespace Content.Client.GameObjects.EntitySystems
             SubscribeNetworkEvent<GasOverlayMessage>(HandleGasOverlayMessage);
             _mapManager.OnGridRemoved += OnGridRemoved;
 
+            _atmosphereSystem = Get<AtmosphereSystem>();
+
             for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
-                var overlay = Atmospherics.GetOverlay(i);
+                var overlay = _atmosphereSystem.GetOverlay(i);
                 switch (overlay)
                 {
                     case SpriteSpecifier.Rsi animated:
@@ -90,7 +91,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 _fireFrameDelays[i] = state.GetDelays();
                 _fireFrameCounter[i] = 0;
             }
-            
+
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
             if(!overlayManager.HasOverlay(nameof(GasTileOverlay)))
                 overlayManager.AddOverlay(new GasTileOverlay());
@@ -104,7 +105,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 chunk.Update(data, indices);
             }
         }
-        
+
         // Slightly different to the server-side system version
         private GasOverlayChunk GetOrCreateChunk(GridId gridId, MapIndices indices)
         {
@@ -113,7 +114,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 chunks = new Dictionary<MapIndices, GasOverlayChunk>();
                 _tileData[gridId] = chunks;
             }
-            
+
             var chunkIndices = GetGasChunkIndices(indices);
 
             if (!chunks.TryGetValue(chunkIndices, out var chunk))
@@ -151,16 +152,16 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             if (!_tileData.TryGetValue(gridIndex, out var chunks))
                 return Array.Empty<(Texture, Color)>();
-            
+
             var chunkIndex = GetGasChunkIndices(indices);
             if (!chunks.TryGetValue(chunkIndex, out var chunk))
                 return Array.Empty<(Texture, Color)>();
-            
+
             var overlays = chunk.GetData(indices);
 
             if (overlays.Gas == null)
                 return Array.Empty<(Texture, Color)>();
-            
+
             var fire = overlays.FireState != 0;
             var length = overlays.Gas.Length + (fire ? 1 : 0);
 
