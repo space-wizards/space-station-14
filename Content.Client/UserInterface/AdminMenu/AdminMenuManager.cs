@@ -13,6 +13,7 @@ namespace Content.Client.UserInterface.AdminMenu
     {
         [Dependency] private INetManager _netManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly IClientConGroupController _clientConGroupController = default!;
 
         private SS14Window _window;
         private List<SS14Window> _commandWindows;
@@ -33,7 +34,7 @@ namespace Content.Client.UserInterface.AdminMenu
             _window = null;
 
             foreach (var window in _commandWindows)
-                _window?.Dispose();
+                window?.Dispose();
             _commandWindows.Clear();
         }
 
@@ -65,7 +66,7 @@ namespace Content.Client.UserInterface.AdminMenu
         /// <returns>True if the player is allowed</returns>
         public bool CanOpen()
         {
-            return IoCManager.Resolve<IClientConGroupController>().CanAdminMenu();
+            return _clientConGroupController.CanAdminMenu();
         }
 
         /// <summary>
