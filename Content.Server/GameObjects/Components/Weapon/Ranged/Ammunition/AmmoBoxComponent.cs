@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
@@ -15,11 +16,12 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
 {
     [RegisterComponent]
-    public sealed class AmmoBoxComponent : Component, IInteractUsing, IUse, IInteractHand, IMapInit
+    public sealed class AmmoBoxComponent : Component, IInteractUsing, IUse, IInteractHand, IMapInit, IExamine
     {
         public override string Name => "AmmoBox";
 
@@ -119,7 +121,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             return true;
         }
 
-        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (eventArgs.Using.HasComponent<AmmoComponent>())
             {
@@ -196,6 +198,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             return TryUse(eventArgs.User);
         }
 
+
+
         // So if you have 200 rounds in a box and that suddenly creates 200 entities you're not having a fun time
         [Verb]
         private sealed class DumpVerb : Verb<AmmoBoxComponent>
@@ -216,6 +220,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             {
                 component.EjectContents(10);
             }
+        }
+
+        public void Examine(FormattedMessage message, bool inDetailsRange)
+        {
+            message.AddMarkup(Loc.GetString("\nIt's a [color=white]{0}[/color] ammo box.", _caliber));
+            message.AddMarkup(Loc.GetString("\nIt has [color=white]{0}[/color] out of [color=white]{1}[/color] ammo left.", AmmoLeft, _capacity));
         }
     }
 }

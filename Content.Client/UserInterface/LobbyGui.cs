@@ -1,4 +1,4 @@
-using Content.Client.Chat;
+﻿using Content.Client.Chat;
 using Content.Client.Interfaces;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
@@ -9,6 +9,8 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using System;
+using System.Collections.Generic;
 
 namespace Content.Client.UserInterface
 {
@@ -21,7 +23,7 @@ namespace Content.Client.UserInterface
         public Button CreditsButton { get; }
         public Button LeaveButton { get; }
         public ChatBox Chat { get; }
-        public ItemList OnlinePlayerItemList { get; }
+        public LobbyPlayerList OnlinePlayerList { get; }
         public ServerInfo ServerInfo { get; }
         public LobbyCharacterPreviewPanel CharacterPreview { get; }
 
@@ -219,7 +221,19 @@ namespace Content.Client.UserInterface
                             MarginBottomOverride = 3,
                             Children =
                             {
-                                (OnlinePlayerItemList = new ItemList())
+                                new HBoxContainer
+                                {
+                                    SizeFlagsHorizontal = SizeFlags.FillExpand,
+                                    CustomMinimumSize = (50,50),
+                                    Children =
+                                    {
+                                        (OnlinePlayerList = new LobbyPlayerList
+                                        {
+                                            SizeFlagsVertical = SizeFlags.FillExpand,
+                                            SizeFlagsHorizontal = SizeFlags.FillExpand,
+                                        })
+                                    }
+                                }
                             }
                         },
                         new NanoHeading
@@ -241,6 +255,84 @@ namespace Content.Client.UserInterface
                     }
                 });
             }
+        }
+    }
+
+    public class LobbyPlayerList : Control
+    {
+        private ScrollContainer _scroll;
+        private VBoxContainer _vBox;
+
+        public LobbyPlayerList()
+        {
+            var panel = new PanelContainer()
+            {
+                PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#202028") },
+            };
+            _vBox = new VBoxContainer();
+            _scroll = new ScrollContainer();
+            _scroll.AddChild(_vBox);
+            panel.AddChild(_scroll);
+            AddChild(panel);
+        }
+
+        // Adds a row
+        public void AddItem(string name, string status)
+        {
+            var hbox = new HBoxContainer
+            {
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+            };
+
+            // Player Name
+            hbox.AddChild(new PanelContainer()
+            {
+                PanelOverride = new StyleBoxFlat
+                {
+                    BackgroundColor = Color.FromHex("#373744"),
+                    ContentMarginBottomOverride = 2,
+                    ContentMarginLeftOverride = 4,
+                    ContentMarginRightOverride = 4,
+                    ContentMarginTopOverride = 2
+                },
+                Children =
+                {
+                    new Label
+                    {
+                        Text = name
+                    }
+                },
+                SizeFlagsHorizontal = SizeFlags.FillExpand
+            });
+            // Status
+            hbox.AddChild(new PanelContainer()
+            {
+                PanelOverride = new StyleBoxFlat
+                {
+                    BackgroundColor = Color.FromHex("#373744"),
+                    ContentMarginBottomOverride = 2,
+                    ContentMarginLeftOverride = 4,
+                    ContentMarginRightOverride = 4,
+                    ContentMarginTopOverride = 2
+                },
+                Children =
+                {
+                    new Label
+                    {
+                        Text = status
+                    }
+                },
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                SizeFlagsStretchRatio = 0.2f,
+            });
+
+            _vBox.AddChild(hbox);
+        }
+
+        // Deletes all rows
+        public void Clear()
+        {
+            _vBox.RemoveAllChildren();
         }
     }
 }

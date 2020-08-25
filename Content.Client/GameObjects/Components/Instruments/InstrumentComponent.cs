@@ -27,13 +27,9 @@ namespace Content.Client.GameObjects.Components.Instruments
         /// </summary>
         public event Action? OnMidiPlaybackEnded;
 
-#pragma warning disable 649
         [Dependency] private readonly IMidiManager _midiManager = default!;
-
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-
         [Dependency] private readonly IClientNetManager _netManager = default!;
-#pragma warning restore 649
 
         private IMidiRenderer? _renderer;
 

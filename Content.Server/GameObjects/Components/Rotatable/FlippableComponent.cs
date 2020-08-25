@@ -14,9 +14,7 @@ namespace Content.Server.GameObjects.Components.Rotatable
     [RegisterComponent]
     public class FlippableComponent : Component
     {
-#pragma warning disable 649
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
-#pragma warning restore 649
 
         public override string Name => "Flippable";
 
@@ -24,7 +22,7 @@ namespace Content.Server.GameObjects.Components.Rotatable
 
         private void TryFlip(IEntity user)
         {
-            if (Owner.TryGetComponent(out ICollidableComponent collidable) &&
+            if (Owner.TryGetComponent(out ICollidableComponent? collidable) &&
                 collidable.Anchored)
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, user, Loc.GetString("It's stuck."));

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
@@ -38,9 +39,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
     [UsedImplicitly]
     public sealed class InteractionSystem : SharedInteractionSystem
     {
-#pragma warning disable 649
-        [Dependency] private readonly IMapManager _mapManager;
-#pragma warning restore 649
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         public override void Initialize()
         {
@@ -438,7 +437,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// Uses a weapon/object on an entity
         /// Finds components with the InteractUsing interface and calls their function
         /// </summary>
-        public void Interaction(IEntity user, IEntity weapon, IEntity attacked, GridCoordinates clickLocation)
+        public async Task Interaction(IEntity user, IEntity weapon, IEntity attacked, GridCoordinates clickLocation)
         {
             var attackMsg = new InteractUsingMessage(user, weapon, attacked, clickLocation);
             RaiseLocalEvent(attackMsg);
@@ -458,7 +457,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             {
                 foreach (var attackBy in attackBys)
                 {
-                    if (attackBy.InteractUsing(attackByEventArgs))
+                    if (await attackBy.InteractUsing(attackByEventArgs))
                     {
                         // If an InteractUsing returns a status completion we finish our attack
                         return;

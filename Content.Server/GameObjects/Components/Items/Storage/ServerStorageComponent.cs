@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects.Components.Items;
@@ -36,10 +37,8 @@ namespace Content.Server.GameObjects.Components.Items.Storage
     public class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IUse, IActivate, IStorageComponent, IDestroyAct, IExAct,
         IDragDrop
     {
-#pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-#pragma warning restore 649
 
         private const string LoggerName = "Storage";
 
@@ -100,13 +99,13 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         {
             EnsureInitialCalculated();
 
-            if (entity.TryGetComponent(out ServerStorageComponent storage) &&
+            if (entity.TryGetComponent(out ServerStorageComponent? storage) &&
                 storage._storageCapacityMax >= _storageCapacityMax)
             {
                 return false;
             }
 
-            if (entity.TryGetComponent(out StorableComponent store) &&
+            if (entity.TryGetComponent(out StorableComponent? store) &&
                 store.ObjectSize > _storageCapacityMax - _storageUsed)
             {
                 return false;
@@ -163,7 +162,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
             Logger.DebugS(LoggerName, $"Storage (UID {Owner.Uid}) had entity (UID {message.Entity.Uid}) removed from it.");
 
-            if (!message.Entity.TryGetComponent(out StorableComponent storable))
+            if (!message.Entity.TryGetComponent(out StorableComponent? storable))
             {
                 Logger.WarningS(LoggerName, $"Removed entity {message.Entity.Uid} without a StorableComponent from storage {Owner.Uid} at {Owner.Transform.MapPosition}");
 
@@ -185,7 +184,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         {
             EnsureInitialCalculated();
 
-            if (!player.TryGetComponent(out IHandsComponent hands) ||
+            if (!player.TryGetComponent(out IHandsComponent? hands) ||
                 hands.GetActiveHand == null)
             {
                 return false;
@@ -316,7 +315,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
         private void UpdateDoorState()
         {
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(StorageVisuals.Open, SubscribedSessions.Count != 0);
             }
@@ -381,7 +380,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
                     var item = entity.GetComponent<ItemComponent>();
                     if (item == null ||
-                        !player.TryGetComponent(out HandsComponent hands))
+                        !player.TryGetComponent(out HandsComponent? hands))
                     {
                         break;
                     }
@@ -435,7 +434,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         /// </summary>
         /// <param name="eventArgs"></param>
         /// <returns>true if inserted, false otherwise</returns>
-        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             Logger.DebugS(LoggerName, $"Storage (UID {Owner.Uid}) attacked by user (UID {eventArgs.User.Uid}) with entity (UID {eventArgs.Using.Uid}).");
 
@@ -495,7 +494,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
             foreach (var entity in storedEntities)
             {
-                var exActs = entity.GetAllComponents<IExAct>();
+                var exActs = entity.GetAllComponents<IExAct>().ToArray();
                 foreach (var exAct in exActs)
                 {
                     exAct.OnExplosion(eventArgs);
@@ -505,7 +504,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
         bool IDragDrop.CanDragDrop(DragDropEventArgs eventArgs)
         {
-            return eventArgs.Target.TryGetComponent(out PlaceableSurfaceComponent placeable) &&
+            return eventArgs.Target.TryGetComponent(out PlaceableSurfaceComponent? placeable) &&
                    placeable.IsPlaceable;
         }
 

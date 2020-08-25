@@ -54,7 +54,6 @@
         public const uint STUNNABLE = 1048;
         public const uint HUNGER = 1049;
         public const uint THIRST = 1050;
-
         public const uint FLASHABLE = 1051;
         public const uint BUCKLE = 1052;
         public const uint PROJECTILE = 1053;
@@ -65,6 +64,12 @@
         public const uint DO_AFTER = 1058;
         public const uint RADIATION_PULSE = 1059;
         public const uint BODY_MANAGER = 1060;
+        public const uint CLIMBING = 1061;
+        public const uint BOLTACTION_BARREL = 1062;
+        public const uint PUMP_BARREL = 1063;
+        public const uint REVOLVER_BARREL = 1064;
+	public const uint CUFFED = 1065;
+        public const uint HANDCUFFS = 1066;
 
         // Net IDs for integration tests.
         public const uint PREDICTION_TEST = 10001;

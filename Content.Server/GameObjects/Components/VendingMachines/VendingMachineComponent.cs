@@ -1,8 +1,9 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.VendingMachines;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -21,6 +22,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
 using Robust.Shared.Utility;
+using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.SharedWiresComponent;
 
 namespace Content.Server.GameObjects.Components.VendingMachines
@@ -29,27 +31,24 @@ namespace Content.Server.GameObjects.Components.VendingMachines
     [ComponentReference(typeof(IActivate))]
     public class VendingMachineComponent : SharedVendingMachineComponent, IActivate, IExamine, IBreakAct, IWires
     {
-#pragma warning disable 649
-        [Dependency] private readonly IRobustRandom _random;
-#pragma warning restore 649
-        private AppearanceComponent _appearance;
-        private BoundUserInterface _userInterface;
-        private PowerReceiverComponent _powerReceiver;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
-        private bool _ejecting = false;
+        private bool _ejecting;
         private TimeSpan _animationDuration = TimeSpan.Zero;
-        private string _packPrototypeId;
-        private string _description;
-        private string _spriteName;
+        private string _packPrototypeId = "";
+        private string? _description;
+        private string _spriteName = "";
 
-        private bool Powered => _powerReceiver.Powered;
-        private bool _broken = false;
+        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+        private bool _broken;
 
-        private string _soundVend;
+        private string _soundVend = "";
+
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(VendingMachineUiKey.Key);
 
         public void Activate(ActivateEventArgs eventArgs)
         {
-            if(!eventArgs.User.TryGetComponent(out IActorComponent actor))
+            if(!eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
                 return;
             }
@@ -62,7 +61,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
                 wires.OpenInterface(actor.playerSession);
             } else
             {
-                _userInterface.Open(actor.playerSession);
+                UserInterface?.Open(actor.playerSession);
             }
         }
 
@@ -106,25 +105,32 @@ namespace Content.Server.GameObjects.Components.VendingMachines
         public override void Initialize()
         {
             base.Initialize();
-            _appearance = Owner.GetComponent<AppearanceComponent>();
-            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
-                .GetBoundUserInterface(VendingMachineUiKey.Key);
-            _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
-            _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
-            _powerReceiver.OnPowerStateChanged += UpdatePower;
-            TrySetVisualState(_powerReceiver.Powered ? VendingMachineVisualState.Normal : VendingMachineVisualState.Off);
+
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
+            }
+
+            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
+            {
+                receiver.OnPowerStateChanged += UpdatePower;
+                TrySetVisualState(receiver.Powered ? VendingMachineVisualState.Normal : VendingMachineVisualState.Off);
+            }
+
             InitializeFromPrototype();
         }
 
         public override void OnRemove()
         {
-            _appearance = null;
-            _powerReceiver.OnPowerStateChanged -= UpdatePower;
-            _powerReceiver = null;
+            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
+            {
+                receiver.OnPowerStateChanged -= UpdatePower;
+            }
+
             base.OnRemove();
         }
 
-        private void UpdatePower(object sender, PowerStateEventArgs args)
+        private void UpdatePower(object? sender, PowerStateEventArgs args)
         {
             var state = args.Powered ? VendingMachineVisualState.Normal : VendingMachineVisualState.Off;
             TrySetVisualState(state);
@@ -141,8 +147,8 @@ namespace Content.Server.GameObjects.Components.VendingMachines
                 case VendingMachineEjectMessage msg:
                     TryEject(msg.ID);
                     break;
-                case InventorySyncRequestMessage msg:
-                    _userInterface.SendMessage(new VendingMachineInventoryMessage(Inventory));
+                case InventorySyncRequestMessage _:
+                    UserInterface?.SendMessage(new VendingMachineInventoryMessage(Inventory));
                     break;
             }
         }
@@ -160,7 +166,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
                 return;
             }
 
-            VendingMachineInventoryEntry entry = Inventory.Find(x => x.ID == id);
+            var entry = Inventory.Find(x => x.ID == id);
             if (entry == null)
             {
                 FlickDenyAnimation();
@@ -175,7 +181,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
 
             _ejecting = true;
             entry.Amount--;
-            _userInterface.SendMessage(new VendingMachineInventoryMessage(Inventory));
+            UserInterface?.SendMessage(new VendingMachineInventoryMessage(Inventory));
             TrySetVisualState(VendingMachineVisualState.Eject);
 
             Timer.Spawn(_animationDuration, () =>
@@ -204,14 +210,20 @@ namespace Content.Server.GameObjects.Components.VendingMachines
             if (_broken)
             {
                 finalState = VendingMachineVisualState.Broken;
-            } else if (_ejecting)
+            }
+            else if (_ejecting)
             {
                 finalState = VendingMachineVisualState.Eject;
-            } else if (!Powered)
+            }
+            else if (!Powered)
             {
                 finalState = VendingMachineVisualState.Off;
             }
-            _appearance.SetData(VendingMachineVisuals.VisualState, finalState);
+
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            {
+                appearance.SetData(VendingMachineVisuals.VisualState, finalState);
+            }
         }
 
         public void OnBreak(BreakageEventArgs eventArgs)

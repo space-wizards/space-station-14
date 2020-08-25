@@ -1,4 +1,4 @@
-﻿- Index: 1
+- Index: 1
   Name: Player
   Commands:
   - login
@@ -37,6 +37,7 @@
   - loc
   - hostlogin
   - events
+  - factions
 
 - Index: 100
   Name: Administrator
@@ -97,6 +98,8 @@
   - events
   - destroymechanism
   - addaccent
+  - readyall
+  - factions
   CanViewVar: true
   CanAdminPlace: true
 
@@ -188,6 +191,8 @@
   - events
   - destroymechanism
   - addaccent
+  - readyall
+  - factions
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true

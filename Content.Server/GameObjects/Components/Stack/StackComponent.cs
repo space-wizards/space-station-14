@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
@@ -18,9 +19,7 @@ namespace Content.Server.GameObjects.Components.Stack
     [RegisterComponent]
     public class StackComponent : SharedStackComponent, IInteractUsing, IExamine
     {
-#pragma warning disable 649
-        [Dependency] private readonly ISharedNotifyManager _sharedNotifyManager;
-#pragma warning restore 649
+        [Dependency] private readonly ISharedNotifyManager _sharedNotifyManager = default!;
 
         private bool _throwIndividually = false;
 
@@ -61,7 +60,7 @@ namespace Content.Server.GameObjects.Components.Stack
             return false;
         }
 
-        public bool InteractUsing(InteractUsingEventArgs eventArgs)
+        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (eventArgs.Using.TryGetComponent<StackComponent>(out var stack))
             {
@@ -106,8 +105,7 @@ namespace Content.Server.GameObjects.Components.Stack
         {
             if (inDetailsRange)
             {
-                var loc = IoCManager.Resolve<ILocalizationManager>();
-                message.AddMarkup(loc.GetPluralString(
+                message.AddMarkup(Loc.GetPluralString(
                     "There is [color=lightgray]1[/color] thing in the stack",
                     "There are [color=lightgray]{0}[/color] things in the stack.", Count, Count));
             }

@@ -16,13 +16,9 @@ namespace Content.Server.GameObjects.Components.Damage
     [ComponentReference(typeof(IDamageableComponent))]
     public class DestructibleComponent : RuinableComponent, IDestroyAct
     {
-#pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-#pragma warning restore 649
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
-        protected ActSystem _actSystem;
-
-        protected string _spawnOnDestroy;
+        protected ActSystem ActSystem;
 
         /// <inheritdoc />
         public override string Name => "Destructible";
@@ -30,26 +26,26 @@ namespace Content.Server.GameObjects.Components.Damage
         /// <summary>
         ///     Entity spawned upon destruction.
         /// </summary>
-        public string SpawnOnDestroy => _spawnOnDestroy;
+        public string SpawnOnDestroy { get; set; }
 
         void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
         {
-            if (!string.IsNullOrWhiteSpace(_spawnOnDestroy) && eventArgs.IsSpawnWreck)
+            if (!string.IsNullOrWhiteSpace(SpawnOnDestroy) && eventArgs.IsSpawnWreck)
             {
-                Owner.EntityManager.SpawnEntity(_spawnOnDestroy, Owner.Transform.GridPosition);
+                Owner.EntityManager.SpawnEntity(SpawnOnDestroy, Owner.Transform.GridPosition);
             }
         }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _spawnOnDestroy, "spawnondestroy", string.Empty);
+            serializer.DataField(this, d => d.SpawnOnDestroy, "spawnondestroy", string.Empty);
         }
 
         public override void Initialize()
         {
             base.Initialize();
-            _actSystem = _entitySystemManager.GetEntitySystem<ActSystem>();
+            ActSystem = _entitySystemManager.GetEntitySystem<ActSystem>();
         }
 
 
@@ -58,7 +54,7 @@ namespace Content.Server.GameObjects.Components.Damage
             if (!Owner.Deleted)
             {
                 var pos = Owner.Transform.GridPosition;
-                _actSystem.HandleDestruction(Owner,
+                ActSystem.HandleDestruction(Owner,
                     true); //This will call IDestroyAct.OnDestroy on this component (and all other components on this entity)
                 if (DestroySound != string.Empty)
                 {

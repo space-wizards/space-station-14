@@ -60,7 +60,7 @@ namespace Content.Server.GameObjects.Components
         {
             connectedClient = null;
 
-            if (!Owner.TryGetComponent(out IActorComponent actorComponent))
+            if (!Owner.TryGetComponent(out IActorComponent? actorComponent))
             {
                 return false;
             }

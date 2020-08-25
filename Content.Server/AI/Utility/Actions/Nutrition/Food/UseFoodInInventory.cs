@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Content.Server.AI.Operators;
 using Content.Server.AI.Operators.Inventory;
+using Content.Server.AI.Operators.Nutrition;
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.Utility.Considerations.Inventory;
 using Content.Server.AI.Utility.Considerations.Nutrition.Food;
@@ -27,7 +28,7 @@ namespace Content.Server.AI.Utility.Actions.Nutrition.Food
             ActionOperators = new Queue<AiOperator>(new AiOperator[]
             {
                 new EquipEntityOperator(Owner, _entity),
-                new UseItemInHandsOperator(Owner, _entity),
+                new UseFoodInInventoryOperator(Owner, _entity), 
             });
         }
 

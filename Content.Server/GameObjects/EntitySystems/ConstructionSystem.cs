@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Construction;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Interactable;
@@ -35,10 +36,8 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     internal class ConstructionSystem : SharedConstructionSystem
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly IMapManager _mapManager;
-#pragma warning restore 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         private readonly Dictionary<string, ConstructionPrototype> _craftRecipes = new Dictionary<string, ConstructionPrototype>();
 
@@ -76,7 +75,7 @@ namespace Content.Server.GameObjects.EntitySystems
             TryStartItemConstruction(placingEnt, msg.PrototypeName);
         }
 
-        private void HandleToolInteraction(AfterInteractMessage msg)
+        private async void HandleToolInteraction(AfterInteractMessage msg)
         {
             if(msg.Handled)
                 return;
@@ -104,7 +103,7 @@ namespace Content.Server.GameObjects.EntitySystems
             // the target entity is in the process of being constructed/deconstructed
             if (msg.Attacked.TryGetComponent<ConstructionComponent>(out var constructComp))
             {
-                var result = TryConstructEntity(constructComp, handEnt, msg.User);
+                var result = await TryConstructEntity(constructComp, handEnt, msg.User);
 
                 // TryConstructEntity may delete the existing entity
 
@@ -367,7 +366,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        private bool TryConstructEntity(ConstructionComponent constructionComponent, IEntity handTool, IEntity user)
+        private async Task<bool> TryConstructEntity(ConstructionComponent constructionComponent, IEntity handTool, IEntity user)
         {
             var constructEntity = constructionComponent.Owner;
             var spriteComponent = constructEntity.GetComponent<SpriteComponent>();
@@ -384,7 +383,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             var stage = constructPrototype.Stages[constructionComponent.Stage];
 
-            if (TryProcessStep(constructEntity, stage.Forward, handTool, user, transformComponent.GridPosition))
+            if (await TryProcessStep(constructEntity, stage.Forward, handTool, user, transformComponent.GridPosition))
             {
                 constructionComponent.Stage++;
                 if (constructionComponent.Stage == constructPrototype.Stages.Count - 1)
@@ -406,7 +405,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 }
             }
 
-            else if (TryProcessStep(constructEntity, stage.Backward, handTool, user, transformComponent.GridPosition))
+            else if (await TryProcessStep(constructEntity, stage.Backward, handTool, user, transformComponent.GridPosition))
             {
                 constructionComponent.Stage--;
                 stage = constructPrototype.Stages[constructionComponent.Stage];
@@ -443,7 +442,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        private bool TryProcessStep(IEntity constructEntity, ConstructionStep step, IEntity slapped, IEntity user, GridCoordinates gridCoords)
+        private async Task<bool> TryProcessStep(IEntity constructEntity, ConstructionStep step, IEntity slapped, IEntity user, GridCoordinates gridCoords)
         {
             if (step == null)
             {
@@ -473,9 +472,9 @@ namespace Content.Server.GameObjects.EntitySystems
                     // Handle welder manually since tool steps specify fuel amount needed, for some reason.
                     if (toolStep.ToolQuality.HasFlag(ToolQuality.Welding))
                         return slapped.TryGetComponent<WelderComponent>(out var welder)
-                               && welder.UseTool(user, constructEntity, toolStep.ToolQuality, toolStep.Amount);
+                               && await welder.UseTool(user, constructEntity, toolStep.DoAfterDelay, toolStep.ToolQuality, toolStep.Amount);
 
-                    return tool.UseTool(user, constructEntity, toolStep.ToolQuality);
+                    return await tool.UseTool(user, constructEntity, toolStep.DoAfterDelay, toolStep.ToolQuality);
 
                 default:
                     throw new NotImplementedException();

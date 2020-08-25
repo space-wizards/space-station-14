@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -12,26 +13,26 @@ namespace Content.Client.GameObjects.Components.Mobs
     [UsedImplicitly]
     public sealed class DamageStateVisualizer : AppearanceVisualizer
     {
-        private DamageStateVisualData _data = DamageStateVisualData.Normal;
-        private Dictionary<DamageStateVisualData, string> _stateMap = new Dictionary<DamageStateVisualData,string>();
-        private int? _originalDrawDepth = null;
+        private DamageState _data = DamageState.Alive;
+        private readonly Dictionary<DamageState, string> _stateMap = new Dictionary<DamageState, string>();
+        private int? _originalDrawDepth;
 
         public override void LoadData(YamlMappingNode node)
         {
             base.LoadData(node);
             if (node.TryGetNode("normal", out var normal))
             {
-                _stateMap.Add(DamageStateVisualData.Normal, normal.AsString());
+                _stateMap.Add(DamageState.Alive, normal.AsString());
             }
 
             if (node.TryGetNode("crit", out var crit))
             {
-                _stateMap.Add(DamageStateVisualData.Crit, crit.AsString());
+                _stateMap.Add(DamageState.Critical, crit.AsString());
             }
 
             if (node.TryGetNode("dead", out var dead))
             {
-                _stateMap.Add(DamageStateVisualData.Dead, dead.AsString());
+                _stateMap.Add(DamageState.Dead, dead.AsString());
             }
         }
 
@@ -39,7 +40,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         {
             base.OnChangeData(component);
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
-            if (!component.TryGetData(DamageStateVisuals.State, out DamageStateVisualData data))
+            if (!component.TryGetData(DamageStateVisuals.State, out DamageState data))
             {
                 return;
             }
@@ -57,7 +58,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             }
 
             // So they don't draw over mobs anymore
-            if (_data == DamageStateVisualData.Dead)
+            if (_data == DamageState.Dead)
             {
                 _originalDrawDepth = sprite.DrawDepth;
                 sprite.DrawDepth = (int) DrawDepth.FloorObjects;

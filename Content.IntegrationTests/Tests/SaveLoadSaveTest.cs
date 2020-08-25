@@ -38,14 +38,14 @@ namespace Content.IntegrationTests.Tests
             string one;
             string two;
 
-            var rp1 = new ResourcePath("save load save 1.yml");
+            var rp1 = new ResourcePath("/save load save 1.yml");
             using (var stream = userData.Open(rp1, FileMode.Open))
             using (var reader = new StreamReader(stream))
             {
                 one = reader.ReadToEnd();
             }
 
-            var rp2 = new ResourcePath("save load save 2.yml");
+            var rp2 = new ResourcePath("/save load save 2.yml");
             using (var stream = userData.Open(rp2, FileMode.Open))
             using (var reader = new StreamReader(stream))
             {
@@ -96,7 +96,7 @@ namespace Content.IntegrationTests.Tests
 
             server.Post(() =>
             {
-                mapLoader.SaveBlueprint(grid.Index, "load save ticks save 2.yml");
+                mapLoader.SaveBlueprint(grid.Index, "/load save ticks save 2.yml");
             });
 
             await server.WaitIdleAsync();
@@ -105,13 +105,13 @@ namespace Content.IntegrationTests.Tests
             string one;
             string two;
 
-            using (var stream = userData.Open(new ResourcePath("load save ticks save 1.yml"), FileMode.Open))
+            using (var stream = userData.Open(new ResourcePath("/load save ticks save 1.yml"), FileMode.Open))
             using (var reader = new StreamReader(stream))
             {
                 one = reader.ReadToEnd();
             }
 
-            using (var stream = userData.Open(new ResourcePath("load save ticks save 2.yml"), FileMode.Open))
+            using (var stream = userData.Open(new ResourcePath("/load save ticks save 2.yml"), FileMode.Open))
             using (var reader = new StreamReader(stream))
             {
                 two = reader.ReadToEnd();

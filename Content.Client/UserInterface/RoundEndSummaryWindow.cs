@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.Utility;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Localization;
@@ -17,7 +18,7 @@ namespace Content.Client.UserInterface
         private TabContainer RoundEndWindowTabs { get; }
         protected override Vector2? CustomSize => (520, 580);
 
-        public RoundEndSummaryWindow(string gm, TimeSpan roundTimeSpan, List<RoundEndPlayerInfo> info )
+        public RoundEndSummaryWindow(string gm, string roundEnd, TimeSpan roundTimeSpan, List<RoundEndPlayerInfo> info)
         {
 
             Title = Loc.GetString("Round End Summary");
@@ -49,6 +50,14 @@ namespace Content.Client.UserInterface
             gamemodeLabel.SetMarkup(Loc.GetString("Round of [color=white]{0}[/color] has ended.", gm));
             RoundEndSummaryTab.AddChild(gamemodeLabel);
 
+            //Round end text
+            if (!string.IsNullOrEmpty(roundEnd))
+            {
+                var roundendLabel = new RichTextLabel();
+                roundendLabel.SetMarkup(Loc.GetString(roundEnd));
+                RoundEndSummaryTab.AddChild(roundendLabel);
+            }
+
             //Duration
             var roundTimeLabel = new RichTextLabel();
             roundTimeLabel.SetMarkup(Loc.GetString("It lasted for [color=yellow]{0} hours, {1} minutes, and {2} seconds.",
@@ -60,35 +69,54 @@ namespace Content.Client.UserInterface
             scrollContainer.SizeFlagsVertical = SizeFlags.FillExpand;
             var innerScrollContainer = new VBoxContainer();
 
-            //Put antags on top of the list.
-            var manifestSortedList = info.OrderBy(p => !p.Antag);
+            //Put observers at the bottom of the list. Put antags on top.
+            var manifestSortedList = info.OrderBy(p => p.Observer).ThenBy(p => !p.Antag);
             //Create labels for each player info.
             foreach (var plyinfo in manifestSortedList)
             {
-
                 var playerInfoText = new RichTextLabel()
                 {
-                    SizeFlagsVertical = SizeFlags.Fill
+                    SizeFlagsVertical = SizeFlags.Fill,
                 };
 
-                //TODO: On Hover display a popup detailing more play info.
-                //For example: their antag goals and if they completed them sucessfully.
-                var icNameColor = plyinfo.Antag ? "red" : "white";
-                playerInfoText.SetMarkup(
-                    Loc.GetString($"[color=gray]{plyinfo.PlayerOOCName}[/color] was [color={icNameColor}]{plyinfo.PlayerICName}[/color] playing role of [color=orange]{plyinfo.Role}[/color]."));
+                if (plyinfo.Observer)
+                {
+                    playerInfoText.SetMarkup(
+                        Loc.GetString("[color=gray]{0}[/color] was [color=lightblue]{1}[/color], an observer.",
+                                        plyinfo.PlayerOOCName, plyinfo.PlayerICName));
+                }
+                else
+                {
+                    //TODO: On Hover display a popup detailing more play info.
+                    //For example: their antag goals and if they completed them sucessfully.
+                    var icNameColor = plyinfo.Antag ? "red" : "white";
+                    playerInfoText.SetMarkup(
+                        Loc.GetString("[color=gray]{0}[/color] was [color={1}]{2}[/color] playing role of [color=orange]{3}[/color].",
+                                        plyinfo.PlayerOOCName, icNameColor, plyinfo.PlayerICName, Loc.GetString(plyinfo.Role)));
+                }
                 innerScrollContainer.AddChild(playerInfoText);
             }
 
             scrollContainer.AddChild(innerScrollContainer);
             //Attach the entire ScrollContainer that holds all the playerinfo.
             PlayerManifestoTab.AddChild(scrollContainer);
+            // TODO: 1240 Overlap, remove once it's fixed. Temp Hack to make the lines not overlap
+            PlayerManifestoTab.OnVisibilityChanged += PlayerManifestoTab_OnVisibilityChanged;
 
             //Finally, display the window.
             OpenCentered();
             MoveToFront();
-
         }
 
+        private void PlayerManifestoTab_OnVisibilityChanged(Control obj)
+        {
+            if (obj.Visible)
+            {
+                // For some reason the lines get not properly drawn with the right height
+                // so we just force a update
+                ForceRunLayoutUpdate();
+            }
+        }
     }
 
 }

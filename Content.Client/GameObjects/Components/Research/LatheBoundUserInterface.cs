@@ -12,10 +12,8 @@ namespace Content.Client.GameObjects.Components.Research
 {
     public class LatheBoundUserInterface : BoundUserInterface
     {
-#pragma warning disable CS0649
-        [Dependency]
-        private IPrototypeManager _prototypeManager;
-#pragma warning restore
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         [ViewVariables]
         private LatheMenu _menu;
         [ViewVariables]

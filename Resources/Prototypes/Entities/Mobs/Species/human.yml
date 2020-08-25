@@ -90,6 +90,10 @@
       color: "#e8b59b"
       sprite: Mobs/Species/Human/parts.rsi
       state: r_foot
+    - map: ["enum.HumanoidVisualLayers.Handcuffs"]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi 
+      state: body-overlay-2
     - map: ["enum.Slots.IDCARD"]
     - map: ["enum.Slots.GLOVES"]
     - map: ["enum.Slots.SHOES"]
@@ -117,7 +121,7 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.35,-0.35,0.35,0.35"
+      bounds: "-0.50,-0.30,0.40,0.30"
       mask:
       - Impassable
       - MobImpassable
@@ -126,6 +130,8 @@
       - Opaque
       - MobImpassable
   - type: BodyManager
+    criticalThreshold: 100
+    deadThreshold: 200
     baseTemplate: bodyTemplate.Humanoid
     basePreset: bodyPreset.BasicHuman
   - type: Metabolism
@@ -141,6 +147,8 @@
     - type: RotationVisualizer
     - type: BuckleVisualizer
   - type: CombatMode
+  - type: Climbing
+  - type: Cuffable
   - type: Teleportable
   - type: CharacterInfo
   - type: FootstepSound
@@ -255,10 +263,11 @@
           layer:
           - MobImpassable
     - type: BodyManager
+      criticalThreshold: 100
+      deadThreshold: 200
       baseTemplate: bodyTemplate.Humanoid
       basePreset: bodyPreset.BasicHuman
     - type: MobStateManager
-    - type: Damageable
     - type: Appearance
       visuals:
         - type: RotationVisualizer

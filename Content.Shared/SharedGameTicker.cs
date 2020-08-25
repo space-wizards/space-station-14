@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using Lidgren.Network;
 using Robust.Shared.Interfaces.Network;
+using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.IoC;
 using Robust.Shared.Network;
 
 namespace Content.Shared
@@ -50,6 +53,31 @@ namespace Content.Shared
             {
             }
         }
+
+        protected class MsgTickerLateJoinStatus : NetMessage
+        {
+            #region REQUIRED
+
+            public const MsgGroups GROUP = MsgGroups.Command;
+            public const string NAME = nameof(MsgTickerLateJoinStatus);
+
+            public bool Disallowed { get; set; }
+
+            public MsgTickerLateJoinStatus(INetChannel channel) : base(NAME, GROUP) { }
+
+            #endregion
+
+            public override void ReadFromBuffer(NetIncomingMessage buffer)
+            {
+                Disallowed = buffer.ReadBoolean();
+            }
+
+            public override void WriteToBuffer(NetOutgoingMessage buffer)
+            {
+                buffer.Write(Disallowed);
+            }
+        }
+
 
         protected class MsgTickerLobbyStatus : NetMessage
         {
@@ -152,6 +180,57 @@ namespace Content.Shared
             }
         }
 
+        protected class MsgTickerLobbyReady : NetMessage
+        {
+            #region REQUIRED
+
+            public const MsgGroups GROUP = MsgGroups.Command;
+            public const string NAME = nameof(MsgTickerLobbyReady);
+            public MsgTickerLobbyReady(INetChannel channel) : base(NAME, GROUP) { }
+
+            #endregion
+
+            /// <summary>
+            /// The Status of the Player in the lobby (ready, observer, ...)
+            /// </summary>
+            public Dictionary<NetSessionId, PlayerStatus> PlayerStatus { get; set; }
+
+            public override void ReadFromBuffer(NetIncomingMessage buffer)
+            {
+                PlayerStatus = new Dictionary<NetSessionId, PlayerStatus>();
+                var length = buffer.ReadInt32();
+                for (int i = 0; i < length; i++)
+                {
+                    var serializer = IoCManager.Resolve<IRobustSerializer>();
+                    var byteLength = buffer.ReadVariableInt32();
+                    NetSessionId sessionID;
+                    using (var stream = buffer.ReadAsStream(byteLength))
+                    {
+                        serializer.DeserializeDirect(stream, out sessionID);
+                    }
+                    var status = (PlayerStatus)buffer.ReadByte();
+                    PlayerStatus.Add(sessionID, status);
+                }
+            }
+
+            public override void WriteToBuffer(NetOutgoingMessage buffer)
+            {
+                var serializer = IoCManager.Resolve<IRobustSerializer>();
+                buffer.Write(PlayerStatus.Count);
+                foreach (var p in PlayerStatus)
+                {
+                    using (var stream = new MemoryStream())
+                    {
+                        serializer.SerializeDirect(stream, p.Key);
+                        buffer.WriteVariableInt32((int) stream.Length);
+                        stream.TryGetBuffer(out var segment);
+                        buffer.Write(segment);
+                    }
+                    buffer.Write((byte)p.Value);
+                }
+            }
+        }
+
 
         public struct RoundEndPlayerInfo
         {
@@ -159,7 +238,7 @@ namespace Content.Shared
             public string PlayerICName;
             public string Role;
             public bool Antag;
-
+            public bool Observer;
         }
 
         protected class MsgRoundEndMessage : NetMessage
@@ -174,6 +253,7 @@ namespace Content.Shared
             #endregion
 
             public string GamemodeTitle;
+            public string RoundEndText;
             public TimeSpan RoundDuration;
 
 
@@ -184,6 +264,7 @@ namespace Content.Shared
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
                 GamemodeTitle = buffer.ReadString();
+                RoundEndText = buffer.ReadString();
 
                 var hours = buffer.ReadInt32();
                 var mins = buffer.ReadInt32();
@@ -199,7 +280,8 @@ namespace Content.Shared
                         PlayerOOCName = buffer.ReadString(),
                         PlayerICName = buffer.ReadString(),
                         Role = buffer.ReadString(),
-                        Antag = buffer.ReadBoolean()
+                        Antag = buffer.ReadBoolean(),
+                        Observer = buffer.ReadBoolean(),
                     };
 
                     AllPlayersEndInfo.Add(readPlayerData);
@@ -210,6 +292,7 @@ namespace Content.Shared
             public override void WriteToBuffer(NetOutgoingMessage buffer)
             {
                 buffer.Write(GamemodeTitle);
+                buffer.Write(RoundEndText);
                 buffer.Write(RoundDuration.Hours);
                 buffer.Write(RoundDuration.Minutes);
                 buffer.Write(RoundDuration.Seconds);
@@ -222,9 +305,17 @@ namespace Content.Shared
                     buffer.Write(playerEndInfo.PlayerICName);
                     buffer.Write(playerEndInfo.Role);
                     buffer.Write(playerEndInfo.Antag);
+                    buffer.Write(playerEndInfo.Observer);
                 }
             }
 
+        }
+
+        public enum PlayerStatus : byte
+        {
+            NotReady = 0,
+            Ready,
+            Observer,
         }
     }
 }

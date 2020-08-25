@@ -37,7 +37,7 @@ namespace Content.Client.GameObjects.Components
         /// <returns>True if the click worked, false otherwise.</returns>
         public bool CheckClick(Vector2 worldPos, out int drawDepth, out uint renderOrder)
         {
-            if (!Owner.TryGetComponent(out ISpriteComponent sprite) || !sprite.Visible)
+            if (!Owner.TryGetComponent(out ISpriteComponent? sprite) || !sprite.Visible)
             {
                 drawDepth = default;
                 renderOrder = default;

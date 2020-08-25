@@ -8,7 +8,6 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-  - type: Damageable
   - type: Destructible
     thresholdvalue: 5
   - type: Sprite

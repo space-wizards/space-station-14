@@ -29,10 +29,9 @@ namespace Content.Server.GameObjects.Components.Nutrition
     [ComponentReference(typeof(IAfterInteract))]
     public class DrinkComponent : Component, IUse, IAfterInteract, ISolutionChange, IExamine, ILand
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly IRobustRandom _random;
-#pragma warning restore 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
+
         public override string Name => "Drink";
 
         [ViewVariables]
@@ -44,7 +43,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         [ViewVariables]
         public ReagentUnit TransferAmount { get; private set; } = ReagentUnit.New(2);
         [ViewVariables]
-        protected bool Opened { get; set; }
+        public bool Opened { get; protected set; }
         [ViewVariables]
         public bool Empty => _contents.CurrentVolume.Float() <= 0;
 

@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
@@ -27,10 +28,8 @@ namespace Content.Server.GameObjects.Components.Conveyor
     [RegisterComponent]
     public class ConveyorComponent : Component, IInteractUsing
     {
-#pragma warning disable 649
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-#pragma warning restore 649
 
         public override string Name => "Conveyor";
 
@@ -59,7 +58,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
             {
                 _state = value;
 
-                if (!Owner.TryGetComponent(out AppearanceComponent appearance))
+                if (!Owner.TryGetComponent(out AppearanceComponent? appearance))
                 {
                     return;
                 }
@@ -92,7 +91,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
                 return false;
             }
 
-            if (Owner.TryGetComponent(out PowerReceiverComponent receiver) &&
+            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver) &&
                 !receiver.Powered)
             {
                 return false;
@@ -113,7 +112,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
                 return false;
             }
 
-            if (!entity.TryGetComponent(out ICollidableComponent collidable) ||
+            if (!entity.TryGetComponent(out ICollidableComponent? collidable) ||
                 collidable.Anchored)
             {
                 return false;
@@ -154,7 +153,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
                     continue;
                 }
 
-                if (entity.TryGetComponent(out ICollidableComponent collidable))
+                if (entity.TryGetComponent(out ICollidableComponent? collidable))
                 {
                     var controller = collidable.EnsureController<ConveyedController>();
                     controller.Move(direction, _speed * frameTime);
@@ -162,10 +161,10 @@ namespace Content.Server.GameObjects.Components.Conveyor
             }
         }
 
-        private bool ToolUsed(IEntity user, ToolComponent tool)
+        private async Task<bool> ToolUsed(IEntity user, ToolComponent tool)
         {
             if (!Owner.HasComponent<ItemComponent>() &&
-                tool.UseTool(user, Owner, ToolQuality.Prying))
+                await tool.UseTool(user, Owner, 0.5f, ToolQuality.Prying))
             {
                 State = ConveyorState.Loose;
 
@@ -224,7 +223,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
                             continue;
                         }
 
-                        if (!@switch.TryGetComponent(out ConveyorSwitchComponent component))
+                        if (!@switch.TryGetComponent(out ConveyorSwitchComponent? component))
                         {
                             continue;
                         }
@@ -244,17 +243,17 @@ namespace Content.Server.GameObjects.Components.Conveyor
             Disconnect();
         }
 
-        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (eventArgs.Using.TryGetComponent(out ConveyorSwitchComponent conveyorSwitch))
+            if (eventArgs.Using.TryGetComponent(out ConveyorSwitchComponent? conveyorSwitch))
             {
                 conveyorSwitch.Connect(this, eventArgs.User);
                 return true;
             }
 
-            if (eventArgs.Using.TryGetComponent(out ToolComponent tool))
+            if (eventArgs.Using.TryGetComponent(out ToolComponent? tool))
             {
-                return ToolUsed(eventArgs.User, tool);
+                return await ToolUsed(eventArgs.User, tool);
             }
 
             return false;

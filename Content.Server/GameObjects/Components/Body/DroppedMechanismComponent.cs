@@ -1,21 +1,23 @@
-﻿using System;
+﻿#nullable enable
 using System.Collections.Generic;
 using Content.Server.Body;
 using Content.Server.Body.Mechanisms;
+using Content.Server.Utility;
 using Content.Shared.Body.Mechanism;
 using Content.Shared.Body.Surgery;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
+using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Body
@@ -26,24 +28,22 @@ namespace Content.Server.GameObjects.Components.Body
     [RegisterComponent]
     public class DroppedMechanismComponent : Component, IAfterInteract
     {
-#pragma warning disable 649
-        [Dependency] private readonly ISharedNotifyManager _sharedNotifyManager;
-        [Dependency] private IPrototypeManager _prototypeManager;
-#pragma warning restore 649
+        [Dependency] private readonly ISharedNotifyManager _sharedNotifyManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public sealed override string Name => "DroppedMechanism";
 
         private readonly Dictionary<int, object> _optionsCache = new Dictionary<int, object>();
 
-        private BodyManagerComponent _bodyManagerComponentCache;
+        private BodyManagerComponent? _bodyManagerComponentCache;
 
         private int _idHash;
 
-        private IEntity _performerCache;
+        private IEntity? _performerCache;
 
-        private BoundUserInterface _userInterface;
+        [ViewVariables] public Mechanism ContainedMechanism { get; private set; } = default!;
 
-        [ViewVariables] public Mechanism ContainedMechanism { get; private set; }
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(GenericSurgeryUiKey.Key);
 
         void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
@@ -63,12 +63,7 @@ namespace Content.Server.GameObjects.Components.Body
             }
             else if (eventArgs.Target.TryGetComponent<DroppedBodyPartComponent>(out var droppedBodyPart))
             {
-                if (droppedBodyPart.ContainedBodyPart == null)
-                {
-                    Logger.Debug(
-                        "Installing a mechanism was attempted on an IEntity with a DroppedBodyPartComponent that doesn't have a BodyPart in it!");
-                    throw new InvalidOperationException("A DroppedBodyPartComponent exists without a BodyPart in it!");
-                }
+                DebugTools.AssertNotNull(droppedBodyPart.ContainedBodyPart);
 
                 if (!droppedBodyPart.ContainedBodyPart.TryInstallDroppedMechanism(this))
                 {
@@ -82,9 +77,10 @@ namespace Content.Server.GameObjects.Components.Body
         {
             base.Initialize();
 
-            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
-                .GetBoundUserInterface(GenericSurgeryUiKey.Key);
-            _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
+            }
         }
 
         public void InitializeDroppedMechanism(Mechanism data)
@@ -92,7 +88,7 @@ namespace Content.Server.GameObjects.Components.Body
             ContainedMechanism = data;
             Owner.Name = Loc.GetString(ContainedMechanism.Name);
 
-            if (Owner.TryGetComponent(out SpriteComponent component))
+            if (Owner.TryGetComponent(out SpriteComponent? component))
             {
                 component.LayerSetRSI(0, data.RSIPath);
                 component.LayerSetState(0, data.RSIState);
@@ -111,7 +107,7 @@ namespace Content.Server.GameObjects.Components.Body
 
             if (serializer.Reading && debugLoadMechanismData != "")
             {
-                _prototypeManager.TryIndex(debugLoadMechanismData, out MechanismPrototype data);
+                _prototypeManager.TryIndex(debugLoadMechanismData!, out MechanismPrototype data);
 
                 var mechanism = new Mechanism(data);
                 mechanism.EnsureInitialize();
@@ -155,7 +151,18 @@ namespace Content.Server.GameObjects.Components.Body
         /// </summary>
         private void HandleReceiveBodyPart(int key)
         {
-            CloseSurgeryUI(_performerCache.GetComponent<BasicActorComponent>().playerSession);
+            if (_performerCache == null ||
+                !_performerCache.TryGetComponent(out IActorComponent? actor))
+            {
+                return;
+            }
+
+            CloseSurgeryUI(actor.playerSession);
+
+            if (_bodyManagerComponentCache == null)
+            {
+                return;
+            }
 
             // TODO: sanity checks to see whether user is in range, user is still able-bodied, target is still the same, etc etc
             if (!_optionsCache.TryGetValue(key, out var targetObject))
@@ -165,36 +172,37 @@ namespace Content.Server.GameObjects.Components.Body
                 return;
             }
 
-            var target = targetObject as BodyPart;
+            var target = (BodyPart) targetObject;
+            var message = target.TryInstallDroppedMechanism(this)
+                ? Loc.GetString("You jam the {0} inside {1:them}.", ContainedMechanism.Name, _performerCache)
+                : Loc.GetString("You can't fit it in!");
 
             _sharedNotifyManager.PopupMessage(
                 _bodyManagerComponentCache.Owner,
                 _performerCache,
-                !target.TryInstallDroppedMechanism(this)
-                    ? Loc.GetString("You can't fit it in!")
-                    : Loc.GetString("You jam the {1} inside {0:them}.", _performerCache, ContainedMechanism.Name));
+                message);
 
             // TODO: {1:theName}
         }
 
         private void OpenSurgeryUI(IPlayerSession session)
         {
-            _userInterface.Open(session);
+            UserInterface?.Open(session);
         }
 
         private void UpdateSurgeryUIBodyPartRequest(IPlayerSession session, Dictionary<string, int> options)
         {
-            _userInterface.SendMessage(new RequestBodyPartSurgeryUIMessage(options), session);
+            UserInterface?.SendMessage(new RequestBodyPartSurgeryUIMessage(options), session);
         }
 
         private void CloseSurgeryUI(IPlayerSession session)
         {
-            _userInterface.Close(session);
+            UserInterface?.Close(session);
         }
 
         private void CloseAllSurgeryUIs()
         {
-            _userInterface.CloseAll();
+            UserInterface?.CloseAll();
         }
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)

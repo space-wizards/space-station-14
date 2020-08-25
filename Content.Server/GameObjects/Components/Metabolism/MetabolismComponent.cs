@@ -20,9 +20,7 @@ namespace Content.Server.GameObjects.Components.Metabolism
     [RegisterComponent]
     public class MetabolismComponent : Component
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-#pragma warning restore 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override string Name => "Metabolism";
 
@@ -213,7 +211,7 @@ namespace Content.Server.GameObjects.Components.Metabolism
             if (Suffocating &&
                 Owner.TryGetComponent(out IDamageableComponent damageable))
             {
-                damageable.ChangeDamage(DamageClass.Airloss, _suffocationDamage, false);
+                // damageable.ChangeDamage(DamageClass.Airloss, _suffocationDamage, false);
             }
         }
 

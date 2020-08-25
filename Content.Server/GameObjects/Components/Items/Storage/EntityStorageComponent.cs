@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Body;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Interactable;
@@ -359,7 +360,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             return Contents.CanInsert(entity);
         }
 
-        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
 
             if (Open)
@@ -377,9 +378,8 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             if (!eventArgs.Using.TryGetComponent(out WelderComponent tool))
                 return false;
 
-            if (!tool.UseTool(eventArgs.User, Owner, ToolQuality.Welding, 1f))
+            if (!await tool.UseTool(eventArgs.User, Owner, 1f, ToolQuality.Welding, 1f))
                 return false;
-
 
             IsWeldedShut ^= true;
             return true;
