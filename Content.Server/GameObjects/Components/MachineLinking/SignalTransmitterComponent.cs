@@ -6,6 +6,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
@@ -28,6 +29,9 @@ namespace Content.Server.GameObjects.Components.MachineLinking
         private List<SignalReceiverComponent> _receivers;
         [ViewVariables] private float _range;
 
+        /// <summary>
+        /// 0 is unlimited range
+        /// </summary>
         public float Range { get => _range; private set => _range = value; }
 
         public override void Initialize()
@@ -91,7 +95,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
         {
             foreach (var receiver in _receivers)
             {
-                if (!Owner.Transform.GridPosition.InRange(_mapManager, receiver.Owner.Transform.GridPosition, Range))
+                if (Range > 0 && !Owner.Transform.GridPosition.InRange(_mapManager, receiver.Owner.Transform.GridPosition, Range))
                 {
                     continue;
                 }
@@ -119,7 +123,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
         {
             if (user != null)
             {
-                _notifyManager.PopupMessage(Owner, user, "Signal fetched.");
+                _notifyManager.PopupMessage(Owner, user, Loc.GetString("Signal fetched."));
             }
 
             return this;

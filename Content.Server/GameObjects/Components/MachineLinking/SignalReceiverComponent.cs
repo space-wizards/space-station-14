@@ -6,6 +6,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -65,25 +66,25 @@ namespace Content.Server.GameObjects.Components.MachineLinking
         {
             if (transmitter == null)
             {
-                _notifyManager.PopupMessage(user, user, "Signal not set.");
+                _notifyManager.PopupMessage(user, user, Loc.GetString("Signal not set."));
                 return false;
             }
 
             if (_transmitters.Contains(transmitter))
             {
                 Unsubscribe(transmitter);
-                _notifyManager.PopupMessage(Owner, user, "Unlinked.");
+                _notifyManager.PopupMessage(Owner, user, Loc.GetString("Unlinked."));
                 return true;
             }
 
-            if (!Owner.Transform.GridPosition.InRange(_mapManager, transmitter.Owner.Transform.GridPosition, transmitter.Range))
+            if (transmitter.Range > 0 && !Owner.Transform.GridPosition.InRange(_mapManager, transmitter.Owner.Transform.GridPosition, transmitter.Range))
             {
-                _notifyManager.PopupMessage(Owner, user, "Out of range.");
+                _notifyManager.PopupMessage(Owner, user, Loc.GetString("Out of range."));
                 return false;
             }
 
             Subscribe(transmitter);
-            _notifyManager.PopupMessage(Owner, user, "Linked!");
+            _notifyManager.PopupMessage(Owner, user, Loc.GetString("Linked!"));
             return true;
         }
 
