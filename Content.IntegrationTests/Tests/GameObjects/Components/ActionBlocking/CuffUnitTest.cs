@@ -19,7 +19,7 @@ using Content.Client.GameObjects.Components.Items;
 namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
 {
     [TestFixture]
-    [TestOf(typeof(CuffedComponent))]
+    [TestOf(typeof(CuffableComponent))]
     [TestOf(typeof(HandcuffComponent))]
     public class CuffUnitTest : ContentIntegrationTest
     {
@@ -34,7 +34,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
             IEntity cables;
             HandcuffComponent cableHandcuff;
             HandcuffComponent handcuff;
-            CuffedComponent cuffed;
+            CuffableComponent cuffed;
             IHandsComponent hands;
             BodyManagerComponent body;
 
@@ -54,7 +54,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
                 human.Transform.WorldPosition = otherHuman.Transform.WorldPosition;
 
                 // Test for components existing
-                Assert.True(human.TryGetComponent(out cuffed!), $"Human has no {nameof(CuffedComponent)}");
+                Assert.True(human.TryGetComponent(out cuffed!), $"Human has no {nameof(CuffableComponent)}");
                 Assert.True(human.TryGetComponent(out hands!), $"Human has no {nameof(HandsComponent)}");
                 Assert.True(human.TryGetComponent(out body!), $"Human has no {nameof(BodyManagerComponent)}");
                 Assert.True(cuffs.TryGetComponent(out handcuff!), $"Handcuff has no {nameof(HandcuffComponent)}");
