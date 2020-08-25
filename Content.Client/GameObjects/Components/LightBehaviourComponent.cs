@@ -26,7 +26,7 @@ namespace Content.Client.GameObjects.Components
 #pragma warning restore 649
 
         [ViewVariables(VVAccess.ReadOnly)]
-        protected List<LightBehaviourData> BehaviourData = default;
+        protected Dictionary<string, LightBehaviourData> BehaviourData = new Dictionary<string, LightBehaviourData>();
 
         private int _prevColorIndex = default;
         private int _currentColorIndex = default;
@@ -61,9 +61,10 @@ namespace Content.Client.GameObjects.Components
                                 Property = nameof(PointLightComponent.Radius),
                                 KeyFrames =
                                 {
-                                    new AnimationTrackProperty.KeyFrame(data.MinValue, 0),
-                                    new AnimationTrackProperty.KeyFrame(data.MaxValue, (float)seconds * 0.5f),
-                                    new AnimationTrackProperty.KeyFrame(data.MinValue, (float)seconds)
+                                    new AnimationTrackProperty.KeyFrame((data.MaxValue + data.MinValue) * 0.5f, 0),
+                                    new AnimationTrackProperty.KeyFrame(data.MaxValue, (float)seconds * 0.25f),
+                                    new AnimationTrackProperty.KeyFrame(data.MinValue, (float)seconds * 0.75f),
+                                    new AnimationTrackProperty.KeyFrame((data.MaxValue + data.MinValue) * 0.5f, (float)seconds)
                                 }
                             }
                         }
@@ -83,15 +84,16 @@ namespace Content.Client.GameObjects.Components
                                 Property = nameof(PointLightComponent.Energy),
                                 KeyFrames =
                                 {
-                                    new AnimationTrackProperty.KeyFrame(data.MinValue, 0),
-                                    new AnimationTrackProperty.KeyFrame(data.MaxValue, (float)seconds * 0.5f),
-                                    new AnimationTrackProperty.KeyFrame(data.MinValue, (float)seconds)
+                                    new AnimationTrackProperty.KeyFrame((data.MaxValue + data.MinValue) * 0.5f, 0),
+                                    new AnimationTrackProperty.KeyFrame(data.MaxValue, (float)seconds * 0.25f),
+                                    new AnimationTrackProperty.KeyFrame(data.MinValue, (float)seconds * 0.75f),
+                                    new AnimationTrackProperty.KeyFrame((data.MaxValue + data.MinValue) * 0.5f, (float)seconds)
                                 }
                             }
                         }
                     };
 
-                case LightBehaviourType.RandomSize:
+                case LightBehaviourType.RandomSize: // todo: we don't need animator for this anymore
 
                     var size = _random.NextDouble() * (data.MaxValue - data.MinValue) + data.MinValue;
                     return new Animation
@@ -112,7 +114,7 @@ namespace Content.Client.GameObjects.Components
                         }
                     };
 
-                case LightBehaviourType.RandomBrightness:
+                case LightBehaviourType.RandomBrightness: // todo: we don't need animator for this anymore
 
                     var brightness = _random.NextDouble() * (data.MaxValue - data.MinValue) + data.MinValue;
                     return new Animation
@@ -148,34 +150,13 @@ namespace Content.Client.GameObjects.Components
                                 KeyFrames =
                                 {
                                     new AnimationTrackProperty.KeyFrame(true, 0),
-                                    new AnimationTrackProperty.KeyFrame(false, 0.05f)
+                                    new AnimationTrackProperty.KeyFrame(false, MathF.Min(data.MaxValue, (float)seconds))
                                 }
                             }
                         }
                     };
 
-                case LightBehaviourType.Toggle:
-
-                    return new Animation
-                    {
-                        Length = TimeSpan.FromSeconds(seconds),
-                        AnimationTracks =
-                        {
-                            new AnimationTrackComponentProperty
-                            {
-                                ComponentType = typeof(PointLightComponent),
-                                InterpolationMode = AnimationInterpolationMode.Linear,
-                                Property = nameof(PointLightComponent.Enabled),
-                                KeyFrames =
-                                {
-                                    new AnimationTrackProperty.KeyFrame(false, 0),
-                                    new AnimationTrackProperty.KeyFrame(true, (float)seconds * 0.5f)
-                                }
-                            }
-                        }
-                    };
-
-                case LightBehaviourType.ColorSequence:
+                case LightBehaviourType.ColorSequence: // todo: we don't need animator for this anymore
 
                     _currentColorIndex = (_currentColorIndex + 1 >= data.ColorsToCycle.Count) ? 0 : _currentColorIndex + 1;
                     return new Animation
@@ -226,6 +207,9 @@ namespace Content.Client.GameObjects.Components
         {
             base.Startup();
 
+            var playerComponent = Owner.EnsureComponent<AnimationPlayerComponent>();
+            playerComponent.AnimationCompleted += (key => PlayNewAnimation(playerComponent, key));
+
             CopyLightSettings();
             StartLightBehaviour(); //this is for testing
         }
@@ -247,9 +231,10 @@ namespace Content.Client.GameObjects.Components
         }
 
         /// <summary>
-        /// If the light behaviour isn't animating, then start animating. If it's already animating or if the owning entity has no PointLightComponent, calling this does nothing.
+        /// Start animating a light behaviour with the specified ID. If the specified ID is empty, it will start animating all light behaviour entries.
+        /// If specified light behaviours are already animating or if the owning entity has no PointLightComponent, calling this does nothing.
         /// </summary>
-        public void StartLightBehaviour()
+        public void StartLightBehaviour(string id = "")
         {
             if (!Owner.HasComponent<PointLightComponent>())
             {
@@ -259,51 +244,59 @@ namespace Content.Client.GameObjects.Components
             _currentColorIndex = 1;
             _prevColorIndex = 0;
             var playerComponent = Owner.EnsureComponent<AnimationPlayerComponent>();
-            var animationCount = 0;
 
-            foreach (LightBehaviourData data in BehaviourData)
+            foreach (KeyValuePair<string, LightBehaviourData> pair in BehaviourData)
             {
-                if ((data.LightBehaviourType == LightBehaviourType.ColorSequence ||
-                    data.LightBehaviourType == LightBehaviourType.ColorSequenceSmooth) &&
-                    data.ColorsToCycle.Count < 2)
+                if (pair.Value.ID != id && id != string.Empty)
                 {
-                    Logger.Warning($"{Owner.Name} has a color cycling {nameof(LightBehaviourComponent)} with less than 2 colors! Check the prototype!");
-                    data.ColorsToCycle.Add(Color.Red);
-                    data.ColorsToCycle.Add(Color.Blue);
+                    continue;
                 }
 
-                var key = nameof(LightBehaviourComponent) + animationCount;
-
-                if (!playerComponent.HasRunningAnimation(key))
+                if ((pair.Value.LightBehaviourType == LightBehaviourType.ColorSequence ||
+                    pair.Value.LightBehaviourType == LightBehaviourType.ColorSequenceSmooth) &&
+                    pair.Value.ColorsToCycle.Count < 2)
                 {
-                    var animation = GenerateAnimation(data);
-
-                    playerComponent.Play(animation, key);
-                    playerComponent.AnimationCompleted += s => PlayNewAnimation(playerComponent, data, s);
+                    Logger.Warning($"{Owner.Name} has a color cycling {nameof(LightBehaviourComponent)} with less than 2 colors!");
+                    pair.Value.ColorsToCycle.Add(Color.Red);
+                    pair.Value.ColorsToCycle.Add(Color.Blue);
                 }
 
-                animationCount++;
+                if (!playerComponent.HasRunningAnimation(pair.Key))
+                {
+                    var animation = GenerateAnimation(pair.Value);
+                    playerComponent.Play(animation, pair.Key);
+                }
             }
         }
 
         /// <summary>
-        /// If the light behaviour is animating, then stop it and reset the light values to its original settings from the prototype.
+        /// If the light behaviour with the specified ID is animating, then stop it.
+        /// If no ID is specified then all light behaviours will be stopped.
         /// </summary>
-        public void StopLightBehaviour()
+        public void StopLightBehaviour(string id = "", bool removeBehaviourData = false, bool resetToOriginalSettings = false)
         {
             if (Owner.TryGetComponent<AnimationPlayerComponent>(out var playerComponent))
             {
-                for (int i = 0; i < BehaviourData.Count; i++)
-                {
-                    var key = nameof(LightBehaviourComponent) + i;
+                var toRemove = new List<string>();
 
-                    if (playerComponent.HasRunningAnimation(key))
+                foreach (KeyValuePair<string, LightBehaviourData> pair in BehaviourData)
+                {
+                    if (playerComponent.HasRunningAnimation(pair.Key) && (pair.Value.ID == id || id == string.Empty))
                     {
-                        playerComponent.Stop(key);
+                        playerComponent.Stop(pair.Key);
+                        toRemove.Add(pair.Key);
                     }
                 }
 
-                if (Owner.TryGetComponent<PointLightComponent>(out var pointLight))
+                if (removeBehaviourData)
+                {
+                    foreach (var key in toRemove)
+                    {
+                        BehaviourData.Remove(key);
+                    }
+                }
+
+                if (resetToOriginalSettings && Owner.TryGetComponent<PointLightComponent>(out var pointLight))
                 {
                     pointLight.Color = _originalColor;
                     pointLight.Enabled = _originalEnabled;
@@ -313,17 +306,44 @@ namespace Content.Client.GameObjects.Components
             }
         }
 
-        private void PlayNewAnimation(AnimationPlayerComponent playerComponent, LightBehaviourData data, string id)
+        /// <summary>
+        /// Add a new light behaviour to the component and start it immediately unless otherwise specified.
+        /// </summary>
+        public void AddNewLightBehaviour(LightBehaviourData data, bool playImmediately = true)
         {
-            var animation = GenerateAnimation(data);
-            playerComponent.Play(animation, id);
+            int key = 0;
+
+            while (BehaviourData.TryGetValue(key.ToString(), out _))
+            {
+                key++;
+            }
+
+            BehaviourData[key.ToString()] = data;
+
+            if (playImmediately)
+            {
+                StartLightBehaviour(data.ID);
+            }
+        }
+
+        private void PlayNewAnimation(AnimationPlayerComponent playerComponent, string key)
+        {
+            var animation = GenerateAnimation(BehaviourData[key]);
+            playerComponent.Play(animation, key);
         }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
-            BehaviourData = serializer.ReadDataField("behaviours", new List<LightBehaviourData>());
+            var list = serializer.ReadDataField("behaviours", new List<LightBehaviourData>());
+            int idx = 0;
+
+            foreach (var behaviour in list)
+            {
+                BehaviourData[idx.ToString()] = behaviour;
+                idx++;
+            }
         }
     }
 }

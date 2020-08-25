@@ -30,10 +30,10 @@
     - type: PointLight
       enabled: false
       color: "#FF0000"
-      - type: LightBehaviour
-        behaviours:
-          - type: RandomBrightness
-            minDuration: 0.1
-            maxDuration: 0.2
-            minValue: 1.0
-            maxValue: 4.0  
+    - type: LightBehaviour
+      behaviours:
+        - type: RandomBrightness
+          minDuration: 0.1
+          maxDuration: 0.2
+          minValue: 1.0
+          maxValue: 4.0  

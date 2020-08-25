@@ -95,8 +95,7 @@
       behaviours:
         - type: ColorSequenceSmooth
           maxDuration: 0.5
-          minValue: 2.0
-          maxValue: 4.0
+          maxValue: 1.0
           colorsToCycle:
             - "#FF0000"
             - "#FFFF00"
@@ -137,8 +136,7 @@
       behaviours:
         - type: ColorSequence
           maxDuration: 0.5
-          minValue: 2.0
-          maxValue: 4.0
+          maxValue: 0.5
           colorsToCycle:
             - "#FF0000"
             - "#FFFF00"
@@ -177,11 +175,9 @@
       color: "#FF0000"
     - type: LightBehaviour
       behaviours:
-        - type: Toggle
-          minDuration: 1.0
+        - type: Flicker
           maxDuration: 2.0
-          minValue: 2.0
-          maxValue: 4.0
+          maxValue: 1.0
 
 - type: entity
   name: flicker briefly light test
@@ -214,10 +210,8 @@
     - type: LightBehaviour
       behaviours:
         - type: Flicker
-          minDuration: 1.0
-          maxDuration: 2.0
-          minValue: 2.0
-          maxValue: 4.0
+          maxDuration: 0.3
+          maxValue: 0.05
 
 - type: entity
   name: pulse light test
@@ -250,13 +244,12 @@
     - type: LightBehaviour
       behaviours:
         - type: PulseBrightness
-          minDuration: 1.0
           maxDuration: 2.0
-          minValue: 2.0
-          maxValue: 4.0
+          minValue: 3.0
+          maxValue: 10.0
 
 - type: entity
-  name: randomized brightness light test
+  name: pulse size light test
   parent: GlowstickBase
   id: GlowstickTest5
   components:
@@ -285,8 +278,117 @@
       color: "#FF0000"
     - type: LightBehaviour
       behaviours:
-        - type: RandomBrightness
-          minDuration: 1.0
+        - type: PulseBrightness
           maxDuration: 2.0
+          minValue: 3.0
+          maxValue: 10.0
+
+- type: entity
+  name: randomized brightness light test
+  parent: GlowstickBase
+  id: GlowstickTest6
+  components:
+    - type: Glowstick
+      spentName: spent glowstick
+      spentDesc: It looks like this glowstick has stopped glowing. How tragic.
+      glowRadius: 3
+      glowEnergy: 2.2
+      glowDuration: 900
+      fadeOutDuration: 300
+      iconStateOn: glowstick_lit
+      iconStateSpent: glowstick_unlit
+    - type: Sprite
+      sprite: Objects/Misc/glowstick.rsi
+      layers:
+        - state: glowstick_base
+        - state: glowstick_unlit
+          shader: unshaded
+          color: "#FF0000"
+    - type: Item
+      sprite: Objects/Misc/glowstick.rsi
+      # color: "#00FF00" this won't work until handcuffs PR is merged
+      HeldPrefix: off
+    - type: PointLight
+      enabled: false
+      color: "#FF0000"
+    - type: LightBehaviour
+      behaviours:
+        - type: RandomBrightness
+          maxDuration: 0.3
           minValue: 1.0
-          maxValue: 4.0
+          maxValue: 6.0
+
+- type: entity
+  name: randomized size light test
+  parent: GlowstickBase
+  id: GlowstickTest7
+  components:
+    - type: Glowstick
+      spentName: spent glowstick
+      spentDesc: It looks like this glowstick has stopped glowing. How tragic.
+      glowRadius: 3
+      glowEnergy: 2.2
+      glowDuration: 900
+      fadeOutDuration: 300
+      iconStateOn: glowstick_lit
+      iconStateSpent: glowstick_unlit
+    - type: Sprite
+      sprite: Objects/Misc/glowstick.rsi
+      layers:
+        - state: glowstick_base
+        - state: glowstick_unlit
+          shader: unshaded
+          color: "#FF0000"
+    - type: Item
+      sprite: Objects/Misc/glowstick.rsi
+      # color: "#00FF00" this won't work until handcuffs PR is merged
+      HeldPrefix: off
+    - type: PointLight
+      enabled: false
+      color: "#FF0000"
+    - type: LightBehaviour
+      behaviours:
+        - type: RandomSize
+          maxDuration: 0.3
+          minValue: 1.0
+          maxValue: 6.0
+
+- type: entity
+  name: multiple behaviour light test
+  parent: GlowstickBase
+  id: GlowstickTest8
+  components:
+    - type: Glowstick
+      spentName: spent glowstick
+      spentDesc: It looks like this glowstick has stopped glowing. How tragic.
+      glowRadius: 3
+      glowEnergy: 2.2
+      glowDuration: 900
+      fadeOutDuration: 300
+      iconStateOn: glowstick_lit
+      iconStateSpent: glowstick_unlit
+    - type: Sprite
+      sprite: Objects/Misc/glowstick.rsi
+      layers:
+        - state: glowstick_base
+        - state: glowstick_unlit
+          shader: unshaded
+          color: "#FF0000"
+    - type: Item
+      sprite: Objects/Misc/glowstick.rsi
+      # color: "#00FF00" this won't work until handcuffs PR is merged
+      HeldPrefix: off
+    - type: PointLight
+      enabled: false
+      color: "#FF0000"
+    - type: LightBehaviour
+      behaviours:
+        - type: ColorSequence
+          maxDuration: 0.5
+          maxValue: 0.5
+          colorsToCycle:
+            - "#FF0000"
+            - "#0000FF"
+        - type: Flicker
+          maxDuration: 2.0
+          maxValue: 1.0

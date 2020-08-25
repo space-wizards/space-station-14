@@ -23,15 +23,15 @@ namespace Content.Shared.GameObjects.Components
             PulseSize,          // a light getting bigger and smaller smoothly
             RandomBrightness,   // something like a campfire flickering
             RandomSize,         // sort of campfire-esque as well
-            Flicker,            // light turns on then off again quickly. think spooky streetlight.
-            Toggle,             // light toggles itself on and off. 
+            Flicker,            // light turns on then off again. 
             ColorSequence,      // light immediately changes colors using the predetermined sequence (or random if the sequence is empty)
             ColorSequenceSmooth // same as above but lerped
         }
 
         [Serializable, NetSerializable]
-        protected struct LightBehaviourData : IExposeData
+        public struct LightBehaviourData : IExposeData
         {
+            public string ID;
             public LightBehaviourType LightBehaviourType;
             public float MinValue;
             public float MaxValue;
@@ -41,6 +41,7 @@ namespace Content.Shared.GameObjects.Components
 
             public void ExposeData(ObjectSerializer serializer)
             {
+                serializer.DataField(ref ID, "id", string.Empty);
                 serializer.DataField(ref LightBehaviourType, "type", LightBehaviourType.Flicker);
                 serializer.DataField(ref MinValue, "minValue", -1f);
                 serializer.DataField(ref MaxValue, "maxValue", 2f);
