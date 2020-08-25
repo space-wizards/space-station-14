@@ -97,6 +97,7 @@
   - tilewalls
   - events
   - destroymechanism
+  - addaccent
   - readyall
   - factions
   CanViewVar: true
@@ -189,6 +190,7 @@
   - tilewalls
   - events
   - destroymechanism
+  - addaccent
   - readyall
   - factions
   CanViewVar: true
