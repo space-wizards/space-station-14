@@ -339,7 +339,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         }
 
         /// <inheritdoc />
-        public TileAtmosphere GetTile(GridCoordinates coordinates)
+        public TileAtmosphere? GetTile(GridCoordinates coordinates)
         {
             return GetTile(coordinates.ToMapIndices(_mapManager));
         }
