@@ -10,11 +10,13 @@ namespace Content.Server.GameObjects.Components.Atmos
     {
         public override string Name => "GasMixtureHolder";
 
-        [ViewVariables] public GasMixture GasMixture { get; set; } = new GasMixture();
+        [ViewVariables] public GasMixture GasMixture { get; set; }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
+
+            GasMixture = new GasMixture();
 
             serializer.DataReadWriteFunction(
                 "volume",

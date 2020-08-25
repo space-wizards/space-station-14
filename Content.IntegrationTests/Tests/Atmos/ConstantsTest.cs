@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Atmos;
 using NUnit.Framework;
+using Robust.Shared.GameObjects.Systems;
 
 namespace Content.IntegrationTests.Tests.Atmos
 {
@@ -18,10 +19,10 @@ namespace Content.IntegrationTests.Tests.Atmos
 
             await server.WaitIdleAsync();
 
-            var atmosSystem = server.ResolveDependency<AtmosphereSystem>();
-
             server.Post(() =>
             {
+                var atmosSystem = EntitySystem.Get<AtmosphereSystem>();
+
                 Assert.That(atmosSystem.Gases.Count(), Is.EqualTo(Atmospherics.TotalNumberOfGases));
 
                 Assert.That(Enum.GetValues(typeof(Gas)).Length, Is.EqualTo(Atmospherics.TotalNumberOfGases));
