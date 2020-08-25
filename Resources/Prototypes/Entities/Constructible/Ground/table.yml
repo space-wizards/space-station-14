@@ -24,7 +24,7 @@
     base: solid_
   - type: Climbable
   - type: Destructible
-    maxHP: 50
+    deadThreshold: 50
     spawnOnDestroy: SteelSheet1
 
 # TODO: drop wood instead of steel when destroyed when that's added
@@ -40,5 +40,5 @@
     key: wood
     base: wood_
   - type: Destructible
-    maxHP: 50
+    deadThreshold: 50
     spawnOnDestroy: SteelSheet1

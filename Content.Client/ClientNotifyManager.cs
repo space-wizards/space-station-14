@@ -21,14 +21,12 @@ namespace Content.Client
 {
     public class ClientNotifyManager : SharedNotifyManager, IClientNotifyManager
     {
-#pragma warning disable 649
-        [Dependency] private IPlayerManager _playerManager;
-        [Dependency] private IUserInterfaceManager _userInterfaceManager;
-        [Dependency] private IInputManager _inputManager;
-        [Dependency] private IEyeManager _eyeManager;
-        [Dependency] private IClientNetManager _netManager;
-        [Dependency] private IEntityManager _entityManager;
-#pragma warning restore 649
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+        [Dependency] private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly IEyeManager _eyeManager = default!;
+        [Dependency] private readonly IClientNetManager _netManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private readonly List<PopupLabel> _aliveLabels = new List<PopupLabel>();
         private bool _initialized;

@@ -8,13 +8,28 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Physics
+  - type: Collidable
     anchored: true
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.3,-0.3,0.3,0.3"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: SnapGrid
     offset: Center
   - type: Anchorable
   - type: Breakable
   - type: Rotatable
+  - type: Pullable
 
 - type: entity
   id: DisposalHolder
@@ -117,22 +132,22 @@
     flushTime: 2
   - type: Clickable
   - type: InteractionOutline
-  - type: Physics
-    anchored: true
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.3,-0.3,0.3,0.3"
-      layer:
-      - Impassable
-      - MobImpassable
   - type: Collidable
     anchored: true
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.3,-0.3,0.3,0.3"
-      layer:
+      bounds: "-0.35,-0.3,0.35,0.3"
+      mask:
       - Impassable
       - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: SnapGrid
     offset: Center
   - type: Anchorable
@@ -155,6 +170,7 @@
     interfaces:
     - key: enum.DisposalUnitUiKey.Key
       type: DisposalUnitBoundUserInterface
+  - type: Pullable
 
 - type: entity
   id: DisposalRouter

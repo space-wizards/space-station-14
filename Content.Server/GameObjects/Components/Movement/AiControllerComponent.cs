@@ -1,11 +1,16 @@
-﻿using Content.Server.GameObjects.EntitySystems.AI;
+﻿#nullable enable
+using Content.Server.GameObjects.EntitySystems.AI;
+using Content.Server.Interfaces.GameTicking;
 using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.Roles;
 using Robust.Server.AI;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -14,23 +19,26 @@ namespace Content.Server.GameObjects.Components.Movement
     [RegisterComponent, ComponentReference(typeof(IMoverComponent))]
     public class AiControllerComponent : Component, IMoverComponent
     {
-        private string _logicName;
+        private string? _logicName;
         private float _visionRadius;
 
         public override string Name => "AiController";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public string LogicName
+        public string? LogicName
         {
             get => _logicName;
             set
             {
                 _logicName = value;
-                Processor = null;
+                Processor = null!;
             }
         }
 
-        public AiLogicProcessor Processor { get; set; }
+        public AiLogicProcessor? Processor { get; set; }
+        
+        [ViewVariables(VVAccess.ReadWrite)]
+        public string? StartingGearPrototype { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float VisionRadius
@@ -45,10 +53,21 @@ namespace Content.Server.GameObjects.Components.Movement
             base.Initialize();
 
             // This component requires a collidable component.
-            if (!Owner.HasComponent<ICollidableComponent>())
-                Owner.AddComponent<CollidableComponent>();
-            
+            Owner.EnsureComponent<CollidableComponent>();
+
             EntitySystem.Get<AiSystem>().ProcessorInitialize(this);
+        }
+
+        protected override void Startup()
+        {
+            base.Startup();
+            
+            if (StartingGearPrototype != null)
+            {
+                var startingGear = IoCManager.Resolve<IPrototypeManager>().Index<StartingGearPrototype>(StartingGearPrototype);
+                IoCManager.Resolve<IGameTicker>().EquipStartingGear(Owner, startingGear);
+            }
+            
         }
 
         /// <inheritdoc />
@@ -57,6 +76,11 @@ namespace Content.Server.GameObjects.Components.Movement
             base.ExposeData(serializer);
 
             serializer.DataField(ref _logicName, "logic", null);
+            serializer.DataReadWriteFunction(
+                "startingGear", 
+                null,
+                startingGear => StartingGearPrototype = startingGear,
+                () => StartingGearPrototype);
             serializer.DataField(ref _visionRadius, "vision", 8.0f);
         }
 
@@ -74,7 +98,7 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             get
             {
-                if (Owner.TryGetComponent(out MovementSpeedModifierComponent component))
+                if (Owner.TryGetComponent(out MovementSpeedModifierComponent? component))
                 {
                     return component.CurrentWalkSpeed;
                 }
@@ -91,7 +115,7 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             get
             {
-                if (Owner.TryGetComponent(out MovementSpeedModifierComponent component))
+                if (Owner.TryGetComponent(out MovementSpeedModifierComponent? component))
                 {
                     return component.CurrentSprintSpeed;
                 }

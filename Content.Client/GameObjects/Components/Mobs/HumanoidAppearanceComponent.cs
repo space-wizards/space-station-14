@@ -1,8 +1,9 @@
-using Content.Shared.GameObjects.Components.Mobs;
+﻿using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Preferences;
 using Content.Shared.Preferences.Appearance;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Content.Client.GameObjects.Components.ActionBlocking;
 
 namespace Content.Client.GameObjects.Components.Mobs
 {
@@ -48,6 +49,15 @@ namespace Content.Client.GameObjects.Components.Mobs
             sprite.LayerSetState(HumanoidVisualLayers.Head, Sex == Sex.Male ? "head_m" : "head_f");
 
             sprite.LayerSetVisible(HumanoidVisualLayers.StencilMask, Sex == Sex.Female);
+
+            if (Owner.TryGetComponent<CuffableComponent>(out var cuffed))
+            {
+                sprite.LayerSetVisible(HumanoidVisualLayers.Handcuffs, !cuffed.CanStillInteract);
+            }
+            else
+            {
+                sprite.LayerSetVisible(HumanoidVisualLayers.Handcuffs, false);
+            }
 
             var hairStyle = Appearance.HairStyleName;
             if (string.IsNullOrWhiteSpace(hairStyle) || !HairStyles.HairStylesMap.ContainsKey(hairStyle))

@@ -24,12 +24,10 @@ namespace Content.Server.GameObjects.Components.Items.Storage
     [ComponentReference(typeof(IItemComponent))]
     public class ItemComponent : StorableComponent, IInteractHand, IExAct, IEquipped, IUnequipped, IItemComponent
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
+
         public override string Name => "Item";
         public override uint? NetID => ContentNetIDs.ITEM;
-
-        #pragma warning disable 649
-        [Dependency] private readonly IMapManager _mapManager;
-        #pragma warning restore 649
 
         private string _equippedPrefix;
 

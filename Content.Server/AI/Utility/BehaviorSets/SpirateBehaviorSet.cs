@@ -14,7 +14,7 @@ namespace Content.Server.AI.Utility.BehaviorSets
                 // TODO: Ideally long-term we should just store the weapons in backpack
                 new EquipMeleeExp(),
                 new PickUpMeleeWeaponExp(),
-                new MeleeAttackNearbyPlayerExp(),
+                new MeleeAttackNearbyExp(),
             };
         }
     }

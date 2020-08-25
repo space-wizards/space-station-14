@@ -29,7 +29,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Breakable
-    maxHP: 150
+    deadThreshold: 150
   - type: GravityGenerator
   - type: UserInterface
     interfaces:

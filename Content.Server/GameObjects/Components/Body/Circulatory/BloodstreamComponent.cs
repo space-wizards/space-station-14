@@ -29,7 +29,7 @@ namespace Content.Server.GameObjects.Components.Body.Circulatory
         /// </summary>
         [ViewVariables] public ReagentUnit EmptyVolume => _internalSolution.EmptyVolume;
 
-        [ViewVariables] public GasMixture Air { get; set; } = new GasMixture(6);
+        [ViewVariables] public GasMixture Air { get; set; }
 
         [ViewVariables] public SolutionComponent Solution => _internalSolution;
 
@@ -44,6 +44,8 @@ namespace Content.Server.GameObjects.Components.Body.Circulatory
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
+
+            Air = new GasMixture(6);
 
             serializer.DataField(ref _initialMaxVolume, "maxVolume", ReagentUnit.New(250));
         }
