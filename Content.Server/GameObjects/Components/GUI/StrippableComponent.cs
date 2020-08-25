@@ -71,10 +71,18 @@ namespace Content.Server.GameObjects.Components.GUI
             UserInterface.SetState(new StrippingBoundUserInterfaceState(inventory, hands));
         }
 
+        public bool CanBeStripped(IEntity by)
+        {
+            return by != Owner
+                   && by.HasComponent<HandsComponent>()
+                   && ActionBlockerSystem.CanInteract(by);
+        }
+
         public bool CanDragDrop(DragDropEventArgs eventArgs)
         {
-            return eventArgs.User.HasComponent<HandsComponent>()
-                   && eventArgs.Target != eventArgs.Dropped && eventArgs.Target == eventArgs.User;
+            return eventArgs.Target != eventArgs.Dropped
+                   && eventArgs.Target == eventArgs.User
+                   && CanBeStripped(eventArgs.User);
         }
 
         public bool DragDrop(DragDropEventArgs eventArgs)
@@ -394,19 +402,7 @@ namespace Content.Server.GameObjects.Components.GUI
         {
             protected override void GetData(IEntity user, StrippableComponent component, VerbData data)
             {
-                if (user == component.Owner)
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                if (!ActionBlockerSystem.CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                if (!user.HasComponent<IActorComponent>())
+                if (!component.CanBeStripped(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
