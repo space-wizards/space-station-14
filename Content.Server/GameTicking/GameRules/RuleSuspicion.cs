@@ -12,6 +12,7 @@ using Robust.Server.Interfaces.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.IoC;
 using Timer = Robust.Shared.Timers.Timer;
 
@@ -28,6 +29,7 @@ namespace Content.Server.GameTicking.GameRules
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IGameTicker _gameTicker = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         private readonly CancellationTokenSource _checkTimerCancel = new CancellationTokenSource();
 
@@ -54,6 +56,9 @@ namespace Content.Server.GameTicking.GameRules
 
         private void _checkWinConditions()
         {
+            if (!_cfg.GetCVar<bool>("game.enablewin"))
+                return;
+
             var traitorsAlive = 0;
             var innocentsAlive = 0;
 

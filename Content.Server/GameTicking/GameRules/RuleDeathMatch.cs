@@ -7,6 +7,7 @@ using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Timer = Robust.Shared.Timers.Timer;
@@ -25,6 +26,7 @@ namespace Content.Server.GameTicking.GameRules
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IGameTicker _gameTicker = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         private CancellationTokenSource _checkTimerCancel;
 
@@ -52,6 +54,9 @@ namespace Content.Server.GameTicking.GameRules
         private void _checkForWinner()
         {
             _checkTimerCancel = null;
+
+            if (!_cfg.GetCVar<bool>("game.enablewin"))
+                return;
 
             IPlayerSession winner = null;
             foreach (var playerSession in _playerManager.GetAllPlayers())
