@@ -14,10 +14,6 @@ namespace Content.Client.GameObjects.Components.Research
         private int[] _serverIds = new int[]{};
         private int _selectedServerId = -1;
 
-#pragma warning disable 649
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-#pragma warning restore 649
-
         protected override Vector2? CustomSize => (300, 300);
         public ResearchClientBoundUserInterface Owner { get; set; }
 
@@ -25,7 +21,7 @@ namespace Content.Client.GameObjects.Components.Research
         {
             IoCManager.InjectDependencies(this);
 
-            Title = _localizationManager.GetString("Research Server Selection");
+            Title = Loc.GetString("Research Server Selection");
 
             _servers = new ItemList() {SelectMode = ItemList.ItemListSelectMode.Single};
 

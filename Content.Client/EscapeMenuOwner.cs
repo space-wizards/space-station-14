@@ -17,18 +17,16 @@ namespace Content.Client
 {
     internal sealed class EscapeMenuOwner : IEscapeMenuOwner
     {
-#pragma warning disable 649
-        [Dependency] private readonly IClientConsole _clientConsole;
-        [Dependency] private readonly IConfigurationManager _configurationManager;
-        [Dependency] private readonly IInputManager _inputManager;
-        [Dependency] private readonly IPlacementManager _placementManager;
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly IResourceCache _resourceCache;
-        [Dependency] private readonly IStateManager _stateManager;
-        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
-        [Dependency] private readonly IGameHud _gameHud;
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-#pragma warning restore 649
+        [Dependency] private readonly IClientConsole _clientConsole = default!;
+        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+        [Dependency] private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly IPlacementManager _placementManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private readonly IStateManager _stateManager = default!;
+        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
+        [Dependency] private readonly IGameHud _gameHud = default!;
+        [Dependency] private readonly ILocalizationManager _localizationManager = default!;
 
         private EscapeMenu _escapeMenu;
 

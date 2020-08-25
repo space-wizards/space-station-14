@@ -19,10 +19,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
     [RegisterComponent]
     class PourableComponent : Component, IInteractUsing
     {
-#pragma warning disable 649
-        [Dependency] private readonly IServerNotifyManager _notifyManager;
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-#pragma warning restore 649
+        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
 
         public override string Name => "Pourable";
 
@@ -91,7 +88,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if (realTransferAmount <= 0) //Special message if container is full
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, eventArgs.User,
-                    _localizationManager.GetString("Container is full"));
+                    Loc.GetString("Container is full"));
                 return false;
             }
 
@@ -101,7 +98,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return false;
 
             _notifyManager.PopupMessage(Owner.Transform.GridPosition, eventArgs.User,
-                _localizationManager.GetString("Transferred {0}u", removedSolution.TotalVolume));
+                Loc.GetString("Transferred {0}u", removedSolution.TotalVolume));
 
             return true;
         }

@@ -20,8 +20,6 @@ namespace Content.Server.GameObjects.Components.Fluids
     [RegisterComponent]
     public class BucketComponent : Component, IInteractUsing
     {
-        [Dependency] private readonly ILocalizationManager _localizationManager = default!;
-
         public override string Name => "Bucket";
 
         public ReagentUnit MaxVolume
@@ -62,11 +60,18 @@ namespace Content.Server.GameObjects.Components.Fluids
                 return false;
             }
 
+            var mopContents = mopComponent.Contents;
+
+            if (mopContents == null)
+            {
+                return false;
+            }
+
             // Let's fill 'er up
             // If this is called the mop should be empty but just in case we'll do Max - Current
             var transferAmount = ReagentUnit.Min(mopComponent.MaxVolume - mopComponent.CurrentVolume, CurrentVolume);
             var solution = contents.SplitSolution(transferAmount);
-            if (!mopComponent.Contents.TryAddSolution(solution) || mopComponent.CurrentVolume == 0)
+            if (!mopContents.TryAddSolution(solution) || mopComponent.CurrentVolume == 0)
             {
                 return false;
             }
@@ -101,7 +106,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                     return false;
                 }
 
-                Owner.PopupMessage(eventArgs.User, _localizationManager.GetString("Splish"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("Splish"));
                 return true;
             }
 
@@ -111,7 +116,14 @@ namespace Content.Server.GameObjects.Components.Fluids
                 return false;
             }
 
-            var solution = mopComponent.Contents.SplitSolution(transferAmount);
+            var mopContents = mopComponent.Contents;
+
+            if (mopContents == null)
+            {
+                return false;
+            }
+
+            var solution = mopContents.SplitSolution(transferAmount);
             if (!contents.TryAddSolution(solution))
             {
                 //This really shouldn't happen
@@ -119,7 +131,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             }
 
             // Give some visual feedback shit's happening (for anyone who can't hear sound)
-            Owner.PopupMessage(eventArgs.User, _localizationManager.GetString("Sploosh"));
+            Owner.PopupMessage(eventArgs.User, Loc.GetString("Sploosh"));
 
             if (_sound == null)
             {
@@ -129,7 +141,6 @@ namespace Content.Server.GameObjects.Components.Fluids
             EntitySystem.Get<AudioSystem>().PlayFromEntity(_sound, Owner);
 
             return true;
-
         }
     }
 }

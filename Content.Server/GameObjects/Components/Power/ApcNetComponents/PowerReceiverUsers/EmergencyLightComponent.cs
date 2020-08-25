@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -21,14 +21,6 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
         [ViewVariables]
         private EmergencyLightState _lightState = EmergencyLightState.Charging;
-
-        [ViewVariables]
-        private BatteryComponent Battery => Owner.GetComponent<BatteryComponent>();
-        [ViewVariables]
-        private PointLightComponent Light => Owner.GetComponent<PointLightComponent>();
-        [ViewVariables]
-        private PowerReceiverComponent PowerReceiver => Owner.GetComponent<PowerReceiverComponent>();
-        private SpriteComponent Sprite => Owner.GetComponent<SpriteComponent>();
 
         [ViewVariables(VVAccess.ReadWrite)]
         private float _wattage;
@@ -58,9 +50,14 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         /// </summary>
         public void UpdateState()
         {
-            if (PowerReceiver.Powered)
+            if (!Owner.TryGetComponent(out PowerReceiverComponent receiver))
             {
-                PowerReceiver.Load = (int) Math.Abs(_wattage);
+                return;
+            }
+
+            if (receiver.Powered)
+            {
+                receiver.Load = (int) Math.Abs(_wattage);
                 TurnOff();
                 _lightState = EmergencyLightState.Charging;
             }
@@ -76,9 +73,14 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             if (_lightState == EmergencyLightState.Empty
                 || _lightState == EmergencyLightState.Full) return;
 
+            if (!Owner.TryGetComponent(out BatteryComponent battery))
+            {
+                return;
+            }
+
             if(_lightState == EmergencyLightState.On)
             {
-                if (!Battery.TryUseCharge(_wattage * frameTime))
+                if (!battery.TryUseCharge(_wattage * frameTime))
                 {
                     _lightState = EmergencyLightState.Empty;
                     TurnOff();
@@ -86,10 +88,14 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             }
             else
             {
-                Battery.CurrentCharge += _chargingWattage * frameTime * _chargingEfficiency;
-                if (Battery.BatteryState == BatteryState.Full)
+                battery.CurrentCharge += _chargingWattage * frameTime * _chargingEfficiency;
+                if (battery.BatteryState == BatteryState.Full)
                 {
-                    PowerReceiver.Load = 1;
+                    if (Owner.TryGetComponent(out PowerReceiverComponent receiver))
+                    {
+                        receiver.Load = 1;
+                    }
+
                     _lightState = EmergencyLightState.Full;
                 }
             }
@@ -97,25 +103,49 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
         private void TurnOff()
         {
-            Sprite.LayerSetState(0, "emergency_light_off");
-            Light.Enabled = false;
+            if (Owner.TryGetComponent(out SpriteComponent sprite))
+            {
+                sprite.LayerSetState(0, "emergency_light_off");
+            }
+
+            if (Owner.TryGetComponent(out PointLightComponent light))
+            {
+                light.Enabled = false;
+            }
         }
 
         private void TurnOn()
         {
-            Sprite.LayerSetState(0, "emergency_light_on");
-            Light.Enabled = true;
+            if (Owner.TryGetComponent(out SpriteComponent sprite))
+            {
+                sprite.LayerSetState(0, "emergency_light_on");
+            }
+
+            if (Owner.TryGetComponent(out PointLightComponent light))
+            {
+                light.Enabled = true;
+            }
         }
 
         public override void Initialize()
         {
             base.Initialize();
-            Owner.GetComponent<PowerReceiverComponent>().OnPowerStateChanged += UpdateState;
+
+            if (!Owner.EnsureComponent(out PowerReceiverComponent receiver))
+            {
+                Logger.Warning($"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(PowerReceiverComponent)}");
+            }
+
+            receiver.OnPowerStateChanged += UpdateState;
         }
 
         public override void OnRemove()
         {
-            Owner.GetComponent<PowerReceiverComponent>().OnPowerStateChanged -= UpdateState;
+            if (Owner.TryGetComponent(out PowerReceiverComponent receiver))
+            {
+                receiver.OnPowerStateChanged -= UpdateState;
+            }
+
             base.OnRemove();
         }
 
@@ -132,7 +162,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             On
         }
 
-        public Dictionary<EmergencyLightState, string> BatteryStateText = new Dictionary<EmergencyLightState, String>
+        public Dictionary<EmergencyLightState, string> BatteryStateText = new Dictionary<EmergencyLightState, string>
         {
             { EmergencyLightState.Full, "[color=darkgreen]Full[/color]"},
             { EmergencyLightState.Empty, "[color=darkred]Empty[/color]"},

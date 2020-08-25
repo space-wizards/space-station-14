@@ -17,12 +17,10 @@ namespace Content.Server.GameObjects.Components.Mining
     [RegisterComponent]
     public class AsteroidRockComponent : Component, IInteractUsing
     {
+        [Dependency] private readonly IRobustRandom _random = default!;
+
         public override string Name => "AsteroidRock";
         private static readonly string[] SpriteStates = {"0", "1", "2", "3", "4"};
-
-#pragma warning disable 649
-        [Dependency] private readonly IRobustRandom _random;
-#pragma warning restore 649
 
         public override void Initialize()
         {

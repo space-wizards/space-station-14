@@ -33,14 +33,12 @@ namespace Content.Server.Chat
         /// </summary>
         private const string MaxLengthExceededMessage = "Your message exceeded {0} character limit";
 
-#pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-        [Dependency] private readonly IServerNetManager _netManager;
-        [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-        [Dependency] private readonly IMoMMILink _mommiLink;
-        [Dependency] private readonly IConGroupController _conGroupController;
-#pragma warning restore 649
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+        [Dependency] private readonly IServerNetManager _netManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly ILocalizationManager _localizationManager = default!;
+        [Dependency] private readonly IMoMMILink _mommiLink = default!;
+        [Dependency] private readonly IConGroupController _conGroupController = default!;
 
         public void Initialize()
         {

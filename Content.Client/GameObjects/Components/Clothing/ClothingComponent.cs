@@ -36,11 +36,6 @@ namespace Content.Client.GameObjects.Components.Clothing
             serializer.DataField(this, p => p.ClothingEquippedPrefix, "ClothingPrefix", null);
         }
 
-        public override void Initialize()
-        {
-            base.Initialize();
-        }
-
         public (RSI rsi, RSI.StateId stateId)? GetEquippedStateInfo(EquipmentSlotDefines.SlotFlags slot)
         {
             if (RsiPath == null)

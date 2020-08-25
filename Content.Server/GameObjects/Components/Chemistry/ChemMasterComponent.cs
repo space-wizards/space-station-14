@@ -9,6 +9,7 @@ using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry.ChemMaster;
 using Content.Shared.GameObjects.EntitySystems;
@@ -43,7 +44,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
     public class ChemMasterComponent : SharedChemMasterComponent, IActivate, IInteractUsing, ISolutionChange
     {
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
-        [Dependency] private readonly ILocalizationManager _localizationManager = default!;
 
         [ViewVariables] private ContainerSlot _beakerContainer = default!;
         [ViewVariables] private string _packPrototypeId = "";
@@ -56,12 +56,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         private readonly SolutionComponent BufferSolution = new SolutionComponent();
 
-        [ViewVariables]
-        private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
-            ui.TryGetBoundUserInterface(ChemMasterUiKey.Key, out var boundUi)
-                ? boundUi
-                : null;
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ChemMasterUiKey.Key);
 
         /// <summary>
         /// Shows the serializer how to save/load this components yaml prototype.
@@ -373,7 +368,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if (!args.User.TryGetComponent(out IHandsComponent? hands))
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                    _localizationManager.GetString("You have no hands."));
+                    Loc.GetString("You have no hands."));
                 return;
             }
 
@@ -396,7 +391,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if (!args.User.TryGetComponent(out IHandsComponent? hands))
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                    _localizationManager.GetString("You have no hands."));
+                    Loc.GetString("You have no hands."));
                 return true;
             }
 
@@ -413,13 +408,13 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 if (HasBeaker)
                 {
                     _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                        _localizationManager.GetString("This ChemMaster already has a container in it."));
+                        Loc.GetString("This ChemMaster already has a container in it."));
                 }
                 else if ((solution.Capabilities & SolutionCaps.FitsInDispenser) == 0) //Close enough to a chem master...
                 {
                     //If it can't fit in the chem master, don't put it in. For example, buckets and mop buckets can't fit.
                     _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                        _localizationManager.GetString("That can't fit in the ChemMaster."));
+                        Loc.GetString("That can't fit in the ChemMaster."));
                 }
                 else
                 {
@@ -430,7 +425,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             else
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                    _localizationManager.GetString("You can't put this in the ChemMaster."));
+                    Loc.GetString("You can't put this in the ChemMaster."));
             }
 
             return true;

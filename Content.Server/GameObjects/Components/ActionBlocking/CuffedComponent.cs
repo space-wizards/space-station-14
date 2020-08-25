@@ -29,9 +29,8 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
     [RegisterComponent]
     public class CuffedComponent : SharedCuffedComponent
     {
-#pragma warning disable 649
-        [Dependency] private readonly ISharedNotifyManager _notifyManager;
-#pragma warning restore 649
+        [Dependency]
+        private readonly ISharedNotifyManager _notifyManager;
 
         /// <summary>
         /// How many of this entity's hands are currently cuffed.
@@ -51,8 +50,6 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
         private bool _dirtyThisFrame = false;
         private float _interactRange;
-        private DoAfterSystem _doAfterSystem;
-        private AudioSystem _audioSystem;
         private IHandsComponent _hands;
 
         public event Action OnCuffedStateChanged;
@@ -62,8 +59,6 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             base.Initialize();
 
             _container = ContainerManagerComponent.Ensure<Container>(Name, Owner);
-            _audioSystem = EntitySystem.Get<AudioSystem>();
-            _doAfterSystem = EntitySystem.Get<DoAfterSystem>();
             _interactRange = SharedInteractionSystem.InteractionRange / 2;
 
             if (!Owner.TryGetComponent(out _hands))
@@ -143,8 +138,9 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         private void UpdateHandCount() 
         {
             _dirtyThisFrame = false;
+            var handCount = _hands.Hands.Count();
 
-            while (CuffedHandCount > _hands.Hands.Count() && CuffedHandCount > 0)
+            while (CuffedHandCount > handCount && CuffedHandCount > 0)
             {
                 _dirtyThisFrame = true;
 
@@ -155,7 +151,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
             if (_dirtyThisFrame)
             {
-                CanStillInteract = _hands.Hands.Count() > CuffedHandCount;
+                CanStillInteract = handCount > CuffedHandCount;
                 OnCuffedStateChanged.Invoke();
                 Dirty();
             }
@@ -228,7 +224,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
             if (!isOwner && !ActionBlockerSystem.CanInteract(user))
             {
-                _notifyManager.PopupMessage(user, user, "You can't do that!");
+                user.PopupMessage(user, "You can't do that!");
                 return;
             }
 
@@ -239,7 +235,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
                     _interactRange,
                     ignoredEnt: Owner))
             {
-                _notifyManager.PopupMessage(user, user, "You are too far away to remove the cuffs.");
+                user.PopupMessage(user, "You are too far away to remove the cuffs.");
                 return;
             }
 
@@ -253,8 +249,10 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
                 return;
             }
 
-            _notifyManager.PopupMessage(user, user, "You start removing the cuffs.");
-            _audioSystem.PlayFromEntity(isOwner ? cuff.StartBreakoutSound : cuff.StartUncuffSound, Owner);
+            user.PopupMessage(user, "You start removing the cuffs.");
+
+            var audio = EntitySystem.Get<AudioSystem>();
+            audio.PlayFromEntity(isOwner ? cuff.StartBreakoutSound : cuff.StartUncuffSound, Owner);
 
             var uncuffTime = isOwner ? cuff.BreakoutTime : cuff.UncuffTime;
             var doAfterEventArgs = new DoAfterEventArgs(user, uncuffTime)
@@ -265,11 +263,12 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
                 NeedHand = true
             };
 
-            var result = await _doAfterSystem.DoAfter(doAfterEventArgs);
+            var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
+            var result = await doAfterSystem.DoAfter(doAfterEventArgs);
 
             if (result != DoAfterStatus.Cancelled)
             {
-                _audioSystem.PlayFromEntity(cuff.EndUncuffSound, Owner);
+                audio.PlayFromEntity(cuff.EndUncuffSound, Owner);
 
                 _container.ForceRemove(cuffsToRemove);
                 cuffsToRemove.Transform.AttachToGridOrMap();
@@ -299,19 +298,19 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
                     if (!isOwner)
                     {
-                        _notifyManager.PopupMessage(user, Owner, Loc.GetString($"{user.Name} uncuffs your hands."));
+                        _notifyManager.PopupMessage(user, Owner, Loc.GetString($"{0:theName} uncuffs your hands.", user));
                     }
                 }
                 else
                 {
                     if (!isOwner)
                     {
-                        _notifyManager.PopupMessage(user, user, Loc.GetString($"You successfully remove the cuffs. {CuffedHandCount} of {user.Name}'s hands remain cuffed."));
-                        _notifyManager.PopupMessage(user, Owner, Loc.GetString($"{user.Name} removes your cuffs. {CuffedHandCount} of your hands remain cuffed."));
+                        _notifyManager.PopupMessage(user, user, Loc.GetString($"You successfully remove the cuffs. {0} of {1:theName}'s hands remain cuffed.", CuffedHandCount, user));
+                        _notifyManager.PopupMessage(user, Owner, Loc.GetString($"{0:theName} removes your cuffs. {1} of your hands remain cuffed.", user, CuffedHandCount));
                     }
                     else
                     {
-                        _notifyManager.PopupMessage(user, user, Loc.GetString($"You successfully remove the cuffs. {CuffedHandCount} of your hands remain cuffed."));
+                        _notifyManager.PopupMessage(user, user, Loc.GetString($"You successfully remove the cuffs. {0} of your hands remain cuffed.", CuffedHandCount));
                     }
                 }
             }

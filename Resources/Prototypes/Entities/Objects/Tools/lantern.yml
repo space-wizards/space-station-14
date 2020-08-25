@@ -23,5 +23,7 @@
       radius: 3
       energy: 2.5
       color: "#FFC458"
-    - type: RadiatingLight
     - type: LoopingSound
+    - type: Appearance
+      visuals:
+        - type: LanternVisualizer

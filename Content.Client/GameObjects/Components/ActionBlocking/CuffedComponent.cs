@@ -22,9 +22,7 @@ namespace Content.Client.GameObjects.Components.ActionBlocking
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            var cuffState = curState as CuffedComponentState;
-
-            if (cuffState == null)
+            if (!(curState is CuffedComponentState cuffState))
             {
                 return;
             }

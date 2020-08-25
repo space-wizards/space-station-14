@@ -6,6 +6,7 @@ using Content.Server.GameObjects.Components.ActionBlocking;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Interfaces;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.GUI;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -29,12 +30,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public const float StripDelay = 2f;
 
-        [ViewVariables]
-        private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
-            ui.TryGetBoundUserInterface(StrippingUiKey.Key, out var boundUi)
-                ? boundUi
-                : null;
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(StrippingUiKey.Key);
 
         public override void Initialize()
         {
@@ -44,7 +40,7 @@ namespace Content.Server.GameObjects.Components.GUI
             {
                 UserInterface.OnReceiveMessage += HandleUserInterfaceMessage;
             }
-            
+
             Owner.EnsureComponent<InventoryComponent>();
             Owner.EnsureComponent<HandsComponent>();
             Owner.EnsureComponent<CuffedComponent>();
@@ -53,10 +49,14 @@ namespace Content.Server.GameObjects.Components.GUI
             {
                 cuffed.OnCuffedStateChanged += UpdateSubscribed;
             }
-
             if (Owner.TryGetComponent(out InventoryComponent? inventory))
             {
                 inventory.OnItemChanged += UpdateSubscribed;
+            }
+
+            if (Owner.TryGetComponent(out HandsComponent? hands))
+            {
+                hands.OnItemChanged += UpdateSubscribed;
             }
 
             // Initial update.

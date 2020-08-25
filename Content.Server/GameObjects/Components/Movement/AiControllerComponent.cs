@@ -1,12 +1,16 @@
 ﻿#nullable enable
 using Content.Server.GameObjects.EntitySystems.AI;
+using Content.Server.Interfaces.GameTicking;
 using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.Roles;
 using Robust.Server.AI;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -32,6 +36,9 @@ namespace Content.Server.GameObjects.Components.Movement
         }
 
         public AiLogicProcessor? Processor { get; set; }
+        
+        [ViewVariables(VVAccess.ReadWrite)]
+        public string? StartingGearPrototype { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float VisionRadius
@@ -51,12 +58,29 @@ namespace Content.Server.GameObjects.Components.Movement
             EntitySystem.Get<AiSystem>().ProcessorInitialize(this);
         }
 
+        protected override void Startup()
+        {
+            base.Startup();
+            
+            if (StartingGearPrototype != null)
+            {
+                var startingGear = IoCManager.Resolve<IPrototypeManager>().Index<StartingGearPrototype>(StartingGearPrototype);
+                IoCManager.Resolve<IGameTicker>().EquipStartingGear(Owner, startingGear);
+            }
+            
+        }
+
         /// <inheritdoc />
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
             serializer.DataField(ref _logicName, "logic", null);
+            serializer.DataReadWriteFunction(
+                "startingGear", 
+                null,
+                startingGear => StartingGearPrototype = startingGear,
+                () => StartingGearPrototype);
             serializer.DataField(ref _visionRadius, "vision", 8.0f);
         }
 

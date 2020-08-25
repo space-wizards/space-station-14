@@ -21,15 +21,13 @@ namespace Content.Client.UserInterface
 {
     public class ItemSlotManager : IItemSlotManager
     {
-#pragma warning disable 0649
-        [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private readonly IGameTiming _gameTiming;
-        [Dependency] private readonly IInputManager _inputManager;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-        [Dependency] private readonly IEntityManager _entityManager;
-        [Dependency] private readonly IEyeManager _eyeManager;
-        [Dependency] private readonly IMapManager _mapManager;
-#pragma warning restore 0649
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IEyeManager _eyeManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         public bool SetItemSlot(ItemSlotButton button, IEntity entity)
         {
