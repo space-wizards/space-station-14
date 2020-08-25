@@ -2,12 +2,9 @@
 using System;
 using System.Collections.Generic;
 using Content.Client.Atmos;
-using Content.Client.GameObjects.Components.Atmos;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
-using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Graphics;
 using Robust.Client.Interfaces.Graphics.Overlays;
 using Robust.Client.Interfaces.ResourceManagement;
@@ -47,17 +44,19 @@ namespace Content.Client.GameObjects.EntitySystems
         private Dictionary<GridId, Dictionary<MapIndices, GasOverlayChunk>> _tileData =
             new Dictionary<GridId, Dictionary<MapIndices, GasOverlayChunk>>();
 
+        private AtmosphereSystem _atmosphereSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
             SubscribeNetworkEvent<GasOverlayMessage>(HandleGasOverlayMessage);
             _mapManager.OnGridRemoved += OnGridRemoved;
 
-            var atmosSystem = Get<AtmosphereSystem>();
+            _atmosphereSystem = Get<AtmosphereSystem>();
 
             for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
-                var overlay = atmosSystem.GetOverlay(i);
+                var overlay = _atmosphereSystem.GetOverlay(i);
                 switch (overlay)
                 {
                     case SpriteSpecifier.Rsi animated:

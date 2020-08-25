@@ -22,12 +22,17 @@ namespace Content.Server.Atmos
     [Serializable]
     public class GasMixture : IExposeData, IEquatable<GasMixture>, ICloneable
     {
+        private readonly AtmosphereSystem _atmosphereSystem;
+
         [ViewVariables]
         private float[] _moles = new float[Atmospherics.TotalNumberOfGases];
 
         [ViewVariables]
         private float[] _molesArchived = new float[Atmospherics.TotalNumberOfGases];
+
+        [ViewVariables]
         private float _temperature = Atmospherics.TCMB;
+
         public IReadOnlyList<float> Gases => _moles;
 
         [ViewVariables]
@@ -50,11 +55,10 @@ namespace Content.Server.Atmos
             get
             {
                 var capacity = 0f;
-                var atmosSystem = EntitySystem.Get<AtmosphereSystem>();
 
                 for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
                 {
-                    capacity += atmosSystem.GetGas(i).SpecificHeat * _moles[i];
+                    capacity += _atmosphereSystem.GetGas(i).SpecificHeat * _moles[i];
                 }
 
                 return MathF.Max(capacity, Atmospherics.MinimumHeatCapacity);
@@ -68,11 +72,10 @@ namespace Content.Server.Atmos
             get
             {
                 var capacity = 0f;
-                var atmosSystem = EntitySystem.Get<AtmosphereSystem>();
 
                 for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
                 {
-                    capacity += atmosSystem.GetGas(i).SpecificHeat * _molesArchived[i];
+                    capacity += _atmosphereSystem.GetGas(i).SpecificHeat * _molesArchived[i];
                 }
 
                 return MathF.Max(capacity, Atmospherics.MinimumHeatCapacity);
@@ -128,6 +131,7 @@ namespace Content.Server.Atmos
 
         public GasMixture()
         {
+            _atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
         }
 
         public GasMixture(float volume)
@@ -135,6 +139,7 @@ namespace Content.Server.Atmos
             if (volume < 0)
                 volume = 0;
             Volume = volume;
+            _atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -269,7 +274,6 @@ namespace Content.Server.Atmos
             var heatCapacitySharerToThis = 0f;
             var movedMoles = 0f;
             var absMovedMoles = 0f;
-            var atmosSystem = EntitySystem.Get<AtmosphereSystem>();
 
             for(var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
@@ -279,7 +283,7 @@ namespace Content.Server.Atmos
                 if (!(MathF.Abs(delta) >= Atmospherics.GasMinMoles)) continue;
                 if (absTemperatureDelta > Atmospherics.MinimumTemperatureDeltaToConsider)
                 {
-                    var gasHeatCapacity = delta * atmosSystem.GetGas(i).SpecificHeat;
+                    var gasHeatCapacity = delta * _atmosphereSystem.GetGas(i).SpecificHeat;
                     if (delta > 0)
                     {
                         heatCapacityToSharer += gasHeatCapacity;
