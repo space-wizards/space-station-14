@@ -35,7 +35,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         private static readonly TimeSpan _thunkDelay = TimeSpan.FromSeconds(2);
         private TimeSpan _lastThunk;
 
-        private bool _turnedOn = true;
+        [ViewVariables] private bool _on;
 
         private LightBulbType BulbType = LightBulbType.Tube;
         [ViewVariables] private ContainerSlot _lightBulbContainer;
@@ -79,13 +79,13 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             switch (state)
             {
                 case SignalState.On:
-                    _turnedOn = true;
+                    _on = true;
                     break;
                 case SignalState.Off:
-                    _turnedOn = false;
+                    _on = false;
                     break;
                 case SignalState.Toggle:
-                    _turnedOn = !_turnedOn;
+                    _on = !_on;
                     break;
             }
             UpdateLight();
@@ -170,6 +170,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         public override void ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(ref BulbType, "bulb", LightBulbType.Tube);
+            serializer.DataField(ref _on, "on", true);
         }
 
         /// <summary>
@@ -201,7 +202,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             switch (LightBulb.State)
             {
                 case LightBulbState.Normal:
-                    if (powerReceiver.Powered && _turnedOn)
+                    if (powerReceiver.Powered && _on)
                     {
                         powerReceiver.Load = LightBulb.PowerUse;
                         sprite.LayerSetState(0, "on");

@@ -96,6 +96,7 @@
   - tilewalls
   - events
   - destroymechanism
+  - signallink
   CanViewVar: true
   CanAdminPlace: true
 
@@ -186,6 +187,7 @@
   - tilewalls
   - events
   - destroymechanism
+  - signallink
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true

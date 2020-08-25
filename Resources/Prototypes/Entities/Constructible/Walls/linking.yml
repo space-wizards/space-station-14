@@ -9,7 +9,7 @@
   - type: Collidable
   - type: Sprite
     sprite: Constructible/Linking/switch.rsi
-    state: off
+    state: on
   - type: Icon
     sprite: Constructible/Linking/switch.rsi
     state: on
