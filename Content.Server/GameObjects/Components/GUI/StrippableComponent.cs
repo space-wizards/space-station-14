@@ -9,6 +9,7 @@ using Content.Server.Interfaces;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.GUI;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
@@ -78,10 +79,18 @@ namespace Content.Server.GameObjects.Components.GUI
             UserInterface.SetState(new StrippingBoundUserInterfaceState(inventory, hands, cuffs));
         }
 
+        public bool CanBeStripped(IEntity by)
+        {
+            return by != Owner
+                   && by.HasComponent<HandsComponent>()
+                   && ActionBlockerSystem.CanInteract(by);
+        }
+
         public bool CanDragDrop(DragDropEventArgs eventArgs)
         {
-            return eventArgs.User.HasComponent<HandsComponent>()
-                   && eventArgs.Target != eventArgs.Dropped && eventArgs.Target == eventArgs.User;
+            return eventArgs.Target != eventArgs.Dropped
+                   && eventArgs.Target == eventArgs.User
+                   && CanBeStripped(eventArgs.User);
         }
 
         public bool DragDrop(DragDropEventArgs eventArgs)
@@ -430,6 +439,32 @@ namespace Content.Server.GameObjects.Components.GUI
                         }
                     }
                     break;
+            }
+        }
+
+        [Verb]
+        private sealed class StripVerb : Verb<StrippableComponent>
+        {
+            protected override void GetData(IEntity user, StrippableComponent component, VerbData data)
+            {
+                if (!component.CanBeStripped(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
+                data.Visibility = VerbVisibility.Visible;
+                data.Text = Loc.GetString("Strip");
+            }
+
+            protected override void Activate(IEntity user, StrippableComponent component)
+            {
+                if (!user.TryGetComponent(out IActorComponent? actor))
+                {
+                    return;
+                }
+
+                component.OpenUserInterface(actor.playerSession);
             }
         }
     }
