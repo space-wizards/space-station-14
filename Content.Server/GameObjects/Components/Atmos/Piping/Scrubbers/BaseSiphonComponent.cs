@@ -11,7 +11,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
     /// <summary>
     ///     Transfers gas from the tile it is on to a <see cref="PipeNode"/>.
     /// </summary>
-    public abstract class BaseSiphonComponent : PipeNetDevice
+    public abstract class BaseSiphonComponent : PipeNetDeviceComponent
     {
         [ViewVariables]
         private PipeNode _scrubberOutlet;
@@ -22,11 +22,13 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
         {
             base.Initialize();
             _atmosSystem = EntitySystem.Get<AtmosphereSystem>();
-            _scrubberOutlet = Owner.GetComponent<NodeContainerComponent>().Nodes.OfType<PipeNode>().First();
+            _scrubberOutlet = Owner.GetComponent<NodeContainerComponent>().Nodes.OfType<PipeNode>().FirstOrDefault();
         }
 
         public override void Update()
         {
+            if (_scrubberOutlet == null)
+                return;
             var tileAtmos = AtmosHelpers.GetTileAtmosphere(Owner.Transform.GridPosition);
             if (tileAtmos == null)
                 return;

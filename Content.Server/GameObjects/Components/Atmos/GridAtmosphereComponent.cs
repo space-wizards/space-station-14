@@ -84,10 +84,10 @@ namespace Content.Server.GameObjects.Components.Atmos
         private int _pipeNetIndex = 0;
 
         [ViewVariables]
-        private readonly List<PipeNetDevice> _pipeNetDevices = new List<PipeNetDevice>();
+        private readonly List<PipeNetDeviceComponent> _pipeNetDevices = new List<PipeNetDeviceComponent>();
 
         /// <summary>
-        ///     Index of most recently updated <see cref="PipeNetDevice"/>.
+        ///     Index of most recently updated <see cref="PipeNetDeviceComponent"/>.
         /// </summary>
         private int _deviceIndex = 0;
 
@@ -327,12 +327,12 @@ namespace Content.Server.GameObjects.Components.Atmos
             _deviceIndex = 0;
         }
 
-        public void AddPipeNetDevice(PipeNetDevice pipeNetDevice)
+        public void AddPipeNetDevice(PipeNetDeviceComponent pipeNetDevice)
         {
             _pipeNetDevices.Add(pipeNetDevice);
         }
 
-        public void RemovePipeNetDevice(PipeNetDevice pipeNetDevice)
+        public void RemovePipeNetDevice(PipeNetDeviceComponent pipeNetDevice)
         {
             _pipeNetDevices.Remove(pipeNetDevice);
             _deviceIndex = 0;

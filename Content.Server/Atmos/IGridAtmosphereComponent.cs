@@ -153,8 +153,8 @@ namespace Content.Server.Atmos
 
         void RemovePipeNet(IPipeNet pipeNet);
 
-        void AddPipeNetDevice(PipeNetDevice pipeNetDevice);
+        void AddPipeNetDevice(PipeNetDeviceComponent pipeNetDevice);
 
-        void RemovePipeNetDevice(PipeNetDevice pipeNetDevice);
+        void RemovePipeNetDevice(PipeNetDeviceComponent pipeNetDevice);
     }
 }
