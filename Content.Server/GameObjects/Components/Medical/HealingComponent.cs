@@ -42,15 +42,18 @@ namespace Content.Server.GameObjects.Components.Medical
                 return;
             }
 
-            var interactionSystem = EntitySystem.Get<SharedInteractionSystem>();
-            var from = eventArgs.User.Transform.MapPosition;
-            var to = eventArgs.Target.Transform.MapPosition;
-            bool Ignored(IEntity entity) => entity == eventArgs.User || entity == eventArgs.Target;
-            var inRange = interactionSystem.InRangeUnobstructed(from, to, predicate: Ignored);
-
-            if (!inRange)
+            if (eventArgs.User != eventArgs.Target)
             {
-                return;
+                var interactionSystem = EntitySystem.Get<SharedInteractionSystem>();
+                var from = eventArgs.User.Transform.MapPosition;
+                var to = eventArgs.Target.Transform.MapPosition;
+                bool Ignored(IEntity entity) => entity == eventArgs.User || entity == eventArgs.Target;
+                var inRange = interactionSystem.InRangeUnobstructed(from, to, predicate: Ignored);
+
+                if (!inRange)
+                {
+                    return;
+                }
             }
 
             if (Owner.TryGetComponent(out StackComponent stack) &&
