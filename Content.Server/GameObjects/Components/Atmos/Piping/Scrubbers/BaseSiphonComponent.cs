@@ -3,6 +3,7 @@ using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Log;
 using Robust.Shared.ViewVariables;
 using System.Linq;
 
@@ -22,13 +23,23 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
         {
             base.Initialize();
             _atmosSystem = EntitySystem.Get<AtmosphereSystem>();
-            _scrubberOutlet = Owner.GetComponent<NodeContainerComponent>().Nodes.OfType<PipeNode>().FirstOrDefault();
+            if (!Owner.TryGetComponent<NodeContainerComponent>(out var container))
+            {
+                JoinedGridAtmos?.RemovePipeNetDevice(this);
+                Logger.Error($"{typeof(BaseSiphonComponent)} on entity {Owner.Uid} did not have a {nameof(NodeContainerComponent)}.");
+                return;
+            }
+            _scrubberOutlet = container.Nodes.OfType<PipeNode>().FirstOrDefault();
+            if (_scrubberOutlet == null)
+            {
+                JoinedGridAtmos?.RemovePipeNetDevice(this);
+                Logger.Error($"{typeof(BaseSiphonComponent)} on entity {Owner.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
+                return;
+            }
         }
 
         public override void Update()
         {
-            if (_scrubberOutlet == null)
-                return;
             var tileAtmos = AtmosHelpers.GetTileAtmosphere(Owner.Transform.GridPosition);
             if (tileAtmos == null)
                 return;

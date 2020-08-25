@@ -1,6 +1,7 @@
 ﻿using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
+using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System.Linq;
@@ -40,17 +41,25 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
         public override void Initialize()
         {
             base.Initialize();
-            var pipeNodes = Owner.GetComponent<NodeContainerComponent>()
-                .Nodes
-                .OfType<PipeNode>();
+            if (!Owner.TryGetComponent<NodeContainerComponent>(out var container))
+            {
+                JoinedGridAtmos?.RemovePipeNetDevice(this);
+                Logger.Error($"{typeof(BasePumpComponent)} on entity {Owner.Uid} did not have a {nameof(NodeContainerComponent)}.");
+                return;
+            }
+            var pipeNodes = container.Nodes.OfType<PipeNode>();
             _inletPipe = pipeNodes.Where(pipe => pipe.PipeDirection == _inletDirection).FirstOrDefault();
             _outletPipe = pipeNodes.Where(pipe => pipe.PipeDirection == _outletDirection).FirstOrDefault();
+            if (_inletPipe == null | _outletPipe == null)
+            {
+                JoinedGridAtmos?.RemovePipeNetDevice(this);
+                Logger.Error($"{typeof(BasePumpComponent)} on entity {Owner.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
+                return;
+            }
         }
 
         public override void Update()
         {
-            if (_inletPipe == null | _outletPipe == null)
-                return;
             PumpGas(_inletPipe.Air, _outletPipe.Air);
         }
 

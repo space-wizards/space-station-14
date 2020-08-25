@@ -14,7 +14,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
     {
         public abstract void Update();
 
-        private IGridAtmosphereComponent _joinedGridAtmos;
+        protected IGridAtmosphereComponent JoinedGridAtmos { get; private set; }
 
         public override void Initialize()
         {
@@ -37,14 +37,14 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
                 Logger.Error($"{nameof(PipeNetDeviceComponent)} on entity {Owner.Uid} could not find an {nameof(IGridAtmosphereComponent)}.");
                 return;
             }
-            _joinedGridAtmos = gridAtmos;
-            _joinedGridAtmos?.AddPipeNetDevice(this);
+            JoinedGridAtmos = gridAtmos;
+            JoinedGridAtmos.AddPipeNetDevice(this);
         }
 
         private void LeaveGridAtmos()
         {
-            _joinedGridAtmos?.RemovePipeNetDevice(this);
-            _joinedGridAtmos = null;
+            JoinedGridAtmos?.RemovePipeNetDevice(this);
+            JoinedGridAtmos = null;
         }
     }
 }
