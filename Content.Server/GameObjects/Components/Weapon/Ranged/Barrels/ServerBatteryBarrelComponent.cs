@@ -98,8 +98,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
             return new BatteryBarrelComponentState(
                 FireRateSelector,
-                count,
-                SoundGunshot);
+                count);
         }
 
         public override void Initialize()
