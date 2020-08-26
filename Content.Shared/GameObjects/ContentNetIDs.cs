@@ -68,7 +68,7 @@
         public const uint BOLTACTION_BARREL = 1062;
         public const uint PUMP_BARREL = 1063;
         public const uint REVOLVER_BARREL = 1064;
-	public const uint CUFFED = 1065;
+        public const uint CUFFED = 1065;
         public const uint HANDCUFFS = 1066;
 
         // Net IDs for integration tests.
