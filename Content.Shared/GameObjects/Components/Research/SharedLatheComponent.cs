@@ -11,13 +11,10 @@ namespace Content.Shared.GameObjects.Components.Research
 {
     public class SharedLatheComponent : Component
     {
+        [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
+
         public override string Name => "Lathe";
         public override uint? NetID => ContentNetIDs.LATHE;
-
-#pragma warning disable CS0649
-        [Dependency]
-        protected IPrototypeManager _prototypeManager;
-#pragma warning restore
 
         public bool CanProduce(LatheRecipePrototype recipe, int quantity = 1)
         {
@@ -36,7 +33,7 @@ namespace Content.Shared.GameObjects.Components.Research
 
         public bool CanProduce(string ID, int quantity = 1)
         {
-            return _prototypeManager.TryIndex(ID, out LatheRecipePrototype recipe) && CanProduce(recipe, quantity);
+            return PrototypeManager.TryIndex(ID, out LatheRecipePrototype recipe) && CanProduce(recipe, quantity);
         }
 
         /// <summary>

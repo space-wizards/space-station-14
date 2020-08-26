@@ -8,12 +8,10 @@ using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using static Robust.Client.UserInterface.Control;
 
 namespace Content.Client.UserInterface
 {
@@ -76,11 +74,9 @@ namespace Content.Client.UserInterface
         private Button _combatModeButton;
         private VBoxContainer _combatPanelContainer;
 
-#pragma warning disable 649
-        [Dependency] private readonly IResourceCache _resourceCache;
-        [Dependency] private readonly ILocalizationManager _loc;
-        [Dependency] private readonly IInputManager _inputManager;
-#pragma warning restore 649
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private readonly ILocalizationManager _loc = default!;
+        [Dependency] private readonly IInputManager _inputManager = default!;
 
         public Control HandsContainer { get; private set; }
         public Control InventoryQuickButtonContainer { get; private set; }

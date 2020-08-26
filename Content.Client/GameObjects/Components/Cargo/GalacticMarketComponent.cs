@@ -1,18 +1,16 @@
-﻿using Content.Shared.GameObjects.Components.Cargo;
+﻿using System;
+using Content.Shared.GameObjects.Components.Cargo;
 using Content.Shared.Prototypes.Cargo;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
-using System;
 
 namespace Content.Client.GameObjects.Components.Cargo
 {
     [RegisterComponent]
     public class GalacticMarketComponent : SharedGalacticMarketComponent
     {
-#pragma warning disable CS0649
-        [Dependency] private IPrototypeManager _prototypeManager;
-#pragma warning restore
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         /// <summary>
         ///     Event called when the database is updated.

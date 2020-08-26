@@ -18,11 +18,11 @@
   - type: Icon
     texture: Constructible/Power/generator.png
   - type: NodeContainer
-    nodeTypes: { HVPower : ["AdjacentNode"] }
+    nodes:
+    - !type:AdjacentNode
+      nodeGroupID: HVPower
   - type: PowerSupplier
     supplyRate: 3000
-  - type: Physics
-    anchored: true
   - type: Anchorable
 
 - type: entity
@@ -45,14 +45,13 @@
   - type: Icon
     texture: Constructible/Power/wiredmachine.png
   - type: NodeContainer
-    nodeTypes: { HVPower : ["AdjacentNode"] }
+    nodes:
+    - !type:AdjacentNode
+      nodeGroupID: HVPower
   - type: PowerConsumer
     drawRate: 50
-  - type: Damageable
   - type: Breakable
-    thresholdvalue: 100
-  - type: Physics
-    anchored: true
+    deadThreshold: 100
   - type: Anchorable
 
 - type: entity
@@ -76,11 +75,11 @@
     texture: Constructible/Power/provider.png
   - type: Battery
   - type: NodeContainer
-    nodeTypes: { HVPower : ["AdjacentNode"] }
+    nodes:
+    - !type:AdjacentNode
+      nodeGroupID: HVPower
   - type: PowerConsumer
   - type: BatteryStorage
-  - type: Physics
-    anchored: true
   - type: Anchorable
 
 - type: entity
@@ -104,11 +103,11 @@
     texture: Constructible/Power/provider.png
   - type: Battery
   - type: NodeContainer
-    nodeTypes: { HVPower : ["AdjacentNode"] }
+    nodes:
+    - !type:AdjacentNode
+      nodeGroupID: HVPower
   - type: PowerSupplier
   - type: BatteryDischarger
-  - type: Physics
-    anchored: true
   - type: Anchorable
 
 - type: entity
@@ -144,15 +143,15 @@
     maxCharge: 1000
     startingCharge: 1000
   - type: NodeContainer
-    nodeTypes: { HVPower : ["AdjacentNode"] }
+    nodes:
+    - !type:AdjacentNode
+      nodeGroupID: HVPower
   - type: PowerConsumer
   - type: BatteryStorage
     activeDrawRate: 1500
   - type: PowerSupplier
   - type: BatteryDischarger
     activeSupplyRate: 1000
-  - type: Physics
-    anchored: true
   - type: Anchorable
 
 - type: entity
@@ -179,7 +178,11 @@
     maxCharge: 1000
     startingCharge: 1000
   - type: NodeContainer
-    nodeTypes: { HVPower : ["AdjacentNode"], MVPower : ["AdjacentNode"] }
+    nodes:
+    - !type:AdjacentNode
+      nodeGroupID: HVPower
+    - !type:AdjacentNode
+      nodeGroupID: MVPower
   - type: PowerConsumer
   - type: BatteryStorage
     activeDrawRate: 1500
@@ -187,8 +190,6 @@
     voltage: Medium
   - type: BatteryDischarger
     activeSupplyRate: 1000
-  - type: Physics
-    anchored: true
   - type: Anchorable
 
 - type: entity
@@ -220,7 +221,11 @@
     maxCharge: 10000
     startingCharge: 10000
   - type: NodeContainer
-    nodeTypes: { MVPower : ["AdjacentNode"], Apc : ["AdjacentNode"] }
+    nodes:
+    - !type:AdjacentNode
+      nodeGroupID: MVPower
+    - !type:AdjacentNode
+      nodeGroupID: Apc
   - type: PowerConsumer
     voltage: Medium
   - type: BatteryStorage
@@ -254,8 +259,6 @@
   - type: Icon
     texture: Constructible/Power/wirelessmachine.png
   - type: PowerReceiver
-  - type: Physics
-    anchored: true
   - type: Anchorable
 
 - type: entity
@@ -278,17 +281,27 @@
     sprite: Constructible/Power/solar_panel.rsi
     state: normal
   - type: NodeContainer
-    nodeTypes: { HVPower : ["AdjacentNode"] }
+    nodes:
+    - !type:AdjacentNode
+      nodeGroupID: HVPower
   - type: PowerSupplier
   - type: SolarPanel
     supply: 1500
   - type: SnapGrid
     offset: Center
-  - type: Damageable
   - type: Breakable
-    thresholdvalue: 100
+    deadThreshold: 100
 
 #Depriciated, to be removed from maps
+
+- type: entity
+  id: Generator
+  name: Depriciated Generator
+  parent: DebugGenerator
+  components:
+  - type: PowerSupplier
+    voltage: High
+    supplyRate: 100000
 
 - type: entity
   id: APC
@@ -296,7 +309,11 @@
   parent: DebugApc
   components:
   - type: NodeContainer
-    nodeTypes: { HVPower : ["AdjacentNode"], Apc : ["AdjacentNode"] }
+    nodes:
+    - !type:AdjacentNode
+      nodeGroupID: HVPower
+    - !type:AdjacentNode
+      nodeGroupID: Apc
   - type: PowerConsumer
     voltage: High
   - type: BatteryStorage

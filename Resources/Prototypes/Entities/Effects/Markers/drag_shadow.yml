@@ -1,6 +1,7 @@
 - type: entity
   name: drag shadow
   id: dragshadow
+  abstract: true
   components:
     - type: Sprite
       layers:

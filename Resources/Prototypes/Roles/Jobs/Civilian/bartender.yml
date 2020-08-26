@@ -8,6 +8,7 @@
   icon: "Bartender"
   access:
   - Service
+  - Maintenance
 
 - type: startingGear
   id: BartenderGear

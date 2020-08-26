@@ -47,6 +47,7 @@
   parent: UniformColorBase
   id: UniformColorBlack
   name: black jumpsuit
+  description: A generic black jumpsuit with no rank markings.
   components:
   - type: Sprite
     state: black
@@ -59,6 +60,7 @@
   parent: UniformColorBlack
   id: UniformColorBlackSkirt
   name: black jumpskirt
+  description: A generic black jumpskirt with no rank markings.
   components:
   - type: Sprite
     state: black_skirt
@@ -74,6 +76,7 @@
   parent: UniformColorBase
   id: UniformColorBlue
   name: blue jumpsuit
+  description: A generic blue jumpsuit with no rank markings.
   components:
   - type: Sprite
     state: blue
@@ -86,6 +89,7 @@
   parent: UniformColorBlue
   id: UniformColorBlueSkirt
   name: blue jumpskirt
+  description: A generic blue jumpskirt with no rank markings.
   components:
   - type: Sprite
     state: blue_skirt
@@ -101,6 +105,7 @@
   parent: UniformColorBase
   id: UniformColorGreen
   name: green jumpsuit
+  description: A generic green jumpsuit with no rank markings.
   components:
   - type: Sprite
     state: green
@@ -113,6 +118,7 @@
   parent: UniformColorGreen
   id: UniformColorGreenSkirt
   name: green jumpskirt
+  description: A generic green jumpskirt with no rank markings.
   components:
   - type: Sprite
     state: green_skirt
@@ -141,6 +147,7 @@
   parent: UniformColorOrange
   id: UniformColorOrangeSkirt
   name: orange jumpskirt
+  description: "Don't wear this near paranoid security officers."
   components:
   - type: Sprite
     state: orange_skirt
@@ -170,6 +177,7 @@
   parent: UniformColorPink
   id: UniformColorPinkSkirt
   name: pink jumpskirt
+  description: "Just looking at this makes you feel fabulous."
   components:
   - type: Sprite
     state: pink_skirt
@@ -197,6 +205,7 @@
   parent: UniformColorBase
   id: UniformColorRed
   name: red jumpsuit
+  description: A generic red jumpsuit with no rank markings.
   components:
   - type: Sprite
     state: red
@@ -209,6 +218,7 @@
   parent: UniformColorRed
   id: UniformColorRedSkirt
   name: red jumpskirt
+  description: A generic red jumpskirt with no rank markings.
   components:
   - type: Sprite
     state: red_skirt
@@ -224,6 +234,7 @@
   parent: UniformColorBase
   id: UniformColorWhite
   name: white jumpsuit
+  description: A generic white jumpsuit with no rank markings.
   components:
   - type: Sprite
     state: white
@@ -236,6 +247,7 @@
   parent: UniformColorWhite
   id: UniformColorWhiteSkirt
   name: white jumpskirt
+  description: A generic white jumpskirt with no rank markings.
   components:
   - type: Sprite
     state: white_skirt
@@ -251,6 +263,7 @@
   parent: UniformColorBase
   id: UniformColorYellow
   name: yellow jumpsuit
+  description: A generic yellow jumpsuit with no rank markings.
   components:
   - type: Sprite
     state: yellow
@@ -263,6 +276,7 @@
   parent: UniformColorYellow
   id: UniformColorYellowSkirt
   name: yellow jumpskirt
+  description: A generic yellow jumpskirt with no rank markings.
   components:
   - type: Sprite
     state: yellow_skirt
@@ -278,6 +292,7 @@
   parent: UniformColorBase
   id: UniformColorDarkBlue
   name: dark blue jumpsuit
+  description: A generic dark blue jumpsuit with no rank markings.
   components:
   - type: Sprite
     state: darkblue
@@ -291,6 +306,7 @@
   parent: UniformColorDarkBlue
   id: UniformColorDarkBlueSkirt
   name: dark blue jumpskirt
+  description: A generic dark blue jumpskirt with no rank markings.
   components:
   - type: Sprite
     state: darkblue_skirt
@@ -306,6 +322,7 @@
   parent: UniformColorBase
   id: UniformColorTeal
   name: teal jumpsuit
+  description: A generic teal jumpsuit with no rank markings.
   components:
   - type: Sprite
     state: teal
@@ -319,6 +336,7 @@
   parent: UniformColorTeal
   id: UniformColorTealSkirt
   name: teal jumpskirt
+  description: A generic teal jumpskirt with no rank markings.
   components:
   - type: Sprite
     state: teal_skirt
@@ -334,6 +352,7 @@
   parent: UniformColorBase
   id: UniformColorPurple
   name: purple jumpsuit
+  description: A generic purple jumpsuit with no rank markings.
   components:
   - type: Sprite
     state: lightpurple
@@ -347,6 +366,7 @@
   parent: UniformColorPurple
   id: UniformColorPurpleSkirt
   name: purple jumpskirt
+  description: A generic purple jumpskirt with no rank markings.
   components:
   - type: Sprite
     state: lightpurple_skirt
@@ -362,6 +382,7 @@
   parent: UniformColorBase
   id: UniformColorDarkGreen
   name: dark green jumpsuit
+  description: A generic dark green jumpsuit with no rank markings.
   components:
   - type: Sprite
     state: darkgreen
@@ -375,6 +396,7 @@
   parent: UniformColorDarkGreen
   id: UniformColorDarkGreenSkirt
   name: dark green jumpskirt
+  description: A generic dark green jumpskirt with no rank markings.
   components:
   - type: Sprite
     state: darkgreen_skirt
@@ -390,6 +412,7 @@
   parent: UniformColorBase
   id: UniformColorLightBrown
   name: light brown jumpsuit
+  description: A generic light brown jumpsuit with no rank markings.
   components:
   - type: Sprite
     state: lightbrown
@@ -402,6 +425,7 @@
   parent: UniformColorLightBrown
   id: UniformColorLightBrownSkirt
   name: light brown jumpskirt
+  description: A generic light brown jumpskirt with no rank markings.
   components:
   - type: Sprite
     state: lightbrown_skirt
@@ -417,6 +441,7 @@
   parent: UniformColorBase
   id: UniformColorBrown
   name: brown jumpsuit
+  description: A generic brown jumpsuit with no rank markings.
   components:
   - type: Sprite
     state: brown
@@ -430,6 +455,7 @@
   parent: UniformColorBrown
   id: UniformColorBrownSkirt
   name: brown jumpskirt
+  description: A generic brown jumpskirt with no rank markings.
   components:
   - type: Sprite
     state: brown_skirt
@@ -444,6 +470,7 @@
   parent: UniformColorBase
   id: UniformColorMaroon
   name: maroon jumpsuit
+  description: A generic maroon jumpsuit with no rank markings.
   components:
   - type: Sprite
     state: maroon
@@ -457,6 +484,7 @@
   parent: UniformColorMaroon
   id: UniformColorMaroonSkirt
   name: maroon jumpskirt
+  description: A generic maroon jumpskirt with no rank markings.
   components:
   - type: Sprite
     state: maroon_skirt
@@ -472,7 +500,7 @@
   parent: UniformColorBase
   id: UniformColorRainbow
   name: rainbow jumpsuit
-  description: A multi-colored jumpskirt!
+  description: A multi-colored jumpsuit!
   components:
   - type: Sprite
     state: rainbow
@@ -485,6 +513,7 @@
   parent: UniformColorRainbow
   id: UniformColorRainbowSkirt
   name: rainbow jumpskirt
+  description: A multi-colored jumpskirt!
   components:
   - type: Sprite
     state: rainbow_skirt

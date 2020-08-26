@@ -1,14 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Server.Interfaces.GameObjects;
-using Robust.Server.Player;
-using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Players;
-using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Mobs

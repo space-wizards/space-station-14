@@ -1,11 +1,12 @@
-﻿using System;
-using Content.Server.Atmos;
+﻿#nullable enable
 using Content.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -15,12 +16,14 @@ namespace Content.Server.GameObjects.Components.Atmos
     [RegisterComponent]
     public class AirtightComponent : Component, IMapInit
     {
-        private SnapGridComponent _snapGrid;
+        [Dependency] private readonly IMapManager _mapManager = default!;
+
         private (GridId, MapIndices) _lastPosition;
 
         public override string Name => "Airtight";
 
         private bool _airBlocked = true;
+        private bool _fixVacuum = false;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool AirBlocked
@@ -29,15 +32,23 @@ namespace Content.Server.GameObjects.Components.Atmos
             set
             {
                 _airBlocked = value;
-                EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(Owner.Transform.GridID)?.Invalidate(_snapGrid.Position);
+
+                if (Owner.TryGetComponent(out SnapGridComponent? snapGrid))
+                {
+                    EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(Owner.Transform.GridID)?.Invalidate(snapGrid.Position);
+                }
             }
         }
+
+        [ViewVariables]
+        public bool FixVacuum => _fixVacuum;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
             serializer.DataField(ref _airBlocked, "airBlocked", true);
+            serializer.DataField(ref _fixVacuum, "fixVacuum", true);
         }
 
         public override void Initialize()
@@ -45,28 +56,23 @@ namespace Content.Server.GameObjects.Components.Atmos
             base.Initialize();
 
             // Using the SnapGrid is critical for the performance of the room builder, and thus if
-            // it is absent the component will not be airtight. An exception is much easier to track
-            // down than the object magically not being airtight, so throw one if the SnapGrid component
+            // it is absent the component will not be airtight. A warning is much easier to track
+            // down than the object magically not being airtight, so log one if the SnapGrid component
             // is missing.
-            if (!Owner.TryGetComponent(out _snapGrid))
-                throw new Exception("Airtight entities must have a SnapGrid component");
-
-            UpdatePosition();
-        }
-
-        public override void OnRemove()
-        {
-            base.OnRemove();
-
-            _airBlocked = false;
+            if (!Owner.EnsureComponent(out SnapGridComponent _))
+                Logger.Warning($"Entity {Owner} at {Owner.Transform.MapPosition.ToString()} didn't have a {nameof(SnapGridComponent)}");
 
             UpdatePosition();
         }
 
         public void MapInit()
         {
-            _snapGrid.OnPositionChanged += OnTransformMove;
-            _lastPosition = (Owner.Transform.GridID, _snapGrid.Position);
+            if (Owner.TryGetComponent(out SnapGridComponent? snapGrid))
+            {
+                snapGrid.OnPositionChanged += OnTransformMove;
+                _lastPosition = (Owner.Transform.GridID, snapGrid.Position);
+            }
+
             UpdatePosition();
         }
 
@@ -76,7 +82,17 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             _airBlocked = false;
 
-            _snapGrid.OnPositionChanged -= OnTransformMove;
+            if (Owner.TryGetComponent(out SnapGridComponent? snapGrid))
+            {
+                snapGrid.OnPositionChanged -= OnTransformMove;
+            }
+
+            if (_fixVacuum)
+            {
+                var mapIndices = Owner.Transform.GridPosition.ToMapIndices(_mapManager);
+                EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(Owner.Transform.GridID)?.FixVacuum(mapIndices);
+            }
+
             UpdatePosition();
         }
 
@@ -84,15 +100,22 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             UpdatePosition(_lastPosition.Item1, _lastPosition.Item2);
             UpdatePosition();
-            _lastPosition = (Owner.Transform.GridID, _snapGrid.Position);
+
+            if (Owner.TryGetComponent(out SnapGridComponent? snapGrid))
+            {
+                _lastPosition = (Owner.Transform.GridID, snapGrid.Position);
+            }
         }
 
-        private void UpdatePosition() => UpdatePosition(Owner.Transform.GridID, _snapGrid.Position);
+        private void UpdatePosition()
+        {
+            var mapIndices = Owner.Transform.GridPosition.ToMapIndices(_mapManager);
+            UpdatePosition(Owner.Transform.GridID, mapIndices);
+        }
 
         private void UpdatePosition(GridId gridId, MapIndices pos)
         {
             EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(gridId)?.Invalidate(pos);
         }
-
     }
 }

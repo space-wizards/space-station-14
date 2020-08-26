@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.EntitySystems;
@@ -89,10 +91,30 @@ namespace Content.Server.GameObjects.Components.Interactable
             serializer.DataField(this, collection => UseSoundCollection, "useSoundCollection", string.Empty);
         }
 
-        public virtual bool UseTool(IEntity user, IEntity target, ToolQuality toolQualityNeeded)
+        public virtual async Task<bool> UseTool(IEntity user, IEntity target, float doAfterDelay, ToolQuality toolQualityNeeded, Func<bool> doAfterCheck = null)
         {
             if (!HasQuality(toolQualityNeeded) || !ActionBlockerSystem.CanInteract(user))
                 return false;
+
+            if (doAfterDelay > 0f)
+            {
+                var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
+
+                var doAfterArgs = new DoAfterEventArgs(user, doAfterDelay / SpeedModifier, default, target)
+                {
+                    ExtraCheck = doAfterCheck,
+                    BreakOnDamage = false, // TODO: Change this to true once breathing is fixed.
+                    BreakOnStun = true,
+                    BreakOnTargetMove = true,
+                    BreakOnUserMove = true,
+                    NeedHand = true,
+                };
+
+                var result = await doAfterSystem.DoAfter(doAfterArgs);
+
+                if (result == DoAfterStatus.Cancelled)
+                    return false;
+            }
 
             PlayUseSound();
 

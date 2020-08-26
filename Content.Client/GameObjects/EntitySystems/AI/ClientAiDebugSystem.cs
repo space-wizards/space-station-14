@@ -15,9 +15,7 @@ namespace Content.Client.GameObjects.EntitySystems.AI
 #if DEBUG
     public class ClientAiDebugSystem : EntitySystem
     {
-#pragma warning disable 649
-        [Dependency] private IEyeManager _eyeManager;
-#pragma warning restore 649
+        [Dependency] private readonly IEyeManager _eyeManager = default!;
 
         private AiDebugMode _tooltips = AiDebugMode.None;
         private readonly Dictionary<IEntity, PanelContainer> _aiBoxes = new Dictionary<IEntity,PanelContainer>();

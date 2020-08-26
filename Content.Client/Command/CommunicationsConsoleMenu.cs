@@ -5,7 +5,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Timer = Robust.Shared.Timers.Timer;
 
@@ -13,9 +12,7 @@ namespace Content.Client.Command
 {
     public class CommunicationsConsoleMenu : SS14Window
     {
-#pragma warning disable 649
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-#pragma warning restore 649
+        [Dependency] private readonly ILocalizationManager _localizationManager = default!;
 
         protected override Vector2? CustomSize => new Vector2(600, 400);
 

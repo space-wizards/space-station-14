@@ -1,17 +1,27 @@
-- type: entity
+﻿- type: entity
   id: EmergencyLight
   name: "emergency light"
+  description: A small red light with an internal battery that turns on as soon as it stops receiving any power.
   parent: WallLight
   components:
   - type: PointLight
+    enabled: false
     radius: 10
     energy: 2.5
     offset: "0.5, 0"
     color: "#FF4020"
     mask: /Textures/emergency_mask.png
-
   - type: EmergencyLight
-
+  - type: PowerReceiver
+  - type: Battery
+    maxCharge: 30000
+    startingCharge: 0
+  - type: Sprite
+    sprite: Constructible/Lighting/emergency_light.rsi
+    state: emergency_light_off
+  - type: Icon
+    sprite: Constructible/Lighting/emergency_light.rsi
+    state: emergency_light_off
   placement:
     snap:
     - Wallmount

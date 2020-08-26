@@ -1,6 +1,7 @@
-- type: entity
+﻿- type: entity
   id: AsteroidRock
   name: asteroid rock
+  description: That's an asteroid
   components:
   - type: AsteroidRock
   - type: Clickable
@@ -15,9 +16,8 @@
     shapes:
     - !type:PhysShapeAabb
       layer: [MobMask]
-  - type: Damageable
   - type: Destructible
-    thresholdvalue: 100
+    deadThreshold: 100
   - type: Occluder
     sizeX: 32
     sizeY: 32

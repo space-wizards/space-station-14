@@ -14,11 +14,9 @@ namespace Content.Server.GameObjects.Components.Interactable
     [RegisterComponent]
     public class TilePryingComponent : Component, IAfterInteract
     {
-#pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
-        [Dependency] private readonly IMapManager _mapManager;
-#pragma warning restore 649
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         public override string Name => "TilePrying";
         private bool _toolComponentNeeded = true;
@@ -34,7 +32,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             serializer.DataField(ref _toolComponentNeeded, "toolComponentNeeded", true);
         }
 
-        public void TryPryTile(IEntity user, GridCoordinates clickLocation)
+        public async void TryPryTile(IEntity user, GridCoordinates clickLocation)
         {
             if (!Owner.TryGetComponent<ToolComponent>(out var tool) && _toolComponentNeeded)
                 return;
@@ -51,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             if (!tileDef.CanCrowbar) return;
 
-            if (_toolComponentNeeded && !tool.UseTool(user, null, ToolQuality.Prying))
+            if (_toolComponentNeeded && !await tool!.UseTool(user, null, 0f,  ToolQuality.Prying))
                 return;
 
             var underplating = _tileDefinitionManager["underplating"];

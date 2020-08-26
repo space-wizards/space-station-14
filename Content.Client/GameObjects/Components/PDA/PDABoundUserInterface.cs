@@ -19,10 +19,9 @@ namespace Content.Client.GameObjects.Components.PDA
 {
     public class PDABoundUserInterface : BoundUserInterface
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
-#pragma warning restore 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+
         private PDAMenu _menu;
         private PDAMenuPopup failPopup;
 
@@ -70,7 +69,7 @@ namespace Content.Client.GameObjects.Components.PDA
                     };
                 }
 
-                SendMessage(new PDAUplinkBuyListingMessage(listing));
+                SendMessage(new PDAUplinkBuyListingMessage(listing.ItemId));
             };
 
             _menu.OnCategoryButtonPressed += (args, category) =>

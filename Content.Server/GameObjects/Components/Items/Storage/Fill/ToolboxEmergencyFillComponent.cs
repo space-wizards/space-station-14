@@ -3,7 +3,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
-using Robust.Shared.Map;
 using Robust.Shared.Random;
 
 namespace Content.Server.GameObjects.Components.Items.Storage.Fill
@@ -11,11 +10,9 @@ namespace Content.Server.GameObjects.Components.Items.Storage.Fill
     [RegisterComponent]
     internal sealed class ToolboxEmergencyFillComponent : Component, IMapInit
     {
-        public override string Name => "ToolboxEmergencyFill";
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
-#pragma warning disable 649
-        [Dependency] private readonly IEntityManager _entityManager;
-#pragma warning restore 649
+        public override string Name => "ToolboxEmergencyFill";
 
         void IMapInit.MapInit()
         {

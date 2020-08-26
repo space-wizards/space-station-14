@@ -1,6 +1,6 @@
 ﻿#nullable enable
-using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
@@ -30,13 +30,11 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     internal class MoverSystem : SharedMoverSystem
     {
-#pragma warning disable 649
         [Dependency] private readonly IPauseManager _pauseManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
-#pragma warning restore 649
 
         private AudioSystem _audioSystem = default!;
 
@@ -58,23 +56,13 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public override void Update(float frameTime)
         {
-            foreach (var entity in RelevantEntities)
+            foreach (var (moverComponent, collidableComponent) in EntityManager.ComponentManager.EntityQuery<IMoverComponent, ICollidableComponent>())
             {
+                var entity = moverComponent.Owner;
                 if (_pauseManager.IsEntityPaused(entity))
-                {
                     continue;
-                }
 
-                var mover = entity.GetComponent<IMoverComponent>();
-                var physics = entity.GetComponent<IPhysicsComponent>();
-                if (entity.TryGetComponent<ICollidableComponent>(out var collider))
-                {
-                    UpdateKinematics(entity.Transform, mover, physics, collider);
-                }
-                else
-                {
-                    UpdateKinematics(entity.Transform, mover, physics);
-                }
+                UpdateKinematics(entity.Transform, moverComponent, collidableComponent);
             }
         }
 
@@ -93,7 +81,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 ev.Entity.RemoveComponent<PlayerInputMoverComponent>();
             }
 
-            if (ev.Entity.TryGetComponent(out IPhysicsComponent physics) &&
+            if (ev.Entity.TryGetComponent(out ICollidableComponent? physics) &&
                 physics.TryGetController(out MoverController controller))
             {
                 controller.StopMoving();

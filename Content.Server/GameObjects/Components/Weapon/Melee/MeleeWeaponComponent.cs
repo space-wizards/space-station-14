@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
-using Content.Shared.GameObjects;
+using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Items;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
@@ -15,24 +15,20 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using CannyFastMath;
+using Content.Shared.Damage;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Math = CannyFastMath.Math;
-using MathF = CannyFastMath.MathF;
 
 namespace Content.Server.GameObjects.Components.Weapon.Melee
 {
     [RegisterComponent]
     public class MeleeWeaponComponent : Component, IAttack
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+        [Dependency] private readonly IPhysicsManager _physicsManager = default!;
+
         public override string Name => "MeleeWeapon";
         private TimeSpan _lastAttackTime;
-
-#pragma warning disable 649
-        [Dependency] private readonly IMapManager _mapManager;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-        [Dependency] private readonly IPhysicsManager _physicsManager;
-#pragma warning restore 649
 
         private int _damage;
         private float _range;
@@ -116,9 +112,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 if (!entity.Transform.IsMapTransform || entity == eventArgs.User)
                     continue;
 
-                if (entity.TryGetComponent(out DamageableComponent damageComponent))
+                if (entity.TryGetComponent(out IDamageableComponent damageComponent))
                 {
-                    damageComponent.TakeDamage(DamageType.Brute, Damage, Owner, eventArgs.User);
+                    damageComponent.ChangeDamage(DamageType.Blunt, Damage, false, Owner);
                     hitEntities.Add(entity);
                 }
             }

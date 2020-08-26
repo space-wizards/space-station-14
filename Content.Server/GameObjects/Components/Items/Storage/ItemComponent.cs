@@ -1,12 +1,12 @@
 ﻿using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Throw;
 using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Containers;
@@ -14,24 +14,20 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 
-namespace Content.Server.GameObjects.Components
+namespace Content.Server.GameObjects.Components.Items.Storage
 {
     [RegisterComponent]
     [ComponentReference(typeof(StorableComponent))]
     [ComponentReference(typeof(IItemComponent))]
     public class ItemComponent : StorableComponent, IInteractHand, IExAct, IEquipped, IUnequipped, IItemComponent
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
+
         public override string Name => "Item";
         public override uint? NetID => ContentNetIDs.ITEM;
-
-        #pragma warning disable 649
-        [Dependency] private readonly IRobustRandom _robustRandom;
-        [Dependency] private readonly IMapManager _mapManager;
-        #pragma warning restore 649
 
         private string _equippedPrefix;
 
@@ -93,7 +89,7 @@ namespace Content.Server.GameObjects.Components
                 return false;
             }
 
-            if (Owner.TryGetComponent(out PhysicsComponent physics) &&
+            if (Owner.TryGetComponent(out ICollidableComponent physics) &&
                 physics.Anchored)
             {
                 return false;

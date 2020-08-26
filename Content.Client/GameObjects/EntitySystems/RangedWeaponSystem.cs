@@ -11,19 +11,17 @@ using Robust.Shared.Input;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 
 namespace Content.Client.GameObjects.EntitySystems
 {
     public class RangedWeaponSystem : EntitySystem
     {
-
-#pragma warning disable 649
-        [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private readonly IEyeManager _eyeManager;
-        [Dependency] private readonly IMapManager _mapManager;
-        [Dependency] private readonly IInputManager _inputManager;
-        [Dependency] private readonly IGameTiming _gameTiming;
-#pragma warning restore 649
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IEyeManager _eyeManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         private InputSystem _inputSystem;
         private CombatModeSystem _combatModeSystem;
@@ -96,9 +94,13 @@ namespace Content.Client.GameObjects.EntitySystems
             var worldPos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
 
             if (!_mapManager.TryFindGridAt(worldPos, out var grid))
-                grid = _mapManager.GetDefaultGrid(worldPos.MapId);
-
-            weapon.SyncFirePos(grid.MapToGrid(worldPos));
+            {
+                weapon.SyncFirePos(GridId.Invalid, worldPos.Position);
+            }
+            else
+            {
+                weapon.SyncFirePos(grid.Index, grid.MapToGrid(worldPos).Position);
+            }
         }
     }
 }

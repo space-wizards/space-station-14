@@ -9,6 +9,7 @@
   icon: "Scientist"
   access:
   - Research
+  - Maintenance
 
 - type: startingGear
   id: ScientistGear

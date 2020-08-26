@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
@@ -56,7 +56,9 @@ namespace Content.Shared.GameObjects.Components.Mobs
         Health,
         Hunger,
         Thirst,
+        Pressure,
         Stun,
+        Cuffed,
         Buckled,
         Piloting,
         Pulling,

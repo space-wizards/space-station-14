@@ -5,7 +5,6 @@ using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.UserInterface;
@@ -13,7 +12,6 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -27,14 +25,12 @@ namespace Content.Client.GameObjects.EntitySystems
     [UsedImplicitly]
     internal sealed class ExamineSystem : ExamineSystemShared
     {
-        public const string StyleClassEntityTooltip = "entity-tooltip";
+        [Dependency] private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
 
-#pragma warning disable 649
-        [Dependency] private IInputManager _inputManager;
-        [Dependency] private IUserInterfaceManager _userInterfaceManager;
-        [Dependency] private IEntityManager _entityManager;
-        [Dependency] private IPlayerManager _playerManager;
-#pragma warning restore 649
+        public const string StyleClassEntityTooltip = "entity-tooltip";
 
         private Popup _examineTooltipOpen;
         private CancellationTokenSource _requestCancelTokenSource;
@@ -109,7 +105,7 @@ namespace Content.Client.GameObjects.EntitySystems
             FormattedMessage message;
             if (entity.Uid.IsClientSide())
             {
-                message = ExamineSystem.GetExamineText(entity, _playerManager.LocalPlayer.ControlledEntity);
+                message = GetExamineText(entity, _playerManager.LocalPlayer.ControlledEntity);
             }
             else
             {

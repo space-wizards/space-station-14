@@ -2,10 +2,9 @@
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Mobs.Roles;
 using Content.Server.Players;
-using Content.Shared.Jobs;
+using Content.Shared.Roles;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
-using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
@@ -52,9 +51,7 @@ namespace Content.Server.Mobs
 
     public class AddRoleCommand : IClientCommand
     {
-#pragma warning disable 649
-        [Dependency] private IPrototypeManager _prototypeManager;
-#pragma warning restore 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public string Command => "addrole";
 
@@ -86,10 +83,7 @@ namespace Content.Server.Mobs
 
     public class RemoveRoleCommand : IClientCommand
     {
-
-#pragma warning disable 649
-        [Dependency] private IPrototypeManager _prototypeManager;
-#pragma warning restore 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public string Command => "rmrole";
 

@@ -1,5 +1,4 @@
-﻿using System;
-using Content.Server.GameObjects.Components.Nutrition;
+﻿using Content.Server.GameObjects.Components.Nutrition;
 using Content.Shared.Chemistry;
 using Content.Shared.Interfaces.Chemistry;
 using Robust.Shared.Interfaces.GameObjects;

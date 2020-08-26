@@ -6,8 +6,8 @@ using System.Threading;
 using Content.Client.State;
 using Content.Client.UserInterface;
 using Content.Client.Utility;
-using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.EntitySystemMessages;
+using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects.EntitySystems;
@@ -42,16 +42,14 @@ namespace Content.Client.GameObjects.EntitySystems
     [UsedImplicitly]
     public sealed class VerbSystem : EntitySystem
     {
-#pragma warning disable 649
-        [Dependency] private readonly IStateManager _stateManager;
-        [Dependency] private readonly IEntityManager _entityManager;
-        [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private readonly IInputManager _inputManager;
-        [Dependency] private readonly IItemSlotManager _itemSlotManager;
-        [Dependency] private readonly IGameTiming _gameTiming;
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
-        [Dependency] private readonly IMapManager _mapManager;
-#pragma warning restore 649
+        [Dependency] private readonly IStateManager _stateManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         private EntityList _currentEntityList;
         private VerbPopup _currentVerbListRoot;
@@ -207,8 +205,10 @@ namespace Content.Client.GameObjects.EntitySystems
             //Get verbs, component dependent.
             foreach (var (component, verb) in VerbUtility.GetVerbs(entity))
             {
-                if (verb.RequireInteractionRange && !VerbUtility.InVerbUseRange(user, entity))
+                if (!VerbUtility.VerbAccessChecks(user, entity, verb))
+                {
                     continue;
+                }
 
                 var verbData = verb.GetData(user, component);
 
@@ -229,8 +229,10 @@ namespace Content.Client.GameObjects.EntitySystems
             //Get global verbs. Visible for all entities regardless of their components.
             foreach (var globalVerb in VerbUtility.GetGlobalVerbs(Assembly.GetExecutingAssembly()))
             {
-                if (globalVerb.RequireInteractionRange && !VerbUtility.InVerbUseRange(user, entity))
+                if (!VerbUtility.VerbAccessChecks(user, entity, globalVerb))
+                {
                     continue;
+                }
 
                 var verbData = globalVerb.GetData(user, entity);
 

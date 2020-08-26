@@ -1,11 +1,10 @@
 ﻿using Content.Server.Mobs;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Movement;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
-using Robust.Shared.ViewVariables;
-using Timer = Robust.Shared.Timers.Timer;
-using Content.Shared.GameObjects.Components.Movement;
+using Robust.Shared.Timers;
 
 namespace Content.Server.GameObjects.Components.Mobs
 {
@@ -13,9 +12,7 @@ namespace Content.Server.GameObjects.Components.Mobs
     [ComponentReference(typeof(SharedStunnableComponent))]
     public class StunnableComponent : SharedStunnableComponent
     {
-#pragma warning disable 649
-        [Dependency] private IGameTiming _gameTiming;
-#pragma warning restore 649
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         protected override void OnKnockdown()
         {

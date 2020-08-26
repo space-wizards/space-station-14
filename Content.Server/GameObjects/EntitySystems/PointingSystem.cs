@@ -2,10 +2,12 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Pointing;
+using Content.Server.Players;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Interfaces;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects.Components;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
@@ -24,14 +26,12 @@ using Robust.Shared.Players;
 namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    public class PointingSystem : EntitySystem
+    internal sealed class PointingSystem : EntitySystem
     {
-#pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-#pragma warning restore 649
 
         private static readonly TimeSpan PointDelay = TimeSpan.FromSeconds(0.5f);
 
@@ -40,6 +40,8 @@ namespace Content.Server.GameObjects.EntitySystems
         ///     pointed at something.
         /// </summary>
         private readonly Dictionary<ICommonSession, TimeSpan> _pointers = new Dictionary<ICommonSession, TimeSpan>();
+
+        private const float PointingRange = 15f;
 
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
         {
@@ -80,7 +82,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public bool TryPoint(ICommonSession? session, GridCoordinates coords, EntityUid uid)
         {
-            var player = session?.AttachedEntity;
+            var player = (session as IPlayerSession)?.ContentData()?.Mind?.CurrentEntity;
             if (player == null)
             {
                 return false;
@@ -113,9 +115,26 @@ namespace Content.Server.GameObjects.EntitySystems
                 }
             }
 
-            var viewers = _playerManager.GetPlayersInRange(player.Transform.GridPosition, 15);
+            var arrow = EntityManager.SpawnEntity("pointingarrow", coords);
 
-            EntityManager.SpawnEntity("pointingarrow", coords);
+            var layer = (int)VisibilityFlags.Normal;
+            if (player.TryGetComponent(out VisibilityComponent? playerVisibility))
+            {
+                var arrowVisibility = arrow.EnsureComponent<VisibilityComponent>();
+                layer = arrowVisibility.Layer = playerVisibility.Layer;
+            }
+
+            // Get players that are in range and whose visibility layer matches the arrow's.
+            var viewers = _playerManager.GetPlayersBy((playerSession) =>
+            {
+                if ((playerSession.VisibilityMask & layer) == 0)
+                    return false;
+
+                var ent = playerSession.ContentData()?.Mind?.CurrentEntity;
+
+                return ent != null
+                       && ent.Transform.MapPosition.InRange(player.Transform.MapPosition, PointingRange);
+            });
 
             string selfMessage;
             string viewerMessage;
@@ -156,8 +175,6 @@ namespace Content.Server.GameObjects.EntitySystems
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
 
-            EntityQuery = new TypeEntityQuery(typeof(PointingArrowComponent));
-
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.Point, new PointerInputCmdHandler(TryPoint))
                 .Register<PointingSystem>();
@@ -173,9 +190,9 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public override void Update(float frameTime)
         {
-            foreach (var entity in RelevantEntities)
+            foreach (var component in ComponentManager.EntityQuery<PointingArrowComponent>())
             {
-                entity.GetComponent<PointingArrowComponent>().Update(frameTime);
+                component.Update(frameTime);
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.Nutrition;
+﻿using Content.Server.GameObjects.Components.Body.Digestive;
+using Content.Server.GameObjects.Components.Nutrition;
 using Content.Server.GameObjects.Components.Utensil;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;
@@ -19,9 +20,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
     [ComponentReference(typeof(IAfterInteract))]
     public class PillComponent : FoodComponent, IUse, IAfterInteract
     {
-#pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystem;
-#pragma warning restore 649
+        [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
+
         public override string Name => "Pill";
 
         [ViewVariables]

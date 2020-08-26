@@ -1,7 +1,5 @@
-﻿using Robust.Shared.Interfaces.Serialization;
-using Robust.Shared.Prototypes;
+﻿using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using System;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -48,26 +46,11 @@ namespace Content.Shared.Atmos
         public string GasOverlaySprite { get; set; }
 
         /// <summary>
-        ///     Sprite specifier for the gas overlay.
-        /// </summary>
-        public SpriteSpecifier GasOverlay
-        {
-            get
-            {
-                if(string.IsNullOrEmpty(GasOverlaySprite) && !string.IsNullOrEmpty(GasOverlayTexture))
-                    return new SpriteSpecifier.Texture(new ResourcePath(GasOverlayTexture));
-
-                if(!string.IsNullOrEmpty(GasOverlaySprite) && !string.IsNullOrEmpty(GasOverlayState))
-                    return new SpriteSpecifier.Rsi(new ResourcePath(GasOverlaySprite), GasOverlayState);
-
-                return null;
-            }
-        }
-
-        /// <summary>
         /// Path to the tile overlay used when this gas appears visible.
         /// </summary>
         public string OverlayPath { get; private set; }
+
+        public string Color { get; private set; }
 
         public void LoadFrom(YamlMappingNode mapping)
         {
@@ -81,6 +64,7 @@ namespace Content.Shared.Atmos
             serializer.DataField(this, x => GasOverlayTexture, "gasOverlayTexture", string.Empty);
             serializer.DataField(this, x => GasOverlaySprite, "gasOverlaySprite", string.Empty);
             serializer.DataField(this, x => GasOverlayState, "gasOverlayState", string.Empty);
+            serializer.DataField(this, x => Color, "color", string.Empty);
         }
     }
 }

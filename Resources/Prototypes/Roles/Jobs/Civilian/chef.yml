@@ -8,6 +8,7 @@
   icon: "Chef"
   access:
   - Service
+  - Maintenance
 
 - type: startingGear
   id: ChefGear

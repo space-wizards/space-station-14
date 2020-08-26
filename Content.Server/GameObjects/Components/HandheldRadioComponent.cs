@@ -1,30 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Interactable
+namespace Content.Server.GameObjects.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IRadio))]
     [ComponentReference(typeof(IListen))]
     class HandheldRadioComponent : Component, IUse, IListen, IRadio
     {
-#pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
-#pragma warning restore 649
 
         public override string Name => "Radio";
 

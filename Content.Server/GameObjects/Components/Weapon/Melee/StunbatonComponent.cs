@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Power;
-using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.Audio;
-using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -29,11 +30,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
     [RegisterComponent]
     public class StunbatonComponent : MeleeWeaponComponent, IUse, IExamine, IMapInit, IInteractUsing
     {
-#pragma warning disable 649
-        [Dependency] private IRobustRandom _robustRandom;
-        [Dependency] private readonly ISharedNotifyManager _notifyManager;
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-#pragma warning restore 649
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly ISharedNotifyManager _notifyManager = default!;
 
         public override string Name => "Stunbaton";
 
@@ -167,14 +165,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             {
                 EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Machines/button.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
 
-                _notifyManager.PopupMessage(Owner, user, _localizationManager.GetString("Cell missing..."));
+                _notifyManager.PopupMessage(Owner, user, Loc.GetString("Cell missing..."));
                 return;
             }
 
             if (cell.CurrentCharge < EnergyPerUse)
             {
                 EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Machines/button.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
-                _notifyManager.PopupMessage(Owner, user, _localizationManager.GetString("Dead cell..."));
+                _notifyManager.PopupMessage(Owner, user, Loc.GetString("Dead cell..."));
                 return;
             }
 
@@ -192,7 +190,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             return true;
         }
 
-        public bool InteractUsing(InteractUsingEventArgs eventArgs)
+        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!eventArgs.Using.HasComponent<BatteryComponent>()) return false;
 
@@ -241,11 +239,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            var loc = IoCManager.Resolve<ILocalizationManager>();
-
             if (Activated)
             {
-                message.AddMarkup(loc.GetString("The light is currently [color=darkgreen]on[/color]."));
+                message.AddMarkup(Loc.GetString("The light is currently [color=darkgreen]on[/color]."));
             }
         }
 
