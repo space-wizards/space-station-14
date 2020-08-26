@@ -4,7 +4,6 @@ using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Utility;
 using NUnit.Framework;
 using Robust.Server.GameObjects.Components.Container;
-using Robust.Shared.Containers;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Map;
@@ -22,7 +21,7 @@ namespace Content.IntegrationTests.Tests.Interaction
 
         private const float InteractionRange = SharedInteractionSystem.InteractionRange;
 
-        private const float InteractionRangeDivided15 = SharedInteractionSystem.InteractionRange / 1.5f;
+        private const float InteractionRangeDivided15 = InteractionRange / 1.5f;
 
         private readonly (float, float) _interactionRangeDivided15X = (InteractionRangeDivided15, 0f);
 
