@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.Linq;
 using Content.Client.GameObjects.Components.Suspicion;
 using Content.Shared.Interfaces;
@@ -58,7 +59,14 @@ namespace Content.Client.UserInterface.Suspicion
             }
 
             var allies = string.Join(", ", role.Allies);
-            var message = Loc.GetString("Your allies are {0}", allies);
+            var message = role.Allies.Count switch
+            {
+                0 => Loc.GetString("You have no allies"),
+                1 => Loc.GetString("Your ally is {0}", allies),
+                var n when n > 2 => Loc.GetString("Your allies are {0}", allies),
+                _ => throw new ArgumentException($"Invalid number of allies: {role.Allies.Count}")
+            };
+
             role.Owner.PopupMessage(role.Owner, message);
         }
 
