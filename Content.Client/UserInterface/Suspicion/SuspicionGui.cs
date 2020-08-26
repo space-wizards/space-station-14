@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Globalization;
+using System.Linq;
 using Content.Client.GameObjects.Components.Suspicion;
 using Content.Shared.Interfaces;
 using Robust.Client.Player;
@@ -90,7 +91,10 @@ namespace Content.Client.UserInterface.Suspicion
             _previousRoleName = suspicion.Role;
             _previousAntagonist = suspicion.Antagonist.Value;
 
-            _roleButton.Text = Loc.GetString(_previousRoleName);
+            var buttonText = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(_previousRoleName);
+            buttonText = Loc.GetString(buttonText);
+
+            _roleButton.Text = buttonText;
             _roleButton.ModulateSelfOverride = _previousAntagonist ? Color.Red : Color.Green;
 
             Visible = true;
