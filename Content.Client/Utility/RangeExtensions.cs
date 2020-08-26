@@ -8,7 +8,7 @@ using static Content.Shared.GameObjects.EntitySystems.SharedInteractionSystem;
 
 namespace Content.Client.Utility
 {
-    public static class RangeChecks
+    public static class RangeExtensions
     {
         private static SharedInteractionSystem SharedInteractionSystem => EntitySystem.Get<SharedInteractionSystem>();
 
