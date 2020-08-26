@@ -7,6 +7,7 @@ using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.Atmos;
 using Content.Server.Interfaces;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
 using Content.Shared.Maps;
@@ -26,7 +27,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos
 {
-    public class TileAtmosphere : IGasMixtureHolder
+    public class TileAtmosphere : IGasMixtureHolder, ITemperatureExpose
     {
         [Robust.Shared.IoC.Dependency] private IRobustRandom _robustRandom = default!;
         [Robust.Shared.IoC.Dependency] private IEntityManager _entityManager = default!;
@@ -781,7 +782,18 @@ namespace Content.Server.Atmos
                 }
             }
 
-            // TODO ATMOS Let all entities in this tile know about the fire?
+            var tileRef = GridIndices.GetTileRef(GridIndex);
+
+            if (tileRef == null) return;
+
+            // Getting all the entities in a tile is not performant.
+            foreach (var entity in tileRef?.GetEntitiesInTile())
+            {
+                foreach (var fireAct in entity.GetAllComponents<IFireAct>())
+                {
+                    fireAct.FireAct(new FireActEventArgs(Hotspot.Temperature, Hotspot.Volume));
+                }
+            }
         }
 
         private bool ConsiderSuperconductivity()
@@ -805,6 +817,8 @@ namespace Content.Server.Atmos
 
         public void Superconduct()
         {
+            return;
+
             var directions = ConductivityDirections();
             var adjacentTiles = _gridAtmosphereComponent.GetAdjacentTiles(GridIndices, true);
 
@@ -864,7 +878,7 @@ namespace Content.Server.Atmos
                     other.TemperatureShareMutualSolid(this, ThermalConductivity);
                 }
 
-                TemperatureExpose(null, _temperature, _gridAtmosphereComponent.GetVolumeForCells(1));
+                TemperatureExpose(new TemperatureExposeEventArgs(null, _temperature, _gridAtmosphereComponent.GetVolumeForCells(1)));
                 return;
             }
 
@@ -1117,7 +1131,7 @@ namespace Content.Server.Atmos
                 Direction.North, Direction.East, Direction.South, Direction.West
             };
 
-        public void TemperatureExpose(GasMixture mixture, float temperature, float cellVolume)
+        public void TemperatureExpose(TemperatureExposeEventArgs eventArgs)
         {
             // TODO ATMOS do this
         }

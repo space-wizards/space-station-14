@@ -1,7 +1,9 @@
 ﻿#nullable enable
 using System;
 using Content.Server.Interfaces;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.Atmos;
+using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Shared.Serialization;
 
@@ -71,9 +73,20 @@ namespace Content.Server.Atmos.Reactions
                 {
                     location.HotspotExpose(temperature, mixture.Volume);
 
-                    // TODO ATMOS Expose temperature all items on cell
+                    var tile = location.GridIndices.GetTileRef(location.GridIndex);
 
-                    location.TemperatureExpose(mixture, temperature, mixture.Volume);
+                     var eventArgs = new TemperatureExposeEventArgs(mixture, temperature, mixture.Volume);
+
+                    if(tile != null)
+                        foreach (var entity in tile.Value.GetEntitiesInTile())
+                        {
+                            foreach (var temp in entity.GetAllComponents<ITemperatureExpose>())
+                            {
+                                temp.TemperatureExpose(eventArgs);
+                            }
+                        }
+
+                    location.TemperatureExpose(eventArgs);
                 }
             }
 
