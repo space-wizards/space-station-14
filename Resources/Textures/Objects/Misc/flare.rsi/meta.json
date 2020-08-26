@@ -81,6 +81,20 @@
             ]
         },
 		{
+            "name": "flare_lit",
+            "select": [],
+            "flags": {},
+            "directions": 1,
+            "delays": [
+                [
+                    0.05,
+                    0.05,
+					0.05,
+					0.05
+                ]
+            ]
+        },
+		{
             "name": "flare_spent",
             "directions": 1,
             "delays": [
@@ -98,16 +112,7 @@
                 ]
             ]
         },
-                {
-            "name": "flare_lit",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-                {
+        {
             "name": "flare_unlit",
             "directions": 1,
             "delays": [

@@ -20,10 +20,10 @@ namespace Content.Client.GameObjects.Components.Interactable
         {
             if (CurrentState == LightState.Fading && _light != null && _expiryTime >= 0f)
             {
-                var fade = MathF.Max(_expiryTime / _fullExpiryTime, 0.08f);
+                var fade = MathF.Max(_expiryTime / _fullExpiryTime, 0.02f);
 
-                _light.Energy = fade * 2.2f;
-                _light.Radius = 2.0f + fade * 1.0f;
+                _light.Energy = fade * GlowEnergy;
+                _light.Radius = 2f + fade * (GlowRadius - 2f);
 
                 _expiryTime -= frameTime;
             }
@@ -58,25 +58,33 @@ namespace Content.Client.GameObjects.Components.Interactable
                     case LightState.Lit:
                     case LightState.Fading:
 
-                        if (Owner.TryGetComponent<LightBehaviourComponent>(out var lightBehaviour))
-                        {
-                            lightBehaviour.StartLightBehaviour();
-                        }
-
+                        ToggleLight(enabled: true);
                         sprite.LayerSetState(1, IconStateLit);
+
                         break;
 
                     case LightState.Dead:
 
-                        if (Owner.TryGetComponent<LightBehaviourComponent>(out var light))
-                        {
-                            light.StopLightBehaviour();
-                        }
-
-                        _light.Enabled = false;
-
+                        ToggleLight(enabled: false);
                         sprite.LayerSetState(1, IconStateSpent);
+
                         break;
+                }
+            }
+        }
+
+        private void ToggleLight(bool enabled)
+        {
+            if (Owner.TryGetComponent<AppearanceComponent>(out var appearance) && appearance.TryGetVisualizer<LightBehaviourVisualizer>(out var visualizer))
+            {
+                if (enabled)
+                {
+                    visualizer.StartLightBehaviour();
+                }
+                else
+                {
+                    visualizer.StopLightBehaviour();
+                    _light.Enabled = false;
                 }
             }
         }

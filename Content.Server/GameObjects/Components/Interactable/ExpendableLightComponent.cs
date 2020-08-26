@@ -91,6 +91,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
                         sprite.LayerSetState(1, IconStateLit);
                         sprite.LayerSetShader(1, "unshaded");
+
                         break;
 
                     default:

@@ -7,7 +7,7 @@
     - type: ExpendableLight
       spentName: spent green glowstick
       spentDesc: It looks like this glowstick has stopped glowing. How tragic.
-      glowRadius: 3
+      glowRadius: 5
       glowEnergy: 2.2
       glowDuration: 900 # time in seconds
       fadeOutDuration: 300
@@ -24,11 +24,12 @@
       state: glowstick_unlit
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      # color: "#00FF00" this won't work until handcuffs PR is merged
+      color: "#00FF00" 
       HeldPrefix: off
     - type: PointLight
       enabled: false
       color: "#00FF00"
+      radius: 5
 
 
 - type: entity
@@ -39,7 +40,7 @@
     - type: ExpendableLight
       spentName: spent red glowstick
       spentDesc: It looks like this glowstick has stopped glowing. How tragic.
-      glowRadius: 3
+      glowRadius: 5
       glowEnergy: 2.2
       glowDuration: 900
       fadeOutDuration: 300
@@ -53,11 +54,12 @@
           color: "#FF0000"
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      # color: "#00FF00" this won't work until handcuffs PR is merged
+      color: "#FF0000" 
       HeldPrefix: off
     - type: PointLight
       enabled: false
       color: "#FF0000"
+      radius: 5
 
 # AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 # THESE ARE ALL DUMMY ENTITIES USED TO TEST THE LIGHT BEHAVIOUR SYSTEM
@@ -89,19 +91,21 @@
     - type: PointLight
       enabled: false
       color: "#FF0000"
-    - type: LightBehaviour
-      enabled: true
-      behaviours:
-        - type: ColorSequenceSmooth
-          maxDuration: 0.5
-          maxValue: 1.0
-          colorsToCycle:
-            - "#FF0000"
-            - "#FFFF00"
-            - "#00FF00"
-            - "#00FFFF"
-            - "#0000FF"
-            - "#FF00FF"
+    - type: Appearance
+      visuals:
+        - type: LightBehaviourVisualizer
+          enabled: true
+          behaviours:
+            - type: ColorSequenceSmooth
+              maxDuration: 0.5
+              maxValue: 1.0
+              colorsToCycle:
+                - "#FF0000"
+                - "#FFFF00"
+                - "#00FF00"
+                - "#00FFFF"
+                - "#0000FF"
+                - "#FF00FF"
 
 - type: entity
   name: color sequence test
@@ -131,19 +135,21 @@
     - type: PointLight
       enabled: false
       color: "#FF0000"
-    - type: LightBehaviour
-      enabled: true
-      behaviours:
-        - type: ColorSequence
-          maxDuration: 0.5
-          maxValue: 0.5
-          colorsToCycle:
-            - "#FF0000"
-            - "#FFFF00"
-            - "#00FF00"
-            - "#00FFFF"
-            - "#0000FF"
-            - "#FF00FF"
+    - type: Appearance
+      visuals:
+        - type: LightBehaviourVisualizer
+          enabled: true
+          behaviours:
+            - type: ColorSequence
+              maxDuration: 0.5
+              maxValue: 1.0
+              colorsToCycle:
+                - "#FF0000"
+                - "#FFFF00"
+                - "#00FF00"
+                - "#00FFFF"
+                - "#0000FF"
+                - "#FF00FF"
 
 - type: entity
   name: toggling on-off light test
@@ -173,12 +179,14 @@
     - type: PointLight
       enabled: false
       color: "#FF0000"
-    - type: LightBehaviour
-      enabled: true
-      behaviours:
-        - type: Flicker
-          maxDuration: 2.0
-          maxValue: 1.0
+    - type: Appearance
+      visuals:
+        - type: LightBehaviourVisualizer
+          enabled: true
+          behaviours:
+            - type: Flicker
+              maxDuration: 2.0
+              maxValue: 1.0
 
 - type: entity
   name: flicker briefly light test
@@ -208,27 +216,20 @@
     - type: PointLight
       enabled: false
       color: "#FF0000"
-    - type: LightBehaviour
-      enabled: true
-      behaviours:
-        - type: Flicker
-          maxDuration: 0.3
-          maxValue: 0.05
+    - type: Appearance
+      visuals:
+        - type: LightBehaviourVisualizer
+          enabled: true
+          behaviours:
+            - type: Flicker
+              maxDuration: 0.3
+              maxValue: 0.05
 
 - type: entity
   name: pulse light test
   parent: GlowstickBase
   id: GlowstickTest4
   components:
-    - type: ExpendableLight
-      spentName: spent glowstick
-      spentDesc: It looks like this glowstick has stopped glowing. How tragic.
-      glowRadius: 3
-      glowEnergy: 2.2
-      glowDuration: 900
-      fadeOutDuration: 300
-      iconStateOn: glowstick_lit
-      iconStateSpent: glowstick_unlit
     - type: Sprite
       sprite: Objects/Misc/glowstick.rsi
       layers:
@@ -241,30 +242,23 @@
       # color: "#00FF00" this won't work until handcuffs PR is merged
       HeldPrefix: off
     - type: PointLight
-      enabled: false
-      color: "#FF0000"
-    - type: LightBehaviour
       enabled: true
-      behaviours:
-        - type: PulseBrightness
-          maxDuration: 2.0
-          minValue: 3.0
-          maxValue: 10.0
+      color: "#FF0000"
+    - type: Appearance
+      visuals:
+        - type: LightBehaviourVisualizer
+          enabled: true
+          behaviours:
+            - type: PulseBrightness
+              maxDuration: 2.0
+              minValue: 3.0
+              maxValue: 10.0
 
 - type: entity
   name: pulse size light test
   parent: GlowstickBase
   id: GlowstickTest5
   components:
-    - type: ExpendableLight
-      spentName: spent glowstick
-      spentDesc: It looks like this glowstick has stopped glowing. How tragic.
-      glowRadius: 3
-      glowEnergy: 2.2
-      glowDuration: 900
-      fadeOutDuration: 300
-      iconStateOn: glowstick_lit
-      iconStateSpent: glowstick_unlit
     - type: Sprite
       sprite: Objects/Misc/glowstick.rsi
       layers:
@@ -277,15 +271,17 @@
       # color: "#00FF00" this won't work until handcuffs PR is merged
       HeldPrefix: off
     - type: PointLight
-      enabled: false
-      color: "#FF0000"
-    - type: LightBehaviour
       enabled: true
-      behaviours:
-        - type: PulseBrightness
-          maxDuration: 2.0
-          minValue: 3.0
-          maxValue: 10.0
+      color: "#FF0000"
+    - type: Appearance
+      visuals:
+        - type: LightBehaviourVisualizer
+          enabled: true
+          behaviours:
+            - type: PulseSize
+              maxDuration: 2.0
+              minValue: 3.0
+              maxValue: 10.0
 
 - type: entity
   name: randomized brightness light test
@@ -315,13 +311,15 @@
     - type: PointLight
       enabled: false
       color: "#FF0000"
-    - type: LightBehaviour
-      enabled: true
-      behaviours:
-        - type: RandomBrightness
-          maxDuration: 0.3
-          minValue: 1.0
-          maxValue: 6.0
+    - type: Appearance
+      visuals:
+        - type: LightBehaviourVisualizer
+          enabled: true
+          behaviours:
+            - type: RandomBrightness
+              maxDuration: 0.3
+              minValue: 1.0
+              maxValue: 6.0
 
 - type: entity
   name: randomized size light test
@@ -351,13 +349,15 @@
     - type: PointLight
       enabled: false
       color: "#FF0000"
-    - type: LightBehaviour
-      enabled: true
-      behaviours:
-        - type: RandomSize
-          maxDuration: 0.3
-          minValue: 1.0
-          maxValue: 6.0
+    - type: Appearance
+      visuals:
+        - type: LightBehaviourVisualizer
+          enabled: true
+          behaviours:
+            - type: RandomSize
+              maxDuration: 0.3
+              minValue: 1.0
+              maxValue: 6.0
 
 - type: entity
   name: multiple behaviour light test
@@ -387,15 +387,17 @@
     - type: PointLight
       enabled: false
       color: "#FF0000"
-    - type: LightBehaviour
-      enabled: true
-      behaviours:
-        - type: ColorSequence
-          maxDuration: 0.5
-          maxValue: 0.5
-          colorsToCycle:
-            - "#FF0000"
-            - "#0000FF"
-        - type: Flicker
-          maxDuration: 2.0
-          maxValue: 1.0
+    - type: Appearance
+      visuals:
+        - type: LightBehaviourVisualizer
+          enabled: true
+          behaviours:
+            - type: ColorSequence
+              maxDuration: 0.5
+              maxValue: 0.5
+              colorsToCycle:
+                - "#FF0000"
+                - "#0000FF"
+            - type: Flicker
+              maxDuration: 2.0
+              maxValue: 1.0
