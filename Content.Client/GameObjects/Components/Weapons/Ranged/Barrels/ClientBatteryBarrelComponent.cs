@@ -1,18 +1,13 @@
 ﻿using Content.Client.UserInterface.Stylesheets;
-using Content.Client.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
-using Robust.Client.Graphics;
+using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Maths;
-using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
 {
@@ -83,7 +78,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
                                 (_bulletsList = new HBoxContainer
                                 {
                                     SizeFlagsVertical = SizeFlags.ShrinkCenter,
-                                    SeparationOverride = 0
+                                    SeparationOverride = 4
                                 }),
                                 (_noBatteryLabel = new Label
                                 {
@@ -118,52 +113,40 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
                 _noBatteryLabel.Visible = false;
                 _ammoCount.Visible = true;
 
-                var texturePath = "/Textures/Interface/ItemStatus/Bullets/normal.png";
-                var texture = StaticIoC.ResC.GetTexture(texturePath);
-
                 _ammoCount.Text = $"x{count:00}";
-                capacity = Math.Min(capacity, 20);
-                FillBulletRow(_bulletsList, count, capacity, texture);
+                capacity = Math.Min(capacity, 8);
+                FillBulletRow(_bulletsList, count, capacity);
             }
 
-            private static void FillBulletRow(Control container, int count, int capacity, Texture texture)
+            private static void FillBulletRow(Control container, int count, int capacity)
             {
-                var colorA = Color.FromHex("#b68f0e");
-                var colorB = Color.FromHex("#d7df60");
-                var colorGoneA = Color.FromHex("#000000");
-                var colorGoneB = Color.FromHex("#222222");
-
-                var altColor = false;
+                var colorGone = Color.FromHex("#000000");
 
                 // Draw the empty ones
                 for (var i = count; i < capacity; i++)
                 {
-                    container.AddChild(new TextureRect
+                    container.AddChild(new PanelContainer
                     {
-                        Texture = texture,
-                        ModulateSelfOverride = altColor ? colorGoneA : colorGoneB,
-                        SizeFlagsHorizontal = SizeFlags.Fill,
-                        SizeFlagsVertical = SizeFlags.Fill,
-                        Stretch = TextureRect.StretchMode.KeepCentered
+                        PanelOverride = new StyleBoxFlat()
+                        {
+                            BackgroundColor = colorGone,
+                        },
+                        CustomMinimumSize = (10, 15),
                     });
-
-                    altColor ^= true;
                 }
 
                 // Draw the full ones, but limit the count to the capacity
                 count = Math.Min(count, capacity);
                 for (var i = 0; i < count; i++)
                 {
-                    container.AddChild(new TextureRect
+                    container.AddChild(new PanelContainer
                     {
-                        Texture = texture,
-                        ModulateSelfOverride = altColor ? colorA : colorB,
-                        SizeFlagsHorizontal = SizeFlags.Fill,
-                        SizeFlagsVertical = SizeFlags.Fill,
-                        Stretch = TextureRect.StretchMode.KeepCentered
+                        PanelOverride = new StyleBoxFlat()
+                        {
+                            BackgroundColor = Color.Green,
+                        },
+                        CustomMinimumSize = (10, 15),
                     });
-
-                    altColor ^= true;
                 }
             }
 
