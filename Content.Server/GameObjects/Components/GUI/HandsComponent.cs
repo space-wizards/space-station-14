@@ -29,6 +29,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
+using Content.Server.GameObjects.Components.ActionBlocking;
 
 namespace Content.Server.GameObjects.Components.GUI
 {
@@ -466,6 +467,11 @@ namespace Content.Server.GameObjects.Components.GUI
             }
 
             OnItemChanged?.Invoke();
+
+            if (Owner.TryGetComponent<CuffableComponent>(out var cuffable))
+            {
+                cuffable.UpdateHandCount();
+            }
 
             Dirty();
         }

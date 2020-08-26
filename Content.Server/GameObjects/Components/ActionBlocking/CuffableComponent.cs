@@ -127,15 +127,10 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             Dirty();
         }
 
-        public void Update(float frameTime)
-        {
-            UpdateHandCount();
-        }
-
         /// <summary>
         /// Check the current amount of hands the owner has, and if there's less hands than active cuffs we remove some cuffs.
         /// </summary>
-        private void UpdateHandCount() 
+        public void UpdateHandCount() 
         {
             _dirtyThisFrame = false;
             var handCount = _hands.Hands.Count();
