@@ -3,6 +3,7 @@ using Content.Shared.Physics;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Map;
 using static Content.Shared.GameObjects.EntitySystems.SharedInteractionSystem;
 
@@ -27,7 +28,8 @@ namespace Content.Client.Utility
                 return false;
             }
 
-            return SharedInteractionSystem.InRangeUnobstructed(originEntity, other, range, collisionMask, predicate, ignoreInsideBlocker);
+            return SharedInteractionSystem.InRangeUnobstructed(originEntity, other, range, collisionMask, predicate,
+                ignoreInsideBlocker);
         }
 
         public static bool InRangeUnobstructed(
@@ -45,7 +47,29 @@ namespace Content.Client.Utility
                 return false;
             }
 
-            return SharedInteractionSystem.InRangeUnobstructed(originEntity, other, range, collisionMask, predicate, ignoreInsideBlocker);
+            return SharedInteractionSystem.InRangeUnobstructed(originEntity, other, range, collisionMask, predicate,
+                ignoreInsideBlocker);
+        }
+
+        public static bool InRangeUnobstructed(
+            this LocalPlayer origin,
+            IContainer other,
+            float range = InteractionRange,
+            CollisionGroup collisionMask = CollisionGroup.Impassable,
+            Ignored predicate = null,
+            bool ignoreInsideBlocker = false)
+        {
+            var originEntity = origin.ControlledEntity;
+            if (originEntity == null)
+            {
+                // TODO: Take into account the player's camera position?
+                return false;
+            }
+
+            var otherEntity = other.Owner;
+
+            return SharedInteractionSystem.InRangeUnobstructed(originEntity, otherEntity, range, collisionMask,
+                predicate, ignoreInsideBlocker);
         }
 
         public static bool InRangeUnobstructed(
@@ -63,7 +87,8 @@ namespace Content.Client.Utility
                 return false;
             }
 
-            return SharedInteractionSystem.InRangeUnobstructed(originEntity, other, range, collisionMask, predicate, ignoreInsideBlocker);
+            return SharedInteractionSystem.InRangeUnobstructed(originEntity, other, range, collisionMask, predicate,
+                ignoreInsideBlocker);
         }
 
         public static bool InRangeUnobstructed(
@@ -81,7 +106,8 @@ namespace Content.Client.Utility
                 return false;
             }
 
-            return SharedInteractionSystem.InRangeUnobstructed(originEntity, other, range, collisionMask, predicate, ignoreInsideBlocker);
+            return SharedInteractionSystem.InRangeUnobstructed(originEntity, other, range, collisionMask, predicate,
+                ignoreInsideBlocker);
         }
     }
 }

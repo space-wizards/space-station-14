@@ -23,7 +23,8 @@ namespace Content.IntegrationTests.Tests.Interaction
         private const float InteractionRange = SharedInteractionSystem.InteractionRange;
 
         private const float InteractionRangeDivided15 = SharedInteractionSystem.InteractionRange / 1.5f;
-        private readonly (float, float) InteractionRangeDivided15X = (InteractionRangeDivided15, 0f);
+
+        private readonly (float, float) _interactionRangeDivided15X = (InteractionRangeDivided15, 0f);
 
         private const float InteractionRangeDivided15Times3 = InteractionRangeDivided15 * 3;
 
@@ -83,7 +84,7 @@ namespace Content.IntegrationTests.Tests.Interaction
 
 
                 // Move them slightly apart
-                origin.Transform.LocalPosition += InteractionRangeDivided15X;
+                origin.Transform.LocalPosition += _interactionRangeDivided15X;
 
                 // Entity <-> Entity
                 Assert.True(origin.InRangeUnobstructed(other));
@@ -107,7 +108,7 @@ namespace Content.IntegrationTests.Tests.Interaction
 
 
                 // Move them out of range
-                origin.Transform.LocalPosition += InteractionRangeDivided15X;
+                origin.Transform.LocalPosition += _interactionRangeDivided15X;
 
                 // Entity <-> Entity
                 Assert.False(origin.InRangeUnobstructed(other));

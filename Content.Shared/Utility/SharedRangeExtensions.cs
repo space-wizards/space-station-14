@@ -117,6 +117,22 @@ namespace Content.Shared.Utility
 
         public static bool InRangeUnobstructed(
             this IComponent origin,
+            IContainer other,
+            float range = InteractionRange,
+            CollisionGroup collisionMask = CollisionGroup.Impassable,
+            Ignored predicate = null,
+            bool ignoreInsideBlocker = false,
+            bool popup = false)
+        {
+            var originEntity = origin.Owner;
+            var otherEntity = other.Owner;
+
+            return SharedInteractionSystem.InRangeUnobstructed(originEntity, otherEntity, range, collisionMask, predicate,
+                ignoreInsideBlocker, popup);
+        }
+
+        public static bool InRangeUnobstructed(
+            this IComponent origin,
             GridCoordinates other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
@@ -258,6 +274,22 @@ namespace Content.Shared.Utility
 
         public static bool InRangeUnobstructed(
             this GridCoordinates origin,
+            IContainer other,
+            float range = InteractionRange,
+            CollisionGroup collisionMask = CollisionGroup.Impassable,
+            Ignored predicate = null,
+            bool ignoreInsideBlocker = false)
+        {
+            var mapManager = IoCManager.Resolve<IMapManager>();
+            var originPosition = origin.ToMap(mapManager);
+            var otherPosition = other.Owner.Transform.MapPosition;
+
+            return SharedInteractionSystem.InRangeUnobstructed(originPosition, otherPosition, range, collisionMask,
+                predicate, ignoreInsideBlocker);
+        }
+
+        public static bool InRangeUnobstructed(
+            this GridCoordinates origin,
             GridCoordinates other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
@@ -306,6 +338,20 @@ namespace Content.Shared.Utility
         public static bool InRangeUnobstructed(
             this MapCoordinates origin,
             IComponent other,
+            float range = InteractionRange,
+            CollisionGroup collisionMask = CollisionGroup.Impassable,
+            Ignored predicate = null,
+            bool ignoreInsideBlocker = false)
+        {
+            var otherPosition = other.Owner.Transform.MapPosition;
+
+            return SharedInteractionSystem.InRangeUnobstructed(origin, otherPosition, range, collisionMask, predicate,
+                ignoreInsideBlocker);
+        }
+
+        public static bool InRangeUnobstructed(
+            this MapCoordinates origin,
+            IContainer other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
             Ignored predicate = null,
