@@ -17,6 +17,7 @@ using System.Linq;
 using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
+using Robust.Shared.GameObjects.Systems;
 using static Content.Server.Interfaces.Chat.IChatManager;
 
 namespace Content.Server.Chat
@@ -115,19 +116,19 @@ namespace Content.Server.Chat
             var pos = source.Transform.GridPosition;
             var clients = _playerManager.GetPlayersInRange(pos, VoiceRange).Select(p => p.ConnectedClient);
 
-            if (message.StartsWith(';') && source.TryGetComponent<InventoryComponent>(out InventoryComponent inventory))
+            if (message.StartsWith(';') && source.TryGetComponent(out InventoryComponent inventory))
             {
                 message = message.Substring(1);
-                if (inventory.TryGetSlotItem<ItemComponent>(EquipmentSlotDefines.Slots.EARS, out ItemComponent item))
+                if (inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.EARS, out ItemComponent item))
                 {
-                    if (item.Owner.TryGetComponent<HeadsetComponent>(out HeadsetComponent headset))
+                    if (item.Owner.TryGetComponent(out HeadsetComponent headset))
                     {
                         headset.RadioRequested = true;
                     }
                 }
             }
 
-            var listeners = _entitySystemManager.GetEntitySystem<ListeningSystem>();
+            var listeners = EntitySystem.Get<ListeningSystem>();
             listeners.PingListeners(source, pos, message);
 
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();

@@ -9,15 +9,13 @@ namespace Content.Server.GameObjects.EntitySystems
 {
     class ListeningSystem : EntitySystem
     {
-#pragma warning disable 649
-        [Dependency] private readonly IMapManager _mapManager;
-#pragma warning restore 649
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         public void PingListeners(IEntity source, GridCoordinates sourcePos, string message)
         {
             foreach (var listener in ComponentManager.EntityQuery<IListen>())
             {
-                var listenerPos = listener.GetListenerPosition();
+                var listenerPos = listener.Owner.Transform.GridPosition;
                 var dist = listenerPos.Distance(_mapManager, sourcePos);
                 if (dist <= listener.GetListenRange())
                 {

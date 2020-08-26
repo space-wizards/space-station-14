@@ -9,12 +9,10 @@ namespace Content.Server.Interfaces
     /// <summary>
     ///     Interface for objects such as radios meant to have an effect when speech is heard. Requires component reference.
     /// </summary>
-    public interface IListen
+    public interface IListen : IComponent
     {
         void HeardSpeech(string speech, IEntity source);
 
         int GetListenRange();
-
-        GridCoordinates GetListenerPosition();
     }
 }

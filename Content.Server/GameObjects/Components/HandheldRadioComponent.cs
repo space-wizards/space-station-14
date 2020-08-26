@@ -99,10 +99,5 @@ namespace Content.Server.GameObjects.Components
         {
             return _channels;
         }
-
-        public GridCoordinates GetListenerPosition()
-        {
-            return Owner.Transform.GridPosition;
-        }
     }
 }
