@@ -30,6 +30,7 @@
     - Single
     fireRate: 2
     powerCellPrototype: PowerCellSmallStandard
+    powerCellRemovable: true
     ammoPrototype: RedLaser
     soundGunshot: /Audio/Weapons/Guns/Gunshots/laser.ogg
   - type: Appearance
@@ -71,6 +72,7 @@
     angleIncrease: 15
     angleDecay: 45
     powerCellPrototype: PowerCellSmallSuper
+    powerCellRemovable: true
     ammoPrototype: RedHeavyLaser
     soundGunshot: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: Appearance
@@ -112,6 +114,7 @@
     angleIncrease: 15
     angleDecay: 45
     powerCellPrototype: PowerCellSmallSuper
+    powerCellRemovable: true
     base_fire_cost: 600
     ammoPrototype: XrayLaser
     soundGunshot: /Audio/Weapons/Guns/Gunshots/laser3.ogg
@@ -155,6 +158,7 @@
     angleIncrease: 20
     angleDecay: 15
     powerCellPrototype: PowerCellSmallStandard
+    powerCellRemovable: false
     ammoPrototype: BulletTaser
     soundGunshot: /Audio/Weapons/Guns/Gunshots/taser.ogg
   - type: Appearance
