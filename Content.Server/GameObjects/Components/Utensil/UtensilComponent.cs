@@ -4,6 +4,7 @@ using Content.Server.GameObjects.Components.Nutrition;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Utensil;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -121,7 +122,7 @@ namespace Content.Server.GameObjects.Components.Utensil
                 return;
             }
 
-            if (!InteractionChecks.InRangeUnobstructed(user, target.Transform.MapPosition))
+            if (!user.InRangeUnobstructed(target, popup: true))
             {
                 return;
             }

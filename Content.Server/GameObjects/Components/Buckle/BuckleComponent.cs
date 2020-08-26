@@ -6,20 +6,19 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Strap;
 using Content.Server.Interfaces;
 using Content.Server.Mobs;
-using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Buckle;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Strap;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystemMessages;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
@@ -185,13 +184,10 @@ namespace Content.Server.GameObjects.Components.Buckle
                 return false;
             }
 
-            var ownerPosition = Owner.Transform.MapPosition;
-            var strapPosition = strap.Owner.Transform.MapPosition;
-            var interaction = EntitySystem.Get<SharedInteractionSystem>();
             var component = strap;
             bool Ignored(IEntity entity) => entity == Owner || entity == user || entity == component.Owner;
 
-            if (!interaction.InRangeUnobstructed(ownerPosition, strapPosition, _range, predicate: Ignored))
+            if (!Owner.InRangeUnobstructed(strap, _range, predicate: Ignored, popup: true))
             {
                 _notifyManager.PopupMessage(strap.Owner, user,
                     Loc.GetString("You can't reach there!"));
@@ -341,9 +337,7 @@ namespace Content.Server.GameObjects.Components.Buckle
                     return false;
                 }
 
-                var strapPosition = Owner.Transform.MapPosition;
-
-                if (!InteractionChecks.InRangeUnobstructed(user, strapPosition, _range))
+                if (!user.InRangeUnobstructed(oldBuckledTo, _range, popup: true))
                 {
                     return false;
                 }
