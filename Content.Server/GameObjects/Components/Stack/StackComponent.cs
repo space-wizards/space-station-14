@@ -19,9 +19,7 @@ namespace Content.Server.GameObjects.Components.Stack
     [RegisterComponent]
     public class StackComponent : SharedStackComponent, IInteractUsing, IExamine
     {
-#pragma warning disable 649
-        [Dependency] private readonly ISharedNotifyManager _sharedNotifyManager;
-#pragma warning restore 649
+        [Dependency] private readonly ISharedNotifyManager _sharedNotifyManager = default!;
 
         private bool _throwIndividually = false;
 

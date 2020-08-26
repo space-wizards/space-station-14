@@ -248,6 +248,9 @@ binds:
 - function: OpenTileSpawnWindow
   type: state
   key: F6
+- function: OpenAdminMenu
+  type: state
+  key: F7
 - function: OpenSandboxWindow
   type: state
   key: B

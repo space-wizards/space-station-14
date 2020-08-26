@@ -22,10 +22,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
     [RegisterComponent]
     public class FlashComponent : MeleeWeaponComponent, IUse, IExamine
     {
-#pragma warning disable 649
-        [Dependency] private readonly IEntityManager _entityManager;
-        [Dependency] private readonly ISharedNotifyManager _notifyManager;
-#pragma warning restore 649
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly ISharedNotifyManager _notifyManager = default!;
 
         public override string Name => "Flash";
 

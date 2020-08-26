@@ -16,9 +16,7 @@ namespace Content.Server.GameObjects.Components.Damage
     [ComponentReference(typeof(IDamageableComponent))]
     public class DestructibleComponent : RuinableComponent, IDestroyAct
     {
-#pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-#pragma warning restore 649
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
         protected ActSystem ActSystem;
 

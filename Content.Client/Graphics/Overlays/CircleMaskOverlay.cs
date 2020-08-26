@@ -11,10 +11,8 @@ namespace Content.Client.Graphics.Overlays
 {
     public class CircleMaskOverlay : Overlay
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly IEyeManager _eyeManager;
-#pragma warning restore 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IEyeManager _eyeManager = default!;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
         private readonly ShaderInstance _shader;

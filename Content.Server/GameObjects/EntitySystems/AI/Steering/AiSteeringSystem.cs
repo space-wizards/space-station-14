@@ -25,11 +25,9 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
     public sealed class AiSteeringSystem : EntitySystem
     {
         // http://www.red3d.com/cwr/papers/1999/gdc99steer.html for a steering overview
+        [Dependency] private IMapManager _mapManager = default!;
+        [Dependency] private IPauseManager _pauseManager = default!;
 
-#pragma warning disable 649
-        [Dependency] private IMapManager _mapManager;
-        [Dependency] private IPauseManager _pauseManager;
-#pragma warning restore 649
         private PathfindingSystem _pathfindingSystem;
 
         /// <summary>
@@ -255,7 +253,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             }
 
             var entitySteering = steeringRequest as EntityTargetSteeringRequest;
-            
+
             if (entitySteering != null && entitySteering.Target.Deleted)
             {
                 controller.VelocityDir = Vector2.Zero;
@@ -279,10 +277,10 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             // Check if we have arrived
             var targetDistance = (entity.Transform.MapPosition.Position - steeringRequest.TargetMap.Position).Length;
             steeringRequest.TimeUntilInteractionCheck -= frameTime;
-            
+
             if (targetDistance <= steeringRequest.ArrivalDistance && steeringRequest.TimeUntilInteractionCheck <= 0.0f)
             {
-                if (!steeringRequest.RequiresInRangeUnobstructed || 
+                if (!steeringRequest.RequiresInRangeUnobstructed ||
                     InteractionChecks.InRangeUnobstructed(entity, steeringRequest.TargetMap, steeringRequest.ArrivalDistance, ignoredEnt: entity))
                 {
                     // TODO: Need cruder LOS checks for ranged weaps
@@ -353,7 +351,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             if (entitySteering != null)
             {
                 // Check if target's moved too far
-                if (_entityTargetPosition.TryGetValue(entity, out var targetGrid) && 
+                if (_entityTargetPosition.TryGetValue(entity, out var targetGrid) &&
                     (entitySteering.TargetGrid.Position - targetGrid.Position).Length >= entitySteering.TargetMaxMove)
                 {
                     // We'll just repath and keep following the existing one until we get a new one

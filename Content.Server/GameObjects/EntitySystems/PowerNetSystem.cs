@@ -6,9 +6,7 @@ namespace Content.Server.GameObjects.EntitySystems
 {
     public class PowerNetSystem : EntitySystem
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPowerNetManager _powerNetManager;
-#pragma warning restore 649
+        [Dependency] private readonly IPowerNetManager _powerNetManager = default!;
 
         public override void Update(float frameTime)
         {

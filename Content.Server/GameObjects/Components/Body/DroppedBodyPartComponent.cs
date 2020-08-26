@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Server.Body;
+using Content.Server.Utility;
 using Content.Shared.Body.Surgery;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
@@ -34,12 +35,7 @@ namespace Content.Server.GameObjects.Components.Body
 
         [ViewVariables] public BodyPart ContainedBodyPart { get; private set; } = default!;
 
-        [ViewVariables]
-        private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
-            ui.TryGetBoundUserInterface(GenericSurgeryUiKey.Key, out var boundUi)
-                ? boundUi
-                : null;
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(GenericSurgeryUiKey.Key);
 
         void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {

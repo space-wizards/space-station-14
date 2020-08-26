@@ -8,11 +8,9 @@ namespace Content.Server.GameObjects.Components.Items.Storage.Fill
     [RegisterComponent]
     internal sealed class UtilityBeltClothingFillComponent : Component, IMapInit
     {
-        public override string Name => "UtilityBeltClothingFill";
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
-#pragma warning disable 649
-        [Dependency] private readonly IEntityManager _entityManager;
-#pragma warning restore 649
+        public override string Name => "UtilityBeltClothingFill";
 
         void IMapInit.MapInit()
         {

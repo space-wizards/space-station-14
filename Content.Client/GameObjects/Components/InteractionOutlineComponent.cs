@@ -9,14 +9,12 @@ namespace Content.Client.GameObjects.Components
     [RegisterComponent]
     public class InteractionOutlineComponent : Component
     {
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         private const string ShaderInRange = "SelectionOutlineInrange";
         private const string ShaderOutOfRange = "SelectionOutline";
 
         public override string Name => "InteractionOutline";
-
-#pragma warning disable 649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-#pragma warning restore 649
 
         private ShaderInstance _selectionShaderInstance;
         private ShaderInstance _selectionShaderInRangeInstance;

@@ -7,9 +7,7 @@ namespace Content.Client.GameObjects.EntitySystems
 {
     public class StatusEffectsSystem : EntitySystem
     {
-#pragma warning disable 649
-        [Dependency] private IGameTiming _gameTiming;
-#pragma warning restore 649
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override void FrameUpdate(float frameTime)
         {

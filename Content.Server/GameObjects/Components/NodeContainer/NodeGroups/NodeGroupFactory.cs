@@ -22,12 +22,10 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
     public class NodeGroupFactory : INodeGroupFactory
     {
-        private readonly Dictionary<NodeGroupID, Type> _groupTypes = new Dictionary<NodeGroupID, Type>();
+        [Dependency] private readonly IReflectionManager _reflectionManager = default!;
+        [Dependency] private readonly IDynamicTypeFactory _typeFactory = default!;
 
-#pragma warning disable 649
-        [Dependency] private readonly IReflectionManager _reflectionManager;
-        [Dependency] private readonly IDynamicTypeFactory _typeFactory;
-#pragma warning restore 649
+        private readonly Dictionary<NodeGroupID, Type> _groupTypes = new Dictionary<NodeGroupID, Type>();
 
         public void Initialize()
         {
