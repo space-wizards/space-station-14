@@ -225,8 +225,8 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             if (result != DoAfterStatus.Cancelled)
             {
                 _audioSystem.PlayFromEntity(EndCuffSound, Owner);
-                _notifyManager.PopupMessage(user, user, Loc.GetString("You successfully cuff {0}.", target.Name));
-                _notifyManager.PopupMessage(target, target, Loc.GetString("You have been cuffed by {0}!", user.Name));
+                _notifyManager.PopupMessage(user, user, Loc.GetString("You successfully cuff {0:theName}.", target));
+                _notifyManager.PopupMessage(target, target, Loc.GetString("You have been cuffed by {0:theName}!", user));
 
                 if (user.TryGetComponent<HandsComponent>(out var hands))
                 {
@@ -240,8 +240,8 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             }
             else
             {
-                user.PopupMessage(user, Loc.GetString("You were interrupted while cuffing {0}!", target.Name));
-                target.PopupMessage(target, Loc.GetString("You interrupt {0} while they are cuffing you!", user.Name));
+                user.PopupMessage(user, Loc.GetString("You were interrupted while cuffing {0:theName}!", target));
+                target.PopupMessage(target, Loc.GetString("You interrupt {0:theName} while they are cuffing you!", user));
             }
         }
     }

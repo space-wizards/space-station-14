@@ -224,7 +224,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
             if (!isOwner && !ActionBlockerSystem.CanInteract(user))
             {
-                user.PopupMessage(user, "You can't do that!");
+                user.PopupMessage(user, Loc.GetString("You can't do that!"));
                 return;
             }
 
@@ -235,7 +235,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
                     _interactRange,
                     ignoredEnt: Owner))
             {
-                user.PopupMessage(user, "You are too far away to remove the cuffs.");
+                user.PopupMessage(user, Loc.GetString("You are too far away to remove the cuffs."));
                 return;
             }
 
@@ -249,7 +249,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
                 return;
             }
 
-            user.PopupMessage(user, "You start removing the cuffs.");
+            user.PopupMessage(user, Loc.GetString("You start removing the cuffs."));
 
             var audio = EntitySystem.Get<AudioSystem>();
             audio.PlayFromEntity(isOwner ? cuff.StartBreakoutSound : cuff.StartUncuffSound, Owner);
@@ -305,7 +305,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
                 {
                     if (!isOwner)
                     {
-                        _notifyManager.PopupMessage(user, user, Loc.GetString("You successfully remove the cuffs. {0} of {0:theName}'s hands remain cuffed.", CuffedHandCount, user));
+                        _notifyManager.PopupMessage(user, user, Loc.GetString("You successfully remove the cuffs. {0} of {1:theName}'s hands remain cuffed.", CuffedHandCount, user));
                         _notifyManager.PopupMessage(user, Owner, Loc.GetString("{0:theName} removes your cuffs. {1} of your hands remain cuffed.", user, CuffedHandCount));
                     }
                     else
