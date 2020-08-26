@@ -93,7 +93,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             if (!Cell.TryUseCharge(EnergyPerUse))
                 return true;
 
-            EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Weapons/Egloves.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
+            EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Weapons/egloves.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
 
             foreach (var entity in entities)
             {
