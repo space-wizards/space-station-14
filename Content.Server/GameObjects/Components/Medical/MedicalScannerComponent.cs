@@ -1,7 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces;
+using Content.Server.Mobs;
+using Content.Server.Players;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Medical;
 using Content.Shared.GameObjects.EntitySystems;
@@ -15,6 +20,9 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
 using Content.Shared.Damage;
+using Content.Shared.Preferences;
+using Robust.Server.Interfaces.Player;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
 namespace Content.Server.GameObjects.Components.Medical
@@ -27,6 +35,8 @@ namespace Content.Server.GameObjects.Components.Medical
         private BoundUserInterface _userInterface;
         private ContainerSlot _bodyContainer;
         private readonly Vector2 _ejectOffset = new Vector2(-0.5f, 0f);
+        [Dependency] private readonly IServerPreferencesManager _prefsManager;
+        [Dependency] private readonly IPlayerManager _playerManager;
         public bool IsOccupied => _bodyContainer.ContainedEntity != null;
 
         private PowerReceiverComponent _powerReceiver;
@@ -75,7 +85,18 @@ namespace Content.Server.GameObjects.Components.Medical
             var classes = new Dictionary<DamageClass, int>(damageable.DamageClasses);
             var types = new Dictionary<DamageType, int>(damageable.DamageTypes);
 
-            return new MedicalScannerBoundUserInterfaceState(body.Uid, classes, types, CloningSystem.HasUid(body.Uid));
+            //TODO: Fix this query so that it doesn't run in cases were there will be no Mind
+            var foo = true;
+            if (_bodyContainer.ContainedEntity != null)
+            {
+                foo = CloningSystem.HasDnaScan(_playerManager
+                    .GetPlayersBy(x => x.AttachedEntity != null
+                                       && x.AttachedEntityUid == _bodyContainer.ContainedEntity.Uid).First()
+                    .ContentData()
+                    ?.Mind);
+            }
+
+            return new MedicalScannerBoundUserInterfaceState(body.Uid, classes, types, foo);
         }
 
         private void UpdateUserInterface()
@@ -207,8 +228,13 @@ namespace Content.Server.GameObjects.Components.Medical
                 case UiButton.ScanDNA:
                     if (_bodyContainer.ContainedEntity != null)
                     {
-                        CloningSystem.AddToScannedUids(_bodyContainer.ContainedEntity.Uid);
+                        CloningSystem.AddToDnaScans(_playerManager
+                            .GetPlayersBy(x => x.AttachedEntity != null
+                                               && x.AttachedEntityUid == _bodyContainer.ContainedEntity.Uid).First()
+                            .ContentData()
+                            ?.Mind);
                     }
+
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

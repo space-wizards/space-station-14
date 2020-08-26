@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using Content.Shared.Preferences;
+using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Serialization;
+using Robust.Shared.Network;
 
 namespace Content.Shared.GameObjects.Components.Medical
 {
+
     public class SharedCloningMachineComponent : Component
     {
         public override string Name => "CloningMachine";
@@ -13,17 +17,17 @@ namespace Content.Shared.GameObjects.Components.Medical
         [Serializable, NetSerializable]
         public class CloningMachineBoundUserInterfaceState : BoundUserInterfaceState
         {
-            public readonly List<EntityUid> Scans;
+            public readonly Dictionary<int, string> MindIdName;
             public readonly float Progress;
-            public readonly bool Working;
 
-            public CloningMachineBoundUserInterfaceState(List<EntityUid> scans, float progress, bool working)
+            public CloningMachineBoundUserInterfaceState(Dictionary<int, string> mindIdName, float progress,
+                bool working)
             {
-                Scans = scans;
+                MindIdName = mindIdName;
                 Progress = progress;
-                Working = working;
             }
         }
+
 
         [Serializable, NetSerializable]
         public enum CloningMachineUIKey
@@ -55,9 +59,9 @@ namespace Content.Shared.GameObjects.Components.Medical
         public class UiButtonPressedMessage : BoundUserInterfaceMessage
         {
             public readonly UiButton Button;
-            public readonly EntityUid? ScanId;
+            public readonly int? ScanId;
 
-            public UiButtonPressedMessage(UiButton button, EntityUid? scanId)
+            public UiButtonPressedMessage(UiButton button, int? scanId)
             {
                 Button = button;
                 ScanId = scanId;

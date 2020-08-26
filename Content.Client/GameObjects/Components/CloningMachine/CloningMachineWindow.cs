@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -22,7 +23,7 @@ namespace Content.Client.GameObjects.Components.CloningMachine
 
         private VBoxContainer MainVBox;
         private ScanListContainer ScanList;
-        private List<EntityUid> scanManager;
+        private Dictionary<int,string> scanManager;
         private LineEdit SearchBar;
         private OptionButton OverrideMenu;
         private Button ClearButton;
@@ -32,19 +33,19 @@ namespace Content.Client.GameObjects.Components.CloningMachine
         protected override Vector2 ContentsMinimumSize => MainVBox?.CombinedMinimumSize ?? Vector2.Zero;
 
         // List of scans that are visible based on current filter criteria.
-        private readonly List<EntityUid> _filteredScans = new List<EntityUid>();
+        private readonly Dictionary<int,string> _filteredScans = new Dictionary<int,string>();
 
         // The indices of the visible scans last time UpdateVisibleScans was ran.
         // This is inclusive, so end is the index of the last scan, not right after it.
         private (int start, int end) _lastScanIndices;
 
         private CloningScanButton? SelectedButton;
-        public EntityUid? SelectedScan;
+        public int? SelectedScan;
 
         protected override Vector2? CustomSize => (250, 300);
 
         public CloningMachineWindow(
-            List<EntityUid> scanManager,
+            Dictionary<int,string> scanManager,
             ILocalizationManager loc)
         {
             this.scanManager = scanManager;
@@ -108,7 +109,7 @@ namespace Content.Client.GameObjects.Components.CloningMachine
 
         public void Populate(CloningMachineBoundUserInterfaceState state)
         {
-            scanManager = state.Scans;
+            scanManager = state.MindIdName;
             BuildEntityList();
         }
 
@@ -150,15 +151,16 @@ namespace Content.Client.GameObjects.Components.CloningMachine
 
             foreach (var scan in scanManager)
             {
-                if (searchStr != null && !_doesScanMatchSearch(scan, searchStr))
+                if (searchStr != null && !_doesScanMatchSearch(scan.Value, searchStr))
                 {
                     continue;
                 }
 
-                _filteredScans.Add(scan);
+                _filteredScans.Add(scan.Key,scan.Value);
             }
 
-            _filteredScans.Sort((a, b) => string.Compare(a.ToString(), b.ToString(), StringComparison.Ordinal));
+            //TODO:Sort when we use filteredScans for a thin
+            //_filteredScans.Sort((a, b) => string.Compare(a.ToString(), b.ToString(), StringComparison.Ordinal));
 
             ScanList.TotalItemCount = _filteredScans.Count;
         }
@@ -211,25 +213,28 @@ namespace Content.Client.GameObjects.Components.CloningMachine
                 ScanList.RemoveChild(control);
             }
 
+            var array = _filteredScans.ToArray();
+
             // Create buttons at the start of the list that are now visible (scrolling up).
             for (var i = Math.Min(prevStart - 1, endIndex); i >= startIndex; i--)
             {
-                InsertEntityButton(_filteredScans[i], true, i);
+                InsertEntityButton(array[i], true, i);
             }
 
             // Create buttons at the end of the list that are now visible (scrolling down).
             for (var i = Math.Max(prevEnd + 1, startIndex); i <= endIndex; i++)
             {
-                InsertEntityButton(_filteredScans[i], false, i);
+                InsertEntityButton(array[i], false, i);
             }
         }
 
         // Create a spawn button and insert it into the start or end of the list.
-        private void InsertEntityButton(EntityUid scan, bool insertFirst, int index)
+        private void InsertEntityButton(KeyValuePair<int,string> scan, bool insertFirst, int index)
         {
             var button = new CloningScanButton
             {
-                Scan = scan,
+                Scan = scan.Value,
+                Id = scan.Key,
                 Index = index // We track this index purely for debugging.
             };
             button.ActualButton.OnToggled += OnItemButtonToggled;
@@ -237,7 +242,7 @@ namespace Content.Client.GameObjects.Components.CloningMachine
 
             button.EntityLabel.Text = entityLabelText;
 
-            if (scan == SelectedScan)
+            if (scan.Key == SelectedScan)
             {
                 SelectedButton = button;
                 SelectedButton.ActualButton.Pressed = true;
@@ -265,9 +270,9 @@ namespace Content.Client.GameObjects.Components.CloningMachine
             }
         }
 
-        private static bool _doesScanMatchSearch(EntityUid scan, string searchStr)
+        private static bool _doesScanMatchSearch(string scan, string searchStr)
         {
-            return scan.ToString().ToLowerInvariant().Contains(searchStr);
+            return scan.ToLowerInvariant().Contains(searchStr);
         }
 
         //TODO: Here is were we have the item toggle logic
@@ -289,7 +294,7 @@ namespace Content.Client.GameObjects.Components.CloningMachine
             SelectedScan = null;
 
             SelectedButton = item;
-            SelectedScan = item.Scan;
+            SelectedScan = item.Id;
         }
 
         protected override void FrameUpdate(FrameEventArgs args)
@@ -365,7 +370,8 @@ namespace Content.Client.GameObjects.Components.CloningMachine
         [DebuggerDisplay("cloningbutton {" + nameof(Index) + "}")]
         private class CloningScanButton : Control
         {
-            public EntityUid Scan { get; set; } = default!;
+            public string Scan { get; set; } = default!;
+            public int Id { get; set; }
             public Button ActualButton { get; private set; }
             public Label EntityLabel { get; private set; }
             public TextureRect EntityTextureRect { get; private set; }

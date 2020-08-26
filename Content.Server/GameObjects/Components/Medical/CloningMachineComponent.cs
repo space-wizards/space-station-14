@@ -6,8 +6,7 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
-using Content.Server.Interfaces.GameTicking;
-using Content.Server.Utility;
+using Content.Server.Mobs;
 using Content.Shared.GameObjects.Components.Medical;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Preferences;
@@ -19,7 +18,7 @@ using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Map;
+using Robust.Shared.Network;
 
 namespace Content.Server.GameObjects.Components.Medical
 {
@@ -30,6 +29,7 @@ namespace Content.Server.GameObjects.Components.Medical
         private AppearanceComponent _appearance;
         private BoundUserInterface _userInterface;
         private ContainerSlot _bodyContainer;
+        private CloningMachineStatus _status;
         [Dependency] private readonly IServerPreferencesManager _prefsManager;
 
         private PowerReceiverComponent _powerReceiver;
@@ -66,11 +66,11 @@ namespace Content.Server.GameObjects.Components.Medical
 
 
         private static readonly CloningMachineBoundUserInterfaceState EmptyUIState =
-            new CloningMachineBoundUserInterfaceState(new List<EntityUid>(), 0, false);
+            new CloningMachineBoundUserInterfaceState(new Dictionary<int, string>(), 0, false);
 
         private CloningMachineBoundUserInterfaceState GetUserInterfaceState()
         {
-            return new CloningMachineBoundUserInterfaceState(CloningSystem.scannedUids, 0, false);
+            return new CloningMachineBoundUserInterfaceState(CloningSystem.getIdToUser(), 0, false);
         }
 
 
@@ -88,9 +88,14 @@ namespace Content.Server.GameObjects.Components.Medical
 
         private async void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
-            if (!(obj.Message is UiButtonPressedMessage message))
+            int Id;
+            if (!(obj.Message is UiButtonPressedMessage message) || message.ScanId == null)
             {
                 return;
+            }
+            else
+            {
+                Id = message.ScanId ?? default(int);
             }
 
             switch (message.Button)
@@ -100,17 +105,13 @@ namespace Content.Server.GameObjects.Components.Medical
                     var _playerManager = IoCManager.Resolve<IPlayerManager>();
 
                     var mob = entityManager.SpawnEntity("HumanMob_Content", Owner.Transform.MapPosition);
+                    var mind = CloningSystem.Minds[Id];
 
-                    //THIS CALL FAILS
-                    var list = _playerManager.GetPlayersBy(x => x.AttachedEntity != null)
-                        .Select(x => x.AttachedEntityUid);
                     var client = _playerManager
-                        .GetPlayersBy(x => x.AttachedEntity != null
-                                           && x.AttachedEntityUid == message.ScanId).First();
-
-                    var profile = GetPlayerProfileAsync(client.Name).Result;
-                    mob.GetComponent<HumanoidAppearanceComponent>().UpdateFromProfile(profile);
-                    mob.Name = profile.Name;
+                        .GetPlayersBy(x => x.SessionId == mind.SessionId).First();
+                    mob.GetComponent<HumanoidAppearanceComponent>()
+                        .UpdateFromProfile(GetPlayerProfileAsync(client.Name).Result);
+                    mob.Name = GetPlayerProfileAsync(client.Name).Result.Name;
 
                     _bodyContainer.Insert(mob);
                     _bodyContainer.Remove(mob);
