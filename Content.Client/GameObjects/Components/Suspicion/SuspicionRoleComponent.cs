@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System.Collections.Generic;
+using System.Linq;
 using Content.Client.UserInterface;
 using Content.Client.UserInterface.Suspicion;
 using Content.Shared.GameObjects.Components.Suspicion;
@@ -16,6 +17,7 @@ namespace Content.Client.GameObjects.Components.Suspicion
     public class SuspicionRoleComponent : SharedSuspicionRoleComponent
     {
         [Dependency] private readonly IGameHud _gameHud = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private SuspicionGui? _gui;
         private string? _role;
@@ -43,7 +45,7 @@ namespace Content.Client.GameObjects.Components.Suspicion
             }
         }
 
-        public HashSet<string> Allies { get; } = new HashSet<string>();
+        public HashSet<IEntity> Allies { get; } = new HashSet<IEntity>();
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
@@ -92,7 +94,7 @@ namespace Content.Client.GameObjects.Components.Suspicion
             {
                 case SuspicionAlliesMessage msg:
                     Allies.Clear();
-                    Allies.UnionWith(msg.Allies);
+                    Allies.UnionWith(msg.Allies.Select(_entityManager.GetEntity));
                     break;
             }
         }

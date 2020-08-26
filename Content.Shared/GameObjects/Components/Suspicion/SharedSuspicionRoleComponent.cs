@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
@@ -28,12 +29,47 @@ namespace Content.Shared.GameObjects.Components.Suspicion
     [Serializable, NetSerializable]
     public class SuspicionAlliesMessage : ComponentMessage
     {
-        public readonly HashSet<string> Allies;
+        public readonly HashSet<EntityUid> Allies;
 
-        public SuspicionAlliesMessage(HashSet<string> allies)
+        public SuspicionAlliesMessage(HashSet<EntityUid> allies)
         {
             Directed = true;
             Allies = allies;
+        }
+
+        public SuspicionAlliesMessage(IEnumerable<EntityUid> allies) : this(allies.ToHashSet()) { }
+    }
+
+    [Serializable, NetSerializable]
+    public class SuspicionAllyAddedMessage : ComponentMessage
+    {
+        public readonly EntityUid Ally;
+
+        public SuspicionAllyAddedMessage(EntityUid ally)
+        {
+            Directed = true;
+            Ally = ally;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class SuspicionAllyRemovedMessage : ComponentMessage
+    {
+        public readonly EntityUid Ally;
+
+        public SuspicionAllyRemovedMessage(EntityUid ally)
+        {
+            Directed = true;
+            Ally = ally;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class SuspicionAlliesClearedMessage : ComponentMessage
+    {
+        public SuspicionAlliesClearedMessage()
+        {
+            Directed = true;
         }
     }
 }

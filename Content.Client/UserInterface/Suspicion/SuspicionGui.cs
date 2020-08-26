@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using System.Linq;
 using Content.Client.GameObjects.Components.Suspicion;
 using Content.Shared.Interfaces;
 using Robust.Client.Player;
