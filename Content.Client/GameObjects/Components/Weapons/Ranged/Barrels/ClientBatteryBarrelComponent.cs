@@ -121,6 +121,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
             private static void FillBulletRow(Control container, int count, int capacity)
             {
                 var colorGone = Color.FromHex("#000000");
+                var color = Color.FromHex("#E00000");
 
                 // Draw the empty ones
                 for (var i = count; i < capacity; i++)
@@ -143,7 +144,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
                     {
                         PanelOverride = new StyleBoxFlat()
                         {
-                            BackgroundColor = Color.Green,
+                            BackgroundColor = color,
                         },
                         CustomMinimumSize = (10, 15),
                     });
