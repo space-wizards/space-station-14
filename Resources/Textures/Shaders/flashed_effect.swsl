@@ -1,18 +1,18 @@
-﻿uniform float percentComplete;
-uniform float fadeFalloffExp = 8;
+﻿uniform highp float percentComplete;
+uniform highp float fadeFalloffExp = 8.0;
 
 void fragment() {
     // Higher exponent -> stronger blinding effect
-    float remaining = -pow(percentComplete, fadeFalloffExp) + 1;
+    highp float remaining = -pow(percentComplete, fadeFalloffExp) + 1.0;
 
     // Two ghost textures that spin around the character
-    vec4 tex1 = texture(TEXTURE, vec2(UV.x + (0.02) * sin(TIME * 3), UV.y + (0.02) * cos(TIME * 3)));
-    vec4 tex2 = texture(TEXTURE, vec2(UV.x + (0.01) * sin(TIME * 2), UV.y + (0.01) * cos(TIME * 2)));
+    highp vec4 tex1 = texture2D(TEXTURE, vec2(UV.x + (0.02) * sin(TIME * 3.0), UV.y + (0.02) * cos(TIME * 3.0)));
+    highp vec4 tex2 = texture2D(TEXTURE, vec2(UV.x + (0.01) * sin(TIME * 2.0), UV.y + (0.01) * cos(TIME * 2.0)));
 
-    vec4 textureMix = mix(tex1, tex2, 0.5);
+    highp vec4 textureMix = mix(tex1, tex2, 0.5);
 
     // Gradually mixes between the texture mix and a full-white texture, causing the "blinding" effect
-    vec4 mixed = mix(vec4(1, 1, 1, 1), textureMix, percentComplete);
+    highp vec4 mixed = mix(vec4(1.0, 1.0, 1.0, 1.0), textureMix, percentComplete);
 
     COLOR = vec4(mixed.rgb, remaining);
 }

@@ -29,47 +29,47 @@
 
 light_mode unshaded;
 //shader_type canvas_item;
-uniform float outline_width = 2.0;
+uniform highp float outline_width = 2.0;
 // TODO: implement that hint_color thingy.
 //uniform vec4 outline_color: hint_color;
-uniform vec4 outline_color=vec4(1,0,0,0.33);
+uniform highp vec4 outline_color=vec4(1.0,0.0,0.0,0.33);
 
 void fragment() {
-	vec4 col = texture(TEXTURE, UV);
-	vec2 ps = TEXTURE_PIXEL_SIZE;
-	float a;
-	float maxa = col.a;
-	float mina = col.a;
+	highp vec4 col = texture2D(TEXTURE, UV);
+	highp vec2 ps = TEXTURE_PIXEL_SIZE;
+	highp float a;
+	highp float maxa = col.a;
+	highp float mina = col.a;
 
-	a = texture(TEXTURE, UV + vec2(0, -outline_width)*ps).a;
+	a = texture2D(TEXTURE, UV + vec2(0.0, -outline_width)*ps).a;
 	maxa = max(a, maxa);
 	mina = min(a, mina);
 
-    a = texture(TEXTURE, UV + vec2(-outline_width, -outline_width)*ps).a;
+    a = texture2D(TEXTURE, UV + vec2(-outline_width, -outline_width)*ps).a;
     maxa = max(a, maxa);
     mina = min(a, mina);
 
-	a = texture(TEXTURE, UV + vec2(0, outline_width)*ps).a;
+	a = texture2D(TEXTURE, UV + vec2(0.0, outline_width)*ps).a;
 	maxa = max(a, maxa);
 	mina = min(a, mina);
 
-    a = texture(TEXTURE, UV + vec2(outline_width, -outline_width)*ps).a;
+    a = texture2D(TEXTURE, UV + vec2(outline_width, -outline_width)*ps).a;
     maxa = max(a, maxa);
     mina = min(a, mina);
 
-	a = texture(TEXTURE, UV + vec2(-outline_width,0)*ps).a;
+	a = texture2D(TEXTURE, UV + vec2(-outline_width,0.0)*ps).a;
 	maxa = max(a, maxa);
 	mina = min(a, mina);
 
-    a = texture(TEXTURE, UV + vec2(-outline_width, outline_width)*ps).a;
+    a = texture2D(TEXTURE, UV + vec2(-outline_width, outline_width)*ps).a;
     maxa = max(a, maxa);
     mina = min(a, mina);
 
-	a = texture(TEXTURE, UV + vec2(outline_width, 0)*ps).a;
+	a = texture2D(TEXTURE, UV + vec2(outline_width, 0.0)*ps).a;
 	maxa = max(a, maxa);
 	mina = min(a, mina);
 
-    a = texture(TEXTURE, UV + vec2(outline_width, outline_width)*ps).a;
+    a = texture2D(TEXTURE, UV + vec2(outline_width, outline_width)*ps).a;
     maxa = max(a, maxa);
     mina = min(a, mina);
 
