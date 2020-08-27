@@ -445,6 +445,7 @@ namespace Content.Server.GameObjects.Components.GUI
             ActiveHand ??= name;
 
             OnItemChanged?.Invoke();
+            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new HandCountChangedEvent(Owner));
 
             Dirty();
         }
@@ -467,11 +468,7 @@ namespace Content.Server.GameObjects.Components.GUI
             }
 
             OnItemChanged?.Invoke();
-
-            if (Owner.TryGetComponent<CuffableComponent>(out var cuffable))
-            {
-                cuffable.UpdateHandCount();
-            }
+            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new HandCountChangedEvent(Owner));
 
             Dirty();
         }
@@ -796,5 +793,15 @@ namespace Content.Server.GameObjects.Components.GUI
         {
             return new SharedHand(index, Name, Entity?.Uid, location);
         }
+    }
+
+    public class HandCountChangedEvent : EntitySystemMessage
+    {
+        public HandCountChangedEvent(IEntity sender)
+        {
+            Sender = sender;
+        }
+
+        public IEntity Sender { get; }
     }
 }
