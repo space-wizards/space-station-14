@@ -7,7 +7,8 @@ namespace Content.Client.UserInterface
 {
     public class GhostGui : Control
     {
-        public Button ReturnToBody = new Button(){Text = "Return to body"};
+        public Button ReturnToBody = new Button() {Text = "Return to body"};
+        public Button ReturnToCloneBody = new Button() {Text = "Return to cloned Body"};
         private GhostComponent _owner;
 
         public GhostGui(GhostComponent owner)
@@ -19,8 +20,17 @@ namespace Content.Client.UserInterface
             MouseFilter = MouseFilterMode.Ignore;
 
             ReturnToBody.OnPressed += (args) => { owner.SendReturnToBodyMessage(); };
+            //Todo:this should not be visable in cases were it is impossible
+            ReturnToCloneBody.OnPressed += (args) => { owner.SendReturnToClonedBodyMessage(); };
 
-            AddChild(ReturnToBody);
+            AddChild((new HBoxContainer
+            {
+                Children =
+                {
+                    ReturnToBody,
+                    ReturnToCloneBody
+                }
+            }));
 
             Update();
         }

@@ -1,4 +1,5 @@
-﻿using Content.Server.Players;
+﻿using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.Players;
 using Content.Shared.GameObjects.Components.Observer;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components;
@@ -67,6 +68,10 @@ namespace Content.Server.GameObjects.Components.Observer
                         actor.playerSession.ContentData().Mind.UnVisit();
                         Owner.Delete();
                     }
+                    break;
+                case ReturnToCloneComponentMessage reenter:
+                    Owner.TryGetComponent(out VisitingMindComponent mind);
+                    mind.Mind.ReturnToCloning  = true;
                     break;
                 default:
                     break;

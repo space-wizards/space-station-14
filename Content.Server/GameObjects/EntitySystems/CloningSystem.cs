@@ -11,6 +11,14 @@ namespace Content.Server.GameObjects.EntitySystems
 {
     internal sealed class CloningSystem : EntitySystem
     {
+        public override void Update(float frameTime)
+        {
+            foreach (var comp in ComponentManager.EntityQuery<CloningMachineComponent>())
+            {
+                comp.Update(frameTime);
+            }
+        }
+
         public static Dictionary<int, Mind> Minds = new Dictionary<int, Mind>();
 
         public static void AddToDnaScans(Mind mind)

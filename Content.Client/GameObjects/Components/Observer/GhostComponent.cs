@@ -102,5 +102,7 @@ namespace Content.Client.GameObjects.Components.Observer
             }
 
         }
+
+        public void SendReturnToClonedBodyMessage() => SendNetworkMessage(new ReturnToCloneComponentMessage());
     }
 }

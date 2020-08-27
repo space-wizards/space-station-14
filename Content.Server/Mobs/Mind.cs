@@ -25,6 +25,7 @@ namespace Content.Server.Mobs
     public sealed class Mind
     {
         private readonly ISet<Role> _roles = new HashSet<Role>();
+        public bool ReturnToCloning = false;
 
         /// <summary>
         ///     Creates the new mind attached to a specific player session.

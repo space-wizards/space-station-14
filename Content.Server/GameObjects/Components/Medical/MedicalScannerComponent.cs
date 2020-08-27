@@ -85,18 +85,23 @@ namespace Content.Server.GameObjects.Components.Medical
             var classes = new Dictionary<DamageClass, int>(damageable.DamageClasses);
             var types = new Dictionary<DamageType, int>(damageable.DamageTypes);
 
-            //TODO: Fix this query so that it doesn't run in cases were there will be no Mind
-            var foo = true;
-            if (_bodyContainer.ContainedEntity != null)
+            //TODO: Fix this so it isn't querying every update
+            if (_bodyContainer.ContainedEntity?.Uid == null)
             {
-                foo = CloningSystem.HasDnaScan(_playerManager
-                    .GetPlayersBy(x => x.AttachedEntity != null
-                                       && x.AttachedEntityUid == _bodyContainer.ContainedEntity.Uid).First()
-                    .ContentData()
-                    ?.Mind);
+                return new MedicalScannerBoundUserInterfaceState(body.Uid, classes, types, true);
             }
 
-            return new MedicalScannerBoundUserInterfaceState(body.Uid, classes, types, foo);
+            var bar = _playerManager
+                .GetPlayersBy(x => x.AttachedEntity != null
+                                   && x.AttachedEntityUid == _bodyContainer.ContainedEntity.Uid);
+
+            if (bar.Count != 0)
+            {
+                return new MedicalScannerBoundUserInterfaceState(body.Uid, classes, types,
+                    CloningSystem.HasDnaScan(bar.First().ContentData()?.Mind));
+            }
+
+            return new MedicalScannerBoundUserInterfaceState(body.Uid, classes, types, true);
         }
 
         private void UpdateUserInterface()

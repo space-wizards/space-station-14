@@ -23,7 +23,7 @@ namespace Content.Client.GameObjects.Components.CloningMachine
 
         private VBoxContainer MainVBox;
         private ScanListContainer ScanList;
-        private Dictionary<int,string> scanManager;
+        private Dictionary<int, string> scanManager;
         private LineEdit SearchBar;
         private OptionButton OverrideMenu;
         private Button ClearButton;
@@ -31,9 +31,10 @@ namespace Content.Client.GameObjects.Components.CloningMachine
         public Button CloneButton;
         private CloningScanButton MeasureButton;
         protected override Vector2 ContentsMinimumSize => MainVBox?.CombinedMinimumSize ?? Vector2.Zero;
+        private CloningMachineBoundUserInterfaceState _lastUpdate;
 
         // List of scans that are visible based on current filter criteria.
-        private readonly Dictionary<int,string> _filteredScans = new Dictionary<int,string>();
+        private readonly Dictionary<int, string> _filteredScans = new Dictionary<int, string>();
 
         // The indices of the visible scans last time UpdateVisibleScans was ran.
         // This is inclusive, so end is the index of the last scan, not right after it.
@@ -45,7 +46,7 @@ namespace Content.Client.GameObjects.Components.CloningMachine
         protected override Vector2? CustomSize => (250, 300);
 
         public CloningMachineWindow(
-            Dictionary<int,string> scanManager,
+            Dictionary<int, string> scanManager,
             ILocalizationManager loc)
         {
             this.scanManager = scanManager;
@@ -109,8 +110,14 @@ namespace Content.Client.GameObjects.Components.CloningMachine
 
         public void Populate(CloningMachineBoundUserInterfaceState state)
         {
-            scanManager = state.MindIdName;
-            BuildEntityList();
+            //Ignore useless updates or we can't interact with the UI
+            //TODO: come up with a better comparision, probably write a commparator because .Equals doesn't work
+            if (_lastUpdate == null || _lastUpdate.MindIdName.Count != state.MindIdName.Count)
+            {
+                scanManager = state.MindIdName;
+                BuildEntityList();
+                _lastUpdate = state;
+            }
         }
 
         public override void Close()
@@ -156,7 +163,7 @@ namespace Content.Client.GameObjects.Components.CloningMachine
                     continue;
                 }
 
-                _filteredScans.Add(scan.Key,scan.Value);
+                _filteredScans.Add(scan.Key, scan.Value);
             }
 
             //TODO:Sort when we use filteredScans for a thin
@@ -229,7 +236,7 @@ namespace Content.Client.GameObjects.Components.CloningMachine
         }
 
         // Create a spawn button and insert it into the start or end of the list.
-        private void InsertEntityButton(KeyValuePair<int,string> scan, bool insertFirst, int index)
+        private void InsertEntityButton(KeyValuePair<int, string> scan, bool insertFirst, int index)
         {
             var button = new CloningScanButton
             {
@@ -238,7 +245,7 @@ namespace Content.Client.GameObjects.Components.CloningMachine
                 Index = index // We track this index purely for debugging.
             };
             button.ActualButton.OnToggled += OnItemButtonToggled;
-            var entityLabelText = scan.ToString();
+            var entityLabelText = scan.Value;
 
             button.EntityLabel.Text = entityLabelText;
 

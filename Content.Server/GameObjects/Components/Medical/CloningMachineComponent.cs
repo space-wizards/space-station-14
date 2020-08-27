@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Mobs;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Medical;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Preferences;
@@ -33,6 +35,7 @@ namespace Content.Server.GameObjects.Components.Medical
         [Dependency] private readonly IServerPreferencesManager _prefsManager;
 
         private PowerReceiverComponent _powerReceiver;
+        private Mind _capturedMind;
         private bool Powered => _powerReceiver.Powered;
 
         public override void Initialize()
@@ -51,6 +54,23 @@ namespace Content.Server.GameObjects.Components.Medical
             _userInterface.SetState(newState);
 
             UpdateUserInterface();
+        }
+
+        public void Update(float frametime)
+        {
+            UpdateUserInterface();
+            if (_bodyContainer != null && _capturedMind != null)
+            {
+                if (_capturedMind.ReturnToCloning)
+                {
+                    //When the user has confirmed return intent and we are cloning them
+                    _capturedMind.VisitingEntity.Delete();
+                    _capturedMind.TransferTo(_bodyContainer.ContainedEntity);
+                    _bodyContainer.Remove(_bodyContainer.ContainedEntity);
+                    _capturedMind.ReturnToCloning = false;
+                    _capturedMind = null;
+                }
+            }
         }
 
         private void UpdateUserInterface()
@@ -101,12 +121,21 @@ namespace Content.Server.GameObjects.Components.Medical
             switch (message.Button)
             {
                 case UiButton.Clone:
+                    var mind = CloningSystem.Minds[Id];
+
+                    var dead =
+                        mind.OwnedEntity.TryGetComponent<IDamageableComponent>(out var damageable) &&
+                        damageable.CurrentDamageState == DamageState.Dead;
+
+                    if (!dead)
+                    {
+                        break;
+                    }
+
                     var entityManager = IoCManager.Resolve<IEntityManager>();
                     var _playerManager = IoCManager.Resolve<IPlayerManager>();
 
                     var mob = entityManager.SpawnEntity("HumanMob_Content", Owner.Transform.MapPosition);
-                    var mind = CloningSystem.Minds[Id];
-
                     var client = _playerManager
                         .GetPlayersBy(x => x.SessionId == mind.SessionId).First();
                     mob.GetComponent<HumanoidAppearanceComponent>()
@@ -114,7 +143,7 @@ namespace Content.Server.GameObjects.Components.Medical
                     mob.Name = GetPlayerProfileAsync(client.Name).Result.Name;
 
                     _bodyContainer.Insert(mob);
-                    _bodyContainer.Remove(mob);
+                    _capturedMind = mind;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
