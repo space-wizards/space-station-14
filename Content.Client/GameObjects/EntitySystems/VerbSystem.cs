@@ -9,6 +9,7 @@ using Content.Client.Utility;
 using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Input;
+using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Graphics;
@@ -29,6 +30,7 @@ using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
+using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -50,6 +52,7 @@ namespace Content.Client.GameObjects.EntitySystems
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IPhysicsManager _physicsManager = default!;
 
         private EntityList _currentEntityList;
         private VerbPopup _currentVerbListRoot;
@@ -116,10 +119,32 @@ namespace Content.Client.GameObjects.EntitySystems
             }
 
             var mapCoordinates = args.Coordinates.ToMap(_mapManager);
+            var playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
+            if (playerEntity == null)
+            {
+                return false;
+            }
+            
             var entities = _entityManager.GetEntitiesIntersecting(mapCoordinates.MapId,
                 Box2.CenteredAround(mapCoordinates.Position, (0.5f, 0.5f))).ToList();
-
+            
             if (entities.Count == 0)
+            {
+                return false;
+            }
+            
+            var vectorDiff = playerEntity.Transform.MapPosition.Position - mapCoordinates.Position;
+            var direction = vectorDiff.Normalized;
+            var distance = vectorDiff.Length;
+            Func<IEntity, bool> ignored = entity => entities.Contains(entity) || entity == playerEntity || !entity.HasComponent<OccluderComponent>();
+            
+            var ray = _physicsManager
+                .IntersectRayWithPredicate(mapCoordinates.MapId, 
+                    new CollisionRay(mapCoordinates.Position, direction, (int) CollisionGroup.Opaque), 
+                    distance, 
+                    ignored);
+
+            if (ray.Any())
             {
                 return false;
             }
