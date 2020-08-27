@@ -7,18 +7,20 @@ namespace Content.Server.Atmos
     ///     The reason we use this over <see cref="Direction"/> is that we are going to do some heavy bitflag usage.
     /// </summary>
     [Flags]
-    public enum AtmosDirection
+    public enum AtmosDirection : byte
     {
         Invalid = 0,
-        North   = 1 << 1,
-        South   = 1 << 2,
-        East    = 1 << 3,
-        West    = 1 << 4,
+        North   = 1 << 0,
+        South   = 1 << 1,
+        East    = 1 << 2,
+        West    = 1 << 3,
 
         NorthEast = North | East,
         NorthWest = North | West,
         SouthEast = South | East,
         SouthWest = South | West,
+
+        All = North | South | East | West,
     }
 
     public static class AtmosDirectionHelpers
@@ -53,6 +55,12 @@ namespace Content.Server.Atmos
                 AtmosDirection.SouthWest => Direction.SouthWest,
                 _ => Direction.Invalid
             };
+        }
+
+        public static int ToIndex(this AtmosDirection direction)
+        {
+            // This will throw if you pass an invalid direction. Not this method's fault, but yours!
+            return (int) Math.Log2((int) direction);
         }
 
         public static AtmosDirection WithFlag(this AtmosDirection direction, AtmosDirection other)

@@ -64,6 +64,12 @@ namespace Content.Server.Atmos
             }
         }
 
+        public float this[int index]
+        {
+            get => this[(AtmosDirection) (1 << index)];
+            set => this[(AtmosDirection) (1 << index)] = value;
+        }
+
         [ViewVariables]
         public float CurrentTransferAmount;
 
