@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Atmos.Piping;
+using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 
@@ -146,5 +148,13 @@ namespace Content.Server.Atmos
         float GetVolumeForCells(int cellCount);
 
         void Update(float frameTime);
+
+        void AddPipeNet(IPipeNet pipeNet);
+
+        void RemovePipeNet(IPipeNet pipeNet);
+
+        void AddPipeNetDevice(PipeNetDeviceComponent pipeNetDevice);
+
+        void RemovePipeNetDevice(PipeNetDeviceComponent pipeNetDevice);
     }
 }

@@ -1,0 +1,30 @@
+﻿- type: entity
+  abstract: true
+  id: VentBase
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: SnapGrid
+    offset: Center
+  - type: Icon
+    texture: Constructible/Power/eightdirwire.png
+  - type: Sprite
+    texture: Constructible/Power/eightdirwire.png
+  - type: Destructible
+    thresholdvalue: 100
+
+- type: entity
+  parent: VentBase
+  id: FromSouthVent
+  name: From South Vent
+  components:
+  - type: NodeContainer
+    nodes:
+    - !type:PipeNode
+      nodeGroupID: Pipe
+      pipeDirection: South
+  - type: DebugVent
+    ventInletDirection: South

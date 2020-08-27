@@ -160,6 +160,9 @@
             "Metabolism",
             "AiFactionTag",
             "PressureProtection",
+            "DebugPump",
+            "DebugVent",
+            "DebugSiphon",
         };
     }
 }
