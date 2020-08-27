@@ -440,7 +440,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
             foreach (var entity in Contents.ContainedEntities)
             {
-                var exActs = entity.GetAllComponents<IExAct>().ToList();
+                var exActs = entity.GetAllComponents<IExAct>().ToArray();
                 foreach (var exAct in exActs)
                 {
                     exAct.OnExplosion(eventArgs);
