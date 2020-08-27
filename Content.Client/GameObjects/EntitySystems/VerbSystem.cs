@@ -7,6 +7,7 @@ using Content.Client.State;
 using Content.Client.UserInterface;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.EntitySystemMessages;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Input;
 using Content.Shared.Physics;
@@ -15,6 +16,7 @@ using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Interfaces.State;
@@ -42,7 +44,7 @@ using Timer = Robust.Shared.Timers.Timer;
 namespace Content.Client.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    public sealed class VerbSystem : EntitySystem
+    public sealed class VerbSystem : SharedVerbSystem
     {
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -52,7 +54,6 @@ namespace Content.Client.GameObjects.EntitySystems
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IPhysicsManager _physicsManager = default!;
 
         private EntityList _currentEntityList;
         private VerbPopup _currentVerbListRoot;
@@ -66,7 +67,7 @@ namespace Content.Client.GameObjects.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-
+            
             SubscribeNetworkEvent<VerbSystemMessages.VerbsResponseMessage>(FillEntityPopup);
 
             IoCManager.InjectDependencies(this);
@@ -117,38 +118,11 @@ namespace Content.Client.GameObjects.EntitySystems
             {
                 return false;
             }
-
+            
             var mapCoordinates = args.Coordinates.ToMap(_mapManager);
             var playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
-            if (playerEntity == null)
-            {
-                return false;
-            }
             
-            var entities = _entityManager.GetEntitiesIntersecting(mapCoordinates.MapId,
-                Box2.CenteredAround(mapCoordinates.Position, (0.5f, 0.5f))).ToList();
-            
-            if (entities.Count == 0)
-            {
-                return false;
-            }
-            
-            // Check if we have LOS to the clicked-location, otherwise no popup.
-            var vectorDiff = playerEntity.Transform.MapPosition.Position - mapCoordinates.Position;
-            var direction = vectorDiff.Normalized;
-            var distance = vectorDiff.Length;
-            Func<IEntity, bool> ignored = entity => entities.Contains(entity) || 
-                                                    entity == playerEntity || 
-                                                    !entity.TryGetComponent(out OccluderComponent occluder) ||
-                                                    !occluder.Enabled;
-            
-            var ray = _physicsManager
-                .IntersectRayWithPredicate(mapCoordinates.MapId, 
-                    new CollisionRay(mapCoordinates.Position, direction, (int) CollisionGroup.Opaque), 
-                    distance, 
-                    ignored);
-
-            if (ray.Any())
+            if (playerEntity == null || !TryGetContextEntities(playerEntity, mapCoordinates, out var entities))
             {
                 return false;
             }
