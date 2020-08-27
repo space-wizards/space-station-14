@@ -1,0 +1,43 @@
+﻿- type: entity
+  abstract: true
+  id: PipeBase
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: SnapGrid
+    offset: Center
+  - type: Icon
+    texture: Constructible/Power/eightdirwire.png
+  - type: Sprite
+    sprite: Constructible/Power/hv_cable.rsi
+  - type: Destructible
+    thresholdvalue: 100
+
+- type: entity
+  parent: PipeBase
+  id: FourwayPipe
+  name: Fourway Pipe
+  components:
+  - type: Sprite
+    state: hvcable_15
+  - type: NodeContainer
+    nodes:
+    - !type:PipeNode
+      nodeGroupID: Pipe
+      pipeDirection: FourWay
+
+- type: entity
+  parent: PipeBase
+  id: LongitudinalPipe
+  name: Longitudinal Pipe
+  components:
+  - type: Sprite
+    state: hvcable_3
+  - type: NodeContainer
+    nodes:
+    - !type:PipeNode
+      nodeGroupID: Pipe
+      pipeDirection: Longitudinal

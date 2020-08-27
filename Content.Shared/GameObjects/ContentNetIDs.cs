@@ -70,6 +70,8 @@
         public const uint REVOLVER_BARREL = 1064;
         public const uint CUFFED = 1065;
         public const uint HANDCUFFS = 1066;
+        public const uint BATTERY_BARREL = 1067;
+        public const uint SUSPICION_ROLE = 1068;
 
         // Net IDs for integration tests.
         public const uint PREDICTION_TEST = 10001;
