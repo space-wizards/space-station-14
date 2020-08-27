@@ -12,13 +12,13 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Body.Mechanisms
 {
     /// <summary>
-    ///     Data class representing a persistent item inside a <see cref="BodyPart"/>.
+    ///     Data class representing a persistent item inside a <see cref="IBodyPart"/>.
     ///     This includes livers, eyes, cameras, brains, explosive implants,
     ///     binary communicators, and other things.
     /// </summary>
     public class Mechanism
     {
-        private BodyPart? _part;
+        private IBodyPart? _part;
 
         public Mechanism(MechanismPrototype data)
         {
@@ -91,13 +91,13 @@ namespace Content.Server.Body.Mechanisms
 
         /// <summary>
         ///     Determines a handful of things - mostly whether this
-        ///     <see cref="Mechanism"/> can fit into a <see cref="BodyPart"/>.
+        ///     <see cref="Mechanism"/> can fit into a <see cref="IBodyPart"/>.
         /// </summary>
         [ViewVariables]
         public int Size { get; set; }
 
         /// <summary>
-        ///     What kind of <see cref="BodyPart"/> this <see cref="Mechanism"/> can be
+        ///     What kind of <see cref="IBodyPart"/> this <see cref="Mechanism"/> can be
         ///     easily installed into.
         /// </summary>
         [ViewVariables]
@@ -109,9 +109,9 @@ namespace Content.Server.Body.Mechanisms
         [ViewVariables]
         private List<MechanismBehavior> Behaviors { get; }
 
-        public BodyManagerComponent? Body => Part?.Body;
+        public IBodyManagerComponent? Body => Part?.Body;
 
-        public BodyPart? Part
+        public IBodyPart? Part
         {
             get => _part;
             set
@@ -202,7 +202,7 @@ namespace Content.Server.Body.Mechanisms
             }
         }
 
-        public void RemovedFromBody(BodyManagerComponent old)
+        public void RemovedFromBody(IBodyManagerComponent old)
         {
             foreach (var behavior in Behaviors)
             {
@@ -211,7 +211,7 @@ namespace Content.Server.Body.Mechanisms
         }
 
         /// <summary>
-        ///     This method is called by <see cref="BodyPart.PreMetabolism"/> before
+        ///     This method is called by <see cref="IBodyPart.PreMetabolism"/> before
         ///     <see cref="MetabolismComponent.Update"/> is called.
         /// </summary>
         public void PreMetabolism(float frameTime)
@@ -223,7 +223,7 @@ namespace Content.Server.Body.Mechanisms
         }
 
         /// <summary>
-        ///     This method is called by <see cref="BodyPart.PostMetabolism"/> after
+        ///     This method is called by <see cref="IBodyPart.PostMetabolism"/> after
         ///     <see cref="MetabolismComponent.Update"/> is called.
         /// </summary>
         public void PostMetabolism(float frameTime)

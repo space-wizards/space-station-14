@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 using System.Linq;
 using Content.Server.GameObjects.Components.Body;
 using Content.Shared.Body.Part;
@@ -48,7 +48,7 @@ namespace Content.Server.Body
             var slot = part.GetHashCode().ToString();
 
             body.Template.Slots.Add(slot, BodyPartType.Hand);
-            body.InstallBodyPart(part, slot);
+            body.TryAddPart(slot, part, true);
         }
     }
 

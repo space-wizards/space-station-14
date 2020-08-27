@@ -37,7 +37,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Combat.Melee
                 throw new InvalidOperationException();
             }
 
-            foreach (var entity in Visibility.GetEntitiesInRange(owner.Transform.GridPosition, typeof(IBodyManagerComponent),
+            foreach (var entity in Visibility.GetEntitiesInRange(owner.Transform.GridPosition, typeof(ISharedBodyManagerComponent),
                 controller.VisionRadius))
             {
                 if (entity.HasComponent<BasicActorComponent>() && entity != owner)
