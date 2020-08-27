@@ -1,7 +1,8 @@
 ﻿using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.Interfaces;
-using Content.Shared.Atmos;
+using Content.Shared.GameObjects.Components.Atmos;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
@@ -55,6 +56,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         [ViewVariables]
         public float Volume { get; private set; }
 
+        private AppearanceComponent _appearance;
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -66,6 +69,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         {
             base.Initialize(owner);
             LocalAir = new GasMixture(Volume);
+            Owner.TryGetComponent(out _appearance);
+            UpdateAppearance();
         }
 
         public void JoinPipeNet(IPipeNet pipeNet)
@@ -103,6 +108,11 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             }
         }
 
+        private void UpdateAppearance()
+        {
+            _appearance?.SetData(PipeVisuals.VisualState, new PipeVisualState(PipeDirection, 2)); //2 for middle conduit layer - placeholder while conduit layers are not implemented
+        }
+
         private void PipeDirectionFromCardinal(CardinalDirection direction, out PipeDirection sameDir, out PipeDirection oppDir)
         {
             switch (direction)
@@ -135,37 +145,5 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             East = Direction.East,
             West = Direction.West,
         }
-    }
-
-    public enum PipeDirection
-    {
-        None = 0,
-
-        //Half of a pipe in a direction
-        North = 1 << 0,
-        South = 1 << 1,
-        West = 1 << 2,
-        East = 1 << 3,
-
-        //Straight pipes
-        Longitudinal = North | South,
-        Lateral = West | East,
-
-        //Bends
-        NWBend = North | West,
-        NEBend = North | East,
-        SWBend = South | West,
-        SEBend = South | East,
-
-        //T-Junctions
-        TNorth = North | Lateral,
-        TSouth = South | Lateral,
-        TWest = West | Longitudinal,
-        TEast = East | Longitudinal,
-
-        //Four way
-        FourWay = North | South | East | West,
-
-        All = -1,
     }
 }
