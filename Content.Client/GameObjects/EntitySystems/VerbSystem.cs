@@ -133,6 +133,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 return false;
             }
             
+            // Check if we have LOS to the clicked-location, otherwise no popup.
             var vectorDiff = playerEntity.Transform.MapPosition.Position - mapCoordinates.Position;
             var direction = vectorDiff.Normalized;
             var distance = vectorDiff.Length;
