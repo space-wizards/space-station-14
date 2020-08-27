@@ -136,7 +136,10 @@ namespace Content.Client.GameObjects.EntitySystems
             var vectorDiff = playerEntity.Transform.MapPosition.Position - mapCoordinates.Position;
             var direction = vectorDiff.Normalized;
             var distance = vectorDiff.Length;
-            Func<IEntity, bool> ignored = entity => entities.Contains(entity) || entity == playerEntity || !entity.HasComponent<OccluderComponent>();
+            Func<IEntity, bool> ignored = entity => entities.Contains(entity) || 
+                                                    entity == playerEntity || 
+                                                    !entity.TryGetComponent(out OccluderComponent occluder) ||
+                                                    !occluder.Enabled;
             
             var ray = _physicsManager
                 .IntersectRayWithPredicate(mapCoordinates.MapId, 
