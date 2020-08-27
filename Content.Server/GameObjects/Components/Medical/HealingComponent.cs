@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Body;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Body;
