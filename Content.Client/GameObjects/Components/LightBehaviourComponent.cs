@@ -21,8 +21,7 @@ namespace Content.Client.GameObjects.Components
     public abstract class LightBehaviour: IExposeData
     {
         public string ID { get; set; }
-        public string NextBehaviourID { get; set; }
-        public string Property { get; set; }
+        public string Property { get; protected set; }
         public bool IsLooped { get; set; }
         public bool Enabled { get; set; }
         public float MinValue { get; set; }
