@@ -36,8 +36,8 @@ namespace Content.Server.GameObjects.Components.Medical
     {
         private ContainerSlot _bodyContainer = default!;
         private readonly Vector2 _ejectOffset = new Vector2(-0.5f, 0f);
-        [Dependency] private readonly IServerPreferencesManager _prefsManager;
-        [Dependency] private readonly IPlayerManager _playerManager;
+
+        [Dependency] private readonly IPlayerManager _playerManager = null!;
         public bool IsOccupied => _bodyContainer.ContainedEntity != null;
 
         [ViewVariables]
@@ -78,7 +78,9 @@ namespace Content.Server.GameObjects.Components.Medical
                 if (Owner.TryGetComponent(out AppearanceComponent? appearance))
                 {
                     appearance?.SetData(MedicalScannerVisuals.Status, MedicalScannerStatus.Open);
-                };
+                }
+
+                ;
 
                 return EmptyUIState;
             }

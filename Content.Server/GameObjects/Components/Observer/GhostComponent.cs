@@ -71,6 +71,7 @@ namespace Content.Server.GameObjects.Components.Observer
                     break;
                 case ReturnToCloneComponentMessage reenter:
                     Owner.TryGetComponent(out VisitingMindComponent mind);
+                    //TODO: Right now this is acting like a toggle, but should it?
                     mind.Mind.ReturnToCloning  = true;
                     break;
                 default:
