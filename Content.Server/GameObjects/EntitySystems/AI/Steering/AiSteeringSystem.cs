@@ -25,11 +25,9 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
     public sealed class AiSteeringSystem : EntitySystem
     {
         // http://www.red3d.com/cwr/papers/1999/gdc99steer.html for a steering overview
+        [Dependency] private IMapManager _mapManager = default!;
+        [Dependency] private IPauseManager _pauseManager = default!;
 
-#pragma warning disable 649
-        [Dependency] private IMapManager _mapManager;
-        [Dependency] private IPauseManager _pauseManager;
-#pragma warning restore 649
         private PathfindingSystem _pathfindingSystem;
 
         /// <summary>
@@ -249,8 +247,16 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         private SteeringStatus Steer(IEntity entity, IAiSteeringRequest steeringRequest, float frameTime)
         {
             // Main optimisation to be done below is the redundant calls and adding more variables
-            if (!entity.TryGetComponent(out AiControllerComponent controller) || !ActionBlockerSystem.CanMove(entity))
+            if (entity.Deleted || !entity.TryGetComponent(out AiControllerComponent controller) || !ActionBlockerSystem.CanMove(entity))
             {
+                return SteeringStatus.NoPath;
+            }
+
+            var entitySteering = steeringRequest as EntityTargetSteeringRequest;
+
+            if (entitySteering != null && entitySteering.Target.Deleted)
+            {
+                controller.VelocityDir = Vector2.Zero;
                 return SteeringStatus.NoPath;
             }
 
@@ -271,10 +277,10 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             // Check if we have arrived
             var targetDistance = (entity.Transform.MapPosition.Position - steeringRequest.TargetMap.Position).Length;
             steeringRequest.TimeUntilInteractionCheck -= frameTime;
-            
+
             if (targetDistance <= steeringRequest.ArrivalDistance && steeringRequest.TimeUntilInteractionCheck <= 0.0f)
             {
-                if (!steeringRequest.RequiresInRangeUnobstructed || 
+                if (!steeringRequest.RequiresInRangeUnobstructed ||
                     InteractionChecks.InRangeUnobstructed(entity, steeringRequest.TargetMap, steeringRequest.ArrivalDistance, ignoredEnt: entity))
                 {
                     // TODO: Need cruder LOS checks for ranged weaps
@@ -320,9 +326,9 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
                 UpdatePath(entity, path);
 
                 // If we're targeting entity get a fixed tile; if they move from it then re-path (at least til we get a better solution)
-                if (steeringRequest is EntityTargetSteeringRequest entitySteeringRequest)
+                if (entitySteering != null)
                 {
-                    _entityTargetPosition[entity] = entitySteeringRequest.TargetGrid;
+                    _entityTargetPosition[entity] = entitySteering.TargetGrid;
                 }
 
                 // Move next tick
@@ -342,22 +348,17 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             // Check if the target entity has moved - If so then re-path
             // TODO: Patch the path from the target's position back towards us, stopping if it ever intersects the current path
             // Probably need a separate "PatchPath" job
-            if (steeringRequest is EntityTargetSteeringRequest entitySteer)
+            if (entitySteering != null)
             {
-                if (entitySteer.Target.Deleted)
-                {
-                    controller.VelocityDir = Vector2.Zero;
-                    return SteeringStatus.NoPath;
-                }
-
                 // Check if target's moved too far
-                if (_entityTargetPosition.TryGetValue(entity, out var targetGrid) && (entitySteer.TargetGrid.Position - targetGrid.Position).Length >= entitySteer.TargetMaxMove)
+                if (_entityTargetPosition.TryGetValue(entity, out var targetGrid) &&
+                    (entitySteering.TargetGrid.Position - targetGrid.Position).Length >= entitySteering.TargetMaxMove)
                 {
                     // We'll just repath and keep following the existing one until we get a new one
                     RequestPath(entity, steeringRequest);
                 }
 
-                ignoredCollision.Add(entitySteer.Target);
+                ignoredCollision.Add(entitySteering.Target);
             }
 
             HandleStuck(entity);

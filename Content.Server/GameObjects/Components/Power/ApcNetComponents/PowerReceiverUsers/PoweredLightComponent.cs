@@ -18,6 +18,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -29,6 +30,8 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
     [RegisterComponent]
     public class PoweredLightComponent : Component, IInteractHand, IInteractUsing, IMapInit
     {
+        [Dependency] private IServerNotifyManager _notifyManager = default!;
+
         public override string Name => "PoweredLight";
 
         private static readonly TimeSpan _thunkDelay = TimeSpan.FromSeconds(2);
@@ -100,6 +103,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
             void Burn()
             {
+                _notifyManager.PopupMessage(Owner, eventArgs.User, Loc.GetString("You burn your hand!"));
                 damageableComponent.ChangeDamage(DamageType.Heat, 20, false, Owner);
                 var audioSystem = EntitySystem.Get<AudioSystem>();
                 audioSystem.PlayFromEntity("/Audio/Effects/lightburn.ogg", Owner);
@@ -221,14 +225,18 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         {
             base.Initialize();
 
-            Owner.GetComponent<PowerReceiverComponent>().OnPowerStateChanged += UpdateLight;
+            Owner.EnsureComponent<PowerReceiverComponent>().OnPowerStateChanged += UpdateLight;
 
             _lightBulbContainer = ContainerManagerComponent.Ensure<ContainerSlot>("light_bulb", Owner);
         }
 
         public override void OnRemove()
         {
-            Owner.GetComponent<PowerReceiverComponent>().OnPowerStateChanged -= UpdateLight;
+            if (Owner.TryGetComponent(out PowerReceiverComponent receiver))
+            {
+                receiver.OnPowerStateChanged -= UpdateLight;
+            }
+
             base.OnRemove();
         }
 

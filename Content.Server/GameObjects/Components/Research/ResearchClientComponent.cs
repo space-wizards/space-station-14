@@ -1,4 +1,6 @@
-﻿using Content.Server.GameObjects.EntitySystems;
+﻿#nullable enable
+using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.Components.UserInterface;
@@ -14,20 +16,17 @@ namespace Content.Server.GameObjects.Components.Research
     [RegisterComponent]
     public class ResearchClientComponent : SharedResearchClientComponent, IActivate
     {
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+
         // TODO: Create GUI for changing RD server.
-
-        private BoundUserInterface _userInterface;
-
-#pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-#pragma warning restore 649
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ResearchClientUiKey.Key);
 
         public bool ConnectedToServer => Server != null;
 
         [ViewVariables(VVAccess.ReadOnly)]
-        public ResearchServerComponent Server { get; set; }
+        public ResearchServerComponent? Server { get; set; }
 
-        public bool RegisterServer(ResearchServerComponent server)
+        public bool RegisterServer(ResearchServerComponent? server)
         {
             var result = server != null && server.RegisterClient(this);
             return result;
@@ -41,23 +40,28 @@ namespace Content.Server.GameObjects.Components.Research
         public override void Initialize()
         {
             base.Initialize();
+
             // For now it just registers on the first server it can find.
             var servers = _entitySystemManager.GetEntitySystem<ResearchSystem>().Servers;
-            if(servers.Count > 0)
+
+            if (servers.Count > 0)
                 RegisterServer(servers[0]);
-            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>().GetBoundUserInterface(ResearchClientUiKey.Key);
-            _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
+
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
+            }
         }
 
         public void OpenUserInterface(IPlayerSession session)
         {
             UpdateUserInterface();
-            _userInterface.Open(session);
+            UserInterface?.Open(session);
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
+            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
                 return;
 
             OpenUserInterface(actor.playerSession);
@@ -65,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Research
 
         public void UpdateUserInterface()
         {
-            _userInterface?.SetState(GetNewUiState());
+            UserInterface?.SetState(GetNewUiState());
         }
 
         private ResearchClientBoundInterfaceState GetNewUiState()
@@ -73,7 +77,7 @@ namespace Content.Server.GameObjects.Components.Research
             var rd = _entitySystemManager.GetEntitySystem<ResearchSystem>();
 
             return new ResearchClientBoundInterfaceState(rd.Servers.Count, rd.GetServerNames(),
-                rd.GetServerIds(), ConnectedToServer ? Server.Id : -1);
+                rd.GetServerIds(), ConnectedToServer ? Server!.Id : -1);
         }
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage msg)

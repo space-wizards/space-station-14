@@ -30,11 +30,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
     [RegisterComponent]
     public class StunbatonComponent : MeleeWeaponComponent, IUse, IExamine, IMapInit, IInteractUsing
     {
-#pragma warning disable 649
-        [Dependency] private IRobustRandom _robustRandom;
-        [Dependency] private readonly ISharedNotifyManager _notifyManager;
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-#pragma warning restore 649
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly ISharedNotifyManager _notifyManager = default!;
 
         public override string Name => "Stunbaton";
 
@@ -168,14 +165,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             {
                 EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Machines/button.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
 
-                _notifyManager.PopupMessage(Owner, user, _localizationManager.GetString("Cell missing..."));
+                _notifyManager.PopupMessage(Owner, user, Loc.GetString("Cell missing..."));
                 return;
             }
 
             if (cell.CurrentCharge < EnergyPerUse)
             {
                 EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Machines/button.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
-                _notifyManager.PopupMessage(Owner, user, _localizationManager.GetString("Dead cell..."));
+                _notifyManager.PopupMessage(Owner, user, Loc.GetString("Dead cell..."));
                 return;
             }
 
@@ -242,11 +239,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            var loc = IoCManager.Resolve<ILocalizationManager>();
-
             if (Activated)
             {
-                message.AddMarkup(loc.GetString("The light is currently [color=darkgreen]on[/color]."));
+                message.AddMarkup(Loc.GetString("The light is currently [color=darkgreen]on[/color]."));
             }
         }
 

@@ -12,18 +12,16 @@ namespace Content.Client.GameObjects.Components.Observer
     [RegisterComponent]
     public class GhostComponent : SharedGhostComponent
     {
+        [Dependency] private readonly IGameHud _gameHud = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IComponentManager _componentManager = default!;
+
         private GhostGui _gui;
 
         [ViewVariables(VVAccess.ReadOnly)]
         public bool CanReturnToBody { get; private set; } = true;
 
         private bool _isAttached;
-
-#pragma warning disable 649
-        [Dependency] private readonly IGameHud _gameHud;
-        [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private IComponentManager _componentManager;
-#pragma warning restore 649
 
         public override void OnRemove()
         {

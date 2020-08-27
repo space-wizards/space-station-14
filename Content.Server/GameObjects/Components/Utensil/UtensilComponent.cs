@@ -19,10 +19,8 @@ namespace Content.Server.GameObjects.Components.Utensil
     [RegisterComponent]
     public class UtensilComponent : SharedUtensilComponent, IAfterInteract
     {
-#pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystem;
-        [Dependency] private readonly IRobustRandom _random;
-#pragma warning restore 649
+        [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         protected UtensilType _types = UtensilType.None;
 

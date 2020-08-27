@@ -17,9 +17,7 @@ namespace Content.Client.GameObjects.Components.Body
     [ComponentReference(typeof(IBodyManagerComponent))]
     public class BodyManagerComponent : SharedBodyManagerComponent, IClientDraggable
     {
-#pragma warning disable 649
         [Dependency] private readonly IEntityManager _entityManager = default!;
-#pragma warning restore 649
 
         public bool ClientCanDropOn(CanDropEventArgs eventArgs)
         {

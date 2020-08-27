@@ -28,17 +28,15 @@ namespace Content.Client.State
     // Instantiated dynamically through the StateManager, Dependencies will be resolved.
     public partial class GameScreenBase : Robust.Client.State.State
     {
-#pragma warning disable 649
-        [Dependency] protected readonly IClientEntityManager EntityManager;
-        [Dependency] protected readonly IInputManager InputManager;
-        [Dependency] protected readonly IPlayerManager PlayerManager;
-        [Dependency] protected readonly IEyeManager EyeManager;
-        [Dependency] protected readonly IEntitySystemManager EntitySystemManager;
-        [Dependency] protected readonly IGameTiming Timing;
-        [Dependency] protected readonly IMapManager MapManager;
-        [Dependency] protected readonly IUserInterfaceManager UserInterfaceManager;
-        [Dependency] protected readonly IConfigurationManager ConfigurationManager;
-#pragma warning restore 649
+        [Dependency] protected readonly IClientEntityManager EntityManager = default!;
+        [Dependency] protected readonly IInputManager InputManager = default!;
+        [Dependency] protected readonly IPlayerManager PlayerManager = default!;
+        [Dependency] protected readonly IEyeManager EyeManager = default!;
+        [Dependency] protected readonly IEntitySystemManager EntitySystemManager = default!;
+        [Dependency] protected readonly IGameTiming Timing = default!;
+        [Dependency] protected readonly IMapManager MapManager = default!;
+        [Dependency] protected readonly IUserInterfaceManager UserInterfaceManager = default!;
+        [Dependency] protected readonly IConfigurationManager ConfigurationManager = default!;
 
         private IEntity _lastHoveredEntity;
 

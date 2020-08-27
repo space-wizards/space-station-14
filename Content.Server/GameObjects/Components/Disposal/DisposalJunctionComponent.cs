@@ -14,9 +14,7 @@ namespace Content.Server.GameObjects.Components.Disposal
     [ComponentReference(typeof(IDisposalTubeComponent))]
     public class DisposalJunctionComponent : DisposalTubeComponent
     {
-#pragma warning disable 649
-        [Dependency] private readonly IRobustRandom _random;
-#pragma warning restore 649
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         /// <summary>
         ///     The angles to connect to.

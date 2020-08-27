@@ -14,9 +14,7 @@ namespace Content.Server.GameObjects.EntitySystems
 {
     public class VerbSystem : EntitySystem
     {
-#pragma warning disable 649
-        [Dependency] private readonly IEntityManager _entityManager;
-#pragma warning restore 649
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public override void Initialize()
         {

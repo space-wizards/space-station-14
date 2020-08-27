@@ -10,11 +10,9 @@ namespace Content.Server.GameObjects.Components.Items.Storage.Fill
     [RegisterComponent]
     internal sealed class ToolboxElectricalFillComponent : Component, IMapInit
     {
-        public override string Name => "ToolboxElectricalFill";
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
-#pragma warning disable 649
-        [Dependency] private readonly IEntityManager _entityManager;
-#pragma warning restore 649
+        public override string Name => "ToolboxElectricalFill";
 
         void IMapInit.MapInit()
         {

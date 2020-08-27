@@ -102,7 +102,6 @@ namespace Content.Server.GameObjects.Components.Medical
                 return;
             }
 
-
             _userInterface.Open(actor.playerSession);
         }
 

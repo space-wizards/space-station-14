@@ -12,9 +12,7 @@ namespace Content.Client.Command
 {
     public class CommunicationsConsoleMenu : SS14Window
     {
-#pragma warning disable 649
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-#pragma warning restore 649
+        [Dependency] private readonly ILocalizationManager _localizationManager = default!;
 
         protected override Vector2? CustomSize => new Vector2(600, 400);
 
