@@ -75,15 +75,15 @@ namespace Content.Client.GameObjects.Components.Interactable
 
         private void ToggleLight(bool enabled)
         {
-            if (Owner.TryGetComponent<AppearanceComponent>(out var appearance) && appearance.TryGetVisualizer<LightBehaviourVisualizer>(out var visualizer))
+            if (Owner.TryGetComponent<LightBehaviourComponent>(out var behaviour))
             {
                 if (enabled)
                 {
-                    visualizer.StartLightBehaviour();
+                    behaviour.StartLightBehaviour();
                 }
                 else
                 {
-                    visualizer.StopLightBehaviour();
+                    behaviour.StopLightBehaviour();
                     _light.Enabled = false;
                 }
             }
