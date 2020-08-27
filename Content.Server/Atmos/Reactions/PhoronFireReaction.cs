@@ -5,6 +5,8 @@ using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.Atmos;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Atmos.Reactions
@@ -12,7 +14,7 @@ namespace Content.Server.Atmos.Reactions
     [UsedImplicitly]
     public class PhoronFireReaction : IGasReactionEffect
     {
-        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder)
+        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, IEventBus eventBus)
         {
             var energyReleased = 0f;
             var oldHeatCapacity = mixture.HeatCapacity;
@@ -73,20 +75,7 @@ namespace Content.Server.Atmos.Reactions
                 {
                     location.HotspotExpose(temperature, mixture.Volume);
 
-                    var tile = location.GridIndices.GetTileRef(location.GridIndex);
-
-                     var eventArgs = new TemperatureExposeEventArgs(mixture, temperature, mixture.Volume);
-
-                    if(tile != null)
-                        foreach (var entity in tile.Value.GetEntitiesInTile())
-                        {
-                            foreach (var temp in entity.GetAllComponents<ITemperatureExpose>())
-                            {
-                                temp.TemperatureExpose(eventArgs);
-                            }
-                        }
-
-                    location.TemperatureExpose(eventArgs);
+                    eventBus.QueueEvent(EventSource.Local, new TemperatureExposeEvent(location.GridIndices, location.GridIndex, mixture, temperature, mixture.Volume));
                 }
             }
 

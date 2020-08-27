@@ -57,6 +57,22 @@ namespace Content.Server.Atmos
             };
         }
 
+        public static AtmosDirection ToAtmosDirection(this Direction direction)
+        {
+            return direction switch
+            {
+                Direction.North => AtmosDirection.North,
+                Direction.South => AtmosDirection.South,
+                Direction.East => AtmosDirection.East,
+                Direction.West => AtmosDirection.West,
+                Direction.NorthEast => AtmosDirection.NorthEast,
+                Direction.NorthWest => AtmosDirection.NorthWest,
+                Direction.SouthEast => AtmosDirection.SouthEast,
+                Direction.SouthWest => AtmosDirection.SouthWest,
+                _ => AtmosDirection.Invalid
+            };
+        }
+
         public static int ToIndex(this AtmosDirection direction)
         {
             // This will throw if you pass an invalid direction. Not this method's fault, but yours!

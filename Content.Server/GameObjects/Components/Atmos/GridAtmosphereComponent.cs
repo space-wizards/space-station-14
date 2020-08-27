@@ -298,24 +298,22 @@ namespace Content.Server.GameObjects.Components.Atmos
         }
 
         /// <inheritdoc />
-        public TileAtmosphere? GetTile(GridCoordinates coordinates)
+        public TileAtmosphere? GetTile(GridCoordinates coordinates, bool createSpace = true)
         {
-            return GetTile(coordinates.ToMapIndices(_mapManager));
+            return GetTile(coordinates.ToMapIndices(_mapManager), createSpace);
         }
 
         /// <inheritdoc />
-        public TileAtmosphere? GetTile(MapIndices indices)
+        public TileAtmosphere? GetTile(MapIndices indices, bool createSpace = true)
         {
             if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return null;
 
             if (_tiles.TryGetValue(indices, out var tile)) return tile;
 
             // We don't have that tile!
-            if (IsSpace(indices))
+            if (IsSpace(indices) && createSpace)
             {
-                var space = new TileAtmosphere(this, mapGrid.Grid.Index, indices, new GasMixture(int.MaxValue){Temperature = Atmospherics.TCMB});
-                space.Air.MarkImmutable();
-                return space;
+                return new TileAtmosphere(this, mapGrid.Grid.Index, indices, new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.TCMB}, true);
             }
 
             return null;

@@ -485,8 +485,7 @@ namespace Content.Server.Atmos
             var temperature = Temperature;
             var energy = ThermalEnergy;
 
-            // TODO ATMOS Take reaction priority into account!
-            foreach (var prototype in IoCManager.Resolve<IPrototypeManager>().EnumeratePrototypes<GasReactionPrototype>())
+            foreach (var prototype in _atmosphereSystem.GasReactions)
             {
                 if (energy < prototype.MinimumEnergyRequirement ||
                     temperature < prototype.MinimumTemperatureRequirement)
@@ -508,7 +507,7 @@ namespace Content.Server.Atmos
                 if (!doReaction)
                     continue;
 
-                reaction = prototype.React(this, holder);
+                reaction = prototype.React(this, holder, _atmosphereSystem.EventBus);
                 if(reaction.HasFlag(ReactionResult.StopReactions))
                     break;
             }

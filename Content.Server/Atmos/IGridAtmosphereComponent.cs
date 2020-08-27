@@ -113,14 +113,14 @@ namespace Content.Server.Atmos
         /// </summary>
         /// <param name="indices"></param>
         /// <returns></returns>
-        TileAtmosphere GetTile(MapIndices indices);
+        TileAtmosphere GetTile(MapIndices indices, bool createSpace = true);
 
         /// <summary>
         ///     Returns a tile.
         /// </summary>
         /// <param name="coordinates"></param>
         /// <returns></returns>
-        TileAtmosphere GetTile(GridCoordinates coordinates);
+        TileAtmosphere GetTile(GridCoordinates coordinates, bool createSpace = true);
 
         /// <summary>
         ///     Returns if the tile in question is air-blocked.
