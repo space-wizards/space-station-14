@@ -193,8 +193,14 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         {
             if (Owner.TryGetComponent(out ServerStatusEffectsComponent status))
             {
-                status.ChangeStatusEffectIcon(StatusEffect.Cuffed,
-                    CanStillInteract ? "/Textures/Interface/StatusEffects/Handcuffed/Uncuffed.png" : "/Textures/Interface/StatusEffects/Handcuffed/Handcuffed.png");
+                if (CanStillInteract)
+                {
+                    status.RemoveStatusEffect(StatusEffect.Cuffed);
+                }
+                else
+                {
+                    status.ChangeStatusEffectIcon(StatusEffect.Cuffed, "/Textures/Interface/StatusEffects/Handcuffed/Handcuffed.png");
+                }
             }
         }
 
