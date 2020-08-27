@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// <summary>
         ///     Check current execution time every n instances processed.
         /// </summary>
-        private const int LagCheckIterations = 15;
+        private const int LagCheckIterations = 30;
 
         /// <summary>
         ///     Max milliseconds allowed for atmos updates.
@@ -44,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// <summary>
         ///     How much time before atmos updates are ran.
         /// </summary>
-        private const float AtmosTime = 1/26f;
+        private const float AtmosTime = 1/25f;
 
         public override string Name => "GridAtmosphere";
 
@@ -186,7 +186,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                 foreach (var direction in Cardinal)
                 {
-                    var otherIndices = indices.Offset(direction);
+                    var otherIndices = indices.Offset(direction.ToDirection());
                     var otherTile = GetTile(otherIndices);
                     AddActiveTile(otherTile);
                     otherTile?.UpdateAdjacent(direction.GetOpposite());
@@ -336,12 +336,12 @@ namespace Content.Server.GameObjects.Components.Atmos
             return mapGrid.Grid.GetTileRef(indices).Tile.IsEmpty;
         }
 
-        public Dictionary<Direction, TileAtmosphere> GetAdjacentTiles(MapIndices indices, bool includeAirBlocked = false)
+        public Dictionary<AtmosDirection, TileAtmosphere> GetAdjacentTiles(MapIndices indices, bool includeAirBlocked = false)
         {
-            var sides = new Dictionary<Direction, TileAtmosphere>();
+            var sides = new Dictionary<AtmosDirection, TileAtmosphere>();
             foreach (var dir in Cardinal)
             {
-                var side = indices.Offset(dir);
+                var side = indices.Offset(dir.ToDirection());
                 var tile = GetTile(side);
                 if (tile != null && (tile.Air != null || includeAirBlocked))
                     sides[dir] = tile;
@@ -420,8 +420,8 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
                 // Process the rest next time.
-                if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
-                    return;
+                //if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
+                //    return;
             }
         }
 
@@ -437,8 +437,8 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
                 // Process the rest next time.
-                if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
-                    return;
+                //if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
+                //    return;
             }
         }
 
@@ -461,8 +461,8 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
                 // Process the rest next time.
-                if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
-                    return;
+                //if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
+                //    return;
             }
         }
 
@@ -481,8 +481,8 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
                 // Process the rest next time.
-                if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
-                    return;
+                //if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
+                //    return;
             }
         }
 
@@ -498,8 +498,8 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
                 // Process the rest next time.
-                if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
-                    return;
+                //if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
+                //    return;
             }
         }
 
@@ -515,8 +515,8 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
                 // Process the rest next time.
-                if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
-                    return;
+                //if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
+                //    return;
             }
         }
 
@@ -533,10 +533,10 @@ namespace Content.Server.GameObjects.Components.Atmos
             return null;
         }
 
-        private static readonly Direction[] Cardinal =
+        private static readonly AtmosDirection[] Cardinal =
             new []
             {
-                Direction.North, Direction.East, Direction.South, Direction.West
+                AtmosDirection.North, AtmosDirection.East, AtmosDirection.South, AtmosDirection.West
             };
 
         public void Dispose()
