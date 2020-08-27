@@ -157,7 +157,6 @@
             "Barotrauma",
             "GasSprayer",
             "GasVapor",
-            "MobStateManager",
             "Metabolism",
             "AiFactionTag",
             "PressureProtection",

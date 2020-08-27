@@ -136,7 +136,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
 
             if (!entity.HasComponent<ItemComponent>() &&
-                !entity.HasComponent<IBodyManagerComponent>())
+                !entity.HasComponent<ISharedBodyManagerComponent>())
             {
                 return false;
             }
