@@ -105,7 +105,6 @@
             "SecureEntityStorage",
             "PresetIdCard",
             "SolarControlConsole",
-            "BatteryBarrel",
             "FlashExplosive",
             "FlashProjectile",
             "Utensil",
