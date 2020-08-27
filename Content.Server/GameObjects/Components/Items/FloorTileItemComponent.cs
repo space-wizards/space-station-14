@@ -15,15 +15,11 @@ namespace Content.Server.GameObjects.Components.Items
     [RegisterComponent]
     public class FloorTileItemComponent : Component, IAfterInteract
     {
-#pragma warning disable 649
-        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
-        [Dependency] private readonly IMapManager _mapManager;
-#pragma warning restore 649
+        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         public override string Name => "FloorTile";
-        private StackComponent _stack;
         private string _outputTile;
-
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -34,18 +30,20 @@ namespace Content.Server.GameObjects.Components.Items
         public override void Initialize()
         {
             base.Initialize();
-            _stack = Owner.GetComponent<StackComponent>();
+            Owner.EnsureComponent<StackComponent>();
         }
+
         public void AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
+            if (!Owner.TryGetComponent(out StackComponent stack)) return;
 
             var attacked = eventArgs.Target;
             var mapGrid = _mapManager.GetGrid(eventArgs.ClickLocation.GridID);
             var tile = mapGrid.GetTileRef(eventArgs.ClickLocation);
             var tileDef = (ContentTileDefinition)_tileDefinitionManager[tile.Tile.TypeId];
 
-            if (tileDef.IsSubFloor && attacked == null && _stack.Use(1))
+            if (tileDef.IsSubFloor && attacked == null && stack.Use(1))
             {
                 var desiredTile = _tileDefinitionManager[_outputTile];
                 mapGrid.SetTile(eventArgs.ClickLocation, new Tile(desiredTile.TileId));

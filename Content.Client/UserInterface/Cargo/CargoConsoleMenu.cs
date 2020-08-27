@@ -15,9 +15,7 @@ namespace Content.Client.UserInterface.Cargo
 {
     public class CargoConsoleMenu : SS14Window
     {
-#pragma warning disable 649
-        [Dependency] private readonly ILocalizationManager _loc;
-#pragma warning restore 649
+        [Dependency] private readonly ILocalizationManager _loc = default!;
 
         protected override Vector2? CustomSize => (400, 600);
 
@@ -287,7 +285,7 @@ namespace Content.Client.UserInterface.Cargo
         public void PopulateOrders()
         {
             _orders.RemoveAllChildren();
-            _requests.RemoveAllChildren();            
+            _requests.RemoveAllChildren();
             foreach (var order in Owner.Orders.Orders)
             {
                 var row = new CargoOrderRow();

@@ -51,9 +51,7 @@ namespace Content.Server.Mobs
 
     public class AddRoleCommand : IClientCommand
     {
-#pragma warning disable 649
-        [Dependency] private IPrototypeManager _prototypeManager;
-#pragma warning restore 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public string Command => "addrole";
 
@@ -85,10 +83,7 @@ namespace Content.Server.Mobs
 
     public class RemoveRoleCommand : IClientCommand
     {
-
-#pragma warning disable 649
-        [Dependency] private IPrototypeManager _prototypeManager;
-#pragma warning restore 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public string Command => "rmrole";
 

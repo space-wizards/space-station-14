@@ -23,14 +23,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
     [RegisterComponent]
     public class MeleeWeaponComponent : Component, IAttack
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+        [Dependency] private readonly IPhysicsManager _physicsManager = default!;
+
         public override string Name => "MeleeWeapon";
         private TimeSpan _lastAttackTime;
-
-#pragma warning disable 649
-        [Dependency] private readonly IMapManager _mapManager;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-        [Dependency] private readonly IPhysicsManager _physicsManager;
-#pragma warning restore 649
 
         private int _damage;
         private float _range;

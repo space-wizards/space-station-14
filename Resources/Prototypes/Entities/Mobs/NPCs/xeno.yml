@@ -9,6 +9,9 @@
   components:
   - type: AiController
     logic: Xeno
+  - type: AiFactionTag
+    factions:
+    - Xeno
   - type: Hands
   - type: MovementSpeedModifier
   - type: InteractionOutline

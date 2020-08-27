@@ -24,17 +24,17 @@ namespace Content.Server.GameObjects.EntitySystems.AI
         [Dependency] private readonly IReflectionManager _reflectionManager = default!;
 
         private readonly Dictionary<string, Type> _processorTypes = new Dictionary<string, Type>();
-        
+
         /// <summary>
         ///     To avoid iterating over dead AI continuously they can wake and sleep themselves when necessary.
         /// </summary>
         private readonly HashSet<AiLogicProcessor> _awakeAi = new HashSet<AiLogicProcessor>();
-        
+
         // To avoid modifying awakeAi while iterating over it.
         private readonly List<SleepAiMessage> _queuedSleepMessages = new List<SleepAiMessage>();
 
         public bool IsAwake(AiLogicProcessor processor) => _awakeAi.Contains(processor);
-        
+
         /// <inheritdoc />
         public override void Initialize()
         {
@@ -66,12 +66,24 @@ namespace Content.Server.GameObjects.EntitySystems.AI
                         break;
                 }
             }
-            
+
             _queuedSleepMessages.Clear();
-            
+            var toRemove = new List<AiLogicProcessor>();
+
             foreach (var processor in _awakeAi)
             {
+                if (processor.SelfEntity.Deleted)
+                {
+                    toRemove.Add(processor);
+                    continue;
+                }
+                
                 processor.Update(frameTime);
+            }
+
+            foreach (var processor in toRemove)
+            {
+                _awakeAi.Remove(processor);
             }
         }
 
@@ -87,7 +99,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI
         /// <param name="controller"></param>
         public void ProcessorInitialize(AiControllerComponent controller)
         {
-            if (controller.Processor != null) return;
+            if (controller.Processor != null || controller.LogicName == null) return;
             controller.Processor = CreateProcessor(controller.LogicName);
             controller.Processor.SelfEntity = controller.Owner;
             controller.Processor.Setup();

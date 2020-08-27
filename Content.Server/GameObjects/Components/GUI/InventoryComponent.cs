@@ -28,10 +28,8 @@ namespace Content.Server.GameObjects.Components.GUI
     [RegisterComponent]
     public class InventoryComponent : SharedInventoryComponent, IExAct, IEffectBlocker, IPressureProtection
     {
-#pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-        [Dependency] private readonly IServerNotifyManager _serverNotifyManager;
-#pragma warning restore 649
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+        [Dependency] private readonly IServerNotifyManager _serverNotifyManager = default!;
 
         [ViewVariables]
         private readonly Dictionary<Slots, ContainerSlot> _slotContainers = new Dictionary<Slots, ContainerSlot>();

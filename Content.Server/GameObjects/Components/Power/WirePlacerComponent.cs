@@ -14,10 +14,8 @@ namespace Content.Server.GameObjects.Components.Power
     [RegisterComponent]
     internal class WirePlacerComponent : Component, IAfterInteract
     {
-#pragma warning disable 649
-        [Dependency] private readonly IServerEntityManager _entityManager;
-        [Dependency] private readonly IMapManager _mapManager;
-#pragma warning restore 649
+        [Dependency] private readonly IServerEntityManager _entityManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         /// <inheritdoc />
         public override string Name => "WirePlacer";
