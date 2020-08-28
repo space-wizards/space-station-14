@@ -27,6 +27,8 @@ namespace Content.Shared.GameObjects.Components.Damage
 
         private DamageState _currentDamageState;
 
+        private DamageFlag _flags;
+
         public event Action<HealthChangedEventArgs>? HealthChangedEvent;
 
         /// <summary>
@@ -87,6 +89,36 @@ namespace Content.Shared.GameObjects.Components.Damage
         public IReadOnlyDictionary<DamageClass, int> DamageClasses => Damage.DamageClasses;
 
         public IReadOnlyDictionary<DamageType, int> DamageTypes => Damage.DamageTypes;
+
+        public DamageFlag Flags
+        {
+            get => _flags;
+            private set
+            {
+                if (_flags == value)
+                {
+                    return;
+                }
+
+                _flags = value;
+                Dirty();
+            }
+        }
+
+        public void AddFlag(DamageFlag flag)
+        {
+            Flags |= flag;
+        }
+
+        public bool HasFlag(DamageFlag flag)
+        {
+            return Flags.HasFlag(flag);
+        }
+
+        public void RemoveFlag(DamageFlag flag)
+        {
+            Flags &= ~flag;
+        }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -151,6 +183,11 @@ namespace Content.Shared.GameObjects.Components.Damage
             IEntity? source = null,
             HealthChangeParams? extraParams = null)
         {
+            if (amount > 0 && HasFlag(DamageFlag.Invulnerable))
+            {
+                return false;
+            }
+
             if (Damage.SupportsDamageType(type))
             {
                 var finalDamage = amount;
@@ -171,6 +208,11 @@ namespace Content.Shared.GameObjects.Components.Damage
             IEntity? source = null,
             HealthChangeParams? extraParams = null)
         {
+            if (amount > 0 && HasFlag(DamageFlag.Invulnerable))
+            {
+                return false;
+            }
+
             if (Damage.SupportsDamageClass(@class))
             {
                 var types = @class.ToTypes();
@@ -250,6 +292,11 @@ namespace Content.Shared.GameObjects.Components.Damage
         public bool SetDamage(DamageType type, int newValue, IEntity? source = null,
             HealthChangeParams? extraParams = null)
         {
+            if (newValue >= TotalDamage && HasFlag(DamageFlag.Invulnerable))
+            {
+                return false;
+            }
+
             if (Damage.SupportsDamageType(type))
             {
                 Damage.SetDamageValue(type, newValue);

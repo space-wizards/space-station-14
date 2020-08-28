@@ -101,6 +101,8 @@
   - addaccent
   - readyall
   - factions
+  - adddamageflag
+  - removedamageflag
   CanViewVar: true
   CanAdminPlace: true
   CanAdminMenu: true
@@ -195,6 +197,8 @@
   - addaccent
   - readyall
   - factions
+  - adddamageflag
+  - removedamageflag
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true
