@@ -266,8 +266,8 @@ namespace Content.Server.GameObjects.Components.Interactable
                 return SuicideKind.Heat;
             }
 
-            PopupMessageOtherClientsInRange(victim, Loc.GetString("{0:theName} bashes {0:themselves} with the {0}!", victim), 15);
-            _notifyManager.PopupMessage(victim, victim, Loc.GetString("You bash yourself with the {0}!"));
+            PopupMessageOtherClientsInRange(victim, Loc.GetString("{0:theName} bashes {0:themselves} with the unlit welding torch!"), 15);
+            _notifyManager.PopupMessage(victim, victim, Loc.GetString("You bash yourself with the unlit welding torch!"));
             return SuicideKind.Blunt;
         }
 
