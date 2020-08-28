@@ -1,4 +1,5 @@
 ﻿using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.Mobs;
 using Content.Server.Players;
 using Content.Shared.GameObjects.Components.Observer;
 using Robust.Server.GameObjects;
@@ -71,12 +72,21 @@ namespace Content.Server.GameObjects.Components.Observer
                     break;
                 case ReturnToCloneComponentMessage reenter:
                     Owner.TryGetComponent(out VisitingMindComponent mind);
-                    //TODO: Right now this is acting like a toggle, but should it?
-                    mind.Mind.ReturnToCloning  = true;
+                    Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new GhostReturnMessage(mind.Mind));
                     break;
                 default:
                     break;
             }
+        }
+
+        public class GhostReturnMessage : EntitySystemMessage
+        {
+            public GhostReturnMessage(Mind sender)
+            {
+                Sender = sender;
+            }
+
+            public Mind Sender { get; }
         }
     }
 }

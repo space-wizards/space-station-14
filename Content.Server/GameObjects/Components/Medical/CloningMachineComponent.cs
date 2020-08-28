@@ -60,23 +60,14 @@ namespace Content.Server.GameObjects.Components.Medical
             UserInterface?.SetState(newState);
 
             UpdateUserInterface();
+
+            Owner.EntityManager.EventBus.SubscribeEvent<GhostComponent.GhostReturnMessage>(EventSource.Local, this,
+                HandleGhostReturn);
         }
 
         public void Update(float frametime)
         {
             UpdateUserInterface();
-            if (_bodyContainer != null && _capturedMind != null)
-            {
-                if (_capturedMind.ReturnToCloning)
-                {
-                    //When the user has confirmed return intent and we are cloning them
-                    _capturedMind.VisitingEntity.Delete();
-                    _capturedMind.TransferTo(_bodyContainer.ContainedEntity);
-                    _bodyContainer.Remove(_bodyContainer.ContainedEntity);
-                    _capturedMind.ReturnToCloning = false;
-                    _capturedMind = null;
-                }
-            }
         }
 
         private void UpdateUserInterface()
@@ -155,8 +146,21 @@ namespace Content.Server.GameObjects.Components.Medical
             }
         }
 
-        private async Task<HumanoidCharacterProfile> GetPlayerProfileAsync(string username) =>
-            (HumanoidCharacterProfile) (await _prefsManager.GetPreferencesAsync(username))
-            .SelectedCharacter;
+        private async Task<HumanoidCharacterProfile> GetPlayerProfileAsync(string username)
+        {
+            return (HumanoidCharacterProfile) (await _prefsManager.GetPreferencesAsync(username))
+                .SelectedCharacter;
+        }
+
+        private void HandleGhostReturn(GhostComponent.GhostReturnMessage message)
+        {
+            if (message.Sender == _capturedMind)
+            {
+                _capturedMind.VisitingEntity.Delete();
+                _capturedMind.TransferTo(_bodyContainer.ContainedEntity);
+                _bodyContainer.Remove(_bodyContainer.ContainedEntity);
+                _capturedMind = null;
+            }
+        }
     }
 }
