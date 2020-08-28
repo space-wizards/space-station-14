@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Content.Server.Atmos;
+using Content.Server.GameObjects.Components.Atmos.Piping;
+using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
 using Content.Shared.Maps;
 using Robust.Server.Interfaces.GameObjects;
@@ -74,6 +76,22 @@ namespace Content.Server.GameObjects.Components.Atmos
         private HashSet<TileAtmosphere> _highPressureDelta = new HashSet<TileAtmosphere>(1000);
 
         [ViewVariables]
+        private readonly List<IPipeNet> _pipeNets = new List<IPipeNet>();
+
+        /// <summary>
+        ///     Index of most recently updated <see cref="IPipeNet"/>.
+        /// </summary>
+        private int _pipeNetIndex = 0;
+
+        [ViewVariables]
+        private readonly List<PipeNetDeviceComponent> _pipeNetDevices = new List<PipeNetDeviceComponent>();
+
+        /// <summary>
+        ///     Index of most recently updated <see cref="PipeNetDeviceComponent"/>.
+        /// </summary>
+        private int _deviceIndex = 0;
+
+        [ViewVariables]
         private ProcessState _state = ProcessState.TileEqualize;
 
         private enum ProcessState
@@ -84,6 +102,8 @@ namespace Content.Server.GameObjects.Components.Atmos
             HighPressureDelta,
             Hotspots,
             Superconductivity,
+            PipeNet,
+            PipeNetDevices,
         }
 
         /// <inheritdoc />
@@ -296,6 +316,28 @@ namespace Content.Server.GameObjects.Components.Atmos
             _excitedGroups.Remove(excitedGroup);
         }
 
+        public void AddPipeNet(IPipeNet pipeNet)
+        {
+            _pipeNets.Add(pipeNet);
+        }
+
+        public void RemovePipeNet(IPipeNet pipeNet)
+        {
+            _pipeNets.Remove(pipeNet);
+            _deviceIndex = 0;
+        }
+
+        public void AddPipeNetDevice(PipeNetDeviceComponent pipeNetDevice)
+        {
+            _pipeNetDevices.Add(pipeNetDevice);
+        }
+
+        public void RemovePipeNetDevice(PipeNetDeviceComponent pipeNetDevice)
+        {
+            _pipeNetDevices.Remove(pipeNetDevice);
+            _deviceIndex = 0;
+        }
+
         /// <inheritdoc />
         public TileAtmosphere? GetTile(GridCoordinates coordinates)
         {
@@ -401,6 +443,14 @@ namespace Content.Server.GameObjects.Components.Atmos
                     break;
                 case ProcessState.Superconductivity:
                     ProcessSuperconductivity();
+                    _state = ProcessState.PipeNet;
+                    break;
+                case ProcessState.PipeNet:
+                    ProcessPipeNets();
+                    _state = ProcessState.PipeNetDevices;
+                    break;
+                case ProcessState.PipeNetDevices:
+                    ProcessPipeNetDevices();
                     _state = ProcessState.TileEqualize;
                     break;
             }
@@ -520,6 +570,45 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
         }
 
+        private void ProcessPipeNets()
+        {
+            _stopwatch.Restart();
+
+            var number = 0;
+            var pipeNets = _pipeNets.ToArray();
+            var netCount = pipeNets.Count();
+            for ( ; _pipeNetIndex < netCount; _pipeNetIndex++)
+            {
+                pipeNets[_pipeNetIndex].Update();
+
+                if (number++ < LagCheckIterations) continue;
+                number = 0;
+                // Process the rest next time.
+                if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
+                    return;
+            }
+            _pipeNetIndex = 0;
+        }
+
+        private void ProcessPipeNetDevices()
+        {
+            _stopwatch.Restart();
+
+            var number = 0;
+            var pipeNetDevices = _pipeNetDevices.ToArray();
+            var deviceCount = pipeNetDevices.Count();
+            for ( ; _deviceIndex < deviceCount; _deviceIndex++)
+            {
+                pipeNetDevices[_deviceIndex].Update();
+
+                if (number++ < LagCheckIterations) continue;
+                number = 0;
+                // Process the rest next time.
+                if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
+                    return;
+            }
+            _deviceIndex = 0;
+        }
         private AirtightComponent? GetObstructingComponent(MapIndices indices)
         {
             if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return default;

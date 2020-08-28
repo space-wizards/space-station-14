@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
+﻿﻿using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 {
@@ -17,7 +18,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         /// <summary>
         ///     Returns a new <see cref="INodeGroup"/> instance.
         /// </summary>
-        INodeGroup MakeNodeGroup(NodeGroupID nodeGroupType);
+        INodeGroup MakeNodeGroup(Node sourceNode);
     }
 
     public class NodeGroupFactory : INodeGroupFactory
@@ -29,7 +30,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         public void Initialize()
         {
-            var nodeGroupTypes = _reflectionManager.GetAllChildren<BaseNodeGroup>();
+            var nodeGroupTypes = _reflectionManager.GetAllChildren<INodeGroup>();
             foreach (var nodeGroupType in nodeGroupTypes)
             {
                 var att = nodeGroupType.GetCustomAttribute<NodeGroupAttribute>();
@@ -43,13 +44,15 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             }
         }
 
-        public INodeGroup MakeNodeGroup(NodeGroupID nodeGroupType)
+        public INodeGroup MakeNodeGroup(Node sourceNode)
         {
-            if (_groupTypes.TryGetValue(nodeGroupType, out var type))
+            if (_groupTypes.TryGetValue(sourceNode.NodeGroupID, out var type))
             {
-                return _typeFactory.CreateInstance<INodeGroup>(type);
+                var nodeGroup = _typeFactory.CreateInstance<INodeGroup>(type);
+                nodeGroup.Initialize(sourceNode);
+                return nodeGroup;
             }
-            throw new ArgumentException($"{nodeGroupType} did not have an associated {nameof(INodeGroup)}.");
+            throw new ArgumentException($"{sourceNode.NodeGroupID} did not have an associated {nameof(INodeGroup)}.");
         }
     }
 
@@ -59,5 +62,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         HVPower,
         MVPower,
         Apc,
+        Pipe,
     }
 }

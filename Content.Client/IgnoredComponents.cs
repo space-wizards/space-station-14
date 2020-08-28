@@ -105,7 +105,6 @@
             "SecureEntityStorage",
             "PresetIdCard",
             "SolarControlConsole",
-            "BatteryBarrel",
             "FlashExplosive",
             "FlashProjectile",
             "Utensil",
@@ -161,6 +160,9 @@
             "Metabolism",
             "AiFactionTag",
             "PressureProtection",
+            "DebugPump",
+            "DebugVent",
+            "DebugSiphon",
         };
     }
 }
