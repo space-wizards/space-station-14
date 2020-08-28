@@ -57,13 +57,11 @@ namespace Content.Shared.GameObjects.Components
         [Serializable, NetSerializable]
         protected sealed class ExpendableLightComponentState : ComponentState
         {
-            public ExpendableLightComponentState(LightState state, float stateExpiryTime) : base(ContentNetIDs.EXPENDABLE_LIGHT)
+            public ExpendableLightComponentState(LightState state) : base(ContentNetIDs.EXPENDABLE_LIGHT)
             {
-                StateExpiryTime = stateExpiryTime;
                 State = state;
             }
 
-            public float StateExpiryTime { get; set; }
             public LightState State { get; set; }
         }
 

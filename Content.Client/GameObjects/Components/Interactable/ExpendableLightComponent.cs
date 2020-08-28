@@ -30,7 +30,6 @@ namespace Content.Client.GameObjects.Components.Interactable
             }
 
             CurrentState = state.State;
-
             UpdateVisuals();
         }
 

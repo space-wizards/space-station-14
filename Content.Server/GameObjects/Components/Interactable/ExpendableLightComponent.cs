@@ -176,7 +176,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         public override ComponentState GetComponentState()
         {
-            return new ExpendableLightComponentState(CurrentState, _stateExpiryTime);
+            return new ExpendableLightComponentState(CurrentState);
         }
 
         [Verb]
