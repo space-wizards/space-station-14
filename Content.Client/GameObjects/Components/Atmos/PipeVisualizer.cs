@@ -10,17 +10,28 @@ namespace Content.Client.GameObjects.Components.Disposal
     [UsedImplicitly]
     public class PipeVisualizer : AppearanceVisualizer
     {
-        private PipeDirection _pipeDirection;
-        private int _conduitLayer;
-
-        private void ChangeState(AppearanceComponent appearance)
+        public override void InitializeEntity(IEntity entity)
         {
-            if (!appearance.Owner.TryGetComponent(out ISpriteComponent sprite))
+            base.InitializeEntity(entity);
+
+            if (!entity.TryGetComponent(out ISpriteComponent sprite))
             {
                 return;
             }
+            sprite.LayerMapSet(Layer.PipeBase, sprite.AddLayerState("pipeFourway2")); //default
+            sprite.LayerSetShader(Layer.PipeBase, "unshaded");
 
-            if (!appearance.TryGetData(PipeVisuals.VisualState, out PipeVisualState pipeVisualState))
+        }
+
+        public override void OnChangeData(AppearanceComponent component)
+        {
+            base.OnChangeData(component);
+
+            if (!component.Owner.TryGetComponent(out ISpriteComponent sprite))
+            {
+                return;
+            }
+            if (!component.TryGetData(PipeVisuals.VisualState, out PipeVisualState pipeVisualState))
             {
                 return;
             }
@@ -29,27 +40,12 @@ namespace Content.Client.GameObjects.Components.Disposal
             state += pipeVisualState.PipeDirection.ToString();
             state += pipeVisualState.ConduitLayer.ToString();
 
-            sprite.LayerSetState(0, state);
+            sprite.LayerSetState(Layer.PipeBase, state);
         }
 
-        public override void InitializeEntity(IEntity entity)
+        private enum Layer
         {
-            base.InitializeEntity(entity);
-
-            var appearance = entity.EnsureComponent<AppearanceComponent>();
-            ChangeState(appearance);
-        }
-
-        public override void OnChangeData(AppearanceComponent component)
-        {
-            base.OnChangeData(component);
-
-            if (component.Owner.Deleted)
-            {
-                return;
-            }
-
-            ChangeState(component);
+            PipeBase,
         }
     }
 }
