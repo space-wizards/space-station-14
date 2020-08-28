@@ -144,6 +144,7 @@ namespace Content.Shared.GameObjects.Components.Movement
             serializer.DataField(this, x => ParalyzeTime, "paralyzeTime", 3f);
             serializer.DataField(this, x  => IntersectPercentage, "intersectPercentage", 0.3f);
             serializer.DataField(this, x => RequiredSlipSpeed, "requiredSlipSpeed", 0f);
+            serializer.DataField(this, x => x.Slippery, "slippery", true);
         }
     }
 }
