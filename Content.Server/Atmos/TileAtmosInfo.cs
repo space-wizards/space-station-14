@@ -1,4 +1,5 @@
 ﻿using System;
+using Content.Shared.Atmos;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 

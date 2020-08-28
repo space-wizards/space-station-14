@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System;
 using Content.Server.GameObjects.Components.Atmos;
+using Content.Shared.Atmos;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Random;

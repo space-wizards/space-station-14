@@ -622,8 +622,7 @@ namespace Content.Server.Atmos
         private void AdjustEqMovement(AtmosDirection direction, float amount)
         {
             _tileAtmosInfo[direction] += amount;
-            if(direction != AtmosDirection.Invalid)
-                _adjacentTiles[direction.ToIndex()]._tileAtmosInfo[direction.GetOpposite()] -= amount;
+            _adjacentTiles[direction.ToIndex()]._tileAtmosInfo[direction.GetOpposite()] -= amount;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

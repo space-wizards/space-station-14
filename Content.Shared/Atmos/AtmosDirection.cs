@@ -1,7 +1,7 @@
 ﻿using System;
 using Robust.Shared.Maths;
 
-namespace Content.Server.Atmos
+namespace Content.Shared.Atmos
 {
     /// <summary>
     ///     The reason we use this over <see cref="Direction"/> is that we are going to do some heavy bitflag usage.
@@ -37,7 +37,7 @@ namespace Content.Server.Atmos
                 AtmosDirection.NorthWest => AtmosDirection.SouthEast,
                 AtmosDirection.SouthEast => AtmosDirection.NorthWest,
                 AtmosDirection.SouthWest => AtmosDirection.NorthEast,
-                _ => AtmosDirection.Invalid
+                _ => throw new ArgumentOutOfRangeException(nameof(direction))
             };
         }
 
@@ -53,7 +53,8 @@ namespace Content.Server.Atmos
                 AtmosDirection.NorthWest => Direction.NorthWest,
                 AtmosDirection.SouthEast => Direction.SouthEast,
                 AtmosDirection.SouthWest => Direction.SouthWest,
-                _ => Direction.Invalid
+                AtmosDirection.Invalid => Direction.Invalid,
+                _ => throw new ArgumentOutOfRangeException(nameof(direction))
             };
         }
 
@@ -69,7 +70,8 @@ namespace Content.Server.Atmos
                 Direction.NorthWest => AtmosDirection.NorthWest,
                 Direction.SouthEast => AtmosDirection.SouthEast,
                 Direction.SouthWest => AtmosDirection.SouthWest,
-                _ => AtmosDirection.Invalid
+                Direction.Invalid => AtmosDirection.Invalid,
+                _ => throw new ArgumentOutOfRangeException(nameof(direction))
             };
         }
 
