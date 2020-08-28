@@ -69,7 +69,7 @@ namespace Content.Client.GameObjects.Components.PDA
                     };
                 }
 
-                SendMessage(new PDAUplinkBuyListingMessage(listing));
+                SendMessage(new PDAUplinkBuyListingMessage(listing.ItemId));
             };
 
             _menu.OnCategoryButtonPressed += (args, category) =>

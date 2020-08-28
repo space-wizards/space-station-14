@@ -17,9 +17,9 @@ namespace Content.Client.GameObjects.Components.Items
     [ComponentReference(typeof(ISharedHandsComponent))]
     public class HandsComponent : SharedHandsComponent
     {
-        private HandsGui? _gui;
-
         [Dependency] private readonly IGameHud _gameHud = default!;
+
+        private HandsGui? _gui;
 
         /// <inheritdoc />
         private readonly List<Hand> _hands = new List<Hand>();
@@ -156,7 +156,8 @@ namespace Content.Client.GameObjects.Components.Items
             }
             else
             {
-                var (rsi, state) = maybeInHands.Value;
+                var (rsi, state, color) = maybeInHands.Value;
+                _sprite.LayerSetColor($"hand-{name}", color);
                 _sprite.LayerSetVisible($"hand-{name}", true);
                 _sprite.LayerSetState($"hand-{name}", state, rsi);
             }

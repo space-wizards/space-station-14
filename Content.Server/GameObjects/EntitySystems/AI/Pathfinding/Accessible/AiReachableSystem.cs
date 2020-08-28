@@ -130,6 +130,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
             _regions.Clear();
             _cachedAccessible.Clear();
             _queuedCacheDeletions.Clear();
+            _mapManager.OnGridRemoved -= GridRemoved;
         }
 
         public void ResettingCleanup()
@@ -626,6 +627,12 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         /// <param name="chunk"></param>
         private void GenerateRegions(PathfindingChunk chunk)
         {
+            // Grid deleted while update queued.
+            if (!_mapManager.TryGetGrid(chunk.GridId, out _))
+            {
+                return;
+            }
+            
             if (!_regions.ContainsKey(chunk.GridId))
             {
                 _regions.Add(chunk.GridId, new Dictionary<PathfindingChunk, HashSet<PathfindingRegion>>());

@@ -5,13 +5,15 @@ namespace Content.Server.Interfaces.PDA
 {
     public interface IPDAUplinkManager
     {
-        public IReadOnlyList<UplinkListingData> FetchListings => null;
+        public IReadOnlyDictionary<string, UplinkListingData> FetchListings => null;
+
         void Initialize();
+
         public bool AddNewAccount(UplinkAccount acc);
 
         public bool ChangeBalance(UplinkAccount acc, int amt);
 
-        public bool TryPurchaseItem(UplinkAccount acc, UplinkListingData listing);
+        public bool TryPurchaseItem(UplinkAccount acc, string itemId);
 
     }
 }

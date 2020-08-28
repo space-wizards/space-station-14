@@ -135,6 +135,8 @@ namespace Content.Server.GameTicking
             _configurationManager.RegisterCVar("game.defaultpreset", "Suspicion", CVar.ARCHIVE);
             _configurationManager.RegisterCVar("game.fallbackpreset", "Sandbox", CVar.ARCHIVE);
 
+            _configurationManager.RegisterCVar("game.enablewin", true, CVar.CHEAT);
+
             PresetSuspicion.RegisterCVars(_configurationManager);
 
             _netManager.RegisterNetMessage<MsgTickerJoinLobby>(nameof(MsgTickerJoinLobby));

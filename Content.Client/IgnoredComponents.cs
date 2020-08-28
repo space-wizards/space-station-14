@@ -105,7 +105,6 @@
             "SecureEntityStorage",
             "PresetIdCard",
             "SolarControlConsole",
-            "BatteryBarrel",
             "FlashExplosive",
             "FlashProjectile",
             "Utensil",
@@ -164,6 +163,9 @@
             "AMEPart",
             "AMEFuelContainer",
             "AMEShield",
+            "DebugPump",
+            "DebugVent",
+            "DebugSiphon",
         };
     }
 }

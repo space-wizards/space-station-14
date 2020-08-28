@@ -1,4 +1,5 @@
 ﻿using System;
+using Content.Shared.Atmos;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 
@@ -30,15 +31,15 @@ namespace Content.Server.Atmos
         [ViewVariables]
         public float TransferDirectionSouth;
 
-        public float this[Direction direction]
+        public float this[AtmosDirection direction]
         {
             get =>
                 direction switch
                 {
-                    Direction.East => TransferDirectionEast,
-                    Direction.West => TransferDirectionWest,
-                    Direction.North => TransferDirectionNorth,
-                    Direction.South => TransferDirectionSouth,
+                    AtmosDirection.East => TransferDirectionEast,
+                    AtmosDirection.West => TransferDirectionWest,
+                    AtmosDirection.North => TransferDirectionNorth,
+                    AtmosDirection.South => TransferDirectionSouth,
                     _ => throw new ArgumentOutOfRangeException(nameof(direction))
                 };
 
@@ -46,16 +47,16 @@ namespace Content.Server.Atmos
             {
                 switch (direction)
                 {
-                    case Direction.East:
+                    case AtmosDirection.East:
                          TransferDirectionEast = value;
                          break;
-                    case Direction.West:
+                    case AtmosDirection.West:
                         TransferDirectionWest = value;
                         break;
-                    case Direction.North:
+                    case AtmosDirection.North:
                         TransferDirectionNorth = value;
                         break;
-                    case Direction.South:
+                    case AtmosDirection.South:
                         TransferDirectionSouth = value;
                         break;
                     default:
@@ -64,10 +65,16 @@ namespace Content.Server.Atmos
             }
         }
 
+        public float this[int index]
+        {
+            get => this[(AtmosDirection) (1 << index)];
+            set => this[(AtmosDirection) (1 << index)] = value;
+        }
+
         [ViewVariables]
         public float CurrentTransferAmount;
 
-        public Direction CurrentTransferDirection;
+        public AtmosDirection CurrentTransferDirection;
 
         [ViewVariables]
         public bool FastDone;

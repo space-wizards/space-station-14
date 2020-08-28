@@ -15,6 +15,7 @@ using Robust.Shared.Interfaces.Log;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Timing;
+using Content.Server.GameObjects.Components.Mobs.Speech;
 
 namespace Content.Server
 {
@@ -64,6 +65,7 @@ namespace Content.Server
             IoCManager.Resolve<IServerPreferencesManager>().StartInit();
             IoCManager.Resolve<INodeGroupFactory>().Initialize();
             IoCManager.Resolve<ISandboxManager>().Initialize();
+            IoCManager.Resolve<IAccentManager>().Initialize();
         }
 
         public override void PostInit()
