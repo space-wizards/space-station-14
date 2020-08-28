@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
 using System.Collections.Generic;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
