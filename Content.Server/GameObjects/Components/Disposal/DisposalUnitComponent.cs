@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
@@ -68,12 +67,6 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         [ViewVariables]
         private TimeSpan _automaticEngageTime;
-
-        [ViewVariables]
-        private TimeSpan _flushDelay;
-
-        [ViewVariables]
-        private float _entryDelay;
 
         /// <summary>
         ///     Token used to cancel the automatic engage of a disposal unit
@@ -181,33 +174,12 @@ namespace Content.Server.GameObjects.Components.Disposal
             UpdateVisualState();
         }
 
-        public async Task<bool> TryInsert(IEntity entity, IEntity? user = default)
+        public bool TryInsert(IEntity entity)
         {
-            if (!CanInsert(entity))
-                return false;
-
-            if (user != null && _entryDelay > 0f)
+            if (!CanInsert(entity) || !_container.Insert(entity))
             {
-                var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
-
-                var doAfterArgs = new DoAfterEventArgs(user, _entryDelay, default, Owner)
-                {
-                    BreakOnDamage = true,
-                    BreakOnStun = true,
-                    BreakOnTargetMove = true,
-                    BreakOnUserMove = true,
-                    NeedHand = false,
-                };
-
-                var result = await doAfterSystem.DoAfter(doAfterArgs);
-
-                if (result == DoAfterStatus.Cancelled)
-                    return false;
-
-            }
-
-            if (!_container.Insert(entity))
                 return false;
+            }
 
             AfterInsert(entity);
 
@@ -253,9 +225,9 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             Engaged ^= true;
 
-            if (Engaged && CanFlush())
+            if (Engaged)
             {
-                Timer.Spawn(_flushDelay, () => TryFlush());
+                TryFlush();
             }
         }
 
@@ -515,16 +487,10 @@ namespace Content.Server.GameObjects.Components.Disposal
                 () => (int) _automaticEngageTime.TotalSeconds);
 
             serializer.DataReadWriteFunction(
-                "flushDelay",
-                3,
-                seconds => _flushDelay = TimeSpan.FromSeconds(seconds),
-                () => (int) _flushDelay.TotalSeconds);
-
-            serializer.DataReadWriteFunction(
-                "entryDelay",
-                0.5f,
-                seconds => _entryDelay = seconds,
-                () => (int) _entryDelay);
+                "automaticEngageTime",
+                30,
+                seconds => _automaticEngageTime = TimeSpan.FromSeconds(seconds),
+                () => (int) _automaticEngageTime.TotalSeconds);
         }
 
         public override void Initialize()
@@ -654,8 +620,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         bool IDragDropOn.DragDropOn(DragDropEventArgs eventArgs)
         {
-            _ = TryInsert(eventArgs.Dropped, eventArgs.User);
-            return true;
+            return TryInsert(eventArgs.Dropped);
         }
 
         [Verb]
@@ -677,7 +642,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             protected override void Activate(IEntity user, DisposalUnitComponent component)
             {
-                _ = component.TryInsert(user, user);
+                component.TryInsert(user);
             }
         }
 

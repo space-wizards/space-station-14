@@ -22,17 +22,14 @@ namespace Content.IntegrationTests.Tests.Disposal
         {
             foreach (var entity in entities)
             {
-                var insertTask = unit.TryInsert(entity);
                 Assert.That(unit.CanInsert(entity), Is.EqualTo(result));
-                insertTask.ContinueWith(task =>
+                Assert.That(unit.TryInsert(entity), Is.EqualTo(result));
+
+                if (result)
                 {
-                    Assert.That(task.Result, Is.EqualTo(result));
-                    if (result)
-                    {
-                        // Not in a tube yet
-                        Assert.That(entity.Transform.Parent, Is.EqualTo(unit.Owner.Transform));
-                    }
-                });
+                    // Not in a tube yet
+                    Assert.That(entity.Transform.Parent == unit.Owner.Transform);
+                }
             }
         }
 
