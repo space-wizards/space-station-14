@@ -4,10 +4,8 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Reactions;
 using Content.Server.GameObjects.Components.Atmos;
-using Content.Server.GameObjects.Components.Doors;
 using Content.Server.GameObjects.EntitySystems.Atmos;
 using Content.Server.Interfaces;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
 using Content.Shared.Maps;
@@ -29,18 +27,15 @@ namespace Content.Server.Atmos
 {
     public class TileAtmosphere : IGasMixtureHolder
     {
-        [Robust.Shared.IoC.Dependency] private IRobustRandom _robustRandom = default!;
-        [Robust.Shared.IoC.Dependency] private IEntityManager _entityManager = default!;
-        [Robust.Shared.IoC.Dependency] private IMapManager _mapManager = default!;
+        [Robust.Shared.IoC.Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Robust.Shared.IoC.Dependency] private readonly IEntityManager _entityManager = default!;
+        [Robust.Shared.IoC.Dependency] private readonly IMapManager _mapManager = default!;
 
 
-        private static readonly TileAtmosphereComparer _comparer = new TileAtmosphereComparer();
+        private static readonly TileAtmosphereComparer Comparer = new TileAtmosphereComparer();
 
-        [ViewVariables]
-        private int _archivedCycle = 0;
-
-        [ViewVariables]
-        private int _currentCycle = 0;
+        [ViewVariables] private int _archivedCycle;
+        [ViewVariables] private int _currentCycle;
 
         [ViewVariables]
         private static GasTileOverlaySystem _gasTileOverlaySystem;
@@ -52,13 +47,13 @@ namespace Content.Server.Atmos
         private float _temperatureArchived = Atmospherics.T20C;
 
         // I know this being static is evil, but I seriously can't come up with a better solution to sound spam.
-        private static int _soundCooldown = 0;
+        private static int _soundCooldown;
 
         [ViewVariables]
-        public TileAtmosphere PressureSpecificTarget { get; set; } = null;
+        public TileAtmosphere PressureSpecificTarget { get; set; }
 
         [ViewVariables]
-        public float PressureDifference { get; set; } = 0;
+        public float PressureDifference { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float HeatCapacity { get; set; } = 1f;
@@ -67,10 +62,10 @@ namespace Content.Server.Atmos
         public float ThermalConductivity => Tile?.Tile.GetContentTileDefinition().ThermalConductivity ?? 0.05f;
 
         [ViewVariables]
-        public bool Excited { get; set; } = false;
+        public bool Excited { get; set; }
 
         [ViewVariables]
-        private GridAtmosphereComponent _gridAtmosphereComponent;
+        private readonly GridAtmosphereComponent _gridAtmosphereComponent;
 
         /// <summary>
         ///     Adjacent tiles in the same order as <see cref="AtmosDirection"/>. (NSEW)
@@ -82,7 +77,7 @@ namespace Content.Server.Atmos
         private AtmosDirection _adjacentBits = AtmosDirection.Invalid;
 
         [ViewVariables]
-        private TileAtmosInfo _tileAtmosInfo = new TileAtmosInfo();
+        private TileAtmosInfo _tileAtmosInfo;
 
         [ViewVariables]
         public Hotspot Hotspot;
@@ -338,7 +333,7 @@ namespace Content.Server.Atmos
             if (giverTilesLength > logN && takerTilesLength > logN)
             {
                 // Even if it fails, it will speed up the next part.
-                Array.Sort(tiles, 0, tileCount, _comparer);
+                Array.Sort(tiles, 0, tileCount, Comparer);
 
                 for (var i = 0; i < tileCount; i++)
                 {
@@ -780,14 +775,11 @@ namespace Content.Server.Atmos
             else
             {
                 var affected = Air.RemoveRatio(Hotspot.Volume / Air.Volume);
-                if (affected != null)
-                {
-                    affected.Temperature = Hotspot.Temperature;
-                    affected.React(this);
-                    Hotspot.Temperature = affected.Temperature;
-                    Hotspot.Volume = affected.ReactionResults[GasReaction.Fire] * Atmospherics.FireGrowthRate;
-                    AssumeAir(affected);
-                }
+                affected.Temperature = Hotspot.Temperature;
+                affected.React(this);
+                Hotspot.Temperature = affected.Temperature;
+                Hotspot.Volume = affected.ReactionResults[GasReaction.Fire] * Atmospherics.FireGrowthRate;
+                AssumeAir(affected);
             }
 
             var tileRef = GridIndices.GetTileRef(GridIndex);
