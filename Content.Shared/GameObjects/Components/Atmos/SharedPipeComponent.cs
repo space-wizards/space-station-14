@@ -49,7 +49,7 @@ namespace Content.Shared.GameObjects.Components.Atmos
         TEast = East | Longitudinal,
 
         //Four way
-        FourWay = North | South | East | West,
+        Fourway = North | South | East | West,
 
         All = -1,
     }
