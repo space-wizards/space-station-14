@@ -18,6 +18,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -302,12 +303,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
                 if (component.PowerCell == null)
                 {
-                    data.Text = "Eject cell (cell missing)";
+                    data.Text = Loc.GetString("Eject cell (cell missing)");
                     data.Visibility = VerbVisibility.Disabled;
                 }
                 else
                 {
-                    data.Text = "Eject cell";
+                    data.Text = Loc.GetString("Eject cell");
                 }
             }
 

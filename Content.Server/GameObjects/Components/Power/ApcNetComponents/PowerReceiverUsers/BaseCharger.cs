@@ -137,11 +137,13 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                 if (component._container.ContainedEntity != null || handsComponent.GetActiveHand == null)
                 {
                     data.Visibility = VerbVisibility.Disabled;
-                    data.Text = "Insert";
+                    data.Text = Loc.GetString("Insert");
                     return;
                 }
 
-                data.Text = $"Insert {handsComponent.GetActiveHand.Owner.Name}";
+                var heldItemName = Loc.GetString(handsComponent.GetActiveHand.Owner.Name);
+
+                data.Text = Loc.GetString("Insert {0}", heldItemName);
             }
 
             protected override void Activate(IEntity user, BaseCharger component)
@@ -173,12 +175,14 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                 }
                 if (component._container.ContainedEntity == null)
                 {
-                    data.Text = "Eject";
+                    data.Text = Loc.GetString("Eject");
                     data.Visibility = VerbVisibility.Disabled;
                     return;
                 }
 
-                data.Text = $"Eject {component._container.ContainedEntity.Name}";
+                var containerItemName = Loc.GetString(component._container.ContainedEntity.Name);
+
+                data.Text = Loc.GetString("Eject {0}", containerItemName);
             }
 
             protected override void Activate(IEntity user, BaseCharger component)
