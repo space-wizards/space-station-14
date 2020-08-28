@@ -54,10 +54,9 @@ namespace Content.Server.GameObjects.Components.Disposal
         /// </summary>
         public override Direction NextDirection(DisposalHolderComponent holder)
         {
-            var invalidDirections = new Direction[] { ConnectableDirections()[0], Direction.Invalid };
-
             if (holder.PreviousTube != null && DirectionTo(holder.PreviousTube) == ConnectableDirections()[0])
             {
+                var invalidDirections = new Direction[] { ConnectableDirections()[0], Direction.Invalid };
                 var directions = System.Enum.GetValues(typeof(Direction))
                     .Cast<Direction>().Except(invalidDirections).ToList();
                 return _random.Pick<Direction>(directions);
