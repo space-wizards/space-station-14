@@ -216,7 +216,6 @@
   - type: Slippery
     intersectPercentage: 0.2
   - type: Collidable
-    hard: true
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.2,-0.2,0.2,0.2"
