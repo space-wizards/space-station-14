@@ -129,7 +129,11 @@ namespace Content.Server.Atmos
         [ViewVariables]
         public float Volume { get; set; }
 
-        public GasMixture(AtmosphereSystem? atmosphereSystem = null)
+        public GasMixture() : this(null)
+        {
+        }
+
+        public GasMixture(AtmosphereSystem? atmosphereSystem)
         {
             _atmosphereSystem = atmosphereSystem ?? EntitySystem.Get<AtmosphereSystem>();
         }

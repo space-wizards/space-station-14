@@ -821,26 +821,23 @@ namespace Content.Server.Atmos
         {
             var directions = ConductivityDirections();
 
-            if (directions != AtmosDirection.Invalid)
+            for(var i = 0; i < Atmospherics.Directions; i++)
             {
-                for(var i = 0; i < Atmospherics.Directions; i++)
-                {
-                    var direction = (AtmosDirection) (1 << i);
-                    if (!directions.HasFlag(direction)) continue;
+                var direction = (AtmosDirection) (1 << i);
+                if (!directions.HasFlag(direction)) continue;
 
-                    var adjacent = _adjacentTiles[direction.ToIndex()];
+                var adjacent = _adjacentTiles[direction.ToIndex()];
 
-                    // TODO ATMOS handle adjacent being null.
-                    if (adjacent == null || adjacent.ThermalConductivity == 0f)
-                        continue;
+                // TODO ATMOS handle adjacent being null.
+                if (adjacent == null || adjacent.ThermalConductivity == 0f)
+                    continue;
 
-                    if(adjacent._archivedCycle < _gridAtmosphereComponent.UpdateCounter)
-                        adjacent.Archive(_gridAtmosphereComponent.UpdateCounter);
+                if(adjacent._archivedCycle < _gridAtmosphereComponent.UpdateCounter)
+                    adjacent.Archive(_gridAtmosphereComponent.UpdateCounter);
 
-                    adjacent.NeighborConductWithSource(this);
+                adjacent.NeighborConductWithSource(this);
 
-                    adjacent.ConsiderSuperconductivity();
-                }
+                adjacent.ConsiderSuperconductivity();
             }
 
             RadiateToSpace();
