@@ -112,7 +112,7 @@ namespace Content.Server.GameObjects.Components.Interactable
                 return extraCheck;
             }
 
-            if (!CanWeld(DefaultFuelCost, user))
+            if (!ExtraCheck())
             {
                 return false;
             }
