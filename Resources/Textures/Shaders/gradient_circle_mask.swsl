@@ -1,5 +1,5 @@
-uniform highp float percentagedistanceshow = 0.05;
-uniform highp float gradientfalloffwidth = 3.0;
+const highp float percentagedistanceshow = 0.05;
+const highp float gradientfalloffwidth = 3.0;
 
 highp vec4 circle(in highp vec2 uv, in highp vec2 pos, highp float rad, in highp vec3 color) {
     highp float d = length(pos - uv) - rad;

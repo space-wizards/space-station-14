@@ -1,5 +1,5 @@
 ﻿uniform highp float percentComplete;
-uniform highp float fadeFalloffExp = 8.0;
+const highp float fadeFalloffExp = 8.0;
 
 void fragment() {
     // Higher exponent -> stronger blinding effect

@@ -29,10 +29,10 @@
 
 light_mode unshaded;
 //shader_type canvas_item;
-uniform highp float outline_width = 2.0;
+uniform highp float outline_width; // = 2.0;
 // TODO: implement that hint_color thingy.
 //uniform vec4 outline_color: hint_color;
-uniform highp vec4 outline_color=vec4(1.0,0.0,0.0,0.33);
+uniform highp vec4 outline_color; // =vec4(1.0,0.0,0.0,0.33);
 
 void fragment() {
 	highp vec4 col = texture2D(TEXTURE, UV);

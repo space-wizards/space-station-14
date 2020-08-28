@@ -12,14 +12,18 @@ void fragment() {
     highp float angle = atan(delta.x, -delta.y) + PI;
 
     highp float dist = length(delta);
+#ifdef HAS_DFDX
     highp float dist_fwidth = fwidth(dist) * 0.67;
+#else
+    highp float dist_fwidth = 0.05;
+#endif
     
     highp float dist_alpha = smoothstep(0.1-dist_fwidth, 0.1, abs(dist-0.35));
     
     highp float angle_delta = (progress * PI * 2.0) - angle;
     highp float arc_length = angle_delta * dist;
     
-    highp float angle_alpha = progress > 0 ? smoothstep(dist_fwidth, 0.0, arc_length) : 0.0;
+    highp float angle_alpha = (progress > 0.0) ? smoothstep(dist_fwidth, 0.0, arc_length) : 0.0;
 
-    COLOR = vec4(col.xyz, 1-max(dist_alpha, angle_alpha));
+    COLOR = vec4(col.xyz, 1.0 - max(dist_alpha, angle_alpha));
 }
