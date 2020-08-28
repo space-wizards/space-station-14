@@ -16,10 +16,8 @@ namespace Content.Server.GameObjects.Components.Items
     [RegisterComponent]
     public class ToysComponent : Component, IActivate, IUse, ILand
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly IRobustRandom _random;
-#pragma warning restore 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         public override string Name => "Toys";
 

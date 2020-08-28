@@ -92,7 +92,8 @@ Toggle UI: [color=#a4885c]{17}[/color]
 Toggle debug overlay: [color=#a4885c]{18}[/color]
 Toggle entity spawner: [color=#a4885c]{19}[/color]
 Toggle tile spawner: [color=#a4885c]{20}[/color]
-Toggle sandbox window: [color=#a4885c]{21}[/color]",
+Toggle sandbox window: [color=#a4885c]{21}[/color]
+Toggle admin menu [color=#a4885c]{31}[/color]",
                 Key(MoveUp), Key(MoveLeft), Key(MoveDown), Key(MoveRight),
                 Key(SwapHands),
                 Key(ActivateItemInHand),
@@ -120,7 +121,8 @@ Toggle sandbox window: [color=#a4885c]{21}[/color]",
                 Key(FocusAdminChat),
                 Key(Point),
                 Key(TryPullObject),
-                Key(MovePulledObject)));
+                Key(MovePulledObject),
+                Key(OpenAdminMenu)));
 
             //Gameplay
             VBox.AddChild(new Label { FontOverride = headerFont, Text = "\nGameplay" });

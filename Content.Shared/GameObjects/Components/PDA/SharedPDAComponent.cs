@@ -30,7 +30,6 @@ namespace Content.Shared.GameObjects.Components.PDA
         }
     }
 
-
     [Serializable, NetSerializable]
     public class PDAUBoundUserInterfaceState : BoundUserInterfaceState
     {
@@ -70,10 +69,11 @@ namespace Content.Shared.GameObjects.Components.PDA
     [Serializable, NetSerializable]
     public sealed class PDAUplinkBuyListingMessage : BoundUserInterfaceMessage
     {
-        public UplinkListingData ListingToBuy;
-        public PDAUplinkBuyListingMessage(UplinkListingData itemToBuy)
+        public string ItemId;
+
+        public PDAUplinkBuyListingMessage(string itemId)
         {
-            ListingToBuy = itemToBuy;
+            ItemId = itemId;
         }
     }
 
@@ -96,8 +96,7 @@ namespace Content.Shared.GameObjects.Components.PDA
         }
     }
 
-
-    [NetSerializable, Serializable]
+    [Serializable, NetSerializable]
     public struct PDAIdInfoText
     {
         public string ActualOwnerName;
@@ -105,13 +104,13 @@ namespace Content.Shared.GameObjects.Components.PDA
         public string JobTitle;
     }
 
-    [NetSerializable, Serializable]
+    [Serializable, NetSerializable]
     public enum PDAVisuals
     {
         FlashlightLit,
     }
 
-    [NetSerializable, Serializable]
+    [Serializable, NetSerializable]
     public enum PDAUiKey
     {
         Key
@@ -142,7 +141,7 @@ namespace Content.Shared.GameObjects.Components.PDA
         }
     }
 
-    [NetSerializable, Serializable]
+    [Serializable, NetSerializable]
     public class UplinkAccountData
     {
         public EntityUid DataAccountHolder;
@@ -155,7 +154,7 @@ namespace Content.Shared.GameObjects.Components.PDA
         }
     }
 
-    [NetSerializable, Serializable]
+    [Serializable, NetSerializable]
     public class UplinkListingData : ComponentState, IEquatable<UplinkListingData>
     {
         public string ItemId;
@@ -185,5 +184,4 @@ namespace Content.Shared.GameObjects.Components.PDA
             return ItemId == other.ItemId;
         }
     }
-
 }

@@ -26,7 +26,7 @@ namespace Content.Server.AI.Utility.Actions.Clothing.Gloves
             ActionOperators = new Queue<AiOperator>(new AiOperator[]
             {
                 new EquipEntityOperator(Owner, _entity),
-                new UseItemInHandsOperator(Owner, _entity),
+                new UseItemInInventoryOperator(Owner, _entity),
             });
         }
 

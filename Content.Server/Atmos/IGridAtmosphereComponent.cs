@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Atmos.Piping;
+using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -11,11 +13,6 @@ namespace Content.Server.Atmos
         ///     Number of times <see cref="Update"/> has been called.
         /// </summary>
         int UpdateCounter { get; }
-
-        /// <summary>
-        ///     How many tiles have high pressure delta.
-        /// </summary>
-        int HighPressureDeltaCount { get; }
 
         /// <summary>
         ///     Control variable for equalization.
@@ -120,14 +117,14 @@ namespace Content.Server.Atmos
         /// </summary>
         /// <param name="indices"></param>
         /// <returns></returns>
-        TileAtmosphere GetTile(MapIndices indices);
+        TileAtmosphere GetTile(MapIndices indices, bool createSpace = true);
 
         /// <summary>
         ///     Returns a tile.
         /// </summary>
         /// <param name="coordinates"></param>
         /// <returns></returns>
-        TileAtmosphere GetTile(GridCoordinates coordinates);
+        TileAtmosphere GetTile(GridCoordinates coordinates, bool createSpace = true);
 
         /// <summary>
         ///     Returns if the tile in question is air-blocked.
@@ -158,5 +155,13 @@ namespace Content.Server.Atmos
         Dictionary<Direction, TileAtmosphere> GetAdjacentTiles(MapIndices indices, bool includeAirBlocked = false);
 
         void Update(float frameTime);
+
+        void AddPipeNet(IPipeNet pipeNet);
+
+        void RemovePipeNet(IPipeNet pipeNet);
+
+        void AddPipeNetDevice(PipeNetDeviceComponent pipeNetDevice);
+
+        void RemovePipeNetDevice(PipeNetDeviceComponent pipeNetDevice);
     }
 }

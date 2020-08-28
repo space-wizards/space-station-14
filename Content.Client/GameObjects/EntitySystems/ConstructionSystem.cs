@@ -24,11 +24,9 @@ namespace Content.Client.GameObjects.EntitySystems
     [UsedImplicitly]
     public class ConstructionSystem : SharedConstructionSystem
     {
-#pragma warning disable 649
-        [Dependency] private readonly IGameHud _gameHud;
-        [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private readonly IEntityManager _entityManager;
-#pragma warning restore 649
+        [Dependency] private readonly IGameHud _gameHud = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private int _nextId;
         private readonly Dictionary<int, ConstructionGhostComponent> _ghosts = new Dictionary<int, ConstructionGhostComponent>();

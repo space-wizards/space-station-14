@@ -20,9 +20,7 @@ namespace Content.Server.GameObjects.Components.Items.Clothing
     [ComponentReference(typeof(IItemComponent))]
     public class ClothingComponent : ItemComponent, IUse
     {
-#pragma warning disable 649
-        [Dependency] private readonly IServerNotifyManager _serverNotifyManager;
-#pragma warning restore 649
+        [Dependency] private readonly IServerNotifyManager _serverNotifyManager = default!;
 
         public override string Name => "Clothing";
         public override uint? NetID => ContentNetIDs.CLOTHING;
@@ -63,7 +61,6 @@ namespace Content.Server.GameObjects.Components.Items.Clothing
             });
 
             serializer.DataField(ref _quickEquipEnabled, "QuickEquip", true);
-
             serializer.DataFieldCached(ref _heatResistance, "HeatResistance", 323);
         }
 

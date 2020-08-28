@@ -1,13 +1,19 @@
 ﻿using System;
 using System.Threading;
 using Content.Server.GameObjects.Components.Suspicion;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs.Roles;
+using Content.Server.Mobs.Roles.Suspicion;
 using Content.Server.Players;
 using Content.Shared.GameObjects.Components.Damage;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.IoC;
 using Timer = Robust.Shared.Timers.Timer;
 
@@ -21,17 +27,21 @@ namespace Content.Server.GameTicking.GameRules
     {
         private static readonly TimeSpan DeadCheckDelay = TimeSpan.FromSeconds(1);
 
-#pragma warning disable 649
-        [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private readonly IChatManager _chatManager;
-        [Dependency] private readonly IGameTicker _gameTicker;
-#pragma warning restore 649
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly IGameTicker _gameTicker = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         private readonly CancellationTokenSource _checkTimerCancel = new CancellationTokenSource();
 
         public override void Added()
         {
             _chatManager.DispatchServerAnnouncement("There are traitors on the station! Find them, and kill them!");
+
+            EntitySystem.Get<AudioSystem>().PlayGlobal("/Audio/Misc/tatoralert.ogg", AudioParams.Default,
+                (session) => session.ContentData().Mind?.HasRole<SuspicionTraitorRole>() ?? false);
+
+            EntitySystem.Get<DoorSystem>().AccessType = DoorSystem.AccessTypes.AllowAllNoExternal;
 
             Timer.SpawnRepeating(DeadCheckDelay, _checkWinConditions, _checkTimerCancel.Token);
         }
@@ -40,11 +50,16 @@ namespace Content.Server.GameTicking.GameRules
         {
             base.Removed();
 
+            EntitySystem.Get<DoorSystem>().AccessType = DoorSystem.AccessTypes.Id;
+
             _checkTimerCancel.Cancel();
         }
 
         private void _checkWinConditions()
         {
+            if (!_cfg.GetCVar<bool>("game.enablewin"))
+                return;
+
             var traitorsAlive = 0;
             var innocentsAlive = 0;
 

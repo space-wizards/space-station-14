@@ -86,9 +86,6 @@
             "CanSpill",
             "SpeedLoader",
             "Hitscan",
-            "BoltActionBarrel",
-            "PumpBarrel",
-            "RevolverBarrel",
             "ExplosiveProjectile",
             "StunnableProjectile",
             "RandomPottedPlant",
@@ -108,7 +105,6 @@
             "SecureEntityStorage",
             "PresetIdCard",
             "SolarControlConsole",
-            "BatteryBarrel",
             "FlashExplosive",
             "FlashProjectile",
             "Utensil",
@@ -162,6 +158,11 @@
             "GasVapor",
             "MobStateManager",
             "Metabolism",
+            "AiFactionTag",
+            "PressureProtection",
+            "DebugPump",
+            "DebugVent",
+            "DebugSiphon",
         };
     }
 }

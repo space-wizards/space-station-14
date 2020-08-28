@@ -1,9 +1,17 @@
 - type: entity
   name: handcuffs
-  description: Just a prop for screenshots for now, sorry!
+  description: Used to detain criminals and other assholes.
   id: Handcuffs
   parent: BaseItem
   components:
+  - type: Handcuff
+    cuffTime: 3.0
+    uncuffTime: 3.0
+    stunBonus: 2.0
+    breakoutTime: 20.0
+    cuffedRSI: Objects/Misc/handcuffs.rsi 
+    iconState: body-overlay
+
   - type: Sprite
     sprite: Objects/Misc/handcuffs.rsi
     state: handcuff
@@ -18,10 +26,29 @@
 
 
 - type: entity
-  name: cable restraints
+  name: makeshift handcuffs
+  description: Homemade handcuffs crafted from spare cables.
   id: Cablecuffs
   parent: Handcuffs
   components:
+  - type: Handcuff
+    cuffTime: 3.5
+    uncuffTime: 3.5
+    stunBonus: 2.0
+    breakoutTime: 15.0
+    cuffedRSI: Objects/Misc/cablecuffs.rsi 
+    bodyIconState: body-overlay
+    color: red
+    breakOnRemove: true
+    brokenIconState: cuff-broken
+    brokenName: broken cables
+    brokenDesc: These cables are broken in several places and don't seem very useful.
+    startCuffSound: /Audio/Items/Handcuffs/rope_start.ogg
+    endCuffSound: /Audio/Items/Handcuffs/rope_end.ogg
+    startUncuffSound: /Audio/Items/Handcuffs/rope_start.ogg
+    endUncuffSound: /Audio/Items/Handcuffs/rope_breakout.ogg
+    startBreakoutSound: /Audio/Items/Handcuffs/rope_takeoff.ogg
+
   - type: Sprite
     sprite: Objects/Misc/cablecuffs.rsi
     state: cuff
@@ -30,7 +57,9 @@
   - type: Icon
     sprite: Objects/Misc/cablecuffs.rsi
     state: cuff
+    color: red
 
   - type: Clothing
     sprite: Objects/Misc/cablecuffs.rsi
+    color: red
     Slots: [belt]

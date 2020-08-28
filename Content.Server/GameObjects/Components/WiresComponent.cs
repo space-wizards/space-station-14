@@ -8,6 +8,7 @@ using Content.Server.GameObjects.Components.VendingMachines;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.EntitySystems;
@@ -33,13 +34,10 @@ namespace Content.Server.GameObjects.Components
     [RegisterComponent]
     public class WiresComponent : SharedWiresComponent, IInteractUsing, IExamine, IMapInit
     {
-#pragma warning disable 649
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
-#pragma warning restore 649
+
         private AudioSystem _audioSystem = default!;
-        private AppearanceComponent _appearance = default!;
-        private BoundUserInterface _userInterface = default!;
 
         private bool _isPanelOpen;
 
@@ -107,7 +105,10 @@ namespace Content.Server.GameObjects.Components
 
         private void UpdateAppearance()
         {
-            _appearance.SetData(WiresVisuals.MaintenancePanelState, IsPanelOpen && IsPanelVisible);
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            {
+                appearance.SetData(WiresVisuals.MaintenancePanelState, IsPanelOpen && IsPanelVisible);
+            }
         }
 
         /// <summary>
@@ -140,15 +141,22 @@ namespace Content.Server.GameObjects.Components
         [ViewVariables]
         private string? _layoutId;
 
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(WiresUiKey.Key);
+
         public override void Initialize()
         {
             base.Initialize();
             _audioSystem = EntitySystem.Get<AudioSystem>();
-            _appearance = Owner.GetComponent<AppearanceComponent>();
-            _appearance.SetData(WiresVisuals.MaintenancePanelState, IsPanelOpen);
-            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
-                .GetBoundUserInterface(WiresUiKey.Key);
-            _userInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
+
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            {
+                appearance.SetData(WiresVisuals.MaintenancePanelState, IsPanelOpen);
+            }
+
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
+            }
         }
 
         private void GenerateSerialNumber()
@@ -357,7 +365,7 @@ namespace Content.Server.GameObjects.Components
         /// </summary>
         public void OpenInterface(IPlayerSession session)
         {
-            _userInterface.Open(session);
+            UserInterface?.Open(session);
         }
 
         private void UserInterfaceOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
@@ -450,7 +458,7 @@ namespace Content.Server.GameObjects.Components
                     entry.Letter));
             }
 
-            _userInterface.SetState(
+            UserInterface?.SetState(
                 new WiresBoundUserInterfaceState(
                     clientList.ToArray(),
                     _statuses.Select(p => new StatusEntry(p.Key, p.Value)).ToArray(),
@@ -485,9 +493,7 @@ namespace Content.Server.GameObjects.Components
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
-            var loc = IoCManager.Resolve<ILocalizationManager>();
-
-            message.AddMarkup(loc.GetString(IsPanelOpen
+            message.AddMarkup(Loc.GetString(IsPanelOpen
                 ? "The [color=lightgray]maintenance panel[/color] is [color=darkgreen]open[/color]."
                 : "The [color=lightgray]maintenance panel[/color] is [color=darkred]closed[/color]."));
         }

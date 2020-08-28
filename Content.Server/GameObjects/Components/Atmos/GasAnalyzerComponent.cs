@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Server.Utility;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
@@ -16,30 +17,32 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
     [RegisterComponent]
     public class GasAnalyzerComponent : SharedGasAnalyzerComponent, IAfterInteract, IDropped, IUse
     {
-#pragma warning disable 649
-        [Dependency] private IServerNotifyManager _notifyManager = default!;
-        [Dependency] private IMapManager _mapManager = default!;
-#pragma warning restore 649
+        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
-        private BoundUserInterface _userInterface = default!;
         private GasAnalyzerDanger _pressureDanger;
         private float _timeSinceSync;
         private const float TimeBetweenSyncs = 2f;
         private bool _checkPlayer = false; // Check at the player pos or at some other tile?
         private GridCoordinates? _position; // The tile that we scanned
 
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(GasAnalyzerUiKey.Key);
+
         public override void Initialize()
         {
             base.Initialize();
-            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
-                .GetBoundUserInterface(GasAnalyzerUiKey.Key);
-            _userInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
+
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
+            }
         }
 
         public override ComponentState GetComponentState()
@@ -56,7 +59,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             _checkPlayer = true;
             _position = null;
-            _userInterface.Open(session);
+            UserInterface?.Open(session);
             UpdateUserInterface();
             Resync();
         }
@@ -71,7 +74,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             _checkPlayer = false;
             _position = pos;
-            _userInterface.Open(session);
+            UserInterface?.Open(session);
             UpdateUserInterface();
             Resync();
         }
@@ -79,7 +82,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         public void CloseInterface(IPlayerSession session)
         {
             _position = null;
-            _userInterface.Close(session);
+            UserInterface?.Close(session);
             Resync();
         }
 
@@ -123,10 +126,15 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         private void UpdateUserInterface()
         {
+            if (UserInterface == null)
+            {
+                return;
+            }
+
             string? error = null;
 
             // Check if the player is still holding the gas analyzer => if not, don't update
-            foreach (var session in _userInterface.SubscribedSessions)
+            foreach (var session in UserInterface.SubscribedSessions)
             {
                 if (session.AttachedEntity == null)
                     return;
@@ -151,12 +159,13 @@ namespace Content.Server.GameObjects.Components.Atmos
                 pos = _position.Value;
             }
 
-            var gam = EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(pos.GridID);
+            var atmosSystem = EntitySystem.Get<AtmosphereSystem>();
+            var gam = atmosSystem.GetGridAtmosphere(pos.GridID);
             var tile = gam?.GetTile(pos).Air;
             if (tile == null)
             {
                 error = "No Atmosphere!";
-                _userInterface.SetState(
+                UserInterface.SetState(
                 new GasAnalyzerBoundUserInterfaceState(
                     0,
                     0,
@@ -166,16 +175,17 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
 
             var gases = new List<GasEntry>();
-            for (int i = 0; i < Atmospherics.TotalNumberOfGases; i++)
+
+            for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
-                var gas = Atmospherics.GetGas(i);
+                var gas = atmosSystem.GetGas(i);
 
                 if (tile.Gases[i] <= Atmospherics.GasMinMoles) continue;
 
                 gases.Add(new GasEntry(gas.Name, tile.Gases[i], gas.Color));
             }
 
-            _userInterface.SetState(
+            UserInterface.SetState(
                 new GasAnalyzerBoundUserInterfaceState(
                     tile.Pressure,
                     tile.Temperature,

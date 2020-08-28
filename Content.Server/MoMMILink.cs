@@ -18,12 +18,10 @@ namespace Content.Server
 {
     internal sealed class MoMMILink : IMoMMILink, IPostInjectInit
     {
-#pragma warning disable 649
-        [Dependency] private readonly IConfigurationManager _configurationManager;
-        [Dependency] private readonly IStatusHost _statusHost;
-        [Dependency] private readonly IChatManager _chatManager;
-        [Dependency] private readonly ITaskManager _taskManager;
-#pragma warning restore 649
+        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+        [Dependency] private readonly IStatusHost _statusHost = default!;
+        [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly ITaskManager _taskManager = default!;
 
         private readonly HttpClient _httpClient = new HttpClient();
 

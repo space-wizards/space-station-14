@@ -1,4 +1,4 @@
-meta:
+﻿meta:
   format: 2
   name: DemoStation
   author: Space-Wizards
@@ -139,8 +139,7 @@ entities:
       DisposalEntry:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 1
   type: DisposalBend
   components:
@@ -152,8 +151,7 @@ entities:
       DisposalBend:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2
   type: DisposalBend
   components:
@@ -165,8 +163,7 @@ entities:
       DisposalBend:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3
   type: DisposalBend
   components:
@@ -177,8 +174,7 @@ entities:
       DisposalBend:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 4
   type: DisposalPipe
   components:
@@ -190,8 +186,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 5
   type: DisposalPipe
   components:
@@ -203,8 +198,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 6
   type: DisposalTrunk
   components:
@@ -216,8 +210,7 @@ entities:
       DisposalEntry:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 7
   type: DisposalUnit
   components:
@@ -225,8 +218,7 @@ entities:
     pos: -5.5,-14.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - shapes: []
-    type: Collidable
+  
   - containers:
       DisposalUnit:
         type: Robust.Server.GameObjects.Components.Container.Container
@@ -242,8 +234,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 9
   type: DisposalPipe
   components:
@@ -254,8 +245,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 10
   type: DisposalPipe
   components:
@@ -266,8 +256,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 11
   type: DisposalPipe
   components:
@@ -278,8 +267,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 12
   type: DisposalPipe
   components:
@@ -290,8 +278,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 13
   type: DisposalPipe
   components:
@@ -302,8 +289,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 14
   type: DisposalPipe
   components:
@@ -315,8 +301,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 15
   components:
   - name: Saltern Station
@@ -22347,8 +22332,7 @@ entities:
       DisposalEntry:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 1596
   type: VendingMachineSovietSoda
   components:
@@ -27782,8 +27766,7 @@ entities:
   - parent: 15
     pos: 18.5,-0.5
     type: Transform
-  - shapes: []
-    type: Collidable
+  
   - containers:
       DisposalUnit:
         type: Robust.Server.GameObjects.Components.Container.Container
@@ -27799,8 +27782,7 @@ entities:
       DisposalEntry:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2220
   type: LargeBeaker
   components:
@@ -33976,8 +33958,7 @@ entities:
     pos: -10.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - shapes: []
-    type: Collidable
+  
   - containers:
       DisposalUnit:
         type: Robust.Server.GameObjects.Components.Container.Container
@@ -33993,8 +33974,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2951
   type: DisposalPipe
   components:
@@ -34006,8 +33986,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2952
   type: DisposalPipe
   components:
@@ -34019,8 +33998,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2953
   type: DisposalUnit
   components:
@@ -34028,8 +34006,7 @@ entities:
     pos: -27.5,-8.5
     rot: 1.5707963267948966 rad
     type: Transform
-  - shapes: []
-    type: Collidable
+  
   - containers:
       DisposalUnit:
         type: Robust.Server.GameObjects.Components.Container.Container
@@ -34045,8 +34022,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2955
   type: DisposalPipe
   components:
@@ -34058,8 +34034,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2956
   type: DisposalPipe
   components:
@@ -34071,8 +34046,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2957
   type: DisposalPipe
   components:
@@ -34084,8 +34058,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2958
   type: DisposalBend
   components:
@@ -34097,8 +34070,7 @@ entities:
       DisposalBend:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2959
   type: DisposalPipe
   components:
@@ -34110,8 +34082,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2960
   type: DisposalPipe
   components:
@@ -34123,8 +34094,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2961
   type: DisposalPipe
   components:
@@ -34136,8 +34106,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2962
   type: DisposalPipe
   components:
@@ -34149,8 +34118,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2963
   type: DisposalPipe
   components:
@@ -34162,8 +34130,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2964
   type: DisposalPipe
   components:
@@ -34175,8 +34142,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2965
   type: DisposalPipe
   components:
@@ -34188,8 +34154,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2966
   type: DisposalPipe
   components:
@@ -34201,8 +34166,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2967
   type: DisposalPipe
   components:
@@ -34214,8 +34178,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2968
   type: DisposalPipe
   components:
@@ -34227,8 +34190,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2969
   type: DisposalPipe
   components:
@@ -34240,8 +34202,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2970
   type: DisposalPipe
   components:
@@ -34253,8 +34214,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2971
   type: DisposalPipe
   components:
@@ -34266,8 +34226,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2972
   type: DisposalPipe
   components:
@@ -34279,8 +34238,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2973
   type: DisposalPipe
   components:
@@ -34292,8 +34250,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2974
   type: DisposalPipe
   components:
@@ -34305,8 +34262,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2975
   type: DisposalPipe
   components:
@@ -34318,8 +34274,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2976
   type: DisposalPipe
   components:
@@ -34331,8 +34286,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2977
   type: DisposalPipe
   components:
@@ -34344,8 +34298,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2978
   type: DisposalPipe
   components:
@@ -34357,8 +34310,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2979
   type: DisposalPipe
   components:
@@ -34370,8 +34322,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2980
   type: DisposalPipe
   components:
@@ -34383,8 +34334,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2981
   type: DisposalUnit
   components:
@@ -34392,8 +34342,7 @@ entities:
     pos: -22.5,6.5
     rot: 3.141592653589793 rad
     type: Transform
-  - shapes: []
-    type: Collidable
+  
   - containers:
       DisposalUnit:
         type: Robust.Server.GameObjects.Components.Container.Container
@@ -34409,8 +34358,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2983
   type: DisposalPipe
   components:
@@ -34422,8 +34370,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2984
   type: DisposalPipe
   components:
@@ -34435,8 +34382,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2985
   type: DisposalPipe
   components:
@@ -34448,8 +34394,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2986
   type: DisposalPipe
   components:
@@ -34461,8 +34406,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2987
   type: DisposalPipe
   components:
@@ -34474,8 +34418,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2988
   type: DisposalPipe
   components:
@@ -34487,8 +34430,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2989
   type: DisposalPipe
   components:
@@ -34500,8 +34442,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2990
   type: DisposalPipe
   components:
@@ -34513,8 +34454,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2991
   type: DisposalUnit
   components:
@@ -34522,8 +34462,7 @@ entities:
     pos: -12.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - shapes: []
-    type: Collidable
+  
   - containers:
       DisposalUnit:
         type: Robust.Server.GameObjects.Components.Container.Container
@@ -34539,8 +34478,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2993
   type: DisposalPipe
   components:
@@ -34552,8 +34490,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2994
   type: DisposalPipe
   components:
@@ -34565,8 +34502,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2995
   type: DisposalPipe
   components:
@@ -34578,8 +34514,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2996
   type: DisposalPipe
   components:
@@ -34591,8 +34526,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2997
   type: DisposalPipe
   components:
@@ -34604,8 +34538,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2998
   type: DisposalPipe
   components:
@@ -34617,8 +34550,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 2999
   type: DisposalPipe
   components:
@@ -34630,8 +34562,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3000
   type: DisposalPipe
   components:
@@ -34643,8 +34574,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3001
   type: DisposalPipe
   components:
@@ -34656,8 +34586,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3002
   type: DisposalPipe
   components:
@@ -34669,8 +34598,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3003
   type: DisposalPipe
   components:
@@ -34682,8 +34610,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3004
   type: DisposalPipe
   components:
@@ -34695,8 +34622,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3005
   type: DisposalPipe
   components:
@@ -34708,8 +34634,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3006
   type: DisposalBend
   components:
@@ -34721,8 +34646,7 @@ entities:
       DisposalBend:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3007
   type: DisposalTrunk
   components:
@@ -34734,8 +34658,7 @@ entities:
       DisposalEntry:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3008
   type: DisposalPipe
   components:
@@ -34747,8 +34670,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3009
   type: DisposalPipe
   components:
@@ -34760,8 +34682,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3010
   type: DisposalBend
   components:
@@ -34772,8 +34693,7 @@ entities:
       DisposalBend:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3011
   type: DisposalPipe
   components:
@@ -34785,8 +34705,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3012
   type: DisposalPipe
   components:
@@ -34798,8 +34717,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3013
   type: DisposalPipe
   components:
@@ -34810,8 +34728,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3014
   type: DisposalTrunk
   components:
@@ -34823,8 +34740,7 @@ entities:
       DisposalEntry:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3015
   type: DisposalPipe
   components:
@@ -34836,8 +34752,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3016
   type: DisposalPipe
   components:
@@ -34848,8 +34763,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3017
   type: DisposalTrunk
   components:
@@ -34861,8 +34775,7 @@ entities:
       DisposalEntry:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3018
   type: DisposalPipe
   components:
@@ -34874,8 +34787,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3019
   type: DisposalUnit
   components:
@@ -34883,8 +34795,7 @@ entities:
     pos: 0.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - shapes: []
-    type: Collidable
+  
   - containers:
       DisposalUnit:
         type: Robust.Server.GameObjects.Components.Container.Container
@@ -34900,8 +34811,7 @@ entities:
       DisposalEntry:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3021
   type: DisposalPipe
   components:
@@ -34912,8 +34822,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3022
   type: DisposalPipe
   components:
@@ -34925,8 +34834,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3023
   type: DisposalPipe
   components:
@@ -34938,8 +34846,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3024
   type: DisposalPipe
   components:
@@ -34951,8 +34858,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3025
   type: DisposalPipe
   components:
@@ -34964,8 +34870,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3026
   type: DisposalPipe
   components:
@@ -34977,8 +34882,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3027
   type: DisposalPipe
   components:
@@ -34990,8 +34894,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3028
   type: DisposalPipe
   components:
@@ -35003,8 +34906,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3029
   type: DisposalPipe
   components:
@@ -35016,8 +34918,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3030
   type: DisposalPipe
   components:
@@ -35029,8 +34930,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3031
   type: DisposalPipe
   components:
@@ -35042,8 +34942,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3032
   type: DisposalPipe
   components:
@@ -35055,8 +34954,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3033
   type: DisposalPipe
   components:
@@ -35068,8 +34966,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3034
   type: DisposalPipe
   components:
@@ -35081,8 +34978,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3035
   type: DisposalPipe
   components:
@@ -35094,8 +34990,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3036
   type: DisposalPipe
   components:
@@ -35107,8 +35002,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3037
   type: DisposalPipe
   components:
@@ -35120,8 +35014,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3038
   type: DisposalPipe
   components:
@@ -35133,8 +35026,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3039
   type: DisposalPipe
   components:
@@ -35146,8 +35038,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3040
   type: DisposalPipe
   components:
@@ -35159,8 +35050,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3041
   type: DisposalPipe
   components:
@@ -35172,8 +35062,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3042
   type: DisposalPipe
   components:
@@ -35185,8 +35074,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3043
   type: DisposalPipe
   components:
@@ -35198,8 +35086,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3044
   type: DisposalPipe
   components:
@@ -35211,8 +35098,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3045
   type: DisposalPipe
   components:
@@ -35224,8 +35110,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3046
   type: DisposalPipe
   components:
@@ -35237,8 +35122,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3047
   type: DisposalPipe
   components:
@@ -35250,8 +35134,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3048
   type: DisposalPipe
   components:
@@ -35263,8 +35146,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3049
   type: DisposalPipe
   components:
@@ -35276,8 +35158,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3050
   type: DisposalUnit
   components:
@@ -35285,8 +35166,7 @@ entities:
     pos: 12.5,-2.5
     rot: 3.141592653589793 rad
     type: Transform
-  - shapes: []
-    type: Collidable
+  
   - containers:
       DisposalUnit:
         type: Robust.Server.GameObjects.Components.Container.Container
@@ -35302,8 +35182,7 @@ entities:
       DisposalEntry:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3052
   type: ConveyorBelt
   components:
@@ -35321,8 +35200,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3054
   type: DisposalPipe
   components:
@@ -35334,8 +35212,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3055
   type: DisposalPipe
   components:
@@ -35347,8 +35224,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3056
   type: DisposalPipe
   components:
@@ -35359,8 +35235,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3057
   type: DisposalUnit
   components:
@@ -35368,8 +35243,7 @@ entities:
     pos: 11.5,-11.5
     rot: 3.141592653589793 rad
     type: Transform
-  - shapes: []
-    type: Collidable
+  
   - containers:
       DisposalUnit:
         type: Robust.Server.GameObjects.Components.Container.Container
@@ -35385,8 +35259,7 @@ entities:
       DisposalEntry:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3059
   type: DisposalPipe
   components:
@@ -35398,8 +35271,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3060
   type: DisposalPipe
   components:
@@ -35411,8 +35283,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3061
   type: DisposalPipe
   components:
@@ -35424,8 +35295,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3062
   type: DisposalPipe
   components:
@@ -35437,8 +35307,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3063
   type: DisposalPipe
   components:
@@ -35450,8 +35319,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3064
   type: DisposalPipe
   components:
@@ -35463,8 +35331,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3065
   type: DisposalPipe
   components:
@@ -35476,8 +35343,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3066
   type: DisposalBend
   components:
@@ -35489,8 +35355,7 @@ entities:
       DisposalBend:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3067
   type: DisposalPipe
   components:
@@ -35502,8 +35367,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3068
   type: DisposalPipe
   components:
@@ -35515,8 +35379,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3069
   type: DisposalPipe
   components:
@@ -35528,8 +35391,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3070
   type: DisposalPipe
   components:
@@ -35541,8 +35403,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3071
   type: DisposalPipe
   components:
@@ -35554,8 +35415,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3072
   type: DisposalPipe
   components:
@@ -35567,8 +35427,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3073
   type: DisposalPipe
   components:
@@ -35580,8 +35439,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3074
   type: DisposalPipe
   components:
@@ -35593,8 +35451,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3075
   type: DisposalPipe
   components:
@@ -35606,8 +35463,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3076
   type: DisposalPipe
   components:
@@ -35619,8 +35475,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3077
   type: DisposalPipe
   components:
@@ -35632,8 +35487,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3078
   type: DisposalPipe
   components:
@@ -35645,8 +35499,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3079
   type: DisposalPipe
   components:
@@ -35658,8 +35511,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3080
   type: DisposalPipe
   components:
@@ -35670,8 +35522,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3081
   type: DisposalUnit
   components:
@@ -35679,8 +35530,7 @@ entities:
     pos: -2.5,29.5
     rot: 3.141592653589793 rad
     type: Transform
-  - shapes: []
-    type: Collidable
+  
   - containers:
       DisposalUnit:
         type: Robust.Server.GameObjects.Components.Container.Container
@@ -35695,8 +35545,7 @@ entities:
       DisposalEntry:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3083
   type: DisposalPipe
   components:
@@ -35707,8 +35556,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3084
   type: DisposalPipe
   components:
@@ -35719,8 +35567,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3085
   type: DisposalPipe
   components:
@@ -35731,8 +35578,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3086
   type: DisposalPipe
   components:
@@ -35743,8 +35589,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3087
   type: DisposalPipe
   components:
@@ -35756,8 +35601,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3088
   type: DisposalPipe
   components:
@@ -35769,8 +35613,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3089
   type: DisposalPipe
   components:
@@ -35782,8 +35625,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3090
   type: DisposalPipe
   components:
@@ -35795,8 +35637,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3091
   type: DisposalPipe
   components:
@@ -35808,8 +35649,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3092
   type: DisposalPipe
   components:
@@ -35821,8 +35661,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3093
   type: DisposalPipe
   components:
@@ -35834,8 +35673,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3094
   type: DisposalPipe
   components:
@@ -35847,8 +35685,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3095
   type: DisposalPipe
   components:
@@ -35860,8 +35697,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3096
   type: DisposalPipe
   components:
@@ -35873,8 +35709,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3097
   type: DisposalPipe
   components:
@@ -35886,8 +35721,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3098
   type: DisposalPipe
   components:
@@ -35899,8 +35733,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3099
   type: DisposalPipe
   components:
@@ -35911,8 +35744,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3100
   type: DisposalPipe
   components:
@@ -35924,8 +35756,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3101
   type: DisposalPipe
   components:
@@ -35937,8 +35768,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3102
   type: DisposalPipe
   components:
@@ -35950,8 +35780,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3103
   type: DisposalPipe
   components:
@@ -35963,8 +35792,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3104
   type: DisposalPipe
   components:
@@ -35976,8 +35804,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3105
   type: DisposalPipe
   components:
@@ -35989,8 +35816,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3106
   type: DisposalPipe
   components:
@@ -36002,8 +35828,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3107
   type: DisposalPipe
   components:
@@ -36015,8 +35840,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3108
   type: DisposalPipe
   components:
@@ -36028,8 +35852,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3109
   type: DisposalPipe
   components:
@@ -36041,8 +35864,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3110
   type: DisposalPipe
   components:
@@ -36054,8 +35876,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3111
   type: DisposalPipe
   components:
@@ -36067,8 +35888,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3112
   type: DisposalBend
   components:
@@ -36080,8 +35900,7 @@ entities:
       DisposalBend:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3113
   type: DisposalUnit
   components:
@@ -36089,8 +35908,7 @@ entities:
     pos: 37.5,6.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - shapes: []
-    type: Collidable
+  
   - containers:
       DisposalUnit:
         type: Robust.Server.GameObjects.Components.Container.Container
@@ -36106,8 +35924,7 @@ entities:
       DisposalEntry:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3115
   type: DisposalPipe
   components:
@@ -36119,8 +35936,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3116
   type: DisposalPipe
   components:
@@ -36132,8 +35948,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3117
   type: DisposalBend
   components:
@@ -36145,8 +35960,7 @@ entities:
       DisposalBend:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3118
   type: DisposalPipe
   components:
@@ -36158,8 +35972,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3119
   type: DisposalPipe
   components:
@@ -36171,8 +35984,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3120
   type: DisposalPipe
   components:
@@ -36184,8 +35996,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3121
   type: DisposalPipe
   components:
@@ -36197,8 +36008,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3122
   type: DisposalPipe
   components:
@@ -36210,8 +36020,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3123
   type: DisposalPipe
   components:
@@ -36223,8 +36032,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3124
   type: DisposalPipe
   components:
@@ -36236,8 +36044,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3125
   type: DisposalUnit
   components:
@@ -36245,8 +36052,7 @@ entities:
     pos: 34.5,-4.5
     rot: 3.141592653589793 rad
     type: Transform
-  - shapes: []
-    type: Collidable
+  
   - containers:
       DisposalUnit:
         type: Robust.Server.GameObjects.Components.Container.Container
@@ -36262,8 +36068,7 @@ entities:
       DisposalEntry:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3127
   type: DisposalPipe
   components:
@@ -36275,8 +36080,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3128
   type: DisposalPipe
   components:
@@ -36288,8 +36092,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3129
   type: DisposalPipe
   components:
@@ -36301,8 +36104,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3130
   type: DisposalPipe
   components:
@@ -36314,8 +36116,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3131
   type: DisposalPipe
   components:
@@ -36327,8 +36128,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3132
   type: DisposalPipe
   components:
@@ -36340,8 +36140,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3133
   type: DisposalPipe
   components:
@@ -36353,8 +36152,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3134
   type: Recycler
   components:
@@ -36372,8 +36170,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3136
   type: DisposalPipe
   components:
@@ -36384,8 +36181,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3137
   type: DisposalPipe
   components:
@@ -36396,8 +36192,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3138
   type: DisposalPipe
   components:
@@ -36408,8 +36203,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3139
   type: DisposalUnit
   components:
@@ -36417,8 +36211,7 @@ entities:
     pos: 24.5,8.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - shapes: []
-    type: Collidable
+  
   - containers:
       DisposalUnit:
         type: Robust.Server.GameObjects.Components.Container.Container
@@ -36434,8 +36227,7 @@ entities:
       DisposalEntry:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3141
   type: DisposalPipe
   components:
@@ -36447,8 +36239,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3142
   type: DisposalPipe
   components:
@@ -36460,8 +36251,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3143
   type: DisposalPipe
   components:
@@ -36473,8 +36263,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3144
   type: DisposalPipe
   components:
@@ -36486,8 +36275,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3145
   type: DisposalUnit
   components:
@@ -36495,8 +36283,7 @@ entities:
     pos: 6.5,11.5
     rot: 3.141592653589793 rad
     type: Transform
-  - shapes: []
-    type: Collidable
+  
   - containers:
       DisposalUnit:
         type: Robust.Server.GameObjects.Components.Container.Container
@@ -36512,8 +36299,7 @@ entities:
       DisposalEntry:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3147
   type: DisposalPipe
   components:
@@ -36525,8 +36311,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3148
   type: DisposalPipe
   components:
@@ -36538,8 +36323,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3149
   type: DisposalPipe
   components:
@@ -36551,8 +36335,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3150
   type: DisposalUnit
   components:
@@ -36560,8 +36343,7 @@ entities:
     pos: -5.5,17.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - shapes: []
-    type: Collidable
+  
   - containers:
       DisposalUnit:
         type: Robust.Server.GameObjects.Components.Container.Container
@@ -36576,8 +36358,7 @@ entities:
       DisposalEntry:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3152
   type: DisposalPipe
   components:
@@ -36588,8 +36369,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3153
   type: DisposalPipe
   components:
@@ -36600,8 +36380,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3154
   type: DisposalPipe
   components:
@@ -36612,8 +36391,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3155
   type: DisposalPipe
   components:
@@ -36624,8 +36402,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3156
   type: DisposalPipe
   components:
@@ -36636,8 +36413,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3157
   type: DisposalPipe
   components:
@@ -36648,8 +36424,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3158
   type: DisposalPipe
   components:
@@ -36661,8 +36436,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3159
   type: DisposalBend
   components:
@@ -36674,8 +36448,7 @@ entities:
       DisposalBend:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3160
   type: DisposalUnit
   components:
@@ -36683,8 +36456,7 @@ entities:
     pos: -29.5,11.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - shapes: []
-    type: Collidable
+  
   - containers:
       DisposalUnit:
         type: Robust.Server.GameObjects.Components.Container.Container
@@ -36707,8 +36479,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3163
   type: DisposalPipe
   components:
@@ -36720,8 +36491,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3164
   type: DisposalPipe
   components:
@@ -36733,8 +36503,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3165
   type: DisposalPipe
   components:
@@ -36746,8 +36515,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3166
   type: DisposalPipe
   components:
@@ -36759,8 +36527,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3167
   type: DisposalPipe
   components:
@@ -36771,8 +36538,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3168
   type: DisposalUnit
   components:
@@ -36780,8 +36546,7 @@ entities:
     pos: -17.5,-22.5
     rot: 3.141592653589793 rad
     type: Transform
-  - shapes: []
-    type: Collidable
+  
   - containers:
       DisposalUnit:
         type: Robust.Server.GameObjects.Components.Container.Container
@@ -36797,8 +36562,7 @@ entities:
       DisposalEntry:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3170
   type: DisposalPipe
   components:
@@ -36810,8 +36574,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3171
   type: DisposalPipe
   components:
@@ -36823,8 +36586,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3172
   type: DisposalPipe
   components:
@@ -36836,8 +36598,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3173
   type: DisposalPipe
   components:
@@ -36849,8 +36610,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3174
   type: DisposalJunctionFlipped
   components:
@@ -36862,8 +36622,7 @@ entities:
       DisposalJunction:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3175
   type: DisposalJunction
   components:
@@ -36875,8 +36634,7 @@ entities:
       DisposalJunction:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3176
   type: DisposalJunctionFlipped
   components:
@@ -36888,8 +36646,7 @@ entities:
       DisposalJunction:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3177
   type: DisposalJunctionFlipped
   components:
@@ -36901,8 +36658,7 @@ entities:
       DisposalJunction:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3178
   type: DisposalJunction
   components:
@@ -36914,8 +36670,7 @@ entities:
       DisposalJunction:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3179
   type: DisposalJunction
   components:
@@ -36927,8 +36682,7 @@ entities:
       DisposalJunction:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3180
   type: DisposalJunctionFlipped
   components:
@@ -36939,8 +36693,7 @@ entities:
       DisposalJunction:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3181
   type: DisposalYJunction
   components:
@@ -36952,8 +36705,7 @@ entities:
       DisposalJunction:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3182
   type: DisposalJunction
   components:
@@ -36965,8 +36717,7 @@ entities:
       DisposalJunction:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3183
   type: DisposalJunctionFlipped
   components:
@@ -36978,8 +36729,7 @@ entities:
       DisposalJunction:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3184
   type: DisposalJunctionFlipped
   components:
@@ -36991,8 +36741,7 @@ entities:
       DisposalJunction:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3185
   type: DisposalJunction
   components:
@@ -37004,8 +36753,7 @@ entities:
       DisposalJunction:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3186
   type: DisposalJunctionFlipped
   components:
@@ -37017,8 +36765,7 @@ entities:
       DisposalJunction:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3187
   type: DisposalJunction
   components:
@@ -37030,8 +36777,7 @@ entities:
       DisposalJunction:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3188
   type: DisposalJunction
   components:
@@ -37043,8 +36789,7 @@ entities:
       DisposalJunction:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3189
   type: DisposalJunctionFlipped
   components:
@@ -37056,8 +36801,7 @@ entities:
       DisposalJunction:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3190
   type: ConveyorSwitch
   components:
@@ -37078,8 +36822,7 @@ entities:
       DisposalTransit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3192
   type: DisposalBend
   components:
@@ -37091,8 +36834,7 @@ entities:
       DisposalBend:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3193
   type: DisposalBend
   components:
@@ -37103,8 +36845,7 @@ entities:
       DisposalBend:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
+  
 - uid: 3194
   type: Beaker
   components:
