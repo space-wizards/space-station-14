@@ -8,6 +8,7 @@ using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Mobs;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Medical;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -21,6 +22,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Medical
 {
@@ -28,30 +30,31 @@ namespace Content.Server.GameObjects.Components.Medical
     [ComponentReference(typeof(IActivate))]
     public class CloningMachineComponent : SharedCloningMachineComponent, IActivate
     {
-        private AppearanceComponent _appearance;
-        private BoundUserInterface _userInterface;
         private ContainerSlot _bodyContainer;
         private CloningMachineStatus _status;
         [Dependency] private readonly IServerPreferencesManager _prefsManager;
 
-        private PowerReceiverComponent _powerReceiver;
         private Mind _capturedMind;
-        private bool Powered => _powerReceiver.Powered;
+
+        [ViewVariables]
+        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(SharedCloningMachineComponent.CloningMachineUIKey.Key);
 
         public override void Initialize()
         {
             base.Initialize();
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += OnUiReceiveMessage;
 
-            _appearance = Owner.GetComponent<AppearanceComponent>();
-            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
-                .GetBoundUserInterface(CloningMachineUIKey.Key);
-            _userInterface.OnReceiveMessage += OnUiReceiveMessage;
+            }
+
             _bodyContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-bodyContainer", Owner);
-            _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
 
             //TODO: write this so that it checks for a change in power events and acts accordingly.
             var newState = GetUserInterfaceState();
-            _userInterface.SetState(newState);
+            UserInterface?.SetState(newState);
 
             UpdateUserInterface();
         }
@@ -81,7 +84,7 @@ namespace Content.Server.GameObjects.Components.Medical
             }
 
             var newState = GetUserInterfaceState();
-            _userInterface.SetState(newState);
+            UserInterface.SetState(newState);
         }
 
 
@@ -102,7 +105,7 @@ namespace Content.Server.GameObjects.Components.Medical
                 return;
             }
 
-            _userInterface.Open(actor.playerSession);
+            UserInterface.Open(actor.playerSession);
         }
 
         private async void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
