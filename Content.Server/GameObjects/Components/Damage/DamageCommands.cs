@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System;
 using System.Diagnostics.CodeAnalysis;
+using Content.Server.GameObjects.Components.Atmos;
 using Content.Shared.GameObjects.Components.Damage;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
@@ -58,7 +59,7 @@ namespace Content.Server.GameObjects.Components.Damage
                     }
 
                     parsedEntity = player.AttachedEntity;
-                    parsedFlag = parsedFlag;
+                    flag = parsedFlag;
                     break;
                 }
                 case 2:
@@ -145,8 +146,69 @@ namespace Content.Server.GameObjects.Components.Damage
                 return;
             }
 
-            damageable.AddFlag(flag);
+            damageable.RemoveFlag(flag);
             shell.SendText(player, $"Removed damage flag {flag} from entity {entity.Name}");
+        }
+    }
+
+    public class GodModeCommand : IClientCommand
+    {
+        public string Command => "godmode";
+        public string Description => "Makes your entity or another invulnerable to almost anything. May have irreversible changes.";
+        public string Help => $"Usage: {Command} / {Command} <entityUid>";
+        public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
+        {
+            IEntity entity;
+
+            switch (args.Length)
+            {
+                case 0:
+                    if (player == null)
+                    {
+                        shell.SendText(player, "An entity needs to be specified when the command isn't used by a player.");
+                        return;
+                    }
+
+                    if (player.AttachedEntity == null)
+                    {
+                        shell.SendText(player, "An entity needs to be specified when you aren't attached to an entity.");
+                        return;
+                    }
+
+                    entity = player.AttachedEntity;
+                    break;
+                case 1:
+                    if (!EntityUid.TryParse(args[0], out var id))
+                    {
+                        shell.SendText(player, $"{args[0]} isn't a valid entity id.");
+                        return;
+                    }
+
+                    var entityManager = IoCManager.Resolve<IEntityManager>();
+                    if (!entityManager.TryGetEntity(id, out var parsedEntity))
+                    {
+                        shell.SendText(player, $"No entity found with id {id}.");
+                        return;
+                    }
+
+                    entity = parsedEntity;
+                    break;
+                default:
+                    shell.SendText(player, Help);
+                    return;
+            }
+
+            if (entity.HasComponent<MovedByPressureComponent>())
+            {
+                entity.RemoveComponent<MovedByPressureComponent>();
+            }
+
+            if (entity.TryGetComponent(out IDamageableComponent? damageable))
+            {
+                damageable.AddFlag(DamageFlag.Invulnerable);
+            }
+
+            shell.SendText(player, $"Enabled godmode for entity {entity.Name}");
         }
     }
 }

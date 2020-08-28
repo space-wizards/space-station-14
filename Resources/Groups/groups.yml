@@ -103,6 +103,7 @@
   - factions
   - adddamageflag
   - removedamageflag
+  - godmode
   CanViewVar: true
   CanAdminPlace: true
   CanAdminMenu: true
@@ -199,6 +200,7 @@
   - factions
   - adddamageflag
   - removedamageflag
+  - godmode
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true
