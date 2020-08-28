@@ -81,6 +81,8 @@ namespace Content.Shared.GameObjects.Components.Damage
                 {
                     EnterState(value);
                 }
+
+                Dirty();
             }
         }
 
@@ -135,6 +137,35 @@ namespace Content.Shared.GameObjects.Components.Damage
                 -1,
                 t => DeadThreshold = t == -1 ? (int?) null : t,
                 () => DeadThreshold ?? -1);
+
+            serializer.DataReadWriteFunction(
+                "flags",
+                new List<DamageFlag>(),
+                flags =>
+                {
+                    var result = DamageFlag.None;
+
+                    foreach (var flag in flags)
+                    {
+                        result |= flag;
+                    }
+
+                    Flags = result;
+                },
+                () =>
+                {
+                    var writeFlags = new List<DamageFlag>();
+
+                    foreach (var flag in (DamageFlag[]) Enum.GetValues(typeof(DamageFlag)))
+                    {
+                        if ((Flags & flag) == flag)
+                        {
+                            writeFlags.Add(flag);
+                        }
+                    }
+
+                    return writeFlags;
+                });
 
             if (serializer.Reading)
             {
