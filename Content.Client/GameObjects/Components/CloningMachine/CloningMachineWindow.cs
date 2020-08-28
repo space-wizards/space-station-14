@@ -16,9 +16,6 @@ namespace Content.Client.GameObjects.Components.CloningMachine
 {
     public sealed class CloningMachineWindow : SS14Window
     {
-        //Todo: delete if we don't need
-        //private readonly IScanManager scanManager;
-        //private readonly IResourceCache resourceCache;
         private readonly ILocalizationManager _loc;
 
         private VBoxContainer MainVBox;
@@ -40,7 +37,7 @@ namespace Content.Client.GameObjects.Components.CloningMachine
         // This is inclusive, so end is the index of the last scan, not right after it.
         private (int start, int end) _lastScanIndices;
 
-        private CloningScanButton? SelectedButton;
+        private CloningScanButton? _selectedButton;
         public int? SelectedScan;
 
         protected override Vector2? CustomSize => (250, 300);
@@ -153,7 +150,7 @@ namespace Content.Client.GameObjects.Components.CloningMachine
             // Reset last scan indices so it automatically updates the entire list.
             _lastScanIndices = (0, -1);
             ScanList.RemoveAllChildren();
-            SelectedButton = null;
+            _selectedButton = null;
             searchStr = searchStr?.ToLowerInvariant();
 
             foreach (var scan in scanManager)
@@ -251,8 +248,8 @@ namespace Content.Client.GameObjects.Components.CloningMachine
 
             if (scan.Key == SelectedScan)
             {
-                SelectedButton = button;
-                SelectedButton.ActualButton.Pressed = true;
+                _selectedButton = button;
+                _selectedButton.ActualButton.Pressed = true;
             }
 
             //TODO: replace with body's face?
@@ -286,21 +283,21 @@ namespace Content.Client.GameObjects.Components.CloningMachine
         private void OnItemButtonToggled(BaseButton.ButtonToggledEventArgs args)
         {
             var item = (CloningScanButton) args.Button.Parent!;
-            if (SelectedButton == item)
+            if (_selectedButton == item)
             {
-                SelectedButton = null;
+                _selectedButton = null;
                 SelectedScan = null;
                 return;
             }
-            else if (SelectedButton != null)
+            else if (_selectedButton != null)
             {
-                SelectedButton.ActualButton.Pressed = false;
+                _selectedButton.ActualButton.Pressed = false;
             }
 
-            SelectedButton = null;
+            _selectedButton = null;
             SelectedScan = null;
 
-            SelectedButton = item;
+            _selectedButton = item;
             SelectedScan = item.Id;
         }
 
