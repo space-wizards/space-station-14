@@ -1,22 +1,28 @@
 ﻿- type: entity
-  name: flare
-  parent: BaseItem
+  name: emergency flare # todo: we need some sort of IgnitionSourceComponent we can add to this, so when it's lit it will cause fires when touching fuel
+  parent: BaseItem 
   id: FlareBase
-  description: An emergency flare that produces a very bright light for a short while. Point the flame away from yourself.
+  description: A flare that produces a very bright light for a short while. Point the flame away from yourself.
   components:
     - type: ExpendableLight
       spentName: spent flare
       spentDesc: It looks like this flare has burnt out. What a bummer.
-      glowRadius: 6.0
-      glowEnergy: 8.0
-      glowDuration: 15 # this should be like 300, 15 is for testing
-      fadeOutDuration: 1
-      iconStateOn: flare_lit
+      glowDuration: 300 
+      fadeOutDuration: 3
+      iconStateOn: flare_unlit
       iconStateSpent: flare_spent
+      turnOnBehaviourID: turn_on
+      fadeOutBehaviourID: fade_out
+      litSound: /Audio/Items/Flare/flare_on.ogg
+      loopedSound: /Audio/Items/Flare/flare_burn.ogg
     - type: Sprite
       sprite: Objects/Misc/flare.rsi
       layers:
         - state: flare_base
+        - state: flare_burn
+          color: "#FF6060"
+          visible: false
+          shader: unshaded
         - state: flare_unlit
           color: "#FF0000"
     - type: Icon
@@ -26,17 +32,36 @@
       sprite: Objects/Misc/flare.rsi
       color: "#FF0000" 
       HeldPrefix: off
+    - type: LoopingSound
     - type: PointLight
       enabled: false
-      color: "#FF0000"
+      color: "#FF8080"
       radius: 6.0
-    - type: Appearance
-      visuals:
-        - type: LightBehaviourVisualizer
-          enabled: true
-          behaviours:
-            - type: RandomBrightness
-              minDuration: 0.02
-              maxDuration: 0.04
-              minValue: 6.0
-              maxValue: 8.0
+      energy: 9.0
+    - type: LightBehaviour
+      behaviours:
+        - !type:RandomizeBehaviour # immediately make it bright and flickery
+          id: turn_on
+          interpolate: Nearest
+          minDuration: 0.02
+          maxDuration: 0.06
+          startValue: 6.0
+          endValue: 9.0
+          property: Energy
+          isLooped: true
+        - !type:RandomizeBehaviour # weaker flicker as it fades out
+          id: fade_out
+          interpolate: Nearest
+          minDuration: 0.02
+          maxDuration: 0.06
+          startValue: 5.0
+          endValue: 8.0
+          property: Energy
+          isLooped: true
+        - !type:FadeBehaviour # fade out radius as it burns out
+          id: fade_out
+          interpolate: Linear
+          maxDuration: 3.0
+          startValue: 6.0
+          endValue: 2.0
+          property: Radius

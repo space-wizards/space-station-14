@@ -8,7 +8,7 @@ namespace Content.Client.GameObjects.EntitySystems
     [UsedImplicitly]
     internal sealed class LightBehaviourSystem : EntitySystem
     {
-        public override void Update(float frameTime)
+        public override void FrameUpdate(float frameTime)
         {
             foreach (var comp in ComponentManager.EntityQuery<LightBehaviourComponent>())
             {

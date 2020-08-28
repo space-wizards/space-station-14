@@ -14,36 +14,38 @@ using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Client.GameObjects.Components
 {
+    #region LIGHT_BEHAVIOURS
     /// <summary>
     /// Base class for all light behaviours to derive from.
     /// </summary>
     [Serializable]
     public abstract class LightBehaviour: IExposeData
     {
-        public string ID { get; set; }
-        public string Property { get; protected set; }
-        public bool IsLooped { get; set; }
-        public bool Enabled { get; set; }
-        public float MinValue { get; set; }
-        public float MaxValue { get; set; }
-        public float MinDuration { get; set; }
-        public float MaxDuration { get; set; }
-        public AnimationInterpolationMode InterpolateMode { get; set; }
+        [ViewVariables] public string ID { get; set; }
+        [ViewVariables] public string Property { get; protected set; }
+        [ViewVariables] public bool IsLooped { get; set; }
+        [ViewVariables] public bool Enabled { get; set; }
+        [ViewVariables] public float StartValue { get; set; }
+        [ViewVariables] public float EndValue { get; set; }
+        [ViewVariables] public float MinDuration { get; set; }
+        [ViewVariables] public float MaxDuration { get; set; }
+        [ViewVariables] public AnimationInterpolationMode InterpolateMode { get; set; }
 
+        [ViewVariables]
         protected float InterpolateValue => _curTime / _maxTime;
         protected PointLightComponent Light = default;
+        protected IRobustRandom RobustRandom = default;
 
         private float _curTime = default;
         private float _maxTime = default;
-        private IRobustRandom _random = default;
         
         public virtual void ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.ID, "id", string.Empty);
             serializer.DataField(this, x => x.IsLooped, "isLooped", false);
             serializer.DataField(this, x => x.Enabled, "enabled", false);
-            serializer.DataField(this, x => x.MinValue, "minValue", 0f);
-            serializer.DataField(this, x => x.MaxValue, "maxValue", 2f);
+            serializer.DataField(this, x => x.StartValue, "startValue", 0f);
+            serializer.DataField(this, x => x.EndValue, "endValue", 2f);
             serializer.DataField(this, x => x.MinDuration, "minDuration", -1f);
             serializer.DataField(this, x => x.MaxDuration, "maxDuration", 2f);
             serializer.DataField(this, x => x.Property, "property", "Radius");
@@ -53,7 +55,16 @@ namespace Content.Client.GameObjects.Components
         public void Initialize(PointLightComponent light)
         {
             Light = light;
-            _random = IoCManager.Resolve<IRobustRandom>();
+            RobustRandom = IoCManager.Resolve<IRobustRandom>();
+            _curTime = 0;
+            _maxTime = (float) RobustRandom.NextDouble() * (MaxDuration - MinDuration) + MinDuration;
+
+            if (Enabled)
+            {
+                Light.Enabled = true;
+            }
+
+            OnInitialize();
         }
 
         public void StartBehaviour()
@@ -64,7 +75,7 @@ namespace Content.Client.GameObjects.Components
 
             if (MinDuration > 0)
             {
-                _maxTime = (float) _random.NextDouble() * (MaxDuration - MinDuration) + MinDuration;
+                _maxTime = (float) RobustRandom.NextDouble() * (MaxDuration - MinDuration) + MinDuration;
             }
             else
             {
@@ -92,18 +103,32 @@ namespace Content.Client.GameObjects.Components
             OnUpdate(frameTime);
         }
 
+        protected static object? GetProperty(object target, string propertyName)
+        {
+            var property = target.GetType().GetProperty(propertyName);
+
+            if (property == null)
+            {
+                throw new ArgumentException($"{nameof(LightBehaviourComponent)} attempting to modify nonexistant property with name '{propertyName}'.");
+            }
+
+            return property.GetValue(target);
+        }
+
         protected static void SetProperty(object target, string propertyName, object value)
         {
             var property = target.GetType().GetProperty(propertyName);
 
             if (property == null)
             {
-                throw new ArgumentException($"Animatable property with name '{propertyName}' does not exist.");
+                throw new ArgumentException($"{nameof(LightBehaviourComponent)} attempting to modify nonexistant property with name '{propertyName}'.");
             }
 
-            if (!Attribute.IsDefined(property, typeof(AnimatableAttribute)))
+            // todo: Fix this in the engine. Setting the radius of a light to 0 causes exceptions.
+            // The user shouldn't be doing that anyways but the safety check should still be there.
+            if (propertyName == "Radius" && (float)value <= 0f)
             {
-                throw new ArgumentException($"Animatable property with name '{propertyName}' does not exist.");
+                value = 0.05f;
             }
 
             property.SetValue(target, value);
@@ -157,22 +182,21 @@ namespace Content.Client.GameObjects.Components
             }
         }
 
-        public abstract void OnStart();
-        public abstract void OnUpdate(float frameTime);
+        public virtual void OnInitialize() { }
+        public virtual void OnStart() { }
+        public virtual void OnUpdate(float frameTime) { }
     }
 
     /// <summary>
-    /// A light behaviour that constantly pulses between MinValue and MaxValue.
+    /// A light behaviour that constantly pulses between StartValue and EndValue
     /// </summary>
     public class PulseBehaviour: LightBehaviour
     {
-        public override void OnStart() { }
-
         public override void OnUpdate(float frameTime)
         {
             if (Property == "Enabled") // special case for boolean, we use MaxValue to determine when to enable/disable
             {
-                SetProperty(Light, Property, InterpolateValue < MaxValue ? true : false);
+                SetProperty(Light, Property, InterpolateValue < EndValue ? true : false);
                 return;
             }
 
@@ -181,14 +205,14 @@ namespace Content.Client.GameObjects.Components
                 switch(InterpolateMode)
                 {
                     case AnimationInterpolationMode.Linear:
-                        SetProperty(Light, Property, InterpolateLinear(MinValue, MaxValue, InterpolateValue * 2f));
+                        SetProperty(Light, Property, InterpolateLinear(StartValue, EndValue, InterpolateValue * 2f));
                         break;
                     case AnimationInterpolationMode.Cubic:
-                        SetProperty(Light, Property, InterpolateCubic(MaxValue, MinValue, MaxValue, MinValue, InterpolateValue * 2f));
+                        SetProperty(Light, Property, InterpolateCubic(EndValue, StartValue, EndValue, StartValue, InterpolateValue * 2f));
                         break;
                     default:
                     case AnimationInterpolationMode.Nearest:
-                        SetProperty(Light, Property, MinValue);
+                        SetProperty(Light, Property, StartValue);
                         break;
                 }
             }
@@ -197,16 +221,103 @@ namespace Content.Client.GameObjects.Components
                 switch (InterpolateMode)
                 {
                     case AnimationInterpolationMode.Linear:
-                        SetProperty(Light, Property, InterpolateLinear(MaxValue, MinValue, (InterpolateValue - 0.5f) * 2f));
+                        SetProperty(Light, Property, InterpolateLinear(EndValue, StartValue, (InterpolateValue - 0.5f) * 2f));
                         break;
                     case AnimationInterpolationMode.Cubic:
-                        SetProperty(Light, Property, InterpolateCubic(MinValue, MaxValue, MinValue, MaxValue, (InterpolateValue - 0.5f) * 2f));
+                        SetProperty(Light, Property, InterpolateCubic(StartValue, EndValue, StartValue, EndValue, (InterpolateValue - 0.5f) * 2f));
                         break;
                     default:
                     case AnimationInterpolationMode.Nearest:
-                        SetProperty(Light, Property, MaxValue);
+                        SetProperty(Light, Property, EndValue);
                         break;
                 }
+            }
+        }
+    }
+
+    /// <summary>
+    /// A light behaviour that interpolates from StartValue to EndValue
+    /// </summary>
+    public class FadeBehaviour : LightBehaviour
+    {
+        public override void OnUpdate(float frameTime)
+        {
+            if (Property == "Enabled") // special case for boolean, we use MaxValue to determine when to enable/disable
+            {
+                SetProperty(Light, Property, InterpolateValue < 0.5f ? true : false);
+                return;
+            }
+
+            switch (InterpolateMode)
+            {
+                case AnimationInterpolationMode.Linear:
+                    SetProperty(Light, Property, InterpolateLinear(StartValue, EndValue, InterpolateValue));
+                    break;
+                case AnimationInterpolationMode.Cubic:
+                    SetProperty(Light, Property, InterpolateCubic(EndValue, StartValue, EndValue, StartValue, InterpolateValue));
+                    break;
+                default:
+                case AnimationInterpolationMode.Nearest:
+                    SetProperty(Light, Property, InterpolateValue < 0.5f ? StartValue : EndValue);
+                    break;
+            }
+        }
+    }
+
+    /// <summary>
+    /// A light behaviour that interpolates random values chosen between StartValue and EndValue.
+    /// </summary>
+    public class RandomizeBehaviour : LightBehaviour
+    {
+        private object? _randomValue1 = default;
+        private object? _randomValue2 = default;
+        private object? _randomValue3 = default;
+        private object? _randomValue4 = default;
+
+        public override void OnInitialize()
+        {
+            _randomValue2 = InterpolateLinear(StartValue, EndValue, (float) RobustRandom.NextDouble());
+            _randomValue3 = InterpolateLinear(StartValue, EndValue, (float) RobustRandom.NextDouble());
+            _randomValue4 = InterpolateLinear(StartValue, EndValue, (float) RobustRandom.NextDouble());
+        }
+
+        public override void OnStart()
+        {
+            if (Property == "Enabled") // special case for boolean, we randomize it
+            {
+                SetProperty(Light, Property, RobustRandom.NextDouble() < 0.5 ? true : false);
+                return;
+            }
+
+            if (InterpolateMode == AnimationInterpolationMode.Cubic)
+            {
+                _randomValue1 = _randomValue2;
+                _randomValue2 = _randomValue3;
+            }
+
+            _randomValue3 = _randomValue4;
+            _randomValue4 = InterpolateLinear(StartValue, EndValue, (float) RobustRandom.NextDouble());
+        }
+
+        public override void OnUpdate(float frameTime)
+        {
+            if (Property == "Enabled")
+            {
+                return;
+            }
+
+            switch (InterpolateMode)
+            {
+                case AnimationInterpolationMode.Linear:
+                    SetProperty(Light, Property, InterpolateLinear(_randomValue3, _randomValue4, InterpolateValue));
+                    break;
+                case AnimationInterpolationMode.Cubic:
+                    SetProperty(Light, Property, InterpolateCubic(_randomValue1, _randomValue2, _randomValue3, _randomValue4, InterpolateValue));
+                    break;
+                default:
+                case AnimationInterpolationMode.Nearest:
+                    SetProperty(Light, Property, InterpolateValue < 0.5f ? _randomValue3 : _randomValue4);
+                    break;
             }
         }
     }
@@ -258,8 +369,8 @@ namespace Content.Client.GameObjects.Components
             serializer.DataField(this, x => x.ID, "id", string.Empty);
             serializer.DataField(this, x => x.IsLooped, "isLooped", false);
             serializer.DataField(this, x => x.Enabled, "enabled", false);
-            serializer.DataField(this, x => x.MinValue, "minValue", 0f);
-            serializer.DataField(this, x => x.MaxValue, "maxValue", 2f);
+            serializer.DataField(this, x => x.StartValue, "minValue", 0f);
+            serializer.DataField(this, x => x.EndValue, "maxValue", 2f);
             serializer.DataField(this, x => x.MinDuration, "minDuration", -1f);
             serializer.DataField(this, x => x.MaxDuration, "maxDuration", 2f);
             serializer.DataField(this, x => x.InterpolateMode, "interpolate", AnimationInterpolationMode.Linear);
@@ -273,6 +384,7 @@ namespace Content.Client.GameObjects.Components
         }
 
     }
+    #endregion
 
     /// <summary>
     /// A component which applies a specific behaviour to a PointLightComponent on its owner.
@@ -309,15 +421,15 @@ namespace Content.Client.GameObjects.Components
                 _originalEnergy = _lightComponent.Energy;
                 _originalRadius = _lightComponent.Radius;
                 _originalRotation = _lightComponent.Rotation;
+
+                foreach (LightBehaviour behaviour in Behaviours)
+                {
+                    behaviour.Initialize(_lightComponent);
+                }
             }
             else
             {
                 Logger.Warning($"{Owner.Name} has a {nameof(LightBehaviourComponent)} but it has no {nameof(PointLightComponent)}! Check the prototype!");
-            }
-
-            foreach (LightBehaviour behaviour in Behaviours)
-            {
-                behaviour.Initialize(_lightComponent);
             }
         }
 
@@ -335,6 +447,7 @@ namespace Content.Client.GameObjects.Components
         /// <summary>
         /// Start animating a light behaviour with the specified ID. If the specified ID is empty, it will start animating all light behaviour entries.
         /// If specified light behaviours are already animating, calling this does nothing.
+        /// Multiple light behaviours can have the same ID.
         /// </summary>
         public void StartLightBehaviour(string id = "")
         {
@@ -350,8 +463,9 @@ namespace Content.Client.GameObjects.Components
         }
 
         /// <summary>
-        /// If the light behaviour with the specified ID is animating, then stop it.
+        /// If any light behaviour with the specified ID is animating, then stop it.
         /// If no ID is specified then all light behaviours will be stopped.
+        /// Multiple light behaviours can have the same ID.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="removeBehaviour">Should the behaviour(s) also be removed permanently?</param>

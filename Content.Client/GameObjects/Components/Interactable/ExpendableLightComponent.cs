@@ -2,31 +2,24 @@
 using Content.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Client.GameObjects;
-using System;
 
 namespace Content.Client.GameObjects.Components.Interactable
 {
     /// <summary>
-    ///     Component that represents a handheld glowstick which can be activated and eventually dies over time.
+    ///     Component that represents a handheld expendable light which can be activated and eventually dies over time.
     /// </summary>
     [RegisterComponent]
-    internal sealed class ExpendableLightComponent : SharedExpendableLightComponent
+    public class ExpendableLightComponent : SharedExpendableLightComponent
     {
-        private float _expiryTime = default;
-        private float _fullExpiryTime = default;
         private PointLightComponent _light = default;
+        private LightBehaviourComponent _lightBehaviour = default;
 
-        public void Update(float frameTime)
+        public override void Initialize()
         {
-            if (CurrentState == LightState.Fading && _light != null && _expiryTime >= 0f)
-            {
-                var fade = MathF.Max(_expiryTime / _fullExpiryTime, 0.02f);
+            base.Initialize();
 
-                _light.Energy = fade * GlowEnergy;
-                _light.Radius = 2f + fade * (GlowRadius - 2f);
-
-                _expiryTime -= frameTime;
-            }
+            Owner.TryGetComponent(out _lightBehaviour);
+            Owner.TryGetComponent(out _light);
         }
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
@@ -36,56 +29,35 @@ namespace Content.Client.GameObjects.Components.Interactable
                 return;
             }
 
-            Owner.TryGetComponent(out _light);
-
             CurrentState = state.State;
-            _expiryTime = state.StateExpiryTime;
-            _fullExpiryTime = state.StateExpiryTime;
 
             UpdateVisuals();
         }
 
         private void UpdateVisuals()
         {
-            if (Owner.TryGetComponent(out SpriteComponent? sprite))
+            switch (CurrentState)
             {
-                switch (CurrentState)
-                {
-                    default:
-                    case LightState.BrandNew:
-                        break;
+                default:
+                case LightState.BrandNew:
+                    break;
 
-                    case LightState.Lit:
-                    case LightState.Fading:
+                case LightState.Lit:
 
-                        ToggleLight(enabled: true);
-                        sprite.LayerSetState(1, IconStateLit);
+                    _lightBehaviour.StartLightBehaviour(TurnOnBehaviourID);
+                    break;
 
-                        break;
+                case LightState.Fading:
 
-                    case LightState.Dead:
+                    _lightBehaviour.StopLightBehaviour(TurnOnBehaviourID);
+                    _lightBehaviour.StartLightBehaviour(FadeOutBehaviourID);
+                    break;
 
-                        ToggleLight(enabled: false);
-                        sprite.LayerSetState(1, IconStateSpent);
+                case LightState.Dead:
 
-                        break;
-                }
-            }
-        }
-
-        private void ToggleLight(bool enabled)
-        {
-            if (Owner.TryGetComponent<LightBehaviourComponent>(out var behaviour))
-            {
-                if (enabled)
-                {
-                    behaviour.StartLightBehaviour();
-                }
-                else
-                {
-                    behaviour.StopLightBehaviour();
+                    _lightBehaviour.StopLightBehaviour();
                     _light.Enabled = false;
-                }
+                    break;
             }
         }
     }

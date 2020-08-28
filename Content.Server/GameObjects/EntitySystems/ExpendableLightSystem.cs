@@ -9,9 +9,9 @@ namespace Content.Server.GameObjects.EntitySystems
     {
         public override void Update(float frameTime)
         {
-            foreach (var glowstick in ComponentManager.EntityQuery<ExpendableLightComponent>())
+            foreach (var light in ComponentManager.EntityQuery<ExpendableLightComponent>())
             {
-                glowstick.Update(frameTime);
+                light.Update(frameTime);
             }
         }
     }

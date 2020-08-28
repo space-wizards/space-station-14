@@ -81,7 +81,7 @@
             ]
         },
 		{
-            "name": "flare_lit",
+            "name": "flare_burn",
             "select": [],
             "flags": {},
             "directions": 1,

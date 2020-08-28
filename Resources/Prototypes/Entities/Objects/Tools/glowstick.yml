@@ -7,16 +7,44 @@
     - type: ExpendableLight
       spentName: spent green glowstick
       spentDesc: It looks like this glowstick has stopped glowing. How tragic.
-      glowRadius: 5
-      glowEnergy: 2.2
       glowDuration: 900 # time in seconds
       fadeOutDuration: 300
       iconStateOn: glowstick_lit
       iconStateSpent: glowstick_unlit
+      turnOnBehaviourID: turn_on
+      fadeOutBehaviourID: fade_out
+      litSound: /Audio/Items/Handcuffs/rope_breakout.ogg
+    - type: LightBehaviour
+      behaviours:
+        - !type:FadeBehaviour # slowly fade in once activated
+          id: turn_on
+          interpolate: Linear
+          maxDuration: 10.0
+          startValue: 0.0
+          endValue: 3.0
+          property: Energy
+        - !type:FadeBehaviour # fade out energy as it burns out
+          id: fade_out
+          interpolate: Linear
+          maxDuration: 300.0
+          startValue: 3.0
+          endValue: 0.2
+          property: Energy
+        - !type:FadeBehaviour # fade out radius as it burns out
+          id: fade_out
+          interpolate: Linear
+          maxDuration: 300.0
+          startValue: 5.0
+          endValue: 1.5
+          property: Radius
     - type: Sprite
       sprite: Objects/Misc/glowstick.rsi
       layers:
         - state: glowstick_base
+        - state: glowstick_glow
+          color: "#00FF00"
+          visible: false
+          shader: unshaded
         - state: glowstick_unlit
           color: "#00FF00"
     - type: Icon
@@ -31,7 +59,6 @@
       color: "#00FF00"
       radius: 5
 
-
 - type: entity
   name: red glowstick
   parent: GlowstickBase
@@ -40,16 +67,21 @@
     - type: ExpendableLight
       spentName: spent red glowstick
       spentDesc: It looks like this glowstick has stopped glowing. How tragic.
-      glowRadius: 5
-      glowEnergy: 2.2
       glowDuration: 900
       fadeOutDuration: 300
       iconStateOn: glowstick_lit
       iconStateSpent: glowstick_unlit
+      turnOnBehaviourID: turn_on
+      fadeOutBehaviourID: fade_out
+      litSound: /Audio/Items/Handcuffs/rope_breakout.ogg
     - type: Sprite
       sprite: Objects/Misc/glowstick.rsi
       layers:
         - state: glowstick_base
+        - state: glowstick_glow
+          color: "#FF0000"
+          visible: false
+          shader: unshaded
         - state: glowstick_unlit
           color: "#FF0000"
     - type: Item
@@ -61,8 +93,9 @@
       color: "#FF0000"
       radius: 5
 
-# AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-# THESE ARE ALL DUMMY ENTITIES USED TO TEST THE LIGHT BEHAVIOUR SYSTEM
+# ----------------------------------------------------------------------------
+# THE FOLLOWING ARE ALL DUMMY ENTITIES USED TO TEST THE LIGHT BEHAVIOUR SYSTEM
+# ----------------------------------------------------------------------------
 - type: entity
   name: light pulse test
   parent: BaseItem
@@ -84,11 +117,12 @@
     - type: PointLight
       enabled: true
       color: "#FF0000"
+      radius: 5
     - type: LightBehaviour
       behaviours:
         - !type:PulseBehaviour
-          interpolate: Linear
-          maxDuration: 2.0
+          interpolate: Cubic
+          maxDuration: 10.0
           minValue: 1.0
           maxValue: 7.0
           isLooped: true
@@ -116,6 +150,7 @@
     - type: PointLight
       enabled: true
       color: "#FF0000"
+      radius: 5
     - type: LightBehaviour
       behaviours:
         - !type:ColorCycleBehaviour
@@ -149,6 +184,7 @@
     - type: PointLight
       enabled: false
       color: "#FF0000"
+      radius: 5
     - type: LightBehaviour
       behaviours:
         - !type:PulseBehaviour
@@ -168,3 +204,102 @@
             - red
             - blue
             - green
+
+- type: entity
+  name: light fade in test
+  parent: BaseItem
+  id: LightBehaviourTest4
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/glowstick.rsi
+      layers:
+        - state: glowstick_base
+        - state: glowstick_unlit
+          shader: unshaded
+          color: "#FF0000"
+    - type: Item
+      sprite: Objects/Misc/glowstick.rsi
+      HeldPrefix: off
+    - type: Icon
+      sprite: Objects/Misc/glowstick.rsi
+      state: glowstick_unlit
+    - type: PointLight
+      enabled: false
+      color: "#FF0000"
+      radius: 5
+    - type: LightBehaviour
+      behaviours:
+        - !type:FadeBehaviour
+          interpolate: Cubic
+          maxDuration: 5.0
+          minValue: 0.0
+          maxValue: 10.0
+          isLooped: true
+          property: Energy
+          enabled: true
+
+- type: entity
+  name: light pulse radius test
+  parent: BaseItem
+  id: LightBehaviourTest5
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/glowstick.rsi
+      layers:
+        - state: glowstick_base
+        - state: glowstick_unlit
+          shader: unshaded
+          color: "#FF0000"
+    - type: Item
+      sprite: Objects/Misc/glowstick.rsi
+      HeldPrefix: off
+    - type: Icon
+      sprite: Objects/Misc/glowstick.rsi
+      state: glowstick_unlit
+    - type: PointLight
+      enabled: false
+      color: "#FF0000"
+      radius: 5
+    - type: LightBehaviour
+      behaviours:
+        - !type:FadeBehaviour
+          interpolate: Cubic
+          maxDuration: 5.0
+          minValue: 1.0
+          maxValue: 10.0
+          isLooped: true
+          property: Radius
+          enabled: true
+
+- type: entity
+  name: light pulse radius test 2
+  parent: BaseItem
+  id: LightBehaviourTest6
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/glowstick.rsi
+      layers:
+        - state: glowstick_base
+        - state: glowstick_unlit
+          shader: unshaded
+          color: "#FF0000"
+    - type: Item
+      sprite: Objects/Misc/glowstick.rsi
+      HeldPrefix: off
+    - type: Icon
+      sprite: Objects/Misc/glowstick.rsi
+      state: glowstick_unlit
+    - type: PointLight
+      enabled: false
+      color: "#FF0000"
+      radius: 5
+    - type: LightBehaviour
+      behaviours:
+        - !type:FadeBehaviour
+          interpolate: Linear
+          maxDuration: 5.0
+          minValue: 2.0
+          maxValue: 10.0
+          isLooped: true
+          property: Radius
+          enabled: true

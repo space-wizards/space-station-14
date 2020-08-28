@@ -1,30 +1,29 @@
 ﻿
 using Content.Server.GameObjects.Components.Items.Clothing;
 using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.Components.Sound;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.ViewVariables;
-using System;
+using Robust.Shared.Audio;
 
 namespace Content.Server.GameObjects.Components.Interactable
 {
     /// <summary>
-    ///     Component that represents a handheld light which can be activated and eventually dies over time.
+    ///     Component that represents a handheld expendable light which can be activated and eventually dies over time.
     /// </summary>
     [RegisterComponent]
-    internal sealed class ExpendableLightComponent : SharedExpendableLightComponent, IUse
-    { 
+    public class ExpendableLightComponent : SharedExpendableLightComponent, IUse
+    {
+        private static readonly AudioParams LoopedSoundParams = new AudioParams(0, 1, "Master", 62.5f, 1, AudioMixTarget.Stereo, true, 0.3f);
+
         /// <summary>
         ///     Status of light, whether or not it is emitting light.
         /// </summary>
@@ -37,7 +36,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            return TryActivate(eventArgs.User);
+            return TryActivate();
         }
 
         public override void Initialize()
@@ -57,7 +56,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         /// <summary>
         ///     Enables the light if it is not active. Once active it cannot be turned off.
         /// </summary>
-        private bool TryActivate(IEntity user)
+        private bool TryActivate()
         {
             if (!Activated)
             {
@@ -72,8 +71,6 @@ namespace Content.Server.GameObjects.Components.Interactable
                 UpdateVisuals(Activated);
                 Dirty();
 
-                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/flashlight_toggle.ogg", Owner);
-
                 return true;
             }
 
@@ -87,18 +84,41 @@ namespace Content.Server.GameObjects.Components.Interactable
                 switch (CurrentState)
                 {
                     case LightState.Lit:
+
+                        if (LoopedSound != string.Empty && Owner.TryGetComponent<LoopingLoopingSoundComponent>(out var loopingSound))
+                        {
+                            loopingSound.Play(LoopedSound, LoopedSoundParams);
+                        }
+
+                        if (LitSound != string.Empty)
+                        {
+                            EntitySystem.Get<AudioSystem>().PlayFromEntity(LitSound, Owner);
+                        }
+
+                        sprite.LayerSetVisible(1, true);
+                        sprite.LayerSetState(2, IconStateLit);
+                        sprite.LayerSetShader(2, "unshaded");
+                        break;
+
                     case LightState.Fading:
-
-                        sprite.LayerSetState(1, IconStateLit);
-                        sprite.LayerSetShader(1, "unshaded");
-
                         break;
 
                     default:
                     case LightState.Dead:
 
-                        sprite.LayerSetState(1, IconStateSpent);
-                        sprite.LayerSetShader(1, "shaded");
+                        if (DieSound != string.Empty)
+                        {
+                            EntitySystem.Get<AudioSystem>().PlayFromEntity(DieSound, Owner);
+                        }
+
+                        if (LoopedSound != string.Empty && Owner.TryGetComponent<LoopingLoopingSoundComponent>(out var loopSound))
+                        {
+                            loopSound.StopAllSounds();
+                        }
+
+                        sprite.LayerSetVisible(1, false);
+                        sprite.LayerSetState(2, IconStateSpent);
+                        sprite.LayerSetShader(2, "shaded");
                         break;
                 }
             }
@@ -183,7 +203,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             protected override void Activate(IEntity user, ExpendableLightComponent component)
             {
-                component.TryActivate(user);
+                component.TryActivate();
             }
         }
     }

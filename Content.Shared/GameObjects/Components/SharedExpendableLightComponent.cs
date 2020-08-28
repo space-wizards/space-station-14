@@ -22,10 +22,10 @@ namespace Content.Shared.GameObjects.Components
         protected LightState CurrentState { get; set; }
 
         [ViewVariables]
-        protected float GlowRadius { get; set; }
+        protected string TurnOnBehaviourID { get; set; }
 
         [ViewVariables]
-        protected float GlowEnergy { get; set; }
+        protected string FadeOutBehaviourID { get; set; }
 
         [ViewVariables]
         protected float GlowDuration { get; set; }
@@ -45,6 +45,15 @@ namespace Content.Shared.GameObjects.Components
         [ViewVariables]
         protected string IconStateLit { get; set; }
 
+        [ViewVariables]
+        protected string LitSound { get; set; }
+
+        [ViewVariables]
+        protected string LoopedSound { get; set; }
+
+        [ViewVariables]
+        protected string DieSound { get; set; }
+
         [Serializable, NetSerializable]
         protected sealed class ExpendableLightComponentState : ComponentState
         {
@@ -62,14 +71,17 @@ namespace Content.Shared.GameObjects.Components
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(this, x => GlowRadius, "glowRadius", 3f);
-            serializer.DataField(this, x => GlowEnergy, "glowEnergy", 3f);
+            serializer.DataField(this, x => TurnOnBehaviourID, "turnOnBehaviourID", string.Empty);
+            serializer.DataField(this, x => FadeOutBehaviourID, "fadeOutBehaviourID", string.Empty);
             serializer.DataField(this, x => GlowDuration, "glowDuration", 60 * 15f);
             serializer.DataField(this, x => FadeOutDuration, "fadeOutDuration", 60 * 5f);
             serializer.DataField(this, x => SpentName, "spentName", string.Empty);
             serializer.DataField(this, x => SpentDesc, "spentDesc", string.Empty);
             serializer.DataField(this, x => IconStateLit, "iconStateOn", string.Empty);
             serializer.DataField(this, x => IconStateSpent, "iconStateSpent", string.Empty);
+            serializer.DataField(this, x => LitSound, "litSound", string.Empty);
+            serializer.DataField(this, x => LoopedSound, "loopedSound", string.Empty);
+            serializer.DataField(this, x => DieSound, "dieSound", string.Empty);
         }
     }
 }
