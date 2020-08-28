@@ -1,11 +1,10 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Diagnostics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
@@ -22,13 +21,14 @@ namespace Content.Client.GameObjects.Components.CloningMachine
         private ScanListContainer ScanList;
         private Dictionary<int, string> scanManager;
         private LineEdit SearchBar;
-        private OptionButton OverrideMenu;
+        private OptionButton OverrideMenu = null!;
         private Button ClearButton;
-        private Button EraseButton;
+        private Button EraseButton = null!;
         public Button CloneButton;
         private CloningScanButton MeasureButton;
+        private CloningScanButton? _selectedButton;
         protected override Vector2 ContentsMinimumSize => MainVBox?.CombinedMinimumSize ?? Vector2.Zero;
-        private CloningMachineBoundUserInterfaceState _lastUpdate;
+        private CloningMachineBoundUserInterfaceState _lastUpdate = null!;
 
         // List of scans that are visible based on current filter criteria.
         private readonly Dictionary<int, string> _filteredScans = new Dictionary<int, string>();
@@ -37,7 +37,6 @@ namespace Content.Client.GameObjects.Components.CloningMachine
         // This is inclusive, so end is the index of the last scan, not right after it.
         private (int start, int end) _lastScanIndices;
 
-        private CloningScanButton? _selectedButton;
         public int? SelectedScan;
 
         protected override Vector2? CustomSize => (250, 300);
