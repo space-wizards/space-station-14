@@ -72,7 +72,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             var tube = snapGrid
                 .GetInDir(nextDirection)
                 .Select(x => x.TryGetComponent(out IDisposalTubeComponent? c) ? c : null)
-                .FirstOrDefault(x => x != null && x != this && x.CanConnect(oppositeDirection, this));
+                .FirstOrDefault(x => x != null && x != this && x.CanConnect(oppositeDirection, this) && CanConnect(nextDirection, this));
 
             return tube;
         }
