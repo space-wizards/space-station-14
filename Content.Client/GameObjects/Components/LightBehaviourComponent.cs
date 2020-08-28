@@ -1,5 +1,4 @@
-﻿#nullable enable
-
+﻿
 using System;
 using System.Collections.Generic;
 using Robust.Client.GameObjects;
@@ -105,6 +104,7 @@ namespace Content.Client.GameObjects.Components
             OnUpdate(frameTime);
         }
 
+#nullable enable
         protected static object? GetProperty(object target, string propertyName)
         {
             var property = target.GetType().GetProperty(propertyName);
@@ -116,6 +116,7 @@ namespace Content.Client.GameObjects.Components
 
             return property.GetValue(target);
         }
+#nullable disable
 
         protected static void SetProperty(object target, string propertyName, object value)
         {
@@ -271,10 +272,10 @@ namespace Content.Client.GameObjects.Components
     /// </summary>
     public class RandomizeBehaviour : LightBehaviour
     {
-        private object? _randomValue1 = default;
-        private object? _randomValue2 = default;
-        private object? _randomValue3 = default;
-        private object? _randomValue4 = default;
+        private object _randomValue1 = default;
+        private object _randomValue2 = default;
+        private object _randomValue3 = default;
+        private object _randomValue4 = default;
 
         public override void OnInitialize()
         {
