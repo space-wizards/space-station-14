@@ -79,7 +79,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         private void UpdateVisuals(bool on)
         {
-            if (Owner.TryGetComponent(out SpriteComponent? sprite))
+            if (Owner.TryGetComponent(out SpriteComponent sprite))
             {
                 switch (CurrentState)
                 {
@@ -123,13 +123,13 @@ namespace Content.Server.GameObjects.Components.Interactable
                 }
             }
 
-            if (Owner.TryGetComponent(out PointLightComponent? light))
+            if (Owner.TryGetComponent(out PointLightComponent light))
             {
                 _light = light;
                 _light.Enabled = on;
             }
 
-            if (Owner.TryGetComponent(out ClothingComponent? clothing))
+            if (Owner.TryGetComponent(out ClothingComponent clothing))
             {
                 clothing.ClothingEquippedPrefix = on ? "Activated" : string.Empty;
             }
