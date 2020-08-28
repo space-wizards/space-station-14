@@ -82,7 +82,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                     continue;
                 }
 
-                if (!CanConnect(nextDirection, this))
+                if (!CanConnect(nextDirection, tube))
                 {
                     continue;
                 }
