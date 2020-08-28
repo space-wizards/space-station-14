@@ -105,7 +105,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
                 {
                     core.CoreIntegrity -= instability;
                 }
-                return CoreCount * injectionAmount;
+                return CoreCount * injectionAmount * 15000; //2 core engine injecting 2 fuel per core = 60kW(?)
             }
             return 0;
         }
@@ -130,14 +130,19 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             if(_cores.Count < 1 || MasterController == null) { return; }
 
             var intensity = 0;
+
+            /*
+             * todo: add an exact to the shielding and make this find the core closest to the controller
+             * so they chain explode, after helpers have been added to make it not cancer
+            */
+            var epicenter = _cores.First();
+
             foreach (AMEShieldComponent core in _cores)
             {
                 intensity += MasterController.InjectionAmount;
             }
 
-            intensity = intensity > 16 ? 16 : intensity;
-
-            var epicenter = _cores.First();
+            intensity = Math.Min(intensity, 8);
 
             ExplosionHelper.SpawnExplosion(epicenter.Owner.Transform.GridPosition, intensity / 2, intensity, intensity * 2, intensity * 3);
 

@@ -26,8 +26,6 @@ namespace Content.Client.GameObjects.Components.Power.AME
         public Label CoreCount { get; set; }
 
 
-        [Dependency] private readonly ILocalizationManager _localizationManager = default!;
-
         public AMEWindow()
         {
             IoCManager.InjectDependencies(this);
@@ -41,7 +39,7 @@ namespace Content.Client.GameObjects.Components.Power.AME
                         {
                             Children =
                             {
-                                new Label {Text = _localizationManager.GetString("Engine Status") + ": "},
+                                new Label {Text = Loc.GetString("Engine Status") + ": "},
                                 (InjectionStatus = new Label {Text = "Not Injecting"})
                             }
                         },
@@ -56,7 +54,7 @@ namespace Content.Client.GameObjects.Components.Power.AME
                         {
                             Children =
                             {
-                                new Label {Text = _localizationManager.GetString("Fuel Status") + ": "},
+                                new Label {Text = Loc.GetString("Fuel Status") + ": "},
                                 (FuelAmount = new Label {Text = "No fuel inserted"})
                             }
                         },
@@ -71,7 +69,7 @@ namespace Content.Client.GameObjects.Components.Power.AME
                         {
                             Children =
                             {
-                                new Label {Text = _localizationManager.GetString("Injection amount") + ": "},
+                                new Label {Text = Loc.GetString("Injection amount") + ": "},
                                 (InjectionAmount = new Label {Text = "0"})
                             }
                         },
@@ -88,7 +86,7 @@ namespace Content.Client.GameObjects.Components.Power.AME
                             Children =
                             {
                                 (RefreshPartsButton = new Button {Text = "Refresh Parts", StyleClasses = {StyleBase.ButtonOpenBoth }, Disabled = true }),
-                                 new Label { Text = _localizationManager.GetString("Core count") + ": "},
+                                 new Label { Text = Loc.GetString("Core count") + ": "},
                                 (CoreCount = new Label { Text = "0"}),
                             }
                         }
@@ -140,7 +138,7 @@ namespace Content.Client.GameObjects.Components.Power.AME
             {
                 EjectButton.Disabled = true;
                 ToggleInjection.Disabled = true;
-                FuelAmount.Text = "No fuel inserted";
+                FuelAmount.Text = Loc.GetString("No fuel inserted");
             }
             else
             {

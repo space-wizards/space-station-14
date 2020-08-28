@@ -92,6 +92,7 @@ namespace Content.Server.GameObjects.Components.Power.AME
             {
                 _powerSupplier.SupplyRate = GetAMENodeGroup().InjectFuel(InjectionAmount);
                 fuelJar.FuelAmount -= InjectionAmount;
+                InjectSound();
                 UpdateUserInterface();
             }
 
@@ -315,6 +316,11 @@ namespace Content.Server.GameObjects.Components.Power.AME
 
             EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
 
+        }
+
+        private void InjectSound()
+        {
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/bang.ogg", Owner, AudioParams.Default.WithVolume(0f));
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)
