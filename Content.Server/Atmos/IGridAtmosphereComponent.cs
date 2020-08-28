@@ -14,11 +14,6 @@ namespace Content.Server.Atmos
         int UpdateCounter { get; }
 
         /// <summary>
-        ///     How many tiles have high pressure delta.
-        /// </summary>
-        int HighPressureDeltaCount { get; }
-
-        /// <summary>
         ///     Control variable for equalization.
         /// </summary>
         long EqualizationQueueCycleControl { get; set; }

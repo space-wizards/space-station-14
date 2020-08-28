@@ -821,15 +821,18 @@ namespace Content.Server.Atmos
         public void Superconduct()
         {
             var directions = ConductivityDirections();
-            var adjacentTiles = _gridAtmosphereComponent.GetAdjacentTiles(GridIndices, true);
 
-            if (directions.Length > 0)
+            if (directions != AtmosDirection.Invalid)
             {
-                foreach (var direction in directions)
+                for(var i = 0; i < Atmospherics.Directions; i++)
                 {
-                    if (!adjacentTiles.TryGetValue(direction, out var adjacent)) continue;
+                    var direction = (AtmosDirection) (1 << i);
+                    if (!directions.HasFlag(direction)) continue;
 
-                    if (adjacent.ThermalConductivity == 0f)
+                    var adjacent = _adjacentTiles[direction.ToIndex()];
+
+                    // TODO ATMOS handle adjacent being null.
+                    if (adjacent == null || adjacent.ThermalConductivity == 0f)
                         continue;
 
                     if(adjacent._archivedCycle < _gridAtmosphereComponent.UpdateCounter)
@@ -932,17 +935,17 @@ namespace Content.Server.Atmos
             }
         }
 
-        public AtmosDirection[] ConductivityDirections()
+        public AtmosDirection ConductivityDirections()
         {
             if(BlocksAir)
             {
                 if(_archivedCycle < _gridAtmosphereComponent.UpdateCounter)
                     Archive(_gridAtmosphereComponent.UpdateCounter);
-                return Cardinal;
+                return AtmosDirection.All;
             }
 
             // TODO ATMOS check if this is correct
-            return Cardinal;
+            return AtmosDirection.All;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1138,12 +1141,6 @@ namespace Content.Server.Atmos
                 ExcitedGroup.DismantleCooldown = 0;
             }
         }
-
-        private static readonly AtmosDirection[] Cardinal =
-            new AtmosDirection[]
-            {
-                AtmosDirection.North, AtmosDirection.East, AtmosDirection.South, AtmosDirection.West
-            };
 
         public void TemperatureExpose(GasMixture air, float temperature, float volume)
         {

@@ -41,7 +41,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// <summary>
         ///     Max milliseconds allowed for atmos updates.
         /// </summary>
-        private const float LagCheckMaxMilliseconds = 5f;
+        private const float LagCheckMaxMilliseconds = 7.5f;
 
         /// <summary>
         ///     How much time before atmos updates are ran.
@@ -52,10 +52,21 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         private float _timer = 0f;
         private Stopwatch _stopwatch = new Stopwatch();
+
+        [ViewVariables]
         public int UpdateCounter { get; private set; } = 0;
 
         [ViewVariables]
+        private double _tileEqualizeLastProcess;
+
+        [ViewVariables]
         private readonly HashSet<ExcitedGroup> _excitedGroups = new HashSet<ExcitedGroup>(1000);
+
+        [ViewVariables]
+        private int ExcitedGroupCount => _excitedGroups.Count;
+
+        [ViewVariables]
+        private double _excitedGroupLastProcess;
 
         [ViewVariables]
         private readonly Dictionary<MapIndices, TileAtmosphere> _tiles = new Dictionary<MapIndices, TileAtmosphere>(1000);
@@ -64,16 +75,43 @@ namespace Content.Server.GameObjects.Components.Atmos
         private readonly HashSet<TileAtmosphere> _activeTiles = new HashSet<TileAtmosphere>(1000);
 
         [ViewVariables]
+        private int ActiveTilesCount => _activeTiles.Count;
+
+        [ViewVariables]
+        private double _activeTilesLastProcess;
+
+        [ViewVariables]
         private readonly HashSet<TileAtmosphere> _hotspotTiles = new HashSet<TileAtmosphere>(1000);
+
+        [ViewVariables]
+        private int HotspotTilesCount => _hotspotTiles.Count;
+
+        [ViewVariables]
+        private double _hotspotsLastProcess;
 
         [ViewVariables]
         private readonly HashSet<TileAtmosphere> _superconductivityTiles = new HashSet<TileAtmosphere>(1000);
 
         [ViewVariables]
+        private int SuperconductivityTilesCount => _superconductivityTiles.Count;
+
+        [ViewVariables]
+        private double _superconductivityLastProcess;
+
+        [ViewVariables]
         private readonly HashSet<MapIndices> _invalidatedCoords = new HashSet<MapIndices>(1000);
 
         [ViewVariables]
+        private int InvalidatedCoordsCount => _invalidatedCoords.Count;
+
+        [ViewVariables]
         private HashSet<TileAtmosphere> _highPressureDelta = new HashSet<TileAtmosphere>(1000);
+
+        [ViewVariables]
+        private int HighPressureDeltaCount => _highPressureDelta.Count;
+
+        [ViewVariables]
+        private double _highPressureDeltaLastProcess;
 
         [ViewVariables]
         private readonly List<IPipeNet> _pipeNets = new List<IPipeNet>();
@@ -392,9 +430,6 @@ namespace Content.Server.GameObjects.Components.Atmos
             return sides;
         }
 
-        /// <inheritdoc />
-        public int HighPressureDeltaCount => _highPressureDelta.Count;
-
         public long EqualizationQueueCycleControl { get; set; }
 
         /// <inheritdoc />
@@ -471,8 +506,10 @@ namespace Content.Server.GameObjects.Components.Atmos
                 number = 0;
                 // Process the rest next time.
                 if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
-                    return;
+                    break;
             }
+
+            _tileEqualizeLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
         }
 
         public void ProcessActiveTiles()
@@ -488,8 +525,10 @@ namespace Content.Server.GameObjects.Components.Atmos
                 number = 0;
                 // Process the rest next time.
                 if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
-                    return;
+                    break;
             }
+
+            _activeTilesLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
         }
 
         public void ProcessExcitedGroups()
@@ -512,8 +551,10 @@ namespace Content.Server.GameObjects.Components.Atmos
                 number = 0;
                 // Process the rest next time.
                 if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
-                    return;
+                    break;
             }
+
+            _excitedGroupLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
         }
 
         public void ProcessHighPressureDelta()
@@ -532,8 +573,10 @@ namespace Content.Server.GameObjects.Components.Atmos
                 number = 0;
                 // Process the rest next time.
                 if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
-                    return;
+                    break;
             }
+
+            _highPressureDeltaLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
         }
 
         private void ProcessHotspots()
@@ -549,8 +592,10 @@ namespace Content.Server.GameObjects.Components.Atmos
                 number = 0;
                 // Process the rest next time.
                 if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
-                    return;
+                    break;
             }
+
+            _hotspotsLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
         }
 
         private void ProcessSuperconductivity()
@@ -566,8 +611,10 @@ namespace Content.Server.GameObjects.Components.Atmos
                 number = 0;
                 // Process the rest next time.
                 if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
-                    return;
+                    break;
             }
+
+            _superconductivityLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
         }
 
         private void ProcessPipeNets()
