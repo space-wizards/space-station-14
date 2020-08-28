@@ -102,7 +102,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             {
                 var extraCheck = doAfterCheck?.Invoke() ?? true;
 
-                if (!CanWeld(DefaultFuelCost))
+                if (!CanWeld(DefaultFuelCost, user))
                 {
                     _notifyManager.PopupMessage(target, user, "Can't weld!");
 
@@ -110,6 +110,11 @@ namespace Content.Server.GameObjects.Components.Interactable
                 }
 
                 return extraCheck;
+            }
+
+            if (!ExtraCheck())
+            {
+                return false;
             }
 
             var canUse = await base.UseTool(user, target, doAfterDelay, toolQualityNeeded, ExtraCheck);
@@ -123,7 +128,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             {
                 var extraCheck = doAfterCheck?.Invoke() ?? true;
 
-                return extraCheck && CanWeld(fuelConsumed);
+                return extraCheck && CanWeld(fuelConsumed, user);
             }
 
             return await base.UseTool(user, target, doAfterDelay, toolQualityNeeded, ExtraCheck) && TryWeld(fuelConsumed, user);
@@ -131,13 +136,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         private bool TryWeld(float value, IEntity? user = null, bool silent = false)
         {
-            if (!WelderLit)
-            {
-                if(!silent) _notifyManager.PopupMessage(Owner, user, Loc.GetString("The welder is turned off!"));
-                return false;
-            }
-
-            if (!CanWeld(value))
+            if (!CanWeld(value, user))
             {
                 if(!silent) _notifyManager.PopupMessage(Owner, user, Loc.GetString("The welder does not have enough fuel for that!"));
                 return false;
@@ -155,8 +154,14 @@ namespace Content.Server.GameObjects.Components.Interactable
             return succeeded;
         }
 
-        private bool CanWeld(float value)
+        private bool CanWeld(float value, IEntity? user = null, bool silent = false)
         {
+            if (!WelderLit)
+            {
+                if (!silent) _notifyManager.PopupMessage(Owner, user, Loc.GetString("The welder is turned off!"));
+                return false;
+            }
+
             return Fuel > value || Qualities != ToolQuality.Welding;
         }
 
