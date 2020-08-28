@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,16 +31,19 @@ namespace Content.Server.GameObjects.Components.Medical
     [ComponentReference(typeof(IActivate))]
     public class CloningMachineComponent : SharedCloningMachineComponent, IActivate
     {
-        private ContainerSlot _bodyContainer;
+        private ContainerSlot _bodyContainer = default!;
         private CloningMachineStatus _status;
-        [Dependency] private readonly IServerPreferencesManager _prefsManager;
-
-        private Mind _capturedMind;
+        [Dependency] private readonly IServerPreferencesManager _prefsManager = null!;
 
         [ViewVariables]
         private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
 
-        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(SharedCloningMachineComponent.CloningMachineUIKey.Key);
+        [ViewVariables]
+        private BoundUserInterface? UserInterface =>
+            Owner.GetUIOrNull(SharedCloningMachineComponent.CloningMachineUIKey.Key);
+
+        private Mind? _capturedMind;
+
 
         public override void Initialize()
         {
@@ -47,7 +51,6 @@ namespace Content.Server.GameObjects.Components.Medical
             if (UserInterface != null)
             {
                 UserInterface.OnReceiveMessage += OnUiReceiveMessage;
-
             }
 
             _bodyContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-bodyContainer", Owner);
@@ -84,7 +87,7 @@ namespace Content.Server.GameObjects.Components.Medical
             }
 
             var newState = GetUserInterfaceState();
-            UserInterface.SetState(newState);
+            UserInterface?.SetState(newState);
         }
 
 
@@ -100,12 +103,12 @@ namespace Content.Server.GameObjects.Components.Medical
         public void Activate(ActivateEventArgs eventArgs)
         {
             if (!Powered ||
-                !eventArgs.User.TryGetComponent(out IActorComponent actor))
+                !eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
                 return;
             }
 
-            UserInterface.Open(actor.playerSession);
+            UserInterface?.Open(actor.playerSession);
         }
 
         private async void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
