@@ -27,15 +27,13 @@ namespace Content.Client.State
     {
         private const string PublicServerAddress = "server.spacestation14.io";
 
-#pragma warning disable 649
-        [Dependency] private readonly IBaseClient _client;
-        [Dependency] private readonly IClientNetManager _netManager;
-        [Dependency] private readonly IConfigurationManager _configurationManager;
-        [Dependency] private readonly IGameController _controllerProxy;
-        [Dependency] private readonly ILocalizationManager _loc;
-        [Dependency] private readonly IResourceCache _resourceCache;
-        [Dependency] private readonly IUserInterfaceManager userInterfaceManager;
-#pragma warning restore 649
+        [Dependency] private readonly IBaseClient _client = default!;
+        [Dependency] private readonly IClientNetManager _netManager = default!;
+        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+        [Dependency] private readonly IGameController _controllerProxy = default!;
+        [Dependency] private readonly ILocalizationManager _loc = default!;
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
 
         private MainMenuControl _mainMenuControl;
         private OptionsMenu OptionsMenu;
@@ -48,7 +46,7 @@ namespace Content.Client.State
         public override void Startup()
         {
             _mainMenuControl = new MainMenuControl(_resourceCache, _configurationManager);
-            userInterfaceManager.StateRoot.AddChild(_mainMenuControl);
+            _userInterfaceManager.StateRoot.AddChild(_mainMenuControl);
 
             _mainMenuControl.QuitButton.OnPressed += QuitButtonPressed;
             _mainMenuControl.OptionsButton.OnPressed += OptionsButtonPressed;
@@ -108,7 +106,7 @@ namespace Content.Client.State
             if (!UsernameHelpers.IsNameValid(inputName, out var reason))
             {
                 var invalidReason = _loc.GetString(reason.ToText());
-                userInterfaceManager.Popup(
+                _userInterfaceManager.Popup(
                     _loc.GetString("Invalid username:\n{0}", invalidReason),
                     _loc.GetString("Invalid Username"));
                 return;
@@ -130,7 +128,7 @@ namespace Content.Client.State
             }
             catch (ArgumentException e)
             {
-                userInterfaceManager.Popup($"Unable to connect: {e.Message}", "Connection error.");
+                _userInterfaceManager.Popup($"Unable to connect: {e.Message}", "Connection error.");
                 Logger.Warning(e.ToString());
                 _netManager.ConnectFailed -= _onConnectFailed;
             }
@@ -185,7 +183,7 @@ namespace Content.Client.State
 
         private void _onConnectFailed(object _, NetConnectFailArgs args)
         {
-            userInterfaceManager.Popup($"Failed to connect:\n{args.Reason}");
+            _userInterfaceManager.Popup($"Failed to connect:\n{args.Reason}");
             _netManager.ConnectFailed -= _onConnectFailed;
             _setConnectingState(false);
         }

@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Disposal;
 using Content.Shared.GameObjects.EntitySystems;
@@ -29,6 +31,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timers.Timer;
@@ -36,13 +39,12 @@ using Timer = Robust.Shared.Timers.Timer;
 namespace Content.Server.GameObjects.Components.Disposal
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedDisposalUnitComponent))]
     [ComponentReference(typeof(IInteractUsing))]
     public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IInteractUsing, IDragDropOn
     {
-#pragma warning disable 649
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-#pragma warning restore 649
 
         public override string Name => "DisposalUnit";
 
@@ -67,6 +69,12 @@ namespace Content.Server.GameObjects.Components.Disposal
         [ViewVariables]
         private TimeSpan _automaticEngageTime;
 
+        [ViewVariables]
+        private TimeSpan _flushDelay;
+
+        [ViewVariables]
+        private float _entryDelay;
+
         /// <summary>
         ///     Token used to cancel the automatic engage of a disposal unit
         ///     after an entity enters it.
@@ -80,9 +88,6 @@ namespace Content.Server.GameObjects.Components.Disposal
         private Container _container = default!;
 
         [ViewVariables] public IReadOnlyList<IEntity> ContainedEntities => _container.ContainedEntities;
-
-        [ViewVariables]
-        private BoundUserInterface _userInterface = default!;
 
         [ViewVariables]
         public bool Powered =>
@@ -114,6 +119,15 @@ namespace Content.Server.GameObjects.Components.Disposal
                 UpdateVisualState();
             }
         }
+
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(DisposalUnitUiKey.Key);
+
+        private DisposalUnitBoundUserInterfaceState? _lastUiState;
+
+        /// <summary>
+        ///     Store the translated state.
+        /// </summary>
+        private (PressureState State, string Localized) _locState;
 
         public bool CanInsert(IEntity entity)
         {
@@ -161,18 +175,39 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             if (entity.TryGetComponent(out IActorComponent? actor))
             {
-                _userInterface.Close(actor.playerSession);
+                UserInterface?.Close(actor.playerSession);
             }
 
             UpdateVisualState();
         }
 
-        public bool TryInsert(IEntity entity)
+        public async Task<bool> TryInsert(IEntity entity, IEntity? user = default)
         {
-            if (!CanInsert(entity) || !_container.Insert(entity))
-            {
+            if (!CanInsert(entity))
                 return false;
+
+            if (user != null && _entryDelay > 0f)
+            {
+                var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
+
+                var doAfterArgs = new DoAfterEventArgs(user, _entryDelay, default, Owner)
+                {
+                    BreakOnDamage = true,
+                    BreakOnStun = true,
+                    BreakOnTargetMove = true,
+                    BreakOnUserMove = true,
+                    NeedHand = false,
+                };
+
+                var result = await doAfterSystem.DoAfter(doAfterArgs);
+
+                if (result == DoAfterStatus.Cancelled)
+                    return false;
+
             }
+
+            if (!_container.Insert(entity))
+                return false;
 
             AfterInsert(entity);
 
@@ -218,9 +253,9 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             Engaged ^= true;
 
-            if (Engaged)
+            if (Engaged && CanFlush())
             {
-                TryFlush();
+                Timer.Spawn(_flushDelay, () => TryFlush());
             }
         }
 
@@ -284,17 +319,35 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private DisposalUnitBoundUserInterfaceState GetInterfaceState()
         {
-            var state = Loc.GetString($"{State}");
-            return new DisposalUnitBoundUserInterfaceState(Owner.Name, state, _pressure, Powered, Engaged);
+            string stateString;
+
+            if (_locState.State != State)
+            {
+                stateString = Loc.GetString($"{State}");
+                _locState = (State, stateString);
+            }
+            else
+            {
+                stateString = _locState.Localized;
+            }
+
+            return new DisposalUnitBoundUserInterfaceState(Owner.Name, stateString, _pressure, Powered, Engaged);
         }
 
         private void UpdateInterface()
         {
             var state = GetInterfaceState();
-            _userInterface.SetState(state);
+
+            if (_lastUiState != null && _lastUiState.Equals(state))
+            {
+                return;
+            }
+
+            _lastUiState = state;
+            UserInterface?.SetState(state);
         }
 
-        private bool PlayerCanUse(IEntity player)
+        private bool PlayerCanUse(IEntity? player)
         {
             if (player == null)
             {
@@ -402,8 +455,9 @@ namespace Content.Server.GameObjects.Components.Disposal
                 : LightState.Ready);
         }
 
-        public void Update(float frameTime)
+        public override void Update(float frameTime)
         {
+            base.Update(frameTime);
             if (!Powered)
             {
                 return;
@@ -461,10 +515,16 @@ namespace Content.Server.GameObjects.Components.Disposal
                 () => (int) _automaticEngageTime.TotalSeconds);
 
             serializer.DataReadWriteFunction(
-                "automaticEngageTime",
-                30,
-                seconds => _automaticEngageTime = TimeSpan.FromSeconds(seconds),
-                () => (int) _automaticEngageTime.TotalSeconds);
+                "flushDelay",
+                3,
+                seconds => _flushDelay = TimeSpan.FromSeconds(seconds),
+                () => (int) _flushDelay.TotalSeconds);
+
+            serializer.DataReadWriteFunction(
+                "entryDelay",
+                0.5f,
+                seconds => _entryDelay = seconds,
+                () => (int) _entryDelay);
         }
 
         public override void Initialize()
@@ -472,9 +532,11 @@ namespace Content.Server.GameObjects.Components.Disposal
             base.Initialize();
 
             _container = ContainerManagerComponent.Ensure<Container>(Name, Owner);
-            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
-                .GetBoundUserInterface(DisposalUnitUiKey.Key);
-            _userInterface.OnReceiveMessage += OnUiReceiveMessage;
+
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += OnUiReceiveMessage;
+            }
 
             UpdateInterface();
         }
@@ -483,10 +545,15 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             base.Startup();
 
-            Owner.EnsureComponent<AnchorableComponent>();
+            if(!Owner.HasComponent<AnchorableComponent>())
+            {
+                Logger.WarningS("VitalComponentMissing", $"Disposal unit {Owner.Uid} is missing an anchorable component");
+            }
 
-            var collidable = Owner.EnsureComponent<CollidableComponent>();
-            collidable.AnchoredChanged += UpdateVisualState;
+            if (Owner.TryGetComponent(out CollidableComponent? collidable))
+            {
+                collidable.AnchoredChanged += UpdateVisualState;
+            }
 
             if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
             {
@@ -513,7 +580,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 _container.ForceRemove(entity);
             }
 
-            _userInterface.CloseAll();
+            UserInterface?.CloseAll();
 
             _automaticEngageToken?.Cancel();
             _automaticEngageToken = null;
@@ -571,7 +638,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
-            _userInterface.Open(actor.playerSession);
+            UserInterface?.Open(actor.playerSession);
             return true;
         }
 
@@ -587,7 +654,8 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         bool IDragDropOn.DragDropOn(DragDropEventArgs eventArgs)
         {
-            return TryInsert(eventArgs.Dropped);
+            _ = TryInsert(eventArgs.Dropped, eventArgs.User);
+            return true;
         }
 
         [Verb]
@@ -609,7 +677,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             protected override void Activate(IEntity user, DisposalUnitComponent component)
             {
-                component.TryInsert(user);
+                _ = component.TryInsert(user, user);
             }
         }
 

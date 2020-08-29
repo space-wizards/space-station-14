@@ -16,10 +16,8 @@ namespace Content.Client.UserInterface
 {
     public sealed class LateJoinGui : SS14Window
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly IClientConsole _console;
-#pragma warning restore 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IClientConsole _console = default!;
 
         protected override Vector2? CustomSize => (360, 560);
 

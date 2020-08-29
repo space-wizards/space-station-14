@@ -15,17 +15,14 @@ namespace Content.Client.VendingMachines
 {
     class VendingMachineMenu : SS14Window
     {
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         protected override Vector2? CustomSize => (300, 450);
 
         private readonly ItemList _items;
         private List<VendingMachineInventoryEntry> _cachedInventory;
 
-        #pragma warning disable CS0649
-        [Dependency]
-        private IResourceCache _resourceCache;
-        [Dependency]
-        private readonly IPrototypeManager _prototypeManager;
-        #pragma warning restore
         public VendingMachineBoundUserInterface Owner { get; set; }
 
         public VendingMachineMenu()

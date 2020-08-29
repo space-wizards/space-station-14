@@ -1,3 +1,4 @@
+#nullable enable
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems.Click;
@@ -20,11 +21,9 @@ namespace Content.Server.AI.Operators.Inventory
             _target = target;
         }
 
-        // TODO: When I spawn new entities they seem to duplicate clothing or something?
         public override Outcome Execute(float frameTime)
         {
-            if (_target == null ||
-                _target.Deleted ||
+            if (_target.Deleted ||
                 !_target.HasComponent<ItemComponent>() ||
                 ContainerHelpers.IsInContainer(_target) ||
                 !InteractionChecks.InRangeUnobstructed(_owner, _target.Transform.MapPosition))
@@ -32,7 +31,7 @@ namespace Content.Server.AI.Operators.Inventory
                 return Outcome.Failed;
             }
 
-            if (!_owner.TryGetComponent(out HandsComponent handsComponent))
+            if (!_owner.TryGetComponent(out HandsComponent? handsComponent))
             {
                 return Outcome.Failed;
             }

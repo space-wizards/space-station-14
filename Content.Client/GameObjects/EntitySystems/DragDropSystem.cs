@@ -30,6 +30,13 @@ namespace Content.Client.GameObjects.EntitySystems
     [UsedImplicitly]
     public class DragDropSystem : EntitySystem
     {
+        [Dependency] private readonly IStateManager _stateManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly IEyeManager _eyeManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
+
         // drag will be triggered when mouse leaves this deadzone around the click position.
         private const float DragDeadzone = 2f;
         // how often to recheck possible targets (prevents calling expensive
@@ -43,15 +50,6 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private const string ShaderDropTargetInRange = "SelectionOutlineInrange";
         private const string ShaderDropTargetOutOfRange = "SelectionOutline";
-
-#pragma warning disable 649
-        [Dependency] private readonly IStateManager _stateManager;
-        [Dependency] private readonly IEntityManager _entityManager;
-        [Dependency] private readonly IInputManager _inputManager;
-        [Dependency] private readonly IEyeManager _eyeManager;
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly IMapManager _mapManager;
-#pragma warning restore 649
 
         // entity performing the drag action
         private IEntity _dragger;

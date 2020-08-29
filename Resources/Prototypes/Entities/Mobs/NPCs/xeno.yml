@@ -9,6 +9,9 @@
   components:
   - type: AiController
     logic: Xeno
+  - type: AiFactionTag
+    factions:
+    - Xeno
   - type: Hands
   - type: MovementSpeedModifier
   - type: InteractionOutline
@@ -36,11 +39,11 @@
       layer:
       - Opaque
       - MobImpassable
-  - type: BodyManager
-    baseTemplate: bodyTemplate.Humanoid
-    basePreset: bodyPreset.BasicHuman
-  - type: Metabolism
+  - type: Damageable
+    criticalThreshold: 150
+    deadThreshold: 200
   - type: MobStateManager
+  - type: Metabolism
   - type: HeatResistance
   - type: CombatMode
   - type: Teleportable

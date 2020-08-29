@@ -7,6 +7,7 @@ using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -20,19 +21,21 @@ namespace Content.Server.GameObjects.Components.Chemistry
         public override string Name => "Vapor";
 
         [ViewVariables]
-        private SolutionComponent _contents;
-        [ViewVariables]
         private ReagentUnit _transferAmount;
 
         private bool _running;
         private Vector2 _direction;
         private float _velocity;
 
-
         public override void Initialize()
         {
             base.Initialize();
-            _contents = Owner.GetComponent<SolutionComponent>();
+
+            if (!Owner.EnsureComponent(out SolutionComponent _))
+            {
+                Logger.Warning(
+                    $"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(SolutionComponent)}");
+            }
         }
 
         public void Start(Vector2 dir, float velocity)
@@ -56,6 +59,9 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         public void Update()
         {
+            if (!Owner.TryGetComponent(out SolutionComponent contents))
+                return;
+
             if (!_running)
                 return;
 
@@ -70,11 +76,11 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 foreach (var tile in tiles)
                 {
                     var pos = tile.GridIndices.ToGridCoordinates(_mapManager, tile.GridIndex);
-                    SpillHelper.SpillAt(pos, _contents.SplitSolution(amount), "PuddleSmear", false); //make non PuddleSmear?
+                    SpillHelper.SpillAt(pos, contents.SplitSolution(amount), "PuddleSmear", false); //make non PuddleSmear?
                 }
             }
 
-            if (_contents.CurrentVolume == 0)
+            if (contents.CurrentVolume == 0)
             {
                 // Delete this
                 Owner.Delete();
@@ -87,7 +93,14 @@ namespace Content.Server.GameObjects.Components.Chemistry
             {
                 return false;
             }
-            var result = _contents.TryAddSolution(solution);
+
+            if (!Owner.TryGetComponent(out SolutionComponent contents))
+            {
+                return false;
+            }
+
+            var result = contents.TryAddSolution(solution);
+
             if (!result)
             {
                 return false;

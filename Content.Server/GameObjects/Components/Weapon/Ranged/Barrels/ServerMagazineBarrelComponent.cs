@@ -81,7 +81,42 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
         private string _magFillPrototype;
 
-        public bool BoltOpen { get; private set; } = true;
+        public bool BoltOpen
+        {
+            get => _boltOpen;
+            set
+            {
+                if (_boltOpen == value)
+                {
+                    return;
+                }
+
+                var soundSystem = EntitySystem.Get<AudioSystem>();
+
+                if (value)
+                {
+                    TryEjectChamber();
+                    if (_soundBoltOpen != null)
+                    {
+                        soundSystem.PlayAtCoords(_soundBoltOpen, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
+                    }
+                }
+                else
+                {
+                    TryFeedChamber();
+                    if (_soundBoltClosed != null)
+                    {
+                        soundSystem.PlayAtCoords(_soundBoltClosed, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
+                    }
+                }
+
+                _boltOpen = value;
+                UpdateAppearance();
+                Dirty();
+            }
+        }
+        private bool _boltOpen = true;
+
         private bool _autoEjectMag;
         // If the bolt needs to be open before we can insert / remove the mag (i.e. for LMGs)
         public bool MagNeedsOpenBolt => _magNeedsOpenBolt;
@@ -104,21 +139,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             serializer.DataReadWriteFunction(
                 "magazineTypes",
                 new List<MagazineType>(),
-                types => types.ForEach(mag => _magazineTypes |= mag),
-                () =>
-                {
-                    var types = new List<MagazineType>();
-
-                    foreach (MagazineType mag in Enum.GetValues(typeof(MagazineType)))
-                    {
-                        if ((_magazineTypes & mag) != 0)
-                        {
-                            types.Add(mag);
-                        }
-                    }
-
-                    return types;
-                });
+                types => types.ForEach(mag => _magazineTypes |= mag), GetMagazineTypes);
             serializer.DataField(ref _caliber, "caliber", BallisticCaliber.Unspecified);
             serializer.DataField(ref _magFillPrototype, "magFillPrototype", null);
             serializer.DataField(ref _autoEjectMag, "autoEjectMag", false);
@@ -129,6 +150,21 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             serializer.DataField(ref _soundMagInsert, "soundMagInsert", null);
             serializer.DataField(ref _soundMagEject, "soundMagEject", null);
             serializer.DataField(ref _soundAutoEject, "soundAutoEject", "/Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg");
+        }
+
+        private List<MagazineType> GetMagazineTypes()
+        {
+            var types = new List<MagazineType>();
+
+            foreach (MagazineType mag in Enum.GetValues(typeof(MagazineType)))
+            {
+                if ((_magazineTypes & mag) != 0)
+                {
+                    types.Add(mag);
+                }
+            }
+
+            return types;
         }
 
         public override ComponentState GetComponentState()
@@ -169,30 +205,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             UpdateAppearance();
         }
 
-        public void ToggleBolt()
-        {
-            // For magazines only when we normally set BoltOpen we'll defer the UpdateAppearance until everything is done
-            // Whereas this will just call it straight up.
-            BoltOpen = !BoltOpen;
-            var soundSystem = EntitySystem.Get<AudioSystem>();
-            if (BoltOpen)
-            {
-                if (_soundBoltOpen != null)
-                {
-                    soundSystem.PlayAtCoords(_soundBoltOpen, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-5));
-                }
-            }
-            else
-            {
-                if (_soundBoltClosed != null)
-                {
-                    soundSystem.PlayAtCoords(_soundBoltClosed, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-5));
-                }
-            }
-            Dirty();
-            UpdateAppearance();
-        }
-
         public override IEntity PeekAmmo()
         {
             return BoltOpen ? null : _chamberContainer.ContainedEntity;
@@ -217,41 +229,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 return;
             }
 
-            var chamberEntity = _chamberContainer.ContainedEntity;
-            if (chamberEntity != null)
-            {
-                _chamberContainer.Remove(chamberEntity);
-                var ammoComponent = chamberEntity.GetComponent<AmmoComponent>();
-                if (!ammoComponent.Caseless)
-                {
-                    EjectCasing(chamberEntity);
-                }
-            }
+            TryEjectChamber();
 
-            // Try and pull a round from the magazine to replace the chamber if possible
-            var magazine = _magazineContainer.ContainedEntity;
-            var nextRound = magazine?.GetComponent<RangedMagazineComponent>().TakeAmmo();
-
-            if (nextRound != null)
-            {
-                // If you're really into gunporn you could put a sound here
-                _chamberContainer.Insert(nextRound);
-            }
+            TryFeedChamber();
 
             var soundSystem = EntitySystem.Get<AudioSystem>();
 
-            if (_autoEjectMag && magazine != null && magazine.GetComponent<RangedMagazineComponent>().ShotsLeft == 0)
-            {
-                if (_soundAutoEject != null)
-                {
-                    soundSystem.PlayAtCoords(_soundAutoEject, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
-                }
-
-                _magazineContainer.Remove(magazine);
-                SendNetworkMessage(new MagazineAutoEjectMessage());
-            }
-
-            if (nextRound == null && !BoltOpen)
+            if (_chamberContainer.ContainedEntity == null && !BoltOpen)
             {
                 if (_soundBoltOpen != null)
                 {
@@ -263,8 +247,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                     Owner.PopupMessage(container.Owner, Loc.GetString("Bolt open"));
                 }
                 BoltOpen = true;
-                Dirty();
-                UpdateAppearance();
                 return;
             }
 
@@ -304,14 +286,63 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 }
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("Bolt closed"));
                 BoltOpen = false;
-                Dirty();
-                UpdateAppearance();
                 return true;
             }
 
             // Could play a rack-slide specific sound here if you're so inclined (if the chamber is empty but rounds are available)
 
             Cycle(true);
+            return true;
+        }
+
+        public bool TryEjectChamber()
+        {
+            var chamberEntity = _chamberContainer.ContainedEntity;
+            if (chamberEntity != null)
+            {
+                if (!_chamberContainer.Remove(chamberEntity))
+                {
+                    return false;
+                }
+                var ammoComponent = chamberEntity.GetComponent<AmmoComponent>();
+                if (!ammoComponent.Caseless)
+                {
+                    EjectCasing(chamberEntity);
+                }
+                return true;
+            }
+            return false;
+        }
+
+        public bool TryFeedChamber()
+        {
+            if (_chamberContainer.ContainedEntity != null)
+            {
+                return false;
+            }
+
+            // Try and pull a round from the magazine to replace the chamber if possible
+            var magazine = _magazineContainer.ContainedEntity;
+            var nextRound = magazine?.GetComponent<RangedMagazineComponent>().TakeAmmo();
+
+            if (nextRound == null)
+            {
+                return false;
+            }
+
+            _chamberContainer.Insert(nextRound);
+
+            if (_autoEjectMag && magazine != null && magazine.GetComponent<RangedMagazineComponent>().ShotsLeft == 0)
+            {
+                if (_soundAutoEject != null)
+                {
+                    var soundSystem = EntitySystem.Get<AudioSystem>();
+                    soundSystem.PlayAtCoords(_soundAutoEject, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
+                }
+
+                _magazineContainer.Remove(magazine);
+                SendNetworkMessage(new MagazineAutoEjectMessage());
+            }
             return true;
         }
 
@@ -420,8 +451,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         {
             base.Examine(message, inDetailsRange);
 
-            var text = Loc.GetString("\nIt uses {0} ammo.", Caliber);
-            message.AddText(text);
+            message.AddMarkup(Loc.GetString("\nIt uses [color=white]{0}[/color] ammo.", Caliber));
+
+            foreach (var magazineType in GetMagazineTypes())
+            {
+                message.AddMarkup(Loc.GetString("\nIt accepts [color=white]{0}[/color] magazines.", magazineType));
+            }
         }
 
         [Verb]
@@ -465,12 +500,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 }
 
                 data.Text = Loc.GetString("Open bolt");
-                data.Visibility = component.BoltOpen ? VerbVisibility.Disabled : VerbVisibility.Visible;
+                data.Visibility = component.BoltOpen ? VerbVisibility.Invisible : VerbVisibility.Visible;
             }
 
             protected override void Activate(IEntity user, ServerMagazineBarrelComponent component)
             {
-                component.ToggleBolt();
+                component.BoltOpen = true;
             }
         }
 
@@ -486,12 +521,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 }
 
                 data.Text = Loc.GetString("Close bolt");
-                data.Visibility = component.BoltOpen ? VerbVisibility.Visible : VerbVisibility.Disabled;
+                data.Visibility = component.BoltOpen ? VerbVisibility.Visible : VerbVisibility.Invisible;
             }
 
             protected override void Activate(IEntity user, ServerMagazineBarrelComponent component)
             {
-                component.ToggleBolt();
+                component.BoltOpen = false;
             }
         }
     }
@@ -511,5 +546,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         Box = 1 << 7,
         Pan = 1 << 8,
         Dart = 1 << 9, // Placeholder
+        CalicoTopMounted = 1 << 10,
     }
 }

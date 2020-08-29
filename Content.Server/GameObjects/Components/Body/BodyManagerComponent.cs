@@ -18,14 +18,12 @@ using Content.Shared.Body.Template;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Movement;
-using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -43,11 +41,9 @@ namespace Content.Server.GameObjects.Components.Body
     [ComponentReference(typeof(IBodyManagerComponent))]
     public class BodyManagerComponent : SharedBodyManagerComponent, IBodyPartContainer, IRelayMoveInput
     {
-#pragma warning disable CS0649
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IBodyNetworkFactory _bodyNetworkFactory = default!;
         [Dependency] private readonly IReflectionManager _reflectionManager = default!;
-#pragma warning restore
 
         [ViewVariables] private string _presetName = default!;
 
@@ -138,11 +134,6 @@ namespace Content.Server.GameObjects.Components.Body
             base.Initialize();
 
             LoadBodyPreset(Preset);
-
-            foreach (var behavior in Owner.GetAllComponents<IOnHealthChangedBehavior>())
-            {
-                HealthChangedEvent += behavior.OnHealthChanged;
-            }
         }
 
         protected override void Startup()

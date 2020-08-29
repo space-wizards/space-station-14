@@ -19,15 +19,13 @@ namespace Content.Server.Sandbox
 {
     internal sealed class SandboxManager : SharedSandboxManager, ISandboxManager
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private readonly IServerNetManager _netManager;
-        [Dependency] private readonly IGameTicker _gameTicker;
-        [Dependency] private readonly IPlacementManager _placementManager;
-        [Dependency] private readonly IConGroupController _conGroupController;
-        [Dependency] private readonly IEntityManager _entityManager;
-        [Dependency] private readonly IConsoleShell _shell;
-#pragma warning restore 649
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IServerNetManager _netManager = default!;
+        [Dependency] private readonly IGameTicker _gameTicker = default!;
+        [Dependency] private readonly IPlacementManager _placementManager = default!;
+        [Dependency] private readonly IConGroupController _conGroupController = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IConsoleShell _shell = default!;
 
         private bool _isSandboxEnabled;
 

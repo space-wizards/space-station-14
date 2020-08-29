@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.Components.Animations;
@@ -13,6 +13,7 @@ namespace Content.Client.GameObjects.Components
     {
         public override string Name => "EmergencyLight";
 
+        /// <inheritdoc/>
         protected override void Startup()
         {
             base.Startup();
