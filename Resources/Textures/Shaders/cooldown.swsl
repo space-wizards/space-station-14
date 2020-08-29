@@ -5,7 +5,7 @@ const highp float PI = 3.14159265;
 uniform highp float progress;
 
 void fragment() {
-    highp vec4 col = texture2D(TEXTURE, UV);
+    highp vec4 col = zTexture(UV);
     highp vec2 center = vec2(0.5,0.5);
     highp vec2 delta = UV.xy - center;
     

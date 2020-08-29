@@ -35,12 +35,13 @@ uniform highp float outline_width; // = 2.0;
 uniform highp vec4 outline_color; // =vec4(1.0,0.0,0.0,0.33);
 
 void fragment() {
-	highp vec4 col = texture2D(TEXTURE, UV);
+	highp vec4 col = zTexture(UV);
 	highp vec2 ps = TEXTURE_PIXEL_SIZE;
 	highp float a;
 	highp float maxa = col.a;
 	highp float mina = col.a;
 
+	// note: these bypass zTexture because only alpha is queried.
 	a = texture2D(TEXTURE, UV + vec2(0.0, -outline_width)*ps).a;
 	maxa = max(a, maxa);
 	mina = min(a, mina);
