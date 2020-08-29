@@ -24,6 +24,12 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         public PipeDirection PipeDirection => _pipeDirection;
         private PipeDirection _pipeDirection;
 
+        /// <summary>
+        ///     Controls what visuals are applied in <see cref="PipeVisualizer"/>.
+        /// </summary>
+        public ConduitLayer ConduitLayer => _conduitLayer;
+        private ConduitLayer _conduitLayer;
+
         [ViewVariables]
         private IPipeNet _pipeNet = PipeNet.NullNet;
 
@@ -58,11 +64,14 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         private AppearanceComponent _appearance;
 
+        private PipeVisualState PipeVisualState => new PipeVisualState(PipeDirection, ConduitLayer);
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _pipeDirection, "pipeDirection", PipeDirection.None);
             serializer.DataField(this, x => Volume, "volume", 10);
+            serializer.DataField(ref _conduitLayer, "conduitLayer", ConduitLayer.Two);
         }
 
         public override void Initialize(IEntity owner)
@@ -108,11 +117,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             }
         }
 
-        private void UpdateAppearance()
-        {
-            _appearance?.SetData(PipeVisuals.VisualState, new PipeVisualState(PipeDirection, ConduitLayer.Two)); //2 for middle conduit layer - placeholder while conduit layers are not implemented
-        }
-
         private void PipeDirectionFromCardinal(CardinalDirection direction, out PipeDirection sameDir, out PipeDirection oppDir)
         {
             switch (direction)
@@ -136,6 +140,16 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
                 default:
                     throw new ArgumentException("Invalid Direction.");
             }
+        }
+
+        private void UpdateAppearance()
+        {
+            var pipeVisualStates = Owner.GetComponent<NodeContainerComponent>()
+                .Nodes
+                .OfType<PipeNode>()
+                .Select(pipeNode => pipeNode.PipeVisualState)
+                .ToArray();
+            _appearance?.SetData(PipeVisuals.VisualState, new PipeVisualStateSet(pipeVisualStates));
         }
 
         private enum CardinalDirection

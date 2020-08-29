@@ -10,6 +10,17 @@ namespace Content.Shared.GameObjects.Components.Atmos
     }
 
     [Serializable, NetSerializable]
+    public class PipeVisualStateSet
+    {
+        public readonly PipeVisualState[] PipeVisualStates;
+
+        public PipeVisualStateSet(PipeVisualState[] pipeVisualStates)
+        {
+            PipeVisualStates = pipeVisualStates;
+        }
+    }
+
+    [Serializable, NetSerializable]
     public class PipeVisualState
     {
         public readonly PipeDirection PipeDirection;
