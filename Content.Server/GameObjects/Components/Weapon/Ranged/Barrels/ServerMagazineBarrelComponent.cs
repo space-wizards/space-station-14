@@ -546,5 +546,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         Box = 1 << 7,
         Pan = 1 << 8,
         Dart = 1 << 9, // Placeholder
+        CalicoTopMounted = 1 << 10,
     }
 }

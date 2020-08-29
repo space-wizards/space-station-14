@@ -315,3 +315,43 @@
       magState: mag
       steps: 1
       zeroVisible: true
+
+- type: entity
+  name: calico m900
+  parent: RifleBase
+  id: RifleCalico
+  description: A carbine with a unique cylindrical magazine design which allows for high capacity loads.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Rifles/calico.rsi
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.RangedBarrelVisualLayers.Mag"]
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Rifles/calico.rsi
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/Rifles/calico.rsi
+  - type: RangedWeapon
+  - type: MagazineBarrel
+    magFillPrototype: MagazinePistolCalicoTopMounted
+    caliber: Pistol
+    magazineTypes:
+    - CalicoTopMounted
+    fireRate: 3
+    minAngle: 0
+    maxAngle: 25
+    angleIncrease: 15
+    angleDecay: 25
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/rifle2.ogg
+    soundRack: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
+    soundMagInsert: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
+    soundMagEject: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 1
+      zeroVisible: true

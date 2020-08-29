@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.UserInterface;
@@ -100,7 +100,10 @@ namespace Content.Client.GameObjects.Components.Mobs
             foreach (var (key, effect) in _status.OrderBy(x => (int) x.Key))
             {
                 var texture = _resourceCache.GetTexture(effect.Icon);
-                var status = new StatusControl(key, texture);
+                var status = new StatusControl(key, texture)
+                {
+                    ToolTip = key.ToString()
+                };
 
                 if (effect.Cooldown.HasValue)
                 {

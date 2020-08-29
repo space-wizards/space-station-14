@@ -9,6 +9,7 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.PDA;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.PDA;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
@@ -48,12 +49,7 @@ namespace Content.Server.GameObjects.Components.PDA
 
         [ViewVariables] private readonly PdaAccessSet _accessSet;
 
-        [ViewVariables]
-        private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
-            ui.TryGetBoundUserInterface(PDAUiKey.Key, out var boundUi)
-                ? boundUi
-                : null;
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(PDAUiKey.Key);
 
         public PDAComponent()
         {
@@ -106,7 +102,7 @@ namespace Content.Server.GameObjects.Components.PDA
 
                 case PDAUplinkBuyListingMessage buyMsg:
                 {
-                    if (!_uplinkManager.TryPurchaseItem(_syndicateUplinkAccount, buyMsg.ListingToBuy))
+                    if (!_uplinkManager.TryPurchaseItem(_syndicateUplinkAccount, buyMsg.ItemId))
                     {
                         SendNetworkMessage(new PDAUplinkInsufficientFundsMessage(), message.Session.ConnectedClient);
                         break;
@@ -132,7 +128,7 @@ namespace Content.Server.GameObjects.Components.PDA
             {
                 var accData = new UplinkAccountData(_syndicateUplinkAccount.AccountHolder,
                     _syndicateUplinkAccount.Balance);
-                var listings = _uplinkManager.FetchListings.ToArray();
+                var listings = _uplinkManager.FetchListings.Values.ToArray();
                 UserInterface?.SetState(new PDAUpdateState(_lightOn, ownerInfo, accData, listings));
             }
             else

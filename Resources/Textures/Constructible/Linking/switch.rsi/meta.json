@@ -1,0 +1,44 @@
+﻿{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/tgstation/tgstation/commit/2f127f8b95220226cdd5be356723f3b849c53acf",
+  "states": [
+        {
+            "name": "on",
+            "select": [],
+            "flags": {},
+            "directions": 1,
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "off",
+            "select": [],
+            "flags": {},
+            "directions": 1,
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "dead",
+            "select": [],
+            "flags": {},
+            "directions": 1,
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        }
+    ]
+}
