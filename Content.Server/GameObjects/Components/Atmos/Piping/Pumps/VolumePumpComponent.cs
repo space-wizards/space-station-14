@@ -37,14 +37,14 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
 
         protected override void PumpGas(GasMixture inletGas, GasMixture outletGas)
         {
-            var volumeRatio = Math.Max(VolumePumpRate / inletGas.Volume, 1);
+            var volumeRatio = Math.Clamp(VolumePumpRate / inletGas.Volume, 0, 1);
 
-            var transferedVolume = Math.Max(VolumePumpRate, inletGas.Volume);
+            var transferedVolume = Math.Min(VolumePumpRate, inletGas.Volume);
             var transferingGas = new GasMixture(transferedVolume);
             transferingGas.Merge(inletGas);
             transferingGas.Multiply(volumeRatio);
 
-            inletGas.Multiply(1 - volumeRatio);
+            inletGas.Remove(transferingGas.TotalMoles);
 
             outletGas.Merge(transferingGas);
         }
