@@ -12,7 +12,11 @@
   - type: Icon
     texture: Constructible/Power/eightdirwire.png
   - type: Sprite
-    sprite: Constructible/Power/mv_cable.rsi
+    sprite: Constructible\Atmos\pump.rsi
+  - type: Appearance
+    visuals:
+    - type: PipeVisualizer
+    - type: PumpVisualizer
   - type: Destructible
     thresholdvalue: 100
 
@@ -21,8 +25,6 @@
   id: NorthFromSouthPipePump
   name: North from south pipe pump
   components:
-  - type: Sprite
-    state: mvcable_3
   - type: NodeContainer
     nodes:
     - !type:PipeNode
