@@ -69,12 +69,28 @@ namespace Content.Server.GameObjects.Components.Disposal
             var nextDirection = NextDirection(holder);
             var snapGrid = Owner.GetComponent<SnapGridComponent>();
             var oppositeDirection = new Angle(nextDirection.ToAngle().Theta + Math.PI).GetDir();
-            var tube = snapGrid
-                .GetInDir(nextDirection)
-                .Select(x => x.TryGetComponent(out IDisposalTubeComponent? c) ? c : null)
-                .FirstOrDefault(x => x != null && x != this && x.CanConnect(oppositeDirection, this));
 
-            return tube;
+            foreach (var entity in snapGrid.GetInDir(nextDirection))
+            {
+                if (!entity.TryGetComponent(out IDisposalTubeComponent? tube))
+                {
+                    continue;
+                }
+
+                if (!tube.CanConnect(oppositeDirection, this))
+                {
+                    continue;
+                }
+
+                if (!CanConnect(nextDirection, tube))
+                {
+                    continue;
+                }
+
+                return tube;
+            }
+
+            return null;
         }
 
         public bool Remove(DisposalHolderComponent holder)
