@@ -251,8 +251,8 @@
   - type: Sprite
     sprite: Constructible/Structures/Crates/hydro_secure.rsi
     layers:
-    - state: hydrosecurecrate
-    - state: hydrosecurecrate_door
+    - state: hydrocratesecure
+    - state: hydrocratesecure_door
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
       visible: false
@@ -262,12 +262,12 @@
       shader: unshaded
   - type: Icon
     sprite: Constructible/Structures/Crates/hydro_secure.rsi
-    state: hydrosecurecrate_icon
+    state: hydrocratesecure_icon
   - type: Appearance
     visuals:
     - type: StorageVisualizer
-      state_open: hydrosecurecrate_open
-      state_closed: hydrosecurecrate_door
+      state_open: hydrocratesecure_open
+      state_closed: hydrocratesecure_door
 
 - type: entity
   id: CrateWeaponSecure

@@ -1,7 +1,7 @@
 {
     "version": 1,
 	"license": "CC-BY-SA-3.0",
-	"copyright": "Taken from Cev-Eris at commit https://github.com/discordia-space/CEV-Eris/commit/053a4b359acc1cd26b5006dfbc72200d7a43470a",
+	"copyright": "Taken from Citadelstation at commit https://github.com/Citadel-Station-13/Citadel-Station-13/commit/85186a971453b0653bacfb3fae88f978dc1be689",
     "size": {
         "x": 32,
         "y": 32
@@ -32,19 +32,19 @@
             "directions": 1
         },
         {
-            "name": "lock_unlocked",
+            "name": "unlocked",
             "select": [],
             "flags": {},
             "directions": 1
         },
         {
-            "name": "lock_off",
+            "name": "off",
             "select": [],
             "flags": {},
             "directions": 1
         },
         {
-            "name": "lock_locked",
+            "name": "locked",
             "select": [],
             "flags": {},
             "directions": 1
