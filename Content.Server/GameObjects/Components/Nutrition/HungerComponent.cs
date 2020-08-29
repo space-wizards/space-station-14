@@ -129,7 +129,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                         return;
 
                     case HungerThreshold.Dead:
-                        break;
+                        return;
                     default:
                         Logger.ErrorS("hunger", $"No hunger threshold found for {_currentHungerThreshold}");
                         throw new ArgumentOutOfRangeException($"No hunger threshold found for {_currentHungerThreshold}");
