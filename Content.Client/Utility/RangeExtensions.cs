@@ -19,7 +19,8 @@ namespace Content.Client.Utility
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
             Ignored predicate = null,
-            bool ignoreInsideBlocker = false)
+            bool ignoreInsideBlocker = false,
+            bool popup = false)
         {
             var originEntity = origin.ControlledEntity;
             if (originEntity == null)
@@ -29,7 +30,7 @@ namespace Content.Client.Utility
             }
 
             return SharedInteractionSystem.InRangeUnobstructed(originEntity, other, range, collisionMask, predicate,
-                ignoreInsideBlocker);
+                ignoreInsideBlocker, popup);
         }
 
         public static bool InRangeUnobstructed(
@@ -38,7 +39,8 @@ namespace Content.Client.Utility
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
             Ignored predicate = null,
-            bool ignoreInsideBlocker = false)
+            bool ignoreInsideBlocker = false,
+            bool popup = false)
         {
             var originEntity = origin.ControlledEntity;
             if (originEntity == null)
@@ -48,7 +50,7 @@ namespace Content.Client.Utility
             }
 
             return SharedInteractionSystem.InRangeUnobstructed(originEntity, other, range, collisionMask, predicate,
-                ignoreInsideBlocker);
+                ignoreInsideBlocker, popup);
         }
 
         public static bool InRangeUnobstructed(
@@ -57,7 +59,8 @@ namespace Content.Client.Utility
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
             Ignored predicate = null,
-            bool ignoreInsideBlocker = false)
+            bool ignoreInsideBlocker = false,
+            bool popup = false)
         {
             var originEntity = origin.ControlledEntity;
             if (originEntity == null)
@@ -69,7 +72,7 @@ namespace Content.Client.Utility
             var otherEntity = other.Owner;
 
             return SharedInteractionSystem.InRangeUnobstructed(originEntity, otherEntity, range, collisionMask,
-                predicate, ignoreInsideBlocker);
+                predicate, ignoreInsideBlocker, popup);
         }
 
         public static bool InRangeUnobstructed(
@@ -78,7 +81,8 @@ namespace Content.Client.Utility
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
             Ignored predicate = null,
-            bool ignoreInsideBlocker = false)
+            bool ignoreInsideBlocker = false,
+            bool popup = false)
         {
             var originEntity = origin.ControlledEntity;
             if (originEntity == null)
@@ -88,7 +92,7 @@ namespace Content.Client.Utility
             }
 
             return SharedInteractionSystem.InRangeUnobstructed(originEntity, other, range, collisionMask, predicate,
-                ignoreInsideBlocker);
+                ignoreInsideBlocker, popup);
         }
 
         public static bool InRangeUnobstructed(
@@ -97,7 +101,8 @@ namespace Content.Client.Utility
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
             Ignored predicate = null,
-            bool ignoreInsideBlocker = false)
+            bool ignoreInsideBlocker = false,
+            bool popup = false)
         {
             var originEntity = origin.ControlledEntity;
             if (originEntity == null)
@@ -107,7 +112,7 @@ namespace Content.Client.Utility
             }
 
             return SharedInteractionSystem.InRangeUnobstructed(originEntity, other, range, collisionMask, predicate,
-                ignoreInsideBlocker);
+                ignoreInsideBlocker, popup);
         }
     }
 }
