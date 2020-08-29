@@ -110,7 +110,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         private void UpdateAppearance()
         {
-            _appearance?.SetData(PipeVisuals.VisualState, new PipeVisualState(PipeDirection, 2)); //2 for middle conduit layer - placeholder while conduit layers are not implemented
+            _appearance?.SetData(PipeVisuals.VisualState, new PipeVisualState(PipeDirection, ConduitLayer.Two)); //2 for middle conduit layer - placeholder while conduit layers are not implemented
         }
 
         private void PipeDirectionFromCardinal(CardinalDirection direction, out PipeDirection sameDir, out PipeDirection oppDir)

@@ -38,7 +38,7 @@ namespace Content.Client.GameObjects.Components.Disposal
 
             var state = "pipe";
             state += pipeVisualState.PipeDirection.ToString();
-            state += pipeVisualState.ConduitLayer.ToString();
+            state += ((int) pipeVisualState.ConduitLayer).ToString();
 
             sprite.LayerSetState(Layer.PipeBase, state);
         }
