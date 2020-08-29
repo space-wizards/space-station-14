@@ -8,7 +8,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
 {
     [RegisterComponent]
     [ComponentReference(typeof(BasePumpComponent))]
-    public class PRessurePumpComponent : BasePumpComponent
+    public class PressurePumpComponent : BasePumpComponent
     {
         public override string Name => "PressurePump";
 
@@ -58,8 +58,8 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
             var goalDiff = PressurePumpTarget - outletGas.Pressure;
             var realGoalPressureDiff = goalDiff * TransferRatio;
             var realTargetPressure = outletGas.Pressure + realGoalPressureDiff;
-            var cappedTargetPressure = Math.Max(realTargetPressure, inletGas.Pressure);
-            inletGas.PumpGasTo(outletGas, cappedTargetPressure);
+            var realCappedTargetPressure = Math.Max(realTargetPressure, outletGas.Pressure); //no lowering the outlet's pressure
+            inletGas.PumpGasTo(outletGas, realCappedTargetPressure);
         }
     }
 }
