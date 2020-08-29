@@ -9,6 +9,7 @@ using Content.Client.Sandbox;
 using Content.Client.State;
 using Content.Client.StationEvents;
 using Content.Client.UserInterface;
+using Content.Client.UserInterface.AdminMenu;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Cargo;
@@ -39,14 +40,12 @@ namespace Content.Client
 {
     public class EntryPoint : GameClient
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private readonly IBaseClient _baseClient;
-        [Dependency] private readonly IEscapeMenuOwner _escapeMenuOwner;
-        [Dependency] private readonly IGameController _gameController;
-        [Dependency] private readonly IStateManager _stateManager;
-        [Dependency] private readonly IConfigurationManager _configurationManager;
-#pragma warning restore 649
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IBaseClient _baseClient = default!;
+        [Dependency] private readonly IEscapeMenuOwner _escapeMenuOwner = default!;
+        [Dependency] private readonly IGameController _gameController = default!;
+        [Dependency] private readonly IStateManager _stateManager = default!;
+        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
         public override void Init()
         {
@@ -152,6 +151,7 @@ namespace Content.Client
             IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();
             IoCManager.Resolve<IStationEventManager>().Initialize();
+            IoCManager.Resolve<IAdminMenuManager>().Initialize();
 
             _baseClient.RunLevelChanged += (sender, args) =>
             {

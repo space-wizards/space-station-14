@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Server.Utility;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
@@ -32,12 +33,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         private bool _checkPlayer = false; // Check at the player pos or at some other tile?
         private GridCoordinates? _position; // The tile that we scanned
 
-        [ViewVariables]
-        private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
-            ui.TryGetBoundUserInterface(GasAnalyzerUiKey.Key, out var boundUi)
-                ? boundUi
-                : null;
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(GasAnalyzerUiKey.Key);
 
         public override void Initialize()
         {
@@ -163,7 +159,8 @@ namespace Content.Server.GameObjects.Components.Atmos
                 pos = _position.Value;
             }
 
-            var gam = EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(pos.GridID);
+            var atmosSystem = EntitySystem.Get<AtmosphereSystem>();
+            var gam = atmosSystem.GetGridAtmosphere(pos.GridID);
             var tile = gam?.GetTile(pos).Air;
             if (tile == null)
             {
@@ -178,9 +175,10 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
 
             var gases = new List<GasEntry>();
+
             for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
-                var gas = Atmospherics.GetGas(i);
+                var gas = atmosSystem.GetGas(i);
 
                 if (tile.Gases[i] <= Atmospherics.GasMinMoles) continue;
 

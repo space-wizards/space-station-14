@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.Chemistry;
+﻿#nullable enable
+using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.Interfaces;
@@ -7,6 +8,7 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Fluids
@@ -18,16 +20,23 @@ namespace Content.Server.GameObjects.Components.Fluids
     public class MopComponent : Component, IAfterInteract
     {
         public override string Name => "Mop";
-        internal SolutionComponent Contents => _contents;
-        private SolutionComponent _contents;
+
+        public SolutionComponent? Contents => Owner.GetComponentOrNull<SolutionComponent>();
 
         public ReagentUnit MaxVolume
         {
-            get => _contents.MaxVolume;
-            set => _contents.MaxVolume = value;
+            get => Owner.GetComponentOrNull<SolutionComponent>()?.MaxVolume ?? ReagentUnit.Zero;
+            set
+            {
+                if (Owner.TryGetComponent(out SolutionComponent? solution))
+                {
+                    solution.MaxVolume = value;
+                }
+            }
         }
 
-        public ReagentUnit CurrentVolume => _contents.CurrentVolume;
+        public ReagentUnit CurrentVolume =>
+            Owner.GetComponentOrNull<SolutionComponent>()?.CurrentVolume ?? ReagentUnit.Zero;
 
         // Currently there's a separate amount for pickup and dropoff so
         // Picking up a puddle requires multiple clicks
@@ -36,7 +45,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         public ReagentUnit PickupAmount => _pickupAmount;
         private ReagentUnit _pickupAmount;
 
-        private string _pickupSound;
+        private string _pickupSound = "";
 
         /// <inheritdoc />
         public override void ExposeData(ObjectSerializer serializer)
@@ -49,12 +58,16 @@ namespace Content.Server.GameObjects.Components.Fluids
         public override void Initialize()
         {
             base.Initialize();
-            _contents = Owner.GetComponent<SolutionComponent>();
 
+            if (!Owner.EnsureComponent(out SolutionComponent _))
+            {
+                Logger.Warning($"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(SolutionComponent)}");
+            }
         }
 
         void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
+            if (!Owner.TryGetComponent(out SolutionComponent? contents)) return;
             if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
 
             if (CurrentVolume <= 0)
@@ -66,12 +79,12 @@ namespace Content.Server.GameObjects.Components.Fluids
             if (eventArgs.Target == null)
             {
                 // Drop the liquid on the mop on to the ground
-                SpillHelper.SpillAt(eventArgs.ClickLocation, _contents.SplitSolution(CurrentVolume), "PuddleSmear");
+                SpillHelper.SpillAt(eventArgs.ClickLocation, contents.SplitSolution(CurrentVolume), "PuddleSmear");
 
                 return;
             }
 
-            if (!eventArgs.Target.TryGetComponent(out PuddleComponent puddleComponent))
+            if (!eventArgs.Target.TryGetComponent(out PuddleComponent? puddleComponent))
             {
                 return;
             }
@@ -102,23 +115,22 @@ namespace Content.Server.GameObjects.Components.Fluids
 
             if (puddleCleaned) //After cleaning the puddle, make a new puddle with solution from the mop as a "wet floor". Then evaporate it slowly.
             {
-                SpillHelper.SpillAt(eventArgs.ClickLocation, _contents.SplitSolution(transferAmount), "PuddleSmear");
+                SpillHelper.SpillAt(eventArgs.ClickLocation, contents.SplitSolution(transferAmount), "PuddleSmear");
             }
             else
             {
-                _contents.SplitSolution(transferAmount);
+                contents.SplitSolution(transferAmount);
             }
 
             // Give some visual feedback shit's happening (for anyone who can't hear sound)
             Owner.PopupMessage(eventArgs.User, Loc.GetString("Swish"));
 
-            if (_pickupSound == null)
+            if (string.IsNullOrWhiteSpace(_pickupSound))
             {
                 return;
             }
 
             EntitySystem.Get<AudioSystem>().PlayFromEntity(_pickupSound, Owner);
-
         }
     }
 }

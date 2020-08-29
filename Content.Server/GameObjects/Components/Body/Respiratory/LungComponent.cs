@@ -21,13 +21,15 @@ namespace Content.Server.GameObjects.Components.Body.Respiratory
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)] private float Pressure { get; set; }
 
-        [ViewVariables] public GasMixture Air { get; set; } = new GasMixture();
+        [ViewVariables] public GasMixture Air { get; set; }
 
         [ViewVariables] public LungStatus Status { get; set; }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
+
+            Air = new GasMixture();
 
             serializer.DataReadWriteFunction(
                 "volume",

@@ -68,10 +68,22 @@ namespace Content.Server.GameObjects.EntitySystems.AI
             }
 
             _queuedSleepMessages.Clear();
+            var toRemove = new List<AiLogicProcessor>();
 
             foreach (var processor in _awakeAi)
             {
+                if (processor.SelfEntity.Deleted)
+                {
+                    toRemove.Add(processor);
+                    continue;
+                }
+                
                 processor.Update(frameTime);
+            }
+
+            foreach (var processor in toRemove)
+            {
+                _awakeAi.Remove(processor);
             }
         }
 

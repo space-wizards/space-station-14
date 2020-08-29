@@ -15,10 +15,8 @@ namespace Content.Server.GameObjects.Components.Items
     [RegisterComponent]
     public class FloorTileItemComponent : Component, IAfterInteract
     {
-#pragma warning disable 649
-        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
-        [Dependency] private readonly IMapManager _mapManager;
-#pragma warning restore 649
+        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         public override string Name => "FloorTile";
         private string _outputTile;

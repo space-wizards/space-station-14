@@ -22,10 +22,9 @@ namespace Content.Server.GameObjects.Components.Nutrition
     [RegisterComponent]
     public sealed class FoodContainer : SharedFoodContainerComponent, IUse
     {
-#pragma warning disable 649
-        [Dependency] private readonly IRobustRandom _random;
-        [Dependency] private readonly IEntityManager _entityManager;
-#pragma warning restore 649
+        [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+
         public override string Name => "FoodContainer";
 
         private AppearanceComponent _appearance;

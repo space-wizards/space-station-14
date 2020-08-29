@@ -1,7 +1,10 @@
 ﻿#nullable enable
 using Content.Server.Interfaces;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.Atmos;
+using Content.Shared.Maps;
 using JetBrains.Annotations;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Atmos.Reactions
@@ -13,7 +16,7 @@ namespace Content.Server.Atmos.Reactions
         {
         }
 
-        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder)
+        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, IEventBus eventBus)
         {
             var energyReleased = 0f;
             var oldHeatCapacity = mixture.HeatCapacity;
@@ -66,9 +69,7 @@ namespace Content.Server.Atmos.Reactions
                 {
                     location.HotspotExpose(temperature, mixture.Volume);
 
-                    // TODO ATMOS Expose temperature all items on cell
-
-                    location.TemperatureExpose(mixture, temperature, mixture.Volume);
+                    eventBus.QueueEvent(EventSource.Local, new TemperatureExposeEvent(location.GridIndices, location.GridIndex, mixture, temperature, mixture.Volume));
                 }
             }
 

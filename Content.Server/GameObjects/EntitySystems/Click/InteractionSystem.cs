@@ -39,9 +39,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
     [UsedImplicitly]
     public sealed class InteractionSystem : SharedInteractionSystem
     {
-#pragma warning disable 649
-        [Dependency] private readonly IMapManager _mapManager;
-#pragma warning restore 649
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         public override void Initialize()
         {

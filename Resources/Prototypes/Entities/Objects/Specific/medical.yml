@@ -27,7 +27,7 @@
   components:
   - type: Stack
   - type: Item
-  #- type: Healing
+  - type: Healing
 
 - type: entity
   name: ointment
@@ -39,9 +39,9 @@
     texture: Objects/Specific/Medical/ointment.png
   - type: Icon
     texture: Objects/Specific/Medical/ointment.png
-   #- type: Healing
-   #  heal: 10
-   #  damage: Heat
+  - type: Healing
+    heal:
+      Heat: 10
   - type: Stack
     max: 5
     count: 5
@@ -57,9 +57,9 @@
     texture: Objects/Specific/Medical/brutepack.png
   - type: Icon
     texture: Objects/Specific/Medical/brutepack.png
-   #- type: Healing
-   #  heal: 10
-   #  damage: Brute
+  - type: Healing
+    heal:
+      Blunt: 10
   - type: Stack
     max: 5
     count: 5

@@ -37,6 +37,8 @@
   - loc
   - hostlogin
   - events
+  - factions
+  CanAdminMenu: true
 
 - Index: 100
   Name: Administrator
@@ -96,9 +98,13 @@
   - tilewalls
   - events
   - destroymechanism
+  - addaccent
   - readyall
+  - factions
+  - signallink
   CanViewVar: true
   CanAdminPlace: true
+  CanAdminMenu: true
 
 - Index: 200
   Name: Host
@@ -187,7 +193,11 @@
   - tilewalls
   - events
   - destroymechanism
+  - addaccent
   - readyall
+  - factions
+  - signallink
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true
+  CanAdminMenu: true

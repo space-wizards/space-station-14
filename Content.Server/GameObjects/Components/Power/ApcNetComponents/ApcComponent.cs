@@ -2,6 +2,7 @@
 using System;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.GameObjects.Components.Power.PowerNetComponents;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -45,12 +46,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         private const int VisualsChangeDelay = 1;
 
-        [ViewVariables]
-        private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
-            ui.TryGetBoundUserInterface(ApcUiKey.Key, out var boundUi)
-                ? boundUi
-                : null;
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ApcUiKey.Key);
 
         public BatteryComponent? Battery => Owner.TryGetComponent(out BatteryComponent? batteryComponent) ? batteryComponent : null;
 

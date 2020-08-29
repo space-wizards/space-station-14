@@ -1,7 +1,6 @@
 ﻿using Content.Server.GameTicking.GameRules;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
-using Content.Server.Mobs.Roles;
 using Content.Server.Players;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.Random;
@@ -11,6 +10,8 @@ using Robust.Shared.Random;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Suspicion;
+using Content.Server.Mobs.Roles;
+using Content.Server.Mobs.Roles.Suspicion;
 using Content.Shared.Roles;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Configuration;
@@ -21,13 +22,11 @@ namespace Content.Server.GameTicking.GamePresets
 {
     public class PresetSuspicion : GamePreset
     {
-#pragma warning disable 649
-        [Dependency] private readonly IChatManager _chatManager;
-        [Dependency] private readonly IGameTicker _gameTicker;
-        [Dependency] private readonly IRobustRandom _random;
-        [Dependency] private readonly IConfigurationManager _cfg;
-        [Dependency] private IPrototypeManager _prototypeManager;
-#pragma warning restore 649
+        [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly IGameTicker _gameTicker = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public int MinPlayers { get; set; }
         public int MinTraitors { get; set; }

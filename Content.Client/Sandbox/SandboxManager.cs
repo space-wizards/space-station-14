@@ -74,19 +74,18 @@ namespace Content.Client.Sandbox
             vBox.AddChild(ShowBbButton);
         }
     }
+
     internal class SandboxManager : SharedSandboxManager, ISandboxManager
     {
-#pragma warning disable 649
-        [Dependency] private readonly IClientConsole _console;
-        [Dependency] private readonly IGameHud _gameHud;
-        [Dependency] private readonly IClientNetManager _netManager;
-        [Dependency] private readonly ILocalizationManager _localization;
-        [Dependency] private readonly IPlacementManager _placementManager;
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly IResourceCache _resourceCache;
-        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
-        [Dependency] private readonly IInputManager _inputManager;
-#pragma warning restore 649
+        [Dependency] private readonly IClientConsole _console = default!;
+        [Dependency] private readonly IGameHud _gameHud = default!;
+        [Dependency] private readonly IClientNetManager _netManager = default!;
+        [Dependency] private readonly ILocalizationManager _localization = default!;
+        [Dependency] private readonly IPlacementManager _placementManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
+        [Dependency] private readonly IInputManager _inputManager = default!;
 
         public bool SandboxAllowed { get; private set; }
 

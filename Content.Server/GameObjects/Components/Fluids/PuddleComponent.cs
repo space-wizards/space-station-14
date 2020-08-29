@@ -46,9 +46,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         // based on behaviour (e.g. someone being punched vs slashed with a sword would have different blood sprite)
         // to check for low volumes for evaporation or whatever
 
-#pragma warning disable 649
-        [Dependency] private readonly IMapManager _mapManager;
-#pragma warning restore 649
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         public override string Name => "Puddle";
 
@@ -115,6 +113,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         public override void Initialize()
         {
             base.Initialize();
+
             if (Owner.TryGetComponent(out SolutionComponent solutionComponent))
             {
                 _contents = solutionComponent;
@@ -122,7 +121,6 @@ namespace Content.Server.GameObjects.Components.Fluids
             else
             {
                 _contents = Owner.AddComponent<SolutionComponent>();
-                _contents.Initialize();
             }
 
             _snapGrid = Owner.EnsureComponent<SnapGridComponent>();

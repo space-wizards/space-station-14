@@ -15,9 +15,7 @@ namespace Content.Server
 {
     public class ServerNotifyManager : SharedNotifyManager, IServerNotifyManager
     {
-#pragma warning disable 649
-        [Dependency] private IServerNetManager _netManager;
-#pragma warning restore 649
+        [Dependency] private readonly IServerNetManager _netManager = default!;
 
         private bool _initialized;
 
