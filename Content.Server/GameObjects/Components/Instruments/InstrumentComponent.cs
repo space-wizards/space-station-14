@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Mobs;
 using Content.Server.Utility;
@@ -15,6 +16,7 @@ using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -323,7 +325,7 @@ namespace Content.Server.GameObjects.Components.Instruments
                 }
                 else
                 {
-                    StandingStateHelper.DropAllItemsInHands(mob, false);
+                    EntitySystem.Get<StandingStateSystem>().DropAllItemsInHands(mob, false);
                 }
 
                 InstrumentPlayer = null;

@@ -215,7 +215,7 @@ namespace Content.Server.GameObjects.Components.Strap
                 }
 
                 data.Visibility = VerbVisibility.Visible;
-                data.Text = buckle.BuckledTo == null ? Loc.GetString("Buckle") : Loc.GetString("Unbuckle");
+                data.Text = Loc.GetString(buckle.BuckledTo == null ? "Buckle" : "Unbuckle");
             }
 
             protected override void Activate(IEntity user, StrapComponent component)

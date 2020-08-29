@@ -101,6 +101,7 @@
   - addaccent
   - readyall
   - factions
+  - signallink
   - adddamageflag
   - removedamageflag
   - godmode
@@ -198,6 +199,7 @@
   - addaccent
   - readyall
   - factions
+  - signallink
   - adddamageflag
   - removedamageflag
   - godmode

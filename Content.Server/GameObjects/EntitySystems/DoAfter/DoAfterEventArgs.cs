@@ -1,6 +1,9 @@
 #nullable enable
 using System;
 using System.Threading;
+using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Physics;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 
 // ReSharper disable UnassignedReadonlyField
@@ -9,6 +12,18 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
 {
     public sealed class DoAfterEventArgs
     {
+        // Premade checks
+        public Func<bool> GetInRangeUnobstructed(int collisionMask = (int) CollisionGroup.MobMask)
+        {
+            if (Target == null)
+            {
+                throw new InvalidOperationException("Can't supply a null target to DoAfterEventArgs.GetInRangeUnobstructed");
+            }
+            var interactionSystem = EntitySystem.Get<SharedInteractionSystem>();
+            Func<IEntity, bool> ignored = entity => entity == User || entity == Target;
+            return () => interactionSystem.InRangeUnobstructed(User.Transform.MapPosition, Target.Transform.MapPosition, collisionMask: collisionMask, predicate: ignored);
+        }
+        
         /// <summary>
         ///     The entity invoking do_after
         /// </summary>
@@ -49,6 +64,14 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
         public bool BreakOnDamage { get; set; }
         public bool BreakOnStun { get; set; }
 
+        /// <summary>
+        ///     Requires a function call once at the end (like InRangeUnobstructed).
+        /// </summary>
+        /// <remarks>
+        ///     Anything that needs a pre-check should do it itself so no DoAfterState is ever sent to the client.
+        /// </remarks>
+        public Func<bool>? PostCheck { get; set; } = null;
+        
         /// <summary>
         ///     Additional conditions that need to be met. Return false to cancel.
         /// </summary>

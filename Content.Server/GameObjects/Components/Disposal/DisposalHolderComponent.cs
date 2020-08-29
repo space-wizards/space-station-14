@@ -63,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
 
             return entity.HasComponent<ItemComponent>() ||
-                   entity.HasComponent<IBodyManagerComponent>();
+                   entity.HasComponent<ISharedBodyManagerComponent>();
         }
 
         public bool TryInsert(IEntity entity)

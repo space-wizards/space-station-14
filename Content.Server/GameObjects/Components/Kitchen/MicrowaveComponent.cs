@@ -27,6 +27,7 @@ using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
+using Robust.Server.Interfaces.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects.Systems;
 using Content.Shared.GameObjects.Components.Body;
@@ -44,8 +45,9 @@ namespace Content.Server.GameObjects.Components.Kitchen
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly RecipeManager _recipeManager = default!;
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
 
-#region YAMLSERIALIZE
+        #region YAMLSERIALIZE
         private int _cookTimeDefault;
         private int _cookTimeMultiplier; //For upgrades and stuff I guess?
         private string _badRecipeName = "";
@@ -498,12 +500,29 @@ namespace Content.Server.GameObjects.Components.Kitchen
                     headCount++;
                 }
             }
-            chat.EntityMe(victim, Loc.GetPluralString("is trying to cook {0:their} head!", "is trying to cook {0:their} heads!", headCount, victim));
+            PopupMessageOtherClientsInRange(victim, Loc.GetString("{0:theName} is trying to cook {0:their} head!", victim), 15);
+            _notifyManager.PopupMessage(victim, victim, Loc.GetString("You cook your head!"));
             _currentCookTimerTime = 10;
             ClickSound();
             _uiDirty = true;
             wzhzhzh();
             return SuicideKind.Heat;
+        }
+        private void PopupMessageOtherClientsInRange(IEntity source, string message, int maxReceiveDistance)
+        {
+            var viewers = _playerManager.GetPlayersInRange(source.Transform.GridPosition, maxReceiveDistance);
+
+            foreach (var viewer in viewers)
+            {
+                var viewerEntity = viewer.AttachedEntity;
+
+                if (viewerEntity == null || source == viewerEntity)
+                {
+                    continue;
+                }
+
+                source.PopupMessage(viewer.AttachedEntity, message);
+            }
         }
     }
 }

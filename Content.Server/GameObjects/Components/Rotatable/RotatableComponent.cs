@@ -43,7 +43,7 @@ namespace Content.Server.GameObjects.Components.Rotatable
                 }
 
                 data.CategoryData = VerbCategories.Rotate;
-                data.Text = "Rotate clockwise";
+                data.Text = Loc.GetString("Rotate clockwise");
                 data.IconTexture = "/Textures/Interface/VerbIcons/rotate_cw.svg.96dpi.png";
             }
 
@@ -65,7 +65,7 @@ namespace Content.Server.GameObjects.Components.Rotatable
                 }
 
                 data.CategoryData = VerbCategories.Rotate;
-                data.Text = "Rotate counter-clockwise";
+                data.Text = Loc.GetString("Rotate counter-clockwise");
                 data.IconTexture = "/Textures/Interface/VerbIcons/rotate_ccw.svg.96dpi.png";
             }
 

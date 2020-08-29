@@ -102,17 +102,22 @@
   parent: BaseItem
   description: A cheap bar of soap. Doesn't smell.
   components:
-    - type: Sprite
-      sprite: Objects/Specific/Janitorial/soap.rsi
-      state: soap
-    - type: Icon
-      sprite: Objects/Specific/Janitorial/soap.rsi
-      state: soap
-    - type: Item
-      sprite: Objects/Specific/Janitorial/soap.rsi
-    - type: Slippery
-      paralyzeTime: 2.5
-
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/soap.rsi
+    state: soap
+  - type: Icon
+    sprite: Objects/Specific/Janitorial/soap.rsi
+    state: soap
+  - type: Item
+    sprite: Objects/Specific/Janitorial/soap.rsi
+  - type: Slippery
+    paralyzeTime: 2.5
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.3,-0.4,0.3,0.4"
+      layer:
+      - MobImpassable
 
 - type: entity
   name: soap
