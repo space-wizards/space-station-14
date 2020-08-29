@@ -3,9 +3,10 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.Components.Mobs.State;
 using Content.Server.GameObjects.Components.Strap;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
-using Content.Server.Mobs;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Buckle;
 using Content.Shared.GameObjects.Components.Mobs;
@@ -136,11 +137,11 @@ namespace Content.Server.GameObjects.Components.Buckle
                     ownTransform.WorldRotation = strapTransform.WorldRotation;
                     break;
                 case StrapPosition.Stand:
-                    StandingStateHelper.Standing(Owner);
+                    EntitySystem.Get<StandingStateSystem>().Standing(Owner);
                     ownTransform.WorldRotation = strapTransform.WorldRotation;
                     break;
                 case StrapPosition.Down:
-                    StandingStateHelper.Down(Owner, force: true);
+                    EntitySystem.Get<StandingStateSystem>().Down(Owner, force: true);
                     ownTransform.WorldRotation = Angle.South;
                     break;
             }
@@ -364,11 +365,11 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             if (Owner.TryGetComponent(out StunnableComponent? stunnable) && stunnable.KnockedDown)
             {
-                StandingStateHelper.Down(Owner);
+                EntitySystem.Get<StandingStateSystem>().Down(Owner);
             }
             else
             {
-                StandingStateHelper.Standing(Owner);
+                EntitySystem.Get<StandingStateSystem>().Standing(Owner);
             }
 
             if (Owner.TryGetComponent(out MobStateManagerComponent? stateManager))
