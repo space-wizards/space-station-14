@@ -294,7 +294,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             protected override void GetData(IEntity user, IDisposalTubeComponent component, VerbData data)
             {
-                data.Text = "Tube Directions";
+                data.Text = Loc.GetString("Tube Directions");
                 data.CategoryData = VerbCategories.Debug;
                 data.Visibility = VerbVisibility.Invisible;
 
