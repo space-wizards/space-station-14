@@ -3,7 +3,13 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Client.Interfaces.ResourceManagement;
+using Robust.Client.ResourceManagement;
+using Robust.Shared.GameObjects.Components.Renderable;
+using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Utility;
+using System;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Disposal
@@ -16,7 +22,19 @@ namespace Content.Client.GameObjects.Components.Disposal
         public override void LoadData(YamlMappingNode node)
         {
             base.LoadData(node);
-            var rsiString = node.GetNode("pumpRSI").ToString(); //how to load an RSI from a string? I need the appearance to take a different rsi than what the sprite component started as
+
+            var rsiString = node.GetNode("pumpRSI").ToString();
+            var rsiPath = SharedSpriteComponent.TextureRoot / rsiString;
+            try
+            {
+                var resourceCache = IoCManager.Resolve<IResourceCache>();
+                var resource = resourceCache.GetResource<RSIResource>(rsiPath);
+                _pumpRSI = resource.RSI;
+            }
+            catch (Exception e)
+            {
+                Logger.ErrorS("go.pumpvisualizer", "Unable to load RSI '{0}'. Trace:\n{1}", rsiPath, e);
+            }
 
         }
 
@@ -34,13 +52,11 @@ namespace Content.Client.GameObjects.Components.Disposal
             }
             var pumpBaseState = "pump";
             pumpBaseState += pumpVisualState.InletDirection.ToString();
-            pumpBaseState += pumpVisualState.OutletDirection.ToString();
             pumpBaseState += pumpVisualState.InletConduitLayer.ToString();
+            pumpBaseState += pumpVisualState.OutletDirection.ToString();
             pumpBaseState += pumpVisualState.OutletConduitLayer.ToString();
 
             var layer = sprite.AddLayerState(pumpBaseState);
-
-            sprite.LayerMapSet(Layer.PumpBase, layer);
             sprite.LayerSetRSI(layer, _pumpRSI);
         }
 

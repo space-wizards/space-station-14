@@ -12,7 +12,7 @@
   - type: Icon
     texture: Constructible/Power/eightdirwire.png
   - type: Sprite
-    sprite: Constructible\Atmos\pipe.rsi
+    sprite: Constructible/Atmos/pipe.rsi
   - type: Destructible
     thresholdvalue: 100
   - type: Appearance
