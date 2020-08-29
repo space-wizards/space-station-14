@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Server.Utility;
 using Content.Shared.Access;
 using Content.Shared.GameObjects.Components.Access;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -30,12 +31,7 @@ namespace Content.Server.GameObjects.Components.Access
         private ContainerSlot _privilegedIdContainer = default!;
         private ContainerSlot _targetIdContainer = default!;
 
-        [ViewVariables]
-        private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
-            ui.TryGetBoundUserInterface(IdCardConsoleUiKey.Key, out var boundUi)
-                ? boundUi
-                : null;
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(IdCardConsoleUiKey.Key);
 
         public override void Initialize()
         {

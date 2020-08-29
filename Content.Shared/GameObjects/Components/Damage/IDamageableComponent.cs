@@ -143,8 +143,8 @@ namespace Content.Shared.GameObjects.Components.Damage
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-            ChangeDamage(DamageType.Piercing, damage, false, null);
-            ChangeDamage(DamageType.Heat, damage, false, null);
+            ChangeDamage(DamageType.Piercing, damage, false);
+            ChangeDamage(DamageType.Heat, damage, false);
         }
     }
 

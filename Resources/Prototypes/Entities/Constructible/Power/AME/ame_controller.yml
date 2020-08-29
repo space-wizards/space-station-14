@@ -1,0 +1,44 @@
+- type: entity
+  id: AMEController
+  name: AME Controller
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: Icon
+    sprite: Constructible/Power/ame_controller.rsi
+    state: control
+  - type: Sprite
+    sprite: Constructible/Power/ame_controller.rsi
+    state: control
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Destructible
+    maxHP: 500
+  - type: SnapGrid
+    offset: Center
+  - type: Anchorable
+  - type: AMEController
+  - type: UserInterface
+    interfaces:
+    - key: enum.AMEControllerUiKey.Key
+      type: AMEControllerBoundUserInterface
+  - type: Appearance
+    visuals:
+    - type: AMEControllerVisualizer
+  - type: NodeContainer
+    nodes:
+    - !type:AdjacentNode
+      nodeGroupID: AMEngine
+    - !type:AdjacentNode
+      nodeGroupID: HVPower
+  - type: PowerReceiver
+  - type: PowerSupplier
+    supplyRate: 0

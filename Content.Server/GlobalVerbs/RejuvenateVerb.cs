@@ -6,6 +6,7 @@ using Robust.Server.Console;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 
 namespace Content.Server.GlobalVerbs
 {
@@ -20,7 +21,7 @@ namespace Content.Server.GlobalVerbs
 
         public override void GetData(IEntity user, IEntity target, VerbData data)
         {
-            data.Text = "Rejuvenate";
+            data.Text = Loc.GetString("Rejuvenate");
             data.CategoryData = VerbCategories.Debug;
             data.Visibility = VerbVisibility.Invisible;
 

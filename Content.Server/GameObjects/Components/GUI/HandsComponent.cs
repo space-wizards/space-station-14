@@ -29,6 +29,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
+using Content.Server.GameObjects.Components.ActionBlocking;
 
 namespace Content.Server.GameObjects.Components.GUI
 {
@@ -444,6 +445,7 @@ namespace Content.Server.GameObjects.Components.GUI
             ActiveHand ??= name;
 
             OnItemChanged?.Invoke();
+            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new HandCountChangedEvent(Owner));
 
             Dirty();
         }
@@ -466,6 +468,7 @@ namespace Content.Server.GameObjects.Components.GUI
             }
 
             OnItemChanged?.Invoke();
+            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new HandCountChangedEvent(Owner));
 
             Dirty();
         }
@@ -790,5 +793,15 @@ namespace Content.Server.GameObjects.Components.GUI
         {
             return new SharedHand(index, Name, Entity?.Uid, location);
         }
+    }
+
+    public class HandCountChangedEvent : EntitySystemMessage
+    {
+        public HandCountChangedEvent(IEntity sender)
+        {
+            Sender = sender;
+        }
+
+        public IEntity Sender { get; }
     }
 }

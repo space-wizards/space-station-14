@@ -105,7 +105,6 @@
             "SecureEntityStorage",
             "PresetIdCard",
             "SolarControlConsole",
-            "BatteryBarrel",
             "FlashExplosive",
             "FlashProjectile",
             "Utensil",
@@ -157,10 +156,15 @@
             "Barotrauma",
             "GasSprayer",
             "GasVapor",
-            "MobStateManager",
             "Metabolism",
             "AiFactionTag",
             "PressureProtection",
+            "AMEPart",
+            "AMEFuelContainer",
+            "AMEShield",
+            "DebugPump",
+            "DebugVent",
+            "DebugSiphon",
         };
     }
 }
