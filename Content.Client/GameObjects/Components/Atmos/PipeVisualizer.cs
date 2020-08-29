@@ -2,26 +2,15 @@
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using System.Collections.Generic;
 
-namespace Content.Client.GameObjects.Components.Disposal
+namespace Content.Client.GameObjects.Components.Atmos
 {
     [UsedImplicitly]
     public class PipeVisualizer : AppearanceVisualizer
     {
-        public override void InitializeEntity(IEntity entity)
-        {
-            base.InitializeEntity(entity);
-
-            if (!entity.TryGetComponent(out ISpriteComponent sprite))
-            {
-                return;
-            }
-            sprite.LayerMapSet(Layer.PipeBase, sprite.AddLayerState("pipeFourway2")); //default
-            sprite.LayerSetShader(Layer.PipeBase, "unshaded");
-
-        }
+        private readonly List<object> _pipeLayerKeys = new List<object>();
 
         public override void OnChangeData(AppearanceComponent component)
         {
@@ -31,21 +20,29 @@ namespace Content.Client.GameObjects.Components.Disposal
             {
                 return;
             }
-            if (!component.TryGetData(PipeVisuals.VisualState, out PipeVisualState pipeVisualState))
+            if (!component.TryGetData(PipeVisuals.VisualState, out PipeVisualStateSet pipeVisualStateSet))
             {
                 return;
             }
+            for (var i = 0; i < pipeVisualStateSet.PipeVisualStates.Length; i++)
+            {
+                var pipeVisualState = pipeVisualStateSet.PipeVisualStates[i];
+                var rsiState = "pipe";
+                rsiState += pipeVisualState.PipeDirection.ToString();
+                rsiState += ((int) pipeVisualState.ConduitLayer).ToString();
 
-            var state = "pipe";
-            state += pipeVisualState.PipeDirection.ToString();
-            state += pipeVisualState.ConduitLayer.ToString();
-
-            sprite.LayerSetState(Layer.PipeBase, state);
-        }
-
-        private enum Layer
-        {
-            PipeBase,
+                var pipeLayerKey = "pipeLayer" + i.ToString();
+                if (!_pipeLayerKeys.Contains(pipeLayerKey))
+                {
+                    _pipeLayerKeys.Add(pipeLayerKey);
+                    sprite.LayerMapSet(pipeLayerKey, sprite.AddLayerState(rsiState));
+                }
+                else
+                {
+                    var layer = sprite.LayerMapGet(pipeLayerKey);
+                    sprite.LayerSetState(layer, rsiState);
+                }
+            }
         }
     }
 }

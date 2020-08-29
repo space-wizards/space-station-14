@@ -10,12 +10,23 @@ namespace Content.Shared.GameObjects.Components.Atmos
     }
 
     [Serializable, NetSerializable]
+    public class PipeVisualStateSet
+    {
+        public readonly PipeVisualState[] PipeVisualStates;
+
+        public PipeVisualStateSet(PipeVisualState[] pipeVisualStates)
+        {
+            PipeVisualStates = pipeVisualStates;
+        }
+    }
+
+    [Serializable, NetSerializable]
     public class PipeVisualState
     {
         public readonly PipeDirection PipeDirection;
-        public readonly int ConduitLayer;
+        public readonly ConduitLayer ConduitLayer;
 
-        public PipeVisualState(PipeDirection pipeDirection, int conduitLayer)
+        public PipeVisualState(PipeDirection pipeDirection, ConduitLayer conduitLayer)
         {
             PipeDirection = pipeDirection;
             ConduitLayer = conduitLayer;
@@ -52,5 +63,12 @@ namespace Content.Shared.GameObjects.Components.Atmos
         Fourway = North | South | East | West,
 
         All = -1,
+    }
+
+    public enum ConduitLayer
+    {
+        One = 1,
+        Two = 2,
+        Three = 3,
     }
 }
