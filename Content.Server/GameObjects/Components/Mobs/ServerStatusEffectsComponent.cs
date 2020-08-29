@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Buckle;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Movement;
+using Content.Server.Mobs;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Network;
@@ -113,6 +114,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
                             hands.StopPull();
                             break;
+
                     }
 
                     break;

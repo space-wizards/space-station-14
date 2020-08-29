@@ -92,6 +92,7 @@ namespace Content.Server.Mobs
             }
         }
 
+
         /// <summary>
         ///     Gives this mind a new role.
         /// </summary>

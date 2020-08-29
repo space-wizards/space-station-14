@@ -92,7 +92,7 @@
       state: r_foot
     - map: ["enum.HumanoidVisualLayers.Handcuffs"]
       color: "#ffffff"
-      sprite: Objects/Misc/handcuffs.rsi 
+      sprite: Objects/Misc/handcuffs.rsi
       state: body-overlay-2
     - map: ["enum.Slots.IDCARD"]
     - map: ["enum.Slots.GLOVES"]
@@ -168,6 +168,8 @@
     interfaces:
       - key: enum.StrippingUiKey.Key
         type: StrippableBoundUserInterface
+      - key: enum.AcceptCloningUiKey.Key
+        type: AcceptCloningBoundUserInterface
 
 
 - type: entity
@@ -229,7 +231,7 @@
         state: r_hand
       - map: ["enum.HumanoidVisualLayers.Handcuffs"]
         color: "#ffffff"
-        sprite: Objects/Misc/handcuffs.rsi 
+        sprite: Objects/Misc/handcuffs.rsi
         state: body-overlay-2
       - map: ["enum.Slots.IDCARD"]
       - map: ["enum.Slots.GLOVES"]

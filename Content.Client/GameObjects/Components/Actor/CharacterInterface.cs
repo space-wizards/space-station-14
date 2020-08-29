@@ -2,6 +2,7 @@
 using System.Linq;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.UserInterface;
+using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.Input;
@@ -105,6 +106,13 @@ namespace Content.Client.GameObjects.Components.Actor
                         _gameHud.CharacterButtonVisible = false;
                         Window.Close();
                     }
+
+                    break;
+
+                case SharedMindComponent.BeingClonedMessage _:
+
+                    var foo = "foo";
+
 
                     break;
             }

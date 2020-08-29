@@ -104,20 +104,12 @@ namespace Content.Server.GameObjects.Components.Medical
 
         private async void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
-            int Id;
-            if (!(obj.Message is UiButtonPressedMessage message) || message.ScanId == null)
-            {
-                return;
-            }
-            else
-            {
-                Id = message.ScanId ?? default(int);
-            }
+            if (!(obj.Message is UiButtonPressedMessage message) || message.ScanId == null) return;
 
             switch (message.Button)
             {
                 case UiButton.Clone:
-                    var mind = CloningSystem.Minds[Id];
+                    var mind = CloningSystem.Minds[(int) message.ScanId];
 
                     var dead =
                         mind.OwnedEntity.TryGetComponent<IDamageableComponent>(out var damageable) &&
@@ -140,11 +132,28 @@ namespace Content.Server.GameObjects.Components.Medical
 
                     _bodyContainer.Insert(mob);
                     _capturedMind = mind;
+
+                    Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local,
+                        new CloningStartedMessage(_capturedMind, (int) message.ScanId));
+
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
+
+        public class CloningStartedMessage : EntitySystemMessage
+        {
+            public CloningStartedMessage(Mind capturedMind, int cloningIndex)
+            {
+                CapturedMind = capturedMind;
+                CloningIndex = cloningIndex;
+            }
+
+            public Mind CapturedMind { get; }
+            public int CloningIndex { get; }
+        }
+
 
         private async Task<HumanoidCharacterProfile> GetPlayerProfileAsync(string username)
         {
@@ -156,7 +165,10 @@ namespace Content.Server.GameObjects.Components.Medical
         {
             if (message.Sender == _capturedMind)
             {
-                _capturedMind.VisitingEntity.Delete();
+                //If the captured mind is in a ghost, we want to get rid of it.
+                _capturedMind.VisitingEntity?.Delete();
+
+                //Transfer the mind to the new mob
                 _capturedMind.TransferTo(_bodyContainer.ContainedEntity);
                 _bodyContainer.Remove(_bodyContainer.ContainedEntity);
                 _capturedMind = null;

@@ -130,11 +130,6 @@ namespace Content.Client.GameObjects.Components.CloningMachine
             ClearButton.Disabled = string.IsNullOrEmpty(args.Text);
         }
 
-        /*private void OnOverrideMenuItemSelected(OptionButton.ItemSelectedEventArgs args)
-        {
-            OverrideMenu.SelectId(args.Id);
-        }*/
-
         private void OnClearButtonPressed(BaseButton.ButtonEventArgs args)
         {
             SearchBar.Clear();
@@ -162,7 +157,7 @@ namespace Content.Client.GameObjects.Components.CloningMachine
                 _filteredScans.Add(scan.Key, scan.Value);
             }
 
-            //TODO:Sort when we use filteredScans for a thin
+            //TODO: set up sort
             //_filteredScans.Sort((a, b) => string.Compare(a.ToString(), b.ToString(), StringComparison.Ordinal));
 
             ScanList.TotalItemCount = _filteredScans.Count;
@@ -278,7 +273,6 @@ namespace Content.Client.GameObjects.Components.CloningMachine
             return scan.ToLowerInvariant().Contains(searchStr);
         }
 
-        //TODO: Here is were we have the item toggle logic
         private void OnItemButtonToggled(BaseButton.ButtonToggledEventArgs args)
         {
             var item = (CloningScanButton) args.Button.Parent!;
