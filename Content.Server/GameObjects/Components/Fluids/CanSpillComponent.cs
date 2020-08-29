@@ -4,6 +4,7 @@ using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Localization;
 
 namespace Content.Server.GameObjects.Components.Fluids
 {
@@ -28,7 +29,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                     return;
                 }
 
-                data.Text = "Spill liquid";
+                data.Text = Loc.GetString("Spill liquid");
                 data.Visibility = solutionComponent.CurrentVolume > ReagentUnit.Zero
                     ? VerbVisibility.Visible
                     : VerbVisibility.Disabled;

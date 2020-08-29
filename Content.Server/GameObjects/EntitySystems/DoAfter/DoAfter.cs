@@ -1,7 +1,6 @@
 #nullable enable
 using System;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
@@ -86,7 +85,16 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
 
             if (IsFinished())
             {
-                Tcs.SetResult(DoAfterStatus.Finished);
+                // Do the final checks here
+                if (!TryPostCheck())
+                {
+                    Tcs.SetResult(DoAfterStatus.Cancelled);
+                }
+                else
+                {
+                    Tcs.SetResult(DoAfterStatus.Finished);
+                }
+                
                 return;
             }
 
@@ -98,6 +106,11 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
 
         private bool IsCancelled()
         {
+            if (EventArgs.User.Deleted || EventArgs.Target?.Deleted == true)
+            {
+                return true;
+            }
+            
             //https://github.com/tgstation/tgstation/blob/1aa293ea337283a0191140a878eeba319221e5df/code/__HELPERS/mobs.dm
             if (EventArgs.CancelToken.IsCancellationRequested)
             {
@@ -157,8 +170,13 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
                     }
                 }
             }
-
+            
             return false;
+        }
+
+        private bool TryPostCheck()
+        {
+            return EventArgs.PostCheck?.Invoke() != false;
         }
 
         private bool IsFinished()

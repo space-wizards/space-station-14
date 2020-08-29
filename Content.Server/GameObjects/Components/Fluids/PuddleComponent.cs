@@ -63,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             get => _slipThreshold;
             set => _slipThreshold = value;
         }
-        private bool _slippery = false;
+
         private float _evaporateTime;
         private string _spillSound;
 
@@ -97,6 +97,8 @@ namespace Content.Server.GameObjects.Components.Fluids
         // Whether the underlying solution color should be used
         private bool _recolor;
 
+        private bool Slippery => Owner.TryGetComponent(out SlipperyComponent slippery) && slippery.Slippery;
+
         /// <inheritdoc />
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -107,7 +109,6 @@ namespace Content.Server.GameObjects.Components.Fluids
             serializer.DataField(ref _evaporateThreshold, "evaporate_threshold", ReagentUnit.New(20));
             serializer.DataField(ref _spriteVariants, "variants", 1);
             serializer.DataField(ref _recolor, "recolor", false);
-
         }
 
         public override void Initialize()
@@ -155,7 +156,7 @@ namespace Content.Server.GameObjects.Components.Fluids
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
-            if(_slippery)
+            if(Slippery)
             {
                 message.AddText(Loc.GetString("It looks slippery."));
             }
@@ -246,15 +247,15 @@ namespace Content.Server.GameObjects.Components.Fluids
 
         private void UpdateSlip()
         {
-            if ((_slipThreshold == ReagentUnit.New(-1) || CurrentVolume < _slipThreshold) && Owner.TryGetComponent(out SlipperyComponent existingSlipperyComponent))
+            if ((_slipThreshold == ReagentUnit.New(-1) || CurrentVolume < _slipThreshold) &&
+                Owner.TryGetComponent(out SlipperyComponent oldSlippery))
             {
-                Owner.RemoveComponent<SlipperyComponent>();
-                _slippery = false;
+                oldSlippery.Slippery = false;
             }
-            else if (CurrentVolume >= _slipThreshold && !Owner.TryGetComponent(out SlipperyComponent newSlipperyComponent))
+            else if (CurrentVolume >= _slipThreshold)
             {
-                Owner.AddComponent<SlipperyComponent>();
-                _slippery = true;
+                var newSlippery = Owner.EnsureComponent<SlipperyComponent>();
+                newSlippery.Slippery = true;
             }
         }
 

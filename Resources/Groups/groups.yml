@@ -101,6 +101,7 @@
   - addaccent
   - readyall
   - factions
+  - signallink
   CanViewVar: true
   CanAdminPlace: true
   CanAdminMenu: true
@@ -195,6 +196,7 @@
   - addaccent
   - readyall
   - factions
+  - signallink
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true

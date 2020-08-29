@@ -273,12 +273,12 @@ namespace Content.Server.GameObjects.Components.Interactable
 
                 if (component.Cell == null)
                 {
-                    data.Text = "Eject cell (cell missing)";
+                    data.Text = Loc.GetString("Eject cell (cell missing)");
                     data.Visibility = VerbVisibility.Disabled;
                 }
                 else
                 {
-                    data.Text = "Eject cell";
+                    data.Text = Loc.GetString("Eject cell");
                 }
             }
 

@@ -52,8 +52,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         private float _currentThirst;
 
         [ViewVariables(VVAccess.ReadOnly)]
-        public Dictionary<ThirstThreshold, float> ThirstThresholds => _thirstThresholds;
-        private readonly Dictionary<ThirstThreshold, float> _thirstThresholds = new Dictionary<ThirstThreshold, float>
+        public Dictionary<ThirstThreshold, float> ThirstThresholds { get; } = new Dictionary<ThirstThreshold, float>
         {
             {ThirstThreshold.OverHydrated, 600.0f},
             {ThirstThreshold.Okay, 450.0f},
@@ -62,15 +61,11 @@ namespace Content.Server.GameObjects.Components.Nutrition
             {ThirstThreshold.Dead, 0.0f},
         };
 
-        // for shared string dict, since we don't define these anywhere in content
-        [UsedImplicitly]
-        public static readonly string[] _thirstThresholdImages =
+        public static readonly Dictionary<ThirstThreshold, string> ThirstThresholdImages = new Dictionary<ThirstThreshold, string>
         {
-            "/Textures/Interface/StatusEffects/Thirst/OverHydrated.png",
-            "/Textures/Interface/StatusEffects/Thirst/Okay.png",
-            "/Textures/Interface/StatusEffects/Thirst/Thirsty.png",
-            "/Textures/Interface/StatusEffects/Thirst/Parched.png",
-            "/Textures/Interface/StatusEffects/Thirst/Dead.png",
+            {ThirstThreshold.OverHydrated, "/Textures/Interface/StatusEffects/Thirst/OverHydrated.png"},
+            {ThirstThreshold.Thirsty, "/Textures/Interface/StatusEffects/Thirst/Thirsty.png"},
+            {ThirstThreshold.Parched, "/Textures/Interface/StatusEffects/Thirst/Parched.png"},
         };
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -92,8 +87,15 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
                 // Update UI
                 Owner.TryGetComponent(out ServerStatusEffectsComponent statusEffectsComponent);
-                statusEffectsComponent?.ChangeStatusEffectIcon(StatusEffect.Thirst, "/Textures/Interface/StatusEffects/Thirst/" +
-                                                                          _currentThirstThreshold + ".png");
+
+                if (ThirstThresholdImages.TryGetValue(_currentThirstThreshold, out var statusTexture))
+                {
+                    statusEffectsComponent?.ChangeStatusEffectIcon(StatusEffect.Thirst, statusTexture);
+                }
+                else
+                {
+                    statusEffectsComponent?.RemoveStatusEffect(StatusEffect.Thirst);
+                }
 
                 switch (_currentThirstThreshold)
                 {
@@ -135,8 +137,8 @@ namespace Content.Server.GameObjects.Components.Nutrition
         {
             base.Startup();
             _currentThirst = IoCManager.Resolve<IRobustRandom>().Next(
-                (int)_thirstThresholds[ThirstThreshold.Thirsty] + 10,
-                (int)_thirstThresholds[ThirstThreshold.Okay] - 1);
+                (int)ThirstThresholds[ThirstThreshold.Thirsty] + 10,
+                (int)ThirstThresholds[ThirstThreshold.Okay] - 1);
             _currentThirstThreshold = GetThirstThreshold(_currentThirst);
             _lastThirstThreshold = ThirstThreshold.Okay; // TODO: Potentially change this -> Used Okay because no effects.
             // TODO: Check all thresholds make sense and throw if they don't.
@@ -148,7 +150,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         {
             ThirstThreshold result = ThirstThreshold.Dead;
             var value = ThirstThresholds[ThirstThreshold.OverHydrated];
-            foreach (var threshold in _thirstThresholds)
+            foreach (var threshold in ThirstThresholds)
             {
                 if (threshold.Value <= value && threshold.Value >= drink)
                 {
