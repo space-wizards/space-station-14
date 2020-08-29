@@ -113,10 +113,14 @@ namespace Content.Server.GameObjects.Components.Buckle
         {
             if (Owner.TryGetComponent(out ServerStatusEffectsComponent? status))
             {
-                status.ChangeStatusEffectIcon(StatusEffect.Buckled,
-                    Buckled
-                        ? BuckledTo!.BuckledIcon
-                        : "/Textures/Interface/StatusEffects/Buckle/unbuckled.png");
+                if (Buckled)
+                {
+                    status.ChangeStatusEffectIcon(StatusEffect.Buckled, BuckledTo!.BuckledIcon);
+                }
+                else
+                {
+                    status.RemoveStatusEffect(StatusEffect.Buckled);
+                }
             }
         }
 
