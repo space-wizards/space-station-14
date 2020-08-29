@@ -128,7 +128,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             return entity;
         }
 
-        public void MuzzleFlash(GridCoordinates grid, Angle angle)
+        public void MuzzleFlash(IEntity entity, Angle angle)
         {
             if (_muzzleFlashSprite == null)
             {
@@ -145,7 +145,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
                 EffectSprite = _muzzleFlashSprite,
                 Born = time,
                 DeathTime = deathTime,
-                Coordinates = grid.Translated(offset),
+                AttachedEntityUid = entity.Uid,
+                AttachedOffset = offset,
                 //Rotated from east facing
                 Rotation = (float) angle.Theta,
                 Color = Vector4.Multiply(new Vector4(255, 255, 255, 255), 1.0f),
