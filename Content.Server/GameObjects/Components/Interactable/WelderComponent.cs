@@ -262,7 +262,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             {
                 PlaySoundCollection(WeldSoundCollection);
                 PopupMessageOtherClientsInRange(victim, Loc.GetString("{0:theName} welds {0:their} every orifice closed! It looks like {0:theyre} trying to commit suicide!", victim), 15);
-                _notifyManager.PopupMessage(victim, victim, Loc.GetString("You weld your every orific closed!"));
+                _notifyManager.PopupMessage(victim, victim, Loc.GetString("You weld your every orifice closed!"));
                 return SuicideKind.Heat;
             }
 
