@@ -2,6 +2,8 @@
 using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Shared.GameObjects.Components.Atmos;
+using Content.Shared.GameObjects.Atmos;
+using Robust.Server.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -32,6 +34,8 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
         [ViewVariables]
         private PipeNode _outletPipe;
 
+        private AppearanceComponent _appearance;
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -42,6 +46,8 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
         public override void Initialize()
         {
             base.Initialize();
+            Owner.TryGetComponent(out _appearance);
+            UpdateAppearance();
             if (!Owner.TryGetComponent<NodeContainerComponent>(out var container))
             {
                 JoinedGridAtmos?.RemovePipeNetDevice(this);
@@ -65,5 +71,10 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
         }
 
         protected abstract void PumpGas(GasMixture inletGas, GasMixture outletGas);
+
+        private void UpdateAppearance()
+        {
+            _appearance?.SetData(PumpVisuals.VisualState, new PumpVisualState(_inletDirection, _outletDirection));
+        }
     }
 }
