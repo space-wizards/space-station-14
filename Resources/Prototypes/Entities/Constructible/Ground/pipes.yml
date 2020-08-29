@@ -40,3 +40,17 @@
     - !type:PipeNode
       nodeGroupID: Pipe
       pipeDirection: Longitudinal
+
+- type: entity
+  parent: PipeBase
+  id: TestPipe
+  name: TestPipe
+  components:
+  - type: NodeContainer
+    nodes:
+    - !type:PipeNode
+      nodeGroupID: Pipe
+      pipeDirection: North
+    - !type:PipeNode
+      nodeGroupID: Pipe
+      pipeDirection: South
