@@ -15,19 +15,17 @@ namespace Content.Client.GameObjects.Components.CloningMachine
 {
     public sealed class CloningMachineWindow : SS14Window
     {
-        private readonly ILocalizationManager _loc;
+        private Dictionary<int, string> _scanManager;
 
-        private VBoxContainer MainVBox;
-        private ScanListContainer ScanList;
-        private Dictionary<int, string> scanManager;
-        private LineEdit SearchBar;
-        private OptionButton OverrideMenu = null!;
-        private Button ClearButton;
-        private Button EraseButton = null!;
-        public Button CloneButton;
-        private CloningScanButton MeasureButton;
+        private readonly VBoxContainer _mainVBox;
+        private readonly ScanListContainer _scanList;
+        private readonly LineEdit _searchBar;
+        private readonly Button _clearButton;
+        public readonly Button CloneButton;
+        private readonly CloningScanButton _measureButton;
         private CloningScanButton? _selectedButton;
-        protected override Vector2 ContentsMinimumSize => MainVBox?.CombinedMinimumSize ?? Vector2.Zero;
+
+        protected override Vector2 ContentsMinimumSize => _mainVBox?.CombinedMinimumSize ?? Vector2.Zero;
         private CloningMachineBoundUserInterfaceState _lastUpdate = null!;
 
         // List of scans that are visible based on current filter criteria.
@@ -45,13 +43,13 @@ namespace Content.Client.GameObjects.Components.CloningMachine
             Dictionary<int, string> scanManager,
             ILocalizationManager loc)
         {
-            this.scanManager = scanManager;
+            _scanManager = scanManager;
 
-            _loc = loc;
+            var localization = loc;
 
-            Title = _loc.GetString("Cloning Machine");
+            Title = localization.GetString("Cloning Machine");
 
-            Contents.AddChild(MainVBox = new VBoxContainer
+            Contents.AddChild(_mainVBox = new VBoxContainer
             {
                 Children =
                 {
@@ -59,16 +57,16 @@ namespace Content.Client.GameObjects.Components.CloningMachine
                     {
                         Children =
                         {
-                            (SearchBar = new LineEdit
+                            (_searchBar = new LineEdit
                             {
                                 SizeFlagsHorizontal = SizeFlags.FillExpand,
-                                PlaceHolder = _loc.GetString("Search")
+                                PlaceHolder = localization.GetString("Search")
                             }),
 
-                            (ClearButton = new Button
+                            (_clearButton = new Button
                             {
                                 Disabled = true,
-                                Text = _loc.GetString("Clear"),
+                                Text = localization.GetString("Clear"),
                             })
                         }
                     },
@@ -78,7 +76,7 @@ namespace Content.Client.GameObjects.Components.CloningMachine
                         SizeFlagsVertical = SizeFlags.FillExpand,
                         Children =
                         {
-                            (ScanList = new ScanListContainer())
+                            (_scanList = new ScanListContainer())
                         }
                     },
                     new VBoxContainer
@@ -91,26 +89,26 @@ namespace Content.Client.GameObjects.Components.CloningMachine
                             })
                         }
                     },
-                    (MeasureButton = new CloningScanButton {Visible = false})
+                    (_measureButton = new CloningScanButton {Visible = false})
                 }
             });
 
 
-            SearchBar.OnTextChanged += OnSearchBarTextChanged;
-            ClearButton.OnPressed += OnClearButtonPressed;
+            _searchBar.OnTextChanged += OnSearchBarTextChanged;
+            _clearButton.OnPressed += OnClearButtonPressed;
 
             BuildEntityList();
 
-            SearchBar.GrabKeyboardFocus();
+            _searchBar.GrabKeyboardFocus();
         }
 
         public void Populate(CloningMachineBoundUserInterfaceState state)
         {
             //Ignore useless updates or we can't interact with the UI
-            //TODO: come up with a better comparision, probably write a commparator because .Equals doesn't work
+            //TODO: come up with a better comparision, probably write a comparator because '.Equals' doesn't work
             if (_lastUpdate == null || _lastUpdate.MindIdName.Count != state.MindIdName.Count)
             {
-                scanManager = state.MindIdName;
+                _scanManager = state.MindIdName;
                 BuildEntityList();
                 _lastUpdate = state;
             }
@@ -127,12 +125,12 @@ namespace Content.Client.GameObjects.Components.CloningMachine
         private void OnSearchBarTextChanged(LineEdit.LineEditEventArgs args)
         {
             BuildEntityList(args.Text);
-            ClearButton.Disabled = string.IsNullOrEmpty(args.Text);
+            _clearButton.Disabled = string.IsNullOrEmpty(args.Text);
         }
 
         private void OnClearButtonPressed(BaseButton.ButtonEventArgs args)
         {
-            SearchBar.Clear();
+            _searchBar.Clear();
             BuildEntityList("");
         }
 
@@ -140,14 +138,14 @@ namespace Content.Client.GameObjects.Components.CloningMachine
         private void BuildEntityList(string? searchStr = null)
         {
             _filteredScans.Clear();
-            ScanList.RemoveAllChildren();
+            _scanList.RemoveAllChildren();
             // Reset last scan indices so it automatically updates the entire list.
             _lastScanIndices = (0, -1);
-            ScanList.RemoveAllChildren();
+            _scanList.RemoveAllChildren();
             _selectedButton = null;
             searchStr = searchStr?.ToLowerInvariant();
 
-            foreach (var scan in scanManager)
+            foreach (var scan in _scanManager)
             {
                 if (searchStr != null && !_doesScanMatchSearch(scan.Value, searchStr))
                 {
@@ -160,7 +158,7 @@ namespace Content.Client.GameObjects.Components.CloningMachine
             //TODO: set up sort
             //_filteredScans.Sort((a, b) => string.Compare(a.ToString(), b.ToString(), StringComparison.Ordinal));
 
-            ScanList.TotalItemCount = _filteredScans.Count;
+            _scanList.TotalItemCount = _filteredScans.Count;
         }
 
         private void UpdateVisibleScans()
@@ -168,10 +166,10 @@ namespace Content.Client.GameObjects.Components.CloningMachine
             // Update visible buttons in the scan list.
 
             // Calculate index of first scan to render based on current scroll.
-            var height = MeasureButton.CombinedMinimumSize.Y + ScanListContainer.Separation;
-            var offset = -ScanList.Position.Y;
+            var height = _measureButton.CombinedMinimumSize.Y + ScanListContainer.Separation;
+            var offset = -_scanList.Position.Y;
             var startIndex = (int) Math.Floor(offset / height);
-            ScanList.ItemOffset = startIndex;
+            _scanList.ItemOffset = startIndex;
 
             var (prevStart, prevEnd) = _lastScanIndices;
 
@@ -179,7 +177,7 @@ namespace Content.Client.GameObjects.Components.CloningMachine
             var endIndex = startIndex - 1;
             var spaceUsed = -height; // -height instead of 0 because else it cuts off the last button.
 
-            while (spaceUsed < ScanList.Parent!.Height)
+            while (spaceUsed < _scanList.Parent!.Height)
             {
                 spaceUsed += height;
                 endIndex += 1;
@@ -198,17 +196,17 @@ namespace Content.Client.GameObjects.Components.CloningMachine
             // Delete buttons at the start of the list that are no longer visible (scrolling down).
             for (var i = prevStart; i < startIndex && i <= prevEnd; i++)
             {
-                var control = (CloningScanButton) ScanList.GetChild(0);
+                var control = (CloningScanButton) _scanList.GetChild(0);
                 DebugTools.Assert(control.Index == i);
-                ScanList.RemoveChild(control);
+                _scanList.RemoveChild(control);
             }
 
             // Delete buttons at the end of the list that are no longer visible (scrolling up).
             for (var i = prevEnd; i > endIndex && i >= prevStart; i--)
             {
-                var control = (CloningScanButton) ScanList.GetChild(ScanList.ChildCount - 1);
+                var control = (CloningScanButton) _scanList.GetChild(_scanList.ChildCount - 1);
                 DebugTools.Assert(control.Index == i);
-                ScanList.RemoveChild(control);
+                _scanList.RemoveChild(control);
             }
 
             var array = _filteredScans.ToArray();
@@ -246,7 +244,7 @@ namespace Content.Client.GameObjects.Components.CloningMachine
                 _selectedButton.ActualButton.Pressed = true;
             }
 
-            //TODO: replace with body's face?
+            //TODO: replace with body's face
             /*var tex = IconComponent.GetScanIcon(scan, resourceCache);
             var rect = button.EntityTextureRect;
             if (tex != null)
@@ -261,7 +259,7 @@ namespace Content.Client.GameObjects.Components.CloningMachine
             rect.Dispose();
             */
 
-            ScanList.AddChild(button);
+            _scanList.AddChild(button);
             if (insertFirst)
             {
                 button.SetPositionInParent(0);

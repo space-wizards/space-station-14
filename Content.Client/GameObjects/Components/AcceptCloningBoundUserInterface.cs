@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using Content.Shared.GameObjects.Components;
-using Content.Shared.GameObjects.Components.Medical;
+﻿using Content.Shared.GameObjects.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects.Components.UserInterface;
-using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Content.Shared.GameObjects.Components;
 
 namespace Content.Client.GameObjects.Components
 {
@@ -39,6 +33,5 @@ namespace Content.Client.GameObjects.Components
             };
             _window.OpenCentered();
         }
-
     }
 }

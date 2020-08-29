@@ -31,8 +31,6 @@ namespace Content.Server.GameObjects.Components.Medical
     [ComponentReference(typeof(IActivate))]
     public class CloningMachineComponent : SharedCloningMachineComponent, IActivate
     {
-        private ContainerSlot _bodyContainer = default!;
-        private CloningMachineStatus _status;
         [Dependency] private readonly IServerPreferencesManager _prefsManager = null!;
 
         [ViewVariables]
@@ -40,9 +38,13 @@ namespace Content.Server.GameObjects.Components.Medical
 
         [ViewVariables]
         private BoundUserInterface? UserInterface =>
-            Owner.GetUIOrNull(SharedCloningMachineComponent.CloningMachineUIKey.Key);
+            Owner.GetUIOrNull(CloningMachineUIKey.Key);
 
+        private ContainerSlot _bodyContainer = default!;
         private Mind? _capturedMind;
+        private CloningMachineStatus _status;
+        private readonly IEntityManager _entityManager = IoCManager.Resolve<IEntityManager>();
+        private readonly IPlayerManager _playerManager = IoCManager.Resolve<IPlayerManager>();
 
 
         public override void Initialize()
@@ -72,18 +74,14 @@ namespace Content.Server.GameObjects.Components.Medical
 
         private void UpdateUserInterface()
         {
-            if (!Powered)
-            {
-                return;
-            }
+            if (!Powered) return;
 
-            var newState = GetUserInterfaceState();
-            UserInterface?.SetState(newState);
+            UserInterface?.SetState(GetUserInterfaceState());
         }
 
 
-        private static readonly CloningMachineBoundUserInterfaceState EmptyUIState =
-            new CloningMachineBoundUserInterfaceState(new Dictionary<int, string>(), 0, false);
+        /*private static readonly CloningMachineBoundUserInterfaceState EmptyUIState =
+            new CloningMachineBoundUserInterfaceState(new Dictionary<int, string>(), 0, false);*/
 
         private CloningMachineBoundUserInterfaceState GetUserInterfaceState()
         {
@@ -120,10 +118,8 @@ namespace Content.Server.GameObjects.Components.Medical
                         break;
                     }
 
-                    var entityManager = IoCManager.Resolve<IEntityManager>();
-                    var _playerManager = IoCManager.Resolve<IPlayerManager>();
 
-                    var mob = entityManager.SpawnEntity("HumanMob_Content", Owner.Transform.MapPosition);
+                    var mob = _entityManager.SpawnEntity("HumanMob_Content", Owner.Transform.MapPosition);
                     var client = _playerManager
                         .GetPlayersBy(x => x.SessionId == mind.SessionId).First();
                     mob.GetComponent<HumanoidAppearanceComponent>()
@@ -134,7 +130,7 @@ namespace Content.Server.GameObjects.Components.Medical
                     _capturedMind = mind;
 
                     Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local,
-                        new CloningStartedMessage(_capturedMind, (int) message.ScanId));
+                        new CloningStartedMessage(_capturedMind));
 
                     break;
                 default:
@@ -144,14 +140,12 @@ namespace Content.Server.GameObjects.Components.Medical
 
         public class CloningStartedMessage : EntitySystemMessage
         {
-            public CloningStartedMessage(Mind capturedMind, int cloningIndex)
+            public CloningStartedMessage(Mind capturedMind)
             {
                 CapturedMind = capturedMind;
-                CloningIndex = cloningIndex;
             }
 
             public Mind CapturedMind { get; }
-            public int CloningIndex { get; }
         }
 
 

@@ -108,13 +108,6 @@ namespace Content.Client.GameObjects.Components.Actor
                     }
 
                     break;
-
-                case SharedMindComponent.BeingClonedMessage _:
-
-                    var foo = "foo";
-
-
-                    break;
             }
         }
 

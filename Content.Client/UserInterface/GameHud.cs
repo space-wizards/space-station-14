@@ -242,7 +242,6 @@ namespace Content.Client.UserInterface
             LayoutContainer.SetAnchorAndMarginPreset(HandsContainer, LayoutContainer.LayoutPreset.CenterBottom);
             LayoutContainer.SetGrowHorizontal(HandsContainer, LayoutContainer.GrowDirection.Both);
             LayoutContainer.SetGrowVertical(HandsContainer, LayoutContainer.GrowDirection.Begin);
-
         }
 
         private void ButtonTutorialOnOnToggled()

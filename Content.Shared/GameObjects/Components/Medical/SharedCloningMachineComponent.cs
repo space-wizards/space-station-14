@@ -51,8 +51,7 @@ namespace Content.Shared.GameObjects.Components.Medical
         [Serializable, NetSerializable]
         public enum UiButton
         {
-            Clone,
-            Accept
+            Clone
         }
 
         [Serializable, NetSerializable]
