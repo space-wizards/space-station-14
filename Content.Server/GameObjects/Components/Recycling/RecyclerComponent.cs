@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameObjects.Components.Conveyor;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
@@ -31,6 +32,8 @@ namespace Content.Server.GameObjects.Components.Recycling
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public override string Name => "Recycler";
+        
+        private List<IEntity> _intersecting = new List<IEntity>();
 
         /// <summary>
         ///     Whether or not sentient beings will be recycled
@@ -87,6 +90,11 @@ namespace Content.Server.GameObjects.Components.Recycling
 
         private void Recycle(IEntity entity)
         {
+            if (!_intersecting.Contains(entity))
+            {
+                _intersecting.Add(entity);
+            }
+            
             // TODO: Prevent collision with recycled items
             if (CanGib(entity))
             {
@@ -166,16 +174,19 @@ namespace Content.Server.GameObjects.Components.Recycling
         {
             if (!CanRun())
             {
+                _intersecting.Clear();
                 return;
             }
 
-            var intersecting = _entityManager.GetEntitiesIntersecting(Owner, true);
             var direction = Vector2.UnitX;
 
-            foreach (var entity in intersecting)
+            for (var i = _intersecting.Count - 1; i >= 0; i--)
             {
-                if (!CanMove(entity))
+                var entity = _intersecting[i];
+                
+                if (!CanMove(entity) || !_entityManager.IsIntersecting(Owner, entity))
                 {
+                    _intersecting.RemoveAt(i);
                     continue;
                 }
 

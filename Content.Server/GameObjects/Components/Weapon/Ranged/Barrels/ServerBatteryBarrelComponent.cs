@@ -6,7 +6,10 @@ using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Shared.Damage;
+using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
+using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -25,6 +28,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
     public sealed class ServerBatteryBarrelComponent : ServerRangedBarrelComponent
     {
         public override string Name => "BatteryBarrel";
+        public override uint? NetID => ContentNetIDs.BATTERY_BARREL;
 
         // The minimum change we need before we can fire
         [ViewVariables] private float _lowerChargeLimit;
@@ -88,6 +92,15 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             serializer.DataField(ref _soundPowerCellEject, "soundPowerCellEject", null);
         }
 
+        public override ComponentState GetComponentState()
+        {
+            (int, int)? count = (ShotsLeft, Capacity);
+
+            return new BatteryBarrelComponentState(
+                FireRateSelector,
+                count);
+        }
+
         public override void Initialize()
         {
             base.Initialize();
@@ -108,6 +121,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 _appearanceComponent = appearanceComponent;
             }
 
+            Dirty();
             UpdateAppearance();
         }
 
@@ -188,8 +202,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 throw new InvalidOperationException("Ammo doesn't have hitscan or projectile?");
             }
 
+            Dirty();
             UpdateAppearance();
-            //Dirty();
             return entity;
         }
 
@@ -211,28 +225,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
 
             _powerCellContainer.Insert(entity);
+
+            Dirty();
             UpdateAppearance();
-            //Dirty();
             return true;
-        }
-
-        private IEntity RemovePowerCell()
-        {
-            if (!_powerCellRemovable || _powerCellContainer.ContainedEntity == null)
-            {
-                return null;
-            }
-
-            var entity = _powerCellContainer.ContainedEntity;
-            _powerCellContainer.Remove(entity);
-            if (_soundPowerCellEject != null)
-            {
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundPowerCellEject, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
-            }
-
-            UpdateAppearance();
-            //Dirty();
-            return entity;
         }
 
         public override bool UseEntity(UseEntityEventArgs eventArgs)
@@ -242,22 +238,44 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 return false;
             }
 
-            if (!eventArgs.User.TryGetComponent(out HandsComponent handsComponent) ||
-                PowerCellEntity == null)
+            if (PowerCellEntity == null)
             {
                 return false;
             }
 
-            var itemComponent = PowerCellEntity.GetComponent<ItemComponent>();
-            if (!handsComponent.CanPutInHand(itemComponent))
+            return TryEjectCell(eventArgs.User);
+        }
+
+        private bool TryEjectCell(IEntity user)
+        {
+            if (PowerCell == null || !_powerCellRemovable)
             {
                 return false;
             }
 
-            var powerCell = RemovePowerCell();
-            handsComponent.PutInHand(itemComponent);
-            powerCell.Transform.GridPosition = eventArgs.User.Transform.GridPosition;
+            if (!user.TryGetComponent(out HandsComponent hands))
+            {
+                return false;
+            }
 
+            var cell = PowerCell;
+            if (!_powerCellContainer.Remove(cell.Owner))
+            {
+                return false;
+            }
+
+            Dirty();
+            UpdateAppearance();
+
+            if (!hands.PutInHand(cell.Owner.GetComponent<ItemComponent>()))
+            {
+                cell.Owner.Transform.GridPosition = user.Transform.GridPosition;
+            }
+
+            if (_soundPowerCellEject != null)
+            {
+                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundPowerCellEject, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
+            }
             return true;
         }
 
@@ -269,6 +287,34 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
 
             return TryInsertPowerCell(eventArgs.Using);
+        }
+
+        [Verb]
+        public sealed class EjectCellVerb : Verb<ServerBatteryBarrelComponent>
+        {
+            protected override void GetData(IEntity user, ServerBatteryBarrelComponent component, VerbData data)
+            {
+                if (!ActionBlockerSystem.CanInteract(user) || !component._powerCellRemovable)
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
+                if (component.PowerCell == null)
+                {
+                    data.Text = "Eject cell (cell missing)";
+                    data.Visibility = VerbVisibility.Disabled;
+                }
+                else
+                {
+                    data.Text = "Eject cell";
+                }
+            }
+
+            protected override void Activate(IEntity user, ServerBatteryBarrelComponent component)
+            {
+                component.TryEjectCell(user);
+            }
         }
     }
 }
