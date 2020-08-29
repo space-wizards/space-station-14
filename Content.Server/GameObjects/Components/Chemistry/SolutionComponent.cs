@@ -234,7 +234,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     var heldEntityName = hands.GetActiveHand.Owner?.Prototype?.Name ?? "<Item>";
                     var myName = component.Owner.Prototype?.Name ?? "<Item>";
 
-                    data.Text= $"Transfer liquid from [{heldEntityName}] to [{myName}].";
+                    var locHeldEntityName = Loc.GetString(heldEntityName);
+                    var locMyName = Loc.GetString(myName);
+
+                    data.Text = Loc.GetString("Transfer liquid from [{0}] to [{1}].", locHeldEntityName, locMyName);
                     return;
                 }
 
@@ -334,7 +337,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     var heldEntityName = hands.GetActiveHand.Owner?.Prototype?.Name ?? "<Item>";
                     var myName = component.Owner.Prototype?.Name ?? "<Item>";
 
-                    data.Text = $"Transfer liquid from [{myName}] to [{heldEntityName}].";
+                    var locHeldEntityName = Loc.GetString(heldEntityName);
+                    var locMyName = Loc.GetString(myName);
+
+                    data.Text = Loc.GetString("Transfer liquid from [{0}] to [{1}].", locMyName, locHeldEntityName);
                     return;
                 }
 

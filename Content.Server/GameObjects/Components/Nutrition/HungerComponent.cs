@@ -68,15 +68,12 @@ namespace Content.Server.GameObjects.Components.Nutrition
             serializer.DataField(ref _baseDecayRate, "base_decay_rate", 0.1f);
         }
 
-        // for shared string dict, since we don't define these anywhere in content
-        [UsedImplicitly]
-        public static readonly string[] _hungerThresholdImages =
+
+        public static readonly Dictionary<HungerThreshold, string> HungerThresholdImages = new Dictionary<HungerThreshold, string>
         {
-            "/Textures/Interface/StatusEffects/Hunger/Overfed.png",
-            "/Textures/Interface/StatusEffects/Hunger/Okay.png",
-            "/Textures/Interface/StatusEffects/Hunger/Peckish.png",
-            "/Textures/Interface/StatusEffects/Hunger/Starving.png",
-            "/Textures/Interface/StatusEffects/Hunger/Dead.png",
+            { HungerThreshold.Overfed, "/Textures/Interface/StatusEffects/Hunger/Overfed.png" },
+            { HungerThreshold.Peckish, "/Textures/Interface/StatusEffects/Hunger/Peckish.png" },
+            { HungerThreshold.Starving, "/Textures/Interface/StatusEffects/Hunger/Starving.png" },
         };
 
         public void HungerThresholdEffect(bool force = false)
@@ -92,7 +89,16 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
                 // Update UI
                 Owner.TryGetComponent(out ServerStatusEffectsComponent statusEffectsComponent);
-                statusEffectsComponent?.ChangeStatusEffectIcon(StatusEffect.Hunger, _hungerThresholdImages[ (int)_currentHungerThreshold ]);
+
+                if (HungerThresholdImages.TryGetValue(_currentHungerThreshold, out var statusTexture))
+                {
+                    statusEffectsComponent?.ChangeStatusEffectIcon(StatusEffect.Hunger, statusTexture);
+                }
+                else
+                {
+                    statusEffectsComponent?.RemoveStatusEffect(StatusEffect.Hunger);
+                }
+
                 switch (_currentHungerThreshold)
                 {
                     case HungerThreshold.Overfed:

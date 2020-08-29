@@ -185,6 +185,7 @@
   - type: Tool
     qualities:
       - Multitool
+  - type: SignalLinker
 
 - type: entity
   name: jaws of life

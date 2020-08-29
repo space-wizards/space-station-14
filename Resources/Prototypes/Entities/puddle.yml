@@ -15,10 +15,13 @@
   - type: LoopingSound
   - type: InteractionOutline
   - type: Clickable
+  - type: Slippery
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.5,-0.5,0.5,0.5"
+      bounds: "-0.4,-0.4,0.4,0.4"
+      layer:
+      - MobImpassable
     hard: false
 
 - type: entity

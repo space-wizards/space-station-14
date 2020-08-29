@@ -428,7 +428,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 return;
             }
 
-            data.Text = component.Open ? "Close" : "Open";
+            data.Text = Loc.GetString(component.Open ? "Close" : "Open");
         }
 
         void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
