@@ -1,5 +1,4 @@
-﻿
-using Robust.Server.GameObjects;
+﻿using Robust.Server.GameObjects;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Robust.Shared.GameObjects;
@@ -24,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using Content.Shared.Utility;
 using Serilog;
+using Content.Server.GameObjects.Components.GUI;
 
 namespace Content.Server.GameObjects.Components.ActionBlocking
 {
@@ -49,7 +49,6 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         [ViewVariables(VVAccess.ReadOnly)]
         private Container _container = default!;
 
-        private bool _dirtyThisFrame = false;
         private float _interactRange;
         private IHandsComponent _hands;
 
@@ -61,6 +60,8 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
             _container = ContainerManagerComponent.Ensure<Container>(Name, Owner);
             _interactRange = SharedInteractionSystem.InteractionRange / 2;
+
+            Owner.EntityManager.EventBus.SubscribeEvent<HandCountChangedEvent>(EventSource.Local, this, HandleHandCountChange);
 
             if (!Owner.TryGetComponent(out _hands))
             {
@@ -124,33 +125,36 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             Dirty();
         }
 
-        public void Update(float frameTime)
-        {
-            UpdateHandCount();
-        }
-
         /// <summary>
         /// Check the current amount of hands the owner has, and if there's less hands than active cuffs we remove some cuffs.
         /// </summary>
         private void UpdateHandCount()
         {
-            _dirtyThisFrame = false;
+            var dirty = false;
             var handCount = _hands.Hands.Count();
 
             while (CuffedHandCount > handCount && CuffedHandCount > 0)
             {
-                _dirtyThisFrame = true;
+                dirty = true;
 
                 var entity = _container.ContainedEntities[_container.ContainedEntities.Count - 1];
                 _container.Remove(entity);
                 entity.Transform.WorldPosition = Owner.Transform.GridPosition.Position;
             }
 
-            if (_dirtyThisFrame)
+            if (dirty)
             {
                 CanStillInteract = handCount > CuffedHandCount;
                 OnCuffedStateChanged.Invoke();
                 Dirty();
+            }
+        }
+
+        private void HandleHandCountChange(HandCountChangedEvent message)
+        {
+            if (message.Sender == Owner)
+            {
+                UpdateHandCount();
             }
         }
 
@@ -186,8 +190,14 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         {
             if (Owner.TryGetComponent(out ServerStatusEffectsComponent status))
             {
-                status.ChangeStatusEffectIcon(StatusEffect.Cuffed,
-                    CanStillInteract ? "/Textures/Interface/StatusEffects/Handcuffed/Uncuffed.png" : "/Textures/Interface/StatusEffects/Handcuffed/Handcuffed.png");
+                if (CanStillInteract)
+                {
+                    status.RemoveStatusEffect(StatusEffect.Cuffed);
+                }
+                else
+                {
+                    status.ChangeStatusEffectIcon(StatusEffect.Cuffed, "/Textures/Interface/StatusEffects/Handcuffed/Handcuffed.png");
+                }
             }
         }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.Mobs.Roles;
 using Content.Server.Players;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
@@ -95,7 +96,7 @@ namespace Content.Server.Mobs
         /// <summary>
         ///     Gives this mind a new role.
         /// </summary>
-        /// <param name="t">The type of the role to give.</param>
+        /// <param name="role">The type of the role to give.</param>
         /// <returns>The instance of the role.</returns>
         /// <exception cref="ArgumentException">
         ///     Thrown if we already have a role with this type.
@@ -109,13 +110,17 @@ namespace Content.Server.Mobs
 
             _roles.Add(role);
             role.Greet();
+
+            var message = new RoleAddedMessage(role);
+            OwnedEntity?.SendMessage(OwnedMob, message);
+
             return role;
         }
 
         /// <summary>
         ///     Removes a role from this mind.
         /// </summary>
-        /// <param name="t">The type of the role to remove.</param>
+        /// <param name="role">The type of the role to remove.</param>
         /// <exception cref="ArgumentException">
         ///     Thrown if we do not have this role.
         /// </exception>
@@ -126,9 +131,10 @@ namespace Content.Server.Mobs
                 throw new ArgumentException($"We do not have this role: {role}");
             }
 
-            // This can definitely get more complex removal hooks later,
-            // when we need it.
             _roles.Remove(role);
+
+            var message = new RoleRemovedMessage(role);
+            OwnedEntity?.SendMessage(OwnedMob, message);
         }
 
         public bool HasRole<T>() where T : Role

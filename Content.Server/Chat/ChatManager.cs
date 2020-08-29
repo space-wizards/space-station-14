@@ -109,6 +109,9 @@ namespace Content.Server.Chat
                 message = handler(source, message);
             }
 
+            // Ensure the first letter inside the message string is always a capital letter
+            message = message[0].ToString().ToUpper() + message.Remove(0,1);
+
             var pos = source.Transform.GridPosition;
             var clients = _playerManager.GetPlayersInRange(pos, VoiceRange).Select(p => p.ConnectedClient);
 

@@ -33,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Medical
                 return;
             }
 
-            if (!eventArgs.Target.TryGetComponent(out IBodyManagerComponent body))
+            if (!eventArgs.Target.TryGetComponent(out ISharedBodyManagerComponent body))
             {
                 return;
             }

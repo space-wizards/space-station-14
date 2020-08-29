@@ -94,6 +94,7 @@
       color: "#ffffff"
       sprite: Objects/Misc/handcuffs.rsi 
       state: body-overlay-2
+      visible: false
     - map: ["enum.Slots.IDCARD"]
     - map: ["enum.Slots.GLOVES"]
     - map: ["enum.Slots.SHOES"]
@@ -227,6 +228,11 @@
         color: "#e8b59b"
         sprite: Mobs/Species/Human/parts.rsi
         state: r_hand
+      - map: ["enum.HumanoidVisualLayers.Handcuffs"]
+        color: "#ffffff"
+        sprite: Objects/Misc/handcuffs.rsi 
+        state: body-overlay-2
+        visible: false
       - map: ["enum.Slots.IDCARD"]
       - map: ["enum.Slots.GLOVES"]
       - map: ["enum.Slots.SHOES"]
