@@ -19,7 +19,7 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.4, -0.4, 0.4, 0.4"
+      bounds: "-0.4, -0.4, 0.29, 0.4"
       mask:
       - Impassable
       - MobImpassable
