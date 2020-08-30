@@ -2,10 +2,10 @@
 using System;
 using Content.Server.GameObjects.Components.Body.Circulatory;
 using Content.Server.Interfaces;
-using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -111,7 +111,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// <param name="eventArgs"></param>
         void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
+            if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true)) return;
 
             //Make sure we have the attacking entity
             if (eventArgs.Target == null || !Owner.TryGetComponent(out SolutionComponent? solution) || !solution.Injector)

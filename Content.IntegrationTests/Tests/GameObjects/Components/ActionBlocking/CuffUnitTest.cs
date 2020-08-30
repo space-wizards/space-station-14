@@ -87,7 +87,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
             var slot = part.GetHashCode().ToString();
 
             body.Template.Slots.Add(slot, BodyPartType.Hand);
-            body.InstallBodyPart(part, slot);
+            body.TryAddPart(slot, part, true);
         }
     }
 }

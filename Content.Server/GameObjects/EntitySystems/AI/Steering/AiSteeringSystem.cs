@@ -7,8 +7,8 @@ using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders;
 using Content.Server.GameObjects.EntitySystems.JobQueues;
-using Content.Server.Utility;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Utility;
 using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
@@ -281,7 +281,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             if (targetDistance <= steeringRequest.ArrivalDistance && steeringRequest.TimeUntilInteractionCheck <= 0.0f)
             {
                 if (!steeringRequest.RequiresInRangeUnobstructed ||
-                    InteractionChecks.InRangeUnobstructed(entity, steeringRequest.TargetMap, steeringRequest.ArrivalDistance, ignoredEnt: entity))
+                    entity.InRangeUnobstructed(steeringRequest.TargetMap, steeringRequest.ArrivalDistance, popup: true))
                 {
                     // TODO: Need cruder LOS checks for ranged weaps
                     controller.VelocityDir = Vector2.Zero;

@@ -125,7 +125,7 @@ namespace Content.Server.GameObjects.EntitySystems
             var entToDesiredDropCoords = coords.Position - entCoords;
             var targetLength = Math.Min(entToDesiredDropCoords.Length, SharedInteractionSystem.InteractionRange - 0.001f); // InteractionRange is reduced due to InRange not dealing with floating point error
             var newCoords = new GridCoordinates((entToDesiredDropCoords.Normalized * targetLength) + entCoords, coords.GridID);
-            var rayLength = Get<SharedInteractionSystem>().UnobstructedRayLength(ent.Transform.MapPosition, newCoords.ToMap(_mapManager), ignoredEnt: ent);
+            var rayLength = Get<SharedInteractionSystem>().UnobstructedDistance(ent.Transform.MapPosition, newCoords.ToMap(_mapManager), ignoredEnt: ent);
 
             handsComp.Drop(handsComp.ActiveHand, new GridCoordinates(entCoords + (entToDesiredDropCoords.Normalized * rayLength), coords.GridID));
 

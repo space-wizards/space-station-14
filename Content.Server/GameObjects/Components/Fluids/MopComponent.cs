@@ -4,6 +4,7 @@ using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
@@ -68,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (!Owner.TryGetComponent(out SolutionComponent? contents)) return;
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
+            if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true)) return;
 
             if (CurrentVolume <= 0)
             {

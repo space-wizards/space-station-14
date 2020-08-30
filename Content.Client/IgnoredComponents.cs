@@ -167,6 +167,11 @@
             "VolumePump",
             "DebugVent",
             "DebugSiphon",
+            "SignalReceiver",
+            "SignalSwitch",
+            "SignalTransmitter",
+            "SignalButton",
+            "SignalLinker",
         };
     }
 }

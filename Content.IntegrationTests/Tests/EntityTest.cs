@@ -121,18 +121,32 @@ namespace Content.IntegrationTests.Tests
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
-            var mapLoader = server.ResolveDependency<IMapLoader>();
             var pauseManager = server.ResolveDependency<IPauseManager>();
             var componentFactory = server.ResolveDependency<IComponentFactory>();
+            var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
 
             IMapGrid grid = default;
 
             server.Post(() =>
             {
-                // Load test map
+                // Create a one tile grid to stave off the grid 0 monsters
                 var mapId = mapManager.CreateMap();
+
                 pauseManager.AddUninitializedMap(mapId);
-                grid = mapLoader.LoadBlueprint(mapId, "Maps/stationstation.yml");
+
+                var gridId = new GridId(1);
+
+                if (!mapManager.TryGetGrid(gridId, out grid))
+                {
+                    grid = mapManager.CreateGrid(mapId, gridId);
+                }
+
+                var tileDefinition = tileDefinitionManager["underplating"];
+                var tile = new Tile(tileDefinition.TileId);
+                var coordinates = new GridCoordinates(0, 0, gridId);
+
+                grid.SetTile(coordinates, tile);
+
                 pauseManager.DoMapInitialize(mapId);
             });
 
@@ -202,18 +216,32 @@ namespace Content.IntegrationTests.Tests
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
-            var mapLoader = server.ResolveDependency<IMapLoader>();
             var pauseManager = server.ResolveDependency<IPauseManager>();
             var componentFactory = server.ResolveDependency<IComponentFactory>();
+            var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
 
             IMapGrid grid = default;
 
             server.Post(() =>
             {
-                // Load test map
+                // Create a one tile grid to stave off the grid 0 monsters
                 var mapId = mapManager.CreateMap();
+
                 pauseManager.AddUninitializedMap(mapId);
-                grid = mapLoader.LoadBlueprint(mapId, "Maps/stationstation.yml");
+
+                var gridId = new GridId(1);
+
+                if (!mapManager.TryGetGrid(gridId, out grid))
+                {
+                    grid = mapManager.CreateGrid(mapId, gridId);
+                }
+
+                var tileDefinition = tileDefinitionManager["underplating"];
+                var tile = new Tile(tileDefinition.TileId);
+                var coordinates = new GridCoordinates(0, 0, gridId);
+
+                grid.SetTile(coordinates, tile);
+
                 pauseManager.DoMapInitialize(mapId);
             });
 
