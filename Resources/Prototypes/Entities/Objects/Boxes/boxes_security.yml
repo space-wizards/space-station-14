@@ -24,3 +24,28 @@
       - state: handcuff
   - type: Storage
     capacity: 6
+
+- type: entity
+  name: flashbang box
+  parent: BoxBase
+  id: BoxFlashbang
+  description:
+  components:
+  - type: StorageFill
+    contents:
+      - Flashbang
+      - Flashbang
+      - Flashbang
+      - Flashbang
+  - type: Sprite
+    layers:
+      - state: box
+      - state: flashbang
+  - type: Icon
+    state: flashbang
+  - type: Item
+    layers:
+      - state: box
+      - state: flashbang
+  - type: Storage
+    capacity: 20

@@ -24,3 +24,49 @@
       - state: syringe
   - type: Storage
     capacity: 30
+
+- type: entity
+  name: sterile box
+  parent: BoxBase
+  id: BoxSterile
+  description:
+  components:
+  - type: StorageFill
+    contents:
+  - type: Sprite
+    layers:
+      - state: box
+      - state: sterile
+  - type: Icon
+    state: sterile
+  - type: Item
+    layers:
+      - state: box
+      - state: sterile
+  - type: Storage
+    capacity: 30
+
+- type: entity
+  name: latex box 
+  parent: BoxBase
+  id: BoxLatex
+  description:
+  components:
+  - type: StorageFill
+    contents:
+      - GlovesLatex
+      - GlovesLatex
+      - GlovesLatex
+      - GlovesLatex
+  - type: Sprite
+    layers:
+      - state: box
+      - state: latex
+  - type: Icon
+    state: latex
+  - type: Item
+    layers:
+      - state: box
+      - state: latex
+  - type: Storage
+    capacity: 20
