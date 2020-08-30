@@ -4,6 +4,8 @@ using Robust.Client.Player;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.Interfaces.Map;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using static Content.Shared.GameObjects.EntitySystems.SharedInteractionSystem;
 
@@ -22,15 +24,10 @@ namespace Content.Client.Utility
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
-            var originEntity = origin.ControlledEntity;
-            if (originEntity == null)
-            {
-                // TODO: Take into account the player's camera position?
-                return false;
-            }
+            var otherPosition = other.Transform.MapPosition;
 
-            return SharedInteractionSystem.InRangeUnobstructed(originEntity, other, range, collisionMask, predicate,
-                ignoreInsideBlocker, popup);
+            return origin.InRangeUnobstructed(otherPosition, range, collisionMask, predicate, ignoreInsideBlocker,
+                popup);
         }
 
         public static bool InRangeUnobstructed(
@@ -42,15 +39,7 @@ namespace Content.Client.Utility
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
-            var originEntity = origin.ControlledEntity;
-            if (originEntity == null)
-            {
-                // TODO: Take into account the player's camera position?
-                return false;
-            }
-
-            return SharedInteractionSystem.InRangeUnobstructed(originEntity, other, range, collisionMask, predicate,
-                ignoreInsideBlocker, popup);
+            return origin.InRangeUnobstructed(other.Owner, range, collisionMask, predicate, ignoreInsideBlocker, popup);
         }
 
         public static bool InRangeUnobstructed(
@@ -62,17 +51,7 @@ namespace Content.Client.Utility
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
-            var originEntity = origin.ControlledEntity;
-            if (originEntity == null)
-            {
-                // TODO: Take into account the player's camera position?
-                return false;
-            }
-
-            var otherEntity = other.Owner;
-
-            return SharedInteractionSystem.InRangeUnobstructed(originEntity, otherEntity, range, collisionMask,
-                predicate, ignoreInsideBlocker, popup);
+            return origin.InRangeUnobstructed(other.Owner, range, collisionMask, predicate, ignoreInsideBlocker, popup);
         }
 
         public static bool InRangeUnobstructed(
@@ -84,15 +63,11 @@ namespace Content.Client.Utility
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
-            var originEntity = origin.ControlledEntity;
-            if (originEntity == null)
-            {
-                // TODO: Take into account the player's camera position?
-                return false;
-            }
+            var mapManager = IoCManager.Resolve<IMapManager>();
+            var otherPosition = other.ToMap(mapManager);
 
-            return SharedInteractionSystem.InRangeUnobstructed(originEntity, other, range, collisionMask, predicate,
-                ignoreInsideBlocker, popup);
+            return origin.InRangeUnobstructed(otherPosition, range, collisionMask, predicate, ignoreInsideBlocker,
+                popup);
         }
 
         public static bool InRangeUnobstructed(
