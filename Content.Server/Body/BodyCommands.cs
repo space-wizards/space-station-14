@@ -156,7 +156,7 @@ namespace Content.Server.Body
 
         public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
         {
-            if (args.Length > 2)
+            if (args.Length < 2)
             {
                 shell.SendText(player, Help);
                 return;
