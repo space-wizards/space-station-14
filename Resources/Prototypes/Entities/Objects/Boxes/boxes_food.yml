@@ -1,0 +1,26 @@
+- type: entity
+  name: donkpocket box
+  parent: BoxBase
+  id: BoxDonkpocket
+  description:
+  components:
+  - type: StorageFill
+    contents:
+      - FoodDonkPocket
+      - FoodDonkPocket
+      - FoodDonkPocket
+      - FoodDonkPocket
+      - FoodDonkPocket
+      - FoodDonkPocket
+  - type: Sprite
+    sprite: Objects/Storage/donkpocket.rsi
+    state: icon
+  - type: Icon
+    sprite: Objects/Storage/donkpocket.rsi
+    state: icon
+  - type: Item
+    color: "#951710"
+    sprite: Objects/Storage/donkpocket.rsi
+    state: icon
+  - type: Storage
+    capacity: 30
