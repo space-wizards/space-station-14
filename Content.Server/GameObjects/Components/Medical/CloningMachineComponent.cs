@@ -83,7 +83,8 @@ namespace Content.Server.GameObjects.Components.Medical
                 _capturedMind = null;
                 _clonningProgress = 0f;
 
-                UpdateAppearance(CloningMachineStatus.Idle);
+                _status = CloningMachineStatus.Idle;
+                UpdateAppearance();
             }
 
             UpdateUserInterface();
@@ -96,20 +97,18 @@ namespace Content.Server.GameObjects.Components.Medical
             UserInterface?.SetState(GetUserInterfaceState());
         }
 
-        private void UpdateAppearance(CloningMachineStatus status)
+        private CloningMachineBoundUserInterfaceState GetUserInterfaceState()
+        {
+            return new CloningMachineBoundUserInterfaceState(CloningSystem.getIdToUser(), _clonningProgress, (_status == CloningMachineStatus.Cloning));
+        }
+
+        private void UpdateAppearance()
         {
             if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
-                appearance.SetData(CloningMachineVisuals.Status, status);
+                appearance.SetData(CloningMachineVisuals.Status, _status);
             }
         }
-
-
-        private CloningMachineBoundUserInterfaceState GetUserInterfaceState()
-        {
-            return new CloningMachineBoundUserInterfaceState(CloningSystem.getIdToUser(), 0, false);
-        }
-
 
         public void Activate(ActivateEventArgs eventArgs)
         {
@@ -155,7 +154,8 @@ namespace Content.Server.GameObjects.Components.Medical
 
                     Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local,
                         new CloningStartedMessage(_capturedMind));
-                    UpdateAppearance(CloningMachineStatus.NoMind);
+                    _status = CloningMachineStatus.NoMind;
+                    UpdateAppearance();
 
                     break;
                 default:
@@ -190,7 +190,8 @@ namespace Content.Server.GameObjects.Components.Medical
                 //Transfer the mind to the new mob
                 _capturedMind.TransferTo(_bodyContainer.ContainedEntity);
 
-                UpdateAppearance(CloningMachineStatus.Cloning);
+                _status = CloningMachineStatus.Cloning;
+                UpdateAppearance();
             }
         }
     }

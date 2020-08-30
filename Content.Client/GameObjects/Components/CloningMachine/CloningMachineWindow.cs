@@ -24,6 +24,9 @@ namespace Content.Client.GameObjects.Components.CloningMachine
         public readonly Button CloneButton;
         private readonly CloningScanButton _measureButton;
         private CloningScanButton? _selectedButton;
+        private Label _progressLabel;
+        private readonly ProgressBar _cloningProgressBar;
+        private Label _mindState;
 
         protected override Vector2 ContentsMinimumSize => _mainVBox?.CombinedMinimumSize ?? Vector2.Zero;
         private CloningMachineBoundUserInterfaceState _lastUpdate = null!;
@@ -89,7 +92,35 @@ namespace Content.Client.GameObjects.Components.CloningMachine
                             })
                         }
                     },
-                    (_measureButton = new CloningScanButton {Visible = false})
+                    (_measureButton = new CloningScanButton {Visible = false}),
+                    (_cloningProgressBar = new ProgressBar
+                    {
+                        CustomMinimumSize = (200, 20),
+                        SizeFlagsHorizontal = SizeFlags.Fill,
+                        MinValue = 0,
+                        MaxValue = 10,
+                        Page = 0,
+                        Value = 0.5f,
+                        Children =
+                        {
+                            (_progressLabel = new Label())
+                        }
+                    }),
+                    new HBoxContainer
+                    {
+                        Children =
+                        {
+                            new Label()
+                            {
+                                Text = "Neural Interface: "
+                            },
+                            (_mindState = new Label()
+                            {
+                                Text = "No Activity",
+                                FontColorOverride = Color.Red
+                            }),
+                        }
+                    }
                 }
             });
 
@@ -112,6 +143,13 @@ namespace Content.Client.GameObjects.Components.CloningMachine
                 BuildEntityList();
                 _lastUpdate = state;
             }
+
+            var percentage = state.Progress / _cloningProgressBar.MaxValue * 100;
+            _progressLabel.Text = $"{percentage:0}%";
+
+            _cloningProgressBar.Value = state.Progress;
+            _mindState.Text = state.MindPresent ? "Consciousness Detected" : "No Activity";
+            _mindState.FontColorOverride = state.MindPresent ? Color.Green : Color.Red;
         }
 
         public override void Close()

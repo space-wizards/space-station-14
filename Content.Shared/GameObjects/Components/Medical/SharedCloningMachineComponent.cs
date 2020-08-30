@@ -18,12 +18,13 @@ namespace Content.Shared.GameObjects.Components.Medical
         {
             public readonly Dictionary<int, string> MindIdName;
             public readonly float Progress;
+            public readonly bool MindPresent;
 
-            public CloningMachineBoundUserInterfaceState(Dictionary<int, string> mindIdName, float progress,
-                bool working)
+            public CloningMachineBoundUserInterfaceState(Dictionary<int, string> mindIdName, float progress, bool mindPresent)
             {
                 MindIdName = mindIdName;
                 Progress = progress;
+                MindPresent = mindPresent;
             }
         }
 

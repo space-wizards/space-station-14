@@ -80,8 +80,6 @@ namespace Content.Server.GameObjects.Components.Medical
                     appearance?.SetData(MedicalScannerVisuals.Status, MedicalScannerStatus.Open);
                 }
 
-                ;
-
                 return EmptyUIState;
             }
 
