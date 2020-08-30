@@ -245,6 +245,7 @@ namespace Content.Server.GameObjects.Components.Medical
                 case UiButton.ScanDNA:
                     if (_bodyContainer.ContainedEntity != null)
                     {
+                        //TODO: Show a 'ERROR: Body is completly devoid of soul'. this will fail if there's no player attatched to the body. This isn't so much a problem for cloning since if they're not attached they've probably moved onto another entity.
                         CloningSystem.AddToDnaScans(_playerManager
                             .GetPlayersBy(x => x.AttachedEntity != null
                                                && x.AttachedEntityUid == _bodyContainer.ContainedEntity.Uid).First()

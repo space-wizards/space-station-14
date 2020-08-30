@@ -45,7 +45,8 @@ namespace Content.Shared.GameObjects.Components.Medical
         {
             Idle,
             Cloning,
-            Done
+            Gore,
+            NoMind
         }
 
         [Serializable, NetSerializable]

@@ -5,11 +5,13 @@
   components:
     - type: Sprite
       netsync: false
-      sprite: Objects/Specific/Medical/Cloning.rsi
-      state: pod_0
+      sprite: Objects/Specific/Medical/cloning.rsi
+      layers:
+        - state: pod_0
+          map: ["enum.CloningMachineVisualLayers.Machine"]
     - type: PowerReceiver
     - type: Icon
-      sprite: Objects/Specific/Medical/Cloning.rsi
+      sprite: Objects/Specific/Medical/cloning.rsi
       state: pod_0
     - type: Anchorable
     - type: Clickable

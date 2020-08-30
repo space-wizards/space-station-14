@@ -79,9 +79,14 @@ namespace Content.Server.GameObjects.Components.Medical
             UserInterface?.SetState(GetUserInterfaceState());
         }
 
+        private void UpdateAppearance(CloningMachineStatus status)
+        {
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            {
+                appearance.SetData(CloningMachineVisuals.Status, status);
+            }
+        }
 
-        /*private static readonly CloningMachineBoundUserInterfaceState EmptyUIState =
-            new CloningMachineBoundUserInterfaceState(new Dictionary<int, string>(), 0, false);*/
 
         private CloningMachineBoundUserInterfaceState GetUserInterfaceState()
         {
@@ -131,6 +136,7 @@ namespace Content.Server.GameObjects.Components.Medical
 
                     Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local,
                         new CloningStartedMessage(_capturedMind));
+                    UpdateAppearance(CloningMachineStatus.Cloning);
 
                     break;
                 default:
@@ -166,6 +172,8 @@ namespace Content.Server.GameObjects.Components.Medical
                 _capturedMind.TransferTo(_bodyContainer.ContainedEntity);
                 _bodyContainer.Remove(_bodyContainer.ContainedEntity);
                 _capturedMind = null;
+
+                UpdateAppearance(CloningMachineStatus.Idle);
             }
         }
     }
