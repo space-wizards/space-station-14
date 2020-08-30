@@ -4,7 +4,6 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.Damage;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -63,8 +62,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                 case BeginDeconstructCompMsg msg:
                     if (!msg.BlockDeconstruct && !(_lightBulbContainer.ContainedEntity is null))
                     {
-                        var notifyManager = IoCManager.Resolve<IServerNotifyManager>();
-                        notifyManager.PopupMessage(Owner, msg.User, "Remove the bulb.");
+                        Owner.PopupMessage(msg.User, Loc.GetString("Remove the bulb."));
                         msg.BlockDeconstruct = true;
                     }
                     break;

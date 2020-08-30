@@ -6,12 +6,12 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Mobs.State;
 using Content.Server.GameObjects.Components.Strap;
 using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces;
 using Content.Shared.GameObjects.Components.Buckle;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Strap;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
@@ -38,7 +38,6 @@ namespace Content.Server.GameObjects.Components.Buckle
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
 
         private int _size;
@@ -174,18 +173,16 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             if (!ActionBlockerSystem.CanInteract(user))
             {
-                _notifyManager.PopupMessage(user, user,
-                    Loc.GetString("You can't do that!"));
-
+                user.PopupMessage(Loc.GetString("You can't do that!"));
                 return false;
             }
 
             if (!to.TryGetComponent(out strap))
             {
-                _notifyManager.PopupMessage(Owner, user,
-                    Loc.GetString(Owner == user
-                        ? "You can't buckle yourself there!"
-                        : "You can't buckle {0:them} there!", Owner));
+                var message = Loc.GetString(Owner == user
+                    ? "You can't buckle yourself there!"
+                    : "You can't buckle {0:them} there!", Owner);
+                Owner.PopupMessage(user, message);
 
                 return false;
             }
@@ -195,8 +192,7 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             if (!Owner.InRangeUnobstructed(strap, _range, predicate: Ignored, popup: true))
             {
-                _notifyManager.PopupMessage(strap.Owner, user,
-                    Loc.GetString("You can't reach there!"));
+                strap.Owner.PopupMessage(user, Loc.GetString("You can't reach there!"));
 
                 return false;
             }
@@ -208,7 +204,7 @@ namespace Content.Server.GameObjects.Components.Buckle
                 if (!ContainerHelpers.TryGetContainer(strap.Owner, out var strapContainer) ||
                     ownerContainer != strapContainer)
                 {
-                    _notifyManager.PopupMessage(strap.Owner, user, Loc.GetString("You can't reach there!"));
+                    strap.Owner.PopupMessage(user, Loc.GetString("You can't reach there!"));
 
                     return false;
                 }
@@ -216,18 +212,16 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             if (!user.HasComponent<HandsComponent>())
             {
-                _notifyManager.PopupMessage(user, user,
-                    Loc.GetString("You don't have hands!"));
-
+                user.PopupMessage(Loc.GetString("You don't have hands!"));
                 return false;
             }
 
             if (Buckled)
             {
-                _notifyManager.PopupMessage(Owner, user,
-                    Loc.GetString(Owner == user
-                        ? "You are already buckled in!"
-                        : "{0:They} are already buckled in!", Owner));
+                var message = Loc.GetString(Owner == user
+                    ? "You are already buckled in!"
+                    : "{0:They} are already buckled in!", Owner);
+                Owner.PopupMessage(user, message);
 
                 return false;
             }
@@ -237,10 +231,10 @@ namespace Content.Server.GameObjects.Components.Buckle
             {
                 if (parent == user.Transform)
                 {
-                    _notifyManager.PopupMessage(Owner, user,
-                        Loc.GetString(Owner == user
-                            ? "You can't buckle yourself there!"
-                            : "You can't buckle {0:them} there!", Owner));
+                    var message = Loc.GetString(Owner == user
+                        ? "You can't buckle yourself there!"
+                        : "You can't buckle {0:them} there!", Owner);
+                    Owner.PopupMessage(user, message);
 
                     return false;
                 }
@@ -250,10 +244,10 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             if (!strap.HasSpace(this))
             {
-                _notifyManager.PopupMessage(Owner, user,
-                    Loc.GetString(Owner == user
-                        ? "You can't fit there!"
-                        : "{0:They} can't fit there!", Owner));
+                var message = Loc.GetString(Owner == user
+                    ? "You can't fit there!"
+                    : "{0:They} can't fit there!", Owner);
+                Owner.PopupMessage(user, message);
 
                 return false;
             }
@@ -284,10 +278,10 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             if (!strap.TryAdd(this))
             {
-                _notifyManager.PopupMessage(Owner, user,
-                    Loc.GetString(Owner == user
-                        ? "You can't buckle yourself there!"
-                        : "You can't buckle {0:them} there!", Owner));
+                var message = Loc.GetString(Owner == user
+                    ? "You can't buckle yourself there!"
+                    : "You can't buckle {0:them} there!", Owner);
+                Owner.PopupMessage(user, message);
                 return false;
             }
 
@@ -338,8 +332,7 @@ namespace Content.Server.GameObjects.Components.Buckle
 
                 if (!ActionBlockerSystem.CanInteract(user))
                 {
-                    _notifyManager.PopupMessage(user, user,
-                        Loc.GetString("You can't do that!"));
+                    user.PopupMessage(Loc.GetString("You can't do that!"));
                     return false;
                 }
 

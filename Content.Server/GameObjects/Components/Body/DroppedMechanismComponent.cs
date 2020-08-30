@@ -28,7 +28,6 @@ namespace Content.Server.GameObjects.Components.Body
     [RegisterComponent]
     public class DroppedMechanismComponent : Component, IAfterInteract
     {
-        [Dependency] private readonly ISharedNotifyManager _sharedNotifyManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public sealed override string Name => "DroppedMechanism";
@@ -67,8 +66,7 @@ namespace Content.Server.GameObjects.Components.Body
 
                 if (!droppedBodyPart.ContainedBodyPart.TryInstallDroppedMechanism(this))
                 {
-                    _sharedNotifyManager.PopupMessage(eventArgs.Target, eventArgs.User,
-                        Loc.GetString("You can't fit it in!"));
+                    eventArgs.Target.PopupMessage(eventArgs.User, Loc.GetString("You can't fit it in!"));
                 }
             }
         }
@@ -141,7 +139,7 @@ namespace Content.Server.GameObjects.Components.Body
             }
             else // If surgery cannot be performed, show message saying so.
             {
-                _sharedNotifyManager.PopupMessage(eventArgs.Target, eventArgs.User,
+                eventArgs.Target.PopupMessage(eventArgs.User,
                     Loc.GetString("You see no way to install the {0}.", Owner.Name));
             }
         }
@@ -167,7 +165,7 @@ namespace Content.Server.GameObjects.Components.Body
             // TODO: sanity checks to see whether user is in range, user is still able-bodied, target is still the same, etc etc
             if (!_optionsCache.TryGetValue(key, out var targetObject))
             {
-                _sharedNotifyManager.PopupMessage(_bodyManagerComponentCache.Owner, _performerCache,
+                _bodyManagerComponentCache.Owner.PopupMessage(_performerCache,
                     Loc.GetString("You see no useful way to use the {0} anymore.", Owner.Name));
                 return;
             }
@@ -177,10 +175,7 @@ namespace Content.Server.GameObjects.Components.Body
                 ? Loc.GetString("You jam the {0} inside {1:them}.", ContainedMechanism.Name, _performerCache)
                 : Loc.GetString("You can't fit it in!");
 
-            _sharedNotifyManager.PopupMessage(
-                _bodyManagerComponentCache.Owner,
-                _performerCache,
-                message);
+            _bodyManagerComponentCache.Owner.PopupMessage(_performerCache, message);
 
             // TODO: {1:theName}
         }
