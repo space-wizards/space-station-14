@@ -1,8 +1,11 @@
 ﻿#nullable enable
+using System;
 using System.Linq;
 using Content.Server.GameObjects.Components.Body;
 using Content.Shared.Body.Part;
+using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Damage;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.Random;
@@ -142,6 +145,60 @@ namespace Content.Server.Body
             }
 
             shell.SendText(player, $"No mechanism was found with name {mechanismName}.");
+        }
+    }
+
+    class HurtCommand : IClientCommand
+    {
+        public string Command => "hurt";
+        public string Description => "Ouch";
+        public string Help => $"Usage: {Command} <type> <amount> (<ignoreResistance>)";
+
+        public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
+        {
+            if (args.Length > 2)
+            {
+                shell.SendText(player, Help);
+                return;
+            }
+
+            // Send all damage types if we can't parse
+            if (!Enum.TryParse<DamageClass>(args[0], true, out var type))
+            {
+                shell.SendText(player, $"Damage Types:\n{string.Join('\n', Enum.GetNames(typeof(DamageClass)))}");
+                return;
+            }
+
+            var ignoreResistance = false;
+            if (!int.TryParse(args[1], out var amount) ||
+                args.Length >= 3 && !bool.TryParse(args[2], out ignoreResistance))
+            {
+                shell.SendText(player, Help);
+                return;
+            }
+
+            if (player == null)
+            {
+                shell.SendText(player, "Only a player can run this command.");
+                return;
+            }
+
+            if (player.AttachedEntity == null)
+            {
+                shell.SendText(player, "You have no entity.");
+                return;
+            }
+
+            if (!player.AttachedEntity.TryGetComponent(out BodyManagerComponent? body))
+            {
+                shell.SendText(player, "You have no body.");
+                return;
+            }
+
+            if (!body.ChangeDamage(type, amount, ignoreResistance))
+            {
+                shell.SendText(player, "Something went wrong!");
+            }
         }
     }
 }
