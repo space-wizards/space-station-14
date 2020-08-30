@@ -18,8 +18,6 @@ namespace Content.Client.GameObjects.Components.Atmos
     [UsedImplicitly]
     public class PipeVisualizer : AppearanceVisualizer
     {
-        private readonly List<object> _pipeLayerKeys = new List<object>();
-
         private RSI _pipeRSI;
 
         public override void LoadData(YamlMappingNode node)
