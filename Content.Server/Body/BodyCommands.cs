@@ -3,6 +3,7 @@ using Content.Server.GameObjects.Components.Body;
 using Content.Shared.Body.Part;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Damage;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.Random;
@@ -188,13 +189,13 @@ namespace Content.Server.Body
                 return;
             }
 
-            if (!player.AttachedEntity.TryGetComponent(out BodyManagerComponent? body))
+            if (!player.AttachedEntity.TryGetComponent(out IDamageableComponent? damageable))
             {
-                shell.SendText(player, "You have no body.");
+                shell.SendText(player, "You can't be damaged.");
                 return;
             }
 
-            if (!body.ChangeDamage(type, amount, ignoreResistance))
+            if (!damageable.ChangeDamage(type, amount, ignoreResistance))
             {
                 shell.SendText(player, "Something went wrong!");
             }
