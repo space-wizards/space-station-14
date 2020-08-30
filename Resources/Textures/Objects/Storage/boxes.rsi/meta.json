@@ -26,6 +26,24 @@
       ]
     },
     {
+      "name": "meson",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "sechud",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
       "name": "box",
       "directions": 1,
       "delays": [
@@ -53,24 +71,6 @@
       ]
     },
     {
-      "name": "box_lh",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
-    },
-    {
       "name": "box_of_doom",
       "directions": 1,
       "delays": [
@@ -83,24 +83,6 @@
       "name": "box_of_doom_big",
       "directions": 1,
       "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "box_rh",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
         [
           1
         ]

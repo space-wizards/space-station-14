@@ -102,3 +102,25 @@
   - type: Item
   - type: Storage
     capacity: 3
+
+- type: entity
+  name: meson box
+  parent: BoxBase
+  id: BoxMesonScanners
+  description:
+  components:
+  - type: StorageFill
+    contents:
+      - MesonGlasses
+      - MesonGlasses
+      - MesonGlasses
+      - MesonGlasses
+  - type: Sprite
+    layers:
+      - state: box
+      - state: meson
+  - type: Icon
+    state: meson
+  - type: Item
+  - type: Storage
+    capacity: 20
