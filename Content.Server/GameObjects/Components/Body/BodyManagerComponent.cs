@@ -8,7 +8,6 @@ using Content.Server.Body.Network;
 using Content.Server.GameObjects.Components.Metabolism;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
-using Content.Server.Mobs;
 using Content.Server.Observer;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Part.Properties.Movement;
@@ -20,6 +19,7 @@ using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Movement;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
@@ -280,14 +280,14 @@ namespace Content.Server.GameObjects.Components.Body
             if (speedSum <= 0.001f || _activeLegs.Count <= 0)
             {
                 // Case: no way of moving. Fall down.
-                StandingStateHelper.Down(Owner);
+                EntitySystem.Get<StandingStateSystem>().Down(Owner);
                 playerMover.BaseWalkSpeed = 0.8f;
                 playerMover.BaseSprintSpeed = 2.0f;
             }
             else
             {
                 // Case: have at least one leg. Set move speed.
-                StandingStateHelper.Standing(Owner);
+                EntitySystem.Get<StandingStateSystem>().Standing(Owner);
 
                 // Extra legs stack diminishingly.
                 // Final speed = speed sum/(leg count-log4(leg count))

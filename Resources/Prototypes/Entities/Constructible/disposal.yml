@@ -10,20 +10,6 @@
   - type: InteractionOutline
   - type: Collidable
     anchored: true
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.3,-0.3,0.3,0.3"
-      mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
-      layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
   - type: SnapGrid
     offset: Center
   - type: Anchorable

@@ -15,6 +15,7 @@ using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Items.Storage
@@ -122,7 +123,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                     return;
                 }
 
-                data.Text = "Pick Up";
+                data.Text = Loc.GetString("Pick Up");
             }
 
             protected override void Activate(IEntity user, ItemComponent component)

@@ -5,6 +5,7 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs.Roles;
+using Content.Server.Mobs.Roles.Suspicion;
 using Content.Server.Players;
 using Content.Shared.GameObjects.Components.Damage;
 using Robust.Server.GameObjects.EntitySystems;
