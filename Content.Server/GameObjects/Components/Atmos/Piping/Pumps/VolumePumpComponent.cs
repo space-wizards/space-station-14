@@ -1,8 +1,10 @@
 ﻿using Content.Server.Atmos;
+using Content.Shared.Atmos;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System;
+using System.Diagnostics;
 
 namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
 {
@@ -38,15 +40,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
         protected override void PumpGas(GasMixture inletGas, GasMixture outletGas)
         {
             var volumeRatio = Math.Clamp(VolumePumpRate / inletGas.Volume, 0, 1);
-
-            var transferedVolume = Math.Min(VolumePumpRate, inletGas.Volume);
-            var transferingGas = new GasMixture(transferedVolume);
-            transferingGas.Merge(inletGas);
-            transferingGas.Multiply(volumeRatio);
-
-            inletGas.Remove(transferingGas.TotalMoles);
-
-            outletGas.Merge(transferingGas);
+            outletGas.Merge(inletGas.RemoveRatio(volumeRatio));
         }
     }
 }
