@@ -33,6 +33,10 @@
   components:
   - type: StorageFill
     contents:
+      - MaskSterile
+      - MaskSterile
+      - MaskSterile
+      - MaskSterile
   - type: Sprite
     layers:
       - state: box
@@ -44,10 +48,10 @@
       - state: box
       - state: sterile
   - type: Storage
-    capacity: 30
+    capacity: 20
 
 - type: entity
-  name: latex box 
+  name: latex box
   parent: BoxBase
   id: BoxLatex
   description:
