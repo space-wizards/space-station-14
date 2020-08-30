@@ -57,7 +57,7 @@
       - MagazinePistolSmg
       - ShotgunGladstone
       - ShotgunGladstone
-# V This is probably an issue.
+# V This is probably an issue, will implement shotgun boxes and change this - Swept
       - ShellShotgun
       - ShellShotgun
       - ShellShotgun
@@ -84,6 +84,7 @@
       - HatLightRiot
       - ShotgunGladstone
       - ShotgunGladstone
+# See 60
       - ShellShotgunBeanbag
       - ShellShotgunBeanbag
       - ShellShotgunBeanbag
@@ -121,3 +122,5 @@
 #      - SecGasmask
 #      - SecGasmask
 #      - SpacelawBook
+
+# Cosmetic Crates
