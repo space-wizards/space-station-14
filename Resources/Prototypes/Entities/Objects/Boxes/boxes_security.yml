@@ -14,7 +14,7 @@
       - Handcuffs
   - type: Sprite
     layers:
-      - state: box
+      - state: box_security
       - state: handcuff
   - type: Icon
     state: handcuff
@@ -36,7 +36,7 @@
       - Flashbang
   - type: Sprite
     layers:
-      - state: box
+      - state: box_security
       - state: flashbang
   - type: Icon
     state: flashbang
