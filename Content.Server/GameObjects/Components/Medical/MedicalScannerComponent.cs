@@ -2,15 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Body;
-using Content.Server.GameObjects.Components.Explosion;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces;
-using Content.Server.Mobs;
 using Content.Server.Players;
 using Content.Server.Utility;
+using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Medical;
 using Content.Shared.GameObjects.EntitySystems;
@@ -20,15 +17,12 @@ using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
+using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Maths;
-using Content.Shared.Damage;
-using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.Preferences;
-using Robust.Server.Interfaces.Player;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Medical
@@ -86,8 +80,14 @@ namespace Content.Server.GameObjects.Components.Medical
                 return EmptyUIState;
             }
 
-            if (!body.TryGetComponent(out IDamageableComponent? damageable) ||
+            /*if (!body.TryGetComponent(out IDamageableComponent? damageable) ||
                 damageable.CurrentDamageState == DamageState.Dead)
+            {
+                return EmptyUIState;
+            }*/
+
+
+            if (!body.TryGetComponent(out IDamageableComponent? damageable))
             {
                 return EmptyUIState;
             }
@@ -236,24 +236,25 @@ namespace Content.Server.GameObjects.Components.Medical
 
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
-            if (!(obj.Message is UiButtonPressedMessage message))
-            {
-                return;
-            }
+            if (!(obj.Message is UiButtonPressedMessage message)) return;
 
             switch (message.Button)
             {
                 case UiButton.ScanDNA:
                     if (_bodyContainer.ContainedEntity != null)
                     {
-                        //TODO: Show a 'ERROR: Body is completly devoid of soul'. this will fail if there's no player attatched to the body. This isn't so much a problem for cloning since if they're not attached they've probably moved onto another entity.
+                        //TODO: Show a 'ERROR: Body is completely devoid of soul' if no Mind owns the entity.
                         CloningSystem.AddToDnaScans(_playerManager
-                            .GetPlayersBy(x => x.AttachedEntity != null
-                                               && x.AttachedEntityUid == _bodyContainer.ContainedEntity.Uid).First()
+                            .GetPlayersBy(playerSession =>
+                            {
+                                var mindOwnedMob = playerSession.ContentData()?.Mind?.OwnedEntity;
+
+                                return mindOwnedMob != null && mindOwnedMob ==
+                                    _bodyContainer.ContainedEntity;
+                            }).Single()
                             .ContentData()
                             ?.Mind);
                     }
-
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
