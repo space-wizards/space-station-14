@@ -17,6 +17,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System;
+using Content.Server.Utility;
 
 namespace Content.Server.GameObjects.Components.Movement
 {
@@ -207,8 +208,12 @@ namespace Content.Server.GameObjects.Components.Movement
                 // we may potentially need additional logic since we're forcing a player onto a climbable
                 // there's also the cases where the user might collide with the person they are forcing onto the climbable that i haven't accounted for
 
-                PopupMessageOtherClientsInRange(user, Loc.GetString("{0:theName} forces {1:theName} onto {2:theName}!", user, entityToMove, Owner), 15);
-                user.PopupMessage(user, Loc.GetString("You force {0:theName} onto {1:theName}!", entityToMove, Owner));
+                var othersMessage = Loc.GetString("{0:theName} forces {1:theName} onto {2:theName}!", user,
+                    entityToMove, Owner);
+                user.PopupMessageOtherClients(othersMessage);
+
+                var selfMessage = Loc.GetString("You force {0:theName} onto {1:theName}!", entityToMove, Owner);
+                user.PopupMessage(selfMessage);
             }
         }
 
@@ -243,25 +248,11 @@ namespace Content.Server.GameObjects.Components.Movement
 
                 climbMode.TryMoveTo(user.Transform.WorldPosition, endPoint);
 
-                PopupMessageOtherClientsInRange(user, Loc.GetString("{0:theName} jumps onto {1:theName}!", user, Owner), 15);
-                user.PopupMessage(user, Loc.GetString("You jump onto {0:theName}!", Owner));
-            }
-        }
+                var othersMessage = Loc.GetString("{0:theName} jumps onto {1:theName}!", user, Owner);
+                user.PopupMessageOtherClients(othersMessage);
 
-        private void PopupMessageOtherClientsInRange(IEntity source, string message, int maxReceiveDistance)
-        {
-            var viewers = _playerManager.GetPlayersInRange(source.Transform.GridPosition, maxReceiveDistance);
-
-            foreach (var viewer in viewers)
-            {
-                var viewerEntity = viewer.AttachedEntity;
-
-                if (viewerEntity == null || source == viewerEntity)
-                {
-                    continue;
-                }
-
-                source.PopupMessage(viewer.AttachedEntity, message);
+                var selfMessage = Loc.GetString("You jump onto {0:theName}!", Owner);
+                user.PopupMessage(selfMessage);
             }
         }
 

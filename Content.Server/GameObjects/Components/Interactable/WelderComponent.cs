@@ -8,7 +8,7 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects;
-using Content.Server.GameObjects.EntitySystems.DoAfter;
+using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Interactable;
@@ -17,7 +17,6 @@ using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -258,39 +257,37 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         public SuicideKind Suicide(IEntity victim, IChatManager chat)
         {
+            string othersMessage;
+            string selfMessage;
+
             if (TryWeld(5, victim, silent: true))
             {
                 PlaySoundCollection(WeldSoundCollection);
-                PopupMessageOtherClientsInRange(victim, Loc.GetString("{0:theName} welds {0:their} every orifice closed! It looks like {0:theyre} trying to commit suicide!", victim), 15);
-                _notifyManager.PopupMessage(victim, victim, Loc.GetString("You weld your every orifice closed!"));
+
+                othersMessage =
+                    Loc.GetString(
+                        "{0:theName} welds {0:their} every orifice closed! It looks like {0:theyre} trying to commit suicide!",
+                        victim);
+                victim.PopupMessageOtherClients(othersMessage);
+
+                selfMessage = Loc.GetString("You weld your every orifice closed!");
+                victim.PopupMessage(selfMessage);
+
                 return SuicideKind.Heat;
             }
 
-            PopupMessageOtherClientsInRange(victim, Loc.GetString("{0:theName} bashes themselves with the unlit welding torch!", victim), 15);
-            _notifyManager.PopupMessage(victim, victim, Loc.GetString("You bash yourself with the unlit welding torch!"));
+            othersMessage = Loc.GetString("{0:theName} bashes themselves with the unlit welding torch!", victim);
+            victim.PopupMessageOtherClients(othersMessage);
+
+            selfMessage = Loc.GetString("You bash yourself with the unlit welding torch!");
+            victim.PopupMessage(selfMessage);
+
             return SuicideKind.Blunt;
         }
 
         public void SolutionChanged(SolutionChangeEventArgs eventArgs)
         {
             Dirty();
-        }
-
-        private void PopupMessageOtherClientsInRange(IEntity source, string message, int maxReceiveDistance)
-        {
-            var viewers = _playerManager.GetPlayersInRange(source.Transform.GridPosition, maxReceiveDistance);
-
-            foreach (var viewer in viewers)
-            {
-                var viewerEntity = viewer.AttachedEntity;
-
-                if (viewerEntity == null || source == viewerEntity)
-                {
-                    continue;
-                }
-
-                source.PopupMessage(viewer.AttachedEntity, message);
-            }
         }
     }
 }
