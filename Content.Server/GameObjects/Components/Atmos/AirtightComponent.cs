@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.Atmos;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
@@ -22,6 +23,8 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public override string Name => "Airtight";
 
+        [ViewVariables]
+        private int _airBlockedDirection;
         private bool _airBlocked = true;
         private bool _fixVacuum = false;
 
@@ -33,10 +36,18 @@ namespace Content.Server.GameObjects.Components.Atmos
             {
                 _airBlocked = value;
 
-                if (Owner.TryGetComponent(out SnapGridComponent? snapGrid))
-                {
-                    EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(Owner.Transform.GridID)?.Revalidate(snapGrid.Position);
-                }
+                UpdatePosition();
+            }
+        }
+
+        public AtmosDirection AirBlockedDirection
+        {
+            get => (AtmosDirection)_airBlockedDirection;
+            set
+            {
+                _airBlockedDirection = (int) value;
+
+                UpdatePosition();
             }
         }
 
@@ -49,16 +60,16 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             serializer.DataField(ref _airBlocked, "airBlocked", true);
             serializer.DataField(ref _fixVacuum, "fixVacuum", true);
+            serializer.DataField(ref _airBlockedDirection, "airBlockedDirection", (int)AtmosDirection.All, WithFormat.Flags<AtmosDirectionFlags>());
         }
 
         public override void Initialize()
         {
             base.Initialize();
 
-            // Using the SnapGrid is critical for the performance of the room builder, and thus if
-            // it is absent the component will not be airtight. A warning is much easier to track
-            // down than the object magically not being airtight, so log one if the SnapGrid component
-            // is missing.
+            // Using the SnapGrid is critical for performance, and thus if it is absent the component
+            // will not be airtight. A warning is much easier to track down than the object magically
+            // not being airtight, so log one if the SnapGrid component is missing.
             if (!Owner.EnsureComponent(out SnapGridComponent _))
                 Logger.Warning($"Entity {Owner} at {Owner.Transform.MapPosition.ToString()} didn't have a {nameof(SnapGridComponent)}");
 
@@ -87,13 +98,10 @@ namespace Content.Server.GameObjects.Components.Atmos
                 snapGrid.OnPositionChanged -= OnTransformMove;
             }
 
-            if (_fixVacuum)
-            {
-                var mapIndices = Owner.Transform.GridPosition.ToMapIndices(_mapManager);
-                EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(Owner.Transform.GridID)?.FixVacuum(mapIndices);
-            }
+            UpdatePosition(_lastPosition.Item1, _lastPosition.Item2);
 
-            UpdatePosition();
+            if (_fixVacuum)
+                EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(_lastPosition.Item1)?.FixVacuum(_lastPosition.Item2);
         }
 
         private void OnTransformMove()
@@ -109,13 +117,18 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         private void UpdatePosition()
         {
-            var mapIndices = Owner.Transform.GridPosition.ToMapIndices(_mapManager);
-            UpdatePosition(Owner.Transform.GridID, mapIndices);
+            if (Owner.TryGetComponent(out SnapGridComponent? snapGrid))
+                UpdatePosition(Owner.Transform.GridID, snapGrid.Position);
         }
 
         private void UpdatePosition(GridId gridId, MapIndices pos)
         {
-            EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(gridId)?.Invalidate(pos);
+            var gridAtmos = EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(gridId);
+
+            if (gridAtmos == null) return;
+
+            gridAtmos.UpdateAdjacentBits(pos);
+            gridAtmos.Invalidate(pos);
         }
     }
 }

@@ -210,64 +210,64 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         private void Revalidate()
         {
+            if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return;
+
             foreach (var indices in _invalidatedCoords.ToArray())
             {
-                Revalidate(indices);
+                var tile = GetTile(indices);
+
+                if (tile == null)
+                {
+                    tile = new TileAtmosphere(this, mapGrid.Grid.Index, indices, new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C});
+                    _tiles[indices] = tile;
+                }
+
+                if (IsSpace(indices))
+                {
+                    tile.Air = new GasMixture(GetVolumeForCells(1));
+                    tile.Air.MarkImmutable();
+                    _tiles[indices] = tile;
+
+                } else if (IsAirBlocked(indices))
+                {
+                    tile.Air = null;
+                }
+                else
+                {
+                    var obs = GetObstructingComponent(indices);
+
+                    if (obs != null)
+                    {
+                        if (tile.Air == null && obs.FixVacuum)
+                        {
+                            FixVacuum(tile.GridIndices);
+                        }
+                    }
+
+                    tile.Air ??= new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C};
+                }
+
+                AddActiveTile(tile);
+                tile.UpdateAdjacent();
+                tile.UpdateVisuals();
+
+                for (var i = 0; i < Atmospherics.Directions; i++)
+                {
+                    var direction = (AtmosDirection) (1 << i);
+                    var otherIndices = indices.Offset(direction.ToDirection());
+                    var otherTile = GetTile(otherIndices);
+                    AddActiveTile(otherTile);
+                    otherTile?.UpdateAdjacent(direction.GetOpposite());
+                }
             }
 
             _invalidatedCoords.Clear();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Revalidate(MapIndices indices)
+        public void UpdateAdjacentBits(MapIndices indices)
         {
-            if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return;
-
-            var tile = GetTile(indices);
-
-            if (tile == null)
-            {
-                tile = new TileAtmosphere(this, mapGrid.Grid.Index, indices, new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C});
-                _tiles[indices] = tile;
-            }
-
-            if (IsSpace(indices))
-            {
-                tile.Air = new GasMixture(GetVolumeForCells(1));
-                tile.Air.MarkImmutable();
-                _tiles[indices] = tile;
-
-            } else if (IsAirBlocked(indices))
-            {
-                tile.Air = null;
-            }
-            else
-            {
-                var obs = GetObstructingComponent(indices);
-
-                if (obs != null)
-                {
-                    if (tile.Air == null && obs.FixVacuum)
-                    {
-                        FixVacuum(tile.GridIndices);
-                    }
-                }
-
-                tile.Air ??= new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C};
-            }
-
-            AddActiveTile(tile);
-            tile.UpdateAdjacent();
-            tile.UpdateVisuals();
-
-            for (var i = 0; i < Atmospherics.Directions; i++)
-            {
-                var direction = (AtmosDirection) (1 << i);
-                var otherIndices = indices.Offset(direction.ToDirection());
-                var otherTile = GetTile(otherIndices);
-                AddActiveTile(otherTile);
-                otherTile?.UpdateAdjacent(direction.GetOpposite());
-            }
+            GetTile(indices)?.UpdateAdjacent();
         }
 
         /// <inheritdoc />
@@ -413,10 +413,10 @@ namespace Content.Server.GameObjects.Components.Atmos
         }
 
         /// <inheritdoc />
-        public bool IsAirBlocked(MapIndices indices)
+        public bool IsAirBlocked(MapIndices indices, AtmosDirection direction = AtmosDirection.All)
         {
             var ac = GetObstructingComponent(indices);
-            return ac != null && ac.AirBlocked;
+            return ac != null && ac.AirBlocked && ac.AirBlockedDirection.HasFlag(direction);
         }
 
         /// <inheritdoc />

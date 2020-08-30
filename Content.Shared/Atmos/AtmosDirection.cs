@@ -1,13 +1,15 @@
 ﻿using System;
 using Robust.Shared.Maths;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos
 {
     /// <summary>
     ///     The reason we use this over <see cref="Direction"/> is that we are going to do some heavy bitflag usage.
     /// </summary>
-    [Flags]
-    public enum AtmosDirection : byte
+    [Flags, Serializable]
+    [FlagsFor(typeof(AtmosDirectionFlags))]
+    public enum AtmosDirection
     {
         Invalid = 0,
         North   = 1 << 0,
@@ -86,4 +88,6 @@ namespace Content.Shared.Atmos
             return direction | other;
         }
     }
+
+    public sealed class AtmosDirectionFlags { }
 }
