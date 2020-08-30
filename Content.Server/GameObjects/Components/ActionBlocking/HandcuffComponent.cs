@@ -23,9 +23,6 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
     [RegisterComponent]
     public class HandcuffComponent : SharedHandcuffComponent, IAfterInteract
     {
-        [Dependency]
-        private readonly ISharedNotifyManager _notifyManager;
-
         /// <summary>
         ///     The time it takes to apply a <see cref="CuffedComponent"/> to an entity.
         /// </summary>
@@ -161,36 +158,36 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
             if (eventArgs.Target == eventArgs.User)
             {
-                _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, Loc.GetString("You can't cuff yourself!"));
+                eventArgs.User.PopupMessage(Loc.GetString("You can't cuff yourself!"));
                 return;
             }
 
             if (Broken)
             {
-                _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, Loc.GetString("The cuffs are broken!"));
+                eventArgs.User.PopupMessage(Loc.GetString("The cuffs are broken!"));
                 return;
             }
 
             if (!eventArgs.Target.TryGetComponent<HandsComponent>(out var hands))
             {
-                _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, Loc.GetString("{0:theName} has no hands!", eventArgs.Target));
+                eventArgs.User.PopupMessage(Loc.GetString("{0:theName} has no hands!", eventArgs.Target));
                 return;
             }
 
             if (cuffed.CuffedHandCount == hands.Count)
             {
-                _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, Loc.GetString("{0:theName} has no free hands to handcuff!", eventArgs.Target));
+                eventArgs.User.PopupMessage(Loc.GetString("{0:theName} has no free hands to handcuff!", eventArgs.Target));
                 return;
             }
 
             if (!eventArgs.InRangeUnobstructed(_interactRange, ignoreInsideBlocker: true))
             {
-                _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, Loc.GetString("You are too far away to use the cuffs!"));
+                eventArgs.User.PopupMessage(Loc.GetString("You are too far away to use the cuffs!"));
                 return;
             }
 
-            _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, Loc.GetString("You start cuffing {0:theName}.", eventArgs.Target));
-            _notifyManager.PopupMessage(eventArgs.User, eventArgs.Target, Loc.GetString("{0:theName} starts cuffing you!", eventArgs.User));
+            eventArgs.User.PopupMessage(Loc.GetString("You start cuffing {0:theName}.", eventArgs.Target));
+            eventArgs.User.PopupMessage(eventArgs.Target, Loc.GetString("{0:theName} starts cuffing you!", eventArgs.User));
             _audioSystem.PlayFromEntity(StartCuffSound, Owner);
 
             TryUpdateCuff(eventArgs.User, eventArgs.Target, cuffed);
@@ -222,8 +219,8 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             if (result != DoAfterStatus.Cancelled)
             {
                 _audioSystem.PlayFromEntity(EndCuffSound, Owner);
-                _notifyManager.PopupMessage(user, user, Loc.GetString("You successfully cuff {0:theName}.", target));
-                _notifyManager.PopupMessage(target, target, Loc.GetString("You have been cuffed by {0:theName}!", user));
+                user.PopupMessage(Loc.GetString("You successfully cuff {0:theName}.", target));
+                target.PopupMessage(Loc.GetString("You have been cuffed by {0:theName}!", user));
 
                 if (user.TryGetComponent<HandsComponent>(out var hands))
                 {
@@ -237,8 +234,8 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             }
             else
             {
-                user.PopupMessage(user, Loc.GetString("You were interrupted while cuffing {0:theName}!", target));
-                target.PopupMessage(target, Loc.GetString("You interrupt {0:theName} while they are cuffing you!", user));
+                user.PopupMessage(Loc.GetString("You were interrupted while cuffing {0:theName}!", target));
+                target.PopupMessage(Loc.GetString("You interrupt {0:theName} while they are cuffing you!", user));
             }
         }
     }

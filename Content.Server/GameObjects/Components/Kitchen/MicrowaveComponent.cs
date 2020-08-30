@@ -210,7 +210,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
             if (itemEntity == null)
             {
-                eventArgs.User.PopupMessage(eventArgs.User, Loc.GetString("You have no active hand!"));
+                eventArgs.User.PopupMessage(Loc.GetString("You have no active hand!"));
                 return false;
             }
 
