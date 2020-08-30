@@ -1,14 +1,14 @@
 ﻿- type: entity
-  id: CloningMachine
-  name: Cloning Machine
-  description: A bulky medical scanner.
+  id: CloningPod
+  name: Cloning Pod
+  description: A Cloning Pod. 50% reliable.
   components:
     - type: Sprite
       netsync: false
       sprite: Objects/Specific/Medical/cloning.rsi
       layers:
         - state: pod_0
-          map: ["enum.CloningMachineVisualLayers.Machine"]
+          map: ["enum.CloningPodVisualLayers.Machine"]
     - type: PowerReceiver
     - type: Icon
       sprite: Objects/Specific/Medical/cloning.rsi
@@ -31,13 +31,13 @@
       anchored: true
     - type: SnapGrid
       offset: Center
-    - type: CloningMachine
+    - type: CloningPod
     - type: Destructible
       deadThreshold: 100
     - type: Appearance
       visuals:
-        - type: CloningMachineVisualizer
+        - type: CloningPodVisualizer
     - type: UserInterface
       interfaces:
-        - key: enum.CloningMachineUIKey.Key
-          type: CloningMachineBoundUserInterface
+        - key: enum.CloningPodUIKey.Key
+          type: CloningPodBoundUserInterface

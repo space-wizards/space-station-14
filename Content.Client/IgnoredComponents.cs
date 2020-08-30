@@ -9,7 +9,7 @@
             "Breakable",
             "Pickaxe",
             "Interactable",
-            "CloningMachine",
+            "CloningPod",
             "Destructible",
             "Temperature",
             "Explosive",

@@ -66,7 +66,7 @@ namespace Content.Server.GameObjects.Components.Mobs
         public override void Initialize()
         {
             base.Initialize();
-            Owner.EntityManager.EventBus.SubscribeEvent<CloningMachineComponent.CloningStartedMessage>(
+            Owner.EntityManager.EventBus.SubscribeEvent<CloningPodComponent.CloningStartedMessage>(
                 EventSource.Local, this,
                 HandleCloningStartedMessage);
 
@@ -76,7 +76,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
         }
 
-        private void HandleCloningStartedMessage(CloningMachineComponent.CloningStartedMessage ev)
+        private void HandleCloningStartedMessage(CloningPodComponent.CloningStartedMessage ev)
         {
             if (ev.CapturedMind == Mind)
             {
@@ -93,7 +93,7 @@ namespace Content.Server.GameObjects.Components.Mobs
         public override void OnRemove()
         {
             base.OnRemove();
-            Owner.EntityManager.EventBus.UnsubscribeEvent<CloningMachineComponent.CloningStartedMessage>(EventSource.Local, this);
+            Owner.EntityManager.EventBus.UnsubscribeEvent<CloningPodComponent.CloningStartedMessage>(EventSource.Local, this);
         }
 
         /// <summary>

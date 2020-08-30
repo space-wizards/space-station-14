@@ -7,27 +7,27 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using static Content.Shared.GameObjects.Components.Medical.SharedCloningMachineComponent;
+using static Content.Shared.GameObjects.Components.Medical.SharedCloningPodComponent;
 
-namespace Content.Client.GameObjects.Components.CloningMachine
+namespace Content.Client.GameObjects.Components.CloningPod
 {
     [UsedImplicitly]
-    public class CloningMachineBoundUserInterface : BoundUserInterface
+    public class CloningPodBoundUserInterface : BoundUserInterface
     {
         [Dependency] private readonly ILocalizationManager _localization;
 
-        public CloningMachineBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public CloningPodBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
         }
 
-        private CloningMachineWindow _window;
+        private CloningPodWindow _window;
 
         protected override void Open()
         {
             base.Open();
 
 
-            _window = new CloningMachineWindow(new Dictionary<int, string>(), _localization);
+            _window = new CloningPodWindow(new Dictionary<int, string>(), _localization);
             _window.OnClose += Close;
             _window.CloneButton.OnPressed += _ => SendMessage(new UiButtonPressedMessage(UiButton.Clone,_window.SelectedScan));
             _window.EjectButton.OnPressed += _ => SendMessage(new UiButtonPressedMessage(UiButton.Eject,_window.SelectedScan));
@@ -37,7 +37,7 @@ namespace Content.Client.GameObjects.Components.CloningMachine
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-            _window.Populate((CloningMachineBoundUserInterfaceState) state);
+            _window.Populate((CloningPodBoundUserInterfaceState) state);
         }
     }
 }

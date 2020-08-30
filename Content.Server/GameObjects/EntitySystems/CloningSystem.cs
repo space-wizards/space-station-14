@@ -13,7 +13,7 @@ namespace Content.Server.GameObjects.EntitySystems
     {
         public override void Update(float frameTime)
         {
-            foreach (var comp in ComponentManager.EntityQuery<CloningMachineComponent>())
+            foreach (var comp in ComponentManager.EntityQuery<CloningPodComponent>())
             {
                 comp.Update(frameTime);
             }

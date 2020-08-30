@@ -30,7 +30,7 @@ namespace Content.Server.GameObjects.Components.Medical
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class CloningMachineComponent : SharedCloningMachineComponent, IActivate
+    public class CloningPodComponent : SharedCloningPodComponent, IActivate
     {
         [Dependency] private readonly IServerPreferencesManager _prefsManager = null!;
 
@@ -39,11 +39,11 @@ namespace Content.Server.GameObjects.Components.Medical
 
         [ViewVariables]
         private BoundUserInterface? UserInterface =>
-            Owner.GetUIOrNull(CloningMachineUIKey.Key);
+            Owner.GetUIOrNull(CloningPodUIKey.Key);
 
         private ContainerSlot _bodyContainer = default!;
         private Mind? _capturedMind;
-        private CloningMachineStatus _status;
+        private CloningPodStatus _status;
         private float _clonningProgress = 0;
         private readonly IEntityManager _entityManager = IoCManager.Resolve<IEntityManager>();
         private readonly IPlayerManager _playerManager = IoCManager.Resolve<IPlayerManager>();
@@ -85,7 +85,7 @@ namespace Content.Server.GameObjects.Components.Medical
                 _capturedMind = null;
                 _clonningProgress = 0f;
 
-                _status = CloningMachineStatus.Idle;
+                _status = CloningPodStatus.Idle;
                 UpdateAppearance();
             }
 
@@ -99,16 +99,16 @@ namespace Content.Server.GameObjects.Components.Medical
             UserInterface?.SetState(GetUserInterfaceState());
         }
 
-        private CloningMachineBoundUserInterfaceState GetUserInterfaceState()
+        private CloningPodBoundUserInterfaceState GetUserInterfaceState()
         {
-            return new CloningMachineBoundUserInterfaceState(CloningSystem.getIdToUser(), _clonningProgress, (_status == CloningMachineStatus.Cloning));
+            return new CloningPodBoundUserInterfaceState(CloningSystem.getIdToUser(), _clonningProgress, (_status == CloningPodStatus.Cloning));
         }
 
         private void UpdateAppearance()
         {
             if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
-                appearance.SetData(CloningMachineVisuals.Status, _status);
+                appearance.SetData(CloningPodVisuals.Status, _status);
             }
         }
 
@@ -156,7 +156,7 @@ namespace Content.Server.GameObjects.Components.Medical
 
                     Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local,
                         new CloningStartedMessage(_capturedMind));
-                    _status = CloningMachineStatus.NoMind;
+                    _status = CloningPodStatus.NoMind;
                     UpdateAppearance();
 
                     break;
@@ -167,7 +167,7 @@ namespace Content.Server.GameObjects.Components.Medical
                     _bodyContainer.Remove(_bodyContainer.ContainedEntity!);
                     _capturedMind = null;
                     _clonningProgress = 0f;
-                    _status = CloningMachineStatus.Idle;
+                    _status = CloningPodStatus.Idle;
                     UpdateAppearance();
                     break;
 
@@ -203,7 +203,7 @@ namespace Content.Server.GameObjects.Components.Medical
                 //Transfer the mind to the new mob
                 _capturedMind.TransferTo(_bodyContainer.ContainedEntity);
 
-                _status = CloningMachineStatus.Cloning;
+                _status = CloningPodStatus.Cloning;
                 UpdateAppearance();
             }
         }

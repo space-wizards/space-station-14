@@ -2,23 +2,23 @@
 using Content.Shared.GameObjects.Components.Medical;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
-using static Content.Shared.GameObjects.Components.Medical.SharedCloningMachineComponent;
-using static Content.Shared.GameObjects.Components.Medical.SharedCloningMachineComponent.CloningMachineStatus;
+using static Content.Shared.GameObjects.Components.Medical.SharedCloningPodComponent;
+using static Content.Shared.GameObjects.Components.Medical.SharedCloningPodComponent.CloningPodStatus;
 
-namespace Content.Client.GameObjects.Components.CloningMachine
+namespace Content.Client.GameObjects.Components.CloningPod
 {
-    public class CloningMachineVisualizer : AppearanceVisualizer
+    public class CloningPodVisualizer : AppearanceVisualizer
     {
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
 
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
-            if (!component.TryGetData(CloningMachineVisuals.Status, out CloningMachineStatus status)) return;
-            sprite.LayerSetState(CloningMachineVisualLayers.Machine, StatusToMachineStateId(status));
+            if (!component.TryGetData(CloningPodVisuals.Status, out CloningPodStatus status)) return;
+            sprite.LayerSetState(CloningPodVisualLayers.Machine, StatusToMachineStateId(status));
         }
 
-        private string StatusToMachineStateId(CloningMachineStatus status)
+        private string StatusToMachineStateId(CloningPodStatus status)
         {
             //TODO: implement NoMind for if the mind is not yet in the body
             //TODO: Find a use for GORE POD
@@ -33,7 +33,7 @@ namespace Content.Client.GameObjects.Components.CloningMachine
             }
         }
 
-        public enum CloningMachineVisualLayers
+        public enum CloningPodVisualLayers
         {
             Machine,
         }

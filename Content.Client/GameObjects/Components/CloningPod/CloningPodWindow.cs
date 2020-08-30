@@ -9,11 +9,11 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using static Content.Shared.GameObjects.Components.Medical.SharedCloningMachineComponent;
+using static Content.Shared.GameObjects.Components.Medical.SharedCloningPodComponent;
 
-namespace Content.Client.GameObjects.Components.CloningMachine
+namespace Content.Client.GameObjects.Components.CloningPod
 {
-    public sealed class CloningMachineWindow : SS14Window
+    public sealed class CloningPodWindow : SS14Window
     {
         private Dictionary<int, string> _scanManager;
 
@@ -30,7 +30,7 @@ namespace Content.Client.GameObjects.Components.CloningMachine
         private Label _mindState;
 
         protected override Vector2 ContentsMinimumSize => _mainVBox?.CombinedMinimumSize ?? Vector2.Zero;
-        private CloningMachineBoundUserInterfaceState _lastUpdate = null!;
+        private CloningPodBoundUserInterfaceState _lastUpdate = null!;
 
         // List of scans that are visible based on current filter criteria.
         private readonly Dictionary<int, string> _filteredScans = new Dictionary<int, string>();
@@ -44,7 +44,7 @@ namespace Content.Client.GameObjects.Components.CloningMachine
 
         protected override Vector2? CustomSize => (250, 300);
 
-        public CloningMachineWindow(
+        public CloningPodWindow(
             Dictionary<int, string> scanManager,
             ILocalizationManager loc)
         {
@@ -139,7 +139,7 @@ namespace Content.Client.GameObjects.Components.CloningMachine
             _searchBar.GrabKeyboardFocus();
         }
 
-        public void Populate(CloningMachineBoundUserInterfaceState state)
+        public void Populate(CloningPodBoundUserInterfaceState state)
         {
             //Ignore useless updates or we can't interact with the UI
             //TODO: come up with a better comparision, probably write a comparator because '.Equals' doesn't work

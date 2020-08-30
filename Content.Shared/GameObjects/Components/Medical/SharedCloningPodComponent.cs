@@ -9,18 +9,18 @@ using Robust.Shared.Network;
 namespace Content.Shared.GameObjects.Components.Medical
 {
 
-    public class SharedCloningMachineComponent : Component
+    public class SharedCloningPodComponent : Component
     {
-        public override string Name => "CloningMachine";
+        public override string Name => "CloningPod";
 
         [Serializable, NetSerializable]
-        public class CloningMachineBoundUserInterfaceState : BoundUserInterfaceState
+        public class CloningPodBoundUserInterfaceState : BoundUserInterfaceState
         {
             public readonly Dictionary<int, string> MindIdName;
             public readonly float Progress;
             public readonly bool MindPresent;
 
-            public CloningMachineBoundUserInterfaceState(Dictionary<int, string> mindIdName, float progress, bool mindPresent)
+            public CloningPodBoundUserInterfaceState(Dictionary<int, string> mindIdName, float progress, bool mindPresent)
             {
                 MindIdName = mindIdName;
                 Progress = progress;
@@ -30,19 +30,19 @@ namespace Content.Shared.GameObjects.Components.Medical
 
 
         [Serializable, NetSerializable]
-        public enum CloningMachineUIKey
+        public enum CloningPodUIKey
         {
             Key
         }
 
         [Serializable, NetSerializable]
-        public enum CloningMachineVisuals
+        public enum CloningPodVisuals
         {
             Status
         }
 
         [Serializable, NetSerializable]
-        public enum CloningMachineStatus
+        public enum CloningPodStatus
         {
             Idle,
             Cloning,
