@@ -1,24 +1,49 @@
 ﻿#nullable enable
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Content.Server.Atmos;
+using Content.Server.Atmos.Reactions;
+using Content.Server.Interfaces;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
 using JetBrains.Annotations;
 using Robust.Server.Interfaces.Timing;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Map;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
     public class AtmosphereSystem : SharedAtmosphereSystem
     {
+        [Dependency] private readonly IPrototypeManager _protoMan = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPauseManager _pauseManager = default!;
+        [Dependency] private IEntityManager _entityManager = default!;
+
+        private GasReactionPrototype[] _gasReactions = Array.Empty<GasReactionPrototype>();
+
+        /// <summary>
+        ///     List of gas reactions ordered by priority.
+        /// </summary>
+        public IEnumerable<GasReactionPrototype> GasReactions => _gasReactions!;
+
+        /// <summary>
+        ///     EventBus reference for gas reactions.
+        /// </summary>
+        public IEventBus EventBus => _entityManager.EventBus;
 
         public override void Initialize()
         {
             base.Initialize();
+
+            _gasReactions = _protoMan.EnumeratePrototypes<GasReactionPrototype>().ToArray();
+            Array.Sort(_gasReactions, (a, b) => b.Priority.CompareTo(a.Priority));
 
             _mapManager.TileChanged += OnTileChanged;
         }

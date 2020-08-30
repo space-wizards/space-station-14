@@ -36,7 +36,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// <summary>
         ///     Check current execution time every n instances processed.
         /// </summary>
-        private const int LagCheckIterations = 15;
+        private const int LagCheckIterations = 30;
 
         /// <summary>
         ///     Max milliseconds allowed for atmos updates.
@@ -50,12 +50,24 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public override string Name => "GridAtmosphere";
 
+        private bool _paused = false;
         private float _timer = 0f;
         private Stopwatch _stopwatch = new Stopwatch();
+
+        [ViewVariables]
         public int UpdateCounter { get; private set; } = 0;
 
         [ViewVariables]
+        private double _tileEqualizeLastProcess;
+
+        [ViewVariables]
         private readonly HashSet<ExcitedGroup> _excitedGroups = new HashSet<ExcitedGroup>(1000);
+
+        [ViewVariables]
+        private int ExcitedGroupCount => _excitedGroups.Count;
+
+        [ViewVariables]
+        private double _excitedGroupLastProcess;
 
         [ViewVariables]
         private readonly Dictionary<MapIndices, TileAtmosphere> _tiles = new Dictionary<MapIndices, TileAtmosphere>(1000);
@@ -64,32 +76,67 @@ namespace Content.Server.GameObjects.Components.Atmos
         private readonly HashSet<TileAtmosphere> _activeTiles = new HashSet<TileAtmosphere>(1000);
 
         [ViewVariables]
+        private int ActiveTilesCount => _activeTiles.Count;
+
+        [ViewVariables]
+        private double _activeTilesLastProcess;
+
+        [ViewVariables]
         private readonly HashSet<TileAtmosphere> _hotspotTiles = new HashSet<TileAtmosphere>(1000);
+
+        [ViewVariables]
+        private int HotspotTilesCount => _hotspotTiles.Count;
+
+        [ViewVariables]
+        private double _hotspotsLastProcess;
 
         [ViewVariables]
         private readonly HashSet<TileAtmosphere> _superconductivityTiles = new HashSet<TileAtmosphere>(1000);
 
         [ViewVariables]
+        private int SuperconductivityTilesCount => _superconductivityTiles.Count;
+
+        [ViewVariables]
+        private double _superconductivityLastProcess;
+
+        [ViewVariables]
         private readonly HashSet<MapIndices> _invalidatedCoords = new HashSet<MapIndices>(1000);
+
+        [ViewVariables]
+        private int InvalidatedCoordsCount => _invalidatedCoords.Count;
 
         [ViewVariables]
         private HashSet<TileAtmosphere> _highPressureDelta = new HashSet<TileAtmosphere>(1000);
 
         [ViewVariables]
-        private readonly List<IPipeNet> _pipeNets = new List<IPipeNet>();
-
-        /// <summary>
-        ///     Index of most recently updated <see cref="IPipeNet"/>.
-        /// </summary>
-        private int _pipeNetIndex = 0;
+        private int HighPressureDeltaCount => _highPressureDelta.Count;
 
         [ViewVariables]
-        private readonly List<PipeNetDeviceComponent> _pipeNetDevices = new List<PipeNetDeviceComponent>();
+        private double _highPressureDeltaLastProcess;
 
-        /// <summary>
-        ///     Index of most recently updated <see cref="PipeNetDeviceComponent"/>.
-        /// </summary>
-        private int _deviceIndex = 0;
+        [ViewVariables]
+        private readonly HashSet<IPipeNet> _pipeNets = new HashSet<IPipeNet>();
+
+        [ViewVariables]
+        private double _pipeNetLastProcess;
+
+        [ViewVariables]
+        private readonly HashSet<PipeNetDeviceComponent> _pipeNetDevices = new HashSet<PipeNetDeviceComponent>();
+
+        [ViewVariables]
+        private double _pipeNetDevicesLastProcess;
+
+        [ViewVariables]
+        private Queue<TileAtmosphere> _currentRunTiles = new Queue<TileAtmosphere>();
+
+        [ViewVariables]
+        private Queue<ExcitedGroup> _currentRunExcitedGroups = new Queue<ExcitedGroup>();
+
+        [ViewVariables]
+        private Queue<IPipeNet> _currentRunPipeNet = new Queue<IPipeNet>();
+
+        [ViewVariables]
+        private Queue<PipeNetDeviceComponent> _currentRunPipeNetDevice = new Queue<PipeNetDeviceComponent>();
 
         [ViewVariables]
         private ProcessState _state = ProcessState.TileEqualize;
@@ -204,9 +251,10 @@ namespace Content.Server.GameObjects.Components.Atmos
                 tile.UpdateAdjacent();
                 tile.UpdateVisuals();
 
-                foreach (var direction in Cardinal)
+                for (var i = 0; i < Atmospherics.Directions; i++)
                 {
-                    var otherIndices = indices.Offset(direction);
+                    var direction = (AtmosDirection) (1 << i);
+                    var otherIndices = indices.Offset(direction.ToDirection());
                     var otherTile = GetTile(otherIndices);
                     AddActiveTile(otherTile);
                     otherTile?.UpdateAdjacent(direction.GetOpposite());
@@ -324,7 +372,6 @@ namespace Content.Server.GameObjects.Components.Atmos
         public void RemovePipeNet(IPipeNet pipeNet)
         {
             _pipeNets.Remove(pipeNet);
-            _deviceIndex = 0;
         }
 
         public void AddPipeNetDevice(PipeNetDeviceComponent pipeNetDevice)
@@ -335,28 +382,25 @@ namespace Content.Server.GameObjects.Components.Atmos
         public void RemovePipeNetDevice(PipeNetDeviceComponent pipeNetDevice)
         {
             _pipeNetDevices.Remove(pipeNetDevice);
-            _deviceIndex = 0;
         }
 
         /// <inheritdoc />
-        public TileAtmosphere? GetTile(GridCoordinates coordinates)
+        public TileAtmosphere? GetTile(GridCoordinates coordinates, bool createSpace = true)
         {
-            return GetTile(coordinates.ToMapIndices(_mapManager));
+            return GetTile(coordinates.ToMapIndices(_mapManager), createSpace);
         }
 
         /// <inheritdoc />
-        public TileAtmosphere? GetTile(MapIndices indices)
+        public TileAtmosphere? GetTile(MapIndices indices, bool createSpace = true)
         {
             if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return null;
 
             if (_tiles.TryGetValue(indices, out var tile)) return tile;
 
             // We don't have that tile!
-            if (IsSpace(indices))
+            if (IsSpace(indices) && createSpace)
             {
-                var space = new TileAtmosphere(this, mapGrid.Grid.Index, indices, new GasMixture(int.MaxValue){Temperature = Atmospherics.TCMB});
-                space.Air.MarkImmutable();
-                return space;
+                return new TileAtmosphere(this, mapGrid.Grid.Index, indices, new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.TCMB}, true);
             }
 
             return null;
@@ -378,22 +422,20 @@ namespace Content.Server.GameObjects.Components.Atmos
             return mapGrid.Grid.GetTileRef(indices).Tile.IsEmpty;
         }
 
-        public Dictionary<Direction, TileAtmosphere> GetAdjacentTiles(MapIndices indices, bool includeAirBlocked = false)
+        public Dictionary<AtmosDirection, TileAtmosphere> GetAdjacentTiles(MapIndices indices, bool includeAirBlocked = false)
         {
-            var sides = new Dictionary<Direction, TileAtmosphere>();
-            foreach (var dir in Cardinal)
+            var sides = new Dictionary<AtmosDirection, TileAtmosphere>();
+            for (var i = 0; i < Atmospherics.Directions; i++)
             {
-                var side = indices.Offset(dir);
+                var direction = (AtmosDirection) (1 << i);
+                var side = indices.Offset(direction.ToDirection());
                 var tile = GetTile(side);
                 if (tile != null && (tile.Air != null || includeAirBlocked))
-                    sides[dir] = tile;
+                    sides[direction] = tile;
             }
 
             return sides;
         }
-
-        /// <inheritdoc />
-        public int HighPressureDeltaCount => _highPressureDelta.Count;
 
         public long EqualizationQueueCycleControl { get; set; }
 
@@ -422,35 +464,83 @@ namespace Content.Server.GameObjects.Components.Atmos
             switch (_state)
             {
                 case ProcessState.TileEqualize:
-                    ProcessTileEqualize();
+                    if (!ProcessTileEqualize(_paused))
+                    {
+                        _paused = true;
+                        return;
+                    }
+
+                    _paused = false;
                     _state = ProcessState.ActiveTiles;
                     return;
                 case ProcessState.ActiveTiles:
-                    ProcessActiveTiles();
+                    if (!ProcessActiveTiles(_paused))
+                    {
+                        _paused = true;
+                        return;
+                    }
+
+                    _paused = false;
                     _state = ProcessState.ExcitedGroups;
                     return;
                 case ProcessState.ExcitedGroups:
-                    ProcessExcitedGroups();
+                    if (!ProcessExcitedGroups(_paused))
+                    {
+                        _paused = true;
+                        return;
+                    }
+
+                    _paused = false;
                     _state = ProcessState.HighPressureDelta;
                     return;
                 case ProcessState.HighPressureDelta:
-                    ProcessHighPressureDelta();
+                    if (!ProcessHighPressureDelta(_paused))
+                    {
+                        _paused = true;
+                        return;
+                    }
+
+                    _paused = false;
                     _state = ProcessState.Hotspots;
                     break;
                 case ProcessState.Hotspots:
-                    ProcessHotspots();
+                    if (!ProcessHotspots(_paused))
+                    {
+                        _paused = true;
+                        return;
+                    }
+
+                    _paused = false;
                     _state = ProcessState.Superconductivity;
                     break;
                 case ProcessState.Superconductivity:
-                    ProcessSuperconductivity();
+                    if (!ProcessSuperconductivity(_paused))
+                    {
+                        _paused = true;
+                        return;
+                    }
+
+                    _paused = false;
                     _state = ProcessState.PipeNet;
                     break;
                 case ProcessState.PipeNet:
-                    ProcessPipeNets();
+                    if (!ProcessPipeNets(_paused))
+                    {
+                        _paused = true;
+                        return;
+                    }
+
+                    _paused = false;
                     _state = ProcessState.PipeNetDevices;
                     break;
                 case ProcessState.PipeNetDevices:
-                    ProcessPipeNetDevices();
+                    if (!ProcessPipeNetDevices(_paused))
+                    {
+                        _paused = true;
+                        return;
+                    }
+
+                    _paused = false;
                     _state = ProcessState.TileEqualize;
                     break;
             }
@@ -458,47 +548,71 @@ namespace Content.Server.GameObjects.Components.Atmos
             UpdateCounter++;
         }
 
-        public void ProcessTileEqualize()
+        public bool ProcessTileEqualize(bool resumed = false)
         {
             _stopwatch.Restart();
 
+            if(!resumed)
+                _currentRunTiles = new Queue<TileAtmosphere>(_activeTiles);
+
             var number = 0;
-            foreach (var tile in _activeTiles.ToArray())
+            while (_currentRunTiles.Count > 0)
             {
+                var tile = _currentRunTiles.Dequeue();
                 tile.EqualizePressureInZone(UpdateCounter);
 
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
                 // Process the rest next time.
                 if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
-                    return;
+                {
+                    _tileEqualizeLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
+                    return false;
+                }
             }
+
+            _tileEqualizeLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
+            return true;
         }
 
-        public void ProcessActiveTiles()
+        public bool ProcessActiveTiles(bool resumed = false)
         {
             _stopwatch.Restart();
 
+            if(!resumed)
+                _currentRunTiles = new Queue<TileAtmosphere>(_activeTiles);
+
             var number = 0;
-            foreach (var tile in _activeTiles.ToArray())
+            while (_currentRunTiles.Count > 0)
             {
+                var tile = _currentRunTiles.Dequeue();
                 tile.ProcessCell(UpdateCounter);
 
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
                 // Process the rest next time.
                 if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
-                    return;
+                {
+                    _activeTilesLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
+                    return false;
+                }
             }
+
+            _activeTilesLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
+            return true;
         }
 
-        public void ProcessExcitedGroups()
+        public bool ProcessExcitedGroups(bool resumed = false)
         {
             _stopwatch.Restart();
 
+            if(!resumed)
+                _currentRunExcitedGroups = new Queue<ExcitedGroup>(_excitedGroups);
+
             var number = 0;
-            foreach (var excitedGroup in _excitedGroups.ToArray())
+            while (_currentRunExcitedGroups.Count > 0)
             {
+                var excitedGroup = _currentRunExcitedGroups.Dequeue();
                 excitedGroup.BreakdownCooldown++;
                 excitedGroup.DismantleCooldown++;
 
@@ -512,17 +626,27 @@ namespace Content.Server.GameObjects.Components.Atmos
                 number = 0;
                 // Process the rest next time.
                 if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
-                    return;
+                {
+                    _excitedGroupLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
+                    return false;
+                }
             }
+
+            _excitedGroupLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
+            return true;
         }
 
-        public void ProcessHighPressureDelta()
+        public bool ProcessHighPressureDelta(bool resumed = false)
         {
             _stopwatch.Restart();
 
+            if(!resumed)
+                _currentRunTiles = new Queue<TileAtmosphere>(_highPressureDelta);
+
             var number = 0;
-            foreach (var tile in _highPressureDelta.ToArray())
+            while (_currentRunTiles.Count > 0)
             {
+                var tile = _currentRunTiles.Dequeue();
                 tile.HighPressureMovements();
                 tile.PressureDifference = 0f;
                 tile.PressureSpecificTarget = null;
@@ -532,83 +656,124 @@ namespace Content.Server.GameObjects.Components.Atmos
                 number = 0;
                 // Process the rest next time.
                 if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
-                    return;
+                {
+                    _highPressureDeltaLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
+                    return false;
+                }
             }
+
+            _highPressureDeltaLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
+            return true;
         }
 
-        private void ProcessHotspots()
+        private bool ProcessHotspots(bool resumed = false)
         {
             _stopwatch.Restart();
 
+            if(!resumed)
+                _currentRunTiles = new Queue<TileAtmosphere>(_hotspotTiles);
+
             var number = 0;
-            foreach (var hotspot in _hotspotTiles.ToArray())
+            while (_currentRunTiles.Count > 0)
             {
+                var hotspot = _currentRunTiles.Dequeue();
                 hotspot.ProcessHotspot();
 
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
                 // Process the rest next time.
                 if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
-                    return;
+                {
+                    _hotspotsLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
+                    return false;
+                }
             }
+
+            _hotspotsLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
+            return true;
         }
 
-        private void ProcessSuperconductivity()
+        private bool ProcessSuperconductivity(bool resumed = false)
         {
             _stopwatch.Restart();
 
+            if(!resumed)
+                _currentRunTiles = new Queue<TileAtmosphere>(_superconductivityTiles);
+
             var number = 0;
-            foreach (var superconductivity in _superconductivityTiles.ToArray())
+            while (_currentRunTiles.Count > 0)
             {
+                var superconductivity = _currentRunTiles.Dequeue();
                 superconductivity.Superconduct();
 
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
                 // Process the rest next time.
                 if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
-                    return;
+                {
+                    _superconductivityLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
+                    return false;
+                }
             }
+
+            _superconductivityLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
+            return true;
         }
 
-        private void ProcessPipeNets()
+        private bool ProcessPipeNets(bool resumed = false)
         {
             _stopwatch.Restart();
 
+            if(!resumed)
+                _currentRunPipeNet = new Queue<IPipeNet>(_pipeNets);
+
             var number = 0;
-            var pipeNets = _pipeNets.ToArray();
-            var netCount = pipeNets.Count();
-            for ( ; _pipeNetIndex < netCount; _pipeNetIndex++)
+            while (_currentRunPipeNet.Count > 0)
             {
-                pipeNets[_pipeNetIndex].Update();
+                var pipenet = _currentRunPipeNet.Dequeue();
+                pipenet.Update();
 
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
                 // Process the rest next time.
                 if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
-                    return;
+                {
+                    _pipeNetLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
+                    return false;
+                }
             }
-            _pipeNetIndex = 0;
+
+            _pipeNetLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
+            return true;
         }
 
-        private void ProcessPipeNetDevices()
+        private bool ProcessPipeNetDevices(bool resumed = false)
         {
             _stopwatch.Restart();
 
+            if(!resumed)
+                _currentRunPipeNetDevice = new Queue<PipeNetDeviceComponent>(_pipeNetDevices);
+
             var number = 0;
-            var pipeNetDevices = _pipeNetDevices.ToArray();
-            var deviceCount = pipeNetDevices.Count();
-            for ( ; _deviceIndex < deviceCount; _deviceIndex++)
+            while (_currentRunPipeNet.Count > 0)
             {
-                pipeNetDevices[_deviceIndex].Update();
+                var device = _currentRunPipeNetDevice.Dequeue();
+                device.Update();
 
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
                 // Process the rest next time.
                 if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
-                    return;
+                {
+                    _pipeNetDevicesLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
+                    return false;
+                }
             }
-            _deviceIndex = 0;
+
+            _pipeNetDevicesLastProcess = _stopwatch.Elapsed.TotalMilliseconds;
+            return true;
         }
+
         private AirtightComponent? GetObstructingComponent(MapIndices indices)
         {
             if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return default;
@@ -621,12 +786,6 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             return null;
         }
-
-        private static readonly Direction[] Cardinal =
-            new []
-            {
-                Direction.North, Direction.East, Direction.South, Direction.West
-            };
 
         public void Dispose()
         {

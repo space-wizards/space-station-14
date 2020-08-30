@@ -7,13 +7,16 @@ using Content.Client.State;
 using Content.Client.UserInterface;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.EntitySystemMessages;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Input;
+using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Interfaces.State;
@@ -29,6 +32,7 @@ using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
+using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -40,7 +44,7 @@ using Timer = Robust.Shared.Timers.Timer;
 namespace Content.Client.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    public sealed class VerbSystem : EntitySystem
+    public sealed class VerbSystem : SharedVerbSystem
     {
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -63,7 +67,7 @@ namespace Content.Client.GameObjects.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-
+            
             SubscribeNetworkEvent<VerbSystemMessages.VerbsResponseMessage>(FillEntityPopup);
 
             IoCManager.InjectDependencies(this);
@@ -114,12 +118,11 @@ namespace Content.Client.GameObjects.EntitySystems
             {
                 return false;
             }
-
+            
             var mapCoordinates = args.Coordinates.ToMap(_mapManager);
-            var entities = _entityManager.GetEntitiesIntersecting(mapCoordinates.MapId,
-                Box2.CenteredAround(mapCoordinates.Position, (0.5f, 0.5f))).ToList();
-
-            if (entities.Count == 0)
+            var playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
+            
+            if (playerEntity == null || !TryGetContextEntities(playerEntity, mapCoordinates, out var entities))
             {
                 return false;
             }

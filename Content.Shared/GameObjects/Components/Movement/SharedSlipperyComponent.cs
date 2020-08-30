@@ -44,9 +44,16 @@ namespace Content.Shared.GameObjects.Components.Movement
         [ViewVariables(VVAccess.ReadWrite)]
         private float RequiredSlipSpeed { get; set; } = 0f;
 
+        /// <summary>
+        ///     Whether or not this component will try to slip entities.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool Slippery { get; set; }
+
         private bool TrySlip(IEntity entity)
         {
-            if (ContainerHelpers.IsInContainer(Owner)
+            if (!Slippery
+                || ContainerHelpers.IsInContainer(Owner)
                 ||  _slipped.Contains(entity.Uid)
                 ||  !entity.TryGetComponent(out SharedStunnableComponent stun)
                 ||  !entity.TryGetComponent(out ICollidableComponent otherBody)
@@ -137,6 +144,7 @@ namespace Content.Shared.GameObjects.Components.Movement
             serializer.DataField(this, x => ParalyzeTime, "paralyzeTime", 3f);
             serializer.DataField(this, x  => IntersectPercentage, "intersectPercentage", 0.3f);
             serializer.DataField(this, x => RequiredSlipSpeed, "requiredSlipSpeed", 0f);
+            serializer.DataField(this, x => x.Slippery, "slippery", true);
         }
     }
 }

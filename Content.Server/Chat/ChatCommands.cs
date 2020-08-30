@@ -5,9 +5,11 @@ using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects;
+using Content.Server.Interfaces;
 using Content.Server.Observer;
 using Content.Server.Players;
 using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.Interfaces;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Enums;
@@ -116,6 +118,9 @@ namespace Content.Server.Chat
 
     internal class SuicideCommand : IClientCommand
     {
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
+
         public string Command => "suicide";
 
         public string Description => "Commits suicide";
@@ -186,12 +191,29 @@ namespace Content.Server.Chat
                 }
             }
             // Default suicide, bite your tongue
-            chat.EntityMe(owner, Loc.GetString("is attempting to bite {0:their} own tongue, looks like {0:theyre} trying to commit suicide!", owner)); //TODO: theyre macro
+            PopupMessageOtherClientsInRange(owner, Loc.GetString("{0:theName} is attempting to bite {0:their} own tongue!", owner), 15);
+            _notifyManager.PopupMessage(owner, owner, Loc.GetString("You attempt to bite your own tongue!"));
             dmgComponent.ChangeDamage(DamageType.Piercing, 500, true, owner);
 
             // Prevent the player from returning to the body. Yes, this is an ugly hack.
             var ghost = new Ghost(){CanReturn = false};
             ghost.Execute(shell, player, Array.Empty<string>());
+        }
+        private void PopupMessageOtherClientsInRange(IEntity source, string message, int maxReceiveDistance)
+        {
+            var viewers = _playerManager.GetPlayersInRange(source.Transform.GridPosition, maxReceiveDistance);
+
+            foreach (var viewer in viewers)
+            {
+                var viewerEntity = viewer.AttachedEntity;
+
+                if (viewerEntity == null || source == viewerEntity)
+                {
+                    continue;
+                }
+
+                source.PopupMessage(viewer.AttachedEntity, message);
+            }
         }
     }
 }
