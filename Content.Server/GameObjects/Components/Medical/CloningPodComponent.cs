@@ -71,7 +71,8 @@ namespace Content.Server.GameObjects.Components.Medical
 
         public void Update(float frametime)
         {
-            if (_bodyContainer.ContainedEntity != null)
+            if (_bodyContainer.ContainedEntity != null &&
+                Powered)
             {
                 _clonningProgress += frametime;
                 _clonningProgress = MathHelper.Clamp(_clonningProgress, 0f, 10f);
@@ -79,7 +80,8 @@ namespace Content.Server.GameObjects.Components.Medical
 
             if (_clonningProgress >= 10.0 &&
                 _bodyContainer.ContainedEntity != null &&
-                _capturedMind?.Session.AttachedEntity == _bodyContainer.ContainedEntity)
+                _capturedMind?.Session.AttachedEntity == _bodyContainer.ContainedEntity &&
+                Powered)
             {
                 _bodyContainer.Remove(_bodyContainer.ContainedEntity);
                 _capturedMind = null;
@@ -101,7 +103,8 @@ namespace Content.Server.GameObjects.Components.Medical
 
         private CloningPodBoundUserInterfaceState GetUserInterfaceState()
         {
-            return new CloningPodBoundUserInterfaceState(CloningSystem.getIdToUser(), _clonningProgress, (_status == CloningPodStatus.Cloning));
+            return new CloningPodBoundUserInterfaceState(CloningSystem.getIdToUser(), _clonningProgress,
+                (_status == CloningPodStatus.Cloning));
         }
 
         private void UpdateAppearance()
