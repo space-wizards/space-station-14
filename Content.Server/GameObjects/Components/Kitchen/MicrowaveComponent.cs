@@ -500,29 +500,18 @@ namespace Content.Server.GameObjects.Components.Kitchen
                     headCount++;
                 }
             }
-            PopupMessageOtherClientsInRange(victim, Loc.GetString("{0:theName} is trying to cook {0:their} head!", victim), 15);
-            _notifyManager.PopupMessage(victim, victim, Loc.GetString("You cook your head!"));
+
+            var othersMessage = Loc.GetString("{0:theName} is trying to cook {0:their} head!", victim);
+            victim.PopupMessageOtherClients(othersMessage);
+
+            var selfMessage = Loc.GetString("You cook your head!");
+            victim.PopupMessage(selfMessage);
+
             _currentCookTimerTime = 10;
             ClickSound();
             _uiDirty = true;
             wzhzhzh();
             return SuicideKind.Heat;
-        }
-        private void PopupMessageOtherClientsInRange(IEntity source, string message, int maxReceiveDistance)
-        {
-            var viewers = _playerManager.GetPlayersInRange(source.Transform.GridPosition, maxReceiveDistance);
-
-            foreach (var viewer in viewers)
-            {
-                var viewerEntity = viewer.AttachedEntity;
-
-                if (viewerEntity == null || source == viewerEntity)
-                {
-                    continue;
-                }
-
-                source.PopupMessage(viewer.AttachedEntity, message);
-            }
         }
     }
 }

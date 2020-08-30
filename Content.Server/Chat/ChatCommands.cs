@@ -8,6 +8,7 @@ using Content.Server.Interfaces.GameObjects;
 using Content.Server.Interfaces;
 using Content.Server.Observer;
 using Content.Server.Players;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.Interfaces;
 using Robust.Server.Interfaces.Console;
@@ -190,30 +191,19 @@ namespace Content.Server.Chat
                     }
                 }
             }
+
             // Default suicide, bite your tongue
-            PopupMessageOtherClientsInRange(owner, Loc.GetString("{0:theName} is attempting to bite {0:their} own tongue!", owner), 15);
-            _notifyManager.PopupMessage(owner, owner, Loc.GetString("You attempt to bite your own tongue!"));
+            var othersMessage = Loc.GetString("{0:theName} is attempting to bite {0:their} own tongue!", owner);
+            owner.PopupMessageOtherClients(othersMessage);
+
+            var selfMessage = Loc.GetString("You attempt to bite your own tongue!");
+            owner.PopupMessage(selfMessage);
+
             dmgComponent.ChangeDamage(DamageType.Piercing, 500, true, owner);
 
             // Prevent the player from returning to the body. Yes, this is an ugly hack.
             var ghost = new Ghost(){CanReturn = false};
             ghost.Execute(shell, player, Array.Empty<string>());
-        }
-        private void PopupMessageOtherClientsInRange(IEntity source, string message, int maxReceiveDistance)
-        {
-            var viewers = _playerManager.GetPlayersInRange(source.Transform.GridPosition, maxReceiveDistance);
-
-            foreach (var viewer in viewers)
-            {
-                var viewerEntity = viewer.AttachedEntity;
-
-                if (viewerEntity == null || source == viewerEntity)
-                {
-                    continue;
-                }
-
-                source.PopupMessage(viewer.AttachedEntity, message);
-            }
         }
     }
 }
