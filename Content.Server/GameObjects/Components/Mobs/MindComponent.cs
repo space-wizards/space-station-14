@@ -90,6 +90,12 @@ namespace Content.Server.GameObjects.Components.Mobs
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new GhostComponent.GhostReturnMessage(Mind));
         }
 
+        public override void OnRemove()
+        {
+            base.OnRemove();
+            Owner.EntityManager.EventBus.UnsubscribeEvent<CloningMachineComponent.CloningStartedMessage>(EventSource.Local, this);
+        }
+
         /// <summary>
         ///     Don't call this unless you know what the hell you're doing.
         ///     Use <see cref="Mind.TransferTo(IEntity)"/> instead.
