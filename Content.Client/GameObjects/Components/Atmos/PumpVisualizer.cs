@@ -35,7 +35,6 @@ namespace Content.Client.GameObjects.Components.Disposal
             {
                 Logger.ErrorS("go.pumpvisualizer", "Unable to load RSI '{0}'. Trace:\n{1}", rsiPath, e);
             }
-
         }
 
         public override void OnChangeData(AppearanceComponent component)
@@ -56,8 +55,11 @@ namespace Content.Client.GameObjects.Components.Disposal
             pumpBaseState += pumpVisualState.OutletDirection.ToString();
             pumpBaseState += pumpVisualState.OutletConduitLayer.ToString();
 
-            var layer = sprite.AddLayerState(pumpBaseState);
-            sprite.LayerSetRSI(layer, _pumpRSI);
+            sprite.LayerMapReserveBlank(Layer.PumpBase);
+            var basePumpLayer = sprite.LayerMapGet(Layer.PumpBase);
+            sprite.LayerSetRSI(basePumpLayer, _pumpRSI);
+            sprite.LayerSetState(basePumpLayer, pumpBaseState);
+            sprite.LayerSetVisible(basePumpLayer, true);
         }
 
         private enum Layer
