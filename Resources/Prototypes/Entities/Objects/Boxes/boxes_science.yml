@@ -1,26 +1,26 @@
 - type: entity
-  name: syringe box
+  name: beaker box
   parent: BoxBase
-  id: BoxSyringe
+  id: BoxBeaker
   description:
   components:
   - type: StorageFill
     contents:
-      - Syringe
-      - Syringe
-      - Syringe
-      - Syringe
-      - Syringe
-      - Syringe
+      - Beaker
+      - Beaker
+      - Beaker
+      - LargeBeaker
+      - LargeBeaker
+      - LargeBeaker
   - type: Sprite
     layers:
       - state: box
-      - state: syringe
+      - state: beaker
   - type: Icon
-    state: syringe
+    state: beaker
   - type: Item
     layers:
       - state: box
-      - state: syringe
+      - state: beaker
   - type: Storage
     capacity: 30
