@@ -48,7 +48,7 @@ namespace Content.Server.GameObjects.Components.Doors
         protected bool AutoClose = true;
         protected const float AutoCloseDelay = 5;
         protected float CloseSpeed = AutoCloseDelay;
-
+        
         private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
         private static readonly TimeSpan CloseTimeOne = TimeSpan.FromSeconds(0.3f);
@@ -409,7 +409,7 @@ namespace Content.Server.GameObjects.Components.Doors
             if (!eventArgs.Using.TryGetComponent(out WelderComponent? tool))
                 return false;
 
-            if (!await tool.UseTool(eventArgs.User, Owner, 5f, ToolQuality.Welding, 5f))
+            if (!await tool.UseTool(eventArgs.User, Owner, 3f, ToolQuality.Welding, 3f, () => _canWeldShut))
                 return false;
 
             IsWeldedShut ^= true;
