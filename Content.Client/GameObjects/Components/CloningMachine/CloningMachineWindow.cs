@@ -22,6 +22,7 @@ namespace Content.Client.GameObjects.Components.CloningMachine
         private readonly LineEdit _searchBar;
         private readonly Button _clearButton;
         public readonly Button CloneButton;
+        public readonly Button EjectButton;
         private readonly CloningScanButton _measureButton;
         private CloningScanButton? _selectedButton;
         private Label _progressLabel;
@@ -106,6 +107,10 @@ namespace Content.Client.GameObjects.Components.CloningMachine
                         {
                             (_progressLabel = new Label())
                         }
+                    }),
+                    (EjectButton = new Button
+                    {
+                        Text = _localization.GetString("Eject Body")
                     }),
                     new HBoxContainer
                     {

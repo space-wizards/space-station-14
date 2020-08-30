@@ -22,6 +22,7 @@ using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.ViewVariables;
 
@@ -73,6 +74,7 @@ namespace Content.Server.GameObjects.Components.Medical
             if (_bodyContainer.ContainedEntity != null)
             {
                 _clonningProgress += frametime;
+                _clonningProgress = MathHelper.Clamp(_clonningProgress, 0f, 10f);
             }
 
             if (_clonningProgress >= 10.0 &&
@@ -123,13 +125,13 @@ namespace Content.Server.GameObjects.Components.Medical
 
         private async void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
-            if (!(obj.Message is UiButtonPressedMessage message) || message.ScanId == null) return;
+            if (!(obj.Message is UiButtonPressedMessage message)) return;
 
             switch (message.Button)
             {
                 case UiButton.Clone:
 
-                    if (_bodyContainer.ContainedEntity != null) break;
+                    if (_bodyContainer.ContainedEntity != null || message.ScanId == null) break;
 
                     var mind = CloningSystem.Minds[(int) message.ScanId];
 
@@ -158,6 +160,17 @@ namespace Content.Server.GameObjects.Components.Medical
                     UpdateAppearance();
 
                     break;
+
+                case UiButton.Eject:
+                    if (_bodyContainer.ContainedEntity == null) break;
+
+                    _bodyContainer.Remove(_bodyContainer.ContainedEntity!);
+                    _capturedMind = null;
+                    _clonningProgress = 0f;
+                    _status = CloningMachineStatus.Idle;
+                    UpdateAppearance();
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }

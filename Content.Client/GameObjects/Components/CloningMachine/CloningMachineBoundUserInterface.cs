@@ -30,6 +30,7 @@ namespace Content.Client.GameObjects.Components.CloningMachine
             _window = new CloningMachineWindow(new Dictionary<int, string>(), _localization);
             _window.OnClose += Close;
             _window.CloneButton.OnPressed += _ => SendMessage(new UiButtonPressedMessage(UiButton.Clone,_window.SelectedScan));
+            _window.EjectButton.OnPressed += _ => SendMessage(new UiButtonPressedMessage(UiButton.Eject,_window.SelectedScan));
             _window.OpenCentered();
         }
 
