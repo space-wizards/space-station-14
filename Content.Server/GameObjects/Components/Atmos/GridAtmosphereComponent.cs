@@ -210,58 +210,64 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         private void Revalidate()
         {
-            if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return;
-
             foreach (var indices in _invalidatedCoords.ToArray())
             {
-                var tile = GetTile(indices);
-                AddActiveTile(tile);
-
-                if (tile == null)
-                {
-                    tile = new TileAtmosphere(this, mapGrid.Grid.Index, indices, new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C});
-                    _tiles[indices] = tile;
-                }
-
-                if (IsSpace(indices))
-                {
-                    tile.Air = new GasMixture(GetVolumeForCells(1));
-                    tile.Air.MarkImmutable();
-                    _tiles[indices] = tile;
-
-                } else if (IsAirBlocked(indices))
-                {
-                    tile.Air = null;
-                }
-                else
-                {
-                    var obs = GetObstructingComponent(indices);
-
-                    if (obs != null)
-                    {
-                        if (tile.Air == null && obs.FixVacuum)
-                        {
-                            FixVacuum(tile.GridIndices);
-                        }
-                    }
-
-                    tile.Air ??= new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C};
-                }
-
-                tile.UpdateAdjacent();
-                tile.UpdateVisuals();
-
-                for (var i = 0; i < Atmospherics.Directions; i++)
-                {
-                    var direction = (AtmosDirection) (1 << i);
-                    var otherIndices = indices.Offset(direction.ToDirection());
-                    var otherTile = GetTile(otherIndices);
-                    AddActiveTile(otherTile);
-                    otherTile?.UpdateAdjacent(direction.GetOpposite());
-                }
+                Revalidate(indices);
             }
 
             _invalidatedCoords.Clear();
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Revalidate(MapIndices indices)
+        {
+            if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return;
+
+            var tile = GetTile(indices);
+
+            if (tile == null)
+            {
+                tile = new TileAtmosphere(this, mapGrid.Grid.Index, indices, new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C});
+                _tiles[indices] = tile;
+            }
+
+            if (IsSpace(indices))
+            {
+                tile.Air = new GasMixture(GetVolumeForCells(1));
+                tile.Air.MarkImmutable();
+                _tiles[indices] = tile;
+
+            } else if (IsAirBlocked(indices))
+            {
+                tile.Air = null;
+            }
+            else
+            {
+                var obs = GetObstructingComponent(indices);
+
+                if (obs != null)
+                {
+                    if (tile.Air == null && obs.FixVacuum)
+                    {
+                        FixVacuum(tile.GridIndices);
+                    }
+                }
+
+                tile.Air ??= new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C};
+            }
+
+            AddActiveTile(tile);
+            tile.UpdateAdjacent();
+            tile.UpdateVisuals();
+
+            for (var i = 0; i < Atmospherics.Directions; i++)
+            {
+                var direction = (AtmosDirection) (1 << i);
+                var otherIndices = indices.Offset(direction.ToDirection());
+                var otherTile = GetTile(otherIndices);
+                AddActiveTile(otherTile);
+                otherTile?.UpdateAdjacent(direction.GetOpposite());
+            }
         }
 
         /// <inheritdoc />

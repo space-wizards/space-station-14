@@ -35,7 +35,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                 if (Owner.TryGetComponent(out SnapGridComponent? snapGrid))
                 {
-                    EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(Owner.Transform.GridID)?.Invalidate(snapGrid.Position);
+                    EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(Owner.Transform.GridID)?.Revalidate(snapGrid.Position);
                 }
             }
         }
