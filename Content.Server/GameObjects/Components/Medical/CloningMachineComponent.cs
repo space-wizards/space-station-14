@@ -43,6 +43,7 @@ namespace Content.Server.GameObjects.Components.Medical
         private ContainerSlot _bodyContainer = default!;
         private Mind? _capturedMind;
         private CloningMachineStatus _status;
+        private float _clonningProgress = 0;
         private readonly IEntityManager _entityManager = IoCManager.Resolve<IEntityManager>();
         private readonly IPlayerManager _playerManager = IoCManager.Resolve<IPlayerManager>();
 
@@ -69,6 +70,22 @@ namespace Content.Server.GameObjects.Components.Medical
 
         public void Update(float frametime)
         {
+            if (_bodyContainer.ContainedEntity != null)
+            {
+                _clonningProgress += frametime;
+            }
+
+            if (_clonningProgress >= 10.0 &&
+                _bodyContainer.ContainedEntity != null &&
+                _capturedMind?.Session.AttachedEntity == _bodyContainer.ContainedEntity)
+            {
+                _bodyContainer.Remove(_bodyContainer.ContainedEntity);
+                _capturedMind = null;
+                _clonningProgress = 0f;
+
+                UpdateAppearance(CloningMachineStatus.Idle);
+            }
+
             UpdateUserInterface();
         }
 
@@ -112,6 +129,9 @@ namespace Content.Server.GameObjects.Components.Medical
             switch (message.Button)
             {
                 case UiButton.Clone:
+
+                    if (_bodyContainer.ContainedEntity != null) break;
+
                     var mind = CloningSystem.Minds[(int) message.ScanId];
 
                     var dead =
@@ -122,7 +142,6 @@ namespace Content.Server.GameObjects.Components.Medical
                     {
                         break;
                     }
-
 
                     var mob = _entityManager.SpawnEntity("HumanMob_Content", Owner.Transform.MapPosition);
                     var client = _playerManager
@@ -136,7 +155,7 @@ namespace Content.Server.GameObjects.Components.Medical
 
                     Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local,
                         new CloningStartedMessage(_capturedMind));
-                    UpdateAppearance(CloningMachineStatus.Cloning);
+                    UpdateAppearance(CloningMachineStatus.NoMind);
 
                     break;
                 default:
@@ -170,10 +189,8 @@ namespace Content.Server.GameObjects.Components.Medical
 
                 //Transfer the mind to the new mob
                 _capturedMind.TransferTo(_bodyContainer.ContainedEntity);
-                _bodyContainer.Remove(_bodyContainer.ContainedEntity);
-                _capturedMind = null;
 
-                UpdateAppearance(CloningMachineStatus.Idle);
+                UpdateAppearance(CloningMachineStatus.Cloning);
             }
         }
     }
