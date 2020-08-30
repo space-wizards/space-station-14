@@ -12,15 +12,21 @@ using Content.Shared.GameObjects.Components;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Interfaces.Serialization;
+using Robust.Client.Animations;
+using Robust.Shared.Interfaces.GameObjects;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Robust.Client.GameObjects.Components.Animations;
+using System.Linq;
 
 namespace Content.Client.GameObjects.Components
 {
     #region LIGHT_BEHAVIOURS
     /// <summary>
     /// Base class for all light behaviours to derive from.
+    /// This AnimationTrack derivative does not rely on keyframes since it often needs to have a randomized duration.
     /// </summary>
     [Serializable]
-    public abstract class LightBehaviour: IExposeData
+    public abstract class LightBehaviourAnimationTrack : AnimationTrackProperty, IExposeData
     {
         [ViewVariables] public string ID { get; set; }
         [ViewVariables] public string Property { get; protected set; }
@@ -32,12 +38,10 @@ namespace Content.Client.GameObjects.Components
         [ViewVariables] public float MaxDuration { get; set; }
         [ViewVariables] public AnimationInterpolationMode InterpolateMode { get; set; }
 
-        [ViewVariables]
-        protected float InterpolateValue => _curTime / _maxTime;
+        [ViewVariables] protected float MaxTime { get; set; }
         protected PointLightComponent Light = default;
         protected IRobustRandom RobustRandom = default;
 
-        private float _curTime = default;
         private float _maxTime = default;
         
         public virtual void ExposeData(ObjectSerializer serializer)
@@ -57,8 +61,6 @@ namespace Content.Client.GameObjects.Components
         {
             Light = light;
             RobustRandom = IoCManager.Resolve<IRobustRandom>();
-            _curTime = 0;
-            _maxTime = (float) RobustRandom.NextDouble() * (MaxDuration - MinDuration) + MinDuration;
 
             if (Enabled)
             {
@@ -68,154 +70,85 @@ namespace Content.Client.GameObjects.Components
             OnInitialize();
         }
 
-        public void StartBehaviour()
+        public void UpdatePlaybackValues(Animation owner)
         {
             Light.Enabled = true;
-            Enabled = true;
-            _curTime = 0;
 
             if (MinDuration > 0)
             {
-                _maxTime = (float) RobustRandom.NextDouble() * (MaxDuration - MinDuration) + MinDuration;
+                MaxTime = (float) RobustRandom.NextDouble() * (MaxDuration - MinDuration) + MinDuration;
             }
             else
             {
-                _maxTime = MaxDuration;
+                MaxTime = MaxDuration;
             }
-            
+
+            owner.Length = TimeSpan.FromSeconds(MaxTime); 
+        }
+
+        public override (int KeyFrameIndex, float FramePlayingTime) InitPlayback()
+        {
             OnStart();
+
+            return (-1, _maxTime);
         }
 
-        public void Update(float frameTime)
+        protected void ApplyProperty(object value)
         {
-            _curTime += frameTime;
-
-            if (_curTime > _maxTime)
+            if (Property == null)
             {
-                if (!IsLooped)
-                {
-                    Enabled = false;
-                    return;
-                }
-
-                StartBehaviour();
+                throw new InvalidOperationException("Property parameter is null! Check the prototype!");
             }
 
-            OnUpdate(frameTime);
-        }
-
-#nullable enable
-        protected static object? GetProperty(object target, string propertyName)
-        {
-            var property = target.GetType().GetProperty(propertyName);
-
-            if (property == null)
+            if (Light is IAnimationProperties properties)
             {
-                throw new ArgumentException($"{nameof(LightBehaviourComponent)} attempting to modify nonexistant property with name '{propertyName}'.");
+                properties.SetAnimatableProperty(Property, value);
             }
-
-            return property.GetValue(target);
-        }
-#nullable disable
-
-        protected static void SetProperty(object target, string propertyName, object value)
-        {
-            var property = target.GetType().GetProperty(propertyName);
-
-            if (property == null)
+            else
             {
-                throw new ArgumentException($"{nameof(LightBehaviourComponent)} attempting to modify nonexistant property with name '{propertyName}'.");
-            }
-
-            // todo: Fix this in the engine. Setting the radius of a light to 0 causes exceptions.
-            // The user shouldn't be doing that anyways but the safety check should still be there.
-            if (propertyName == "Radius" && (float)value <= 0f)
-            {
-                value = 0.05f;
-            }
-
-            property.SetValue(target, value);
-        }
-
-        protected static object InterpolateLinear(object a, object b, float t)
-        {
-            switch (a)
-            {
-                case Vector2 vector2:
-                    return Vector2.Lerp(vector2, (Vector2) b, t);
-                case Vector3 vector3:
-                    return Vector3.Lerp(vector3, (Vector3) b, t);
-                case Vector4 vector4:
-                    return Vector4.Lerp(vector4, (Vector4) b, t);
-                case float f:
-                    return MathHelper.Lerp(f, (float) b, t);
-                case double d:
-                    return MathHelper.Lerp(d, (double) b, t);
-                case Angle angle:
-                    return (Angle) MathHelper.Lerp(angle, (Angle) b, t);
-                case Color color:
-                    return Color.InterpolateBetween(color, (Color) b, t);
-                case int i:
-                    return (int) MathHelper.Lerp((double) i, (int) b, t);
-                default:
-                    // Fall back to "previous" interpolation, treating this as a discrete value.
-                    return a;
+                AnimationHelper.SetAnimatableProperty(Light, Property, value);
             }
         }
 
-        protected static object InterpolateCubic(object preA, object a, object b, object postB, float t)
+        protected override void ApplyProperty(object context, object value)
         {
-            switch (a)
-            {
-                case Vector2 vector2:
-                    return Vector2.InterpolateCubic((Vector2) preA, vector2, (Vector2) b, (Vector2) postB, t);
-                case Vector3 vector3:
-                    return Vector3.InterpolateCubic((Vector3) preA, vector3, (Vector3) b, (Vector3) postB, t);
-                case Vector4 vector4:
-                    return Vector4.InterpolateCubic((Vector4) preA, vector4, (Vector4) b, (Vector4) postB, t);
-                case float f:
-                    return MathHelper.InterpolateCubic((float) preA, f, (float) b, (float) postB, t);
-                case double d:
-                    return MathHelper.InterpolateCubic((double) preA, d, (double) b, (double) postB, t);
-                case int i:
-                    return (int) MathHelper.InterpolateCubic((int) preA, (double) i, (int) b, (int) postB, t);
-                default:
-                    // Fall back to "previous" interpolation, treating this as a discrete value.
-                    return a;
-            }
+            ApplyProperty(value);
         }
 
         public virtual void OnInitialize() { }
         public virtual void OnStart() { }
-        public virtual void OnUpdate(float frameTime) { }
     }
 
     /// <summary>
-    /// A light behaviour that constantly pulses between StartValue and EndValue
+    /// A light behaviour that alternates between StartValue and EndValue
     /// </summary>
-    public class PulseBehaviour: LightBehaviour
+    public class PulseBehaviour: LightBehaviourAnimationTrack
     {
-        public override void OnUpdate(float frameTime)
+        public override (int KeyFrameIndex, float FramePlayingTime) AdvancePlayback(
+            object context, int prevKeyFrameIndex, float prevPlayingTime, float frameTime)
         {
-            if (Property == "Enabled") // special case for boolean, we use MaxValue to determine when to enable/disable
+            var playingTime = prevPlayingTime + frameTime;
+            var interpolateValue = playingTime / MaxTime;
+
+            if (Property == "Enabled") // special case for boolean
             {
-                SetProperty(Light, Property, InterpolateValue < EndValue ? true : false);
-                return;
+                ApplyProperty(interpolateValue < 0.5f? true : false);
+                return (-1, playingTime);
             }
 
-            if (InterpolateValue < 0.5f)
+            if (interpolateValue < 0.5f)
             {
-                switch(InterpolateMode)
+                switch (InterpolateMode)
                 {
                     case AnimationInterpolationMode.Linear:
-                        SetProperty(Light, Property, InterpolateLinear(StartValue, EndValue, InterpolateValue * 2f));
+                        ApplyProperty(InterpolateLinear(StartValue, EndValue, interpolateValue * 2f));
                         break;
                     case AnimationInterpolationMode.Cubic:
-                        SetProperty(Light, Property, InterpolateCubic(EndValue, StartValue, EndValue, StartValue, InterpolateValue * 2f));
+                        ApplyProperty(InterpolateCubic(EndValue, StartValue, EndValue, StartValue, interpolateValue * 2f));
                         break;
                     default:
                     case AnimationInterpolationMode.Nearest:
-                        SetProperty(Light, Property, StartValue);
+                        ApplyProperty(StartValue);
                         break;
                 }
             }
@@ -224,53 +157,61 @@ namespace Content.Client.GameObjects.Components
                 switch (InterpolateMode)
                 {
                     case AnimationInterpolationMode.Linear:
-                        SetProperty(Light, Property, InterpolateLinear(EndValue, StartValue, (InterpolateValue - 0.5f) * 2f));
+                        ApplyProperty(InterpolateLinear(EndValue, StartValue, (interpolateValue - 0.5f) * 2f));
                         break;
                     case AnimationInterpolationMode.Cubic:
-                        SetProperty(Light, Property, InterpolateCubic(StartValue, EndValue, StartValue, EndValue, (InterpolateValue - 0.5f) * 2f));
+                        ApplyProperty(InterpolateCubic(StartValue, EndValue, StartValue, EndValue, (interpolateValue - 0.5f) * 2f));
                         break;
                     default:
                     case AnimationInterpolationMode.Nearest:
-                        SetProperty(Light, Property, EndValue);
+                        ApplyProperty(EndValue);
                         break;
                 }
             }
+
+            return (-1, playingTime);
         }
     }
 
     /// <summary>
     /// A light behaviour that interpolates from StartValue to EndValue
     /// </summary>
-    public class FadeBehaviour : LightBehaviour
+    public class FadeBehaviour : LightBehaviourAnimationTrack
     {
-        public override void OnUpdate(float frameTime)
+        public override (int KeyFrameIndex, float FramePlayingTime) AdvancePlayback(
+            object context, int prevKeyFrameIndex, float prevPlayingTime, float frameTime)
         {
-            if (Property == "Enabled") // special case for boolean, we use MaxValue to determine when to enable/disable
+            var playingTime = prevPlayingTime + frameTime;
+            var interpolateValue = playingTime / MaxTime;
+
+            if (Property == "Enabled") // special case for boolean
             {
-                SetProperty(Light, Property, InterpolateValue < 0.5f ? true : false);
-                return;
+                ApplyProperty(interpolateValue < EndValue? true : false);
+                return (-1, playingTime);
             }
 
             switch (InterpolateMode)
             {
                 case AnimationInterpolationMode.Linear:
-                    SetProperty(Light, Property, InterpolateLinear(StartValue, EndValue, InterpolateValue));
+                    ApplyProperty(InterpolateLinear(StartValue, EndValue, interpolateValue));
                     break;
                 case AnimationInterpolationMode.Cubic:
-                    SetProperty(Light, Property, InterpolateCubic(EndValue, StartValue, EndValue, StartValue, InterpolateValue));
+                    ApplyProperty(InterpolateCubic(EndValue, StartValue, EndValue, StartValue, interpolateValue));
                     break;
                 default:
                 case AnimationInterpolationMode.Nearest:
-                    SetProperty(Light, Property, InterpolateValue < 0.5f ? StartValue : EndValue);
+                    ApplyProperty(interpolateValue < 0.5f ? StartValue : EndValue);
                     break;
             }
+
+            return (-1, playingTime);
         }
     }
 
     /// <summary>
-    /// A light behaviour that interpolates random values chosen between StartValue and EndValue.
+    /// A light behaviour that interpolates using random values chosen between StartValue and EndValue.
     /// </summary>
-    public class RandomizeBehaviour : LightBehaviour
+    public class RandomizeBehaviour : LightBehaviourAnimationTrack
     {
         private object _randomValue1 = default;
         private object _randomValue2 = default;
@@ -288,7 +229,7 @@ namespace Content.Client.GameObjects.Components
         {
             if (Property == "Enabled") // special case for boolean, we randomize it
             {
-                SetProperty(Light, Property, RobustRandom.NextDouble() < 0.5 ? true : false);
+                ApplyProperty(RobustRandom.NextDouble() < 0.5 ? true : false);
                 return;
             }
 
@@ -302,33 +243,39 @@ namespace Content.Client.GameObjects.Components
             _randomValue4 = InterpolateLinear(StartValue, EndValue, (float) RobustRandom.NextDouble());
         }
 
-        public override void OnUpdate(float frameTime)
+        public override (int KeyFrameIndex, float FramePlayingTime) AdvancePlayback(
+           object context, int prevKeyFrameIndex, float prevPlayingTime, float frameTime)
         {
+            var playingTime = prevPlayingTime + frameTime;
+            var interpolateValue = playingTime / MaxTime;
+
             if (Property == "Enabled")
             {
-                return;
+                return (-1, playingTime);
             }
 
             switch (InterpolateMode)
             {
                 case AnimationInterpolationMode.Linear:
-                    SetProperty(Light, Property, InterpolateLinear(_randomValue3, _randomValue4, InterpolateValue));
+                    ApplyProperty(InterpolateLinear(_randomValue3, _randomValue4, interpolateValue));
                     break;
                 case AnimationInterpolationMode.Cubic:
-                    SetProperty(Light, Property, InterpolateCubic(_randomValue1, _randomValue2, _randomValue3, _randomValue4, InterpolateValue));
+                    ApplyProperty(InterpolateCubic(_randomValue1, _randomValue2, _randomValue3, _randomValue4, interpolateValue));
                     break;
                 default:
                 case AnimationInterpolationMode.Nearest:
-                    SetProperty(Light, Property, InterpolateValue < 0.5f ? _randomValue3 : _randomValue4);
+                    ApplyProperty(interpolateValue < 0.5f ? _randomValue3 : _randomValue4);
                     break;
             }
+
+            return (-1, playingTime);
         }
     }
 
     /// <summary>
     /// A light behaviour that cycles through a list of colors.
     /// </summary>
-    public class ColorCycleBehaviour : LightBehaviour
+    public class ColorCycleBehaviour : LightBehaviourAnimationTrack
     {
         public List<Color> ColorsToCycle { get; set; }
 
@@ -344,27 +291,33 @@ namespace Content.Client.GameObjects.Components
             }
         }
 
-        public override void OnUpdate(float frameTime)
+        public override (int KeyFrameIndex, float FramePlayingTime) AdvancePlayback(
+           object context, int prevKeyFrameIndex, float prevPlayingTime, float frameTime)
         {
+            var playingTime = prevPlayingTime + frameTime;
+            var interpolateValue = playingTime / MaxTime;
+
             switch (InterpolateMode)
             {
                 case AnimationInterpolationMode.Linear:
-                    SetProperty(Light, Property, InterpolateLinear(ColorsToCycle[(_colorIndex - 1) % ColorsToCycle.Count],
+                    ApplyProperty(InterpolateLinear(ColorsToCycle[(_colorIndex - 1) % ColorsToCycle.Count],
                                                                     ColorsToCycle[_colorIndex],
-                                                                    InterpolateValue));
+                                                                    interpolateValue));
                     break;
                 case AnimationInterpolationMode.Cubic:
-                    SetProperty(Light, Property, InterpolateCubic(ColorsToCycle[_colorIndex],
+                    ApplyProperty(InterpolateCubic(ColorsToCycle[_colorIndex],
                                                                     ColorsToCycle[(_colorIndex + 1) % ColorsToCycle.Count],
                                                                     ColorsToCycle[(_colorIndex + 2) % ColorsToCycle.Count],
                                                                     ColorsToCycle[(_colorIndex + 3) % ColorsToCycle.Count],
-                                                                    InterpolateValue));
+                                                                    interpolateValue));
                     break;
                 default:
                 case AnimationInterpolationMode.Nearest:
-                    SetProperty(Light, Property, ColorsToCycle[_colorIndex]);
+                    ApplyProperty(ColorsToCycle[_colorIndex]);
                     break;
             }
+
+            return (-1, playingTime);
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -372,8 +325,6 @@ namespace Content.Client.GameObjects.Components
             serializer.DataField(this, x => x.ID, "id", string.Empty);
             serializer.DataField(this, x => x.IsLooped, "isLooped", false);
             serializer.DataField(this, x => x.Enabled, "enabled", false);
-            serializer.DataField(this, x => x.StartValue, "minValue", 0f);
-            serializer.DataField(this, x => x.EndValue, "maxValue", 2f);
             serializer.DataField(this, x => x.MinDuration, "minDuration", -1f);
             serializer.DataField(this, x => x.MaxDuration, "maxDuration", 2f);
             serializer.DataField(this, x => x.InterpolateMode, "interpolate", AnimationInterpolationMode.Linear);
@@ -395,8 +346,25 @@ namespace Content.Client.GameObjects.Components
     [RegisterComponent]
     public class LightBehaviourComponent : SharedLightBehaviourComponent 
     {
+        private const string KeyPrefix = nameof(LightBehaviourComponent);
+
+        private class AnimationContainer
+        {
+            public AnimationContainer(int key, Animation animation, LightBehaviourAnimationTrack track)
+            {
+                Key = key;
+                Animation = animation;
+                LightBehaviour = track;
+            }
+
+            public string FullKey => KeyPrefix + Key;
+            public int Key { get; set; }
+            public Animation Animation { get; set; }
+            public LightBehaviourAnimationTrack LightBehaviour { get; set; }
+        }
+
         [ViewVariables(VVAccess.ReadOnly)]
-        protected List<LightBehaviour> Behaviours = new List<LightBehaviour>();
+        private List<AnimationContainer> _animations = new List<AnimationContainer>();
 
         private float _originalRadius = default;
         private float _originalEnergy = default;
@@ -404,12 +372,40 @@ namespace Content.Client.GameObjects.Components
         private Color _originalColor = default;
         private bool _originalEnabled = default;
         private PointLightComponent _lightComponent = default;
+        private AnimationPlayerComponent _animationPlayer = default;
 
         protected override void Startup()
         {
             base.Startup();
 
             CopyLightSettings();
+            _animationPlayer = Owner.EnsureComponent<AnimationPlayerComponent>();
+            _animationPlayer.AnimationCompleted += s => OnAnimationCompleted(s);
+
+            foreach (var container in _animations)
+            {
+                container.LightBehaviour.Initialize(_lightComponent);
+            }
+
+            // we need to initialize all behaviours before starting any 
+            foreach (var container in _animations)
+            {
+                if (container.LightBehaviour.Enabled)
+                {
+                    StartLightBehaviour(container.LightBehaviour.ID);
+                }
+            }
+        }
+
+        private void OnAnimationCompleted(string key)
+        {
+            var container = _animations.FirstOrDefault(x => x.FullKey == key);
+
+            if (container.LightBehaviour.IsLooped)
+            {
+                container.LightBehaviour.UpdatePlaybackValues(container.Animation);
+                _animationPlayer.Play(container.Animation, container.FullKey);
+            }
         }
 
         /// <summary>
@@ -424,26 +420,10 @@ namespace Content.Client.GameObjects.Components
                 _originalEnergy = _lightComponent.Energy;
                 _originalRadius = _lightComponent.Radius;
                 _originalRotation = _lightComponent.Rotation;
-
-                foreach (LightBehaviour behaviour in Behaviours)
-                {
-                    behaviour.Initialize(_lightComponent);
-                }
             }
             else
             {
                 Logger.Warning($"{Owner.Name} has a {nameof(LightBehaviourComponent)} but it has no {nameof(PointLightComponent)}! Check the prototype!");
-            }
-        }
-
-        public void Update(float frameTime)
-        {
-            foreach (var behaviour in Behaviours)
-            {
-                if (behaviour.Enabled)
-                {
-                    behaviour.Update(frameTime);
-                }
             }
         }
 
@@ -454,14 +434,16 @@ namespace Content.Client.GameObjects.Components
         /// </summary>
         public void StartLightBehaviour(string id = "")
         {
-            foreach (var behaviour in Behaviours)
+            foreach (var container in _animations)
             {
-                if (behaviour.ID != id && id != string.Empty)
+                if (container.LightBehaviour.ID == id || id == string.Empty)
                 {
-                    continue;
+                    if (!_animationPlayer.HasRunningAnimation(KeyPrefix + container.Key))
+                    {
+                        container.LightBehaviour.UpdatePlaybackValues(container.Animation);
+                        _animationPlayer.Play(container.Animation, KeyPrefix + container.Key);
+                    }
                 }
-
-                behaviour.StartBehaviour();
             }
         }
 
@@ -475,24 +457,27 @@ namespace Content.Client.GameObjects.Components
         /// <param name="resetToOriginalSettings">Should the light have its original settings applied?</param>
         public void StopLightBehaviour(string id = "", bool removeBehaviour = false, bool resetToOriginalSettings = false)
         {
-            var toRemove = new List<LightBehaviour>();
+            var toRemove = new List<AnimationContainer>();
 
-            foreach (var behaviour in Behaviours)
+            foreach (var container in _animations)
             {
-                if (behaviour.ID == id || id == string.Empty)
+                if (container.LightBehaviour.ID == id || id == string.Empty)
                 {
-                    behaviour.Enabled = false;
+                    if (_animationPlayer.HasRunningAnimation(KeyPrefix + container.Key))
+                    {
+                        _animationPlayer.Stop(KeyPrefix + container.Key);
+                    }
 
                     if (removeBehaviour)
                     {
-                        toRemove.Add(behaviour);
-                    } 
+                        toRemove.Add(container);
+                    }
                 }
             }
 
-            foreach (var behaviour in toRemove)
+            foreach (var container in toRemove)
             {
-                Behaviours.Remove(behaviour);
+                _animations.Remove(container);
             }
 
             if (resetToOriginalSettings)
@@ -508,10 +493,23 @@ namespace Content.Client.GameObjects.Components
         /// <summary>
         /// Add a new light behaviour to the component and start it immediately unless otherwise specified.
         /// </summary>
-        public void AddNewLightBehaviour(LightBehaviour behaviour, bool playImmediately = true)
+        public void AddNewLightBehaviour(LightBehaviourAnimationTrack behaviour, bool playImmediately = true)
         {
-            Behaviours.Add(behaviour);
+            int key = 0;
+
+            while (_animations.Any(x => x.Key == key))
+            {
+                key++;
+            }
+
+            var animation = new Animation()
+            {
+                AnimationTracks = { behaviour }
+            };
+
             behaviour.Initialize(_lightComponent);
+            var container = new AnimationContainer(key, animation, behaviour);
+            _animations.Add(container);
 
             if (playImmediately)
             {
@@ -523,7 +521,19 @@ namespace Content.Client.GameObjects.Components
         {
             base.ExposeData(serializer);
 
-            Behaviours = serializer.ReadDataField("behaviours", new List<LightBehaviour>());
+            var behaviours = serializer.ReadDataField("behaviours", new List<LightBehaviourAnimationTrack>());
+            var key = 0;
+
+            foreach (LightBehaviourAnimationTrack behaviour in behaviours)
+            {
+                var animation = new Animation()
+                {
+                    AnimationTracks = { behaviour }
+                };
+
+                _animations.Add(new AnimationContainer(key, animation, behaviour));
+                key++;
+            }
         }
     }
 }

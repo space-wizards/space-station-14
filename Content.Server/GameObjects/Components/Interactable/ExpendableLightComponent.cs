@@ -9,6 +9,7 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.EntitySystemMessages;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.ViewVariables;
@@ -28,11 +29,11 @@ namespace Content.Server.GameObjects.Components.Interactable
         ///     Status of light, whether or not it is emitting light.
         /// </summary>
         [ViewVariables]
-        public bool Activated => CurrentState == LightState.Lit || CurrentState == LightState.Fading;
+        public bool Activated => CurrentState == ExpendableLightState.Lit || CurrentState == ExpendableLightState.Fading;
 
         [ViewVariables]
         private float _stateExpiryTime = default;
-        private PointLightComponent _light = default;
+        private AppearanceComponent _appearance = default;
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
@@ -48,9 +49,9 @@ namespace Content.Server.GameObjects.Components.Interactable
                 item.EquippedPrefix = "off";
             }
 
-            CurrentState = LightState.BrandNew;
+            CurrentState = ExpendableLightState.BrandNew;
             Owner.EnsureComponent<PointLightComponent>();
-            Dirty();
+            Owner.TryGetComponent(out _appearance);
         }
 
         /// <summary>
@@ -65,11 +66,11 @@ namespace Content.Server.GameObjects.Components.Interactable
                     item.EquippedPrefix = "on";
                 }
 
-                CurrentState = LightState.Lit;
+                CurrentState = ExpendableLightState.Lit;
                 _stateExpiryTime = GlowDuration;
-
-                UpdateVisuals(Activated);
-                Dirty();
+                
+                UpdateSpriteAndSounds(Activated);
+                UpdateVisualizer();
 
                 return true;
             }
@@ -77,13 +78,34 @@ namespace Content.Server.GameObjects.Components.Interactable
             return false;
         }
 
-        private void UpdateVisuals(bool on)
+        private void UpdateVisualizer()
+        {
+            switch (CurrentState)
+            {
+                case ExpendableLightState.Lit:
+                    _appearance.SetData(ExpendableLightVisuals.State, TurnOnBehaviourID);
+                    break;
+
+                case ExpendableLightState.Fading:
+                    _appearance.SetData(ExpendableLightVisuals.State, FadeOutBehaviourID);
+                    break;
+
+                case ExpendableLightState.Dead:
+                    _appearance.SetData(ExpendableLightVisuals.State, string.Empty);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        private void UpdateSpriteAndSounds(bool on)
         {
             if (Owner.TryGetComponent(out SpriteComponent sprite))
             {
                 switch (CurrentState)
                 {
-                    case LightState.Lit:
+                    case ExpendableLightState.Lit:
 
                         if (LoopedSound != string.Empty && Owner.TryGetComponent<LoopingLoopingSoundComponent>(out var loopingSound))
                         {
@@ -100,11 +122,11 @@ namespace Content.Server.GameObjects.Components.Interactable
                         sprite.LayerSetShader(2, "unshaded");
                         break;
 
-                    case LightState.Fading:
+                    case ExpendableLightState.Fading:
                         break;
 
                     default:
-                    case LightState.Dead:
+                    case ExpendableLightState.Dead:
 
                         if (DieSound != string.Empty)
                         {
@@ -123,12 +145,6 @@ namespace Content.Server.GameObjects.Components.Interactable
                 }
             }
 
-            if (Owner.TryGetComponent(out PointLightComponent light))
-            {
-                _light = light;
-                _light.Enabled = on;
-            }
-
             if (Owner.TryGetComponent(out ClothingComponent clothing))
             {
                 clothing.ClothingEquippedPrefix = on ? "Activated" : string.Empty;
@@ -145,24 +161,24 @@ namespace Content.Server.GameObjects.Components.Interactable
             {
                 switch (CurrentState)
                 {
-                    case LightState.Lit:
+                    case ExpendableLightState.Lit:
 
-                        CurrentState = LightState.Fading;
+                        CurrentState = ExpendableLightState.Fading;
                         _stateExpiryTime = FadeOutDuration;
 
-                        Dirty();
+                        UpdateVisualizer();
 
                         break;
 
                     default:
-                    case LightState.Fading:
+                    case ExpendableLightState.Fading:
 
-                        CurrentState = LightState.Dead;
+                        CurrentState = ExpendableLightState.Dead;
                         Owner.Name = SpentName;
                         Owner.Description = SpentDesc;
 
-                        UpdateVisuals(Activated);
-                        Dirty();
+                        UpdateSpriteAndSounds(Activated);
+                        UpdateVisualizer();
 
                         if (Owner.TryGetComponent<ItemComponent>(out var item))
                         {
@@ -172,11 +188,6 @@ namespace Content.Server.GameObjects.Components.Interactable
                         break;
                 }
             }
-        }
-
-        public override ComponentState GetComponentState()
-        {
-            return new ExpendableLightComponentState(CurrentState);
         }
 
         [Verb]
@@ -190,7 +201,7 @@ namespace Content.Server.GameObjects.Components.Interactable
                     return;
                 }
 
-                if (component.CurrentState == LightState.BrandNew)
+                if (component.CurrentState == ExpendableLightState.BrandNew)
                 {
                     data.Text = "Activate";
                     data.Visibility = VerbVisibility.Visible;

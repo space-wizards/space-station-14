@@ -72,7 +72,6 @@
         public const uint HANDCUFFS = 1066;
         public const uint BATTERY_BARREL = 1067;
         public const uint SUSPICION_ROLE = 1068;
-        public const uint EXPENDABLE_LIGHT = 1069;
 
         // Net IDs for integration tests.
         public const uint PREDICTION_TEST = 10001;

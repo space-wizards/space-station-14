@@ -5,21 +5,27 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components
 {
+    [Serializable, NetSerializable]
+    public enum ExpendableLightVisuals
+    {
+        State
+    }
+
+    [Serializable, NetSerializable]
+    public enum ExpendableLightState
+    {
+        BrandNew,
+        Lit,
+        Fading,
+        Dead
+    }
+
     public abstract class SharedExpendableLightComponent: Component
     {
-        protected enum LightState
-        {
-            BrandNew,
-            Lit,
-            Fading,
-            Dead
-        }
-
         public sealed override string Name => "ExpendableLight";
-        public sealed override uint? NetID => ContentNetIDs.EXPENDABLE_LIGHT;
 
         [ViewVariables(VVAccess.ReadOnly)]
-        protected LightState CurrentState { get; set; }
+        protected ExpendableLightState CurrentState { get; set; }
 
         [ViewVariables]
         protected string TurnOnBehaviourID { get; set; }
@@ -53,17 +59,6 @@ namespace Content.Shared.GameObjects.Components
 
         [ViewVariables]
         protected string DieSound { get; set; }
-
-        [Serializable, NetSerializable]
-        protected sealed class ExpendableLightComponentState : ComponentState
-        {
-            public ExpendableLightComponentState(LightState state) : base(ContentNetIDs.EXPENDABLE_LIGHT)
-            {
-                State = state;
-            }
-
-            public LightState State { get; set; }
-        }
 
         public override void ExposeData(ObjectSerializer serializer)
         {

@@ -11,53 +11,6 @@ namespace Content.Client.GameObjects.Components.Interactable
     [RegisterComponent]
     public class ExpendableLightComponent : SharedExpendableLightComponent
     {
-        private PointLightComponent _light = default;
-        private LightBehaviourComponent _lightBehaviour = default;
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            Owner.TryGetComponent(out _lightBehaviour);
-            Owner.TryGetComponent(out _light);
-        }
-
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
-        {
-            if (!(curState is ExpendableLightComponentState state))
-            {
-                return;
-            }
-
-            CurrentState = state.State;
-            UpdateVisuals();
-        }
-
-        private void UpdateVisuals()
-        {
-            switch (CurrentState)
-            {
-                default:
-                case LightState.BrandNew:
-                    break;
-
-                case LightState.Lit:
-
-                    _lightBehaviour.StartLightBehaviour(TurnOnBehaviourID);
-                    break;
-
-                case LightState.Fading:
-
-                    _lightBehaviour.StopLightBehaviour(TurnOnBehaviourID);
-                    _lightBehaviour.StartLightBehaviour(FadeOutBehaviourID);
-                    break;
-
-                case LightState.Dead:
-
-                    _lightBehaviour.StopLightBehaviour();
-                    _light.Enabled = false;
-                    break;
-            }
-        }
+       
     }
 }

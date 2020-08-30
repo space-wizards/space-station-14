@@ -14,29 +14,6 @@
       turnOnBehaviourID: turn_on
       fadeOutBehaviourID: fade_out
       litSound: /Audio/Items/Handcuffs/rope_breakout.ogg
-    - type: LightBehaviour
-      behaviours:
-        - !type:FadeBehaviour # slowly fade in once activated
-          id: turn_on
-          interpolate: Linear
-          maxDuration: 10.0
-          startValue: 0.0
-          endValue: 3.0
-          property: Energy
-        - !type:FadeBehaviour # fade out energy as it burns out
-          id: fade_out
-          interpolate: Linear
-          maxDuration: 300.0
-          startValue: 3.0
-          endValue: 0.2
-          property: Energy
-        - !type:FadeBehaviour # fade out radius as it burns out
-          id: fade_out
-          interpolate: Linear
-          maxDuration: 300.0
-          startValue: 5.0
-          endValue: 1.5
-          property: Radius
     - type: Sprite
       sprite: Objects/Misc/glowstick.rsi
       layers:
@@ -54,10 +31,37 @@
       sprite: Objects/Misc/glowstick.rsi
       color: "#00FF00" 
       HeldPrefix: off
+    - type: Appearance
+      visuals:
+        - type: ExpendableLightVisualizer
     - type: PointLight
       enabled: false
       color: "#00FF00"
       radius: 5
+      energy: 0
+    - type: LightBehaviour
+      behaviours:
+        - !type:FadeBehaviour # slowly fade in once activated
+          id: turn_on
+          interpolate: Linear
+          maxDuration: 10.0
+          startValue: 0.0
+          endValue: 3.0
+          property: Energy
+        - !type:FadeBehaviour # fade out energy as it burns out
+          id: fade_out
+          interpolate: Linear
+          maxDuration: 10 # 300.0
+          startValue: 3.0
+          endValue: 0.2
+          property: Energy
+        - !type:FadeBehaviour # fade out radius as it burns out
+          id: fade_out
+          interpolate: Linear
+          maxDuration: 10 # 300.0
+          startValue: 5.0
+          endValue: 1.5
+          property: Radius
 
 - type: entity
   name: red glowstick
@@ -92,6 +96,7 @@
       enabled: false
       color: "#FF0000"
       radius: 5
+      energy: 0
 
 # ----------------------------------------------------------------------------
 # THE FOLLOWING ARE ALL DUMMY ENTITIES USED TO TEST THE LIGHT BEHAVIOUR SYSTEM
@@ -262,17 +267,18 @@
       radius: 5
     - type: LightBehaviour
       behaviours:
-        - !type:FadeBehaviour
+        - !type:PulseBehaviour
           interpolate: Cubic
+          minDuration: 1.0
           maxDuration: 5.0
-          minValue: 1.0
+          minValue: 2.0
           maxValue: 10.0
           isLooped: true
           property: Radius
           enabled: true
 
 - type: entity
-  name: light pulse radius test 2
+  name: light randomize radius test
   parent: BaseItem
   id: LightBehaviourTest6
   components:
@@ -293,13 +299,14 @@
       enabled: false
       color: "#FF0000"
       radius: 5
+      energy: 10
     - type: LightBehaviour
       behaviours:
-        - !type:FadeBehaviour
-          interpolate: Linear
-          maxDuration: 5.0
-          minValue: 2.0
-          maxValue: 10.0
+        - !type:RandomizeBehaviour
+          interpolate: Nearest
+          maxDuration: 0.5
+          minValue: 10.0
+          maxValue: 25.0
           isLooped: true
           property: Radius
           enabled: true

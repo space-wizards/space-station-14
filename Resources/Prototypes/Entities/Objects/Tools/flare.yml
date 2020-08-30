@@ -7,7 +7,7 @@
     - type: ExpendableLight
       spentName: spent flare
       spentDesc: It looks like this flare has burnt out. What a bummer.
-      glowDuration: 300 
+      glowDuration: 400 
       fadeOutDuration: 3
       iconStateOn: flare_unlit
       iconStateSpent: flare_spent
@@ -20,7 +20,7 @@
       layers:
         - state: flare_base
         - state: flare_burn
-          color: "#FF6060"
+          color: "#FFFFFF"
           visible: false
           shader: unshaded
         - state: flare_unlit
@@ -33,6 +33,9 @@
       color: "#FF0000" 
       HeldPrefix: off
     - type: LoopingSound
+    - type: Appearance
+      visuals:
+        - type: ExpendableLightVisualizer
     - type: PointLight
       enabled: false
       color: "#FF8080"
@@ -54,7 +57,7 @@
           interpolate: Nearest
           minDuration: 0.02
           maxDuration: 0.06
-          startValue: 5.0
+          startValue: 4.0
           endValue: 8.0
           property: Energy
           isLooped: true
