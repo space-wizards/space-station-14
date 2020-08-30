@@ -162,7 +162,7 @@ namespace Content.Server.GameObjects.Components.Medical
                     break;
 
                 case UiButton.Eject:
-                    if (_bodyContainer.ContainedEntity == null) break;
+                    if (_bodyContainer.ContainedEntity == null || _clonningProgress < 10f) break;
 
                     _bodyContainer.Remove(_bodyContainer.ContainedEntity!);
                     _capturedMind = null;
