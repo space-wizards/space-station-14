@@ -25,9 +25,6 @@
   - type: Icon
     state: light
   - type: Item
-    layers:
-      - state: box
-      - state: light
 
 - type: entity
   name: lighttube box
@@ -56,9 +53,6 @@
   - type: Icon
     state: lighttube
   - type: Item
-    layers:
-      - state: box
-      - state: lighttube
 
 - type: entity
   name: mixed lights box
@@ -87,9 +81,6 @@
   - type: Icon
     state: lightmixed
   - type: Item
-    layers:
-      - state: box
-      - state: lightmixed
 
 - type: entity
   name: pda box
@@ -109,8 +100,5 @@
   - type: Icon
     state: pda
   - type: Item
-    layers:
-      - state: box
-      - state: pda
   - type: Storage
     capacity: 3

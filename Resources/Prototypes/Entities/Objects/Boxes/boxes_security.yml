@@ -19,9 +19,6 @@
   - type: Icon
     state: handcuff
   - type: Item
-    layers:
-      - state: box
-      - state: handcuff
   - type: Storage
     capacity: 6
 
@@ -44,8 +41,5 @@
   - type: Icon
     state: flashbang
   - type: Item
-    layers:
-      - state: box
-      - state: flashbang
   - type: Storage
     capacity: 20

@@ -19,9 +19,6 @@
   - type: Icon
     state: syringe
   - type: Item
-    layers:
-      - state: box
-      - state: syringe
   - type: Storage
     capacity: 30
 
@@ -44,9 +41,6 @@
   - type: Icon
     state: sterile
   - type: Item
-    layers:
-      - state: box
-      - state: sterile
   - type: Storage
     capacity: 20
 
@@ -69,8 +63,5 @@
   - type: Icon
     state: latex
   - type: Item
-    layers:
-      - state: box
-      - state: latex
   - type: Storage
     capacity: 20

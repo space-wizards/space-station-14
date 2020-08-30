@@ -19,8 +19,5 @@
   - type: Icon
     state: beaker
   - type: Item
-    layers:
-      - state: box
-      - state: beaker
   - type: Storage
     capacity: 30
