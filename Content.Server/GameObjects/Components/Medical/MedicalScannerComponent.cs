@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Server.GameObjects.Components.Body;
+using Content.Server.GameObjects.Components.Explosion;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
@@ -22,6 +24,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
 using Content.Shared.Damage;
+using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.Preferences;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.IoC;
@@ -32,7 +35,7 @@ namespace Content.Server.GameObjects.Components.Medical
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class MedicalScannerComponent : SharedMedicalScannerComponent, IActivate
+    public class MedicalScannerComponent : SharedMedicalScannerComponent, IActivate, IDragDropOn
     {
         private ContainerSlot _bodyContainer = default!;
         private readonly Vector2 _ejectOffset = new Vector2(-0.5f, 0f);
@@ -255,6 +258,17 @@ namespace Content.Server.GameObjects.Components.Medical
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        public bool CanDragDropOn(DragDropEventArgs eventArgs)
+        {
+            return eventArgs.Dropped.HasComponent<BodyManagerComponent>();
+        }
+
+        public bool DragDropOn(DragDropEventArgs eventArgs)
+        {
+            _bodyContainer.Insert(eventArgs.Dropped);
+            return true;
         }
     }
 }

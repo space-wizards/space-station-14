@@ -59,7 +59,6 @@
             "AccessReader",
             "IdCardConsole",
             "Airlock",
-            "MedicalScanner",
             "WirePlacer",
             "Drink",
             "Food",
