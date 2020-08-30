@@ -1,5 +1,4 @@
-﻿
-using Robust.Server.GameObjects;
+﻿using Robust.Server.GameObjects;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Robust.Shared.GameObjects;
@@ -22,6 +21,8 @@ using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Shared.Maths;
 using System;
 using System.Collections.Generic;
+using Content.Shared.Utility;
+using Serilog;
 using Content.Server.GameObjects.Components.GUI;
 
 namespace Content.Server.GameObjects.Components.ActionBlocking
@@ -109,11 +110,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
                 return;
             }
 
-            if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(
-                    handcuff.Transform.MapPosition,
-                    Owner.Transform.MapPosition,
-                    _interactRange,
-                    ignoredEnt: Owner))
+            if (!handcuff.InRangeUnobstructed(Owner, _interactRange))
             {
                 Logger.Warning("Handcuffs being applied to player are obstructed or too far away! This should not happen!");
                 return;
@@ -131,7 +128,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         /// <summary>
         /// Check the current amount of hands the owner has, and if there's less hands than active cuffs we remove some cuffs.
         /// </summary>
-        private void UpdateHandCount() 
+        private void UpdateHandCount()
         {
             var dirty = false;
             var handCount = _hands.Hands.Count();
@@ -238,22 +235,13 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
                 return;
             }
 
-            if (!isOwner &&
-                !EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(
-                    user.Transform.MapPosition,
-                    Owner.Transform.MapPosition,
-                    _interactRange,
-                    ignoredEnt: Owner))
+            if (!isOwner && user.InRangeUnobstructed(Owner, _interactRange))
             {
                 user.PopupMessage(user, Loc.GetString("You are too far away to remove the cuffs."));
                 return;
             }
 
-            if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(
-                    cuffsToRemove.Transform.MapPosition,
-                    Owner.Transform.MapPosition,
-                    _interactRange,
-                    ignoredEnt: Owner))
+            if (!cuffsToRemove.InRangeUnobstructed(Owner, _interactRange))
             {
                 Logger.Warning("Handcuffs being removed from player are obstructed or too far away! This should not happen!");
                 return;

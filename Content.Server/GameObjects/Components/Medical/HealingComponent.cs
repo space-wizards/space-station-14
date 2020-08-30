@@ -5,6 +5,7 @@ using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
@@ -43,18 +44,10 @@ namespace Content.Server.GameObjects.Components.Medical
                 return;
             }
 
-            if (eventArgs.User != eventArgs.Target)
+            if (eventArgs.User != eventArgs.Target &&
+                !eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
             {
-                var interactionSystem = EntitySystem.Get<SharedInteractionSystem>();
-                var from = eventArgs.User.Transform.MapPosition;
-                var to = eventArgs.Target.Transform.MapPosition;
-                bool Ignored(IEntity entity) => entity == eventArgs.User || entity == eventArgs.Target;
-                var inRange = interactionSystem.InRangeUnobstructed(from, to, predicate: Ignored);
-
-                if (!inRange)
-                {
-                    return;
-                }
+                return;
             }
 
             if (Owner.TryGetComponent(out StackComponent stack) &&

@@ -1,6 +1,7 @@
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Utility;
+using Content.Shared.Utility;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
@@ -28,7 +29,7 @@ namespace Content.Server.AI.Operators.Inventory
                 return Outcome.Failed;
             }
 
-            if (!InteractionChecks.InRangeUnobstructed(_owner, _useTarget.Transform.MapPosition))
+            if (!_owner.InRangeUnobstructed(_useTarget, popup: true))
             {
                 return Outcome.Failed;
             }

@@ -1,10 +1,9 @@
 #nullable enable
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Physics;
+using Content.Shared.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
@@ -15,14 +14,6 @@ namespace Content.Shared.GameObjects.Verbs
 {
     public class SharedVerbSystem : EntitySystem
     {
-        private SharedInteractionSystem _interactionSystem = null!;
-
-        public override void Initialize()
-        {
-            base.Initialize();
-            _interactionSystem = Get<SharedInteractionSystem>();
-        }
-
         /// <summary>
         ///     Get all of the entities relevant for the contextmenu
         /// </summary>
@@ -35,29 +26,27 @@ namespace Content.Shared.GameObjects.Verbs
         {
             contextEntities = null;
             var length = buffer ? 1.0f: 0.5f;
-            
+
             var entities = EntityManager.GetEntitiesIntersecting(targetPos.MapId,
                 Box2.CenteredAround(targetPos.Position, (length, length))).ToList();
-            
+
             if (entities.Count == 0)
             {
                 return false;
             }
-            
+
             // Check if we have LOS to the clicked-location, otherwise no popup.
             var vectorDiff = player.Transform.MapPosition.Position - targetPos.Position;
             var distance = vectorDiff.Length + 0.01f;
-            Func<IEntity, bool> ignored = entity => entities.Contains(entity) || 
-                                                    entity == player || 
-                                                    !entity.TryGetComponent(out OccluderComponent? occluder) ||
-                                                    !occluder.Enabled;
+            bool Ignored(IEntity entity)
+            {
+                return entities.Contains(entity) ||
+                       entity == player ||
+                       !entity.TryGetComponent(out OccluderComponent? occluder) ||
+                       !occluder.Enabled;
+            }
 
-            var result = _interactionSystem.InRangeUnobstructed(
-                player.Transform.MapPosition, 
-                targetPos,
-                distance, 
-                (int) CollisionGroup.Opaque, 
-                ignored);
+            var result = player.InRangeUnobstructed(targetPos, distance, CollisionGroup.Opaque, Ignored);
 
             if (!result)
             {

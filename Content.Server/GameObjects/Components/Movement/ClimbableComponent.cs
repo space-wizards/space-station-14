@@ -1,4 +1,4 @@
-using Content.Server.GameObjects.Components.Body;
+﻿using Content.Server.GameObjects.Components.Body;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
@@ -18,6 +18,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System;
 using Content.Server.Utility;
+using Content.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Movement
 {
@@ -107,12 +108,7 @@ namespace Content.Server.GameObjects.Components.Movement
                 return false;
             }
 
-            var userPosition = user.Transform.MapPosition;
-            var climbablePosition = target.Transform.MapPosition;
-            var interaction = EntitySystem.Get<SharedInteractionSystem>();
-            bool Ignored(IEntity entity) => (entity == target || entity == user);
-
-            if (!interaction.InRangeUnobstructed(userPosition, climbablePosition, _range, predicate: Ignored))
+            if (!user.InRangeUnobstructed(target, _range))
             {
                 reason = Loc.GetString("You can't reach there!");
                 return false;
@@ -144,14 +140,10 @@ namespace Content.Server.GameObjects.Components.Movement
                 return false;
             }
 
-            var userPosition = user.Transform.MapPosition;
-            var otherUserPosition = dragged.Transform.MapPosition;
-            var climbablePosition = target.Transform.MapPosition;
-            var interaction = EntitySystem.Get<SharedInteractionSystem>();
-            bool Ignored(IEntity entity) => (entity == target || entity == user || entity == dragged);
+            bool Ignored(IEntity entity) => entity == target || entity == user || entity == dragged;
 
-            if (!interaction.InRangeUnobstructed(userPosition, climbablePosition, _range, predicate: Ignored) ||
-                !interaction.InRangeUnobstructed(userPosition, otherUserPosition, _range, predicate: Ignored))
+            if (!user.InRangeUnobstructed(target, _range, predicate: Ignored) ||
+                !user.InRangeUnobstructed(dragged, _range, predicate: Ignored))
             {
                 reason = Loc.GetString("You can't reach there!");
                 return false;

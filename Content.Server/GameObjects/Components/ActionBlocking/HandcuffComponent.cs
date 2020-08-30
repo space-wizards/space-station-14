@@ -16,6 +16,7 @@ using Content.Shared.GameObjects.Components.ActionBlocking;
 using Content.Server.GameObjects.Components.Mobs;
 using Robust.Shared.Maths;
 using System;
+using Content.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.ActionBlocking
 {
@@ -115,7 +116,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         private float _interactRange;
         private DoAfterSystem _doAfterSystem;
         private AudioSystem _audioSystem;
-        
+
         public override void Initialize()
         {
             base.Initialize();
@@ -182,11 +183,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
                 return;
             }
 
-            if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(
-                    eventArgs.User.Transform.MapPosition,
-                    eventArgs.Target.Transform.MapPosition,
-                    _interactRange,
-                    ignoredEnt: Owner))
+            if (!eventArgs.InRangeUnobstructed(_interactRange, ignoreInsideBlocker: true))
             {
                 _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, Loc.GetString("You are too far away to use the cuffs!"));
                 return;
@@ -196,7 +193,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             _notifyManager.PopupMessage(eventArgs.User, eventArgs.Target, Loc.GetString("{0:theName} starts cuffing you!", eventArgs.User));
             _audioSystem.PlayFromEntity(StartCuffSound, Owner);
 
-            TryUpdateCuff(eventArgs.User, eventArgs.Target, cuffed); 
+            TryUpdateCuff(eventArgs.User, eventArgs.Target, cuffed);
         }
 
         /// <summary>
