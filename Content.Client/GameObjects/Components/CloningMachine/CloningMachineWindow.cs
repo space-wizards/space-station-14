@@ -39,6 +39,7 @@ namespace Content.Client.GameObjects.Components.CloningMachine
         private (int start, int end) _lastScanIndices;
 
         public int? SelectedScan;
+        private readonly ILocalizationManager _localization;
 
         protected override Vector2? CustomSize => (250, 300);
 
@@ -48,9 +49,9 @@ namespace Content.Client.GameObjects.Components.CloningMachine
         {
             _scanManager = scanManager;
 
-            var localization = loc;
+            _localization = loc;
 
-            Title = localization.GetString("Cloning Machine");
+            Title = _localization.GetString("Cloning Machine");
 
             Contents.AddChild(_mainVBox = new VBoxContainer
             {
@@ -63,13 +64,13 @@ namespace Content.Client.GameObjects.Components.CloningMachine
                             (_searchBar = new LineEdit
                             {
                                 SizeFlagsHorizontal = SizeFlags.FillExpand,
-                                PlaceHolder = localization.GetString("Search")
+                                PlaceHolder = _localization.GetString("Search")
                             }),
 
                             (_clearButton = new Button
                             {
                                 Disabled = true,
-                                Text = localization.GetString("Clear"),
+                                Text = _localization.GetString("Clear"),
                             })
                         }
                     },
@@ -88,7 +89,7 @@ namespace Content.Client.GameObjects.Components.CloningMachine
                         {
                             (CloneButton = new Button
                             {
-                                Text = "Clone"
+                                Text = _localization.GetString("Clone")
                             })
                         }
                     },
@@ -112,11 +113,11 @@ namespace Content.Client.GameObjects.Components.CloningMachine
                         {
                             new Label()
                             {
-                                Text = "Neural Interface: "
+                                Text = _localization.GetString("Neural Interface: ")
                             },
                             (_mindState = new Label()
                             {
-                                Text = "No Activity",
+                                Text = _localization.GetString("No Activity"),
                                 FontColorOverride = Color.Red
                             }),
                         }
@@ -148,7 +149,7 @@ namespace Content.Client.GameObjects.Components.CloningMachine
             _progressLabel.Text = $"{percentage:0}%";
 
             _cloningProgressBar.Value = state.Progress;
-            _mindState.Text = state.MindPresent ? "Consciousness Detected" : "No Activity";
+            _mindState.Text = _localization.GetString(state.MindPresent ? "Consciousness Detected" : "No Activity");
             _mindState.FontColorOverride = state.MindPresent ? Color.Green : Color.Red;
         }
 
