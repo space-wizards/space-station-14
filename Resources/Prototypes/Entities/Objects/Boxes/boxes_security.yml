@@ -1,0 +1,26 @@
+- type: entity
+  name: handcuff box
+  parent: BoxBase
+  id: BoxHandcuff
+  description:
+  components:
+  - type: StorageFill
+    contents:
+      - Handcuffs
+      - Handcuffs
+      - Handcuffs
+      - Handcuffs
+      - Handcuffs
+      - Handcuffs
+  - type: Sprite
+    layers:
+      - state: box
+      - state: handcuff
+  - type: Icon
+    state: handcuff
+  - type: Item
+    layers:
+      - state: box
+      - state: handcuff
+  - type: Storage
+    capacity: 6
