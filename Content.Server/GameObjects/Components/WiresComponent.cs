@@ -13,6 +13,7 @@ using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
@@ -388,7 +389,7 @@ namespace Content.Server.GameObjects.Components
                         return;
                     }
 
-                    if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(player.Transform.MapPosition, Owner.Transform.MapPosition, ignoredEnt: Owner))
+                    if (!player.InRangeUnobstructed(Owner))
                     {
                         _notifyManager.PopupMessage(Owner.Transform.GridPosition, player,
                             Loc.GetString("You can't reach there!"));

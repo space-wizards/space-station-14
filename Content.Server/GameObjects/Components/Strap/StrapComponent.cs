@@ -4,6 +4,7 @@ using Content.Shared.GameObjects.Components.Strap;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
@@ -202,20 +203,15 @@ namespace Content.Server.GameObjects.Components.Strap
                     parent = parent.Parent;
                 }
 
-                var userPosition = user.Transform.MapPosition;
-                var strapPosition = component.Owner.Transform.MapPosition;
                 var range = SharedInteractionSystem.InteractionRange / 2;
-                var inRange = EntitySystem.Get<SharedInteractionSystem>()
-                    .InRangeUnobstructed(userPosition, strapPosition, range,
-                        predicate: entity => entity == user || entity == component.Owner);
 
-                if (!inRange)
+                if (!user.InRangeUnobstructed(component, range))
                 {
                     return;
                 }
 
                 data.Visibility = VerbVisibility.Visible;
-                data.Text = buckle.BuckledTo == null ? Loc.GetString("Buckle") : Loc.GetString("Unbuckle");
+                data.Text = Loc.GetString(buckle.BuckledTo == null ? "Buckle" : "Unbuckle");
             }
 
             protected override void Activate(IEntity user, StrapComponent component)

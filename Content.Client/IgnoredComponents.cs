@@ -156,13 +156,22 @@
             "Barotrauma",
             "GasSprayer",
             "GasVapor",
-            "MobStateManager",
             "Metabolism",
             "AiFactionTag",
             "PressureProtection",
+            "AMEPart",
+            "AMEFuelContainer",
+            "AMEShield",
             "DebugPump",
+            "PressurePump",
+            "VolumePump",
             "DebugVent",
             "DebugSiphon",
+            "SignalReceiver",
+            "SignalSwitch",
+            "SignalTransmitter",
+            "SignalButton",
+            "SignalLinker",
         };
     }
 }

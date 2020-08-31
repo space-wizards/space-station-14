@@ -5,9 +5,12 @@ using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects;
+using Content.Server.Interfaces;
 using Content.Server.Observer;
 using Content.Server.Players;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.Interfaces;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Enums;
@@ -116,6 +119,9 @@ namespace Content.Server.Chat
 
     internal class SuicideCommand : IClientCommand
     {
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
+
         public string Command => "suicide";
 
         public string Description => "Commits suicide";
@@ -185,8 +191,14 @@ namespace Content.Server.Chat
                     }
                 }
             }
+
             // Default suicide, bite your tongue
-            chat.EntityMe(owner, Loc.GetString("is attempting to bite {0:their} own tongue, looks like {0:theyre} trying to commit suicide!", owner)); //TODO: theyre macro
+            var othersMessage = Loc.GetString("{0:theName} is attempting to bite {0:their} own tongue!", owner);
+            owner.PopupMessageOtherClients(othersMessage);
+
+            var selfMessage = Loc.GetString("You attempt to bite your own tongue!");
+            owner.PopupMessage(selfMessage);
+
             dmgComponent.ChangeDamage(DamageType.Piercing, 500, true, owner);
 
             // Prevent the player from returning to the body. Yes, this is an ugly hack.

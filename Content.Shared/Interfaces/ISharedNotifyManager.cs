@@ -35,9 +35,26 @@ namespace Content.Shared.Interfaces
 
     public static class NotifyManagerExt
     {
+        /// <summary>
+        ///     Pops up a message at the location of <see cref="source"/> for
+        ///     <see cref="viewer"/> alone to see.
+        /// </summary>
+        /// <param name="source">The entity above which the message will appear.</param>
+        /// <param name="viewer">The entity that will see the message.</param>
+        /// <param name="message">The message to show.</param>
         public static void PopupMessage(this IEntity source, IEntity viewer, string message)
         {
             IoCManager.Resolve<ISharedNotifyManager>().PopupMessage(source, viewer, message);
+        }
+
+        /// <summary>
+        ///     Pops up a message at the given entity's location for it alone to see.
+        /// </summary>
+        /// <param name="viewer">The entity that will see the message.</param>
+        /// <param name="message">The message to be seen.</param>
+        public static void PopupMessage(this IEntity viewer, string message)
+        {
+            viewer.PopupMessage(viewer, message);
         }
     }
 }

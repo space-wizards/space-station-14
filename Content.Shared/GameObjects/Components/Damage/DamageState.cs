@@ -16,6 +16,7 @@ namespace Content.Shared.GameObjects.Components.Damage
     [Serializable, NetSerializable]
     public enum DamageState
     {
+        Invalid = 0,
         Alive,
         Critical,
         Dead

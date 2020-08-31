@@ -211,6 +211,12 @@
         public const int LowPressureDamage = 4;
 
         public const float WindowHeatTransferCoefficient = 0.1f;
+
+        /// <summary>
+        ///     Directions that atmos currently supports. Modify in case of multi-z.
+        ///     See <see cref="AtmosDirection"/> on the server.
+        /// </summary>
+        public const int Directions = 4;
     }
 
     /// <summary>

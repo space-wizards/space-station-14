@@ -46,6 +46,30 @@ namespace Content.Shared.GameObjects.Components.Damage
         IReadOnlyDictionary<DamageType, int> DamageTypes { get; }
 
         /// <summary>
+        ///     The damage flags on this component.
+        /// </summary>
+        DamageFlag Flags { get; }
+
+        /// <summary>
+        ///     Adds a flag to this component.
+        /// </summary>
+        /// <param name="flag">The flag to add.</param>
+        void AddFlag(DamageFlag flag);
+
+        /// <summary>
+        ///     Checks whether or not this component has a specific flag.
+        /// </summary>
+        /// <param name="flag">The flag to check for.</param>
+        /// <returns>True if it has the flag, false otherwise.</returns>
+        bool HasFlag(DamageFlag flag);
+
+        /// <summary>
+        ///     Removes a flag from this component.
+        /// </summary>
+        /// <param name="flag">The flag to remove.</param>
+        void RemoveFlag(DamageFlag flag);
+
+        /// <summary>
         ///     Gets the amount of damage of a type.
         /// </summary>
         /// <param name="type">The type to get the damage of.</param>
@@ -143,8 +167,8 @@ namespace Content.Shared.GameObjects.Components.Damage
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-            ChangeDamage(DamageType.Piercing, damage, false, null);
-            ChangeDamage(DamageType.Heat, damage, false, null);
+            ChangeDamage(DamageType.Piercing, damage, false);
+            ChangeDamage(DamageType.Heat, damage, false);
         }
     }
 

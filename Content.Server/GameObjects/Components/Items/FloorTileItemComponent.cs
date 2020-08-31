@@ -2,6 +2,7 @@
 using Content.Server.Utility;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Maps;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
@@ -35,7 +36,7 @@ namespace Content.Server.GameObjects.Components.Items
 
         public void AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
+            if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true)) return;
             if (!Owner.TryGetComponent(out StackComponent stack)) return;
 
             var attacked = eventArgs.Target;

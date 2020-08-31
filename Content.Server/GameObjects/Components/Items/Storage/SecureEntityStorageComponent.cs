@@ -146,7 +146,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                     return;
                 }
 
-                data.Text = component.Locked ? Loc.GetString("Unlock") : Loc.GetString("Lock");
+                data.Text = Loc.GetString(component.Locked ? "Unlock" : "Lock");
             }
 
             protected override void Activate(IEntity user, SecureEntityStorageComponent component)

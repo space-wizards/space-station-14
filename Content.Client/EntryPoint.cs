@@ -18,6 +18,7 @@ using Content.Shared.GameObjects.Components.Chemistry.ChemMaster;
 using Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser;
 using Content.Shared.GameObjects.Components.Gravity;
 using Content.Shared.GameObjects.Components.Markers;
+using Content.Shared.GameObjects.Components.Power.AME;
 using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.GameObjects.Components.VendingMachines;
 using Content.Shared.Kitchen;
@@ -72,6 +73,7 @@ namespace Content.Client
             factory.Register<SharedChemMasterComponent>();
             factory.Register<SharedMicrowaveComponent>();
             factory.Register<SharedGravityGeneratorComponent>();
+            factory.Register<SharedAMEControllerComponent>();
 
             prototypes.RegisterIgnore("material");
             prototypes.RegisterIgnore("reaction"); //Chemical reactions only needed by server. Reactions checks are server-side.

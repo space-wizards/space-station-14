@@ -85,6 +85,12 @@
       map: ["enum.PDAVisualLayers.Flashlight"]
   - type: Slippery
     paralyzeTime: 4
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.25,-0.25,0.25,0.25"
+      layer:
+      - MobImpassable
 
 - type: entity
   name: Cargo PDA
