@@ -17,13 +17,15 @@ namespace Content.Shared.GameObjects.Atmos
         public readonly PipeDirection OutletDirection;
         public readonly ConduitLayer InletConduitLayer;
         public readonly ConduitLayer OutletConduitLayer;
+        public readonly bool PumpEnabled;
 
-        public PumpVisualState(PipeDirection inletDirection, PipeDirection outletDirection, ConduitLayer inletConduitLayer, ConduitLayer outletConduitLayer)
+        public PumpVisualState(PipeDirection inletDirection, PipeDirection outletDirection, ConduitLayer inletConduitLayer, ConduitLayer outletConduitLayer, bool pumpEnabled)
         {
             InletDirection = inletDirection;
             OutletDirection = outletDirection;
             InletConduitLayer = inletConduitLayer;
             OutletConduitLayer = outletConduitLayer;
+            PumpEnabled = pumpEnabled;
         }
     }
 }
