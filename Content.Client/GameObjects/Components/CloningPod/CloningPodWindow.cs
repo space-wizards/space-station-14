@@ -9,6 +9,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Robust.Shared.Localization;
 using static Content.Shared.GameObjects.Components.Medical.SharedCloningPodComponent;
 
 namespace Content.Client.GameObjects.Components.CloningPod
@@ -40,19 +41,16 @@ namespace Content.Client.GameObjects.Components.CloningPod
         private (int start, int end) _lastScanIndices;
 
         public int? SelectedScan;
-        private readonly ILocalizationManager _localization;
 
         protected override Vector2? CustomSize => (250, 300);
 
         public CloningPodWindow(
-            Dictionary<int, string> scanManager,
-            ILocalizationManager loc)
+            Dictionary<int, string> scanManager)
         {
             _scanManager = scanManager;
 
-            _localization = loc;
 
-            Title = _localization.GetString("Cloning Machine");
+            Title = Loc.GetString("Cloning Machine");
 
             Contents.AddChild(_mainVBox = new VBoxContainer
             {
@@ -65,13 +63,13 @@ namespace Content.Client.GameObjects.Components.CloningPod
                             (_searchBar = new LineEdit
                             {
                                 SizeFlagsHorizontal = SizeFlags.FillExpand,
-                                PlaceHolder = _localization.GetString("Search")
+                                PlaceHolder = Loc.GetString("Search")
                             }),
 
                             (_clearButton = new Button
                             {
                                 Disabled = true,
-                                Text = _localization.GetString("Clear"),
+                                Text = Loc.GetString("Clear"),
                             })
                         }
                     },
@@ -90,7 +88,7 @@ namespace Content.Client.GameObjects.Components.CloningPod
                         {
                             (CloneButton = new Button
                             {
-                                Text = _localization.GetString("Clone")
+                                Text = Loc.GetString("Clone")
                             })
                         }
                     },
@@ -110,7 +108,7 @@ namespace Content.Client.GameObjects.Components.CloningPod
                     }),
                     (EjectButton = new Button
                     {
-                        Text = _localization.GetString("Eject Body")
+                        Text = Loc.GetString("Eject Body")
                     }),
                     new HBoxContainer
                     {
@@ -118,11 +116,11 @@ namespace Content.Client.GameObjects.Components.CloningPod
                         {
                             new Label()
                             {
-                                Text = _localization.GetString("Neural Interface: ")
+                                Text = Loc.GetString("Neural Interface: ")
                             },
                             (_mindState = new Label()
                             {
-                                Text = _localization.GetString("No Activity"),
+                                Text = Loc.GetString("No Activity"),
                                 FontColorOverride = Color.Red
                             }),
                         }
@@ -154,7 +152,7 @@ namespace Content.Client.GameObjects.Components.CloningPod
             _progressLabel.Text = $"{percentage:0}%";
 
             _cloningProgressBar.Value = state.Progress;
-            _mindState.Text = _localization.GetString(state.MindPresent ? "Consciousness Detected" : "No Activity");
+            _mindState.Text = Loc.GetString(state.MindPresent ? "Consciousness Detected" : "No Activity");
             _mindState.FontColorOverride = state.MindPresent ? Color.Green : Color.Red;
         }
 
@@ -441,7 +439,7 @@ namespace Content.Client.GameObjects.Components.CloningPod
                         {
                             SizeFlagsVertical = SizeFlags.ShrinkCenter,
                             SizeFlagsHorizontal = SizeFlags.FillExpand,
-                            Text = "Backpack",
+                            Text = "",
                             ClipText = true
                         })
                     }

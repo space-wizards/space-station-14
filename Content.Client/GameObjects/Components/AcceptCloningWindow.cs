@@ -10,11 +10,10 @@ namespace Content.Client.GameObjects.Components
         public readonly Button DenyButton;
         public readonly Button ConfirmButton;
 
-        public AcceptCloningWindow(ILocalizationManager loc)
+        public AcceptCloningWindow()
         {
-            var localization = loc;
 
-            Title = localization.GetString("Cloning Machine");
+            Title = Loc.GetString("Cloning Machine");
 
             Contents.AddChild(new VBoxContainer
             {
@@ -26,7 +25,7 @@ namespace Content.Client.GameObjects.Components
                         {
                             (new Label
                             {
-                                Text = "You are being cloned! Transfer you soul to the clone body?"
+                                Text = Loc.GetString("You are being cloned! Transfer you soul to the clone body?")
                             }),
                             new HBoxContainer
                             {
@@ -34,11 +33,11 @@ namespace Content.Client.GameObjects.Components
                                 {
                                     (ConfirmButton = new Button
                                     {
-                                        Text = localization.GetString("Yes"),
+                                        Text = Loc.GetString("Yes"),
                                     }),
                                     (DenyButton = new Button
                                     {
-                                        Text = localization.GetString("No"),
+                                        Text = Loc.GetString("No"),
                                     })
                                 }
                             },

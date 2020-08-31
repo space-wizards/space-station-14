@@ -21,7 +21,7 @@ namespace Content.Client.GameObjects.Components
         {
             base.Open();
 
-            _window = new AcceptCloningWindow(_localization);
+            _window = new AcceptCloningWindow();
             _window.OnClose += Close;
             _window.DenyButton.OnPressed += _ => _window.Close();
             _window.ConfirmButton.OnPressed += _ =>

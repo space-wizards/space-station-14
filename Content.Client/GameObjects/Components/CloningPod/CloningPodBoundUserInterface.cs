@@ -14,7 +14,6 @@ namespace Content.Client.GameObjects.Components.CloningPod
     [UsedImplicitly]
     public class CloningPodBoundUserInterface : BoundUserInterface
     {
-        [Dependency] private readonly ILocalizationManager _localization;
 
         public CloningPodBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
@@ -27,7 +26,7 @@ namespace Content.Client.GameObjects.Components.CloningPod
             base.Open();
 
 
-            _window = new CloningPodWindow(new Dictionary<int, string>(), _localization);
+            _window = new CloningPodWindow(new Dictionary<int, string>());
             _window.OnClose += Close;
             _window.CloneButton.OnPressed += _ => SendMessage(new UiButtonPressedMessage(UiButton.Clone,_window.SelectedScan));
             _window.EjectButton.OnPressed += _ => SendMessage(new UiButtonPressedMessage(UiButton.Eject,_window.SelectedScan));
