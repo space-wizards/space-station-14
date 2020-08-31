@@ -74,7 +74,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
 
         private void UpdateAppearance()
         {
-            _appearance?.SetData(PumpVisuals.VisualState, new PumpVisualState(_inletDirection, _outletDirection, 2, 2)); //2's for default conduit layers of inlet and outlet of pump before its implementation
+            _appearance?.SetData(PumpVisuals.VisualState, new PumpVisualState(_inletDirection, _outletDirection, _inletPipe.ConduitLayer, _outletPipe.ConduitLayer));
         }
     }
 }

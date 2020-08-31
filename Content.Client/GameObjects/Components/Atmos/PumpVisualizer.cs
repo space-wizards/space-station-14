@@ -51,9 +51,9 @@ namespace Content.Client.GameObjects.Components.Disposal
             }
             var pumpBaseState = "pump";
             pumpBaseState += pumpVisualState.InletDirection.ToString();
-            pumpBaseState += pumpVisualState.InletConduitLayer.ToString();
+            pumpBaseState += ((int) pumpVisualState.InletConduitLayer).ToString();
             pumpBaseState += pumpVisualState.OutletDirection.ToString();
-            pumpBaseState += pumpVisualState.OutletConduitLayer.ToString();
+            pumpBaseState += ((int) pumpVisualState.OutletConduitLayer).ToString();
 
             sprite.LayerMapReserveBlank(Layer.PumpBase);
             var basePumpLayer = sprite.LayerMapGet(Layer.PumpBase);
