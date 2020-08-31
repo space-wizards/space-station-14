@@ -135,6 +135,7 @@
     deadThreshold: 200
     baseTemplate: bodyTemplate.Humanoid
     basePreset: bodyPreset.BasicHuman
+    damageSound: /Audio/Effects/hit_kick.ogg
   - type: Metabolism
     needsGases:
       Oxygen: 0.006365740
