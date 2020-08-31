@@ -2,6 +2,8 @@
 using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Shared.GameObjects.Components.Atmos;
+using Content.Shared.GameObjects.Atmos;
+using Robust.Server.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -32,6 +34,8 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
         [ViewVariables]
         private PipeNode _outletPipe;
 
+        private AppearanceComponent _appearance;
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -57,6 +61,8 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
                 Logger.Error($"{typeof(BasePumpComponent)} on entity {Owner.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
                 return;
             }
+            Owner.TryGetComponent(out _appearance);
+            UpdateAppearance();
         }
 
         public override void Update()
@@ -65,5 +71,10 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
         }
 
         protected abstract void PumpGas(GasMixture inletGas, GasMixture outletGas);
+
+        private void UpdateAppearance()
+        {
+            _appearance?.SetData(PumpVisuals.VisualState, new PumpVisualState(_inletDirection, _outletDirection, _inletPipe.ConduitLayer, _outletPipe.ConduitLayer));
+        }
     }
 }

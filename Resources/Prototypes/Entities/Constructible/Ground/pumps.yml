@@ -12,7 +12,12 @@
   - type: Icon
     texture: Constructible/Power/eightdirwire.png
   - type: Sprite
-    sprite: Constructible/Power/mv_cable.rsi
+  - type: Appearance
+    visuals:
+    - type: PipeVisualizer
+      pipeRSI: Constructible/Atmos/pipe.rsi
+    - type: PumpVisualizer
+      pumpRSI: Constructible/Atmos/pressurepump.rsi
   - type: Destructible
     thresholdvalue: 100
 
@@ -21,8 +26,6 @@
   parent: PumpBase
   id: NorthwardLongitudinalPump
   components:
-  - type: Sprite
-    state: mvcable_3
   - type: NodeContainer
     nodes:
     - !type:PipeNode
