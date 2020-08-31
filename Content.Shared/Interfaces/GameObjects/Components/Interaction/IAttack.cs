@@ -32,6 +32,6 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         public GridCoordinates ClickLocation { get; }
         public bool WideAttack { get; }
         public EntityUid Target { get; }
-        public IEntity? TargetEntity => IoCManager.Resolve<IEntityManager>()?.GetEntity(Target) ?? null;
+        public IEntity? TargetEntity => Target.IsValid() ? IoCManager.Resolve<IEntityManager>()?.GetEntity(Target) ?? null : null;
     }
 }

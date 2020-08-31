@@ -17,6 +17,8 @@ using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using Content.Shared.Damage;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects.EntitySystemMessages;
 
 namespace Content.Server.GameObjects.Components.Weapon.Melee
 {
@@ -24,7 +26,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
     public class MeleeWeaponComponent : Component, IAttack
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
         [Dependency] private readonly IPhysicsManager _physicsManager = default!;
 
         public override string Name => "MeleeWeapon";
@@ -54,6 +55,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageType DamageType { get; set; }
 
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool ClickAttackEffect { get; set; }
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -68,6 +72,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             serializer.DataField(this, x => x.ArcCooldownTime, "arcCooldownTime", 1f);
             serializer.DataField(this, x => x.CooldownTime, "cooldownTime", 1f);
             serializer.DataField(this, x => x.DamageType, "damageType", DamageType.Blunt);
+            serializer.DataField(this, x => x.ClickAttackEffect, "clickAttackEffect", true);
         }
 
         protected virtual bool OnHitEntities(IReadOnlyList<IEntity> entities, AttackEventArgs eventArgs)
@@ -117,8 +122,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
             if (Arc != null)
             {
-                var sys = _entitySystemManager.GetEntitySystem<MeleeWeaponSystem>();
-                sys.SendAnimation(Arc, angle, eventArgs.User, hitEntities);
+                var sys = EntitySystem.Get<MeleeWeaponSystem>();
+                sys.SendAnimation(Arc, angle, eventArgs.User, Owner, hitEntities);
             }
 
             _lastAttackTime = curTime;
@@ -170,8 +175,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
             if (ClickArc != null)
             {
-                var sys = _entitySystemManager.GetEntitySystem<MeleeWeaponSystem>();
-                sys.SendAnimation(ClickArc, angle, eventArgs.User, targets);
+                var sys = EntitySystem.Get<MeleeWeaponSystem>();
+                sys.SendAnimation(ClickArc, angle, eventArgs.User, Owner, targets, ClickAttackEffect);
             }
 
             _lastAttackTime = curTime;
