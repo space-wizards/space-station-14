@@ -12,8 +12,8 @@ using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
+using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.Player;
@@ -71,7 +71,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             var interactionArgs = new DragDropEventArgs(performer, msg.DropLocation, dropped, target);
 
             // must be in range of both the target and the object they are drag / dropping
-            if (!InteractionChecks.InRangeUnobstructed(interactionArgs)) return;
+            if (!interactionArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true)) return;
 
             // trigger dragdrops on the dropped entity
             foreach (var dragDrop in dropped.GetAllComponents<IDragDrop>())
@@ -145,7 +145,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
             // all activates should only fire when in range / unbostructed
             var activateEventArgs = new ActivateEventArgs {User = user, Target = used};
-            if (InteractionChecks.InRangeUnobstructed(activateEventArgs))
+            if (activateEventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
             {
                 activateComp.Activate(activateEventArgs);
             }
@@ -453,7 +453,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             };
 
             // all AttackBys should only happen when in range / unobstructed, so no range check is needed
-            if (InteractionChecks.InRangeUnobstructed(attackByEventArgs))
+            if (attackByEventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
             {
                 foreach (var attackBy in attackBys)
                 {
@@ -501,8 +501,8 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             var attackHands = attacked.GetAllComponents<IInteractHand>().ToList();
             var attackHandEventArgs = new InteractHandEventArgs {User = user, Target = attacked};
 
-            // all attackHands should only fire when in range / unbostructed
-            if (InteractionChecks.InRangeUnobstructed(attackHandEventArgs))
+            // all attackHands should only fire when in range / unobstructed
+            if (attackHandEventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
             {
                 foreach (var attackHand in attackHands)
                 {

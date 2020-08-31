@@ -1,6 +1,7 @@
 using Content.Client.GameObjects.Components.Instruments;
 using Content.Client.UserInterface.Stylesheets;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Client.Utility;
+using Content.Shared.Utility;
 using Robust.Client.Audio.Midi;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.UserInterface;
@@ -9,7 +10,6 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
@@ -197,9 +197,7 @@ namespace Content.Client.Instruments
                                         || conMan.Owner != localPlayer.ControlledEntity))) return;
 
             // We check that we're in range unobstructed just in case.
-            if(!EntitySystem.Get<SharedInteractionSystem>()
-                    .InRangeUnobstructed(localPlayer.ControlledEntity.Transform.MapPosition,
-                        instrumentEnt.Transform.MapPosition, ignoredEnt:instrumentEnt)) return;
+            if (!localPlayer.InRangeUnobstructed(instrumentEnt)) return;
 
             if (!_midiManager.IsMidiFile(filename))
             {

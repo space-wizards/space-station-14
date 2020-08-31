@@ -101,7 +101,7 @@ namespace Content.Server.GameObjects.Components.Body
 
                 foreach (var connectedPart in parts)
                 {
-                    if (!connectedPart.CanAttachBodyPart(ContainedBodyPart))
+                    if (!connectedPart.CanAttachPart(ContainedBodyPart))
                     {
                         continue;
                     }

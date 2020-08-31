@@ -26,7 +26,7 @@ namespace Content.Server.GameObjects.Components.Doors
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(ServerDoorComponent))]
-    public class AirlockComponent : ServerDoorComponent, IWires, IInteractUsing
+    public class AirlockComponent : ServerDoorComponent, IWires
     {
         public override string Name => "Airlock";
 
@@ -383,7 +383,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
         public override bool CanOpen()
         {
-            return IsPowered() && !IsBolted();
+            return base.CanOpen() && IsPowered() && !IsBolted();
         }
 
         public override bool CanClose()
@@ -412,8 +412,11 @@ namespace Content.Server.GameObjects.Components.Doors
                    || receiver.Powered;
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        public override async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
+            if (await base.InteractUsing(eventArgs))
+                return true;
+
             if (!eventArgs.Using.TryGetComponent<ToolComponent>(out var tool))
                 return false;
 
