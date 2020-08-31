@@ -124,3 +124,24 @@
   - type: Item
   - type: Storage
     capacity: 20
+
+- type: entity
+  name: survival box
+  parent: BoxBase
+  id: BoxSurvival
+  description:
+  components:
+  - type: StorageFill
+    contents:
+      - BreathMaskClothing
+      #- O2 Canister
+      #- Injector
+  - type: Sprite
+    layers:
+      - state: box
+      - state: meson
+  - type: Icon
+    state: meson
+  - type: Item
+  - type: Storage
+    capacity: 20
