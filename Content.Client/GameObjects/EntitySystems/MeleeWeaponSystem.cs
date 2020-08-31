@@ -21,8 +21,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         public override void Initialize()
         {
-            SubscribeNetworkEvent<PlayMeleeWeaponArcAnimationMessage>(PlayWeaponArc);
-            SubscribeNetworkEvent<PlayMeleeWeaponAnimationMessage>(PlayWeapon);
+            SubscribeNetworkEvent<PlayMeleeWeaponAnimationMessage>(PlayWeaponArc);
         }
 
         public override void FrameUpdate(float frameTime)
@@ -35,7 +34,7 @@ namespace Content.Client.GameObjects.EntitySystems
             }
         }
 
-        private void PlayWeaponArc(PlayMeleeWeaponArcAnimationMessage msg)
+        private void PlayWeaponArc(PlayMeleeWeaponAnimationMessage msg)
         {
             if (!_prototypeManager.TryIndex(msg.ArcPrototype, out MeleeWeaponAnimationPrototype weaponArc))
             {
@@ -80,33 +79,6 @@ namespace Content.Client.GameObjects.EntitySystems
                     }
                 });
             }
-        }
-
-        private void PlayWeapon(PlayMeleeWeaponAnimationMessage msg)
-        {
-            var attacker = EntityManager.GetEntity(msg.Attacker);
-
-            var lunge = attacker.EnsureComponent<MeleeLungeComponent>();
-            lunge.SetData(msg.Angle);
-
-            if (!EntityManager.TryGetEntity(msg.Hit, out var hitEntity)
-            ||  !hitEntity.TryGetComponent(out ISpriteComponent sprite))
-            {
-                return;
-            }
-
-            var originalColor = sprite.Color;
-            var newColor = Color.Red * originalColor;
-            sprite.Color = newColor;
-
-            Timer.Spawn(100, () =>
-            {
-                // Only reset back to the original color if something else didn't change the color in the mean time.
-                if (sprite.Color == newColor)
-                {
-                    sprite.Color = originalColor;
-                }
-            });
         }
     }
 }

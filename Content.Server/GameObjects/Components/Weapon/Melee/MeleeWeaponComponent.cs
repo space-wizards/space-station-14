@@ -37,6 +37,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         public float CooldownTime { get; private set; } = 0.5f;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        public string ClickArc { get; set; }
+
+        [ViewVariables(VVAccess.ReadWrite)]
         public string Arc { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -59,6 +62,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             serializer.DataField(this, x => x.Range, "range", 1);
             serializer.DataField(this, x => x.ArcWidth, "arcwidth", 90);
             serializer.DataField(this, x => x.Arc, "arc", "default");
+            serializer.DataField(this, x => x.ClickArc, "clickArc", "punch");
             serializer.DataField(this, x => x._hitSound, "hitSound", "/Audio/Weapons/genhit1.ogg");
             serializer.DataField(this, x => x._missSound, "hitSound", "/Audio/Weapons/punchmiss.ogg");
             serializer.DataField(this, x => x.ArcCooldownTime, "arcCooldownTime", 1f);
@@ -159,11 +163,16 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 damageComponent.ChangeDamage(DamageType, Damage, false, Owner);
             }
 
-            if (!OnHitEntities(new[] {target}, eventArgs))
+            var targets = new[] {target};
+
+            if (!OnHitEntities(targets, eventArgs))
                 return true;
 
-            var sys = _entitySystemManager.GetEntitySystem<MeleeWeaponSystem>();
-            sys.SendAnimation(angle, eventArgs.User, target);
+            if (ClickArc != null)
+            {
+                var sys = _entitySystemManager.GetEntitySystem<MeleeWeaponSystem>();
+                sys.SendAnimation(ClickArc, angle, eventArgs.User, targets);
+            }
 
             _lastAttackTime = curTime;
             _cooldownEnd = _lastAttackTime + TimeSpan.FromSeconds(CooldownTime);
