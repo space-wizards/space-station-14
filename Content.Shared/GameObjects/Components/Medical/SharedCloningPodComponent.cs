@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Shared.Preferences;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Serialization;
-using Robust.Shared.Network;
 
 namespace Content.Shared.GameObjects.Components.Medical
 {
@@ -58,12 +56,12 @@ namespace Content.Shared.GameObjects.Components.Medical
         }
 
         [Serializable, NetSerializable]
-        public class UiButtonPressedMessage : BoundUserInterfaceMessage
+        public class CloningPodUiButtonPressedMessage : BoundUserInterfaceMessage
         {
             public readonly UiButton Button;
             public readonly int? ScanId;
 
-            public UiButtonPressedMessage(UiButton button, int? scanId)
+            public CloningPodUiButtonPressedMessage(UiButton button, int? scanId)
             {
                 Button = button;
                 ScanId = scanId;

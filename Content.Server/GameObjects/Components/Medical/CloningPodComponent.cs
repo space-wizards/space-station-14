@@ -128,15 +128,19 @@ namespace Content.Server.GameObjects.Components.Medical
 
         private async void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
-            if (!(obj.Message is UiButtonPressedMessage message)) return;
+            if (!(obj.Message is CloningPodUiButtonPressedMessage message)) return;
 
             switch (message.Button)
             {
                 case UiButton.Clone:
 
-                    if (_bodyContainer.ContainedEntity != null || message.ScanId == null) break;
+                    if (message.ScanId == null) return;
 
-                    var mind = CloningSystem.Minds[(int) message.ScanId];
+                    if (_bodyContainer.ContainedEntity != null ||
+                        !CloningSystem.Minds.TryGetValue((int) message.ScanId, out var mind))
+                    {
+                        return;
+                    }
 
                     var dead =
                         mind.OwnedEntity.TryGetComponent<IDamageableComponent>(out var damageable) &&

@@ -14,7 +14,6 @@ namespace Content.Client.GameObjects.Components.CloningPod
     [UsedImplicitly]
     public class CloningPodBoundUserInterface : BoundUserInterface
     {
-
         public CloningPodBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
         }
@@ -28,8 +27,17 @@ namespace Content.Client.GameObjects.Components.CloningPod
 
             _window = new CloningPodWindow(new Dictionary<int, string>());
             _window.OnClose += Close;
-            _window.CloneButton.OnPressed += _ => SendMessage(new UiButtonPressedMessage(UiButton.Clone,_window.SelectedScan));
-            _window.EjectButton.OnPressed += _ => SendMessage(new UiButtonPressedMessage(UiButton.Eject,_window.SelectedScan));
+            _window.CloneButton.OnPressed += _ =>
+            {
+                if (_window.SelectedScan != null)
+                {
+                    SendMessage(new CloningPodUiButtonPressedMessage(UiButton.Clone, (int) _window.SelectedScan));
+                }
+            };
+            _window.EjectButton.OnPressed += _ =>
+            {
+                SendMessage(new CloningPodUiButtonPressedMessage(UiButton.Eject, null));
+            };
             _window.OpenCentered();
         }
 
