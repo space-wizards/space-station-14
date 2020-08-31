@@ -9,9 +9,9 @@ namespace Content.Shared.GameObjects.EntitySystemMessages
     public static class MeleeWeaponSystemMessages
     {
         [Serializable, NetSerializable]
-        public sealed class PlayMeleeWeaponAnimationMessage : EntitySystemMessage
+        public sealed class PlayMeleeWeaponArcAnimationMessage : EntitySystemMessage
         {
-            public PlayMeleeWeaponAnimationMessage(string arcPrototype, Angle angle, EntityUid attacker, List<EntityUid> hits)
+            public PlayMeleeWeaponArcAnimationMessage(string arcPrototype, Angle angle, EntityUid attacker, List<EntityUid> hits)
             {
                 ArcPrototype = arcPrototype;
                 Angle = angle;
@@ -23,6 +23,20 @@ namespace Content.Shared.GameObjects.EntitySystemMessages
             public Angle Angle { get; }
             public EntityUid Attacker { get; }
             public List<EntityUid> Hits { get; }
+        }
+
+        [Serializable, NetSerializable]
+        public sealed class PlayMeleeWeaponAnimationMessage : EntitySystemMessage
+        {
+            public PlayMeleeWeaponAnimationMessage(Angle angle, EntityUid attacker, EntityUid hit)
+            {
+                Attacker = attacker;
+                Hit = hit;
+            }
+
+            public Angle Angle { get; }
+            public EntityUid Attacker { get; }
+            public EntityUid Hit { get; }
         }
     }
 }
