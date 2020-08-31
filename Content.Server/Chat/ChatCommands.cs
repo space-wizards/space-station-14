@@ -139,12 +139,15 @@ namespace Content.Server.Chat
                 damageableComponent.ChangeDamage(kind switch
                     {
                         SuicideKind.Blunt => DamageType.Blunt,
+                        SuicideKind.Slash => DamageType.Slash,
                         SuicideKind.Piercing => DamageType.Piercing,
                         SuicideKind.Heat => DamageType.Heat,
-                        SuicideKind.Disintegration => DamageType.Disintegration,
-                        SuicideKind.Cellular => DamageType.Cellular,
-                        SuicideKind.DNA => DamageType.DNA,
+                        SuicideKind.Shock => DamageType.Shock,
+                        SuicideKind.Cold => DamageType.Cold,
+                        SuicideKind.Poison => DamageType.Poison,
+                        SuicideKind.Radiation => DamageType.Radiation,
                         SuicideKind.Asphyxiation => DamageType.Asphyxiation,
+                        SuicideKind.Bloodloss => DamageType.Bloodloss,
                         _ => DamageType.Blunt
                     },
                 500,
