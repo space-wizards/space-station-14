@@ -6,7 +6,7 @@ namespace Content.Client.GameObjects.Components.MedicalScanner
 
     [RegisterComponent]
     [ComponentReference(typeof(SharedMedicalScannerComponent))]
-    public class MedicalScannerComponent: SharedMedicalScannerComponent
+    public class MedicalScannerComponent : SharedMedicalScannerComponent
     {
 
     }
