@@ -139,9 +139,9 @@
   - type: Sprite
     layers:
       - state: box
-      - state: meson
+      - state: writing
   - type: Icon
-    state: meson
+    state: box
   - type: Item
   - type: Storage
-    capacity: 20
+    capacity: 15
