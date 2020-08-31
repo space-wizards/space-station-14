@@ -1,0 +1,16 @@
+﻿- type: entity
+  id: ExtinguisherCabinet
+  name: extinguisher cabinet
+  description: A small wall mounted cabinet designed to hold a fire extinguisher.
+  components:
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Sprite
+      sprite: Constructible/Misc/extinguisher_cabinet.rsi
+      state: extinguisher_closed
+    - type: Icon
+      sprite: Constructible/Misc/extinguisher_cabinet.rsi
+      state: extinguisher_closed
+    - type: ExtinguisherCabinet
+  placement:
+    mode: SnapgridCenter
