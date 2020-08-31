@@ -1,7 +1,8 @@
 ﻿using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.Interfaces;
-using Content.Shared.Atmos;
+using Content.Shared.GameObjects.Components.Atmos;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
@@ -22,6 +23,12 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         [ViewVariables]
         public PipeDirection PipeDirection => _pipeDirection;
         private PipeDirection _pipeDirection;
+
+        /// <summary>
+        ///     Controls what visuals are applied in <see cref="PipeVisualizer"/>.
+        /// </summary>
+        public ConduitLayer ConduitLayer => _conduitLayer;
+        private ConduitLayer _conduitLayer;
 
         [ViewVariables]
         private IPipeNet _pipeNet = PipeNet.NullNet;
@@ -55,17 +62,24 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         [ViewVariables]
         public float Volume { get; private set; }
 
+        private AppearanceComponent _appearance;
+
+        private PipeVisualState PipeVisualState => new PipeVisualState(PipeDirection, ConduitLayer);
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _pipeDirection, "pipeDirection", PipeDirection.None);
             serializer.DataField(this, x => Volume, "volume", 10);
+            serializer.DataField(ref _conduitLayer, "conduitLayer", ConduitLayer.Two);
         }
 
         public override void Initialize(IEntity owner)
         {
             base.Initialize(owner);
             LocalAir = new GasMixture(Volume);
+            Owner.TryGetComponent(out _appearance);
+            UpdateAppearance();
         }
 
         public void JoinPipeNet(IPipeNet pipeNet)
@@ -128,6 +142,16 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             }
         }
 
+        private void UpdateAppearance()
+        {
+            var pipeVisualStates = Owner.GetComponent<NodeContainerComponent>()
+                .Nodes
+                .OfType<PipeNode>()
+                .Select(pipeNode => pipeNode.PipeVisualState)
+                .ToArray();
+            _appearance?.SetData(PipeVisuals.VisualState, new PipeVisualStateSet(pipeVisualStates));
+        }
+
         private enum CardinalDirection
         {
             North = Direction.North,
@@ -135,37 +159,5 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             East = Direction.East,
             West = Direction.West,
         }
-    }
-
-    public enum PipeDirection
-    {
-        None = 0,
-
-        //Half of a pipe in a direction
-        North = 1 << 0,
-        South = 1 << 1,
-        West = 1 << 2,
-        East = 1 << 3,
-
-        //Straight pipes
-        Longitudinal = North | South,
-        Lateral = West | East,
-
-        //Bends
-        NWBend = North | West,
-        NEBend = North | East,
-        SWBend = South | West,
-        SEBend = South | East,
-
-        //T-Junctions
-        TNorth = North | Lateral,
-        TSouth = South | Lateral,
-        TWest = West | Longitudinal,
-        TEast = East | Longitudinal,
-
-        //Four way
-        FourWay = North | South | East | West,
-
-        All = -1,
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
+using Content.Shared.GameObjects.Components.Atmos;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
