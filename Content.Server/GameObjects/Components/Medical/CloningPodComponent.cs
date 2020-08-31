@@ -24,6 +24,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
+using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Medical
@@ -45,9 +46,17 @@ namespace Content.Server.GameObjects.Components.Medical
         private Mind? _capturedMind;
         private CloningPodStatus _status;
         private float _clonningProgress = 0;
+        private float _cloningTime;
         private readonly IEntityManager _entityManager = IoCManager.Resolve<IEntityManager>();
         private readonly IPlayerManager _playerManager = IoCManager.Resolve<IPlayerManager>();
 
+
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+            serializer.DataField(ref _cloningTime, "cloningTime", 10f);
+        }
 
         public override void Initialize()
         {
@@ -59,7 +68,7 @@ namespace Content.Server.GameObjects.Components.Medical
 
             _bodyContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-bodyContainer", Owner);
 
-            //TODO: write this so that it checks for a change in power events and acts accordingly.
+            //TODO: write this so that it checks for a change in power events for GORE POD cases
             var newState = GetUserInterfaceState();
             UserInterface?.SetState(newState);
 
@@ -75,10 +84,10 @@ namespace Content.Server.GameObjects.Components.Medical
                 Powered)
             {
                 _clonningProgress += frametime;
-                _clonningProgress = MathHelper.Clamp(_clonningProgress, 0f, 10f);
+                _clonningProgress = MathHelper.Clamp(_clonningProgress, 0f, _cloningTime);
             }
 
-            if (_clonningProgress >= 10.0 &&
+            if (_clonningProgress >= _cloningTime &&
                 _bodyContainer.ContainedEntity != null &&
                 _capturedMind?.Session.AttachedEntity == _bodyContainer.ContainedEntity &&
                 Powered)
@@ -145,11 +154,8 @@ namespace Content.Server.GameObjects.Components.Medical
                     var dead =
                         mind.OwnedEntity.TryGetComponent<IDamageableComponent>(out var damageable) &&
                         damageable.CurrentDamageState == DamageState.Dead;
+                    if (!dead) return;
 
-                    if (!dead)
-                    {
-                        break;
-                    }
 
                     var mob = _entityManager.SpawnEntity("HumanMob_Content", Owner.Transform.MapPosition);
                     var client = _playerManager
@@ -169,7 +175,7 @@ namespace Content.Server.GameObjects.Components.Medical
                     break;
 
                 case UiButton.Eject:
-                    if (_bodyContainer.ContainedEntity == null || _clonningProgress < 10f) break;
+                    if (_bodyContainer.ContainedEntity == null || _clonningProgress < _cloningTime) break;
 
                     _bodyContainer.Remove(_bodyContainer.ContainedEntity!);
                     _capturedMind = null;

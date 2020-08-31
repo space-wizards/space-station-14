@@ -32,6 +32,7 @@
     - type: SnapGrid
       offset: Center
     - type: CloningPod
+      cloningTime: 10.0
     - type: Destructible
       deadThreshold: 100
     - type: Appearance
