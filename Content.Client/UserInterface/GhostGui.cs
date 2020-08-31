@@ -8,7 +8,6 @@ namespace Content.Client.UserInterface
 {
     public class GhostGui : Control
     {
-        [Dependency] private readonly ILocalizationManager _localization;
 
         public readonly Button ReturnToBody = new Button() {Text = Loc.GetString("Return to body")};
         private GhostComponent _owner;
