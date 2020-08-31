@@ -9,7 +9,6 @@ namespace Content.Client.GameObjects.Components
     [UsedImplicitly]
     public class AcceptCloningBoundUserInterface : BoundUserInterface
     {
-        [Dependency] private readonly ILocalizationManager _localization;
 
         public AcceptCloningBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
