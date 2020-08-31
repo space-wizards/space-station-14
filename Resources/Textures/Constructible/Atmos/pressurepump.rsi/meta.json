@@ -28,22 +28,22 @@
          "delays":[ [ 1.0 ] ]
       },
       {
-         "name":"pumpAnimationEast2West2",
+         "name":"pumpEnabledEast2West2",
          "directions":1,
          "delays":[ [ 0.1, 0.1, 0.1, 0.1, 0.1 ] ]
       },
       {
-         "name":"pumpAnimationNorth2South2",
+         "name":"pumpEnabledNorth2South2",
          "directions":1,
          "delays":[ [ 0.1, 0.1, 0.1, 0.1, 0.1 ] ]
       },
       {
-         "name":"pumpAnimationSouth2North2",
+         "name":"pumpEnabledSouth2North2",
          "directions":1,
          "delays":[ [ 0.1, 0.1, 0.1, 0.1, 0.1 ] ]
       },
       {
-         "name":"pumpAnimationWest2East2",
+         "name":"pumpEnabledWest2East2",
          "directions":1,
          "delays":[ [ 0.1, 0.1, 0.1, 0.1, 0.1 ] ]
       }
