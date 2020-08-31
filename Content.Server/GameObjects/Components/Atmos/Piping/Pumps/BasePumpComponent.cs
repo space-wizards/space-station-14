@@ -46,8 +46,6 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
         public override void Initialize()
         {
             base.Initialize();
-            Owner.TryGetComponent(out _appearance);
-            UpdateAppearance();
             if (!Owner.TryGetComponent<NodeContainerComponent>(out var container))
             {
                 JoinedGridAtmos?.RemovePipeNetDevice(this);
@@ -63,6 +61,8 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
                 Logger.Error($"{typeof(BasePumpComponent)} on entity {Owner.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
                 return;
             }
+            Owner.TryGetComponent(out _appearance);
+            UpdateAppearance();
         }
 
         public override void Update()
