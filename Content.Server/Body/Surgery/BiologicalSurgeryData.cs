@@ -17,7 +17,7 @@ namespace Content.Server.Body.Surgery
     [UsedImplicitly]
     public class BiologicalSurgeryData : SurgeryData
     {
-        private readonly List<Mechanism> _disconnectedOrgans = new List<Mechanism>();
+        private readonly List<IMechanism> _disconnectedOrgans = new List<IMechanism>();
 
         private bool _skinOpened;
         private bool _skinRetracted;
@@ -118,7 +118,7 @@ namespace Content.Server.Body.Surgery
             return toReturn;
         }
 
-        public override bool CanInstallMechanism(Mechanism mechanism)
+        public override bool CanInstallMechanism(IMechanism mechanism)
         {
             return _skinOpened && _vesselsClamped && _skinRetracted;
         }
@@ -170,7 +170,7 @@ namespace Content.Server.Body.Surgery
                 return;
             }
 
-            var toSend = new List<Mechanism>();
+            var toSend = new List<IMechanism>();
             foreach (var mechanism in Parent.Mechanisms)
             {
                 if (!_disconnectedOrgans.Contains(mechanism))
@@ -185,7 +185,7 @@ namespace Content.Server.Body.Surgery
             }
         }
 
-        private void LoosenOrganSurgeryCallback(Mechanism target, IBodyPartContainer container, ISurgeon surgeon,
+        private void LoosenOrganSurgeryCallback(IMechanism target, IBodyPartContainer container, ISurgeon surgeon,
             IEntity performer)
         {
             if (target == null || !Parent.Mechanisms.Contains(target))
@@ -216,7 +216,7 @@ namespace Content.Server.Body.Surgery
             }
         }
 
-        private void RemoveOrganSurgeryCallback(Mechanism target, IBodyPartContainer container, ISurgeon surgeon,
+        private void RemoveOrganSurgeryCallback(IMechanism target, IBodyPartContainer container, ISurgeon surgeon,
             IEntity performer)
         {
             if (target == null || !Parent.Mechanisms.Contains(target))
