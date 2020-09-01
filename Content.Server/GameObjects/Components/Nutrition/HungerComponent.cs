@@ -6,7 +6,6 @@ using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Nutrition;
-using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -19,6 +18,8 @@ namespace Content.Server.GameObjects.Components.Nutrition
     [RegisterComponent]
     public sealed class HungerComponent : SharedHungerComponent
     {
+        [Dependency] private readonly IRobustRandom _random = default!;
+
         // Base stuff
         [ViewVariables(VVAccess.ReadWrite)]
         public float BaseDecayRate
@@ -141,7 +142,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         {
             base.Startup();
             // Similar functionality to SS13. Should also stagger people going to the chef.
-            _currentHunger = IoCManager.Resolve<IRobustRandom>().Next(
+            _currentHunger = _random.Next(
                 (int)_hungerThresholds[HungerThreshold.Peckish] + 10,
                 (int)_hungerThresholds[HungerThreshold.Okay] - 1);
             _currentHungerThreshold = GetHungerThreshold(_currentHunger);

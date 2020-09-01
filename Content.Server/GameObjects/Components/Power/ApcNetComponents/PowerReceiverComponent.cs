@@ -21,6 +21,9 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
     [RegisterComponent]
     public class PowerReceiverComponent : Component, IExamine
     {
+        [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
+
         public override string Name => "PowerReceiver";
 
         public event EventHandler<PowerStateEventArgs> OnPowerStateChanged;
@@ -116,16 +119,16 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         private bool TryFindAvailableProvider(out IPowerProvider foundProvider)
         {
-            var nearbyEntities = IoCManager.Resolve<IServerEntityManager>()
+            var nearbyEntities = _serverEntityManager
                 .GetEntitiesInRange(Owner, PowerReceptionRange);
-            var mapManager = IoCManager.Resolve<IMapManager>();
+
             foreach (var entity in nearbyEntities)
             {
                 if (entity.TryGetComponent<PowerProviderComponent>(out var provider))
                 {
                     if (provider.Connectable)
                     {
-                        var distanceToProvider = provider.Owner.Transform.GridPosition.Distance(mapManager, Owner.Transform.GridPosition);
+                        var distanceToProvider = provider.Owner.Transform.GridPosition.Distance(_mapManager, Owner.Transform.GridPosition);
                         if (distanceToProvider < Math.Min(PowerReceptionRange, provider.PowerTransferRange))
                         {
                             foundProvider = provider;

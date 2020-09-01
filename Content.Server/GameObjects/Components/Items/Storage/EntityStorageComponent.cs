@@ -4,10 +4,7 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Body;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Interactable;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Interactable;
-using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
@@ -35,6 +32,8 @@ namespace Content.Server.GameObjects.Components.Items.Storage
     [ComponentReference(typeof(IStorageComponent))]
     public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing, IDestroyAct, IActionBlocker, IExAct
     {
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+
         public override string Name => "EntityStorage";
 
         private const float MaxSize = 1.0f; // maximum width or height of an entity allowed inside the storage.
@@ -301,14 +300,13 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 case RelayMovementEntityMessage msg:
                     if (msg.Entity.HasComponent<HandsComponent>())
                     {
-                        var timing = IoCManager.Resolve<IGameTiming>();
-                        if (timing.CurTime <
+                        if (_gameTiming.CurTime <
                             _lastInternalOpenAttempt + InternalOpenAttemptDelay)
                         {
                             break;
                         }
 
-                        _lastInternalOpenAttempt = timing.CurTime;
+                        _lastInternalOpenAttempt = _gameTiming.CurTime;
                         TryOpenStorage(msg.Entity);
                     }
                     break;
