@@ -25,7 +25,7 @@ namespace Content.Client.GameObjects.Components
                         {
                             (new Label
                             {
-                                Text = Loc.GetString("You are being cloned! Transfer you soul to the clone body?")
+                                Text = Loc.GetString("You are being cloned! Transfer your soul to the clone body?")
                             }),
                             new HBoxContainer
                             {
