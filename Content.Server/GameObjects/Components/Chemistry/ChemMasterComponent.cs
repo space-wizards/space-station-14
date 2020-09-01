@@ -341,9 +341,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     //Put it on the floor
                     pill.Transform.GridPosition = user.Transform.GridPosition;
                     //Give it an offset
-                    var x_negative = random.Prob(0.5f) ? -1 : 1;
-                    var y_negative = random.Prob(0.5f) ? -1 : 1;
-                    pill.Transform.LocalPosition += new Vector2(random.NextFloat() * 0.2f * x_negative, random.NextFloat() * 0.2f * y_negative);
+                    pill.RandomOffset(0.2f);
                 }
             }
 
