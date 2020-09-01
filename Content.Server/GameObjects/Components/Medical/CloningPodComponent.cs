@@ -51,7 +51,6 @@ namespace Content.Server.GameObjects.Components.Medical
         private float _cloningTime;
 
 
-
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -101,6 +100,16 @@ namespace Content.Server.GameObjects.Components.Medical
             }
 
             UpdateUserInterface();
+        }
+
+        public override void OnRemove()
+        {
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage -= OnUiReceiveMessage;
+            }
+
+            base.OnRemove();
         }
 
         private void UpdateUserInterface()
