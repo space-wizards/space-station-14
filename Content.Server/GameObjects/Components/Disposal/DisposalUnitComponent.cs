@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.Interfaces;
+using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Disposal;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -42,7 +43,6 @@ namespace Content.Server.GameObjects.Components.Disposal
     [ComponentReference(typeof(IInteractUsing))]
     public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IInteractUsing, IDragDropOn
     {
-        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override string Name => "DisposalUnit";
@@ -67,6 +67,12 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         [ViewVariables]
         private TimeSpan _automaticEngageTime;
+
+        [ViewVariables]
+        private TimeSpan _flushDelay;
+
+        [ViewVariables]
+        private float _entryDelay;
 
         /// <summary>
         ///     Token used to cancel the automatic engage of a disposal unit
@@ -136,7 +142,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
 
             if (!entity.HasComponent<ItemComponent>() &&
-                !entity.HasComponent<IBodyManagerComponent>())
+                !entity.HasComponent<ISharedBodyManagerComponent>())
             {
                 return false;
             }
@@ -174,12 +180,33 @@ namespace Content.Server.GameObjects.Components.Disposal
             UpdateVisualState();
         }
 
-        public bool TryInsert(IEntity entity)
+        public async Task<bool> TryInsert(IEntity entity, IEntity? user = default)
         {
-            if (!CanInsert(entity) || !_container.Insert(entity))
-            {
+            if (!CanInsert(entity))
                 return false;
+
+            if (user != null && _entryDelay > 0f)
+            {
+                var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
+
+                var doAfterArgs = new DoAfterEventArgs(user, _entryDelay, default, Owner)
+                {
+                    BreakOnDamage = true,
+                    BreakOnStun = true,
+                    BreakOnTargetMove = true,
+                    BreakOnUserMove = true,
+                    NeedHand = false,
+                };
+
+                var result = await doAfterSystem.DoAfter(doAfterArgs);
+
+                if (result == DoAfterStatus.Cancelled)
+                    return false;
+
             }
+
+            if (!_container.Insert(entity))
+                return false;
 
             AfterInsert(entity);
 
@@ -225,9 +252,9 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             Engaged ^= true;
 
-            if (Engaged)
+            if (Engaged && CanFlush())
             {
-                TryFlush();
+                Timer.Spawn(_flushDelay, () => TryFlush());
             }
         }
 
@@ -487,10 +514,16 @@ namespace Content.Server.GameObjects.Components.Disposal
                 () => (int) _automaticEngageTime.TotalSeconds);
 
             serializer.DataReadWriteFunction(
-                "automaticEngageTime",
-                30,
-                seconds => _automaticEngageTime = TimeSpan.FromSeconds(seconds),
-                () => (int) _automaticEngageTime.TotalSeconds);
+                "flushDelay",
+                3,
+                seconds => _flushDelay = TimeSpan.FromSeconds(seconds),
+                () => (int) _flushDelay.TotalSeconds);
+
+            serializer.DataReadWriteFunction(
+                "entryDelay",
+                0.5f,
+                seconds => _entryDelay = seconds,
+                () => (int) _entryDelay);
         }
 
         public override void Initialize()
@@ -580,15 +613,13 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             if (!ActionBlockerSystem.CanInteract(eventArgs.User))
             {
-                _notifyManager.PopupMessage(Owner.Transform.GridPosition, eventArgs.User,
-                    Loc.GetString("You can't do that!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("You can't do that!"));
                 return false;
             }
 
             if (ContainerHelpers.IsInContainer(eventArgs.User))
             {
-                _notifyManager.PopupMessage(Owner.Transform.GridPosition, eventArgs.User,
-                    Loc.GetString("You can't reach there!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("You can't reach there!"));
                 return false;
             }
 
@@ -599,8 +630,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             if (!eventArgs.User.HasComponent<IHandsComponent>())
             {
-                _notifyManager.PopupMessage(Owner.Transform.GridPosition, eventArgs.User,
-                    Loc.GetString("You have no hands!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("You have no hands!"));
                 return false;
             }
 
@@ -620,7 +650,8 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         bool IDragDropOn.DragDropOn(DragDropEventArgs eventArgs)
         {
-            return TryInsert(eventArgs.Dropped);
+            _ = TryInsert(eventArgs.Dropped, eventArgs.User);
+            return true;
         }
 
         [Verb]
@@ -642,7 +673,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             protected override void Activate(IEntity user, DisposalUnitComponent component)
             {
-                component.TryInsert(user);
+                _ = component.TryInsert(user, user);
             }
         }
 

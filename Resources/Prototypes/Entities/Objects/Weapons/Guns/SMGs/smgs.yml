@@ -161,44 +161,6 @@
       zeroVisible: true
 
 - type: entity
-  name: Straylight
-  parent: SmgBase
-  id: SmgStraylight
-  description: Pla-ket-ket-ket-ket
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/SMGs/straylight.rsi
-    layers:
-      - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: bolt-closed
-        map: ["enum.RangedBarrelVisualLayers.Bolt"]
-      - state: mag-0
-        map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/SMGs/straylight.rsi
-  - type: Item
-    size: 24
-    sprite: Objects/Weapons/Guns/SMGs/straylight.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    currentSelector: Automatic
-    allSelectors:
-    - Single
-    - Automatic
-    fireRate: 10
-    caliber: Pistol
-    magazineTypes:
-    - Smg
-  - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
-    - type: MagVisualizer
-      magState: mag
-      steps: 1
-      zeroVisible: true
-
-- type: entity
   name: WT550
   parent: SmgBase
   id: SmgWt550

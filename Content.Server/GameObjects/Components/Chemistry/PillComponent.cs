@@ -5,6 +5,7 @@ using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -80,7 +81,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return false;
             }
 
-            if (!InteractionChecks.InRangeUnobstructed(user, trueTarget.Transform.MapPosition))
+            if (!user.InRangeUnobstructed(trueTarget, popup: true))
             {
                 return false;
             }

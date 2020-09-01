@@ -16,7 +16,6 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
@@ -34,8 +33,6 @@ namespace Content.Server.GameObjects.Components.Body
     [RegisterComponent]
     public class SurgeryToolComponent : Component, ISurgeon, IAfterInteract
     {
-        [Dependency] private readonly ISharedNotifyManager _sharedNotifyManager = default!;
-
         public override string Name => "SurgeryTool";
         public override uint? NetID => ContentNetIDs.SURGERY;
 
@@ -259,9 +256,7 @@ namespace Content.Server.GameObjects.Components.Body
                 return;
             }
 
-            _sharedNotifyManager.PopupMessage(
-                _bodyManagerComponentCache.Owner,
-                _performerCache,
+            _bodyManagerComponentCache.Owner.PopupMessage(_performerCache,
                 Loc.GetString("You see no useful way to use {0:theName}.", Owner));
         }
 
@@ -272,9 +267,7 @@ namespace Content.Server.GameObjects.Components.Body
                 return;
             }
 
-            _sharedNotifyManager.PopupMessage(
-                _bodyManagerComponentCache.Owner,
-                _performerCache,
+            _bodyManagerComponentCache.Owner.PopupMessage(_performerCache,
                 Loc.GetString("You see no useful way to use {0:theName} anymore.", Owner));
         }
 

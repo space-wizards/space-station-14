@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.Interfaces;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
@@ -20,8 +19,6 @@ namespace Content.Server.GameObjects.Components.Items.Clothing
     [ComponentReference(typeof(IItemComponent))]
     public class ClothingComponent : ItemComponent, IUse
     {
-        [Dependency] private readonly IServerNotifyManager _serverNotifyManager = default!;
-
         public override string Name => "Clothing";
         public override uint? NetID => ContentNetIDs.CLOTHING;
 
@@ -112,7 +109,7 @@ namespace Content.Server.GameObjects.Components.Items.Clothing
             if (!inv.Equip(slot, this, true, out var reason))
             {
                 if (reason != null)
-                    _serverNotifyManager.PopupMessage(Owner, user, reason);
+                    Owner.PopupMessage(user, reason);
 
                 return false;
             }

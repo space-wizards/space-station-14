@@ -1,12 +1,12 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
@@ -24,7 +24,6 @@ namespace Content.Server.GameObjects.Components.Atmos
     [RegisterComponent]
     public class GasAnalyzerComponent : SharedGasAnalyzerComponent, IAfterInteract, IDropped, IUse
     {
-        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
 
         private GasAnalyzerDanger _pressureDanger;
@@ -207,17 +206,14 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                     if (!player.TryGetComponent(out IHandsComponent? handsComponent))
                     {
-                        _notifyManager.PopupMessage(Owner.Transform.GridPosition, player,
-                            Loc.GetString("You have no hands."));
+                        Owner.PopupMessage(player, Loc.GetString("You have no hands."));
                         return;
                     }
 
                     var activeHandEntity = handsComponent.GetActiveHand?.Owner;
                     if (activeHandEntity == null || !activeHandEntity.TryGetComponent(out GasAnalyzerComponent? gasAnalyzer))
                     {
-                        _notifyManager.PopupMessage(serverMsg.Session.AttachedEntity,
-                            serverMsg.Session.AttachedEntity,
-                            Loc.GetString("You need a Gas Analyzer in your hand!"));
+                        serverMsg.Session.AttachedEntity.PopupMessage(Loc.GetString("You need a Gas Analyzer in your hand!"));
                         return;
                     }
 
@@ -231,7 +227,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             if (!eventArgs.CanReach)
             {
-                _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, Loc.GetString("You can't reach there!"));
+                eventArgs.User.PopupMessage(Loc.GetString("You can't reach there!"));
                 return;
             }
 

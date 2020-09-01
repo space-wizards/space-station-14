@@ -7,13 +7,14 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry.ChemMaster;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.GameObjects.EntitySystems;
@@ -43,8 +44,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
     [ComponentReference(typeof(IInteractUsing))]
     public class ChemMasterComponent : SharedChemMasterComponent, IActivate, IInteractUsing, ISolutionChange
     {
-        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
-
         [ViewVariables] private ContainerSlot _beakerContainer = default!;
         [ViewVariables] private string _packPrototypeId = "";
 
@@ -302,15 +301,12 @@ namespace Content.Server.GameObjects.Components.Chemistry
                             hands.PutInHand(item);
                             continue;
                         }
-
                     }
 
                     //Put it on the floor
                     bottle.Transform.GridPosition = user.Transform.GridPosition;
                     //Give it an offset
-                    var x_negative = random.Prob(0.5f) ? -1 : 1;
-                    var y_negative = random.Prob(0.5f) ? -1 : 1;
-                    bottle.Transform.LocalPosition += new Vector2(random.NextFloat() * 0.2f * x_negative, random.NextFloat() * 0.2f * y_negative);
+                    bottle.RandomOffset(0.2f);
                 }
 
             }
@@ -367,8 +363,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             if (!args.User.TryGetComponent(out IHandsComponent? hands))
             {
-                _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                    Loc.GetString("You have no hands."));
+                Owner.PopupMessage(args.User, Loc.GetString("You have no hands."));
                 return;
             }
 
@@ -390,15 +385,13 @@ namespace Content.Server.GameObjects.Components.Chemistry
         {
             if (!args.User.TryGetComponent(out IHandsComponent? hands))
             {
-                _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                    Loc.GetString("You have no hands."));
+                Owner.PopupMessage(args.User, Loc.GetString("You have no hands."));
                 return true;
             }
 
             if (hands.GetActiveHand == null)
             {
-                _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                    Loc.GetString("You have nothing on your hand."));
+                Owner.PopupMessage(args.User, Loc.GetString("You have nothing on your hand."));
                 return false;
             }
 
@@ -407,14 +400,12 @@ namespace Content.Server.GameObjects.Components.Chemistry
             {
                 if (HasBeaker)
                 {
-                    _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                        Loc.GetString("This ChemMaster already has a container in it."));
+                    Owner.PopupMessage(args.User, Loc.GetString("This ChemMaster already has a container in it."));
                 }
                 else if ((solution.Capabilities & SolutionCaps.FitsInDispenser) == 0) //Close enough to a chem master...
                 {
                     //If it can't fit in the chem master, don't put it in. For example, buckets and mop buckets can't fit.
-                    _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                        Loc.GetString("That can't fit in the ChemMaster."));
+                    Owner.PopupMessage(args.User, Loc.GetString("That can't fit in the ChemMaster."));
                 }
                 else
                 {
@@ -424,8 +415,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
             else
             {
-                _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                    Loc.GetString("You can't put this in the ChemMaster."));
+                Owner.PopupMessage(args.User, Loc.GetString("You can't put this in the ChemMaster."));
             }
 
             return true;
@@ -435,7 +425,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         private void ClickSound()
         {
-
             EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
         }
     }

@@ -2,11 +2,11 @@
 using System;
 using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.Interfaces;
-using Content.Server.Mobs;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Instruments;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
@@ -15,6 +15,7 @@ using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -36,7 +37,6 @@ namespace Content.Server.GameObjects.Components.Instruments
             IUse,
             IThrown
     {
-        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         private static readonly TimeSpan OneSecAgo = TimeSpan.FromSeconds(-1);
@@ -164,11 +164,11 @@ namespace Content.Server.GameObjects.Components.Instruments
                         switch (_laggedBatches)
                         {
                             case (int) (MaxMidiLaggedBatches * (1 / 3d)) + 1:
-                                _notifyManager.PopupMessage(Owner, InstrumentPlayer.AttachedEntity,
+                                Owner.PopupMessage(InstrumentPlayer.AttachedEntity,
                                     "Your fingers are beginning to a cramp a little!");
                                 break;
                             case (int) (MaxMidiLaggedBatches * (2 / 3d)) + 1:
-                                _notifyManager.PopupMessage(Owner, InstrumentPlayer.AttachedEntity,
+                                Owner.PopupMessage(InstrumentPlayer.AttachedEntity,
                                     "Your fingers are seriously cramping up!");
                                 break;
                         }
@@ -244,9 +244,12 @@ namespace Content.Server.GameObjects.Components.Instruments
 
         public void HandSelected(HandSelectedEventArgs eventArgs)
         {
-            var session = eventArgs.User?.GetComponent<BasicActorComponent>()?.playerSession;
+            if (eventArgs.User == null || !eventArgs.User.TryGetComponent(out BasicActorComponent? actor))
+                return;
 
-            if (session == null) return;
+            var session = actor.playerSession;
+
+            if (session.Status != SessionStatus.InGame) return;
 
             InstrumentPlayer = session;
         }
@@ -323,12 +326,12 @@ namespace Content.Server.GameObjects.Components.Instruments
                 }
                 else
                 {
-                    StandingStateHelper.DropAllItemsInHands(mob, false);
+                    EntitySystem.Get<StandingStateSystem>().DropAllItemsInHands(mob, false);
                 }
 
                 InstrumentPlayer = null;
 
-                _notifyManager.PopupMessage(Owner, mob, "Your fingers cramp up from playing!");
+                Owner.PopupMessage(mob, "Your fingers cramp up from playing!");
             }
 
             _timer += delta;

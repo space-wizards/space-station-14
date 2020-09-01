@@ -6,7 +6,9 @@ using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Maps;
 using Content.Shared.Physics;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
@@ -63,7 +65,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             get => _slipThreshold;
             set => _slipThreshold = value;
         }
-        private bool _slippery = false;
+
         private float _evaporateTime;
         private string _spillSound;
 
@@ -97,6 +99,8 @@ namespace Content.Server.GameObjects.Components.Fluids
         // Whether the underlying solution color should be used
         private bool _recolor;
 
+        private bool Slippery => Owner.TryGetComponent(out SlipperyComponent slippery) && slippery.Slippery;
+
         /// <inheritdoc />
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -107,7 +111,6 @@ namespace Content.Server.GameObjects.Components.Fluids
             serializer.DataField(ref _evaporateThreshold, "evaporate_threshold", ReagentUnit.New(20));
             serializer.DataField(ref _spriteVariants, "variants", 1);
             serializer.DataField(ref _recolor, "recolor", false);
-
         }
 
         public override void Initialize()
@@ -155,7 +158,7 @@ namespace Content.Server.GameObjects.Components.Fluids
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
-            if(_slippery)
+            if(Slippery)
             {
                 message.AddText(Loc.GetString("It looks slippery."));
             }
@@ -246,15 +249,15 @@ namespace Content.Server.GameObjects.Components.Fluids
 
         private void UpdateSlip()
         {
-            if ((_slipThreshold == ReagentUnit.New(-1) || CurrentVolume < _slipThreshold) && Owner.TryGetComponent(out SlipperyComponent existingSlipperyComponent))
+            if ((_slipThreshold == ReagentUnit.New(-1) || CurrentVolume < _slipThreshold) &&
+                Owner.TryGetComponent(out SlipperyComponent oldSlippery))
             {
-                Owner.RemoveComponent<SlipperyComponent>();
-                _slippery = false;
+                oldSlippery.Slippery = false;
             }
-            else if (CurrentVolume >= _slipThreshold && !Owner.TryGetComponent(out SlipperyComponent newSlipperyComponent))
+            else if (CurrentVolume >= _slipThreshold)
             {
-                Owner.AddComponent<SlipperyComponent>();
-                _slippery = true;
+                var newSlippery = Owner.EnsureComponent<SlipperyComponent>();
+                newSlippery.Slippery = true;
             }
         }
 
@@ -337,43 +340,6 @@ namespace Content.Server.GameObjects.Components.Fluids
             }
         }
 
-        // TODO: Move the below to SnapGrid?
-        /// <summary>
-        /// Will yield a random direction until none are left
-        /// </summary>
-        /// <returns></returns>
-        private static IEnumerable<Direction> RandomDirections()
-        {
-            var directions = new[]
-            {
-                Direction.East,
-                Direction.SouthEast,
-                Direction.South,
-                Direction.SouthWest,
-                Direction.West,
-                Direction.NorthWest,
-                Direction.North,
-                Direction.NorthEast,
-            };
-
-            var robustRandom = IoCManager.Resolve<IRobustRandom>();
-            var n = directions.Length;
-
-            while (n > 1)
-            {
-                n--;
-                var k = robustRandom.Next(n + 1);
-                var value = directions[k];
-                directions[k] = directions[n];
-                directions[n] = value;
-            }
-
-            foreach (var direction in directions)
-            {
-                yield return direction;
-            }
-        }
-
         /// <summary>
         /// Tries to get an adjacent coordinate to overflow to, unless it is blocked by a wall on the
         /// same tile or the tile is empty
@@ -388,9 +354,13 @@ namespace Content.Server.GameObjects.Components.Fluids
 
             var mapGrid = _mapManager.GetGrid(Owner.Transform.GridID);
 
+            if (!Owner.Transform.GridPosition.Offset(direction).TryGetTileRef(out var tile))
+            {
+                return false;
+            }
+
             // If space return early, let that spill go out into the void
-            var tileRef = mapGrid.GetTileRef(Owner.Transform.GridPosition.Offset(direction.ToVec()));
-            if (tileRef.Tile.IsEmpty)
+            if (tile.Value.Tile.IsEmpty)
             {
                 return false;
             }
@@ -431,7 +401,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         /// <returns>Enumerable of the puddles found or to be created</returns>
         private IEnumerable<Func<PuddleComponent>> GetAllAdjacentOverflow()
         {
-            foreach (var direction in RandomDirections())
+            foreach (var direction in SharedDirectionExtensions.RandomDirections())
             {
                 if (TryGetAdjacentOverflow(direction, out var puddle))
                 {

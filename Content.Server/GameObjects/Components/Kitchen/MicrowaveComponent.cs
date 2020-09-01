@@ -12,7 +12,6 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Utility;
@@ -43,9 +42,8 @@ namespace Content.Server.GameObjects.Components.Kitchen
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly RecipeManager _recipeManager = default!;
-        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
 
-#region YAMLSERIALIZE
+        #region YAMLSERIALIZE
         private int _cookTimeDefault;
         private int _cookTimeMultiplier; //For upgrades and stuff I guess?
         private string _badRecipeName = "";
@@ -204,8 +202,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
         {
             if (!Powered)
             {
-                _notifyManager.PopupMessage(Owner.Transform.GridPosition, eventArgs.User,
-                    Loc.GetString("It has no power!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("It has no power!"));
                 return false;
             }
 
@@ -213,7 +210,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
             if (itemEntity == null)
             {
-                eventArgs.User.PopupMessage(eventArgs.User, Loc.GetString("You have no active hand!"));
+                eventArgs.User.PopupMessage(Loc.GetString("You have no active hand!"));
                 return false;
             }
 
@@ -234,8 +231,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 var realTransferAmount = ReagentUnit.Min(attackPourable.TransferAmount, solution.EmptyVolume);
                 if (realTransferAmount <= 0) //Special message if container is full
                 {
-                    _notifyManager.PopupMessage(Owner.Transform.GridPosition, eventArgs.User,
-                        Loc.GetString("Container is full"));
+                    Owner.PopupMessage(eventArgs.User, Loc.GetString("Container is full"));
                     return false;
                 }
 
@@ -246,15 +242,14 @@ namespace Content.Server.GameObjects.Components.Kitchen
                     return false;
                 }
 
-                _notifyManager.PopupMessage(Owner.Transform.GridPosition, eventArgs.User,
-                    Loc.GetString("Transferred {0}u", removedSolution.TotalVolume));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("Transferred {0}u", removedSolution.TotalVolume));
                 return true;
             }
 
             if (!itemEntity.TryGetComponent(typeof(ItemComponent), out var food))
             {
 
-                _notifyManager.PopupMessage(Owner, eventArgs.User, "That won't work!");
+                Owner.PopupMessage(eventArgs.User, "That won't work!");
                 return false;
             }
 
@@ -498,7 +493,13 @@ namespace Content.Server.GameObjects.Components.Kitchen
                     headCount++;
                 }
             }
-            chat.EntityMe(victim, Loc.GetPluralString("is trying to cook {0:their} head!", "is trying to cook {0:their} heads!", headCount, victim));
+
+            var othersMessage = Loc.GetString("{0:theName} is trying to cook {0:their} head!", victim);
+            victim.PopupMessageOtherClients(othersMessage);
+
+            var selfMessage = Loc.GetString("You cook your head!");
+            victim.PopupMessage(selfMessage);
+
             _currentCookTimerTime = 10;
             ClickSound();
             _uiDirty = true;

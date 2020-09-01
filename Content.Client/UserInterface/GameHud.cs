@@ -47,6 +47,7 @@ namespace Content.Client.UserInterface
         Action<bool> SandboxButtonToggled { get; set; }
 
         Control HandsContainer { get; }
+        Control SuspicionContainer { get; }
         Control InventoryQuickButtonContainer { get; }
 
         bool CombatPanelVisible { get; set; }
@@ -79,6 +80,7 @@ namespace Content.Client.UserInterface
         [Dependency] private readonly IInputManager _inputManager = default!;
 
         public Control HandsContainer { get; private set; }
+        public Control SuspicionContainer { get; private set; }
         public Control InventoryQuickButtonContainer { get; private set; }
 
         public bool CombatPanelVisible
@@ -242,6 +244,17 @@ namespace Content.Client.UserInterface
             LayoutContainer.SetAnchorAndMarginPreset(HandsContainer, LayoutContainer.LayoutPreset.CenterBottom);
             LayoutContainer.SetGrowHorizontal(HandsContainer, LayoutContainer.GrowDirection.Both);
             LayoutContainer.SetGrowVertical(HandsContainer, LayoutContainer.GrowDirection.Begin);
+
+            SuspicionContainer = new MarginContainer
+            {
+                SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter
+            };
+
+            RootControl.AddChild(SuspicionContainer);
+
+            LayoutContainer.SetAnchorAndMarginPreset(SuspicionContainer, LayoutContainer.LayoutPreset.BottomLeft, margin: 10);
+            LayoutContainer.SetGrowHorizontal(SuspicionContainer, LayoutContainer.GrowDirection.End);
+            LayoutContainer.SetGrowVertical(SuspicionContainer, LayoutContainer.GrowDirection.Begin);
         }
 
         private void ButtonTutorialOnOnToggled()

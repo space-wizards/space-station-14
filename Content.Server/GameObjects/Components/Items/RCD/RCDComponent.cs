@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
-using Content.Server.Interfaces;
-using Content.Server.Utility;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Maps;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
@@ -29,7 +29,6 @@ namespace Content.Server.GameObjects.Components.Items.RCD
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
-        [Dependency] private readonly IServerNotifyManager _serverNotifyManager = default!;
 
         public override string Name => "RCD";
         private RcdMode _mode = 0; //What mode are we on? Can be floors, walls, deconstruct.
@@ -85,12 +84,12 @@ namespace Content.Server.GameObjects.Components.Items.RCD
             int mode = (int) _mode; //Firstly, cast our RCDmode mode to an int (enums are backed by ints anyway by default)
             mode = (++mode) % _modes.Length; //Then, do a rollover on the value so it doesnt hit an invalid state
             _mode = (RcdMode) mode; //Finally, cast the newly acquired int mode to an RCDmode so we can use it.
-            _serverNotifyManager.PopupMessage(Owner, eventArgs.User, $"The RCD is now set to {this._mode} mode."); //Prints an overhead message above the RCD
+            Owner.PopupMessage(eventArgs.User, Loc.GetString("The RCD is now set to {0} mode.", _mode)); //Prints an overhead message above the RCD
         }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddMarkup(Loc.GetString("It's currently on {0} mode, and holds {1} charges.",_mode.ToString(), this._ammo));
+            message.AddMarkup(Loc.GetString("It's currently on {0} mode, and holds {1} charges.",_mode.ToString(), _ammo));
         }
 
         public async void AfterInteract(AfterInteractEventArgs   eventArgs)
@@ -158,7 +157,7 @@ namespace Content.Server.GameObjects.Components.Items.RCD
             //Less expensive checks first. Failing those ones, we need to check that the tile isn't obstructed.
             if (_ammo <= 0)
             {
-                _serverNotifyManager.PopupMessage(Owner, eventArgs.User, $"The RCD is out of ammo!");
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("The RCD is out of ammo!"));
                 return false;
             }
 
@@ -168,7 +167,7 @@ namespace Content.Server.GameObjects.Components.Items.RCD
             }
 
             var coordinates = mapGrid.GridTileToLocal(tile.GridIndices);
-            if (coordinates == GridCoordinates.InvalidGrid || !InteractionChecks.InRangeUnobstructed(eventArgs))
+            if (coordinates == GridCoordinates.InvalidGrid || !eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
             {
                 return false;
             }
@@ -179,7 +178,7 @@ namespace Content.Server.GameObjects.Components.Items.RCD
                 case RcdMode.Floors:
                     if (!tile.Tile.IsEmpty)
                     {
-                        _serverNotifyManager.PopupMessage(Owner, eventArgs.User, $"You can only build a floor on space!");
+                        Owner.PopupMessage(eventArgs.User, Loc.GetString("You can only build a floor on space!"));
                         return false;
                     }
 
@@ -194,13 +193,13 @@ namespace Content.Server.GameObjects.Components.Items.RCD
                     //They tried to decon a turf but the turf is blocked
                     if (eventArgs.Target == null && tile.IsBlockedTurf(true))
                     {
-                        _serverNotifyManager.PopupMessage(Owner, eventArgs.User, $"That tile is obstructed!");
+                        Owner.PopupMessage(eventArgs.User, Loc.GetString("That tile is obstructed!"));
                         return false;
                     }
                     //They tried to decon a non-turf but it's not in the whitelist
                     if (eventArgs.Target != null && !eventArgs.Target.TryGetComponent(out RCDDeconstructWhitelist rcd_decon))
                     {
-                        _serverNotifyManager.PopupMessage(Owner, eventArgs.User, $"You can't deconstruct that!");
+                        Owner.PopupMessage(eventArgs.User, Loc.GetString("You can't deconstruct that!"));
                         return false;
                     }
 
@@ -209,25 +208,25 @@ namespace Content.Server.GameObjects.Components.Items.RCD
                 case RcdMode.Walls:
                     if (tile.Tile.IsEmpty)
                     {
-                        _serverNotifyManager.PopupMessage(Owner, eventArgs.User, $"Cannot build a wall on space!");
+                        Owner.PopupMessage(eventArgs.User, Loc.GetString("You cannot build a wall on space!"));
                         return false;
                     }
 
                     if (tile.IsBlockedTurf(true))
                     {
-                        _serverNotifyManager.PopupMessage(Owner, eventArgs.User, $"That tile is obstructed!");
+                        Owner.PopupMessage(eventArgs.User, Loc.GetString("That tile is obstructed!"));
                         return false;
                     }
                     return true;
                 case RcdMode.Airlock:
                     if (tile.Tile.IsEmpty)
                     {
-                        _serverNotifyManager.PopupMessage(Owner, eventArgs.User, $"Cannot build an airlock on space!");
+                        Owner.PopupMessage(eventArgs.User, Loc.GetString("Cannot build an airlock on space!"));
                         return false;
                     }
                     if (tile.IsBlockedTurf(true))
                     {
-                        _serverNotifyManager.PopupMessage(Owner, eventArgs.User, $"That tile is obstructed!");
+                        Owner.PopupMessage(eventArgs.User, Loc.GetString("That tile is obstructed!"));
                         return false;
                     }
                     return true;

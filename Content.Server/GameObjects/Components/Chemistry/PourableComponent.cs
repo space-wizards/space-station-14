@@ -1,9 +1,8 @@
 ﻿using System.Threading.Tasks;
-using Content.Server.Interfaces;
 using Content.Shared.Chemistry;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -19,8 +18,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
     [RegisterComponent]
     class PourableComponent : Component, IInteractUsing
     {
-        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
-
         public override string Name => "Pourable";
 
         private ReagentUnit _transferAmount;
@@ -87,8 +84,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             var realTransferAmount = ReagentUnit.Min(fromPourable.TransferAmount, toSolution.EmptyVolume);
             if (realTransferAmount <= 0) //Special message if container is full
             {
-                _notifyManager.PopupMessage(Owner.Transform.GridPosition, eventArgs.User,
-                    Loc.GetString("Container is full"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("Container is full"));
                 return false;
             }
 
@@ -97,8 +93,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if (!toSolution.TryAddSolution(removedSolution))
                 return false;
 
-            _notifyManager.PopupMessage(Owner.Transform.GridPosition, eventArgs.User,
-                Loc.GetString("Transferred {0}u", removedSolution.TotalVolume));
+            Owner.PopupMessage(eventArgs.User, Loc.GetString("Transferred {0}u", removedSolution.TotalVolume));
 
             return true;
         }
