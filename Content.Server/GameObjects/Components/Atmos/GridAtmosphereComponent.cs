@@ -755,7 +755,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 _currentRunPipeNetDevice = new Queue<PipeNetDeviceComponent>(_pipeNetDevices);
 
             var number = 0;
-            while (_currentRunPipeNet.Count > 0)
+            while (_currentRunPipeNetDevice.Count > 0)
             {
                 var device = _currentRunPipeNetDevice.Dequeue();
                 device.Update();

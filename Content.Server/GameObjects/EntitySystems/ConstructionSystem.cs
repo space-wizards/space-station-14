@@ -6,19 +6,18 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Stack;
-using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Utility;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Map;
@@ -91,8 +90,7 @@ namespace Content.Server.GameObjects.EntitySystems
             if(targetEnt is null || handEnt is null)
                 return;
 
-            var interaction = Get<InteractionSystem>();
-            if(!interaction.InRangeUnobstructed(handEnt.Transform.MapPosition, targetEnt.Transform.MapPosition, ignoredEnt: targetEnt, ignoreInsideBlocker: true))
+            if (!handEnt.InRangeUnobstructed(targetEnt, ignoreInsideBlocker: true))
                 return;
 
             // Cannot deconstruct an entity with no prototype.
@@ -246,8 +244,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             var prototype = _prototypeManager.Index<ConstructionPrototype>(prototypeName);
 
-            if (!InteractionChecks.InRangeUnobstructed(placingEnt, loc.ToMap(_mapManager),
-                ignoredEnt: placingEnt, ignoreInsideBlocker: prototype.CanBuildInImpassable))
+            if (!placingEnt.InRangeUnobstructed(loc, ignoreInsideBlocker: prototype.CanBuildInImpassable, popup: true))
             {
                 return false;
             }
@@ -377,7 +374,7 @@ namespace Content.Server.GameObjects.EntitySystems
             var constructPrototype = constructionComponent.Prototype;
             if (constructPrototype.CanBuildInImpassable == false)
             {
-                if (!InteractionChecks.InRangeUnobstructed(user, constructEntity.Transform.MapPosition))
+                if (!user.InRangeUnobstructed(constructEntity, popup: true))
                     return false;
             }
 

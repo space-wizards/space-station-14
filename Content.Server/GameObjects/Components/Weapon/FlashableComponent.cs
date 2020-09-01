@@ -1,6 +1,6 @@
 using System;
-using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Weapons;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -32,7 +32,7 @@ namespace Content.Server.GameObjects.Components.Weapon
         {
             foreach (var entity in IoCManager.Resolve<IEntityManager>().GetEntitiesInRange(source.Transform.GridPosition, range))
             {
-                if (!InteractionChecks.InRangeUnobstructed(source, entity.Transform.MapPosition, range, ignoredEnt:entity))
+                if (!source.InRangeUnobstructed(entity, range, popup: true))
                     continue;
 
                 if(entity.TryGetComponent(out FlashableComponent flashable))

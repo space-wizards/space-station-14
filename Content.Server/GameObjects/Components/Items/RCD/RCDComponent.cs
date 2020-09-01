@@ -6,6 +6,7 @@ using Content.Server.Utility;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Maps;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
@@ -168,7 +169,7 @@ namespace Content.Server.GameObjects.Components.Items.RCD
             }
 
             var coordinates = mapGrid.GridTileToLocal(tile.GridIndices);
-            if (coordinates == GridCoordinates.InvalidGrid || !InteractionChecks.InRangeUnobstructed(eventArgs))
+            if (coordinates == GridCoordinates.InvalidGrid || !eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
             {
                 return false;
             }

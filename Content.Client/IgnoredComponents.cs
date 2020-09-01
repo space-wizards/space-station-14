@@ -163,8 +163,15 @@
             "AMEFuelContainer",
             "AMEShield",
             "DebugPump",
+            "PressurePump",
+            "VolumePump",
             "DebugVent",
             "DebugSiphon",
+            "SignalReceiver",
+            "SignalSwitch",
+            "SignalTransmitter",
+            "SignalButton",
+            "SignalLinker",
         };
     }
 }

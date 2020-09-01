@@ -246,9 +246,12 @@ namespace Content.Server.GameObjects.Components.Instruments
 
         public void HandSelected(HandSelectedEventArgs eventArgs)
         {
-            var session = eventArgs.User?.GetComponent<BasicActorComponent>()?.playerSession;
+            if (eventArgs.User == null || !eventArgs.User.TryGetComponent(out BasicActorComponent? actor))
+                return;
 
-            if (session == null) return;
+            var session = actor.playerSession;
+
+            if (session.Status != SessionStatus.InGame) return;
 
             InstrumentPlayer = session;
         }

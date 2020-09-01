@@ -6,7 +6,7 @@ using Robust.Shared.Interfaces.GameObjects;
 namespace Content.Server.Body.Surgery
 {
     /// <summary>
-    ///     This data class represents the state of a <see cref="BodyPart"/> in regards to everything surgery related -
+    ///     This data class represents the state of a <see cref="IBodyPart"/> in regards to everything surgery related -
     ///     whether there's an incision on it, whether the bone is broken, etc.
     /// </summary>
     public abstract class SurgeryData
@@ -14,40 +14,40 @@ namespace Content.Server.Body.Surgery
         protected delegate void SurgeryAction(IBodyPartContainer container, ISurgeon surgeon, IEntity performer);
 
         /// <summary>
-        ///     The <see cref="BodyPart"/> this surgeryData is attached to.
+        ///     The <see cref="IBodyPart"/> this surgeryData is attached to.
         ///     The <see cref="SurgeryData"/> class should not exist without a
-        ///     <see cref="BodyPart"/> that it represents, and will throw errors if it
+        ///     <see cref="IBodyPart"/> that it represents, and will throw errors if it
         ///     is null.
         /// </summary>
-        protected readonly BodyPart Parent;
+        protected readonly IBodyPart Parent;
 
-        protected SurgeryData(BodyPart parent)
+        protected SurgeryData(IBodyPart parent)
         {
             Parent = parent;
         }
 
         /// <summary>
-        ///     The <see cref="BodyPartType"/> of the parent <see cref="BodyPart"/>.
+        ///     The <see cref="BodyPartType"/> of the parent <see cref="IBodyPart"/>.
         /// </summary>
         protected BodyPartType ParentType => Parent.PartType;
 
         /// <summary>
-        ///     Returns the description of this current <see cref="BodyPart"/> to be shown
+        ///     Returns the description of this current <see cref="IBodyPart"/> to be shown
         ///     upon observing the given entity.
         /// </summary>
         public abstract string GetDescription(IEntity target);
 
         /// <summary>
         ///     Returns whether a <see cref="Mechanism"/> can be installed into the
-        ///     <see cref="BodyPart"/> this <see cref="SurgeryData"/> represents.
+        ///     <see cref="IBodyPart"/> this <see cref="SurgeryData"/> represents.
         /// </summary>
         public abstract bool CanInstallMechanism(Mechanism mechanism);
 
         /// <summary>
-        ///     Returns whether the given <see cref="BodyPart"/> can be connected to the
-        ///     <see cref="BodyPart"/> this <see cref="SurgeryData"/> represents.
+        ///     Returns whether the given <see cref="IBodyPart"/> can be connected to the
+        ///     <see cref="IBodyPart"/> this <see cref="SurgeryData"/> represents.
         /// </summary>
-        public abstract bool CanAttachBodyPart(BodyPart part);
+        public abstract bool CanAttachBodyPart(IBodyPart part);
 
         /// <summary>
         ///     Gets the delegate corresponding to the surgery step using the given
