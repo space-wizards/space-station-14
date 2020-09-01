@@ -40,7 +40,7 @@ namespace Content.Server.GameObjects.Components.Body
 
         private IEntity? _performerCache;
 
-        [ViewVariables] public Mechanism ContainedMechanism { get; private set; } = default!;
+        [ViewVariables] public IMechanism ContainedMechanism { get; private set; } = default!;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(GenericSurgeryUiKey.Key);
 
@@ -81,7 +81,7 @@ namespace Content.Server.GameObjects.Components.Body
             }
         }
 
-        public void InitializeDroppedMechanism(Mechanism data)
+        public void InitializeDroppedMechanism(IMechanism data)
         {
             ContainedMechanism = data;
             Owner.Name = Loc.GetString(ContainedMechanism.Name);
