@@ -6,7 +6,9 @@ using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Maps;
 using Content.Shared.Physics;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
@@ -338,43 +340,6 @@ namespace Content.Server.GameObjects.Components.Fluids
             }
         }
 
-        // TODO: Move the below to SnapGrid?
-        /// <summary>
-        /// Will yield a random direction until none are left
-        /// </summary>
-        /// <returns></returns>
-        private static IEnumerable<Direction> RandomDirections()
-        {
-            var directions = new[]
-            {
-                Direction.East,
-                Direction.SouthEast,
-                Direction.South,
-                Direction.SouthWest,
-                Direction.West,
-                Direction.NorthWest,
-                Direction.North,
-                Direction.NorthEast,
-            };
-
-            var robustRandom = IoCManager.Resolve<IRobustRandom>();
-            var n = directions.Length;
-
-            while (n > 1)
-            {
-                n--;
-                var k = robustRandom.Next(n + 1);
-                var value = directions[k];
-                directions[k] = directions[n];
-                directions[n] = value;
-            }
-
-            foreach (var direction in directions)
-            {
-                yield return direction;
-            }
-        }
-
         /// <summary>
         /// Tries to get an adjacent coordinate to overflow to, unless it is blocked by a wall on the
         /// same tile or the tile is empty
@@ -389,9 +354,13 @@ namespace Content.Server.GameObjects.Components.Fluids
 
             var mapGrid = _mapManager.GetGrid(Owner.Transform.GridID);
 
+            if (!Owner.Transform.GridPosition.Offset(direction).TryGetTileRef(out var tile))
+            {
+                return false;
+            }
+
             // If space return early, let that spill go out into the void
-            var tileRef = mapGrid.GetTileRef(Owner.Transform.GridPosition.Offset(direction.ToVec()));
-            if (tileRef.Tile.IsEmpty)
+            if (tile.Value.Tile.IsEmpty)
             {
                 return false;
             }
@@ -432,7 +401,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         /// <returns>Enumerable of the puddles found or to be created</returns>
         private IEnumerable<Func<PuddleComponent>> GetAllAdjacentOverflow()
         {
-            foreach (var direction in RandomDirections())
+            foreach (var direction in SharedDirectionExtensions.RandomDirections())
             {
                 if (TryGetAdjacentOverflow(direction, out var puddle))
                 {
