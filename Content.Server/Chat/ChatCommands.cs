@@ -5,7 +5,6 @@ using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects;
-using Content.Server.Interfaces;
 using Content.Server.Observer;
 using Content.Server.Players;
 using Content.Server.Utility;
@@ -120,7 +119,6 @@ namespace Content.Server.Chat
     internal class SuicideCommand : IClientCommand
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
 
         public string Command => "suicide";
 
@@ -139,12 +137,15 @@ namespace Content.Server.Chat
                 damageableComponent.ChangeDamage(kind switch
                     {
                         SuicideKind.Blunt => DamageType.Blunt,
+                        SuicideKind.Slash => DamageType.Slash,
                         SuicideKind.Piercing => DamageType.Piercing,
                         SuicideKind.Heat => DamageType.Heat,
-                        SuicideKind.Disintegration => DamageType.Disintegration,
-                        SuicideKind.Cellular => DamageType.Cellular,
-                        SuicideKind.DNA => DamageType.DNA,
+                        SuicideKind.Shock => DamageType.Shock,
+                        SuicideKind.Cold => DamageType.Cold,
+                        SuicideKind.Poison => DamageType.Poison,
+                        SuicideKind.Radiation => DamageType.Radiation,
                         SuicideKind.Asphyxiation => DamageType.Asphyxiation,
+                        SuicideKind.Bloodloss => DamageType.Bloodloss,
                         _ => DamageType.Blunt
                     },
                 500,

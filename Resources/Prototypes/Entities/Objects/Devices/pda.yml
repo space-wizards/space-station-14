@@ -93,6 +93,27 @@
       - MobImpassable
 
 - type: entity
+  name: Mime PDA
+  parent: BasePDA
+  id: MimePDA
+  description: Suprisingly not on mute.
+  components:
+  - type: PDA
+    idCard: MimeIDCard
+  - type: Icon
+    sprite: Objects/Devices/pda.rsi
+    state: pda-mime
+  - type: Sprite
+    sprite: Objects/Devices/pda.rsi
+    netsync: false
+    layers:
+    - state: pda-mime
+      map: ["enum.PDAVisualLayers.Base"]
+    - state: light_overlay
+      shader: unshaded
+      map: ["enum.PDAVisualLayers.Flashlight"]
+
+- type: entity
   name: Cargo PDA
   parent: BasePDA
   id: CargoPDA

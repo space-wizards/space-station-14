@@ -36,7 +36,7 @@ namespace Content.Server.Body
     {
         private IBodyManagerComponent? _body;
 
-        private readonly HashSet<Mechanism> _mechanisms = new HashSet<Mechanism>();
+        private readonly HashSet<IMechanism> _mechanisms = new HashSet<IMechanism>();
 
         public BodyPart(BodyPartPrototype data)
         {
@@ -146,11 +146,11 @@ namespace Content.Server.Body
         public BodyPartCompatibility Compatibility { get; private set; }
 
         /// <summary>
-        ///     Set of all <see cref="Mechanism"/> currently inside this
+        ///     Set of all <see cref="IMechanism"/> currently inside this
         ///     <see cref="IBodyPart"/>.
         /// </summary>
         [ViewVariables]
-        public IReadOnlyCollection<Mechanism> Mechanisms => _mechanisms;
+        public IReadOnlyCollection<IMechanism> Mechanisms => _mechanisms;
 
         /// <summary>
         ///     This method is called by
@@ -258,7 +258,7 @@ namespace Content.Server.Body
             return SurgeryData.CanAttachBodyPart(part);
         }
 
-        public bool CanInstallMechanism(Mechanism mechanism)
+        public bool CanInstallMechanism(IMechanism mechanism)
         {
             return SizeUsed + mechanism.Size <= Size &&
                    SurgeryData.CanInstallMechanism(mechanism);
@@ -275,7 +275,7 @@ namespace Content.Server.Body
         ///     True if successful, false if there was an error
         ///     (e.g. not enough room in <see cref="IBodyPart"/>).
         /// </returns>
-        private bool TryInstallMechanism(Mechanism mechanism)
+        private bool TryInstallMechanism(IMechanism mechanism)
         {
             if (!CanInstallMechanism(mechanism))
             {
@@ -308,7 +308,7 @@ namespace Content.Server.Body
             return true;
         }
 
-        public bool TryDropMechanism(IEntity dropLocation, Mechanism mechanismTarget,
+        public bool TryDropMechanism(IEntity dropLocation, IMechanism mechanismTarget,
             [NotNullWhen(true)] out DroppedMechanismComponent dropped)
         {
             dropped = null!;
@@ -331,16 +331,16 @@ namespace Content.Server.Body
         }
 
         /// <summary>
-        ///     Tries to destroy the given <see cref="Mechanism"/> in this
+        ///     Tries to destroy the given <see cref="IMechanism"/> in this
         ///     <see cref="IBodyPart"/>. Does NOT spawn a dropped entity.
         /// </summary>
         /// <summary>
-        ///     Tries to destroy the given <see cref="Mechanism"/> in this
+        ///     Tries to destroy the given <see cref="IMechanism"/> in this
         ///     <see cref="IBodyPart"/>.
         /// </summary>
         /// <param name="mechanismTarget">The mechanism to destroy.</param>
         /// <returns>True if successful, false otherwise.</returns>
-        public bool DestroyMechanism(Mechanism mechanismTarget)
+        public bool DestroyMechanism(IMechanism mechanismTarget)
         {
             if (!RemoveMechanism(mechanismTarget))
             {
@@ -365,7 +365,7 @@ namespace Content.Server.Body
             return SurgeryData.PerformSurgery(toolType, target, surgeon, performer);
         }
 
-        private void AddMechanism(Mechanism mechanism)
+        private void AddMechanism(IMechanism mechanism)
         {
             DebugTools.AssertNotNull(mechanism);
 
@@ -402,7 +402,7 @@ namespace Content.Server.Body
         /// </summary>
         /// <param name="mechanism">The mechanism to remove.</param>
         /// <returns>True if it was removed, false otherwise.</returns>
-        private bool RemoveMechanism(Mechanism mechanism)
+        private bool RemoveMechanism(IMechanism mechanism)
         {
             DebugTools.AssertNotNull(mechanism);
 

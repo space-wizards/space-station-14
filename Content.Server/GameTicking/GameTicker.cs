@@ -861,17 +861,6 @@ namespace Content.Server.GameTicking
             var accessTags = access.Tags;
             accessTags.UnionWith(jobPrototype.Access);
             pdaComponent.SetPDAOwner(characterName);
-            var mindComponent = mob.GetComponent<MindComponent>();
-            if (mindComponent.HasMind) //Redundancy checks.
-            {
-                if (mindComponent.Mind.AllRoles.Any(role => role.Antagonist)) //Give antags a new uplinkaccount.
-                {
-                    var uplinkAccount =
-                        new UplinkAccount(mob.Uid,
-                            20); //TODO: make me into a variable based on server pop or something.
-                    pdaComponent.InitUplinkAccount(uplinkAccount);
-                }
-            }
         }
 
         private void AddManifestEntry(string characterName, string jobId)

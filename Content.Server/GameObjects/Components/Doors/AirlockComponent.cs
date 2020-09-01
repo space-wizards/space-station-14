@@ -8,6 +8,7 @@ using Content.Server.GameObjects.Components.VendingMachines;
 using Content.Server.Interfaces;
 using Content.Shared.GameObjects.Components.Doors;
 using Content.Shared.GameObjects.Components.Interactable;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
@@ -438,16 +439,14 @@ namespace Content.Server.GameObjects.Components.Doors
             {
                 if (IsBolted())
                 {
-                    var notify = IoCManager.Resolve<IServerNotifyManager>();
-                    notify.PopupMessage(Owner, eventArgs.User,
+                    Owner.PopupMessage(eventArgs.User,
                         Loc.GetString("The airlock's bolts prevent it from being forced!"));
                     return false;
                 }
 
                 if (IsPowered())
                 {
-                    var notify = IoCManager.Resolve<IServerNotifyManager>();
-                    notify.PopupMessage(Owner, eventArgs.User, Loc.GetString("The powered motors block your efforts!"));
+                    Owner.PopupMessage(eventArgs.User, Loc.GetString("The powered motors block your efforts!"));
                     return false;
                 }
 

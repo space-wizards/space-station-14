@@ -163,6 +163,8 @@
             "AMEFuelContainer",
             "AMEShield",
             "DebugPump",
+            "PressurePump",
+            "VolumePump",
             "DebugVent",
             "DebugSiphon",
             "SignalReceiver",
