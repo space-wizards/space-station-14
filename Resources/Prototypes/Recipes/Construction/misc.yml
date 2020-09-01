@@ -10,3 +10,20 @@
   steps:
   - material: Metal
     amount: 1
+
+- type: construction
+  id: ExtinguisherCabinet
+  name: extinguisher cabinet
+  category: Items/Misc
+  keywords: [misc]
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+  description: A small wall mounted cabinet designed to hold a fire extinguisher.
+  icon: Constructible/Misc/extinguisher_cabinet.rsi/extinguisher_closed.png
+  result: ExtinguisherCabinet
+  steps:
+    - material: Metal
+      amount: 2
+      icon:
+        sprite: Constructible/Misc/extinguisher_cabinet.rsi
+        state: extinguisher_closed
