@@ -127,3 +127,11 @@
     sprite: Clothing/Back/Duffels/duffel_med.rsi
   - type: StorageFill
     contents:
+      - hemostat
+      - bone_saw
+      - drill
+      - cautery
+      - retractor
+      - scalpel
+  - type: Storage
+    capacity: 30
