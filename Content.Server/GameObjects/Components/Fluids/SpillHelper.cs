@@ -18,7 +18,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         /// <param name="solution">Initial solution for the prototype</param>
         /// <param name="prototype">Prototype to use</param>
         /// <param name="sound">Play the spill sound</param>
-        internal static void SpillAt(IEntity entity, Solution solution, string prototype, bool sound = true)
+        public static void SpillAt(IEntity entity, Solution solution, string prototype, bool sound = true)
         {
             var entityLocation = entity.Transform.GridPosition;
             SpillAt(entityLocation, solution, prototype, sound);
@@ -33,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         /// <param name="solution">Initial solution for the prototype</param>
         /// <param name="prototype">Prototype to use</param>
         /// <param name="sound">Play the spill sound</param>
-        internal static PuddleComponent? SpillAt(GridCoordinates gridCoordinates, Solution solution, string prototype, bool sound = true)
+        public static PuddleComponent? SpillAt(GridCoordinates gridCoordinates, Solution solution, string prototype, bool sound = true)
         {
             if (solution.TotalVolume == 0)
             {
