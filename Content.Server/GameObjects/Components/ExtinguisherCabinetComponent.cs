@@ -1,21 +1,19 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items;
 using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components
@@ -25,13 +23,13 @@ namespace Content.Server.GameObjects.Components
     [ComponentReference(typeof(IActivate))]
     public class ExtinguisherCabinetComponent : Component, IInteractUsing, IInteractHand, IActivate
     {
-
-        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
-
         public override string Name => "ExtinguisherCabinet";
 
-        [ViewVariables] protected ContainerSlot ItemContainer;
         private bool _opened = false;
+        private string _doorSound;
+
+        [ViewVariables] protected ContainerSlot ItemContainer;
+        [ViewVariables] public string DoorSound => _doorSound;
 
         public override void Initialize()
         {
@@ -41,17 +39,32 @@ namespace Content.Server.GameObjects.Components
                 ContainerManagerComponent.Ensure<ContainerSlot>("extinguisher_cabinet", Owner, out _);
         }
 
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+
+            serializer.DataField(ref _doorSound, "doorSound", "/Audio/Machines/machine_switch.ogg");
+        }
+
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (ItemContainer.ContainedEntity != null || !eventArgs.Using.HasComponent<FireExtinguisherComponent>())
+            if (!_opened)
             {
-                return false;
+                _opened = true;
+                ClickLatchSound();
             }
-            var handsComponent = eventArgs.User.GetComponent<IHandsComponent>();
-
-            if (!handsComponent.Drop(eventArgs.Using, ItemContainer))
+            else
             {
-                return false;
+                if (ItemContainer.ContainedEntity != null || !eventArgs.Using.HasComponent<FireExtinguisherComponent>())
+                {
+                    return false;
+                }
+                var handsComponent = eventArgs.User.GetComponent<IHandsComponent>();
+
+                if (!handsComponent.Drop(eventArgs.Using, ItemContainer))
+                {
+                    return false;
+                }
             }
 
             UpdateVisuals();
@@ -70,7 +83,7 @@ namespace Content.Server.GameObjects.Components
                 }
                 else if (eventArgs.User.TryGetComponent(out HandsComponent hands))
                 {
-                    _notifyManager.PopupMessage(Owner.Transform.GridPosition, eventArgs.User,
+                    Owner.PopupMessage(eventArgs.User,
                         Loc.GetString("You take {0:extinguisherName} from the {1:cabinetName}", ItemContainer.ContainedEntity.Name, Owner.Name));
                     hands.PutInHandOrDrop(ItemContainer.ContainedEntity.GetComponent<ItemComponent>());
                 }
@@ -109,7 +122,7 @@ namespace Content.Server.GameObjects.Components
         private void ClickLatchSound()
         {
             EntitySystem.Get<AudioSystem>() // Don't have original click, this sounds close
-                .PlayFromEntity("/Audio/Machines/machine_switch.ogg", Owner, AudioHelpers.WithVariation(0.15f));
+                .PlayFromEntity(DoorSound, Owner, AudioHelpers.WithVariation(0.15f));
         }
     }
 }
