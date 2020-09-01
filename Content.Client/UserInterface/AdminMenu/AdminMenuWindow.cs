@@ -1,7 +1,4 @@
 ﻿#nullable enable
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Client.StationEvents;
 using Content.Shared.Atmos;
@@ -17,8 +14,12 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.UserInterface.AdminMenu
@@ -27,6 +28,9 @@ namespace Content.Client.UserInterface.AdminMenu
     {
         public TabContainer MasterTabContainer;
         public VBoxContainer PlayerList;
+        public Label PlayerCount;
+
+        protected override Vector2? CustomSize => (500, 250);
 
         private List<CommandButton> _adminButtons = new List<CommandButton>
         {
@@ -60,7 +64,9 @@ namespace Content.Client.UserInterface.AdminMenu
         private void RefreshPlayerList(ButtonEventArgs args)
         {
             PlayerList.RemoveAllChildren();
-            var sessions = IoCManager.Resolve<IPlayerManager>().Sessions;
+            var playerManager = IoCManager.Resolve<IPlayerManager>();
+            var sessions = playerManager.Sessions;
+            PlayerCount.Text = $"Players: {playerManager.PlayerCount}";
             var header = new HBoxContainer
             {
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
@@ -93,11 +99,13 @@ namespace Content.Client.UserInterface.AdminMenu
                         new Label {
                             Text = player.Name,
                             SizeFlagsStretchRatio = 2f,
-                            SizeFlagsHorizontal = SizeFlags.FillExpand },
+                            SizeFlagsHorizontal = SizeFlags.FillExpand,
+                            ClipText = true },
                         new Label {
                             Text = player.AttachedEntity?.Name,
                             SizeFlagsStretchRatio = 2f,
-                            SizeFlagsHorizontal = SizeFlags.FillExpand },
+                            SizeFlagsHorizontal = SizeFlags.FillExpand,
+                            ClipText = true },
                         new Label {
                             Text = player.Status.ToString(),
                             SizeFlagsStretchRatio = 1f,
@@ -133,7 +141,6 @@ namespace Content.Client.UserInterface.AdminMenu
 
         public AdminMenuWindow() //TODO: search for buttons?
         {
-            CustomMinimumSize = (415,0);
             Title = Loc.GetString("Admin Menu");
 
             #region PlayerList
@@ -146,22 +153,49 @@ namespace Content.Client.UserInterface.AdminMenu
                 MarginBottomOverride = 4,
                 CustomMinimumSize = (50, 50),
             };
-            PlayerList = new VBoxContainer();
+
+            PlayerCount = new Label
+            {
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                SizeFlagsStretchRatio = 0.7f,
+            };
             var refreshButton = new Button
             {
-                Text = "Refresh"
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                SizeFlagsStretchRatio = 0.3f,
+                Text = "Refresh",
             };
             refreshButton.OnPressed += RefreshPlayerList;
-            RefreshPlayerList(null!);
+
+            PlayerList = new VBoxContainer();
+            
             var playerVBox = new VBoxContainer
             {
+                SizeFlagsVertical = SizeFlags.FillExpand,
                 Children =
                 {
-                    refreshButton,
-                    PlayerList
+                    new HBoxContainer
+                    {
+                        SizeFlagsHorizontal = SizeFlags.FillExpand,
+                        Children =
+                        {
+                            PlayerCount,
+                            refreshButton,
+                        }
+                    },
+                    new ScrollContainer
+                    {
+                        SizeFlagsHorizontal = SizeFlags.FillExpand,
+                        SizeFlagsVertical = SizeFlags.FillExpand,
+                        Children =
+                        {
+                            PlayerList
+                        },
+                    },
                 }
             };
             playerTabContainer.AddChild(playerVBox);
+            RefreshPlayerList(null!);
             #endregion PlayerList
 
             #region Admin Tab
