@@ -32,6 +32,8 @@ namespace Content.Server.GameObjects.Components.Atmos
     public class GridAtmosphereComponent : Component, IGridAtmosphereComponent
     {
         [Robust.Shared.IoC.Dependency] private IMapManager _mapManager = default!;
+        [Robust.Shared.IoC.Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
+        [Robust.Shared.IoC.Dependency] private IServerEntityManager _serverEntityManager = default!;
 
         /// <summary>
         ///     Check current execution time every n instances processed.
@@ -162,14 +164,13 @@ namespace Content.Server.GameObjects.Components.Atmos
             var mapGrid = mapGridComponent.Grid;
             var tile = mapGrid.GetTileRef(indices).Tile;
 
-            var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
-            var tileDef = (ContentTileDefinition)tileDefinitionManager[tile.TypeId];
+            var tileDef = (ContentTileDefinition) _tileDefinitionManager[tile.TypeId];
 
-            var underplating = tileDefinitionManager["underplating"];
+            var underplating = _tileDefinitionManager["underplating"];
             mapGrid.SetTile(indices, new Tile(underplating.TileId));
 
             //Actually spawn the relevant tile item at the right position and give it some offset to the corner.
-            var tileItem = IoCManager.Resolve<IServerEntityManager>().SpawnEntity(tileDef.ItemDropPrototypeName, new GridCoordinates(indices.X, indices.Y, mapGrid));
+            var tileItem = _serverEntityManager.SpawnEntity(tileDef.ItemDropPrototypeName, new GridCoordinates(indices.X, indices.Y, mapGrid));
             tileItem.Transform.WorldPosition += (0.2f, 0.2f);
         }
 
