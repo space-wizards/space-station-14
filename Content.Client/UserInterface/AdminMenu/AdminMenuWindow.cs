@@ -67,7 +67,8 @@ namespace Content.Client.UserInterface.AdminMenu
         {
             public HSeperator()
             {
-                AddChild(new PanelContainer { PanelOverride = new StyleBoxFlat
+                AddChild(new PanelContainer {
+                    PanelOverride = new StyleBoxFlat
                     {
                         BackgroundColor = SeparatorColor,
                         ContentMarginBottomOverride = 2, ContentMarginLeftOverride = 2
@@ -81,7 +82,11 @@ namespace Content.Client.UserInterface.AdminMenu
             public VSeperator()
             {
                 CustomMinimumSize = (2, 5);
-                AddChild(new PanelContainer { PanelOverride = new StyleBoxFlat { BackgroundColor = SeparatorColor } });
+                AddChild(new PanelContainer {
+                    PanelOverride = new StyleBoxFlat {
+                        BackgroundColor = SeparatorColor
+                    }
+                });
             }
         }
 
@@ -91,6 +96,10 @@ namespace Content.Client.UserInterface.AdminMenu
             var playerManager = IoCManager.Resolve<IPlayerManager>();
             var sessions = playerManager.Sessions;
             PlayerCount.Text = $"Players: {playerManager.PlayerCount}";
+
+            Color altColor = Color.FromHex("#292B38");
+            Color defaultColor = Color.FromHex("#2F2F3B");
+
             var header = new HBoxContainer
             {
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
@@ -115,8 +124,20 @@ namespace Content.Client.UserInterface.AdminMenu
                             Align = Label.AlignMode.Right },
                     }
             };
-            PlayerList.AddChild(header);
+            PlayerList.AddChild(new PanelContainer
+            {
+                PanelOverride = new StyleBoxFlat
+                {
+                    BackgroundColor = altColor,
+                },
+                Children =
+                {
+                    header
+                }
+            });
             PlayerList.AddChild(new HSeperator());
+
+            var useAltColor = false;
             foreach (var player in sessions)
             {
                 var hbox = new HBoxContainer
@@ -149,7 +170,18 @@ namespace Content.Client.UserInterface.AdminMenu
                             Align = Label.AlignMode.Right },
                     }
                 };
-                PlayerList.AddChild(hbox);
+                PlayerList.AddChild(new PanelContainer
+                {
+                    PanelOverride = new StyleBoxFlat
+                    {
+                        BackgroundColor = useAltColor ? altColor : defaultColor,
+                    },
+                    Children =
+                    {
+                        hbox
+                    }
+                });
+                useAltColor ^= true;
             }
         }
 
