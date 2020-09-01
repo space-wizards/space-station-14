@@ -143,5 +143,7 @@
   - type: Icon
     state: box
   - type: Item
+    size: 15
   - type: Storage
     capacity: 15
+    size: 15
