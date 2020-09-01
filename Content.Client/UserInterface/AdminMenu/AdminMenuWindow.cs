@@ -3,6 +3,7 @@ using Content.Client.GameObjects.EntitySystems;
 using Content.Client.StationEvents;
 using Content.Shared.Atmos;
 using Robust.Client.Console;
+using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.Placement;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Player;
@@ -61,6 +62,29 @@ namespace Content.Client.UserInterface.AdminMenu
             new DirectCommandButton("Shutdown", "shutdown"),
         };
 
+        private static readonly Color SeparatorColor = Color.FromHex("#3D4059");
+        private class HSeperator : Control
+        {
+            public HSeperator()
+            {
+                AddChild(new PanelContainer { PanelOverride = new StyleBoxFlat
+                    {
+                        BackgroundColor = SeparatorColor,
+                        ContentMarginBottomOverride = 2, ContentMarginLeftOverride = 2
+                    }
+                });
+            }
+        }
+
+        private class VSeperator : PanelContainer
+        {
+            public VSeperator()
+            {
+                CustomMinimumSize = (2, 5);
+                AddChild(new PanelContainer { PanelOverride = new StyleBoxFlat { BackgroundColor = SeparatorColor } });
+            }
+        }
+
         private void RefreshPlayerList(ButtonEventArgs args)
         {
             PlayerList.RemoveAllChildren();
@@ -70,18 +94,21 @@ namespace Content.Client.UserInterface.AdminMenu
             var header = new HBoxContainer
             {
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
-                SeparationOverride = 8,
+                SeparationOverride = 4,
                 Children =
                     {
                         new Label { Text = "Name",
                             SizeFlagsStretchRatio = 2f,
                             SizeFlagsHorizontal = SizeFlags.FillExpand },
+                        new VSeperator(),
                         new Label { Text = "Player",
                             SizeFlagsStretchRatio = 2f,
                             SizeFlagsHorizontal = SizeFlags.FillExpand },
+                        new VSeperator(),
                         new Label { Text = "Status",
                             SizeFlagsStretchRatio = 1f,
                             SizeFlagsHorizontal = SizeFlags.FillExpand },
+                        new VSeperator(),
                         new Label { Text = "Ping",
                             SizeFlagsStretchRatio = 1f,
                             SizeFlagsHorizontal = SizeFlags.FillExpand,
@@ -89,13 +116,13 @@ namespace Content.Client.UserInterface.AdminMenu
                     }
             };
             PlayerList.AddChild(header);
-            PlayerList.AddChild(new Controls.HighDivider());
+            PlayerList.AddChild(new HSeperator());
             foreach (var player in sessions)
             {
                 var hbox = new HBoxContainer
                 {
                     SizeFlagsHorizontal = SizeFlags.FillExpand,
-                    SeparationOverride = 8,
+                    SeparationOverride = 4,
                     Children =
                     {
                         new Label {
@@ -103,15 +130,18 @@ namespace Content.Client.UserInterface.AdminMenu
                             SizeFlagsStretchRatio = 2f,
                             SizeFlagsHorizontal = SizeFlags.FillExpand,
                             ClipText = true },
+                        new VSeperator(),
                         new Label {
                             Text = player.AttachedEntity?.Name,
                             SizeFlagsStretchRatio = 2f,
                             SizeFlagsHorizontal = SizeFlags.FillExpand,
                             ClipText = true },
+                        new VSeperator(),
                         new Label {
                             Text = player.Status.ToString(),
                             SizeFlagsStretchRatio = 1f,
                             SizeFlagsHorizontal = SizeFlags.FillExpand },
+                        new VSeperator(),
                         new Label {
                             Text = player.Ping.ToString(),
                             SizeFlagsStretchRatio = 1f,
@@ -185,6 +215,7 @@ namespace Content.Client.UserInterface.AdminMenu
                             refreshButton,
                         }
                     },
+                    new Control { CustomMinimumSize = (0, 5) },
                     new ScrollContainer
                     {
                         SizeFlagsHorizontal = SizeFlags.FillExpand,
