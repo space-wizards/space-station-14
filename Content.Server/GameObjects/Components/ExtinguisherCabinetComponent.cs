@@ -26,14 +26,6 @@ namespace Content.Server.GameObjects.Components
     public class ExtinguisherCabinetComponent : Component, IInteractUsing, IInteractHand, IActivate
     {
 
-        // TODO
-        // - Deconstruct with wrench
-        //     - "You start unsecuring [name]..." text
-        //     - deconstruct.ogg
-        //         - 50 volume
-        //     - Spawn 2 metal
-        //     - Spawn extinguisher
-
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
 
         public override string Name => "ExtinguisherCabinet";
