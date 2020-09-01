@@ -23,11 +23,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Maths;
-using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -44,8 +40,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
     [ComponentReference(typeof(IInteractUsing))]
     public class ChemMasterComponent : SharedChemMasterComponent, IActivate, IInteractUsing, ISolutionChange
     {
-        [Dependency] private readonly IRobustRandom _random = default!;
-
         [ViewVariables] private ContainerSlot _beakerContainer = default!;
         [ViewVariables] private string _packPrototypeId = "";
 
@@ -341,9 +335,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     //Put it on the floor
                     pill.Transform.GridPosition = user.Transform.GridPosition;
                     //Give it an offset
-                    var x_negative = _random.Prob(0.5f) ? -1 : 1;
-                    var y_negative = _random.Prob(0.5f) ? -1 : 1;
-                    pill.Transform.LocalPosition += new Vector2(_random.NextFloat() * 0.2f * x_negative, _random.NextFloat() * 0.2f * y_negative);
+                    pill.RandomOffset(0.2f);
                 }
             }
 
