@@ -146,7 +146,7 @@ namespace Content.Server.GameObjects.Components.Medical
                     if (message.ScanId == null) return;
 
                     if (_bodyContainer.ContainedEntity != null ||
-                        !CloningSystem.Minds.TryGetValue((int) message.ScanId, out var mind))
+                        !CloningSystem.Minds.TryGetValue(message.ScanId.Value, out var mind))
                     {
                         return;
                     }
