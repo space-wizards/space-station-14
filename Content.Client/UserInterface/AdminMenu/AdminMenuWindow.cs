@@ -70,6 +70,7 @@ namespace Content.Client.UserInterface.AdminMenu
             var header = new HBoxContainer
             {
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
+                SeparationOverride = 8,
                 Children =
                     {
                         new Label { Text = "Name",
@@ -94,6 +95,7 @@ namespace Content.Client.UserInterface.AdminMenu
                 var hbox = new HBoxContainer
                 {
                     SizeFlagsHorizontal = SizeFlags.FillExpand,
+                    SeparationOverride = 8,
                     Children =
                     {
                         new Label {
