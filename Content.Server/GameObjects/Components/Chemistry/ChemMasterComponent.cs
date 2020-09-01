@@ -44,6 +44,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
     public class ChemMasterComponent : SharedChemMasterComponent, IActivate, IInteractUsing, ISolutionChange
     {
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         [ViewVariables] private ContainerSlot _beakerContainer = default!;
         [ViewVariables] private string _packPrototypeId = "";
@@ -272,8 +273,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         private void TryCreatePackage(IEntity user, UiAction action, int pillAmount, int bottleAmount)
         {
-            var random = IoCManager.Resolve<IRobustRandom>();
-
             if (BufferSolution.CurrentVolume == 0)
                 return;
 
@@ -308,9 +307,9 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     //Put it on the floor
                     bottle.Transform.GridPosition = user.Transform.GridPosition;
                     //Give it an offset
-                    var x_negative = random.Prob(0.5f) ? -1 : 1;
-                    var y_negative = random.Prob(0.5f) ? -1 : 1;
-                    bottle.Transform.LocalPosition += new Vector2(random.NextFloat() * 0.2f * x_negative, random.NextFloat() * 0.2f * y_negative);
+                    var x_negative = _random.Prob(0.5f) ? -1 : 1;
+                    var y_negative = _random.Prob(0.5f) ? -1 : 1;
+                    bottle.Transform.LocalPosition += new Vector2(_random.NextFloat() * 0.2f * x_negative, _random.NextFloat() * 0.2f * y_negative);
                 }
 
             }
@@ -345,9 +344,9 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     //Put it on the floor
                     pill.Transform.GridPosition = user.Transform.GridPosition;
                     //Give it an offset
-                    var x_negative = random.Prob(0.5f) ? -1 : 1;
-                    var y_negative = random.Prob(0.5f) ? -1 : 1;
-                    pill.Transform.LocalPosition += new Vector2(random.NextFloat() * 0.2f * x_negative, random.NextFloat() * 0.2f * y_negative);
+                    var x_negative = _random.Prob(0.5f) ? -1 : 1;
+                    var y_negative = _random.Prob(0.5f) ? -1 : 1;
+                    pill.Transform.LocalPosition += new Vector2(_random.NextFloat() * 0.2f * x_negative, _random.NextFloat() * 0.2f * y_negative);
                 }
             }
 

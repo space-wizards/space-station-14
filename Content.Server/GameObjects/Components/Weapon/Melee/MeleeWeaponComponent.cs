@@ -26,6 +26,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
         [Dependency] private readonly IPhysicsManager _physicsManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override string Name => "MeleeWeapon";
         private TimeSpan _lastAttackTime;
@@ -85,7 +86,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
         void IAttack.Attack(AttackEventArgs eventArgs)
         {
-            var curTime = IoCManager.Resolve<IGameTiming>().CurTime;
+            var curTime = _gameTiming.CurTime;
             var span = curTime - _lastAttackTime;
             if(span.TotalSeconds < _cooldownTime) {
                 return;
@@ -127,7 +128,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 sys.SendAnimation(Arc, angle, eventArgs.User, hitEntities);
             }
 
-            _lastAttackTime = IoCManager.Resolve<IGameTiming>().CurTime;
+            _lastAttackTime = _gameTiming.CurTime;
 
             if (Owner.TryGetComponent(out ItemCooldownComponent cooldown))
             {

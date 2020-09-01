@@ -47,6 +47,8 @@ namespace Content.Server.GameObjects.Components.Fluids
         // to check for low volumes for evaporation or whatever
 
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public override string Name => "Puddle";
 
@@ -132,8 +134,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             // Random sprite state set server-side so it's consistent across all clients
             _spriteComponent = Owner.EnsureComponent<SpriteComponent>();
 
-            var robustRandom = IoCManager.Resolve<IRobustRandom>();
-            var randomVariant = robustRandom.Next(0, _spriteVariants - 1);
+            var randomVariant = _random.Next(0, _spriteVariants - 1);
 
             if (_spriteComponent.BaseRSIPath != null)
             {
@@ -419,8 +420,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             if (puddle == default)
             {
                 var grid = _snapGrid.DirectionToGrid(direction);
-                var entityManager = IoCManager.Resolve<IEntityManager>();
-                puddle = () => entityManager.SpawnEntity(Owner.Prototype.ID, grid).GetComponent<PuddleComponent>();
+                puddle = () => _entityManager.SpawnEntity(Owner.Prototype.ID, grid).GetComponent<PuddleComponent>();
             }
 
             return true;
