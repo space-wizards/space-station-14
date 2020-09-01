@@ -37,7 +37,7 @@ namespace Content.Shared.Atmos
         public static IEnumerable<GasPrototype> Gases => GasPrototypes;
 
         private static readonly SpriteSpecifier[] GasOverlays;
-        
+
         public static SpriteSpecifier GetOverlay(int overlayId) => GasOverlays[overlayId];
 
         #region ATMOS
@@ -246,6 +246,11 @@ namespace Content.Shared.Atmos
         public const int LowPressureDamage = 4;
 
         public const float WindowHeatTransferCoefficient = 0.1f;
+
+        /// <summary>
+        ///     The normal body temperature in degrees Celsius.
+        /// </summary>
+        public const float NormalBodyTemperature = 37f;
     }
 
     /// <summary>

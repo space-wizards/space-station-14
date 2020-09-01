@@ -183,6 +183,7 @@ namespace Content.Server.Atmos
 
             foreach (var tile in gam)
             {
+                Console.WriteLine(tile.GridIndices);
                 if (gasId != -1)
                 {
                     tile.Air?.AdjustMoles(gasId, moles);

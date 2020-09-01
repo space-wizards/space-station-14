@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Metabolism;
@@ -66,19 +67,30 @@ namespace Content.Server.GameObjects.Components.Body.Circulatory
             return true;
         }
 
-        public void PumpToxins(GasMixture to, float pressure)
+        public void PumpToxins(GasMixture to)
         {
             if (!Owner.TryGetComponent(out MetabolismComponent metabolism))
             {
-                Air.PumpGasTo(to, pressure);
+                to.Merge(Air);
+                Air.Clear();
                 return;
             }
 
             var toxins = metabolism.Clean(this);
+            var toOld = to.Gases.ToArray();
 
-            toxins.PumpGasTo(to, pressure);
+            to.Merge(toxins);
+
+            for (var i = 0; i < toOld.Length; i++)
+            {
+                var newAmount = to.GetMoles(i);
+                var oldAmount = toOld[i];
+                var delta = newAmount - oldAmount;
+
+                toxins.AdjustMoles(i, -delta);
+            }
+
             Air.Merge(toxins);
-            toxins.Clear();
         }
     }
 }

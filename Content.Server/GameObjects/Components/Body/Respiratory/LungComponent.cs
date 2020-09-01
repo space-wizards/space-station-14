@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Body.Circulatory;
 using Content.Server.Interfaces;
@@ -16,11 +17,6 @@ namespace Content.Server.GameObjects.Components.Body.Respiratory
 
         private float _accumulatedFrameTime;
 
-        /// <summary>
-        ///     The pressure that this lung exerts on the air around it
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)] private float Pressure { get; set; }
-
         [ViewVariables] public GasMixture Air { get; set; } = new GasMixture();
 
         [ViewVariables] public LungStatus Status { get; set; }
@@ -34,7 +30,12 @@ namespace Content.Server.GameObjects.Components.Body.Respiratory
                 6,
                 vol => Air.Volume = vol,
                 () => Air.Volume);
-            serializer.DataField(this, l => l.Pressure, "pressure", 100);
+
+            serializer.DataReadWriteFunction(
+                "temperature",
+                Atmospherics.NormalBodyTemperature,
+                temp => Air.Temperature = temp,
+                () => Air.Temperature);
         }
 
         public void Update(float frameTime)
@@ -76,47 +77,69 @@ namespace Content.Server.GameObjects.Components.Body.Respiratory
 
         public void Inhale(float frameTime)
         {
-            if (!Owner.TryGetComponent(out BloodstreamComponent bloodstream))
-            {
-                return;
-            }
-
             if (!Owner.Transform.GridPosition.TryGetTileAir(out var tileAir))
             {
                 return;
             }
 
-            var amount = Atmospherics.BreathVolume * frameTime;
-            var volumeRatio = amount / tileAir.Volume;
-            var temp = tileAir.RemoveRatio(volumeRatio);
+            Inhale(frameTime, tileAir);
+        }
 
-            temp.PumpGasTo(Air, Pressure);
-            Air.PumpGasTo(bloodstream.Air, Pressure);
-            tileAir.Merge(temp);
-            temp.Clear();
+        public void Inhale(float frameTime, GasMixture from)
+        {
+            var ratio = Atmospherics.BreathPercentage * from.Volume * frameTime;
+            var removed = from.RemoveRatio(ratio);
+            var airOld = Air.Gases.ToArray();
+
+            Air.Merge(removed);
+
+            for (var gas = 0; gas < Atmospherics.TotalNumberOfGases; gas++)
+            {
+                var newAmount = Air.GetMoles(gas);
+                var oldAmount = airOld[gas];
+                var delta = newAmount - oldAmount;
+
+                removed.AdjustMoles(gas, -delta);
+            }
+
+            from.Merge(removed);
         }
 
         public void Exhale(float frameTime)
         {
-            if (!Owner.TryGetComponent(out BloodstreamComponent bloodstream))
-            {
-                return;
-            }
-
             if (!Owner.Transform.GridPosition.TryGetTileAir(out var tileAir))
             {
                 return;
             }
 
-            bloodstream.PumpToxins(Air, Pressure);
+            Exhale(frameTime, tileAir);
+        }
 
-            var temp = new GasMixture(Air.Volume);
+        public void Exhale(float frameTime, GasMixture to)
+        {
+            // TODO: Make the bloodstream separately pump toxins into the lungs, making the lungs' only job to empty.
+            if (!Owner.TryGetComponent(out BloodstreamComponent bloodstream))
+            {
+                return;
+            }
 
-            temp.Merge(Air);
-            Air.Clear();
+            bloodstream.PumpToxins(Air);
 
-            tileAir.Merge(temp);
-            temp.Clear();
+            var lungRemoved = Air.RemoveRatio(0.5f);
+            var toOld = to.Gases.ToArray();
+
+            to.Merge(lungRemoved);
+
+            for (var gas = 0; gas < Atmospherics.TotalNumberOfGases; gas++)
+            {
+                var newAmount = to.GetMoles(gas);
+                var oldAmount = toOld[gas];
+                var delta = newAmount - oldAmount;
+
+                lungRemoved.AdjustMoles(gas, -delta);
+            }
+
+            Air.Merge(lungRemoved);
         }
     }
 

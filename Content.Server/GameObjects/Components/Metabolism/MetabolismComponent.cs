@@ -219,32 +219,30 @@ namespace Content.Server.GameObjects.Components.Metabolism
             }
         }
 
-        public void Transfer(BloodstreamComponent from, GasMixture to, Gas gas, float pressure)
-        {
-            var transfer = new GasMixture(from.Air.Volume);
-            var molesInBlood = from.Air.GetMoles(gas);
-            transfer.AdjustMoles(gas, molesInBlood);
-            from.Air.AdjustMoles(gas, -molesInBlood);
-
-            transfer.PumpGasTo(to, pressure);
-
-            from.Air.Merge(transfer);
-            transfer.Clear();
-        }
-
-        public GasMixture Clean(BloodstreamComponent bloodstream, float pressure = 100)
+        public GasMixture Clean(BloodstreamComponent bloodstream)
         {
             var gasMixture = new GasMixture(bloodstream.Air.Volume);
 
             for (Gas gas = 0; gas < (Gas) Atmospherics.TotalNumberOfGases; gas++)
             {
-                if (NeedsGases.TryGetValue(gas, out var needed) &&
-                    bloodstream.Air.GetMoles(gas) < needed * 1.5f)
+                float amount;
+                var molesInBlood = bloodstream.Air.GetMoles(gas);
+
+                if (!NeedsGases.TryGetValue(gas, out var needed))
                 {
-                    continue;
+                    amount = molesInBlood;
+                }
+                else
+                {
+                    var overflowThreshold = needed * 1.5f;
+
+                    amount = molesInBlood > overflowThreshold
+                        ? molesInBlood - overflowThreshold
+                        : 0;
                 }
 
-                Transfer(bloodstream, gasMixture, gas, pressure);
+                gasMixture.AdjustMoles(gas, amount);
+                bloodstream.Air.AdjustMoles(gas, -amount);
             }
 
             return gasMixture;
