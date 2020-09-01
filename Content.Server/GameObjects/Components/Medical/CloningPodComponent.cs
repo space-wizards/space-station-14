@@ -34,6 +34,8 @@ namespace Content.Server.GameObjects.Components.Medical
     public class CloningPodComponent : SharedCloningPodComponent, IActivate
     {
         [Dependency] private readonly IServerPreferencesManager _prefsManager = null!;
+        [Dependency] private readonly IEntityManager _entityManager = null!;
+        [Dependency] private readonly IPlayerManager _playerManager = null!;
 
         [ViewVariables]
         private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
@@ -45,10 +47,8 @@ namespace Content.Server.GameObjects.Components.Medical
         private ContainerSlot _bodyContainer = default!;
         private Mind? _capturedMind;
         private CloningPodStatus _status;
-        private float _clonningProgress = 0;
+        private float _cloningProgress = 0;
         private float _cloningTime;
-        private readonly IEntityManager _entityManager = IoCManager.Resolve<IEntityManager>();
-        private readonly IPlayerManager _playerManager = IoCManager.Resolve<IPlayerManager>();
 
 
 
@@ -83,18 +83,18 @@ namespace Content.Server.GameObjects.Components.Medical
             if (_bodyContainer.ContainedEntity != null &&
                 Powered)
             {
-                _clonningProgress += frametime;
-                _clonningProgress = MathHelper.Clamp(_clonningProgress, 0f, _cloningTime);
+                _cloningProgress += frametime;
+                _cloningProgress = MathHelper.Clamp(_cloningProgress, 0f, _cloningTime);
             }
 
-            if (_clonningProgress >= _cloningTime &&
+            if (_cloningProgress >= _cloningTime &&
                 _bodyContainer.ContainedEntity != null &&
                 _capturedMind?.Session.AttachedEntity == _bodyContainer.ContainedEntity &&
                 Powered)
             {
                 _bodyContainer.Remove(_bodyContainer.ContainedEntity);
                 _capturedMind = null;
-                _clonningProgress = 0f;
+                _cloningProgress = 0f;
 
                 _status = CloningPodStatus.Idle;
                 UpdateAppearance();
@@ -112,7 +112,7 @@ namespace Content.Server.GameObjects.Components.Medical
 
         private CloningPodBoundUserInterfaceState GetUserInterfaceState()
         {
-            return new CloningPodBoundUserInterfaceState(CloningSystem.getIdToUser(), _clonningProgress,
+            return new CloningPodBoundUserInterfaceState(CloningSystem.getIdToUser(), _cloningProgress,
                 (_status == CloningPodStatus.Cloning));
         }
 
@@ -175,11 +175,11 @@ namespace Content.Server.GameObjects.Components.Medical
                     break;
 
                 case UiButton.Eject:
-                    if (_bodyContainer.ContainedEntity == null || _clonningProgress < _cloningTime) break;
+                    if (_bodyContainer.ContainedEntity == null || _cloningProgress < _cloningTime) break;
 
                     _bodyContainer.Remove(_bodyContainer.ContainedEntity!);
                     _capturedMind = null;
-                    _clonningProgress = 0f;
+                    _cloningProgress = 0f;
                     _status = CloningPodStatus.Idle;
                     UpdateAppearance();
                     break;

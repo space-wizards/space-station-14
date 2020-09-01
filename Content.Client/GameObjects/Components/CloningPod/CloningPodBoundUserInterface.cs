@@ -46,5 +46,15 @@ namespace Content.Client.GameObjects.Components.CloningPod
             base.UpdateState(state);
             _window.Populate((CloningPodBoundUserInterfaceState) state);
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            if (disposing)
+            {
+                _window?.Dispose();
+            }
+        }
     }
 }

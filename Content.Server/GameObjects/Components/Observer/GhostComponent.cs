@@ -33,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Observer
         {
             base.Initialize();
 
-            Owner.EnsureComponent<VisibilityComponent>().Layer = (int)VisibilityFlags.Ghost;
+            Owner.EnsureComponent<VisibilityComponent>().Layer = (int) VisibilityFlags.Ghost;
         }
 
         public override ComponentState GetComponentState() => new GhostComponentState(CanReturnToBody);
@@ -45,18 +45,19 @@ namespace Content.Server.GameObjects.Components.Observer
             switch (message)
             {
                 case PlayerAttachedMsg msg:
-                    msg.NewPlayer.VisibilityMask |= (int)VisibilityFlags.Ghost;
+                    msg.NewPlayer.VisibilityMask |= (int) VisibilityFlags.Ghost;
                     Dirty();
                     break;
                 case PlayerDetachedMsg msg:
-                    msg.OldPlayer.VisibilityMask &= ~(int)VisibilityFlags.Ghost;
+                    msg.OldPlayer.VisibilityMask &= ~(int) VisibilityFlags.Ghost;
                     break;
                 default:
                     break;
             }
         }
 
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession session = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel,
+            ICommonSession session = null)
         {
             base.HandleNetworkMessage(message, netChannel, session);
 
@@ -69,10 +70,15 @@ namespace Content.Server.GameObjects.Components.Observer
                         actor.playerSession.ContentData().Mind.UnVisit();
                         Owner.Delete();
                     }
+
                     break;
                 case ReturnToCloneComponentMessage reenter:
-                    Owner.TryGetComponent(out VisitingMindComponent mind);
-                    Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new GhostReturnMessage(mind.Mind));
+
+                    if (Owner.TryGetComponent(out VisitingMindComponent mind))
+                    {
+                        Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new GhostReturnMessage(mind.Mind));
+                    }
+
                     break;
                 default:
                     break;

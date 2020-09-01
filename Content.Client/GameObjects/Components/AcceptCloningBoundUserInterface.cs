@@ -1,8 +1,6 @@
 ﻿using Content.Shared.GameObjects.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects.Components.UserInterface;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Client.GameObjects.Components
 {
@@ -32,5 +30,16 @@ namespace Content.Client.GameObjects.Components
             };
             _window.OpenCentered();
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            if (disposing)
+            {
+                _window?.Dispose();
+            }
+        }
+
     }
 }

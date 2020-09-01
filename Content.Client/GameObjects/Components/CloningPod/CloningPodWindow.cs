@@ -156,14 +156,6 @@ namespace Content.Client.GameObjects.Components.CloningPod
             _mindState.FontColorOverride = state.MindPresent ? Color.Green : Color.Red;
         }
 
-        public override void Close()
-        {
-            base.Close();
-
-            Dispose();
-        }
-
-
         private void OnSearchBarTextChanged(LineEdit.LineEditEventArgs args)
         {
             BuildEntityList(args.Text);

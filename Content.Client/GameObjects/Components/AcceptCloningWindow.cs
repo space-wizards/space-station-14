@@ -46,11 +46,5 @@ namespace Content.Client.GameObjects.Components
                 }
             });
         }
-
-        public override void Close()
-        {
-            base.Close();
-            Dispose();
-        }
     }
 }
