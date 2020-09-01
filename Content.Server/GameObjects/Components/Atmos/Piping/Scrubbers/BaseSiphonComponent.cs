@@ -58,6 +58,9 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
 
         public override void Update()
         {
+            if (!SiphonEnabled)
+                return;
+
             var tileAtmos = AtmosHelpers.GetTileAtmosphere(Owner.Transform.GridPosition);
             if (tileAtmos == null)
                 return;
