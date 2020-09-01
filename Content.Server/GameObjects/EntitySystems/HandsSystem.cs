@@ -4,12 +4,12 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems.Click;
-using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Throw;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
+using Content.Shared.Interfaces;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystemMessages;
 using Robust.Server.Interfaces.Player;
@@ -28,7 +28,6 @@ namespace Content.Server.GameObjects.EntitySystems
     internal sealed class HandsSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
 
         private const float ThrowForce = 1.5f; // Throwing force of mobs in Newtons
 
@@ -202,9 +201,8 @@ namespace Content.Server.GameObjects.EntitySystems
             if (!inventoryComp.TryGetSlotItem(equipementSlot, out ItemComponent equipmentItem)
                 || !equipmentItem.Owner.TryGetComponent<ServerStorageComponent>(out var storageComponent))
             {
-                _notifyManager.PopupMessage(plyEnt, plyEnt,
-                    Loc.GetString("You have no {0} to take something out of!",
-                        EquipmentSlotDefines.SlotNames[equipementSlot].ToLower()));
+                plyEnt.PopupMessage(Loc.GetString("You have no {0} to take something out of!",
+                    EquipmentSlotDefines.SlotNames[equipementSlot].ToLower()));
                 return;
             }
 
@@ -218,9 +216,8 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 if (storageComponent.StoredEntities.Count == 0)
                 {
-                    _notifyManager.PopupMessage(plyEnt, plyEnt,
-                        Loc.GetString("There's nothing in your {0} to take out!",
-                            EquipmentSlotDefines.SlotNames[equipementSlot].ToLower()));
+                    plyEnt.PopupMessage(Loc.GetString("There's nothing in your {0} to take out!",
+                        EquipmentSlotDefines.SlotNames[equipementSlot].ToLower()));
                 }
                 else
                 {

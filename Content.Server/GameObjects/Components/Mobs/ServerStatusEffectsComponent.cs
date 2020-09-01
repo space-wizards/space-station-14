@@ -115,7 +115,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                             hands.StopPull();
                             break;
                         default:
-                            player.PopupMessage(player, msg.Effect.ToString());
+                            player.PopupMessage(msg.Effect.ToString());
                             break;
                     }
 

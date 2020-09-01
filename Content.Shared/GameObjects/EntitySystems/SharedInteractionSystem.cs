@@ -188,7 +188,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             if (!inRange && popup)
             {
                 var message = Loc.GetString("You can't reach there!");
-                origin.PopupMessage(origin, message);
+                origin.PopupMessage(message);
             }
 
             return inRange;
@@ -244,7 +244,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             if (!inRange && popup)
             {
                 var message = Loc.GetString("You can't reach there!");
-                origin.PopupMessage(origin, message);
+                origin.PopupMessage(message);
             }
 
             return inRange;
@@ -300,7 +300,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             if (!inRange && popup)
             {
                 var message = Loc.GetString("You can't reach there!");
-                origin.PopupMessage(origin, message);
+                origin.PopupMessage(message);
             }
 
             return inRange;
@@ -355,7 +355,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             if (!inRange && popup)
             {
                 var message = Loc.GetString("You can't reach there!");
-                origin.PopupMessage(origin, message);
+                origin.PopupMessage(message);
             }
 
             return inRange;

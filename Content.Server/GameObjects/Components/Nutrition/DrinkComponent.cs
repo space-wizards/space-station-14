@@ -130,13 +130,13 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             if (!Opened)
             {
-                target.PopupMessage(target, Loc.GetString("Open it first!"));
+                target.PopupMessage(Loc.GetString("Open it first!"));
                 return false;
             }
 
             if (_contents.CurrentVolume.Float() <= 0)
             {
-                target.PopupMessage(target, Loc.GetString("It's empty!"));
+                target.PopupMessage(Loc.GetString("It's empty!"));
                 return false;
             }
 
@@ -151,14 +151,14 @@ namespace Content.Server.GameObjects.Components.Nutrition
             {
                 if (_useSound == null) return false;
                 EntitySystem.Get<AudioSystem>().PlayFromEntity(_useSound, target, AudioParams.Default.WithVolume(-2f));
-                target.PopupMessage(target, Loc.GetString("Slurp"));
+                target.PopupMessage(Loc.GetString("Slurp"));
                 UpdateAppearance();
                 return true;
             }
 
             //Stomach was full or can't handle whatever solution we have.
             _contents.TryAddSolution(split);
-            target.PopupMessage(target, Loc.GetString("You've had enough {0}!", Owner.Name));
+            target.PopupMessage(Loc.GetString("You've had enough {0}!", Owner.Name));
             return false;
         }
 

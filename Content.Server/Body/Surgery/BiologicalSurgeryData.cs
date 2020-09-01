@@ -131,7 +131,7 @@ namespace Content.Server.Body.Surgery
 
         private void OpenSkinSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
-            performer.PopupMessage(performer, Loc.GetString("Cut open the skin..."));
+            performer.PopupMessage(Loc.GetString("Cut open the skin..."));
 
             // TODO do_after: Delay
             _skinOpened = true;
@@ -139,7 +139,7 @@ namespace Content.Server.Body.Surgery
 
         private void ClampVesselsSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
-            performer.PopupMessage(performer, Loc.GetString("Clamp the vessels..."));
+            performer.PopupMessage(Loc.GetString("Clamp the vessels..."));
 
             // TODO do_after: Delay
             _vesselsClamped = true;
@@ -147,7 +147,7 @@ namespace Content.Server.Body.Surgery
 
         private void RetractSkinSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
-            performer.PopupMessage(performer, Loc.GetString("Retract the skin..."));
+            performer.PopupMessage(Loc.GetString("Retract the skin..."));
 
             // TODO do_after: Delay
             _skinRetracted = true;
@@ -155,7 +155,7 @@ namespace Content.Server.Body.Surgery
 
         private void CauterizeIncisionSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
-            performer.PopupMessage(performer, Loc.GetString("Cauterize the incision..."));
+            performer.PopupMessage(Loc.GetString("Cauterize the incision..."));
 
             // TODO do_after: Delay
             _skinOpened = false;
@@ -193,7 +193,7 @@ namespace Content.Server.Body.Surgery
                 return;
             }
 
-            performer.PopupMessage(performer, Loc.GetString("Loosen the organ..."));
+            performer.PopupMessage(Loc.GetString("Loosen the organ..."));
 
             // TODO do_after: Delay
             _disconnectedOrgans.Add(target);
@@ -224,7 +224,7 @@ namespace Content.Server.Body.Surgery
                 return;
             }
 
-            performer.PopupMessage(performer, Loc.GetString("Remove the organ..."));
+            performer.PopupMessage(Loc.GetString("Remove the organ..."));
 
             // TODO do_after: Delay
             Parent.TryDropMechanism(performer, target, out _);
@@ -240,7 +240,7 @@ namespace Content.Server.Body.Surgery
             }
 
             var bmTarget = (BodyManagerComponent) container;
-            performer.PopupMessage(performer, Loc.GetString("Saw off the limb!"));
+            performer.PopupMessage(Loc.GetString("Saw off the limb!"));
 
             // TODO do_after: Delay
             bmTarget.DisconnectBodyPart(Parent, true);

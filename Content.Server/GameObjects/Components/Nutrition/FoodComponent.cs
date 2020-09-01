@@ -90,7 +90,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         {
             if (_utensilsNeeded != UtensilType.None)
             {
-                eventArgs.User.PopupMessage(eventArgs.User, Loc.GetString("You need to use a {0} to eat that!", _utensilsNeeded));
+                eventArgs.User.PopupMessage(Loc.GetString("You need to use a {0} to eat that!", _utensilsNeeded));
                 return false;
             }
 
@@ -122,7 +122,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             if (UsesRemaining <= 0)
             {
-                user.PopupMessage(user, Loc.GetString("{0:TheName} is empty!", Owner));
+                user.PopupMessage(Loc.GetString("{0:TheName} is empty!", Owner));
                 return false;
             }
 

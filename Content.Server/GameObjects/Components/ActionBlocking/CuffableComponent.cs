@@ -4,7 +4,6 @@ using Content.Shared.Interfaces;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Robust.Shared.ViewVariables;
@@ -22,7 +21,6 @@ using Robust.Shared.Maths;
 using System;
 using System.Collections.Generic;
 using Content.Shared.Utility;
-using Serilog;
 using Content.Server.GameObjects.Components.GUI;
 
 namespace Content.Server.GameObjects.Components.ActionBlocking
@@ -30,9 +28,6 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
     [RegisterComponent]
     public class CuffableComponent : SharedCuffableComponent
     {
-        [Dependency]
-        private readonly ISharedNotifyManager _notifyManager;
-
         /// <summary>
         /// How many of this entity's hands are currently cuffed.
         /// </summary>
@@ -231,13 +226,13 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
             if (!isOwner && !ActionBlockerSystem.CanInteract(user))
             {
-                user.PopupMessage(user, Loc.GetString("You can't do that!"));
+                user.PopupMessage(Loc.GetString("You can't do that!"));
                 return;
             }
 
             if (!isOwner && user.InRangeUnobstructed(Owner, _interactRange))
             {
-                user.PopupMessage(user, Loc.GetString("You are too far away to remove the cuffs."));
+                user.PopupMessage(Loc.GetString("You are too far away to remove the cuffs."));
                 return;
             }
 
@@ -247,7 +242,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
                 return;
             }
 
-            user.PopupMessage(user, Loc.GetString("You start removing the cuffs."));
+            user.PopupMessage(Loc.GetString("You start removing the cuffs."));
 
             var audio = EntitySystem.Get<AudioSystem>();
             audio.PlayFromEntity(isOwner ? cuff.StartBreakoutSound : cuff.StartUncuffSound, Owner);
@@ -292,29 +287,29 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
                 if (CuffedHandCount == 0)
                 {
-                    _notifyManager.PopupMessage(user, user, Loc.GetString("You successfully remove the cuffs."));
+                    user.PopupMessage(Loc.GetString("You successfully remove the cuffs."));
 
                     if (!isOwner)
                     {
-                        _notifyManager.PopupMessage(user, Owner, Loc.GetString("{0:theName} uncuffs your hands.", user));
+                        user.PopupMessage(Owner, Loc.GetString("{0:theName} uncuffs your hands.", user));
                     }
                 }
                 else
                 {
                     if (!isOwner)
                     {
-                        _notifyManager.PopupMessage(user, user, Loc.GetString("You successfully remove the cuffs. {0} of {1:theName}'s hands remain cuffed.", CuffedHandCount, user));
-                        _notifyManager.PopupMessage(user, Owner, Loc.GetString("{0:theName} removes your cuffs. {1} of your hands remain cuffed.", user, CuffedHandCount));
+                        user.PopupMessage(Loc.GetString("You successfully remove the cuffs. {0} of {1:theName}'s hands remain cuffed.", CuffedHandCount, user));
+                        user.PopupMessage(Owner, Loc.GetString("{0:theName} removes your cuffs. {1} of your hands remain cuffed.", user, CuffedHandCount));
                     }
                     else
                     {
-                        _notifyManager.PopupMessage(user, user, Loc.GetString("You successfully remove the cuffs. {0} of your hands remain cuffed.", CuffedHandCount));
+                        user.PopupMessage(Loc.GetString("You successfully remove the cuffs. {0} of your hands remain cuffed.", CuffedHandCount));
                     }
                 }
             }
             else
             {
-                _notifyManager.PopupMessage(user, user, Loc.GetString("You fail to remove the cuffs."));
+                user.PopupMessage(Loc.GetString("You fail to remove the cuffs."));
             }
 
             return;
