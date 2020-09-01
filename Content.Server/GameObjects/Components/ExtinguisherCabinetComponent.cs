@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -10,6 +11,7 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.IoC;
@@ -31,37 +33,31 @@ namespace Content.Server.GameObjects.Components
         //         - 50 volume
         //     - Spawn 2 metal
         //     - Spawn extinguisher
-        // - Build with 2 metal
-        //     - Do not spawn with extinguisher
-        // - Map into Saltern
-        // - Test in multiplayer
 
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
 
         public override string Name => "ExtinguisherCabinet";
 
-        [ViewVariables] private ContainerSlot _itemContainer;
+        [ViewVariables] protected ContainerSlot ItemContainer;
         private bool _opened = false;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            _itemContainer =
+            ItemContainer =
                 ContainerManagerComponent.Ensure<ContainerSlot>("extinguisher_cabinet", Owner, out _);
-
-            _itemContainer.Insert(Owner.EntityManager.SpawnEntity("FireExtinguisher", Owner.Transform.GridPosition));
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (_itemContainer.ContainedEntity != null || !eventArgs.Using.HasComponent<FireExtinguisherComponent>())
+            if (ItemContainer.ContainedEntity != null || !eventArgs.Using.HasComponent<FireExtinguisherComponent>())
             {
                 return false;
             }
             var handsComponent = eventArgs.User.GetComponent<IHandsComponent>();
 
-            if (!handsComponent.Drop(eventArgs.Using, _itemContainer))
+            if (!handsComponent.Drop(eventArgs.Using, ItemContainer))
             {
                 return false;
             }
@@ -75,7 +71,7 @@ namespace Content.Server.GameObjects.Components
         {
             if (_opened)
             {
-                if (_itemContainer.ContainedEntity == null)
+                if (ItemContainer.ContainedEntity == null)
                 {
                     _opened = false;
                     ClickLatchSound();
@@ -83,12 +79,12 @@ namespace Content.Server.GameObjects.Components
                 else if (eventArgs.User.TryGetComponent(out HandsComponent hands))
                 {
                     _notifyManager.PopupMessage(Owner.Transform.GridPosition, eventArgs.User,
-                        Loc.GetString("You take {0:extinguisherName} from the {1:cabinetName}", _itemContainer.ContainedEntity.Name, Owner.Name));
-                    hands.PutInHandOrDrop(_itemContainer.ContainedEntity.GetComponent<ItemComponent>());
+                        Loc.GetString("You take {0:extinguisherName} from the {1:cabinetName}", ItemContainer.ContainedEntity.Name, Owner.Name));
+                    hands.PutInHandOrDrop(ItemContainer.ContainedEntity.GetComponent<ItemComponent>());
                 }
-                else if (_itemContainer.Remove(_itemContainer.ContainedEntity))
+                else if (ItemContainer.Remove(ItemContainer.ContainedEntity))
                 {
-                    _itemContainer.ContainedEntity.Transform.GridPosition = Owner.Transform.GridPosition;
+                    ItemContainer.ContainedEntity.Transform.GridPosition = Owner.Transform.GridPosition;
                 }
             }
             else
@@ -114,7 +110,7 @@ namespace Content.Server.GameObjects.Components
             if (Owner.TryGetComponent(out AppearanceComponent appearance))
             {
                 appearance.SetData(ExtinguisherCabinetVisuals.IsOpen, _opened);
-                appearance.SetData(ExtinguisherCabinetVisuals.ContainsExtinguisher, _itemContainer.ContainedEntity != null);
+                appearance.SetData(ExtinguisherCabinetVisuals.ContainsExtinguisher, ItemContainer.ContainedEntity != null);
             }
         }
 
