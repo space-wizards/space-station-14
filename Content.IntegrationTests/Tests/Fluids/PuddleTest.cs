@@ -54,7 +54,7 @@ namespace Content.IntegrationTests.Tests.Fluids
             server.Assert(() =>
             {
                 var solution = new Solution("water", ReagentUnit.New(20));
-                var puddle = SpillHelper.SpillAt(coordinates, solution, "PuddleSmear");
+                var puddle = solution.SpillAt(coordinates, "PuddleSmear");
                 Assert.NotNull(puddle);
             });
 
@@ -92,7 +92,7 @@ namespace Content.IntegrationTests.Tests.Fluids
                 var gridId = new GridId(1);
                 var coordinates = new GridCoordinates(0, 0, gridId);
                 var solution = new Solution("water", ReagentUnit.New(20));
-                var puddle = SpillHelper.SpillAt(coordinates, solution, "PuddleSmear");
+                var puddle = solution.SpillAt(coordinates, "PuddleSmear");
                 Assert.Null(puddle);
             });
 
