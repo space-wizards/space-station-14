@@ -43,7 +43,6 @@ namespace Content.Server.GameObjects.Components.Fluids
         // Small puddles will evaporate after a set delay
 
         // TODO: 'leaves fluidtracks', probably in a separate component for stuff like gibb chunks?;
-        // TODO: Add stuff like slipping -> probably in a separate component (for stuff like bananas)
 
         // based on behaviour (e.g. someone being punched vs slashed with a sword would have different blood sprite)
         // to check for low volumes for evaporation or whatever
