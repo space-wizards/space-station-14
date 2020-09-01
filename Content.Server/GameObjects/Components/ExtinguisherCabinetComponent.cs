@@ -1,23 +1,30 @@
 ﻿using System.Threading.Tasks;
+using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Items;
+using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.Interfaces;
+using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.Audio;
+using Content.Shared.GameObjects.Components;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components
 {
 
     [RegisterComponent]
-    public class ExtinguisherCabinetComponent : Component, IInteractUsing, IInteractHand
+    [ComponentReference(typeof(IActivate))]
+    public class ExtinguisherCabinetComponent : Component, IInteractUsing, IInteractHand, IActivate
     {
 
         // TODO
-        // - Spawn with extinguisher in init
-        // - Alt click to close
-        //     - Extra inspect text
         // - Deconstruct with wrench
         //     - "You start unsecuring [name]..." text
         //     - deconstruct.ogg
@@ -26,12 +33,10 @@ namespace Content.Server.GameObjects.Components
         //     - Spawn extinguisher
         // - Build with 2 metal
         //     - Do not spawn with extinguisher
-        // - Place extinguisher inside if opened
-        // - Click to open => Click to get extinguisher
-        //     - You take [stored_extinguisher] from [src].
-        //     - sound/machines/click.ogg
-        //         - 15 volume
+        // - Map into Saltern
         // - Test in multiplayer
+
+        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
 
         public override string Name => "ExtinguisherCabinet";
 
@@ -44,68 +49,79 @@ namespace Content.Server.GameObjects.Components
 
             _itemContainer =
                 ContainerManagerComponent.Ensure<ContainerSlot>("extinguisher_cabinet", Owner, out _);
+
+            _itemContainer.Insert(Owner.EntityManager.SpawnEntity("FireExtinguisher", Owner.Transform.GridPosition));
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            // if (_itemContainer.ContainedEntity != null)
-            // {
-            //     Rustle();
-            //
-            //     Owner.PopupMessage(eventArgs.User, Loc.GetString("There's already something in here?!"));
-            //     return false;
-            // }
+            if (_itemContainer.ContainedEntity != null || !eventArgs.Using.HasComponent<FireExtinguisherComponent>())
+            {
+                return false;
+            }
+            var handsComponent = eventArgs.User.GetComponent<IHandsComponent>();
 
-            // var size = eventArgs.Using.GetComponent<ItemComponent>().ObjectSize;
+            if (!handsComponent.Drop(eventArgs.Using, _itemContainer))
+            {
+                return false;
+            }
 
-            // TODO: use proper text macro system for this.
+            UpdateVisuals();
 
-            // if (size > MaxItemSize)
-            // {
-            //     Owner.PopupMessage(eventArgs.User,
-            //         Loc.GetString("{0:TheName} is too big to fit in the plant!", eventArgs.Using));
-            //     return false;
-            // }
-
-            // var handsComponent = eventArgs.User.GetComponent<IHandsComponent>();
-            //
-            // if (!handsComponent.Drop(eventArgs.Using, _itemContainer))
-            // {
-            //     return false;
-            // }
-            //
-            // Owner.PopupMessage(eventArgs.User, Loc.GetString("You hide {0:theName} in the plant.", eventArgs.Using));
-            // Rustle();
             return true;
         }
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
-            // Rustle();
-            //
-            // if (_itemContainer.ContainedEntity == null)
-            // {
-            //     Owner.PopupMessage(eventArgs.User, Loc.GetString("You root around in the roots."));
-            //     return true;
-            // }
-            //
-            // Owner.PopupMessage(eventArgs.User, Loc.GetString("There was something in there!"));
-            // if (eventArgs.User.TryGetComponent(out HandsComponent hands))
-            // {
-            //     hands.PutInHandOrDrop(_itemContainer.ContainedEntity.GetComponent<ItemComponent>());
-            // }
-            // else if (_itemContainer.Remove(_itemContainer.ContainedEntity))
-            // {
-            //     _itemContainer.ContainedEntity.Transform.GridPosition = Owner.Transform.GridPosition;
-            // }
+            if (_opened)
+            {
+                if (_itemContainer.ContainedEntity == null)
+                {
+                    _opened = false;
+                    ClickLatchSound();
+                }
+                else if (eventArgs.User.TryGetComponent(out HandsComponent hands))
+                {
+                    _notifyManager.PopupMessage(Owner.Transform.GridPosition, eventArgs.User,
+                        Loc.GetString("You take {0:extinguisherName} from the {1:cabinetName}", _itemContainer.ContainedEntity.Name, Owner.Name));
+                    hands.PutInHandOrDrop(_itemContainer.ContainedEntity.GetComponent<ItemComponent>());
+                }
+                else if (_itemContainer.Remove(_itemContainer.ContainedEntity))
+                {
+                    _itemContainer.ContainedEntity.Transform.GridPosition = Owner.Transform.GridPosition;
+                }
+            }
+            else
+            {
+                _opened = true;
+                ClickLatchSound();
+            }
+
+            UpdateVisuals();
 
             return true;
         }
 
-        private void Rustle()
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            EntitySystem.Get<AudioSystem>()
-                .PlayFromEntity("/Audio/Effects/plant_rustle.ogg", Owner, AudioHelpers.WithVariation(0.25f));
+            _opened = !_opened;
+            ClickLatchSound();
+            UpdateVisuals();
+        }
+
+        private void UpdateVisuals()
+        {
+            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            {
+                appearance.SetData(ExtinguisherCabinetVisuals.IsOpen, _opened);
+                appearance.SetData(ExtinguisherCabinetVisuals.ContainsExtinguisher, _itemContainer.ContainedEntity != null);
+            }
+        }
+
+        private void ClickLatchSound()
+        {
+            EntitySystem.Get<AudioSystem>() // Don't have original click, this sounds close
+                .PlayFromEntity("/Audio/Machines/machine_switch.ogg", Owner, AudioHelpers.WithVariation(0.15f));
         }
     }
 }

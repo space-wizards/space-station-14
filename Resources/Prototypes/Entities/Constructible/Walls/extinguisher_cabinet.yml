@@ -12,5 +12,8 @@
       sprite: Constructible/Misc/extinguisher_cabinet.rsi
       state: extinguisher_closed
     - type: ExtinguisherCabinet
+    - type: Appearance
+      visuals:
+        - type: ExtinguisherCabinetVisualizer
   placement:
     mode: SnapgridCenter
