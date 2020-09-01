@@ -109,6 +109,8 @@ namespace Content.Server.GameObjects.Components.Medical
                 UserInterface.OnReceiveMessage -= OnUiReceiveMessage;
             }
 
+            Owner.EntityManager.EventBus.UnsubscribeEvent<GhostComponent.GhostReturnMessage>(EventSource.Local, this);
+
             base.OnRemove();
         }
 
