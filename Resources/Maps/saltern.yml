@@ -45978,4 +45978,11 @@ entities:
     type: Transform
   - anchored: False
     type: Collidable
+- uid: 3957
+  type: SpawnPointMime
+  components:
+  - parent: 857
+    pos: -19.5,-8.5
+    rot: -1.5707963267948966 rad
+    type: Transform
 ...

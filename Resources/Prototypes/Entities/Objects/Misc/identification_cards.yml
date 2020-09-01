@@ -6,13 +6,13 @@
   abstract: true
   components:
   - type: Sprite
-    sprite: Clothing/Belt/id_cards.rsi
+    sprite: Objects/Misc/id_cards.rsi
   - type: Icon
-    sprite: Clothing/Belt/id_cards.rsi
+    sprite: Objects/Misc/id_cards.rsi
   - type: Clothing
     Slots:
     - idcard
-    sprite: Clothing/Belt/id_cards.rsi
+    sprite: Objects/Misc/id_cards.rsi
     HeldPrefix: default
   - type: Access
   - type: IdCard
@@ -140,6 +140,21 @@
     state: idclown
   - type: PresetIdCard
     job: Clown
+
+- type: entity
+  parent: IDCardStandard
+  id: MimeIDCard
+  name: mime ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: assigned
+    - state: idmime
+  - type: Icon
+    state: idmime
+  - type: PresetIdCard
+    job: Mime
 
 - type: entity
   parent: IDCardStandard
