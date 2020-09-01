@@ -29,7 +29,7 @@ namespace Content.Client.GameObjects.Components.CloningPod
                 case Gore: return "pod_g";
                 case Idle: return "pod_0";
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(status), status, "unknown MedicalScannerStatus");
+                    throw new ArgumentOutOfRangeException(nameof(status), status, "unknown CloningPodStatus");
             }
         }
 
