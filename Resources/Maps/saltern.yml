@@ -37359,6 +37359,8 @@ entities:
   components:
   - parent: 3224
     type: Transform
+  - startingCharge: 1000
+    type: PowerCell
   - anchored: False
     type: Collidable
 - uid: 3226
@@ -37383,6 +37385,8 @@ entities:
   components:
   - parent: 3226
     type: Transform
+  - startingCharge: 1000
+    type: PowerCell
   - anchored: False
     type: Collidable
 - uid: 3228
@@ -38399,13 +38403,6 @@ entities:
   components:
   - parent: 15
     pos: -15.5,-11.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 3354
-  type: SpawnPointMime
-  components:
-  - parent: 15
-    pos: -19.5,-8.5
     rot: -1.5707963267948966 rad
     type: Transform
 ...
