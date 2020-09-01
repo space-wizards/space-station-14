@@ -14,6 +14,7 @@ using Content.Shared.GameObjects.Components.Chemistry.ChemMaster;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.GameObjects.EntitySystems;
@@ -300,15 +301,12 @@ namespace Content.Server.GameObjects.Components.Chemistry
                             hands.PutInHand(item);
                             continue;
                         }
-
                     }
 
                     //Put it on the floor
                     bottle.Transform.GridPosition = user.Transform.GridPosition;
                     //Give it an offset
-                    var x_negative = random.Prob(0.5f) ? -1 : 1;
-                    var y_negative = random.Prob(0.5f) ? -1 : 1;
-                    bottle.Transform.LocalPosition += new Vector2(random.NextFloat() * 0.2f * x_negative, random.NextFloat() * 0.2f * y_negative);
+                    bottle.RandomOffset(0.2f);
                 }
 
             }
