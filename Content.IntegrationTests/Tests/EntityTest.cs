@@ -25,11 +25,13 @@ namespace Content.IntegrationTests.Tests
         {
             var server = StartServerDummyTicker();
             await server.WaitIdleAsync();
-            var mapMan = server.ResolveDependency<IMapManager>();
+
+            var mapManager = server.ResolveDependency<IMapManager>();
             var entityMan = server.ResolveDependency<IEntityManager>();
             var prototypeMan = server.ResolveDependency<IPrototypeManager>();
-            var mapLoader = server.ResolveDependency<IMapLoader>();
-            var pauseMan = server.ResolveDependency<IPauseManager>();
+            var pauseManager = server.ResolveDependency<IPauseManager>();
+            var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
+
             var prototypes = new List<EntityPrototype>();
             IMapGrid grid = default;
             IEntity testEntity;
@@ -37,9 +39,25 @@ namespace Content.IntegrationTests.Tests
             //Build up test environment
             server.Post(() =>
             {
-                var mapId = mapMan.CreateMap();
-                pauseMan.AddUninitializedMap(mapId);
-                grid = mapLoader.LoadBlueprint(mapId, "Maps/stationstation.yml");
+                // Create a one tile grid to stave off the grid 0 monsters
+                var mapId = mapManager.CreateMap();
+
+                pauseManager.AddUninitializedMap(mapId);
+
+                var gridId = new GridId(1);
+
+                if (!mapManager.TryGetGrid(gridId, out grid))
+                {
+                    grid = mapManager.CreateGrid(mapId, gridId);
+                }
+
+                var tileDefinition = tileDefinitionManager["underplating"];
+                var tile = new Tile(tileDefinition.TileId);
+                var coordinates = new GridCoordinates(0, 0, gridId);
+
+                grid.SetTile(coordinates, tile);
+
+                pauseManager.DoMapInitialize(mapId);
             });
 
             server.Assert(() =>
