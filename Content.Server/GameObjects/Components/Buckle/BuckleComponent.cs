@@ -162,7 +162,7 @@ namespace Content.Server.GameObjects.Components.Buckle
             }
         }
 
-        private bool CanBuckle(IEntity user, IEntity to, [MaybeNullWhen(false)] out StrapComponent strap)
+        private bool CanBuckle(IEntity? user, IEntity to, [MaybeNullWhen(false)] out StrapComponent strap)
         {
             strap = null;
 

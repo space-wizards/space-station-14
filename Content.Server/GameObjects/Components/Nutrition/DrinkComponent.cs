@@ -172,7 +172,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 Opened = true;
 
                 var solution = component.SplitSolution(component.CurrentVolume);
-                SpillHelper.SpillAt(Owner, solution, "PuddleSmear");
+                solution.SpillAt(Owner, "PuddleSmear");
 
                 EntitySystem.Get<AudioSystem>().PlayFromEntity(_burstSound, Owner,
                     AudioParams.Default.WithVolume(-4));

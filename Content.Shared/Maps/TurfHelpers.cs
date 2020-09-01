@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Physics;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
@@ -59,6 +60,11 @@ namespace Content.Shared.Maps
             return tile;
         }
 
+        public static bool TryGetTileRef(this GridCoordinates coordinates, [NotNullWhen(true)] out TileRef? turf)
+        {
+            return (turf = coordinates.GetTileRef()) != null;
+        }
+
         /// <summary>
         ///     Helper that returns all entities in a turf.
         /// </summary>
@@ -90,6 +96,11 @@ namespace Content.Shared.Maps
             }
 
             return false;
+        }
+
+        public static GridCoordinates GridPosition(this TileRef turf)
+        {
+            return new GridCoordinates(turf.X, turf.Y, turf.GridIndex);
         }
 
         /// <summary>

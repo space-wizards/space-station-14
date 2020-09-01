@@ -80,7 +80,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             if (eventArgs.Target == null)
             {
                 // Drop the liquid on the mop on to the ground
-                SpillHelper.SpillAt(eventArgs.ClickLocation, contents.SplitSolution(CurrentVolume), "PuddleSmear");
+                contents.SplitSolution(CurrentVolume).SpillAt(eventArgs.ClickLocation, "PuddleSmear");
 
                 return;
             }
@@ -116,7 +116,7 @@ namespace Content.Server.GameObjects.Components.Fluids
 
             if (puddleCleaned) //After cleaning the puddle, make a new puddle with solution from the mop as a "wet floor". Then evaporate it slowly.
             {
-                SpillHelper.SpillAt(eventArgs.ClickLocation, contents.SplitSolution(transferAmount), "PuddleSmear");
+                contents.SplitSolution(transferAmount).SpillAt(eventArgs.ClickLocation, "PuddleSmear");
             }
             else
             {
