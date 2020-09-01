@@ -98,6 +98,111 @@
       radius: 5
       energy: 0
 
+- type: entity
+  name: purple glowstick
+  parent: GlowstickBase
+  id: GlowstickPurple
+  components:
+    - type: ExpendableLight
+      spentName: spent purple glowstick
+      spentDesc: It looks like this glowstick has stopped glowing. How tragic.
+      glowDuration: 900
+      fadeOutDuration: 300
+      iconStateOn: glowstick_lit
+      iconStateSpent: glowstick_unlit
+      turnOnBehaviourID: turn_on
+      fadeOutBehaviourID: fade_out
+      litSound: /Audio/Items/Handcuffs/rope_breakout.ogg
+    - type: Sprite
+      sprite: Objects/Misc/glowstick.rsi
+      layers:
+        - state: glowstick_base
+        - state: glowstick_glow
+          color: "#FF00FF"
+          visible: false
+          shader: unshaded
+        - state: glowstick_unlit
+          color: "#FF00FF"
+    - type: Item
+      sprite: Objects/Misc/glowstick.rsi
+      color: "#FF00FF" 
+      HeldPrefix: off
+    - type: PointLight
+      enabled: false
+      color: "#FF00FF"
+      radius: 5
+      energy: 0
+
+- type: entity
+  name: yellow glowstick
+  parent: GlowstickBase
+  id: GlowstickYellow
+  components:
+    - type: ExpendableLight
+      spentName: spent yellow glowstick
+      spentDesc: It looks like this glowstick has stopped glowing. How tragic.
+      glowDuration: 900
+      fadeOutDuration: 300
+      iconStateOn: glowstick_lit
+      iconStateSpent: glowstick_unlit
+      turnOnBehaviourID: turn_on
+      fadeOutBehaviourID: fade_out
+      litSound: /Audio/Items/Handcuffs/rope_breakout.ogg
+    - type: Sprite
+      sprite: Objects/Misc/glowstick.rsi
+      layers:
+        - state: glowstick_base
+        - state: glowstick_glow
+          color: "#FFFF00"
+          visible: false
+          shader: unshaded
+        - state: glowstick_unlit
+          color: "#FFFF00"
+    - type: Item
+      sprite: Objects/Misc/glowstick.rsi
+      color: "#FFFF00" 
+      HeldPrefix: off
+    - type: PointLight
+      enabled: false
+      color: "#FFFF00"
+      radius: 5
+      energy: 0
+
+- type: entity
+  name: blue glowstick
+  parent: GlowstickBase
+  id: GlowstickBlue
+  components:
+    - type: ExpendableLight
+      spentName: spent blue glowstick
+      spentDesc: It looks like this glowstick has stopped glowing. How tragic.
+      glowDuration: 900
+      fadeOutDuration: 300
+      iconStateOn: glowstick_lit
+      iconStateSpent: glowstick_unlit
+      turnOnBehaviourID: turn_on
+      fadeOutBehaviourID: fade_out
+      litSound: /Audio/Items/Handcuffs/rope_breakout.ogg
+    - type: Sprite
+      sprite: Objects/Misc/glowstick.rsi
+      layers:
+        - state: glowstick_base
+        - state: glowstick_glow
+          color: "#0000FF"
+          visible: false
+          shader: unshaded
+        - state: glowstick_unlit
+          color: "#0000FF"
+    - type: Item
+      sprite: Objects/Misc/glowstick.rsi
+      color: "#0000FF" 
+      HeldPrefix: off
+    - type: PointLight
+      enabled: false
+      color: "#0000FF"
+      radius: 5
+      energy: 0
+
 # ----------------------------------------------------------------------------
 # THE FOLLOWING ARE ALL DUMMY ENTITIES USED TO TEST THE LIGHT BEHAVIOUR SYSTEM
 # ----------------------------------------------------------------------------
