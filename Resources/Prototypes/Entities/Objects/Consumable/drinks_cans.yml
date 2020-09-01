@@ -38,7 +38,7 @@
   parent: DrinkCanBaseFull
   id: DrinkIceTeaCan
   name: ice tea can
-  description: ''
+  description: A can of refreshing ice tea.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/ice_tea_can.rsi

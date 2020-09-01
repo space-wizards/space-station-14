@@ -106,7 +106,7 @@
   parent: BackpackClothing
   id: BackpackMime
   name: mime backpack
-  description:
+  description: A silent backpack made for those silent workers. Silence Co.
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/mime.rsi
@@ -121,7 +121,7 @@
   parent: BackpackClothing
   id: BackpackChemistry
   name: chemistry backpack
-  description:
+  description: A backpack specially designed to repel stains and hazardous liquids.
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/chemistry.rsi
@@ -136,7 +136,7 @@
   parent: BackpackClothing
   id: BackpackBotany
   name: botany backpack
-  description:
+  description: It's a backpack made of all-natural fibers.
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/botany.rsi
