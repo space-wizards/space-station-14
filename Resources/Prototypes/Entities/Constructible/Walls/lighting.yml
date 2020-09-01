@@ -22,6 +22,7 @@
     energy: 1.2
     offset: "0.5, 0"
     color: "#DCDCC6"
+  - type: SignalReceiver
   placement:
     snap:
     - Wallmount
@@ -45,6 +46,8 @@
   - type: PoweredLight
     bulb: Tube
   - type: PowerReceiver
+  - type: Destructible
+    deadThreshold: 50
 
 - type: entity
   name: small light
@@ -66,3 +69,5 @@
   - type: PoweredLight
     bulb: Bulb
   - type: PowerReceiver
+  - type: Destructible
+    deadThreshold: 25

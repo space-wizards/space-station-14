@@ -1,7 +1,6 @@
 #nullable enable
 using System;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
@@ -54,7 +53,7 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
 
             // For this we need to stay on the same hand slot and need the same item in that hand slot
             // (or if there is no item there we need to keep it free).
-            if (eventArgs.NeedHand && eventArgs.User.TryGetComponent(out HandsComponent handsComponent))
+            if (eventArgs.NeedHand && eventArgs.User.TryGetComponent(out HandsComponent? handsComponent))
             {
                 _activeHand = handsComponent.ActiveHand;
                 _activeItem = handsComponent.GetActiveHand;
@@ -86,7 +85,16 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
 
             if (IsFinished())
             {
-                Tcs.SetResult(DoAfterStatus.Finished);
+                // Do the final checks here
+                if (!TryPostCheck())
+                {
+                    Tcs.SetResult(DoAfterStatus.Cancelled);
+                }
+                else
+                {
+                    Tcs.SetResult(DoAfterStatus.Finished);
+                }
+                
                 return;
             }
 
@@ -98,6 +106,11 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
 
         private bool IsCancelled()
         {
+            if (EventArgs.User.Deleted || EventArgs.Target?.Deleted == true)
+            {
+                return true;
+            }
+            
             //https://github.com/tgstation/tgstation/blob/1aa293ea337283a0191140a878eeba319221e5df/code/__HELPERS/mobs.dm
             if (EventArgs.CancelToken.IsCancellationRequested)
             {
@@ -126,7 +139,7 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
             }
 
             if (EventArgs.BreakOnStun &&
-                EventArgs.User.TryGetComponent(out StunnableComponent stunnableComponent) &&
+                EventArgs.User.TryGetComponent(out StunnableComponent? stunnableComponent) &&
                 stunnableComponent.Stunned)
             {
                 return true;
@@ -134,7 +147,7 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
 
             if (EventArgs.NeedHand)
             {
-                if (!EventArgs.User.TryGetComponent(out HandsComponent handsComponent))
+                if (!EventArgs.User.TryGetComponent(out HandsComponent? handsComponent))
                 {
                     // If we had a hand but no longer have it that's still a paddlin'
                     if (_activeHand != null)
@@ -157,8 +170,13 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
                     }
                 }
             }
-
+            
             return false;
+        }
+
+        private bool TryPostCheck()
+        {
+            return EventArgs.PostCheck?.Invoke() != false;
         }
 
         private bool IsFinished()

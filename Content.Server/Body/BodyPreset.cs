@@ -21,7 +21,7 @@ namespace Content.Server.Body
         [ViewVariables] public string Name { get; private set; }
 
         /// <summary>
-        ///     Maps a template slot to the ID of the <see cref="BodyPart"/> that should
+        ///     Maps a template slot to the ID of the <see cref="IBodyPart"/> that should
         ///     fill it. E.g. "right arm" : "BodyPart.arm.basic_human".
         /// </summary>
         [ViewVariables]

@@ -15,7 +15,7 @@
     - !type:PhysShapeAabb
       layer: [MobMask, Opaque]
   - type: Destructible
-    maxHP: 50
+    deadThreshold: 50
     spawnOnDestroy: SteelSheet1
   - type: SnapGrid
     offset: Edge

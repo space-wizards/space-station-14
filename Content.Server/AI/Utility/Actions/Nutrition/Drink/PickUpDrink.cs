@@ -40,10 +40,6 @@ namespace Content.Server.AI.Utility.Actions.Nutrition.Drink
             
             return new[]
             {
-                considerationsManager.Get<FreeHandCon>()
-                    .BoolCurve(context),
-                considerationsManager.Get<ThirstCon>()
-                    .PresetCurve(context, PresetCurve.Nutrition),
                 considerationsManager.Get<TargetDistanceCon>()
                     .PresetCurve(context, PresetCurve.Distance),
                 considerationsManager.Get<DrinkValueCon>()

@@ -1,10 +1,12 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.Interfaces;
-using Content.Server.Mobs;
+using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Instruments;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
@@ -13,6 +15,7 @@ using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -34,12 +37,7 @@ namespace Content.Server.GameObjects.Components.Instruments
             IUse,
             IThrown
     {
-
-#pragma warning disable 649
-        [Dependency] private readonly IServerNotifyManager _notifyManager;
-
-        [Dependency] private readonly IGameTiming _gameTiming;
-#pragma warning restore 649
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         private static readonly TimeSpan OneSecAgo = TimeSpan.FromSeconds(-1);
 
@@ -47,7 +45,7 @@ namespace Content.Server.GameObjects.Components.Instruments
         ///     The client channel currently playing the instrument, or null if there's none.
         /// </summary>
         [ViewVariables]
-        private IPlayerSession _instrumentPlayer;
+        private IPlayerSession? _instrumentPlayer;
 
         private bool _handheld;
 
@@ -72,9 +70,6 @@ namespace Content.Server.GameObjects.Components.Instruments
         [ViewVariables]
         private int _midiEventCount = 0;
 
-        [ViewVariables]
-        private BoundUserInterface _userInterface;
-
         /// <summary>
         ///     Whether the instrument is an item which can be held or not.
         /// </summary>
@@ -95,7 +90,7 @@ namespace Content.Server.GameObjects.Components.Instruments
             }
         }
 
-        public IPlayerSession InstrumentPlayer
+        public IPlayerSession? InstrumentPlayer
         {
             get => _instrumentPlayer;
             private set
@@ -108,11 +103,13 @@ namespace Content.Server.GameObjects.Components.Instruments
                 _instrumentPlayer = value;
 
                 if (value != null)
-                    _instrumentPlayer.PlayerStatusChanged += OnPlayerStatusChanged;
+                    _instrumentPlayer!.PlayerStatusChanged += OnPlayerStatusChanged;
             }
         }
 
-        private void OnPlayerStatusChanged(object sender, SessionStatusEventArgs e)
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(InstrumentUiKey.Key);
+
+        private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
         {
             if (e.Session != _instrumentPlayer || e.NewStatus != SessionStatus.Disconnected) return;
             InstrumentPlayer = null;
@@ -122,8 +119,11 @@ namespace Content.Server.GameObjects.Components.Instruments
         public override void Initialize()
         {
             base.Initialize();
-            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>().GetBoundUserInterface(InstrumentUiKey.Key);
-            _userInterface.OnClosed += UserInterfaceOnClosed;
+
+            if (UserInterface != null)
+            {
+                UserInterface.OnClosed += UserInterfaceOnClosed;
+            }
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -137,14 +137,14 @@ namespace Content.Server.GameObjects.Components.Instruments
             return new InstrumentState(Playing, _lastSequencerTick);
         }
 
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, channel, session);
 
             switch (message)
             {
                 case InstrumentMidiEventMessage midiEventMsg:
-                    if (!Playing || session != _instrumentPlayer) return;
+                    if (!Playing || session != _instrumentPlayer || InstrumentPlayer == null) return;
 
                     var send = true;
 
@@ -164,11 +164,11 @@ namespace Content.Server.GameObjects.Components.Instruments
                         switch (_laggedBatches)
                         {
                             case (int) (MaxMidiLaggedBatches * (1 / 3d)) + 1:
-                                _notifyManager.PopupMessage(Owner, InstrumentPlayer.AttachedEntity,
+                                Owner.PopupMessage(InstrumentPlayer.AttachedEntity,
                                     "Your fingers are beginning to a cramp a little!");
                                 break;
                             case (int) (MaxMidiLaggedBatches * (2 / 3d)) + 1:
-                                _notifyManager.PopupMessage(Owner, InstrumentPlayer.AttachedEntity,
+                                Owner.PopupMessage(InstrumentPlayer.AttachedEntity,
                                     "Your fingers are seriously cramping up!");
                                 break;
                         }
@@ -231,7 +231,7 @@ namespace Content.Server.GameObjects.Components.Instruments
             Clean();
             SendNetworkMessage(new InstrumentStopMidiMessage());
             InstrumentPlayer = null;
-            _userInterface.CloseAll();
+            UserInterface?.CloseAll();
         }
 
         public void Thrown(ThrownEventArgs eventArgs)
@@ -239,14 +239,17 @@ namespace Content.Server.GameObjects.Components.Instruments
             Clean();
             SendNetworkMessage(new InstrumentStopMidiMessage());
             InstrumentPlayer = null;
-            _userInterface.CloseAll();
+            UserInterface?.CloseAll();
         }
 
         public void HandSelected(HandSelectedEventArgs eventArgs)
         {
-            var session = eventArgs.User?.GetComponent<BasicActorComponent>()?.playerSession;
+            if (eventArgs.User == null || !eventArgs.User.TryGetComponent(out BasicActorComponent? actor))
+                return;
 
-            if (session == null) return;
+            var session = actor.playerSession;
+
+            if (session.Status != SessionStatus.InGame) return;
 
             InstrumentPlayer = session;
         }
@@ -255,12 +258,12 @@ namespace Content.Server.GameObjects.Components.Instruments
         {
             Clean();
             SendNetworkMessage(new InstrumentStopMidiMessage());
-            _userInterface.CloseAll();
+            UserInterface?.CloseAll();
         }
 
         public void Activate(ActivateEventArgs eventArgs)
         {
-            if (Handheld || !eventArgs.User.TryGetComponent(out IActorComponent actor)) return;
+            if (Handheld || !eventArgs.User.TryGetComponent(out IActorComponent? actor)) return;
 
             if (InstrumentPlayer != null) return;
 
@@ -270,7 +273,7 @@ namespace Content.Server.GameObjects.Components.Instruments
 
         public bool UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent actor)) return false;
+            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor)) return false;
 
             if (InstrumentPlayer == actor.playerSession)
             {
@@ -291,7 +294,7 @@ namespace Content.Server.GameObjects.Components.Instruments
 
         private void OpenUserInterface(IPlayerSession session)
         {
-            _userInterface.Open(session);
+            UserInterface?.Open(session);
         }
 
         public override void Update(float delta)
@@ -302,7 +305,7 @@ namespace Content.Server.GameObjects.Components.Instruments
             {
                 InstrumentPlayer = null;
                 Clean();
-                _userInterface.CloseAll();
+                UserInterface?.CloseAll();
             }
 
             if ((_batchesDropped >= MaxMidiBatchDropped
@@ -314,21 +317,21 @@ namespace Content.Server.GameObjects.Components.Instruments
                 SendNetworkMessage(new InstrumentStopMidiMessage());
                 Playing = false;
 
-                _userInterface.CloseAll();
+                UserInterface?.CloseAll();
 
-                if (mob.TryGetComponent(out StunnableComponent stun))
+                if (mob != null && mob.TryGetComponent(out StunnableComponent? stun))
                 {
                     stun.Stun(1);
                     Clean();
                 }
                 else
                 {
-                    StandingStateHelper.DropAllItemsInHands(mob, false);
+                    EntitySystem.Get<StandingStateSystem>().DropAllItemsInHands(mob, false);
                 }
 
                 InstrumentPlayer = null;
 
-                _notifyManager.PopupMessage(Owner, mob, "Your fingers cramp up from playing!");
+                Owner.PopupMessage(mob, "Your fingers cramp up from playing!");
             }
 
             _timer += delta;

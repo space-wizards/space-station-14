@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 using System.Linq;
 using Content.Server.GameObjects.Components.Body;
 using Content.Shared.Body.Part;
@@ -32,7 +32,7 @@ namespace Content.Server.Body
                 return;
             }
 
-            if (!player.AttachedEntity.TryGetComponent(out BodyManagerComponent body))
+            if (!player.AttachedEntity.TryGetComponent(out BodyManagerComponent? body))
             {
                 var random = IoCManager.Resolve<IRobustRandom>();
                 var text = $"You have no body{(random.Prob(0.2f) ? " and you must scream." : ".")}";
@@ -42,13 +42,13 @@ namespace Content.Server.Body
             }
 
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            prototypeManager.TryIndex("bodyPart.Hand.BasicHuman", out BodyPartPrototype prototype);
+            prototypeManager.TryIndex("bodyPart.LHand.BasicHuman", out BodyPartPrototype prototype);
 
             var part = new BodyPart(prototype);
             var slot = part.GetHashCode().ToString();
 
             body.Template.Slots.Add(slot, BodyPartType.Hand);
-            body.InstallBodyPart(part, slot);
+            body.TryAddPart(slot, part, true);
         }
     }
 
@@ -72,7 +72,7 @@ namespace Content.Server.Body
                 return;
             }
 
-            if (!player.AttachedEntity.TryGetComponent(out BodyManagerComponent body))
+            if (!player.AttachedEntity.TryGetComponent(out BodyManagerComponent? body))
             {
                 var random = IoCManager.Resolve<IRobustRandom>();
                 var text = $"You have no body{(random.Prob(0.2f) ? " and you must scream." : ".")}";
@@ -119,7 +119,7 @@ namespace Content.Server.Body
                 return;
             }
 
-            if (!player.AttachedEntity.TryGetComponent(out BodyManagerComponent body))
+            if (!player.AttachedEntity.TryGetComponent(out BodyManagerComponent? body))
             {
                 var random = IoCManager.Resolve<IRobustRandom>();
                 var text = $"You have no body{(random.Prob(0.2f) ? " and you must scream." : ".")}";

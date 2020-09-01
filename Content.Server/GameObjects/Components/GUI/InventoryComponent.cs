@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Items.Clothing;
 using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.Click;
-using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces;
 using Robust.Server.GameObjects.Components.Container;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
@@ -27,10 +27,7 @@ namespace Content.Server.GameObjects.Components.GUI
     [RegisterComponent]
     public class InventoryComponent : SharedInventoryComponent, IExAct, IEffectBlocker, IPressureProtection
     {
-#pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-        [Dependency] private readonly IServerNotifyManager _serverNotifyManager;
-#pragma warning restore 649
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
         [ViewVariables]
         private readonly Dictionary<Slots, ContainerSlot> _slotContainers = new Dictionary<Slots, ContainerSlot>();
@@ -115,8 +112,14 @@ namespace Content.Server.GameObjects.Components.GUI
         public override void OnRemove()
         {
             var slots = _slotContainers.Keys.ToList();
+
             foreach (var slot in slots)
             {
+                if (TryGetSlotItem(slot, out ItemComponent item))
+                {
+                    item.Owner.Delete();
+                }
+
                 RemoveSlot(slot);
             }
 
@@ -267,23 +270,46 @@ namespace Content.Server.GameObjects.Components.GUI
             }
 
             var inventorySlot = _slotContainers[slot];
-            var item = inventorySlot.ContainedEntity.GetComponent<ItemComponent>();
-            if (!inventorySlot.Remove(inventorySlot.ContainedEntity))
+            var entity = inventorySlot.ContainedEntity;
+            var item = entity.GetComponent<ItemComponent>();
+            if (!inventorySlot.Remove(entity))
             {
                 return false;
             }
 
             // TODO: The item should be dropped to the container our owner is in, if any.
-            var itemTransform = item.Owner.GetComponent<ITransformComponent>();
-            itemTransform.GridPosition = Owner.GetComponent<ITransformComponent>().GridPosition;
+            ContainerHelpers.AttachParentToContainerOrGrid(entity.Transform);
 
-            _entitySystemManager.GetEntitySystem<InteractionSystem>().UnequippedInteraction(Owner, item.Owner, slot);
+            _entitySystemManager.GetEntitySystem<InteractionSystem>().UnequippedInteraction(Owner, entity, slot);
 
             OnItemChanged?.Invoke();
 
             Dirty();
 
             return true;
+        }
+
+        public void ForceUnequip(Slots slot)
+        {
+            var inventorySlot = _slotContainers[slot];
+            var entity = inventorySlot.ContainedEntity;
+            if (entity == null)
+            {
+                return;
+            }
+
+            var item = entity.GetComponent<ItemComponent>();
+            inventorySlot.ForceRemove(entity);
+
+            var itemTransform = entity.Transform;
+
+            ContainerHelpers.AttachParentToContainerOrGrid(itemTransform);
+
+            _entitySystemManager.GetEntitySystem<InteractionSystem>().UnequippedInteraction(Owner, item.Owner, slot);
+
+            OnItemChanged?.Invoke();
+
+            Dirty();
         }
 
         /// <summary>
@@ -340,13 +366,11 @@ namespace Content.Server.GameObjects.Components.GUI
                 throw new InvalidOperationException($"Slow '{slot}' does not exist.");
             }
 
-            if (GetSlotItem(slot) != null && !Unequip(slot))
-            {
-                // TODO: Handle this potential failiure better.
-                throw new InvalidOperationException(
-                    "Unable to remove slot as the contained clothing could not be dropped");
-            }
+            ForceUnequip(slot);
 
+            var container = _slotContainers[slot];
+
+            container.Shutdown();
             _slotContainers.Remove(slot);
 
             OnItemChanged?.Invoke();
@@ -406,7 +430,7 @@ namespace Content.Server.GameObjects.Components.GUI
                             hands.PutInHand(clothing);
 
                             if (reason != null)
-                                _serverNotifyManager.PopupMessageCursor(Owner, reason);
+                                Owner.PopupMessageCursor(reason);
                         }
                     }
                     break;

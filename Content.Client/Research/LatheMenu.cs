@@ -14,9 +14,7 @@ namespace Content.Client.Research
 {
     public class LatheMenu : SS14Window
     {
-#pragma warning disable CS0649
-        [Dependency] private IPrototypeManager PrototypeManager;
-#pragma warning restore
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         private ItemList Items;
         private ItemList Materials;
@@ -174,7 +172,7 @@ namespace Content.Client.Research
 
             foreach (var (id, amount) in Owner.Storage)
             {
-                if (!PrototypeManager.TryIndex(id, out MaterialPrototype materialPrototype)) continue;
+                if (!_prototypeManager.TryIndex(id, out MaterialPrototype materialPrototype)) continue;
                 var material = materialPrototype.Material;
                 Materials.AddItem($"{material.Name} {amount} cm³", material.Icon.Frame0(), false);
             }

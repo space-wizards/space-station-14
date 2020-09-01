@@ -29,6 +29,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
+using Content.Server.GameObjects.Components.ActionBlocking;
 
 namespace Content.Server.GameObjects.Components.GUI
 {
@@ -37,9 +38,7 @@ namespace Content.Server.GameObjects.Components.GUI
     [ComponentReference(typeof(ISharedHandsComponent))]
     public class HandsComponent : SharedHandsComponent, IHandsComponent, IBodyPartAdded, IBodyPartRemoved
     {
-#pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
-#pragma warning restore 649
 
         private string? _activeHand;
         private uint _nextHand;
@@ -446,6 +445,7 @@ namespace Content.Server.GameObjects.Components.GUI
             ActiveHand ??= name;
 
             OnItemChanged?.Invoke();
+            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new HandCountChangedEvent(Owner));
 
             Dirty();
         }
@@ -468,6 +468,7 @@ namespace Content.Server.GameObjects.Components.GUI
             }
 
             OnItemChanged?.Invoke();
+            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new HandCountChangedEvent(Owner));
 
             Dirty();
         }
@@ -711,7 +712,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
                 Dirty();
 
-                if (!message.Entity.TryGetComponent(out ICollidableComponent collidable))
+                if (!message.Entity.TryGetComponent(out ICollidableComponent? collidable))
                 {
                     return;
                 }
@@ -724,13 +725,13 @@ namespace Content.Server.GameObjects.Components.GUI
 
         private void AddPullingStatuses(IEntity pulled)
         {
-            if (pulled.TryGetComponent(out ServerStatusEffectsComponent pulledStatus))
+            if (pulled.TryGetComponent(out ServerStatusEffectsComponent? pulledStatus))
             {
                 pulledStatus.ChangeStatusEffectIcon(StatusEffect.Pulled,
                     "/Textures/Interface/StatusEffects/Pull/pulled.png");
             }
 
-            if (Owner.TryGetComponent(out ServerStatusEffectsComponent ownerStatus))
+            if (Owner.TryGetComponent(out ServerStatusEffectsComponent? ownerStatus))
             {
                 ownerStatus.ChangeStatusEffectIcon(StatusEffect.Pulling,
                     "/Textures/Interface/StatusEffects/Pull/pulling.png");
@@ -739,12 +740,12 @@ namespace Content.Server.GameObjects.Components.GUI
 
         private void RemovePullingStatuses(IEntity pulled)
         {
-            if (pulled.TryGetComponent(out ServerStatusEffectsComponent pulledStatus))
+            if (pulled.TryGetComponent(out ServerStatusEffectsComponent? pulledStatus))
             {
                 pulledStatus.RemoveStatusEffect(StatusEffect.Pulled);
             }
 
-            if (Owner.TryGetComponent(out ServerStatusEffectsComponent ownerStatus))
+            if (Owner.TryGetComponent(out ServerStatusEffectsComponent? ownerStatus))
             {
                 ownerStatus.RemoveStatusEffect(StatusEffect.Pulling);
             }
@@ -792,5 +793,15 @@ namespace Content.Server.GameObjects.Components.GUI
         {
             return new SharedHand(index, Name, Entity?.Uid, location);
         }
+    }
+
+    public class HandCountChangedEvent : EntitySystemMessage
+    {
+        public HandCountChangedEvent(IEntity sender)
+        {
+            Sender = sender;
+        }
+
+        public IEntity Sender { get; }
     }
 }

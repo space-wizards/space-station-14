@@ -100,6 +100,53 @@
     sprite: Clothing/Back/Backpacks/captain.rsi
     HeldPrefix: captain
 
+# Inhands/On mob aren't working until I refactor this file -Swept
+
+- type: entity
+  parent: BackpackClothing
+  id: BackpackMime
+  name: mime backpack
+  description:
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/mime.rsi
+    state: icon
+  - type: Icon
+    sprite: Clothing/Back/Backpacks/mime.rsi
+    state: icon
+  - type: Clothing
+    sprite: Clothing/Back/Backpacks/mime.rsi
+
+- type: entity
+  parent: BackpackClothing
+  id: BackpackChemistry
+  name: chemistry backpack
+  description:
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/chemistry.rsi
+    state: icon
+  - type: Icon
+    sprite: Clothing/Back/Backpacks/chemistry.rsi
+    state: icon
+  - type: Clothing
+    sprite: Clothing/Back/Backpacks/chemistry.rsi
+
+- type: entity
+  parent: BackpackClothing
+  id: BackpackBotany
+  name: botany backpack
+  description:
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/botany.rsi
+    state: icon
+  - type: Icon
+    sprite: Clothing/Back/Backpacks/botany.rsi
+    state: icon
+  - type: Clothing
+    sprite: Clothing/Back/Backpacks/botany.rsi
+
 - type: entity
   parent: BackpackClothing
   id: BackpackHolding

@@ -178,7 +178,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
                     stun.Paralyze(3f);
                 }
 
-                user.PopupMessage(user, Loc.GetString("The gun blows up in your face!"));
+                user.PopupMessage(Loc.GetString("The gun blows up in your face!"));
 
                 Owner.Delete();
                 return;

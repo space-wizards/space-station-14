@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.GameTicking;
+using Content.Shared.Roles;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
@@ -22,7 +24,7 @@ namespace Content.Server.Interfaces.GameTicking
 
         void RestartRound();
         void StartRound(bool force = false);
-        void EndRound();
+        void EndRound(string roundEndText = "");
 
         void Respawn(IPlayerSession targetPlayer);
         void MakeObserve(IPlayerSession player);
@@ -32,6 +34,8 @@ namespace Content.Server.Interfaces.GameTicking
         GridCoordinates GetLateJoinSpawnPoint();
         GridCoordinates GetJobSpawnPoint(string jobId);
         GridCoordinates GetObserverSpawnPoint();
+
+        void EquipStartingGear(IEntity entity, StartingGearPrototype startingGear);
 
         // GameRule system.
         T AddGameRule<T>() where T : GameRule, new();

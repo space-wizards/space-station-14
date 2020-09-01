@@ -31,8 +31,9 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         public override void Initialize()
         {
             base.Initialize();
-            _battery = Owner.GetComponent<BatteryComponent>();
-            _supplier = Owner.GetComponent<PowerSupplierComponent>();
+
+            _battery = Owner.EnsureComponent<BatteryComponent>();
+            _supplier = Owner.EnsureComponent<PowerSupplierComponent>();
             UpdateSupplyRate();
         }
 

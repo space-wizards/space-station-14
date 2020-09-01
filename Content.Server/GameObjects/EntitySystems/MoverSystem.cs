@@ -30,13 +30,11 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     internal class MoverSystem : SharedMoverSystem
     {
-#pragma warning disable 649
         [Dependency] private readonly IPauseManager _pauseManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
-#pragma warning restore 649
 
         private AudioSystem _audioSystem = default!;
 
@@ -83,7 +81,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 ev.Entity.RemoveComponent<PlayerInputMoverComponent>();
             }
 
-            if (ev.Entity.TryGetComponent(out ICollidableComponent physics) &&
+            if (ev.Entity.TryGetComponent(out ICollidableComponent? physics) &&
                 physics.TryGetController(out MoverController controller))
             {
                 controller.StopMoving();

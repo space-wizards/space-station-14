@@ -5,13 +5,14 @@ using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects;
+using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -29,10 +30,7 @@ namespace Content.Server.GameObjects.Components.Interactable
     [ComponentReference(typeof(IToolComponent))]
     public class WelderComponent : ToolComponent, IExamine, IUse, ISuicideAct, ISolutionChange
     {
-#pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
-        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
-#pragma warning restore 649
 
         public override string Name => "Welder";
         public override uint? NetID => ContentNetIDs.WELDER;
@@ -106,7 +104,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
                 if (!CanWeld(DefaultFuelCost))
                 {
-                    _notifyManager.PopupMessage(target, user, "Can't weld!");
+                    target.PopupMessage(user, "Can't weld!");
 
                     return false;
                 }
@@ -135,13 +133,13 @@ namespace Content.Server.GameObjects.Components.Interactable
         {
             if (!WelderLit)
             {
-                if(!silent) _notifyManager.PopupMessage(Owner, user, Loc.GetString("The welder is turned off!"));
+                if(!silent) Owner.PopupMessage(user, Loc.GetString("The welder is turned off!"));
                 return false;
             }
 
             if (!CanWeld(value))
             {
-                if(!silent) _notifyManager.PopupMessage(Owner, user, Loc.GetString("The welder does not have enough fuel for that!"));
+                if(!silent) Owner.PopupMessage(user, Loc.GetString("The welder does not have enough fuel for that!"));
                 return false;
             }
 
@@ -190,7 +188,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             if (!CanLitWelder())
             {
-                _notifyManager.PopupMessage(Owner, user, Loc.GetString("The welder has no fuel left!"));
+                Owner.PopupMessage(user, Loc.GetString("The welder has no fuel left!"));
                 return false;
             }
 
@@ -255,14 +253,31 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         public SuicideKind Suicide(IEntity victim, IChatManager chat)
         {
+            string othersMessage;
+            string selfMessage;
+
             if (TryWeld(5, victim, silent: true))
             {
                 PlaySoundCollection(WeldSoundCollection);
-                chat.EntityMe(victim, Loc.GetString("welds {0:their} every orifice closed! It looks like {0:theyre} trying to commit suicide!", victim));
+
+                othersMessage =
+                    Loc.GetString(
+                        "{0:theName} welds {0:their} every orifice closed! It looks like {0:theyre} trying to commit suicide!",
+                        victim);
+                victim.PopupMessageOtherClients(othersMessage);
+
+                selfMessage = Loc.GetString("You weld your every orifice closed!");
+                victim.PopupMessage(selfMessage);
+
                 return SuicideKind.Heat;
             }
 
-            chat.EntityMe(victim, Loc.GetString("bashes {0:themselves} with the {1}!", victim, Owner.Name));
+            othersMessage = Loc.GetString("{0:theName} bashes themselves with the unlit welding torch!", victim);
+            victim.PopupMessageOtherClients(othersMessage);
+
+            selfMessage = Loc.GetString("You bash yourself with the unlit welding torch!");
+            victim.PopupMessage(selfMessage);
+
             return SuicideKind.Blunt;
         }
 

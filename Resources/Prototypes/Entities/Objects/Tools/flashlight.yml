@@ -4,21 +4,24 @@
   id: FlashlightLantern
   description: They light the way to freedom
   components:
-  - type: HandheldLight
-  - type: Sprite
-    sprite: Objects/Tools/flashlight.rsi
-    layers:
-    - state: lantern_off
-    - state: HandheldLightOnOverlay
-      shader: unshaded
-      visible: false
-  - type: Icon
-    sprite: Objects/Tools/flashlight.rsi
-    state: lantern_off
-  - type: Item
-    sprite: Objects/Tools/flashlight.rsi
-    HeldPrefix: off
-  - type: PointLight
-    enabled: false
-    radius: 3
-  - type: LoopingSound
+    - type: HandheldLight
+    - type: Sprite
+      sprite: Objects/Tools/flashlight.rsi
+      layers:
+        - state: lantern_off
+        - state: HandheldLightOnOverlay
+          shader: unshaded
+          visible: false
+    - type: Icon
+      sprite: Objects/Tools/flashlight.rsi
+      state: lantern_off
+    - type: Item
+      sprite: Objects/Tools/flashlight.rsi
+      HeldPrefix: off
+    - type: PointLight
+      enabled: false
+      radius: 3
+    - type: LoopingSound
+    - type: Appearance
+      visuals:
+        - type: FlashLightVisualizer

@@ -5,6 +5,7 @@
   id: HumanMob_PathDummy
   description: A miserable pile of secrets
   drawdepth: Mobs
+  suffix: AI
   components:
   - type: AiController
     logic: PathingDummy

@@ -53,7 +53,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             serializer.DataField(this, x => NodeGroupID, "nodeGroupID", NodeGroupID.Default);
         }
 
-        public void Initialize(IEntity owner)
+        public virtual void Initialize(IEntity owner)
         {
             Owner = owner;
             _nodeGroupFactory = IoCManager.Resolve<INodeGroupFactory>();
@@ -143,7 +143,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         private INodeGroup MakeNewGroup()
         {
-            return _nodeGroupFactory.MakeNodeGroup(NodeGroupID);
+            return _nodeGroupFactory.MakeNodeGroup(this);
         }
 
         private void AnchorUpdate()
