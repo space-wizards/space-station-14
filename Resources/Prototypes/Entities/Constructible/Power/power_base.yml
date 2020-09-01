@@ -1,6 +1,7 @@
 ﻿- type: entity
-  id: DebugGenerator
-  name: Debug Generator
+  id: BaseGenerator
+  name: Base Generator
+  abstract: true
   placement:
     mode: SnapgridCenter
   components:
@@ -26,93 +27,9 @@
   - type: Anchorable
 
 - type: entity
-  id: DebugConsumer
-  name: Debug Consumer
-  placement:
-    mode: SnapgridCenter
-  components:
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Collidable
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.5, -0.5, 0.5, 0.5"
-      layer: [MobMask, Opaque]
-  - type: SnapGrid
-    offset: Center
-  - type: Sprite
-    texture: Constructible/Power/wiredmachine.png
-  - type: Icon
-    texture: Constructible/Power/wiredmachine.png
-  - type: NodeContainer
-    nodes:
-    - !type:AdjacentNode
-      nodeGroupID: HVPower
-  - type: PowerConsumer
-    drawRate: 50
-  - type: Breakable
-    deadThreshold: 100
-  - type: Anchorable
-
-- type: entity
-  id: DebugBatteryStorage
-  name: Debug Battery Storage
-  placement:
-    mode: SnapgridCenter
-  components:
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Collidable
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.5, -0.5, 0.5, 0.5"
-      layer: [MobMask, Opaque]
-  - type: SnapGrid
-    offset: Center
-  - type: Sprite
-    texture: Constructible/Power/provider.png
-  - type: Icon
-    texture: Constructible/Power/provider.png
-  - type: Battery
-  - type: NodeContainer
-    nodes:
-    - !type:AdjacentNode
-      nodeGroupID: HVPower
-  - type: PowerConsumer
-  - type: BatteryStorage
-  - type: Anchorable
-
-- type: entity
-  id: DebugBatteryDischarger
-  name: Debug Battery Discharger
-  placement:
-    mode: SnapgridCenter
-  components:
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Collidable
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.5, -0.5, 0.5, 0.5"
-      layer: [MobMask, Opaque]
-  - type: SnapGrid
-    offset: Center
-  - type: Sprite
-    texture: Constructible/Power/provider.png
-  - type: Icon
-    texture: Constructible/Power/provider.png
-  - type: Battery
-  - type: NodeContainer
-    nodes:
-    - !type:AdjacentNode
-      nodeGroupID: HVPower
-  - type: PowerSupplier
-  - type: BatteryDischarger
-  - type: Anchorable
-
-- type: entity
-  id: DebugSmes
-  name: Debug Smes
+  id: BaseSmes
+  name: Base Smes
+  abstract: true
   placement:
     mode: SnapgridCenter
   components:
@@ -155,8 +72,9 @@
   - type: Anchorable
 
 - type: entity
-  id: DebugSubstation
-  name: Debug Substation
+  id: BaseSubstation
+  name: Base Substation
+  abstract: true
   placement:
     mode: SnapgridCenter
   components:
@@ -193,8 +111,9 @@
   - type: Anchorable
 
 - type: entity
-  id: DebugApc
-  name: Debug Apc
+  id: BaseApc
+  name: Base Apc
+  abstract: true
   placement:
     mode: SnapgridCenter
   components:
@@ -240,28 +159,6 @@
       type: ApcBoundUserInterface
 
 - type: entity
-  id: DebugPowerReceiver
-  name: Debug Power Receiver
-  placement:
-    mode: SnapgridCenter
-  components:
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Collidable
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.5, -0.5, 0.5, 0.5"
-      layer: [MobMask, Opaque]
-  - type: SnapGrid
-    offset: Center
-  - type: Sprite
-    texture: Constructible/Power/wirelessmachine.png
-  - type: Icon
-    texture: Constructible/Power/wirelessmachine.png
-  - type: PowerReceiver
-  - type: Anchorable
-
-- type: entity
   id: SolarPanel
   name: solar panel
   description: Generates power from sunlight. Usually used to power replacements for sunlight. Fragile.
@@ -291,50 +188,3 @@
     offset: Center
   - type: Breakable
     deadThreshold: 100
-
-#Depriciated, to be removed from maps
-
-- type: entity
-  id: Generator
-  name: Depriciated Generator
-  parent: DebugGenerator
-  components:
-  - type: PowerSupplier
-    voltage: High
-    supplyRate: 100000
-
-- type: entity
-  id: APC
-  name: Depriciated Apc
-  parent: DebugApc
-  components:
-  - type: NodeContainer
-    nodes:
-    - !type:AdjacentNode
-      nodeGroupID: HVPower
-    - !type:AdjacentNode
-      nodeGroupID: Apc
-  - type: PowerConsumer
-    voltage: High
-  - type: BatteryStorage
-    activeDrawRate: 10000
-
-- type: entity
-  id: SMES
-  name: Depriciated Smes
-  parent: DebugSmes
-
-- type: entity
-  id: SmesDry
-  name: Depriciated Smes
-  parent: DebugSmes
-
-- type: entity
-  id: WiredMachine
-  name: Depriciated WiredMachine
-  parent: DebugConsumer
-
-- type: entity
-  id: WirelessMachine
-  name: Depriciated WirelessMachine
-  parent: DebugPowerReceiver
