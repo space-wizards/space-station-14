@@ -21,15 +21,19 @@ namespace Content.Server.Administration
                 return;
             }
 
-            var id = args[0];
+            var id = args[0].ToLower();
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            var query = new PredicateEntityQuery(e => e.Prototype?.ID == id);
+            var query = new PredicateEntityQuery(e => e.Prototype?.ID.ToLower() == id);
             var entities = entityManager.GetEntities(query);
+            var i = 0;
 
             foreach (var entity in entities)
             {
                 entity.Delete();
+                i++;
             }
+
+            shell.SendText(player, $"Deleted all entities with id {id}. Occurrences: {i}");
         }
     }
 }
