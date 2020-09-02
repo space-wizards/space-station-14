@@ -173,7 +173,7 @@ namespace Content.Server.Body
             }
 
             var ignoreResistance = false;
-            var entityUid = player.AttachedEntityUid.HasValue ? player.AttachedEntityUid.Value : EntityUid.Invalid;
+            var entityUid = player != null && player.AttachedEntityUid.HasValue ? player.AttachedEntityUid.Value : EntityUid.Invalid;
             if (args.Length < 2 || !int.TryParse(args[1], out var amount) ||
                 args.Length >= 3 && args[2] != "_" && !EntityUid.TryParse(args[2], out entityUid) || 
                 args.Length >= 4 && !bool.TryParse(args[3], out ignoreResistance))
@@ -182,6 +182,7 @@ namespace Content.Server.Body
                 return;
             }
 
+            // Enough parsing, do the actual checks and stuff
             if (player == null)
             {
                 shell.SendText(player, "Only a player can run this command.");
@@ -194,8 +195,7 @@ namespace Content.Server.Body
                 return;
             }
 
-            var ent = IoCManager.Resolve<IEntityManager>().GetEntity(entityUid);
-            if (ent == null)
+            if (!IoCManager.Resolve<IEntityManager>().TryGetEntity(entityUid, out var ent))
             {
                 shell.SendText(player, "Entity couldn't be found.");
                 return;
