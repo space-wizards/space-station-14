@@ -31,7 +31,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
     public class StunbatonComponent : MeleeWeaponComponent, IUse, IExamine, IMapInit, IInteractUsing
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
-        [Dependency] private readonly ISharedNotifyManager _notifyManager = default!;
 
         public override string Name => "Stunbaton";
 
@@ -165,14 +164,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             {
                 EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Machines/button.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
 
-                _notifyManager.PopupMessage(Owner, user, Loc.GetString("Cell missing..."));
+                Owner.PopupMessage(user, Loc.GetString("Cell missing..."));
                 return;
             }
 
             if (cell.CurrentCharge < EnergyPerUse)
             {
                 EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Machines/button.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
-                _notifyManager.PopupMessage(Owner, user, Loc.GetString("Dead cell..."));
+                Owner.PopupMessage(user, Loc.GetString("Dead cell..."));
                 return;
             }
 

@@ -63,7 +63,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
         {
             if (transmitter == null)
             {
-                user.PopupMessage(user, Loc.GetString("Signal not set."));
+                user.PopupMessage(Loc.GetString("Signal not set."));
                 return false;
             }
 

@@ -66,7 +66,7 @@ namespace Content.Client.UserInterface.Suspicion
                 _ => throw new ArgumentException($"Invalid number of allies: {role.Allies.Count}")
             };
 
-            role.Owner.PopupMessage(role.Owner, message);
+            role.Owner.PopupMessage(message);
         }
 
         private bool TryGetComponent(out SuspicionRoleComponent suspicion)

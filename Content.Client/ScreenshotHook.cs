@@ -57,7 +57,7 @@ namespace Content.Client
                     }
 
                     await using var file =
-                        _resourceManager.UserData.Open(BaseScreenshotPath / $"{filename}.png", FileMode.CreateNew, FileAccess.Read, FileShare.None);
+                        _resourceManager.UserData.Open(BaseScreenshotPath / $"{filename}.png", FileMode.CreateNew, FileAccess.Write, FileShare.None);
 
                     await Task.Run(() =>
                     {

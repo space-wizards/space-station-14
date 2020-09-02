@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
 using Content.Shared.Access;
 using Content.Shared.GameObjects.Components.Access;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.Components.UserInterface;
@@ -25,7 +25,6 @@ namespace Content.Server.GameObjects.Components.Access
     [ComponentReference(typeof(IActivate))]
     public class IdCardConsoleComponent : SharedIdCardConsoleComponent, IActivate
     {
-        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         private ContainerSlot _privilegedIdContainer = default!;
@@ -132,7 +131,7 @@ namespace Content.Server.GameObjects.Components.Access
         {
             if (!user.TryGetComponent(out IHandsComponent? hands))
             {
-                _notifyManager.PopupMessage(Owner.Transform.GridPosition, user, Loc.GetString("You have no hands."));
+                Owner.PopupMessage(user, Loc.GetString("You have no hands."));
                 return;
             }
 
@@ -161,7 +160,7 @@ namespace Content.Server.GameObjects.Components.Access
 
             if (!hands.Drop(hands.ActiveHand, container))
             {
-                _notifyManager.PopupMessage(Owner.Transform.GridPosition, user, Loc.GetString("You can't let go of the ID card!"));
+                Owner.PopupMessage(user, Loc.GetString("You can't let go of the ID card!"));
                 return;
             }
             UpdateUserInterface();

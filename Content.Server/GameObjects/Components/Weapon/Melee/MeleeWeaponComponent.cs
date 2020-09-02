@@ -27,6 +27,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPhysicsManager _physicsManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override string Name => "MeleeWeapon";
         private TimeSpan _lastAttackTime;
@@ -84,7 +85,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         {
             if (!eventArgs.WideAttack) return true;
 
-            var curTime = IoCManager.Resolve<IGameTiming>().CurTime;
+            var curTime = _gameTiming.CurTime;
 
             if(curTime < _cooldownEnd)
                 return true;
@@ -142,7 +143,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         {
             if (eventArgs.WideAttack) return false;
 
-            var curTime = IoCManager.Resolve<IGameTiming>().CurTime;
+            var curTime = _gameTiming.CurTime;
 
             if(curTime < _cooldownEnd || !eventArgs.Target.IsValid())
                 return true;
