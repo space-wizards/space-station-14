@@ -14,7 +14,7 @@
 - type: entity
   name: scalpel
   parent: BaseSurgeryTool
-  id: scalpel
+  id: Scalpel
   desc: A surgical tool used to make incisions into flesh.
   components:
   - type: SurgeryTool
@@ -32,7 +32,7 @@
 - type: entity
   name: retractor
   parent: BaseSurgeryTool
-  id: retractor
+  id: Retractor
   desc: A surgical tool used to hold open incisions.
   components:
   - type: SurgeryTool
@@ -50,7 +50,7 @@
 - type: entity
   name: cautery
   parent: BaseSurgeryTool
-  id: cautery
+  id: Cautery
   desc: A surgical tool used to cauterize open wounds.
   components:
   - type: SurgeryTool
@@ -68,7 +68,7 @@
 - type: entity
   name: drill
   parent: BaseSurgeryTool
-  id: drill
+  id: Drill
   desc: A surgical drill for making holes into hard material.
   components:
   - type: SurgeryTool
@@ -86,7 +86,7 @@
 - type: entity
   name: bone saw
   parent: BaseSurgeryTool
-  id: bone_saw
+  id: BoneSaw
   desc: A surgical tool used to cauterize open wounds.
   components:
   - type: SurgeryTool
@@ -104,7 +104,7 @@
 - type: entity
   name: hemostat
   parent: BaseSurgeryTool
-  id: hemostat
+  id: Hemostat
   desc: A surgical tool used to compress blood vessels to prevent bleeding.
   components:
   - type: SurgeryTool
