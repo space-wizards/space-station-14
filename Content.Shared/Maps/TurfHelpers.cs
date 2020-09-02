@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Physics;
+using Content.Shared.Utility;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Physics;
@@ -63,6 +64,52 @@ namespace Content.Shared.Maps
         public static bool TryGetTileRef(this GridCoordinates coordinates, [NotNullWhen(true)] out TileRef? turf)
         {
             return (turf = coordinates.GetTileRef()) != null;
+        }
+
+        public static bool PryTile(this GridCoordinates coordinates,
+            IMapManager? mapManager = null, ITileDefinitionManager? tileDefinitionManager = null, IEntityManager? entityManager = null)
+        {
+            mapManager ??= IoCManager.Resolve<IMapManager>();
+
+            return coordinates.ToMapIndices(mapManager).PryTile(coordinates.GridID);
+        }
+
+        public static bool PryTile(this MapIndices indices, GridId gridId,
+            IMapManager? mapManager = null, ITileDefinitionManager? tileDefinitionManager = null, IEntityManager? entityManager = null)
+        {
+            mapManager ??= IoCManager.Resolve<IMapManager>();
+            var grid = mapManager.GetGrid(gridId);
+            var tileRef = grid.GetTileRef(indices);
+            return tileRef.PryTile(mapManager, tileDefinitionManager, entityManager);
+        }
+
+        public static bool PryTile(this TileRef tileRef,
+            IMapManager? mapManager = null, ITileDefinitionManager? tileDefinitionManager = null, IEntityManager? entityManager = null)
+        {
+            var tile = tileRef.Tile;
+            var indices = tileRef.GridIndices;
+
+            // If the arguments are null, resolve the needed dependencies.
+            mapManager ??= IoCManager.Resolve<IMapManager>();
+            tileDefinitionManager ??= IoCManager.Resolve<ITileDefinitionManager>();
+            entityManager ??= IoCManager.Resolve<IEntityManager>();
+
+            if (tile.IsEmpty) return false;
+
+            var tileDef = (ContentTileDefinition) tileDefinitionManager[tile.TypeId];
+
+            if (!tileDef.CanCrowbar) return false;
+
+            var mapGrid = mapManager.GetGrid(tileRef.GridIndex);
+
+            var plating = tileDefinitionManager[tileDef.BaseTurfs[^1]];
+
+             mapGrid.SetTile(tileRef.GridIndices, new Tile(plating.TileId));
+
+            //Actually spawn the relevant tile item at the right position and give it some random offset.
+            var tileItem = entityManager.SpawnEntity(tileDef.ItemDropPrototypeName, new GridCoordinates(indices.X, indices.Y, mapGrid));
+            tileItem.RandomOffset(0.5f);
+            return true;
         }
 
         /// <summary>

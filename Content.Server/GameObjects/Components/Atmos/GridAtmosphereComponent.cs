@@ -162,16 +162,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             if (IsSpace(indices) || IsAirBlocked(indices)) return;
 
             var mapGrid = mapGridComponent.Grid;
-            var tile = mapGrid.GetTileRef(indices).Tile;
-
-            var tileDef = (ContentTileDefinition) _tileDefinitionManager[tile.TypeId];
-
-            var underplating = _tileDefinitionManager["underplating"];
-            mapGrid.SetTile(indices, new Tile(underplating.TileId));
-
-            //Actually spawn the relevant tile item at the right position and give it some offset to the corner.
-            var tileItem = _serverEntityManager.SpawnEntity(tileDef.ItemDropPrototypeName, new GridCoordinates(indices.X, indices.Y, mapGrid));
-            tileItem.Transform.WorldPosition += (0.2f, 0.2f);
+            indices.PryTile(mapGrid.Index, _mapManager, _tileDefinitionManager, _serverEntityManager);
         }
 
         public override void Initialize()
