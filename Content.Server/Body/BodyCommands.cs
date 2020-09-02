@@ -225,10 +225,15 @@ namespace Content.Server.Body
                 return;
             }
 
-            if (fallback && !damageable.ChangeDamage(dmgType, amount, ignoreResistance) ||
-                !damageable.ChangeDamage(dmgClass, amount, ignoreResistance))
+            if (fallback)
             {
-                shell.SendText(player, "Something went wrong!");
+                if (!damageable.ChangeDamage(dmgType, amount, ignoreResistance))
+                    shell.SendText(player, "Something went wrong!");
+            }
+            else
+            {
+                if (!damageable.ChangeDamage(dmgClass, amount, ignoreResistance))
+                    shell.SendText(player, "Something went wrong!");
             }
         }
     }
