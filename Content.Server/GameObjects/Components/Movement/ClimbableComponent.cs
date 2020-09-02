@@ -73,7 +73,7 @@ namespace Content.Server.GameObjects.Components.Movement
                 canVault = CanVault(eventArgs.User, eventArgs.Dropped, eventArgs.Target, out reason);
 
             if (!canVault)
-                eventArgs.User.PopupMessage(eventArgs.User, reason);
+                eventArgs.User.PopupMessage(reason);
 
             return canVault;
         }

@@ -5,6 +5,7 @@
   - Burn
   - Toxin
   - Airloss
+  - Genetic
 
 - type: damageContainer
   id: metallicDamageContainer

@@ -1,5 +1,4 @@
 ﻿using Content.Server.GameObjects.Components.Interactable;
-using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -10,6 +9,7 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using System.Threading.Tasks;
+using Content.Shared.Interfaces;
 
 namespace Content.Server.GameObjects.Components.Power.AME
 {
@@ -19,15 +19,14 @@ namespace Content.Server.GameObjects.Components.Power.AME
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
-        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
+
         public override string Name => "AMEPart";
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)
         {
             if (!args.User.TryGetComponent(out IHandsComponent hands))
             {
-                _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                    Loc.GetString("You have no hands."));
+                Owner.PopupMessage(args.User, Loc.GetString("You have no hands."));
                 return true;
             }
 

@@ -6,7 +6,9 @@ using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Maps;
 using Content.Shared.Physics;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
@@ -41,12 +43,13 @@ namespace Content.Server.GameObjects.Components.Fluids
         // Small puddles will evaporate after a set delay
 
         // TODO: 'leaves fluidtracks', probably in a separate component for stuff like gibb chunks?;
-        // TODO: Add stuff like slipping -> probably in a separate component (for stuff like bananas)
 
         // based on behaviour (e.g. someone being punched vs slashed with a sword would have different blood sprite)
         // to check for low volumes for evaporation or whatever
 
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public override string Name => "Puddle";
 
@@ -132,8 +135,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             // Random sprite state set server-side so it's consistent across all clients
             _spriteComponent = Owner.EnsureComponent<SpriteComponent>();
 
-            var robustRandom = IoCManager.Resolve<IRobustRandom>();
-            var randomVariant = robustRandom.Next(0, _spriteVariants - 1);
+            var randomVariant = _random.Next(0, _spriteVariants - 1);
 
             if (_spriteComponent.BaseRSIPath != null)
             {
@@ -338,43 +340,6 @@ namespace Content.Server.GameObjects.Components.Fluids
             }
         }
 
-        // TODO: Move the below to SnapGrid?
-        /// <summary>
-        /// Will yield a random direction until none are left
-        /// </summary>
-        /// <returns></returns>
-        private static IEnumerable<Direction> RandomDirections()
-        {
-            var directions = new[]
-            {
-                Direction.East,
-                Direction.SouthEast,
-                Direction.South,
-                Direction.SouthWest,
-                Direction.West,
-                Direction.NorthWest,
-                Direction.North,
-                Direction.NorthEast,
-            };
-
-            var robustRandom = IoCManager.Resolve<IRobustRandom>();
-            var n = directions.Length;
-
-            while (n > 1)
-            {
-                n--;
-                var k = robustRandom.Next(n + 1);
-                var value = directions[k];
-                directions[k] = directions[n];
-                directions[n] = value;
-            }
-
-            foreach (var direction in directions)
-            {
-                yield return direction;
-            }
-        }
-
         /// <summary>
         /// Tries to get an adjacent coordinate to overflow to, unless it is blocked by a wall on the
         /// same tile or the tile is empty
@@ -389,9 +354,13 @@ namespace Content.Server.GameObjects.Components.Fluids
 
             var mapGrid = _mapManager.GetGrid(Owner.Transform.GridID);
 
+            if (!Owner.Transform.GridPosition.Offset(direction).TryGetTileRef(out var tile))
+            {
+                return false;
+            }
+
             // If space return early, let that spill go out into the void
-            var tileRef = mapGrid.GetTileRef(Owner.Transform.GridPosition.Offset(direction.ToVec()));
-            if (tileRef.Tile.IsEmpty)
+            if (tile.Value.Tile.IsEmpty)
             {
                 return false;
             }
@@ -419,8 +388,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             if (puddle == default)
             {
                 var grid = _snapGrid.DirectionToGrid(direction);
-                var entityManager = IoCManager.Resolve<IEntityManager>();
-                puddle = () => entityManager.SpawnEntity(Owner.Prototype.ID, grid).GetComponent<PuddleComponent>();
+                puddle = () => _entityManager.SpawnEntity(Owner.Prototype.ID, grid).GetComponent<PuddleComponent>();
             }
 
             return true;
@@ -432,7 +400,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         /// <returns>Enumerable of the puddles found or to be created</returns>
         private IEnumerable<Func<PuddleComponent>> GetAllAdjacentOverflow()
         {
-            foreach (var direction in RandomDirections())
+            foreach (var direction in SharedDirectionExtensions.RandomDirections())
             {
                 if (TryGetAdjacentOverflow(direction, out var puddle))
                 {

@@ -81,7 +81,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
             }
 
             _group.AddConveyor(conveyor);
-            user?.PopupMessage(user, Loc.GetString("Conveyor linked."));
+            user?.PopupMessage(Loc.GetString("Conveyor linked."));
         }
 
         /// <summary>

@@ -2,12 +2,14 @@ using Content.Client.GameObjects.Components.Observer;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 
 namespace Content.Client.UserInterface
 {
     public class GhostGui : Control
     {
-        public Button ReturnToBody = new Button(){Text = "Return to body"};
+
+        public readonly Button ReturnToBody = new Button() {Text = Loc.GetString("Return to body")};
         private GhostComponent _owner;
 
         public GhostGui(GhostComponent owner)

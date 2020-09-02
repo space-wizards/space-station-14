@@ -1,14 +1,13 @@
 ﻿#nullable enable
 using System;
 using Content.Server.GameObjects.Components.Body.Circulatory;
-using Content.Server.Interfaces;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -23,8 +22,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
     [RegisterComponent]
     public class InjectorComponent : SharedInjectorComponent, IAfterInteract, IUse
     {
-        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
-
         /// <summary>
         /// Whether or not the injector is able to draw from containers or if it's a single use
         /// device that can only inject.
@@ -100,7 +97,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     throw new ArgumentOutOfRangeException();
             }
 
-            _notifyManager.PopupMessage(Owner, user, Loc.GetString(msg));
+            Owner.PopupMessage(user, Loc.GetString(msg));
 
             Dirty();
         }
@@ -165,8 +162,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             var realTransferAmount = ReagentUnit.Min(_transferAmount, targetBloodstream.EmptyVolume);
             if (realTransferAmount <= 0)
             {
-                _notifyManager.PopupMessage(Owner.Transform.GridPosition, user,
-                    Loc.GetString("Container full."));
+                Owner.PopupMessage(user, Loc.GetString("Container full."));
                 return;
             }
 
@@ -177,8 +173,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return;
             }
 
-            _notifyManager.PopupMessage(Owner.Transform.GridPosition, user,
-                Loc.GetString("Injected {0}u", removedSolution.TotalVolume));
+            Owner.PopupMessage(user, Loc.GetString("Injected {0}u", removedSolution.TotalVolume));
             Dirty();
         }
 
@@ -194,8 +189,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             var realTransferAmount = ReagentUnit.Min(_transferAmount, targetSolution.EmptyVolume);
             if (realTransferAmount <= 0)
             {
-                _notifyManager.PopupMessage(Owner.Transform.GridPosition, user,
-                    Loc.GetString("Container full."));
+                Owner.PopupMessage(user, Loc.GetString("Container full."));
                 return;
             }
 
@@ -206,8 +200,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return;
             }
 
-            _notifyManager.PopupMessage(Owner.Transform.GridPosition, user,
-                Loc.GetString("Injected {0}u", removedSolution.TotalVolume));
+            Owner.PopupMessage(user, Loc.GetString("Injected {0}u", removedSolution.TotalVolume));
             Dirty();
         }
 
@@ -223,8 +216,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             var realTransferAmount = ReagentUnit.Min(_transferAmount, targetSolution.CurrentVolume);
             if (realTransferAmount <= 0)
             {
-                _notifyManager.PopupMessage(Owner.Transform.GridPosition, user,
-                    Loc.GetString("Container empty"));
+                Owner.PopupMessage(user, Loc.GetString("Container empty"));
                 return;
             }
 
@@ -235,8 +227,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return;
             }
 
-            _notifyManager.PopupMessage(Owner.Transform.GridPosition, user,
-                Loc.GetString("Drew {0}u", removedSolution.TotalVolume));
+            Owner.PopupMessage(user, Loc.GetString("Drew {0}u", removedSolution.TotalVolume));
             Dirty();
         }
 

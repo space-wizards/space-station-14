@@ -1,11 +1,10 @@
 #nullable enable
-using Content.Server.Interfaces;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
+using Content.Shared.Interfaces;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 
@@ -14,8 +13,6 @@ namespace Content.Server.GameObjects.Components.Rotatable
     [RegisterComponent]
     public class FlippableComponent : Component
     {
-        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
-
         public override string Name => "Flippable";
 
         private string? _entity;
@@ -25,7 +22,7 @@ namespace Content.Server.GameObjects.Components.Rotatable
             if (Owner.TryGetComponent(out ICollidableComponent? collidable) &&
                 collidable.Anchored)
             {
-                _notifyManager.PopupMessage(Owner.Transform.GridPosition, user, Loc.GetString("It's stuck."));
+                Owner.PopupMessage(user, Loc.GetString("It's stuck."));
                 return;
             }
 

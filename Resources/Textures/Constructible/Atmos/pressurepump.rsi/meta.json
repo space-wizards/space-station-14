@@ -26,6 +26,26 @@
          "name":"pumpWest2East2",
          "directions":1,
          "delays":[ [ 1.0 ] ]
+      },
+      {
+         "name":"pumpEnabledEast2West2",
+         "directions":1,
+         "delays":[ [ 0.1, 0.1, 0.1, 0.1, 0.1 ] ]
+      },
+      {
+         "name":"pumpEnabledNorth2South2",
+         "directions":1,
+         "delays":[ [ 0.1, 0.1, 0.1, 0.1, 0.1 ] ]
+      },
+      {
+         "name":"pumpEnabledSouth2North2",
+         "directions":1,
+         "delays":[ [ 0.1, 0.1, 0.1, 0.1, 0.1 ] ]
+      },
+      {
+         "name":"pumpEnabledWest2East2",
+         "directions":1,
+         "delays":[ [ 0.1, 0.1, 0.1, 0.1, 0.1 ] ]
       }
    ]
 }

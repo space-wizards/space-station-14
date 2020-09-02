@@ -14,12 +14,15 @@ namespace Content.Server.Interfaces.GameObjects
 
         //Damage type suicides
         Blunt,
+        Slash,
         Piercing,
         Heat,
-        Disintegration,
-        Cellular,
-        DNA,
-        Asphyxiation
+        Shock,
+        Cold,
+        Poison,
+        Radiation,
+        Asphyxiation,
+        Bloodloss
 
     }
 }

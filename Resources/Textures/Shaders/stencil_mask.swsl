@@ -1,7 +1,8 @@
 void fragment() {
-    if (texture(TEXTURE, UV).a == 0) {
+    // Bypasses zTexture because only alpha is queried.
+    if (texture2D(TEXTURE, UV).a == 0.0) {
         discard; // Discard if no alpha so that there's a hole in the stencil buffer.
     }
 
-    COLOR = vec4(0);
+    COLOR = vec4(0.0);
 }

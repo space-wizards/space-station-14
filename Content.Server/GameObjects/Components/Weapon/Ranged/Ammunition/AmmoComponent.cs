@@ -25,6 +25,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
     [RegisterComponent]
     public class AmmoComponent : Component, IExamine
     {
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+
         public override string Name => "Ammo";
         public BallisticCaliber Caliber => _caliber;
         private BallisticCaliber _caliber;
@@ -135,7 +137,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
                 return;
             }
 
-            var time = IoCManager.Resolve<IGameTiming>().CurTime;
+            var time = _gameTiming.CurTime;
             var deathTime = time + TimeSpan.FromMilliseconds(200);
             // Offset the sprite so it actually looks like it's coming from the gun
             var offset = angle.ToVec().Normalized / 2;

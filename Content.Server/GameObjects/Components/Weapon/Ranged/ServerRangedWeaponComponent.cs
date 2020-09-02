@@ -32,6 +32,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
     [RegisterComponent]
     public sealed class ServerRangedWeaponComponent : SharedRangedWeaponComponent, IHandSelected
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
+
         private TimeSpan _lastFireTime;
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -102,7 +106,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
                     if (msg.TargetGrid != GridId.Invalid)
                     {
                         // grid pos
-                        if (!IoCManager.Resolve<IMapManager>().TryGetGrid(msg.TargetGrid, out var grid))
+                        if (!_mapManager.TryGetGrid(msg.TargetGrid, out var grid))
                         {
                             // Client sent us a message with an invalid grid.
                             break;
@@ -147,7 +151,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
                 return;
             }
 
-            var curTime = IoCManager.Resolve<IGameTiming>().CurTime;
+            var curTime = _gameTiming.CurTime;
             var span = curTime - _lastFireTime;
             if (span.TotalSeconds < 1 / _barrel.FireRate)
             {
@@ -158,7 +162,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
 
             if (ClumsyCheck &&
                 user.HasComponent<ClumsyComponent>() &&
-                IoCManager.Resolve<IRobustRandom>().Prob(ClumsyExplodeChance))
+                _random.Prob(ClumsyExplodeChance))
             {
                 var soundSystem = EntitySystem.Get<AudioSystem>();
                 soundSystem.PlayAtCoords("/Audio/Items/bikehorn.ogg",
@@ -178,7 +182,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
                     stun.Paralyze(3f);
                 }
 
-                user.PopupMessage(user, Loc.GetString("The gun blows up in your face!"));
+                user.PopupMessage(Loc.GetString("The gun blows up in your face!"));
 
                 Owner.Delete();
                 return;
