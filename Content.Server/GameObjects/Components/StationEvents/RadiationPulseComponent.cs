@@ -44,10 +44,8 @@ namespace Content.Server.GameObjects.Components.StationEvents
             serializer.DataField(this, x => x.MinPulseLifespan, "minPulseLifespan", 0.8f);
         }
 
-        public override void Initialize()
+        public void DoPulse()
         {
-            base.Initialize();
-
             var currentTime = _gameTiming.CurTime;
             _duration = _random.NextFloat() * (MaxPulseLifespan - MinPulseLifespan) + MinPulseLifespan;
             _endTime = currentTime + TimeSpan.FromSeconds(_duration);

@@ -1,4 +1,5 @@
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.Components.StationEvents;
 using Content.Shared.GameObjects.Components.Mobs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems;
@@ -17,7 +18,7 @@ namespace Content.Server.StationEvents
     public sealed class RadiationStorm : StationEvent
     {
         // Based on Goonstation style radiation storm with some TG elements (announcer, etc.)
-        
+
         [Dependency] private IEntityManager _entityManager = default!;
         [Dependency] private IMapManager _mapManager = default!;
         [Dependency] private IRobustRandom _robustRandom = default!;
@@ -65,12 +66,12 @@ namespace Content.Server.StationEvents
         public override void Shutdown()
         {
             base.Shutdown();
-            
+
             // IOC uninject?
             _entityManager = null;
             _mapManager = null;
             _robustRandom = null;
-            
+
             var componentManager = IoCManager.Resolve<IComponentManager>();
 
             foreach (var overlay in componentManager.EntityQuery<ServerOverlayEffectsComponent>())
@@ -78,7 +79,7 @@ namespace Content.Server.StationEvents
                 overlay.RemoveOverlay(SharedOverlayID.RadiationPulseOverlay);
             }
         }
-        
+
         public override void Update(float frameTime)
         {
             _timeElapsed += frameTime;
@@ -112,8 +113,9 @@ namespace Content.Server.StationEvents
         }
 
         private void SpawnPulse(IMapGrid mapGrid)
-        { 
-            _entityManager.SpawnEntity("RadiationPulse", FindRandomGrid(mapGrid));
+        {
+            var pulse = _entityManager.SpawnEntity("RadiationPulse", FindRandomGrid(mapGrid));
+            pulse.GetComponent<RadiationPulseComponent>().DoPulse();
             _timeUntilPulse = _robustRandom.NextFloat() * (MaxPulseDelay - MinPulseDelay) + MinPulseDelay;
             _pulsesRemaining -= 1;
         }

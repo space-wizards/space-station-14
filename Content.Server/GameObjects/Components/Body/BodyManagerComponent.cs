@@ -943,11 +943,9 @@ namespace Content.Server.GameObjects.Components.Body
 
         public void RadiationAct(float frameTime, RadiationPulseComponent radiation)
         {
-            var totalDamage = Math.Min((int)(frameTime * radiation.DPS), 1);
+            var totalDamage = Math.Max((int)(frameTime * radiation.DPS), 1);
 
-            if (!Owner.TryGetComponent(out IDamageableComponent? damageable)) return;
-
-            damageable.ChangeDamage(DamageType.Radiation, totalDamage, false, radiation.Owner);
+            ChangeDamage(DamageType.Radiation, totalDamage, false, radiation.Owner);
         }
     }
 
