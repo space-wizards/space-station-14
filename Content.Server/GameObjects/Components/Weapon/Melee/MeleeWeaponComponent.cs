@@ -119,7 +119,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 }
             }
 
-            if(!OnHitEntities(hitEntities, eventArgs)) return true;
+            if(!OnHitEntities(hitEntities, eventArgs)) return false;
 
             if (Arc != null)
             {
@@ -161,7 +161,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             else
             {
                 audioSystem.PlayFromEntity(_missSound, eventArgs.User);
-                return true;
+                return false;
             }
 
             if (target.TryGetComponent(out IDamageableComponent damageComponent))
@@ -172,7 +172,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             var targets = new[] {target};
 
             if (!OnHitEntities(targets, eventArgs))
-                return true;
+                return false;
 
             if (ClickArc != null)
             {

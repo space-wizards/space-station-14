@@ -26,12 +26,16 @@ namespace Content.Shared.Interfaces.GameObjects.Components
             ClickLocation = clickLocation;
             WideAttack = wideAttack;
             Target = target;
+
+            IEntity? targetEntity = null;
+            IoCManager.Resolve<IEntityManager>()?.TryGetEntity(Target, out targetEntity);
+            TargetEntity = targetEntity;
         }
 
         public IEntity User { get; }
         public GridCoordinates ClickLocation { get; }
         public bool WideAttack { get; }
         public EntityUid Target { get; }
-        public IEntity? TargetEntity => Target.IsValid() ? IoCManager.Resolve<IEntityManager>()?.GetEntity(Target) ?? null : null;
+        public IEntity? TargetEntity { get; }
     }
 }
