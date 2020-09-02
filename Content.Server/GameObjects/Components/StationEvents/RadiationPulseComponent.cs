@@ -18,18 +18,30 @@ namespace Content.Server.GameObjects.Components.StationEvents
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
-        private const float MinPulseLifespan = 0.8f;
-        private const float MaxPulseLifespan = 2.5f;
+        public float MinPulseLifespan { get; set; }
+        public float MaxPulseLifespan { get; set; }
+        public float DPS { get; set; }
+        public string Sound { get; set; }
 
-        public float DPS => _dps;
-        private float _dps;
+        /// <summary>
+        /// Radius of the pulse from its position
+        /// </summary>
+        public float Range { get; set; }
 
+        public bool Draw { get; set; }
+
+        private float _duration;
         private TimeSpan _endTime;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _dps, "dps", 40.0f);
+            serializer.DataField(this, x => x.DPS, "dps", 40.0f);
+            serializer.DataField(this, x => x.Sound, "sound", "/Audio/Weapons/Guns/Gunshots/laser3.ogg");
+            serializer.DataField(this, x => x.Range, "range", 5.0f);
+            serializer.DataField(this, x => x.Draw, "draw", true);
+            serializer.DataField(this, x => x.MaxPulseLifespan, "maxPulseLifespan", 2.5f);
+            serializer.DataField(this, x => x.MinPulseLifespan, "minPulseLifespan", 0.8f);
         }
 
         public override void Initialize()
@@ -37,29 +49,30 @@ namespace Content.Server.GameObjects.Components.StationEvents
             base.Initialize();
 
             var currentTime = _gameTiming.CurTime;
-            var duration  =
-                TimeSpan.FromSeconds(
-                    _random.NextFloat() * (MaxPulseLifespan - MinPulseLifespan) +
-                    MinPulseLifespan);
+            _duration = _random.NextFloat() * (MaxPulseLifespan - MinPulseLifespan) + MinPulseLifespan;
+            _endTime = currentTime + TimeSpan.FromSeconds(_duration);
 
-            _endTime = currentTime + duration;
+            if(!string.IsNullOrEmpty(Sound))
+                EntitySystem.Get<AudioSystem>().PlayAtCoords(Sound, Owner.Transform.GridPosition);
 
-            Timer.Spawn(duration,
-                () =>
-            {
-                if (!Owner.Deleted)
-                {
-                    Owner.Delete();
-                }
-            });
-
-            EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Weapons/Guns/Gunshots/laser3.ogg", Owner.Transform.GridPosition);
-            Dirty();
+            if(Draw)
+                Dirty();
         }
 
         public override ComponentState GetComponentState()
         {
-            return new RadiationPulseMessage(_endTime);
+            return new RadiationPulseState(_endTime, Range);
+        }
+
+        public void Update(float frameTime)
+        {
+            if (!Owner.Deleted)
+                return;
+
+            if(_duration <= 0f)
+                Owner.Delete();
+
+            _duration -= frameTime;
         }
     }
 }

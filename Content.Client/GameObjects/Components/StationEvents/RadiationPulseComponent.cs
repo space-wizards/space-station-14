@@ -9,16 +9,19 @@ namespace Content.Client.GameObjects.Components.StationEvents
     public sealed class RadiationPulseComponent : SharedRadiationPulseComponent
     {
         public TimeSpan EndTime { get; private set; }
-        
+
+        public float Range { get; private set; } = 0f;
+
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
-            if (!(curState is RadiationPulseMessage state))
+            if (!(curState is RadiationPulseState state))
             {
                 return;
             }
 
             EndTime = state.EndTime;
+            Range = state.Range;
         }
     }
 }
