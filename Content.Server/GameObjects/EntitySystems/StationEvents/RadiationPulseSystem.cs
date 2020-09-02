@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
     {
         private const string RadiationPrototype = "RadiationPulse";
 
-        public IEntity RadiationPulse(GridCoordinates coordinates, float range, int dps, float minPulseLifespan = 0.8f, float maxPulseLifespan = 2.5f, string sound = null)
+        public IEntity RadiationPulse(GridCoordinates coordinates, float range, int dps, bool decay = true, float minPulseLifespan = 0.8f, float maxPulseLifespan = 2.5f, string sound = null)
         {
             var radiationEntity = EntityManager.SpawnEntity(RadiationPrototype, coordinates);
             var radiation = radiationEntity.GetComponent<RadiationPulseComponent>();
@@ -33,6 +33,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
             radiation.Range = range;
             radiation.DPS = dps;
             radiation.Draw = false;
+            radiation.Decay = decay;
             radiation.MinPulseLifespan = minPulseLifespan;
             radiation.MaxPulseLifespan = maxPulseLifespan;
             radiation.Sound = sound;

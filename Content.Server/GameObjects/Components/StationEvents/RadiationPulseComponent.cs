@@ -18,6 +18,11 @@ namespace Content.Server.GameObjects.Components.StationEvents
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
+        /// <summary>
+        ///     Whether the entity will delete itself after a certain duration defined by
+        ///     <see cref="MinPulseLifespan"/> and <see cref="MaxPulseLifespan"/>
+        /// </summary>
+        public bool Decay { get; set; }
         public float MinPulseLifespan { get; set; }
         public float MaxPulseLifespan { get; set; }
         public float DPS { get; set; }
@@ -40,15 +45,19 @@ namespace Content.Server.GameObjects.Components.StationEvents
             serializer.DataField(this, x => x.Sound, "sound", "/Audio/Weapons/Guns/Gunshots/laser3.ogg");
             serializer.DataField(this, x => x.Range, "range", 5.0f);
             serializer.DataField(this, x => x.Draw, "draw", true);
+            serializer.DataField(this, x => x.Decay, "decay", true);
             serializer.DataField(this, x => x.MaxPulseLifespan, "maxPulseLifespan", 2.5f);
             serializer.DataField(this, x => x.MinPulseLifespan, "minPulseLifespan", 0.8f);
         }
 
         public void DoPulse()
         {
-            var currentTime = _gameTiming.CurTime;
-            _duration = _random.NextFloat() * (MaxPulseLifespan - MinPulseLifespan) + MinPulseLifespan;
-            _endTime = currentTime + TimeSpan.FromSeconds(_duration);
+            if (Decay)
+            {
+                var currentTime = _gameTiming.CurTime;
+                _duration = _random.NextFloat() * (MaxPulseLifespan - MinPulseLifespan) + MinPulseLifespan;
+                _endTime = currentTime + TimeSpan.FromSeconds(_duration);
+            }
 
             if(!string.IsNullOrEmpty(Sound))
                 EntitySystem.Get<AudioSystem>().PlayAtCoords(Sound, Owner.Transform.GridPosition);
@@ -64,7 +73,7 @@ namespace Content.Server.GameObjects.Components.StationEvents
 
         public void Update(float frameTime)
         {
-            if (!Owner.Deleted)
+            if (!Decay || !Owner.Deleted)
                 return;
 
             if(_duration <= 0f)
