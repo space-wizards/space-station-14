@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
@@ -37,6 +38,7 @@ namespace Content.Server.GameObjects.Components.Items.RCD
         public int _ammo; //How much "ammo" we have left. You can refill this with RCD ammo.
         [ViewVariables(VVAccess.ReadWrite)] private float _delay;
         private DoAfterSystem doAfterSystem;
+        private SparkSystem _sparkSystem = default!;
 
 
         ///Enum to store the different mode states for clarity.
@@ -61,6 +63,7 @@ namespace Content.Server.GameObjects.Components.Items.RCD
             base.Initialize();
             _ammo = maxAmmo;
             doAfterSystem = EntitySystem.Get<DoAfterSystem>();
+            _sparkSystem = EntitySystem.Get<SparkSystem>();
         }
 
         ///<summary>
@@ -84,6 +87,7 @@ namespace Content.Server.GameObjects.Components.Items.RCD
             int mode = (int) _mode; //Firstly, cast our RCDmode mode to an int (enums are backed by ints anyway by default)
             mode = (++mode) % _modes.Length; //Then, do a rollover on the value so it doesnt hit an invalid state
             _mode = (RcdMode) mode; //Finally, cast the newly acquired int mode to an RCDmode so we can use it.
+            _sparkSystem.CreateSparks(Owner.Transform.GridPosition, 5, 10);
             Owner.PopupMessage(eventArgs.User, Loc.GetString("The RCD is now set to {0} mode.", _mode)); //Prints an overhead message above the RCD
         }
 

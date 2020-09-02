@@ -175,6 +175,7 @@
             "ExtinguisherCabinet",
             "ExtinguisherCabinetFilled",
             "FireExtinguisher",
+            "Spark"
         };
     }
 }

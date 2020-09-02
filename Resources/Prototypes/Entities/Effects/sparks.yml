@@ -1,0 +1,21 @@
+- type: entity
+  name: sparks
+  id: SparkEffect
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.1,-0.1,0.1,0.1"
+      mask:
+      - Impassable
+    anchored: false
+  - type: Sprite
+    sprite: Effects/spark.rsi
+    layers:
+      - shader: unshaded
+      - state: spark
+  - type: Icon
+    sprite: Effects/spark.rsi
+    state: spark
+  - type: Spark
+    lifetime: 1
