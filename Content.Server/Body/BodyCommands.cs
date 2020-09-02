@@ -6,6 +6,8 @@ using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Damage;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
@@ -152,17 +154,18 @@ namespace Content.Server.Body
     {
         public string Command => "hurt";
         public string Description => "Ouch";
-        public string Help => $"Usage: {Command} <type> <amount> (<ignoreResistance>)";
+        public string Help => $"Usage: {Command} <type> <amount> (<entity uid/_>) (<ignoreResistance>)";
 
         public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
         {
-            if (args.Length < 2)
+            // Check if we have enough for the dmg types to show
+            if (args.Length < 1)
             {
                 shell.SendText(player, Help);
                 return;
             }
 
-            // Send all damage types if we can't parse
+            // Send all damage types if we can't parse (e.g. hurt ?)
             if (!Enum.TryParse<DamageClass>(args[0], true, out var type))
             {
                 shell.SendText(player, $"Damage Types:\n{string.Join('\n', Enum.GetNames(typeof(DamageClass)))}");
@@ -170,8 +173,10 @@ namespace Content.Server.Body
             }
 
             var ignoreResistance = false;
-            if (!int.TryParse(args[1], out var amount) ||
-                args.Length >= 3 && !bool.TryParse(args[2], out ignoreResistance))
+            var entityUid = player.AttachedEntityUid.HasValue ? player.AttachedEntityUid.Value : EntityUid.Invalid;
+            if (args.Length < 2 || !int.TryParse(args[1], out var amount) ||
+                args.Length >= 3 && args[2] != "_" && !EntityUid.TryParse(args[2], out entityUid) || 
+                args.Length >= 4 && !bool.TryParse(args[3], out ignoreResistance))
             {
                 shell.SendText(player, Help);
                 return;
@@ -183,15 +188,22 @@ namespace Content.Server.Body
                 return;
             }
 
-            if (player.AttachedEntity == null)
+            if (entityUid == EntityUid.Invalid)
             {
-                shell.SendText(player, "You have no entity.");
+                shell.SendText(player, "Not a valid entity.");
                 return;
             }
 
-            if (!player.AttachedEntity.TryGetComponent(out IDamageableComponent? damageable))
+            var ent = IoCManager.Resolve<IEntityManager>().GetEntity(entityUid);
+            if (ent == null)
             {
-                shell.SendText(player, "You can't be damaged.");
+                shell.SendText(player, "Entity couldn't be found.");
+                return;
+            }
+
+            if (!ent.TryGetComponent(out IDamageableComponent? damageable))
+            {
+                shell.SendText(player, "Entity can't be damaged.");
                 return;
             }
 
