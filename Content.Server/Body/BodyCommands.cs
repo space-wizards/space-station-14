@@ -165,11 +165,29 @@ namespace Content.Server.Body
                 return;
             }
 
+            bool fallback = false;
+            DamageType dmgType = default;
             // Send all damage types if we can't parse (e.g. hurt ?)
-            if (!Enum.TryParse<DamageClass>(args[0], true, out var type))
+            if (!Enum.TryParse<DamageClass>(args[0], true, out var dmgClass))
             {
-                shell.SendText(player, $"Damage Types:\n{string.Join('\n', Enum.GetNames(typeof(DamageClass)))}");
-                return;
+                // Fallback to DamageType
+                if (!Enum.TryParse(args[0], true, out dmgType))
+                {
+                    var msg = "";
+                    foreach (var dClass in Enum.GetNames(typeof(DamageClass)))
+                    {
+                        msg += $"\n{dClass}";
+                        var types = Enum.Parse<DamageClass>(dClass).ToTypes();
+                        foreach (var dType in types)
+                        {
+                            msg += $"\n - {dType}";
+                        }
+                    }
+                    shell.SendText(player, $"Damage Types:{msg}");
+                    return;
+                }
+                // Remember that we use DamageType not DamageClass
+                fallback = true;
             }
 
             var ignoreResistance = false;
@@ -207,7 +225,8 @@ namespace Content.Server.Body
                 return;
             }
 
-            if (!damageable.ChangeDamage(type, amount, ignoreResistance))
+            if (fallback && !damageable.ChangeDamage(dmgType, amount, ignoreResistance) ||
+                !damageable.ChangeDamage(dmgClass, amount, ignoreResistance))
             {
                 shell.SendText(player, "Something went wrong!");
             }
