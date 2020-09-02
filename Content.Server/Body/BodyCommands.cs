@@ -156,54 +156,44 @@ namespace Content.Server.Body
         public string Description => "Ouch";
         public string Help => $"Usage: {Command} <type> <amount> (<entity uid/_>) (<ignoreResistance>)";
 
+        private void SendDamageTypes(IConsoleShell shell, IPlayerSession? player)
+        {
+            var msg = "";
+            foreach (var dClass in Enum.GetNames(typeof(DamageClass)))
+            {
+                msg += $"\n{dClass}";
+                var types = Enum.Parse<DamageClass>(dClass).ToTypes();
+                foreach (var dType in types)
+                {
+                    msg += $"\n - {dType}";
+                }
+            }
+            shell.SendText(player, $"Damage Types:{msg}");
+        }
+
         public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
         {
             // Check if we have enough for the dmg types to show
-            if (args.Length < 1)
+            if (args.Length > 0 && args[0] == "?")
             {
-                shell.SendText(player, Help);
+                SendDamageTypes(shell, player);
                 return;
             }
 
-            bool fallback = false;
-            DamageType dmgType = default;
-            // Send all damage types if we can't parse (e.g. hurt ?)
-            if (!Enum.TryParse<DamageClass>(args[0], true, out var dmgClass))
+            // Not enough args
+            if (args.Length < 2)
             {
-                // Fallback to DamageType
-                if (!Enum.TryParse(args[0], true, out dmgType))
-                {
-                    var msg = "";
-                    foreach (var dClass in Enum.GetNames(typeof(DamageClass)))
-                    {
-                        msg += $"\n{dClass}";
-                        var types = Enum.Parse<DamageClass>(dClass).ToTypes();
-                        foreach (var dType in types)
-                        {
-                            msg += $"\n - {dType}";
-                        }
-                    }
-                    shell.SendText(player, $"Damage Types:{msg}");
-                    return;
-                }
-                // Remember that we use DamageType not DamageClass
-                fallback = true;
+                shell.SendText(player, Help);
+                return;
             }
 
             var ignoreResistance = false;
             var entityUid = player != null && player.AttachedEntityUid.HasValue ? player.AttachedEntityUid.Value : EntityUid.Invalid;
-            if (args.Length < 2 || !int.TryParse(args[1], out var amount) ||
+            if (!int.TryParse(args[1], out var amount) ||
                 args.Length >= 3 && args[2] != "_" && !EntityUid.TryParse(args[2], out entityUid) || 
                 args.Length >= 4 && !bool.TryParse(args[3], out ignoreResistance))
             {
                 shell.SendText(player, Help);
-                return;
-            }
-
-            // Enough parsing, do the actual checks and stuff
-            if (player == null)
-            {
-                shell.SendText(player, "Only a player can run this command.");
                 return;
             }
 
@@ -225,15 +215,22 @@ namespace Content.Server.Body
                 return;
             }
 
-            if (fallback)
-            {
-                if (!damageable.ChangeDamage(dmgType, amount, ignoreResistance))
-                    shell.SendText(player, "Something went wrong!");
-            }
-            else
+            if (Enum.TryParse<DamageClass>(args[0], true, out var dmgClass))
             {
                 if (!damageable.ChangeDamage(dmgClass, amount, ignoreResistance))
                     shell.SendText(player, "Something went wrong!");
+                return;
+            }
+            // Fall back to DamageType
+            else if (Enum.TryParse<DamageType>(args[0], true, out var dmgType))
+            {
+                if (!damageable.ChangeDamage(dmgType, amount, ignoreResistance))
+                    shell.SendText(player, "Something went wrong!");
+                return;
+            }
+            else
+            {
+                SendDamageTypes(shell, player);
             }
         }
     }
