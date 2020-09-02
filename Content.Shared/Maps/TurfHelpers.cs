@@ -106,9 +106,11 @@ namespace Content.Shared.Maps
 
              mapGrid.SetTile(tileRef.GridIndices, new Tile(plating.TileId));
 
+             var half = mapGrid.TileSize / 2f;
+
             //Actually spawn the relevant tile item at the right position and give it some random offset.
-            var tileItem = entityManager.SpawnEntity(tileDef.ItemDropPrototypeName, new GridCoordinates(indices.X, indices.Y, mapGrid));
-            tileItem.RandomOffset(0.5f);
+            var tileItem = entityManager.SpawnEntity(tileDef.ItemDropPrototypeName, indices.ToGridCoordinates(mapManager, tileRef.GridIndex).Offset(new Vector2(half, half)));
+            tileItem.RandomOffset(0.25f);
             return true;
         }
 
