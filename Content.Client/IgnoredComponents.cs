@@ -172,6 +172,9 @@
             "SignalTransmitter",
             "SignalButton",
             "SignalLinker",
+            "ExtinguisherCabinet",
+            "ExtinguisherCabinetFilled",
+            "FireExtinguisher",
         };
     }
 }
