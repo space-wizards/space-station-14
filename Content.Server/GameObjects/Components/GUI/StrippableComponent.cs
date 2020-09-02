@@ -1,15 +1,14 @@
 ﻿#nullable enable
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using Content.Server.GameObjects.Components.ActionBlocking;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
-using Content.Server.Interfaces;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.GUI;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
@@ -17,7 +16,6 @@ using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
@@ -27,11 +25,9 @@ namespace Content.Server.GameObjects.Components.GUI
     [RegisterComponent]
     public sealed class StrippableComponent : SharedStrippableComponent, IDragDrop
     {
-        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
-
         public const float StripDelay = 2f;
 
-        [ViewVariables] 
+        [ViewVariables]
 		private BoundUserInterface? UserInterface => Owner.GetUIOrNull(StrippingUiKey.Key);
 
         public override void Initialize()
@@ -46,7 +42,7 @@ namespace Content.Server.GameObjects.Components.GUI
             Owner.EnsureComponent<InventoryComponent>();
             Owner.EnsureComponent<HandsComponent>();
             Owner.EnsureComponent<CuffableComponent>();
-            
+
             if (Owner.TryGetComponent(out CuffableComponent? cuffed))
             {
                 cuffed.OnCuffedStateChanged += UpdateSubscribed;
@@ -104,7 +100,7 @@ namespace Content.Server.GameObjects.Components.GUI
         private Dictionary<EntityUid, string> GetHandcuffs()
         {
             var dictionary = new Dictionary<EntityUid, string>();
-            
+
             if (!Owner.TryGetComponent(out CuffableComponent? cuffed))
             {
                 return dictionary;
@@ -173,13 +169,13 @@ namespace Content.Server.GameObjects.Components.GUI
 
                 if (item == null)
                 {
-                    _notifyManager.PopupMessageCursor(user, Loc.GetString("You aren't holding anything!"));
+                    user.PopupMessageCursor(Loc.GetString("You aren't holding anything!"));
                     return false;
                 }
 
                 if (!userHands.CanDrop(userHands.ActiveHand!))
                 {
-                    _notifyManager.PopupMessageCursor(user, Loc.GetString("You can't drop that!"));
+                    user.PopupMessageCursor(Loc.GetString("You can't drop that!"));
                     return false;
                 }
 
@@ -188,13 +184,13 @@ namespace Content.Server.GameObjects.Components.GUI
 
                 if (inventory.TryGetSlotItem(slot, out ItemComponent _))
                 {
-                    _notifyManager.PopupMessageCursor(user, Loc.GetString("{0:They} already {0:have} something there!", Owner));
+                    user.PopupMessageCursor(Loc.GetString("{0:They} already {0:have} something there!", Owner));
                     return false;
                 }
 
                 if (!inventory.CanEquip(slot, item, false))
                 {
-                    _notifyManager.PopupMessageCursor(user, Loc.GetString("{0:They} cannot equip that there!", Owner));
+                    user.PopupMessageCursor(Loc.GetString("{0:They} cannot equip that there!", Owner));
                     return false;
                 }
 
@@ -238,13 +234,13 @@ namespace Content.Server.GameObjects.Components.GUI
 
                 if (item == null)
                 {
-                    _notifyManager.PopupMessageCursor(user, Loc.GetString("You aren't holding anything!"));
+                    user.PopupMessageCursor(Loc.GetString("You aren't holding anything!"));
                     return false;
                 }
 
                 if (!userHands.CanDrop(userHands.ActiveHand!))
                 {
-                    _notifyManager.PopupMessageCursor(user, Loc.GetString("You can't drop that!"));
+                    user.PopupMessageCursor(Loc.GetString("You can't drop that!"));
                     return false;
                 }
 
@@ -253,13 +249,13 @@ namespace Content.Server.GameObjects.Components.GUI
 
                 if (hands.TryGetItem(hand, out var _))
                 {
-                    _notifyManager.PopupMessageCursor(user, Loc.GetString("{0:They} already {0:have} something there!", Owner));
+                    user.PopupMessageCursor(Loc.GetString("{0:They} already {0:have} something there!", Owner));
                     return false;
                 }
 
                 if (!hands.CanPutInHand(item, hand, false))
                 {
-                    _notifyManager.PopupMessageCursor(user, Loc.GetString("{0:They} cannot put that there!", Owner));
+                    user.PopupMessageCursor(Loc.GetString("{0:They} cannot put that there!", Owner));
                     return false;
                 }
 
@@ -304,13 +300,13 @@ namespace Content.Server.GameObjects.Components.GUI
 
                 if (!inventory.TryGetSlotItem(slot, out ItemComponent itemToTake))
                 {
-                    _notifyManager.PopupMessageCursor(user, Loc.GetString("{0:They} {0:have} nothing there!", Owner));
+                    user.PopupMessageCursor(Loc.GetString("{0:They} {0:have} nothing there!", Owner));
                     return false;
                 }
 
                 if (!inventory.CanUnequip(slot, false))
                 {
-                    _notifyManager.PopupMessageCursor(user, Loc.GetString("{0:They} cannot unequip that!", Owner));
+                    user.PopupMessageCursor(Loc.GetString("{0:They} cannot unequip that!", Owner));
                     return false;
                 }
 
@@ -355,13 +351,13 @@ namespace Content.Server.GameObjects.Components.GUI
 
                 if (!hands.TryGetItem(hand, out var heldItem))
                 {
-                    _notifyManager.PopupMessageCursor(user, Loc.GetString("{0:They} {0:have} nothing there!", Owner));
+                    user.PopupMessageCursor(Loc.GetString("{0:They} {0:have} nothing there!", Owner));
                     return false;
                 }
 
                 if (!hands.CanDrop(hand, false))
                 {
-                    _notifyManager.PopupMessageCursor(user, Loc.GetString("{0:They} cannot drop that!", Owner));
+                    user.PopupMessageCursor(Loc.GetString("{0:They} cannot drop that!", Owner));
                     return false;
                 }
 

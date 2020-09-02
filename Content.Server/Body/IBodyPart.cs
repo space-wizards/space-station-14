@@ -54,12 +54,12 @@ namespace Content.Server.Body
         int CurrentDurability { get; }
 
         /// <summary>
-        ///     Collection of all <see cref="Mechanism"/>s currently inside this
+        ///     Collection of all <see cref="IMechanism"/>s currently inside this
         ///     <see cref="IBodyPart"/>.
         ///     To add and remove from this list see <see cref="AddMechanism"/> and
         ///     <see cref="RemoveMechanism"/>
         /// </summary>
-        IReadOnlyCollection<Mechanism> Mechanisms { get; }
+        IReadOnlyCollection<IMechanism> Mechanisms { get; }
 
         /// <summary>
         ///     Path to the RSI that represents this <see cref="IBodyPart"/>.
@@ -109,23 +109,23 @@ namespace Content.Server.Body
         bool CanAttachPart(IBodyPart part);
 
         /// <summary>
-        ///     Checks if a <see cref="Mechanism"/> can be installed on this
+        ///     Checks if a <see cref="IMechanism"/> can be installed on this
         ///     <see cref="IBodyPart"/>.
         /// </summary>
         /// <returns>True if it can be installed, false otherwise.</returns>
-        bool CanInstallMechanism(Mechanism mechanism);
+        bool CanInstallMechanism(IMechanism mechanism);
 
         /// <summary>
-        ///     Tries to remove the given <see cref="Mechanism"/> reference from
+        ///     Tries to remove the given <see cref="IMechanism"/> reference from
         ///     this <see cref="IBodyPart"/>.
         /// </summary>
         /// <returns>
         ///     The newly spawned <see cref="DroppedMechanismComponent"/>, or null
         ///     if there was an error in spawning the entity or removing the mechanism.
         /// </returns>
-        bool TryDropMechanism(IEntity dropLocation, Mechanism mechanismTarget,
+        bool TryDropMechanism(IEntity dropLocation, IMechanism mechanismTarget,
             [NotNullWhen(true)] out DroppedMechanismComponent dropped);
 
-        bool DestroyMechanism(Mechanism mechanism);
+        bool DestroyMechanism(IMechanism mechanism);
     }
 }

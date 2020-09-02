@@ -1,18 +1,17 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using System.Linq;
-using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Server.Body;
 using Content.Server.Utility;
 using Content.Shared.Body.Surgery;
+using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
 
@@ -24,8 +23,6 @@ namespace Content.Server.GameObjects.Components.Body
     [RegisterComponent]
     public class DroppedBodyPartComponent : Component, IAfterInteract, IBodyPartContainer
     {
-        [Dependency] private readonly ISharedNotifyManager _sharedNotifyManager = default!;
-
         private readonly Dictionary<int, object> _optionsCache = new Dictionary<int, object>();
         private BodyManagerComponent? _bodyManagerComponentCache;
         private int _idHash;
@@ -121,7 +118,7 @@ namespace Content.Server.GameObjects.Components.Body
             }
             else // If surgery cannot be performed, show message saying so.
             {
-                _sharedNotifyManager.PopupMessage(eventArgs.Target, eventArgs.User,
+                eventArgs.Target.PopupMessage(eventArgs.User,
                     Loc.GetString("You see no way to install {0:theName}.", Owner));
             }
         }
@@ -147,7 +144,7 @@ namespace Content.Server.GameObjects.Components.Body
             // TODO: sanity checks to see whether user is in range, user is still able-bodied, target is still the same, etc etc
             if (!_optionsCache.TryGetValue(key, out var targetObject))
             {
-                _sharedNotifyManager.PopupMessage(_bodyManagerComponentCache.Owner, _performerCache,
+                _bodyManagerComponentCache.Owner.PopupMessage(_performerCache,
                     Loc.GetString("You see no useful way to attach {0:theName} anymore.", Owner));
             }
 
@@ -163,10 +160,7 @@ namespace Content.Server.GameObjects.Components.Body
                 message = Loc.GetString("You can't attach it!");
             }
 
-            _sharedNotifyManager.PopupMessage(
-                _bodyManagerComponentCache.Owner,
-                _performerCache,
-                message);
+            _bodyManagerComponentCache.Owner.PopupMessage(_performerCache, message);
         }
 
         private void OpenSurgeryUI(IPlayerSession session)

@@ -126,8 +126,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             {
                 if (!reader.IsAllowed(user))
                 {
-                    IoCManager.Resolve<IServerNotifyManager>()
-                        .PopupMessage(Owner, user, Loc.GetString("Access denied"));
+                    Owner.PopupMessage(user, Loc.GetString("Access denied"));
                     return true;
                 }
             }

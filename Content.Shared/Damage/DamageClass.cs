@@ -12,7 +12,8 @@ namespace Content.Shared.Damage
         Brute,
         Burn,
         Toxin,
-        Airloss
+        Airloss,
+        Genetic
     }
 
     public static class DamageClassExtensions
@@ -20,10 +21,11 @@ namespace Content.Shared.Damage
         private static readonly ImmutableDictionary<DamageClass, List<DamageType>> ClassToType =
             new Dictionary<DamageClass, List<DamageType>>
             {
-                {DamageClass.Brute, new List<DamageType> {DamageType.Blunt, DamageType.Piercing}},
-                {DamageClass.Burn, new List<DamageType> {DamageType.Heat, DamageType.Disintegration}},
-                {DamageClass.Toxin, new List<DamageType> {DamageType.Cellular, DamageType.DNA}},
-                {DamageClass.Airloss, new List<DamageType> {DamageType.Asphyxiation}}
+                {DamageClass.Brute, new List<DamageType> {DamageType.Blunt, DamageType.Slash, DamageType.Piercing}},
+                {DamageClass.Burn, new List<DamageType> {DamageType.Heat, DamageType.Shock, DamageType.Cold}},
+                {DamageClass.Toxin, new List<DamageType> {DamageType.Poison, DamageType.Radiation}},
+                {DamageClass.Airloss, new List<DamageType> {DamageType.Asphyxiation, DamageType.Bloodloss}},
+                {DamageClass.Genetic, new List<DamageType> {DamageType.Cellular}}
             }.ToImmutableDictionary();
 
         public static List<DamageType> ToTypes(this DamageClass @class)
