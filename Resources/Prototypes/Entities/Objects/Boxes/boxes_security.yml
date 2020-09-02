@@ -30,10 +30,10 @@
   components:
   - type: StorageFill
     contents:
-      - Flashbang
-      - Flashbang
-      - Flashbang
-      - Flashbang
+      - GrenadeFlashBang
+      - GrenadeFlashBang
+      - GrenadeFlashBang
+      - GrenadeFlashBang
   - type: Sprite
     layers:
       - state: box_security
