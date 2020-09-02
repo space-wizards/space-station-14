@@ -1,9 +1,16 @@
 ﻿#nullable enable
+using System;
+using Content.Server.GameObjects.Components.Body;
+using Content.Server.GameObjects.Components.Medical;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs;
+using Content.Server.Utility;
+using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
+using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
@@ -14,6 +21,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
+using Serilog.Debugging;
 
 namespace Content.Server.GameObjects.Components.Mobs
 {
@@ -48,6 +56,45 @@ namespace Content.Server.GameObjects.Components.Mobs
         {
             get => _showExamineInfo;
             set => _showExamineInfo = value;
+        }
+
+        [ViewVariables]
+        private BoundUserInterface? UserInterface =>
+            Owner.GetUIOrNull(SharedAcceptCloningComponent.AcceptCloningUiKey.Key);
+
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            Owner.EntityManager.EventBus.SubscribeEvent<CloningPodComponent.CloningStartedMessage>(
+                EventSource.Local, this,
+                HandleCloningStartedMessage);
+
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += OnUiAcceptCloningMessage;
+            }
+        }
+
+        private void HandleCloningStartedMessage(CloningPodComponent.CloningStartedMessage ev)
+        {
+            if (ev.CapturedMind == Mind)
+            {
+                UserInterface?.Open(Mind.Session);
+            }
+        }
+
+        private void OnUiAcceptCloningMessage(ServerBoundUserInterfaceMessage obj)
+        {
+            if (!(obj.Message is SharedAcceptCloningComponent.UiButtonPressedMessage message)) return;
+            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new GhostComponent.GhostReturnMessage(Mind));
+        }
+
+        public override void OnRemove()
+        {
+            base.OnRemove();
+            Owner.EntityManager.EventBus.UnsubscribeEvent<CloningPodComponent.CloningStartedMessage>(EventSource.Local, this);
+            if (UserInterface != null) UserInterface.OnReceiveMessage -= OnUiAcceptCloningMessage;
         }
 
         /// <summary>
@@ -133,13 +180,19 @@ namespace Content.Server.GameObjects.Components.Mobs
             if (!HasMind)
             {
                 message.AddMarkup(!dead
-                    ? $"[color=red]" + Loc.GetString("{0:They} {0:are} totally catatonic. The stresses of life in deep-space must have been too much for {0:them}. Any recovery is unlikely.", Owner) + "[/color]"
+                    ? $"[color=red]" +
+                      Loc.GetString(
+                          "{0:They} {0:are} totally catatonic. The stresses of life in deep-space must have been too much for {0:them}. Any recovery is unlikely.",
+                          Owner) + "[/color]"
                     : $"[color=purple]" + Loc.GetString("{0:Their} soul has departed.", Owner) + "[/color]");
             }
             else if (Mind?.Session == null)
             {
-                if(!dead)
-                    message.AddMarkup("[color=yellow]" + Loc.GetString("{0:They} {0:have} a blank, absent-minded stare and appears completely unresponsive to anything. {0:They} may snap out of it soon.", Owner) + "[/color]");
+                if (!dead)
+                    message.AddMarkup("[color=yellow]" +
+                                      Loc.GetString(
+                                          "{0:They} {0:have} a blank, absent-minded stare and appears completely unresponsive to anything. {0:They} may snap out of it soon.",
+                                          Owner) + "[/color]");
             }
         }
     }
