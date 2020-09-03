@@ -73,7 +73,7 @@ namespace Content.Server.GameObjects.Components.StationEvents
 
         public void Update(float frameTime)
         {
-            if (!Decay || !Owner.Deleted)
+            if (!Decay || Owner.Deleted)
                 return;
 
             if(_duration <= 0f)
