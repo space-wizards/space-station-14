@@ -29,7 +29,7 @@ namespace Content.Shared.GameObjects.Components.GUI
                    && CanBeStripped(args.User);
         }
 
-        public abstract bool Dropped(DragDropEventArgs args);
+        public abstract bool Drop(DragDropEventArgs args);
 
         [NetSerializable, Serializable]
         public enum StrippingUiKey

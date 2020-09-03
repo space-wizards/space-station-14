@@ -148,8 +148,8 @@ namespace Content.Client.GameObjects.EntitySystems
                 var canDrag = false;
                 foreach (var draggable in entity.GetAllComponents<IDraggable>())
                 {
-                    var dragEventArgs = new CanDragEventArgs(args.Session.AttachedEntity, entity);
-                    if (draggable.CanBeDragged(dragEventArgs))
+                    var dragEventArgs = new StartDragDropEventArgs(args.Session.AttachedEntity, entity);
+                    if (draggable.CanStartDrag(dragEventArgs))
                     {
                         // wait to initiate a drag
                         _dragger = dragger;
@@ -202,19 +202,26 @@ namespace Content.Client.GameObjects.EntitySystems
             foreach (var entity in entities)
             {
                 // check if it's able to be dropped on by current dragged entity
-                var canDropArgs = new CanDropEventArgs(_dragger, _draggedEntity, entity);
-                var anyValidDraggable = _draggables.Any(draggable => draggable.CanDrop(canDropArgs));
+                var dropArgs = new DragDropEventArgs(_dragger, args.Coordinates, _draggedEntity, entity);
 
-                if (anyValidDraggable)
+                foreach (var draggable in _draggables)
                 {
+                    if (!draggable.CanDrop(dropArgs))
+                    {
+                        continue;
+                    }
+
                     // tell the server about the drop attempt
                     RaiseNetworkEvent(new DragDropMessage(args.Coordinates, _draggedEntity.Uid,
                         entity.Uid));
+
+                    draggable.Drop(dropArgs);
 
                     CancelDrag(false, null);
                     return true;
                 }
             }
+
             CancelDrag(false, null);
             return false;
         }
@@ -279,7 +286,7 @@ namespace Content.Client.GameObjects.EntitySystems
                     if (inRangeSprite.Visible == false) continue;
 
                     // check if it's able to be dropped on by current dragged entity
-                    var canDropArgs = new CanDropEventArgs(_dragger, _draggedEntity, pvsEntity);
+                    var canDropArgs = new CanDropEventArgs(_dragger,  _draggedEntity, pvsEntity);
                     var anyValidDraggable = _draggables.Any(draggable => draggable.CanDrop(canDropArgs));
 
                     if (anyValidDraggable)

@@ -51,7 +51,7 @@ namespace Content.Shared.GameObjects.Components.Movement
             return args.Target.HasComponent<IClimbable>();
         }
 
-        bool IDraggable.Dropped(DragDropEventArgs args)
+        bool IDraggable.Drop(DragDropEventArgs args)
         {
             return false;
         }

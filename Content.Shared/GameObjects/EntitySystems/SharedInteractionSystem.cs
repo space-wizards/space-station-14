@@ -447,7 +447,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             bool popup = false)
         {
             var user = args.User;
-            var dropped = args.Dropped;
+            var dropped = args.Dragged;
             var target = args.Target;
 
             if (!InRangeUnobstructed(user, target, range, collisionMask, predicate, ignoreInsideBlocker))

@@ -84,7 +84,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             foreach (var entity in _storage.ContainedEntities)
             {
                 var item = entity.GetComponent<StorableComponent>();
-                _storageUsed += item.ObjectSize;
+                _storageUsed += item.Size;
             }
         }
 
@@ -104,7 +104,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             }
 
             if (entity.TryGetComponent(out StorableComponent? store) &&
-                store.ObjectSize > _storageCapacityMax - _storageUsed)
+                store.Size > _storageCapacityMax - _storageUsed)
             {
                 return false;
             }
@@ -139,7 +139,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
             Logger.DebugS(LoggerName, $"Storage (UID {Owner.Uid}) had entity (UID {message.Entity.Uid}) inserted into it.");
 
-            _storageUsed += message.Entity.GetComponent<StorableComponent>().ObjectSize;
+            _storageUsed += message.Entity.GetComponent<StorableComponent>().Size;
 
             UpdateClientInventories();
         }
@@ -163,7 +163,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 return;
             }
 
-            _storageUsed -= storable.ObjectSize;
+            _storageUsed -= storable.Size;
 
             UpdateClientInventories();
         }

@@ -41,7 +41,7 @@ namespace Content.Server.GameObjects.Components
                 return false;
             }
 
-            var size = eventArgs.Using.GetComponent<ItemComponent>().ObjectSize;
+            var size = eventArgs.Using.GetComponent<ItemComponent>().Size;
 
             // TODO: use proper text macro system for this.
 

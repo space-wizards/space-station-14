@@ -250,12 +250,12 @@ namespace Content.Server.GameObjects.Components.Medical
 
         public bool CanDragDropOn(DragDropEventArgs eventArgs)
         {
-            return eventArgs.Dropped.HasComponent<BodyManagerComponent>();
+            return eventArgs.Dragged.HasComponent<BodyManagerComponent>();
         }
 
         public bool DragDropOn(DragDropEventArgs eventArgs)
         {
-            _bodyContainer.Insert(eventArgs.Dropped);
+            _bodyContainer.Insert(eventArgs.Dragged);
             return true;
         }
     }

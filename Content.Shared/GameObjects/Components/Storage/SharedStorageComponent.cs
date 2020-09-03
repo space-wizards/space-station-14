@@ -24,20 +24,15 @@ namespace Content.Shared.GameObjects.Components.Storage
         /// <returns>True if no longer in storage, false otherwise</returns>
         public abstract bool Remove(IEntity entity);
 
-        public bool CanDrop(CanDropEventArgs eventArgs)
+        public bool CanDrop(CanDropEventArgs args)
         {
-            return eventArgs.Target.TryGetComponent(out SharedPlaceableSurfaceComponent? placeable) &&
+            return args.Target.TryGetComponent(out SharedPlaceableSurfaceComponent? placeable) &&
                    placeable.IsPlaceable;
         }
 
-        public bool Dropped(DragDropEventArgs eventArgs)
+        public bool Drop(DragDropEventArgs eventArgs)
         {
             if (!ActionBlockerSystem.CanInteract(eventArgs.User))
-            {
-                return false;
-            }
-
-            if (!CanDrop(eventArgs))
             {
                 return false;
             }
