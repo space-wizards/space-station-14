@@ -281,7 +281,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         public void AddActiveTile(TileAtmosphere? tile)
         {
             if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return;
-            if (tile?.GridIndex != mapGrid.Grid.Index || tile?.Air == null) return;
+            if (tile?.GridIndex != mapGrid.Grid.Index) return;
             tile.Excited = true;
             _activeTiles.Add(tile);
         }
