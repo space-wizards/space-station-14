@@ -1,0 +1,43 @@
+﻿- type: entity
+  id: PipeDispenser
+  name: "pipe dispenser"
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Icon
+    sprite: Constructible/Power/VendingMachines/boozeomat.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/boozeomat.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Unlit"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+  - type: Collidable
+    anchored: true
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.25,0.4,0.25"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+    IsScrapingFloor: true
+  - type: SnapGrid
+    offset: Center
+  - type: PipeDispenser
+    inventory:
+      - DisposalPipe
+  - type: Anchorable
+  - type: UserInterface
+    interfaces:
+    - key: enum.PipeDispenserUiKey.Key
+      type: PipeDispenserBoundUserInterface
+  - type: PowerReceiver
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+      normalUnshaded: true
+      broken: true

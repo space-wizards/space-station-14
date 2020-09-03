@@ -74,6 +74,7 @@ namespace Content.Client
             factory.Register<SharedMicrowaveComponent>();
             factory.Register<SharedGravityGeneratorComponent>();
             factory.Register<SharedAMEControllerComponent>();
+            factory.Register<SharedPipeDispenserComponent>();
 
             prototypes.RegisterIgnore("material");
             prototypes.RegisterIgnore("reaction"); //Chemical reactions only needed by server. Reactions checks are server-side.
