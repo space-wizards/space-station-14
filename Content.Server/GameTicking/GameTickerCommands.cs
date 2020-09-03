@@ -301,7 +301,7 @@ namespace Content.Server.GameTicking
     {
         public string Command => "mapping";
         public string Description => "Creates and teleports you to a new uninitialized map for mapping.";
-        public string Help => $"Usage: {Command} <id> <mapname> / {Command} <mapname>";
+        public string Help => $"Usage: {Command} <mapname> / {Command} <id> <mapname>";
 
         public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
         {
