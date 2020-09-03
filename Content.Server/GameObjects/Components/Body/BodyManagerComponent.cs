@@ -35,6 +35,7 @@ namespace Content.Server.GameObjects.Components.Body
     [RegisterComponent]
     [ComponentReference(typeof(IDamageableComponent))]
     [ComponentReference(typeof(ISharedBodyManagerComponent))]
+    [ComponentReference(typeof(IBodyPartManager))]
     [ComponentReference(typeof(IBodyManagerComponent))]
     public partial class BodyManagerComponent : SharedBodyManagerComponent, IBodyPartContainer, IRelayMoveInput, IBodyManagerComponent
     {
