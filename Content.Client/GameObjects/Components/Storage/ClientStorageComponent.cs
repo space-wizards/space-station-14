@@ -27,7 +27,7 @@ namespace Content.Client.GameObjects.Components.Storage
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
-        private List<IEntity> _storedEntities;
+        private List<IEntity> _storedEntities = new List<IEntity>();
         private int StorageSizeUsed;
         private int StorageCapacityMax;
         private StorageWindow Window;
@@ -48,7 +48,7 @@ namespace Content.Client.GameObjects.Components.Storage
             base.OnRemove();
         }
 
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
             base.HandleComponentState(curState, nextState);
 
