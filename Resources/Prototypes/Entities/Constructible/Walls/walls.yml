@@ -28,6 +28,7 @@
   - type: Destructible
     deadThreshold: 500
     spawnOnDestroy: Girder
+    resistances: metallicResistances
   - type: Occluder
     sizeX: 32
     sizeY: 32

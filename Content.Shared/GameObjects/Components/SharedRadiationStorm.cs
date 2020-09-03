@@ -8,21 +8,32 @@ namespace Content.Shared.GameObjects.Components
     {
         public override string Name => "RadiationPulse";
         public override uint? NetID => ContentNetIDs.RADIATION_PULSE;
+
+        public virtual float DPS { get; set; }
+
+        /// <summary>
+        /// Radius of the pulse from its position
+        /// </summary>
+        public virtual float Range { get; set; }
+
+        public virtual TimeSpan EndTime { get; }
     }
 
     /// <summary>
     /// For syncing the pulse's lifespan between client and server for the overlay
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed class RadiationPulseState : ComponentState
+    public class RadiationPulseState : ComponentState
     {
-        public TimeSpan EndTime { get; }
-        public float Range { get; }
+        public readonly float DPS;
+        public readonly float Range;
+        public readonly TimeSpan EndTime;
 
-        public RadiationPulseState(TimeSpan endTime, float range) : base(ContentNetIDs.RADIATION_PULSE)
+        public RadiationPulseState(float dps, float range, TimeSpan endTime) : base(ContentNetIDs.RADIATION_PULSE)
         {
-            EndTime = endTime;
+            DPS = dps;
             Range = range;
+            EndTime = endTime;
         }
     }
 }

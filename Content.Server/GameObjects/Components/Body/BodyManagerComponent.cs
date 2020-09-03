@@ -6,9 +6,7 @@ using System.Linq;
 using Content.Server.Body;
 using Content.Server.Body.Network;
 using Content.Server.GameObjects.Components.Metabolism;
-using Content.Server.GameObjects.Components.StationEvents;
 using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces.GameObjects.Components;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Observer;
 using Content.Shared.Body.Part;
@@ -16,7 +14,6 @@ using Content.Shared.Body.Part.Properties.Movement;
 using Content.Shared.Body.Part.Properties.Other;
 using Content.Shared.Body.Preset;
 using Content.Shared.Body.Template;
-using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Movement;
@@ -43,7 +40,7 @@ namespace Content.Server.GameObjects.Components.Body
     [ComponentReference(typeof(IDamageableComponent))]
     [ComponentReference(typeof(ISharedBodyManagerComponent))]
     [ComponentReference(typeof(IBodyManagerComponent))]
-    public class BodyManagerComponent : SharedBodyManagerComponent, IBodyPartContainer, IRelayMoveInput, IBodyManagerComponent, IRadiationAct
+    public class BodyManagerComponent : SharedBodyManagerComponent, IBodyPartContainer, IRelayMoveInput, IBodyManagerComponent
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IBodyNetworkFactory _bodyNetworkFactory = default!;
@@ -940,13 +937,6 @@ namespace Content.Server.GameObjects.Components.Body
         }
 
         #endregion
-
-        public void RadiationAct(float frameTime, RadiationPulseComponent radiation)
-        {
-            var totalDamage = Math.Max((int)(frameTime * radiation.DPS), 1);
-
-            ChangeDamage(DamageType.Radiation, totalDamage, false, radiation.Owner);
-        }
     }
 
     public interface IBodyManagerHealthChangeParams

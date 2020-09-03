@@ -8,35 +8,56 @@ using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
-using Robust.Shared.Timers;
 
 namespace Content.Server.GameObjects.Components.StationEvents
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedRadiationPulseComponent))]
     public sealed class RadiationPulseComponent : SharedRadiationPulseComponent
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+
+        private float _duration;
+        private float _dps;
+        private float _range;
+        private TimeSpan _endTime;
 
         /// <summary>
         ///     Whether the entity will delete itself after a certain duration defined by
         ///     <see cref="MinPulseLifespan"/> and <see cref="MaxPulseLifespan"/>
         /// </summary>
         public bool Decay { get; set; }
+
         public float MinPulseLifespan { get; set; }
+
         public float MaxPulseLifespan { get; set; }
-        public float DPS { get; set; }
+
+        public override float DPS
+        {
+            get => _dps;
+            set
+            {
+                _dps = value;
+                Dirty();
+            }
+        }
+
         public string Sound { get; set; }
 
-        /// <summary>
-        /// Radius of the pulse from its position
-        /// </summary>
-        public float Range { get; set; }
+        public override float Range
+        {
+            get => _range;
+            set
+            {
+                _range = value;
+                Dirty();
+            }
+        }
 
         public bool Draw { get; set; }
 
-        private float _duration;
-        private TimeSpan _endTime;
+        public override TimeSpan EndTime => _endTime;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -68,7 +89,7 @@ namespace Content.Server.GameObjects.Components.StationEvents
 
         public override ComponentState GetComponentState()
         {
-            return new RadiationPulseState(_endTime, Range);
+            return new RadiationPulseState(_dps, _range, _endTime);
         }
 
         public void Update(float frameTime)

@@ -8,6 +8,7 @@ using Content.Shared.Damage;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.Interfaces.GameObjects.Components;
 using JetBrains.Annotations;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
