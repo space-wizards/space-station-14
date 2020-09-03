@@ -32,6 +32,8 @@ namespace Content.Server.GameObjects.Components.Atmos
     public class GridAtmosphereComponent : Component, IGridAtmosphereComponent
     {
         [Robust.Shared.IoC.Dependency] private IMapManager _mapManager = default!;
+        [Robust.Shared.IoC.Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
+        [Robust.Shared.IoC.Dependency] private IServerEntityManager _serverEntityManager = default!;
 
         /// <summary>
         ///     Check current execution time every n instances processed.
@@ -160,17 +162,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             if (IsSpace(indices) || IsAirBlocked(indices)) return;
 
             var mapGrid = mapGridComponent.Grid;
-            var tile = mapGrid.GetTileRef(indices).Tile;
-
-            var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
-            var tileDef = (ContentTileDefinition)tileDefinitionManager[tile.TypeId];
-
-            var underplating = tileDefinitionManager["underplating"];
-            mapGrid.SetTile(indices, new Tile(underplating.TileId));
-
-            //Actually spawn the relevant tile item at the right position and give it some offset to the corner.
-            var tileItem = IoCManager.Resolve<IServerEntityManager>().SpawnEntity(tileDef.ItemDropPrototypeName, new GridCoordinates(indices.X, indices.Y, mapGrid));
-            tileItem.Transform.WorldPosition += (0.2f, 0.2f);
+            indices.PryTile(mapGrid.Index, _mapManager, _tileDefinitionManager, _serverEntityManager);
         }
 
         public override void Initialize()
@@ -289,7 +281,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         public void AddActiveTile(TileAtmosphere? tile)
         {
             if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return;
-            if (tile?.GridIndex != mapGrid.Grid.Index || tile?.Air == null) return;
+            if (tile?.GridIndex != mapGrid.Grid.Index) return;
             tile.Excited = true;
             _activeTiles.Add(tile);
         }
@@ -755,7 +747,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 _currentRunPipeNetDevice = new Queue<PipeNetDeviceComponent>(_pipeNetDevices);
 
             var number = 0;
-            while (_currentRunPipeNet.Count > 0)
+            while (_currentRunPipeNetDevice.Count > 0)
             {
                 var device = _currentRunPipeNetDevice.Dequeue();
                 device.Update();

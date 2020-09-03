@@ -9,6 +9,7 @@
             "Breakable",
             "Pickaxe",
             "Interactable",
+            "CloningPod",
             "Destructible",
             "Temperature",
             "Explosive",
@@ -58,7 +59,6 @@
             "AccessReader",
             "IdCardConsole",
             "Airlock",
-            "MedicalScanner",
             "WirePlacer",
             "Drink",
             "Food",
@@ -163,9 +163,18 @@
             "AMEFuelContainer",
             "AMEShield",
             "DebugPump",
+            "PressurePump",
+            "VolumePump",
             "DebugVent",
             "DebugSiphon",
-            //"PipeDispenser"
+            "SignalReceiver",
+            "SignalSwitch",
+            "SignalTransmitter",
+            "SignalButton",
+            "SignalLinker",
+            "ExtinguisherCabinet",
+            "ExtinguisherCabinetFilled",
+            "FireExtinguisher",
         };
     }
 }

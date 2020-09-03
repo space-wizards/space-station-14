@@ -35,4 +35,11 @@ namespace Content.Shared.GameObjects.Components.Observer
     {
         public ReturnToBodyComponentMessage() => Directed = true;
     }
+
+
+    [Serializable, NetSerializable]
+    public class ReturnToCloneComponentMessage : ComponentMessage
+    {
+        public ReturnToCloneComponentMessage() => Directed = true;
+    }
 }

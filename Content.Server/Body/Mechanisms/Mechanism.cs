@@ -12,13 +12,13 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Body.Mechanisms
 {
     /// <summary>
-    ///     Data class representing a persistent item inside a <see cref="BodyPart"/>.
+    ///     Data class representing a persistent item inside a <see cref="IBodyPart"/>.
     ///     This includes livers, eyes, cameras, brains, explosive implants,
     ///     binary communicators, and other things.
     /// </summary>
-    public class Mechanism
+    public class Mechanism : IMechanism
     {
-        private BodyPart? _part;
+        private IBodyPart? _part;
 
         public Mechanism(MechanismPrototype data)
         {
@@ -29,7 +29,7 @@ namespace Content.Server.Body.Mechanisms
             ExamineMessage = null!;
             RSIPath = null!;
             RSIState = null!;
-            Behaviors = new List<MechanismBehavior>();
+            _behaviors = new List<MechanismBehavior>();
         }
 
         [ViewVariables] private bool Initialized { get; set; }
@@ -40,78 +40,33 @@ namespace Content.Server.Body.Mechanisms
 
         [ViewVariables] public string Name { get; set; }
 
-        /// <summary>
-        ///     Professional description of the <see cref="Mechanism"/>.
-        /// </summary>
-        [ViewVariables]
-        public string Description { get; set; }
+        [ViewVariables] public string Description { get; set; }
 
-        /// <summary>
-        ///     The message to display upon examining a mob with this Mechanism installed.
-        ///     If the string is empty (""), no message will be displayed.
-        /// </summary>
-        [ViewVariables]
-        public string ExamineMessage { get; set; }
+        [ViewVariables] public string ExamineMessage { get; set; }
 
-        /// <summary>
-        ///     Path to the RSI that represents this <see cref="Mechanism"/>.
-        /// </summary>
-        [ViewVariables]
-        public string RSIPath { get; set; }
+        [ViewVariables] public string RSIPath { get; set; }
 
-        /// <summary>
-        ///     RSI state that represents this <see cref="Mechanism"/>.
-        /// </summary>
-        [ViewVariables]
-        public string RSIState { get; set; }
+        [ViewVariables] public string RSIState { get; set; }
 
-        /// <summary>
-        ///     Max HP of this <see cref="Mechanism"/>.
-        /// </summary>
-        [ViewVariables]
-        public int MaxDurability { get; set; }
+        [ViewVariables] public int MaxDurability { get; set; }
 
-        /// <summary>
-        ///     Current HP of this <see cref="Mechanism"/>.
-        /// </summary>
-        [ViewVariables]
-        public int CurrentDurability { get; set; }
+        [ViewVariables] public int CurrentDurability { get; set; }
 
-        /// <summary>
-        ///     At what HP this <see cref="Mechanism"/> is completely destroyed.
-        /// </summary>
-        [ViewVariables]
-        public int DestroyThreshold { get; set; }
+        [ViewVariables] public int DestroyThreshold { get; set; }
 
-        /// <summary>
-        ///     Armor of this <see cref="Mechanism"/> against attacks.
-        /// </summary>
-        [ViewVariables]
-        public int Resistance { get; set; }
+        [ViewVariables] public int Resistance { get; set; }
 
-        /// <summary>
-        ///     Determines a handful of things - mostly whether this
-        ///     <see cref="Mechanism"/> can fit into a <see cref="BodyPart"/>.
-        /// </summary>
-        [ViewVariables]
-        public int Size { get; set; }
+        [ViewVariables] public int Size { get; set; }
 
-        /// <summary>
-        ///     What kind of <see cref="BodyPart"/> this <see cref="Mechanism"/> can be
-        ///     easily installed into.
-        /// </summary>
-        [ViewVariables]
-        public BodyPartCompatibility Compatibility { get; set; }
+        [ViewVariables] public BodyPartCompatibility Compatibility { get; set; }
 
-        /// <summary>
-        ///     The behaviors that this <see cref="Mechanism"/> performs.
-        /// </summary>
-        [ViewVariables]
-        private List<MechanismBehavior> Behaviors { get; }
+        private readonly List<MechanismBehavior> _behaviors;
 
-        public BodyManagerComponent? Body => Part?.Body;
+        [ViewVariables] public IReadOnlyList<MechanismBehavior> Behaviors => _behaviors;
 
-        public BodyPart? Part
+        public IBodyManagerComponent? Body => Part?.Body;
+
+        public IBodyPart? Part
         {
             get => _part;
             set
@@ -167,7 +122,7 @@ namespace Content.Server.Body.Mechanisms
             Size = data.Size;
             Compatibility = data.Compatibility;
 
-            foreach (var behavior in Behaviors.ToArray())
+            foreach (var behavior in _behaviors.ToArray())
             {
                 RemoveBehavior(behavior);
             }
@@ -202,7 +157,7 @@ namespace Content.Server.Body.Mechanisms
             }
         }
 
-        public void RemovedFromBody(BodyManagerComponent old)
+        public void RemovedFromBody(IBodyManagerComponent old)
         {
             foreach (var behavior in Behaviors)
             {
@@ -210,10 +165,6 @@ namespace Content.Server.Body.Mechanisms
             }
         }
 
-        /// <summary>
-        ///     This method is called by <see cref="BodyPart.PreMetabolism"/> before
-        ///     <see cref="MetabolismComponent.Update"/> is called.
-        /// </summary>
         public void PreMetabolism(float frameTime)
         {
             foreach (var behavior in Behaviors)
@@ -222,10 +173,6 @@ namespace Content.Server.Body.Mechanisms
             }
         }
 
-        /// <summary>
-        ///     This method is called by <see cref="BodyPart.PostMetabolism"/> after
-        ///     <see cref="MetabolismComponent.Update"/> is called.
-        /// </summary>
         public void PostMetabolism(float frameTime)
         {
             foreach (var behavior in Behaviors)
@@ -234,16 +181,21 @@ namespace Content.Server.Body.Mechanisms
             }
         }
 
-        private void AddBehavior(MechanismBehavior behavior)
+        public void AddBehavior(MechanismBehavior behavior)
         {
-            Behaviors.Add(behavior);
+            _behaviors.Add(behavior);
             behavior.Initialize(this);
         }
 
-        private bool RemoveBehavior(MechanismBehavior behavior)
+        public bool RemoveBehavior(MechanismBehavior behavior)
         {
-            behavior.Remove();
-            return Behaviors.Remove(behavior);
+            if (_behaviors.Remove(behavior))
+            {
+                behavior.Remove();
+                return true;
+            }
+
+            return false;
         }
     }
 }

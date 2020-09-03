@@ -86,17 +86,3 @@
     wireType: Apc
   - type: Destructible
     spawnondestroy: ApcExtensionCableStack1
-
-#Depriciated, to be removed from maps
-
-- type: entity
-  id: Wire
-  name: Depriciated Wire
-  parent: ApcExtensionCable
-  components:
-  - type: NodeContainer
-    nodes:
-    - !type:AdjacentNode
-      nodeGroupID: HVPower
-    - !type:AdjacentNode
-      nodeGroupID: Apc

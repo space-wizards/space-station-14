@@ -19,6 +19,9 @@ namespace Content.Server.GameObjects.Components.Movement
     [RegisterComponent, ComponentReference(typeof(IMoverComponent))]
     public class AiControllerComponent : Component, IMoverComponent
     {
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IGameTicker _gameTicker = default!;
+
         private string? _logicName;
         private float _visionRadius;
 
@@ -36,7 +39,7 @@ namespace Content.Server.GameObjects.Components.Movement
         }
 
         public AiLogicProcessor? Processor { get; set; }
-        
+
         [ViewVariables(VVAccess.ReadWrite)]
         public string? StartingGearPrototype { get; set; }
 
@@ -61,13 +64,13 @@ namespace Content.Server.GameObjects.Components.Movement
         protected override void Startup()
         {
             base.Startup();
-            
+
             if (StartingGearPrototype != null)
             {
-                var startingGear = IoCManager.Resolve<IPrototypeManager>().Index<StartingGearPrototype>(StartingGearPrototype);
-                IoCManager.Resolve<IGameTicker>().EquipStartingGear(Owner, startingGear);
+                var startingGear = _prototypeManager.Index<StartingGearPrototype>(StartingGearPrototype);
+                _gameTicker.EquipStartingGear(Owner, startingGear);
             }
-            
+
         }
 
         /// <inheritdoc />
@@ -77,7 +80,7 @@ namespace Content.Server.GameObjects.Components.Movement
 
             serializer.DataField(ref _logicName, "logic", null);
             serializer.DataReadWriteFunction(
-                "startingGear", 
+                "startingGear",
                 null,
                 startingGear => StartingGearPrototype = startingGear,
                 () => StartingGearPrototype);

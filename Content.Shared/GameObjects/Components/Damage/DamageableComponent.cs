@@ -27,6 +27,8 @@ namespace Content.Shared.GameObjects.Components.Damage
 
         private DamageState _currentDamageState;
 
+        private DamageFlag _flags;
+
         public event Action<HealthChangedEventArgs>? HealthChangedEvent;
 
         /// <summary>
@@ -79,6 +81,8 @@ namespace Content.Shared.GameObjects.Components.Damage
                 {
                     EnterState(value);
                 }
+
+                Dirty();
             }
         }
 
@@ -87,6 +91,36 @@ namespace Content.Shared.GameObjects.Components.Damage
         public IReadOnlyDictionary<DamageClass, int> DamageClasses => Damage.DamageClasses;
 
         public IReadOnlyDictionary<DamageType, int> DamageTypes => Damage.DamageTypes;
+
+        public DamageFlag Flags
+        {
+            get => _flags;
+            private set
+            {
+                if (_flags == value)
+                {
+                    return;
+                }
+
+                _flags = value;
+                Dirty();
+            }
+        }
+
+        public void AddFlag(DamageFlag flag)
+        {
+            Flags |= flag;
+        }
+
+        public bool HasFlag(DamageFlag flag)
+        {
+            return Flags.HasFlag(flag);
+        }
+
+        public void RemoveFlag(DamageFlag flag)
+        {
+            Flags &= ~flag;
+        }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -103,6 +137,35 @@ namespace Content.Shared.GameObjects.Components.Damage
                 -1,
                 t => DeadThreshold = t == -1 ? (int?) null : t,
                 () => DeadThreshold ?? -1);
+
+            serializer.DataReadWriteFunction(
+                "flags",
+                new List<DamageFlag>(),
+                flags =>
+                {
+                    var result = DamageFlag.None;
+
+                    foreach (var flag in flags)
+                    {
+                        result |= flag;
+                    }
+
+                    Flags = result;
+                },
+                () =>
+                {
+                    var writeFlags = new List<DamageFlag>();
+
+                    foreach (var flag in (DamageFlag[]) Enum.GetValues(typeof(DamageFlag)))
+                    {
+                        if ((Flags & flag) == flag)
+                        {
+                            writeFlags.Add(flag);
+                        }
+                    }
+
+                    return writeFlags;
+                });
 
             if (serializer.Reading)
             {
@@ -151,6 +214,11 @@ namespace Content.Shared.GameObjects.Components.Damage
             IEntity? source = null,
             HealthChangeParams? extraParams = null)
         {
+            if (amount > 0 && HasFlag(DamageFlag.Invulnerable))
+            {
+                return false;
+            }
+
             if (Damage.SupportsDamageType(type))
             {
                 var finalDamage = amount;
@@ -171,6 +239,11 @@ namespace Content.Shared.GameObjects.Components.Damage
             IEntity? source = null,
             HealthChangeParams? extraParams = null)
         {
+            if (amount > 0 && HasFlag(DamageFlag.Invulnerable))
+            {
+                return false;
+            }
+
             if (Damage.SupportsDamageClass(@class))
             {
                 var types = @class.ToTypes();
@@ -250,6 +323,11 @@ namespace Content.Shared.GameObjects.Components.Damage
         public bool SetDamage(DamageType type, int newValue, IEntity? source = null,
             HealthChangeParams? extraParams = null)
         {
+            if (newValue >= TotalDamage && HasFlag(DamageFlag.Invulnerable))
+            {
+                return false;
+            }
+
             if (Damage.SupportsDamageType(type))
             {
                 Damage.SetDamageValue(type, newValue);
@@ -289,17 +367,20 @@ namespace Content.Shared.GameObjects.Components.Damage
 
         protected virtual void OnHealthChanged(HealthChangedEventArgs e)
         {
-            if (DeadThreshold != -1 && TotalDamage > DeadThreshold)
+            if (CurrentDamageState != DamageState.Dead)
             {
-                CurrentDamageState = DamageState.Dead;
-            }
-            else if (CriticalThreshold != -1 && TotalDamage > CriticalThreshold)
-            {
-                CurrentDamageState = DamageState.Critical;
-            }
-            else
-            {
-                CurrentDamageState = DamageState.Alive;
+                if (DeadThreshold != -1 && TotalDamage > DeadThreshold)
+                {
+                    CurrentDamageState = DamageState.Dead;
+                }
+                else if (CriticalThreshold != -1 && TotalDamage > CriticalThreshold)
+                {
+                    CurrentDamageState = DamageState.Critical;
+                }
+                else
+                {
+                    CurrentDamageState = DamageState.Alive;
+                }
             }
 
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, e);

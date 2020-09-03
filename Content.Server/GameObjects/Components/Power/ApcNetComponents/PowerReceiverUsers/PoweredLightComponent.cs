@@ -4,7 +4,6 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.Damage;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -32,6 +31,8 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
     [RegisterComponent]
     public class PoweredLightComponent : Component, IInteractHand, IInteractUsing, IMapInit, ISignalReceiver
     {
+        [Dependency] private IGameTiming _gameTiming = default!;
+
         public override string Name => "PoweredLight";
 
         private static readonly TimeSpan _thunkDelay = TimeSpan.FromSeconds(2);
@@ -41,6 +42,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
         private LightBulbType BulbType = LightBulbType.Tube;
         [ViewVariables] private ContainerSlot _lightBulbContainer;
+
         [ViewVariables]
         private LightBulbComponent LightBulb
         {
@@ -63,8 +65,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                 case BeginDeconstructCompMsg msg:
                     if (!msg.BlockDeconstruct && !(_lightBulbContainer.ContainedEntity is null))
                     {
-                        var notifyManager = IoCManager.Resolve<IServerNotifyManager>();
-                        notifyManager.PopupMessage(Owner, msg.User, "Remove the bulb.");
+                        Owner.PopupMessage(msg.User, Loc.GetString("Remove the bulb."));
                         msg.BlockDeconstruct = true;
                     }
                     break;
@@ -211,7 +212,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                         sprite.LayerSetState(0, "on");
                         light.Enabled = true;
                         light.Color = LightBulb.Color;
-                        var time = IoCManager.Resolve<IGameTiming>().CurTime;
+                        var time = _gameTiming.CurTime;
                         if (time > _lastThunk + _thunkDelay)
                         {
                             _lastThunk = time;

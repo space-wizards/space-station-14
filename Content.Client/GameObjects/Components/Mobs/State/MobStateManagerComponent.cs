@@ -54,7 +54,7 @@ namespace Content.Client.GameObjects.Components.Mobs.State
             }
 
             _currentDamageState = state.DamageState;
-            CurrentMobState.ExitState(Owner);
+            CurrentMobState?.ExitState(Owner);
             CurrentMobState = Behavior[CurrentDamageState];
             CurrentMobState.EnterState(Owner);
         }
