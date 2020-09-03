@@ -189,7 +189,7 @@
   name: bread (slice)
   parent: FoodBase
   id: FoodBreadSlice
-  description:
+  description: A slice of bread.
   components:
   - type: Food
     trash: TrashPlate
@@ -207,7 +207,7 @@
   name: banana bread (slice)
   parent: FoodBase
   id: FoodBananaBreadSlice
-  description:
+  description: A slice of delicious banana bread.
   components:
   - type: Food
     trash: TrashPlate
@@ -329,7 +329,7 @@
   name: brain cake (slice)
   parent: FoodBase
   id: FoodBrainCakeSlice
-  description: ''
+  description: Braaains.
   components:
   - type: Food
     trash: TrashPlate

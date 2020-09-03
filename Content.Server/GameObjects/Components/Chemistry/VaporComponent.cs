@@ -76,7 +76,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 foreach (var tile in tiles)
                 {
                     var pos = tile.GridIndices.ToGridCoordinates(_mapManager, tile.GridIndex);
-                    SpillHelper.SpillAt(pos, contents.SplitSolution(amount), "PuddleSmear", false); //make non PuddleSmear?
+                    contents.SplitSolution(amount).SpillAt(pos, "PuddleSmear", false); // TODO: Make non PuddleSmear?
                 }
             }
 

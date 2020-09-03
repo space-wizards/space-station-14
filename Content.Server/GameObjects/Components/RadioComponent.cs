@@ -14,6 +14,7 @@ namespace Content.Server.GameObjects.Components
     class RadioComponent : Component, IUse, IListen
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+        [Dependency] private readonly IChatManager _chatManager = default!;
 
         public override string Name => "Radio";
 
@@ -51,8 +52,7 @@ namespace Content.Server.GameObjects.Components
 
         public void Speaker(string message)
         {
-            var chat = IoCManager.Resolve<IChatManager>();
-            chat.EntitySay(Owner, message);
+            _chatManager.EntitySay(Owner, message);
         }
 
         public bool UseEntity(UseEntityEventArgs eventArgs)

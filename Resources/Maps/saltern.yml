@@ -500,7 +500,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 51
-  type: bone_saw
+  type: BoneSaw
   components:
   - parent: 857
     pos: 19.49593,-21.552101
@@ -565,7 +565,7 @@ entities:
   - anchored: False
     type: Collidable
 - uid: 58
-  type: scalpel
+  type: Scalpel
   components:
   - parent: 857
     pos: 19.190952,-21.29313
@@ -594,7 +594,7 @@ entities:
   - anchored: False
     type: Collidable
 - uid: 61
-  type: retractor
+  type: Retractor
   components:
   - parent: 857
     pos: 19.482815,-21.853302
@@ -621,7 +621,7 @@ entities:
   - deadThreshold: 100
     type: Destructible
 - uid: 64
-  type: drill
+  type: Drill
   components:
   - parent: 857
     pos: 19.515043,-22.566078
@@ -646,7 +646,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 67
-  type: hemostat
+  type: Hemostat
   components:
   - parent: 857
     pos: 19.655668,-21.300453

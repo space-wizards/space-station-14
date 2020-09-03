@@ -53,12 +53,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             if (_toolComponentNeeded && !await tool!.UseTool(user, null, 0f,  ToolQuality.Prying))
                 return;
 
-            var underplating = _tileDefinitionManager["underplating"];
-            mapGrid.SetTile(clickLocation, new Tile(underplating.TileId));
-
-            //Actually spawn the relevant tile item at the right position and give it some offset to the corner.
-            var tileItem = Owner.EntityManager.SpawnEntity(tileDef.ItemDropPrototypeName, coordinates);
-            tileItem.Transform.WorldPosition += (0.2f, 0.2f);
+            coordinates.PryTile(_mapManager, _tileDefinitionManager, Owner.EntityManager);
         }
     }
 }
