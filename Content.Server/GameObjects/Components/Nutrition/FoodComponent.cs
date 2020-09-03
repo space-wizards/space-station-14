@@ -41,7 +41,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         {
             get
             {
-                if (!Owner.TryGetComponent(out SolutionComponent? solution))
+                if (!Owner.TryGetComponent(out SolutionContainerComponent? solution))
                 {
                     return 0;
                 }
@@ -83,7 +83,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         public override void Initialize()
         {
             base.Initialize();
-            Owner.EnsureComponent<SolutionComponent>();
+            Owner.EnsureComponent<SolutionContainerComponent>();
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
@@ -110,7 +110,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         public virtual bool TryUseFood(IEntity? user, IEntity? target, UtensilComponent? utensilUsed = null)
         {
-            if (!Owner.TryGetComponent(out SolutionComponent? solution))
+            if (!Owner.TryGetComponent(out SolutionContainerComponent? solution))
             {
                 return false;
             }

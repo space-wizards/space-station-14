@@ -14,9 +14,9 @@
     - type: Item
       sprite: Objects/Misc/fire_extinguisher.rsi
       size: 10
-    - type: Solution
+    - type: SolutionContainer
       maxVol: 1000
-      caps: 9
+      caps: AddTo, RemoveFrom, NoExamine
       contents:
         reagents:
           - ReagentId: chem.H2O

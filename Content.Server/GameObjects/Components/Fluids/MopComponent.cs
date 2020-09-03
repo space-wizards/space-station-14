@@ -22,14 +22,14 @@ namespace Content.Server.GameObjects.Components.Fluids
     {
         public override string Name => "Mop";
 
-        public SolutionComponent? Contents => Owner.GetComponentOrNull<SolutionComponent>();
+        public SolutionContainerComponent? Contents => Owner.GetComponentOrNull<SolutionContainerComponent>();
 
         public ReagentUnit MaxVolume
         {
-            get => Owner.GetComponentOrNull<SolutionComponent>()?.MaxVolume ?? ReagentUnit.Zero;
+            get => Owner.GetComponentOrNull<SolutionContainerComponent>()?.MaxVolume ?? ReagentUnit.Zero;
             set
             {
-                if (Owner.TryGetComponent(out SolutionComponent? solution))
+                if (Owner.TryGetComponent(out SolutionContainerComponent? solution))
                 {
                     solution.MaxVolume = value;
                 }
@@ -37,7 +37,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         }
 
         public ReagentUnit CurrentVolume =>
-            Owner.GetComponentOrNull<SolutionComponent>()?.CurrentVolume ?? ReagentUnit.Zero;
+            Owner.GetComponentOrNull<SolutionContainerComponent>()?.CurrentVolume ?? ReagentUnit.Zero;
 
         // Currently there's a separate amount for pickup and dropoff so
         // Picking up a puddle requires multiple clicks
@@ -60,15 +60,15 @@ namespace Content.Server.GameObjects.Components.Fluids
         {
             base.Initialize();
 
-            if (!Owner.EnsureComponent(out SolutionComponent _))
+            if (!Owner.EnsureComponent(out SolutionContainerComponent _))
             {
-                Logger.Warning($"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(SolutionComponent)}");
+                Logger.Warning($"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(SolutionContainerComponent)}");
             }
         }
 
         void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (!Owner.TryGetComponent(out SolutionComponent? contents)) return;
+            if (!Owner.TryGetComponent(out SolutionContainerComponent? contents)) return;
             if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true)) return;
 
             if (CurrentVolume <= 0)
@@ -76,7 +76,6 @@ namespace Content.Server.GameObjects.Components.Fluids
                 return;
             }
 
-            //Solution solution;
             if (eventArgs.Target == null)
             {
                 // Drop the liquid on the mop on to the ground
@@ -98,7 +97,7 @@ namespace Content.Server.GameObjects.Components.Fluids
 
             if (transferAmount == 0)
             {
-                if(puddleComponent.EmptyHolder) //The puddle doesn't actually *have* reagents, for example vomit because there's no "vomit" reagent.
+                if (puddleComponent.EmptyHolder) //The puddle doesn't actually *have* reagents, for example vomit because there's no "vomit" reagent.
                 {
                     puddleComponent.Owner.Delete();
                     transferAmount = ReagentUnit.Min(ReagentUnit.New(5), CurrentVolume);

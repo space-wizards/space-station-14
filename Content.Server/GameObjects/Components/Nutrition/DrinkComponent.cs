@@ -35,7 +35,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         public override string Name => "Drink";
 
         [ViewVariables]
-        private SolutionComponent _contents;
+        private SolutionContainerComponent _contents;
         [ViewVariables]
         private string _useSound;
         [ViewVariables]
@@ -56,9 +56,9 @@ namespace Content.Server.GameObjects.Components.Nutrition
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _useSound, "useSound", "/Audio/Items/drink.ogg");
-            serializer.DataField(ref _defaultToOpened, "isOpen", false); //For things like cups of coffee.
-            serializer.DataField(ref _soundCollection, "openSounds","canOpenSounds");
-            serializer.DataField(ref _pressurized, "pressurized",false);
+            serializer.DataField(ref _defaultToOpened, "isOpen", false); // For things like cups of coffee.
+            serializer.DataField(ref _soundCollection, "openSounds", "canOpenSounds");
+            serializer.DataField(ref _pressurized, "pressurized", false);
             serializer.DataField(ref _burstSound, "burstSound", "/Audio/Effects/flash_bang.ogg");
         }
 
@@ -66,14 +66,13 @@ namespace Content.Server.GameObjects.Components.Nutrition
         {
             base.Initialize();
             Owner.TryGetComponent(out _appearanceComponent);
-            if(!Owner.TryGetComponent(out _contents))
+
+            if (!Owner.TryGetComponent(out _contents))
             {
-                _contents = Owner.AddComponent<SolutionComponent>();
+                _contents = Owner.AddComponent<SolutionContainerComponent>();
             }
 
-            _contents.Capabilities = SolutionCaps.PourIn
-                                     | SolutionCaps.PourOut
-                                     | SolutionCaps.Injectable;
+            _contents.Capabilities = SolutionContainerCaps.AddTo | SolutionContainerCaps.RemoveFrom;
             Opened = _defaultToOpened;
             UpdateAppearance();
         }
@@ -83,11 +82,11 @@ namespace Content.Server.GameObjects.Components.Nutrition
             UpdateAppearance();
         }
 
-
         private void UpdateAppearance()
         {
             _appearanceComponent?.SetData(SharedFoodComponent.FoodVisuals.Visual, _contents.CurrentVolume.Float());
         }
+
         bool IUse.UseEntity(UseEntityEventArgs args)
         {
             if (!Opened)
@@ -100,13 +99,20 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 Opened = true;
                 return false;
             }
+
+            if (_contents.CurrentVolume.Float() <= 0)
+            {
+                args.User.PopupMessage(Loc.GetString("{0:theName} is empty!", Owner));
+                return true;
+            }
+
             return TryUseDrink(args.User);
         }
 
         //Force feeding a drink to someone.
         void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            TryUseDrink(eventArgs.Target);
+            TryUseDrink(eventArgs.Target, forced: true);
         }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
@@ -118,25 +124,28 @@ namespace Content.Server.GameObjects.Components.Nutrition
             var color = Empty ? "gray" : "yellow";
             var openedText = Loc.GetString(Empty ? "Empty" : "Opened");
             message.AddMarkup(Loc.GetString("[color={0}]{1}[/color]", color, openedText));
-
         }
 
-        private bool TryUseDrink(IEntity target)
+        private bool TryUseDrink(IEntity target, bool forced = false)
         {
-            if (target == null)
+            if (target == null || !_contents.CanRemoveSolutions)
             {
                 return false;
             }
 
             if (!Opened)
             {
-                target.PopupMessage(Loc.GetString("Open it first!"));
+                target.PopupMessage(Loc.GetString("Open {0:theName} first!", Owner));
                 return false;
             }
 
             if (_contents.CurrentVolume.Float() <= 0)
             {
-                target.PopupMessage(Loc.GetString("It's empty!"));
+                if (!forced)
+                {
+                    target.PopupMessage(Loc.GetString("{0:theName} is empty!", Owner));
+                }
+                
                 return false;
             }
 
@@ -147,18 +156,23 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             var transferAmount = ReagentUnit.Min(TransferAmount, _contents.CurrentVolume);
             var split = _contents.SplitSolution(transferAmount);
+
             if (stomachComponent.TryTransferSolution(split))
             {
-                if (_useSound == null) return false;
+                if (_useSound == null)
+                {
+                    return false;
+                }
+
                 EntitySystem.Get<AudioSystem>().PlayFromEntity(_useSound, target, AudioParams.Default.WithVolume(-2f));
                 target.PopupMessage(Loc.GetString("Slurp"));
                 UpdateAppearance();
                 return true;
             }
 
-            //Stomach was full or can't handle whatever solution we have.
+            // Stomach was full or can't handle whatever solution we have.
             _contents.TryAddSolution(split);
-            target.PopupMessage(Loc.GetString("You've had enough {0}!", Owner.Name));
+            target.PopupMessage(Loc.GetString("You've had enough {0:theName}!", Owner));
             return false;
         }
 
@@ -167,7 +181,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             if (_pressurized &&
                 !Opened &&
                 _random.Prob(0.25f) &&
-                Owner.TryGetComponent(out SolutionComponent component))
+                Owner.TryGetComponent(out SolutionContainerComponent component))
             {
                 Opened = true;
 

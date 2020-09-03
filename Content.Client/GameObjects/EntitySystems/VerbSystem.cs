@@ -320,7 +320,11 @@ namespace Content.Client.GameObjects.EntitySystems
                 button.Icon = data.Icon.Frame0();
             }
 
-            if (!data.Disabled)
+            if (data.Disabled)
+            {
+                button.Modulate = Color.FromHex("#999999"); // grey it out slightly since it's disabled
+            }
+            else
             {
                 button.OnPressed += _ =>
                 {

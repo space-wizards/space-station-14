@@ -18,9 +18,9 @@
   - type: Hunger
   - type: Thirst
   # Organs
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 250
-    caps: 32
+    caps: AddTo, RemoveFrom, NoExamine
   - type: Bloodstream
     max_volume: 100
   - type: Stomach

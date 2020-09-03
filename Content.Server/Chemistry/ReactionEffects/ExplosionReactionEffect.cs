@@ -40,7 +40,7 @@ namespace Content.Server.Chemistry.ReactionEffects
             float floatIntensity = (float)intensity;
             if (solutionEntity == null)
                 return;
-            if(!solutionEntity.TryGetComponent(out SolutionComponent solution))
+            if(!solutionEntity.TryGetComponent(out SolutionContainerComponent solution))
                 return;
 
             //Handle scaling

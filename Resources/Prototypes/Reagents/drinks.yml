@@ -2,6 +2,7 @@
   id: chem.Whiskey
   name: whiskey
   desc: An alcoholic beverage made from fermented grain mash
+  visualDesc: a light brown
   color: "#664300"
   spritePath: whiskeyglass.rsi
 
@@ -9,13 +10,15 @@
   id: chem.Ale
   name: ale
   desc: A type of beer brewed using a warm fermentation method, resulting in a sweet, full-bodied and fruity taste.
-  color: "#664300"
+  visualDesc: a bubbly amber
+  color: "#663100"
   spritePath: aleglass.rsi
 
 - type: reagent
   id: chem.Wine
   name: wine
   desc: An alcoholic drink made from fermented grapes
+  visualDesc: a deep red
   color: "#7E4043"
   spritePath: wineglass.rsi
 
@@ -23,19 +26,22 @@
   id: chem.Beer
   name: beer
   desc: A cold pint of pale lager.
-  color: "#664300"
+  visualDesc: a bubbly, pale yellow
+  color: "#cfa85f"
   spritePath: beerglass.rsi
 
 - type: reagent
   id: chem.Vodka
   name: vodka
   desc: The glass contain wodka. Xynta.
+  visualDesc: a clear
   color: "#664300"
 
 - type: reagent
   id: chem.Kahlua
   name: kahlua
   desc: A widely known, Mexican coffee-flavoured liqueur. In production since 1936!
+  visualDesc: a cloudy brown
   color: "#664300"
   spritePath: kahluaglass.rsi
 
@@ -43,6 +49,7 @@
   id: chem.Cognac
   name: cognac
   desc: A sweet and strongly alcoholic drink, twice distilled and left to mature for several years. Classy as fornication.
+  visualDesc: an amber
   color: "#AB3C05"
   spritePath: cognacglass.rsi
 
@@ -50,6 +57,7 @@
   id: chem.ManlyDorf
   name: manly dorf
   desc: A dwarfy concoction made from ale and beer. Intended for stout dwarves only.
+  visualDesc: a bubbly pale brown
   color: "#664300"
   spritePath: manlydorfglass.rsi
 
@@ -57,6 +65,7 @@
   id: chem.CubaLibre
   name: cuba libre
   desc: A classic mix of rum and cola.
+  visualDesc: a bubbly brown
   color: "#3E1B00"
   spritePath: cubalibreglass.rsi
 
@@ -64,6 +73,7 @@
   id: chem.IrishCarBomb
   name: irish car bomb
   desc: A troubling mixture of irish cream and ale.
+  visualDesc: a bubbly brown
   color: "#2E6671"
   spritePath: irishcarbomb.rsi
 
@@ -71,6 +81,7 @@
   id: chem.IrishCoffee
   name: irish coffee
   desc: Coffee served with irish cream. Regular cream just isn't the same!
+  visualDesc: a brown
   color: "#664300"
   spritePath: irishcoffeeglass.rsi
 
@@ -78,6 +89,7 @@
   id: chem.IrishCream
   name: irish cream
   desc: Whiskey-imbued cream. What else could you expect from the Irish.
+  visualDesc: a pale brown
   color: "#664300"
   spritePath: irishcreamglass.rsi
 
@@ -85,6 +97,7 @@
   id: chem.B52
   name: b-52
   desc: Coffee, irish cream, and cognac. You will get bombed.
+  visualDesc: a cloudy, light brown
   color: "#664300"
   spritePath: b52glass.rsi
 
@@ -92,6 +105,7 @@
   id: chem.AtomicBomb
   name: atomic bomb
   desc: Nuclear proliferation never tasted so good.
+  visualDesc: a dark yellow
   color: "#666300"
   spritePath: atomicbombglass.rsi
 
@@ -99,6 +113,7 @@
   id: chem.WhiskeyCola
   name: whiskey cola
   desc: An innocent-looking mixture of cola and whiskey. Delicious.
+  visualDesc: a brown
   color: "#3E1B00"
   spritePath: whiskeycolaglass.rsi
 
@@ -106,6 +121,7 @@
   id: chem.SyndicateBomb
   name: syndicate bomb
   desc: Somebody set us up the bomb!
+  visualDesc: a dark blue
   color: "#2E6671"
   spritePath: syndicatebomb.rsi
 
@@ -113,15 +129,16 @@
   id: chem.Antifreeze
   name: antifreeze
   desc: The ultimate refreshment.
-  color: "#664300"
+  visualDesc: a light red
+  color: "#ff7d63"
   spritePath: antifreeze.rsi
-
 
 - type: reagent
   id: chem.Cola
   name: cola
   desc: A sweet, carbonated soft drink. Caffeine free.
-  color: "#100800"
+  visualDesc: a bubbly brown
+  color: "#422912"
   metabolism:
     - !type:DefaultDrink
       rate: 1
@@ -130,6 +147,7 @@
   id: chem.Coffee
   name: coffee
   desc: A drink made from brewed coffee beans. Contains a moderate amount of caffeine.
+  visualDesc: a dark brown
   color: "#664300"
   metabolism:
     - !type:DefaultDrink
@@ -139,7 +157,8 @@
   id: chem.Tea
   name: tea
   desc: A made by boiling leaves of the tea tree, Camellia sinensis.
-  color: "#101000"
+  visualDesc: an amber
+  color: "#8a5a3a"
   metabolism:
     - !type:DefaultDrink
       rate: 1
@@ -148,6 +167,7 @@
   id: chem.Cream
   name: cream
   desc: The fatty, still liquid part of milk. Why don't you mix this with sum scotch, eh?
+  visualDesc: a white
   color: "#DFD7AF"
   metabolism:
     - !type:DefaultDrink
@@ -157,6 +177,7 @@
   id: chem.Milk
   name: milk
   desc: An opaque white liquid produced by the mammary glands of mammals.
+  visualDesc: a white
   color: "#DFDFDF"
   metabolism:
     - !type:DefaultDrink
@@ -166,6 +187,7 @@
   id: chem.Lean
   name: lean
   desc: Turn up for days
+  visualDesc: a bubbly purple
   color: "#9400D3"
   metabolism:
     - !type:DefaultDrink

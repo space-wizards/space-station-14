@@ -2,6 +2,7 @@
   id: chem.Flour
   name: flour
   desc: Used for baking.
+  visualDesc: a powdery white
   color: "#FFFFFF"
   metabolism:
     - !type:DefaultFood

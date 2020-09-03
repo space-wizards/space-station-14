@@ -48,7 +48,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         private bool _welderLit;
         private WelderSystem _welderSystem = default!;
         private SpriteComponent? _spriteComponent;
-        private SolutionComponent? _solutionComponent;
+        private SolutionContainerComponent? _solutionComponent;
         private PointLightComponent? _pointLightComponent;
 
         public string? WeldSoundCollection { get; set; }
