@@ -279,16 +279,11 @@ namespace Content.Server.GameObjects.Components.Body
 
             if (speedSum <= 0.001f || _activeLegs.Count <= 0)
             {
-                // Case: no way of moving. Fall down.
-                EntitySystem.Get<StandingStateSystem>().Down(Owner);
                 playerMover.BaseWalkSpeed = 0.8f;
                 playerMover.BaseSprintSpeed = 2.0f;
             }
             else
             {
-                // Case: have at least one leg. Set move speed.
-                EntitySystem.Get<StandingStateSystem>().Standing(Owner);
-
                 // Extra legs stack diminishingly.
                 // Final speed = speed sum/(leg count-log4(leg count))
                 playerMover.BaseWalkSpeed =
@@ -568,28 +563,10 @@ namespace Content.Server.GameObjects.Components.Body
         {
             DebugTools.AssertNotNull(part);
 
-            if (!_parts.ContainsValue(part))
-            {
-                return;
-            }
+            var slotName = _parts.FirstOrDefault(x => x.Value == part).Key;
+            if (string.IsNullOrEmpty(slotName)) return;
+            DisconnectBodyPart(slotName, dropEntity);
 
-            var slotName = Parts.FirstOrDefault(x => x.Value == part).Key;
-            RemoveBodyPart(slotName, dropEntity);
-
-            // Call disconnect on all limbs that were hanging off this limb
-            if (TryGetBodyPartConnections(slotName, out List<string> connections))
-            {
-                // TODO: Optimize
-                foreach (var connectionName in connections)
-                {
-                    if (TryGetBodyPart(connectionName, out var result) && !ConnectedToCenterPart(result))
-                    {
-                        DisconnectBodyPart(connectionName, dropEntity);
-                    }
-                }
-            }
-
-            OnBodyChanged();
         }
 
         /// <summary>
@@ -755,6 +732,21 @@ namespace Content.Server.GameObjects.Components.Body
                 var mechanismMessage = new MechanismSpriteRemovedMessage(mechanismEnum);
 
                 SendNetworkMessage(mechanismMessage);
+            }
+
+            if (CurrentDamageState == DamageState.Dead) return true;
+
+            // creadth: fall down if no legs
+            if (part.PartType == BodyPartType.Leg && Parts.Count(x => x.Value.PartType == BodyPartType.Leg) == 0)
+            {
+                EntitySystem.Get<StandingStateSystem>().Down(Owner);
+            }
+
+            // creadth: immediately kill entity if last vital part removed
+            if (part.IsVital && Parts.Count(x => x.Value.PartType == part.PartType) == 0)
+            {
+                CurrentDamageState = DamageState.Dead;
+                ForceHealthChangedEvent();
             }
 
             return true;
