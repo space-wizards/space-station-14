@@ -33,6 +33,8 @@ namespace Content.Shared.Body.Part
         private string _rsiState;
         private int _size;
         private string _surgeryDataName;
+        private bool _isVital;
+
 
         [ViewVariables] public string Name => _name;
 
@@ -66,6 +68,8 @@ namespace Content.Shared.Body.Part
 
         [ViewVariables] public string ID => _id;
 
+        [ViewVariables] public bool IsVital => _isVital;
+
         public virtual void LoadFrom(YamlMappingNode mapping)
         {
             var serializer = YamlObjectSerializer.NewReader(mapping);
@@ -86,6 +90,7 @@ namespace Content.Shared.Body.Part
             serializer.DataField(ref _resistanceSetId, "resistances", string.Empty);
             serializer.DataField(ref _properties, "properties", new List<IExposeData>());
             serializer.DataField(ref _mechanisms, "mechanisms", new List<string>());
+            serializer.DataField(ref _isVital, "isVital", false);
 
             foreach (var property in _properties)
             {

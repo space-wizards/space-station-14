@@ -82,6 +82,11 @@ namespace Content.Server.Body
         // TODO: SpriteComponent rework
         public Color? RSIColor { get; set; }
 
+        /// <summary>
+        /// If body part is vital
+        /// </summary>
+        public bool IsVital { get; }
+
         bool HasProperty<T>() where T : BodyPartProperty;
 
         bool HasProperty(Type type);

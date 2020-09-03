@@ -33,6 +33,7 @@
   damageContainer: biologicalDamageContainer
   resistances: defaultResistances
   surgeryDataType: Content.Server.Body.Surgery.BiologicalSurgeryData
+  isVital: true
   mechanisms:
   - mechanism.Brain.BasicHuman
   - mechanism.Eyes.BasicHuman
