@@ -319,15 +319,14 @@ namespace Content.Server.GameTicking
                 case 1:
                     if (player.AttachedEntity == null)
                     {
-                        shell.SendText(player, "The map id argument cannot be omitted if you have no entity.");
+                        shell.SendText(player, "The map name argument cannot be omitted if you have no entity.");
                         return;
                     }
 
                     var mapManager = IoCManager.Resolve<IMapManager>();
-                    // TODO: Engine PR
-
-                    shell.SendText(player, "Not currently supported.");
-                    return;
+                    mapId = (int) mapManager.NextMapId();
+                    mapName = args[0];
+                    break;
                 case 2:
                     if (!int.TryParse(args[0], out var id))
                     {
