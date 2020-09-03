@@ -17,6 +17,21 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
     public abstract class BasePumpComponent : PipeNetDeviceComponent
     {
         /// <summary>
+        ///     If the pump is currently pumping.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool PumpEnabled
+        {
+            get => _pumpEnabled;
+            set
+            {
+                _pumpEnabled = value;
+                UpdateAppearance();
+            }
+        }
+        private bool _pumpEnabled = true;
+
+        /// <summary>
         ///     Needs to be same <see cref="PipeDirection"/> as that of a <see cref="Pipe"/> on this entity.
         /// </summary>
         [ViewVariables]
@@ -67,6 +82,9 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
 
         public override void Update()
         {
+            if (!PumpEnabled)
+                return;
+
             PumpGas(_inletPipe.Air, _outletPipe.Air);
         }
 
@@ -74,7 +92,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
 
         private void UpdateAppearance()
         {
-            _appearance?.SetData(PumpVisuals.VisualState, new PumpVisualState(_inletDirection, _outletDirection, _inletPipe.ConduitLayer, _outletPipe.ConduitLayer));
+            _appearance?.SetData(PumpVisuals.VisualState, new PumpVisualState(_inletDirection, _outletDirection, _inletPipe.ConduitLayer, _outletPipe.ConduitLayer, PumpEnabled));
         }
     }
 }

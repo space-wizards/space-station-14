@@ -15,7 +15,7 @@ namespace Content.Server.AI.Utility.Considerations.Combat.Melee
                 return 0.0f;
             }
 
-            return meleeWeaponComponent.CooldownTime / 10.0f;
+            return meleeWeaponComponent.ArcCooldownTime / 10.0f;
         }
     }
 }

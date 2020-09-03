@@ -10,6 +10,7 @@ using Content.Shared.GameObjects.Components.Conveyor;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -170,7 +171,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
 
                 Owner.AddComponent<ItemComponent>();
                 _group?.RemoveConveyor(this);
-                Owner.Transform.WorldPosition += (_random.NextFloat() * 0.4f - 0.2f, _random.NextFloat() * 0.4f - 0.2f);
+                Owner.RandomOffset(0.2f);
 
                 return true;
             }

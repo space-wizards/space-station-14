@@ -12,6 +12,11 @@ namespace Content.Client.GameObjects.Components.MedicalScanner
         {
             base.OnChangeData(component);
 
+            if (component.Owner.Deleted)
+            {
+                return;
+            }
+
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
             if (!component.TryGetData(MedicalScannerVisuals.Status, out MedicalScannerStatus status)) return;
             sprite.LayerSetState(MedicalScannerVisualLayers.Machine, StatusToMachineStateId(status));

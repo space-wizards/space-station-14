@@ -3,8 +3,6 @@
   name: "signal switch"
   components:
   - type: Clickable
-    bounds:
-      all: -0.25,-0.375,0.25,0.375
   - type: InteractionOutline
   - type: Collidable
   - type: Sprite
@@ -24,8 +22,6 @@
   name: "signal button"
   components:
   - type: Clickable
-    bounds:
-      all: -0.25,-0.375,0.25,0.375
   - type: InteractionOutline
   - type: Collidable
   - type: Sprite

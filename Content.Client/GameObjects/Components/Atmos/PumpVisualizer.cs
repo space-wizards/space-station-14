@@ -12,7 +12,7 @@ using Robust.Shared.Utility;
 using System;
 using YamlDotNet.RepresentationModel;
 
-namespace Content.Client.GameObjects.Components.Disposal
+namespace Content.Client.GameObjects.Components.Atmos
 {
     [UsedImplicitly]
     public class PumpVisualizer : AppearanceVisualizer
@@ -60,11 +60,26 @@ namespace Content.Client.GameObjects.Components.Disposal
             sprite.LayerSetRSI(basePumpLayer, _pumpRSI);
             sprite.LayerSetState(basePumpLayer, pumpBaseState);
             sprite.LayerSetVisible(basePumpLayer, true);
+
+
+
+            var pumpEnabledAnimationState = "pumpEnabled";
+            pumpEnabledAnimationState += pumpVisualState.InletDirection.ToString();
+            pumpEnabledAnimationState += ((int) pumpVisualState.InletConduitLayer).ToString();
+            pumpEnabledAnimationState += pumpVisualState.OutletDirection.ToString();
+            pumpEnabledAnimationState += ((int) pumpVisualState.OutletConduitLayer).ToString();
+
+            sprite.LayerMapReserveBlank(Layer.PumpEnabled);
+            var pumpEnabledAnimationLayer = sprite.LayerMapGet(Layer.PumpEnabled);
+            sprite.LayerSetRSI(pumpEnabledAnimationLayer, _pumpRSI);
+            sprite.LayerSetState(pumpEnabledAnimationLayer, pumpEnabledAnimationState);
+            sprite.LayerSetVisible(pumpEnabledAnimationLayer, pumpVisualState.PumpEnabled);
         }
 
         private enum Layer
         {
-            PumpBase
+            PumpBase,
+            PumpEnabled,
         }
     }
 }

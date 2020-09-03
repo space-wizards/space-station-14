@@ -38,10 +38,10 @@ namespace Content.Server.Body.Surgery
         public abstract string GetDescription(IEntity target);
 
         /// <summary>
-        ///     Returns whether a <see cref="Mechanism"/> can be installed into the
+        ///     Returns whether a <see cref="IMechanism"/> can be installed into the
         ///     <see cref="IBodyPart"/> this <see cref="SurgeryData"/> represents.
         /// </summary>
-        public abstract bool CanInstallMechanism(Mechanism mechanism);
+        public abstract bool CanInstallMechanism(IMechanism mechanism);
 
         /// <summary>
         ///     Returns whether the given <see cref="IBodyPart"/> can be connected to the
