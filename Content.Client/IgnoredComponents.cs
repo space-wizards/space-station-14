@@ -32,7 +32,6 @@
             "Wrench",
             "Crowbar",
             "MeleeWeapon",
-            "Storable",
             "Dice",
             "Construction",
             "Door",

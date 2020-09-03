@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Client.GameObjects.Components.Items;
-using Content.Client.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects.Components.Storage;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.Player;
@@ -22,12 +23,16 @@ namespace Content.Client.GameObjects.Components.Storage
     /// Client version of item storage containers, contains a UI which displays stored entities and their size
     /// </summary>
     [RegisterComponent]
-    public class ClientStorageComponent : SharedStorageComponent, IClientDraggable
+    public class ClientStorageComponent : SharedStorageComponent, IDraggable
     {
-        private Dictionary<EntityUid, int> StoredEntities { get; set; } = new Dictionary<EntityUid, int>();
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+
+        private List<IEntity> _storedEntities;
         private int StorageSizeUsed;
         private int StorageCapacityMax;
         private StorageWindow Window;
+
+        public override IReadOnlyList<IEntity> StoredEntities => _storedEntities;
 
         public override void OnAdd()
         {
@@ -41,6 +46,20 @@ namespace Content.Client.GameObjects.Components.Storage
         {
             Window.Dispose();
             base.OnRemove();
+        }
+
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+        {
+            base.HandleComponentState(curState, nextState);
+
+            if (!(curState is StorageComponentState state))
+            {
+                return;
+            }
+
+            _storedEntities = state.StoredEntities
+                .Select(id => _entityManager.GetEntity(id))
+                .ToList();
         }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
@@ -69,7 +88,7 @@ namespace Content.Client.GameObjects.Components.Storage
         /// <param name="storagestate"></param>
         private void HandleStorageMessage(StorageHeldItemsMessage storagestate)
         {
-            StoredEntities = new Dictionary<EntityUid, int>(storagestate.StoredEntities);
+            _storedEntities = storagestate.StoredEntities.Select(id => _entityManager.GetEntity(id)).ToList();
             StorageSizeUsed = storagestate.StorageSizeUsed;
             StorageCapacityMax = storagestate.StorageSizeMax;
             Window.BuildEntityList();
@@ -95,6 +114,17 @@ namespace Content.Client.GameObjects.Components.Storage
         private void Interact(EntityUid entityuid)
         {
             SendNetworkMessage(new RemoveEntityMessage(entityuid));
+        }
+
+        public override bool Remove(IEntity entity)
+        {
+            if (_storedEntities.Remove(entity))
+            {
+                Dirty();
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -197,19 +227,22 @@ namespace Content.Client.GameObjects.Components.Storage
 
                 var storagelist = StorageEntity.StoredEntities;
 
-                foreach (var entityuid in storagelist)
+                foreach (var entity in storagelist)
                 {
-                    var entity = IoCManager.Resolve<IEntityManager>().GetEntity(entityuid.Key);
-
                     var button = new EntityButton()
                     {
-                        EntityuID = entityuid.Key,
+                        EntityuID = entity.Uid,
                         MouseFilter = MouseFilterMode.Stop,
                     };
                     button.ActualButton.OnToggled += OnItemButtonToggled;
                     //Name and Size labels set
                     button.EntityName.Text = entity.Name;
-                    button.EntitySize.Text = string.Format("{0}", entityuid.Value);
+
+                    var size = entity.TryGetComponent(out StorableComponent storable)
+                        ? storable.Size.ToString()
+                        : "N/A";
+
+                    button.EntitySize.Text = size;
 
                     //Gets entity sprite and assigns it to button texture
                     if (entity.TryGetComponent(out ISpriteComponent sprite))
@@ -316,18 +349,6 @@ namespace Content.Client.GameObjects.Components.Storage
                 hBoxContainer.AddChild(EntityControl);
                 AddChild(hBoxContainer);
             }
-        }
-
-        public bool ClientCanDropOn(CanDropEventArgs eventArgs)
-        {
-            //can only drop on placeable surfaces to empty out contents
-            return eventArgs.Target.HasComponent<PlaceableSurfaceComponent>();
-        }
-
-        public bool ClientCanDrag(CanDragEventArgs eventArgs)
-        {
-            //always draggable, at least for now
-            return true;
         }
     }
 }

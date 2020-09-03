@@ -15,6 +15,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Strap
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedStrapComponent))]
     public class StrapComponent : SharedStrapComponent, IInteractHand
     {
         private HashSet<IEntity> _buckledEntities;

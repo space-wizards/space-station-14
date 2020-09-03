@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using Content.Client.Interfaces.GameObjects.Components.Interaction;
 using Content.Client.State;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces.GameObjects.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.EntitySystems;
@@ -16,7 +16,6 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
@@ -35,7 +34,6 @@ namespace Content.Client.GameObjects.EntitySystems
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
 
         // drag will be triggered when mouse leaves this deadzone around the click position.
         private const float DragDeadzone = 2f;
@@ -54,7 +52,7 @@ namespace Content.Client.GameObjects.EntitySystems
         // entity performing the drag action
         private IEntity _dragger;
         private IEntity _draggedEntity;
-        private readonly List<IClientDraggable> _draggables = new List<IClientDraggable>();
+        private readonly List<IDraggable> _draggables = new List<IDraggable>();
         private IEntity _dragShadow;
         private DragState _state;
         // time since mouse down over the dragged entity
@@ -148,10 +146,10 @@ namespace Content.Client.GameObjects.EntitySystems
                 }
 
                 var canDrag = false;
-                foreach (var draggable in entity.GetAllComponents<IClientDraggable>())
+                foreach (var draggable in entity.GetAllComponents<IDraggable>())
                 {
                     var dragEventArgs = new CanDragEventArgs(args.Session.AttachedEntity, entity);
-                    if (draggable.ClientCanDrag(dragEventArgs))
+                    if (draggable.CanBeDragged(dragEventArgs))
                     {
                         // wait to initiate a drag
                         _dragger = dragger;
@@ -205,7 +203,7 @@ namespace Content.Client.GameObjects.EntitySystems
             {
                 // check if it's able to be dropped on by current dragged entity
                 var canDropArgs = new CanDropEventArgs(_dragger, _draggedEntity, entity);
-                var anyValidDraggable = _draggables.Any(draggable => draggable.ClientCanDropOn(canDropArgs));
+                var anyValidDraggable = _draggables.Any(draggable => draggable.CanDrop(canDropArgs));
 
                 if (anyValidDraggable)
                 {
@@ -282,7 +280,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
                     // check if it's able to be dropped on by current dragged entity
                     var canDropArgs = new CanDropEventArgs(_dragger, _draggedEntity, pvsEntity);
-                    var anyValidDraggable = _draggables.Any(draggable => draggable.ClientCanDropOn(canDropArgs));
+                    var anyValidDraggable = _draggables.Any(draggable => draggable.CanDrop(canDropArgs));
 
                     if (anyValidDraggable)
                     {

@@ -7,7 +7,7 @@ using Content.Shared.GameObjects.EntitySystems;
 namespace Content.Server.GameObjects.Components.Movement
 {
     [RegisterComponent]
-    public class ClimbingComponent : SharedClimbingComponent, IActionBlocker
+    public class ClimbingComponent : SharedClimbingComponent
     {
         private bool _isClimbing = false;
         private ClimbController _climbController = default;
@@ -42,7 +42,7 @@ namespace Content.Server.GameObjects.Components.Movement
             }
         }
 
-        public void Update(float frameTime) 
+        public void Update(float frameTime)
         {
             if (Body != null && IsClimbing)
             {

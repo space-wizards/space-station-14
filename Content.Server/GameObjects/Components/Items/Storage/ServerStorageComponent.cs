@@ -4,9 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects.Components.Items;
-using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
@@ -35,8 +33,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
-    public class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IUse, IActivate, IStorageComponent, IDestroyAct, IExAct,
-        IDragDrop
+    public class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IUse, IActivate, IStorageComponent, IDestroyAct, IExAct
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -51,7 +48,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         private int _storageCapacityMax;
         public readonly HashSet<IPlayerSession> SubscribedSessions = new HashSet<IPlayerSession>();
 
-        public IReadOnlyCollection<IEntity>? StoredEntities => _storage?.ContainedEntities;
+        public override IReadOnlyList<IEntity>? StoredEntities => _storage?.ContainedEntities;
 
         public bool OccludesLight
         {
@@ -125,12 +122,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             return CanInsert(entity) && _storage?.Insert(entity) == true;
         }
 
-        /// <summary>
-        ///     Removes from the storage container and updates the stored value
-        /// </summary>
-        /// <param name="entity">The entity to remove</param>
-        /// <returns>true if no longer in storage, false otherwise</returns>
-        public bool Remove(IEntity entity)
+        public override bool Remove(IEntity entity)
         {
             EnsureInitialCalculated();
             return _storage?.Remove(entity) == true;
@@ -258,14 +250,16 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 return;
             }
 
-            var storedEntities = new Dictionary<EntityUid, int>();
-
-            foreach (var entities in _storage.ContainedEntities)
+            if (StoredEntities == null)
             {
-                storedEntities.Add(entities.Uid, entities.GetComponent<StorableComponent>().ObjectSize);
+                Logger.WarningS(LoggerName, $"{nameof(UpdateClientInventory)} called with null {nameof(StoredEntities)}");
+
+                return;
             }
 
-            SendNetworkMessage(new StorageHeldItemsMessage(storedEntities, _storageUsed, _storageCapacityMax), session.ConnectedClient);
+            var stored = StoredEntities.Select(e => e.Uid).ToArray();
+
+            SendNetworkMessage(new StorageHeldItemsMessage(stored, _storageUsed, _storageCapacityMax), session.ConnectedClient);
         }
 
         /// <summary>
@@ -499,44 +493,6 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                     exAct.OnExplosion(eventArgs);
                 }
             }
-        }
-
-        bool IDragDrop.CanDragDrop(DragDropEventArgs eventArgs)
-        {
-            return eventArgs.Target.TryGetComponent(out PlaceableSurfaceComponent? placeable) &&
-                   placeable.IsPlaceable;
-        }
-
-        bool IDragDrop.DragDrop(DragDropEventArgs eventArgs)
-        {
-            if (!ActionBlockerSystem.CanInteract(eventArgs.User))
-            {
-                return false;
-            }
-
-            if (!eventArgs.Target.TryGetComponent<PlaceableSurfaceComponent>(out var placeableSurface) ||
-                !placeableSurface.IsPlaceable)
-            {
-                return false;
-            }
-
-            var storedEntities = StoredEntities?.ToList();
-
-            if (storedEntities == null)
-            {
-                return false;
-            }
-
-            // empty everything out
-            foreach (var storedEntity in StoredEntities.ToList())
-            {
-                if (Remove(storedEntity))
-                {
-                    storedEntity.Transform.WorldPosition = eventArgs.DropLocation.Position;
-                }
-            }
-
-            return true;
         }
     }
 }

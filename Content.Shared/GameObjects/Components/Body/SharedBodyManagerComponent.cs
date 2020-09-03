@@ -1,15 +1,30 @@
 using System;
 using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Disposal;
+using Content.Shared.GameObjects.Components.Medical;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Body
 {
-    public abstract class SharedBodyManagerComponent : DamageableComponent, ISharedBodyManagerComponent
+    public abstract class SharedBodyManagerComponent : DamageableComponent, ISharedBodyManagerComponent, IDraggable
     {
         public override string Name => "BodyManager";
 
         public override uint? NetID => ContentNetIDs.BODY_MANAGER;
+
+        bool IDraggable.CanDrop(CanDropEventArgs args)
+        {
+            if (
+                args.Target.HasComponent<SharedDisposalUnitComponent>() ||
+                args.Target.HasComponent<SharedMedicalScannerComponent>())
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 
     [Serializable, NetSerializable]

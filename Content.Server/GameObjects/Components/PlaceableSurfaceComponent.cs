@@ -8,10 +8,26 @@ using Robust.Shared.Serialization;
 namespace Content.Server.GameObjects.Components
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedPlaceableSurfaceComponent))]
     public class PlaceableSurfaceComponent : SharedPlaceableSurfaceComponent, IInteractUsing
     {
         private bool _isPlaceable;
-        public bool IsPlaceable { get => _isPlaceable; set => _isPlaceable = value; }
+
+        public bool IsPlaceable
+        {
+            get => _isPlaceable;
+            set
+            {
+                if (_isPlaceable == value)
+                {
+                    return;
+                }
+
+                _isPlaceable = value;
+
+                Dirty();
+            }
+        }
 
         int IInteractUsing.Priority => 1;
 
@@ -22,6 +38,10 @@ namespace Content.Server.GameObjects.Components
             serializer.DataField(ref _isPlaceable, "IsPlaceable", true);
         }
 
+        public override ComponentState GetComponentState()
+        {
+            return new PlaceableSurfaceComponentState(_isPlaceable);
+        }
 
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {

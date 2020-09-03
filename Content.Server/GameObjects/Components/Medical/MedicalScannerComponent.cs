@@ -30,6 +30,7 @@ namespace Content.Server.GameObjects.Components.Medical
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
+    [ComponentReference(typeof(SharedMedicalScannerComponent))]
     public class MedicalScannerComponent : SharedMedicalScannerComponent, IActivate, IDragDropOn
     {
         private ContainerSlot _bodyContainer = default!;
