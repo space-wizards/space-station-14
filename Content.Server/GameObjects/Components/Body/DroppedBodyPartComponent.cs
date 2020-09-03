@@ -91,7 +91,7 @@ namespace Content.Server.GameObjects.Components.Body
             {
                 if (!bodyManager.TryGetSlotType(slot, out var typeResult) ||
                     typeResult != ContainedBodyPart?.PartType ||
-                    !bodyManager.TryGetBodyPartConnections(slot, out var parts))
+                    !bodyManager.TryGetPartConnections(slot, out var parts))
                 {
                     continue;
                 }
@@ -151,7 +151,7 @@ namespace Content.Server.GameObjects.Components.Body
             var target = (string) targetObject!;
             string message;
 
-            if (_bodyManagerComponentCache.InstallDroppedBodyPart(this, target))
+            if (_bodyManagerComponentCache.TryAddPart(target, this))
             {
                 message = Loc.GetString("You attach {0:theName}.", ContainedBodyPart);
             }

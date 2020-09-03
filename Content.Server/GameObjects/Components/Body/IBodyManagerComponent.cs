@@ -6,16 +6,16 @@ using Content.Shared.GameObjects.Components.Body;
 namespace Content.Server.GameObjects.Components.Body
 {
     // TODO: Merge with ISharedBodyManagerComponent
-    public interface IBodyManagerComponent : ISharedBodyManagerComponent
+    public interface IBodyManagerComponent : ISharedBodyManagerComponent, IBodyPartManager
     {
         /// <summary>
-        ///     The <see cref="BodyTemplate"/> that this <see cref="BodyManagerComponent"/>
+        ///     The <see cref="BodyTemplate"/> that this <see cref="Content.Server.GameObjects.Components.Body.BodyManagerComponent"/>
         ///     is adhering to.
         /// </summary>
         public BodyTemplate Template { get; }
 
         /// <summary>
-        ///     The <see cref="BodyPreset"/> that this <see cref="BodyManagerComponent"/>
+        ///     The <see cref="BodyPreset"/> that this <see cref="Content.Server.GameObjects.Components.Body.BodyManagerComponent"/>
         ///     is adhering to.
         /// </summary>
         public BodyPreset Preset { get; }

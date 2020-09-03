@@ -71,7 +71,7 @@ namespace Content.Server.Body.Mechanisms.Behaviors
 
         /// <summary>
         ///     Called when the containing <see cref="IBodyPart"/> is attached to a
-        ///     <see cref="BodyManagerComponent"/>.
+        ///     <see cref="Content.Server.GameObjects.Components.Body.BodyManagerComponent"/>.
         ///     For instance, attaching a head to a body will call this on the brain inside.
         /// </summary>
         public void InstalledIntoBody()
@@ -93,7 +93,7 @@ namespace Content.Server.Body.Mechanisms.Behaviors
 
         /// <summary>
         ///     Called when the containing <see cref="IBodyPart"/> is removed from a
-        ///     <see cref="BodyManagerComponent"/>.
+        ///     <see cref="Content.Server.GameObjects.Components.Body.BodyManagerComponent"/>.
         ///     For instance, cutting off ones head will call this on the brain inside.
         /// </summary>
         public void RemovedFromBody(IBodyManagerComponent old)
@@ -138,7 +138,7 @@ namespace Content.Server.Body.Mechanisms.Behaviors
 
         /// <summary>
         ///     Called when the containing <see cref="IBodyPart"/> is attached to a
-        ///     <see cref="BodyManagerComponent"/>.
+        ///     <see cref="Content.Server.GameObjects.Components.Body.BodyManagerComponent"/>.
         ///     For instance, attaching a head to a body will call this on the brain inside.
         /// </summary>
         protected virtual void OnInstalledIntoBody() { }
@@ -152,7 +152,7 @@ namespace Content.Server.Body.Mechanisms.Behaviors
 
         /// <summary>
         ///     Called when the containing <see cref="IBodyPart"/> is removed from a
-        ///     <see cref="BodyManagerComponent"/>.
+        ///     <see cref="Content.Server.GameObjects.Components.Body.BodyManagerComponent"/>.
         ///     For instance, cutting off ones head will call this on the brain inside.
         /// </summary>
         protected virtual void OnRemovedFromBody(IBodyManagerComponent old) { }
@@ -166,7 +166,7 @@ namespace Content.Server.Body.Mechanisms.Behaviors
 
         /// <summary>
         ///     Called every update when this behavior is connected to a
-        ///     <see cref="BodyManagerComponent"/>, but not while in a
+        ///     <see cref="Content.Server.GameObjects.Components.Body.BodyManagerComponent"/>, but not while in a
         ///     <see cref="DroppedMechanismComponent"/> or
         ///     <see cref="DroppedBodyPartComponent"/>,
         ///     before <see cref="MetabolismComponent.Update"/> is called.
@@ -175,7 +175,7 @@ namespace Content.Server.Body.Mechanisms.Behaviors
 
         /// <summary>
         ///     Called every update when this behavior is connected to a
-        ///     <see cref="BodyManagerComponent"/>, but not while in a
+        ///     <see cref="Content.Server.GameObjects.Components.Body.BodyManagerComponent"/>, but not while in a
         ///     <see cref="DroppedMechanismComponent"/> or
         ///     <see cref="DroppedBodyPartComponent"/>,
         ///     after <see cref="MetabolismComponent.Update"/> is called.

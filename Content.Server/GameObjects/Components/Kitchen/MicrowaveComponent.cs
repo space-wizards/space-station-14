@@ -479,7 +479,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             var headCount = 0;
             if (victim.TryGetComponent<BodyManagerComponent>(out var bodyManagerComponent))
             {
-                var heads = bodyManagerComponent.GetBodyPartsOfType(BodyPartType.Head);
+                var heads = bodyManagerComponent.GetPartsOfType(BodyPartType.Head);
                 foreach (var head in heads)
                 {
                     var droppedHead = bodyManagerComponent.DropPart(head);

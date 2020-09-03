@@ -10,7 +10,7 @@ namespace Content.Server.Body
     ///     <see cref="SurgeryData.SurgeryAction"/> delegate, as to later typecast
     ///     it back to the original class type.
     ///     Every BodyPart also needs an <see cref="IBodyPartContainer"/> to be
-    ///     its parent (i.e. the <see cref="BodyManagerComponent"/> holds many
+    ///     its parent (i.e. the <see cref="Content.Server.GameObjects.Components.Body.BodyManagerComponent"/> holds many
     ///     <see cref="IBodyPart"/>, each of which have an upward reference to it).
     /// </summary>
     public interface IBodyPartContainer

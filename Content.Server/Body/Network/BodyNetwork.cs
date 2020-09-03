@@ -9,7 +9,7 @@ namespace Content.Server.Body.Network
 {
     /// <summary>
     ///     Represents a "network" such as a bloodstream or electrical power that
-    ///     is coordinated throughout an entire <see cref="BodyManagerComponent"/>.
+    ///     is coordinated throughout an entire <see cref="Content.Server.GameObjects.Components.Body.BodyManagerComponent"/>.
     /// </summary>
     public abstract class BodyNetwork : IExposeData
     {
@@ -31,7 +31,7 @@ namespace Content.Server.Body.Network
         public virtual void OnRemove() { }
 
         /// <summary>
-        ///     Called every update by <see cref="BodyManagerComponent.Update"/>.
+        ///     Called every update by <see cref="Content.Server.GameObjects.Components.Body.BodyManagerComponent.Update"/>.
         /// </summary>
         public virtual void Update(float frameTime) { }
     }

@@ -28,7 +28,7 @@ namespace Content.Server.Body
 {
     /// <summary>
     ///     Data class representing a singular limb such as an arm or a leg.
-    ///     Typically held within either a <see cref="BodyManagerComponent"/>,
+    ///     Typically held within either a <see cref="Content.Server.GameObjects.Components.Body.BodyManagerComponent"/>,
     ///     which coordinates functions between BodyParts, or a
     ///     <see cref="DroppedBodyPartComponent"/>.
     /// </summary>

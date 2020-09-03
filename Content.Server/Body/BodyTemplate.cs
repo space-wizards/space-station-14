@@ -10,7 +10,7 @@ namespace Content.Server.Body
 {
     /// <summary>
     ///     This class is a data capsule representing the standard format of a
-    ///     <see cref="BodyManagerComponent"/>.
+    ///     <see cref="Content.Server.GameObjects.Components.Body.BodyManagerComponent"/>.
     ///     For instance, the "humanoid" BodyTemplate defines two arms, each connected to
     ///     a torso and so on.
     ///     Capable of loading data from a <see cref="BodyTemplatePrototype"/>.
@@ -75,7 +75,7 @@ namespace Content.Server.Body
         ///     Checks if the given slot exists in this <see cref="BodyTemplate"/>.
         /// </summary>
         /// <returns>True if it does, false otherwise.</returns>
-        public bool SlotExists(string slotName)
+        public bool HasSlot(string slotName)
         {
             return Slots.Keys.Any(slot => slot == slotName);
         }
