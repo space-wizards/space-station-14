@@ -43,7 +43,7 @@ namespace Content.Shared.GameObjects.Components.Buckle
 
         public bool Drop(DragDropEventArgs args)
         {
-            return false;
+            return TryBuckle(args.User, args.Dragged);
         }
     }
 
