@@ -134,7 +134,7 @@ namespace Content.Client.StationEvents
             {
                 foreach (var pulse in radiationPulses)
                 {
-                    if (grid.Index != pulse.Owner.Transform.GridID) continue;
+                    if (!pulse.Draw || grid.Index != pulse.Owner.Transform.GridID) continue;
 
                     // TODO: Check if viewport intersects circle
                     var circlePosition = _eyeManager.WorldToScreen(pulse.Owner.Transform.WorldPosition);
@@ -143,7 +143,7 @@ namespace Content.Client.StationEvents
                     screenHandle.DrawCircle(
                         circlePosition,
                         pulse.Range * 64,
-                        GetColor(pulse.Owner, elapsedTime, pulse.EndTime));
+                        GetColor(pulse.Owner, pulse.Decay ? elapsedTime : 0, pulse.EndTime));
                 }
             }
         }

@@ -389,7 +389,7 @@ namespace Content.Shared.GameObjects.Components.Damage
 
         public void RadiationAct(float frameTime, SharedRadiationPulseComponent radiation)
         {
-            var totalDamage = Math.Max((int)(frameTime * radiation.DPS), 1);
+            var totalDamage = Math.Max((int)(frameTime * radiation.RadsPerSecond), 1);
 
             ChangeDamage(DamageType.Radiation, totalDamage, false, radiation.Owner);
         }

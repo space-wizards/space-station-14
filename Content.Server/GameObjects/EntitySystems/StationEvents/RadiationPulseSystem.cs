@@ -32,7 +32,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
             var radiation = radiationEntity.GetComponent<RadiationPulseComponent>();
 
             radiation.Range = range;
-            radiation.DPS = dps;
+            radiation.RadsPerSecond = dps;
             radiation.Draw = false;
             radiation.Decay = decay;
             radiation.MinPulseLifespan = minPulseLifespan;
@@ -53,8 +53,12 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
                 comp.Update(frameTime);
                 var ent = comp.Owner;
 
+                if (ent.Deleted) continue;
+
                 foreach (var entity in EntityManager.GetEntitiesInRange(ent.Transform.GridPosition, comp.Range, true))
                 {
+                    if (entity.Deleted) continue;
+
                     foreach (var radiation in entity.GetAllComponents<IRadiationAct>())
                     {
                         radiation.RadiationAct(frameTime, comp);

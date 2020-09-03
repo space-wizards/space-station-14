@@ -19,26 +19,36 @@ namespace Content.Server.GameObjects.Components.StationEvents
         [Dependency] private readonly IRobustRandom _random = default!;
 
         private float _duration;
-        private float _dps;
+        private float _radsPerSecond;
         private float _range;
         private TimeSpan _endTime;
+        private bool _draw;
+        private bool _decay;
 
         /// <summary>
         ///     Whether the entity will delete itself after a certain duration defined by
         ///     <see cref="MinPulseLifespan"/> and <see cref="MaxPulseLifespan"/>
         /// </summary>
-        public bool Decay { get; set; }
+        public override bool Decay
+        {
+            get => _decay;
+            set
+            {
+                _decay = value;
+                Dirty();
+            }
+        }
 
         public float MinPulseLifespan { get; set; }
 
         public float MaxPulseLifespan { get; set; }
 
-        public override float DPS
+        public override float RadsPerSecond
         {
-            get => _dps;
+            get => _radsPerSecond;
             set
             {
-                _dps = value;
+                _radsPerSecond = value;
                 Dirty();
             }
         }
@@ -55,14 +65,22 @@ namespace Content.Server.GameObjects.Components.StationEvents
             }
         }
 
-        public bool Draw { get; set; }
+        public override bool Draw
+        {
+            get => _draw;
+            set
+            {
+                _draw = value;
+                Dirty();
+            }
+        }
 
         public override TimeSpan EndTime => _endTime;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(this, x => x.DPS, "dps", 40.0f);
+            serializer.DataField(this, x => x.RadsPerSecond, "dps", 40.0f);
             serializer.DataField(this, x => x.Sound, "sound", "/Audio/Weapons/Guns/Gunshots/laser3.ogg");
             serializer.DataField(this, x => x.Range, "range", 5.0f);
             serializer.DataField(this, x => x.Draw, "draw", true);
@@ -83,13 +101,12 @@ namespace Content.Server.GameObjects.Components.StationEvents
             if(!string.IsNullOrEmpty(Sound))
                 EntitySystem.Get<AudioSystem>().PlayAtCoords(Sound, Owner.Transform.GridPosition);
 
-            if(Draw)
-                Dirty();
+            Dirty();
         }
 
         public override ComponentState GetComponentState()
         {
-            return new RadiationPulseState(_dps, _range, _endTime);
+            return new RadiationPulseState(_radsPerSecond, _range, Draw, Decay, _endTime);
         }
 
         public void Update(float frameTime)
