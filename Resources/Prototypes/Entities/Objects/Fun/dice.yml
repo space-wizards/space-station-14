@@ -11,6 +11,7 @@
   name: "d100"
   parent: BaseDice
   id: d100
+  description: A die with one hundred sides! Probably not fairly weighted...
   components:
   - type: Dice
     sides: 100
@@ -26,6 +27,7 @@
   name: "d20"
   parent: BaseDice
   id: d20
+  description: A die with twenty sides. The preferred die to throw at the GM.
   components:
   - type: Dice
     sides: 20
@@ -40,6 +42,7 @@
   name: "d12"
   parent: BaseDice
   id: d12
+  description: A die with twelve sides. There's an air of neglect about it.
   components:
   - type: Dice
     sides: 12
@@ -54,6 +57,7 @@
   name: "d10"
   parent: BaseDice
   id: d10
+  description: A die with ten sides. Useful for percentages.
   components:
   - type: Dice
     sides: 10
@@ -68,6 +72,7 @@
   name: "d8"
   parent: BaseDice
   id: d8
+  description: A die with eight sides. It feels... lucky.
   components:
   - type: Dice
     sides: 8
@@ -82,6 +87,7 @@
   name: "d6"
   parent: BaseDice
   id: d6
+  description: A die with six sides. Basic and serviceable.
   components:
   - type: Dice
     sides: 6
@@ -96,6 +102,7 @@
   name: "d4"
   parent: BaseDice
   id: d4
+  description: A die with four sides. The nerd's caltrop.
   components:
   - type: Dice
     sides: 4

@@ -12,13 +12,14 @@ namespace Content.Server.GameObjects.Components.Weapon
     [RegisterComponent]
     public sealed class FlashableComponent : SharedFlashableComponent
     {
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+
         private double _duration;
         private TimeSpan _lastFlash;
 
         public void Flash(double duration)
         {
-            var timing = IoCManager.Resolve<IGameTiming>();
-            _lastFlash = timing.CurTime;
+            _lastFlash = _gameTiming.CurTime;
             _duration = duration;
             Dirty();
         }
