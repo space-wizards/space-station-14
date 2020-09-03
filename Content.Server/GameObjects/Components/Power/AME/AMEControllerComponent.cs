@@ -3,16 +3,13 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
-using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.Power.PowerNetComponents;
-using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Power.AME;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Microsoft.EntityFrameworkCore.Internal;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.Components.UserInterface;
@@ -20,18 +17,13 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.GameObjects.Components;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using Content.Shared.Interfaces;
 
 namespace Content.Server.GameObjects.Components.Power.AME
 {
@@ -40,8 +32,6 @@ namespace Content.Server.GameObjects.Components.Power.AME
     [ComponentReference(typeof(IInteractUsing))]
     public class AMEControllerComponent : SharedAMEControllerComponent, IActivate, IInteractUsing
     {
-        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
-
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(AMEControllerUiKey.Key);
         [ViewVariables] private bool _injecting;
         [ViewVariables] public int InjectionAmount;
@@ -87,20 +77,27 @@ namespace Content.Server.GameObjects.Components.Power.AME
                 return;
             }
 
+            var group = GetAMENodeGroup();
+
+            if (group == null)
+            {
+                return;
+            }
+
             _jarSlot.ContainedEntity.TryGetComponent<AMEFuelContainerComponent>(out var fuelJar);
             if(fuelJar != null && _powerSupplier != null && fuelJar.FuelAmount > InjectionAmount)
             {
-                _powerSupplier.SupplyRate = GetAMENodeGroup().InjectFuel(InjectionAmount);
+                _powerSupplier.SupplyRate = group.InjectFuel(InjectionAmount);
                 fuelJar.FuelAmount -= InjectionAmount;
                 InjectSound();
                 UpdateUserInterface();
             }
 
-            _stability = GetAMENodeGroup().GetTotalStability();
+            _stability = group.GetTotalStability();
 
             UpdateDisplay(_stability);
 
-            if(_stability <= 0) { GetAMENodeGroup().ExplodeCores(); }
+            if(_stability <= 0) { group.ExplodeCores(); }
 
         }
 
@@ -117,8 +114,7 @@ namespace Content.Server.GameObjects.Components.Power.AME
 
             if (!args.User.TryGetComponent(out IHandsComponent? hands))
             {
-                _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                    Loc.GetString("You have no hands."));
+                Owner.PopupMessage(args.User, Loc.GetString("You have no hands."));
                 return;
             }
 
@@ -213,7 +209,7 @@ namespace Content.Server.GameObjects.Components.Power.AME
                     break;
             }
 
-                GetAMENodeGroup().UpdateCoreVisuals(InjectionAmount, _injecting);
+            GetAMENodeGroup()?.UpdateCoreVisuals(InjectionAmount, _injecting);
 
             UpdateUserInterface();
             ClickSound();
@@ -272,11 +268,11 @@ namespace Content.Server.GameObjects.Components.Power.AME
 
         private void RefreshParts()
         {
-            GetAMENodeGroup().RefreshAMENodes(this);
+            GetAMENodeGroup()?.RefreshAMENodes(this);
             UpdateUserInterface();
         }
 
-        private AMENodeGroup GetAMENodeGroup()
+        private AMENodeGroup? GetAMENodeGroup()
         {
             Owner.TryGetComponent(out NodeContainerComponent? nodeContainer);
 
@@ -285,12 +281,12 @@ namespace Content.Server.GameObjects.Components.Power.AME
             .OfType<AMENodeGroup>()
             .First();
 
-            return engineNodeGroup ?? default!;
+            return engineNodeGroup;
         }
 
         private bool IsMasterController()
         {
-            if(GetAMENodeGroup().MasterController == this)
+            if(GetAMENodeGroup()?.MasterController == this)
             {
                 return true;
             }
@@ -301,10 +297,11 @@ namespace Content.Server.GameObjects.Components.Power.AME
         private int GetCoreCount()
         {
             var coreCount = 0;
+            var group = GetAMENodeGroup();
 
-            if(GetAMENodeGroup() != null)
+            if (group != null)
             {
-                coreCount = GetAMENodeGroup().CoreCount;
+                coreCount = group.CoreCount;
             }
 
             return coreCount;
@@ -327,15 +324,13 @@ namespace Content.Server.GameObjects.Components.Power.AME
         {
             if (!args.User.TryGetComponent(out IHandsComponent? hands))
             {
-                _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                    Loc.GetString("You have no hands."));
+                Owner.PopupMessage(args.User, Loc.GetString("You have no hands."));
                 return true;
             }
 
             if (hands.GetActiveHand == null)
             {
-                _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                    Loc.GetString("You have nothing on your hand."));
+                Owner.PopupMessage(args.User, Loc.GetString("You have nothing on your hand."));
                 return false;
             }
 
@@ -344,22 +339,19 @@ namespace Content.Server.GameObjects.Components.Power.AME
             {
                 if (HasJar)
                 {
-                    _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                        Loc.GetString("The controller already has a jar loaded."));
+                    Owner.PopupMessage(args.User, Loc.GetString("The controller already has a jar loaded."));
                 }
 
                 else
                 {
                     _jarSlot.Insert(activeHandEntity);
-                    _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                        Loc.GetString("You insert the jar into the fuel slot."));
+                    Owner.PopupMessage(args.User, Loc.GetString("You insert the jar into the fuel slot."));
                     UpdateUserInterface();
                 }
             }
             else
             {
-                _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                    Loc.GetString("You can't put that in the controller..."));
+                Owner.PopupMessage(args.User, Loc.GetString("You can't put that in the controller..."));
             }
 
             return true;

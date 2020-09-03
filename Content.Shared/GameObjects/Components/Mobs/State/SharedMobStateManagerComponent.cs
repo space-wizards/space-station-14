@@ -25,17 +25,11 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
 
         public virtual DamageState CurrentDamageState { get; protected set; }
 
-        public override void OnAdd()
-        {
-            base.OnAdd();
-
-            CurrentDamageState = DamageState.Alive;
-        }
-
         public override void Initialize()
         {
             base.Initialize();
 
+            CurrentDamageState = DamageState.Alive;
             CurrentMobState = Behavior[CurrentDamageState];
             CurrentMobState.EnterState(Owner);
             CurrentMobState.UpdateState(Owner);

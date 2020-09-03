@@ -8,6 +8,7 @@ using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -96,9 +97,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 return false;
             }
 
-            var itemPos = Owner.Transform.MapPosition;
-
-            return InteractionChecks.InRangeUnobstructed(user, itemPos, ignoredEnt: Owner, ignoreInsideBlocker:true);
+            return user.InRangeUnobstructed(Owner, ignoreInsideBlocker: true, popup: true);
         }
 
         public bool InteractHand(InteractHandEventArgs eventArgs)

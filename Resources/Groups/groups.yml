@@ -102,6 +102,11 @@
   - readyall
   - factions
   - signallink
+  - adddamageflag
+  - removedamageflag
+  - godmode
+  - deleteewi
+  - hurt
   CanViewVar: true
   CanAdminPlace: true
   CanAdminMenu: true
@@ -197,6 +202,11 @@
   - readyall
   - factions
   - signallink
+  - adddamageflag
+  - removedamageflag
+  - godmode
+  - deleteewi
+  - hurt
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true

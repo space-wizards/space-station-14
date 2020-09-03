@@ -12,30 +12,29 @@
   - type: Icon
     texture: Constructible/Power/eightdirwire.png
   - type: Sprite
-    sprite: Constructible/Power/hv_cable.rsi
   - type: Destructible
     thresholdvalue: 100
+  - type: Appearance
+    visuals:
+    - type: PipeVisualizer
+      pipeRSI: Constructible/Atmos/pipe.rsi
 
 - type: entity
   parent: PipeBase
   id: FourwayPipe
   name: Fourway Pipe
   components:
-  - type: Sprite
-    state: hvcable_15
   - type: NodeContainer
     nodes:
     - !type:PipeNode
       nodeGroupID: Pipe
-      pipeDirection: FourWay
+      pipeDirection: Fourway
 
 - type: entity
   parent: PipeBase
   id: LongitudinalPipe
   name: Longitudinal Pipe
   components:
-  - type: Sprite
-    state: hvcable_3
   - type: NodeContainer
     nodes:
     - !type:PipeNode

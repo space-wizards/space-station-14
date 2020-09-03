@@ -102,7 +102,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             if (!InRange(coords, player.Transform.GridPosition))
             {
-                player.PopupMessage(player, Loc.GetString("You can't reach there!"));
+                player.PopupMessage(Loc.GetString("You can't reach there!"));
                 return false;
             }
 

@@ -25,6 +25,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
     [RegisterComponent]
     public sealed class RevolverBarrelComponent : ServerRangedBarrelComponent
     {
+        [Dependency] private readonly IRobustRandom _random = default!;
+
         public override string Name => "RevolverBarrel";
         public override uint? NetID => ContentNetIDs.REVOLVER_BARREL;
 
@@ -176,7 +178,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         /// </summary>
         public void Spin()
         {
-            var random = IoCManager.Resolve<IRobustRandom>().Next(_ammoSlots.Length - 1);
+            var random = _random.Next(_ammoSlots.Length - 1);
             _currentSlot = random;
             if (_soundSpin != null)
             {

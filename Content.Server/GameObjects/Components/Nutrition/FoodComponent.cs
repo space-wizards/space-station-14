@@ -11,6 +11,7 @@ using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Utensil;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -89,7 +90,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         {
             if (_utensilsNeeded != UtensilType.None)
             {
-                eventArgs.User.PopupMessage(eventArgs.User, Loc.GetString("You need to use a {0} to eat that!", _utensilsNeeded));
+                eventArgs.User.PopupMessage(Loc.GetString("You need to use a {0} to eat that!", _utensilsNeeded));
                 return false;
             }
 
@@ -121,7 +122,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             if (UsesRemaining <= 0)
             {
-                user.PopupMessage(user, Loc.GetString("{0:TheName} is empty!", Owner));
+                user.PopupMessage(Loc.GetString("{0:TheName} is empty!", Owner));
                 return false;
             }
 
@@ -162,7 +163,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 }
             }
 
-            if (!InteractionChecks.InRangeUnobstructed(user, trueTarget.Transform.MapPosition))
+            if (!user.InRangeUnobstructed(trueTarget, popup: true))
             {
                 return false;
             }

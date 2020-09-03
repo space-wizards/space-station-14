@@ -11,6 +11,7 @@ using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystemMessages;
@@ -405,9 +406,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                         break;
                     }
 
-                    var storagePosition = Owner.Transform.MapPosition;
-
-                    if (!InteractionChecks.InRangeUnobstructed(player, storagePosition))
+                    if (!player.InRangeUnobstructed(Owner, popup: true))
                     {
                         break;
                     }

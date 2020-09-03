@@ -12,25 +12,44 @@
   - type: Icon
     texture: Constructible/Power/eightdirwire.png
   - type: Sprite
-    sprite: Constructible/Power/mv_cable.rsi
+  - type: Appearance
+    visuals:
+    - type: PipeVisualizer
+      pipeRSI: Constructible/Atmos/pipe.rsi
+    - type: PumpVisualizer
+      pumpRSI: Constructible/Atmos/pressurepump.rsi
   - type: Destructible
     thresholdvalue: 100
 
 - type: entity
+  abstract: true
   parent: PumpBase
-  id: NorthFromSouthPipePump
-  name: North from south pipe pump
+  id: NorthwardLongitudinalPump
   components:
-  - type: Sprite
-    state: mvcable_3
   - type: NodeContainer
     nodes:
     - !type:PipeNode
       nodeGroupID: Pipe
-      pipeDirection: North
+      pipeDirection: South
     - !type:PipeNode
       nodeGroupID: Pipe
-      pipeDirection: South
-  - type: DebugPump
-    outletDirection: North
+      pipeDirection: North
+
+- type: entity
+  parent: NorthwardLongitudinalPump
+  id: NorthwardLongitudinalVolumePump
+  name: Northward Longitudinal Volume Pump
+  components:
+  - type: VolumePump
     inletDirection: South
+    outletDirection: North
+    
+- type: entity
+  parent: NorthwardLongitudinalPump
+  id: NorthwardLongitudinalPressurePump
+  name: Northward Longitudinal Pressure Pump
+  components:
+  - type: PressurePump
+    inletDirection: South
+    outletDirection: North
+    
