@@ -105,6 +105,7 @@ namespace Content.Server.Atmos
             {
                 if (tile?.Air == null) continue;
                 tile.Air.CopyFromMutable(combined);
+                tile.AtmosCooldown = 0;
                 tile.UpdateVisuals();
             }
 
@@ -131,7 +132,7 @@ namespace Content.Server.Atmos
             _disposed = true;
             _gridAtmosphereComponent.RemoveExcitedGroup(this);
 
-            Dismantle();
+            Dismantle(false);
 
             _gridAtmosphereComponent = null;
         }
