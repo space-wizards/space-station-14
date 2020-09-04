@@ -306,6 +306,7 @@ namespace Content.Server.GameObjects.Components.Doors
                     case Wires.BackupPower:
                         PowerWiresPulsed = true;
                         _powerWiresPulsedTimerCancel.Cancel();
+                        _powerWiresPulsedTimerCancel = new CancellationTokenSource();
                         Timer.Spawn(PowerWiresTimeout,
                             () => PowerWiresPulsed = false,
                             _powerWiresPulsedTimerCancel.Token);

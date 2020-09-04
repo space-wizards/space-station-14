@@ -112,8 +112,6 @@
       sprite: Mobs/Customization/human_hair.rsi
     - map: ["enum.Slots.MASK"]
     - map: ["enum.Slots.HEAD"]
-    - map: ["hand-left"]
-    - map: ["hand-right"]
   - type: Icon
     sprite: Mobs/Species/Human/parts.rsi
     state: full

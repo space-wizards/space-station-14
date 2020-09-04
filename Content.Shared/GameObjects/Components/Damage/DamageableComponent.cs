@@ -367,17 +367,20 @@ namespace Content.Shared.GameObjects.Components.Damage
 
         protected virtual void OnHealthChanged(HealthChangedEventArgs e)
         {
-            if (DeadThreshold != -1 && TotalDamage > DeadThreshold)
+            if (CurrentDamageState != DamageState.Dead)
             {
-                CurrentDamageState = DamageState.Dead;
-            }
-            else if (CriticalThreshold != -1 && TotalDamage > CriticalThreshold)
-            {
-                CurrentDamageState = DamageState.Critical;
-            }
-            else
-            {
-                CurrentDamageState = DamageState.Alive;
+                if (DeadThreshold != -1 && TotalDamage > DeadThreshold)
+                {
+                    CurrentDamageState = DamageState.Dead;
+                }
+                else if (CriticalThreshold != -1 && TotalDamage > CriticalThreshold)
+                {
+                    CurrentDamageState = DamageState.Critical;
+                }
+                else
+                {
+                    CurrentDamageState = DamageState.Alive;
+                }
             }
 
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, e);
