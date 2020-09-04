@@ -20,14 +20,14 @@ namespace Content.Server.Body
     {
         [ViewVariables] public bool Initialized { get; private set; }
 
-        [ViewVariables] public string Name { get; private set; }
+        [ViewVariables] public string Name { get; private set; } = "";
 
         /// <summary>
         ///     The name of the center BodyPart. For humans, this is set to "torso".
         ///     Used in many calculations.
         /// </summary>
         [ViewVariables]
-        public string CenterSlot { get; set; }
+        public string CenterSlot { get; set; } = "";
 
         /// <summary>
         ///     Maps all parts on this template to its BodyPartType.
