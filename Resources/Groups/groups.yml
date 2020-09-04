@@ -106,6 +106,7 @@
   - removedamageflag
   - godmode
   - deleteewi
+  - hurt
   CanViewVar: true
   CanAdminPlace: true
   CanAdminMenu: true
@@ -205,6 +206,7 @@
   - removedamageflag
   - godmode
   - deleteewi
+  - hurt
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
@@ -32,9 +32,9 @@ namespace Content.Server.StationEvents
         private float _elapsedTime;
         private int _failDuration;
         
-        private Dictionary<IEntity, bool> _powered = new Dictionary<IEntity, bool>();
+        private List<IEntity> _powered = new List<IEntity>();
         
-        private readonly List<PowerReceiverComponent> _toPowerDown = new List<PowerReceiverComponent>();
+
         
         public override void Startup()
         {
@@ -45,9 +45,10 @@ namespace Content.Server.StationEvents
             _failDuration = IoCManager.Resolve<IRobustRandom>().Next(30, 120);
             var componentManager = IoCManager.Resolve<IComponentManager>();
             
-            foreach (var component in componentManager.EntityQuery<PowerReceiverComponent>())
+            foreach (PowerReceiverComponent component in componentManager.EntityQuery<PowerReceiverComponent>())
             {
                 component.PowerDisabled = true;
+                _powered.Add(component.Owner);
             }
         }
 
@@ -56,13 +57,13 @@ namespace Content.Server.StationEvents
             base.Shutdown();
             EntitySystem.Get<AudioSystem>().PlayGlobal("/Audio/Announcements/power_on.ogg");
 
-            foreach (var (entity, powered) in _powered)
+            foreach (var entity in _powered)
             {
                 if (entity.Deleted) continue;
                 
                 if (entity.TryGetComponent(out PowerReceiverComponent powerReceiverComponent))
                 {
-                    powerReceiverComponent.PowerDisabled = powered;
+                    powerReceiverComponent.PowerDisabled = false;
                 }
             }
             

@@ -153,6 +153,13 @@ namespace Content.Server.Body
         public IReadOnlyCollection<IMechanism> Mechanisms => _mechanisms;
 
         /// <summary>
+        /// Represents if body part is vital for creature.
+        /// If the last vital body part is removed creature dies
+        /// </summary>
+        [ViewVariables]
+        public bool IsVital { get; private set; }
+
+        /// <summary>
         ///     This method is called by
         ///     <see cref="IBodyManagerComponent.PreMetabolism"/> before
         ///     <see cref="MetabolismComponent.Update"/> is called.
@@ -451,6 +458,7 @@ namespace Content.Server.Body
             RSIPath = data.RSIPath;
             RSIState = data.RSIState;
             MaxDurability = data.Durability;
+            IsVital = data.IsVital;
 
             if (!prototypeManager.TryIndex(data.DamageContainerPresetId,
                 out DamageContainerPrototype damageContainerData))
