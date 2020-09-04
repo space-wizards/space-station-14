@@ -46,8 +46,6 @@ namespace Content.Server.GameObjects.Components.Body
 
         [ViewVariables] public BodyTemplate Template { get; private set; } = default!;
 
-        [ViewVariables] public BodyPreset Preset { get; private set; } = default!;
-
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -166,7 +164,7 @@ namespace Content.Server.GameObjects.Components.Body
 
             foreach (var network in _networks.Values)
             {
-                network.Update(frameTime);
+                network.PreMetabolism(frameTime);
             }
         }
 
@@ -188,7 +186,7 @@ namespace Content.Server.GameObjects.Components.Body
 
             foreach (var network in _networks.Values)
             {
-                network.Update(frameTime);
+                network.PostMetabolism(frameTime);
             }
         }
 

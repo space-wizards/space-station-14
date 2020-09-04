@@ -10,7 +10,7 @@ namespace Content.Server.Body
 {
     /// <summary>
     ///     This class is a data capsule representing the standard format of a
-    ///     <see cref="Content.Server.GameObjects.Components.Body.BodyManagerComponent"/>.
+    ///     <see cref="BodyManagerComponent"/>.
     ///     For instance, the "humanoid" BodyTemplate defines two arms, each connected to
     ///     a torso and so on.
     ///     Capable of loading data from a <see cref="BodyTemplatePrototype"/>.

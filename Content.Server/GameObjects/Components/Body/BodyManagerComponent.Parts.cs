@@ -23,6 +23,8 @@ namespace Content.Server.GameObjects.Components.Body
     {
         private readonly Dictionary<string, IBodyPart> _parts = new Dictionary<string, IBodyPart>();
 
+        [ViewVariables] public BodyPreset Preset { get; private set; } = default!;
+
         /// <summary>
         ///     All <see cref="IBodyPart"></see> with <see cref="LegProperty"></see>
         ///     that are currently affecting move speed, mapped to how big that leg

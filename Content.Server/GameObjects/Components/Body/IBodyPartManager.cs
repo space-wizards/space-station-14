@@ -10,6 +10,13 @@ namespace Content.Server.GameObjects.Components.Body
     public interface IBodyPartManager : IComponent
     {
         /// <summary>
+        ///     The <see cref="BodyPreset"/> that this
+        ///     <see cref="BodyManagerComponent"/>
+        ///     is adhering to.
+        /// </summary>
+        public BodyPreset Preset { get; }
+
+        /// <summary>
         ///     Installs the given <see cref="DroppedBodyPartComponent"/> into the
         ///     given slot, deleting the <see cref="IEntity"/> afterwards.
         /// </summary>
