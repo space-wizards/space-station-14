@@ -71,14 +71,15 @@ namespace Content.Server.GameObjects.Components.Body
                 "bodyPreset.BasicHuman",
                 preset =>
                 {
-                    if (!_prototypeManager.TryIndex(preset, out BodyPresetPrototype presetData))
+                    if (!_prototypeManager.TryIndex(preset, out BodyPresetPrototype presetPrototype))
                     {
                         // Invalid prototype
                         throw new InvalidOperationException(
                             $"No {nameof(BodyPresetPrototype)} found with name {preset}");
                     }
 
-                    Preset = new BodyPreset(presetData);
+                    Preset = new BodyPreset();
+                    Preset.Initialize(presetPrototype);
                 },
                 () => _presetName);
         }

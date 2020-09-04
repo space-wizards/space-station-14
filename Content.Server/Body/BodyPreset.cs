@@ -13,19 +13,19 @@ namespace Content.Server.Body
     /// </summary>
     public class BodyPreset
     {
-        public BodyPreset(BodyPresetPrototype data)
-        {
-            Name = data.Name;
-            PartIDs = data.PartIDs;
-        }
-
-        [ViewVariables] public string Name { get; }
+        [ViewVariables] public string Name { get; protected set; }
 
         /// <summary>
         ///     Maps a template slot to the ID of the <see cref="IBodyPart"/>
         ///     that should fill it. E.g. "right arm" : "BodyPart.arm.basic_human".
         /// </summary>
         [ViewVariables]
-        public Dictionary<string, string> PartIDs { get; }
+        public Dictionary<string, string> PartIDs { get; protected set;  }
+
+        public virtual void Initialize(BodyPresetPrototype prototype)
+        {
+            Name = prototype.Name;
+            PartIDs = prototype.PartIDs;
+        }
     }
 }
