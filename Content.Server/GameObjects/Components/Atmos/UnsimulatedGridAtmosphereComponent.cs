@@ -1,11 +1,17 @@
 ﻿#nullable enable
+using System;
 using Content.Server.Atmos;
 using Content.Shared.Atmos;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Map;
 using Robust.Shared.Map;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
+    [RegisterComponent]
+    [ComponentReference(typeof(IGridAtmosphereComponent))]
+    [ComponentReference(typeof(GridAtmosphereComponent))]
+    [Serializable]
     public class UnsimulatedGridAtmosphereComponent : GridAtmosphereComponent, IGridAtmosphereComponent
     {
         public override string Name => "UnsimulatedGridAtmosphere";
