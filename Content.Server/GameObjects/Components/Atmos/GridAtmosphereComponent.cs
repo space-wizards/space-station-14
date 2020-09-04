@@ -14,10 +14,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Map;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Timing;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
@@ -257,7 +254,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         }
 
         /// <inheritdoc />
-        public void FixVacuum(MapIndices indices)
+        public virtual void FixVacuum(MapIndices indices)
         {
             if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return;
             var tile = GetTile(indices);
@@ -278,7 +275,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void AddActiveTile(TileAtmosphere? tile)
+        public virtual void AddActiveTile(TileAtmosphere? tile)
         {
             if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return;
             if (tile?.GridIndex != mapGrid.Grid.Index) return;
@@ -288,7 +285,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void RemoveActiveTile(TileAtmosphere? tile)
+        public virtual void RemoveActiveTile(TileAtmosphere? tile)
         {
             if (tile == null) return;
             _activeTiles.Remove(tile);
@@ -298,7 +295,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void AddHotspotTile(TileAtmosphere? tile)
+        public virtual void AddHotspotTile(TileAtmosphere? tile)
         {
             if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return;
             if (tile?.GridIndex != mapGrid.Grid.Index || tile?.Air == null) return;
@@ -307,20 +304,20 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void RemoveHotspotTile(TileAtmosphere? tile)
+        public virtual void RemoveHotspotTile(TileAtmosphere? tile)
         {
             if (tile == null) return;
             _hotspotTiles.Remove(tile);
         }
 
-        public void AddSuperconductivityTile(TileAtmosphere? tile)
+        public virtual void AddSuperconductivityTile(TileAtmosphere? tile)
         {
             if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return;
             if (tile?.GridIndex != mapGrid.Grid.Index) return;
             _superconductivityTiles.Add(tile);
         }
 
-        public void RemoveSuperconductivityTile(TileAtmosphere? tile)
+        public virtual void RemoveSuperconductivityTile(TileAtmosphere? tile)
         {
             if (tile == null) return;
             _superconductivityTiles.Remove(tile);
@@ -328,7 +325,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void AddHighPressureDelta(TileAtmosphere? tile)
+        public virtual void AddHighPressureDelta(TileAtmosphere? tile)
         {
             if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return;
             if (tile?.GridIndex != mapGrid.Grid.Index) return;
@@ -337,21 +334,21 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool HasHighPressureDelta(TileAtmosphere tile)
+        public virtual bool HasHighPressureDelta(TileAtmosphere tile)
         {
             return _highPressureDelta.Contains(tile);
         }
 
         /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void AddExcitedGroup(ExcitedGroup excitedGroup)
+        public virtual void AddExcitedGroup(ExcitedGroup excitedGroup)
         {
             _excitedGroups.Add(excitedGroup);
         }
 
         /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void RemoveExcitedGroup(ExcitedGroup excitedGroup)
+        public virtual void RemoveExcitedGroup(ExcitedGroup excitedGroup)
         {
             _excitedGroups.Remove(excitedGroup);
         }
@@ -440,7 +437,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         }
 
         /// <inheritdoc />
-        public void Update(float frameTime)
+        public virtual void Update(float frameTime)
         {
             _timer += frameTime;
 
@@ -540,7 +537,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             UpdateCounter++;
         }
 
-        public bool ProcessTileEqualize(bool resumed = false)
+        public virtual bool ProcessTileEqualize(bool resumed = false)
         {
             _stopwatch.Restart();
 
@@ -567,7 +564,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             return true;
         }
 
-        public bool ProcessActiveTiles(bool resumed = false)
+        public virtual bool ProcessActiveTiles(bool resumed = false)
         {
             _stopwatch.Restart();
 
@@ -594,7 +591,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             return true;
         }
 
-        public bool ProcessExcitedGroups(bool resumed = false)
+        public virtual bool ProcessExcitedGroups(bool resumed = false)
         {
             _stopwatch.Restart();
 
@@ -628,7 +625,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             return true;
         }
 
-        public bool ProcessHighPressureDelta(bool resumed = false)
+        public virtual bool ProcessHighPressureDelta(bool resumed = false)
         {
             _stopwatch.Restart();
 
@@ -658,7 +655,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             return true;
         }
 
-        private bool ProcessHotspots(bool resumed = false)
+        protected virtual bool ProcessHotspots(bool resumed = false)
         {
             _stopwatch.Restart();
 
@@ -685,7 +682,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             return true;
         }
 
-        private bool ProcessSuperconductivity(bool resumed = false)
+        protected virtual bool ProcessSuperconductivity(bool resumed = false)
         {
             _stopwatch.Restart();
 
@@ -712,7 +709,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             return true;
         }
 
-        private bool ProcessPipeNets(bool resumed = false)
+        protected virtual bool ProcessPipeNets(bool resumed = false)
         {
             _stopwatch.Restart();
 
@@ -739,7 +736,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             return true;
         }
 
-        private bool ProcessPipeNetDevices(bool resumed = false)
+        protected virtual bool ProcessPipeNetDevices(bool resumed = false)
         {
             _stopwatch.Restart();
 
@@ -841,7 +838,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         }
 
         /// <inheritdoc />
-        public void BurnTile(MapIndices gridIndices)
+        public virtual void BurnTile(MapIndices gridIndices)
         {
             // TODO ATMOS
         }
