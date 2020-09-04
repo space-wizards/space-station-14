@@ -35,7 +35,7 @@ namespace Content.Server.Body
         ///     template.
         /// </summary>
         [ViewVariables]
-        public Dictionary<string, BodyPartType> Slots { get; private set; }
+        public Dictionary<string, BodyPartType> Slots { get; private set; } = new Dictionary<string, BodyPartType>();
 
         /// <summary>
         ///     Maps limb name to the list of their connections to other limbs.
@@ -46,13 +46,13 @@ namespace Content.Server.Body
         ///     map "left arm" to "torso".
         /// </summary>
         [ViewVariables]
-        public Dictionary<string, List<string>> Connections { get; private set; }
+        public Dictionary<string, List<string>> Connections { get; private set; } = new Dictionary<string, List<string>>();
 
         [ViewVariables]
-        public Dictionary<string, string> Layers { get; private set; }
+        public Dictionary<string, string> Layers { get; private set; } = new Dictionary<string, string>();
 
         [ViewVariables]
-        public Dictionary<string, string> MechanismLayers { get; private set; }
+        public Dictionary<string, string> MechanismLayers { get; private set; } = new Dictionary<string, string>();
 
         public bool Equals(BodyTemplate other)
         {
@@ -126,10 +126,10 @@ namespace Content.Server.Body
 
             Name = prototype.Name;
             CenterSlot = prototype.CenterSlot;
-            Slots = prototype.Slots;
-            Connections = prototype.Connections;
-            Layers = prototype.Layers;
-            MechanismLayers = prototype.MechanismLayers;
+            Slots = new Dictionary<string, BodyPartType>(prototype.Slots);
+            Connections = new Dictionary<string, List<string>>(prototype.Connections);
+            Layers = new Dictionary<string, string>(prototype.Layers);
+            MechanismLayers = new Dictionary<string, string>(prototype.MechanismLayers);
 
             Initialized = true;
         }
