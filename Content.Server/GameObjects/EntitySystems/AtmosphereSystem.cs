@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Reactions;
+using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.Interfaces;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
 using JetBrains.Annotations;
@@ -64,10 +65,23 @@ namespace Content.Server.GameObjects.EntitySystems
 
             foreach (var (mapGridComponent, gridAtmosphereComponent) in EntityManager.ComponentManager.EntityQuery<IMapGridComponent, IGridAtmosphereComponent>())
             {
-                if (_pauseManager.IsGridPaused(mapGridComponent.GridIndex))
-                    continue;
+                if (_pauseManager.IsGridPaused(mapGridComponent.GridIndex)) continue;
 
                 gridAtmosphereComponent.Update(frameTime);
+            }
+
+            // creadth: everything exposable by atmo should be updated as well
+            foreach (var atmoExposableComponent in EntityManager.ComponentManager.EntityQuery<AtmoExposableComponent>())
+            {
+                // creadth TODO: should be updated by atmo component when entity lookups for tiles ready
+                // cref: https://discordapp.com/channels/310555209753690112/560845886263918612/751436453208260670
+                var ownerTransform = atmoExposableComponent.Owner.Transform;
+                var atmo = GetGridAtmosphere(ownerTransform.GridID);
+                var tile = atmo?.GetTile(ownerTransform.GridPosition);
+                // creadth: we ignore airless for now: we have heat exchange of tile too small
+                // for heat exchange. Heat radiation is too small so ignored as well for now
+                if (tile?.Air == null) continue;
+                atmoExposableComponent.Update(tile);
             }
         }
 
