@@ -41,7 +41,7 @@ namespace Content.Server.Atmos
         private static GasTileOverlaySystem _gasTileOverlaySystem;
 
         [ViewVariables]
-        private float _temperature = Atmospherics.T20C;
+        public float Temperature {get; private set; } = Atmospherics.T20C;
 
         [ViewVariables]
         private float _temperatureArchived = Atmospherics.T20C;
@@ -119,7 +119,7 @@ namespace Content.Server.Atmos
         {
             Air?.Archive();
             _archivedCycle = fireCount;
-            _temperatureArchived = _temperature;
+            _temperatureArchived = Temperature;
         }
 
         public void HotspotExpose(float exposedTemperature, float exposedVolume, bool soh = false)
@@ -842,10 +842,10 @@ namespace Content.Server.Atmos
             // Conduct with air on my tile if I have it
             if (!BlocksAir)
             {
-                _temperature = Air.TemperatureShare(ThermalConductivity, _temperature, HeatCapacity);
+                Temperature = Air.TemperatureShare(ThermalConductivity, Temperature, HeatCapacity);
             }
 
-            FinishSuperconduction(BlocksAir ? _temperature : Air.Temperature);
+            FinishSuperconduction(BlocksAir ? Temperature : Air.Temperature);
         }
 
         private void FinishSuperconduction(float temperature)
@@ -870,7 +870,7 @@ namespace Content.Server.Atmos
                     other.TemperatureShareMutualSolid(this, ThermalConductivity);
                 }
 
-                TemperatureExpose(null, _temperature, _gridAtmosphereComponent.GetVolumeForCells(1));
+                TemperatureExpose(null, Temperature, _gridAtmosphereComponent.GetVolumeForCells(1));
                 return;
             }
 
@@ -888,8 +888,8 @@ namespace Content.Server.Atmos
 
         private void TemperatureShareOpenToSolid(TileAtmosphere other)
         {
-            other._temperature =
-                Air.TemperatureShare(other.ThermalConductivity, other._temperature, other.HeatCapacity);
+            other.Temperature =
+                Air.TemperatureShare(other.ThermalConductivity, other.Temperature, other.HeatCapacity);
         }
 
         private void TemperatureShareMutualSolid(TileAtmosphere other, float conductionCoefficient)
@@ -901,15 +901,15 @@ namespace Content.Server.Atmos
                 var heat = conductionCoefficient * deltaTemperature *
                            (HeatCapacity * other.HeatCapacity / (HeatCapacity + other.HeatCapacity));
 
-                _temperature -= heat / HeatCapacity;
-                other._temperature += heat / other.HeatCapacity;
+                Temperature -= heat / HeatCapacity;
+                other.Temperature += heat / other.HeatCapacity;
             }
         }
 
         public void RadiateToSpace()
         {
             // Considering 0ºC as the break even point for radiation in and out.
-            if (_temperature > Atmospherics.T0C)
+            if (Temperature > Atmospherics.T0C)
             {
                 // Hardcoded space temperature.
                 var deltaTemperature = (_temperatureArchived - Atmospherics.TCMB);
@@ -918,7 +918,7 @@ namespace Content.Server.Atmos
                     var heat = ThermalConductivity * deltaTemperature * (HeatCapacity *
                         Atmospherics.HeatCapacityVacuum / (HeatCapacity + Atmospherics.HeatCapacityVacuum));
 
-                    _temperature -= heat;
+                    Temperature -= heat;
                 }
             }
         }

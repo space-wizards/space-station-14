@@ -130,6 +130,12 @@
       layer:
       - Opaque
       - MobImpassable
+  - type: AtmoExposable
+  - type: Temperature
+    fireDamageThreshold: 373
+    coldDamageThreshold: 173
+    specificHeat: 42
+    tempDamageCoefficient: 0.1
   - type: BodyManager
     criticalThreshold: 100
     deadThreshold: 200
