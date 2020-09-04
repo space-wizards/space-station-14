@@ -15,22 +15,17 @@ namespace Content.Server.Body
     {
         public BodyPreset(BodyPresetPrototype data)
         {
-            LoadFromPrototype(data);
+            Name = data.Name;
+            PartIDs = data.PartIDs;
         }
 
-        [ViewVariables] public string Name { get; private set; }
+        [ViewVariables] public string Name { get; }
 
         /// <summary>
         ///     Maps a template slot to the ID of the <see cref="IBodyPart"/>
         ///     that should fill it. E.g. "right arm" : "BodyPart.arm.basic_human".
         /// </summary>
         [ViewVariables]
-        public Dictionary<string, string> PartIDs { get; private set; }
-
-        protected virtual void LoadFromPrototype(BodyPresetPrototype data)
-        {
-            Name = data.Name;
-            PartIDs = data.PartIDs;
-        }
+        public Dictionary<string, string> PartIDs { get; }
     }
 }
