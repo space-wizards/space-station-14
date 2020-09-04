@@ -17,7 +17,7 @@ namespace Content.Shared.Utility
 
         public static EntityCoordinates ToCoordinates(this EntityUid id, float x, float y)
         {
-            return new EntityCoordinates(id, new Vector2(x, y));
+            return new EntityCoordinates(id, x, y);
         }
 
         public static EntityCoordinates ToCoordinates(this EntityUid id)
@@ -32,7 +32,7 @@ namespace Content.Shared.Utility
 
         public static EntityCoordinates ToCoordinates(this IEntity entity, float x, float y)
         {
-            return new EntityCoordinates(entity.Uid, new Vector2(x, y));
+            return new EntityCoordinates(entity.Uid, x, y);
         }
 
         public static EntityCoordinates ToCoordinates(this IEntity entity)
@@ -47,7 +47,7 @@ namespace Content.Shared.Utility
 
         public static EntityCoordinates ToCoordinates(this IMapGrid grid, float x, float y)
         {
-            return ToCoordinates(grid.GridEntityId, new Vector2(x, y));
+            return ToCoordinates(grid.GridEntityId, x, y);
         }
 
         public static EntityCoordinates ToCoordinates(this IMapGrid grid)

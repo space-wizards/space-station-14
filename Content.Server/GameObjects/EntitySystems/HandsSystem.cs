@@ -126,10 +126,10 @@ namespace Content.Server.GameObjects.EntitySystems
             var entCoords = ent.Transform.Coordinates.Position;
             var entToDesiredDropCoords = coords.Position - entCoords;
             var targetLength = Math.Min(entToDesiredDropCoords.Length, SharedInteractionSystem.InteractionRange - 0.001f); // InteractionRange is reduced due to InRange not dealing with floating point error
-            var newCoords = uid.ToCoordinates((entToDesiredDropCoords.Normalized * targetLength) + entCoords).ToMap(_entityManager);
+            var newCoords = coords.WithPosition((entToDesiredDropCoords.Normalized * targetLength) + entCoords).ToMap(_entityManager);
             var rayLength = Get<SharedInteractionSystem>().UnobstructedDistance(ent.Transform.MapPosition, newCoords, ignoredEnt: ent);
 
-            handsComp.Drop(handsComp.ActiveHand, uid.ToCoordinates(entCoords + (entToDesiredDropCoords.Normalized * rayLength)));
+            handsComp.Drop(handsComp.ActiveHand, coords.WithPosition(entCoords + (entToDesiredDropCoords.Normalized * rayLength)));
 
             return true;
         }

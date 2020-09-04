@@ -49,7 +49,7 @@ namespace Content.Client
 
         private void DoNotifyCoordinates(MsgDoNotifyCoordinates message)
         {
-            PopupMessage(_eyeManager.WorldToScreen(message.Coordinates), message.Message);
+            PopupMessage(_eyeManager.CoordinatesToScreen(message.Coordinates), message.Message);
         }
 
         private void DoNotifyEntity(MsgDoNotifyEntity message)
@@ -59,7 +59,7 @@ namespace Content.Client
                 return;
             }
 
-            PopupMessage(_eyeManager.WorldToScreen(entity.Transform.Coordinates), message.Message);
+            PopupMessage(_eyeManager.CoordinatesToScreen(entity.Transform.Coordinates), message.Message);
         }
 
         public override void PopupMessage(IEntity source, IEntity viewer, string message)
@@ -69,7 +69,7 @@ namespace Content.Client
                 return;
             }
 
-            PopupMessage(_eyeManager.WorldToScreen(source.Transform.Coordinates), message);
+            PopupMessage(_eyeManager.CoordinatesToScreen(source.Transform.Coordinates), message);
         }
 
         public override void PopupMessage(EntityCoordinates coordinates, IEntity viewer, string message)
@@ -79,7 +79,7 @@ namespace Content.Client
                 return;
             }
 
-            PopupMessage(_eyeManager.WorldToScreen(coordinates), message);
+            PopupMessage(_eyeManager.CoordinatesToScreen(coordinates), message);
         }
 
         public override void PopupMessageCursor(IEntity viewer, string message)
