@@ -1,5 +1,7 @@
 ﻿#nullable enable
 using Content.Server.Atmos;
+using Content.Shared.Atmos;
+using Robust.Shared.GameObjects.Components.Map;
 using Robust.Shared.Map;
 
 namespace Content.Server.GameObjects.Components.Atmos
@@ -7,6 +9,23 @@ namespace Content.Server.GameObjects.Components.Atmos
     public class UnsimulatedGridAtmosphereComponent : GridAtmosphereComponent, IGridAtmosphereComponent
     {
         public override string Name => "UnsimulatedGridAtmosphere";
+
+        public override void PryTile(MapIndices indices) { }
+
+        public override void RepopulateTiles()
+        {
+            if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return;
+
+            foreach (var tile in mapGrid.Grid.GetAllTiles())
+            {
+                if(!Tiles.ContainsKey(tile.GridIndices))
+                    Tiles.Add(tile.GridIndices, new TileAtmosphere(this, tile.GridIndex, tile.GridIndices, new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C}));
+            }
+        }
+
+        public override void Invalidate(MapIndices indices) { }
+
+        protected override void Revalidate() { }
 
         public override void FixVacuum(MapIndices indices) { }
 

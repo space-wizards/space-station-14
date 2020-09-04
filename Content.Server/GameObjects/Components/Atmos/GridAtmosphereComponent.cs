@@ -69,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         private double _excitedGroupLastProcess;
 
         [ViewVariables]
-        private readonly Dictionary<MapIndices, TileAtmosphere> _tiles = new Dictionary<MapIndices, TileAtmosphere>(1000);
+        protected readonly Dictionary<MapIndices, TileAtmosphere> Tiles = new Dictionary<MapIndices, TileAtmosphere>(1000);
 
         [ViewVariables]
         private readonly HashSet<TileAtmosphere> _activeTiles = new HashSet<TileAtmosphere>(1000);
@@ -153,7 +153,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         }
 
         /// <inheritdoc />
-        public void PryTile(MapIndices indices)
+        public virtual void PryTile(MapIndices indices)
         {
             if (!Owner.TryGetComponent(out IMapGridComponent? mapGridComponent)) return;
             if (IsSpace(indices) || IsAirBlocked(indices)) return;
@@ -174,17 +174,17 @@ namespace Content.Server.GameObjects.Components.Atmos
             RepopulateTiles();
         }
 
-        public void RepopulateTiles()
+        public virtual void RepopulateTiles()
         {
             if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return;
 
             foreach (var tile in mapGrid.Grid.GetAllTiles())
             {
-                if(!_tiles.ContainsKey(tile.GridIndices))
-                    _tiles.Add(tile.GridIndices, new TileAtmosphere(this, tile.GridIndex, tile.GridIndices, new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C}));
+                if(!Tiles.ContainsKey(tile.GridIndices))
+                    Tiles.Add(tile.GridIndices, new TileAtmosphere(this, tile.GridIndex, tile.GridIndices, new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C}));
             }
 
-            foreach (var (_, tile) in _tiles.ToArray())
+            foreach (var (_, tile) in Tiles.ToArray())
             {
                 tile.UpdateAdjacent();
                 tile.UpdateVisuals();
@@ -192,12 +192,12 @@ namespace Content.Server.GameObjects.Components.Atmos
         }
 
         /// <inheritdoc />
-        public void Invalidate(MapIndices indices)
+        public virtual void Invalidate(MapIndices indices)
         {
             _invalidatedCoords.Add(indices);
         }
 
-        private void Revalidate()
+        protected virtual void Revalidate()
         {
             if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return;
 
@@ -209,14 +209,14 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (tile == null)
                 {
                     tile = new TileAtmosphere(this, mapGrid.Grid.Index, indices, new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C});
-                    _tiles[indices] = tile;
+                    Tiles[indices] = tile;
                 }
 
                 if (IsSpace(indices))
                 {
                     tile.Air = new GasMixture(GetVolumeForCells(1));
                     tile.Air.MarkImmutable();
-                    _tiles[indices] = tile;
+                    Tiles[indices] = tile;
 
                 } else if (IsAirBlocked(indices))
                 {
@@ -261,11 +261,11 @@ namespace Content.Server.GameObjects.Components.Atmos
             if (tile?.GridIndex != mapGrid.Grid.Index) return;
             var adjacent = GetAdjacentTiles(indices);
             tile.Air = new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C};
-            _tiles[indices] = tile;
+            Tiles[indices] = tile;
 
             var ratio = 1f / adjacent.Count;
 
-            foreach (var (direction, adj) in adjacent)
+            foreach (var (_, adj) in adjacent)
             {
                 var mix = adj.Air.RemoveRatio(ratio);
                 tile.Air.Merge(mix);
@@ -384,7 +384,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return null;
 
-            if (_tiles.TryGetValue(indices, out var tile)) return tile;
+            if (Tiles.TryGetValue(indices, out var tile)) return tile;
 
             // We don't have that tile!
             if (IsSpace(indices) && createSpace)
@@ -793,11 +793,11 @@ namespace Content.Server.GameObjects.Components.Atmos
                     !serializer.TryReadDataField("tiles", out Dictionary<MapIndices, int>? tiles))
                     return;
 
-                _tiles.Clear();
+                Tiles.Clear();
 
                 foreach (var (indices, mix) in tiles!)
                 {
-                    _tiles.Add(indices, new TileAtmosphere(this, gridId, indices, (GasMixture)uniqueMixes![mix].Clone()));
+                    Tiles.Add(indices, new TileAtmosphere(this, gridId, indices, (GasMixture)uniqueMixes![mix].Clone()));
                     Invalidate(indices);
                 }
             }
@@ -806,7 +806,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 var uniqueMixes = new List<GasMixture>();
                 var uniqueMixHash = new Dictionary<GasMixture, int>();
                 var tiles = new Dictionary<MapIndices, int>();
-                foreach (var (indices, tile) in _tiles)
+                foreach (var (indices, tile) in Tiles)
                 {
                     if (tile.Air == null) continue;
 
@@ -829,7 +829,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public IEnumerator<TileAtmosphere> GetEnumerator()
         {
-            return _tiles.Values.GetEnumerator();
+            return Tiles.Values.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
