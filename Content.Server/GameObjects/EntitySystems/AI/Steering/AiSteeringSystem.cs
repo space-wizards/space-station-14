@@ -57,7 +57,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         private int _listIndex;
 
         // Cache nextGrid
-        private readonly Dictionary<IEntity, GridCoordinates> _nextGrid = new Dictionary<IEntity, GridCoordinates>();
+        private readonly Dictionary<IEntity, EntityCoordinates> _nextGrid = new Dictionary<IEntity, EntityCoordinates>();
 
         /// <summary>
         /// Current live paths for AI
@@ -78,11 +78,11 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         /// <summary>
         /// Get a fixed position for the target entity; if they move then re-path
         /// </summary>
-        private readonly Dictionary<IEntity, GridCoordinates> _entityTargetPosition = new Dictionary<IEntity, GridCoordinates>();
+        private readonly Dictionary<IEntity, EntityCoordinates> _entityTargetPosition = new Dictionary<IEntity, EntityCoordinates>();
 
         // Anti-Stuck
         // Given the collision avoidance can lead to twitching need to store a reference position and check if we've been near this too long
-        private readonly Dictionary<IEntity, GridCoordinates> _stuckPositions = new Dictionary<IEntity, GridCoordinates>();
+        private readonly Dictionary<IEntity, EntityCoordinates> _stuckPositions = new Dictionary<IEntity, EntityCoordinates>();
 
         public override void Initialize()
         {
@@ -470,7 +470,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         /// <param name="entity"></param>
         /// <param name="steeringRequest"></param>
         /// <returns></returns>
-        private GridCoordinates? NextGrid(IEntity entity, IAiSteeringRequest steeringRequest)
+        private EntityCoordinates? NextGrid(IEntity entity, IAiSteeringRequest steeringRequest)
         {
             // Remove the cached grid
             if (!_paths.ContainsKey(entity) && _nextGrid.ContainsKey(entity))
@@ -558,11 +558,13 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         /// <param name="entity"></param>
         /// <param name="grid"></param>
         /// <returns></returns>
-        private Vector2 Seek(IEntity entity, GridCoordinates grid)
+        private Vector2 Seek(IEntity entity, EntityCoordinates grid)
         {
             // is-even much
-            var entityPos = entity.Transform.GridPosition;
-            return entityPos == grid ? Vector2.Zero : (grid.Position - entityPos.Position).Normalized;
+            var entityPos = entity.Transform.Coordinates;
+            return entityPos == grid
+                ? Vector2.Zero
+                : (grid.Position - entityPos.Position).Normalized;
         }
 
         /// <summary>
@@ -572,9 +574,9 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         /// <param name="grid"></param>
         /// <param name="slowingDistance"></param>
         /// <returns></returns>
-        private Vector2 Arrival(IEntity entity, GridCoordinates grid, float slowingDistance = 1.0f)
+        private Vector2 Arrival(IEntity entity, EntityCoordinates grid, float slowingDistance = 1.0f)
         {
-            var entityPos = entity.Transform.GridPosition;
+            var entityPos = entity.Transform.Coordinates;
             DebugTools.Assert(slowingDistance > 0.0f);
             if (entityPos == grid)
             {

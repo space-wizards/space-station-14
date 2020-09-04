@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
@@ -222,7 +223,7 @@ namespace Content.Server.GameObjects.Components.Movement
         public void Teleport(IEntity user, Vector2 vector)
         {
             // Messy maybe?
-            var targetGrid = new GridCoordinates(vector, user.Transform.GridID);
+            var targetGrid = user.ToCoordinates(vector);
             var soundPlayer = EntitySystem.Get<AudioSystem>();
 
             // If portals use those, otherwise just move em over

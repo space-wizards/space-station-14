@@ -33,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             serializer.DataField(ref _toolComponentNeeded, "toolComponentNeeded", true);
         }
 
-        public async void TryPryTile(IEntity user, GridCoordinates clickLocation)
+        public async void TryPryTile(IEntity user, EntityCoordinates clickLocation)
         {
             if (!Owner.TryGetComponent<ToolComponent>(out var tool) && _toolComponentNeeded)
                 return;

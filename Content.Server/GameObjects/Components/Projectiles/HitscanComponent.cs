@@ -103,7 +103,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             });
         }
 
-        private EffectSystemMessage MuzzleFlash(GridCoordinates grid, Angle angle)
+        private EffectSystemMessage MuzzleFlash(EntityCoordinates grid, Angle angle)
         {
             if (_muzzleFlash == null)
             {
@@ -117,7 +117,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 EffectSprite = _muzzleFlash,
                 Born = _startTime,
                 DeathTime = _deathTime,
-                Coordinates = grid.Translated(offset),
+                Coordinates = grid.Offset(offset),
                 //Rotated from east facing
                 Rotation = (float) angle.Theta,
                 Color = Vector4.Multiply(new Vector4(255, 255, 255, 750), ColorModifier),
@@ -128,7 +128,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             return message;
         }
 
-        private EffectSystemMessage AfterEffects(GridCoordinates origin, Angle angle, float distance, float offset = 0.0f)
+        private EffectSystemMessage AfterEffects(EntityCoordinates origin, Angle angle, float distance, float offset = 0.0f)
         {
             var midPointOffset = angle.ToVec() * distance / 2;
             var message = new EffectSystemMessage
@@ -137,7 +137,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 Born = _startTime,
                 DeathTime = _deathTime,
                 Size = new Vector2(distance - offset, 1f),
-                Coordinates = origin.Translated(midPointOffset),
+                Coordinates = origin.Offset(midPointOffset),
                 //Rotated from east facing
                 Rotation = (float) angle.Theta,
                 Color = Vector4.Multiply(new Vector4(255, 255, 255, 750), ColorModifier),

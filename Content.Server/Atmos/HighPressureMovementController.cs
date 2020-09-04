@@ -26,7 +26,7 @@ namespace Content.Server.Atmos
         private const float ThrowForce = 100f;
 
         public void ExperiencePressureDifference(int cycle, float pressureDifference, AtmosDirection direction,
-            float pressureResistanceProbDelta, GridCoordinates throwTarget)
+            float pressureResistanceProbDelta, EntityCoordinates throwTarget)
         {
             if (ControlledComponent == null)
                 return;
@@ -52,7 +52,7 @@ namespace Content.Server.Atmos
 
                 if (maxForce > ThrowForce)
                 {
-                    if (throwTarget != GridCoordinates.InvalidGrid)
+                    if (throwTarget != EntityCoordinates.Invalid)
                     {
                         var moveForce = maxForce * MathHelper.Clamp(moveProb, 0, 100) / 150f;
                         var pos = ((throwTarget.Position - transform.GridPosition.Position).Normalized + direction.ToDirection().ToVec()).Normalized;

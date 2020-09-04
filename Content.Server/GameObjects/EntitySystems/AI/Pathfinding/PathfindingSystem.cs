@@ -30,6 +30,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
     public class PathfindingSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public IReadOnlyDictionary<GridId, Dictionary<MapIndices, PathfindingChunk>> Graph => _graph;
         private readonly Dictionary<GridId, Dictionary<MapIndices, PathfindingChunk>> _graph = new Dictionary<GridId, Dictionary<MapIndices, PathfindingChunk>>();
@@ -359,9 +360,10 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         // TODO: Need to rethink the pathfinder utils (traversable etc.). Maybe just chuck them all in PathfindingSystem
         // Otherwise you get the steerer using this and the pathfinders using a different traversable.
         // Also look at increasing tile cost the more physics entities are on it
-        public bool CanTraverse(IEntity entity, GridCoordinates grid)
+        public bool CanTraverse(IEntity entity, EntityCoordinates coordinates)
         {
-            var tile = _mapManager.GetGrid(grid.GridID).GetTileRef(grid);
+            var gridId = coordinates.GetGridId(_entityManager);
+            var tile = _mapManager.GetGrid(gridId).GetTileRef(coordinates);
             var node = GetNode(tile);
             return CanTraverse(entity, node);
         }

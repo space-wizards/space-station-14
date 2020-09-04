@@ -56,7 +56,7 @@ namespace Content.Client.Utility
 
         public static bool InRangeUnobstructed(
             this LocalPlayer origin,
-            GridCoordinates other,
+            EntityCoordinates other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
             Ignored predicate = null,

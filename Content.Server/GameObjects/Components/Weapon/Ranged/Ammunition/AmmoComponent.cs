@@ -7,6 +7,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.EntitySystemMessages;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -26,6 +27,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
     public class AmmoComponent : Component, IExamine
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public override string Name => "Ammo";
         public BallisticCaliber Caliber => _caliber;
@@ -106,7 +108,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             }
         }
 
-        public IEntity TakeBullet(GridCoordinates spawnAtGrid, MapCoordinates spawnAtMap)
+        public IEntity TakeBullet(EntityCoordinates spawnAtGrid, MapCoordinates spawnAtMap)
         {
             if (_ammoIsProjectile)
             {
@@ -124,7 +126,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
                 appearanceComponent.SetData(AmmoVisuals.Spent, true);
             }
 
-            var entity = spawnAtGrid.GridID != GridId.Invalid ? Owner.EntityManager.SpawnEntity(_projectileId, spawnAtGrid) : Owner.EntityManager.SpawnEntity(_projectileId, spawnAtMap);
+            var entity = spawnAtGrid.GetGridId(_entityManager) != GridId.Invalid
+                ? Owner.EntityManager.SpawnEntity(_projectileId, spawnAtGrid)
+                : Owner.EntityManager.SpawnEntity(_projectileId, spawnAtMap);
 
             DebugTools.AssertNotNull(entity);
             return entity;

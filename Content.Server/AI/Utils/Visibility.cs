@@ -47,20 +47,20 @@ namespace Content.Server.AI.Utils
         }
 
         // Should this be in robust or something? Fark it
-        public static IEnumerable<IEntity> GetNearestEntities(GridCoordinates grid, Type component, float range)
+        public static IEnumerable<IEntity> GetNearestEntities(EntityCoordinates grid, Type component, float range)
         {
             var inRange = GetEntitiesInRange(grid, component, range).ToList();
-            var sortedInRange = inRange.OrderBy(o => (o.Transform.GridPosition.Position - grid.Position).Length);
+            var sortedInRange = inRange.OrderBy(o => (o.Transform.Coordinates.Position - grid.Position).Length);
 
             return sortedInRange;
         }
 
-        public static IEnumerable<IEntity> GetEntitiesInRange(GridCoordinates grid, Type component, float range)
+        public static IEnumerable<IEntity> GetEntitiesInRange(EntityCoordinates grid, Type component, float range)
         {
             var entityManager = IoCManager.Resolve<IEntityManager>();
             foreach (var entity in entityManager.GetEntities(new TypeEntityQuery(component)))
             {
-                if (entity.Transform.GridPosition.GridID != grid.GridID)
+                if (entity.Transform.Coordinates.GetGridId(entityManager) != grid.GetGridId(entityManager))
                 {
                     continue;
                 }

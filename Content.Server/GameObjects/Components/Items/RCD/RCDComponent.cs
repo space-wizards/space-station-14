@@ -166,8 +166,8 @@ namespace Content.Server.GameObjects.Components.Items.RCD
                 return false;
             }
 
-            var coordinates = mapGrid.GridTileToLocal(tile.GridIndices);
-            if (coordinates == GridCoordinates.InvalidGrid || !eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
+            var coordinates = mapGrid.ToCoordinates(tile.GridIndices);
+            if (coordinates == EntityCoordinates.Invalid || !eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
             {
                 return false;
             }

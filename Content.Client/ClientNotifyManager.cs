@@ -72,7 +72,7 @@ namespace Content.Client
             PopupMessage(_eyeManager.WorldToScreen(source.Transform.GridPosition), message);
         }
 
-        public override void PopupMessage(GridCoordinates coordinates, IEntity viewer, string message)
+        public override void PopupMessage(EntityCoordinates coordinates, IEntity viewer, string message)
         {
             if (viewer != _playerManager.LocalPlayer.ControlledEntity)
             {

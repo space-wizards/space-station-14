@@ -41,7 +41,7 @@ namespace Content.IntegrationTests.Tests.Interaction
             IEntity other = null;
             IContainer container = null;
             IComponent component = null;
-            GridCoordinates gridCoordinates = default;
+            EntityCoordinates gridCoordinates = default;
             MapCoordinates mapCoordinates = default;
 
             server.Assert(() =>
@@ -53,7 +53,7 @@ namespace Content.IntegrationTests.Tests.Interaction
                 other = entityManager.SpawnEntity(HumanId, coordinates);
                 container = ContainerManagerComponent.Ensure<Container>("InRangeUnobstructedTestOtherContainer", other);
                 component = other.Transform;
-                gridCoordinates = other.Transform.GridPosition;
+                gridCoordinates = other.Transform.Coordinates;
                 mapCoordinates = other.Transform.MapPosition;
             });
 

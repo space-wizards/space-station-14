@@ -240,7 +240,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 { ConstructionStepMaterial.MaterialType.Glass, "GlassSheet1" }
             };
 
-        private bool TryStartStructureConstruction(IEntity placingEnt, GridCoordinates loc, string prototypeName, Angle angle)
+        private bool TryStartStructureConstruction(IEntity placingEnt, EntityCoordinates loc, string prototypeName, Angle angle)
         {
             var prototype = _prototypeManager.Index<ConstructionPrototype>(prototypeName);
 
@@ -439,7 +439,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        private async Task<bool> TryProcessStep(IEntity constructEntity, ConstructionStep step, IEntity slapped, IEntity user, GridCoordinates gridCoords)
+        private async Task<bool> TryProcessStep(IEntity constructEntity, ConstructionStep step, IEntity slapped, IEntity user, EntityCoordinates gridCoords)
         {
             if (step == null)
             {

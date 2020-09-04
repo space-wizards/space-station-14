@@ -284,7 +284,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         /// </returns>
         public bool InRangeUnobstructed(
             IEntity origin,
-            GridCoordinates other,
+            EntityCoordinates other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
             Ignored predicate = null,

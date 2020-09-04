@@ -45,33 +45,36 @@ namespace Content.Shared.Maps
         /// <summary>
         ///     Attempts to get the turf at a certain coordinates or null if no such turf is found.
         /// </summary>
-        public static TileRef? GetTileRef(this GridCoordinates coordinates)
+        public static TileRef? GetTileRef(this EntityCoordinates coordinates, IEntityManager? entityManager = null, IMapManager? mapManager = null)
         {
-            if (!coordinates.GridID.IsValid())
+            entityManager ??= IoCManager.Resolve<IEntityManager>();
+
+            if (!coordinates.IsValid(entityManager))
                 return null;
 
-            var mapManager = IoCManager.Resolve<IMapManager>();
+            mapManager ??= IoCManager.Resolve<IMapManager>();
 
-            if (!mapManager.TryGetGrid(coordinates.GridID, out var grid))
+            if (!mapManager.TryGetGrid(coordinates.GetGridId(entityManager), out var grid))
                 return null;
 
-            if (!grid.TryGetTileRef(coordinates.ToMapIndices(mapManager), out var tile))
+            if (!grid.TryGetTileRef(coordinates.ToMapIndices(entityManager, mapManager), out var tile))
                 return null;
 
             return tile;
         }
 
-        public static bool TryGetTileRef(this GridCoordinates coordinates, [NotNullWhen(true)] out TileRef? turf)
+        public static bool TryGetTileRef(this EntityCoordinates coordinates, [NotNullWhen(true)] out TileRef? turf)
         {
             return (turf = coordinates.GetTileRef()) != null;
         }
 
-        public static bool PryTile(this GridCoordinates coordinates,
-            IMapManager? mapManager = null, ITileDefinitionManager? tileDefinitionManager = null, IEntityManager? entityManager = null)
+        public static bool PryTile(this EntityCoordinates coordinates, IEntityManager? entityManager = null,
+            IMapManager? mapManager = null)
         {
+            entityManager ??= IoCManager.Resolve<IEntityManager>();
             mapManager ??= IoCManager.Resolve<IMapManager>();
 
-            return coordinates.ToMapIndices(mapManager).PryTile(coordinates.GridID);
+            return coordinates.ToMapIndices(entityManager, mapManager).PryTile(coordinates.GetGridId(entityManager));
         }
 
         public static bool PryTile(this MapIndices indices, GridId gridId,
@@ -147,9 +150,11 @@ namespace Content.Shared.Maps
             return false;
         }
 
-        public static GridCoordinates GridPosition(this TileRef turf)
+        public static EntityCoordinates GridPosition(this TileRef turf, IMapManager? mapManager = null)
         {
-            return new GridCoordinates(turf.X, turf.Y, turf.GridIndex);
+            mapManager ??= IoCManager.Resolve<IMapManager>();
+
+            return turf.GridIndices.ToCoordinates(mapManager, turf.GridIndex);
         }
 
         /// <summary>

@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Content.Server.Atmos;
 using NUnit.Framework;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 
 namespace Content.IntegrationTests.Tests.Atmos
@@ -14,13 +15,19 @@ namespace Content.IntegrationTests.Tests.Atmos
         {
             var server = StartServerDummyTicker();
 
+            await server.WaitIdleAsync();
+
+            var entityManager = server.ResolveDependency<IEntityManager>();
+
             server.Assert(() =>
             {
                 Assert.DoesNotThrow(() =>
                 {
-                    var atmosphere = default(GridCoordinates).GetTileAtmosphere();
+                    var atmosphere1 = default(EntityCoordinates).GetTileAtmosphere();
+                    var atmosphere2 = default(EntityCoordinates).GetTileAtmosphere(entityManager);
 
-                    Assert.Null(atmosphere);
+                    Assert.Null(atmosphere1);
+                    Assert.Null(atmosphere2);
                 });
             });
 
@@ -36,7 +43,7 @@ namespace Content.IntegrationTests.Tests.Atmos
             {
                 Assert.DoesNotThrow(() =>
                 {
-                    var air = default(GridCoordinates).GetTileAir();
+                    var air = default(EntityCoordinates).GetTileAir();
 
                     Assert.Null(air);
                 });
@@ -54,7 +61,7 @@ namespace Content.IntegrationTests.Tests.Atmos
             {
                 Assert.DoesNotThrow(() =>
                 {
-                    var hasAtmosphere = default(GridCoordinates).TryGetTileAtmosphere(out var atmosphere);
+                    var hasAtmosphere = default(EntityCoordinates).TryGetTileAtmosphere(out var atmosphere);
 
                     Assert.False(hasAtmosphere);
                     Assert.Null(atmosphere);
@@ -73,7 +80,7 @@ namespace Content.IntegrationTests.Tests.Atmos
             {
                 Assert.DoesNotThrow(() =>
                 {
-                    var hasAir = default(GridCoordinates).TryGetTileAir(out var air);
+                    var hasAir = default(EntityCoordinates).TryGetTileAir(out var air);
 
                     Assert.False(hasAir);
                     Assert.Null(air);

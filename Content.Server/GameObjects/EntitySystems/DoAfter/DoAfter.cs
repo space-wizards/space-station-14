@@ -23,9 +23,9 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
 
         public float Elapsed { get; set; }
 
-        public GridCoordinates UserGrid { get; }
+        public EntityCoordinates UserGrid { get; }
 
-        public GridCoordinates TargetGrid { get; }
+        public EntityCoordinates TargetGrid { get; }
 
         private bool _tookDamage;
 
@@ -94,7 +94,7 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
                 {
                     Tcs.SetResult(DoAfterStatus.Finished);
                 }
-                
+
                 return;
             }
 
@@ -110,7 +110,7 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
             {
                 return true;
             }
-            
+
             //https://github.com/tgstation/tgstation/blob/1aa293ea337283a0191140a878eeba319221e5df/code/__HELPERS/mobs.dm
             if (EventArgs.CancelToken.IsCancellationRequested)
             {
@@ -170,7 +170,7 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
                     }
                 }
             }
-            
+
             return false;
         }
 

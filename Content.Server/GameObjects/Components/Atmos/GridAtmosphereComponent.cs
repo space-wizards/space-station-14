@@ -377,7 +377,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         }
 
         /// <inheritdoc />
-        public TileAtmosphere? GetTile(GridCoordinates coordinates, bool createSpace = true)
+        public TileAtmosphere? GetTile(EntityCoordinates coordinates, bool createSpace = true)
         {
             return GetTile(coordinates.ToMapIndices(_mapManager), createSpace);
         }

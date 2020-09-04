@@ -26,7 +26,7 @@ namespace Content.Server.Explosions
         /// </summary>
         private static Vector2 _epicenterDistance = (0.1f, 0.1f);
 
-        public static void SpawnExplosion(GridCoordinates coords, int devastationRange, int heavyImpactRange, int lightImpactRange, int flashRange)
+        public static void SpawnExplosion(EntityCoordinates coords, int devastationRange, int heavyImpactRange, int lightImpactRange, int flashRange)
         {
             var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
             var serverEntityManager = IoCManager.Resolve<IServerEntityManager>();

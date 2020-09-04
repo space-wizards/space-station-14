@@ -7,6 +7,7 @@ using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Buckle;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Utility;
 using NUnit.Framework;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
@@ -193,7 +194,7 @@ namespace Content.IntegrationTests.Tests
                 var entityManager = IoCManager.Resolve<IEntityManager>();
                 var gridId = new GridId(1);
                 var grid = mapManager.CreateGrid(mapId, gridId);
-                var coordinates = new GridCoordinates((0, 0), gridId);
+                var coordinates = grid.GridEntityId.ToCoordinates();
                 var tileManager = IoCManager.Resolve<ITileDefinitionManager>();
                 var tileId = tileManager["underplating"].TileId;
                 var tile = new Tile(tileId);

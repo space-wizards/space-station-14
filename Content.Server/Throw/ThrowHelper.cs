@@ -40,7 +40,7 @@ namespace Content.Server.Throw
         /// <param name="throwSourceEnt">
         /// The entity that did the throwing. An opposite impulse will be applied to this entity if passed in.
         /// </param>
-        public static void Throw(IEntity thrownEnt, float throwForce, GridCoordinates targetLoc, GridCoordinates sourceLoc, bool spread = false, IEntity throwSourceEnt = null)
+        public static void Throw(IEntity thrownEnt, float throwForce, EntityCoordinates targetLoc, EntityCoordinates sourceLoc, bool spread = false, IEntity throwSourceEnt = null)
         {
             if (!thrownEnt.TryGetComponent(out ICollidableComponent colComp))
                 return;
@@ -126,14 +126,18 @@ namespace Content.Server.Throw
         /// <param name="throwSourceEnt">
         /// The entity that did the throwing. An opposite impulse will be applied to this entity if passed in.
         /// </param>
-        public static void ThrowTo(IEntity thrownEnt, float throwForceMax, GridCoordinates targetLoc,
-            GridCoordinates sourceLoc, bool spread = false, IEntity throwSourceEnt = null)
+        public static void ThrowTo(IEntity thrownEnt, float throwForceMax, EntityCoordinates targetLoc,
+            EntityCoordinates sourceLoc, bool spread = false, IEntity throwSourceEnt = null)
         {
-            var mapManager = IoCManager.Resolve<IMapManager>();
+            var entityManager = IoCManager.Resolve<IEntityManager>();
             var timing = IoCManager.Resolve<IGameTiming>();
 
             // Calculate the force necessary to land a throw based on throw duration, mass and distance.
-            var distance = (targetLoc.ToMapPos(mapManager) - sourceLoc.ToMapPos(mapManager)).Length;
+            if (!targetLoc.TryDistance(entityManager, sourceLoc, out var distance))
+            {
+                return;
+            }
+
             var throwDuration = ThrownItemComponent.DefaultThrowTime;
             var mass = 1f;
             if (thrownEnt.TryGetComponent(out ICollidableComponent physicsComponent))

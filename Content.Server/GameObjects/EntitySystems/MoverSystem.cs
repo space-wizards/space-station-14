@@ -127,15 +127,15 @@ namespace Content.Server.GameObjects.EntitySystems
                 }
                 else
                 {
-                    PlayFootstepSound(transform.GridPosition);
+                    PlayFootstepSound(transform.Coordinates);
                 }
             }
         }
 
-        private void PlayFootstepSound(GridCoordinates coordinates)
+        private void PlayFootstepSound(EntityCoordinates coordinates)
         {
             // Step one: figure out sound collection prototype.
-            var grid = _mapManager.GetGrid(coordinates.GridID);
+            var grid = _mapManager.GetGrid(coordinates.GetGridId(EntityManager));
             var tile = grid.GetTileRef(coordinates);
 
             // If the coordinates have a catwalk, it's always catwalk.

@@ -30,7 +30,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         private float _timeSinceSync;
         private const float TimeBetweenSyncs = 2f;
         private bool _checkPlayer = false; // Check at the player pos or at some other tile?
-        private GridCoordinates? _position; // The tile that we scanned
+        private EntityCoordinates? _position; // The tile that we scanned
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(GasAnalyzerUiKey.Key);
 
@@ -69,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// </summary>
         /// <param name="session">The session to open the ui for</param>
         /// <param name="pos">The position to analyze the gas</param>
-        public void OpenInterface(IPlayerSession session, GridCoordinates pos)
+        public void OpenInterface(IPlayerSession session, EntityCoordinates pos)
         {
             _checkPlayer = false;
             _position = pos;

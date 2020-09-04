@@ -12,7 +12,7 @@ namespace Content.Server.GameObjects.Components.Movement
     [ComponentReference(typeof(IMoverComponent))]
     public class PlayerInputMoverComponent : SharedPlayerInputMoverComponent
     {
-        public override GridCoordinates LastPosition { get; set; }
+        public override EntityCoordinates LastPosition { get; set; }
 
         public override float StepSoundDistance { get; set; }
     }
