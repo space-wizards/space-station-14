@@ -9,6 +9,7 @@ using Content.Server.Interfaces;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
 using Content.Shared.Maps;
+using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -39,6 +40,9 @@ namespace Content.Server.Atmos
 
         [ViewVariables]
         private static GasTileOverlaySystem _gasTileOverlaySystem;
+
+        [ViewVariables]
+        public int AtmosCooldown { get; set; } = 0;
 
         [ViewVariables]
         private float _temperature = Atmospherics.T20C;
@@ -73,8 +77,10 @@ namespace Content.Server.Atmos
         [ViewVariables]
         private readonly TileAtmosphere[] _adjacentTiles = new TileAtmosphere[Atmospherics.Directions];
 
-        [ViewVariables]
         private AtmosDirection _adjacentBits = AtmosDirection.Invalid;
+
+        [ViewVariables, UsedImplicitly]
+        private int AdjacentBitsInt => (int)_adjacentBits;
 
         [ViewVariables]
         private TileAtmosInfo _tileAtmosInfo;
@@ -83,6 +89,9 @@ namespace Content.Server.Atmos
         public Hotspot Hotspot;
 
         private AtmosDirection _pressureDirection;
+
+        [ViewVariables, UsedImplicitly]
+        private int PressureDirectionInt => (int)_pressureDirection;
 
         [ViewVariables]
         public GridId GridIndex { get; }
@@ -635,6 +644,15 @@ namespace Content.Server.Atmos
 
             _currentCycle = fireCount;
             var adjacentTileLength = 0;
+
+            AtmosCooldown++;
+            for (var i = 0; i < Atmospherics.Directions; i++)
+            {
+                var direction = (AtmosDirection) (1 << i);
+                if(_adjacentBits.HasFlag(direction))
+                    adjacentTileLength++;
+            }
+
             for(var i = 0; i < Atmospherics.Directions; i++)
             {
                 var direction = (AtmosDirection) (1 << i);
@@ -643,7 +661,6 @@ namespace Content.Server.Atmos
 
                 // If the tile is null or has no air, we don't do anything for it.
                 if(enemyTile?.Air == null) continue;
-                adjacentTileLength++;
                 if (fireCount <= enemyTile._currentCycle) continue;
                 enemyTile.Archive(fireCount);
 
@@ -703,7 +720,13 @@ namespace Content.Server.Atmos
             React();
             UpdateVisuals();
 
-            if((!(Air.Temperature > Atmospherics.MinimumTemperatureStartSuperConduction && ConsiderSuperconductivity(true))) && ExcitedGroup == null)
+            var remove = true;
+
+            if(Air.Temperature > Atmospherics.MinimumTemperatureStartSuperConduction)
+                if (ConsiderSuperconductivity(true))
+                    remove = false;
+
+            if((ExcitedGroup == null && remove) || (AtmosCooldown > (Atmospherics.ExcitedGroupsDismantleCycles * 2)))
                 _gridAtmosphereComponent.RemoveActiveTile(this);
         }
 
@@ -1124,9 +1147,11 @@ namespace Content.Server.Atmos
             if (lastShare > Atmospherics.MinimumAirToSuspend)
             {
                 ExcitedGroup.ResetCooldowns();
+                AtmosCooldown = 0;
             } else if (lastShare > Atmospherics.MinimumMolesDeltaToMove)
             {
                 ExcitedGroup.DismantleCooldown = 0;
+                AtmosCooldown = 0;
             }
         }
 
