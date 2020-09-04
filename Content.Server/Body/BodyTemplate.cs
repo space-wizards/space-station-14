@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Server.GameObjects.Components.Body;
 using Content.Shared.Body.Template;
 using Content.Shared.GameObjects.Components.Body;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Body
@@ -11,26 +12,13 @@ namespace Content.Server.Body
     /// <summary>
     ///     This class is a data capsule representing the standard format of a
     ///     <see cref="BodyManagerComponent"/>.
-    ///     For instance, the "humanoid" BodyTemplate defines two arms, each connected to
-    ///     a torso and so on.
+    ///     For instance, the "humanoid" BodyTemplate defines two arms, each
+    ///     connected to a torso and so on.
     ///     Capable of loading data from a <see cref="BodyTemplatePrototype"/>.
     /// </summary>
     public class BodyTemplate
     {
-        public BodyTemplate()
-        {
-            Name = "empty";
-            CenterSlot = "";
-            Slots = new Dictionary<string, BodyPartType>();
-            Connections = new Dictionary<string, List<string>>();
-            Layers = new Dictionary<string, string>();
-            MechanismLayers = new Dictionary<string, string>();
-        }
-
-        public BodyTemplate(BodyTemplatePrototype data)
-        {
-            LoadFromPrototype(data);
-        }
+        [ViewVariables] public bool Initialized { get; private set; }
 
         [ViewVariables] public string Name { get; private set; }
 
@@ -132,14 +120,18 @@ namespace Content.Server.Body
             return hash;
         }
 
-        protected virtual void LoadFromPrototype(BodyTemplatePrototype data)
+        public virtual void Initialize(BodyTemplatePrototype prototype)
         {
-            Name = data.Name;
-            CenterSlot = data.CenterSlot;
-            Slots = data.Slots;
-            Connections = data.Connections;
-            Layers = data.Layers;
-            MechanismLayers = data.MechanismLayers;
+            DebugTools.Assert(!Initialized, $"{nameof(BodyTemplate)} {Name} has already been initialized!");
+
+            Name = prototype.Name;
+            CenterSlot = prototype.CenterSlot;
+            Slots = prototype.Slots;
+            Connections = prototype.Connections;
+            Layers = prototype.Layers;
+            MechanismLayers = prototype.MechanismLayers;
+
+            Initialized = true;
         }
     }
 }

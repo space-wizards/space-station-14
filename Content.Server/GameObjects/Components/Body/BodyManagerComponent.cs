@@ -55,14 +55,15 @@ namespace Content.Server.GameObjects.Components.Body
                 "bodyTemplate.Humanoid",
                 template =>
                 {
-                    if (!_prototypeManager.TryIndex(template, out BodyTemplatePrototype templateData))
+                    if (!_prototypeManager.TryIndex(template, out BodyTemplatePrototype prototype))
                     {
                         // Invalid prototype
                         throw new InvalidOperationException(
                             $"No {nameof(BodyTemplatePrototype)} found with name {template}");
                     }
 
-                    Template = new BodyTemplate(templateData);
+                    Template = new BodyTemplate();
+                    Template.Initialize(prototype);
                 },
                 () => Template.Name);
 
@@ -71,7 +72,7 @@ namespace Content.Server.GameObjects.Components.Body
                 "bodyPreset.BasicHuman",
                 preset =>
                 {
-                    if (!_prototypeManager.TryIndex(preset, out BodyPresetPrototype presetPrototype))
+                    if (!_prototypeManager.TryIndex(preset, out BodyPresetPrototype prototype))
                     {
                         // Invalid prototype
                         throw new InvalidOperationException(
@@ -79,7 +80,7 @@ namespace Content.Server.GameObjects.Components.Body
                     }
 
                     Preset = new BodyPreset();
-                    Preset.Initialize(presetPrototype);
+                    Preset.Initialize(prototype);
                 },
                 () => _presetName);
         }
