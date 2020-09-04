@@ -54,17 +54,5 @@ namespace Content.Shared.Utility
         {
             return ToCoordinates(grid.GridEntityId, Vector2.Zero);
         }
-
-        // TODO: Remove
-        public static IEntity SpawnEntity(this IEntityManager manager, string? protoName, EntityCoordinates coordinates)
-        {
-            return manager.SpawnEntity(protoName, coordinates.ToMap(manager));
-        }
-
-        // TODO: Remove
-        public static EntityCoordinates ToCoordinates(this MapIndices indices, IMapManager mapManager, GridId gridIndex)
-        {
-            return EntityCoordinates.FromGrid(mapManager, indices.ToGridCoordinates(mapManager, gridIndex));
-        }
     }
 }

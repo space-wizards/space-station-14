@@ -181,7 +181,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         /// <returns></returns>
         public PathfindingNode GetNode(IEntity entity)
         {
-            var tile = _mapManager.GetGrid(entity.Transform.GridID).GetTileRef(entity.Transform.GridPosition);
+            var tile = _mapManager.GetGrid(entity.Transform.GridID).GetTileRef(entity.Transform.Coordinates);
             return GetNode(tile);
         }
 
@@ -281,7 +281,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             }
 
             var grid = _mapManager.GetGrid(entity.Transform.GridID);
-            var tileRef = grid.GetTileRef(entity.Transform.GridPosition);
+            var tileRef = grid.GetTileRef(entity.Transform.Coordinates);
 
             var chunk = GetChunk(tileRef);
             var node = chunk.GetNode(tileRef);
@@ -338,7 +338,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 
             // The pathfinding graph is tile-based so first we'll check if they're on a different tile and if we need to update.
             // If you get entities bigger than 1 tile wide you'll need some other system so god help you.
-            var newTile = _mapManager.GetGrid(moveEvent.NewPosition.GridID).GetTileRef(moveEvent.NewPosition);
+            var newTile = _mapManager.GetGrid(moveEvent.NewPosition.GetGridId(_entityManager)).GetTileRef(moveEvent.NewPosition);
 
             if (oldNode == null || oldNode.TileRef == newTile)
             {

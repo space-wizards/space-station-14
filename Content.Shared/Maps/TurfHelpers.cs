@@ -154,7 +154,7 @@ namespace Content.Shared.Maps
         {
             mapManager ??= IoCManager.Resolve<IMapManager>();
 
-            return turf.GridIndices.ToCoordinates(mapManager, turf.GridIndex);
+            return turf.GridIndices.ToGridCoordinates(mapManager, turf.GridIndex);
         }
 
         /// <summary>

@@ -92,7 +92,7 @@ namespace Content.Shared.Physics.Pull
 
             ControlledComponent.WakeBody();
 
-            var dist = _puller.Owner.Transform.GridPosition.Position - to.Position;
+            var dist = _puller.Owner.Transform.Coordinates.Position - to.Position;
 
             if (Math.Sqrt(dist.LengthSquared) > DistBeforeStopPull ||
                 Math.Sqrt(dist.LengthSquared) < 0.25f)
@@ -125,7 +125,7 @@ namespace Content.Shared.Physics.Pull
             }
             else if (_movingTo.HasValue)
             {
-                var diff = _movingTo.Value.Position - ControlledComponent.Owner.Transform.GridPosition.Position;
+                var diff = _movingTo.Value.Position - ControlledComponent.Owner.Transform.Coordinates.Position;
                 LinearVelocity = diff.Normalized * 5;
             }
             else if (dist.Length > DistBeforePull)
@@ -153,7 +153,7 @@ namespace Content.Shared.Physics.Pull
                 return;
             }
 
-            if (ControlledComponent.Owner.Transform.GridPosition.Position.EqualsApprox(_movingTo.Value.Position, 0.01))
+            if (ControlledComponent.Owner.Transform.Coordinates.Position.EqualsApprox(_movingTo.Value.Position, 0.01))
             {
                 _movingTo = null;
             }

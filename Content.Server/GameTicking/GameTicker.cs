@@ -557,7 +557,7 @@ namespace Content.Server.GameTicking
 
                 foreach (var (slot, equipmentStr) in gear)
                 {
-                    var equipmentEntity = _entityManager.SpawnEntity(equipmentStr, entity.Transform.GridPosition);
+                    var equipmentEntity = _entityManager.SpawnEntity(equipmentStr, entity.Transform.Coordinates);
                     inventory.Equip(slot, equipmentEntity.GetComponent<ItemComponent>());
                 }
             }
@@ -567,7 +567,7 @@ namespace Content.Server.GameTicking
                 var inhand = startingGear.Inhand;
                 foreach (var (hand, prototype) in inhand)
                 {
-                    var inhandEntity = _entityManager.SpawnEntity(prototype, entity.Transform.GridPosition);
+                    var inhandEntity = _entityManager.SpawnEntity(prototype, entity.Transform.Coordinates);
                     handsComponent.PutInHand(inhandEntity.GetComponent<ItemComponent>(), hand);
                 }
             }

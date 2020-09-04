@@ -234,7 +234,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             if (!hands.PutInHand(cell.Owner.GetComponent<ItemComponent>()))
             {
-                cell.Owner.Transform.GridPosition = user.Transform.GridPosition;
+                cell.Owner.Transform.Coordinates = user.Transform.Coordinates;
             }
 
             EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/pistol_magout.ogg", Owner);
@@ -292,7 +292,7 @@ namespace Content.Server.GameObjects.Components.Interactable
                 return;
             }
 
-            var cell = Owner.EntityManager.SpawnEntity("PowerCellSmallStandard", Owner.Transform.GridPosition);
+            var cell = Owner.EntityManager.SpawnEntity("PowerCellSmallStandard", Owner.Transform.Coordinates);
             _cellContainer.Insert(cell);
         }
     }

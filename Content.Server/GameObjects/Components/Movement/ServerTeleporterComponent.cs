@@ -84,7 +84,7 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             if (_teleporterType == TeleporterType.Directed)
             {
-                TryDirectedTeleport(eventArgs.User, eventArgs.ClickLocation.ToMap(_mapManager));
+                TryDirectedTeleport(eventArgs.User, eventArgs.ClickLocation.ToMap(Owner.EntityManager));
             }
 
             if (_teleporterType == TeleporterType.Random)
@@ -165,13 +165,13 @@ namespace Content.Server.GameObjects.Components.Movement
 
         private Vector2 RandomEmptySpot(IEntity user, int range)
         {
-            Vector2 targetVector = user.Transform.GridPosition.Position;
+            Vector2 targetVector = user.Transform.Coordinates.Position;
             // Definitely a better way to do this
             foreach (var i in Enumerable.Range(0, 5))
             {
                 var randomRange = _spreadRandom.Next(0, range);
                 var angle = Angle.FromDegrees(_spreadRandom.Next(0, 359));
-                targetVector = user.Transform.GridPosition.Position + angle.ToVec() * randomRange;
+                targetVector = user.Transform.Coordinates.Position + angle.ToVec() * randomRange;
                 if (EmptySpace(user, targetVector))
                 {
                     return targetVector;
@@ -202,7 +202,7 @@ namespace Content.Server.GameObjects.Components.Movement
             {
                var randomRange = _spreadRandom.Next(0, _range);
                var angle = Angle.FromDegrees(_spreadRandom.Next(0, 359));
-               targetVector = user.Transform.GridPosition.Position + angle.ToVec() * randomRange;
+               targetVector = user.Transform.Coordinates.Position + angle.ToVec() * randomRange;
             }
             // Start / Continue
             if (_state == ItemTeleporterState.Off)
@@ -231,7 +231,7 @@ namespace Content.Server.GameObjects.Components.Movement
             {
                 // Call Delete here as the teleporter should have control over portal longevity
                 // Departure portal
-                var departurePortal = _serverEntityManager.SpawnEntity("Portal", user.Transform.GridPosition);
+                var departurePortal = _serverEntityManager.SpawnEntity("Portal", user.Transform.Coordinates);
                 departurePortal.TryGetComponent<ServerPortalComponent>(out var departureComponent);
 
                 // Arrival portal
@@ -245,12 +245,12 @@ namespace Content.Server.GameObjects.Components.Movement
             else
             {
                 // Departure
-                soundPlayer.PlayAtCoords(_departureSound, user.Transform.GridPosition);
+                soundPlayer.PlayAtCoords(_departureSound, user.Transform.Coordinates);
 
                 // Arrival
                 user.Transform.AttachToGridOrMap();
                 user.Transform.WorldPosition = vector;
-                soundPlayer.PlayAtCoords(_arrivalSound, user.Transform.GridPosition);
+                soundPlayer.PlayAtCoords(_arrivalSound, user.Transform.Coordinates);
             }
 
         }

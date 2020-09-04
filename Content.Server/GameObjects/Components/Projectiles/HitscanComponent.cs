@@ -65,7 +65,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             _startTime = _gameTiming.CurTime;
             _deathTime = _startTime + TimeSpan.FromSeconds(1);
 
-            var afterEffect = AfterEffects(user.Transform.GridPosition, angle, distance, 1.0f);
+            var afterEffect = AfterEffects(user.Transform.Coordinates, angle, distance, 1.0f);
             if (afterEffect != null)
             {
                 effectSystem.CreateParticle(afterEffect);
@@ -80,7 +80,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
                     effectSystem.CreateParticle(impactEffect);
                 }
 
-                var muzzleEffect = MuzzleFlash(user.Transform.GridPosition, angle);
+                var muzzleEffect = MuzzleFlash(user.Transform.Coordinates, angle);
                 if (muzzleEffect != null)
                 {
                     effectSystem.CreateParticle(muzzleEffect);
@@ -91,7 +91,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             {
                 // TODO: No wall component so ?
                 var offset = angle.ToVec().Normalized / 2;
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHitWall, user.Transform.GridPosition.Translated(offset));
+                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHitWall, user.Transform.Coordinates.Offset(offset));
             }
 
             Timer.Spawn((int) _deathTime.TotalMilliseconds, () =>
@@ -161,7 +161,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 EffectSprite = _impactFlash,
                 Born = _startTime,
                 DeathTime = _deathTime,
-                Coordinates = Owner.Transform.GridPosition.Translated(angle.ToVec() * distance),
+                Coordinates = Owner.Transform.Coordinates.Offset(angle.ToVec() * distance),
                 //Rotated from east facing
                 Rotation = (float) angle.FlipPositive(),
                 Color = Vector4.Multiply(new Vector4(255, 255, 255, 750), ColorModifier),

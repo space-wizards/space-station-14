@@ -25,8 +25,9 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
     public sealed class AiSteeringSystem : EntitySystem
     {
         // http://www.red3d.com/cwr/papers/1999/gdc99steer.html for a steering overview
-        [Dependency] private IMapManager _mapManager = default!;
-        [Dependency] private IPauseManager _pauseManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IPauseManager _pauseManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private PathfindingSystem _pathfindingSystem;
 
@@ -268,7 +269,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
 
             // Validation
             // Check if we can even arrive -> Currently only samegrid movement supported
-            if (entity.Transform.GridID != steeringRequest.TargetGrid.GridID)
+            if (entity.Transform.GridID != steeringRequest.TargetGrid.GetGridId(_entityManager))
             {
                 controller.VelocityDir = Vector2.Zero;
                 return SteeringStatus.NoPath;
@@ -413,7 +414,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
 
             var cancelToken = new CancellationTokenSource();
             var gridManager = _mapManager.GetGrid(entity.Transform.GridID);
-            var startTile = gridManager.GetTileRef(entity.Transform.GridPosition);
+            var startTile = gridManager.GetTileRef(entity.Transform.Coordinates);
             var endTile = gridManager.GetTileRef(steeringRequest.TargetGrid);
             var collisionMask = 0;
             if (entity.TryGetComponent(out ICollidableComponent collidableComponent))
@@ -443,7 +444,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         {
             _pathfindingRequests.Remove(entity);
 
-            var entityTile = _mapManager.GetGrid(entity.Transform.GridID).GetTileRef(entity.Transform.GridPosition);
+            var entityTile = _mapManager.GetGrid(entity.Transform.GridID).GetTileRef(entity.Transform.Coordinates);
             var tile = path.Dequeue();
             var closestDistance = PathfindingHelpers.OctileDistance(entityTile, tile);
 
@@ -481,7 +482,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             // If no tiles left just move towards the target (if we're close)
             if (!_paths.ContainsKey(entity) || _paths[entity].Count == 0)
             {
-                if ((steeringRequest.TargetGrid.Position - entity.Transform.GridPosition.Position).Length <= 2.0f)
+                if ((steeringRequest.TargetGrid.Position - entity.Transform.Coordinates.Position).Length <= 2.0f)
                 {
                     return steeringRequest.TargetGrid;
                 }
@@ -491,7 +492,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             }
 
             if (!_nextGrid.TryGetValue(entity, out var nextGrid) ||
-                (nextGrid.Position - entity.Transform.GridPosition.Position).Length <= TileTolerance)
+                (nextGrid.Position - entity.Transform.Coordinates.Position).Length <= TileTolerance)
             {
                 UpdateGridCache(entity);
                 nextGrid = _nextGrid[entity];
@@ -522,12 +523,12 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         {
             if (!_stuckPositions.TryGetValue(entity, out var stuckPosition))
             {
-                _stuckPositions[entity] = entity.Transform.GridPosition;
+                _stuckPositions[entity] = entity.Transform.Coordinates;
                 _stuckCounter[entity] = 0;
                 return;
             }
 
-            if ((entity.Transform.GridPosition.Position - stuckPosition.Position).Length <= 1.0f)
+            if ((entity.Transform.Coordinates.Position - stuckPosition.Position).Length <= 1.0f)
             {
                 _stuckCounter.TryGetValue(entity, out var stuckCount);
                 _stuckCounter[entity] = stuckCount + 1;
@@ -535,7 +536,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             else
             {
                 // No longer stuck
-                _stuckPositions[entity] = entity.Transform.GridPosition;
+                _stuckPositions[entity] = entity.Transform.Coordinates;
                 _stuckCounter[entity] = 0;
                 return;
             }
@@ -595,8 +596,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         /// <returns></returns>
         private Vector2 Pursuit(IEntity entity, IEntity target)
         {
-            var entityPos = entity.Transform.GridPosition;
-            var targetPos = target.Transform.GridPosition;
+            var entityPos = entity.Transform.Coordinates;
+            var targetPos = target.Transform.Coordinates;
             if (entityPos == targetPos)
             {
                 return Vector2.Zero;
@@ -632,7 +633,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             var avoidanceVector = Vector2.Zero;
             var checkTiles = new HashSet<TileRef>();
             var avoidTiles = new HashSet<TileRef>();
-            var entityGridCoords = entity.Transform.GridPosition;
+            var entityGridCoords = entity.Transform.Coordinates;
             var grid = _mapManager.GetGrid(entity.Transform.GridID);
             var currentTile = grid.GetTileRef(entityGridCoords);
             var halfwayTile = grid.GetTileRef(entityGridCoords.Offset(direction / 2));
@@ -667,7 +668,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
                         continue;
                     }
 
-                    var centerGrid = physicsEntity.Transform.GridPosition;
+                    var centerGrid = physicsEntity.Transform.Coordinates;
                     // Check how close we are to center of tile and get the inverse; if we're closer this is stronger
                     var additionalVector = (centerGrid.Position - entityGridCoords.Position);
                     var distance = additionalVector.Length;

@@ -14,10 +14,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Map;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Timing;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
@@ -379,7 +376,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// <inheritdoc />
         public TileAtmosphere? GetTile(EntityCoordinates coordinates, bool createSpace = true)
         {
-            return GetTile(coordinates.ToMapIndices(_mapManager), createSpace);
+            return GetTile(coordinates.ToMapIndices(_serverEntityManager, _mapManager), createSpace);
         }
 
         /// <inheritdoc />

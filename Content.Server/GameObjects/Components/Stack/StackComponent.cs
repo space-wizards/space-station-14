@@ -73,7 +73,7 @@ namespace Content.Server.GameObjects.Components.Stack
                 var popupPos = eventArgs.ClickLocation;
                 if (popupPos == EntityCoordinates.Invalid)
                 {
-                    popupPos = eventArgs.User.Transform.GridPosition;
+                    popupPos = eventArgs.User.Transform.Coordinates;
                 }
 
 

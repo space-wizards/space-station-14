@@ -55,7 +55,7 @@ namespace Content.Shared
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
                 Message = buffer.ReadString();
-                Coordinates = buffer.ReadCoordinates();
+                Coordinates = buffer.ReadEntityCoordinates();
             }
 
             public override void WriteToBuffer(NetOutgoingMessage buffer)

@@ -26,7 +26,7 @@ namespace Content.Server.AI.Utils
 
             if (owner.TryGetComponent(out AiControllerComponent controller))
             {
-                var targetRange = (target.Transform.GridPosition.Position - owner.Transform.GridPosition.Position).Length;
+                var targetRange = (target.Transform.Coordinates.Position - owner.Transform.Coordinates.Position).Length;
                 if (targetRange > controller.VisionRadius)
                 {
                     return false;
@@ -35,9 +35,9 @@ namespace Content.Server.AI.Utils
                 range = controller.VisionRadius;
             }
 
-            var angle = new Angle(target.Transform.GridPosition.Position - owner.Transform.GridPosition.Position);
+            var angle = new Angle(target.Transform.Coordinates.Position - owner.Transform.Coordinates.Position);
             var ray = new CollisionRay(
-                owner.Transform.GridPosition.Position,
+                owner.Transform.Coordinates.Position,
                 angle.ToVec(),
                 (int)(CollisionGroup.Opaque | CollisionGroup.Impassable | CollisionGroup.MobImpassable));
 
@@ -65,7 +65,7 @@ namespace Content.Server.AI.Utils
                     continue;
                 }
 
-                if ((entity.Transform.GridPosition.Position - grid.Position).Length <= range)
+                if ((entity.Transform.Coordinates.Position - grid.Position).Length <= range)
                 {
                     yield return entity;
                 }

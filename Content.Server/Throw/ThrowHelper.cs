@@ -4,7 +4,6 @@ using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -45,7 +44,7 @@ namespace Content.Server.Throw
             if (!thrownEnt.TryGetComponent(out ICollidableComponent colComp))
                 return;
 
-            var mapManager = IoCManager.Resolve<IMapManager>();
+            var entityManager = IoCManager.Resolve<IEntityManager>();
 
             colComp.CanCollide = true;
             // I can now collide with player, so that i can do damage.
@@ -60,7 +59,7 @@ namespace Content.Server.Throw
                 colComp.PhysicsShapes[0].CollisionMask |= (int) CollisionGroup.ThrownItem;
                 colComp.Status = BodyStatus.InAir;
             }
-            var angle = new Angle(targetLoc.ToMapPos(mapManager) - sourceLoc.ToMapPos(mapManager));
+            var angle = new Angle(targetLoc.ToMapPos(entityManager) - sourceLoc.ToMapPos(entityManager));
 
             if (spread)
             {
@@ -90,7 +89,7 @@ namespace Content.Server.Throw
             {
                 var physicsMgr = IoCManager.Resolve<IPhysicsManager>();
 
-                if (physicsMgr.IsWeightless(throwSourceEnt.Transform.GridPosition))
+                if (physicsMgr.IsWeightless(throwSourceEnt.Transform.Coordinates))
                 {
                     // We don't check for surrounding entities,
                     // so you'll still get knocked around if you're hugging the station wall in zero g.

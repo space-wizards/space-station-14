@@ -123,10 +123,10 @@ namespace Content.Server.GameObjects.EntitySystems
             if (handsComp.GetActiveHand == null)
                 return false;
 
-            var entCoords = ent.Transform.GridPosition.Position;
+            var entCoords = ent.Transform.Coordinates.Position;
             var entToDesiredDropCoords = coords.Position - entCoords;
             var targetLength = Math.Min(entToDesiredDropCoords.Length, SharedInteractionSystem.InteractionRange - 0.001f); // InteractionRange is reduced due to InRange not dealing with floating point error
-            var newCoords = uid.ToCoordinates((entToDesiredDropCoords.Normalized * targetLength) + entCoords);
+            var newCoords = uid.ToCoordinates((entToDesiredDropCoords.Normalized * targetLength) + entCoords).ToMap(_entityManager);
             var rayLength = Get<SharedInteractionSystem>().UnobstructedDistance(ent.Transform.MapPosition, newCoords, ignoredEnt: ent);
 
             handsComp.Drop(handsComp.ActiveHand, uid.ToCoordinates(entCoords + (entToDesiredDropCoords.Normalized * rayLength)));
@@ -168,14 +168,14 @@ namespace Content.Server.GameObjects.EntitySystems
             else
             {
                 stackComp.Use(1);
-                throwEnt = throwEnt.EntityManager.SpawnEntity(throwEnt.Prototype.ID, plyEnt.Transform.GridPosition);
+                throwEnt = throwEnt.EntityManager.SpawnEntity(throwEnt.Prototype.ID, plyEnt.Transform.Coordinates);
 
                 // can only throw one item at a time, regardless of what the prototype stack size is.
                 if (throwEnt.TryGetComponent<StackComponent>(out var newStackComp))
                     newStackComp.Count = 1;
             }
 
-            ThrowHelper.ThrowTo(throwEnt, ThrowForce, coords, plyEnt.Transform.GridPosition, false, plyEnt);
+            ThrowHelper.ThrowTo(throwEnt, ThrowForce, coords, plyEnt.Transform.Coordinates, false, plyEnt);
 
             return true;
         }

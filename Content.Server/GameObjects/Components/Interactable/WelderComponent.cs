@@ -201,7 +201,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             PlaySoundCollection("WelderOn", -5);
             _welderSystem.Subscribe(this);
 
-            Owner.Transform.GridPosition
+            Owner.Transform.Coordinates
                 .GetTileAtmosphere()?.HotspotExpose(700f, 50f, true);
 
             return true;
@@ -243,7 +243,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             _solutionComponent?.TryRemoveReagent("chem.WeldingFuel", ReagentUnit.New(FuelLossRate * frameTime));
 
-            Owner.Transform.GridPosition
+            Owner.Transform.Coordinates
                 .GetTileAtmosphere()?.HotspotExpose(700f, 50f, true);
 
             if (Fuel == 0)

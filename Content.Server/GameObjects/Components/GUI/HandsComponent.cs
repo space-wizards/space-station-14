@@ -181,7 +181,7 @@ namespace Content.Server.GameObjects.Components.GUI
         {
             if (!PutInHand(item, mobCheck))
             {
-                item.Owner.Transform.GridPosition = Owner.Transform.GridPosition;
+                item.Owner.Transform.Coordinates = Owner.Transform.Coordinates;
             }
         }
 
@@ -264,7 +264,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 return false;
 
             item.RemovedFromSlot();
-            item.Owner.Transform.GridPosition = coords;
+            item.Owner.Transform.Coordinates = coords;
 
             if (ContainerHelpers.TryGetContainer(Owner, out var container))
             {
@@ -311,7 +311,7 @@ namespace Content.Server.GameObjects.Components.GUI
             }
 
             item.RemovedFromSlot();
-            item.Owner.Transform.GridPosition = Owner.Transform.GridPosition;
+            item.Owner.Transform.Coordinates = Owner.Transform.Coordinates;
 
             if (item.Owner.TryGetComponent<SpriteComponent>(out var spriteComponent))
             {

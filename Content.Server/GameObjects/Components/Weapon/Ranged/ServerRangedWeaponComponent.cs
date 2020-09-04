@@ -166,10 +166,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
             {
                 var soundSystem = EntitySystem.Get<AudioSystem>();
                 soundSystem.PlayAtCoords("/Audio/Items/bikehorn.ogg",
-                    Owner.Transform.GridPosition, AudioParams.Default, 5);
+                    Owner.Transform.Coordinates, AudioParams.Default, 5);
 
                 soundSystem.PlayAtCoords("/Audio/Weapons/Guns/Gunshots/bang.ogg",
-                    Owner.Transform.GridPosition, AudioParams.Default, 5);
+                    Owner.Transform.Coordinates, AudioParams.Default, 5);
 
                 if (user.TryGetComponent(out IDamageableComponent health))
                 {

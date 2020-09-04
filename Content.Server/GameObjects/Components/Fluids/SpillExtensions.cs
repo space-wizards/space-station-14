@@ -23,7 +23,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         /// <returns>The puddle if one was created, null otherwise.</returns>
         public static PuddleComponent? SpillAt(this Solution solution, IEntity entity, string prototype, bool sound = true)
         {
-            var coordinates = entity.Transform.GridPosition;
+            var coordinates = entity.Transform.Coordinates;
             return solution.SpillAt(coordinates, prototype, sound);
         }
 

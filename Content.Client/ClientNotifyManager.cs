@@ -59,17 +59,17 @@ namespace Content.Client
                 return;
             }
 
-            PopupMessage(_eyeManager.WorldToScreen(entity.Transform.GridPosition), message.Message);
+            PopupMessage(_eyeManager.WorldToScreen(entity.Transform.Coordinates), message.Message);
         }
 
         public override void PopupMessage(IEntity source, IEntity viewer, string message)
         {
-            if (viewer != _playerManager.LocalPlayer.ControlledEntity)
+            if (viewer != _playerManager.LocalPlayer?.ControlledEntity)
             {
                 return;
             }
 
-            PopupMessage(_eyeManager.WorldToScreen(source.Transform.GridPosition), message);
+            PopupMessage(_eyeManager.WorldToScreen(source.Transform.Coordinates), message);
         }
 
         public override void PopupMessage(EntityCoordinates coordinates, IEntity viewer, string message)

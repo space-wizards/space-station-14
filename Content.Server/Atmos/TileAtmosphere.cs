@@ -192,7 +192,7 @@ namespace Content.Server.Atmos
                 var pressureMovements = physics.EnsureController<HighPressureMovementController>();
                 if (pressure.LastHighPressureMovementAirCycle < _gridAtmosphereComponent.UpdateCounter)
                 {
-                    pressureMovements.ExperiencePressureDifference(_gridAtmosphereComponent.UpdateCounter, PressureDifference, _pressureDirection, 0, PressureSpecificTarget?.GridIndices.ToCoordinates(_mapManager, GridIndex) ?? EntityCoordinates.Invalid);
+                    pressureMovements.ExperiencePressureDifference(_gridAtmosphereComponent.UpdateCounter, PressureDifference, _pressureDirection, 0, PressureSpecificTarget?.GridIndices.ToGridCoordinates(_mapManager, GridIndex) ?? EntityCoordinates.Invalid);
                 }
 
             }

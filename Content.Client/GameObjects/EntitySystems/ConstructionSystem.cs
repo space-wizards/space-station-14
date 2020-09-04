@@ -191,7 +191,7 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             var ghost = _ghosts[ghostId];
             var transform = ghost.Owner.Transform;
-            var msg = new TryStartStructureConstructionMessage(transform.GridPosition, ghost.Prototype.ID, transform.LocalRotation, ghostId);
+            var msg = new TryStartStructureConstructionMessage(transform.Coordinates, ghost.Prototype.ID, transform.LocalRotation, ghostId);
             RaiseNetworkEvent(msg);
         }
 

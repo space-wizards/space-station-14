@@ -128,11 +128,13 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
                 {
                     if (provider.Connectable)
                     {
-                        var distanceToProvider = provider.Owner.Transform.GridPosition.Distance(_mapManager, Owner.Transform.GridPosition);
-                        if (distanceToProvider < Math.Min(PowerReceptionRange, provider.PowerTransferRange))
+                        if (provider.Owner.Transform.Coordinates.TryDistance(_serverEntityManager, Owner.Transform.Coordinates, out var distance))
                         {
-                            foundProvider = provider;
-                            return true;
+                            if (distance < Math.Min(PowerReceptionRange, provider.PowerTransferRange))
+                            {
+                                foundProvider = provider;
+                                return true;
+                            }
                         }
                     }
                 }

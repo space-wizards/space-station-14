@@ -106,7 +106,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return false;
             }
 
-            if (!playerEnt.Transform.GridPosition.InRange(_mapManager, used.Transform.GridPosition, InteractionRange))
+            if (!playerEnt.Transform.Coordinates.InRange(EntityManager, used.Transform.Coordinates, InteractionRange))
             {
                 return false;
             }
@@ -282,7 +282,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return false;
             }
 
-            var dist = player.Transform.GridPosition.Position - pulledObject.Transform.GridPosition.Position;
+            var dist = player.Transform.Coordinates.Position - pulledObject.Transform.Coordinates.Position;
             if (dist.LengthSquared > InteractionRangeSquared)
             {
                 return false;
@@ -323,7 +323,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             // Verify player is on the same map as the entity he clicked on
-            if (_mapManager.GetGrid(coordinates.GridID).ParentMapId != playerTransform.MapID)
+            if (_mapManager.GetGrid(coordinates.GetGridId(EntityManager)).ParentMapId != playerTransform.MapID)
             {
                 Logger.WarningS("system.interaction",
                     $"Player named {player.Name} clicked on a map he isn't located on");
@@ -340,7 +340,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
             if (ActionBlockerSystem.CanChangeDirection(player))
             {
-                var diff = coordinates.ToMapPos(_mapManager) - playerTransform.MapPosition.Position;
+                var diff = coordinates.ToMapPos(EntityManager) - playerTransform.MapPosition.Position;
                 if (diff.LengthSquared > 0.01f)
                 {
                     playerTransform.LocalRotation = new Angle(diff);
@@ -373,7 +373,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 if (item != null)
                 {
                     // After attack: Check if we clicked on an empty location, if so the only interaction we can do is AfterInteract
-                    var distSqrt = (playerTransform.WorldPosition - coordinates.ToMapPos(_mapManager)).LengthSquared;
+                    var distSqrt = (playerTransform.WorldPosition - coordinates.ToMapPos(EntityManager)).LengthSquared;
                     InteractAfter(player, item, coordinates, distSqrt <= InteractionRangeSquared);
                 }
 
@@ -804,7 +804,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             if (!ActionBlockerSystem.CanAttack(player) ||
-                (!wideAttack && !InRangeUnobstructed(player.Transform.MapPosition, coordinates, ignoreInsideBlocker:true)))
+                (!wideAttack && !player.InRangeUnobstructed(coordinates, ignoreInsideBlocker:true)))
             {
                 return;
             }

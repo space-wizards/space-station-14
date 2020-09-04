@@ -78,8 +78,7 @@ namespace Content.Server.Atmos
 
                 foreach (var tile in tiles)
                 {
-                    // TODO: EntityCoordinates
-                    var pos = EntityCoordinates.FromGrid(_mapManager, tile.GridIndices.ToGridCoordinates(_mapManager, tile.GridIndex));
+                    var pos = tile.GridIndices.ToGridCoordinates(_mapManager, tile.GridIndex);
                     var atmos = pos.GetTileAtmosphere(_entityManager);
 
                     if (atmos?.Air == null)
