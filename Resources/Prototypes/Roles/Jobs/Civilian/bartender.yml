@@ -8,12 +8,13 @@
   icon: "Bartender"
   access:
   - Service
+  - Maintenance
 
 - type: startingGear
   id: BartenderGear
   equipment:
     innerclothing: UniformBartender
     outerclothing: OuterclothingArmorVest
-    backpack: BackpackClothing
+    backpack: BackpackClothingFilled
     shoes: ShoesBlack
     idcard: BartenderPDA

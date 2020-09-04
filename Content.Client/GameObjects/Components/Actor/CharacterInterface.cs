@@ -2,6 +2,7 @@
 using System.Linq;
 using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.UserInterface;
+using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.Input;
@@ -20,12 +21,9 @@ namespace Content.Client.GameObjects.Components.Actor
     [RegisterComponent]
     public class CharacterInterface : Component
     {
-        public override string Name => "Character Interface Component";
+        [Dependency] private readonly IGameHud _gameHud = default!;
 
-        [Dependency]
-#pragma warning disable 649
-        private readonly IGameHud _gameHud;
-#pragma warning restore 649
+        public override string Name => "Character Interface Component";
 
         /// <summary>
         ///     Window to hold each of the character interfaces

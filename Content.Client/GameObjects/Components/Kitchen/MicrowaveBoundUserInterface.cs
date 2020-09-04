@@ -20,10 +20,9 @@ namespace Content.Client.GameObjects.Components.Kitchen
 {
     public  class MicrowaveBoundUserInterface : BoundUserInterface
     {
-#pragma warning disable 649
-        [Dependency] private readonly IEntityManager _entityManager;
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-#pragma warning restore 649
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         private MicrowaveMenu _menu;
 
         private Dictionary<int, EntityUid> _solids = new Dictionary<int, EntityUid>();

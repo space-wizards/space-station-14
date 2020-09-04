@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System;
 using Content.Server.GameObjects.Components.Atmos;
+using Content.Shared.Atmos;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Random;
@@ -24,7 +25,7 @@ namespace Content.Server.Atmos
         private const float ProbabilityBasePercent = 10f;
         private const float ThrowForce = 100f;
 
-        public void ExperiencePressureDifference(int cycle, float pressureDifference, Direction direction,
+        public void ExperiencePressureDifference(int cycle, float pressureDifference, AtmosDirection direction,
             float pressureResistanceProbDelta, GridCoordinates throwTarget)
         {
             if (ControlledComponent == null)
@@ -54,14 +55,14 @@ namespace Content.Server.Atmos
                     if (throwTarget != GridCoordinates.InvalidGrid)
                     {
                         var moveForce = maxForce * MathHelper.Clamp(moveProb, 0, 100) / 150f;
-                        var pos = ((throwTarget.Position - transform.GridPosition.Position).Normalized + direction.ToVec()).Normalized;
+                        var pos = ((throwTarget.Position - transform.GridPosition.Position).Normalized + direction.ToDirection().ToVec()).Normalized;
                         LinearVelocity = pos * moveForce;
                     }
 
                     else
                     {
                         var moveForce = MathF.Min(maxForce * MathHelper.Clamp(moveProb, 0, 100) / 2500f, 20f);
-                        LinearVelocity = direction.ToVec() * moveForce;
+                        LinearVelocity = direction.ToDirection().ToVec() * moveForce;
                     }
 
                     pressureComponent.LastHighPressureMovementAirCycle = cycle;

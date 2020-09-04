@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.UserInterface;
@@ -23,12 +23,10 @@ namespace Content.Client.GameObjects.Components.Mobs
     [ComponentReference(typeof(SharedStatusEffectsComponent))]
     public sealed class ClientStatusEffectsComponent : SharedStatusEffectsComponent
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private readonly IResourceCache _resourceCache;
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
-        [Dependency] private readonly IGameTiming _gameTiming;
-#pragma warning restore 649
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         private StatusEffectsUI _ui;
         private Dictionary<StatusEffect, StatusEffectStatus> _status = new Dictionary<StatusEffect, StatusEffectStatus>();
@@ -102,7 +100,10 @@ namespace Content.Client.GameObjects.Components.Mobs
             foreach (var (key, effect) in _status.OrderBy(x => (int) x.Key))
             {
                 var texture = _resourceCache.GetTexture(effect.Icon);
-                var status = new StatusControl(key, texture);
+                var status = new StatusControl(key, texture)
+                {
+                    ToolTip = key.ToString()
+                };
 
                 if (effect.Cooldown.HasValue)
                 {

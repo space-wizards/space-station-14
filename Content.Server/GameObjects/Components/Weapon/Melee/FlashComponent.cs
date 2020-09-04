@@ -22,11 +22,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
     [RegisterComponent]
     public class FlashComponent : MeleeWeaponComponent, IUse, IExamine
     {
-#pragma warning disable 649
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-        [Dependency] private readonly IEntityManager _entityManager;
-        [Dependency] private readonly ISharedNotifyManager _notifyManager;
-#pragma warning restore 649
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public override string Name => "Flash";
 
@@ -104,7 +100,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 {
                     sprite.LayerSetState(0, "burnt");
 
-                    _notifyManager.PopupMessage(Owner, user, Loc.GetString("The flash burns out!"));
+                    Owner.PopupMessage(user, Loc.GetString("The flash burns out!"));
                 }
                 else if (!_flashing)
                 {
@@ -158,7 +154,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
             if (entity != user)
             {
-                _notifyManager.PopupMessage(user, entity, Loc.GetString("{0:TheName} blinds you with {1:theName}", user, Owner));
+                user.PopupMessage(entity, Loc.GetString("{0:TheName} blinds you with {1:theName}", user, Owner));
             }
         }
 
@@ -173,10 +169,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             if (inDetailsRange)
             {
                 message.AddMarkup(
-                    _localizationManager.GetString(
+                    Loc.GetString(
                         "The flash has [color=green]{0}[/color] {1} remaining.",
                         Uses,
-                        _localizationManager.GetPluralString("use", "uses", Uses)
+                        Loc.GetPluralString("use", "uses", Uses)
                     )
                 );
             }

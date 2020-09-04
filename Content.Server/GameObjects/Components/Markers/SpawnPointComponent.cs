@@ -12,9 +12,7 @@ namespace Content.Server.GameObjects.Components.Markers
     [ComponentReference(typeof(SharedSpawnPointComponent))]
     public sealed class SpawnPointComponent : SharedSpawnPointComponent
     {
-#pragma warning disable 649
-        [Dependency] private IPrototypeManager _prototypeManager;
-#pragma warning restore 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         [ViewVariables(VVAccess.ReadWrite)]
         private SpawnPointType _spawnType;

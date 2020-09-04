@@ -14,12 +14,10 @@ namespace Content.Server.GameObjects.Components.Markers
     [RegisterComponent]
     public class TrashSpawnerComponent : ConditionalSpawnerComponent
     {
-        public override string Name => "TrashSpawner";
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
-#pragma warning disable 649
-        [Dependency] private IEntityManager _entityManager;
-        [Dependency] private IRobustRandom _robustRandom;
-#pragma warning restore 649
+        public override string Name => "TrashSpawner";
 
         [ViewVariables(VVAccess.ReadWrite)]
         public List<string> RarePrototypes { get; set; } = new List<string>();

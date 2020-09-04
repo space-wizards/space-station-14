@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Preferences.Appearance
@@ -19,6 +19,7 @@ namespace Content.Shared.Preferences.Appearance
         LLeg,
         RFoot,
         LFoot,
+        Handcuffs,
         StencilMask
     }
 }

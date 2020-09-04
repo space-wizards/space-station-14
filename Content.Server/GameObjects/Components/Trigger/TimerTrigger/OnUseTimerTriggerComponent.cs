@@ -13,9 +13,7 @@ namespace Content.Server.GameObjects.Components.Trigger.TimerTrigger
     [RegisterComponent]
     public class OnUseTimerTriggerComponent : Component, IUse
     {
-        #pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-#pragma warning restore 649
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
         public override string Name => "OnUseTimerTrigger";
 

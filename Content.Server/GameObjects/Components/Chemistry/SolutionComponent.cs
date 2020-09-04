@@ -29,11 +29,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
     [RegisterComponent]
     public class SolutionComponent : SharedSolutionComponent, IExamine
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly ILocalizationManager _loc;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-#pragma warning restore 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
         private IEnumerable<ReactionPrototype> _reactions;
         private AudioSystem _audioSystem;
@@ -237,7 +234,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     var heldEntityName = hands.GetActiveHand.Owner?.Prototype?.Name ?? "<Item>";
                     var myName = component.Owner.Prototype?.Name ?? "<Item>";
 
-                    data.Text= $"Transfer liquid from [{heldEntityName}] to [{myName}].";
+                    var locHeldEntityName = Loc.GetString(heldEntityName);
+                    var locMyName = Loc.GetString(myName);
+
+                    data.Text = Loc.GetString("Transfer liquid from [{0}] to [{1}].", locHeldEntityName, locMyName);
                     return;
                 }
 
@@ -276,7 +276,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return;
             }
 
-            message.AddText(_loc.GetString("Contains:\n"));
+            message.AddText(Loc.GetString("Contains:\n"));
             if (ReagentList.Count == 0)
             {
                 message.AddText("Nothing.\n");
@@ -303,12 +303,12 @@ namespace Content.Server.GameObjects.Components.Chemistry
                             colorIsh = "Blue";
                         }
 
-                        message.AddText(_loc.GetString("A {0} liquid\n", colorIsh));
+                        message.AddText(Loc.GetString("A {0} liquid\n", colorIsh));
                     }
                 }
                 else
                 {
-                    message.AddText(_loc.GetString("Unknown reagent: {0}u\n", reagent.Quantity));
+                    message.AddText(Loc.GetString("Unknown reagent: {0}u\n", reagent.Quantity));
                 }
             }
         }
@@ -337,7 +337,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     var heldEntityName = hands.GetActiveHand.Owner?.Prototype?.Name ?? "<Item>";
                     var myName = component.Owner.Prototype?.Name ?? "<Item>";
 
-                    data.Text = $"Transfer liquid from [{myName}] to [{heldEntityName}].";
+                    var locHeldEntityName = Loc.GetString(heldEntityName);
+                    var locMyName = Loc.GetString(myName);
+
+                    data.Text = Loc.GetString("Transfer liquid from [{0}] to [{1}].", locMyName, locHeldEntityName);
                     return;
                 }
 

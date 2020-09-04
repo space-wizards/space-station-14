@@ -10,12 +10,16 @@ namespace Content.Shared.Damage
     public enum DamageType
     {
         Blunt,
+        Slash,
         Piercing,
         Heat,
-        Disintegration,
-        Cellular,
-        DNA,
-        Asphyxiation
+        Shock,
+        Cold,
+        Poison,
+        Radiation,
+        Asphyxiation,
+        Bloodloss,
+        Cellular
     }
 
     public static class DamageTypeExtensions
@@ -25,12 +29,17 @@ namespace Content.Shared.Damage
             new Dictionary<DamageType, DamageClass>
             {
                 {DamageType.Blunt, DamageClass.Brute},
+                {DamageType.Slash, DamageClass.Brute},
                 {DamageType.Piercing, DamageClass.Brute},
                 {DamageType.Heat, DamageClass.Burn},
-                {DamageType.Disintegration, DamageClass.Burn},
-                {DamageType.Cellular, DamageClass.Toxin},
-                {DamageType.DNA, DamageClass.Toxin},
-                {DamageType.Asphyxiation, DamageClass.Airloss}
+                {DamageType.Shock, DamageClass.Burn},
+                {DamageType.Cold, DamageClass.Burn},
+                {DamageType.Poison, DamageClass.Toxin},
+                {DamageType.Radiation, DamageClass.Toxin},
+                {DamageType.Asphyxiation, DamageClass.Airloss},
+                {DamageType.Bloodloss, DamageClass.Airloss},
+                {DamageType.Cellular, DamageClass.Genetic }
+
             }.ToImmutableDictionary();
 
         public static DamageClass ToClass(this DamageType type)

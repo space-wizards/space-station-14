@@ -15,12 +15,15 @@ namespace Content.Server.GameObjects.Components.StationEvents
     [RegisterComponent]
     public sealed class RadiationPulseComponent : SharedRadiationPulseComponent
     {
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
+
         private const float MinPulseLifespan = 0.8f;
         private const float MaxPulseLifespan = 2.5f;
 
         public float DPS => _dps;
         private float _dps;
-        
+
         private TimeSpan _endTime;
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -33,15 +36,15 @@ namespace Content.Server.GameObjects.Components.StationEvents
         {
             base.Initialize();
 
-            var currentTime = IoCManager.Resolve<IGameTiming>().CurTime;
+            var currentTime = _gameTiming.CurTime;
             var duration  =
                 TimeSpan.FromSeconds(
-                    IoCManager.Resolve<IRobustRandom>().NextFloat() * (MaxPulseLifespan - MinPulseLifespan) +
+                    _random.NextFloat() * (MaxPulseLifespan - MinPulseLifespan) +
                     MinPulseLifespan);
 
             _endTime = currentTime + duration;
-            
-            Timer.Spawn(duration, 
+
+            Timer.Spawn(duration,
                 () =>
             {
                 if (!Owner.Deleted)

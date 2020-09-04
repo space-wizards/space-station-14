@@ -24,7 +24,6 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Disposal
 {
-    // TODO: Make unanchored pipes pullable
     public abstract class DisposalTubeComponent : Component, IDisposalTubeComponent, IBreakAct
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -69,23 +68,29 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             var nextDirection = NextDirection(holder);
             var snapGrid = Owner.GetComponent<SnapGridComponent>();
-            var tube = snapGrid
-                .GetInDir(nextDirection)
-                .Select(x => x.TryGetComponent(out IDisposalTubeComponent? c) ? c : null)
-                .FirstOrDefault(x => x != null && x != this);
-
-            if (tube == null)
-            {
-                return null;
-            }
-
             var oppositeDirection = new Angle(nextDirection.ToAngle().Theta + Math.PI).GetDir();
-            if (!tube.CanConnect(oppositeDirection, this))
+
+            foreach (var entity in snapGrid.GetInDir(nextDirection))
             {
-                return null;
+                if (!entity.TryGetComponent(out IDisposalTubeComponent? tube))
+                {
+                    continue;
+                }
+
+                if (!tube.CanConnect(oppositeDirection, this))
+                {
+                    continue;
+                }
+
+                if (!CanConnect(nextDirection, tube))
+                {
+                    continue;
+                }
+
+                return tube;
             }
 
-            return tube;
+            return null;
         }
 
         public bool Remove(DisposalHolderComponent holder)
@@ -285,7 +290,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             protected override void GetData(IEntity user, IDisposalTubeComponent component, VerbData data)
             {
-                data.Text = "Tube Directions";
+                data.Text = Loc.GetString("Tube Directions");
                 data.CategoryData = VerbCategories.Debug;
                 data.Visibility = VerbVisibility.Invisible;
 

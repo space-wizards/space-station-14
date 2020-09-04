@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
+using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
@@ -24,7 +25,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
     [RegisterComponent]
     public sealed class RevolverBarrelComponent : ServerRangedBarrelComponent
     {
+        [Dependency] private readonly IRobustRandom _random = default!;
+
         public override string Name => "RevolverBarrel";
+        public override uint? NetID => ContentNetIDs.REVOLVER_BARREL;
+
         private BallisticCaliber _caliber;
         private Container _ammoContainer;
         private int _currentSlot = 0;
@@ -60,6 +65,26 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             serializer.DataField(ref _soundSpin, "soundSpin", "/Audio/Weapons/Guns/Misc/revolver_spin.ogg");
         }
 
+        public override ComponentState GetComponentState()
+        {
+            var slotsSpent = new bool?[Capacity];
+            for (var i = 0; i < Capacity; i++)
+            {
+                slotsSpent[i] = null;
+                if (_ammoSlots[i] != null && _ammoSlots[i].TryGetComponent(out AmmoComponent ammo))
+                {
+                    slotsSpent[i] = ammo.Spent;
+                }
+            }
+
+            //TODO: make yaml var to not sent currentSlot/UI? (for russian roulette)
+            return new RevolverBarrelComponentState(
+                _currentSlot,
+                FireRateSelector,
+                slotsSpent,
+                SoundGunshot);
+        }
+
         public override void Initialize()
         {
             base.Initialize();
@@ -89,7 +114,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 _appearanceComponent = appearanceComponent;
             }
 
-            _appearanceComponent?.SetData(MagazineBarrelVisuals.MagLoaded, true);
+            UpdateAppearance();
+            Dirty();
         }
 
         private void UpdateAppearance()
@@ -129,7 +155,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                         EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundInsert, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
                     }
 
-                    // Dirty();
+                    Dirty();
                     UpdateAppearance();
                     return true;
                 }
@@ -143,7 +169,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         {
             // Move up a slot
             _currentSlot = (_currentSlot + 1) % _ammoSlots.Length;
-            // Dirty();
+            Dirty();
             UpdateAppearance();
         }
 
@@ -152,12 +178,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         /// </summary>
         public void Spin()
         {
-            var random = IoCManager.Resolve<IRobustRandom>().Next(_ammoSlots.Length - 1);
+            var random = _random.Next(_ammoSlots.Length - 1);
             _currentSlot = random;
             if (_soundSpin != null)
             {
                 EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundSpin, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
             }
+            Dirty();
         }
 
         public override IEntity PeekAmmo()
@@ -227,7 +254,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override bool UseEntity(UseEntityEventArgs eventArgs)
         {
             EjectAllSlots();
-            //Dirty();
+            Dirty();
             UpdateAppearance();
             return true;
         }

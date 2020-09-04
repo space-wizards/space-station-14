@@ -6,6 +6,7 @@ using Robust.Server.Console;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 
 namespace Content.Server.GlobalVerbs
 {
@@ -35,7 +36,7 @@ namespace Content.Server.GlobalVerbs
                 if (groupController.CanCommand(player.playerSession, "controlmob"))
                 {
                     data.Visibility = VerbVisibility.Visible;
-                    data.Text = "Control Mob";
+                    data.Text = Loc.GetString("Control Mob");
                     data.CategoryData = VerbCategories.Debug;
                 }
             }

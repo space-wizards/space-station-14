@@ -4,6 +4,7 @@ using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Timing;
+using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -18,8 +19,6 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
     public class SolarPanelComponent : Component, IBreakAct
     {
         public override string Name => "SolarPanel";
-
-        private PowerSupplierComponent _powerSupplier;
 
         /// <summary>
         /// Maximum supply output by this panel (coverage = 1)
@@ -64,15 +63,21 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 
         private void UpdateSupply()
         {
-            if (_powerSupplier != null)
-                _powerSupplier.SupplyRate = (int) (_maxSupply * _coverage);
+            if (Owner.TryGetComponent(out PowerSupplierComponent supplier))
+            {
+                supplier.SupplyRate = (int) (_maxSupply * _coverage);
+            }
         }
 
         public override void Initialize()
         {
             base.Initialize();
 
-            _powerSupplier = Owner.GetComponent<PowerSupplierComponent>();
+            if (!Owner.EnsureComponent(out PowerSupplierComponent _))
+            {
+                Logger.Warning($"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(PowerSupplierComponent)}");
+            }
+
             UpdateSupply();
         }
 

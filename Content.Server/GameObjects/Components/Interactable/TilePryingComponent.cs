@@ -2,6 +2,7 @@
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Maps;
+using Content.Shared.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
@@ -14,11 +15,9 @@ namespace Content.Server.GameObjects.Components.Interactable
     [RegisterComponent]
     public class TilePryingComponent : Component, IAfterInteract
     {
-#pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
-        [Dependency] private readonly IMapManager _mapManager;
-#pragma warning restore 649
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         public override string Name => "TilePrying";
         private bool _toolComponentNeeded = true;
@@ -44,7 +43,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             var coordinates = mapGrid.GridTileToLocal(tile.GridIndices);
 
-            if (!_entitySystemManager.GetEntitySystem<InteractionSystem>().InRangeUnobstructed(user.Transform.MapPosition, coordinates.ToMap(_mapManager), ignoredEnt:user))
+            if (!user.InRangeUnobstructed(coordinates, popup: true))
                 return;
 
             var tileDef = (ContentTileDefinition)_tileDefinitionManager[tile.Tile.TypeId];
@@ -54,12 +53,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             if (_toolComponentNeeded && !await tool!.UseTool(user, null, 0f,  ToolQuality.Prying))
                 return;
 
-            var underplating = _tileDefinitionManager["underplating"];
-            mapGrid.SetTile(clickLocation, new Tile(underplating.TileId));
-
-            //Actually spawn the relevant tile item at the right position and give it some offset to the corner.
-            var tileItem = Owner.EntityManager.SpawnEntity(tileDef.ItemDropPrototypeName, coordinates);
-            tileItem.Transform.WorldPosition += (0.2f, 0.2f);
+            coordinates.PryTile(_mapManager, _tileDefinitionManager, Owner.EntityManager);
         }
     }
 }

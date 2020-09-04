@@ -1,5 +1,6 @@
-using Robust.Server.Interfaces.Player;
+﻿using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.GameObjects;
+using System;
 
 namespace Content.Server.Interfaces.Chat
 {
@@ -28,5 +29,8 @@ namespace Content.Server.Interfaces.Chat
         void SendDeadChat(IPlayerSession player, string message);
 
         void SendHookOOC(string sender, string message);
+
+        delegate string TransformChat(IEntity speaker, string message);
+        void RegisterChatTransform(TransformChat handler);
     }
 }

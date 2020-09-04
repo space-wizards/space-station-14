@@ -207,10 +207,17 @@
   parent: TrashBase
   id: TrashBananaPeel
   components:
-    - type: Sprite
-      sprite: Objects/Consumable/Food/banana.rsi
-      state: peel
-    - type: Icon
-      sprite: Objects/Consumable/Food/banana.rsi
-      state: peel
-    - type: Slippery
+  - type: Sprite
+    sprite: Objects/Consumable/Food/banana.rsi
+    state: peel
+  - type: Icon
+    sprite: Objects/Consumable/Food/banana.rsi
+    state: peel
+  - type: Slippery
+    intersectPercentage: 0.2
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.2,-0.2,0.2,0.2"
+      layer:
+      - MobImpassable

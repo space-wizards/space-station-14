@@ -32,9 +32,7 @@ namespace Content.Client.Research
         private ItemList _unlockableTechnologies;
         private ItemList _futureTechnologies;
 
-#pragma warning disable 649
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-#pragma warning restore 649
+        [Dependency] private readonly ILocalizationManager _localizationManager = default!;
 
         public Button UnlockButton { get; private set; }
         public Button ServerSelectionButton { get; private set; }
