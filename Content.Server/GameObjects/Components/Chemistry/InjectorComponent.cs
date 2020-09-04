@@ -191,7 +191,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return;
             }
 
-            Owner.PopupMessage(user, Loc.GetString("You inject {0}u into {1:theName}'s vein!", removedSolution.TotalVolume, targetBloodstream.Owner));
+            Owner.PopupMessage(user, Loc.GetString("You inject {0}u into {1:theName}!", removedSolution.TotalVolume, targetBloodstream.Owner));
             Dirty();
         }
 

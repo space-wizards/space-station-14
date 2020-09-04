@@ -94,6 +94,12 @@ namespace Content.Server.GameObjects.Components.Chemistry
             
             //Move units from attackSolution to targetSolution
             var removedSolution = fromSolution.SplitSolution(realTransferAmount);
+
+            if (removedSolution.TotalVolume <= ReagentUnit.Zero)
+            {
+                return false;
+            }
+
             if (!toSolution.TryAddSolution(removedSolution))
             {
                 return false;

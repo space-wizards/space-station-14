@@ -259,7 +259,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             if (ReagentList.Count == 0)
             {
-                message.AddText("It's empty.");
+                message.AddText(Loc.GetString("It's empty."));
             }
             else if (ReagentList.Count == 1)
             {
@@ -267,12 +267,23 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
                 if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype proto))
                 {
-                    message.AddMarkup($"It contains [color={proto.GetSubstanceTextColor().ToHexNoAlpha()}]{proto.VisualDescription}[/color] substance.");
+                    var colorStr = $" [color={proto.GetSubstanceTextColor().ToHexNoAlpha()}]";
+                    message.AddText(Loc.GetString("It contains a"));
+                    message.AddMarkup(colorStr + Loc.GetString(proto.PhysicalDescription) + "[/color] ");
+                    message.AddText(Loc.GetString("substance."));
                 }
             }
             else
             {
-                message.AddMarkup($"It contains a [color={SubstanceColor.ToHexNoAlpha()}]mixture of substances[/color].");
+                var reagent = ReagentList.Max();
+
+                if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype proto))
+                {
+                    var colorStr = $" [color={SubstanceColor.ToHexNoAlpha()}]";
+                    message.AddText(Loc.GetString("It contains a"));
+                    message.AddMarkup(colorStr + Loc.GetString(proto.PhysicalDescription) + "[/color] ");
+                    message.AddText(Loc.GetString("mixture of substances."));
+                }
             }
         }
 

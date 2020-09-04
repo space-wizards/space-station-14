@@ -20,7 +20,8 @@ namespace Content.Shared.Chemistry
         private string _id;
         private string _name;
         private string _description;
-        private string _visualDescription;
+        private string _colorDescription;
+        private string _physicalDescription;
         private Color _substanceColor;
         private List<IMetabolizable> _metabolism;
         private string _spritePath;
@@ -28,7 +29,7 @@ namespace Content.Shared.Chemistry
         public string ID => _id;
         public string Name => _name;
         public string Description => _description;
-        public string VisualDescription => _visualDescription;
+        public string PhysicalDescription => _physicalDescription;
         public Color SubstanceColor => _substanceColor;
 
         //List of metabolism effects this reagent has, should really only be used server-side.
@@ -47,7 +48,7 @@ namespace Content.Shared.Chemistry
             serializer.DataField(ref _id, "id", string.Empty);
             serializer.DataField(ref _name, "name", string.Empty);
             serializer.DataField(ref _description, "desc", string.Empty);
-            serializer.DataField(ref _visualDescription, "visualDesc", string.Empty);
+            serializer.DataField(ref _physicalDescription, "physicalDesc", string.Empty);
             serializer.DataField(ref _substanceColor, "color", Color.White);
             serializer.DataField(ref _spritePath, "spritePath", string.Empty);
 
