@@ -63,8 +63,8 @@ namespace Content.Client.Utility
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
-            var mapManager = IoCManager.Resolve<IMapManager>();
-            var otherPosition = other.ToMap(mapManager);
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var otherPosition = other.ToMap(entityManager);
 
             return origin.InRangeUnobstructed(otherPosition, range, collisionMask, predicate, ignoreInsideBlocker,
                 popup);
