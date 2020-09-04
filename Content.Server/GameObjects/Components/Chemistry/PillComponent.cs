@@ -1,7 +1,6 @@
 ﻿using Content.Server.GameObjects.Components.Body.Digestive;
 using Content.Server.GameObjects.Components.Nutrition;
 using Content.Server.GameObjects.Components.Utensil;
-using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -47,8 +46,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
         {
             base.Initialize();
             _contents = Owner.GetComponent<SolutionComponent>();
-            _transferAmount = _contents.CurrentVolume;
-
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
