@@ -17,7 +17,6 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -31,8 +30,6 @@ namespace Content.Server.GameObjects.Components.Interactable
     internal sealed class HandheldLightComponent : SharedHandheldLightComponent, IUse, IExamine, IInteractUsing,
         IMapInit
     {
-        [Dependency] private readonly ISharedNotifyManager _notifyManager = default!;
-
         [ViewVariables(VVAccess.ReadWrite)] public float Wattage { get; set; } = 10;
         [ViewVariables] private ContainerSlot _cellContainer = default!;
 
@@ -152,7 +149,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             {
                 EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/button.ogg", Owner);
 
-                _notifyManager.PopupMessage(Owner, user, Loc.GetString("Cell missing..."));
+                Owner.PopupMessage(user, Loc.GetString("Cell missing..."));
                 return;
             }
 
@@ -162,7 +159,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             if (Wattage > cell.CurrentCharge)
             {
                 EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/button.ogg", Owner);
-                _notifyManager.PopupMessage(Owner, user, Loc.GetString("Dead cell..."));
+                Owner.PopupMessage(user, Loc.GetString("Dead cell..."));
                 return;
             }
 
@@ -273,12 +270,12 @@ namespace Content.Server.GameObjects.Components.Interactable
 
                 if (component.Cell == null)
                 {
-                    data.Text = "Eject cell (cell missing)";
+                    data.Text = Loc.GetString("Eject cell (cell missing)");
                     data.Visibility = VerbVisibility.Disabled;
                 }
                 else
                 {
-                    data.Text = "Eject cell";
+                    data.Text = Loc.GetString("Eject cell");
                 }
             }
 

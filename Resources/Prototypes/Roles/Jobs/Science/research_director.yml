@@ -17,7 +17,8 @@
   id: ResearchDirectorGear
   equipment:
     innerclothing: UniformResearchDirector
-    backpack: BackpackClothing
+    # Note to Swept add science backpacks
+    backpack: BackpackClothingFilled
     shoes: ShoesBrown
     outerclothing: OuterclothingLabcoatopen
     idcard: RnDPDA

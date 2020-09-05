@@ -13,7 +13,7 @@
   id: AssistantGear
   equipment:
     innerclothing: UniformColorGrey
-    backpack: BackpackClothing
+    backpack: BackpackClothingFilled
     shoes: ShoesBlack
     idcard: AssistantPDA
     ears: HeadsetRadioEars

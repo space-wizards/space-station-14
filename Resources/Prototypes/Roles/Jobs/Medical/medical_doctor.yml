@@ -15,7 +15,7 @@
   id: DoctorGear
   equipment:
     innerclothing: UniformMedicalDoctor
-    backpack: BackpackMedical
+    backpack: BackpackMedicalFilled
     shoes: ShoesWhite
     outerclothing: OuterclothingLabcoatmedspecopen
     idcard: MedicalPDA

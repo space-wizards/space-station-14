@@ -126,8 +126,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             {
                 if (!reader.IsAllowed(user))
                 {
-                    IoCManager.Resolve<IServerNotifyManager>()
-                        .PopupMessage(Owner, user, Loc.GetString("Access denied"));
+                    Owner.PopupMessage(user, Loc.GetString("Access denied"));
                     return true;
                 }
             }
@@ -146,7 +145,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                     return;
                 }
 
-                data.Text = component.Locked ? Loc.GetString("Unlock") : Loc.GetString("Lock");
+                data.Text = Loc.GetString(component.Locked ? "Unlock" : "Lock");
             }
 
             protected override void Activate(IEntity user, SecureEntityStorageComponent component)

@@ -3,6 +3,7 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Utility;
+using Content.Shared.Utility;
 using Robust.Shared.Containers;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -26,7 +27,7 @@ namespace Content.Server.AI.Operators.Inventory
             if (_target.Deleted ||
                 !_target.HasComponent<ItemComponent>() ||
                 ContainerHelpers.IsInContainer(_target) ||
-                !InteractionChecks.InRangeUnobstructed(_owner, _target.Transform.MapPosition))
+                !_owner.InRangeUnobstructed(_target, popup: true))
             {
                 return Outcome.Failed;
             }

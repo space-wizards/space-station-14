@@ -32,6 +32,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
     public class VendingMachineComponent : SharedVendingMachineComponent, IActivate, IExamine, IBreakAct, IWires
     {
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         private bool _ejecting;
         private TimeSpan _animationDuration = TimeSpan.Zero;
@@ -77,8 +78,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
         private void InitializeFromPrototype()
         {
             if (string.IsNullOrEmpty(_packPrototypeId)) { return; }
-            var prototypeManger = IoCManager.Resolve<IPrototypeManager>();
-            if (!prototypeManger.TryIndex(_packPrototypeId, out VendingMachineInventoryPrototype packPrototype))
+            if (!_prototypeManager.TryIndex(_packPrototypeId, out VendingMachineInventoryPrototype packPrototype))
             {
                 return;
             }

@@ -15,7 +15,7 @@
   id: CargoTechGear
   equipment:
     innerclothing: UniformCargoTech
-    backpack: BackpackClothing
+    backpack: BackpackClothingFilled
     shoes: ShoesBlack
     idcard: CargoPDA
     ears: HeadsetRadioCargoEars

@@ -23,7 +23,7 @@
   id: HoPGear
   equipment:
     innerclothing: UniformHoP
-    backpack: BackpackClothing
+    backpack: BackpackClothingFilled
     shoes: ShoesBrown
     head: HatHopcap
     idcard: HoPPDA

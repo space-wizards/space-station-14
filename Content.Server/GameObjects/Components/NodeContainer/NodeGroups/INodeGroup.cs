@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
@@ -12,6 +13,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
     public interface INodeGroup
     {
         IReadOnlyList<Node> Nodes { get; }
+
+        void Initialize(Node sourceNode);
 
         void AddNode(Node node);
 
@@ -34,6 +37,13 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         public static readonly INodeGroup NullGroup = new NullNodeGroup();
 
+        protected GridId GridId { get; private set;}
+
+        public virtual void Initialize(Node sourceNode)
+        {
+            GridId = sourceNode.Owner.Transform.GridID;
+        }
+
         public void AddNode(Node node)
         {
             _nodes.Add(node);
@@ -54,6 +64,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
                 newGroup.CombineGroup(this);
                 return;
             }
+            OnGivingNodesForCombine(newGroup);
             foreach (var node in Nodes)
             {
                 node.NodeGroup = newGroup;
@@ -70,23 +81,31 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             {
                 node.ClearNodeGroup();
             }
+            var newGroups = new List<INodeGroup>();
             foreach (var node in Nodes)
             {
                 if (node.TryAssignGroupIfNeeded())
                 {
                     node.SpreadGroup();
+                    newGroups.Add(node.NodeGroup);
                 }
             }
+            AfterRemake(newGroups);
         }
 
         protected virtual void OnAddNode(Node node) { }
         
         protected virtual void OnRemoveNode(Node node) { }
 
+        protected virtual void OnGivingNodesForCombine(INodeGroup newGroup) { }
+
+        protected virtual void AfterRemake(IEnumerable<INodeGroup> newGroups) { }
+
         private class NullNodeGroup : INodeGroup
         {
             public IReadOnlyList<Node> Nodes => _nodes;
             private readonly List<Node> _nodes = new List<Node>();
+            public void Initialize(Node sourceNode) { }
             public void AddNode(Node node) { }
             public void CombineGroup(INodeGroup newGroup) { }
             public void RemoveNode(Node node) { }

@@ -260,7 +260,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
                 if (CanMuzzleFlash)
                 {
-                    ammoComponent.MuzzleFlash(Owner.Transform.GridPosition, angle);
+                    ammoComponent.MuzzleFlash(Owner, angle);
                 }
 
                 if (ammoComponent.Caseless)
