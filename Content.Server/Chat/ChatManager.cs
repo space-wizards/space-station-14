@@ -116,8 +116,7 @@ namespace Content.Server.Chat
             // Ensure the first letter inside the message string is always a capital letter
             message = message[0].ToString().ToUpper() + message.Remove(0,1);
 
-            var pos = source.Transform.GridPosition;
-            var clients = _playerManager.GetPlayersInRange(pos, VoiceRange).Select(p => p.ConnectedClient);
+            var clients = _playerManager.GetPlayersInRange(source.Transform.GridPosition, VoiceRange).Select(p => p.ConnectedClient);
 
             if (message.StartsWith(';') && source.TryGetComponent(out InventoryComponent inventory))
             {
@@ -132,7 +131,7 @@ namespace Content.Server.Chat
             }
 
             var listeners = EntitySystem.Get<ListeningSystem>();
-            listeners.PingListeners(source, pos, message);
+            listeners.PingListeners(source, message);
 
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Local;

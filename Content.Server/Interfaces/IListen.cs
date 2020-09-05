@@ -13,6 +13,8 @@ namespace Content.Server.Interfaces
     {
         int ListenRange { get; }
 
-        void HeardSpeech(string speech, IEntity source);
+        bool CanHear(string message, IEntity source);
+
+        void Broadcast(string message, IEntity speaker);
     }
 }

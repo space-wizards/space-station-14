@@ -56,13 +56,9 @@ namespace Content.Server.GameObjects.Components
             _radioSystem = EntitySystem.Get<RadioSystem>();
         }
 
-        public void HeardSpeech(string speech, IEntity source)
+        public bool CanHear(string message, IEntity source)
         {
-            if (RadioRequested)
-            {
-                Broadcast(speech, source);
-            }
-            RadioRequested = false;
+            return RadioRequested;
         }
 
         public void Receiver(string message, int channel, IEntity source)
@@ -85,6 +81,7 @@ namespace Content.Server.GameObjects.Components
         public void Broadcast(string message, IEntity speaker)
         {
             _radioSystem.SpreadMessage(this, speaker, message, _broadcastChannel);
+            RadioRequested = false;
         }
     }
 }
