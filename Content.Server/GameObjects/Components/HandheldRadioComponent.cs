@@ -39,6 +39,8 @@ namespace Content.Server.GameObjects.Components
             }
         }
 
+        [ViewVariables] public IReadOnlyList<int> Channels => _channels;
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -100,11 +102,6 @@ namespace Content.Server.GameObjects.Components
         public void Broadcast(string message, IEntity speaker)
         {
             _radioSystem.SpreadMessage(this, speaker, message, _broadcastChannel);
-        }
-
-        public List<int> GetChannels()
-        {
-            return _channels;
         }
     }
 }
