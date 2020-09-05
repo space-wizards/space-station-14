@@ -27,3 +27,4 @@
       fuelType: chem.H2O
       fuelName: water
       fuelCost: 50
+    - type: FireExtinguisher

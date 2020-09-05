@@ -92,7 +92,7 @@
       state: r_foot
     - map: ["enum.HumanoidVisualLayers.Handcuffs"]
       color: "#ffffff"
-      sprite: Objects/Misc/handcuffs.rsi 
+      sprite: Objects/Misc/handcuffs.rsi
       state: body-overlay-2
       visible: false
     - map: ["enum.Slots.IDCARD"]
@@ -112,8 +112,6 @@
       sprite: Mobs/Customization/human_hair.rsi
     - map: ["enum.Slots.MASK"]
     - map: ["enum.Slots.HEAD"]
-    - map: ["hand-left"]
-    - map: ["hand-right"]
   - type: Icon
     sprite: Mobs/Species/Human/parts.rsi
     state: full
@@ -169,6 +167,8 @@
     interfaces:
       - key: enum.StrippingUiKey.Key
         type: StrippableBoundUserInterface
+      - key: enum.AcceptCloningUiKey.Key
+        type: AcceptCloningBoundUserInterface
 
 
 - type: entity
@@ -230,7 +230,7 @@
         state: r_hand
       - map: ["enum.HumanoidVisualLayers.Handcuffs"]
         color: "#ffffff"
-        sprite: Objects/Misc/handcuffs.rsi 
+        sprite: Objects/Misc/handcuffs.rsi
         state: body-overlay-2
         visible: false
       - map: ["enum.Slots.IDCARD"]

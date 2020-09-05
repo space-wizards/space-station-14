@@ -1,0 +1,67 @@
+- type: entity
+  name: handcuff box
+  parent: BoxBase
+  id: BoxHandcuff
+  description:
+  components:
+  - type: StorageFill
+    contents:
+      - Handcuffs
+      - Handcuffs
+      - Handcuffs
+      - Handcuffs
+      - Handcuffs
+      - Handcuffs
+  - type: Sprite
+    layers:
+      - state: box_security
+      - state: handcuff
+  - type: Icon
+    state: handcuff
+  - type: Item
+  - type: Storage
+    capacity: 6
+
+- type: entity
+  name: flashbang box
+  parent: BoxBase
+  id: BoxFlashbang
+  description:
+  components:
+  - type: StorageFill
+    contents:
+      - GrenadeFlashBang
+      - GrenadeFlashBang
+      - GrenadeFlashBang
+      - GrenadeFlashBang
+  - type: Sprite
+    layers:
+      - state: box_security
+      - state: flashbang
+  - type: Icon
+    state: flashbang
+  - type: Item
+  - type: Storage
+    capacity: 20
+
+- type: entity
+  name: sechud box
+  parent: BoxBase
+  id: BoxSechud
+  description:
+  components:
+  - type: StorageFill
+    contents:
+      - SecGlasses
+      - SecGlasses
+      - SecGlasses
+      - SecGlasses
+  - type: Sprite
+    layers:
+      - state: box_security
+      - state: sechud
+  - type: Icon
+    state: sechud
+  - type: Item
+  - type: Storage
+    capacity: 20

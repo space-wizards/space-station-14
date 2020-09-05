@@ -1,6 +1,6 @@
 ﻿using Content.Server.GameObjects.Components.Chemistry;
-using Content.Server.Interfaces;
 using Content.Shared.Chemistry;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
@@ -17,7 +17,6 @@ namespace Content.Server.GameObjects.Components.Fluids
     [RegisterComponent]
     class SprayComponent : Component, IAfterInteract
     {
-        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
         [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
 
         public override string Name => "Spray";
@@ -71,7 +70,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         {
             if (CurrentVolume <= 0)
             {
-                _notifyManager.PopupMessage(Owner, eventArgs.User, Loc.GetString("It's empty!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("It's empty!"));
                 return;
             }
 

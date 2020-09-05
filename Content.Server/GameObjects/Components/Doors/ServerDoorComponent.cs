@@ -3,15 +3,18 @@ using System;
 using System.Linq;
 using System.Threading;
 using Content.Server.Atmos;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Doors;
+using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -30,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Doors
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class ServerDoorComponent : Component, IActivate, ICollideBehavior
+    public class ServerDoorComponent : Component, IActivate, ICollideBehavior, IInteractUsing
     {
         public override string Name => "Door";
 
@@ -46,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Doors
         protected bool AutoClose = true;
         protected const float AutoCloseDelay = 5;
         protected float CloseSpeed = AutoCloseDelay;
-
+        
         private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
         protected virtual TimeSpan CloseTimeOne => TimeSpan.FromSeconds(0.3f);
@@ -63,11 +66,31 @@ namespace Content.Server.GameObjects.Components.Doors
 
         public bool Occludes => _occludes;
 
+        [ViewVariables]
+        public bool IsWeldedShut
+        {
+            get => _isWeldedShut;
+            set
+            {
+                if (_isWeldedShut == value)
+                {
+                    return;
+                }
+
+                _isWeldedShut = value;
+                SetAppearance(_isWeldedShut ? DoorVisualState.Welded : DoorVisualState.Closed);
+            }
+        }
+        private bool _isWeldedShut;
+
+        private bool _canWeldShut = true;
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
             serializer.DataField(ref _occludes, "occludes", true);
+            serializer.DataField(ref _isWeldedShut, "welded", false);
         }
 
         public override void OnRemove()
@@ -103,7 +126,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
             // Disabled because it makes it suck hard to walk through double doors.
 
-            if (entity.HasComponent<IBodyManagerComponent>())
+            if (entity.HasComponent<ISharedBodyManagerComponent>())
             {
                 if (!entity.TryGetComponent<IMoverComponent>(out var mover)) return;
 
@@ -132,7 +155,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
         public virtual bool CanOpen()
         {
-            return true;
+            return !_isWeldedShut;
         }
 
         public virtual bool CanOpen(IEntity user)
@@ -195,6 +218,7 @@ namespace Content.Server.GameObjects.Components.Doors
                 return;
             }
 
+            _canWeldShut = false;
             State = DoorState.Opening;
             SetAppearance(DoorVisualState.Opening);
             if (_occludes && Owner.TryGetComponent(out OccluderComponent? occluder))
@@ -379,6 +403,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
                 await Timer.Delay(CloseTimeTwo, _cancellationTokenSource.Token);
 
+                _canWeldShut = true;
                 State = DoorState.Closed;
                 SetAppearance(DoorVisualState.Closed);
             }, _cancellationTokenSource.Token);
@@ -388,7 +413,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
         public virtual void Deny()
         {
-            if (State == DoorState.Open)
+            if (State == DoorState.Open || _isWeldedShut)
             {
                 return;
             }
@@ -428,6 +453,21 @@ namespace Content.Server.GameObjects.Components.Doors
             Open,
             Closing,
             Opening,
+        }
+
+        public virtual async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        {
+            if (!_canWeldShut)
+                return false;
+
+            if (!eventArgs.Using.TryGetComponent(out WelderComponent? tool))
+                return false;
+
+            if (!await tool.UseTool(eventArgs.User, Owner, 3f, ToolQuality.Welding, 3f, () => _canWeldShut))
+                return false;
+
+            IsWeldedShut ^= true;
+            return true;
         }
     }
 }

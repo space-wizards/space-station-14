@@ -1,0 +1,149 @@
+- type: entity
+  name: lightbulb box
+  parent: BoxBase
+  id: BoxLightbulb
+  description:
+  components:
+  - type: StorageFill
+    contents:
+      - LightBulb
+      - LightBulb
+      - LightBulb
+      - LightBulb
+      - LightBulb
+      - LightBulb
+      - LightBulb
+      - LightBulb
+      - LightBulb
+      - LightBulb
+      - LightBulb
+      - LightBulb
+  - type: Sprite
+    layers:
+      - state: box
+      - state: light
+  - type: Icon
+    state: light
+  - type: Item
+
+- type: entity
+  name: lighttube box
+  parent: BoxBase
+  id: BoxLighttube
+  description:
+  components:
+  - type: StorageFill
+    contents:
+      - LightTube
+      - LightTube
+      - LightTube
+      - LightTube
+      - LightTube
+      - LightTube
+      - LightTube
+      - LightTube
+      - LightTube
+      - LightTube
+      - LightTube
+      - LightTube
+  - type: Sprite
+    layers:
+      - state: box
+      - state: lighttube
+  - type: Icon
+    state: lighttube
+  - type: Item
+
+- type: entity
+  name: mixed lights box
+  parent: BoxBase
+  id: BoxLightMixed
+  description:
+  components:
+  - type: StorageFill
+    contents:
+      - LightTube
+      - LightTube
+      - LightTube
+      - LightTube
+      - LightTube
+      - LightTube
+      - LightBulb
+      - LightBulb
+      - LightBulb
+      - LightBulb
+      - LightBulb
+      - LightBulb
+  - type: Sprite
+    layers:
+      - state: box
+      - state: lightmixed
+  - type: Icon
+    state: lightmixed
+  - type: Item
+
+- type: entity
+  name: pda box
+  parent: BoxBase
+  id: BoxPDA
+  description:
+  components:
+  - type: StorageFill
+    contents:
+      - AssistantPDA
+      - AssistantPDA
+      - AssistantPDA
+  - type: Sprite
+    layers:
+      - state: box
+      - state: pda
+  - type: Icon
+    state: pda
+  - type: Item
+  - type: Storage
+    capacity: 3
+
+- type: entity
+  name: meson box
+  parent: BoxBase
+  id: BoxMesonScanners
+  description:
+  components:
+  - type: StorageFill
+    contents:
+      - MesonGlasses
+      - MesonGlasses
+      - MesonGlasses
+      - MesonGlasses
+  - type: Sprite
+    layers:
+      - state: box
+      - state: meson
+  - type: Icon
+    state: meson
+  - type: Item
+  - type: Storage
+    capacity: 20
+
+- type: entity
+  name: survival box
+  parent: BoxBase
+  id: BoxSurvival
+  description:
+  components:
+  - type: StorageFill
+    contents:
+      - BreathMaskClothing
+      #- O2 Canister
+      #- Injector
+  - type: Sprite
+    layers:
+      - state: box
+      - state: writing
+  - type: Icon
+    state: box
+  - type: Item
+    size: 15
+  - type: Storage
+    capacity: 15
+    size: 15

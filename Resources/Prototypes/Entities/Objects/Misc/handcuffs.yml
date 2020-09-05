@@ -9,21 +9,17 @@
     uncuffTime: 3.0
     stunBonus: 2.0
     breakoutTime: 20.0
-    cuffedRSI: Objects/Misc/handcuffs.rsi 
+    cuffedRSI: Objects/Misc/handcuffs.rsi
     iconState: body-overlay
-
   - type: Sprite
     sprite: Objects/Misc/handcuffs.rsi
     state: handcuff
-
   - type: Icon
     sprite: Objects/Misc/handcuffs.rsi
     state: handcuff
-
   - type: Clothing
     sprite: Objects/Misc/handcuffs.rsi
     Slots: [belt]
-
 
 - type: entity
   name: makeshift handcuffs
@@ -36,7 +32,7 @@
     uncuffTime: 3.5
     stunBonus: 2.0
     breakoutTime: 15.0
-    cuffedRSI: Objects/Misc/cablecuffs.rsi 
+    cuffedRSI: Objects/Misc/cablecuffs.rsi
     bodyIconState: body-overlay
     color: red
     breakOnRemove: true

@@ -1,11 +1,13 @@
 ﻿using System;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
+using static Content.Shared.GameObjects.EntitySystems.SharedInteractionSystem;
 
 namespace Content.Shared.GameObjects.EntitySystems
 {
@@ -26,11 +28,8 @@ namespace Content.Shared.GameObjects.EntitySystems
 
         private static bool IsInDetailsRange(IEntity examiner, IEntity entity)
         {
-            return Get<SharedInteractionSystem>()
-                    .InRangeUnobstructed(examiner.Transform.MapPosition, entity.Transform.MapPosition,
-                        ExamineDetailsRange, predicate: entity0 => entity0 == examiner || entity0 == entity,
-                        ignoreInsideBlocker: true) &&
-                examiner.IsInSameOrNoContainer(entity);
+            return examiner.InRangeUnobstructed(entity, ExamineDetailsRange, ignoreInsideBlocker: true) &&
+                   examiner.IsInSameOrNoContainer(entity);
         }
 
         [Pure]
@@ -51,16 +50,14 @@ namespace Content.Shared.GameObjects.EntitySystems
                 return false;
             }
 
-            Func<IEntity, bool> predicate = entity => entity == examiner || entity == examined;
+            Ignored predicate = entity => entity == examiner || entity == examined;
 
             if (ContainerHelpers.TryGetContainer(examiner, out var container))
             {
                 predicate += entity => entity == container.Owner;
             }
 
-            return Get<SharedInteractionSystem>()
-                .InRangeUnobstructed(examiner.Transform.MapPosition, examined.Transform.MapPosition,
-                    ExamineRange, predicate: predicate, ignoreInsideBlocker:true);
+            return examiner.InRangeUnobstructed(examined, ExamineRange, predicate: predicate, ignoreInsideBlocker: true);
         }
 
         public static FormattedMessage GetExamineText(IEntity entity, IEntity examiner)

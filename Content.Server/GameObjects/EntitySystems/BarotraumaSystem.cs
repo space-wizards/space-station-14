@@ -7,7 +7,7 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     public class BarotraumaSystem : EntitySystem
     {
-        private const float TimePerUpdate = 0.5f;
+        private const float TimePerUpdate = 3f;
 
         private float _timer = 0f;
 

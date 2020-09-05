@@ -69,12 +69,28 @@ namespace Content.Server.GameObjects.Components.Disposal
             var nextDirection = NextDirection(holder);
             var snapGrid = Owner.GetComponent<SnapGridComponent>();
             var oppositeDirection = new Angle(nextDirection.ToAngle().Theta + Math.PI).GetDir();
-            var tube = snapGrid
-                .GetInDir(nextDirection)
-                .Select(x => x.TryGetComponent(out IDisposalTubeComponent? c) ? c : null)
-                .FirstOrDefault(x => x != null && x != this && x.CanConnect(oppositeDirection, this));
 
-            return tube;
+            foreach (var entity in snapGrid.GetInDir(nextDirection))
+            {
+                if (!entity.TryGetComponent(out IDisposalTubeComponent? tube))
+                {
+                    continue;
+                }
+
+                if (!tube.CanConnect(oppositeDirection, this))
+                {
+                    continue;
+                }
+
+                if (!CanConnect(nextDirection, tube))
+                {
+                    continue;
+                }
+
+                return tube;
+            }
+
+            return null;
         }
 
         public bool Remove(DisposalHolderComponent holder)
@@ -181,8 +197,6 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return;
             }
 
-            collidable.CanCollide = !collidable.Anchored;
-
             if (collidable.Anchored)
             {
                 OnAnchor();
@@ -221,8 +235,6 @@ namespace Content.Server.GameObjects.Components.Disposal
             var collidable = Owner.EnsureComponent<CollidableComponent>();
 
             collidable.AnchoredChanged += AnchoredChanged;
-
-            collidable.CanCollide = !collidable.Anchored;
         }
 
         protected override void Startup()
@@ -278,7 +290,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             protected override void GetData(IEntity user, IDisposalTubeComponent component, VerbData data)
             {
-                data.Text = "Tube Directions";
+                data.Text = Loc.GetString("Tube Directions");
                 data.CategoryData = VerbCategories.Debug;
                 data.Visibility = VerbVisibility.Invisible;
 

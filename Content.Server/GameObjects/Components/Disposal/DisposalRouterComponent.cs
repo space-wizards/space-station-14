@@ -1,5 +1,4 @@
 ﻿#nullable enable
-using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -11,13 +10,13 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 using System;
 using System.Collections.Generic;
 using Content.Server.Utility;
+using Content.Shared.Interfaces;
 using static Content.Shared.GameObjects.Components.Disposal.SharedDisposalRouterComponent;
 
 namespace Content.Server.GameObjects.Components.Disposal
@@ -27,7 +26,6 @@ namespace Content.Server.GameObjects.Components.Disposal
     [ComponentReference(typeof(IDisposalTubeComponent))]
     public class DisposalRouterComponent : DisposalJunctionComponent, IActivate
     {
-        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
         public override string Name => "DisposalRouter";
 
         [ViewVariables]
@@ -160,8 +158,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             if (!args.User.TryGetComponent(out IHandsComponent? hands))
             {
-                _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                    Loc.GetString("You have no hands."));
+                Owner.PopupMessage(args.User, Loc.GetString("You have no hands."));
                 return;
             }
 

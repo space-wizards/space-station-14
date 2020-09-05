@@ -3,16 +3,17 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.Components.Mobs.State;
 using Content.Server.GameObjects.Components.Strap;
-using Content.Server.Interfaces;
-using Content.Server.Mobs;
-using Content.Server.Utility;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Buckle;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Strap;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystemMessages;
 using Robust.Server.GameObjects.EntitySystems;
@@ -37,7 +38,6 @@ namespace Content.Server.GameObjects.Components.Buckle
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
 
         private int _size;
@@ -112,10 +112,14 @@ namespace Content.Server.GameObjects.Components.Buckle
         {
             if (Owner.TryGetComponent(out ServerStatusEffectsComponent? status))
             {
-                status.ChangeStatusEffectIcon(StatusEffect.Buckled,
-                    Buckled
-                        ? BuckledTo!.BuckledIcon
-                        : "/Textures/Interface/StatusEffects/Buckle/unbuckled.png");
+                if (Buckled)
+                {
+                    status.ChangeStatusEffectIcon(StatusEffect.Buckled, BuckledTo!.BuckledIcon);
+                }
+                else
+                {
+                    status.RemoveStatusEffect(StatusEffect.Buckled);
+                }
             }
         }
 
@@ -136,11 +140,11 @@ namespace Content.Server.GameObjects.Components.Buckle
                     ownTransform.WorldRotation = strapTransform.WorldRotation;
                     break;
                 case StrapPosition.Stand:
-                    StandingStateHelper.Standing(Owner);
+                    EntitySystem.Get<StandingStateSystem>().Standing(Owner);
                     ownTransform.WorldRotation = strapTransform.WorldRotation;
                     break;
                 case StrapPosition.Down:
-                    StandingStateHelper.Down(Owner, force: true);
+                    EntitySystem.Get<StandingStateSystem>().Down(Owner, force: true);
                     ownTransform.WorldRotation = Angle.South;
                     break;
             }
@@ -158,7 +162,7 @@ namespace Content.Server.GameObjects.Components.Buckle
             }
         }
 
-        private bool CanBuckle(IEntity user, IEntity to, [MaybeNullWhen(false)] out StrapComponent strap)
+        private bool CanBuckle(IEntity? user, IEntity to, [MaybeNullWhen(false)] out StrapComponent strap)
         {
             strap = null;
 
@@ -169,32 +173,26 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             if (!ActionBlockerSystem.CanInteract(user))
             {
-                _notifyManager.PopupMessage(user, user,
-                    Loc.GetString("You can't do that!"));
-
+                user.PopupMessage(Loc.GetString("You can't do that!"));
                 return false;
             }
 
             if (!to.TryGetComponent(out strap))
             {
-                _notifyManager.PopupMessage(Owner, user,
-                    Loc.GetString(Owner == user
-                        ? "You can't buckle yourself there!"
-                        : "You can't buckle {0:them} there!", Owner));
+                var message = Loc.GetString(Owner == user
+                    ? "You can't buckle yourself there!"
+                    : "You can't buckle {0:them} there!", Owner);
+                Owner.PopupMessage(user, message);
 
                 return false;
             }
 
-            var ownerPosition = Owner.Transform.MapPosition;
-            var strapPosition = strap.Owner.Transform.MapPosition;
-            var interaction = EntitySystem.Get<SharedInteractionSystem>();
             var component = strap;
             bool Ignored(IEntity entity) => entity == Owner || entity == user || entity == component.Owner;
 
-            if (!interaction.InRangeUnobstructed(ownerPosition, strapPosition, _range, predicate: Ignored))
+            if (!Owner.InRangeUnobstructed(strap, _range, predicate: Ignored, popup: true))
             {
-                _notifyManager.PopupMessage(strap.Owner, user,
-                    Loc.GetString("You can't reach there!"));
+                strap.Owner.PopupMessage(user, Loc.GetString("You can't reach there!"));
 
                 return false;
             }
@@ -206,7 +204,7 @@ namespace Content.Server.GameObjects.Components.Buckle
                 if (!ContainerHelpers.TryGetContainer(strap.Owner, out var strapContainer) ||
                     ownerContainer != strapContainer)
                 {
-                    _notifyManager.PopupMessage(strap.Owner, user, Loc.GetString("You can't reach there!"));
+                    strap.Owner.PopupMessage(user, Loc.GetString("You can't reach there!"));
 
                     return false;
                 }
@@ -214,18 +212,16 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             if (!user.HasComponent<HandsComponent>())
             {
-                _notifyManager.PopupMessage(user, user,
-                    Loc.GetString("You don't have hands!"));
-
+                user.PopupMessage(Loc.GetString("You don't have hands!"));
                 return false;
             }
 
             if (Buckled)
             {
-                _notifyManager.PopupMessage(Owner, user,
-                    Loc.GetString(Owner == user
-                        ? "You are already buckled in!"
-                        : "{0:They} are already buckled in!", Owner));
+                var message = Loc.GetString(Owner == user
+                    ? "You are already buckled in!"
+                    : "{0:They} are already buckled in!", Owner);
+                Owner.PopupMessage(user, message);
 
                 return false;
             }
@@ -235,10 +231,10 @@ namespace Content.Server.GameObjects.Components.Buckle
             {
                 if (parent == user.Transform)
                 {
-                    _notifyManager.PopupMessage(Owner, user,
-                        Loc.GetString(Owner == user
-                            ? "You can't buckle yourself there!"
-                            : "You can't buckle {0:them} there!", Owner));
+                    var message = Loc.GetString(Owner == user
+                        ? "You can't buckle yourself there!"
+                        : "You can't buckle {0:them} there!", Owner);
+                    Owner.PopupMessage(user, message);
 
                     return false;
                 }
@@ -248,10 +244,10 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             if (!strap.HasSpace(this))
             {
-                _notifyManager.PopupMessage(Owner, user,
-                    Loc.GetString(Owner == user
-                        ? "You can't fit there!"
-                        : "{0:They} can't fit there!", Owner));
+                var message = Loc.GetString(Owner == user
+                    ? "You can't fit there!"
+                    : "{0:They} can't fit there!", Owner);
+                Owner.PopupMessage(user, message);
 
                 return false;
             }
@@ -282,10 +278,10 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             if (!strap.TryAdd(this))
             {
-                _notifyManager.PopupMessage(Owner, user,
-                    Loc.GetString(Owner == user
-                        ? "You can't buckle yourself there!"
-                        : "You can't buckle {0:them} there!", Owner));
+                var message = Loc.GetString(Owner == user
+                    ? "You can't buckle yourself there!"
+                    : "You can't buckle {0:them} there!", Owner);
+                Owner.PopupMessage(user, message);
                 return false;
             }
 
@@ -336,14 +332,11 @@ namespace Content.Server.GameObjects.Components.Buckle
 
                 if (!ActionBlockerSystem.CanInteract(user))
                 {
-                    _notifyManager.PopupMessage(user, user,
-                        Loc.GetString("You can't do that!"));
+                    user.PopupMessage(Loc.GetString("You can't do that!"));
                     return false;
                 }
 
-                var strapPosition = Owner.Transform.MapPosition;
-
-                if (!InteractionChecks.InRangeUnobstructed(user, strapPosition, _range))
+                if (!user.InRangeUnobstructed(oldBuckledTo, _range, popup: true))
                 {
                     return false;
                 }
@@ -364,11 +357,11 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             if (Owner.TryGetComponent(out StunnableComponent? stunnable) && stunnable.KnockedDown)
             {
-                StandingStateHelper.Down(Owner);
+                EntitySystem.Get<StandingStateSystem>().Down(Owner);
             }
             else
             {
-                StandingStateHelper.Standing(Owner);
+                EntitySystem.Get<StandingStateSystem>().Standing(Owner);
             }
 
             if (Owner.TryGetComponent(out MobStateManagerComponent? stateManager))

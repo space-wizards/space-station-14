@@ -22,6 +22,8 @@ namespace Content.Server.GameObjects.Components.Projectiles
     [RegisterComponent]
     public class HitscanComponent : Component
     {
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+
         public override string Name => "Hitscan";
         public CollisionGroup CollisionMask => (CollisionGroup) _collisionMask;
         private int _collisionMask;
@@ -60,7 +62,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
         public void FireEffects(IEntity user, float distance, Angle angle, IEntity hitEntity = null)
         {
             var effectSystem = EntitySystem.Get<EffectSystem>();
-            _startTime = IoCManager.Resolve<IGameTiming>().CurTime;
+            _startTime = _gameTiming.CurTime;
             _deathTime = _startTime + TimeSpan.FromSeconds(1);
 
             var afterEffect = AfterEffects(user.Transform.GridPosition, angle, distance, 1.0f);

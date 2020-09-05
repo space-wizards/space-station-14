@@ -14,13 +14,11 @@ using Content.Shared.Damage.DamageContainer;
 using Content.Shared.Damage.ResistanceSet;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Damage;
-using Robust.Server.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
-using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -34,20 +32,11 @@ namespace Content.Server.Body
     ///     which coordinates functions between BodyParts, or a
     ///     <see cref="DroppedBodyPartComponent"/>.
     /// </summary>
-    public class BodyPart
+    public class BodyPart : IBodyPart
     {
-        /// <summary>
-        ///     The body that this body part is in, if any.
-        /// </summary>
-        private BodyManagerComponent? _body;
+        private IBodyManagerComponent? _body;
 
-        /// <summary>
-        ///     Set of all <see cref="Mechanism"/> currently inside this
-        ///     <see cref="BodyPart"/>.
-        ///     To add and remove from this list see <see cref="AddMechanism"/> and
-        ///     <see cref="RemoveMechanism"/>
-        /// </summary>
-        private readonly HashSet<Mechanism> _mechanisms = new HashSet<Mechanism>();
+        private readonly HashSet<IMechanism> _mechanisms = new HashSet<IMechanism>();
 
         public BodyPart(BodyPartPrototype data)
         {
@@ -64,11 +53,8 @@ namespace Content.Server.Body
             LoadFromPrototype(data);
         }
 
-        /// <summary>
-        ///     The body that this body part is in, if any.
-        /// </summary>
         [ViewVariables]
-        public BodyManagerComponent? Body
+        public IBodyManagerComponent? Body
         {
             get => _body;
             set
@@ -111,91 +97,48 @@ namespace Content.Server.Body
         [ViewVariables]
         private HashSet<IExposeData> Properties { get; }
 
-        /// <summary>
-        ///     The name of this <see cref="BodyPart"/>, often displayed to the user.
-        ///     For example, it could be named "advanced robotic arm".
-        /// </summary>
-        [ViewVariables]
-        public string Name { get; private set; }
+        [ViewVariables] public string Name { get; private set; }
 
-        /// <summary>
-        ///     Plural version of this <see cref="BodyPart"/> name.
-        /// </summary>
-        [ViewVariables]
-        public string Plural { get; private set; }
+        [ViewVariables] public string Plural { get; private set; }
 
-        /// <summary>
-        ///     Path to the RSI that represents this <see cref="BodyPart"/>.
-        /// </summary>
-        [ViewVariables]
-        public string RSIPath { get; private set; }
+        [ViewVariables] public string RSIPath { get; private set; }
 
-        /// <summary>
-        ///     RSI state that represents this <see cref="BodyPart"/>.
-        /// </summary>
-        [ViewVariables]
-        public string RSIState { get; private set; }
+        [ViewVariables] public string RSIState { get; private set; }
 
-        /// <summary>
-        ///     RSI map keys that this body part changes on the sprite.
-        /// </summary>
-        [ViewVariables]
-        public Enum? RSIMap { get; set; }
+        [ViewVariables] public Enum? RSIMap { get; set; }
 
-        /// <summary>
-        ///     RSI color of this body part.
-        /// </summary>
         // TODO: SpriteComponent rework
-        public Color? RSIColor { get; set; }
+        [ViewVariables] public Color? RSIColor { get; set; }
 
-        /// <summary>
-        ///     <see cref="BodyPartType"/> that this <see cref="BodyPart"/> is considered
-        ///     to be.
-        ///     For example, <see cref="BodyPartType.Arm"/>.
-        /// </summary>
-        [ViewVariables]
-        public BodyPartType PartType { get; private set; }
+        [ViewVariables] public BodyPartType PartType { get; private set; }
 
-        /// <summary>
-        ///     Determines many things: how many mechanisms can be fit inside this
-        ///     <see cref="BodyPart"/>, whether a body can fit through tiny crevices, etc.
-        /// </summary>
-        [ViewVariables]
-        private int Size { get; set; }
+        [ViewVariables] public int Size { get; private set; }
 
-        /// <summary>
-        ///     Max HP of this <see cref="BodyPart"/>.
-        /// </summary>
-        [ViewVariables]
-        public int MaxDurability { get; private set; }
+        [ViewVariables] public int MaxDurability { get; private set; }
 
-        /// <summary>
-        ///     Current HP of this <see cref="BodyPart"/> based on sum of all damage types.
-        /// </summary>
-        [ViewVariables]
-        public int CurrentDurability => MaxDurability - Damage.TotalDamage;
+        [ViewVariables] public int CurrentDurability => MaxDurability - Damage.TotalDamage;
 
         // TODO: Individual body part damage
         /// <summary>
-        ///     Current damage dealt to this <see cref="BodyPart"/>.
+        ///     Current damage dealt to this <see cref="IBodyPart"/>.
         /// </summary>
         [ViewVariables]
         public DamageContainer Damage { get; private set; }
 
         /// <summary>
-        ///     Armor of this <see cref="BodyPart"/> against damages.
+        ///     Armor of this <see cref="IBodyPart"/> against damages.
         /// </summary>
         [ViewVariables]
         public ResistanceSet Resistances { get; private set; }
 
         /// <summary>
-        ///     At what HP this <see cref="BodyPart"/> destroyed.
+        ///     At what HP this <see cref="IBodyPart"/> destroyed.
         /// </summary>
         [ViewVariables]
         public int DestroyThreshold { get; private set; }
 
         /// <summary>
-        ///     What types of BodyParts this <see cref="BodyPart"/> can easily attach to.
+        ///     What types of BodyParts this <see cref="IBodyPart"/> can easily attach to.
         ///     For the most part, most limbs aren't universal and require extra work to
         ///     attach between types.
         /// </summary>
@@ -203,15 +146,23 @@ namespace Content.Server.Body
         public BodyPartCompatibility Compatibility { get; private set; }
 
         /// <summary>
-        ///     Set of all <see cref="Mechanism"/> currently inside this
-        ///     <see cref="BodyPart"/>.
+        ///     Set of all <see cref="IMechanism"/> currently inside this
+        ///     <see cref="IBodyPart"/>.
         /// </summary>
         [ViewVariables]
-        public IReadOnlyCollection<Mechanism> Mechanisms => _mechanisms;
+        public IReadOnlyCollection<IMechanism> Mechanisms => _mechanisms;
 
         /// <summary>
-        ///     This method is called by <see cref="BodyManagerComponent.Update"/>
-        ///     before <see cref="MetabolismComponent.Update"/> is called.
+        /// Represents if body part is vital for creature.
+        /// If the last vital body part is removed creature dies
+        /// </summary>
+        [ViewVariables]
+        public bool IsVital { get; private set; }
+
+        /// <summary>
+        ///     This method is called by
+        ///     <see cref="IBodyManagerComponent.PreMetabolism"/> before
+        ///     <see cref="MetabolismComponent.Update"/> is called.
         /// </summary>
         public void PreMetabolism(float frameTime)
         {
@@ -222,8 +173,9 @@ namespace Content.Server.Body
         }
 
         /// <summary>
-        ///     This method is called by <see cref="BodyManagerComponent.Update"/>
-        ///     after <see cref="MetabolismComponent.Update"/> is called.
+        ///     This method is called by
+        ///     <see cref="IBodyManagerComponent.PostMetabolism"/> after
+        ///     <see cref="MetabolismComponent.Update"/> is called.
         /// </summary>
         public void PostMetabolism(float frameTime)
         {
@@ -258,9 +210,10 @@ namespace Content.Server.Body
         /// <param name="property">The property if found, null otherwise.</param>
         /// <typeparam name="T">The type of the property to find.</typeparam>
         /// <returns>True if successful, false otherwise.</returns>
-        public bool TryGetProperty<T>(out T property)
+        public bool TryGetProperty<T>([NotNullWhen(true)] out T? property) where T : BodyPartProperty
         {
-            property = (T) Properties.First(x => x.GetType() == typeof(T));
+            property = (T?) Properties.FirstOrDefault(x => x.GetType() == typeof(T));
+
             return property != null;
         }
 
@@ -269,20 +222,21 @@ namespace Content.Server.Body
         ///     The resulting <see cref="BodyPartProperty"/> will be null if unsuccessful.
         /// </summary>
         /// <returns>True if successful, false otherwise.</returns>
-        public bool TryGetProperty(Type propertyType, out BodyPartProperty property)
+        public bool TryGetProperty(Type propertyType, [NotNullWhen(true)] out BodyPartProperty? property)
         {
-            property = (BodyPartProperty) Properties.First(x => x.GetType() == propertyType);
+            property = (BodyPartProperty?) Properties.First(x => x.GetType() == propertyType);
+
             return property != null;
         }
 
         /// <summary>
-        ///     Checks if the given type <see cref="T"/> is on this <see cref="BodyPart"/>.
+        ///     Checks if the given type <see cref="T"/> is on this <see cref="IBodyPart"/>.
         /// </summary>
         /// <typeparam name="T">
         ///     The subtype of <see cref="BodyPartProperty"/> to look for.
         /// </typeparam>
         /// <returns>
-        ///     True if this <see cref="BodyPart"/> has a property of type
+        ///     True if this <see cref="IBodyPart"/> has a property of type
         ///     <see cref="T"/>, false otherwise.
         /// </returns>
         public bool HasProperty<T>() where T : BodyPartProperty
@@ -292,13 +246,13 @@ namespace Content.Server.Body
 
         /// <summary>
         ///     Checks if a subtype of <see cref="BodyPartProperty"/> is on this
-        ///     <see cref="BodyPart"/>.
+        ///     <see cref="IBodyPart"/>.
         /// </summary>
         /// <param name="propertyType">
         ///     The subtype of <see cref="BodyPartProperty"/> to look for.
         /// </param>
         /// <returns>
-        ///     True if this <see cref="BodyPart"/> has a property of type
+        ///     True if this <see cref="IBodyPart"/> has a property of type
         ///     <see cref="propertyType"/>, false otherwise.
         /// </returns>
         public bool HasProperty(Type propertyType)
@@ -306,22 +260,12 @@ namespace Content.Server.Body
             return Properties.Count(x => x.GetType() == propertyType) > 0;
         }
 
-        /// <summary>
-        ///     Checks if another <see cref="BodyPart"/> can be connected to this one.
-        /// </summary>
-        /// <param name="toBeConnected">The part to connect.</param>
-        /// <returns>True if it can be connected, false otherwise.</returns>
-        public bool CanAttachBodyPart(BodyPart toBeConnected)
+        public bool CanAttachPart(IBodyPart part)
         {
-            return SurgeryData.CanAttachBodyPart(toBeConnected);
+            return SurgeryData.CanAttachBodyPart(part);
         }
 
-        /// <summary>
-        ///     Checks if a <see cref="Mechanism"/> can be installed on this
-        ///     <see cref="BodyPart"/>.
-        /// </summary>
-        /// <returns>True if it can be installed, false otherwise.</returns>
-        public bool CanInstallMechanism(Mechanism mechanism)
+        public bool CanInstallMechanism(IMechanism mechanism)
         {
             return SizeUsed + mechanism.Size <= Size &&
                    SurgeryData.CanInstallMechanism(mechanism);
@@ -336,9 +280,9 @@ namespace Content.Server.Body
         /// <param name="mechanism">The mechanism to try to install.</param>
         /// <returns>
         ///     True if successful, false if there was an error
-        ///     (e.g. not enough room in <see cref="BodyPart"/>).
+        ///     (e.g. not enough room in <see cref="IBodyPart"/>).
         /// </returns>
-        private bool TryInstallMechanism(Mechanism mechanism)
+        private bool TryInstallMechanism(IMechanism mechanism)
         {
             if (!CanInstallMechanism(mechanism))
             {
@@ -352,7 +296,7 @@ namespace Content.Server.Body
 
         /// <summary>
         ///     Tries to install a <see cref="DroppedMechanismComponent"/> into this
-        ///     <see cref="BodyPart"/>, potentially deleting the dropped
+        ///     <see cref="IBodyPart"/>, potentially deleting the dropped
         ///     <see cref="IEntity"/>.
         /// </summary>
         /// <param name="droppedMechanism">The mechanism to install.</param>
@@ -364,22 +308,14 @@ namespace Content.Server.Body
         {
             if (!TryInstallMechanism(droppedMechanism.ContainedMechanism))
             {
-                return false; //Installing the mechanism failed for some reason.
+                return false; // Installing the mechanism failed for some reason.
             }
 
             droppedMechanism.Owner.Delete();
             return true;
         }
 
-        /// <summary>
-        ///     Tries to remove the given <see cref="Mechanism"/> reference from
-        ///     this <see cref="BodyPart"/>.
-        /// </summary>
-        /// <returns>
-        ///     The newly spawned <see cref="DroppedMechanismComponent"/>, or null
-        ///     if there was an error in spawning the entity or removing the mechanism.
-        /// </returns>
-        public bool TryDropMechanism(IEntity dropLocation, Mechanism mechanismTarget,
+        public bool TryDropMechanism(IEntity dropLocation, IMechanism mechanismTarget,
             [NotNullWhen(true)] out DroppedMechanismComponent dropped)
         {
             dropped = null!;
@@ -402,16 +338,16 @@ namespace Content.Server.Body
         }
 
         /// <summary>
-        ///     Tries to destroy the given <see cref="Mechanism"/> in this
-        ///     <see cref="BodyPart"/>. Does NOT spawn a dropped entity.
+        ///     Tries to destroy the given <see cref="IMechanism"/> in this
+        ///     <see cref="IBodyPart"/>. Does NOT spawn a dropped entity.
         /// </summary>
         /// <summary>
-        ///     Tries to destroy the given <see cref="Mechanism"/> in this
-        ///     <see cref="BodyPart"/>.
+        ///     Tries to destroy the given <see cref="IMechanism"/> in this
+        ///     <see cref="IBodyPart"/>.
         /// </summary>
         /// <param name="mechanismTarget">The mechanism to destroy.</param>
         /// <returns>True if successful, false otherwise.</returns>
-        public bool DestroyMechanism(Mechanism mechanismTarget)
+        public bool DestroyMechanism(IMechanism mechanismTarget)
         {
             if (!RemoveMechanism(mechanismTarget))
             {
@@ -421,18 +357,13 @@ namespace Content.Server.Body
             return true;
         }
 
-        /// <summary>
-        ///     Checks if the given <see cref="SurgeryType"/> can be used on
-        ///     the current state of this <see cref="BodyPart"/>.
-        /// </summary>
-        /// <returns>True if it can be used, false otherwise.</returns>
-        public bool SurgeryCheck(SurgeryType toolType)
+        public bool SurgeryCheck(SurgeryType surgery)
         {
-            return SurgeryData.CheckSurgery(toolType);
+            return SurgeryData.CheckSurgery(surgery);
         }
 
         /// <summary>
-        ///     Attempts to perform surgery on this <see cref="BodyPart"/> with the given
+        ///     Attempts to perform surgery on this <see cref="IBodyPart"/> with the given
         ///     tool.
         /// </summary>
         /// <returns>True if successful, false if there was an error.</returns>
@@ -441,7 +372,7 @@ namespace Content.Server.Body
             return SurgeryData.PerformSurgery(toolType, target, surgeon, performer);
         }
 
-        private void AddMechanism(Mechanism mechanism)
+        private void AddMechanism(IMechanism mechanism)
         {
             DebugTools.AssertNotNull(mechanism);
 
@@ -474,11 +405,11 @@ namespace Content.Server.Body
 
         /// <summary>
         ///     Tries to remove the given <see cref="mechanism"/> from this
-        ///     <see cref="BodyPart"/>.
+        ///     <see cref="IBodyPart"/>.
         /// </summary>
         /// <param name="mechanism">The mechanism to remove.</param>
         /// <returns>True if it was removed, false otherwise.</returns>
-        private bool RemoveMechanism(Mechanism mechanism)
+        private bool RemoveMechanism(IMechanism mechanism)
         {
             DebugTools.AssertNotNull(mechanism);
 
@@ -515,7 +446,7 @@ namespace Content.Server.Body
 
         /// <summary>
         ///     Loads the given <see cref="BodyPartPrototype"/>.
-        ///     Current data on this <see cref="BodyPart"/> will be overwritten!
+        ///     Current data on this <see cref="IBodyPart"/> will be overwritten!
         /// </summary>
         protected virtual void LoadFromPrototype(BodyPartPrototype data)
         {
@@ -527,6 +458,7 @@ namespace Content.Server.Body
             RSIPath = data.RSIPath;
             RSIState = data.RSIState;
             MaxDurability = data.Durability;
+            IsVital = data.IsVital;
 
             if (!prototypeManager.TryIndex(data.DamageContainerPresetId,
                 out DamageContainerPrototype damageContainerData))

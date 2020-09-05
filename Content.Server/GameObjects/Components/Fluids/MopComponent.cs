@@ -4,6 +4,7 @@ using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
@@ -68,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (!Owner.TryGetComponent(out SolutionComponent? contents)) return;
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
+            if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true)) return;
 
             if (CurrentVolume <= 0)
             {
@@ -79,7 +80,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             if (eventArgs.Target == null)
             {
                 // Drop the liquid on the mop on to the ground
-                SpillHelper.SpillAt(eventArgs.ClickLocation, contents.SplitSolution(CurrentVolume), "PuddleSmear");
+                contents.SplitSolution(CurrentVolume).SpillAt(eventArgs.ClickLocation, "PuddleSmear");
 
                 return;
             }
@@ -115,7 +116,7 @@ namespace Content.Server.GameObjects.Components.Fluids
 
             if (puddleCleaned) //After cleaning the puddle, make a new puddle with solution from the mop as a "wet floor". Then evaporate it slowly.
             {
-                SpillHelper.SpillAt(eventArgs.ClickLocation, contents.SplitSolution(transferAmount), "PuddleSmear");
+                contents.SplitSolution(transferAmount).SpillAt(eventArgs.ClickLocation, "PuddleSmear");
             }
             else
             {

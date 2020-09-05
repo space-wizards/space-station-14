@@ -8,6 +8,7 @@ using Content.Server.GameObjects.Components.VendingMachines;
 using Content.Server.Interfaces;
 using Content.Shared.GameObjects.Components.Doors;
 using Content.Shared.GameObjects.Components.Interactable;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
@@ -26,7 +27,7 @@ namespace Content.Server.GameObjects.Components.Doors
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(ServerDoorComponent))]
-    public class AirlockComponent : ServerDoorComponent, IWires, IInteractUsing
+    public class AirlockComponent : ServerDoorComponent, IWires
     {
         public override string Name => "Airlock";
 
@@ -305,6 +306,7 @@ namespace Content.Server.GameObjects.Components.Doors
                     case Wires.BackupPower:
                         PowerWiresPulsed = true;
                         _powerWiresPulsedTimerCancel.Cancel();
+                        _powerWiresPulsedTimerCancel = new CancellationTokenSource();
                         Timer.Spawn(PowerWiresTimeout,
                             () => PowerWiresPulsed = false,
                             _powerWiresPulsedTimerCancel.Token);
@@ -383,7 +385,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
         public override bool CanOpen()
         {
-            return IsPowered() && !IsBolted();
+            return base.CanOpen() && IsPowered() && !IsBolted();
         }
 
         public override bool CanClose()
@@ -412,8 +414,11 @@ namespace Content.Server.GameObjects.Components.Doors
                    || receiver.Powered;
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        public override async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
+            if (await base.InteractUsing(eventArgs))
+                return true;
+
             if (!eventArgs.Using.TryGetComponent<ToolComponent>(out var tool))
                 return false;
 
@@ -435,16 +440,14 @@ namespace Content.Server.GameObjects.Components.Doors
             {
                 if (IsBolted())
                 {
-                    var notify = IoCManager.Resolve<IServerNotifyManager>();
-                    notify.PopupMessage(Owner, eventArgs.User,
+                    Owner.PopupMessage(eventArgs.User,
                         Loc.GetString("The airlock's bolts prevent it from being forced!"));
                     return false;
                 }
 
                 if (IsPowered())
                 {
-                    var notify = IoCManager.Resolve<IServerNotifyManager>();
-                    notify.PopupMessage(Owner, eventArgs.User, Loc.GetString("The powered motors block your efforts!"));
+                    Owner.PopupMessage(eventArgs.User, Loc.GetString("The powered motors block your efforts!"));
                     return false;
                 }
 

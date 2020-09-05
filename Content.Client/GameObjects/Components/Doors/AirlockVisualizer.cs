@@ -115,6 +115,7 @@ namespace Content.Client.GameObjects.Components.Doors
 
             var unlitVisible = true;
             var boltedVisible = false;
+            var weldedVisible = false;
             switch (state)
             {
                 case DoorVisualState.Closed:
@@ -145,6 +146,9 @@ namespace Content.Client.GameObjects.Components.Doors
                         animPlayer.Play(DenyAnimation, AnimationKey);
                     }
                     break;
+                case DoorVisualState.Welded:
+                    weldedVisible = true;
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -159,6 +163,7 @@ namespace Content.Client.GameObjects.Components.Doors
             }
 
             sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, unlitVisible);
+            sprite.LayerSetVisible(DoorVisualLayers.BaseWelded, weldedVisible);
             sprite.LayerSetVisible(DoorVisualLayers.BaseBolted, unlitVisible && boltedVisible);
         }
     }
@@ -167,6 +172,7 @@ namespace Content.Client.GameObjects.Components.Doors
     {
         Base,
         BaseUnlit,
-        BaseBolted
+        BaseWelded,
+        BaseBolted,
     }
 }

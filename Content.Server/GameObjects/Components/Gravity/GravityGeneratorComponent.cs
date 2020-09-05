@@ -8,6 +8,7 @@ using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Gravity;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
@@ -111,9 +112,8 @@ namespace Content.Server.GameObjects.Components.Gravity
             breakable.FixAllDamage();
             _intact = true;
 
-            var notifyManager = IoCManager.Resolve<IServerNotifyManager>();
-
-            notifyManager.PopupMessage(Owner, eventArgs.User, Loc.GetString("You repair {0:theName} with {1:theName}", Owner, eventArgs.Using));
+            Owner.PopupMessage(eventArgs.User,
+                Loc.GetString("You repair {0:theName} with {1:theName}", Owner, eventArgs.Using));
 
             return true;
         }

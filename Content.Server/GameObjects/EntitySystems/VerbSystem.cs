@@ -12,7 +12,7 @@ using static Content.Shared.GameObjects.EntitySystemMessages.VerbSystemMessages;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
-    public class VerbSystem : EntitySystem
+    public class VerbSystem : SharedVerbSystem
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
@@ -90,6 +90,11 @@ namespace Content.Server.GameObjects.EntitySystems
             if (userEntity == null)
             {
                 Logger.Warning($"{nameof(UseVerb)} called by player {player} with no attached entity.");
+                return;
+            }
+
+            if (!TryGetContextEntities(userEntity, entity.Transform.MapPosition, out var entities, true) || !entities.Contains(entity))
+            {
                 return;
             }
 

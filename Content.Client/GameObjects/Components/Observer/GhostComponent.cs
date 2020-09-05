@@ -18,8 +18,7 @@ namespace Content.Client.GameObjects.Components.Observer
 
         private GhostGui _gui;
 
-        [ViewVariables(VVAccess.ReadOnly)]
-        public bool CanReturnToBody { get; private set; } = true;
+        [ViewVariables(VVAccess.ReadOnly)] public bool CanReturnToBody { get; private set; } = true;
 
         private bool _isAttached;
 
@@ -51,7 +50,8 @@ namespace Content.Client.GameObjects.Components.Observer
             base.Initialize();
 
             if (Owner.TryGetComponent(out SpriteComponent component))
-                component.Visible = _playerManager.LocalPlayer.ControlledEntity?.HasComponent<GhostComponent>() ?? false;
+                component.Visible =
+                    _playerManager.LocalPlayer.ControlledEntity?.HasComponent<GhostComponent>() ?? false;
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent component)
@@ -98,7 +98,6 @@ namespace Content.Client.GameObjects.Components.Observer
             {
                 _gui?.Update();
             }
-
         }
     }
 }

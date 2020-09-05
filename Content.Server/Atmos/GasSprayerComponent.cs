@@ -1,7 +1,7 @@
 ﻿using Content.Server.GameObjects.Components.Chemistry;
-using Content.Server.Interfaces;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
@@ -13,13 +13,11 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 
-
 namespace Content.Server.Atmos
 {
     [RegisterComponent]
     public class GasSprayerComponent : Component, IAfterInteract
     {
-        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
         [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
 
         //TODO: create a function that can create a gas based on a solution mix
@@ -48,7 +46,7 @@ namespace Content.Server.Atmos
 
             if (tank.Solution.GetReagentQuantity(_fuelType) == 0)
             {
-                _notifyManager.PopupMessage(Owner, eventArgs.User,
+                Owner.PopupMessage(eventArgs.User,
                     Loc.GetString("{0:theName} is out of {1}!", Owner, _fuelName));
             }
             else

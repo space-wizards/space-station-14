@@ -237,6 +237,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
             else
             {
                 CurrentEvent = stationEvent;
+                CurrentEvent.Startup();
             }
         }
 

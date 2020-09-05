@@ -8,6 +8,7 @@ using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -15,6 +16,7 @@ using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Items.Storage
@@ -95,9 +97,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 return false;
             }
 
-            var itemPos = Owner.Transform.MapPosition;
-
-            return InteractionChecks.InRangeUnobstructed(user, itemPos, ignoredEnt: Owner, ignoreInsideBlocker:true);
+            return user.InRangeUnobstructed(Owner, ignoreInsideBlocker: true, popup: true);
         }
 
         public bool InteractHand(InteractHandEventArgs eventArgs)
@@ -122,7 +122,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                     return;
                 }
 
-                data.Text = "Pick Up";
+                data.Text = Loc.GetString("Pick Up");
             }
 
             protected override void Activate(IEntity user, ItemComponent component)

@@ -1,0 +1,126 @@
+﻿- type: entity
+  id: DebugGenerator
+  parent: BaseGenerator
+  name: Debug Generator
+
+- type: entity
+  id: DebugConsumer
+  name: Debug Consumer
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5, -0.5, 0.5, 0.5"
+      layer: [MobMask, Opaque]
+  - type: SnapGrid
+    offset: Center
+  - type: Sprite
+    texture: Constructible/Power/wiredmachine.png
+  - type: Icon
+    texture: Constructible/Power/wiredmachine.png
+  - type: NodeContainer
+    nodes:
+    - !type:AdjacentNode
+      nodeGroupID: HVPower
+  - type: PowerConsumer
+    drawRate: 50
+  - type: Breakable
+    deadThreshold: 100
+  - type: Anchorable
+
+- type: entity
+  id: DebugBatteryStorage
+  name: Debug Battery Storage
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5, -0.5, 0.5, 0.5"
+      layer: [MobMask, Opaque]
+  - type: SnapGrid
+    offset: Center
+  - type: Sprite
+    texture: Constructible/Power/provider.png
+  - type: Icon
+    texture: Constructible/Power/provider.png
+  - type: Battery
+  - type: NodeContainer
+    nodes:
+    - !type:AdjacentNode
+      nodeGroupID: HVPower
+  - type: PowerConsumer
+  - type: BatteryStorage
+  - type: Anchorable
+
+- type: entity
+  id: DebugBatteryDischarger
+  name: Debug Battery Discharger
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5, -0.5, 0.5, 0.5"
+      layer: [MobMask, Opaque]
+  - type: SnapGrid
+    offset: Center
+  - type: Sprite
+    texture: Constructible/Power/provider.png
+  - type: Icon
+    texture: Constructible/Power/provider.png
+  - type: Battery
+  - type: NodeContainer
+    nodes:
+    - !type:AdjacentNode
+      nodeGroupID: HVPower
+  - type: PowerSupplier
+  - type: BatteryDischarger
+  - type: Anchorable
+
+- type: entity
+  id: DebugSmes
+  parent: BaseSmes
+  name: Debug Smes
+
+- type: entity
+  id: DebugSubstation
+  parent: BaseSubstation
+  name: Debug Substation
+
+- type: entity
+  id: DebugApc
+  parent: BaseApc
+  name: Debug Apc
+
+- type: entity
+  id: DebugPowerReceiver
+  name: Debug Power Receiver
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5, -0.5, 0.5, 0.5"
+      layer: [MobMask, Opaque]
+  - type: SnapGrid
+    offset: Center
+  - type: Sprite
+    texture: Constructible/Power/wirelessmachine.png
+  - type: Icon
+    texture: Constructible/Power/wirelessmachine.png
+  - type: PowerReceiver
+  - type: Anchorable
