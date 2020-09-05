@@ -250,11 +250,7 @@ namespace Content.Server.GameObjects.Components.Metabolism
                 }
 
                 // creadth: sweating does not help in airless environment
-                var atmoSystem = EntitySystem.Get<AtmosphereSystem>();
-                var ownerTransform = Owner.Transform;
-                var atmo = atmoSystem.GetGridAtmosphere(ownerTransform.GridID);
-                var tile = atmo?.GetTile(ownerTransform.GridPosition);
-                if (tile?.Air != null)
+                if (Owner.Transform.GridPosition.TryGetTileAir(out _))
                 {
                     temperatureComponent.RemoveHeat(Math.Min(targetHeat, SweatHeatRegulation));
                 }
