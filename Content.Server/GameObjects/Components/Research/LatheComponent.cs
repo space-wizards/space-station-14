@@ -41,6 +41,7 @@ namespace Content.Server.GameObjects.Components.Research
             set => _state = value;
         }
 
+        [ViewVariables]
         private LatheRecipePrototype? _producingRecipe;
         private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
 
