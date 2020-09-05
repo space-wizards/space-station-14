@@ -40,7 +40,7 @@ namespace Content.Server.GameTicking.GamePresets
         public int TraitorStartingBalance { get; set; }
 
 
-        public override bool DisallowLateJoin => true;
+        public override bool DisallowLateJoin { get; set; } = true;
 
         private static string TraitorID = "SuspicionTraitor";
         private static string InnocentID = "SuspicionInnocent";
@@ -158,7 +158,6 @@ namespace Content.Server.GameTicking.GamePresets
             _gameTicker.AddGameRule<RuleSuspicion>();
             return true;
         }
-
 
         public override string ModeTitle => "Suspicion";
         public override string Description => "Suspicion on the Space Station. There are traitors on board... Can you kill them before they kill you?";
