@@ -7,10 +7,10 @@ namespace Content.Server.Interfaces
 {
     public interface IRadio
     {
+        IReadOnlyList<int> Channels { get; }
+
         void Receiver(string message, int channel, IEntity speaker);
 
         void Broadcast(string message, IEntity speaker);
-
-        List<int> GetChannels();
     }
 }

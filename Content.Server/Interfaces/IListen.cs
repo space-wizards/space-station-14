@@ -11,8 +11,8 @@ namespace Content.Server.Interfaces
     /// </summary>
     public interface IListen : IComponent
     {
-        void HeardSpeech(string speech, IEntity source);
+        int ListenRange { get; }
 
-        int GetListenRange();
+        void HeardSpeech(string speech, IEntity source);
     }
 }
