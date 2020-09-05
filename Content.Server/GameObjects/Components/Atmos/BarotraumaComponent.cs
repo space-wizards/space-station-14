@@ -19,18 +19,14 @@ namespace Content.Server.GameObjects.Components.Atmos
     public class BarotraumaComponent : Component
     {
         public override string Name => "Barotrauma";
+        public float Pressure { get; set; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Update(float frameTime)
+        public void Update()
         {
             if (!Owner.TryGetComponent(out IDamageableComponent damageable)) return;
             Owner.TryGetComponent(out ServerStatusEffectsComponent status);
 
-            var coordinates = Owner.Transform.GridPosition;
-            var gridAtmos = EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(coordinates.GridID);
-            var tile = gridAtmos?.GetTile(coordinates);
-
-            var pressure = 1f;
             var highPressureMultiplier = 1f;
             var lowPressureMultiplier = 1f;
 
@@ -40,8 +36,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 lowPressureMultiplier *= protection.LowPressureMultiplier;
             }
 
-            if (tile?.Air != null)
-                pressure = MathF.Max(tile.Air.Pressure, 1f);
+            var pressure = MathF.Max(Pressure, 1f);
 
             switch (pressure)
             {

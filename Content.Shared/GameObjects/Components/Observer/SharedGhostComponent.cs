@@ -17,6 +17,7 @@ namespace Content.Shared.GameObjects.Components.Observer
         public bool CanPickup() => false;
         public bool CanEmote() => false;
         public bool CanAttack() => false;
+        public bool CanShiver() => false;
     }
 
     [Serializable, NetSerializable]
