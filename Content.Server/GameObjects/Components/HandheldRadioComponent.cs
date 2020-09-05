@@ -5,6 +5,7 @@ using Content.Server.Interfaces.Chat;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
@@ -17,19 +18,22 @@ namespace Content.Server.GameObjects.Components
     [ComponentReference(typeof(IListen))]
     class HandheldRadioComponent : Component, IUse, IListen, IRadio
     {
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
 
         public override string Name => "Radio";
 
-        private bool _radioOn;
-        private List<int> _channels = new List<int>();
-        private int _broadcastChannel;
         private RadioSystem _radioSystem = default!;
 
-        public int ListenRange { get; private set; } = 7;
+        private bool _radioOn;
+        private List<int> _channels = new List<int>();
 
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
+        private int _broadcastChannel;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public int ListenRange { get; private set; }
+
+        [ViewVariables(VVAccess.ReadWrite)]
         public bool RadioOn
         {
             get => _radioOn;
@@ -55,8 +59,7 @@ namespace Content.Server.GameObjects.Components
         {
             base.Initialize();
 
-            _radioSystem = _entitySystemManager.GetEntitySystem<RadioSystem>();
-            _broadcastChannel = 1459;
+            _radioSystem = EntitySystem.Get<RadioSystem>();
 
             RadioOn = false;
         }
@@ -69,14 +72,11 @@ namespace Content.Server.GameObjects.Components
         public bool UseEntity(UseEntityEventArgs eventArgs)
         {
             RadioOn = !RadioOn;
-            if(RadioOn)
-            {
-                Owner.PopupMessage(eventArgs.User, "The radio is now on.");
-            }
-            else
-            {
-                Owner.PopupMessage(eventArgs.User, "The radio is now off.");
-            }
+
+            Owner.PopupMessage(eventArgs.User, RadioOn
+                ? "The radio is now on."
+                : "The radio is now off.");
+
             return true;
         }
 
@@ -90,7 +90,7 @@ namespace Content.Server.GameObjects.Components
 
         public void Receiver(string message, int channel, IEntity speaker)
         {
-            if(RadioOn)
+            if (RadioOn)
             {
                 Speaker(message);
             }

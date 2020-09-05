@@ -15,9 +15,10 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             foreach (var listener in ComponentManager.EntityQuery<IListen>())
             {
+                // TODO: Map Position distance
                 var listenerPos = listener.Owner.Transform.GridPosition;
                 var dist = listenerPos.Distance(_mapManager, sourcePos);
-                if (dist <= listener.GetListenRange())
+                if (dist <= listener.ListenRange)
                 {
                     listener.HeardSpeech(message, source);
                 }
