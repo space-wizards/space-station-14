@@ -26,11 +26,11 @@ namespace Content.Server.GameObjects.EntitySystems
     public sealed class SparkSystem : EntitySystem
     {
         [Dependency]
-        private IEntityManager _entityManager = default!;
+        private readonly IEntityManager _entityManager = default!;
         [Dependency]
         private readonly IRobustRandom _random = default!;
 
-        private List<IEntity> _deleteQueue = new List<IEntity>();
+        private readonly List<IEntity> _deleteQueue = new List<IEntity>();
 
         public override void Update(float frameTime)
         {
@@ -61,7 +61,8 @@ namespace Content.Server.GameObjects.EntitySystems
                 var spark = _entityManager.SpawnEntity("SparkEffect", coords);
                 spark.GetComponent<SparkComponent>().Lifetime = Math.Min(0.5f, _random.NextFloat());
                 spark.TryGetComponent<ICollidableComponent>(out var collidable);
-                collidable.EnsureController<MoverController>().Push(Angle.FromDegrees(_random.Next(360)).ToVec(), 3.0f);
+                collidable?.EnsureController<MoverController>()
+                    .Push(Angle.FromDegrees(_random.Next(360)).ToVec(), 3.0f);
             }
         }
     }

@@ -31,12 +31,6 @@ namespace Content.Server.GameObjects.Components.Power
 
         public float Lifetime = 1.0f;
 
-
-        public override void Initialize()
-        {
-            base.Initialize();
-        }
-
         public void Update(float frameTime)
         {
             AccumulatedFrameTime += frameTime;

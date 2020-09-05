@@ -37,8 +37,8 @@ namespace Content.Server.GameObjects.Components.Items.RCD
         [ViewVariables(VVAccess.ReadWrite)] public int maxAmmo;
         public int _ammo; //How much "ammo" we have left. You can refill this with RCD ammo.
         [ViewVariables(VVAccess.ReadWrite)] private float _delay;
-        private DoAfterSystem doAfterSystem;
-        private SparkSystem _sparkSystem = default!;
+        private DoAfterSystem _doAfterSystem;
+        private SparkSystem _sparkSystem;
 
 
         ///Enum to store the different mode states for clarity.
@@ -62,7 +62,7 @@ namespace Content.Server.GameObjects.Components.Items.RCD
         {
             base.Initialize();
             _ammo = maxAmmo;
-            doAfterSystem = EntitySystem.Get<DoAfterSystem>();
+            _doAfterSystem = EntitySystem.Get<DoAfterSystem>();
             _sparkSystem = EntitySystem.Get<SparkSystem>();
         }
 
@@ -115,7 +115,7 @@ namespace Content.Server.GameObjects.Components.Items.RCD
                 ExtraCheck = () => IsRCDStillValid(eventArgs, mapGrid, tile, snapPos, startingMode) //All of the sanity checks are here
             };
 
-            var result = await doAfterSystem.DoAfter(doAfterEventArgs);
+            var result = await _doAfterSystem.DoAfter(doAfterEventArgs);
             if (result == DoAfterStatus.Cancelled)
             {
                 return;
