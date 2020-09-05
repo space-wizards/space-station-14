@@ -7,7 +7,7 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Map;
+using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components
@@ -39,12 +39,19 @@ namespace Content.Server.GameObjects.Components
             }
         }
 
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+
+            serializer.DataField(ref _channels, "channels", new List<int>());
+            serializer.DataField(ref _broadcastChannel, "broadcastChannel", 1459);
+        }
+
         public override void Initialize()
         {
             base.Initialize();
 
             _radioSystem = _entitySystemManager.GetEntitySystem<RadioSystem>();
-            _channels.Add(1459);
             _broadcastChannel = 1459;
 
             RadioOn = false;
