@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
@@ -22,9 +23,9 @@ namespace Content.Server.GameObjects.Components.Temperature
         /// <inheritdoc />
         public override string Name => "Temperature";
 
-        //TODO: should be programmatic instead of how it currently is
-        [ViewVariables] public float CurrentTemperature => _currentTemperature;
-        [ViewVariables] public float FireDamageThreshold => _fireDamageThreshold;
+        [ViewVariables] public float CurrentTemperature { get => _currentTemperature; set => _currentTemperature = value; }
+
+        [ViewVariables] public float HeatDamageThreshold => _heatDamageThreshold;
         [ViewVariables] public float ColdDamageThreshold => _coldDamageThreshold;
         [ViewVariables] public float TempDamageCoefficient => _tempDamageCoefficient;
         [ViewVariables] public float HeatCapacity {
@@ -41,32 +42,30 @@ namespace Content.Server.GameObjects.Components.Temperature
 
         [ViewVariables] public float SpecificHeat => _specificHeat;
 
-        private float _fireDamageThreshold;
+        private float _heatDamageThreshold;
         private float _coldDamageThreshold;
         private float _tempDamageCoefficient;
         private float _currentTemperature;
         private float _specificHeat;
 
-        private float _secondsSinceLastDamageUpdate = 0;
-
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(ref _fireDamageThreshold, "fireDamageThreshold", 0);
+            serializer.DataField(ref _heatDamageThreshold, "heatDamageThreshold", 0);
             serializer.DataField(ref _coldDamageThreshold, "coldDamageThreshold", 0);
             serializer.DataField(ref _tempDamageCoefficient, "tempDamageCoefficient", 1);
             serializer.DataField(ref _currentTemperature, "currentTemperature", Atmospherics.T20C);
             serializer.DataField(ref _specificHeat, "specificHeat", Atmospherics.MinimumHeatCapacity);
         }
 
-        public void Update(float frameTime)
+        public void Update()
         {
             var tempDamage = 0;
             DamageType? damageType = null;
-            if (CurrentTemperature >= _fireDamageThreshold)
+            if (CurrentTemperature >= _heatDamageThreshold)
             {
-                tempDamage = (int) Math.Floor((CurrentTemperature - _fireDamageThreshold) * _tempDamageCoefficient);
+                tempDamage = (int) Math.Floor((CurrentTemperature - _heatDamageThreshold) * _tempDamageCoefficient);
                 damageType = DamageType.Heat;
             }
             else if (CurrentTemperature <= _coldDamageThreshold)
@@ -75,33 +74,30 @@ namespace Content.Server.GameObjects.Components.Temperature
                 damageType = DamageType.Cold;
             }
 
-            if (damageType.HasValue)
-            {
-                _secondsSinceLastDamageUpdate += frameTime;
-                HandleTemperatureDamage(damageType.Value, tempDamage);
-                return;
-            }
-        }
+            if (!damageType.HasValue) return;
 
-        // Set new temperature
-        public void SetTemperature(float newTemperature)
-        {
-            // creadth: if we won't have anything useful here
-            // we might probably replace it with public setter
-            // on the actual property instead of separate method
-            _currentTemperature = newTemperature;
-        }
-
-        private void HandleTemperatureDamage(DamageType type, int amount)
-        {
             if (!Owner.TryGetComponent(out IDamageableComponent component)) return;
-
-            while (_secondsSinceLastDamageUpdate >= 1)
-            {
-                component?.ChangeDamage(type, amount, false);
-                _secondsSinceLastDamageUpdate -= 1;
-            }
-
+            component.ChangeDamage(damageType.Value, tempDamage, false);
+            Debug.Write($"Temp is: {CurrentTemperature}");
         }
+
+        /// <summary>
+        /// Forcefully give heat to this component
+        /// </summary>
+        /// <param name="heatAmount"></param>
+        public void ReceiveHeat(float heatAmount)
+        {
+            CurrentTemperature += heatAmount / HeatCapacity;
+        }
+
+        /// <summary>
+        /// Forcefully remove heat from this component
+        /// </summary>
+        /// <param name="heatAmount"></param>
+        public void RemoveHeat(float heatAmount)
+        {
+            CurrentTemperature -= heatAmount / HeatCapacity;
+        }
+
     }
 }

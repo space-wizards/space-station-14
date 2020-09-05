@@ -12,7 +12,7 @@
             "CloningPod",
             "Destructible",
             "Temperature",
-            "AtmoExposable",
+            "AtmosExposed",
             "Explosive",
             "OnUseTimerTrigger",
             "ToolboxElectricalFill",

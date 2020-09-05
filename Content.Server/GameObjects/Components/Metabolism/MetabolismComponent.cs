@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Atmos;
-using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.Body.Circulatory;
+using Content.Server.GameObjects.Components.Temperature;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry;
-using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.Chemistry;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -26,6 +29,9 @@ namespace Content.Server.GameObjects.Components.Metabolism
 
         private float _accumulatedFrameTime;
 
+        private bool _isShivering;
+        private bool _isSweating;
+
         [ViewVariables(VVAccess.ReadWrite)] private int _suffocationDamage;
 
         [ViewVariables] public Dictionary<Gas, float> NeedsGases { get; set; }
@@ -33,6 +39,42 @@ namespace Content.Server.GameObjects.Components.Metabolism
         [ViewVariables] public Dictionary<Gas, float> ProducesGases { get; set; }
 
         [ViewVariables] public Dictionary<Gas, float> DeficitGases { get; set; }
+
+        /// <summary>
+        /// Heat generated due to metabolism. It's generated via metabolism
+        /// </summary>
+        [ViewVariables] public float MetabolismHeat { get; private set; }
+
+        /// <summary>
+        /// Heat output via radiation.
+        /// </summary>
+        [ViewVariables] public float RadiatedHeat { get; private set; }
+
+        /// <summary>
+        /// Maximum heat regulated via sweat
+        /// </summary>
+        [ViewVariables] public float SweatHeatRegulation { get; private set; }
+
+        /// <summary>
+        /// Maximum heat regulated via shivering
+        /// </summary>
+        [ViewVariables] public float ShiveringHeatRegulation { get; private set; }
+
+        /// <summary>
+        /// Amount of heat regulation that represents thermal regulation processes not
+        /// explicitly coded.
+        /// </summary>
+        public float ImplicitHeatRegulation { get; private set; }
+
+        /// <summary>
+        /// Normal body temperature
+        /// </summary>
+        [ViewVariables] public float NormalBodyTemperature { get; private set; }
+
+        /// <summary>
+        /// Deviation from normal temperature for body to start thermal regulation
+        /// </summary>
+        public float ThermalRegulationTemperatureThreshold { get; private set; }
 
         [ViewVariables] public bool Suffocating => SuffocatingPercentage() > 0;
 
@@ -43,6 +85,13 @@ namespace Content.Server.GameObjects.Components.Metabolism
             serializer.DataField(this, b => b.NeedsGases, "needsGases", new Dictionary<Gas, float>());
             serializer.DataField(this, b => b.ProducesGases, "producesGases", new Dictionary<Gas, float>());
             serializer.DataField(this, b => b.DeficitGases, "deficitGases", new Dictionary<Gas, float>());
+            serializer.DataField(this, b => b.MetabolismHeat, "metabolismHeat", 0);
+            serializer.DataField(this, b => b.RadiatedHeat, "radiatedHeat", 0);
+            serializer.DataField(this, b => b.SweatHeatRegulation, "sweatHeatRegulation", 0);
+            serializer.DataField(this, b => b.ShiveringHeatRegulation, "shiveringHeatRegulation", 0);
+            serializer.DataField(this, b => b.ImplicitHeatRegulation, "implicitHeatRegulation", 0);
+            serializer.DataField(this, b => b.NormalBodyTemperature, "normalBodyTemperature", 0);
+            serializer.DataField(this, b => b.ThermalRegulationTemperatureThreshold, "thermalRegulationTemperatureThreshold", 0);
             serializer.DataField(ref _suffocationDamage, "suffocationDamage", 1);
         }
 
@@ -153,6 +202,78 @@ namespace Content.Server.GameObjects.Components.Metabolism
         }
 
         /// <summary>
+        /// Process thermal regulation
+        /// </summary>
+        /// <param name="frameTime"></param>
+        private void ProcessThermalRegulation(float frameTime)
+        {
+            if (!Owner.TryGetComponent(out TemperatureComponent temperatureComponent)) return;
+            temperatureComponent.ReceiveHeat(MetabolismHeat);
+            temperatureComponent.RemoveHeat(RadiatedHeat);
+
+            // implicit heat regulation
+            var tempDiff = Math.Abs(temperatureComponent.CurrentTemperature - NormalBodyTemperature);
+            var targetHeat = tempDiff * temperatureComponent.HeatCapacity;
+            if (temperatureComponent.CurrentTemperature > NormalBodyTemperature)
+            {
+                temperatureComponent.RemoveHeat(Math.Min(targetHeat,ImplicitHeatRegulation));
+            }
+            else
+            {
+                temperatureComponent.ReceiveHeat(Math.Min(targetHeat, ImplicitHeatRegulation));
+            }
+
+            // recalc difference and target heat
+            tempDiff = Math.Abs(temperatureComponent.CurrentTemperature - NormalBodyTemperature);
+            targetHeat = tempDiff * temperatureComponent.HeatCapacity;
+
+            // if body temperature is not within comfortable, thermal regulation
+            // processes starts
+            if (tempDiff < ThermalRegulationTemperatureThreshold)
+            {
+                if (_isShivering || _isSweating)
+                {
+                    Owner.PopupMessage("You feel comfortable");
+                }
+                _isShivering = false;
+                _isSweating = false;
+                return;
+            }
+
+
+            if (temperatureComponent.CurrentTemperature > NormalBodyTemperature)
+            {
+                if (!_isSweating)
+                {
+                    Owner.PopupMessage("You are sweating");
+                    _isSweating = true;
+                }
+
+                // creadth: sweating does not help in airless environment
+                var atmoSystem = EntitySystem.Get<AtmosphereSystem>();
+                var ownerTransform = Owner.Transform;
+                var atmo = atmoSystem.GetGridAtmosphere(ownerTransform.GridID);
+                var tile = atmo?.GetTile(ownerTransform.GridPosition);
+                if (tile?.Air != null)
+                {
+                    temperatureComponent.RemoveHeat(Math.Min(targetHeat, SweatHeatRegulation));
+                }
+            }
+            else
+            {
+                if (!ActionBlockerSystem.CanShiver(Owner)) return;
+                if (!_isShivering)
+                {
+                    Owner.PopupMessage("You are shivering");
+                    _isShivering = true;
+                }
+
+                temperatureComponent.ReceiveHeat(Math.Min(targetHeat, ShiveringHeatRegulation));
+            }
+        }
+
+
+        /// <summary>
         ///     Loops through each reagent in _internalSolution,
         ///     and calls <see cref="IMetabolizable.Metabolize"/> for each of them.
         /// </summary>
@@ -196,6 +317,8 @@ namespace Content.Server.GameObjects.Components.Metabolism
         /// </param>
         public void Update(float frameTime)
         {
+            var damageable = Owner.GetComponentOrNull<IDamageableComponent>();
+            if (damageable?.CurrentDamageState == DamageState.Dead) return;
             _accumulatedFrameTime += frameTime;
 
             if (_accumulatedFrameTime < 1)
@@ -207,9 +330,9 @@ namespace Content.Server.GameObjects.Components.Metabolism
 
             ProcessGases(frameTime);
             ProcessNutrients(frameTime);
+            ProcessThermalRegulation(frameTime);
 
-            if (Suffocating &&
-                Owner.TryGetComponent(out IDamageableComponent damageable))
+            if (Suffocating)
             {
                 // damageable.ChangeDamage(DamageClass.Airloss, _suffocationDamage, false);
             }
