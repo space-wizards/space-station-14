@@ -23,10 +23,11 @@ namespace Content.Server.GameObjects.Components
         public override string Name => "Radio";
 
         private bool _radioOn;
-        private int _listenRange = 7;
         private List<int> _channels = new List<int>();
         private int _broadcastChannel;
         private RadioSystem _radioSystem = default!;
+
+        public int ListenRange { get; private set; } = 7;
 
         [ViewVariables]
         public bool RadioOn
@@ -45,6 +46,7 @@ namespace Content.Server.GameObjects.Components
         {
             base.ExposeData(serializer);
 
+            serializer.DataField(this, h => h.ListenRange, "listenRange", 7);
             serializer.DataField(ref _channels, "channels", new List<int>());
             serializer.DataField(ref _broadcastChannel, "broadcastChannel", 1459);
         }
@@ -84,11 +86,6 @@ namespace Content.Server.GameObjects.Components
             {
                 Broadcast(speech, source);
             }
-        }
-
-        public int GetListenRange()
-        {
-            return _listenRange;
         }
 
         public void Receiver(string message, int channel, IEntity speaker)
