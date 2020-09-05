@@ -2,6 +2,7 @@
 using Content.Shared.Research;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Research
 {
