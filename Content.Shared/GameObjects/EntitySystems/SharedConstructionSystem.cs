@@ -22,7 +22,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             /// <summary>
             ///     Position to start building.
             /// </summary>
-            public readonly GridCoordinates Location;
+            public readonly EntityCoordinates Location;
 
             /// <summary>
             ///     The construction prototype to start building.
@@ -36,7 +36,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             /// </summary>
             public readonly int Ack;
 
-            public TryStartStructureConstructionMessage(GridCoordinates loc, string prototypeName, Angle angle, int ack)
+            public TryStartStructureConstructionMessage(EntityCoordinates loc, string prototypeName, Angle angle, int ack)
             {
                 Location = loc;
                 PrototypeName = prototypeName;

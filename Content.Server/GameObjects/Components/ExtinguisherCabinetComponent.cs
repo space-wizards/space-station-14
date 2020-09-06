@@ -89,7 +89,7 @@ namespace Content.Server.GameObjects.Components
                 }
                 else if (ItemContainer.Remove(ItemContainer.ContainedEntity))
                 {
-                    ItemContainer.ContainedEntity.Transform.GridPosition = Owner.Transform.GridPosition;
+                    ItemContainer.ContainedEntity.Transform.Coordinates = Owner.Transform.Coordinates;
                 }
             }
             else

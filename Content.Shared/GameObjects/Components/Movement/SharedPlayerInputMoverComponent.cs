@@ -132,7 +132,7 @@ namespace Content.Shared.GameObjects.Components.Movement
             }
         }
 
-        public abstract GridCoordinates LastPosition { get; set; }
+        public abstract EntityCoordinates LastPosition { get; set; }
         public abstract float StepSoundDistance { get; set; }
 
         /// <summary>

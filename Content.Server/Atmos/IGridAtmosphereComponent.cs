@@ -117,7 +117,7 @@ namespace Content.Server.Atmos
         /// </summary>
         /// <param name="coordinates"></param>
         /// <returns></returns>
-        TileAtmosphere GetTile(GridCoordinates coordinates, bool createSpace = true);
+        TileAtmosphere GetTile(EntityCoordinates coordinates, bool createSpace = true);
 
         /// <summary>
         ///     Returns if the tile in question is air-blocked.

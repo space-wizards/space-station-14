@@ -41,7 +41,7 @@ namespace Content.IntegrationTests.Tests.Interaction
             IEntity other = null;
             IContainer container = null;
             IComponent component = null;
-            GridCoordinates gridCoordinates = default;
+            EntityCoordinates entityCoordinates = default;
             MapCoordinates mapCoordinates = default;
 
             server.Assert(() =>
@@ -53,7 +53,7 @@ namespace Content.IntegrationTests.Tests.Interaction
                 other = entityManager.SpawnEntity(HumanId, coordinates);
                 container = ContainerManagerComponent.Ensure<Container>("InRangeUnobstructedTestOtherContainer", other);
                 component = other.Transform;
-                gridCoordinates = other.Transform.GridPosition;
+                entityCoordinates = other.Transform.Coordinates;
                 mapCoordinates = other.Transform.MapPosition;
             });
 
@@ -73,9 +73,9 @@ namespace Content.IntegrationTests.Tests.Interaction
                 Assert.True(origin.InRangeUnobstructed(container));
                 Assert.True(container.InRangeUnobstructed(origin));
 
-                // Entity <-> GridCoordinates
-                Assert.True(origin.InRangeUnobstructed(gridCoordinates));
-                Assert.True(gridCoordinates.InRangeUnobstructed(origin));
+                // Entity <-> EntityCoordinates
+                Assert.True(origin.InRangeUnobstructed(entityCoordinates));
+                Assert.True(entityCoordinates.InRangeUnobstructed(origin));
 
                 // Entity <-> MapCoordinates
                 Assert.True(origin.InRangeUnobstructed(mapCoordinates));
@@ -97,9 +97,9 @@ namespace Content.IntegrationTests.Tests.Interaction
                 Assert.True(origin.InRangeUnobstructed(container));
                 Assert.True(container.InRangeUnobstructed(origin));
 
-                // Entity <-> GridCoordinates
-                Assert.True(origin.InRangeUnobstructed(gridCoordinates));
-                Assert.True(gridCoordinates.InRangeUnobstructed(origin));
+                // Entity <-> EntityCoordinates
+                Assert.True(origin.InRangeUnobstructed(entityCoordinates));
+                Assert.True(entityCoordinates.InRangeUnobstructed(origin));
 
                 // Entity <-> MapCoordinates
                 Assert.True(origin.InRangeUnobstructed(mapCoordinates));
@@ -121,9 +121,9 @@ namespace Content.IntegrationTests.Tests.Interaction
                 Assert.False(origin.InRangeUnobstructed(container));
                 Assert.False(container.InRangeUnobstructed(origin));
 
-                // Entity <-> GridCoordinates
-                Assert.False(origin.InRangeUnobstructed(gridCoordinates));
-                Assert.False(gridCoordinates.InRangeUnobstructed(origin));
+                // Entity <-> EntityCoordinates
+                Assert.False(origin.InRangeUnobstructed(entityCoordinates));
+                Assert.False(entityCoordinates.InRangeUnobstructed(origin));
 
                 // Entity <-> MapCoordinates
                 Assert.False(origin.InRangeUnobstructed(mapCoordinates));
@@ -144,9 +144,9 @@ namespace Content.IntegrationTests.Tests.Interaction
                 Assert.True(origin.InRangeUnobstructed(container, InteractionRangeDivided15Times3));
                 Assert.True(container.InRangeUnobstructed(origin, InteractionRangeDivided15Times3));
 
-                // Entity <-> GridCoordinates
-                Assert.True(origin.InRangeUnobstructed(gridCoordinates, InteractionRangeDivided15Times3));
-                Assert.True(gridCoordinates.InRangeUnobstructed(origin, InteractionRangeDivided15Times3));
+                // Entity <-> EntityCoordinates
+                Assert.True(origin.InRangeUnobstructed(entityCoordinates, InteractionRangeDivided15Times3));
+                Assert.True(entityCoordinates.InRangeUnobstructed(origin, InteractionRangeDivided15Times3));
 
                 // Entity <-> MapCoordinates
                 Assert.True(origin.InRangeUnobstructed(mapCoordinates, InteractionRangeDivided15Times3));

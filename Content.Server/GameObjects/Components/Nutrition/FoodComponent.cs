@@ -202,7 +202,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             }
 
             //We're empty. Become trash.
-            var position = Owner.Transform.GridPosition;
+            var position = Owner.Transform.Coordinates;
             var finisher = Owner.EntityManager.SpawnEntity(_trashPrototype, position);
 
             // If the user is holding the item
