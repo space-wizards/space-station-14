@@ -11,7 +11,7 @@ namespace Content.IntegrationTests.Tests.Atmos
     public class AtmosHelpersTest : ContentIntegrationTest
     {
         [Test]
-        public async Task GetTileAtmosphereGridCoordinatesNullTest()
+        public async Task GetTileAtmosphereEntityCoordinatesNullTest()
         {
             var server = StartServerDummyTicker();
 
@@ -35,7 +35,7 @@ namespace Content.IntegrationTests.Tests.Atmos
         }
 
         [Test]
-        public async Task GetTileAirGridCoordinatesNullTest()
+        public async Task GetTileAirEntityCoordinatesNullTest()
         {
             var server = StartServerDummyTicker();
 
@@ -53,7 +53,7 @@ namespace Content.IntegrationTests.Tests.Atmos
         }
 
         [Test]
-        public async Task TryGetTileAtmosphereGridCoordinatesNullTest()
+        public async Task TryGetTileAtmosphereEntityCoordinatesNullTest()
         {
             var server = StartServerDummyTicker();
 
@@ -72,7 +72,7 @@ namespace Content.IntegrationTests.Tests.Atmos
         }
 
         [Test]
-        public async Task TryGetTileTileAirGridCoordinatesNullTest()
+        public async Task TryGetTileTileAirEntityCoordinatesNullTest()
         {
             var server = StartServerDummyTicker();
 

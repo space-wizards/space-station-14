@@ -466,7 +466,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         }
 
         /// <summary>
-        /// Get the next tile as GridCoordinates
+        /// Get the next tile as EntityCoordinates
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="steeringRequest"></param>
@@ -503,7 +503,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         }
 
         /// <summary>
-        /// Rather than converting TileRef to GridCoordinates over and over we'll just cache it
+        /// Rather than converting TileRef to EntityCoordinates over and over we'll just cache it
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="dequeue"></param>
@@ -516,7 +516,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         }
 
         /// <summary>
-        /// Check if we've been near our last GridCoordinates too long and try to fix it
+        /// Check if we've been near our last EntityCoordinates too long and try to fix it
         /// </summary>
         /// <param name="entity"></param>
         private void HandleStuck(IEntity entity)

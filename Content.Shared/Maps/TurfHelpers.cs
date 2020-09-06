@@ -112,7 +112,7 @@ namespace Content.Shared.Maps
              var half = mapGrid.TileSize / 2f;
 
             //Actually spawn the relevant tile item at the right position and give it some random offset.
-            var tileItem = entityManager.SpawnEntity(tileDef.ItemDropPrototypeName, indices.ToGridCoordinates(mapManager, tileRef.GridIndex).Offset(new Vector2(half, half)));
+            var tileItem = entityManager.SpawnEntity(tileDef.ItemDropPrototypeName, indices.ToEntityCoordinates(mapManager, tileRef.GridIndex).Offset(new Vector2(half, half)));
             tileItem.RandomOffset(0.25f);
             return true;
         }
@@ -154,7 +154,7 @@ namespace Content.Shared.Maps
         {
             mapManager ??= IoCManager.Resolve<IMapManager>();
 
-            return turf.GridIndices.ToGridCoordinates(mapManager, turf.GridIndex);
+            return turf.GridIndices.ToEntityCoordinates(mapManager, turf.GridIndex);
         }
 
         /// <summary>
