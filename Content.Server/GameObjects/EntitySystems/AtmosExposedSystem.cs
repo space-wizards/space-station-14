@@ -1,6 +1,9 @@
-﻿using Content.Server.GameObjects.Components.Atmos;
+﻿using Content.Server.Atmos;
+using Content.Server.GameObjects.Components.Atmos;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -8,6 +11,8 @@ namespace Content.Server.GameObjects.EntitySystems
     public class AtmosExposedSystem
     : EntitySystem
     {
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+
         private const float UpdateDelay = 3f;
         private float _lastUpdate;
         public override void Update(float frameTime)
@@ -18,9 +23,7 @@ namespace Content.Server.GameObjects.EntitySystems
             // creadth: everything exposable by atmo should be updated as well
             foreach (var atmosExposedComponent in EntityManager.ComponentManager.EntityQuery<AtmosExposedComponent>())
             {
-                var ownerTransform = atmosExposedComponent.Owner.Transform;
-                var atmo = atmoSystem.GetGridAtmosphere(ownerTransform.GridID);
-                var tile = atmo?.GetTile(ownerTransform.GridPosition);
+                var tile = atmosExposedComponent.Owner.Transform.Coordinates.GetTileAtmosphere(_entityManager);
                 if (tile == null) continue;
                 atmosExposedComponent.Update(tile, _lastUpdate);
             }
