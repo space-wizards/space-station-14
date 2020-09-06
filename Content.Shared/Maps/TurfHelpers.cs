@@ -5,6 +5,8 @@ using System.Runtime.CompilerServices;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Physics;
 using Content.Shared.Utility;
+using Robust.Server.GameObjects.EntitySystems.TileLookup;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Physics;
@@ -59,7 +61,7 @@ namespace Content.Shared.Maps
             if (!mapManager.TryGetGrid(coordinates.GetGridId(entityManager), out var grid))
                 return null;
 
-            if (!grid.TryGetTileRef(coordinates.ToMapIndices(entityManager, mapManager), out var tile))
+            if (!grid.TryGetTileRef(coordinates, out var tile))
                 return null;
 
             return tile;
@@ -125,15 +127,15 @@ namespace Content.Shared.Maps
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<IEntity> GetEntitiesInTile(this TileRef turf, bool approximate = false)
         {
-            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var gridTileLookup = EntitySystem.Get<GridTileLookupSystem>();
 
-            return entityManager.GetEntitiesIntersecting(turf.MapIndex, GetWorldTileBox(turf), approximate);
+            return gridTileLookup.GetEntitiesIntersecting(turf.GridIndex, turf.GridIndices);
         }
 
         /// <summary>
         ///     Helper that returns all entities in a turf.
         /// </summary>
-        public static IEnumerable<IEntity> GetEntitiesInTile(this GridCoordinates coordinates, bool approximate = false)
+        public static IEnumerable<IEntity> GetEntitiesInTile(this EntityCoordinates coordinates, bool approximate = false)
         {
             var turf = coordinates.GetTileRef();
 
