@@ -40,7 +40,7 @@ namespace Content.Server.GameTicking.GamePresets
         public int TraitorStartingBalance { get; set; }
 
 
-        public override bool DisallowLateJoin { get; set; } = true;
+        public override bool DisallowLateJoin => true;
 
         private static string TraitorID = "SuspicionTraitor";
         private static string InnocentID = "SuspicionInnocent";

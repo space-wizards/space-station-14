@@ -244,6 +244,19 @@ namespace Content.Server.GameTicking
         }
     }
 
+    class ToggleDisallowLateJoinCommand: IClientCommand
+    {
+        public string Command => "toggledisallowlatejoin";
+        public string Description => "";
+        public string Help => "";
+
+        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        {
+            var ticker = IoCManager.Resolve<IGameTicker>();
+            ticker.ToggleDisallowLateJoin(bool.Parse(args[0]));
+        }
+    }
+
     class SetGamePresetCommand : IClientCommand
     {
         public string Command => "setgamepreset";
