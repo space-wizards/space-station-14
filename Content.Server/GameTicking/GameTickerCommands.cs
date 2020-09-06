@@ -247,12 +247,19 @@ namespace Content.Server.GameTicking
     class ToggleDisallowLateJoinCommand: IClientCommand
     {
         public string Command => "toggledisallowlatejoin";
-        public string Description => "";
-        public string Help => "";
+        public string Description => "Allows or disallows latejoining during mid-game.";
+        public string Help => $"Usage: {Command} <disallow>";
 
         public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
         {
+            if (args.Length != 1)
+            {
+                shell.SendText(player, "Need exactly one argument.");
+                return;
+            }
+
             var ticker = IoCManager.Resolve<IGameTicker>();
+
             ticker.ToggleDisallowLateJoin(bool.Parse(args[0]));
         }
     }
