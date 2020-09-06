@@ -29,8 +29,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             if (Owner.TryGetComponent<BarotraumaComponent>(out var barotraumaComponent))
             {
-                barotraumaComponent.Pressure = tile.Air?.Pressure ?? 0;
-                barotraumaComponent.Update();
+                barotraumaComponent.Update(tile.Air?.Pressure ?? 0);
             }
 
         }

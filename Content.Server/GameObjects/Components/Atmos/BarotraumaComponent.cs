@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Atmos
@@ -22,10 +20,9 @@ namespace Content.Server.GameObjects.Components.Atmos
         [Robust.Shared.IoC.Dependency] private readonly IEntityManager _entityManager = default!;
 
         public override string Name => "Barotrauma";
-        public float Pressure { get; set; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Update()
+        public void Update(float airPressure)
         {
             if (!Owner.TryGetComponent(out IDamageableComponent damageable)) return;
             Owner.TryGetComponent(out ServerStatusEffectsComponent status);
@@ -39,7 +36,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 lowPressureMultiplier *= protection.LowPressureMultiplier;
             }
 
-            var pressure = MathF.Max(Pressure, 1f);
+            var pressure = MathF.Max(airPressure, 1f);
 
             switch (pressure)
             {

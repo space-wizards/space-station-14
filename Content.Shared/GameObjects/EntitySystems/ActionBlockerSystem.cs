@@ -174,8 +174,12 @@ namespace Content.Shared.GameObjects.EntitySystems
 
         public static bool CanShiver(IEntity entity)
         {
-            return entity.GetAllComponents<IActionBlocker>().Aggregate(true,
-                (current, actionBlockerComponent) => current & actionBlockerComponent.CanChangeDirection());
+            var canShiver = true;
+            foreach (var component in entity.GetAllComponents<IActionBlocker>())
+            {
+                canShiver &= component.CanChangeDirection();
+            }
+            return canShiver;
         }
     }
 }
