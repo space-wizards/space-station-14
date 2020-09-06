@@ -139,7 +139,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
 
             if (_unspawnedCount > 0)
             {
-                entity = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.GridPosition);
+                entity = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.Coordinates);
                 _unspawnedCount--;
             }
 

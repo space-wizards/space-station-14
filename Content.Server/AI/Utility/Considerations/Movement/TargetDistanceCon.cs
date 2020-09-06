@@ -13,9 +13,9 @@ namespace Content.Server.AI.Utility.Considerations.Movement
             {
                 return 0.0f;
             }
-            
+
             // Anything further than 100 tiles gets clamped
-            return (target.Transform.GridPosition.Position - self.Transform.GridPosition.Position).Length / 100;
+            return (target.Transform.Coordinates.Position - self.Transform.Coordinates.Position).Length / 100;
         }
     }
 }

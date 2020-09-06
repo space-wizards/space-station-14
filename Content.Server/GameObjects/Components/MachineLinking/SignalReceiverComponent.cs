@@ -74,7 +74,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
                 return true;
             }
 
-            if (transmitter.Range > 0 && !Owner.Transform.GridPosition.InRange(_mapManager, transmitter.Owner.Transform.GridPosition, transmitter.Range))
+            if (transmitter.Range > 0 && !Owner.Transform.Coordinates.InRange(Owner.EntityManager, transmitter.Owner.Transform.Coordinates, transmitter.Range))
             {
                 Owner.PopupMessage(user, Loc.GetString("Out of range."));
                 return false;

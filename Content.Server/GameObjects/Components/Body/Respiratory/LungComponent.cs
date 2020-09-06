@@ -83,7 +83,7 @@ namespace Content.Server.GameObjects.Components.Body.Respiratory
                 return;
             }
 
-            if (!Owner.Transform.GridPosition.TryGetTileAir(out var tileAir))
+            if (!Owner.Transform.Coordinates.TryGetTileAir(out var tileAir))
             {
                 return;
             }
@@ -104,7 +104,7 @@ namespace Content.Server.GameObjects.Components.Body.Respiratory
                 return;
             }
 
-            if (!Owner.Transform.GridPosition.TryGetTileAir(out var tileAir))
+            if (!Owner.Transform.Coordinates.TryGetTileAir(out var tileAir))
             {
                 return;
             }

@@ -273,7 +273,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                     }
 
                     _lastClang = _gameTiming.CurTime;
-                    EntitySystem.Get<AudioSystem>().PlayAtCoords(_clangSound, Owner.Transform.GridPosition);
+                    EntitySystem.Get<AudioSystem>().PlayAtCoords(_clangSound, Owner.Transform.Coordinates);
                     break;
             }
         }

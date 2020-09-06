@@ -23,7 +23,7 @@ namespace Content.Shared.Interfaces
         /// <param name="coordinates">Location on a grid that the message floats up from.</param>
         /// <param name="viewer">The client attached entity that the message is being sent to.</param>
         /// <param name="message">Text contents of the message.</param>
-        void PopupMessage(GridCoordinates coordinates, IEntity viewer, string message);
+        void PopupMessage(EntityCoordinates coordinates, IEntity viewer, string message);
 
         /// <summary>
         /// Makes a string of text float up from a client's cursor.
@@ -64,7 +64,7 @@ namespace Content.Shared.Interfaces
         /// <param name="coordinates">Location on a grid that the message floats up from.</param>
         /// <param name="viewer">The client attached entity that the message is being sent to.</param>
         /// <param name="message">Text contents of the message.</param>
-        public static void PopupMessage(this GridCoordinates coordinates, IEntity viewer, string message)
+        public static void PopupMessage(this EntityCoordinates coordinates, IEntity viewer, string message)
         {
             var notifyManager = IoCManager.Resolve<ISharedNotifyManager>();
             notifyManager.PopupMessage(coordinates, viewer, message);

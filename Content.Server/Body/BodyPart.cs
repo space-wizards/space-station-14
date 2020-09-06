@@ -328,7 +328,7 @@ namespace Content.Server.Body
             SizeUsed -= mechanismTarget.Size;
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            var position = dropLocation.Transform.GridPosition;
+            var position = dropLocation.Transform.Coordinates;
             var mechanismEntity = entityManager.SpawnEntity("BaseDroppedMechanism", position);
 
             dropped = mechanismEntity.GetComponent<DroppedMechanismComponent>();
@@ -524,7 +524,7 @@ namespace Content.Server.Body
                 return false;
             }
 
-            dropped = IoCManager.Resolve<IEntityManager>().SpawnEntity("BaseDroppedBodyPart", Body.Owner.Transform.GridPosition);
+            dropped = IoCManager.Resolve<IEntityManager>().SpawnEntity("BaseDroppedBodyPart", Body.Owner.Transform.Coordinates);
 
             dropped.GetComponent<DroppedBodyPartComponent>().TransferBodyPartData(this);
 

@@ -70,7 +70,7 @@ namespace Content.Server.GameObjects.Components.Damage
             _actSystem.HandleBreakage(Owner);
             if (!Owner.Deleted && DestroySound != string.Empty)
             {
-                var pos = Owner.Transform.GridPosition;
+                var pos = Owner.Transform.Coordinates;
                 EntitySystem.Get<AudioSystem>().PlayAtCoords(DestroySound, pos);
             }
         }

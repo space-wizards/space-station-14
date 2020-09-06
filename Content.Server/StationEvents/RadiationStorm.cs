@@ -1,5 +1,6 @@
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects.Systems;
@@ -17,7 +18,7 @@ namespace Content.Server.StationEvents
     public sealed class RadiationStorm : StationEvent
     {
         // Based on Goonstation style radiation storm with some TG elements (announcer, etc.)
-        
+
         [Dependency] private IEntityManager _entityManager = default!;
         [Dependency] private IMapManager _mapManager = default!;
         [Dependency] private IRobustRandom _robustRandom = default!;
@@ -65,12 +66,12 @@ namespace Content.Server.StationEvents
         public override void Shutdown()
         {
             base.Shutdown();
-            
+
             // IOC uninject?
             _entityManager = null;
             _mapManager = null;
             _robustRandom = null;
-            
+
             var componentManager = IoCManager.Resolve<IComponentManager>();
 
             foreach (var overlay in componentManager.EntityQuery<ServerOverlayEffectsComponent>())
@@ -78,7 +79,7 @@ namespace Content.Server.StationEvents
                 overlay.RemoveOverlay(SharedOverlayID.RadiationPulseOverlay);
             }
         }
-        
+
         public override void Update(float frameTime)
         {
             _timeElapsed += frameTime;
@@ -112,20 +113,20 @@ namespace Content.Server.StationEvents
         }
 
         private void SpawnPulse(IMapGrid mapGrid)
-        { 
+        {
             _entityManager.SpawnEntity("RadiationPulse", FindRandomGrid(mapGrid));
             _timeUntilPulse = _robustRandom.NextFloat() * (MaxPulseDelay - MinPulseDelay) + MinPulseDelay;
             _pulsesRemaining -= 1;
         }
 
-        private GridCoordinates FindRandomGrid(IMapGrid mapGrid)
+        private EntityCoordinates FindRandomGrid(IMapGrid mapGrid)
         {
             // TODO: Need to get valid tiles? (maybe just move right if the tile we chose is invalid?)
 
             var randomX = _robustRandom.Next((int) mapGrid.WorldBounds.Left, (int) mapGrid.WorldBounds.Right);
             var randomY = _robustRandom.Next((int) mapGrid.WorldBounds.Bottom, (int) mapGrid.WorldBounds.Top);
 
-            return mapGrid.GridTileToLocal(new MapIndices(randomX, randomY));
+            return mapGrid.ToCoordinates(randomX, randomY);
         }
     }
 }

@@ -408,7 +408,7 @@ namespace Content.Server.GameTicking
                     continue;
                 }
 
-                var tile = grid.GetTileRef(childEntity.Transform.GridPosition);
+                var tile = grid.GetTileRef(childEntity.Transform.Coordinates);
                 var tileDef = (ContentTileDefinition) tileDefinitionManager[tile.Tile.TypeId];
 
                 if (tileDef.Name == "underplating")
@@ -416,7 +416,7 @@ namespace Content.Server.GameTicking
                     continue;
                 }
 
-                grid.SetTile(childEntity.Transform.GridPosition, underplatingTile);
+                grid.SetTile(childEntity.Transform.Coordinates, underplatingTile);
                 changed++;
             }
 

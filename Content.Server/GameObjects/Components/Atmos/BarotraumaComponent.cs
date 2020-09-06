@@ -9,6 +9,7 @@ using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
@@ -18,6 +19,8 @@ namespace Content.Server.GameObjects.Components.Atmos
     [RegisterComponent]
     public class BarotraumaComponent : Component
     {
+        [Robust.Shared.IoC.Dependency] private readonly IEntityManager _entityManager = default!;
+
         public override string Name => "Barotrauma";
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -26,8 +29,8 @@ namespace Content.Server.GameObjects.Components.Atmos
             if (!Owner.TryGetComponent(out IDamageableComponent damageable)) return;
             Owner.TryGetComponent(out ServerStatusEffectsComponent status);
 
-            var coordinates = Owner.Transform.GridPosition;
-            var gridAtmos = EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(coordinates.GridID);
+            var coordinates = Owner.Transform.Coordinates;
+            var gridAtmos = EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(coordinates.GetGridId(_entityManager));
             var tile = gridAtmos?.GetTile(coordinates);
 
             var pressure = 1f;
