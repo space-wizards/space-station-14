@@ -54,6 +54,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         private bool _paused = false;
         private float _timer = 0f;
         private Stopwatch _stopwatch = new Stopwatch();
+        private GridId _gridId;
 
         [ViewVariables]
         public int UpdateCounter { get; private set; } = 0;
@@ -157,11 +158,9 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// <inheritdoc />
         public virtual void PryTile(MapIndices indices)
         {
-            if (!Owner.TryGetComponent(out IMapGridComponent? mapGridComponent)) return;
             if (IsSpace(indices) || IsAirBlocked(indices)) return;
 
-            var mapGrid = mapGridComponent.Grid;
-            indices.PryTile(mapGrid.Index, _mapManager, _tileDefinitionManager, _serverEntityManager);
+            indices.PryTile(_gridId, _mapManager, _tileDefinitionManager, _serverEntityManager);
         }
 
         public override void Initialize()
@@ -173,7 +172,9 @@ namespace Content.Server.GameObjects.Components.Atmos
         public override void OnAdd()
         {
             base.OnAdd();
-            RepopulateTiles();
+
+            if (Owner.TryGetComponent(out IMapGridComponent? mapGrid))
+                _gridId = mapGrid.GridIndex;
         }
 
         public virtual void RepopulateTiles()
@@ -201,15 +202,13 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         protected virtual void Revalidate()
         {
-            if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return;
-
             foreach (var indices in _invalidatedCoords.ToArray())
             {
                 var tile = GetTile(indices);
 
                 if (tile == null)
                 {
-                    tile = new TileAtmosphere(this, mapGrid.Grid.Index, indices, new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C});
+                    tile = new TileAtmosphere(this, _gridId, indices, new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C});
                     Tiles[indices] = tile;
                 }
 
@@ -263,9 +262,8 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// <inheritdoc />
         public virtual void FixVacuum(MapIndices indices)
         {
-            if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return;
             var tile = GetTile(indices);
-            if (tile?.GridIndex != mapGrid.Grid.Index) return;
+            if (tile?.GridIndex != _gridId) return;
             var adjacent = GetAdjacentTiles(indices);
             tile.Air = new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C};
             Tiles[indices] = tile;
@@ -284,9 +282,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual void AddActiveTile(TileAtmosphere? tile)
         {
-            // TODO ATMOS Optimization: Cache the grid Id for faster superconduction. Do the same for all the other ones.
-            if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return;
-            if (tile?.GridIndex != mapGrid.Grid.Index) return;
+            if (tile?.GridIndex != _gridId) return;
             tile.Excited = true;
             _activeTiles.Add(tile);
         }
@@ -305,8 +301,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual void AddHotspotTile(TileAtmosphere? tile)
         {
-            if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return;
-            if (tile?.GridIndex != mapGrid.Grid.Index || tile?.Air == null) return;
+            if (tile?.GridIndex != _gridId || tile?.Air == null) return;
             _hotspotTiles.Add(tile);
         }
 
@@ -320,8 +315,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public virtual void AddSuperconductivityTile(TileAtmosphere? tile)
         {
-            if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return;
-            if (tile?.GridIndex != mapGrid.Grid.Index) return;
+            if (tile?.GridIndex != _gridId) return;
             _superconductivityTiles.Add(tile);
         }
 
@@ -335,8 +329,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual void AddHighPressureDelta(TileAtmosphere? tile)
         {
-            if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return;
-            if (tile?.GridIndex != mapGrid.Grid.Index) return;
+            if (tile?.GridIndex != _gridId) return;
             _highPressureDelta.Add(tile);
         }
 
@@ -390,14 +383,12 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// <inheritdoc />
         public TileAtmosphere? GetTile(MapIndices indices, bool createSpace = true)
         {
-            if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return null;
-
             if (Tiles.TryGetValue(indices, out var tile)) return tile;
 
             // We don't have that tile!
             if (IsSpace(indices) && createSpace)
             {
-                return new TileAtmosphere(this, mapGrid.Grid.Index, indices, new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.TCMB}, true);
+                return new TileAtmosphere(this, _gridId, indices, new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.TCMB}, true);
             }
 
             return null;
@@ -781,13 +772,11 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         private IEnumerable<AirtightComponent> GetObstructingComponents(MapIndices indices)
         {
-            if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return Enumerable.Empty<AirtightComponent>();
-
             var gridLookup = EntitySystem.Get<GridTileLookupSystem>();
 
             var list = new List<AirtightComponent>();
 
-            foreach (var v in gridLookup.GetEntitiesIntersecting(mapGrid.GridIndex, indices))
+            foreach (var v in gridLookup.GetEntitiesIntersecting(_gridId, indices))
             {
                 if (v.TryGetComponent<AirtightComponent>(out var ac))
                     list.Add(ac);
