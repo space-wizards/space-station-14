@@ -2,11 +2,11 @@ using JetBrains.Annotations;
 using Content.Server.GameObjects.Components.Doors;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Items.Storage.Fill;
-using Content.Server.Utility;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Prototypes;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
@@ -25,14 +25,14 @@ namespace Content.Server.StationEvents
         private float _elapsedTime;
         private int _eventDuration;   
         protected override string StartAnnouncement => Loc.GetString(
-            "The airlocks have been hacked by the hacker known as 4chan. We have dispatched hacking equipment to the crew so that you can continue your productive shift");
+            "The airlocks have been hacked by the hacker known as 4chan. We have dispatched high quality hacking equipment at every crewmember location so that you can continue your productive shift");
         protected override string EndAnnouncement => Loc.GetString(
              "Our team of lawyers have dealt with the problem. Have a nice shift.");
         public override void Startup()
         {
             base.Startup();
             EntitySystem.Get<AudioSystem>().PlayGlobal("/Audio/Effects/alert.ogg");
-            _eventDuration = IoCManager.Resolve<IRobustRandom>().Next(180, 600);
+            _eventDuration = IoCManager.Resolve<IRobustRandom>().Next(120, 180);
 
             var componentManager = IoCManager.Resolve<IComponentManager>();
             foreach (var component in componentManager.EntityQuery<AirlockComponent>()) component.BoltsDown = true;
@@ -40,15 +40,15 @@ namespace Content.Server.StationEvents
             var playerManager = IoCManager.Resolve<IPlayerManager>();
             foreach (var player in playerManager.GetAllPlayers())
             {
+                // var prototypeManager = IoCManager.Resolve<IPrototypeManager>();  || prototypeManager.TryIndex("UtilityBeltClothingFilledEvent", out EntityPrototype prototype)
+                // inventory.SpawnItemInSlot(Slots.BELT, "UtilityBeltClothingFilledEvent", true);  
                 if (player.AttachedEntity == null) return;
 
                 var inventory = player.AttachedEntity.GetComponent<InventoryComponent>();
-                inventory.SpawnItemInSlot(Slots.BELT, "UtilityBeltClothingFilledEvent", true);
-
-                if (inventory.TryGetSlotItem(Slots.BELT, out ItemComponent item) && !item.Owner.TryGetComponent(out UtilityBeltClothingFillComponent utilityBelt))
+                if (!inventory.TryGetSlotItem(Slots.BELT, out ItemComponent item))
                 {
                     var entityManager = IoCManager.Resolve<IEntityManager>();
-                    var playerPos = player.AttachedEntity.Transform.GridPosition;
+                    var playerPos = player.AttachedEntity.Transform.Coordinates
                     entityManager.SpawnEntity("UtilityBeltClothingFilledEvent", playerPos);
                 }
             }

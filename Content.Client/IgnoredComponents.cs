@@ -69,7 +69,6 @@
             "MedkitFill",
             "FloorTile",
             "FootstepSound",
-            "UtilityBeltClothingFill",
             "ShuttleController",
             "HumanInventoryController",
             "UseDelay",

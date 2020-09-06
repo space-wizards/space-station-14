@@ -3,11 +3,23 @@
   parent: UtilityBeltClothing
   suffix: Filled
   components:
-  - type: UtilityBeltClothingFill
-  
+  - type: StorageFill
+    contents:
+      - Crowbar
+      - Wrench
+      - Screwdriver
+      - Wirecutter
+      - Welder
+      - Multitool
+      - ApcExtensionCableStack
+
 - type: entity
   id: UtilityBeltClothingFilledEvent
   parent: UtilityBeltClothing
   suffix: Filled
   components:
-  - type: UtilityBeltClothingFillEvent
+  - type: StorageFill
+    contents:
+      - Crowbar
+      - Screwdriver
+      - Multitool
