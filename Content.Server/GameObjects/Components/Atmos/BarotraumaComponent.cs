@@ -20,6 +20,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         [Robust.Shared.IoC.Dependency] private readonly IEntityManager _entityManager = default!;
 
         public override string Name => "Barotrauma";
+        public float Pressure { get; set; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Update(float airPressure)
