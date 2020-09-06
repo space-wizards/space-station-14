@@ -80,7 +80,7 @@ namespace Content.Server.GameObjects.Components.Markers
             for (int i = 0; i < number; i++)
             {
                 var entity = _robustRandom.Pick(Prototypes);
-                _entityManager.SpawnEntity(entity, Owner.Transform.GridPosition);
+                _entityManager.SpawnEntity(entity, Owner.Transform.Coordinates);
             }
         }
     }

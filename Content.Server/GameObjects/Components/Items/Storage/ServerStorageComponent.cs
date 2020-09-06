@@ -365,7 +365,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                     var ownerTransform = Owner.Transform;
                     var playerTransform = player.Transform;
 
-                    if (!playerTransform.GridPosition.InRange(_mapManager, ownerTransform.GridPosition, 2) ||
+                    if (!playerTransform.Coordinates.InRange(_entityManager, ownerTransform.Coordinates, 2) ||
                         !ownerTransform.IsMapTransform &&
                         !playerTransform.ContainsEntity(ownerTransform))
                     {

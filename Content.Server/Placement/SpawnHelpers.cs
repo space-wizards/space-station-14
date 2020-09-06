@@ -13,7 +13,7 @@ namespace Content.Server.Placement
         ///     Spawns a spotlight ground turret that will track any living entities in range.
         /// </summary>
         /// <param name="position"></param>
-        public static void SpawnLightTurret(GridCoordinates position)
+        public static void SpawnLightTurret(EntityCoordinates position)
         {
             var entMan = IoCManager.Resolve<IServerEntityManager>();
             var tBase = entMan.SpawnEntity("TurretBase", position);

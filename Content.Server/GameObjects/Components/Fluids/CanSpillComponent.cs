@@ -39,7 +39,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             {
                 var solutionComponent = component.Owner.GetComponent<SolutionComponent>();
                 // Need this as when we split the component's owner may be deleted
-                var entityLocation = component.Owner.Transform.GridPosition;
+                var entityLocation = component.Owner.Transform.Coordinates;
                 var solution = solutionComponent.SplitSolution(solutionComponent.CurrentVolume);
                 solution.SpillAt(entityLocation, "PuddleSmear");
             }
