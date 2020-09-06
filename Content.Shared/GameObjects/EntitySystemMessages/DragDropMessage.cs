@@ -11,11 +11,11 @@ namespace Content.Shared.GameObjects.EntitySystemMessages
     [Serializable, NetSerializable]
     public class DragDropMessage : EntitySystemMessage
     {
-        public GridCoordinates DropLocation { get; }
+        public EntityCoordinates DropLocation { get; }
         public EntityUid Dropped { get; }
         public EntityUid Target { get; }
 
-        public DragDropMessage(GridCoordinates dropLocation, EntityUid dropped, EntityUid target)
+        public DragDropMessage(EntityCoordinates dropLocation, EntityUid dropped, EntityUid target)
         {
             DropLocation = dropLocation;
             Dropped = dropped;

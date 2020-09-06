@@ -100,7 +100,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
                 .Where(receiver => receiver != null)
                 .Where(receiver => receiver.Connectable)
                 .Where(receiver => receiver.NeedsProvider)
-                .Where(receiver => receiver.Owner.Transform.GridPosition.Distance(_mapManager, Owner.Transform.GridPosition) < Math.Min(PowerTransferRange, receiver.PowerReceptionRange))
+                .Where(receiver => receiver.Owner.Transform.Coordinates.TryDistance(_serverEntityManager, Owner.Transform.Coordinates, out var distance) && distance < Math.Min(PowerTransferRange, receiver.PowerReceptionRange))
                 .ToList();
         }
 

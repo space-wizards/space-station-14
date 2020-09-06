@@ -44,7 +44,7 @@ namespace Content.Server
             _netManager.ServerSendMessage(netMessage, actor.playerSession.ConnectedClient);
         }
 
-        public override void PopupMessage(GridCoordinates coordinates, IEntity viewer, string message)
+        public override void PopupMessage(EntityCoordinates coordinates, IEntity viewer, string message)
         {
             if (!viewer.TryGetComponent(out IActorComponent actor))
             {

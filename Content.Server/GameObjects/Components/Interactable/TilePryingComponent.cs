@@ -1,5 +1,4 @@
-﻿using Content.Server.GameObjects.EntitySystems.Click;
-using Content.Shared.GameObjects.Components.Interactable;
+﻿using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Maps;
 using Content.Shared.Utility;
@@ -15,7 +14,6 @@ namespace Content.Server.GameObjects.Components.Interactable
     [RegisterComponent]
     public class TilePryingComponent : Component, IAfterInteract
     {
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
 
@@ -33,12 +31,12 @@ namespace Content.Server.GameObjects.Components.Interactable
             serializer.DataField(ref _toolComponentNeeded, "toolComponentNeeded", true);
         }
 
-        public async void TryPryTile(IEntity user, GridCoordinates clickLocation)
+        public async void TryPryTile(IEntity user, EntityCoordinates clickLocation)
         {
             if (!Owner.TryGetComponent<ToolComponent>(out var tool) && _toolComponentNeeded)
                 return;
 
-            var mapGrid = _mapManager.GetGrid(clickLocation.GridID);
+            var mapGrid = _mapManager.GetGrid(clickLocation.GetGridId(Owner.EntityManager));
             var tile = mapGrid.GetTileRef(clickLocation);
 
             var coordinates = mapGrid.GridTileToLocal(tile.GridIndices);
@@ -53,7 +51,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             if (_toolComponentNeeded && !await tool!.UseTool(user, null, 0f,  ToolQuality.Prying))
                 return;
 
-            coordinates.PryTile(_mapManager, _tileDefinitionManager, Owner.EntityManager);
+            coordinates.PryTile(Owner.EntityManager, _mapManager);
         }
     }
 }

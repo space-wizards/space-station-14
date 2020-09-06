@@ -98,7 +98,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
 
             foreach (var receiver in _receivers)
             {
-                if (Range > 0 && !Owner.Transform.GridPosition.InRange(_mapManager, receiver.Owner.Transform.GridPosition, Range))
+                if (Range > 0 && !Owner.Transform.Coordinates.InRange(Owner.EntityManager, receiver.Owner.Transform.Coordinates, Range))
                 {
                     continue;
                 }

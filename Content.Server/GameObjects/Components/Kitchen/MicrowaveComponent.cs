@@ -339,7 +339,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                     if (recipeToCook != null)
                     {
                         var entityToSpawn = goodMeal ? recipeToCook.Result : _badRecipeName;
-                        _entityManager.SpawnEntity(entityToSpawn, Owner.Transform.GridPosition);
+                        _entityManager.SpawnEntity(entityToSpawn, Owner.Transform.Coordinates);
                     }
                 }
                 _audioSystem.PlayFromEntity(_cookingCompleteSound, Owner, AudioParams.Default.WithVolume(-1f));
