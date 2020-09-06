@@ -58,6 +58,10 @@ namespace Content.IntegrationTests
         {
         }
 
+        public void ToggleDisallowLateJoin(bool disallowLateJoin)
+        {
+        }
+
         public GridCoordinates GetLateJoinSpawnPoint() => GridCoordinates.InvalidGrid;
         public GridCoordinates GetJobSpawnPoint(string jobId) => GridCoordinates.InvalidGrid;
         public GridCoordinates GetObserverSpawnPoint() => GridCoordinates.InvalidGrid;
