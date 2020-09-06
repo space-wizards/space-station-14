@@ -12,6 +12,7 @@ using Content.Shared.Maps;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.GameObjects.EntitySystems.TileLookup;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
@@ -32,6 +33,7 @@ namespace Content.Server.Atmos
         [Robust.Shared.IoC.Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Robust.Shared.IoC.Dependency] private readonly IEntityManager _entityManager = default!;
         [Robust.Shared.IoC.Dependency] private readonly IMapManager _mapManager = default!;
+        private readonly GridTileLookupSystem _gridTileLookupSystem = default!;
 
 
         private static readonly TileAtmosphereComparer Comparer = new TileAtmosphereComparer();
@@ -116,6 +118,7 @@ namespace Content.Server.Atmos
         {
             IoCManager.InjectDependencies(this);
             _gridAtmosphereComponent = atmosphereComponent;
+            _gridTileLookupSystem = _entityManager.EntitySysManager.GetEntitySystem<GridTileLookupSystem>();
             GridIndex = gridIndex;
             GridIndices = gridIndices;
             Air = mixture;
@@ -189,7 +192,7 @@ namespace Content.Server.Atmos
                         GridIndices.ToEntityCoordinates(_mapManager, GridIndex), AudioHelpers.WithVariation(0.125f).WithVolume(MathHelper.Clamp(PressureDifference / 10, 10, 100)));
             }
 
-            foreach (var entity in _entityManager.GetEntitiesIntersecting(_mapManager.GetGrid(GridIndex).ParentMapId, Box2.UnitCentered.Translated(GridIndices)))
+            foreach (var entity in _gridTileLookupSystem.GetEntitiesIntersecting(GridIndex, GridIndices))
             {
                 if (!entity.TryGetComponent(out ICollidableComponent physics)
                     ||  !entity.TryGetComponent(out MovedByPressureComponent pressure)
