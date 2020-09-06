@@ -67,7 +67,7 @@ namespace Content.Server.Atmos
         public float HeatCapacity { get; set; } = 1f;
 
         [ViewVariables]
-        public float ThermalConductivity => Tile?.Tile.GetContentTileDefinition().ThermalConductivity ?? 0.05f;
+        public float ThermalConductivity { get; set; } = 0.05f;
 
         [ViewVariables]
         public bool Excited { get; set; }
@@ -112,8 +112,13 @@ namespace Content.Server.Atmos
         [ViewVariables]
         public GasMixture Air { get; set; }
 
+        [ViewVariables, UsedImplicitly]
+        private int _blockedAirflow => (int)BlockedAirflow;
+
+        public AtmosDirection BlockedAirflow { get; set; } = AtmosDirection.Invalid;
+
         [ViewVariables]
-        public bool BlocksAir => _gridAtmosphereComponent.IsAirBlocked(GridIndices);
+        public bool BlocksAllAir => BlockedAirflow == AtmosDirection.All;
 
         public TileAtmosphere(GridAtmosphereComponent atmosphereComponent, GridId gridIndex, MapIndices gridIndices, GasMixture mixture = null, bool immutable = false)
         {
@@ -868,12 +873,12 @@ namespace Content.Server.Atmos
         private void FinishSuperconduction()
         {
             // Conduct with air on my tile if I have it
-            if (!BlocksAir)
+            if (!BlocksAllAir)
             {
                 _temperature = Air.TemperatureShare(ThermalConductivity, _temperature, HeatCapacity);
             }
 
-            FinishSuperconduction(BlocksAir ? _temperature : Air.Temperature);
+            FinishSuperconduction(BlocksAllAir ? _temperature : Air.Temperature);
         }
 
         private void FinishSuperconduction(float temperature)
@@ -887,9 +892,9 @@ namespace Content.Server.Atmos
 
         private void NeighborConductWithSource(TileAtmosphere other)
         {
-            if (BlocksAir)
+            if (BlocksAllAir)
             {
-                if (!other.BlocksAir)
+                if (!other.BlocksAllAir)
                 {
                     other.TemperatureShareOpenToSolid(this);
                 }
@@ -902,7 +907,7 @@ namespace Content.Server.Atmos
                 return;
             }
 
-            if (!other.BlocksAir)
+            if (!other.BlocksAllAir)
             {
                 other.Air.TemperatureShare(Air, Atmospherics.WindowHeatTransferCoefficient);
             }
@@ -953,7 +958,7 @@ namespace Content.Server.Atmos
 
         public AtmosDirection ConductivityDirections()
         {
-            if(BlocksAir)
+            if(BlocksAllAir)
             {
                 if(_archivedCycle < _gridAtmosphereComponent.UpdateCounter)
                     Archive(_gridAtmosphereComponent.UpdateCounter);
@@ -1150,7 +1155,7 @@ namespace Content.Server.Atmos
                 _adjacentTiles[direction.ToIndex()] = adjacent;
                 adjacent?.UpdateAdjacent(direction.GetOpposite());
 
-                if (adjacent != null && !_gridAtmosphereComponent.IsAirBlocked(adjacent.GridIndices, direction.GetOpposite()))
+                if (adjacent != null && !BlockedAirflow.HasFlag(direction) && !_gridAtmosphereComponent.IsAirBlocked(adjacent.GridIndices, direction.GetOpposite()))
                 {
                     _adjacentBits |= direction;
                 }
@@ -1161,7 +1166,7 @@ namespace Content.Server.Atmos
         {
             _adjacentTiles[direction.ToIndex()] = _gridAtmosphereComponent.GetTile(GridIndices.Offset(direction.ToDirection()));
 
-            if (!_gridAtmosphereComponent.IsAirBlocked(GridIndices.Offset(direction.ToDirection()), direction.GetOpposite()))
+            if (!BlockedAirflow.HasFlag(direction) && !_gridAtmosphereComponent.IsAirBlocked(GridIndices.Offset(direction.ToDirection()), direction.GetOpposite()))
             {
                 _adjacentBits |= direction;
             }

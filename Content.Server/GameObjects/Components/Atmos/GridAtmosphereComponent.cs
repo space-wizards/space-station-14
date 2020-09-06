@@ -9,10 +9,12 @@ using Content.Server.GameObjects.Components.Atmos.Piping;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
 using Content.Shared.Maps;
+using Robust.Server.GameObjects.EntitySystems.TileLookup;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Map;
 using Robust.Shared.GameObjects.Components.Transform;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
@@ -223,20 +225,19 @@ namespace Content.Server.GameObjects.Components.Atmos
                 }
                 else
                 {
-                    var obs = GetObstructingComponent(indices);
-
-                    if (obs != null)
+                    if (tile.Air == null && NeedsVacuumFixing(indices))
                     {
-                        if (tile.Air == null && obs.FixVacuum)
-                        {
-                            FixVacuum(tile.GridIndices);
-                        }
+                        FixVacuum(tile.GridIndices);
                     }
 
                     tile.Air ??= new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C};
                 }
 
                 AddActiveTile(tile);
+                tile.BlockedAirflow = GetBlockedDirections(indices);
+
+                // TODO ATMOS: Query all the contents of this tile (like walls) and calculate the correct thermal conductivity
+                tile.ThermalConductivity = tile.Tile?.Tile.GetContentTileDefinition().ThermalConductivity ?? 0.5f;
                 tile.UpdateAdjacent();
                 tile.UpdateVisuals();
 
@@ -283,6 +284,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual void AddActiveTile(TileAtmosphere? tile)
         {
+            // TODO ATMOS Optimization: Cache the grid Id for faster superconduction. Do the same for all the other ones.
             if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return;
             if (tile?.GridIndex != mapGrid.Grid.Index) return;
             tile.Excited = true;
@@ -404,8 +406,16 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// <inheritdoc />
         public bool IsAirBlocked(MapIndices indices, AtmosDirection direction = AtmosDirection.All)
         {
-            var ac = GetObstructingComponent(indices);
-            return ac != null && ac.AirBlocked && ac.AirBlockedDirection.HasFlag(direction);
+            foreach (var obstructingComponent in GetObstructingComponents(indices))
+            {
+                if (!obstructingComponent.AirBlocked)
+                    continue;
+
+                if (obstructingComponent.AirBlockedDirection.HasFlag(direction))
+                    return true;
+            }
+
+            return false;
         }
 
         /// <inheritdoc />
@@ -769,17 +779,45 @@ namespace Content.Server.GameObjects.Components.Atmos
             return true;
         }
 
-        private AirtightComponent? GetObstructingComponent(MapIndices indices)
+        private IEnumerable<AirtightComponent> GetObstructingComponents(MapIndices indices)
         {
-            if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return default;
+            if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return Enumerable.Empty<AirtightComponent>();
 
-            foreach (var v in mapGrid.Grid.GetSnapGridCell(indices, SnapGridOffset.Center))
+            var gridLookup = EntitySystem.Get<GridTileLookupSystem>();
+
+            var list = new List<AirtightComponent>();
+
+            foreach (var v in gridLookup.GetEntitiesIntersecting(mapGrid.GridIndex, indices))
             {
-                if (v.Owner.TryGetComponent<AirtightComponent>(out var ac))
-                    return ac;
+                if (v.TryGetComponent<AirtightComponent>(out var ac))
+                    list.Add(ac);
             }
 
-            return null;
+            return list;
+        }
+
+        private bool NeedsVacuumFixing(MapIndices indices)
+        {
+            var value = false;
+
+            foreach (var airtightComponent in GetObstructingComponents(indices))
+            {
+                value |= airtightComponent.FixVacuum;
+            }
+
+            return value;
+        }
+
+        private AtmosDirection GetBlockedDirections(MapIndices indices)
+        {
+            var value = AtmosDirection.Invalid;
+
+            foreach (var airtightComponent in GetObstructingComponents(indices))
+            {
+                value |= airtightComponent.AirBlockedDirection;
+            }
+
+            return value;
         }
 
         public void Dispose()
