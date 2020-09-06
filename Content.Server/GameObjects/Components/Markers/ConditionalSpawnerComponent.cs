@@ -87,7 +87,7 @@ namespace Content.Server.GameObjects.Components.Markers
             }
 
             if(!Owner.Deleted)
-                _entityManager.SpawnEntity(_robustRandom.Pick(Prototypes), Owner.Transform.GridPosition);
+                _entityManager.SpawnEntity(_robustRandom.Pick(Prototypes), Owner.Transform.Coordinates);
         }
 
         public virtual void MapInit()

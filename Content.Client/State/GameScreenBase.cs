@@ -3,7 +3,6 @@ using System.Collections.Immutable;
 using System.Linq;
 using Content.Client.GameObjects.Components;
 using Content.Client.Utility;
-using Content.Shared.Utility;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Interfaces.GameObjects;
 using Robust.Client.Interfaces.Graphics.ClientEye;
@@ -111,9 +110,9 @@ namespace Content.Client.State
             return entitiesUnderPosition.Count > 0 ? entitiesUnderPosition[0] : null;
         }
 
-        public IList<IEntity> GetEntitiesUnderPosition(GridCoordinates coordinates)
+        public IList<IEntity> GetEntitiesUnderPosition(EntityCoordinates coordinates)
         {
-            return GetEntitiesUnderPosition(coordinates.ToMap(MapManager));
+            return GetEntitiesUnderPosition(coordinates.ToMap(EntityManager));
         }
 
         public IList<IEntity> GetEntitiesUnderPosition(MapCoordinates coordinates)
@@ -152,7 +151,7 @@ namespace Content.Client.State
         /// <param name="stateManager">state manager to use to get the current game screen</param>
         /// <param name="coordinates">coordinates to check</param>
         /// <returns>the entities under the position, empty list if none found</returns>
-        public static IList<IEntity> GetEntitiesUnderPosition(IStateManager stateManager, GridCoordinates coordinates)
+        public static IList<IEntity> GetEntitiesUnderPosition(IStateManager stateManager, EntityCoordinates coordinates)
         {
             if (stateManager.CurrentState is GameScreenBase gameScreenBase)
             {
@@ -184,7 +183,7 @@ namespace Content.Client.State
 
                 var transx = x.clicked.Transform;
                 var transy = y.clicked.Transform;
-                val = transx.GridPosition.Y.CompareTo(transy.GridPosition.Y);
+                val = transx.Coordinates.Y.CompareTo(transy.Coordinates.Y);
                 if (val != 0)
                 {
                     return val;

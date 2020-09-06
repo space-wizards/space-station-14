@@ -159,7 +159,7 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
             }
 
             // Set position ready for 2nd+ frames.
-            _playerPosition = _eyeManager.WorldToScreen(AttachedEntity.Transform.GridPosition);
+            _playerPosition = _eyeManager.CoordinatesToScreen(AttachedEntity.Transform.Coordinates);
             LayoutContainer.SetPosition(this, new Vector2(_playerPosition.X - Width / 2, _playerPosition.Y - Height - 30.0f));
 
             if (_firstDraw)

@@ -103,7 +103,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
             for (var i = 0; i < _unspawnedCount; i++)
             {
-                var entity = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.GridPosition);
+                var entity = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.Coordinates);
                 _ammoSlots[idx] = entity;
                 _ammoContainer.Insert(entity);
                 idx++;
@@ -152,7 +152,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                     _ammoContainer.Insert(entity);
                     if (_soundInsert != null)
                     {
-                        EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundInsert, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
+                        EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundInsert, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
                     }
 
                     Dirty();
@@ -182,7 +182,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             _currentSlot = random;
             if (_soundSpin != null)
             {
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundSpin, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
+                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundSpin, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
             }
             Dirty();
         }
@@ -198,7 +198,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public override IEntity TakeProjectile(GridCoordinates spawnAtGrid, MapCoordinates spawnAtMap)
+        public override IEntity TakeProjectile(EntityCoordinates spawnAtGrid, MapCoordinates spawnAtMap)
         {
             var ammo = _ammoSlots[_currentSlot];
             IEntity bullet = null;
@@ -236,7 +236,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             {
                 if (_soundEject != null)
                 {
-                    EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundEject, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-1));
+                    EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundEject, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-1));
                 }
             }
 

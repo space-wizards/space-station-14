@@ -144,7 +144,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             return _chamberContainer.ContainedEntity;
         }
 
-        public override IEntity TakeProjectile(GridCoordinates spawnAtGrid, MapCoordinates spawnAtMap)
+        public override IEntity TakeProjectile(EntityCoordinates spawnAtGrid, MapCoordinates spawnAtMap)
         {
             var chamberEntity = _chamberContainer.ContainedEntity;
             if (!_manualCycle)
@@ -181,7 +181,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             if (_unspawnedCount > 0)
             {
                 _unspawnedCount--;
-                var ammoEntity = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.GridPosition);
+                var ammoEntity = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.Coordinates);
                 _chamberContainer.Insert(ammoEntity);
             }
 
@@ -189,7 +189,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             {
                 if (_soundCycle != null)
                 {
-                    EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundCycle, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
+                    EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundCycle, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
                 }
             }
 
@@ -218,7 +218,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 UpdateAppearance();
                 if (_soundInsert != null)
                 {
-                    EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundInsert, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
+                    EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundInsert, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
                 }
                 return true;
             }

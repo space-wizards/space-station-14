@@ -74,8 +74,8 @@ namespace Content.Server.GameObjects.Components.Fluids
                 return;
             }
 
-            var playerPos = eventArgs.User.Transform.GridPosition;
-            if (eventArgs.ClickLocation.GridID != playerPos.GridID)
+            var playerPos = eventArgs.User.Transform.Coordinates;
+            if (eventArgs.ClickLocation.GetGridId(_serverEntityManager) != playerPos.GetGridId(_serverEntityManager))
                 return;
 
             if (!Owner.TryGetComponent(out SolutionComponent contents))

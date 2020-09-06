@@ -75,7 +75,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 var amount = _transferAmount / ReagentUnit.New(tiles.Count());
                 foreach (var tile in tiles)
                 {
-                    var pos = tile.GridIndices.ToGridCoordinates(_mapManager, tile.GridIndex);
+                    var pos = tile.GridIndices.ToEntityCoordinates(_mapManager, tile.GridIndex);
                     contents.SplitSolution(amount).SpillAt(pos, "PuddleSmear", false); // TODO: Make non PuddleSmear?
                 }
             }

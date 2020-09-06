@@ -50,7 +50,7 @@ namespace Content.Client.GameObjects.EntitySystems
             base.Shutdown();
         }
 
-        private bool HandleExamine(ICommonSession session, GridCoordinates coords, EntityUid uid)
+        private bool HandleExamine(ICommonSession session, EntityCoordinates coords, EntityUid uid)
         {
             if (!uid.IsValid() || !_entityManager.TryGetEntity(uid, out var examined))
             {
