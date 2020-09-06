@@ -31,7 +31,7 @@ namespace Content.IntegrationTests.Tests
                 List<IEntity> entities;
                 var mapOne = mapManager.CreateMap();
                 var gridOne = mapManager.CreateGrid(mapOne);
-                
+
                 var tileDefinition = tileDefinitionManager["underplating"];
                 var underplating = new Tile(tileDefinition.TileId);
                 gridOne.SetTile(new MapIndices(0, 0), underplating);
@@ -45,8 +45,8 @@ namespace Content.IntegrationTests.Tests
                 entities = tileLookup.GetEntitiesIntersecting(gridOne.Index, new MapIndices(1000, 1000)).ToList();
                 Assert.That(entities.Count, Is.EqualTo(0));
 
-                var entityOne = entityManager.SpawnEntity("HumanMob_Content", new GridCoordinates(Vector2.Zero, gridOne));
-                entityManager.SpawnEntity("HumanMob_Content", new GridCoordinates(Vector2.One, gridOne));
+                var entityOne = entityManager.SpawnEntity("HumanMob_Content", new EntityCoordinates(gridOne.GridEntityId, Vector2.Zero));
+                entityManager.SpawnEntity("HumanMob_Content", new EntityCoordinates(gridOne.GridEntityId, Vector2.One));
 
                 var entityTiles = tileLookup.GetIndices(entityOne);
                 Assert.That(entityTiles.Count, Is.EqualTo(2));
@@ -54,11 +54,11 @@ namespace Content.IntegrationTests.Tests
                 entities = tileLookup.GetEntitiesIntersecting(entityOne).ToList();
                 // Includes station entity
                 Assert.That(entities.Count, Is.EqualTo(3));
-                
+
                 // Both dummies should be in each corner of the 0,0 tile but only one dummy intersects -1,-1
                 entities = tileLookup.GetEntitiesIntersecting(gridOne.Index, new MapIndices(-1, -1)).ToList();
                 Assert.That(entities.Count, Is.EqualTo(1));
-                
+
                 entities = tileLookup.GetEntitiesIntersecting(gridOne.Index, new MapIndices(0, 0)).ToList();
                 Assert.That(entities.Count, Is.EqualTo(2));
             });
