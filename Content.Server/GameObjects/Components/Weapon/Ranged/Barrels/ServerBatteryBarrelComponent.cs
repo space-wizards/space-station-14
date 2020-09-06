@@ -108,7 +108,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             _powerCellContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-powercell-container", Owner, out var existing);
             if (!existing && _powerCellPrototype != null)
             {
-                var powerCellEntity = Owner.EntityManager.SpawnEntity(_powerCellPrototype, Owner.Transform.GridPosition);
+                var powerCellEntity = Owner.EntityManager.SpawnEntity(_powerCellPrototype, Owner.Transform.Coordinates);
                 _powerCellContainer.Insert(powerCellEntity);
             }
 
@@ -140,14 +140,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             var ammo = _ammoContainer.ContainedEntity;
             if (ammo == null)
             {
-                ammo = Owner.EntityManager.SpawnEntity(_ammoPrototype, Owner.Transform.GridPosition);
+                ammo = Owner.EntityManager.SpawnEntity(_ammoPrototype, Owner.Transform.Coordinates);
                 _ammoContainer.Insert(ammo);
             }
 
             return ammo;
         }
 
-        public override IEntity TakeProjectile(GridCoordinates spawnAtGrid, MapCoordinates spawnAtMap)
+        public override IEntity TakeProjectile(EntityCoordinates spawnAtGrid, MapCoordinates spawnAtMap)
         {
             var powerCellEntity = _powerCellContainer.ContainedEntity;
 
@@ -177,7 +177,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             else
             {
                 entity = Owner.Transform.GridID != GridId.Invalid ?
-                    Owner.EntityManager.SpawnEntity(_ammoPrototype, Owner.Transform.GridPosition)
+                    Owner.EntityManager.SpawnEntity(_ammoPrototype, Owner.Transform.Coordinates)
                     : Owner.EntityManager.SpawnEntity(_ammoPrototype, Owner.Transform.MapPosition);
             }
 
@@ -222,7 +222,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
             if (_soundPowerCellInsert != null)
             {
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundPowerCellInsert, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
+                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundPowerCellInsert, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
             }
 
             _powerCellContainer.Insert(entity);
@@ -270,12 +270,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
             if (!hands.PutInHand(cell.Owner.GetComponent<ItemComponent>()))
             {
-                cell.Owner.Transform.GridPosition = user.Transform.GridPosition;
+                cell.Owner.Transform.Coordinates = user.Transform.Coordinates;
             }
 
             if (_soundPowerCellEject != null)
             {
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundPowerCellEject, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
+                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundPowerCellEject, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
             }
             return true;
         }

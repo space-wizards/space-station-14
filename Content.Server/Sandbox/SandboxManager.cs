@@ -115,7 +115,7 @@ namespace Content.Server.Sandbox
                 ;
                 hands.PutInHandOrDrop(
                     _entityManager.SpawnEntity("CaptainIDCard",
-                    player.AttachedEntity.Transform.GridPosition).GetComponent<ItemComponent>());
+                    player.AttachedEntity.Transform.Coordinates).GetComponent<ItemComponent>());
             }
         }
 

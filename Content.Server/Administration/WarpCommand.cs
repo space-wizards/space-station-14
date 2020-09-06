@@ -60,32 +60,36 @@ namespace Content.Server.Administration
                 var mapManager = IoCManager.Resolve<IMapManager>();
                 var currentMap = player.AttachedEntity.Transform.MapID;
                 var currentGrid = player.AttachedEntity.Transform.GridID;
+                var entityManager = IoCManager.Resolve<IEntityManager>();
 
                 var found = comp.EntityQuery<WarpPointComponent>()
                     .Where(p => p.Location == location)
-                    .Select(p => p.Owner.Transform.GridPosition)
-                    .OrderBy(p => p, Comparer<GridCoordinates>.Create((a, b) =>
+                    .Select(p => p.Owner.Transform.Coordinates)
+                    .OrderBy(p => p, Comparer<EntityCoordinates>.Create((a, b) =>
                     {
                         // Sort so that warp points on the same grid/map are first.
                         // So if you have two maps loaded with the same warp points,
                         // it will prefer the warp points on the map you're currently on.
-                        if (a.GridID == b.GridID)
+                        var aGrid = a.GetGridId(entityManager);
+                        var bGrid = b.GetGridId(entityManager);
+
+                        if (aGrid == bGrid)
                         {
                             return 0;
                         }
 
-                        if (a.GridID == currentGrid)
+                        if (aGrid == currentGrid)
                         {
                             return -1;
                         }
 
-                        if (b.GridID == currentGrid)
+                        if (bGrid == currentGrid)
                         {
                             return 1;
                         }
 
-                        var mapA = mapManager.GetGrid(a.GridID).ParentMapId;
-                        var mapB = mapManager.GetGrid(b.GridID).ParentMapId;
+                        var mapA = mapManager.GetGrid(aGrid).ParentMapId;
+                        var mapB = mapManager.GetGrid(bGrid).ParentMapId;
 
                         if (mapA == mapB)
                         {
@@ -106,9 +110,9 @@ namespace Content.Server.Administration
                     }))
                     .FirstOrDefault();
 
-                if (found.GridID != GridId.Invalid)
+                if (found.GetGridId(entityManager) != GridId.Invalid)
                 {
-                    player.AttachedEntity.Transform.GridPosition = found;
+                    player.AttachedEntity.Transform.Coordinates = found;
                     if (player.AttachedEntity.TryGetComponent(out ICollidableComponent collidable))
                     {
                         collidable.Stop();

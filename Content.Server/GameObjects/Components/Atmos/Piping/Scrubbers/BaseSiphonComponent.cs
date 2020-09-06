@@ -6,6 +6,8 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Log;
 using Robust.Shared.ViewVariables;
 using System.Linq;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.GameObjects.Components.Atmos.Piping
 {
@@ -14,6 +16,8 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
     /// </summary>
     public abstract class BaseSiphonComponent : PipeNetDeviceComponent
     {
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+
         [ViewVariables]
         private PipeNode _scrubberOutlet;
 
@@ -40,11 +44,11 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
 
         public override void Update()
         {
-            var tileAtmos = AtmosHelpers.GetTileAtmosphere(Owner.Transform.GridPosition);
+            var tileAtmos = Owner.Transform.Coordinates.GetTileAtmosphere(_entityManager);
             if (tileAtmos == null)
                 return;
             ScrubGas(tileAtmos.Air, _scrubberOutlet.Air);
-            _atmosSystem.GetGridAtmosphere(Owner.Transform.GridID).Invalidate(tileAtmos.GridIndices);
+            _atmosSystem.GetGridAtmosphere(Owner.Transform.GridID)?.Invalidate(tileAtmos.GridIndices);
         }
 
         protected abstract void ScrubGas(GasMixture inletGas, GasMixture outletGas);

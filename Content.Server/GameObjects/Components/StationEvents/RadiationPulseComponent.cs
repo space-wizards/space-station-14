@@ -53,7 +53,7 @@ namespace Content.Server.GameObjects.Components.StationEvents
                 }
             });
 
-            EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Weapons/Guns/Gunshots/laser3.ogg", Owner.Transform.GridPosition);
+            EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Weapons/Guns/Gunshots/laser3.ogg", Owner.Transform.Coordinates);
             Dirty();
         }
 

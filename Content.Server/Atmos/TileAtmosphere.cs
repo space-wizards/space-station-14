@@ -9,8 +9,10 @@ using Content.Server.Interfaces;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
 using Content.Shared.Maps;
+using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.GameObjects.EntitySystems.TileLookup;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
@@ -31,6 +33,7 @@ namespace Content.Server.Atmos
         [Robust.Shared.IoC.Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Robust.Shared.IoC.Dependency] private readonly IEntityManager _entityManager = default!;
         [Robust.Shared.IoC.Dependency] private readonly IMapManager _mapManager = default!;
+        private readonly GridTileLookupSystem _gridTileLookupSystem = default!;
 
 
         private static readonly TileAtmosphereComparer Comparer = new TileAtmosphereComparer();
@@ -115,6 +118,7 @@ namespace Content.Server.Atmos
         {
             IoCManager.InjectDependencies(this);
             _gridAtmosphereComponent = atmosphereComponent;
+            _gridTileLookupSystem = _entityManager.EntitySysManager.GetEntitySystem<GridTileLookupSystem>();
             GridIndex = gridIndex;
             GridIndices = gridIndices;
             Air = mixture;
@@ -185,10 +189,10 @@ namespace Content.Server.Atmos
             {
                 if(_soundCooldown == 0)
                     EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Effects/space_wind.ogg",
-                        GridIndices.ToGridCoordinates(_mapManager, GridIndex), AudioHelpers.WithVariation(0.125f).WithVolume(MathHelper.Clamp(PressureDifference / 10, 10, 100)));
+                        GridIndices.ToEntityCoordinates(_mapManager, GridIndex), AudioHelpers.WithVariation(0.125f).WithVolume(MathHelper.Clamp(PressureDifference / 10, 10, 100)));
             }
 
-            foreach (var entity in _entityManager.GetEntitiesIntersecting(_mapManager.GetGrid(GridIndex).ParentMapId, Box2.UnitCentered.Translated(GridIndices)))
+            foreach (var entity in _gridTileLookupSystem.GetEntitiesIntersecting(GridIndex, GridIndices))
             {
                 if (!entity.TryGetComponent(out ICollidableComponent physics)
                     ||  !entity.TryGetComponent(out MovedByPressureComponent pressure)
@@ -200,7 +204,7 @@ namespace Content.Server.Atmos
                 var pressureMovements = physics.EnsureController<HighPressureMovementController>();
                 if (pressure.LastHighPressureMovementAirCycle < _gridAtmosphereComponent.UpdateCounter)
                 {
-                    pressureMovements.ExperiencePressureDifference(_gridAtmosphereComponent.UpdateCounter, PressureDifference, _pressureDirection, 0, PressureSpecificTarget?.GridIndices.ToGridCoordinates(_mapManager, GridIndex) ?? GridCoordinates.InvalidGrid);
+                    pressureMovements.ExperiencePressureDifference(_gridAtmosphereComponent.UpdateCounter, PressureDifference, _pressureDirection, 0, PressureSpecificTarget?.GridIndices.ToEntityCoordinates(_mapManager, GridIndex) ?? EntityCoordinates.Invalid);
                 }
 
             }

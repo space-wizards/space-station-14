@@ -1,22 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Threading;
 using Content.Client.State;
 using Content.Client.UserInterface;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.EntitySystemMessages;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Input;
-using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Interfaces.State;
@@ -27,12 +23,9 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -53,7 +46,6 @@ namespace Content.Client.GameObjects.EntitySystems
         [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
 
         private EntityList _currentEntityList;
         private VerbPopup _currentVerbListRoot;
@@ -67,7 +59,7 @@ namespace Content.Client.GameObjects.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-            
+
             SubscribeNetworkEvent<VerbSystemMessages.VerbsResponseMessage>(FillEntityPopup);
 
             IoCManager.InjectDependencies(this);
@@ -118,10 +110,10 @@ namespace Content.Client.GameObjects.EntitySystems
             {
                 return false;
             }
-            
-            var mapCoordinates = args.Coordinates.ToMap(_mapManager);
+
+            var mapCoordinates = args.Coordinates.ToMap(_entityManager);
             var playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
-            
+
             if (playerEntity == null || !TryGetContextEntities(playerEntity, mapCoordinates, out var entities))
             {
                 return false;
@@ -469,7 +461,7 @@ namespace Content.Client.GameObjects.EntitySystems
                     var funcId = _master._inputManager.NetworkBindMap.KeyFunctionID(args.Function);
 
                     var message = new FullInputCmdMessage(_master._gameTiming.CurTick, _master._gameTiming.TickFraction, funcId, BoundKeyState.Down,
-                        _entity.Transform.GridPosition,
+                        _entity.Transform.Coordinates,
                         args.PointerLocation, _entity.Uid);
 
                     // client side command handlers will always be sent the local player session.

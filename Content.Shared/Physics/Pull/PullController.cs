@@ -3,7 +3,7 @@ using System;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects.Components;
-using Robust.Shared.Interfaces.Map;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -22,7 +22,7 @@ namespace Content.Shared.Physics.Pull
 
         public bool GettingPulled => _puller != null;
 
-        private GridCoordinates? _movingTo;
+        private EntityCoordinates? _movingTo;
 
         public ICollidableComponent? Puller => _puller;
 
@@ -76,23 +76,23 @@ namespace Content.Shared.Physics.Pull
             ControlledComponent.TryRemoveController<PullController>();
         }
 
-        public void TryMoveTo(GridCoordinates from, GridCoordinates to)
+        public void TryMoveTo(EntityCoordinates from, EntityCoordinates to)
         {
             if (_puller == null || ControlledComponent == null)
             {
                 return;
             }
 
-            var mapManager = IoCManager.Resolve<IMapManager>();
+            var entityManager = IoCManager.Resolve<IEntityManager>();
 
-            if (!from.InRange(mapManager, to, SharedInteractionSystem.InteractionRange))
+            if (!from.InRange(entityManager, to, SharedInteractionSystem.InteractionRange))
             {
                 return;
             }
 
             ControlledComponent.WakeBody();
 
-            var dist = _puller.Owner.Transform.GridPosition.Position - to.Position;
+            var dist = _puller.Owner.Transform.Coordinates.Position - to.Position;
 
             if (Math.Sqrt(dist.LengthSquared) > DistBeforeStopPull ||
                 Math.Sqrt(dist.LengthSquared) < 0.25f)
@@ -125,7 +125,7 @@ namespace Content.Shared.Physics.Pull
             }
             else if (_movingTo.HasValue)
             {
-                var diff = _movingTo.Value.Position - ControlledComponent.Owner.Transform.GridPosition.Position;
+                var diff = _movingTo.Value.Position - ControlledComponent.Owner.Transform.Coordinates.Position;
                 LinearVelocity = diff.Normalized * 5;
             }
             else if (dist.Length > DistBeforePull)
@@ -153,7 +153,7 @@ namespace Content.Shared.Physics.Pull
                 return;
             }
 
-            if (ControlledComponent.Owner.Transform.GridPosition.Position.EqualsApprox(_movingTo.Value.Position, 0.01))
+            if (ControlledComponent.Owner.Transform.Coordinates.Position.EqualsApprox(_movingTo.Value.Position, 0.01))
             {
                 _movingTo = null;
             }
