@@ -6,6 +6,7 @@ using Content.Server.Atmos.Reactions;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.EntitySystems.Atmos;
 using Content.Server.Interfaces;
+using Content.Server.Utility;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
 using Content.Shared.Maps;
@@ -1090,7 +1091,7 @@ namespace Content.Server.Atmos
             // TODO ATMOS firelocks!
             var reconsiderAdjacent = false;
 
-            foreach (var entity in GridIndices.GetEntitiesInTile(GridIndex))
+            foreach (var entity in GridIndices.GetEntitiesInTileFast(GridIndex))
             {
                 if (!entity.TryGetComponent(out FirelockComponent firelock)) continue;
                 reconsiderAdjacent |= firelock.EmergencyPressureStop();

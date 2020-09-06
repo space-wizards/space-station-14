@@ -5,7 +5,6 @@ using System.Runtime.CompilerServices;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Physics;
 using Content.Shared.Utility;
-using Robust.Server.GameObjects.EntitySystems.TileLookup;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
@@ -127,9 +126,9 @@ namespace Content.Shared.Maps
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<IEntity> GetEntitiesInTile(this TileRef turf, bool approximate = false)
         {
-            var gridTileLookup = EntitySystem.Get<GridTileLookupSystem>();
+            var entityManager = IoCManager.Resolve<IEntityManager>();
 
-            return gridTileLookup.GetEntitiesIntersecting(turf.GridIndex, turf.GridIndices);
+            return entityManager.GetEntitiesIntersecting(turf.MapIndex, GetWorldTileBox(turf), approximate);
         }
 
         /// <summary>
