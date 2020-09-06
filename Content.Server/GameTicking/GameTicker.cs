@@ -28,6 +28,7 @@ using Content.Shared.GameObjects.Components.PDA;
 using Content.Shared.Network.NetMessages;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Content.Shared.Utility;
 using Prometheus;
 using Robust.Server.Interfaces;
 using Robust.Server.Interfaces.Maps;
@@ -91,7 +92,7 @@ namespace Content.Server.GameTicking
         [ViewVariables] private bool _roundStartCountdownHasNotStartedYetDueToNoPlayers;
         private DateTime _roundStartTimeUtc;
         [ViewVariables] private GameRunLevel _runLevel;
-        [ViewVariables(VVAccess.ReadWrite)] private GridCoordinates _spawnPoint;
+        [ViewVariables(VVAccess.ReadWrite)] private EntityCoordinates _spawnPoint;
 
         [ViewVariables] private bool DisallowLateJoin { get; set; } = false;
 
@@ -540,7 +541,7 @@ namespace Content.Server.GameTicking
 
         private IEntity _spawnPlayerMob(Job job, bool lateJoin = true)
         {
-            GridCoordinates coordinates = lateJoin ? GetLateJoinSpawnPoint() : GetJobSpawnPoint(job.Prototype.ID);
+            EntityCoordinates coordinates = lateJoin ? GetLateJoinSpawnPoint() : GetJobSpawnPoint(job.Prototype.ID);
             var entity = _entityManager.SpawnEntity(PlayerPrototypeName, coordinates);
             var startingGear = _prototypeManager.Index<StartingGearPrototype>(job.StartingGear);
             EquipStartingGear(entity, startingGear);
@@ -556,7 +557,7 @@ namespace Content.Server.GameTicking
 
                 foreach (var (slot, equipmentStr) in gear)
                 {
-                    var equipmentEntity = _entityManager.SpawnEntity(equipmentStr, entity.Transform.GridPosition);
+                    var equipmentEntity = _entityManager.SpawnEntity(equipmentStr, entity.Transform.Coordinates);
                     inventory.Equip(slot, equipmentEntity.GetComponent<ItemComponent>());
                 }
             }
@@ -566,7 +567,7 @@ namespace Content.Server.GameTicking
                 var inhand = startingGear.Inhand;
                 foreach (var (hand, prototype) in inhand)
                 {
-                    var inhandEntity = _entityManager.SpawnEntity(prototype, entity.Transform.GridPosition);
+                    var inhandEntity = _entityManager.SpawnEntity(prototype, entity.Transform.Coordinates);
                     handsComponent.PutInHand(inhandEntity.GetComponent<ItemComponent>(), hand);
                 }
             }
@@ -586,15 +587,15 @@ namespace Content.Server.GameTicking
             return _entityManager.SpawnEntity(ObserverPrototypeName, coordinates);
         }
 
-        public GridCoordinates GetLateJoinSpawnPoint()
+        public EntityCoordinates GetLateJoinSpawnPoint()
         {
             var location = _spawnPoint;
 
-            var possiblePoints = new List<GridCoordinates>();
+            var possiblePoints = new List<EntityCoordinates>();
             foreach (var entity in _entityManager.GetEntities(new TypeEntityQuery(typeof(SpawnPointComponent))))
             {
                 var point = entity.GetComponent<SpawnPointComponent>();
-                if (point.SpawnType == SpawnPointType.LateJoin) possiblePoints.Add(entity.Transform.GridPosition);
+                if (point.SpawnType == SpawnPointType.LateJoin) possiblePoints.Add(entity.Transform.Coordinates);
             }
 
             if (possiblePoints.Count != 0) location = _robustRandom.Pick(possiblePoints);
@@ -602,16 +603,16 @@ namespace Content.Server.GameTicking
             return location;
         }
 
-        public GridCoordinates GetJobSpawnPoint(string jobId)
+        public EntityCoordinates GetJobSpawnPoint(string jobId)
         {
             var location = _spawnPoint;
 
-            var possiblePoints = new List<GridCoordinates>();
+            var possiblePoints = new List<EntityCoordinates>();
             foreach (var entity in _entityManager.GetEntities(new TypeEntityQuery(typeof(SpawnPointComponent))))
             {
                 var point = entity.GetComponent<SpawnPointComponent>();
                 if (point.SpawnType == SpawnPointType.Job && point.Job.ID == jobId)
-                    possiblePoints.Add(entity.Transform.GridPosition);
+                    possiblePoints.Add(entity.Transform.Coordinates);
             }
 
             if (possiblePoints.Count != 0) location = _robustRandom.Pick(possiblePoints);
@@ -619,16 +620,16 @@ namespace Content.Server.GameTicking
             return location;
         }
 
-        public GridCoordinates GetObserverSpawnPoint()
+        public EntityCoordinates GetObserverSpawnPoint()
         {
             var location = _spawnPoint;
 
-            var possiblePoints = new List<GridCoordinates>();
+            var possiblePoints = new List<EntityCoordinates>();
             foreach (var entity in _entityManager.GetEntities(new TypeEntityQuery(typeof(SpawnPointComponent))))
             {
                 var point = entity.GetComponent<SpawnPointComponent>();
                 if (point.SpawnType == SpawnPointType.Observer)
-                    possiblePoints.Add(entity.Transform.GridPosition);
+                    possiblePoints.Add(entity.Transform.Coordinates);
             }
 
             if (possiblePoints.Count != 0) location = _robustRandom.Pick(possiblePoints);
@@ -684,7 +685,7 @@ namespace Content.Server.GameTicking
             var startTime = _gameTiming.RealTime;
             var grid = _mapLoader.LoadBlueprint(newMapId, MapFile);
 
-            _spawnPoint = new GridCoordinates(Vector2.Zero, grid);
+            _spawnPoint = grid.ToCoordinates();
 
             var timeSpan = _gameTiming.RealTime - startTime;
             Logger.InfoS("ticker", $"Loaded map in {timeSpan.TotalMilliseconds:N2}ms.");

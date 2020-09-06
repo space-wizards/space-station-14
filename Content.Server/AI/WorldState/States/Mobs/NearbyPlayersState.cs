@@ -23,7 +23,7 @@ namespace Content.Server.AI.WorldState.States.Mobs
             }
 
             var playerManager = IoCManager.Resolve<IPlayerManager>();
-            var nearbyPlayers = playerManager.GetPlayersInRange(Owner.Transform.GridPosition, (int) controller.VisionRadius);
+            var nearbyPlayers = playerManager.GetPlayersInRange(Owner.Transform.Coordinates, (int) controller.VisionRadius);
 
             foreach (var player in nearbyPlayers)
             {

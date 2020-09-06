@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Content.Shared.Maps;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -59,10 +58,8 @@ namespace Content.Shared.Utility
         ///     Gets tiles in random directions from the given one.
         /// </summary>
         /// <returns>An enumerable of the adjacent tiles.</returns>
-        public static IEnumerable<TileRef> AdjacentTilesRandom(this GridCoordinates coordinates, bool ignoreSpace = false)
+        public static IEnumerable<TileRef> AdjacentTilesRandom(this EntityCoordinates coordinates, bool ignoreSpace = false)
         {
-            var mapManager = IoCManager.Resolve<IMapManager>();
-
             foreach (var direction in RandomDirections())
             {
                 var adjacent = coordinates.Offset(direction).GetTileRef();
@@ -81,7 +78,7 @@ namespace Content.Shared.Utility
             }
         }
 
-        public static GridCoordinates Offset(this GridCoordinates coordinates, Direction direction)
+        public static EntityCoordinates Offset(this EntityCoordinates coordinates, Direction direction)
         {
             return coordinates.Offset(direction.ToVec());
         }

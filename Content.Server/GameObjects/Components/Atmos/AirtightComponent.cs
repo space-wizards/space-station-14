@@ -5,6 +5,7 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -18,6 +19,7 @@ namespace Content.Server.GameObjects.Components.Atmos
     public class AirtightComponent : Component, IMapInit
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private (GridId, MapIndices) _lastPosition;
 

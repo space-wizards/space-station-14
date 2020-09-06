@@ -47,7 +47,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
     public class ExplosionEventArgs : EventArgs
     {
-        public GridCoordinates Source { get; set; }
+        public EntityCoordinates Source { get; set; }
         public IEntity Target { get; set; }
         public ExplosionSeverity Severity { get; set; }
     }
@@ -71,7 +71,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             owner.Delete();
         }
 
-        public void HandleExplosion(GridCoordinates source, IEntity target, ExplosionSeverity severity)
+        public void HandleExplosion(EntityCoordinates source, IEntity target, ExplosionSeverity severity)
         {
             var eventArgs = new ExplosionEventArgs
             {

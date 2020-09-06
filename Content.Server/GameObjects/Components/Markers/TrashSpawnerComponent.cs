@@ -42,7 +42,7 @@ namespace Content.Server.GameObjects.Components.Markers
         {
             if (RarePrototypes.Count > 0 && (RareChance == 1.0f || _robustRandom.Prob(RareChance)))
             {
-                _entityManager.SpawnEntity(_robustRandom.Pick(RarePrototypes), Owner.Transform.GridPosition);
+                _entityManager.SpawnEntity(_robustRandom.Pick(RarePrototypes), Owner.Transform.Coordinates);
                 return;
             }
 
@@ -64,7 +64,7 @@ namespace Content.Server.GameObjects.Components.Markers
                 var x_negative = random.Prob(0.5f) ? -1 : 1;
                 var y_negative = random.Prob(0.5f) ? -1 : 1;
 
-                var entity = _entityManager.SpawnEntity(_robustRandom.Pick(Prototypes), Owner.Transform.GridPosition);
+                var entity = _entityManager.SpawnEntity(_robustRandom.Pick(Prototypes), Owner.Transform.Coordinates);
                 entity.Transform.LocalPosition += new Vector2(random.NextFloat() * Offset * x_negative, random.NextFloat() * Offset * y_negative);
             }
 

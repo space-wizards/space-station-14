@@ -132,7 +132,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             else if (_unspawnedCount > 0)
             {
                 _unspawnedCount--;
-                ammo = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.GridPosition);
+                ammo = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.Coordinates);
             }
 
             UpdateAppearance();
@@ -160,7 +160,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             var itemComponent = ammo.GetComponent<ItemComponent>();
             if (!handsComponent.CanPutInHand(itemComponent))
             {
-                ammo.Transform.GridPosition = eventArgs.User.Transform.GridPosition;
+                ammo.Transform.Coordinates = eventArgs.User.Transform.Coordinates;
                 ServerRangedBarrelComponent.EjectCasing(ammo);
             }
             else
