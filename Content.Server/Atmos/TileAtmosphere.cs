@@ -1159,9 +1159,15 @@ namespace Content.Server.Atmos
 
         public void UpdateAdjacent(AtmosDirection direction)
         {
-            if (!_gridAtmosphereComponent.IsAirBlocked(GridIndices.Offset(direction.ToDirection())))
+            _adjacentTiles[direction.ToIndex()] = _gridAtmosphereComponent.GetTile(GridIndices.Offset(direction.ToDirection()));
+
+            if (!_gridAtmosphereComponent.IsAirBlocked(GridIndices.Offset(direction.ToDirection()), direction.GetOpposite()))
             {
-                _adjacentTiles[direction.ToIndex()] = _gridAtmosphereComponent.GetTile(GridIndices.Offset(direction.ToDirection()));
+                _adjacentBits |= direction;
+            }
+            else
+            {
+                _adjacentBits &= ~direction;
             }
         }
 

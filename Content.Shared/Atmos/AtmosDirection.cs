@@ -87,6 +87,11 @@ namespace Content.Shared.Atmos
         {
             return direction | other;
         }
+
+        public static AtmosDirection WithoutFlag(this AtmosDirection direction, AtmosDirection other)
+        {
+            return direction & ~other;
+        }
     }
 
     public sealed class AtmosDirectionFlags { }
