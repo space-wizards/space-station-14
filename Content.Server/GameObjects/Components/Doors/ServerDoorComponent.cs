@@ -49,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Doors
         protected bool AutoClose = true;
         protected const float AutoCloseDelay = 5;
         protected float CloseSpeed = AutoCloseDelay;
-        
+
         private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
         protected virtual TimeSpan CloseTimeOne => TimeSpan.FromSeconds(0.3f);
@@ -316,7 +316,7 @@ namespace Content.Server.GameObjects.Components.Doors
         {
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
-            if (!Owner.Transform.GridPosition.TryGetTileAtmosphere(out var tileAtmos))
+            if (!Owner.Transform.Coordinates.TryGetTileAtmosphere(out var tileAtmos))
                 return false;
 
             var gridAtmosphere = atmosphereSystem.GetGridAtmosphere(Owner.Transform.GridID);
@@ -343,7 +343,7 @@ namespace Content.Server.GameObjects.Components.Doors
         {
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
-            if (!Owner.Transform.GridPosition.TryGetTileAtmosphere(out var tileAtmos))
+            if (!Owner.Transform.Coordinates.TryGetTileAtmosphere(out var tileAtmos))
                 return false;
 
             if (tileAtmos.Hotspot.Valid)
