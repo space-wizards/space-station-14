@@ -87,7 +87,7 @@ namespace Content.Server.GameObjects.Components.Items.RCD
             int mode = (int) _mode; //Firstly, cast our RCDmode mode to an int (enums are backed by ints anyway by default)
             mode = (++mode) % _modes.Length; //Then, do a rollover on the value so it doesnt hit an invalid state
             _mode = (RcdMode) mode; //Finally, cast the newly acquired int mode to an RCDmode so we can use it.
-            _sparkSystem.CreateSparks(Owner.Transform.GridPosition, 5, 10);
+            _sparkSystem.CreateSparks(Owner.Transform.Coordinates, 5, 10);
             Owner.PopupMessage(eventArgs.User, Loc.GetString("The RCD is now set to {0} mode.", _mode)); //Prints an overhead message above the RCD
         }
 

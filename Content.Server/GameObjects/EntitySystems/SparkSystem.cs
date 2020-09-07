@@ -11,8 +11,6 @@ using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -25,10 +23,8 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     public sealed class SparkSystem : EntitySystem
     {
-        [Dependency]
-        private readonly IEntityManager _entityManager = default!;
-        [Dependency]
-        private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         private readonly List<IEntity> _deleteQueue = new List<IEntity>();
 
@@ -53,15 +49,15 @@ namespace Content.Server.GameObjects.EntitySystems
             _deleteQueue.Clear();
         }
 
-        public void CreateSparks(GridCoordinates coords, int minAmount, int maxAmount)
+        public void CreateSparks(EntityCoordinates coords, int minAmount, int maxAmount)
         {
             var amount = _random.Next(minAmount, maxAmount);
-            for(var i = amount; i > 0; i--)
+            for (var i = amount; i > 0; i--)
             {
                 var spark = _entityManager.SpawnEntity("SparkEffect", coords);
                 spark.GetComponent<SparkComponent>().Lifetime = Math.Min(0.5f, _random.NextFloat());
-                spark.TryGetComponent<ICollidableComponent>(out var collidable);
-                collidable?.EnsureController<MoverController>()
+                if (!spark.TryGetComponent<ICollidableComponent>(out var collidable)) continue;
+                collidable.EnsureController<MoverController>()
                     .Push(Angle.FromDegrees(_random.Next(360)).ToVec(), 3.0f);
             }
         }
