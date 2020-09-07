@@ -172,10 +172,14 @@ namespace Content.Server.GameObjects.Components.PDA
                 return;
             }
 
-            if (UserInterface.SessionHasOpen(actor.playerSession))
-                UserInterface?.Close(actor.playerSession);
-            else
-                UserInterface?.Open(actor.playerSession);
+            if (UserInterface != null)
+            {
+                if (!UserInterface!.SessionHasOpen(actor.playerSession))
+                    UserInterface?.Open(actor.playerSession);
+                else
+                    UserInterface?.Close(actor.playerSession);
+            }
+
             UpdatePDAAppearance();
         }
 
@@ -186,10 +190,14 @@ namespace Content.Server.GameObjects.Components.PDA
                 return false;
             }
 
-            if (UserInterface.SessionHasOpen(actor.playerSession))
-                UserInterface?.Close(actor.playerSession);
-            else
-                UserInterface?.Open(actor.playerSession);
+            if (UserInterface != null)
+            {
+                if (!UserInterface!.SessionHasOpen(actor.playerSession))
+                    UserInterface?.Open(actor.playerSession);
+                else
+                    UserInterface?.Close(actor.playerSession);
+            }
+
             UpdatePDAAppearance();
 
             return true;
