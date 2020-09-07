@@ -56,7 +56,7 @@ namespace Content.Client.State
 
             _client.RunLevelChanged += RunLevelChanged;
 
-            OptionsMenu = new OptionsMenu(_configurationManager);
+            OptionsMenu = new OptionsMenu();
         }
 
         /// <inheritdoc />
