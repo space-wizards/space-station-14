@@ -8,6 +8,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using System.Threading.Tasks;
+using Content.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -30,9 +31,9 @@ namespace Content.IntegrationTests.Tests
                 mapMan.CreateMap(new MapId(1));
                 var grid = mapMan.CreateGrid(new MapId(1));
 
-                var generatorEnt = entityMan.SpawnEntity("DebugGenerator", new GridCoordinates(new Vector2(0, 0), grid.Index));
-                var consumerEnt1 = entityMan.SpawnEntity("DebugConsumer", new GridCoordinates(new Vector2(0, 1), grid.Index));
-                var consumerEnt2 = entityMan.SpawnEntity("DebugConsumer", new GridCoordinates(new Vector2(0, 2), grid.Index));
+                var generatorEnt = entityMan.SpawnEntity("DebugGenerator", grid.ToCoordinates());
+                var consumerEnt1 = entityMan.SpawnEntity("DebugConsumer", grid.ToCoordinates(0, 1));
+                var consumerEnt2 = entityMan.SpawnEntity("DebugConsumer", grid.ToCoordinates(0, 2));
 
                 Assert.That(generatorEnt.TryGetComponent(out supplier));
                 Assert.That(consumerEnt1.TryGetComponent(out consumer1));
@@ -74,9 +75,9 @@ namespace Content.IntegrationTests.Tests
                 mapMan.CreateMap(new MapId(1));
                 var grid = mapMan.CreateGrid(new MapId(1));
 
-                var generatorEnt = entityMan.SpawnEntity("DebugGenerator", new GridCoordinates(new Vector2(0, 0), grid.Index));
-                var substationEnt = entityMan.SpawnEntity("DebugSubstation", new GridCoordinates(new Vector2(0, 1), grid.Index));
-                var apcEnt = entityMan.SpawnEntity("DebugApc", new GridCoordinates(new Vector2(0, 2), grid.Index));
+                var generatorEnt = entityMan.SpawnEntity("DebugGenerator", grid.ToCoordinates());
+                var substationEnt = entityMan.SpawnEntity("DebugSubstation", grid.ToCoordinates(0, 1));
+                var apcEnt = entityMan.SpawnEntity("DebugApc", grid.ToCoordinates(0, 2));
 
                 Assert.That(generatorEnt.TryGetComponent<PowerSupplierComponent>(out var generatorSupplier));
 
@@ -120,9 +121,9 @@ namespace Content.IntegrationTests.Tests
                 mapMan.CreateMap(new MapId(1));
                 var grid = mapMan.CreateGrid(new MapId(1));
 
-                var apcEnt = entityMan.SpawnEntity("DebugApc", new GridCoordinates(new Vector2(0, 0), grid.Index));
-                var apcExtensionEnt = entityMan.SpawnEntity("ApcExtensionCable", new GridCoordinates(new Vector2(0, 1), grid.Index));
-                var powerReceiverEnt = entityMan.SpawnEntity("DebugPowerReceiver", new GridCoordinates(new Vector2(0, 2), grid.Index));
+                var apcEnt = entityMan.SpawnEntity("DebugApc", grid.ToCoordinates(0, 0));
+                var apcExtensionEnt = entityMan.SpawnEntity("ApcExtensionCable", grid.ToCoordinates(0, 1));
+                var powerReceiverEnt = entityMan.SpawnEntity("DebugPowerReceiver", grid.ToCoordinates(0, 2));
 
                 Assert.That(apcEnt.TryGetComponent<ApcComponent>(out var apc));
                 Assert.That(apcExtensionEnt.TryGetComponent<PowerProviderComponent>(out var provider));

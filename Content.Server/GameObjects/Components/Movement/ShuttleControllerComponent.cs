@@ -58,7 +58,7 @@ namespace Content.Server.GameObjects.Components.Movement
         public bool Sprinting => false;
 
         public (Vector2 walking, Vector2 sprinting) VelocityDir { get; } = (Vector2.Zero, Vector2.Zero);
-        public GridCoordinates LastPosition { get; set; }
+        public EntityCoordinates LastPosition { get; set; }
         public float StepSoundDistance { get; set; }
 
         public void SetVelocityDirection(Direction direction, ushort subTick, bool enabled)

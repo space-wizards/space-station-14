@@ -195,7 +195,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 return true;
             }
 
-            EntitySystem.Get<AudioSystem>().PlayAtCoords(_spillSound, Owner.Transform.GridPosition);
+            EntitySystem.Get<AudioSystem>().PlayAtCoords(_spillSound, Owner.Transform.Coordinates);
             return true;
         }
 
@@ -354,7 +354,7 @@ namespace Content.Server.GameObjects.Components.Fluids
 
             var mapGrid = _mapManager.GetGrid(Owner.Transform.GridID);
 
-            if (!Owner.Transform.GridPosition.Offset(direction).TryGetTileRef(out var tile))
+            if (!Owner.Transform.Coordinates.Offset(direction).TryGetTileRef(out var tile))
             {
                 return false;
             }

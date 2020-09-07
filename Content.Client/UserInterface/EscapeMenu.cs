@@ -1,24 +1,14 @@
 ﻿using Robust.Client.Console;
-using Robust.Client.Interfaces.Placement;
-using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.Interfaces.Configuration;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.UserInterface
 {
     internal sealed class EscapeMenu : SS14Window
     {
         private readonly IClientConsole _console;
-        private readonly ITileDefinitionManager _tileDefinitionManager;
-        private readonly IPlacementManager _placementManager;
-        private readonly IPrototypeManager _prototypeManager;
-        private readonly IResourceCache _resourceCache;
-        private readonly IConfigurationManager _configSystem;
         private readonly ILocalizationManager _localizationManager;
 
         private BaseButton DisconnectButton;
@@ -26,20 +16,10 @@ namespace Content.Client.UserInterface
         private BaseButton OptionsButton;
         private OptionsMenu optionsMenu;
 
-        public EscapeMenu(IClientConsole console,
-            ITileDefinitionManager tileDefinitionManager,
-            IPlacementManager placementManager,
-            IPrototypeManager prototypeManager,
-            IResourceCache resourceCache,
-            IConfigurationManager configSystem, ILocalizationManager localizationManager)
+        public EscapeMenu(IClientConsole console, ILocalizationManager localizationManager)
         {
-            _configSystem = configSystem;
             _localizationManager = localizationManager;
             _console = console;
-            _tileDefinitionManager = tileDefinitionManager;
-            _placementManager = placementManager;
-            _prototypeManager = prototypeManager;
-            _resourceCache = resourceCache;
 
             IoCManager.InjectDependencies(this);
 
@@ -48,7 +28,7 @@ namespace Content.Client.UserInterface
 
         private void PerformLayout()
         {
-            optionsMenu = new OptionsMenu(_configSystem);
+            optionsMenu = new OptionsMenu();
 
             Resizable = false;
 
@@ -94,11 +74,6 @@ namespace Content.Client.UserInterface
             {
                 optionsMenu.Dispose();
             }
-        }
-
-        public override void Close()
-        {
-            base.Close();
         }
     }
 }

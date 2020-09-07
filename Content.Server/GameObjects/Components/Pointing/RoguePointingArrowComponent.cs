@@ -42,7 +42,7 @@ namespace Content.Server.GameObjects.Components.Pointing
         private IEntity? RandomNearbyPlayer()
         {
             var players = _playerManager
-                .GetPlayersInRange(Owner.Transform.GridPosition, 15)
+                .GetPlayersInRange(Owner.Transform.Coordinates, 15)
                 .Where(player => player.AttachedEntity != null)
                 .ToArray();
 
@@ -127,7 +127,7 @@ namespace Content.Server.GameObjects.Components.Pointing
                 return;
             }
 
-            ExplosionHelper.SpawnExplosion(Owner.Transform.GridPosition, 0, 2, 1, 1);
+            ExplosionHelper.SpawnExplosion(Owner.Transform.Coordinates, 0, 2, 1, 1);
             EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/explosion.ogg", Owner);
 
             Owner.Delete();

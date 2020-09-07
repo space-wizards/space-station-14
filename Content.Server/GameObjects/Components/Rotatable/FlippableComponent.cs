@@ -31,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Rotatable
                 return;
             }
 
-            Owner.EntityManager.SpawnEntity(_entity, Owner.Transform.GridPosition);
+            Owner.EntityManager.SpawnEntity(_entity, Owner.Transform.Coordinates);
             Owner.Delete();
         }
 

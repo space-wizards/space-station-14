@@ -46,7 +46,7 @@ namespace Content.Server.Observer
                 mind.VisitingEntity.Delete();
             }
 
-            var position = player.AttachedEntity?.Transform.GridPosition ?? IoCManager.Resolve<IGameTicker>().GetObserverSpawnPoint();
+            var position = player.AttachedEntity?.Transform.Coordinates ?? IoCManager.Resolve<IGameTicker>().GetObserverSpawnPoint();
 
             if (canReturn && player.AttachedEntity.TryGetComponent(out IDamageableComponent damageable))
             {

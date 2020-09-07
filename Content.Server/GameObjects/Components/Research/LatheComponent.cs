@@ -126,7 +126,7 @@ namespace Content.Server.GameObjects.Components.Research
             {
                 Producing = false;
                 _producingRecipe = null;
-                Owner.EntityManager.SpawnEntity(recipe.Result, Owner.Transform.GridPosition);
+                Owner.EntityManager.SpawnEntity(recipe.Result, Owner.Transform.Coordinates);
                 UserInterface?.SendMessage(new LatheStoppedProducingRecipeMessage());
                 State = LatheState.Base;
                 SetAppearance(LatheVisualState.Idle);

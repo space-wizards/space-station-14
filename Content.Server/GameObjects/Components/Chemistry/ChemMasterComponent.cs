@@ -279,7 +279,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 var actualVolume = ReagentUnit.Min(individualVolume, ReagentUnit.New(30));
                 for (int i = 0; i < bottleAmount; i++)
                 {
-                    var bottle = Owner.EntityManager.SpawnEntity("bottle", Owner.Transform.GridPosition);
+                    var bottle = Owner.EntityManager.SpawnEntity("bottle", Owner.Transform.Coordinates);
 
                     var bufferSolution = BufferSolution.Solution.SplitSolution(actualVolume);
 
@@ -298,7 +298,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     }
 
                     //Put it on the floor
-                    bottle.Transform.GridPosition = user.Transform.GridPosition;
+                    bottle.Transform.Coordinates = user.Transform.Coordinates;
                     //Give it an offset
                     bottle.RandomOffset(0.2f);
                 }
@@ -313,7 +313,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 var actualVolume = ReagentUnit.Min(individualVolume, ReagentUnit.New(50));
                 for (int i = 0; i < pillAmount; i++)
                 {
-                    var pill = Owner.EntityManager.SpawnEntity("pill", Owner.Transform.GridPosition);
+                    var pill = Owner.EntityManager.SpawnEntity("pill", Owner.Transform.Coordinates);
 
                     var bufferSolution = BufferSolution.Solution.SplitSolution(actualVolume);
 
@@ -333,7 +333,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     }
 
                     //Put it on the floor
-                    pill.Transform.GridPosition = user.Transform.GridPosition;
+                    pill.Transform.Coordinates = user.Transform.Coordinates;
                     //Give it an offset
                     pill.RandomOffset(0.2f);
                 }

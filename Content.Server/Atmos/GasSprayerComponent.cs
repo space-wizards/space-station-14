@@ -53,7 +53,7 @@ namespace Content.Server.Atmos
             {
                 tank.TryRemoveReagent(_fuelType, ReagentUnit.New(_fuelCost));
 
-                var playerPos = eventArgs.User.Transform.GridPosition;
+                var playerPos = eventArgs.User.Transform.Coordinates;
                 var direction = (eventArgs.ClickLocation.Position - playerPos.Position).Normalized;
                 playerPos.Offset(direction/2);
 

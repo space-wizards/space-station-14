@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Fluids;
 using Content.Shared.Chemistry;
+using Content.Shared.Utility;
 using NUnit.Framework;
 using Robust.Server.Interfaces.Timing;
 using Robust.Shared.Interfaces.Map;
@@ -23,7 +24,7 @@ namespace Content.IntegrationTests.Tests.Fluids
             var pauseManager = server.ResolveDependency<IPauseManager>();
             var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
 
-            GridCoordinates coordinates = default;
+            EntityCoordinates coordinates = default;
 
             // Build up test environment
             server.Post(() =>
@@ -42,7 +43,7 @@ namespace Content.IntegrationTests.Tests.Fluids
 
                 var tileDefinition = tileDefinitionManager["underplating"];
                 var tile = new Tile(tileDefinition.TileId);
-                coordinates = new GridCoordinates(0, 0, gridId);
+                coordinates = grid.ToCoordinates();
 
                 grid.SetTile(coordinates, tile);
 
@@ -69,6 +70,7 @@ namespace Content.IntegrationTests.Tests.Fluids
             await server.WaitIdleAsync();
             var mapManager = server.ResolveDependency<IMapManager>();
             var pauseManager = server.ResolveDependency<IPauseManager>();
+            IMapGrid grid = null;
 
             // Build up test environment
             server.Post(() =>
@@ -79,9 +81,9 @@ namespace Content.IntegrationTests.Tests.Fluids
 
                 var gridId = new GridId(1);
 
-                if (!mapManager.GridExists(gridId))
+                if (!mapManager.TryGetGrid(gridId, out grid))
                 {
-                    mapManager.CreateGrid(mapId, gridId);
+                    grid = mapManager.CreateGrid(mapId, gridId);
                 }
             });
 
@@ -90,7 +92,7 @@ namespace Content.IntegrationTests.Tests.Fluids
             server.Assert(() =>
             {
                 var gridId = new GridId(1);
-                var coordinates = new GridCoordinates(0, 0, gridId);
+                var coordinates = grid.ToCoordinates();
                 var solution = new Solution("water", ReagentUnit.New(20));
                 var puddle = solution.SpillAt(coordinates, "PuddleSmear");
                 Assert.Null(puddle);

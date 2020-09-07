@@ -244,6 +244,26 @@ namespace Content.Server.GameTicking
         }
     }
 
+    class ToggleDisallowLateJoinCommand: IClientCommand
+    {
+        public string Command => "toggledisallowlatejoin";
+        public string Description => "Allows or disallows latejoining during mid-game.";
+        public string Help => $"Usage: {Command} <disallow>";
+
+        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        {
+            if (args.Length != 1)
+            {
+                shell.SendText(player, "Need exactly one argument.");
+                return;
+            }
+
+            var ticker = IoCManager.Resolve<IGameTicker>();
+
+            ticker.ToggleDisallowLateJoin(bool.Parse(args[0]));
+        }
+    }
+
     class SetGamePresetCommand : IClientCommand
     {
         public string Command => "setgamepreset";
@@ -408,7 +428,7 @@ namespace Content.Server.GameTicking
                     continue;
                 }
 
-                var tile = grid.GetTileRef(childEntity.Transform.GridPosition);
+                var tile = grid.GetTileRef(childEntity.Transform.Coordinates);
                 var tileDef = (ContentTileDefinition) tileDefinitionManager[tile.Tile.TypeId];
 
                 if (tileDef.Name == "underplating")
@@ -416,7 +436,7 @@ namespace Content.Server.GameTicking
                     continue;
                 }
 
-                grid.SetTile(childEntity.Transform.GridPosition, underplatingTile);
+                grid.SetTile(childEntity.Transform.Coordinates, underplatingTile);
                 changed++;
             }
 

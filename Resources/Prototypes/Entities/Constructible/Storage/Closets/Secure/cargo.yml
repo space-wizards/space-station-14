@@ -1,7 +1,7 @@
 - type: entity
   id: LockerQuarterMaster
   parent: LockerSecureBase
-  name: "quatermaster's locker"
+  name: "quartermaster's locker"
   components:
   - type: Appearance
     visuals:

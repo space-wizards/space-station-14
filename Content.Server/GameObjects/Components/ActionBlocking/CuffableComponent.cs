@@ -134,7 +134,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
                 var entity = _container.ContainedEntities[_container.ContainedEntities.Count - 1];
                 _container.Remove(entity);
-                entity.Transform.WorldPosition = Owner.Transform.GridPosition.Position;
+                entity.Transform.WorldPosition = Owner.Transform.Coordinates.Position;
             }
 
             if (dirty)

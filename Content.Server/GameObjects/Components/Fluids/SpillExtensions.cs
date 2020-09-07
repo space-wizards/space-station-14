@@ -23,7 +23,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         /// <returns>The puddle if one was created, null otherwise.</returns>
         public static PuddleComponent? SpillAt(this Solution solution, IEntity entity, string prototype, bool sound = true)
         {
-            var coordinates = entity.Transform.GridPosition;
+            var coordinates = entity.Transform.Coordinates;
             return solution.SpillAt(coordinates, prototype, sound);
         }
 
@@ -52,7 +52,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         /// <param name="prototype">The prototype to use.</param>
         /// <param name="sound">Whether or not to play the spill sound.</param>
         /// <returns>The puddle if one was created, null otherwise.</returns>
-        public static PuddleComponent? SpillAt(this Solution solution, GridCoordinates coordinates, string prototype, bool sound = true)
+        public static PuddleComponent? SpillAt(this Solution solution, EntityCoordinates coordinates, string prototype, bool sound = true)
         {
             if (solution.TotalVolume == 0)
             {
@@ -63,7 +63,8 @@ namespace Content.Server.GameObjects.Components.Fluids
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var serverEntityManager = IoCManager.Resolve<IServerEntityManager>();
 
-            var mapGrid = mapManager.GetGrid(coordinates.GridID);
+            var gridId = coordinates.GetGridId(entityManager);
+            var mapGrid = mapManager.GetGrid(gridId);
 
             // If space return early, let that spill go out into the void
             var tileRef = mapGrid.GetTileRef(coordinates);
@@ -74,7 +75,7 @@ namespace Content.Server.GameObjects.Components.Fluids
 
             // Get normalized co-ordinate for spill location and spill it in the centre
             // TODO: Does SnapGrid or something else already do this?
-            var spillTileMapGrid = mapManager.GetGrid(coordinates.GridID);
+            var spillTileMapGrid = mapManager.GetGrid(gridId);
             var spillTileRef = spillTileMapGrid.GetTileRef(coordinates).GridIndices;
             var spillGridCoords = spillTileMapGrid.GridTileToLocal(spillTileRef);
 
@@ -119,7 +120,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         /// <param name="puddle">The puddle if one was created, null otherwise.</param>
         /// <param name="sound">Play the spill sound.</param>
         /// <returns>True if a puddle was created, false otherwise.</returns>
-        public static bool TrySpillAt(this Solution solution, GridCoordinates coordinates, string prototype, [NotNullWhen(true)] out PuddleComponent? puddle, bool sound = true)
+        public static bool TrySpillAt(this Solution solution, EntityCoordinates coordinates, string prototype, [NotNullWhen(true)] out PuddleComponent? puddle, bool sound = true)
         {
             puddle = solution.SpillAt(coordinates, prototype, sound);
             return puddle != null;

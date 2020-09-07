@@ -13,7 +13,7 @@ namespace Content.Server.GameObjects.Components
         {
             base.Initialize();
 
-            ItemContainer.Insert(Owner.EntityManager.SpawnEntity("FireExtinguisher", Owner.Transform.GridPosition));
+            ItemContainer.Insert(Owner.EntityManager.SpawnEntity("FireExtinguisher", Owner.Transform.Coordinates));
         }
     }
 }
