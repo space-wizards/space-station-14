@@ -145,6 +145,13 @@ namespace Content.Server.GameObjects.Components.GUI
         {
             return GetSlotItem<ItemComponent>(slot);
         }
+
+        public IEnumerable<T> LookupItems<T>() where T: Component
+        {
+            return _slotContainers.Values.SelectMany(x => x.ContainedEntities.Select(e => e.GetComponentOrNull<T>()))
+                .Where(x => x != null);
+        }
+
         public T GetSlotItem<T>(Slots slot) where T : ItemComponent
         {
             if (!_slotContainers.ContainsKey(slot))

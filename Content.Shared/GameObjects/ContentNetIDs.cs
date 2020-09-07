@@ -74,6 +74,9 @@
         public const uint SUSPICION_ROLE = 1068;
         public const uint ROTATION = 1069;
         public const uint MOB_STATE_MANAGER = 1070;
+        public const uint GAS_TANK = 1071;
+        public const uint BREATH_MASK = 1072;
+
 
         // Net IDs for integration tests.
         public const uint PREDICTION_TEST = 10001;
