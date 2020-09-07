@@ -55,7 +55,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
 
                 if (ent.Deleted) continue;
 
-                foreach (var entity in EntityManager.GetEntitiesInRange(ent.Transform.GridPosition, comp.Range, true))
+                foreach (var entity in EntityManager.GetEntitiesInRange(ent.Transform.Coordinates, comp.Range, true))
                 {
                     if (entity.Deleted) continue;
 
