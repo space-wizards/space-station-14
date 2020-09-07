@@ -1,136 +1,45 @@
-﻿using Robust.Client.Graphics;
-using Robust.Client.UserInterface.Controls;
+﻿using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Interfaces.Configuration;
+using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+
+#nullable enable
 
 namespace Content.Client.UserInterface
 {
-    public sealed class OptionsMenu : SS14Window
+    public sealed partial class OptionsMenu : SS14Window
     {
-        private readonly Button ApplyButton;
-        private readonly CheckBox VSyncCheckBox;
-        private readonly CheckBox FullscreenCheckBox;
-        private readonly OptionButton LightingPresetOption;
-        private readonly IConfigurationManager configManager;
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
 
-        protected override Vector2? CustomSize => (180, 160);
+        protected override Vector2? CustomSize => (800, 450);
 
-        public OptionsMenu(IConfigurationManager configMan)
+        public OptionsMenu()
         {
-            configManager = configMan;
+            IoCManager.InjectDependencies(this);
 
-            Title = "Options";
+            Title = Loc.GetString("Game Options");
 
-            var vBox = new VBoxContainer();
-            Contents.AddChild(vBox);
-            //vBox.SetAnchorAndMarginPreset(LayoutPreset.Wide);
+            GraphicsControl graphicsControl;
+            KeyRebindControl rebindControl;
+            AudioControl audioControl;
 
-            VSyncCheckBox = new CheckBox {Text = "VSync"};
-            vBox.AddChild(VSyncCheckBox);
-            VSyncCheckBox.OnToggled += OnCheckBoxToggled;
-
-            FullscreenCheckBox = new CheckBox {Text = "Fullscreen"};
-            vBox.AddChild(FullscreenCheckBox);
-            FullscreenCheckBox.OnToggled += OnCheckBoxToggled;
-
-            vBox.AddChild(new Label {Text = "Lighting Quality"});
-
-            LightingPresetOption = new OptionButton();
-            LightingPresetOption.AddItem("Very Low");
-            LightingPresetOption.AddItem("Low");
-            LightingPresetOption.AddItem("Medium");
-            LightingPresetOption.AddItem("High");
-            vBox.AddChild(LightingPresetOption);
-            LightingPresetOption.OnItemSelected += OnLightingQualityChanged;
-
-            ApplyButton = new Button
+            var tabs = new TabContainer
             {
-                Text = "Apply", TextAlign = Label.AlignMode.Center,
-                SizeFlagsVertical = SizeFlags.ShrinkCenter
+                Children =
+                {
+                    (graphicsControl = new GraphicsControl(_configManager)),
+                    (rebindControl = new KeyRebindControl()),
+                    (audioControl = new AudioControl(_configManager)),
+                }
             };
-            vBox.AddChild(ApplyButton);
-            ApplyButton.OnPressed += OnApplyButtonPressed;
 
-            VSyncCheckBox.Pressed = configManager.GetCVar<bool>("display.vsync");
-            FullscreenCheckBox.Pressed = ConfigIsFullscreen;
-            LightingPresetOption.SelectId(GetConfigLightingQuality());
-        }
+            TabContainer.SetTabTitle(graphicsControl, Loc.GetString("Graphics"));
+            TabContainer.SetTabTitle(rebindControl, Loc.GetString("Controls"));
+            TabContainer.SetTabTitle(audioControl, Loc.GetString("Audio"));
 
-        private void OnApplyButtonPressed(BaseButton.ButtonEventArgs args)
-        {
-            configManager.SetCVar("display.vsync", VSyncCheckBox.Pressed);
-            SetConfigLightingQuality(LightingPresetOption.SelectedId);
-            configManager.SetCVar("display.windowmode",
-                (int) (FullscreenCheckBox.Pressed ? WindowMode.Fullscreen : WindowMode.Windowed));
-            configManager.SaveToFile();
-            UpdateApplyButton();
-        }
-
-        private void OnCheckBoxToggled(BaseButton.ButtonToggledEventArgs args)
-        {
-            UpdateApplyButton();
-        }
-
-        private void OnLightingQualityChanged(OptionButton.ItemSelectedEventArgs args)
-        {
-            LightingPresetOption.SelectId(args.Id);
-            UpdateApplyButton();
-        }
-
-        private void UpdateApplyButton()
-        {
-            var isVSyncSame = VSyncCheckBox.Pressed == configManager.GetCVar<bool>("display.vsync");
-            var isFullscreenSame = FullscreenCheckBox.Pressed == ConfigIsFullscreen;
-            var isLightingQualitySame = LightingPresetOption.SelectedId == GetConfigLightingQuality();
-            ApplyButton.Disabled = isVSyncSame && isFullscreenSame && isLightingQualitySame;
-        }
-
-        private bool ConfigIsFullscreen =>
-            configManager.GetCVar<int>("display.windowmode") == (int) WindowMode.Fullscreen;
-
-        private int GetConfigLightingQuality()
-        {
-            var val = configManager.GetCVar<int>("display.lightmapdivider");
-            var soft = configManager.GetCVar<bool>("display.softshadows");
-            if (val >= 8)
-            {
-                return 0;
-            }
-            else if ((val >= 2) && !soft)
-            {
-                return 1;
-            }
-            else if (val >= 2)
-            {
-                return 2;
-            }
-            else
-            {
-                return 3;
-            }
-        }
-        private void SetConfigLightingQuality(int value)
-        {
-            switch (value)
-            {
-                case 0:
-                    configManager.SetCVar("display.lightmapdivider", 8);
-                    configManager.SetCVar("display.softshadows", false);
-                    break;
-                case 1:
-                    configManager.SetCVar("display.lightmapdivider", 2);
-                    configManager.SetCVar("display.softshadows", false);
-                    break;
-                case 2:
-                    configManager.SetCVar("display.lightmapdivider", 2);
-                    configManager.SetCVar("display.softshadows", true);
-                    break;
-                case 3:
-                    configManager.SetCVar("display.lightmapdivider", 1);
-                    configManager.SetCVar("display.softshadows", true);
-                    break;
-            }
+            Contents.AddChild(tabs);
         }
     }
 }
