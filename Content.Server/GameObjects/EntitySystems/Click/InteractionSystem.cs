@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
+using Content.Server.GameObjects.Components.Pulling;
 using Content.Server.GameObjects.Components.Timing;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
@@ -294,18 +295,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return false;
             }
 
-            var controller = collidable.EnsureController<PullController>();
-
-            if (controller.GettingPulled)
-            {
-                hands.StopPull();
-            }
-            else
-            {
-                hands.StartPull(pull);
-            }
-
-            return false;
+            return hands.TogglePull(pull);
         }
 
         private void UserInteraction(IEntity player, GridCoordinates coordinates, EntityUid clickedUid)

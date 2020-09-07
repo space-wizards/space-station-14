@@ -1,6 +1,8 @@
 ﻿#nullable enable
 using System;
+using Content.Shared.GameObjects.Components.Pulling;
 using Content.Shared.Physics.Pull;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
@@ -20,13 +22,51 @@ namespace Content.Shared.GameObjects.Components.Items
         [ViewVariables]
         protected bool IsPulling => PulledObject != null;
 
-        public virtual void StopPull()
+        public bool StartPull(SharedPullableComponent pullable)
+        {
+            if (Owner == pullable.Owner)
+            {
+                return false;
+            }
+
+            if (!Owner.IsInSameOrNoContainer(pullable.Owner))
+            {
+                return false;
+            }
+
+            if (IsPulling)
+            {
+                StopPull();
+            }
+
+            PulledObject = pullable.Owner.GetComponent<ICollidableComponent>();
+            var controller = PulledObject.EnsureController<PullController>();
+            return controller.StartPull(Owner.GetComponent<ICollidableComponent>());
+        }
+
+        public virtual bool StopPull()
         {
             if (PulledObject != null &&
                 PulledObject.TryGetController(out PullController controller))
             {
-                controller.StopPull();
+                return controller.StopPull();
             }
+
+            return false;
+        }
+
+        public bool TogglePull(SharedPullableComponent pullable)
+        {
+            if (PulledObject == null)
+            {
+                return StartPull(pullable);
+            } else if (pullable.Owner.TryGetComponent(out ICollidableComponent? collidable) &&
+                       PulledObject == collidable)
+            {
+                return StopPull();
+            }
+
+            return false;
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)

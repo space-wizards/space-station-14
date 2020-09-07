@@ -26,20 +26,20 @@ namespace Content.Shared.Physics.Pull
 
         public ICollidableComponent? Puller => _puller;
 
-        public void StartPull(ICollidableComponent puller)
+        public bool StartPull(ICollidableComponent puller)
         {
             DebugTools.AssertNotNull(puller);
 
             if (_puller == puller)
             {
-                return;
+                return false;
             }
 
             _puller = puller;
 
             if (ControlledComponent == null)
             {
-                return;
+                return false;
             }
 
             ControlledComponent.WakeBody();
@@ -48,22 +48,24 @@ namespace Content.Shared.Physics.Pull
 
             _puller.Owner.SendMessage(null, message);
             ControlledComponent.Owner.SendMessage(null, message);
+
+            return true;
         }
 
-        public void StopPull()
+        public bool StopPull()
         {
             var oldPuller = _puller;
 
             if (oldPuller == null)
             {
-                return;
+                return false;
             }
 
             _puller = null;
 
             if (ControlledComponent == null)
             {
-                return;
+                return false;
             }
 
             ControlledComponent.WakeBody();
@@ -74,6 +76,8 @@ namespace Content.Shared.Physics.Pull
             ControlledComponent.Owner.SendMessage(null, message);
 
             ControlledComponent.TryRemoveController<PullController>();
+
+            return true;
         }
 
         public void TryMoveTo(GridCoordinates from, GridCoordinates to)
