@@ -185,22 +185,6 @@
     highPressureMultiplier: 0.45
     lowPressureMultiplier: 100
 
-- type: entity
-  parent: HardsuitBase
-  id: Spacesuit
-  name: spacesuit
-  description: A basic space suit.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/space.rsi
-  - type: Icon
-    sprite: Clothing/OuterClothing/space.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/space.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 1
-    lowPressureMultiplier: 100
-
 # I don't know what the hell "td" is but whatever i'll dump it here.
 - type: entity
   parent: HardsuitBase
