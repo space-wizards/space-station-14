@@ -3,7 +3,6 @@ using System;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Shared.Atmos;
 using Robust.Shared.GameObjects.Components;
-using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -15,8 +14,8 @@ namespace Content.Server.Atmos
 {
     public class HighPressureMovementController : VirtualController
     {
-        [Dependency] private IRobustRandom _robustRandom = default!;
-        [Dependency] private IPhysicsManager _physicsManager = default!;
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
+
         public override ICollidableComponent? ControlledComponent { protected get; set; }
 
         private const float MoveForcePushRatio = 1f;
@@ -56,29 +55,17 @@ namespace Content.Server.Atmos
                     {
                         var moveForce = maxForce * MathHelper.Clamp(moveProb, 0, 100) / 150f;
                         var pos = ((throwTarget.Position - transform.Coordinates.Position).Normalized + direction.ToDirection().ToVec()).Normalized;
-                        LinearVelocity = pos * moveForce;
+                        ControlledComponent.Force += pos * moveForce;
                     }
 
                     else
                     {
                         var moveForce = MathF.Min(maxForce * MathHelper.Clamp(moveProb, 0, 100) / 2500f, 20f);
-                        LinearVelocity = direction.ToDirection().ToVec() * moveForce;
+                        ControlledComponent.Force += direction.ToDirection().ToVec() * moveForce;
                     }
 
                     pressureComponent.LastHighPressureMovementAirCycle = cycle;
                 }
-            }
-        }
-
-        public override void UpdateAfterProcessing()
-        {
-            base.UpdateAfterProcessing();
-
-            if (ControlledComponent != null && !_physicsManager.IsWeightless(ControlledComponent.Owner.Transform.Coordinates))
-            {
-                LinearVelocity *= 0.85f;
-                if (MathF.Abs(LinearVelocity.Length) < 1f)
-                    Stop();
             }
         }
     }

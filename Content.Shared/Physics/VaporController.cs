@@ -7,7 +7,10 @@ namespace Content.Shared.Physics
     {
         public void Move(Vector2 velocityDirection, float speed)
         {
-            LinearVelocity = velocityDirection * speed;
+            if (ControlledComponent != null)
+            {
+                LinearVelocity = velocityDirection * speed;
+            }
         }
     }
 }

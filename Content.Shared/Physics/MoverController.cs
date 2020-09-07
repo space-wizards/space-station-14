@@ -1,6 +1,5 @@
 ﻿#nullable enable
 using Content.Shared.GameObjects.Components.Movement;
-using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -12,27 +11,20 @@ namespace Content.Shared.Physics
     {
         [Dependency] private readonly IPhysicsManager _physicsManager = default!;
 
-        public override ICollidableComponent? ControlledComponent { protected get; set; }
-
-        public void Move(Vector2 velocityDirection, float speed)
+        public void Push(Vector2 velocityDirection, float speed)
         {
-            if (ControlledComponent?.Owner.HasComponent<MovementIgnoreGravityComponent>() == false
+            if (ControlledComponent == null)
+            {
+                return;
+            }
+
+            if (!ControlledComponent.Owner.HasComponent<MovementIgnoreGravityComponent>()
                 && _physicsManager.IsWeightless(ControlledComponent.Owner.Transform.Coordinates))
             {
                 return;
             }
 
-            Push(velocityDirection, speed);
-        }
-
-        public void Push(Vector2 velocityDirection, float speed)
-        {
-            LinearVelocity = velocityDirection * speed;
-        }
-
-        public void StopMoving()
-        {
-            LinearVelocity = Vector2.Zero;
+            ControlledComponent.Force += velocityDirection * speed * 5000;
         }
     }
 }

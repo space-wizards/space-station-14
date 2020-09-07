@@ -399,7 +399,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 projectile
                     .GetComponent<ICollidableComponent>()
                     .EnsureController<BulletController>()
-                    .LinearVelocity = projectileAngle.ToVec() * velocity;
+                    .Push(projectileAngle.ToVec(), velocity);
 
                 projectile.Transform.LocalRotation = projectileAngle.Theta;
             }

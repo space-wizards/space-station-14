@@ -75,37 +75,32 @@ namespace Content.Shared.GameObjects.EntitySystems
             var combined = walkDir + sprintDir;
             if (combined.LengthSquared < 0.001 || !ActionBlockerSystem.CanMove(mover.Owner) && !weightless)
             {
+                return;
+            }
+
+            if (weightless)
+            {
                 if (collidable.TryGetController(out MoverController controller))
                 {
-                    controller.StopMoving();
+                    controller.Push(combined, mover.CurrentPushSpeed);
                 }
+
+                transform.LocalRotation = walkDir.GetDir().ToAngle();
+                return;
             }
-            else
+
+            var total = walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed;
+
             {
-                if (weightless)
+                if (collidable.TryGetController(out MoverController controller))
                 {
-                    if (collidable.TryGetController(out MoverController controller))
-                    {
-                        controller.Push(combined, mover.CurrentPushSpeed);
-                    }
-
-                    transform.LocalRotation = walkDir.GetDir().ToAngle();
-                    return;
+                    controller.Push(total, 1);
                 }
-
-                var total = walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed;
-
-                {
-                    if (collidable.TryGetController(out MoverController controller))
-                    {
-                        controller.Move(total, 1);
-                    }
-                }
-
-                transform.LocalRotation = total.GetDir().ToAngle();
-
-                HandleFootsteps(mover);
             }
+
+            transform.LocalRotation = total.GetDir().ToAngle();
+
+            HandleFootsteps(mover);
         }
 
         protected virtual void HandleFootsteps(IMoverComponent mover)

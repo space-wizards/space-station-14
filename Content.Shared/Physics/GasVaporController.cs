@@ -1,8 +1,5 @@
 ﻿using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Content.Shared.Physics
 {
@@ -10,7 +7,10 @@ namespace Content.Shared.Physics
     {
         public void Move(Vector2 velocityDirection, float speed)
         {
-            LinearVelocity = velocityDirection * speed;
+            if (ControlledComponent != null)
+            {
+                ControlledComponent.Force += velocityDirection * speed;
+            }
         }
     }
 }

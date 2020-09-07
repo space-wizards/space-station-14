@@ -82,7 +82,7 @@ namespace Content.Shared.GameObjects.Components.Movement
             if (entity.TryGetComponent(out ICollidableComponent collidable))
             {
                 var controller = collidable.EnsureController<SlipController>();
-                controller.LinearVelocity = collidable.LinearVelocity;
+                controller.Push(collidable.LinearVelocity, 1);
             }
 
             stun.Paralyze(5);

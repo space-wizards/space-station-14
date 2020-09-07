@@ -6,7 +6,6 @@ using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Utility;
 
@@ -126,15 +125,11 @@ namespace Content.Shared.Physics.Pull
             else if (_movingTo.HasValue)
             {
                 var diff = _movingTo.Value.Position - ControlledComponent.Owner.Transform.Coordinates.Position;
-                LinearVelocity = diff.Normalized * 5;
+                ControlledComponent.Force += diff.Normalized * 5;
             }
             else if (dist.Length > DistBeforePull)
             {
-                LinearVelocity = dist.Normalized * _puller.LinearVelocity.Length * 1.1f;
-            }
-            else
-            {
-                LinearVelocity = Vector2.Zero;
+                ControlledComponent.Force += dist.Normalized * _puller.LinearVelocity.Length * 1.1f;
             }
         }
 

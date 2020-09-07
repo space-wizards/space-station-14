@@ -82,12 +82,6 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 ev.Entity.RemoveComponent<PlayerInputMoverComponent>();
             }
-
-            if (ev.Entity.TryGetComponent(out ICollidableComponent? physics) &&
-                physics.TryGetController(out MoverController controller))
-            {
-                controller.StopMoving();
-            }
         }
 
         protected override void HandleFootsteps(IMoverComponent mover)
