@@ -1104,6 +1104,10 @@ namespace Content.Server.Atmos
 
             UpdateVisuals();
 
+            if (!Excited)
+            {
+                _gridAtmosphereComponent.AddActiveTile(this);
+            }
             return true;
         }
 

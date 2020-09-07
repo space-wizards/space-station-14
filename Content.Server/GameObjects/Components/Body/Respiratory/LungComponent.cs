@@ -1,8 +1,11 @@
 using System;
 using Content.Server.Atmos;
+using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.Body.Circulatory;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Server.Interfaces;
 using Content.Shared.Atmos;
+using Content.Shared.GameObjects.Components.Inventory;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -15,6 +18,7 @@ namespace Content.Server.GameObjects.Components.Body.Respiratory
         public override string Name => "Lung";
 
         private float _accumulatedFrameTime;
+        private InventoryComponent _inventory;
 
         /// <summary>
         ///     The pressure that this lung exerts on the air around it
@@ -24,6 +28,12 @@ namespace Content.Server.GameObjects.Components.Body.Respiratory
         [ViewVariables] public GasMixture Air { get; set; }
 
         [ViewVariables] public LungStatus Status { get; set; }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            _inventory = Owner.GetComponent<InventoryComponent>();
+        }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -83,18 +93,28 @@ namespace Content.Server.GameObjects.Components.Body.Respiratory
                 return;
             }
 
-            if (!Owner.Transform.Coordinates.TryGetTileAir(out var tileAir))
+            GasMixture air;
+            if (_inventory.TryGetSlotItem<BreathMaskComponent>(EquipmentSlotDefines.Slots.MASK, out var mask) &&
+                mask.IsConnected())
+            {
+                air = mask.ConnectedGasTank.Air;
+            }
+            else if (!Owner.Transform.Coordinates.TryGetTileAir(out air))
+            {
+                    return;
+            }
+
+            if (air == null)
             {
                 return;
             }
 
-            var amount = Atmospherics.BreathPercentage * frameTime;
-            var volumeRatio = amount / tileAir.Volume;
-            var temp = tileAir.RemoveRatio(volumeRatio);
+            var amount = Atmospherics.BreathVolume * frameTime / air.Volume;
+            var temp = air.Remove(amount);
 
             temp.PumpGasTo(Air, Pressure);
             Air.PumpGasTo(bloodstream.Air, Pressure);
-            tileAir.Merge(temp);
+            air.Merge(temp);
         }
 
         public void Exhale(float frameTime)

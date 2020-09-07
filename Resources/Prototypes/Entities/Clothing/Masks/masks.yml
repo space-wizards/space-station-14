@@ -50,6 +50,7 @@
     state: icon
   - type: Clothing
     sprite: Clothing/Masks/mask_breath.rsi
+  - type: BreathMask
 
 - type: entity
   parent: MasksBase

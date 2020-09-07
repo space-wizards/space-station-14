@@ -1,0 +1,34 @@
+﻿- type: entity
+  parent: BaseItem
+  id: GasTank
+  name: Gas Tank
+  description: It's a gas tank. It has gas.
+  components:
+    - type: Sprite
+      sprite: Clothing/Back/Backpacks/medical.rsi
+      state: icon
+    - type: Icon
+      sprite: Clothing/Back/Backpacks/medical.rsi
+      state: icon
+    - type: Clothing
+      sprite: Clothing/Back/Backpacks/medical.rsi
+      Slots:
+        - back
+    - type: GasTank
+      air:
+        volume: 1
+        moles:
+          - 1  #oxy
+          - 0   #nitrogen
+          - 0   #co2
+          - 0   #phoron
+          - 0   #tritium
+          - 0   #water vapor
+        molesArchived:
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        temperature: 293.15

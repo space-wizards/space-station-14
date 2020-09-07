@@ -7,6 +7,7 @@
             "Anchorable",
             "AmmoBox",
             "Breakable",
+            "BreathMask",
             "Pickaxe",
             "Interactable",
             "CloningPod",
