@@ -8,4 +8,4 @@
     - type: StorageVisualizer
       state: hydro
   - type: Icon
-    state: hydro_door
+    state: hydro_icon
