@@ -16,14 +16,14 @@ namespace Content.Shared.Interfaces.GameObjects.Components
 
     public class LandEventArgs : EventArgs
     {
-        public LandEventArgs(IEntity user, GridCoordinates landingLocation)
+        public LandEventArgs(IEntity user, EntityCoordinates landingLocation)
         {
             User = user;
             LandingLocation = landingLocation;
         }
 
         public IEntity User { get; }
-        public GridCoordinates LandingLocation { get; }
+        public EntityCoordinates LandingLocation { get; }
     }
 
     /// <summary>
@@ -50,9 +50,9 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// <summary>
         ///     Location where the item landed.
         /// </summary>
-        public GridCoordinates LandLocation { get; }
+        public EntityCoordinates LandLocation { get; }
 
-        public LandMessage(IEntity user, IEntity thrown, GridCoordinates landLocation)
+        public LandMessage(IEntity user, IEntity thrown, EntityCoordinates landLocation)
         {
             User = user;
             Thrown = thrown;

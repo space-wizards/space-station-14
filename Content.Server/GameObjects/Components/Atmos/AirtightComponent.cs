@@ -4,6 +4,7 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -17,6 +18,7 @@ namespace Content.Server.GameObjects.Components.Atmos
     public class AirtightComponent : Component, IMapInit
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private (GridId, MapIndices) _lastPosition;
 
@@ -89,7 +91,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             if (_fixVacuum)
             {
-                var mapIndices = Owner.Transform.GridPosition.ToMapIndices(_mapManager);
+                var mapIndices = Owner.Transform.Coordinates.ToMapIndices(_entityManager, _mapManager);
                 EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(Owner.Transform.GridID)?.FixVacuum(mapIndices);
             }
 
@@ -109,7 +111,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         private void UpdatePosition()
         {
-            var mapIndices = Owner.Transform.GridPosition.ToMapIndices(_mapManager);
+            var mapIndices = Owner.Transform.Coordinates.ToMapIndices(_entityManager, _mapManager);
             UpdatePosition(Owner.Transform.GridID, mapIndices);
         }
 

@@ -31,6 +31,11 @@ namespace Content.Client.UserInterface.Stylesheets
         public static readonly Color ButtonColorPressed = Color.FromHex("#3e6c45");
         public static readonly Color ButtonColorDisabled = Color.FromHex("#30313c");
 
+        public static readonly Color ButtonColorCautionDefault = Color.FromHex("#d31a1a");
+        public static readonly Color ButtonColorCautionHovered = Color.FromHex("#e83838");
+        public static readonly Color ButtonColorCautionPressed = Color.FromHex("#3e6c45");
+        public static readonly Color ButtonColorCautionDisabled = Color.FromHex("#822626");
+
         //Used by the APC and SMES menus
         public const string StyleClassPowerStateNone = "PowerStateNone";
         public const string StyleClassPowerStateLow = "PowerStateLow";
@@ -69,30 +74,6 @@ namespace Content.Client.UserInterface.Stylesheets
             windowBackground.SetExpandMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
 
             var textureInvertedTriangle = resCache.GetTexture("/Textures/Interface/Nano/inverted_triangle.svg.png");
-
-            static (StyleBox, StyleBox, StyleBox, StyleBox) ButtonPermutations(StyleBoxTexture @base)
-            {
-                var normal = new StyleBoxTexture(@base) {Modulate = ButtonColorDefault};
-                var hover = new StyleBoxTexture(@base) {Modulate = ButtonColorHovered};
-                var pressed = new StyleBoxTexture(@base) {Modulate = ButtonColorPressed};
-                var disabled = new StyleBoxTexture(@base) {Modulate = ButtonColorDisabled};
-
-                return (normal, hover, pressed, disabled);
-            }
-
-            // Button styles.
-            var (buttonNormal, buttonHover, buttonPressed, buttonDisabled)
-                = ButtonPermutations(BaseButton);
-
-            var (buttonRNormal, buttonRHover, buttonRPressed, buttonRDisabled)
-                = ButtonPermutations(BaseButtonOpenRight);
-
-            var (buttonLNormal, buttonLHover, buttonLPressed, buttonLDisabled)
-                = ButtonPermutations(BaseButtonOpenLeft);
-
-            var (buttonBNormal, buttonBHover, buttonBPressed, buttonBDisabled)
-                = ButtonPermutations(BaseButtonOpenBoth);
-
 
             var lineEditTex = resCache.GetTexture("/Textures/Interface/Nano/lineedit.png");
             var lineEdit = new StyleBoxTexture
@@ -297,80 +278,60 @@ namespace Content.Client.UserInterface.Stylesheets
                         new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#753131")),
                     }),
 
-                // Regular buttons!
-                new StyleRule(new SelectorElement(typeof(ContainerButton), new[] { ContainerButton.StyleClassButton }, null, new[] {ContainerButton.StylePseudoClassNormal}), new[]
-                {
-                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonNormal),
-                }),
-                new StyleRule(new SelectorElement(typeof(ContainerButton), new[] { ContainerButton.StyleClassButton }, null, new[] {ContainerButton.StylePseudoClassHover}), new[]
-                {
-                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonHover),
-                }),
-                new StyleRule(new SelectorElement(typeof(ContainerButton), new[] { ContainerButton.StyleClassButton }, null, new[] {ContainerButton.StylePseudoClassPressed}), new[]
-                {
-                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonPressed),
-                }),
-                new StyleRule(new SelectorElement(typeof(ContainerButton), new[] { ContainerButton.StyleClassButton }, null, new[] {ContainerButton.StylePseudoClassDisabled}), new[]
-                {
-                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonDisabled),
-                }),
+                // Shapes for the buttons.
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                    .Prop(ContainerButton.StylePropertyStyleBox, BaseButton),
+
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                    .Class(ButtonOpenRight)
+                    .Prop(ContainerButton.StylePropertyStyleBox, BaseButtonOpenRight),
+
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                    .Class(ButtonOpenLeft)
+                    .Prop(ContainerButton.StylePropertyStyleBox, BaseButtonOpenLeft),
+
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                    .Class(ButtonOpenBoth)
+                    .Prop(ContainerButton.StylePropertyStyleBox, BaseButtonOpenBoth),
 
                 new StyleRule(new SelectorElement(typeof(Label), new[] { Button.StyleClassButton }, null, null), new[]
                 {
                     new StyleProperty(Label.StylePropertyAlignMode, Label.AlignMode.Center),
                 }),
 
-                // Right open buttons.
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonOpenRight)
+                // Colors for the buttons.
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
                     .Pseudo(ContainerButton.StylePseudoClassNormal)
-                    .Prop(ContainerButton.StylePropertyStyleBox, buttonRNormal),
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorDefault),
 
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonOpenRight)
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
                     .Pseudo(ContainerButton.StylePseudoClassHover)
-                    .Prop(ContainerButton.StylePropertyStyleBox, buttonRHover),
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorHovered),
 
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonOpenRight)
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
                     .Pseudo(ContainerButton.StylePseudoClassPressed)
-                    .Prop(ContainerButton.StylePropertyStyleBox, buttonRPressed),
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorPressed),
 
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonOpenRight)
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
                     .Pseudo(ContainerButton.StylePseudoClassDisabled)
-                    .Prop(ContainerButton.StylePropertyStyleBox, buttonRDisabled),
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorDisabled),
 
-                // Left open buttons.
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonOpenLeft)
+                // Colors for the caution buttons.
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonCaution)
                     .Pseudo(ContainerButton.StylePseudoClassNormal)
-                    .Prop(ContainerButton.StylePropertyStyleBox, buttonLNormal),
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionDefault),
 
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonOpenLeft)
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonCaution)
                     .Pseudo(ContainerButton.StylePseudoClassHover)
-                    .Prop(ContainerButton.StylePropertyStyleBox, buttonLHover),
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionHovered),
 
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonOpenLeft)
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonCaution)
                     .Pseudo(ContainerButton.StylePseudoClassPressed)
-                    .Prop(ContainerButton.StylePropertyStyleBox, buttonLPressed),
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionPressed),
 
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonOpenLeft)
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonCaution)
                     .Pseudo(ContainerButton.StylePseudoClassDisabled)
-                    .Prop(ContainerButton.StylePropertyStyleBox, buttonLDisabled),
-
-                // "Both" open buttons
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonOpenBoth)
-                    .Pseudo(ContainerButton.StylePseudoClassNormal)
-                    .Prop(ContainerButton.StylePropertyStyleBox, buttonBNormal),
-
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonOpenBoth)
-                    .Pseudo(ContainerButton.StylePseudoClassHover)
-                    .Prop(ContainerButton.StylePropertyStyleBox, buttonBHover),
-
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonOpenBoth)
-                    .Pseudo(ContainerButton.StylePseudoClassPressed)
-                    .Prop(ContainerButton.StylePropertyStyleBox, buttonBPressed),
-
-                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonOpenBoth)
-                    .Pseudo(ContainerButton.StylePseudoClassDisabled)
-                    .Prop(ContainerButton.StylePropertyStyleBox, buttonBDisabled),
-
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionDisabled),
 
                 new StyleRule(new SelectorChild(
                     new SelectorElement(typeof(Button), null, null, new[] {ContainerButton.StylePseudoClassDisabled}),
@@ -649,25 +610,28 @@ namespace Content.Client.UserInterface.Stylesheets
                 }),
 
                 // Those top menu buttons.
+                Element<GameHud.TopButton>()
+                    .Prop(Button.StylePropertyStyleBox, BaseButton),
+
                 new StyleRule(
                     new SelectorElement(typeof(GameHud.TopButton), null, null, new[] {Button.StylePseudoClassNormal}),
                     new[]
                     {
-                        new StyleProperty(Button.StylePropertyStyleBox, buttonNormal),
+                        new StyleProperty(Button.StylePropertyModulateSelf, ButtonColorDefault),
                     }),
 
                 new StyleRule(
                     new SelectorElement(typeof(GameHud.TopButton), null, null, new[] {Button.StylePseudoClassPressed}),
                     new[]
                     {
-                        new StyleProperty(Button.StylePropertyStyleBox, buttonPressed),
+                        new StyleProperty(Button.StylePropertyModulateSelf, ButtonColorPressed),
                     }),
 
                 new StyleRule(
                     new SelectorElement(typeof(GameHud.TopButton), null, null, new[] {Button.StylePseudoClassHover}),
                     new[]
                     {
-                        new StyleProperty(Button.StylePropertyStyleBox, buttonHover),
+                        new StyleProperty(Button.StylePropertyModulateSelf, ButtonColorHovered),
                     }),
 
                 new StyleRule(
@@ -758,21 +722,25 @@ namespace Content.Client.UserInterface.Stylesheets
                 }),
 
                 // OptionButton
+                new StyleRule(new SelectorElement(typeof(OptionButton), null, null, null), new[]
+                {
+                    new StyleProperty(ContainerButton.StylePropertyStyleBox, BaseButton),
+                }),
                 new StyleRule(new SelectorElement(typeof(OptionButton), null, null, new[] {ContainerButton.StylePseudoClassNormal}), new[]
                 {
-                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonNormal),
+                    new StyleProperty(Control.StylePropertyModulateSelf, ButtonColorDefault),
                 }),
                 new StyleRule(new SelectorElement(typeof(OptionButton), null, null, new[] {ContainerButton.StylePseudoClassHover}), new[]
                 {
-                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonHover),
+                    new StyleProperty(Control.StylePropertyModulateSelf, ButtonColorHovered),
                 }),
                 new StyleRule(new SelectorElement(typeof(OptionButton), null, null, new[] {ContainerButton.StylePseudoClassPressed}), new[]
                 {
-                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonPressed),
+                    new StyleProperty(Control.StylePropertyModulateSelf, ButtonColorPressed),
                 }),
                 new StyleRule(new SelectorElement(typeof(OptionButton), null, null, new[] {ContainerButton.StylePseudoClassDisabled}), new[]
                 {
-                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonDisabled),
+                    new StyleProperty(Control.StylePropertyModulateSelf, ButtonColorDisabled),
                 }),
 
                 new StyleRule(new SelectorElement(typeof(TextureRect), new[] {OptionButton.StyleClassOptionTriangle}, null, null), new[]

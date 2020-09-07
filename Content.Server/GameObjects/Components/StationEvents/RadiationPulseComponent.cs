@@ -99,7 +99,7 @@ namespace Content.Server.GameObjects.Components.StationEvents
             }
 
             if(!string.IsNullOrEmpty(Sound))
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(Sound, Owner.Transform.GridPosition);
+                EntitySystem.Get<AudioSystem>().PlayAtCoords(Sound, Owner.Transform.Coordinates);
 
             Dirty();
         }

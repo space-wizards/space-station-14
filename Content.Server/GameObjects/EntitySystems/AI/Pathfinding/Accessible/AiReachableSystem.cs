@@ -38,6 +38,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
          */
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private PathfindingSystem _pathfindingSystem;
 
@@ -160,7 +161,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         /// <returns></returns>
         public bool CanAccess(IEntity entity, IEntity target, float range = 0.0f)
         {
-            var targetTile = _mapManager.GetGrid(target.Transform.GridID).GetTileRef(target.Transform.GridPosition);
+            var targetTile = _mapManager.GetGrid(target.Transform.GridID).GetTileRef(target.Transform.Coordinates);
             var targetNode = _pathfindingSystem.GetNode(targetTile);
 
             var collisionMask = 0;
@@ -198,7 +199,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
                 return false;
             }
 
-            var entityTile = _mapManager.GetGrid(entity.Transform.GridID).GetTileRef(entity.Transform.GridPosition);
+            var entityTile = _mapManager.GetGrid(entity.Transform.GridID).GetTileRef(entity.Transform.Coordinates);
             var entityNode = _pathfindingSystem.GetNode(entityTile);
             var entityRegion = GetRegion(entityNode);
             var targetRegion = GetRegion(targetNode);
@@ -408,7 +409,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         /// <returns></returns>
         public PathfindingRegion GetRegion(IEntity entity)
         {
-            var entityTile = _mapManager.GetGrid(entity.Transform.GridID).GetTileRef(entity.Transform.GridPosition);
+            var entityTile = _mapManager.GetGrid(entity.Transform.GridID).GetTileRef(entity.Transform.Coordinates);
             var entityNode = _pathfindingSystem.GetNode(entityTile);
             return GetRegion(entityNode);
         }
@@ -632,7 +633,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
             {
                 return;
             }
-            
+
             if (!_regions.ContainsKey(chunk.GridId))
             {
                 _regions.Add(chunk.GridId, new Dictionary<PathfindingChunk, HashSet<PathfindingRegion>>());
@@ -714,7 +715,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
 
                     foreach (var node in region.Nodes)
                     {
-                        var nodeVector = grid.GridTileToLocal(node.TileRef.GridIndices).ToMapPos(_mapManager);
+                        var nodeVector = grid.GridTileToLocal(node.TileRef.GridIndices).ToMapPos(_entityManager);
                         debugRegionNodes.Add(nodeVector);
                     }
 
@@ -743,7 +744,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
 
                 foreach (var node in region.Nodes)
                 {
-                    var nodeVector = grid.GridTileToLocal(node.TileRef.GridIndices).ToMapPos(_mapManager);
+                    var nodeVector = grid.GridTileToLocal(node.TileRef.GridIndices).ToMapPos(_entityManager);
 
                     debugResult[_runningCacheIdx].Add(nodeVector);
                 }

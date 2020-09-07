@@ -1,6 +1,7 @@
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.StationEvents;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects.Systems;
@@ -120,14 +121,14 @@ namespace Content.Server.StationEvents
             _pulsesRemaining -= 1;
         }
 
-        private GridCoordinates FindRandomGrid(IMapGrid mapGrid)
+        private EntityCoordinates FindRandomGrid(IMapGrid mapGrid)
         {
             // TODO: Need to get valid tiles? (maybe just move right if the tile we chose is invalid?)
 
             var randomX = _robustRandom.Next((int) mapGrid.WorldBounds.Left, (int) mapGrid.WorldBounds.Right);
             var randomY = _robustRandom.Next((int) mapGrid.WorldBounds.Bottom, (int) mapGrid.WorldBounds.Top);
 
-            return mapGrid.GridTileToLocal(new MapIndices(randomX, randomY));
+            return mapGrid.ToCoordinates(randomX, randomY);
         }
     }
 }

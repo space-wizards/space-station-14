@@ -8,7 +8,6 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -17,15 +16,12 @@ using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using Content.Shared.Damage;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects.EntitySystemMessages;
 
 namespace Content.Server.GameObjects.Components.Weapon.Melee
 {
     [RegisterComponent]
     public class MeleeWeaponComponent : Component, IAttack
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPhysicsManager _physicsManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -90,8 +86,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             if(curTime < _cooldownEnd)
                 return true;
 
-            var location = eventArgs.User.Transform.GridPosition;
-            var angle = new Angle(eventArgs.ClickLocation.ToMapPos(_mapManager) - location.ToMapPos(_mapManager));
+            var location = eventArgs.User.Transform.Coordinates;
+            var angle = new Angle(eventArgs.ClickLocation.ToMapPos(Owner.EntityManager) - location.ToMapPos(Owner.EntityManager));
 
             // This should really be improved. GetEntitiesInArc uses pos instead of bounding boxes.
             var entities = ArcRayCast(eventArgs.User.Transform.WorldPosition, angle, eventArgs.User);
@@ -150,8 +146,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
             var target = eventArgs.TargetEntity;
 
-            var location = eventArgs.User.Transform.GridPosition;
-            var angle = new Angle(eventArgs.ClickLocation.ToMapPos(_mapManager) - location.ToMapPos(_mapManager));
+            var location = eventArgs.User.Transform.Coordinates;
+            var angle = new Angle(eventArgs.ClickLocation.ToMapPos(Owner.EntityManager) - location.ToMapPos(Owner.EntityManager));
 
             var audioSystem = EntitySystem.Get<AudioSystem>();
             if (target != null)
