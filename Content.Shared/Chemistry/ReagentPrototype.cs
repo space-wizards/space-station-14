@@ -20,7 +20,6 @@ namespace Content.Shared.Chemistry
         private string _id;
         private string _name;
         private string _description;
-        private string _colorDescription;
         private string _physicalDescription;
         private Color _substanceColor;
         private List<IMetabolizable> _metabolism;
