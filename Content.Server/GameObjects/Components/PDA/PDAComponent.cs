@@ -172,7 +172,10 @@ namespace Content.Server.GameObjects.Components.PDA
                 return;
             }
 
-            UserInterface?.Open(actor.playerSession);
+            if (UserInterface.SessionHasOpen(actor.playerSession))
+                UserInterface?.Close(actor.playerSession);
+            else
+                UserInterface?.Open(actor.playerSession);
             UpdatePDAAppearance();
         }
 
@@ -183,8 +186,12 @@ namespace Content.Server.GameObjects.Components.PDA
                 return false;
             }
 
-            UserInterface?.Open(actor.playerSession);
+            if (UserInterface.SessionHasOpen(actor.playerSession))
+                UserInterface?.Close(actor.playerSession);
+            else
+                UserInterface?.Open(actor.playerSession);
             UpdatePDAAppearance();
+
             return true;
         }
 
