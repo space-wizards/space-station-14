@@ -18,6 +18,7 @@ namespace Content.Shared.GameObjects.Components.Observer
         public bool CanEmote() => false;
         public bool CanAttack() => false;
         public bool CanShiver() => false;
+        public bool CanSweat() => false;
     }
 
     [Serializable, NetSerializable]

@@ -27,6 +27,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         bool CanChangeDirection() => true;
 
         bool CanShiver() => true;
+        bool CanSweat() => true;
     }
 
     /// <summary>
@@ -180,6 +181,16 @@ namespace Content.Shared.GameObjects.EntitySystems
                 canShiver &= component.CanShiver();
             }
             return canShiver;
+        }
+
+        public static bool CanSweat(IEntity entity)
+        {
+            var canSweat = true;
+            foreach (var component in entity.GetAllComponents<IActionBlocker>())
+            {
+                canSweat &= component.CanSweat();
+            }
+            return canSweat;
         }
     }
 }

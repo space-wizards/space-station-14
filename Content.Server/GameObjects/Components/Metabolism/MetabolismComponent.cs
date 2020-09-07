@@ -15,6 +15,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -46,22 +47,26 @@ namespace Content.Server.GameObjects.Components.Metabolism
         /// <summary>
         /// Heat generated due to metabolism. It's generated via metabolism
         /// </summary>
-        [ViewVariables] public float MetabolismHeat { get; private set; }
+        [ViewVariables]
+        public float MetabolismHeat { get; private set; }
 
         /// <summary>
         /// Heat output via radiation.
         /// </summary>
-        [ViewVariables] public float RadiatedHeat { get; private set; }
+        [ViewVariables]
+        public float RadiatedHeat { get; private set; }
 
         /// <summary>
         /// Maximum heat regulated via sweat
         /// </summary>
-        [ViewVariables] public float SweatHeatRegulation { get; private set; }
+        [ViewVariables]
+        public float SweatHeatRegulation { get; private set; }
 
         /// <summary>
         /// Maximum heat regulated via shivering
         /// </summary>
-        [ViewVariables] public float ShiveringHeatRegulation { get; private set; }
+        [ViewVariables]
+        public float ShiveringHeatRegulation { get; private set; }
 
         /// <summary>
         /// Amount of heat regulation that represents thermal regulation processes not
@@ -72,7 +77,8 @@ namespace Content.Server.GameObjects.Components.Metabolism
         /// <summary>
         /// Normal body temperature
         /// </summary>
-        [ViewVariables] public float NormalBodyTemperature { get; private set; }
+        [ViewVariables]
+        public float NormalBodyTemperature { get; private set; }
 
         /// <summary>
         /// Deviation from normal temperature for body to start thermal regulation
@@ -94,7 +100,8 @@ namespace Content.Server.GameObjects.Components.Metabolism
             serializer.DataField(this, b => b.ShiveringHeatRegulation, "shiveringHeatRegulation", 0);
             serializer.DataField(this, b => b.ImplicitHeatRegulation, "implicitHeatRegulation", 0);
             serializer.DataField(this, b => b.NormalBodyTemperature, "normalBodyTemperature", 0);
-            serializer.DataField(this, b => b.ThermalRegulationTemperatureThreshold, "thermalRegulationTemperatureThreshold", 0);
+            serializer.DataField(this, b => b.ThermalRegulationTemperatureThreshold,
+                "thermalRegulationTemperatureThreshold", 0);
             serializer.DataField(ref _suffocationDamage, "suffocationDamage", 1);
         }
 
@@ -219,7 +226,7 @@ namespace Content.Server.GameObjects.Components.Metabolism
             var targetHeat = tempDiff * temperatureComponent.HeatCapacity;
             if (temperatureComponent.CurrentTemperature > NormalBodyTemperature)
             {
-                temperatureComponent.RemoveHeat(Math.Min(targetHeat,ImplicitHeatRegulation));
+                temperatureComponent.RemoveHeat(Math.Min(targetHeat, ImplicitHeatRegulation));
             }
             else
             {
@@ -236,8 +243,9 @@ namespace Content.Server.GameObjects.Components.Metabolism
             {
                 if (_isShivering || _isSweating)
                 {
-                    Owner.PopupMessage("You feel comfortable");
+                    Owner.PopupMessage(Loc.GetString("You feel comfortable"));
                 }
+
                 _isShivering = false;
                 _isSweating = false;
                 return;
@@ -246,9 +254,10 @@ namespace Content.Server.GameObjects.Components.Metabolism
 
             if (temperatureComponent.CurrentTemperature > NormalBodyTemperature)
             {
+                if (!ActionBlockerSystem.CanSweat(Owner)) return;
                 if (!_isSweating)
                 {
-                    Owner.PopupMessage("You are sweating");
+                    Owner.PopupMessage(Loc.GetString("You are sweating"));
                     _isSweating = true;
                 }
 
@@ -263,7 +272,7 @@ namespace Content.Server.GameObjects.Components.Metabolism
                 if (!ActionBlockerSystem.CanShiver(Owner)) return;
                 if (!_isShivering)
                 {
-                    Owner.PopupMessage("You are shivering");
+                    Owner.PopupMessage(Loc.GetString("You are shivering"));
                     _isShivering = true;
                 }
 
@@ -316,8 +325,12 @@ namespace Content.Server.GameObjects.Components.Metabolism
         /// </param>
         public void Update(float frameTime)
         {
-            var damageable = Owner.GetComponentOrNull<IDamageableComponent>();
-            if (damageable?.CurrentDamageState == DamageState.Dead) return;
+            if (!Owner.TryGetComponent<IDamageableComponent>(out var damageable) ||
+                damageable.CurrentDamageState == DamageState.Dead)
+            {
+                return;
+            }
+
             _accumulatedFrameTime += frameTime;
 
             if (_accumulatedFrameTime < 1)
