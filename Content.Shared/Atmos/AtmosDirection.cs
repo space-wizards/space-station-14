@@ -96,7 +96,7 @@ namespace Content.Shared.Atmos
                 AtmosDirection.SouthWest => Angle.FromDegrees(225),
                 AtmosDirection.SouthEast => Angle.FromDegrees(315),
 
-                _ => throw new ArgumentOutOfRangeException(nameof(direction)),
+                _ => throw new ArgumentOutOfRangeException(nameof(direction), $"It was {direction}."),
             };
         }
 

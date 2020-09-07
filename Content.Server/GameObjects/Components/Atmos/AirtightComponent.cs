@@ -95,7 +95,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         private void RotateEvent(RotateEvent ev)
         {
-            if (!_rotateAirBlocked || ev.Sender != Owner || ev.NewRotation == ev.OldRotation)
+            if (!_rotateAirBlocked || ev.Sender != Owner || ev.NewRotation == ev.OldRotation || AirBlockedDirection == AtmosDirection.Invalid)
                 return;
 
             var diff = ev.NewRotation - ev.OldRotation;
@@ -105,7 +105,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             // When we make multiZ atmos, special case this.
             for (int i = 0; i < Atmospherics.Directions; i++)
             {
-                var direction = (AtmosDirection) i;
+                var direction = (AtmosDirection) (1 << i);
                 if (!AirBlockedDirection.HasFlag(direction)) continue;
                 var angle = direction.ToAngle();
                 angle += diff;
