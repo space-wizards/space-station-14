@@ -40,8 +40,9 @@ namespace Content.Server.GameObjects.Components.Disposal
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedDisposalUnitComponent))]
+    [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IInteractUsing))]
-    public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IInteractUsing, IDragDropOn
+    public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IActivate, IInteractUsing, IDragDropOn
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -637,6 +638,36 @@ namespace Content.Server.GameObjects.Components.Disposal
             UserInterface?.Open(actor.playerSession);
             return true;
         }
+
+        void IActivate.Activate(ActivateEventArgs eventArgs)
+        {
+            if (!ActionBlockerSystem.CanInteract(eventArgs.User))
+            {
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("You can't do that!"));
+                return;
+            }
+
+            if (ContainerHelpers.IsInContainer(eventArgs.User))
+            {
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("You can't reach there!"));
+                return;
+            }
+
+            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            {
+                return;
+            }
+
+            if (!eventArgs.User.HasComponent<IHandsComponent>())
+            {
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("You have no hands!"));
+                return;
+            }
+
+            UserInterface?.Open(actor.playerSession);
+            return;
+        }
+
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
