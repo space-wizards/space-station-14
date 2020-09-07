@@ -9,7 +9,7 @@
   "states": [
     {
       "name": "onicon",
-      "directions": 4,
+      "directions": 1,
       "delays": [
         [
           1
@@ -18,7 +18,7 @@
     },
     {
       "name": "officon",
-      "directions": 4,
+      "directions": 1,
       "delays": [
         [
           1
