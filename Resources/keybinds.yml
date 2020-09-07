@@ -1,19 +1,24 @@
 version: 1 # Not used right now, whatever.
 binds:
 - function: UIClick
-  type: state
+  type: State
   key: MouseLeft
   canFocus: true
+- function: UIRightClick
+  type: State
+  key: MouseRight
+  canFocus: true
+  priority: 10
 - function: CloseModals
-  type: state
+  type: State
   key: Escape
   priority: 10
 - function: Use
-  type: state
+  type: State
   key: MouseLeft
   canFocus: true
 - function: WideAttack
-  type: state
+  type: State
   key: Space
 - function: ShowDebugMonitors
   type: Toggle
@@ -86,7 +91,7 @@ binds:
   # TextCursorSelect HAS to be above ExamineEntity
   # So that LineEdit receives it correctly.
   # TODO: Make it so that UI keybinds are somehow prioritized so this ordering stuff isn't necessary.
-  type: state
+  type: State
   key: MouseLeft
   mod1: Shift
   canFocus: true
@@ -96,37 +101,37 @@ binds:
   canFocus: true
   mod1: Shift
 - function: ActivateItemInWorld
-  type: state
+  type: State
   key: E
 - function: ThrowItemInHand
-  type: state
+  type: State
   key: MouseLeft
   canFocus: true
   mod1: Alt
 - function: TryPullObject
-  type: state
+  type: State
   canFocus: true
   key: MouseLeft
   mod1: Control
 - function: MovePulledObject
-  type: state
+  type: State
   key: MouseRight
   mod1: Control
 - function: OpenContextMenu
-  type: state
+  type: State
   key: MouseRight
   canFocus: true
 - function: ToggleCombatMode
   type: State
   key: R
 - function: OpenCraftingMenu
-  type: state
+  type: State
   key: G
 - function: OpenTutorial
-  type: state
+  type: State
   key: F1
 - function: OpenInventoryMenu
-  type: state
+  type: State
   key: I
 - function: SmartEquipBackpack
   type: State
@@ -137,135 +142,135 @@ binds:
   key: E
   mod1: Shift
 - function: ShowDebugConsole
-  type: state
+  type: State
   key: Tilde
 - function: MouseMiddle
-  type: state
+  type: State
   key: MouseMiddle
   canFocus: true
 - function: TextCursorLeft
-  type: state
+  type: State
   key: Left
   canRepeat: true
 - function: TextCursorRight
-  type: state
+  type: State
   key: Right
   canRepeat: true
 - function: TextCursorWordLeft
-  type: state
+  type: State
   key: Left
   mod1: Control
   canRepeat: true
 - function: TextCursorWordRight
-  type: state
+  type: State
   key: Right
   mod1: Control
   canRepeat: true
 - function: TextCursorBegin
-  type: state
+  type: State
   key: Home
 - function: TextCursorEnd
-  type: state
+  type: State
   key: End
   canRepeat: true
 - function: TextCursorSelectLeft
-  type: state
+  type: State
   key: Left
   mod1: Shift
   canRepeat: true
 - function: TextCursorSelectRight
-  type: state
+  type: State
   key: Right
   mod1: Shift
   canRepeat: true
 - function: TextCursorSelectWordLeft
-  type: state
+  type: State
   key: Left
   mod1: Shift
   mod2: Control
   canRepeat: true
 - function: TextCursorSelectWordRight
-  type: state
+  type: State
   key: Right
   mod1: Shift
   mod2: Control
   canRepeat: true
 - function: TextCursorSelectBegin
-  type: state
+  type: State
   mod1: Shift
   key: Home
 - function: TextCursorSelectEnd
-  type: state
+  type: State
   mod1: Shift
   key: End
   canRepeat: true
 - function: TextBackspace
-  type: state
+  type: State
   key: BackSpace
   canRepeat: true
 - function: TextSubmit
-  type: state
+  type: State
   key: Return
 - function: TextSubmit
-  type: state
+  type: State
   key: NumpadEnter
 - function: TextSelectAll
-  type: state
+  type: State
   key: A
   mod1: Control
 - function: TextCopy
-  type: state
+  type: State
   key: C
   mod1: Control
 - function: TextCut
-  type: state
+  type: State
   key: X
   mod1: Control
 - function: TextPaste
-  type: state
+  type: State
   key: V
   mod1: Control
 - function: TextHistoryPrev
-  type: state
+  type: State
   key: Up
 - function: TextHistoryNext
-  type: state
+  type: State
   key: Down
 - function: TextReleaseFocus
-  type: state
+  type: State
   key: Escape
   priority: 15
 - function: TextScrollToBottom
-  type: state
+  type: State
   key: PageDown
 - function: TextDelete
-  type: state
+  type: State
   key: Delete
   canRepeat: true
 - function: OpenEntitySpawnWindow
-  type: state
+  type: State
   key: F5
 - function: OpenTileSpawnWindow
-  type: state
+  type: State
   key: F6
 - function: OpenAdminMenu
-  type: state
+  type: State
   key: F7
 - function: OpenSandboxWindow
-  type: state
+  type: State
   key: B
 - function: TakeScreenshot
-  type: state
+  type: State
   key: F2
 - function: TakeScreenshotNoUI
-  type: state
+  type: State
   key: F2
   mod1: Shift
 - function: GuiTabNavigateNext
-  type: state
+  type: State
   key: Tab
 - function: GuiTabNavigatePrev
-  type: state
+  type: State
   key: Tab
   mod1: Shift
 - function: Point
