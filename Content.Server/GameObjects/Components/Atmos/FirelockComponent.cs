@@ -35,12 +35,17 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             base.Startup();
 
-            var airtightComponent = Owner.EnsureComponent<AirtightComponent>();
-            var collidableComponent = Owner.GetComponent<ICollidableComponent>();
+            if (Owner.TryGetComponent(out AirtightComponent airtightComponent))
+            {
+                airtightComponent.AirBlocked = false;
+            }
+
+            if (Owner.TryGetComponent(out ICollidableComponent collidableComponent))
+            {
+                collidableComponent.Hard = false;
+            }
 
             Safety = false;
-            airtightComponent.AirBlocked = false;
-            collidableComponent.Hard = false;
 
             if (Occludes && Owner.TryGetComponent(out OccluderComponent occluder))
             {

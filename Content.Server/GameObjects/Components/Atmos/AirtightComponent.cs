@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using System;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Atmos;
 using Robust.Server.Interfaces.GameObjects;
@@ -10,6 +11,7 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -29,6 +31,12 @@ namespace Content.Server.GameObjects.Components.Atmos
         private int _airBlockedDirection;
         private bool _airBlocked = true;
         private bool _fixVacuum = false;
+
+        [ViewVariables]
+        private bool _rotateAirBlocked = true;
+
+        [ViewVariables]
+        private bool _fixAirBlockedDirectionInitialize = true;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool AirBlocked
@@ -63,6 +71,8 @@ namespace Content.Server.GameObjects.Components.Atmos
             serializer.DataField(ref _airBlocked, "airBlocked", true);
             serializer.DataField(ref _fixVacuum, "fixVacuum", true);
             serializer.DataField(ref _airBlockedDirection, "airBlockedDirection", (int)AtmosDirection.All, WithFormat.Flags<AtmosDirectionFlags>());
+            serializer.DataField(ref _rotateAirBlocked, "rotateAirBlocked", true);
+            serializer.DataField(ref _fixAirBlockedDirectionInitialize, "fixAirBlockedDirectionInitialize", true);
         }
 
         public override void Initialize()
@@ -75,7 +85,34 @@ namespace Content.Server.GameObjects.Components.Atmos
             if (!Owner.EnsureComponent(out SnapGridComponent _))
                 Logger.Warning($"Entity {Owner} at {Owner.Transform.MapPosition.ToString()} didn't have a {nameof(SnapGridComponent)}");
 
+            Owner.EntityManager.EventBus.SubscribeEvent<RotateEvent>(EventSource.Local, this, RotateEvent);
+
+            if(_fixAirBlockedDirectionInitialize)
+                RotateEvent(new RotateEvent(Owner, Angle.Zero, Owner.Transform.LocalRotation));
+
             UpdatePosition();
+        }
+
+        private void RotateEvent(RotateEvent ev)
+        {
+            if (!_rotateAirBlocked || ev.Sender != Owner || ev.NewRotation == ev.OldRotation)
+                return;
+
+            var diff = ev.NewRotation - ev.OldRotation;
+
+            var newAirBlockedDirs = AtmosDirection.Invalid;
+
+            // When we make multiZ atmos, special case this.
+            for (int i = 0; i < Atmospherics.Directions; i++)
+            {
+                var direction = (AtmosDirection) i;
+                if (!AirBlockedDirection.HasFlag(direction)) continue;
+                var angle = direction.ToAngle();
+                angle += diff;
+                newAirBlockedDirs |= angle.ToAtmosDirectionCardinal();
+            }
+
+            AirBlockedDirection = newAirBlockedDirs;
         }
 
         public void MapInit()
