@@ -177,7 +177,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             var canShiver = true;
             foreach (var component in entity.GetAllComponents<IActionBlocker>())
             {
-                canShiver &= component.CanChangeDirection();
+                canShiver &= component.CanShiver();
             }
             return canShiver;
         }
