@@ -84,6 +84,7 @@ namespace Content.Server.GameObjects.Components.Doors
         private bool _isWeldedShut;
 
         private bool _canWeldShut = true;
+        private bool _canCrush = true;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -91,6 +92,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
             serializer.DataField(ref _occludes, "occludes", true);
             serializer.DataField(ref _isWeldedShut, "welded", false);
+            serializer.DataField(ref _canCrush, "canCrush", true);
         }
 
         public override void OnRemove()
@@ -367,7 +369,7 @@ namespace Content.Server.GameObjects.Components.Doors
         {
             bool shouldCheckCrush = false;
 
-            if (Owner.TryGetComponent(out ICollidableComponent? collidable) && collidable.IsColliding(Vector2.Zero, false))
+            if (_canCrush && Owner.TryGetComponent(out ICollidableComponent? collidable) && collidable.IsColliding(Vector2.Zero, false))
             {
                 if (Safety)
                     return false;
@@ -386,7 +388,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
             Timer.Spawn(CloseTimeOne, async () =>
             {
-                if (shouldCheckCrush)
+                if (shouldCheckCrush && _canCrush)
                 {
                     CheckCrush();
                 }

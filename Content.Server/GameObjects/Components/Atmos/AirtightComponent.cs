@@ -88,7 +88,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             Owner.EntityManager.EventBus.SubscribeEvent<RotateEvent>(EventSource.Local, this, RotateEvent);
 
             if(_fixAirBlockedDirectionInitialize)
-                RotateEvent(new RotateEvent(Owner, Angle.Zero, Owner.Transform.LocalRotation));
+                RotateEvent(new RotateEvent(Owner, Angle.South, Owner.Transform.LocalRotation));
 
             UpdatePosition();
         }
