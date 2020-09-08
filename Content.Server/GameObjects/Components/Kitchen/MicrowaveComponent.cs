@@ -195,7 +195,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             }
 
             _uiDirty = true;
-            UserInterface?.Open(actor.playerSession);
+            UserInterface?.Toggle(actor.playerSession);
         }
 
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
