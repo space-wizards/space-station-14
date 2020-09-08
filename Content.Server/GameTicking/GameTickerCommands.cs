@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Players;
 using Content.Shared.Maps;
@@ -311,6 +312,7 @@ namespace Content.Server.GameTicking
                 return;
             }
 
+            var mapManager = IoCManager.Resolve<IMapManager>();
             int mapId;
             string mapName;
 
@@ -323,7 +325,6 @@ namespace Content.Server.GameTicking
                         return;
                     }
 
-                    var mapManager = IoCManager.Resolve<IMapManager>();
                     mapId = (int) mapManager.NextMapId();
                     mapName = args[0];
                     break;
@@ -347,7 +348,9 @@ namespace Content.Server.GameTicking
             shell.ExecuteCommand(player, $"aghost");
             shell.ExecuteCommand(player, $"tp 0 0 {mapId}");
 
-            shell.SendText(player, $"Created unloaded map from file {mapName} with id {mapId}. Use \"savebp 4 foo.yml\" to save it.");
+            var newGridId = mapManager.GetAllGrids().Max(g => (int) g.Index);
+
+            shell.SendText(player, $"Created unloaded map from file {mapName} with id {mapId}. Use \"savebp {newGridId} foo.yml\" to save the new grid as a map.");
         }
     }
 
