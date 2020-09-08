@@ -204,7 +204,7 @@ namespace Content.Client.Chat
                     color = Color.Orange;
                     break;
                 case ChatChannel.Radio:
-                    color = new Color(19, 255, 0);
+                    color = Color.Green;
                     break;
                 case ChatChannel.OOC:
                     color = Color.LightSkyBlue;

@@ -17,6 +17,7 @@ using System.Linq;
 using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Shared.Interfaces;
 using Robust.Shared.GameObjects.Systems;
 using static Content.Server.Interfaces.Chat.IChatManager;
 
@@ -42,7 +43,6 @@ namespace Content.Server.Chat
         //TODO: make prio based?
         private List<TransformChat> _chatTransformHandlers;
 
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly ILocalizationManager _localizationManager = default!;
@@ -118,15 +118,19 @@ namespace Content.Server.Chat
 
             var clients = _playerManager.GetPlayersInRange(source.Transform.GridPosition, VoiceRange).Select(p => p.ConnectedClient);
 
-            if (message.StartsWith(';') && source.TryGetComponent(out InventoryComponent inventory))
+            if (message.StartsWith(';'))
             {
                 message = message.Substring(1);
-                if (inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.EARS, out ItemComponent item))
+
+                if (source.TryGetComponent(out InventoryComponent inventory) &&
+                    inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.EARS, out ItemComponent item) &&
+                    item.Owner.TryGetComponent(out HeadsetComponent headset))
                 {
-                    if (item.Owner.TryGetComponent(out HeadsetComponent headset))
-                    {
-                        headset.RadioRequested = true;
-                    }
+                    headset.RadioRequested = true;
+                }
+                else
+                {
+                    source.PopupMessage(Loc.GetString("You don't have a headset on!"));
                 }
             }
 
@@ -136,7 +140,7 @@ namespace Content.Server.Chat
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Local;
             msg.Message = message;
-            msg.MessageWrap = $"{source.Name} says, \"{{0}}\"";
+            msg.MessageWrap = Loc.GetString("{0} says, \"{{0}}\"", source.Name);
             msg.SenderEntity = source.Uid;
             _netManager.ServerSendToMany(msg, clients.ToList());
         }

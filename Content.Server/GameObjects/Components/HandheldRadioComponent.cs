@@ -9,6 +9,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -75,9 +76,7 @@ namespace Content.Server.GameObjects.Components
         {
             RadioOn = !RadioOn;
 
-            Owner.PopupMessage(eventArgs.User, RadioOn
-                ? "The radio is now on."
-                : "The radio is now off.");
+            Owner.PopupMessage(eventArgs.User, Loc.GetString($"The radio is now {(RadioOn ? "on" : "off")}."));
 
             return true;
         }
