@@ -411,6 +411,12 @@ namespace Content.Server.GameTicking
             _netManager.ServerSendToAll(GetStatusSingle(player, status));
         }
 
+        public void ToggleDisallowLateJoin(bool disallowLateJoin)
+        {
+            DisallowLateJoin = disallowLateJoin;
+            UpdateLateJoinStatus();
+        }
+
         public T AddGameRule<T>() where T : GameRule, new()
         {
             var instance = _dynamicTypeFactory.CreateInstance<T>();
