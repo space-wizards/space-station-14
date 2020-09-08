@@ -220,7 +220,7 @@ namespace Content.Server.GameObjects.Components.Access
                 return;
             }
 
-            UserInterface?.Open(actor.playerSession);
+            UserInterface?.Toggle(actor.playerSession);
         }
     }
 }
