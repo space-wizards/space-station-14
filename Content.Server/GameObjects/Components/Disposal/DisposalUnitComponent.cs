@@ -544,7 +544,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             base.Startup();
 
-            if(!Owner.HasComponent<AnchorableComponent>())
+            if (!Owner.HasComponent<AnchorableComponent>())
             {
                 Logger.WarningS("VitalComponentMissing", $"Disposal unit {Owner.Uid} is missing an anchorable component");
             }

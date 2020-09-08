@@ -84,33 +84,33 @@ namespace Content.Server.GameObjects.Components.PDA
             switch (message.Message)
             {
                 case PDARequestUpdateInterfaceMessage msg:
-                {
-                    UpdatePDAUserInterface();
-                    break;
-                }
-                case PDAToggleFlashlightMessage msg:
-                {
-                    ToggleLight();
-                    break;
-                }
-
-                case PDAEjectIDMessage msg:
-                {
-                    HandleIDEjection(message.Session.AttachedEntity!);
-                    break;
-                }
-
-                case PDAUplinkBuyListingMessage buyMsg:
-                {
-                    if (!_uplinkManager.TryPurchaseItem(_syndicateUplinkAccount, buyMsg.ItemId))
                     {
-                        SendNetworkMessage(new PDAUplinkInsufficientFundsMessage(), message.Session.ConnectedClient);
+                        UpdatePDAUserInterface();
+                        break;
+                    }
+                case PDAToggleFlashlightMessage msg:
+                    {
+                        ToggleLight();
                         break;
                     }
 
-                    SendNetworkMessage(new PDAUplinkBuySuccessMessage(), message.Session.ConnectedClient);
-                    break;
-                }
+                case PDAEjectIDMessage msg:
+                    {
+                        HandleIDEjection(message.Session.AttachedEntity!);
+                        break;
+                    }
+
+                case PDAUplinkBuyListingMessage buyMsg:
+                    {
+                        if (!_uplinkManager.TryPurchaseItem(_syndicateUplinkAccount, buyMsg.ItemId))
+                        {
+                            SendNetworkMessage(new PDAUplinkInsufficientFundsMessage(), message.Session.ConnectedClient);
+                            break;
+                        }
+
+                        SendNetworkMessage(new PDAUplinkBuySuccessMessage(), message.Session.ConnectedClient);
+                        break;
+                    }
             }
         }
 
@@ -172,14 +172,7 @@ namespace Content.Server.GameObjects.Components.PDA
                 return;
             }
 
-            if (UserInterface != null)
-            {
-                if (!UserInterface!.SessionHasOpen(actor.playerSession))
-                    UserInterface?.Open(actor.playerSession);
-                else
-                    UserInterface?.Close(actor.playerSession);
-            }
-
+            UserInterface?.Open(actor.playerSession);
             UpdatePDAAppearance();
         }
 
@@ -190,16 +183,8 @@ namespace Content.Server.GameObjects.Components.PDA
                 return false;
             }
 
-            if (UserInterface != null)
-            {
-                if (!UserInterface!.SessionHasOpen(actor.playerSession))
-                    UserInterface?.Open(actor.playerSession);
-                else
-                    UserInterface?.Close(actor.playerSession);
-            }
-
+            UserInterface?.Open(actor.playerSession);
             UpdatePDAAppearance();
-
             return true;
         }
 
