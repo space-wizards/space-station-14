@@ -37,6 +37,7 @@ namespace Content.Server.GameObjects.Components.Doors
     {
         public override string Name => "Door";
 
+        [ViewVariables]
         private DoorState _state = DoorState.Closed;
 
         public virtual DoorState State
@@ -46,8 +47,10 @@ namespace Content.Server.GameObjects.Components.Doors
         }
 
         protected float OpenTimeCounter;
+        [ViewVariables(VVAccess.ReadWrite)]
         protected bool AutoClose = true;
         protected const float AutoCloseDelay = 5;
+        [ViewVariables(VVAccess.ReadWrite)]
         protected float CloseSpeed = AutoCloseDelay;
 
         private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
@@ -60,13 +63,14 @@ namespace Content.Server.GameObjects.Components.Doors
 
         private const int DoorCrushDamage = 15;
         private const float DoorStunTime = 5f;
+        [ViewVariables(VVAccess.ReadWrite)]
         protected bool Safety = true;
 
-        [ViewVariables] private bool _occludes;
+        [ViewVariables(VVAccess.ReadWrite)] private bool _occludes;
 
         public bool Occludes => _occludes;
 
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         public bool IsWeldedShut
         {
             get => _isWeldedShut;
@@ -84,6 +88,8 @@ namespace Content.Server.GameObjects.Components.Doors
         private bool _isWeldedShut;
 
         private bool _canWeldShut = true;
+        
+        [ViewVariables(VVAccess.ReadWrite)]
         private bool _canCrush = true;
 
         public override void ExposeData(ObjectSerializer serializer)

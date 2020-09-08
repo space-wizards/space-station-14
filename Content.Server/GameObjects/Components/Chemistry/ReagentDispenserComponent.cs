@@ -49,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         [ViewVariables] private ReagentUnit _dispenseAmount = ReagentUnit.New(10);
 
         [ViewVariables]
-        private SolutionComponent Solution => _beakerContainer.ContainedEntity.GetComponent<SolutionComponent>();
+        private SolutionComponent? Solution => _beakerContainer.ContainedEntity?.GetComponent<SolutionComponent>();
 
         private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
 

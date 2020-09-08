@@ -19,6 +19,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 {
@@ -30,8 +31,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override string Name => "RevolverBarrel";
         public override uint? NetID => ContentNetIDs.REVOLVER_BARREL;
 
+        [ViewVariables]
         private BallisticCaliber _caliber;
         private Container _ammoContainer;
+        [ViewVariables]
         private int _currentSlot = 0;
         public override int Capacity => _ammoSlots.Length;
         private IEntity[] _ammoSlots;
@@ -39,6 +42,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override int ShotsLeft => _ammoContainer.ContainedEntities.Count;
 
         private AppearanceComponent _appearanceComponent;
+        [ViewVariables]
         private string _fillPrototype;
         private int _unspawnedCount;
 
