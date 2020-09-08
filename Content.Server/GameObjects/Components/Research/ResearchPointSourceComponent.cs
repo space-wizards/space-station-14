@@ -16,14 +16,14 @@ namespace Content.Server.GameObjects.Components.Research
         private bool _active;
         private PowerReceiverComponent _powerReceiver;
 
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         public int PointsPerSecond
         {
             get => _pointsPerSecond;
             set => _pointsPerSecond = value;
         }
 
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         public bool Active
         {
             get => _active;
@@ -34,6 +34,7 @@ namespace Content.Server.GameObjects.Components.Research
         /// Whether this can be used to produce research points.
         /// </summary>
         /// <remarks>If no <see cref="PowerReceiverComponent"/> is found, it's assumed power is not required.</remarks>
+        [ViewVariables]
         public bool CanProduce => Active && (_powerReceiver is null || _powerReceiver.Powered);
 
         public override void Initialize()
