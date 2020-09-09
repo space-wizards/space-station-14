@@ -1263,7 +1263,7 @@ entities:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - uid: 137
-  type: PlaqueZum
+  type: PlaqueAtmos
   components:
   - parent: 857
     pos: 33.498077,11.399912
