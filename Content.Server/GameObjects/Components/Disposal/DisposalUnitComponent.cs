@@ -65,7 +65,6 @@ namespace Content.Server.GameObjects.Components.Disposal
         [ViewVariables]
         private float _pressure;
 
-        [ViewVariables]
         private bool _engaged;
 
         [ViewVariables(VVAccess.ReadWrite)]
