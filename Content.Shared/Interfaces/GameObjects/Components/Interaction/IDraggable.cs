@@ -108,7 +108,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// <param name="dropLocation">The location where <see cref="dropped"/> is being dropped.</param>
         /// <param name="dragged">The entity that is being dragged and dropped.</param>
         /// <param name="target">The entity that <see cref="dropped"/> is being dropped onto.</param>
-        public DragDropEventArgs(IEntity user, GridCoordinates dropLocation, IEntity dragged, IEntity target) : base(user, dragged, target)
+        public DragDropEventArgs(IEntity user, EntityCoordinates dropLocation, IEntity dragged, IEntity target) : base(user, dragged, target)
         {
             DropLocation = dropLocation;
         }
@@ -116,6 +116,6 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         ///     The location where <see cref="StartDragDropEventArgs.Dragged"/>
         ///     is being dropped.
         /// </summary>
-        public GridCoordinates DropLocation { get; }
+        public EntityCoordinates DropLocation { get; }
     }
 }
