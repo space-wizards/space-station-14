@@ -609,8 +609,8 @@ namespace Content.Server.GameObjects.Components.Disposal
                     break;
             }
         }
-
-        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
+    
+        bool IsValidInteraction(ITargetedInteractEventArgs eventArgs)
         {
             if (!ActionBlockerSystem.CanInteract(eventArgs.User))
             {
@@ -623,11 +623,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("You can't reach there!"));
                 return false;
             }
-
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
-            {
-                return false;
-            }
+            // This popup message doesn't appear on clicks, even when code was seperate. Unsure why.
 
             if (!eventArgs.User.HasComponent<IHandsComponent>())
             {
@@ -635,36 +631,39 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
-            UserInterface?.Open(actor.playerSession);
             return true;
+        }
+
+
+        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
+        {
+            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            {
+                return false;
+            }
+            // Duplicated code here, not sure how else to get actor inside to make UserInterface happy. 
+          
+            if (IsValidInteraction(eventArgs))
+            {
+                UserInterface?.Open(actor.playerSession);
+                return true;
+            }
+
+            return false;
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!ActionBlockerSystem.CanInteract(eventArgs.User))
-            {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("You can't do that!"));
-                return;
-            }
-
-            if (ContainerHelpers.IsInContainer(eventArgs.User))
-            {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("You can't reach there!"));
-                return;
-            }
-
             if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
                 return;
             }
 
-            if (!eventArgs.User.HasComponent<IHandsComponent>())
+            if (IsValidInteraction(eventArgs))
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("You have no hands!"));
-                return;
+                UserInterface?.Open(actor.playerSession);
             }
 
-            UserInterface?.Open(actor.playerSession);
             return;
         }
 
