@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// <summary>
         ///     The amount of solution to be transferred from this solution when clicking on other solutions with it.
         /// </summary>
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         public ReagentUnit TransferAmount
         {
             get => _transferAmount;
