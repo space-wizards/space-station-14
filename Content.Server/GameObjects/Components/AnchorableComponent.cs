@@ -7,6 +7,7 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components
 {
@@ -15,6 +16,7 @@ namespace Content.Server.GameObjects.Components
     {
         public override string Name => "Anchorable";
 
+        [ViewVariables]
         int IInteractUsing.Priority => 1;
 
         /// <summary>

@@ -49,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
 
-        private readonly SolutionComponent BufferSolution = new SolutionComponent();
+        [ViewVariables] private readonly SolutionComponent BufferSolution = new SolutionComponent();
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ChemMasterUiKey.Key);
 

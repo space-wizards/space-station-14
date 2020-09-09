@@ -128,12 +128,26 @@
       layer:
       - Opaque
       - MobImpassable
+  - type: AtmosExposed
+  - type: Temperature
+    heatDamageThreshold: 360
+    coldDamageThreshold: 260
+    currentTemperature: 310.15
+    specificHeat: 42
+    tempDamageCoefficient: 0.1
   - type: BodyManager
     criticalThreshold: 100
     deadThreshold: 200
     baseTemplate: bodyTemplate.Humanoid
     basePreset: bodyPreset.BasicHuman
   - type: Metabolism
+    metabolismHeat: 5000
+    radiatedHeat: 400
+    implicitHeatRegulation: 5000
+    sweatHeatRegulation: 5000
+    shiveringHeatRegulation: 5000
+    normalBodyTemperature: 310.15
+    thermalRegulationTemperatureThreshold: 25
     needsGases:
       Oxygen: 0.006365740
     producesGases:

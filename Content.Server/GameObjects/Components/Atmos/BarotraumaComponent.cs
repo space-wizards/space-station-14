@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Atmos
@@ -19,21 +17,14 @@ namespace Content.Server.GameObjects.Components.Atmos
     [RegisterComponent]
     public class BarotraumaComponent : Component
     {
-        [Robust.Shared.IoC.Dependency] private readonly IEntityManager _entityManager = default!;
-
         public override string Name => "Barotrauma";
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Update(float frameTime)
+        public void Update(float airPressure)
         {
             if (!Owner.TryGetComponent(out IDamageableComponent damageable)) return;
             Owner.TryGetComponent(out ServerStatusEffectsComponent status);
 
-            var coordinates = Owner.Transform.Coordinates;
-            var gridAtmos = EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(coordinates.GetGridId(_entityManager));
-            var tile = gridAtmos?.GetTile(coordinates);
-
-            var pressure = 1f;
             var highPressureMultiplier = 1f;
             var lowPressureMultiplier = 1f;
 
@@ -43,8 +34,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 lowPressureMultiplier *= protection.LowPressureMultiplier;
             }
 
-            if (tile?.Air != null)
-                pressure = MathF.Max(tile.Air.Pressure, 1f);
+            var pressure = MathF.Max(airPressure, 1f);
 
             switch (pressure)
             {
