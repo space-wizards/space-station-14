@@ -60,7 +60,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 return false;
             }
 
-            var itemToSpawn = _entityManager.SpawnEntity(GetRandomPrototype(), Owner.Transform.GridPosition);
+            var itemToSpawn = _entityManager.SpawnEntity(GetRandomPrototype(), Owner.Transform.Coordinates);
             handsComponent.PutInHandOrDrop(itemToSpawn.GetComponent<ItemComponent>());
             _count--;
             if (_count < 1)

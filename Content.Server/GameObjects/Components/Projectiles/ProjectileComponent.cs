@@ -84,10 +84,10 @@ namespace Content.Server.GameObjects.Components.Projectiles
 
             if (_soundHitSpecies != null && entity.HasComponent<IDamageableComponent>())
             {
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHitSpecies, entity.Transform.GridPosition);
+                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHitSpecies, entity.Transform.Coordinates);
             } else if (_soundHit != null)
             {
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHit, entity.Transform.GridPosition);
+                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHit, entity.Transform.Coordinates);
             }
 
             if (entity.TryGetComponent(out IDamageableComponent damage))

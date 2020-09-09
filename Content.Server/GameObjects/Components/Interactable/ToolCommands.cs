@@ -49,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             var mapManager = IoCManager.Resolve<IMapManager>();
             var playerGrid = player.AttachedEntity.Transform.GridID;
             var mapGrid = mapManager.GetGrid(playerGrid);
-            var playerPosition = player.AttachedEntity.Transform.GridPosition;
+            var playerPosition = player.AttachedEntity.Transform.Coordinates;
             var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
 
             for (var i = -radius; i <= radius; i++)

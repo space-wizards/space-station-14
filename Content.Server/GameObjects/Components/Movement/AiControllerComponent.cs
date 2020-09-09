@@ -151,7 +151,7 @@ namespace Content.Server.GameObjects.Components.Movement
         (Vector2 walking, Vector2 sprinting) IMoverComponent.VelocityDir =>
             Sprinting ? (Vector2.Zero, VelocityDir) : (VelocityDir, Vector2.Zero);
 
-        public GridCoordinates LastPosition { get; set; }
+        public EntityCoordinates LastPosition { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)] public float StepSoundDistance { get; set; }
 

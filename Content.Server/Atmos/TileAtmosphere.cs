@@ -9,8 +9,10 @@ using Content.Server.Interfaces;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
 using Content.Shared.Maps;
+using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.GameObjects.EntitySystems.TileLookup;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
@@ -31,6 +33,7 @@ namespace Content.Server.Atmos
         [Robust.Shared.IoC.Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Robust.Shared.IoC.Dependency] private readonly IEntityManager _entityManager = default!;
         [Robust.Shared.IoC.Dependency] private readonly IMapManager _mapManager = default!;
+        private readonly GridTileLookupSystem _gridTileLookupSystem = default!;
 
 
         private static readonly TileAtmosphereComparer Comparer = new TileAtmosphereComparer();
@@ -45,7 +48,7 @@ namespace Content.Server.Atmos
         public int AtmosCooldown { get; set; } = 0;
 
         [ViewVariables]
-        private float _temperature = Atmospherics.T20C;
+        public float Temperature {get; private set; } = Atmospherics.T20C;
 
         [ViewVariables]
         private float _temperatureArchived = Atmospherics.T20C;
@@ -115,6 +118,7 @@ namespace Content.Server.Atmos
         {
             IoCManager.InjectDependencies(this);
             _gridAtmosphereComponent = atmosphereComponent;
+            _gridTileLookupSystem = _entityManager.EntitySysManager.GetEntitySystem<GridTileLookupSystem>();
             GridIndex = gridIndex;
             GridIndices = gridIndices;
             Air = mixture;
@@ -128,7 +132,7 @@ namespace Content.Server.Atmos
         {
             Air?.Archive();
             _archivedCycle = fireCount;
-            _temperatureArchived = _temperature;
+            _temperatureArchived = Temperature;
         }
 
         public void HotspotExpose(float exposedTemperature, float exposedVolume, bool soh = false)
@@ -185,10 +189,10 @@ namespace Content.Server.Atmos
             {
                 if(_soundCooldown == 0)
                     EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Effects/space_wind.ogg",
-                        GridIndices.ToGridCoordinates(_mapManager, GridIndex), AudioHelpers.WithVariation(0.125f).WithVolume(MathHelper.Clamp(PressureDifference / 10, 10, 100)));
+                        GridIndices.ToEntityCoordinates(_mapManager, GridIndex), AudioHelpers.WithVariation(0.125f).WithVolume(MathHelper.Clamp(PressureDifference / 10, 10, 100)));
             }
 
-            foreach (var entity in _entityManager.GetEntitiesIntersecting(_mapManager.GetGrid(GridIndex).ParentMapId, Box2.UnitCentered.Translated(GridIndices)))
+            foreach (var entity in _gridTileLookupSystem.GetEntitiesIntersecting(GridIndex, GridIndices))
             {
                 if (!entity.TryGetComponent(out ICollidableComponent physics)
                     ||  !entity.TryGetComponent(out MovedByPressureComponent pressure)
@@ -200,7 +204,7 @@ namespace Content.Server.Atmos
                 var pressureMovements = physics.EnsureController<HighPressureMovementController>();
                 if (pressure.LastHighPressureMovementAirCycle < _gridAtmosphereComponent.UpdateCounter)
                 {
-                    pressureMovements.ExperiencePressureDifference(_gridAtmosphereComponent.UpdateCounter, PressureDifference, _pressureDirection, 0, PressureSpecificTarget?.GridIndices.ToGridCoordinates(_mapManager, GridIndex) ?? GridCoordinates.InvalidGrid);
+                    pressureMovements.ExperiencePressureDifference(_gridAtmosphereComponent.UpdateCounter, PressureDifference, _pressureDirection, 0, PressureSpecificTarget?.GridIndices.ToEntityCoordinates(_mapManager, GridIndex) ?? EntityCoordinates.Invalid);
                 }
 
             }
@@ -865,10 +869,10 @@ namespace Content.Server.Atmos
             // Conduct with air on my tile if I have it
             if (!BlocksAir)
             {
-                _temperature = Air.TemperatureShare(ThermalConductivity, _temperature, HeatCapacity);
+                Temperature = Air.TemperatureShare(ThermalConductivity, Temperature, HeatCapacity);
             }
 
-            FinishSuperconduction(BlocksAir ? _temperature : Air.Temperature);
+            FinishSuperconduction(BlocksAir ? Temperature : Air.Temperature);
         }
 
         private void FinishSuperconduction(float temperature)
@@ -893,7 +897,7 @@ namespace Content.Server.Atmos
                     other.TemperatureShareMutualSolid(this, ThermalConductivity);
                 }
 
-                TemperatureExpose(null, _temperature, _gridAtmosphereComponent.GetVolumeForCells(1));
+                TemperatureExpose(null, Temperature, _gridAtmosphereComponent.GetVolumeForCells(1));
                 return;
             }
 
@@ -911,8 +915,8 @@ namespace Content.Server.Atmos
 
         private void TemperatureShareOpenToSolid(TileAtmosphere other)
         {
-            other._temperature =
-                Air.TemperatureShare(other.ThermalConductivity, other._temperature, other.HeatCapacity);
+            other.Temperature =
+                Air.TemperatureShare(other.ThermalConductivity, other.Temperature, other.HeatCapacity);
         }
 
         private void TemperatureShareMutualSolid(TileAtmosphere other, float conductionCoefficient)
@@ -924,15 +928,15 @@ namespace Content.Server.Atmos
                 var heat = conductionCoefficient * deltaTemperature *
                            (HeatCapacity * other.HeatCapacity / (HeatCapacity + other.HeatCapacity));
 
-                _temperature -= heat / HeatCapacity;
-                other._temperature += heat / other.HeatCapacity;
+                Temperature -= heat / HeatCapacity;
+                other.Temperature += heat / other.HeatCapacity;
             }
         }
 
         public void RadiateToSpace()
         {
             // Considering 0ºC as the break even point for radiation in and out.
-            if (_temperature > Atmospherics.T0C)
+            if (Temperature > Atmospherics.T0C)
             {
                 // Hardcoded space temperature.
                 var deltaTemperature = (_temperatureArchived - Atmospherics.TCMB);
@@ -941,7 +945,7 @@ namespace Content.Server.Atmos
                     var heat = ThermalConductivity * deltaTemperature * (HeatCapacity *
                         Atmospherics.HeatCapacityVacuum / (HeatCapacity + Atmospherics.HeatCapacityVacuum));
 
-                    _temperature -= heat;
+                    Temperature -= heat;
                 }
             }
         }

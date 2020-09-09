@@ -6,8 +6,9 @@
   id: DrinkBase
   abstract: true
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 50
+    caps: AddTo, RemoveFrom
   - type: Pourable
     transferAmount: 5
   - type: Drink
@@ -15,7 +16,7 @@
     state: icon
   - type: Icon
     state: icon
-  - type: CanSpill
+  - type: Spillable
 
 - type: entity
   parent: DrinkBase
@@ -35,10 +36,10 @@
     sprite: Objects/Consumable/Drinks/glass_clear.rsi
   - type: Icon
     sprite: Objects/Consumable/Drinks/glass_clear.rsi
-  - type: Solution
+  - type: SolutionContainer
     fillingState: glass
     maxVol: 50
-    caps: 16
+    caps: AddTo, RemoveFrom
   - type: Pourable
     transferAmount: 5
   - type: TransformableContainer
@@ -47,9 +48,9 @@
   parent: DrinkGlassBase
   id: DrinkAleglass
   name: ale
-  description: A dark alchoholic beverage made by malted barley and yeast.
+  description: A dark alchoholic beverage made with malted barley and yeast.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 20
     contents:
       reagents:
@@ -66,7 +67,7 @@
   name: anti-freeze
   description: Ultimate refreshment.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 20
     contents:
       reagents:
@@ -84,7 +85,7 @@
   name: atomic bomb glass
   description: Nuclear proliferation never tasted so good.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 20
     contents:
       reagents:
@@ -102,7 +103,7 @@
   name: b-52 glass
   description: Coffee, Irish Cream, and cognac. You will get bombed.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 20
     contents:
       reagents:
@@ -144,7 +145,7 @@
   name: beer  # beer it is. coffee. beer? coff-ee? be-er? c-o... b-e
   description: An alcoholic beverage made from malted grains, hops, yeast, and water.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 20
     contents:
       reagents:
@@ -161,7 +162,7 @@
   name: beer glass
   description: An alcoholic beverage made from malted grains, hops, yeast, and water.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 20
     contents:
       reagents:
@@ -305,7 +306,7 @@
   name: coffee
   description: Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 20
     contents:
       reagents:
@@ -322,7 +323,7 @@
   name: cognac glass
   description: A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. Classy as fornication.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 20
     contents:
       reagents:
@@ -339,7 +340,7 @@
   name: space cola bottle
   description: Cola. in space
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 20
     contents:
       reagents:
@@ -356,7 +357,7 @@
   name: cream
   description: Dairy product composed of the higher-fat layer skimmed from the top of milk before homogenization.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 20
     contents:
       reagents:
@@ -373,7 +374,7 @@
   name: cuba libre glass
   description: Rum, mixed with cola. Viva la revolucion.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 20
     contents:
       reagents:
@@ -642,7 +643,7 @@
   name: milk
   description: An opaque white liquid produced by the mammary glands of mammals.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 20
     contents:
       reagents:
@@ -804,7 +805,7 @@
   name: ice glass
   description: Water frozen into a solid state.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 20
     contents:
       reagents:
@@ -821,7 +822,7 @@
   name: irish car bomb
   description: Mmm, tastes like chocolate cake...
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 20
     contents:
       reagents:
@@ -838,7 +839,7 @@
   name: irish coffee glass
   description: Coffee, and alcohol. More fun than a Mimosa to drink in the morning.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 20
     contents:
       reagents:
@@ -855,7 +856,7 @@
   name: irish cream glass
   description: Whiskey-imbued cream, what else would you expect from the Irish.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 20
     contents:
       reagents:
@@ -908,7 +909,7 @@
   name: kahlua glass
   description: A widely known, Mexican coffee-flavoured liqueur.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 20
     contents:
       reagents:
@@ -1045,7 +1046,7 @@
   name: the manly dorf glass
   description: Beer and Ale, brought together in a delicious mix. Intended for true men only.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 20
     contents:
       reagents:
@@ -1098,7 +1099,7 @@
   name: milk jug
   description: An opaque white liquid produced by the mammary glands of mammals.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 20
     contents:
       reagents:
@@ -1597,7 +1598,7 @@
   name: syndicate bomb
   description: Tastes like terrorism!
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 20
     contents:
       reagents:
@@ -1614,7 +1615,7 @@
   name: tea glass
   description: Tasty black tea. Contains caffeine.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 20
     contents:
       reagents:
@@ -1631,7 +1632,7 @@
   name: teapot  # short and stout
   description: An elegant teapot. It simply oozes class.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 20
     contents:
       reagents:
@@ -1822,7 +1823,7 @@
   name: whiskey cola glass
   description: Whiskey, mixed with cola. Surprisingly refreshing.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 20
     contents:
       reagents:
@@ -1839,7 +1840,7 @@
   name: special blend whiskey glass
   description: Just when you thought regular station whiskey was good... This silky, amber goodness has to come along and ruin everything.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 20
     contents:
       reagents:
@@ -1892,7 +1893,7 @@
   name: wine glass
   description: An premium alchoholic beverage made from distilled grape juice.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 20
     contents:
       reagents:

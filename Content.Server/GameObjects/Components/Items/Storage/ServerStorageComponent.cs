@@ -26,6 +26,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Items.Storage
 {
@@ -51,6 +52,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         private int _storageCapacityMax;
         public readonly HashSet<IPlayerSession> SubscribedSessions = new HashSet<IPlayerSession>();
 
+        [ViewVariables]
         public IReadOnlyCollection<IEntity>? StoredEntities => _storage?.ContainedEntities;
 
         public bool OccludesLight
@@ -365,7 +367,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                     var ownerTransform = Owner.Transform;
                     var playerTransform = player.Transform;
 
-                    if (!playerTransform.GridPosition.InRange(_mapManager, ownerTransform.GridPosition, 2) ||
+                    if (!playerTransform.Coordinates.InRange(_entityManager, ownerTransform.Coordinates, 2) ||
                         !ownerTransform.IsMapTransform &&
                         !playerTransform.ContainsEntity(ownerTransform))
                     {

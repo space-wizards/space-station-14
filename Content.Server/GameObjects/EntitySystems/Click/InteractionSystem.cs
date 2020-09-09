@@ -6,7 +6,6 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.Components.Timing;
 using Content.Server.Interfaces.GameObjects.Components.Items;
-using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.GameObjects.EntitySystems;
@@ -40,6 +39,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
     public sealed class InteractionSystem : SharedInteractionSystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public override void Initialize()
         {
@@ -94,7 +94,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
         }
 
-        private bool HandleActivateItemInWorld(ICommonSession session, GridCoordinates coords, EntityUid uid)
+        private bool HandleActivateItemInWorld(ICommonSession session, EntityCoordinates coords, EntityUid uid)
         {
             if (!EntityManager.TryGetEntity(uid, out var used))
                 return false;
@@ -106,7 +106,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return false;
             }
 
-            if (!playerEnt.Transform.GridPosition.InRange(_mapManager, used.Transform.GridPosition, InteractionRange))
+            if (!playerEnt.Transform.Coordinates.InRange(EntityManager, used.Transform.Coordinates, InteractionRange))
             {
                 return false;
             }
@@ -151,10 +151,10 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
         }
 
-        private bool HandleWideAttack(ICommonSession session, GridCoordinates coords, EntityUid uid)
+        private bool HandleWideAttack(ICommonSession session, EntityCoordinates coords, EntityUid uid)
         {
             // client sanitization
-            if (!_mapManager.GridExists(coords.GridID))
+            if (!_mapManager.GridExists(coords.GetGridId(_entityManager)))
             {
                 Logger.InfoS("system.interaction", $"Invalid Coordinates: client={session}, coords={coords}");
                 return true;
@@ -189,7 +189,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// <param name="entity"></param>
         /// <param name="coords"></param>
         /// <param name="uid"></param>
-        internal void UseItemInHand(IEntity entity, GridCoordinates coords, EntityUid uid)
+        internal void UseItemInHand(IEntity entity, EntityCoordinates coords, EntityUid uid)
         {
             if (entity.HasComponent<BasicActorComponent>())
             {
@@ -206,10 +206,10 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
         }
 
-        private bool HandleClientUseItemInHand(ICommonSession session, GridCoordinates coords, EntityUid uid)
+        private bool HandleClientUseItemInHand(ICommonSession session, EntityCoordinates coords, EntityUid uid)
         {
             // client sanitization
-            if (!_mapManager.GridExists(coords.GridID))
+            if (!_mapManager.GridExists(coords.GetGridId(_entityManager)))
             {
                 Logger.InfoS("system.interaction", $"Invalid Coordinates: client={session}, coords={coords}");
                 return true;
@@ -237,10 +237,10 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             return true;
         }
 
-        private bool HandleTryPullObject(ICommonSession session, GridCoordinates coords, EntityUid uid)
+        private bool HandleTryPullObject(ICommonSession session, EntityCoordinates coords, EntityUid uid)
         {
             // client sanitization
-            if (!_mapManager.GridExists(coords.GridID))
+            if (!_mapManager.GridExists(coords.GetGridId(_entityManager)))
             {
                 Logger.InfoS("system.interaction", $"Invalid Coordinates for pulling: client={session}, coords={coords}");
                 return false;
@@ -282,7 +282,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return false;
             }
 
-            var dist = player.Transform.GridPosition.Position - pulledObject.Transform.GridPosition.Position;
+            var dist = player.Transform.Coordinates.Position - pulledObject.Transform.Coordinates.Position;
             if (dist.LengthSquared > InteractionRangeSquared)
             {
                 return false;
@@ -308,7 +308,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             return false;
         }
 
-        private void UserInteraction(IEntity player, GridCoordinates coordinates, EntityUid clickedUid)
+        private void UserInteraction(IEntity player, EntityCoordinates coordinates, EntityUid clickedUid)
         {
             // Get entity clicked upon from UID if valid UID, if not assume no entity clicked upon and null
             if (!EntityManager.TryGetEntity(clickedUid, out var attacked))
@@ -323,7 +323,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             // Verify player is on the same map as the entity he clicked on
-            if (_mapManager.GetGrid(coordinates.GridID).ParentMapId != playerTransform.MapID)
+            if (_mapManager.GetGrid(coordinates.GetGridId(EntityManager)).ParentMapId != playerTransform.MapID)
             {
                 Logger.WarningS("system.interaction",
                     $"Player named {player.Name} clicked on a map he isn't located on");
@@ -340,7 +340,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
             if (ActionBlockerSystem.CanChangeDirection(player))
             {
-                var diff = coordinates.ToMapPos(_mapManager) - playerTransform.MapPosition.Position;
+                var diff = coordinates.ToMapPos(EntityManager) - playerTransform.MapPosition.Position;
                 if (diff.LengthSquared > 0.01f)
                 {
                     playerTransform.LocalRotation = new Angle(diff);
@@ -373,7 +373,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 if (item != null)
                 {
                     // After attack: Check if we clicked on an empty location, if so the only interaction we can do is AfterInteract
-                    var distSqrt = (playerTransform.WorldPosition - coordinates.ToMapPos(_mapManager)).LengthSquared;
+                    var distSqrt = (playerTransform.WorldPosition - coordinates.ToMapPos(EntityManager)).LengthSquared;
                     InteractAfter(player, item, coordinates, distSqrt <= InteractionRangeSquared);
                 }
 
@@ -418,7 +418,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// <summary>
         ///     We didn't click on any entity, try doing an AfterInteract on the click location
         /// </summary>
-        private void InteractAfter(IEntity user, IEntity weapon, GridCoordinates clickLocation, bool canReach)
+        private void InteractAfter(IEntity user, IEntity weapon, EntityCoordinates clickLocation, bool canReach)
         {
             var message = new AfterInteractMessage(user, weapon, null, clickLocation, canReach);
             RaiseLocalEvent(message);
@@ -440,7 +440,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// Uses a weapon/object on an entity
         /// Finds components with the InteractUsing interface and calls their function
         /// </summary>
-        public async Task Interaction(IEntity user, IEntity weapon, IEntity attacked, GridCoordinates clickLocation)
+        public async Task Interaction(IEntity user, IEntity weapon, IEntity attacked, EntityCoordinates clickLocation)
         {
             var attackMsg = new InteractUsingMessage(user, weapon, attacked, clickLocation);
             RaiseLocalEvent(attackMsg);
@@ -607,7 +607,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         ///     Calls Land on all components that implement the ILand interface
         ///     on an entity that has landed after being thrown.
         /// </summary>
-        public void LandInteraction(IEntity user, IEntity landing, GridCoordinates landLocation)
+        public void LandInteraction(IEntity user, IEntity landing, EntityCoordinates landLocation)
         {
             var landMsg = new LandMessage(user, landing, landLocation);
             RaiseLocalEvent(landMsg);
@@ -752,7 +752,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// Will have two behaviors, either "uses" the weapon at range on the entity if it is capable of accepting that action
         /// Or it will use the weapon itself on the position clicked, regardless of what was there
         /// </summary>
-        public void RangedInteraction(IEntity user, IEntity weapon, IEntity attacked, GridCoordinates clickLocation)
+        public void RangedInteraction(IEntity user, IEntity weapon, IEntity attacked, EntityCoordinates clickLocation)
         {
             var rangedMsg = new RangedInteractMessage(user, weapon, attacked, clickLocation);
             RaiseLocalEvent(rangedMsg);
@@ -793,10 +793,10 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
         }
 
-        private void DoAttack(IEntity player, GridCoordinates coordinates, bool wideAttack, EntityUid target = default)
+        private void DoAttack(IEntity player, EntityCoordinates coordinates, bool wideAttack, EntityUid target = default)
         {
             // Verify player is on the same map as the entity he clicked on
-            if (_mapManager.GetGrid(coordinates.GridID).ParentMapId != player.Transform.MapID)
+            if (_mapManager.GetGrid(coordinates.GetGridId(_entityManager)).ParentMapId != player.Transform.MapID)
             {
                 Logger.WarningS("system.interaction",
                     $"Player named {player.Name} clicked on a map he isn't located on");
@@ -804,7 +804,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             if (!ActionBlockerSystem.CanAttack(player) ||
-                (!wideAttack && !InRangeUnobstructed(player.Transform.MapPosition, coordinates.ToMap(_mapManager), ignoreInsideBlocker:true)))
+                (!wideAttack && !player.InRangeUnobstructed(coordinates, ignoreInsideBlocker:true)))
             {
                 return;
             }

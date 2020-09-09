@@ -28,7 +28,7 @@
   parent: HatBase
   id: HatMouseGray
   name: mouse gray
-  description: This is a head of a gray mouse. Squeak!
+  description: This is a head of a grey mouse. Squeak!
   components:
   - type: Sprite
     sprite: Clothing/Head/mouse_gray.rsi

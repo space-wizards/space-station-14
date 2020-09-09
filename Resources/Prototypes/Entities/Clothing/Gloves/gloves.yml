@@ -118,8 +118,8 @@
 - type: entity
   parent: GlovesBase
   id: GlovesGray
-  name: gray gloves
-  description: Regular gray gloves that do not keep you from frying.
+  name: grey gloves
+  description: Regular grey gloves that do not keep you from frying.
   components:
   - type: Sprite
     sprite: Clothing/Gloves/gray.rsi

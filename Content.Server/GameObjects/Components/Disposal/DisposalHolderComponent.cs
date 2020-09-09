@@ -88,7 +88,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 PreviousTube = CurrentTube;
             }
 
-            Owner.Transform.GridPosition = tube.Owner.Transform.GridPosition;
+            Owner.Transform.Coordinates = tube.Owner.Transform.Coordinates;
             CurrentTube = tube;
             NextTube = tube.NextTube(this);
             StartingTime = 0.1f;

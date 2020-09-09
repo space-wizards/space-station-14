@@ -207,7 +207,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
                     continue;
                 }
 
-                var entityTile = grid.GetTileRef(entity.Transform.GridPosition).GridIndices;
+                var entityTile = grid.GetTileRef(entity.Transform.Coordinates).GridIndices;
 
                 for (var x = -maxXDiff; x <= maxXDiff; x++)
                 {

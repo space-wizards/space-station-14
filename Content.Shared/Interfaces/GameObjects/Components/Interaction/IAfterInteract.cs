@@ -21,7 +21,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     public class AfterInteractEventArgs : EventArgs
     {
         public IEntity User { get; set; }
-        public GridCoordinates ClickLocation { get; set; }
+        public EntityCoordinates ClickLocation { get; set; }
         public IEntity Target { get; set; }
         public bool CanReach { get; set; }
     }
@@ -55,7 +55,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// <summary>
         ///     Location that the user clicked outside of their interaction range.
         /// </summary>
-        public GridCoordinates ClickLocation { get; }
+        public EntityCoordinates ClickLocation { get; }
 
         /// <summary>
         /// Is the click location close enough to reach by the player? This does not check for obstructions, just that the target is within
@@ -63,7 +63,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// </summary>
         public bool CanReach { get; }
 
-        public AfterInteractMessage(IEntity user, IEntity itemInHand, IEntity attacked, GridCoordinates clickLocation, bool canReach)
+        public AfterInteractMessage(IEntity user, IEntity itemInHand, IEntity attacked, EntityCoordinates clickLocation, bool canReach)
         {
             User = user;
             Attacked = attacked;

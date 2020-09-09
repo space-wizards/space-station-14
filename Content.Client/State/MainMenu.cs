@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using Content.Client.UserInterface;
 using Robust.Client;
 using Robust.Client.Interfaces;
 using Robust.Client.Interfaces.ResourceManagement;
@@ -7,7 +8,6 @@ using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
@@ -56,7 +56,7 @@ namespace Content.Client.State
 
             _client.RunLevelChanged += RunLevelChanged;
 
-            OptionsMenu = new OptionsMenu(_configurationManager);
+            OptionsMenu = new OptionsMenu();
         }
 
         /// <inheritdoc />
