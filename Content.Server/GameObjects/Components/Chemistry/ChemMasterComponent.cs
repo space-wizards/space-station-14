@@ -47,7 +47,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         [ViewVariables] private bool _bufferModeTransfer = true;
 
-        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+        [ViewVariables] private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
 
         [ViewVariables] private readonly SolutionComponent BufferSolution = new SolutionComponent();
 

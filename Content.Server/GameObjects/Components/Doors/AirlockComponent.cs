@@ -39,6 +39,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
         private CancellationTokenSource _powerWiresPulsedTimerCancel = new CancellationTokenSource();
 
+        [ViewVariables]
         private bool _powerWiresPulsed;
 
         /// <summary>
@@ -56,6 +57,7 @@ namespace Content.Server.GameObjects.Components.Doors
             }
         }
 
+        [ViewVariables]
         private bool _boltsDown;
 
         [ViewVariables(VVAccess.ReadWrite)]
