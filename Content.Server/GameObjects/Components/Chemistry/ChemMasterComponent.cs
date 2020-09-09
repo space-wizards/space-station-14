@@ -42,9 +42,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
     {
         [ViewVariables] private ContainerSlot _beakerContainer = default!;
         [ViewVariables] private string _packPrototypeId = "";
-
         [ViewVariables] private bool HasBeaker => _beakerContainer.ContainedEntity != null;
-
         [ViewVariables] private bool _bufferModeTransfer = true;
 
         private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
