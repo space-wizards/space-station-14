@@ -7,7 +7,6 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
@@ -21,7 +20,7 @@ namespace Content.Server.GameObjects.Components
     public class HandheldRadioComponent : Component, IUse, IListen, IRadio
     {
         [Dependency] private readonly IChatManager _chatManager = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public override string Name => "Radio";
 
@@ -84,7 +83,8 @@ namespace Content.Server.GameObjects.Components
         public bool CanHear(string message, IEntity source)
         {
             return RadioOn &&
-                   Owner.Transform.GridPosition.Distance(_mapManager, source.Transform.GridPosition) <= ListenRange;
+                   Owner.Transform.Coordinates.TryDistance(_entityManager, source.Transform.Coordinates, out var distance) &&
+                   distance <= ListenRange;
         }
 
         public void Receiver(string message, int channel, IEntity speaker)

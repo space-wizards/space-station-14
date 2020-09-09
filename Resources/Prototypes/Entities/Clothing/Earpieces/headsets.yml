@@ -8,7 +8,7 @@
   - type: Headset
   - type: Clothing
     Slots:
-      - ears
+    - ears
     sprite: Objects/Devices/communication.rsi
 
 - type: entity
