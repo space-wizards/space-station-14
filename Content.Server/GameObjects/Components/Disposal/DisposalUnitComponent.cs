@@ -61,14 +61,15 @@ namespace Content.Server.GameObjects.Components.Disposal
         ///     The current pressure of this disposal unit.
         ///     Prevents it from flushing if it is not equal to or bigger than 1.
         /// </summary>
+        [ViewVariables]
         private float _pressure;
 
         private bool _engaged;
 
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         private TimeSpan _automaticEngageTime;
 
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         private TimeSpan _flushDelay;
 
         [ViewVariables]
@@ -101,7 +102,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         [ViewVariables]
         private PressureState State => _pressure >= 1 ? PressureState.Ready : PressureState.Pressurizing;
 
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         private bool Engaged
         {
             get => _engaged;

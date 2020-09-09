@@ -18,6 +18,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.SharedWiresComponent;
 using static Content.Shared.GameObjects.Components.SharedWiresComponent.WiresAction;
 using Timer = Robust.Shared.Timers.Timer;
@@ -43,6 +44,7 @@ namespace Content.Server.GameObjects.Components.Doors
         /// <summary>
         /// True if either power wire was pulsed in the last <see cref="PowerWiresTimeout"/>.
         /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
         private bool PowerWiresPulsed
         {
             get => _powerWiresPulsed;
@@ -56,6 +58,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
         private bool _boltsDown;
 
+        [ViewVariables(VVAccess.ReadWrite)]
         private bool BoltsDown
         {
             get => _boltsDown;
@@ -68,6 +71,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
         private bool _boltLightsWirePulsed = true;
 
+        [ViewVariables(VVAccess.ReadWrite)]
         private bool BoltLightsVisible
         {
             get => _boltLightsWirePulsed && BoltsDown && IsPowered() && State == DoorState.Closed;
@@ -80,6 +84,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
         private const float AutoCloseDelayFast = 1;
         // True => AutoCloseDelay; False => AutoCloseDelayFast
+        [ViewVariables(VVAccess.ReadWrite)]
         private bool NormalCloseSpeed
         {
             get => CloseSpeed == AutoCloseDelay;

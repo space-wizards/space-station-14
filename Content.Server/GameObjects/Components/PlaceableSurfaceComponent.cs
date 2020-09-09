@@ -1,9 +1,10 @@
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components
 {
@@ -13,7 +14,8 @@ namespace Content.Server.GameObjects.Components
     {
         private bool _isPlaceable;
 
-        public bool IsPlaceable
+        [ViewVariables(VVAccess.ReadWrite)]
+        public override bool IsPlaceable
         {
             get => _isPlaceable;
             set
@@ -29,6 +31,7 @@ namespace Content.Server.GameObjects.Components
             }
         }
 
+        [ViewVariables]
         int IInteractUsing.Priority => 1;
 
         public override void ExposeData(ObjectSerializer serializer)

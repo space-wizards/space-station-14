@@ -39,7 +39,7 @@ namespace Content.Client.GameObjects.Components.Storage
             base.OnAdd();
 
             Window = new StorageWindow()
-                {StorageEntity = this, Title = Owner.Name};
+            { StorageEntity = this, Title = Owner.Name };
         }
 
         public override void OnRemove()
@@ -74,7 +74,7 @@ namespace Content.Client.GameObjects.Components.Storage
                     break;
                 //Opens the UI
                 case OpenStorageUIMessage _:
-                    OpenUI();
+                    ToggleUI();
                     break;
                 case CloseStorageUIMessage _:
                     CloseUI();
@@ -95,11 +95,14 @@ namespace Content.Client.GameObjects.Components.Storage
         }
 
         /// <summary>
-        /// Opens the storage UI
+        /// Opens the storage UI if closed. Closes it if opened.
         /// </summary>
-        private void OpenUI()
+        private void ToggleUI()
         {
-            Window.Open();
+            if (Window.IsOpen)
+                Window.Close();
+            else
+                Window.Open();
         }
 
         private void CloseUI()
@@ -137,8 +140,8 @@ namespace Content.Client.GameObjects.Components.Storage
             private Label Information;
             public ClientStorageComponent StorageEntity;
 
-            private StyleBoxFlat _HoveredBox = new StyleBoxFlat {BackgroundColor = Color.Black.WithAlpha(0.35f)};
-            private StyleBoxFlat  _unHoveredBox = new StyleBoxFlat {BackgroundColor = Color.Black.WithAlpha(0.0f)};
+            private StyleBoxFlat _HoveredBox = new StyleBoxFlat { BackgroundColor = Color.Black.WithAlpha(0.35f) };
+            private StyleBoxFlat _unHoveredBox = new StyleBoxFlat { BackgroundColor = Color.Black.WithAlpha(0.0f) };
 
             protected override Vector2? CustomSize => (180, 320);
 

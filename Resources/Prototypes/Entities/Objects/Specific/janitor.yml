@@ -14,9 +14,9 @@
     size: 10
     sprite: Objects/Specific/Janitorial/mop.rsi
   - type: Mop
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 10
-    caps: 1
+    caps: AddTo, RemoveFrom
   - type: LoopingSound
 
 - type: entity
@@ -33,9 +33,9 @@
   - type: InteractionOutline
   - type: Bucket
   - type: LoopingSound
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 500
-    caps: 3
+    caps: AddTo, RemoveFrom
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -49,14 +49,14 @@
   - type: Physics
     mass: 5
     anchored: false
-  - type: CanSpill
+  - type: Spillable
   - type: Pullable
 
 - type: entity
   parent: BaseItem
   name: bucket
   id: Bucket
-  description: "Dear God."
+  description: It's a boring old bucket.
   components:
   - type: Clickable
   - type: Sprite
@@ -66,9 +66,9 @@
     texture: Objects/Specific/Janitorial/bucket.png
   - type: Bucket
   - type: LoopingSound
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 500
-    caps: 3
+    caps: AddTo, RemoveFrom
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -79,7 +79,7 @@
   - type: Physics
     mass: 5
     anchored: false
-  - type: CanSpill
+  - type: Spillable
 
 - type: entity
   name: wet floor sign
@@ -190,12 +190,12 @@
     texture: Objects/Specific/Janitorial/cleaner.png
   - type: Icon
     texture: Objects/Specific/Janitorial/cleaner.png
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 100
-    caps: 1
+    caps: AddTo, RemoveFrom
   - type: Pourable
     transferAmount: 5.0
-  - type: CanSpill
+  - type: Spillable
   - type: Spray
     transferAmount: 10
     sprayVelocity: 5

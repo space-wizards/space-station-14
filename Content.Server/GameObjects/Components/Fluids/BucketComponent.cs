@@ -24,17 +24,17 @@ namespace Content.Server.GameObjects.Components.Fluids
 
         public ReagentUnit MaxVolume
         {
-            get => Owner.TryGetComponent(out SolutionComponent? solution) ? solution.MaxVolume : ReagentUnit.Zero;
+            get => Owner.TryGetComponent(out SolutionContainerComponent? solution) ? solution.MaxVolume : ReagentUnit.Zero;
             set
             {
-                if (Owner.TryGetComponent(out SolutionComponent? solution))
+                if (Owner.TryGetComponent(out SolutionContainerComponent? solution))
                 {
                     solution.MaxVolume = value;
                 }
             }
         }
 
-        public ReagentUnit CurrentVolume => Owner.TryGetComponent(out SolutionComponent? solution)
+        public ReagentUnit CurrentVolume => Owner.TryGetComponent(out SolutionContainerComponent? solution)
             ? solution.CurrentVolume
             : ReagentUnit.Zero;
 
@@ -50,12 +50,12 @@ namespace Content.Server.GameObjects.Components.Fluids
         public override void Initialize()
         {
             base.Initialize();
-            Owner.EnsureComponent<SolutionComponent>();
+            Owner.EnsureComponent<SolutionContainerComponent>();
         }
 
         private bool TryGiveToMop(MopComponent mopComponent)
         {
-            if (!Owner.TryGetComponent(out SolutionComponent? contents))
+            if (!Owner.TryGetComponent(out SolutionContainerComponent? contents))
             {
                 return false;
             }
@@ -88,7 +88,7 @@ namespace Content.Server.GameObjects.Components.Fluids
 
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!Owner.TryGetComponent(out SolutionComponent? contents))
+            if (!Owner.TryGetComponent(out SolutionContainerComponent? contents))
             {
                 return false;
             }
