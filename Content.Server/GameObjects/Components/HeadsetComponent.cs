@@ -45,7 +45,7 @@ namespace Content.Server.GameObjects.Components
             // Only listens to speech in exact same position
             serializer.DataField(this, h => h.ListenRange, "listenRange", 0);
 
-            serializer.DataField(ref _channels, "channels", new List<int>());
+            serializer.DataField(ref _channels, "channels", new List<int> {1459});
             serializer.DataField(ref _broadcastChannel, "broadcastChannel", 1459);
         }
 

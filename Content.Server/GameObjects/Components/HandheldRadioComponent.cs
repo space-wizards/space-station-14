@@ -53,7 +53,7 @@ namespace Content.Server.GameObjects.Components
             base.ExposeData(serializer);
 
             serializer.DataField(this, h => h.ListenRange, "listenRange", 7);
-            serializer.DataField(ref _channels, "channels", new List<int>());
+            serializer.DataField(ref _channels, "channels", new List<int> {1459});
             serializer.DataField(ref _broadcastChannel, "broadcastChannel", 1459);
         }
 
