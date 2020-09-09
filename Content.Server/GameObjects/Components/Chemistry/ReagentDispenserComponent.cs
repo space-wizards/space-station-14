@@ -47,9 +47,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         [ViewVariables] private bool HasBeaker => _beakerContainer.ContainedEntity != null;
         [ViewVariables] private ReagentUnit _dispenseAmount = ReagentUnit.New(10);
-
-        [ViewVariables]
-        private SolutionComponent? Solution => _beakerContainer.ContainedEntity?.GetComponent<SolutionComponent>();
+        [ViewVariables] private SolutionContainerComponent? Solution => _beakerContainer.ContainedEntity.GetComponent<SolutionContainerComponent>();
 
         private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
 
@@ -210,7 +208,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     "", Inventory, Owner.Name, null, _dispenseAmount);
             }
 
-            var solution = beaker.GetComponent<SolutionComponent>();
+            var solution = beaker.GetComponent<SolutionContainerComponent>();
             return new ReagentDispenserBoundUserInterfaceState(Powered, true, solution.CurrentVolume, solution.MaxVolume,
                 beaker.Name, Inventory, Owner.Name, solution.ReagentList.ToList(), _dispenseAmount);
         }
@@ -222,7 +220,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         }
 
         /// <summary>
-        /// If this component contains an entity with a <see cref="SolutionComponent"/>, eject it.
+        /// If this component contains an entity with a <see cref="SolutionContainerComponent"/>, eject it.
         /// Tries to eject into user's hands first, then ejects onto dispenser if both hands are full.
         /// </summary>
         private void TryEject(IEntity user)
@@ -241,26 +239,26 @@ namespace Content.Server.GameObjects.Components.Chemistry
         }
 
         /// <summary>
-        /// If this component contains an entity with a <see cref="SolutionComponent"/>, remove all of it's reagents / solutions.
+        /// If this component contains an entity with a <see cref="SolutionContainerComponent"/>, remove all of it's reagents / solutions.
         /// </summary>
         private void TryClear()
         {
             if (!HasBeaker) return;
-            var solution = _beakerContainer.ContainedEntity.GetComponent<SolutionComponent>();
+            var solution = _beakerContainer.ContainedEntity.GetComponent<SolutionContainerComponent>();
             solution.RemoveAllSolution();
 
             UpdateUserInterface();
         }
 
         /// <summary>
-        /// If this component contains an entity with a <see cref="SolutionComponent"/>, attempt to dispense the specified reagent to it.
+        /// If this component contains an entity with a <see cref="SolutionContainerComponent"/>, attempt to dispense the specified reagent to it.
         /// </summary>
         /// <param name="dispenseIndex">The index of the reagent in <c>Inventory</c>.</param>
         private void TryDispense(int dispenseIndex)
         {
             if (!HasBeaker) return;
 
-            var solution = _beakerContainer.ContainedEntity.GetComponent<SolutionComponent>();
+            var solution = _beakerContainer.ContainedEntity.GetComponent<SolutionContainerComponent>();
             solution.TryAddReagent(Inventory[dispenseIndex].ID, _dispenseAmount, out _);
 
             UpdateUserInterface();
@@ -292,7 +290,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         /// <summary>
         /// Called when you click the owner entity with something in your active hand. If the entity in your hand
-        /// contains a <see cref="SolutionComponent"/>, if you have hands, and if the dispenser doesn't already
+        /// contains a <see cref="SolutionContainerComponent"/>, if you have hands, and if the dispenser doesn't already
         /// hold a container, it will be added to the dispenser.
         /// </summary>
         /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
@@ -312,13 +310,13 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
 
             var activeHandEntity = hands.GetActiveHand.Owner;
-            if (activeHandEntity.TryGetComponent<SolutionComponent>(out var solution))
+            if (activeHandEntity.TryGetComponent<SolutionContainerComponent>(out var solution))
             {
                 if (HasBeaker)
                 {
                     Owner.PopupMessage(args.User, Loc.GetString("This dispenser already has a container in it."));
                 }
-                else if ((solution.Capabilities & SolutionCaps.FitsInDispenser) == 0)
+                else if ((solution.Capabilities & SolutionContainerCaps.FitsInDispenser) == 0)
                 {
                     //If it can't fit in the dispenser, don't put it in. For example, buckets and mop buckets can't fit.
                     Owner.PopupMessage(args.User, Loc.GetString("That can't fit in the dispenser."));

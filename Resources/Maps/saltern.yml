@@ -580,8 +580,8 @@ entities:
     pos: -15.694785,24.608267
     rot: -1.5707963267948966 rad
     type: Transform
-  - caps: PourIn, PourOut, Injectable
-    type: Solution
+  - caps: AddTo, RemoveFrom
+    type: SolutionContainer
   - anchored: False
     type: Collidable
 - uid: 60
@@ -718,8 +718,8 @@ entities:
     pos: -3.470539,16.956116
     rot: -1.5707963267948966 rad
     type: Transform
-  - caps: PourIn, PourOut, Injectable
-    type: Solution
+  - caps: AddTo, RemoveFrom
+    type: SolutionContainer
   - anchored: False
     type: Collidable
 - uid: 74
@@ -1037,8 +1037,8 @@ entities:
   - parent: 857
     pos: 8.661116,25.513401
     type: Transform
-  - caps: PourIn, PourOut, Injectable
-    type: Solution
+  - caps: AddTo, RemoveFrom
+    type: SolutionContainer
   - anchored: False
     type: Collidable
 - uid: 114
@@ -22848,7 +22848,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - fillingSteps: 0
-    type: Solution
+    type: SolutionContainer
   - anchored: False
     type: Collidable
 - uid: 1219
@@ -32479,8 +32479,8 @@ entities:
     pos: -8.476567,-17.420076
     rot: -1.5707963267948966 rad
     type: Transform
-  - caps: PourIn, PourOut, Injectable
-    type: Solution
+  - caps: AddTo, RemoveFrom
+    type: SolutionContainer
   - anchored: False
     type: Collidable
 - uid: 2454

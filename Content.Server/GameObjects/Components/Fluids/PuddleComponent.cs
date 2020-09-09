@@ -94,7 +94,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         private ReagentUnit _overflowVolume;
         private ReagentUnit OverflowLeft => CurrentVolume - OverflowVolume;
 
-        private SolutionComponent _contents;
+        private SolutionContainerComponent _contents;
         public bool EmptyHolder => _contents.ReagentList.Count == 0;
         private int _spriteVariants;
         // Whether the underlying solution color should be used
@@ -118,13 +118,13 @@ namespace Content.Server.GameObjects.Components.Fluids
         {
             base.Initialize();
 
-            if (Owner.TryGetComponent(out SolutionComponent solutionComponent))
+            if (Owner.TryGetComponent(out SolutionContainerComponent solutionComponent))
             {
                 _contents = solutionComponent;
             }
             else
             {
-                _contents = Owner.AddComponent<SolutionComponent>();
+                _contents = Owner.AddComponent<SolutionContainerComponent>();
             }
 
             _snapGrid = Owner.EnsureComponent<SnapGridComponent>();

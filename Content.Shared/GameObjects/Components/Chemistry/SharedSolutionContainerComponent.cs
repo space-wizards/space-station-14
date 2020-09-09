@@ -4,9 +4,9 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Chemistry
 {
-    public class SharedSolutionComponent : Component
+    public class SharedSolutionContainerComponent : Component
     {
-        public override string Name => "Solution";
+        public override string Name => "SolutionContainer";
 
         /// <inheritdoc />
         public sealed override uint? NetID => ContentNetIDs.SOLUTION;
@@ -28,13 +28,13 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         {
             base.HandleComponentState(curState, nextState);
 
-            if(curState == null)
+            if (curState == null)
+            {
                 return;
-
-            var compState = (SolutionComponentState)curState;
-
-            //TODO: Make me work!
+            }
+                
+            // var compState = (SolutionComponentState)curState;
+            // Is there anything we even need to sync with client?
         }
-
     }
 }

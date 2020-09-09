@@ -2,6 +2,7 @@
   id: chem.H
   name: hydrogen
   desc: A light, flammable gas.
+  physicalDesc: gaseous
   color: "#808080"
   boilingPoint: -253.0
   meltingPoint: -259.2
@@ -10,6 +11,7 @@
   id: chem.O
   name: oxygen
   desc: An oxidizing, colorless gas.
+  physicalDesc: gaseous
   color: "#808080"
   boilingPoint: -183.0
   meltingPoint: -218.4
@@ -19,7 +21,8 @@
   id: chem.S
   name: sulfur
   desc: A yellow, crystalline solid.
-  color: "#FFFACD"
+  physicalDesc: powdery
+  color: "#fff385"
   boilingPoint: 445.0
   meltingPoint: 120.0
 
@@ -27,6 +30,7 @@
   id: chem.C
   name: carbon
   desc: A black, crystalline solid.
+  physicalDesc: crystalline
   color: "#22282b"
   boilingPoint: 4200.0
   meltingPoint: 3550.0
@@ -34,7 +38,8 @@
 - type: reagent
   id: chem.Al
   name: aluminum
-  desc: A silvery-white, soft, non-magnetic, and ductile metal.
+  desc: A silver, soft, non-magnetic, and ductile metal.
+  physicalDesc: metallic
   color: "#848789"
   boilingPoint: 2327.0
   meltingPoint: 660.0
@@ -43,6 +48,7 @@
   id: chem.Cu
   name: copper
   desc: A soft, malleable, and ductile metal with very high thermal and electrical conductivity.
+  physicalDesc: metallic
   color: "#b05b3c"
   boilingPoint: 2595.0
   meltingPoint: 1083.0
@@ -51,6 +57,7 @@
   id: chem.N
   name: nitrogen
   desc: A colorless, odorless unreactive gas. Highly stable.
+  physicalDesc: gaseous
   color: "#808080"
   boilingPoint: -195.8
   meltingPoint: -210.0
@@ -59,6 +66,7 @@
   id: chem.Fe
   name: iron
   desc: A silvery-grey metal which forms iron oxides (rust) with contact with air. Commonly alloyed with other elements to create alloys such as steel.
+  physicalDesc: metallic
   color: "#434b4d"
   boilingPoint: 2862.0
   meltingPoint: 1538.0
@@ -67,6 +75,7 @@
   id: chem.F
   name: fluorine
   desc: A highly toxic pale yellow gas. Extremely reactive.
+  physicalDesc: gaseous
   color: "#808080"
   boilingPoint: -188.11
   meltingPoint: -219.67
@@ -75,6 +84,7 @@
   id: chem.Si
   name: silicon
   desc: A hard and brittle crystalline solid with a blue-grey color.
+  physicalDesc: crystalline
   color: "#364266"
   boilingPoint: 3265.0
   meltingPoint: 1414.0
@@ -83,6 +93,7 @@
   id: chem.Cl
   name: chlorine
   desc: A yellow-green gas which is toxic to humans.
+  physicalDesc: gaseous
   color: "#a2ff00"
   meltingPoint: -101.5
   boilingPoint: -34.04
@@ -91,6 +102,7 @@
   id: chem.Li
   name: lithium
   desc: A soft, silvery-white alkali metal. It is highly reactive, and ignites if it makes contact with water.
+  physicalDesc: shiny
   color: "#c6c8cc"
   meltingPoint: 180.5
   boilingPoint: 1330.0
@@ -99,6 +111,7 @@
   id: chem.Hg
   name: mercury
   desc: A silver metal which is liquid at room temperature. It is highly toxic to humans.
+  physicalDesc: shiny
   color: "#929296"
   meltingPoint: -38.83
   boilingPoint: 356.73
@@ -107,14 +120,16 @@
   id: chem.P
   name: phosphorus
   desc: A reactive metal used in pyrotechnics and weapons.
-  color: "#803330"
+  physicalDesc: powdery
+  color: "#ede4e4"
   meltingPoint: 44.2
   boilingPoint: 280.5
 
 - type: reagent
   id: chem.K
   name: potassium
-  desc: A soft, silvery-white metal. Even more reactive than lithium.
+  desc: A soft, shiny grey metal. Even more reactive than lithium.
+  physicalDesc: shiny
   color: "#c6c8cc"
   meltingPoint: 65.5
   boilingPoint: 759.0
@@ -123,6 +138,7 @@
   id: chem.Ra
   name: radium
   desc: A radioactive metal, silvery-white in it's pure form. It glows due to it's radioactivity and is highly toxic.
+  physicalDesc: glowing
   color: "#00ff04"
   meltingPoint: 700.0
   boilingPoint: 1737.0
@@ -131,6 +147,7 @@
   id: chem.Na
   name: sodium
   desc: A silvery-white alkali metal. Highly reactive in it's pure form.
+  physicalDesc: metallic
   color: "#c6c8cc"
   meltingPoint: 97.8
   boilingPoint: 883.0
@@ -138,7 +155,8 @@
 - type: reagent
   id: chem.U
   name: uranium
-  desc: A silvery-white metallic chemical element in the actinide series, weakly radioactive.
-  color: "#00ff06"
+  desc: A grey metallic chemical element in the actinide series, weakly radioactive.
+  physicalDesc: metallic
+  color: "#8fa191"
   meltingPoint: 1133.0
   boilingPoint: 4131.0
