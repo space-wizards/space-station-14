@@ -9,19 +9,9 @@
   - type: Clothing
     Slots:
     - ears
-    sprite: Objects/Devices/communication.rsi
-
-- type: entity
-  parent: Clothing
-  id: HeadsetOverEarsBase
-  name: headset
-  abstract: true
-  description: An updated, modular intercom that fits over the head. Takes encryption keys.
-  components:
-  - type: Headset
+    sprite: Clothing/Ears/Headsets/base.rsi
 
 
-## Earpiece Headsets
 - type: entity
   parent: HeadsetBase
   id: HeadsetCargo
@@ -29,11 +19,11 @@
   description: A headset used by the QM and his slaves.
   components:
   - type: Sprite
-    sprite: Objects/Devices/communication.rsi
-    state: cargo_headset
+    sprite: Clothing/Ears/Headsets/cargo.rsi
+    state: icon
   - type: Icon
-    sprite: Objects/Devices/communication.rsi
-    state: cargo_headset
+    sprite: Clothing/Ears/Headsets/cargo.rsi
+    state: icon
 
 - type: entity
   parent: HeadsetBase
@@ -42,11 +32,11 @@
   description: A headset used by the upper echelons of Nanotrasen.
   components:
   - type: Sprite
-    sprite: Objects/Devices/communication.rsi
-    state: cent_headset
+    sprite: Clothing/Ears/Headsets/centcom.rsi
+    state: icon
   - type: Icon
-    sprite: Objects/Devices/communication.rsi
-    state: cent_headset
+    sprite: Clothing/Ears/Headsets/centcom.rsi
+    state: icon
 
 - type: entity
   parent: HeadsetBase
@@ -55,11 +45,11 @@
   description: A headset with a commanding channel.
   components:
   - type: Sprite
-    sprite: Objects/Devices/communication.rsi
-    state: com_headset
+    sprite: Clothing/Ears/Headsets/command.rsi
+    state: icon
   - type: Icon
-    sprite: Objects/Devices/communication.rsi
-    state: com_headset
+    sprite: Clothing/Ears/Headsets/command.rsi
+    state: icon
 
 - type: entity
   parent: HeadsetBase
@@ -68,11 +58,11 @@
   description: When the engineers wish to chat like girls.
   components:
   - type: Sprite
-    sprite: Objects/Devices/communication.rsi
-    state: eng_headset
+    sprite: Clothing/Ears/Headsets/engineering.rsi
+    state: icon
   - type: Icon
-    sprite: Objects/Devices/communication.rsi
-    state: eng_headset
+    sprite: Clothing/Ears/Headsets/engineering.rsi
+    state: icon
 
 - type: entity
   parent: HeadsetBase
@@ -81,11 +71,50 @@
   description: A headset for the trained staff of the medbay.
   components:
   - type: Sprite
-    sprite: Objects/Devices/communication.rsi
-    state: med_headset
+    sprite: Clothing/Ears/Headsets/medical.rsi
+    state: icon
   - type: Icon
-    sprite: Objects/Devices/communication.rsi
-    state: med_headset
+    sprite: Clothing/Ears/Headsets/medical.rsi
+    state: icon
+
+- type: entity
+  parent: HeadsetBase
+  id: HeadsetMedicalScience
+  name: medical research headset
+  description: A headset that is a result of the mating between medical and science.
+  components:
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/medicalscience.rsi
+    state: icon
+  - type: Icon
+    sprite: Clothing/Ears/Headsets/medicalscience.rsi
+    state: icon
+
+- type: entity
+  parent: HeadsetBase
+  id: HeadsetMining
+  name: mining headset
+  description: Headset used by shaft miners.
+  components:
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/mining.rsi
+    state: icon
+  - type: Icon
+    sprite: Clothing/Ears/Headsets/mining.rsi
+    state: icon
+
+- type: entity
+  parent: HeadsetBase
+  id: HeadsetRobotics
+  name: robotics headset
+  description: Made specifically for the roboticists, who cannot decide between departments.
+  components:
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/robotics.rsi
+    state: icon
+  - type: Icon
+    sprite: Clothing/Ears/Headsets/robotics.rsi
+    state: icon
 
 - type: entity
   parent: HeadsetBase
@@ -94,11 +123,11 @@
   description: A sciency headset. Like usual.
   components:
   - type: Sprite
-    sprite: Objects/Devices/communication.rsi
-    state: sci_headset
+    sprite: Clothing/Ears/Headsets/science.rsi
+    state: icon
   - type: Icon
-    sprite: Objects/Devices/communication.rsi
-    state: sci_headset
+    sprite: Clothing/Ears/Headsets/science.rsi
+    state: icon
 
 - type: entity
   parent: HeadsetBase
@@ -107,106 +136,21 @@
   description: This is used by your elite security force.
   components:
   - type: Sprite
-    sprite: Objects/Devices/communication.rsi
-    state: sec_headset
+    sprite: Clothing/Ears/Headsets/security.rsi
+    state: icon
   - type: Icon
-    sprite: Objects/Devices/communication.rsi
-    state: sec_headset
-
-## Overear Headset
-- type: entity
-  parent: HeadsetOverEarsBase
-  id: HeadsetOverEarsSecurity
-  name: security overear-headset
-  components:
-  - type: Sprite
-    sprite: Objects/Devices/Headsets/sec_headset_alt.rsi
-    state: headset
-  - type: Icon
-    sprite: Objects/Devices/Headsets/sec_headset_alt.rsi
-    state: headset
-  - type: Clothing
-    Slots:
-    - ears
-    sprite: Objects/Devices/Headsets/sec_headset_alt.rsi
+    sprite: Clothing/Ears/Headsets/security.rsi
+    state: icon
 
 - type: entity
-  parent: HeadsetOverEarsBase
-  id: HeadsetOverEarsCargo
-  name: cargo overear-headset
+  parent: HeadsetBase
+  id: HeadsetService
+  name: service headset
+  description: Headset used by the service staff, tasked with keeping the station full, happy and clean.
   components:
   - type: Sprite
-    sprite: Objects/Devices/Headsets/cargo_headset_alt.rsi
-    state: headset
+    sprite: Clothing/Ears/Headsets/service.rsi
+    state: icon
   - type: Icon
-    sprite: Objects/Devices/Headsets/cargo_headset_alt.rsi
-    state: headset
-  - type: Clothing
-    Slots:
-    - ears
-    sprite: Objects/Devices/Headsets/cargo_headset_alt.rsi
-
-- type: entity
-  parent: HeadsetOverEarsBase
-  id: HeadsetOverEarsCommand
-  name: command overear-headset
-  components:
-  - type: Sprite
-    sprite: Objects/Devices/Headsets/command_headset_alt.rsi
-    state: headset
-  - type: Icon
-    sprite: Objects/Devices/Headsets/command_headset_alt.rsi
-    state: headset
-  - type: Clothing
-    Slots:
-    - ears
-    sprite: Objects/Devices/Headsets/command_headset_alt.rsi
-
-- type: entity
-  parent: HeadsetOverEarsBase
-  id: HeadsetOverEarsEngineering
-  name: engineering overear-headset
-  components:
-  - type: Sprite
-    sprite: Objects/Devices/Headsets/eng_headset_alt.rsi
-    state: headset
-  - type: Icon
-    sprite: Objects/Devices/Headsets/eng_headset_alt.rsi
-    state: headset
-  - type: Clothing
-    Slots:
-    - ears
-    sprite: Objects/Devices/Headsets/eng_headset_alt.rsi
-
-- type: entity
-  parent: HeadsetOverEarsBase
-  id: HeadsetOverEarsMedical
-  name: medical overear-headset
-  components:
-  - type: Sprite
-    sprite: Objects/Devices/Headsets/med_headset_alt.rsi
-    state: headset
-  - type: Icon
-    sprite: Objects/Devices/Headsets/med_headset_alt.rsi
-    state: headset
-  - type: Clothing
-    Slots:
-    - ears
-    sprite: Objects/Devices/Headsets/med_headset_alt.rsi
-
-- type: entity
-  parent: HeadsetOverEarsBase
-  id: HeadsetOverEarsSyndicate
-  name: syndicate overear-headset
-  description: A syndicate headset that can be used to hear all radio frequencies. Protects ears from flashbangs.
-  components:
-  - type: Sprite
-    sprite: Objects/Devices/Headsets/syndie_headset.rsi
-    state: headset
-  - type: Icon
-    sprite: Objects/Devices/Headsets/syndie_headset.rsi
-    state: headset
-  - type: Clothing
-    Slots:
-    - ears
-    sprite: Objects/Devices/Headsets/syndie_headset.rsi
+    sprite: Clothing/Ears/Headsets/service.rsi
+    state: icon

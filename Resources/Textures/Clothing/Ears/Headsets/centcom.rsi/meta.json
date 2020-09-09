@@ -17,7 +17,7 @@
             ]
         },
         {
-            "name": "cent_headset",
+            "name": "icon",
             "directions": 1,
             "delays": [
                 [
@@ -26,7 +26,7 @@
             ]
         },
         {
-            "name": "cent_headset_alt",
+            "name": "icon_alt",
             "directions": 1,
             "delays": [
                 [
