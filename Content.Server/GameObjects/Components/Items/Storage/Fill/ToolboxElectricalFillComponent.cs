@@ -21,7 +21,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage.Fill
 
             void Spawn(string prototype)
             {
-                storage.Insert(_entityManager.SpawnEntity(prototype, Owner.Transform.GridPosition));
+                storage.Insert(_entityManager.SpawnEntity(prototype, Owner.Transform.Coordinates));
             }
 
             Spawn("Screwdriver");

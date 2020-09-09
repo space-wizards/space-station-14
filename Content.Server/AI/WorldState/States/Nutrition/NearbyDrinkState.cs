@@ -24,7 +24,7 @@ namespace Content.Server.AI.WorldState.States.Nutrition
             }
 
             foreach (var entity in Visibility
-                .GetNearestEntities(Owner.Transform.GridPosition, typeof(DrinkComponent), controller.VisionRadius))
+                .GetNearestEntities(Owner.Transform.Coordinates, typeof(DrinkComponent), controller.VisionRadius))
             {
                 if (ContainerHelpers.TryGetContainer(entity, out var container))
                 {

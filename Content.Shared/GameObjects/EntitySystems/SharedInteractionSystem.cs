@@ -5,7 +5,6 @@ using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -21,7 +20,6 @@ namespace Content.Shared.GameObjects.EntitySystems
     public class SharedInteractionSystem : EntitySystem
     {
         [Dependency] private readonly IPhysicsManager _physicsManager = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
 
         public const float InteractionRange = 2;
         public const float InteractionRangeSquared = InteractionRange * InteractionRange;
@@ -284,7 +282,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         /// </returns>
         public bool InRangeUnobstructed(
             IEntity origin,
-            GridCoordinates other,
+            EntityCoordinates other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
             Ignored predicate = null,
@@ -292,7 +290,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             bool popup = false)
         {
             var originPosition = origin.Transform.MapPosition;
-            var otherPosition = other.ToMap(_mapManager);
+            var otherPosition = other.ToMap(EntityManager);
             predicate ??= e => e == origin;
 
             var inRange = InRangeUnobstructed(originPosition, otherPosition, range, collisionMask, predicate, ignoreInsideBlocker);
@@ -522,7 +520,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             if (target == null)
             {
-                otherPosition = args.ClickLocation.ToMap(_mapManager);
+                otherPosition = args.ClickLocation.ToMap(EntityManager);
             }
             else
             {

@@ -183,15 +183,15 @@ namespace Content.Server.GameObjects.Components.Movement
                 return;
             }
 
-            var position = _connectingTeleporter.Transform.GridPosition;
+            var position = _connectingTeleporter.Transform.Coordinates;
             var soundPlayer = EntitySystem.Get<AudioSystem>();
 
             // Departure
             // Do we need to rate-limit sounds to stop ear BLAST?
-            soundPlayer.PlayAtCoords(_departureSound, entity.Transform.GridPosition);
+            soundPlayer.PlayAtCoords(_departureSound, entity.Transform.Coordinates);
             entity.Transform.AttachToGridOrMap();
-            entity.Transform.GridPosition = position;
-            soundPlayer.PlayAtCoords(_arrivalSound, entity.Transform.GridPosition);
+            entity.Transform.Coordinates = position;
+            soundPlayer.PlayAtCoords(_arrivalSound, entity.Transform.Coordinates);
             TryChangeState(PortalState.RecentlyTeleported);
             // To stop spam teleporting. Could potentially look at adding a timer to flush this from the portal
             ImmuneEntities.Add(entity);

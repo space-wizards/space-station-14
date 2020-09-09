@@ -56,15 +56,15 @@ namespace Content.Client.Utility
 
         public static bool InRangeUnobstructed(
             this LocalPlayer origin,
-            GridCoordinates other,
+            EntityCoordinates other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
             Ignored predicate = null,
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
-            var mapManager = IoCManager.Resolve<IMapManager>();
-            var otherPosition = other.ToMap(mapManager);
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var otherPosition = other.ToMap(entityManager);
 
             return origin.InRangeUnobstructed(otherPosition, range, collisionMask, predicate, ignoreInsideBlocker,
                 popup);

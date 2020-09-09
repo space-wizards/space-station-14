@@ -13,6 +13,7 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -25,12 +26,13 @@ namespace Content.Server.GameObjects.Components.Atmos
     public class GasAnalyzerComponent : SharedGasAnalyzerComponent, IAfterInteract, IDropped, IUse
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private GasAnalyzerDanger _pressureDanger;
         private float _timeSinceSync;
         private const float TimeBetweenSyncs = 2f;
         private bool _checkPlayer = false; // Check at the player pos or at some other tile?
-        private GridCoordinates? _position; // The tile that we scanned
+        private EntityCoordinates? _position; // The tile that we scanned
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(GasAnalyzerUiKey.Key);
 
@@ -69,7 +71,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// </summary>
         /// <param name="session">The session to open the ui for</param>
         /// <param name="pos">The position to analyze the gas</param>
-        public void OpenInterface(IPlayerSession session, GridCoordinates pos)
+        public void OpenInterface(IPlayerSession session, EntityCoordinates pos)
         {
             _checkPlayer = false;
             _position = pos;
@@ -100,7 +102,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             // Already get the pressure before Dirty(), because we can't get the EntitySystem in that thread or smth
             var pressure = 0f;
             var gam = EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(Owner.Transform.GridID);
-            var tile = gam?.GetTile(Owner.Transform.GridPosition).Air;
+            var tile = gam?.GetTile(Owner.Transform.Coordinates).Air;
             if (tile != null)
             {
                 pressure = tile.Pressure;
@@ -148,18 +150,18 @@ namespace Content.Server.GameObjects.Components.Atmos
                 }
             }
 
-            var pos = Owner.Transform.GridPosition;
+            var pos = Owner.Transform.Coordinates;
             if (!_checkPlayer && _position.HasValue)
             {
                 // Check if position is out of range => don't update
-                if (!_position.Value.InRange(_mapManager, pos, SharedInteractionSystem.InteractionRange))
+                if (!_position.Value.InRange(_entityManager, pos, SharedInteractionSystem.InteractionRange))
                     return;
 
                 pos = _position.Value;
             }
 
             var atmosSystem = EntitySystem.Get<AtmosphereSystem>();
-            var gam = atmosSystem.GetGridAtmosphere(pos.GridID);
+            var gam = atmosSystem.GetGridAtmosphere(pos.GetGridId(_entityManager));
             var tile = gam?.GetTile(pos).Air;
             if (tile == null)
             {

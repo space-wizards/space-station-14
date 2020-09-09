@@ -1,0 +1,57 @@
+- type: entity
+  abstract: true
+  parent: BackpackClothing
+  id: BackpackClothingFilled
+  components:
+  - type: StorageFill
+    contents:
+      - BoxSurvival
+
+- type: entity
+  abstract: true
+  parent: ClownPack
+  id: ClownPackFilled
+  components:
+  - type: StorageFill
+    contents:
+      - BoxSurvival
+
+- type: entity
+  abstract: true
+  parent: SecPack
+  id: SecPackFilled
+  components:
+  - type: StorageFill
+    contents:
+      - BoxSurvival
+      - Stunbaton
+      - Flash
+
+- type: entity
+  abstract: true
+  parent: BackpackMedical
+  id: BackpackMedicalFilled
+  components:
+  - type: StorageFill
+    contents:
+      - BoxSurvival
+
+- type: entity
+  abstract: true
+  parent: BackpackCaptain
+  id: BackpackCaptainFilled
+  components:
+  - type: StorageFill
+    contents:
+      - BoxSurvival
+      #- StationCharter
+      #- TelescopicBaton
+
+- type: entity
+  abstract: true
+  parent: BackpackEngineering
+  id: BackpackEngineeringFilled
+  components:
+  - type: StorageFill
+    contents:
+      - BoxSurvival

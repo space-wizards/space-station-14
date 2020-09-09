@@ -1,0 +1,15 @@
+- type: entity
+  id: BoxBase
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/boxes.rsi
+  - type: Icon
+    sprite: Objects/Storage/boxicons.rsi
+  - type: Item
+    sprite: Objects/Storage/boxes.rsi
+    size: 9999
+  - type: Storage
+    capacity: 60
+    size: 9999

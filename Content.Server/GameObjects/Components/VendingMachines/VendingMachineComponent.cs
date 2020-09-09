@@ -188,7 +188,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
             {
                 _ejecting = false;
                 TrySetVisualState(VendingMachineVisualState.Normal);
-                Owner.EntityManager.SpawnEntity(id, Owner.Transform.GridPosition);
+                Owner.EntityManager.SpawnEntity(id, Owner.Transform.Coordinates);
             });
 
             EntitySystem.Get<AudioSystem>().PlayFromEntity(_soundVend, Owner, AudioParams.Default.WithVolume(-2f));

@@ -38,9 +38,9 @@ namespace Content.Shared.GameObjects.Components.Movement
     [Serializable, NetSerializable]
     public class TeleportMessage : ComponentMessage
     {
-        public readonly GridCoordinates Target;
+        public readonly EntityCoordinates Target;
 
-        public TeleportMessage(GridCoordinates target)
+        public TeleportMessage(EntityCoordinates target)
         {
             Target = target;
         }

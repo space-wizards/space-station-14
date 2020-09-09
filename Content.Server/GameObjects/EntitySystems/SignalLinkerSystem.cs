@@ -64,7 +64,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        private bool HandleUse(ICommonSession session, GridCoordinates coords, EntityUid uid)
+        private bool HandleUse(ICommonSession session, EntityCoordinates coords, EntityUid uid)
         {
             if (!_transmitters.TryGetValue(session.SessionId, out var signalTransmitter))
             {
@@ -72,11 +72,6 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             if (!EntityManager.TryGetEntity(uid, out var entity))
-            {
-                return false;
-            }
-
-            if (entity == null)
             {
                 return false;
             }

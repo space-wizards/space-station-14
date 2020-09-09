@@ -133,7 +133,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <param name="coords"></param>
         /// <param name="doMobChecks">Whether to check the <see cref="ActionBlockerSystem.CanDrop()"/> for the mob or not.</param>
         /// <returns>True if an item was dropped, false otherwise.</returns>
-        bool Drop(string slot, GridCoordinates coords, bool doMobChecks = true);
+        bool Drop(string slot, EntityCoordinates coords, bool doMobChecks = true);
 
         /// <summary>
         ///     Drop the specified entity in our hands to a certain position.
@@ -155,7 +155,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <exception cref="ArgumentException">
         ///     Thrown if <see cref="entity"/> is not actually held in any hand.
         /// </exception>
-        bool Drop(IEntity entity, GridCoordinates coords, bool doMobChecks = true);
+        bool Drop(IEntity entity, EntityCoordinates coords, bool doMobChecks = true);
 
         /// <summary>
         ///     Drop the item contained in a slot into another container.

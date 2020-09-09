@@ -81,7 +81,7 @@ namespace Content.Server.GameObjects.Components
             }
             else if (_itemContainer.Remove(_itemContainer.ContainedEntity))
             {
-                _itemContainer.ContainedEntity.Transform.GridPosition = Owner.Transform.GridPosition;
+                _itemContainer.ContainedEntity.Transform.Coordinates = Owner.Transform.Coordinates;
             }
 
             return true;
