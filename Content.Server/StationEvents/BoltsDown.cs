@@ -2,17 +2,16 @@ using JetBrains.Annotations;
 using Content.Server.GameObjects.Components.Doors;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
-using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
+using Content.Shared.GameObjects.Components.Inventory;
+using Content.Shared.GameObjects.Components.Damage;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
-using Robust.Shared.Prototypes;
-using Robust.Shared.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-
 
 namespace Content.Server.StationEvents
 {
@@ -25,13 +24,13 @@ namespace Content.Server.StationEvents
         private float _elapsedTime;
         private int _eventDuration;   
         protected override string StartAnnouncement => Loc.GetString(
-            "The airlocks have been hacked by the hacker known as 4chan. We have dispatched high quality hacking equipment at every crewmember location so that you can continue your productive shift");
+            "All the airlocks have their bolts down due to the hacker known as 4chan. We have dispatched high quality hacking equipment at every crewmember location so that this productive shift can continue");
         protected override string EndAnnouncement => Loc.GetString(
-             "Our team of lawyers have dealt with the problem. Have a nice shift.");
+            "Our cybersecurity team has dealt with the problem and restarted all the airlocks bolts in the station. Have a nice shift.");
         public override void Startup()
         {
             base.Startup();
-            EntitySystem.Get<AudioSystem>().PlayGlobal("/Audio/Effects/alert.ogg");
+            EntitySystem.Get<AudioSystem>().PlayGlobal("/Audio/Effects/alert.ogg", AudioParams.Default.WithVolume(-10f));
             _eventDuration = IoCManager.Resolve<IRobustRandom>().Next(120, 180);
 
             var componentManager = IoCManager.Resolve<IComponentManager>();
@@ -40,23 +39,22 @@ namespace Content.Server.StationEvents
             var playerManager = IoCManager.Resolve<IPlayerManager>();
             foreach (var player in playerManager.GetAllPlayers())
             {
-                // var prototypeManager = IoCManager.Resolve<IPrototypeManager>();  || prototypeManager.TryIndex("UtilityBeltClothingFilledEvent", out EntityPrototype prototype)
-                // inventory.SpawnItemInSlot(Slots.BELT, "UtilityBeltClothingFilledEvent", true);  
-                if (player.AttachedEntity == null) return;
-
                 var inventory = player.AttachedEntity.GetComponent<InventoryComponent>();
-                if (!inventory.TryGetSlotItem(Slots.BELT, out ItemComponent item))
-                {
-                    var entityManager = IoCManager.Resolve<IEntityManager>();
-                    var playerPos = player.AttachedEntity.Transform.Coordinates
-                    entityManager.SpawnEntity("UtilityBeltClothingFilledEvent", playerPos);
-                }
+                if (player.AttachedEntity == null) return; 
+                if (inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.BELT, out ItemComponent item) 
+                && item.Owner.Prototype.ID == "UtilityBeltClothingFilledEvent") return;
+                if (player.AttachedEntity.TryGetComponent<IDamageableComponent>(out var damageable) 
+                && damageable.CurrentDamageState == DamageState.Dead) return;
+
+                var entityManager = IoCManager.Resolve<IEntityManager>();
+                var playerPos = player.AttachedEntity.Transform.Coordinates;
+                entityManager.SpawnEntity("UtilityBeltClothingFilledEvent", playerPos);
             }
         }
         public override void Shutdown()
         {
             base.Shutdown();
-            EntitySystem.Get<AudioSystem>().PlayGlobal("/Audio/Effects/alert.ogg");
+            EntitySystem.Get<AudioSystem>().PlayGlobal("/Audio/Effects/alert.ogg", AudioParams.Default.WithVolume(-10f));
 
             var componentManager = IoCManager.Resolve<IComponentManager>();
             foreach (var component in componentManager.EntityQuery<AirlockComponent>()) component.BoltsDown = false;
