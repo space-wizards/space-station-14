@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.Utility;
-using Robust.Shared.Utility;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -17,8 +16,8 @@ using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
+using Robust.Shared.Maths;
+using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects.Components
 {
@@ -37,6 +36,8 @@ namespace Content.Server.GameObjects.Components
 
         private string _soundVend = "";
 
+        private Direction _accessDirection;
+
         [ViewVariables] private BoundUserInterface UserInterface => Owner.GetUIOrNull(PipeDispenserUiKey.Key);
 
         public void Activate(ActivateEventArgs eventArgs)
@@ -45,7 +46,7 @@ namespace Content.Server.GameObjects.Components
                 return;
             if (!Powered)
                 return;
-
+            _accessDirection = DirectionTo(actor.Owner);
             UserInterface?.Open(actor.playerSession);
         }
 
@@ -138,7 +139,7 @@ namespace Content.Server.GameObjects.Components
                 TrySetVisualState(PipeDispenserVisualState.Normal);
                 for (int i = 0; i < amount; i++)
                 {
-                    var e = Owner.EntityManager.SpawnEntity(id, Owner.Transform.GridPosition);
+                    var e = Owner.EntityManager.SpawnEntity(id, Owner.Transform.GridPositio);
                     if(e.TryGetComponent(out CollidableComponent collidable))
                         collidable.Anchored = false;
                 }
@@ -167,6 +168,11 @@ namespace Content.Server.GameObjects.Components
             {
                 appearance.SetData(PipeDispenserVisuals.VisualState, finalState);
             }
+        }
+
+        private Direction DirectionTo(IEntity other)
+        {
+            return (other.Transform.WorldPosition - Owner.Transform.WorldPosition).GetDir();
         }
 
         public void OnBreak(BreakageEventArgs eventArgs)

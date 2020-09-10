@@ -6,6 +6,7 @@
   - type: InteractionOutline
   - type: Icon
     sprite: Constructible/Power/VendingMachines/boozeomat.rsi
+    state: "off"
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/boozeomat.rsi
     layers:
