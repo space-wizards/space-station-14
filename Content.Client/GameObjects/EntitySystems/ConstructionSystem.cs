@@ -150,7 +150,7 @@ namespace Content.Client.GameObjects.EntitySystems
         /// <summary>
         /// Creates a construction ghost at the given location.
         /// </summary>
-        public void SpawnGhost(ConstructionPrototype prototype, GridCoordinates loc, Direction dir)
+        public void SpawnGhost(ConstructionPrototype prototype, EntityCoordinates loc, Direction dir)
         {
             if (GhostPresent(loc))
             {
@@ -174,11 +174,11 @@ namespace Content.Client.GameObjects.EntitySystems
         /// <summary>
         /// Checks if any construction ghosts are present at the given position
         /// </summary>
-        private bool GhostPresent(GridCoordinates loc)
+        private bool GhostPresent(EntityCoordinates loc)
         {
-            foreach (KeyValuePair<int, ConstructionGhostComponent> ghost in _ghosts)
+            foreach (var ghost in _ghosts)
             {
-                if (ghost.Value.Owner.Transform.GridPosition.Equals(loc))
+                if (ghost.Value.Owner.Transform.Coordinates.Equals(loc))
                 {
                     return true;
                 }
@@ -191,7 +191,7 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             var ghost = _ghosts[ghostId];
             var transform = ghost.Owner.Transform;
-            var msg = new TryStartStructureConstructionMessage(transform.GridPosition, ghost.Prototype.ID, transform.LocalRotation, ghostId);
+            var msg = new TryStartStructureConstructionMessage(transform.Coordinates, ghost.Prototype.ID, transform.LocalRotation, ghostId);
             RaiseNetworkEvent(msg);
         }
 

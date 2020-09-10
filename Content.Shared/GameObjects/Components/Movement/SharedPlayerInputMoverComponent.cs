@@ -78,7 +78,9 @@ namespace Content.Shared.GameObjects.Components.Movement
             }
         }
 
+        [ViewVariables(VVAccess.ReadWrite)]
         public float CurrentPushSpeed => 5;
+        [ViewVariables(VVAccess.ReadWrite)]
         public float GrabRange => 0.2f;
         public bool Sprinting => !HasFlag(_heldMoveButtons, MoveButtons.Walk);
 
@@ -132,7 +134,7 @@ namespace Content.Shared.GameObjects.Components.Movement
             }
         }
 
-        public abstract GridCoordinates LastPosition { get; set; }
+        public abstract EntityCoordinates LastPosition { get; set; }
         public abstract float StepSoundDistance { get; set; }
 
         /// <summary>

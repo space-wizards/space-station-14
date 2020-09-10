@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Content.Server.Mobs;
 using Content.Server.Players;
+using Content.Shared.Utility;
 using NUnit.Framework;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
@@ -128,7 +129,7 @@ namespace Content.IntegrationTests.Tests
 
                 mapMan.CreateNewMapEntity(MapId.Nullspace);
 
-                playerEnt = entMgr.SpawnEntity(null, new GridCoordinates(Vector2.Zero, grid.Index));
+                playerEnt = entMgr.SpawnEntity(null, grid.ToCoordinates());
 
                 mind = new Mind(player.SessionId);
                 player.ContentData().Mind = mind;

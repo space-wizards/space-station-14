@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
@@ -13,8 +12,6 @@ using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Client.Animations;
-using Robust.Shared.Interfaces.GameObjects;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Robust.Client.GameObjects.Components.Animations;
 using System.Linq;
 
@@ -43,7 +40,7 @@ namespace Content.Client.GameObjects.Components
         protected IRobustRandom RobustRandom = default;
 
         private float _maxTime = default;
-        
+
         public virtual void ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.ID, "id", string.Empty);
@@ -83,7 +80,7 @@ namespace Content.Client.GameObjects.Components
                 MaxTime = MaxDuration;
             }
 
-            owner.Length = TimeSpan.FromSeconds(MaxTime); 
+            owner.Length = TimeSpan.FromSeconds(MaxTime);
         }
 
         public override (int KeyFrameIndex, float FramePlayingTime) InitPlayback()
@@ -344,7 +341,7 @@ namespace Content.Client.GameObjects.Components
     /// A component which applies a specific behaviour to a PointLightComponent on its owner.
     /// </summary>
     [RegisterComponent]
-    public class LightBehaviourComponent : SharedLightBehaviourComponent 
+    public class LightBehaviourComponent : SharedLightBehaviourComponent
     {
         private const string KeyPrefix = nameof(LightBehaviourComponent);
 
@@ -387,7 +384,7 @@ namespace Content.Client.GameObjects.Components
                 container.LightBehaviour.Initialize(_lightComponent);
             }
 
-            // we need to initialize all behaviours before starting any 
+            // we need to initialize all behaviours before starting any
             foreach (var container in _animations)
             {
                 if (container.LightBehaviour.Enabled)

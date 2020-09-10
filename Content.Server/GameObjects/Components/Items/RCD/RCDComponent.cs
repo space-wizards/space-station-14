@@ -97,7 +97,7 @@ namespace Content.Server.GameObjects.Components.Items.RCD
             //No changing mode mid-RCD
             var startingMode = _mode;
 
-            var mapGrid = _mapManager.GetGrid(eventArgs.ClickLocation.GridID);
+            var mapGrid = _mapManager.GetGrid(eventArgs.ClickLocation.GetGridId(Owner.EntityManager));
             var tile = mapGrid.GetTileRef(eventArgs.ClickLocation);
             var snapPos = mapGrid.SnapGridCellFor(eventArgs.ClickLocation, SnapGridOffset.Center);
 
@@ -166,8 +166,8 @@ namespace Content.Server.GameObjects.Components.Items.RCD
                 return false;
             }
 
-            var coordinates = mapGrid.GridTileToLocal(tile.GridIndices);
-            if (coordinates == GridCoordinates.InvalidGrid || !eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
+            var coordinates = mapGrid.ToCoordinates(tile.GridIndices);
+            if (coordinates == EntityCoordinates.Invalid || !eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
             {
                 return false;
             }

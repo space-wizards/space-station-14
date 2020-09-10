@@ -41,6 +41,7 @@ namespace Content.Server.GameObjects.Components.Research
             set => _state = value;
         }
 
+        [ViewVariables]
         private LatheRecipePrototype? _producingRecipe;
         private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
 
@@ -126,7 +127,7 @@ namespace Content.Server.GameObjects.Components.Research
             {
                 Producing = false;
                 _producingRecipe = null;
-                Owner.EntityManager.SpawnEntity(recipe.Result, Owner.Transform.GridPosition);
+                Owner.EntityManager.SpawnEntity(recipe.Result, Owner.Transform.Coordinates);
                 UserInterface?.SendMessage(new LatheStoppedProducingRecipeMessage());
                 State = LatheState.Base;
                 SetAppearance(LatheVisualState.Idle);

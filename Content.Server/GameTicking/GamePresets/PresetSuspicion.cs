@@ -159,7 +159,6 @@ namespace Content.Server.GameTicking.GamePresets
             return true;
         }
 
-
         public override string ModeTitle => "Suspicion";
         public override string Description => "Suspicion on the Space Station. There are traitors on board... Can you kill them before they kill you?";
     }

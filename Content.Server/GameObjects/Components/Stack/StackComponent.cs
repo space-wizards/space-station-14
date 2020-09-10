@@ -71,9 +71,9 @@ namespace Content.Server.GameObjects.Components.Stack
                 stack.Add(toTransfer);
 
                 var popupPos = eventArgs.ClickLocation;
-                if (popupPos == GridCoordinates.InvalidGrid)
+                if (popupPos == EntityCoordinates.Invalid)
                 {
-                    popupPos = eventArgs.User.Transform.GridPosition;
+                    popupPos = eventArgs.User.Transform.Coordinates;
                 }
 
 

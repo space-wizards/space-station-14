@@ -101,8 +101,8 @@ namespace Content.Server.GameObjects.Components.Movement
 
             var bodyManager = user.GetComponent<BodyManagerComponent>();
 
-            if (bodyManager.GetBodyPartsOfType(Shared.GameObjects.Components.Body.BodyPartType.Leg).Count == 0 ||
-                bodyManager.GetBodyPartsOfType(Shared.GameObjects.Components.Body.BodyPartType.Foot).Count == 0)
+            if (bodyManager.GetPartsOfType(Shared.GameObjects.Components.Body.BodyPartType.Leg).Count == 0 ||
+                bodyManager.GetPartsOfType(Shared.GameObjects.Components.Body.BodyPartType.Foot).Count == 0)
             {
                 reason = Loc.GetString("You are unable to climb!");
                 return false;

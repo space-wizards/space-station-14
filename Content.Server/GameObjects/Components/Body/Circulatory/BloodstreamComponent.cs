@@ -22,7 +22,7 @@ namespace Content.Server.GameObjects.Components.Body.Circulatory
         /// <summary>
         ///     Internal solution for reagent storage
         /// </summary>
-        [ViewVariables] private SolutionComponent _internalSolution;
+        [ViewVariables] private SolutionContainerComponent _internalSolution;
 
         /// <summary>
         ///     Empty volume of internal solution
@@ -31,13 +31,13 @@ namespace Content.Server.GameObjects.Components.Body.Circulatory
 
         [ViewVariables] public GasMixture Air { get; set; }
 
-        [ViewVariables] public SolutionComponent Solution => _internalSolution;
+        [ViewVariables] public SolutionContainerComponent Solution => _internalSolution;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            _internalSolution = Owner.EnsureComponent<SolutionComponent>();
+            _internalSolution = Owner.EnsureComponent<SolutionContainerComponent>();
             _internalSolution.MaxVolume = _initialMaxVolume;
         }
 

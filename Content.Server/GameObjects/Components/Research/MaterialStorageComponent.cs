@@ -1,7 +1,8 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Research;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Research
 {
@@ -9,11 +10,13 @@ namespace Content.Server.GameObjects.Components.Research
     [ComponentReference(typeof(SharedMaterialStorageComponent))]
     public class MaterialStorageComponent : SharedMaterialStorageComponent
     {
+        [ViewVariables]
         protected override Dictionary<string, int> Storage { get; set; } = new Dictionary<string, int>();
 
         /// <summary>
         ///     How much material the storage can store in total.
         /// </summary>
+        [ViewVariables]
         public int StorageLimit => _storageLimit;
         private int _storageLimit;
 

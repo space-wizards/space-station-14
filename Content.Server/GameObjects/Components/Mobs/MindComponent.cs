@@ -135,13 +135,14 @@ namespace Content.Server.GameObjects.Components.Mobs
                 }
                 else
                 {
-                    var spawnPosition = Owner.Transform.GridPosition;
+                    var spawnPosition = Owner.Transform.Coordinates;
                     Timer.Spawn(0, () =>
                     {
                         // Async this so that we don't throw if the grid we're on is being deleted.
                         var mapMan = IoCManager.Resolve<IMapManager>();
 
-                        if (spawnPosition.GridID == GridId.Invalid || !mapMan.GridExists(spawnPosition.GridID))
+                        var gridId = spawnPosition.GetGridId(Owner.EntityManager);
+                        if (gridId == GridId.Invalid || !mapMan.GridExists(gridId))
                         {
                             spawnPosition = IoCManager.Resolve<IGameTicker>().GetObserverSpawnPoint();
                         }

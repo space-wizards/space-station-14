@@ -58,10 +58,14 @@ namespace Content.IntegrationTests
         {
         }
 
-        public GridCoordinates GetLateJoinSpawnPoint() => GridCoordinates.InvalidGrid;
-        public GridCoordinates GetJobSpawnPoint(string jobId) => GridCoordinates.InvalidGrid;
-        public GridCoordinates GetObserverSpawnPoint() => GridCoordinates.InvalidGrid;
-        
+        public void ToggleDisallowLateJoin(bool disallowLateJoin)
+        {
+        }
+
+        public EntityCoordinates GetLateJoinSpawnPoint() => EntityCoordinates.Invalid;
+        public EntityCoordinates GetJobSpawnPoint(string jobId) => EntityCoordinates.Invalid;
+        public EntityCoordinates GetObserverSpawnPoint() => EntityCoordinates.Invalid;
+
         public void EquipStartingGear(IEntity entity, StartingGearPrototype startingGear)
         {
         }
