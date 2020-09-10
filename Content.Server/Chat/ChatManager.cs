@@ -114,15 +114,18 @@ namespace Content.Server.Chat
                 message = handler(source, message);
             }
 
-            // Ensure the first letter inside the message string is always a capital letter
-            message = message[0].ToString().ToUpper() + message.Remove(0,1);
+            message = message.Trim();
 
             var pos = source.Transform.Coordinates;
             var clients = _playerManager.GetPlayersInRange(pos, VoiceRange).Select(p => p.ConnectedClient);
 
             if (message.StartsWith(';'))
             {
-                message = message.Substring(1);
+                // Remove semicolon
+                message = message.Substring(1).TrimStart();
+
+                // Capitalize first letter
+                message = message[0].ToString().ToUpper() + message.Remove(0,1);
 
                 if (source.TryGetComponent(out InventoryComponent inventory) &&
                     inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.EARS, out ItemComponent item) &&
@@ -134,6 +137,11 @@ namespace Content.Server.Chat
                 {
                     source.PopupMessage(Loc.GetString("You don't have a headset on!"));
                 }
+            }
+            else
+            {
+                // Capitalize first letter
+                message = message[0].ToString().ToUpper() + message.Remove(0,1);
             }
 
             var listeners = EntitySystem.Get<ListeningSystem>();
