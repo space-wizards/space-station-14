@@ -75,7 +75,8 @@ namespace Content.Server.GameObjects.Components
         {
             RadioOn = !RadioOn;
 
-            Owner.PopupMessage(eventArgs.User, Loc.GetString($"The radio is now {(RadioOn ? "on" : "off")}."));
+            var message = Loc.GetString($"The radio is now {(RadioOn ? "on" : "off")}.");
+            Owner.PopupMessage(eventArgs.User, message);
 
             return true;
         }
