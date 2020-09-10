@@ -9,7 +9,7 @@ namespace Content.Server.Interfaces
     {
         IReadOnlyList<int> Channels { get; }
 
-        void Receiver(string message, int channel, IEntity speaker);
+        void Receive(string message, int channel, IEntity speaker);
 
         void Broadcast(string message, IEntity speaker);
     }

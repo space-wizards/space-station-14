@@ -1,12 +1,14 @@
 ﻿using Content.Server.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
-    class RadioSystem : EntitySystem
+    [UsedImplicitly]
+    public class RadioSystem : EntitySystem
     {
         private List<string> _messages;
 
@@ -25,10 +27,10 @@ namespace Content.Server.GameObjects.EntitySystems
 
             foreach (var radio in ComponentManager.EntityQuery<IRadio>())
             {
-                if (radio != source && radio.Channels.Contains(channel))
+                if (radio.Channels.Contains(channel))
                 {
                     //TODO: once voice identity gets added, pass into receiver via source.GetSpeakerVoice()
-                    radio.Receiver(message, channel, speaker);
+                    radio.Receive(message, channel, speaker);
                 }
             }
 

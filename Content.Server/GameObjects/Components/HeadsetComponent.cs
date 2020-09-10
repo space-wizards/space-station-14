@@ -61,7 +61,7 @@ namespace Content.Server.GameObjects.Components
             return RadioRequested;
         }
 
-        public void Receiver(string message, int channel, IEntity source)
+        public void Receive(string message, int channel, IEntity source)
         {
             if (ContainerHelpers.TryGetContainer(Owner, out var container))
             {

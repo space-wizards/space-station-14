@@ -66,7 +66,7 @@ namespace Content.Server.GameObjects.Components
             RadioOn = false;
         }
 
-        public void Speaker(string message)
+        public void Speak(string message)
         {
             _chatManager.EntitySay(Owner, message);
         }
@@ -87,11 +87,11 @@ namespace Content.Server.GameObjects.Components
                    distance <= ListenRange;
         }
 
-        public void Receiver(string message, int channel, IEntity speaker)
+        public void Receive(string message, int channel, IEntity speaker)
         {
             if (RadioOn)
             {
-                Speaker(message);
+                Speak(message);
             }
         }
 
