@@ -1,13 +1,10 @@
 ﻿using System.Collections.Generic;
 using Content.Client.UserInterface;
 using Content.Shared.GameObjects.Components.GUI;
-using Content.Shared.GameObjects.Components.Inventory;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
-using Robust.Shared.ViewVariables;
-using Robust.Shared.Localization;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 using Content.Client.Utility;
@@ -16,7 +13,8 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Maths;
 using Robust.Shared.IoC;
-using Robust.Shared.Interfaces.GameObjects;
+
+using Robust.Shared.Log;
 
 namespace Content.Client.GameObjects.Components.HUD.Inventory
 {
@@ -31,12 +29,12 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         private StrippingInventoryWindow _stripMenu;
 
         [Dependency] private readonly IResourceCache _resourceCache = default!;
-        [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
-
 
         public StrippableBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
         }
+
+        private const string LoggerName = "Storage";
 
         protected override void Open()
         {
@@ -46,19 +44,35 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             _stripMenu.OnClose += Close;
             _stripMenu.OpenToLeft();
 
+
+
             foreach (var (slot, button) in _stripMenu.Buttons)
             {
-                button.OnPressed = (e) => SendMessage(new StrippingInventoryButtonPressed(slot));
+                if (button != null)
+                {
+                    Logger.DebugS(LoggerName, $"The {(slot, button)} button has been created.");
+                    button.OnHover = (ev) => SendMessage(new StrippingInventoryButtonPressed(slot));
+                    //button.OnPressed = (e) => SendMessage(new StrippingInventoryButtonPressed(slot));
+                    // it was a silly test, but this one doesn't call things twice and crash things to shit.
+                    // what's wrong with press? I'll see how spriting works on the meanwhile.
+                }
+                // according to the logger the buttons are only being made once?
+
+
                 // button.OnStoragePressed = (e) => OpenStorage(e, slot);
                 // button.OnHover = (e) => RequestItemHover(slot);
-                // _invButtons.Add(slot, new List<ItemSlotButton> { button });
+                //_invButtons.Add(slot, new List<ItemSlotButton> { button });
             }
 
-            UpdateMenu();
+            // UpdateMenu();
         }
+
+        // SendMessage(new StrippingHandcuffButtonPressed(id));
+        // SendMessage(new StrippingHandButtonPressed(hand));
 
         protected override void Dispose(bool disposing)
         {
+            Logger.DebugS(LoggerName, $"Dispose called.");
             base.Dispose(disposing);
             if (!disposing) return;
             _stripMenu.Dispose();
@@ -69,7 +83,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
 
         private void UpdateMenu()
         {
-
+            Logger.DebugS(LoggerName, $"Update menu called.");
             // _stripMenu.ClearButtons();
             // this was an innate part of the old one.
 
@@ -90,58 +104,14 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             //}
             //// okay. wrapping it in antinull. like tinfoil. didn't work. i'll keep it there anyways.
 
-            //if (Inventory != null)
-            //{
-            //    foreach (var (slot,name) in Inventory)
-            //    {
+            // here is where you rebuild all of the buttons, icons, and interactions. i think.
 
-            //    }
-            //}
-
-            // moving button checks to Open() see how that goes.
-
-                //_stripMenu.ClearButtons();
-
-                //if (Inventory != null)
-                //{
-                //    foreach (var (slot, name) in Inventory)
-                //    {
-                //        _strippingMenu.AddButton(EquipmentSlotDefines.SlotNames[slot], name, (ev) =>
-                //        {
-                //            SendMessage(new StrippingInventoryButtonPressed(slot));
-                //        });
-                //    }
-                //}
-
-                //if (Hands != null)
-                //{
-                //    foreach (var (hand, name) in Hands)
-                //    {
-                //        _strippingMenu.AddButton(hand, name, (ev) =>
-                //        {
-                //            SendMessage(new StrippingHandButtonPressed(hand));
-                //        });
-                //    }
-                //}
-
-                //if (Handcuffs != null)
-                //{
-                //    foreach (var (id, name) in Handcuffs)
-                //    {
-                //        _strippingMenu.AddButton(Loc.GetString("Restraints"), name, (ev) =>
-                //        {
-                //            SendMessage(new StrippingHandcuffButtonPressed(id));
-                //        });
-                //    }
-                //}
-
-                // here is where you rebuild all of the buttons, icons, and interactions. i think.
-
-                return;
+            return;
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
         {
+            Logger.DebugS(LoggerName, $"Update state called.");
             base.UpdateState(state);
 
             if (!(state is StrippingBoundUserInterfaceState stripState)) return;
@@ -150,7 +120,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             Hands = stripState.Hands;
             Handcuffs = stripState.Handcuffs;
 
-            UpdateMenu();
+            // UpdateMenu();
         }
 
         private class StrippingInventoryWindow : SS14Window
@@ -163,6 +133,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
 
             public StrippingInventoryWindow(IResourceCache resourceCache)
             {
+                Logger.DebugS(LoggerName, $"StrippingInventoryWindow called.");
                 Title = "oh yay corpses!";
                 Resizable = false;
 
@@ -170,7 +141,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
                 Buttons = buttonDict;
 
                 const int width = ButtonSize * 4 + ButtonSeparation * 3 + RightSeparation;
-                const int height = ButtonSize * 4 + ButtonSeparation * 3;
+                const int height = ButtonSize * 5 + ButtonSeparation * 3;
                 const int sizep = (ButtonSize + ButtonSeparation);
 
                 var windowContents = new LayoutContainer { CustomMinimumSize = (width, height) };
@@ -182,18 +153,18 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
                     var storageTexture = resourceCache.GetTexture("/Textures/Interface/Inventory/back.png");
                     var button = new ItemSlotButton(texture, storageTexture);
 
-
                     position = position * sizep;
                     LayoutContainer.SetPosition(button, position);
-
                     windowContents.AddChild(button);
 
                     // took this out, but then it didn't withdraw anything.
                     buttonDict.Add(slot, button);
+                    Logger.DebugS(LoggerName, $"dictionary holds {(slot,button)}");
                 }
 
                 // 0,0 is top left.
                 // x,x is bottom right.
+                // still needs slots for hands, handcuffs? not sure how handcuffs going to work here.
 
                 AddButton(Slots.EYES, "glasses", (0, 0));
                 AddButton(Slots.NECK, "neck", (0, 1));
@@ -213,6 +184,9 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
                 AddButton(Slots.BELT, "belt", (3, 1));
                 AddButton(Slots.GLOVES, "gloves", (3, 2));
                 AddButton(Slots.POCKET2, "pocket", (3, 3));
+
+                AddButton(Slots.LHAND, "gloves", (4, 2));
+                AddButton(Slots.RHAND, "gloves", (4, 3));
             }
         }
 

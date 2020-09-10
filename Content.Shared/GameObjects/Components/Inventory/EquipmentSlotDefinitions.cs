@@ -47,6 +47,8 @@ namespace Content.Shared.GameObjects.Components.Inventory
             POCKET4,
             EXOSUITSLOT1,
             EXOSUITSLOT2,
+            LHAND,
+            RHAND,
 
             /// <summary>
             ///     Not a real slot.

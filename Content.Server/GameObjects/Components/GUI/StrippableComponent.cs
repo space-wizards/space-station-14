@@ -300,7 +300,9 @@ namespace Content.Server.GameObjects.Components.GUI
 
                 if (!inventory.TryGetSlotItem(slot, out ItemComponent itemToTake))
                 {
-                    user.PopupMessageCursor(Loc.GetString("{0:They} {0:have} nothing there!", Owner));
+                    // so the way i see things is have options always there, and just deny em when it's no good.
+                    // once the singeclick stuff works this can decomment this maybe. right now it's annoying.
+                    // user.PopupMessageCursor(Loc.GetString("{0:They} {0:have} nothing there!", Owner));
                     return false;
                 }
 
@@ -394,6 +396,9 @@ namespace Content.Server.GameObjects.Components.GUI
             switch (obj.Message)
             {
                 case StrippingInventoryButtonPressed inventoryMessage:
+
+                    if (inventoryMessage == null)
+                        break;
 
                     if (Owner.TryGetComponent<InventoryComponent>(out var inventory))
                     {
