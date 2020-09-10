@@ -74,7 +74,7 @@ namespace Content.Server.GameObjects.Components
 
                 msg.Channel = ChatChannel.Radio;
                 msg.Message = message;
-                msg.MessageWrap = Loc.GetString("[{0}] {1} says, {{0}}", channel, source.Name);
+                msg.MessageWrap = Loc.GetString("[{0}] {1} says, \"{{0}}\"", channel, source.Name);
                 _netManager.ServerSendMessage(msg, playerChannel);
             }
         }
