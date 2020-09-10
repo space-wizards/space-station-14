@@ -14,6 +14,7 @@ namespace Content.Client.UserInterface
 
         private readonly VBoxContainer _vboxContainer;
 
+        // title's and sizes a vbox container.
         public StrippingMenu(string title)
         {
             Title = title;
@@ -27,11 +28,13 @@ namespace Content.Client.UserInterface
             Contents.AddChild(_vboxContainer);
         }
 
+        // deletes all buttons so update can remake them.
         public void ClearButtons()
         {
             _vboxContainer.DisposeAllChildren();
         }
 
+        // creates buttons for vbox.
         public void AddButton(string title, string name, Action<BaseButton.ButtonEventArgs> onPressed)
         {
             var button = new Button()
@@ -62,3 +65,6 @@ namespace Content.Client.UserInterface
         }
     }
 }
+
+// all in all i'm not sure this file needs to exist in the first place? a lot of the interactions are in SBUI.
+// current plan is to steal from humaninvetoryinterfacecontroller's implementation of invetoryinterfacecontroller.
