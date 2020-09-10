@@ -31,7 +31,6 @@ namespace Content.Client.State
         [Dependency] private readonly IClientNetManager _netManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IGameController _controllerProxy = default!;
-        [Dependency] private readonly ILocalizationManager _loc = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
 
@@ -105,10 +104,10 @@ namespace Content.Client.State
             var inputName = _mainMenuControl.UserNameBox.Text.Trim();
             if (!UsernameHelpers.IsNameValid(inputName, out var reason))
             {
-                var invalidReason = _loc.GetString(reason.ToText());
+                var invalidReason = Loc.GetString(reason.ToText());
                 _userInterfaceManager.Popup(
-                    _loc.GetString("Invalid username:\n{0}", invalidReason),
-                    _loc.GetString("Invalid Username"));
+                    Loc.GetString("Invalid username:\n{0}", invalidReason),
+                    Loc.GetString("Invalid Username"));
                 return;
             }
 

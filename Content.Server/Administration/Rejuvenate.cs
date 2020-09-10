@@ -15,28 +15,25 @@ namespace Content.Server.Administration
         {
             get
             {
-                var localizationManager = IoCManager.Resolve<ILocalizationManager>();
-                return localizationManager.GetString("Fully heals a mob.");
+                return Loc.GetString("Fully heals a mob.");
             }
         }
         public string Help
         {
             get
             {
-                var localizationManager = IoCManager.Resolve<ILocalizationManager>();
-                return localizationManager.GetString("Usage: rejuvenate <mobUid_1> <mobUid_2> ... <mobUid_n>\nAttempts to heal the user's mob if no arguments are provided.");
+                return Loc.GetString("Usage: rejuvenate <mobUid_1> <mobUid_2> ... <mobUid_n>\nAttempts to heal the user's mob if no arguments are provided.");
             }
         }
 
         public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
         {
-            var localizationManager = IoCManager.Resolve<ILocalizationManager>();
             if (args.Length < 1 && player != null) //Try to heal the users mob if applicable
             {
-                shell.SendText(player, localizationManager.GetString("Healing the user's mob since no arguments were provided."));
+                shell.SendText(player, Loc.GetString("Healing the user's mob since no arguments were provided."));
                 if (player.AttachedEntity == null)
                 {
-                    shell.SendText(player, localizationManager.GetString("There's no entity attached to the user."));
+                    shell.SendText(player, Loc.GetString("There's no entity attached to the user."));
                     return;
                 }
                 RejuvenateVerb.PerformRejuvenate(player.AttachedEntity);
@@ -47,7 +44,7 @@ namespace Content.Server.Administration
             {
                 if(!EntityUid.TryParse(arg, out var uid) || !entityManager.TryGetEntity(uid, out var entity))
                 {
-                    shell.SendText(player, localizationManager.GetString("Could not find entity {0}", arg));
+                    shell.SendText(player, Loc.GetString("Could not find entity {0}", arg));
                     continue;
                 }
                 RejuvenateVerb.PerformRejuvenate(entity);
