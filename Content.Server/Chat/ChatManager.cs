@@ -43,7 +43,6 @@ namespace Content.Server.Chat
         //TODO: make prio based?
         private List<TransformChat> _chatTransformHandlers;
 
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly ILocalizationManager _localizationManager = default!;
