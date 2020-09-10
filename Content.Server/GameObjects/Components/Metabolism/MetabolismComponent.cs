@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Body.Circulatory;
 using Content.Server.GameObjects.Components.Temperature;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Damage;
@@ -11,7 +11,6 @@ using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.Chemistry;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -26,7 +25,6 @@ namespace Content.Server.GameObjects.Components.Metabolism
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-
 
         public override string Name => "Metabolism";
 
