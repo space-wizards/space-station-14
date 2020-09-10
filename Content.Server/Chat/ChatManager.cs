@@ -97,16 +97,16 @@ namespace Content.Server.Chat
                 return;
             }
 
-            // Get entity's PlayerSession
-            IPlayerSession playerSession = source.GetComponent<IActorComponent>().playerSession;
-
             // Check if message exceeds the character limit if the sender is a player
-            if (playerSession != null)
-                if (message.Length > MaxMessageLength)
-                {
-                    DispatchServerMessage(playerSession, Loc.GetString(MaxLengthExceededMessage, MaxMessageLength));
-                    return;
-                }
+            if (source.TryGetComponent(out IActorComponent actor) &&
+                message.Length > MaxMessageLength)
+            {
+                var feedback = Loc.GetString(MaxLengthExceededMessage, MaxMessageLength);
+
+                DispatchServerMessage(actor.playerSession, feedback);
+
+                return;
+            }
 
             foreach (var handler in _chatTransformHandlers)
             {
