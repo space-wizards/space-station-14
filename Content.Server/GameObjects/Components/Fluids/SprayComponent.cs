@@ -45,16 +45,16 @@ namespace Content.Server.GameObjects.Components.Fluids
             set => _sprayVelocity = value;
         }
 
-        public ReagentUnit CurrentVolume => Owner.GetComponentOrNull<SolutionComponent>()?.CurrentVolume ?? ReagentUnit.Zero;
+        public ReagentUnit CurrentVolume => Owner.GetComponentOrNull<SolutionContainerComponent>()?.CurrentVolume ?? ReagentUnit.Zero;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            if (!Owner.EnsureComponent(out SolutionComponent _))
+            if (!Owner.EnsureComponent(out SolutionContainerComponent _))
             {
                 Logger.Warning(
-                    $"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(SolutionComponent)}");
+                    $"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(SolutionContainerComponent)}");
             }
         }
 
@@ -74,11 +74,11 @@ namespace Content.Server.GameObjects.Components.Fluids
                 return;
             }
 
-            var playerPos = eventArgs.User.Transform.GridPosition;
-            if (eventArgs.ClickLocation.GridID != playerPos.GridID)
+            var playerPos = eventArgs.User.Transform.Coordinates;
+            if (eventArgs.ClickLocation.GetGridId(_serverEntityManager) != playerPos.GetGridId(_serverEntityManager))
                 return;
 
-            if (!Owner.TryGetComponent(out SolutionComponent contents))
+            if (!Owner.TryGetComponent(out SolutionContainerComponent contents))
                 return;
 
             var direction = (eventArgs.ClickLocation.Position - playerPos.Position).Normalized;

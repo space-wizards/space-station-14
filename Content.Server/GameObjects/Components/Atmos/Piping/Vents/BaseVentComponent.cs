@@ -6,6 +6,8 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Log;
 using Robust.Shared.ViewVariables;
 using System.Linq;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.GameObjects.Components.Atmos.Piping
 {
@@ -14,12 +16,12 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
     /// </summary>
     public abstract class BaseVentComponent : PipeNetDeviceComponent
     {
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+
         [ViewVariables]
         private PipeNode _ventInlet;
 
         private AtmosphereSystem _atmosSystem;
-
-
 
         public override void Initialize()
         {
@@ -42,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
 
         public override void Update()
         {
-            var tileAtmos = AtmosHelpers.GetTileAtmosphere(Owner.Transform.GridPosition);
+            var tileAtmos = Owner.Transform.Coordinates.GetTileAtmosphere(_entityManager);
             if (tileAtmos == null)
                 return;
             VentGas(_ventInlet.Air, tileAtmos.Air);

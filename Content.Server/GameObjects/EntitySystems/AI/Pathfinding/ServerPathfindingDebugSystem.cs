@@ -35,16 +35,16 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             foreach (var tile in routeDebug.Route)
             {
                 var tileGrid = mapManager.GetGrid(tile.GridIndex).GridTileToLocal(tile.GridIndices);
-                route.Add(mapManager.GetGrid(tile.GridIndex).LocalToWorld(tileGrid).Position);
+                route.Add(tileGrid.ToMapPos(EntityManager));
             }
 
             var cameFrom = new Dictionary<Vector2, Vector2>();
             foreach (var (from, to) in routeDebug.CameFrom)
             {
                 var tileOneGrid = mapManager.GetGrid(from.GridIndex).GridTileToLocal(from.GridIndices);
-                var tileOneWorld = mapManager.GetGrid(from.GridIndex).LocalToWorld(tileOneGrid).Position;
+                var tileOneWorld = tileOneGrid.ToMapPos(EntityManager);
                 var tileTwoGrid = mapManager.GetGrid(to.GridIndex).GridTileToLocal(to.GridIndices);
-                var tileTwoWorld = mapManager.GetGrid(to.GridIndex).LocalToWorld(tileTwoGrid).Position;
+                var tileTwoWorld = tileTwoGrid.ToMapPos(EntityManager);
                 cameFrom.Add(tileOneWorld, tileTwoWorld);
             }
 
@@ -52,7 +52,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             foreach (var (tile, score) in routeDebug.GScores)
             {
                 var tileGrid = mapManager.GetGrid(tile.GridIndex).GridTileToLocal(tile.GridIndices);
-                gScores.Add(mapManager.GetGrid(tile.GridIndex).LocalToWorld(tileGrid).Position, score);
+                gScores.Add(tileGrid.ToMapPos(EntityManager), score);
             }
 
             var systemMessage = new SharedAiDebug.AStarRouteMessage(
@@ -73,14 +73,14 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             foreach (var tile in routeDebug.Route)
             {
                 var tileGrid = mapManager.GetGrid(tile.GridIndex).GridTileToLocal(tile.GridIndices);
-                route.Add(mapManager.GetGrid(tile.GridIndex).LocalToWorld(tileGrid).Position);
+                route.Add(tileGrid.ToMapPos(EntityManager));
             }
 
             var jumpNodes = new List<Vector2>();
             foreach (var tile in routeDebug.JumpNodes)
             {
                 var tileGrid = mapManager.GetGrid(tile.GridIndex).GridTileToLocal(tile.GridIndices);
-                jumpNodes.Add(mapManager.GetGrid(tile.GridIndex).LocalToWorld(tileGrid).Position);
+                jumpNodes.Add(tileGrid.ToMapPos(EntityManager));
             }
 
             var systemMessage = new SharedAiDebug.JpsRouteMessage(

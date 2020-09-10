@@ -90,11 +90,11 @@ namespace Content.Client.Commands
     {
         public string Command => "mapping";
         public string Description => "Creates and teleports you to a new uninitialized map for mapping.";
-        public string Help => $"Usage: {Command} <id> <mapname>";
+        public string Help => $"Usage: {Command} <mapname> / {Command} <id> <mapname>";
 
         public bool Execute(IDebugConsole console, params string[] args)
         {
-            if (args.Length != 2)
+            if (args.Length == 0)
             {
                 console.AddLine(Help);
                 return false;

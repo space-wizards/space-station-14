@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Power.AME
             if (activeHandEntity.TryGetComponent<ToolComponent>(out var multitool) && multitool.Qualities == ToolQuality.Multitool)
             {
 
-                var mapGrid = _mapManager.GetGrid(args.ClickLocation.GridID);
+                var mapGrid = _mapManager.GetGrid(args.ClickLocation.GetGridId(_serverEntityManager));
                 var tile = mapGrid.GetTileRef(args.ClickLocation);
                 var snapPos = mapGrid.SnapGridCellFor(args.ClickLocation, SnapGridOffset.Center);
 

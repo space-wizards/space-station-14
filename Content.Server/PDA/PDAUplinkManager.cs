@@ -119,7 +119,7 @@ namespace Content.Server.PDA
             var player = _entityManager.GetEntity(acc.AccountHolder);
             var hands = player.GetComponent<HandsComponent>();
             hands.PutInHandOrDrop(_entityManager.SpawnEntity(listing.ItemId,
-                player.Transform.GridPosition).GetComponent<ItemComponent>());
+                player.Transform.Coordinates).GetComponent<ItemComponent>());
             return true;
         }
     }

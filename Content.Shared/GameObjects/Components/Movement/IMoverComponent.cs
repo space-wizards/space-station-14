@@ -39,7 +39,7 @@ namespace Content.Shared.GameObjects.Components.Movement
         /// </summary>
         (Vector2 walking, Vector2 sprinting) VelocityDir { get; }
 
-        GridCoordinates LastPosition { get; set; }
+        EntityCoordinates LastPosition { get; set; }
 
         float StepSoundDistance { get; set; }
 

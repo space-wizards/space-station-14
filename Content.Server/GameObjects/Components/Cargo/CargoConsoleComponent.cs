@@ -168,7 +168,7 @@ namespace Content.Server.GameObjects.Components.Cargo
                             continue;
                         for (var i = 0; i < order.Amount; i++)
                         {
-                            Owner.EntityManager.SpawnEntity(product.Product, Owner.Transform.GridPosition);
+                            Owner.EntityManager.SpawnEntity(product.Product, Owner.Transform.Coordinates);
                         }
                     }
                     break;

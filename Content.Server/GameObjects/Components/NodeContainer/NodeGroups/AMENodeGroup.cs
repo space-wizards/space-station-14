@@ -144,7 +144,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
             intensity = Math.Min(intensity, 8);
 
-            ExplosionHelper.SpawnExplosion(epicenter.Owner.Transform.GridPosition, intensity / 2, intensity, intensity * 2, intensity * 3);
+            ExplosionHelper.SpawnExplosion(epicenter.Owner.Transform.Coordinates, intensity / 2, intensity, intensity * 2, intensity * 3);
 
         }
 

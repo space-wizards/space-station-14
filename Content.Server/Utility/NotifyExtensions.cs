@@ -19,7 +19,7 @@ namespace Content.Server.Utility
         public static void PopupMessageOtherClients(this IEntity source, string message, int range = 15)
         {
             var playerManager = IoCManager.Resolve<IPlayerManager>();
-            var viewers = playerManager.GetPlayersInRange(source.Transform.GridPosition, range);
+            var viewers = playerManager.GetPlayersInRange(source.Transform.Coordinates, range);
 
             foreach (var viewer in viewers)
             {
