@@ -41,9 +41,9 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             // gotta figure out how to summon the screen in the first place.
             foreach (var (slot, button) in _window.Buttons)
             {
-               // button.OnPressed = (e) => SendMessage(new StrippingInventoryButtonPressed(slot));
-            //    button.OnHover = (e) => RequestItemHover(slot);
-                _inventoryButtons.Add(slot, new List<ItemSlotButton> { button });
+//               button.OnPressed = (e) => SendMessage(new StrippingInventoryButtonPressed(slot));
+  //             button.OnHover = (e) => RequestItemHover(slot);
+    //           _inventoryButtons.Add(slot, new List<ItemSlotButton> { button });
             }
         }
 
@@ -105,6 +105,8 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
 
             base.HandleInventoryKeybind(args, slot);
         }
+        // this relies on inventoryinterfacecontroller which i kinda want to stay clear from.
+
 
         private void ClearButton(ItemSlotButton button, Slots slot)
         {
