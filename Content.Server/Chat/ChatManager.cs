@@ -124,7 +124,8 @@ namespace Content.Server.Chat
                 message = message.Substring(1).TrimStart();
 
                 // Capitalize first letter
-                message = message[0].ToString().ToUpper() + message.Remove(0,1);
+                message = message[0].ToString().ToUpper() +
+                          message.Remove(0,1);
 
                 if (source.TryGetComponent(out InventoryComponent inventory) &&
                     inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.EARS, out ItemComponent item) &&
@@ -140,7 +141,8 @@ namespace Content.Server.Chat
             else
             {
                 // Capitalize first letter
-                message = message[0].ToString().ToUpper() + message.Remove(0,1);
+                message = message[0].ToString().ToUpper() +
+                          message.Remove(0,1);
             }
 
             var listeners = EntitySystem.Get<ListeningSystem>();
