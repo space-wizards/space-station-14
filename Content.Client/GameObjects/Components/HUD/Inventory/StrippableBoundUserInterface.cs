@@ -59,6 +59,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
 
                     // UPDATE: Middleclicks only call OnPressed once. Left/Rights do em twice.
                     // manually trying to overstuff a body sometimes causes redbars to popup everytime you move. investicate later.
+                    // overstuffing gets a "you can't drop that." investigate why it's dropping in the first place?
 
                 }
                 // according to the logger the buttons are only being made once?
@@ -102,18 +103,28 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             // old stuff not touching yet.
 
 
-            foreach (var (slot, button) in _stripMenu.Buttons)
+            // once something changes, kill everything, summon it again?
+            void ClearSprite()
             {
                 return;
-                // remove picture for each buttons
-
-                // if button valid, add new button.
-                //if (Owner.TryGetSlot(slot, out var entity))
-                //{
-                    // add new pictures.
-                //}
             }
 
+            // end goal: iterate through _stripMenu for slots.
+            // see which parts of person ain't nekked, get their item type.
+            // have some array-thingy to pair slots with location. gross.
+            void AddSprite(string textureName, Vector2 position)
+            {
+                return;
+            }
+
+            foreach (var (slot, button) in _stripMenu.Buttons)
+            {
+                // something about AddSprite.
+                return;  
+            }
+
+            ClearSprite();
+            AddSprite("gun", (2, 1));
 
             // UpdateMenu();
         }
@@ -145,8 +156,9 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
                 void AddButton(Slots slot, string textureName, Vector2 position)
                 {
                     var texture = resourceCache.GetTexture($"/Textures/Interface/Inventory/{textureName}.png");
-                    var storageTexture = resourceCache.GetTexture("/Textures/Interface/Inventory/back.png");
-                    var button = new ItemSlotButton(texture, storageTexture);
+                    // why the fuck is storagetexture a thing?
+                    //var storageTexture = resourceCache.GetTexture("/Textures/Interface/Inventory/back.png");
+                    var button = new ItemSlotButton(texture, texture);
 
                     position = position * sizep;
                     LayoutContainer.SetPosition(button, position);
@@ -175,13 +187,13 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
                 AddButton(Slots.IDCARD, "id", (2, 1));
                 AddButton(Slots.EXOSUITSLOT1, "suit_storage", (2, 2));
                 AddButton(Slots.POCKET1, "pocket", (2, 3));
-                AddButton(Slots.LHAND, "gloves", (2, 4));
+                AddButton(Slots.RHAND, "hand_r_no_letter", (2, 4));
 
                 AddButton(Slots.BACKPACK, "back", (3, 0));
                 AddButton(Slots.BELT, "belt", (3, 1));
                 AddButton(Slots.GLOVES, "gloves", (3, 2));
                 AddButton(Slots.POCKET2, "pocket", (3, 3));
-                AddButton(Slots.RHAND, "gloves", (3, 4));
+                AddButton(Slots.LHAND, "hand_l_no_letter", (3, 4));
             }
         }
 

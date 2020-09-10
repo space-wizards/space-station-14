@@ -298,14 +298,12 @@ namespace Content.Server.GameObjects.Components.GUI
                 if (!inventory.HasSlot(slot))
                     return false;
 
-                if (user == null || slot == null)
+                if (user == null)
                     return false;
 
                 if (!inventory.TryGetSlotItem(slot, out ItemComponent itemToTake))
                 {
-                    // so the way i see things is have options always there, and just deny em when it's no good.
-                    // once the singeclick stuff works this can decomment this maybe. right now it's annoying.
-                    // user.PopupMessageCursor(Loc.GetString("{0:They} {0:have} nothing there!", Owner));
+                    user.PopupMessageCursor(Loc.GetString("{0:They} {0:have} nothing there!", Owner));
                     return false;
                 }
 

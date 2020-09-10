@@ -179,7 +179,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public void PutInHandOrDrop(ItemComponent item, bool mobCheck = true)
         {
-            if (!PutInHand(item, mobCheck) || item != null)
+            if (!PutInHand(item, mobCheck) && item != null)
             {
                 item.Owner.Transform.Coordinates = Owner.Transform.Coordinates;
             }
