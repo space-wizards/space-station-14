@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.Interfaces.GameObjects.Components.Items;
@@ -30,7 +31,7 @@ namespace Content.Server.GameObjects.Components
                 ContainerManagerComponent.Ensure<ContainerSlot>("potted_plant_hide", Owner, out _);
         }
 
-        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (_itemContainer.ContainedEntity != null)
             {
@@ -80,7 +81,7 @@ namespace Content.Server.GameObjects.Components
             }
             else if (_itemContainer.Remove(_itemContainer.ContainedEntity))
             {
-                _itemContainer.ContainedEntity.Transform.GridPosition = Owner.Transform.GridPosition;
+                _itemContainer.ContainedEntity.Transform.Coordinates = Owner.Transform.Coordinates;
             }
 
             return true;

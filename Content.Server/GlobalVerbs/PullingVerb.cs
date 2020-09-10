@@ -31,7 +31,7 @@ namespace Content.Server.GlobalVerbs
                 return;
             }
 
-            var dist = user.Transform.GridPosition.Position - target.Transform.GridPosition.Position;
+            var dist = user.Transform.Coordinates.Position - target.Transform.Coordinates.Position;
             if (dist.LengthSquared > SharedInteractionSystem.InteractionRangeSquared)
             {
                 return;

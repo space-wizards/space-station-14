@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -7,7 +7,9 @@ using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Observer;
 using Content.Server.Players;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.Interfaces;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Enums;
@@ -32,9 +34,11 @@ namespace Content.Server.Chat
             if (args.Length < 1)
                 return;
 
-            var chat = IoCManager.Resolve<IChatManager>();
+            var message = string.Join(" ", args).Trim();
+            if (string.IsNullOrEmpty(message))
+                return;
 
-            var message = string.Join(" ", args);
+            var chat = IoCManager.Resolve<IChatManager>();
 
             if (player.AttachedEntity.HasComponent<GhostComponent>())
                 chat.SendDeadChat(player, message);
@@ -61,9 +65,11 @@ namespace Content.Server.Chat
             if (args.Length < 1)
                 return;
 
-            var chat = IoCManager.Resolve<IChatManager>();
+            var action = string.Join(" ", args).Trim();
+            if (string.IsNullOrEmpty(action))
+                return;
 
-            var action = string.Join(" ", args);
+            var chat = IoCManager.Resolve<IChatManager>();
 
             var mindComponent = player.ContentData().Mind;
             chat.EntityMe(mindComponent.OwnedEntity, action);
@@ -78,8 +84,15 @@ namespace Content.Server.Chat
 
         public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
         {
+            if (args.Length < 1)
+                return;
+
+            var message = string.Join(" ", args).Trim();
+            if (string.IsNullOrEmpty(message))
+                return;
+
             var chat = IoCManager.Resolve<IChatManager>();
-            chat.SendOOC(player, string.Join(" ", args));
+            chat.SendOOC(player, message);
         }
     }
 
@@ -91,13 +104,22 @@ namespace Content.Server.Chat
 
         public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
         {
+            if (args.Length < 1)
+                return;
+
+            var message = string.Join(" ", args).Trim();
+            if (string.IsNullOrEmpty(message))
+                return;
+
             var chat = IoCManager.Resolve<IChatManager>();
-            chat.SendAdminChat(player, string.Join(" ", args));
+            chat.SendAdminChat(player, message);
         }
     }
 
     internal class SuicideCommand : IClientCommand
     {
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+
         public string Command => "suicide";
 
         public string Description => "Commits suicide";
@@ -115,12 +137,15 @@ namespace Content.Server.Chat
                 damageableComponent.ChangeDamage(kind switch
                     {
                         SuicideKind.Blunt => DamageType.Blunt,
+                        SuicideKind.Slash => DamageType.Slash,
                         SuicideKind.Piercing => DamageType.Piercing,
                         SuicideKind.Heat => DamageType.Heat,
-                        SuicideKind.Disintegration => DamageType.Disintegration,
-                        SuicideKind.Cellular => DamageType.Cellular,
-                        SuicideKind.DNA => DamageType.DNA,
+                        SuicideKind.Shock => DamageType.Shock,
+                        SuicideKind.Cold => DamageType.Cold,
+                        SuicideKind.Poison => DamageType.Poison,
+                        SuicideKind.Radiation => DamageType.Radiation,
                         SuicideKind.Asphyxiation => DamageType.Asphyxiation,
+                        SuicideKind.Bloodloss => DamageType.Bloodloss,
                         _ => DamageType.Blunt
                     },
                 500,
@@ -167,8 +192,14 @@ namespace Content.Server.Chat
                     }
                 }
             }
+
             // Default suicide, bite your tongue
-            chat.EntityMe(owner, Loc.GetString("is attempting to bite {0:their} own tongue, looks like {0:theyre} trying to commit suicide!", owner)); //TODO: theyre macro
+            var othersMessage = Loc.GetString("{0:theName} is attempting to bite {0:their} own tongue!", owner);
+            owner.PopupMessageOtherClients(othersMessage);
+
+            var selfMessage = Loc.GetString("You attempt to bite your own tongue!");
+            owner.PopupMessage(selfMessage);
+
             dmgComponent.ChangeDamage(DamageType.Piercing, 500, true, owner);
 
             // Prevent the player from returning to the body. Yes, this is an ugly hack.

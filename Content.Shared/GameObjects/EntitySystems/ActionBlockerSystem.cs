@@ -1,4 +1,5 @@
-﻿using Robust.Shared.GameObjects.Systems;
+﻿using System.Linq;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Shared.GameObjects.EntitySystems
@@ -10,21 +11,13 @@ namespace Content.Shared.GameObjects.EntitySystems
     public interface IActionBlocker
     {
         bool CanMove() => true;
-
         bool CanInteract() => true;
-
         bool CanUse() => true;
-
         bool CanThrow() => true;
-
         bool CanSpeak() => true;
-
         bool CanDrop() => true;
-
         bool CanPickup() => true;
-
         bool CanEmote() => true;
-
         bool CanAttack() => true;
 
         bool CanEquip() => true;
@@ -32,6 +25,9 @@ namespace Content.Shared.GameObjects.EntitySystems
         bool CanUnequip() => true;
 
         bool CanChangeDirection() => true;
+
+        bool CanShiver() => true;
+        bool CanSweat() => true;
     }
 
     /// <summary>
@@ -43,10 +39,11 @@ namespace Content.Shared.GameObjects.EntitySystems
         public static bool CanMove(IEntity entity)
         {
             bool canmove = true;
-            foreach(var actionblockercomponents in entity.GetAllComponents<IActionBlocker>())
+            foreach (var actionblockercomponents in entity.GetAllComponents<IActionBlocker>())
             {
                 canmove &= actionblockercomponents.CanMove(); // Sets var to false if false
             }
+
             return canmove;
         }
 
@@ -57,6 +54,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             {
                 caninteract &= actionblockercomponents.CanInteract();
             }
+
             return caninteract;
         }
 
@@ -67,6 +65,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             {
                 canuse &= actionblockercomponents.CanUse();
             }
+
             return canuse;
         }
 
@@ -77,6 +76,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             {
                 canthrow &= actionblockercomponents.CanThrow();
             }
+
             return canthrow;
         }
 
@@ -87,6 +87,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             {
                 canspeak &= actionblockercomponents.CanSpeak();
             }
+
             return canspeak;
         }
 
@@ -97,8 +98,9 @@ namespace Content.Shared.GameObjects.EntitySystems
             {
                 candrop &= actionblockercomponents.CanDrop();
             }
+
             return candrop;
-		}
+        }
 
         public static bool CanPickup(IEntity entity)
         {
@@ -107,6 +109,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             {
                 canpickup &= actionblockercomponents.CanPickup();
             }
+
             return canpickup;
         }
 
@@ -168,6 +171,26 @@ namespace Content.Shared.GameObjects.EntitySystems
             }
 
             return canchangedirection;
+        }
+
+        public static bool CanShiver(IEntity entity)
+        {
+            var canShiver = true;
+            foreach (var component in entity.GetAllComponents<IActionBlocker>())
+            {
+                canShiver &= component.CanShiver();
+            }
+            return canShiver;
+        }
+
+        public static bool CanSweat(IEntity entity)
+        {
+            var canSweat = true;
+            foreach (var component in entity.GetAllComponents<IActionBlocker>())
+            {
+                canSweat &= component.CanSweat();
+            }
+            return canSweat;
         }
     }
 }

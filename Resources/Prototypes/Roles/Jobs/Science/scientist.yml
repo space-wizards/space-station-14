@@ -9,12 +9,13 @@
   icon: "Scientist"
   access:
   - Research
+  - Maintenance
 
 - type: startingGear
   id: ScientistGear
   equipment:
     innerclothing: UniformScientist
-    backpack: BackpackClothing
+    backpack: BackpackClothingFilled
     shoes: ShoesWhite
     outerclothing: OuterclothingLabcoat
     idcard: SciencePDA

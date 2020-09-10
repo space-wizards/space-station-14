@@ -1,4 +1,5 @@
-﻿using Content.Server.Mobs;
+﻿#nullable enable
+using Content.Server.Mobs;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Network;
 using Robust.Shared.ViewVariables;
@@ -22,7 +23,7 @@ namespace Content.Server.Players
         ///     DO NOT DIRECTLY SET THIS UNLESS YOU KNOW WHAT YOU'RE DOING.
         /// </summary>
         [ViewVariables]
-        public Mind Mind { get; set; }
+        public Mind? Mind { get; set; }
 
         public void WipeMind()
         {
@@ -41,15 +42,15 @@ namespace Content.Server.Players
         /// <summary>
         ///     Gets the correctly cast instance of content player data from an engine player data storage.
         /// </summary>
-        public static PlayerData ContentData(this IPlayerData data)
+        public static PlayerData? ContentData(this IPlayerData data)
         {
-            return (PlayerData)data.ContentDataUncast;
+            return (PlayerData?) data.ContentDataUncast;
         }
 
         /// <summary>
         ///     Gets the correctly cast instance of content player data from an engine player data storage.
         /// </summary>
-        public static PlayerData ContentData(this IPlayerSession session)
+        public static PlayerData? ContentData(this IPlayerSession session)
         {
             return session.Data.ContentData();
         }

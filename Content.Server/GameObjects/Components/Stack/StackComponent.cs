@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Timers;
@@ -18,10 +18,6 @@ namespace Content.Server.GameObjects.Components.Stack
     [RegisterComponent]
     public class StackComponent : SharedStackComponent, IInteractUsing, IExamine
     {
-#pragma warning disable 649
-        [Dependency] private readonly ISharedNotifyManager _sharedNotifyManager;
-#pragma warning restore 649
-
         private bool _throwIndividually = false;
 
         public override int Count
@@ -61,7 +57,7 @@ namespace Content.Server.GameObjects.Components.Stack
             return false;
         }
 
-        public bool InteractUsing(InteractUsingEventArgs eventArgs)
+        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (eventArgs.Using.TryGetComponent<StackComponent>(out var stack))
             {
@@ -75,28 +71,27 @@ namespace Content.Server.GameObjects.Components.Stack
                 stack.Add(toTransfer);
 
                 var popupPos = eventArgs.ClickLocation;
-                if (popupPos == GridCoordinates.InvalidGrid)
+                if (popupPos == EntityCoordinates.Invalid)
                 {
-                    popupPos = eventArgs.User.Transform.GridPosition;
+                    popupPos = eventArgs.User.Transform.Coordinates;
                 }
 
 
                 if (toTransfer > 0)
                 {
-                    _sharedNotifyManager.PopupMessage(popupPos, eventArgs.User, $"+{toTransfer}");
+                    popupPos.PopupMessage(eventArgs.User, $"+{toTransfer}");
 
                     if (stack.AvailableSpace == 0)
                     {
-
-                        Timer.Spawn(300, () => _sharedNotifyManager.PopupMessage(popupPos, eventArgs.User, "Stack is now full."));
+                        Timer.Spawn(300, () => popupPos.PopupMessage(eventArgs.User, "Stack is now full."));
                     }
+
                     return true;
                 }
                 else if (toTransfer == 0 && stack.AvailableSpace == 0)
                 {
-                    _sharedNotifyManager.PopupMessage(popupPos, eventArgs.User, "Stack is already full.");
+                    popupPos.PopupMessage(eventArgs.User, "Stack is already full.");
                 }
-
             }
 
             return false;
@@ -106,8 +101,7 @@ namespace Content.Server.GameObjects.Components.Stack
         {
             if (inDetailsRange)
             {
-                var loc = IoCManager.Resolve<ILocalizationManager>();
-                message.AddMarkup(loc.GetPluralString(
+                message.AddMarkup(Loc.GetPluralString(
                     "There is [color=lightgray]1[/color] thing in the stack",
                     "There are [color=lightgray]{0}[/color] things in the stack.", Count, Count));
             }

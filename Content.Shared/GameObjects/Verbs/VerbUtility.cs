@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Robust.Shared.Containers;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.GameObjects.Verbs
@@ -15,6 +17,8 @@ namespace Content.Shared.GameObjects.Verbs
         // This works for now though.
         public static IEnumerable<(IComponent, Verb)> GetVerbs(IEntity entity)
         {
+            var typeFactory = IoCManager.Resolve<IDynamicTypeFactory>();
+
             foreach (var component in entity.GetAllComponents())
             {
                 var type = component.GetType();
@@ -25,7 +29,7 @@ namespace Content.Shared.GameObjects.Verbs
                         continue;
                     }
 
-                    var verb = (Verb)Activator.CreateInstance(nestedType);
+                    var verb = typeFactory.CreateInstance<Verb>(nestedType);
                     yield return (component, verb);
                 }
             }
@@ -37,6 +41,8 @@ namespace Content.Shared.GameObjects.Verbs
         /// <param name="assembly">The assembly to search for global verbs in.</param>
         public static IEnumerable<GlobalVerb> GetGlobalVerbs(Assembly assembly)
         {
+            var typeFactory = IoCManager.Resolve<IDynamicTypeFactory>();
+
             foreach (Type type in assembly.GetTypes())
             {
                 if (Attribute.IsDefined(type, typeof(GlobalVerbAttribute)))
@@ -45,9 +51,24 @@ namespace Content.Shared.GameObjects.Verbs
                     {
                         continue;
                     }
-                    yield return (GlobalVerb)Activator.CreateInstance(type);
+                    yield return typeFactory.CreateInstance<GlobalVerb>(type);
                 }
             }
+        }
+
+        public static bool VerbAccessChecks(IEntity user, IEntity target, VerbBase verb)
+        {
+            if (verb.RequireInteractionRange && !InVerbUseRange(user, target))
+            {
+                return false;
+            }
+
+            if (verb.BlockedByContainers && !VerbContainerCheck(user, target))
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public static bool InVerbUseRange(IEntity user, IEntity target)
@@ -58,6 +79,20 @@ namespace Content.Shared.GameObjects.Verbs
             {
                 return false;
             }
+            return true;
+        }
+
+        public static bool VerbContainerCheck(IEntity user, IEntity target)
+        {
+            if (!user.IsInSameOrNoContainer(target))
+            {
+                if (!ContainerHelpers.TryGetContainer(target, out var container) ||
+                    container.Owner != user)
+                {
+                    return false;
+                }
+            }
+
             return true;
         }
     }

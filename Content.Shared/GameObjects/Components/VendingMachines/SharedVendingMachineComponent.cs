@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.VendingMachines
 {
@@ -11,6 +12,7 @@ namespace Content.Shared.GameObjects.Components.VendingMachines
         public override string Name => "VendingMachine";
         public override uint? NetID => ContentNetIDs.VENDING_MACHINE;
 
+        [ViewVariables]
         public List<VendingMachineInventoryEntry> Inventory = new List<VendingMachineInventoryEntry>();
 
         [Serializable, NetSerializable]
@@ -63,7 +65,9 @@ namespace Content.Shared.GameObjects.Components.VendingMachines
         [Serializable, NetSerializable]
         public class VendingMachineInventoryEntry
         {
+            [ViewVariables(VVAccess.ReadWrite)]
             public string ID;
+            [ViewVariables(VVAccess.ReadWrite)]
             public uint Amount;
             public VendingMachineInventoryEntry(string id, uint amount)
             {

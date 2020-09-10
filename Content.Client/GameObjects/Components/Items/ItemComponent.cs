@@ -12,6 +12,7 @@ using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components.Items
@@ -24,6 +25,8 @@ namespace Content.Client.GameObjects.Components.Items
         public override uint? NetID => ContentNetIDs.ITEM;
 
         [ViewVariables] protected ResourcePath RsiPath;
+
+        [ViewVariables(VVAccess.ReadWrite)] protected Color Color;
 
         private string _equippedPrefix;
 
@@ -40,7 +43,7 @@ namespace Content.Client.GameObjects.Components.Items
             }
         }
 
-        public (RSI rsi, RSI.StateId stateId)? GetInHandStateInfo(HandLocation hand)
+        public (RSI rsi, RSI.StateId stateId, Color color)? GetInHandStateInfo(HandLocation hand)
         {
             if (RsiPath == null)
             {
@@ -52,7 +55,7 @@ namespace Content.Client.GameObjects.Components.Items
             var stateId = EquippedPrefix != null ? $"{EquippedPrefix}-inhand-{handName}" : $"inhand-{handName}";
             if (rsi.TryGetState(stateId, out _))
             {
-                return (rsi, stateId);
+                return (rsi, stateId, Color);
             }
 
             return null;
@@ -62,6 +65,7 @@ namespace Content.Client.GameObjects.Components.Items
         {
             base.ExposeData(serializer);
 
+            serializer.DataFieldCached(ref Color, "color", Color.White);
             serializer.DataFieldCached(ref RsiPath, "sprite", null);
             serializer.DataFieldCached(ref _equippedPrefix, "HeldPrefix", null);
         }

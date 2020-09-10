@@ -14,9 +14,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
 {
     public abstract class SharedStunnableComponent : Component, IMoveSpeedModifier, IActionBlocker, IInteractHand
     {
-#pragma warning disable 649
-        [Dependency] private IGameTiming _gameTiming;
-#pragma warning restore 649
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public sealed override string Name => "Stunnable";
         public override uint? NetID => ContentNetIDs.STUNNABLE;
@@ -262,6 +260,10 @@ namespace Content.Shared.GameObjects.Components.Mobs
 
         public bool CanUnequip() => (!Stunned);
         public bool CanChangeDirection() => true;
+
+        public bool CanShiver() => !Stunned;
+        public bool CanSweat() => true;
+
         #endregion
 
         [ViewVariables]

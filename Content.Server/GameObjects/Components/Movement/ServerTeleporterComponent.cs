@@ -1,7 +1,9 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Linq;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
@@ -24,11 +26,10 @@ namespace Content.Server.GameObjects.Components.Movement
     [RegisterComponent]
     public class ServerTeleporterComponent : Component, IAfterInteract
     {
-#pragma warning disable 649
-        [Dependency] private readonly IMapManager _mapManager;
-        [Dependency] private readonly IServerEntityManager _serverEntityManager;
-        [Dependency] private readonly IRobustRandom _spreadRandom;
-#pragma warning restore 649
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
+        [Dependency] private readonly IRobustRandom _spreadRandom = default!;
+
         // TODO: Look at MapManager.Map for Beacons to get all entities on grid
         public ItemTeleporterState State => _state;
 
@@ -39,14 +40,12 @@ namespace Content.Server.GameObjects.Components.Movement
         [ViewVariables] private int _range;
         [ViewVariables] private ItemTeleporterState _state;
         [ViewVariables] private TeleporterType _teleporterType;
-        [ViewVariables] private string _departureSound;
-        [ViewVariables] private string _arrivalSound;
-        [ViewVariables] private string _cooldownSound;
+        [ViewVariables] private string _departureSound = "";
+        [ViewVariables] private string _arrivalSound = "";
+        [ViewVariables] private string? _cooldownSound;
         // If the direct OR random teleport will try to avoid hitting collidables
         [ViewVariables] private bool _avoidCollidable;
         [ViewVariables] private float _portalAliveTime;
-
-        private AppearanceComponent _appearanceComponent;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -63,22 +62,20 @@ namespace Content.Server.GameObjects.Components.Movement
             serializer.DataField(ref _portalAliveTime, "portal_alive_time", 5.0f);  // TODO: Change this to 0 before PR?
         }
 
-        public override void OnRemove()
-        {
-            _appearanceComponent = null;
-
-            base.OnRemove();
-        }
-
         private void SetState(ItemTeleporterState newState)
         {
+            if (!Owner.TryGetComponent(out AppearanceComponent? appearance))
+            {
+                return;
+            }
+
             if (newState == ItemTeleporterState.Cooldown)
             {
-                _appearanceComponent.SetData(TeleporterVisuals.VisualState, TeleporterVisualState.Charging);
+                appearance.SetData(TeleporterVisuals.VisualState, TeleporterVisualState.Charging);
             }
             else
             {
-                _appearanceComponent.SetData(TeleporterVisuals.VisualState, TeleporterVisualState.Ready);
+                appearance.SetData(TeleporterVisuals.VisualState, TeleporterVisualState.Ready);
             }
             _state = newState;
         }
@@ -87,7 +84,7 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             if (_teleporterType == TeleporterType.Directed)
             {
-                TryDirectedTeleport(eventArgs.User, eventArgs.ClickLocation.ToMap(_mapManager));
+                TryDirectedTeleport(eventArgs.User, eventArgs.ClickLocation.ToMap(Owner.EntityManager));
             }
 
             if (_teleporterType == TeleporterType.Random)
@@ -149,12 +146,11 @@ namespace Content.Server.GameObjects.Components.Movement
 
         public override void Initialize()
         {
-            _appearanceComponent = Owner.GetComponent<AppearanceComponent>();
-            _state = ItemTeleporterState.Off;
             base.Initialize();
+            _state = ItemTeleporterState.Off;
         }
 
-        private bool emptySpace(IEntity user, Vector2 target)
+        private bool EmptySpace(IEntity user, Vector2 target)
         {
             // TODO: Check the user's spot? Upside is no stacking TPs but downside is they can't unstuck themselves from walls.
             foreach (var entity in _serverEntityManager.GetEntitiesIntersecting(user.Transform.MapID, target))
@@ -167,16 +163,16 @@ namespace Content.Server.GameObjects.Components.Movement
             return true;
         }
 
-        private Vector2 randomEmptySpot(IEntity user, int range)
+        private Vector2 RandomEmptySpot(IEntity user, int range)
         {
-            Vector2 targetVector = user.Transform.GridPosition.Position;
+            Vector2 targetVector = user.Transform.Coordinates.Position;
             // Definitely a better way to do this
             foreach (var i in Enumerable.Range(0, 5))
             {
                 var randomRange = _spreadRandom.Next(0, range);
                 var angle = Angle.FromDegrees(_spreadRandom.Next(0, 359));
-                targetVector = user.Transform.GridPosition.Position + angle.ToVec() * randomRange;
-                if (emptySpace(user, targetVector))
+                targetVector = user.Transform.Coordinates.Position + angle.ToVec() * randomRange;
+                if (EmptySpace(user, targetVector))
                 {
                     return targetVector;
                 }
@@ -200,13 +196,13 @@ namespace Content.Server.GameObjects.Components.Movement
             Vector2 targetVector;
             if (_avoidCollidable)
             {
-                targetVector = randomEmptySpot(user, _range);
+                targetVector = RandomEmptySpot(user, _range);
             }
             else
             {
                var randomRange = _spreadRandom.Next(0, _range);
                var angle = Angle.FromDegrees(_spreadRandom.Next(0, 359));
-               targetVector = user.Transform.GridPosition.Position + angle.ToVec() * randomRange;
+               targetVector = user.Transform.Coordinates.Position + angle.ToVec() * randomRange;
             }
             // Start / Continue
             if (_state == ItemTeleporterState.Off)
@@ -227,7 +223,7 @@ namespace Content.Server.GameObjects.Components.Movement
         public void Teleport(IEntity user, Vector2 vector)
         {
             // Messy maybe?
-            GridCoordinates targetGrid = new GridCoordinates(vector, user.Transform.GridID);
+            var targetGrid = user.ToCoordinates(vector);
             var soundPlayer = EntitySystem.Get<AudioSystem>();
 
             // If portals use those, otherwise just move em over
@@ -235,25 +231,26 @@ namespace Content.Server.GameObjects.Components.Movement
             {
                 // Call Delete here as the teleporter should have control over portal longevity
                 // Departure portal
-                var departurePortal = _serverEntityManager.SpawnEntity("Portal", user.Transform.GridPosition);
+                var departurePortal = _serverEntityManager.SpawnEntity("Portal", user.Transform.Coordinates);
                 departurePortal.TryGetComponent<ServerPortalComponent>(out var departureComponent);
 
                 // Arrival portal
                 var arrivalPortal = _serverEntityManager.SpawnEntity("Portal", targetGrid);
-                arrivalPortal.TryGetComponent<ServerPortalComponent>(out var arrivalComponent);
-
-                // Connect. TODO: If the OnUpdate in ServerPortalComponent is changed this may need to change as well.
-                arrivalComponent.TryConnectPortal(departurePortal);
+                if (arrivalPortal.TryGetComponent<ServerPortalComponent>(out var arrivalComponent))
+                {
+                    // Connect. TODO: If the OnUpdate in ServerPortalComponent is changed this may need to change as well.
+                    arrivalComponent.TryConnectPortal(departurePortal);
+                }
             }
             else
             {
                 // Departure
-                soundPlayer.PlayAtCoords(_departureSound, user.Transform.GridPosition);
+                soundPlayer.PlayAtCoords(_departureSound, user.Transform.Coordinates);
 
                 // Arrival
                 user.Transform.AttachToGridOrMap();
                 user.Transform.WorldPosition = vector;
-                soundPlayer.PlayAtCoords(_arrivalSound, user.Transform.GridPosition);
+                soundPlayer.PlayAtCoords(_arrivalSound, user.Transform.Coordinates);
             }
 
         }

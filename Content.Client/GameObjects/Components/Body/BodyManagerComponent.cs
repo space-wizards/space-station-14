@@ -1,8 +1,10 @@
 #nullable enable
 using Content.Client.GameObjects.Components.Disposal;
+using Content.Client.GameObjects.Components.MedicalScanner;
 using Content.Client.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Medical;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -14,16 +16,20 @@ namespace Content.Client.GameObjects.Components.Body
 {
     [RegisterComponent]
     [ComponentReference(typeof(IDamageableComponent))]
-    [ComponentReference(typeof(IBodyManagerComponent))]
+    [ComponentReference(typeof(ISharedBodyManagerComponent))]
     public class BodyManagerComponent : SharedBodyManagerComponent, IClientDraggable
     {
-#pragma warning disable 649
         [Dependency] private readonly IEntityManager _entityManager = default!;
-#pragma warning restore 649
 
         public bool ClientCanDropOn(CanDropEventArgs eventArgs)
         {
-            return eventArgs.Target.HasComponent<DisposalUnitComponent>();
+            if (
+                eventArgs.Target.HasComponent<DisposalUnitComponent>()||
+                eventArgs.Target.HasComponent<MedicalScannerComponent>())
+            {
+                return true;
+            }
+            return false;
         }
 
         public bool ClientCanDrag(CanDragEventArgs eventArgs)
@@ -33,7 +39,7 @@ namespace Content.Client.GameObjects.Components.Body
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null)
         {
-            if (!Owner.TryGetComponent(out ISpriteComponent sprite))
+            if (!Owner.TryGetComponent(out ISpriteComponent? sprite))
             {
                 return;
             }
@@ -50,7 +56,7 @@ namespace Content.Client.GameObjects.Components.Body
 
                     if (!partRemoved.Dropped.HasValue ||
                         !_entityManager.TryGetEntity(partRemoved.Dropped.Value, out var entity) ||
-                        !entity.TryGetComponent(out ISpriteComponent droppedSprite))
+                        !entity.TryGetComponent(out ISpriteComponent? droppedSprite))
                     {
                         break;
                     }

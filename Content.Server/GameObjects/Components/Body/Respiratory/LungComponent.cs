@@ -17,13 +17,15 @@ namespace Content.Server.GameObjects.Components.Body.Respiratory
 
         private float _accumulatedFrameTime;
 
-        [ViewVariables] public GasMixture Air { get; set; } = new GasMixture();
+        [ViewVariables] public GasMixture Air { get; set; }
 
         [ViewVariables] public LungStatus Status { get; set; }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
+
+            Air = new GasMixture();
 
             serializer.DataReadWriteFunction(
                 "volume",
@@ -77,7 +79,7 @@ namespace Content.Server.GameObjects.Components.Body.Respiratory
 
         public void Inhale(float frameTime)
         {
-            if (!Owner.Transform.GridPosition.TryGetTileAir(out var tileAir))
+            if (!Owner.Transform.Coordinates.TryGetTileAir(out var tileAir))
             {
                 return;
             }
@@ -107,7 +109,7 @@ namespace Content.Server.GameObjects.Components.Body.Respiratory
 
         public void Exhale(float frameTime)
         {
-            if (!Owner.Transform.GridPosition.TryGetTileAir(out var tileAir))
+            if (!Owner.Transform.Coordinates.TryGetTileAir(out var tileAir))
             {
                 return;
             }

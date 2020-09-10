@@ -9,13 +9,13 @@ namespace Content.Server.AI.Utility.Considerations.Movement
         {
             var self = context.GetState<SelfState>().GetValue();
             var target = context.GetState<TargetEntityState>().GetValue();
-            if (target == null || target.Transform.GridID != self.Transform.GridID)
+            if (target == null || target.Deleted || target.Transform.GridID != self.Transform.GridID)
             {
                 return 0.0f;
             }
-            
+
             // Anything further than 100 tiles gets clamped
-            return (target.Transform.GridPosition.Position - self.Transform.GridPosition.Position).Length / 100;
+            return (target.Transform.Coordinates.Position - self.Transform.Coordinates.Position).Length / 100;
         }
     }
 }

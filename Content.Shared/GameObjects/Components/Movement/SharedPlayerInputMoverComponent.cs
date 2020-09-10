@@ -56,7 +56,7 @@ namespace Content.Shared.GameObjects.Components.Movement
         {
             get
             {
-                if (Owner.TryGetComponent(out MovementSpeedModifierComponent component))
+                if (Owner.TryGetComponent(out MovementSpeedModifierComponent? component))
                 {
                     return component.CurrentWalkSpeed;
                 }
@@ -69,7 +69,7 @@ namespace Content.Shared.GameObjects.Components.Movement
         {
             get
             {
-                if (Owner.TryGetComponent(out MovementSpeedModifierComponent component))
+                if (Owner.TryGetComponent(out MovementSpeedModifierComponent? component))
                 {
                     return component.CurrentSprintSpeed;
                 }
@@ -78,7 +78,9 @@ namespace Content.Shared.GameObjects.Components.Movement
             }
         }
 
+        [ViewVariables(VVAccess.ReadWrite)]
         public float CurrentPushSpeed => 5;
+        [ViewVariables(VVAccess.ReadWrite)]
         public float GrabRange => 0.2f;
         public bool Sprinting => !HasFlag(_heldMoveButtons, MoveButtons.Walk);
 
@@ -132,7 +134,7 @@ namespace Content.Shared.GameObjects.Components.Movement
             }
         }
 
-        public abstract GridCoordinates LastPosition { get; set; }
+        public abstract EntityCoordinates LastPosition { get; set; }
         public abstract float StepSoundDistance { get; set; }
 
         /// <summary>
@@ -270,7 +272,7 @@ namespace Content.Shared.GameObjects.Components.Movement
         bool ICollideSpecial.PreventCollide(IPhysBody collidedWith)
         {
             // Don't collide with other mobs
-            return collidedWith.Entity.HasComponent<IBodyManagerComponent>();
+            return collidedWith.Entity.HasComponent<ISharedBodyManagerComponent>();
         }
 
         [Serializable, NetSerializable]

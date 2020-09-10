@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Physics;
@@ -7,6 +8,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -14,9 +16,7 @@ namespace Content.Shared.GameObjects.Components.Movement
 {
     public abstract class SharedSlipperyComponent : Component, ICollideBehavior
     {
-#pragma warning disable 649
-        [Dependency] private readonly IEntityManager _entityManager;
-#pragma warning restore 649
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public sealed override string Name => "Slippery";
 
@@ -44,9 +44,16 @@ namespace Content.Shared.GameObjects.Components.Movement
         [ViewVariables(VVAccess.ReadWrite)]
         private float RequiredSlipSpeed { get; set; } = 0f;
 
+        /// <summary>
+        ///     Whether or not this component will try to slip entities.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool Slippery { get; set; }
+
         private bool TrySlip(IEntity entity)
         {
-            if (ContainerHelpers.IsInContainer(Owner)
+            if (!Slippery
+                || ContainerHelpers.IsInContainer(Owner)
                 ||  _slipped.Contains(entity.Uid)
                 ||  !entity.TryGetComponent(out SharedStunnableComponent stun)
                 ||  !entity.TryGetComponent(out ICollidableComponent otherBody)
@@ -116,12 +123,18 @@ namespace Content.Shared.GameObjects.Components.Movement
         public override void Initialize()
         {
             base.Initialize();
-            var collidable = Owner.GetComponent<ICollidableComponent>();
+
+            var collidable = Owner.EnsureComponent<CollidableComponent>();
 
             collidable.Hard = false;
-            var shape = collidable.PhysicsShapes[0];
-            shape.CollisionLayer |= (int) CollisionGroup.SmallImpassable;
-            shape.CollisionMask = (int)CollisionGroup.None;
+
+            var shape = collidable.PhysicsShapes.FirstOrDefault();
+
+            if (shape != null)
+            {
+                shape.CollisionLayer |= (int) CollisionGroup.SmallImpassable;
+                shape.CollisionMask = (int) CollisionGroup.None;
+            }
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -131,6 +144,7 @@ namespace Content.Shared.GameObjects.Components.Movement
             serializer.DataField(this, x => ParalyzeTime, "paralyzeTime", 3f);
             serializer.DataField(this, x  => IntersectPercentage, "intersectPercentage", 0.3f);
             serializer.DataField(this, x => RequiredSlipSpeed, "requiredSlipSpeed", 0f);
+            serializer.DataField(this, x => x.Slippery, "slippery", true);
         }
     }
 }

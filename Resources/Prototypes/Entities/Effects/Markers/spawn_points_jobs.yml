@@ -38,7 +38,6 @@
   id: SpawnPointBartender
   parent: SpawnPointJobBase
   name: spawn point (bartender)
-
   components:
   - type: SpawnPoint
     job_id: Bartender
@@ -52,7 +51,6 @@
   id: SpawnPointChef
   parent: SpawnPointJobBase
   name: spawn point (chef)
-
   components:
   - type: SpawnPoint
     job_id: Chef
@@ -66,7 +64,6 @@
   id: SpawnPointClown
   parent: SpawnPointJobBase
   name: spawn point (clown)
-
   components:
   - type: SpawnPoint
     job_id: Clown
@@ -75,12 +72,24 @@
   - type: Icon
     state: Clown
 
+# Mime
+- type: entity
+  id: SpawnPointMime
+  parent: SpawnPointJobBase
+  name: spawn point (mime)
+  components:
+  - type: SpawnPoint
+    job_id: Mime
+  - type: Sprite
+    state: Mime
+  - type: Icon
+    state: Mime
+
 # Janitor
 - type: entity
   id: SpawnPointJanitor
   parent: SpawnPointJobBase
   name: spawn point (janitor)
-
   components:
   - type: SpawnPoint
     job_id: Janitor
@@ -94,7 +103,6 @@
   id: SpawnPointCaptain
   parent: SpawnPointJobBase
   name: spawn point (captain)
-
   components:
   - type: SpawnPoint
     job_id: Captain
@@ -108,7 +116,6 @@
   id: SpawnPointHeadOfPersonnel
   parent: SpawnPointJobBase
   name: spawn point (headofpersonnel)
-
   components:
   - type: SpawnPoint
     job_id: HeadOfPersonnel
@@ -122,7 +129,6 @@
   id: SpawnPointChiefEngineer
   parent: SpawnPointJobBase
   name: spawn point (chiefengineer)
-
   components:
   - type: SpawnPoint
     job_id: ChiefEngineer
@@ -136,7 +142,6 @@
   id: SpawnPointStationEngineer
   parent: SpawnPointJobBase
   name: spawn point (stationengineer)
-
   components:
   - type: SpawnPoint
     job_id: StationEngineer
@@ -150,7 +155,6 @@
   id: SpawnPointChiefMedicalOfficer
   parent: SpawnPointJobBase
   name: spawn point (chiefmedicalofficer)
-
   components:
   - type: SpawnPoint
     job_id: ChiefMedicalOfficer
@@ -164,7 +168,6 @@
   id: SpawnPointMedicalDoctor
   parent: SpawnPointJobBase
   name: spawn point (medicaldoctor)
-
   components:
   - type: SpawnPoint
     job_id: MedicalDoctor
@@ -178,7 +181,6 @@
   id: SpawnPointResearchDirector
   parent: SpawnPointJobBase
   name: spawn point (researchdirector)
-
   components:
   - type: SpawnPoint
     job_id: ResearchDirector
@@ -192,7 +194,6 @@
   id: SpawnPointScientist
   parent: SpawnPointJobBase
   name: spawn point (scientist)
-
   components:
   - type: SpawnPoint
     job_id: Scientist
@@ -206,7 +207,6 @@
   id: SpawnPointHeadOfSecurity
   parent: SpawnPointJobBase
   name: spawn point (headofsecurity)
-
   components:
   - type: SpawnPoint
     job_id: HeadOfSecurity
@@ -220,7 +220,6 @@
   id: SpawnPointSecurityOfficer
   parent: SpawnPointJobBase
   name: spawn point (securityofficer)
-
   components:
   - type: SpawnPoint
     job_id: SecurityOfficer

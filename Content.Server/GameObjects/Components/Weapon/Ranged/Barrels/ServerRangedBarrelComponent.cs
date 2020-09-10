@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
@@ -27,6 +28,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Content.Shared.GameObjects.Components.Damage;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 {
@@ -38,10 +40,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
     {
         // There's still some of py01 and PJB's work left over, especially in underlying shooting logic,
         // it's just when I re-organised it changed me as the contributor
-#pragma warning disable 649
-        [Dependency] private IGameTiming _gameTiming;
-        [Dependency] private IRobustRandom _robustRandom;
-#pragma warning restore 649
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         public override FireRateSelector FireRateSelector => _fireRateSelector;
         private FireRateSelector _fireRateSelector;
@@ -54,7 +54,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         private TimeSpan _lastFire;
 
         public abstract IEntity PeekAmmo();
-        public abstract IEntity TakeProjectile(GridCoordinates spawnAtGrid, MapCoordinates spawnAtMap);
+        public abstract IEntity TakeProjectile(EntityCoordinates spawnAtGrid, MapCoordinates spawnAtMap);
 
         // Recoil / spray control
         private Angle _minAngle;
@@ -156,8 +156,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override void OnAdd()
         {
             base.OnAdd();
-            var rangedWeaponComponent = Owner.GetComponent<ServerRangedWeaponComponent>();
-            rangedWeaponComponent.Barrel = this;
+
+            if (!Owner.EnsureComponent(out ServerRangedWeaponComponent rangedWeaponComponent))
+            {
+                Logger.Warning(
+                    $"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(ServerRangedWeaponComponent)}");
+            }
+
+            rangedWeaponComponent.Barrel ??= this;
             rangedWeaponComponent.FireHandler += Fire;
             rangedWeaponComponent.WeaponCanFireHandler += WeaponCanFire;
         }
@@ -177,7 +183,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         {
             var currentTime = _gameTiming.CurTime;
             var timeSinceLastFire = (currentTime - _lastFire).TotalSeconds;
-            var newTheta = FloatMath.Clamp(_currentAngle.Theta + _angleIncrease - _angleDecay * timeSinceLastFire, _minAngle.Theta, _maxAngle.Theta);
+            var newTheta = MathHelper.Clamp(_currentAngle.Theta + _angleIncrease - _angleDecay * timeSinceLastFire, _minAngle.Theta, _maxAngle.Theta);
             _currentAngle = new Angle(newTheta);
 
             var random = (_robustRandom.NextDouble() - 0.5) * 2;
@@ -186,7 +192,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         }
 
         public abstract bool UseEntity(UseEntityEventArgs eventArgs);
-        public abstract bool InteractUsing(InteractUsingEventArgs eventArgs);
+
+        public abstract Task<bool> InteractUsing(InteractUsingEventArgs eventArgs);
 
         public void ChangeFireSelector(FireRateSelector rateSelector)
         {
@@ -217,16 +224,16 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             {
                 if (_soundEmpty != null)
                 {
-                    soundSystem.PlayAtCoords(_soundEmpty, Owner.Transform.GridPosition);
+                    soundSystem.PlayAtCoords(_soundEmpty, Owner.Transform.Coordinates);
                 }
                 return;
             }
 
             var ammo = PeekAmmo();
-            var projectile = TakeProjectile(shooter.Transform.GridPosition, shooter.Transform.MapPosition);
+            var projectile = TakeProjectile(shooter.Transform.Coordinates, shooter.Transform.MapPosition);
             if (projectile == null)
             {
-                soundSystem.PlayAtCoords(_soundEmpty, Owner.Transform.GridPosition);
+                soundSystem.PlayAtCoords(_soundEmpty, Owner.Transform.Coordinates);
                 return;
             }
 
@@ -253,7 +260,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
                 if (CanMuzzleFlash)
                 {
-                    ammoComponent.MuzzleFlash(Owner.Transform.GridPosition, angle);
+                    ammoComponent.MuzzleFlash(Owner, angle);
                 }
 
                 if (ammoComponent.Caseless)
@@ -267,7 +274,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 throw new InvalidOperationException();
             }
 
-            soundSystem.PlayAtCoords(_soundGunshot, Owner.Transform.GridPosition);
+            soundSystem.PlayAtCoords(_soundGunshot, Owner.Transform.Coordinates);
             _lastFire = _gameTiming.CurTime;
 
             return;
@@ -302,7 +309,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             const float ejectOffset = 0.2f;
             var ammo = entity.GetComponent<AmmoComponent>();
             var offsetPos = (robustRandom.NextFloat() * ejectOffset, robustRandom.NextFloat() * ejectOffset);
-            entity.Transform.GridPosition = entity.Transform.GridPosition.Offset(offsetPos);
+            entity.Transform.Coordinates = entity.Transform.Coordinates.Offset(offsetPos);
             entity.Transform.LocalRotation = robustRandom.Pick(ejectDirections).ToAngle();
 
             if (ammo.SoundCollectionEject == null || !playSound)
@@ -317,7 +324,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
             var soundCollection = prototypeManager.Index<SoundCollectionPrototype>(ammo.SoundCollectionEject);
             var randomFile = robustRandom.Pick(soundCollection.PickFiles);
-            EntitySystem.Get<AudioSystem>().PlayAtCoords(randomFile, entity.Transform.GridPosition, AudioParams.Default.WithVolume(-1));
+            EntitySystem.Get<AudioSystem>().PlayAtCoords(randomFile, entity.Transform.Coordinates, AudioParams.Default.WithVolume(-1));
         }
 
         /// <summary>
@@ -368,7 +375,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 else
                 {
                     projectile =
-                        Owner.EntityManager.SpawnEntity(baseProjectile.Prototype.ID, Owner.Transform.GridPosition);
+                        Owner.EntityManager.SpawnEntity(baseProjectile.Prototype.ID, Owner.Transform.MapPosition);
                 }
 
                 Angle projectileAngle;
@@ -384,7 +391,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
                 var collidableComponent = projectile.GetComponent<ICollidableComponent>();
                 collidableComponent.Status = BodyStatus.InAir;
-                projectile.Transform.GridPosition = Owner.Transform.GridPosition;
+                projectile.Transform.WorldPosition = Owner.Transform.MapPosition.Position;
 
                 var projectileComponent = projectile.GetComponent<ProjectileComponent>();
                 projectileComponent.IgnoreEntity(shooter);
@@ -419,7 +426,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         /// </summary>
         private void FireHitscan(IEntity shooter, HitscanComponent hitscan, Angle angle)
         {
-            var ray = new CollisionRay(Owner.Transform.GridPosition.Position, angle.ToVec(), (int) hitscan.CollisionMask);
+            var ray = new CollisionRay(Owner.Transform.Coordinates.Position, angle.ToVec(), (int) hitscan.CollisionMask);
             var physicsManager = IoCManager.Resolve<IPhysicsManager>();
             var rayCastResults = physicsManager.IntersectRay(Owner.Transform.MapID, ray, hitscan.MaxLength, shooter, false).ToList();
 

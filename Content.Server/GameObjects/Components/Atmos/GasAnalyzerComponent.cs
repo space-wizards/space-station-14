@@ -1,45 +1,49 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Server.Utility;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
     [RegisterComponent]
     public class GasAnalyzerComponent : SharedGasAnalyzerComponent, IAfterInteract, IDropped, IUse
     {
-#pragma warning disable 649
-        [Dependency] private IServerNotifyManager _notifyManager = default!;
-        [Dependency] private IMapManager _mapManager = default!;
-#pragma warning restore 649
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
-        private BoundUserInterface _userInterface = default!;
         private GasAnalyzerDanger _pressureDanger;
         private float _timeSinceSync;
         private const float TimeBetweenSyncs = 2f;
         private bool _checkPlayer = false; // Check at the player pos or at some other tile?
-        private GridCoordinates? _position; // The tile that we scanned
+        private EntityCoordinates? _position; // The tile that we scanned
+
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(GasAnalyzerUiKey.Key);
 
         public override void Initialize()
         {
             base.Initialize();
-            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
-                .GetBoundUserInterface(GasAnalyzerUiKey.Key);
-            _userInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
+
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
+            }
         }
 
         public override ComponentState GetComponentState()
@@ -56,7 +60,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             _checkPlayer = true;
             _position = null;
-            _userInterface.Open(session);
+            UserInterface?.Open(session);
             UpdateUserInterface();
             Resync();
         }
@@ -67,11 +71,11 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// </summary>
         /// <param name="session">The session to open the ui for</param>
         /// <param name="pos">The position to analyze the gas</param>
-        public void OpenInterface(IPlayerSession session, GridCoordinates pos)
+        public void OpenInterface(IPlayerSession session, EntityCoordinates pos)
         {
             _checkPlayer = false;
             _position = pos;
-            _userInterface.Open(session);
+            UserInterface?.Open(session);
             UpdateUserInterface();
             Resync();
         }
@@ -79,7 +83,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         public void CloseInterface(IPlayerSession session)
         {
             _position = null;
-            _userInterface.Close(session);
+            UserInterface?.Close(session);
             Resync();
         }
 
@@ -98,7 +102,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             // Already get the pressure before Dirty(), because we can't get the EntitySystem in that thread or smth
             var pressure = 0f;
             var gam = EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(Owner.Transform.GridID);
-            var tile = gam?.GetTile(Owner.Transform.GridPosition).Air;
+            var tile = gam?.GetTile(Owner.Transform.Coordinates).Air;
             if (tile != null)
             {
                 pressure = tile.Pressure;
@@ -116,47 +120,53 @@ namespace Content.Server.GameObjects.Components.Atmos
             {
                 _pressureDanger = GasAnalyzerDanger.Nominal;
             }
-            
+
             Dirty();
             _timeSinceSync = 0f;
         }
 
         private void UpdateUserInterface()
         {
+            if (UserInterface == null)
+            {
+                return;
+            }
+
             string? error = null;
 
             // Check if the player is still holding the gas analyzer => if not, don't update
-            foreach (var session in _userInterface.SubscribedSessions)
+            foreach (var session in UserInterface.SubscribedSessions)
             {
                 if (session.AttachedEntity == null)
                     return;
 
-                if (!session.AttachedEntity.TryGetComponent(out IHandsComponent handsComponent))
+                if (!session.AttachedEntity.TryGetComponent(out IHandsComponent? handsComponent))
                     return;
 
                 var activeHandEntity = handsComponent?.GetActiveHand?.Owner;
-                if (activeHandEntity == null || !activeHandEntity.TryGetComponent(out GasAnalyzerComponent gasAnalyzer))
+                if (activeHandEntity == null || !activeHandEntity.TryGetComponent(out GasAnalyzerComponent? gasAnalyzer))
                 {
                     return;
                 }
             }
 
-            var pos = Owner.Transform.GridPosition;
+            var pos = Owner.Transform.Coordinates;
             if (!_checkPlayer && _position.HasValue)
             {
                 // Check if position is out of range => don't update
-                if (!_position.Value.InRange(_mapManager, pos, SharedInteractionSystem.InteractionRange))
+                if (!_position.Value.InRange(_entityManager, pos, SharedInteractionSystem.InteractionRange))
                     return;
-                
+
                 pos = _position.Value;
             }
 
-            var gam = EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(pos.GridID);
+            var atmosSystem = EntitySystem.Get<AtmosphereSystem>();
+            var gam = atmosSystem.GetGridAtmosphere(pos.GetGridId(_entityManager));
             var tile = gam?.GetTile(pos).Air;
             if (tile == null)
             {
                 error = "No Atmosphere!";
-                _userInterface.SetState(
+                UserInterface.SetState(
                 new GasAnalyzerBoundUserInterfaceState(
                     0,
                     0,
@@ -166,16 +176,17 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
 
             var gases = new List<GasEntry>();
-            for (int i = 0; i < Atmospherics.TotalNumberOfGases; i++)
+
+            for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
-                var gas = Atmospherics.GetGas(i);
+                var gas = atmosSystem.GetGas(i);
 
                 if (tile.Gases[i] <= Atmospherics.GasMinMoles) continue;
 
                 gases.Add(new GasEntry(gas.Name, tile.Gases[i], gas.Color));
             }
 
-            _userInterface.SetState(
+            UserInterface.SetState(
                 new GasAnalyzerBoundUserInterfaceState(
                     tile.Pressure,
                     tile.Temperature,
@@ -195,19 +206,16 @@ namespace Content.Server.GameObjects.Components.Atmos
                         return;
                     }
 
-                    if (!player.TryGetComponent(out IHandsComponent handsComponent))
+                    if (!player.TryGetComponent(out IHandsComponent? handsComponent))
                     {
-                        _notifyManager.PopupMessage(Owner.Transform.GridPosition, player,
-                            Loc.GetString("You have no hands."));
+                        Owner.PopupMessage(player, Loc.GetString("You have no hands."));
                         return;
                     }
 
                     var activeHandEntity = handsComponent.GetActiveHand?.Owner;
-                    if (activeHandEntity == null || !activeHandEntity.TryGetComponent(out GasAnalyzerComponent gasAnalyzer))
+                    if (activeHandEntity == null || !activeHandEntity.TryGetComponent(out GasAnalyzerComponent? gasAnalyzer))
                     {
-                        _notifyManager.PopupMessage(serverMsg.Session.AttachedEntity,
-                            serverMsg.Session.AttachedEntity,
-                            Loc.GetString("You need a Gas Analyzer in your hand!"));
+                        serverMsg.Session.AttachedEntity.PopupMessage(Loc.GetString("You need a Gas Analyzer in your hand!"));
                         return;
                     }
 
@@ -221,11 +229,11 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             if (!eventArgs.CanReach)
             {
-                _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, Loc.GetString("You can't reach there!"));
+                eventArgs.User.PopupMessage(Loc.GetString("You can't reach there!"));
                 return;
             }
 
-            if (eventArgs.User.TryGetComponent(out IActorComponent actor))
+            if (eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
                 OpenInterface(actor.playerSession, eventArgs.ClickLocation);
                 //TODO: show other sprite when ui open?
@@ -236,7 +244,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         void IDropped.Dropped(DroppedEventArgs eventArgs)
         {
-            if (eventArgs.User.TryGetComponent(out IActorComponent actor))
+            if (eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
                 CloseInterface(actor.playerSession);
                 //TODO: if other sprite is shown, change again
@@ -245,7 +253,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (eventArgs.User.TryGetComponent(out IActorComponent actor))
+            if (eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
                 OpenInterface(actor.playerSession);
                 //TODO: show other sprite when ui open?

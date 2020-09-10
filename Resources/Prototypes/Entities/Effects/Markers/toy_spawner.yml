@@ -1,0 +1,80 @@
+- type: entity
+  name: Toy Spawner
+  id: ToySpawner
+  components:
+    - type: Sprite
+      netsync: false
+      visible: false
+      sprite: Interface/Misc/markers.rsi
+      state: spawner_toy
+    - type: Icon
+      sprite: Interface/Misc/markers.rsi
+      state: spawner_toy
+    - type: Marker
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Collidable
+    - type: TrashSpawner
+      rarePrototypes:
+        - CarvingHelpMe
+        - CarvingHello
+        - CarvingThankYou
+        - CarvingVeryGood
+        - CarvingImSorry
+        - FoamBlade
+      rareChance: 0.03
+      prototypes:
+        - PlushieBee
+        - PlushieNuke
+        - PlushieLizard
+        - PlushieNar
+        - PlushieCarp
+        - PlushieSlime
+        - PlushieSnake
+        - ToyMouse
+      chance: 0.5
+      offset: 0.2
+  placement:
+    mode: AlignTileAny
+
+- type: entity
+  name: Figure Spawner
+  id: FigureSpawner
+  components:
+    - type: Sprite
+      netsync: false
+      visible: false
+      sprite: Interface/Misc/markers.rsi
+      state: spawner_figure
+    - type: Icon
+      sprite: Interface/Misc/markers.rsi
+      state: spawner_figure
+    - type: Marker
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Collidable
+    - type: TrashSpawner
+      prototypes:
+        - ToyAi
+        - ToyNuke
+        - ToyAssistant
+        - ToyGriffin
+        - ToyHonk
+        - ToyIan
+        - ToyMarauder
+        - ToyMauler
+        - ToyGygax
+        - ToyOdysseus
+        - ToyOwlman
+        - ToyDeathRipley
+        - ToyPhazon
+        - ToyFireRipley
+        - ToyReticence
+        - ToyRipley
+        - ToySeraph
+        - ToyDurand
+        - ToySkeleton
+      chance: 0.5
+      offset: 0.2
+  placement:
+    mode: AlignTileAny

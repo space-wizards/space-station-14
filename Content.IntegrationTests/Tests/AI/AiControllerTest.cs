@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Movement;
+using Content.Shared.Utility;
 using NUnit.Framework;
 using Robust.Server.AI;
 using Robust.Shared.GameObjects;
@@ -50,7 +51,7 @@ namespace Content.IntegrationTests.Tests.AI
 
                     if (!comps.ContainsKey("AiController")) continue;
 
-                    var aiEntity = entityManager.SpawnEntity(entity.ID, new GridCoordinates(new Vector2(0, 0), grid.Index));
+                    var aiEntity = entityManager.SpawnEntity(entity.ID, grid.ToCoordinates());
                     var aiController = aiEntity.GetComponent<AiControllerComponent>();
                     Assert.That(processorNames.Contains(aiController.LogicName), $"Could not find valid processor named {aiController.LogicName} on entity {entity.ID}");
                 }
@@ -58,6 +59,5 @@ namespace Content.IntegrationTests.Tests.AI
 
             await server.WaitIdleAsync();
         }
-
     }
 }

@@ -17,6 +17,8 @@ namespace Content.Client.UserInterface.Stylesheets
         public const string ButtonOpenLeft = "OpenLeft";
         public const string ButtonOpenBoth = "OpenBoth";
 
+        public const string ButtonCaution = "Caution";
+
         public abstract Stylesheet Stylesheet { get; }
 
         protected StyleRule[] BaseRules { get; }

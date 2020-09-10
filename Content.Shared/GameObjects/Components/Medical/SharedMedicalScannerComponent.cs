@@ -17,15 +17,18 @@ namespace Content.Shared.GameObjects.Components.Medical
             public readonly EntityUid? Entity;
             public readonly Dictionary<DamageClass, int> DamageClasses;
             public readonly Dictionary<DamageType, int> DamageTypes;
+            public readonly bool IsScanned;
 
             public MedicalScannerBoundUserInterfaceState(
                 EntityUid? entity,
                 Dictionary<DamageClass, int> damageClasses,
-                Dictionary<DamageType, int> damageTypes)
+                Dictionary<DamageType, int> damageTypes,
+                bool isScanned)
             {
                 Entity = entity;
                 DamageClasses = damageClasses;
                 DamageTypes = damageTypes;
+                IsScanned = isScanned;
             }
 
             public bool HasDamage()
@@ -56,5 +59,24 @@ namespace Content.Shared.GameObjects.Components.Medical
             Green,
             Yellow,
         }
+
+        [Serializable, NetSerializable]
+        public enum UiButton
+        {
+            ScanDNA,
+        }
+
+        [Serializable, NetSerializable]
+        public class UiButtonPressedMessage : BoundUserInterfaceMessage
+        {
+            public readonly UiButton Button;
+
+            public UiButtonPressedMessage(UiButton button)
+            {
+                Button = button;
+            }
+        }
+
+
     }
 }

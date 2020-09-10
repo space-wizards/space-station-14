@@ -1,6 +1,7 @@
 ﻿using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -12,10 +13,8 @@ namespace Content.Server.GameObjects.Components
     [RegisterComponent]
     class RadioComponent : Component, IUse, IListen
     {
-#pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
-        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
-#pragma warning restore 649
+        [Dependency] private readonly IChatManager _chatManager = default!;
 
         public override string Name => "Radio";
 
@@ -53,8 +52,7 @@ namespace Content.Server.GameObjects.Components
 
         public void Speaker(string message)
         {
-            var chat = IoCManager.Resolve<IChatManager>();
-            chat.EntitySay(Owner, message);
+            _chatManager.EntitySay(Owner, message);
         }
 
         public bool UseEntity(UseEntityEventArgs eventArgs)
@@ -62,11 +60,11 @@ namespace Content.Server.GameObjects.Components
             RadioOn = !RadioOn;
             if(RadioOn)
             {
-                _notifyManager.PopupMessage(Owner, eventArgs.User, "The radio is now on.");
+                Owner.PopupMessage(eventArgs.User, "The radio is now on.");
             }
             else
             {
-                _notifyManager.PopupMessage(Owner, eventArgs.User, "The radio is now off.");
+                Owner.PopupMessage(eventArgs.User, "The radio is now off.");
             }
             return true;
         }

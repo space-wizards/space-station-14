@@ -12,20 +12,8 @@ namespace Content.Shared.GameObjects.Verbs
     ///     To add a global verb to all entities,
     ///     define it and mark it with <see cref="GlobalVerbAttribute"/>
     /// </remarks>
-    public abstract class GlobalVerb
+    public abstract class GlobalVerb : VerbBase
     {
-        /// <summary>
-        ///     If true, this verb requires the user to be within
-        ///     <see cref="VerbUtility.InteractionRange"/> meters from the entity on which this verb resides.
-        /// </summary>
-        public virtual bool RequireInteractionRange => true;
-
-        /// <summary>
-        ///     If true, this verb requires both the user and the entity on which
-        ///     this verb resides to be in the same container or no container.
-        /// </summary>
-        public virtual bool BlockedByContainers => true;
-
         /// <summary>
         ///     Gets the visible verb data for the user.
         /// </summary>

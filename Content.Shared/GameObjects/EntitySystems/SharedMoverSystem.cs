@@ -5,7 +5,6 @@ using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
@@ -58,7 +57,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             collidable.EnsureController<MoverController>();
 
             var weightless = !transform.Owner.HasComponent<MovementIgnoreGravityComponent>() &&
-                             _physicsManager.IsWeightless(transform.GridPosition);
+                             _physicsManager.IsWeightless(transform.Coordinates);
 
             if (weightless)
             {
@@ -179,7 +178,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         }
 
         private static bool TryGetAttachedComponent<T>(ICommonSession? session, [MaybeNullWhen(false)] out T component)
-            where T : IComponent
+            where T : class, IComponent
         {
             component = default;
 
@@ -188,7 +187,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             if (ent == null || !ent.IsValid())
                 return false;
 
-            if (!ent.TryGetComponent(out T comp))
+            if (!ent.TryGetComponent(out T? comp))
                 return false;
 
             component = comp;

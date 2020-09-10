@@ -16,11 +16,9 @@ namespace Content.Shared
         // If you want to change your codebase's language, do it here.
         private const string Culture = "en-US";
 
-#pragma warning disable 649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-#pragma warning restore 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
+        [Dependency] private readonly ILocalizationManager _localizationManager = default!;
 
         public override void PreInit()
         {

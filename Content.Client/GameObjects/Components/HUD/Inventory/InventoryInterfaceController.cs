@@ -12,9 +12,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
 {
     public abstract class InventoryInterfaceController : IDisposable
     {
-#pragma warning disable 649
-        [Dependency] protected readonly IGameHud _gameHud;
-#pragma warning restore 649
+        [Dependency] protected readonly IGameHud GameHud = default!;
 
         protected InventoryInterfaceController(ClientInventoryComponent owner)
         {
@@ -31,8 +29,8 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
 
         public virtual void PlayerAttached()
         {
-            _gameHud.InventoryButtonVisible = true;
-            _gameHud.InventoryButtonToggled = b =>
+            GameHud.InventoryButtonVisible = true;
+            GameHud.InventoryButtonToggled = b =>
             {
                 if (b)
                 {
@@ -47,7 +45,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
 
         public virtual void PlayerDetached()
         {
-            _gameHud.InventoryButtonVisible = false;
+            GameHud.InventoryButtonVisible = false;
             Window.Close();
         }
 

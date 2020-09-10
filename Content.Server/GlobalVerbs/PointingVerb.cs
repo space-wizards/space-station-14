@@ -25,7 +25,7 @@ namespace Content.Server.GlobalVerbs
                 return;
             }
 
-            if (!EntitySystem.Get<PointingSystem>().InRange(user.Transform.GridPosition, target.Transform.GridPosition))
+            if (!EntitySystem.Get<PointingSystem>().InRange(user.Transform.Coordinates, target.Transform.Coordinates))
             {
                 return;
             }
@@ -47,7 +47,7 @@ namespace Content.Server.GlobalVerbs
                 return;
             }
 
-            EntitySystem.Get<PointingSystem>().TryPoint(actor.playerSession, target.Transform.GridPosition, target.Uid);
+            EntitySystem.Get<PointingSystem>().TryPoint(actor.playerSession, target.Transform.Coordinates, target.Uid);
         }
     }
 }

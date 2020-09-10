@@ -1,5 +1,4 @@
-#nullable enable
-using Content.Server.GameObjects.EntitySystems;
+﻿#nullable enable
 using Content.Server.GameObjects.EntitySystems.StationEvents;
 using JetBrains.Annotations;
 using Robust.Server.Interfaces.Console;
@@ -14,11 +13,10 @@ namespace Content.Client.Commands
     {
         public string Command => "events";
         public string Description => "Provides admin control to station events";
-        public string Help => "events <list/pause/resume/random/stop/run <eventname>>\n" + 
+        public string Help => "events <list/pause/resume/stop/run <eventname/random>>\n" + 
                               "list: return all event names that can be run\n " +
                               "pause: stop all random events from running\n" + 
                               "resume: allow random events to run again\n" +
-                              "random: choose a random event that is valid and run it\n" +
                               "run: start a particular event now; <eventname> is case-insensitive and not localized";
         public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
         {

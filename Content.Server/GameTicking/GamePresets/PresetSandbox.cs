@@ -7,9 +7,7 @@ namespace Content.Server.GameTicking.GamePresets
 {
     public sealed class PresetSandbox : GamePreset
     {
-#pragma warning disable 649
-        [Dependency] private readonly ISandboxManager _sandboxManager;
-#pragma warning restore 649
+        [Dependency] private readonly ISandboxManager _sandboxManager = default!;
 
         public override bool Start(IReadOnlyList<IPlayerSession> readyPlayers, bool force = false)
         {

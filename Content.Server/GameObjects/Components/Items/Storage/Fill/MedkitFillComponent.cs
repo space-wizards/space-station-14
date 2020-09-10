@@ -8,11 +8,9 @@ namespace Content.Server.GameObjects.Components.Items.Storage.Fill
     [RegisterComponent]
     internal sealed class MedkitFillComponent : Component, IMapInit
     {
-        public override string Name => "MedkitFill";
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
-#pragma warning disable 649
-        [Dependency] private readonly IEntityManager _entityManager;
-#pragma warning restore 649
+        public override string Name => "MedkitFill";
 
         void IMapInit.MapInit()
         {
@@ -20,7 +18,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage.Fill
 
             void Spawn(string prototype)
             {
-                storage.Insert(_entityManager.SpawnEntity(prototype, Owner.Transform.GridPosition));
+                storage.Insert(_entityManager.SpawnEntity(prototype, Owner.Transform.Coordinates));
             }
 
             Spawn("Brutepack");

@@ -1,6 +1,6 @@
 ﻿using Content.Server.GameObjects.Components.Chemistry;
-using Content.Server.Interfaces;
 using Content.Shared.Chemistry;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
@@ -8,6 +8,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -16,10 +17,8 @@ namespace Content.Server.GameObjects.Components.Fluids
     [RegisterComponent]
     class SprayComponent : Component, IAfterInteract
     {
-#pragma warning disable 649
-        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
         [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
-#pragma warning restore 649
+
         public override string Name => "Spray";
 
         private ReagentUnit _transferAmount;
@@ -46,13 +45,17 @@ namespace Content.Server.GameObjects.Components.Fluids
             set => _sprayVelocity = value;
         }
 
-        private SolutionComponent _contents;
-        public ReagentUnit CurrentVolume => _contents.CurrentVolume;
+        public ReagentUnit CurrentVolume => Owner.GetComponentOrNull<SolutionContainerComponent>()?.CurrentVolume ?? ReagentUnit.Zero;
 
         public override void Initialize()
         {
             base.Initialize();
-            _contents = Owner.GetComponent<SolutionComponent>();
+
+            if (!Owner.EnsureComponent(out SolutionContainerComponent _))
+            {
+                Logger.Warning(
+                    $"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(SolutionContainerComponent)}");
+            }
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -67,16 +70,19 @@ namespace Content.Server.GameObjects.Components.Fluids
         {
             if (CurrentVolume <= 0)
             {
-                _notifyManager.PopupMessage(Owner, eventArgs.User, Loc.GetString("It's empty!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("It's empty!"));
                 return;
             }
 
-            var playerPos = eventArgs.User.Transform.GridPosition;
-            if (eventArgs.ClickLocation.GridID != playerPos.GridID)
+            var playerPos = eventArgs.User.Transform.Coordinates;
+            if (eventArgs.ClickLocation.GetGridId(_serverEntityManager) != playerPos.GetGridId(_serverEntityManager))
+                return;
+
+            if (!Owner.TryGetComponent(out SolutionContainerComponent contents))
                 return;
 
             var direction = (eventArgs.ClickLocation.Position - playerPos.Position).Normalized;
-            var solution = _contents.SplitSolution(_transferAmount);
+            var solution = contents.SplitSolution(_transferAmount);
 
             playerPos = playerPos.Offset(direction); // Move a bit so we don't hit the player
             //TODO: check for wall?

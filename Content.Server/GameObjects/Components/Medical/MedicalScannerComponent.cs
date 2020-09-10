@@ -1,6 +1,14 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using Content.Server.GameObjects.Components.Body;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Players;
+using Content.Server.Utility;
+using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Medical;
 using Content.Shared.GameObjects.EntitySystems;
@@ -10,36 +18,45 @@ using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
+using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Maths;
-using Content.Shared.Damage;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Maths;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Medical
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class MedicalScannerComponent : SharedMedicalScannerComponent, IActivate
+    public class MedicalScannerComponent : SharedMedicalScannerComponent, IActivate, IDragDropOn
     {
-        private AppearanceComponent _appearance;
-        private BoundUserInterface _userInterface;
-        private ContainerSlot _bodyContainer;
+        private ContainerSlot _bodyContainer = default!;
         private readonly Vector2 _ejectOffset = new Vector2(-0.5f, 0f);
+
+        [Dependency] private readonly IPlayerManager _playerManager = null!;
         public bool IsOccupied => _bodyContainer.ContainedEntity != null;
 
-        private PowerReceiverComponent _powerReceiver;
-        private bool Powered => _powerReceiver.Powered;
+        [ViewVariables]
+        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(MedicalScannerUiKey.Key);
 
         public override void Initialize()
         {
             base.Initialize();
 
-            _appearance = Owner.GetComponent<AppearanceComponent>();
-            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
-                .GetBoundUserInterface(MedicalScannerUiKey.Key);
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += OnUiReceiveMessage;
+            }
+
             _bodyContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-bodyContainer", Owner);
-            _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
+
+            // TODO: write this so that it checks for a change in power events and acts accordingly.
+            var newState = GetUserInterfaceState();
+            UserInterface?.SetState(newState);
 
             UpdateUserInterface();
         }
@@ -48,19 +65,23 @@ namespace Content.Server.GameObjects.Components.Medical
             new MedicalScannerBoundUserInterfaceState(
                 null,
                 new Dictionary<DamageClass, int>(),
-                new Dictionary<DamageType, int>());
+                new Dictionary<DamageType, int>(),
+                false);
 
         private MedicalScannerBoundUserInterfaceState GetUserInterfaceState()
         {
             var body = _bodyContainer.ContainedEntity;
             if (body == null)
             {
-                _appearance.SetData(MedicalScannerVisuals.Status, MedicalScannerStatus.Open);
+                if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+                {
+                    appearance?.SetData(MedicalScannerVisuals.Status, MedicalScannerStatus.Open);
+                }
+
                 return EmptyUIState;
             }
 
-            if (!body.TryGetComponent(out IDamageableComponent damageable) ||
-                damageable.CurrentDamageState == DamageState.Dead)
+            if (!body.TryGetComponent(out IDamageableComponent? damageable))
             {
                 return EmptyUIState;
             }
@@ -68,7 +89,14 @@ namespace Content.Server.GameObjects.Components.Medical
             var classes = new Dictionary<DamageClass, int>(damageable.DamageClasses);
             var types = new Dictionary<DamageType, int>(damageable.DamageTypes);
 
-            return new MedicalScannerBoundUserInterfaceState(body.Uid, classes, types);
+            if (_bodyContainer.ContainedEntity?.Uid == null)
+            {
+                return new MedicalScannerBoundUserInterfaceState(body.Uid, classes, types, true);
+            }
+
+
+            return new MedicalScannerBoundUserInterfaceState(body.Uid, classes, types,
+                CloningSystem.HasDnaScan(_bodyContainer.ContainedEntity.GetComponent<MindComponent>().Mind));
         }
 
         private void UpdateUserInterface()
@@ -79,7 +107,7 @@ namespace Content.Server.GameObjects.Components.Medical
             }
 
             var newState = GetUserInterfaceState();
-            _userInterface.SetState(newState);
+            UserInterface?.SetState(newState);
         }
 
         private MedicalScannerStatus GetStatusFromDamageState(DamageState damageState)
@@ -92,22 +120,31 @@ namespace Content.Server.GameObjects.Components.Medical
                 default: throw new ArgumentException(nameof(damageState));
             }
         }
+
         private MedicalScannerStatus GetStatus()
         {
-            var body = _bodyContainer.ContainedEntity;
-            return body == null
-                ? MedicalScannerStatus.Open
-                : GetStatusFromDamageState(body.GetComponent<IDamageableComponent>().CurrentDamageState);
+            if (Powered)
+            {
+                var body = _bodyContainer.ContainedEntity;
+                return body == null
+                    ? MedicalScannerStatus.Open
+                    : GetStatusFromDamageState(body.GetComponent<IDamageableComponent>().CurrentDamageState);
+            }
+
+            return MedicalScannerStatus.Off;
         }
 
         private void UpdateAppearance()
         {
-            _appearance.SetData(MedicalScannerVisuals.Status, GetStatus());
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            {
+                appearance.SetData(MedicalScannerVisuals.Status, GetStatus());
+            }
         }
 
         public void Activate(ActivateEventArgs args)
         {
-            if (!args.User.TryGetComponent(out IActorComponent actor))
+            if (!args.User.TryGetComponent(out IActorComponent? actor))
             {
                 return;
             }
@@ -115,7 +152,7 @@ namespace Content.Server.GameObjects.Components.Medical
             if (!Powered)
                 return;
 
-            _userInterface.Open(actor.playerSession);
+            UserInterface?.Open(actor.playerSession);
         }
 
         [Verb]
@@ -178,14 +215,47 @@ namespace Content.Server.GameObjects.Components.Medical
 
         public void Update(float frameTime)
         {
-            if (_bodyContainer.ContainedEntity == null)
-            {
-                // There's no need to update if there's no one inside
-                return;
-            }
-
             UpdateUserInterface();
             UpdateAppearance();
+        }
+
+        private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
+        {
+            if (!(obj.Message is UiButtonPressedMessage message)) return;
+
+            switch (message.Button)
+            {
+                case UiButton.ScanDNA:
+                    if (_bodyContainer.ContainedEntity != null)
+                    {
+                        //TODO: Show a 'ERROR: Body is completely devoid of soul' if no Mind owns the entity.
+                        CloningSystem.AddToDnaScans(_playerManager
+                            .GetPlayersBy(playerSession =>
+                            {
+                                var mindOwnedMob = playerSession.ContentData()?.Mind?.OwnedEntity;
+
+                                return mindOwnedMob != null && mindOwnedMob ==
+                                    _bodyContainer.ContainedEntity;
+                            }).Single()
+                            .ContentData()
+                            ?.Mind);
+                    }
+
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        public bool CanDragDropOn(DragDropEventArgs eventArgs)
+        {
+            return eventArgs.Dropped.HasComponent<BodyManagerComponent>();
+        }
+
+        public bool DragDropOn(DragDropEventArgs eventArgs)
+        {
+            _bodyContainer.Insert(eventArgs.Dropped);
+            return true;
         }
     }
 }

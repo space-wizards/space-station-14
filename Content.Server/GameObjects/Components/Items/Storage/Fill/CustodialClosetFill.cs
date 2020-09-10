@@ -13,11 +13,10 @@ namespace Content.Server.GameObjects.Components.Items.Storage.Fill
         void IMapInit.MapInit()
         {
             var storage = Owner.GetComponent<IStorageComponent>();
-            var random = IoCManager.Resolve<IRobustRandom>();
 
             void Spawn(string prototype)
             {
-                storage.Insert(Owner.EntityManager.SpawnEntity(prototype, Owner.Transform.GridPosition));
+                storage.Insert(Owner.EntityManager.SpawnEntity(prototype, Owner.Transform.Coordinates));
             }
 
             Spawn("MopItem");

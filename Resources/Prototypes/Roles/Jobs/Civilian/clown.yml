@@ -8,13 +8,14 @@
   icon: "Clown"
   access:
   - Theatre
+  - Maintenance
   special: !type:ClownSpecial {}
 
 - type: startingGear
   id: ClownGear
   equipment:
     innerclothing: UniformClown
-    backpack: ClownPack
+    backpack: ClownPackFilled
     shoes: ShoesClown
     mask: MaskClown
     pocket1: BikeHorn

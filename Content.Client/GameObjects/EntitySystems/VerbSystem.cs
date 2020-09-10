@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Threading;
 using Content.Client.State;
@@ -24,11 +23,9 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -40,18 +37,15 @@ using Timer = Robust.Shared.Timers.Timer;
 namespace Content.Client.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    public sealed class VerbSystem : EntitySystem
+    public sealed class VerbSystem : SharedVerbSystem
     {
-#pragma warning disable 649
-        [Dependency] private readonly IStateManager _stateManager;
-        [Dependency] private readonly IEntityManager _entityManager;
-        [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private readonly IInputManager _inputManager;
-        [Dependency] private readonly IItemSlotManager _itemSlotManager;
-        [Dependency] private readonly IGameTiming _gameTiming;
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
-        [Dependency] private readonly IMapManager _mapManager;
-#pragma warning restore 649
+        [Dependency] private readonly IStateManager _stateManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
 
         private EntityList _currentEntityList;
         private VerbPopup _currentVerbListRoot;
@@ -117,11 +111,10 @@ namespace Content.Client.GameObjects.EntitySystems
                 return false;
             }
 
-            var mapCoordinates = args.Coordinates.ToMap(_mapManager);
-            var entities = _entityManager.GetEntitiesIntersecting(mapCoordinates.MapId,
-                Box2.CenteredAround(mapCoordinates.Position, (0.5f, 0.5f))).ToList();
+            var mapCoordinates = args.Coordinates.ToMap(_entityManager);
+            var playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
 
-            if (entities.Count == 0)
+            if (playerEntity == null || !TryGetContextEntities(playerEntity, mapCoordinates, out var entities))
             {
                 return false;
             }
@@ -207,11 +200,10 @@ namespace Content.Client.GameObjects.EntitySystems
             //Get verbs, component dependent.
             foreach (var (component, verb) in VerbUtility.GetVerbs(entity))
             {
-                if (verb.RequireInteractionRange && !VerbUtility.InVerbUseRange(user, entity))
+                if (!VerbUtility.VerbAccessChecks(user, entity, verb))
+                {
                     continue;
-
-                if (verb.BlockedByContainers && !user.IsInSameOrNoContainer(entity))
-                    continue;
+                }
 
                 var verbData = verb.GetData(user, component);
 
@@ -232,11 +224,10 @@ namespace Content.Client.GameObjects.EntitySystems
             //Get global verbs. Visible for all entities regardless of their components.
             foreach (var globalVerb in VerbUtility.GetGlobalVerbs(Assembly.GetExecutingAssembly()))
             {
-                if (globalVerb.RequireInteractionRange && !VerbUtility.InVerbUseRange(user, entity))
+                if (!VerbUtility.VerbAccessChecks(user, entity, globalVerb))
+                {
                     continue;
-
-                if (globalVerb.BlockedByContainers && !user.IsInSameOrNoContainer(entity))
-                    continue;
+                }
 
                 var verbData = globalVerb.GetData(user, entity);
 
@@ -470,7 +461,7 @@ namespace Content.Client.GameObjects.EntitySystems
                     var funcId = _master._inputManager.NetworkBindMap.KeyFunctionID(args.Function);
 
                     var message = new FullInputCmdMessage(_master._gameTiming.CurTick, _master._gameTiming.TickFraction, funcId, BoundKeyState.Down,
-                        _entity.Transform.GridPosition,
+                        _entity.Transform.Coordinates,
                         args.PointerLocation, _entity.Uid);
 
                     // client side command handlers will always be sent the local player session.

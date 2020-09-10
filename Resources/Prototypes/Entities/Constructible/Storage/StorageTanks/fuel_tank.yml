@@ -13,7 +13,7 @@
     heavyImpactRange: 2
     lightImpactRange: 6
     flashRange: 5
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.WeldingFuel

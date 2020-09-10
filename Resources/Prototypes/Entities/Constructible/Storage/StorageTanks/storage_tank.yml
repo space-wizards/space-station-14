@@ -26,10 +26,10 @@
     mass: 15
     Anchored: false
   - type: Destructible
-    maxHP: 10
-  - type: Solution
+    deadThreshold: 10
+  - type: SolutionContainer
     maxVol: 1500
-    caps: 2
+    caps: RemoveFrom
   - type: Pourable
     transferAmount: 100.0
   placement:

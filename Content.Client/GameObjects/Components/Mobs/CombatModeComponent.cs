@@ -12,10 +12,8 @@ namespace Content.Client.GameObjects.Components.Mobs
     [ComponentReference(typeof(SharedCombatModeComponent))]
     public sealed class CombatModeComponent : SharedCombatModeComponent
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private readonly IGameHud _gameHud;
-#pragma warning restore 649
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IGameHud _gameHud = default!;
 
         public override bool IsInCombatMode
         {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Movement;
@@ -19,23 +20,31 @@ namespace Content.Server.GameObjects.EntitySystems.AI
     [UsedImplicitly]
     internal class AiSystem : EntitySystem
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPauseManager _pauseManager;
-        [Dependency] private readonly IDynamicTypeFactory _typeFactory;
-        [Dependency] private readonly IReflectionManager _reflectionManager;
-#pragma warning restore 649
+        [Dependency] private readonly IDynamicTypeFactory _typeFactory = default!;
+        [Dependency] private readonly IReflectionManager _reflectionManager = default!;
 
         private readonly Dictionary<string, Type> _processorTypes = new Dictionary<string, Type>();
+
+        /// <summary>
+        ///     To avoid iterating over dead AI continuously they can wake and sleep themselves when necessary.
+        /// </summary>
+        private readonly HashSet<AiLogicProcessor> _awakeAi = new HashSet<AiLogicProcessor>();
+
+        // To avoid modifying awakeAi while iterating over it.
+        private readonly List<SleepAiMessage> _queuedSleepMessages = new List<SleepAiMessage>();
+
+        public bool IsAwake(AiLogicProcessor processor) => _awakeAi.Contains(processor);
 
         /// <inheritdoc />
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<SleepAiMessage>(HandleAiSleep);
 
             var processors = _reflectionManager.GetAllChildren<AiLogicProcessor>();
             foreach (var processor in processors)
             {
-                var att = (AiLogicProcessorAttribute)Attribute.GetCustomAttribute(processor, typeof(AiLogicProcessorAttribute));
+                var att = (AiLogicProcessorAttribute) Attribute.GetCustomAttribute(processor, typeof(AiLogicProcessorAttribute))!;
                 // Tests should pick this up
                 DebugTools.AssertNotNull(att);
                 _processorTypes.Add(att.SerializeName, processor);
@@ -45,31 +54,56 @@ namespace Content.Server.GameObjects.EntitySystems.AI
         /// <inheritdoc />
         public override void Update(float frameTime)
         {
-            foreach (var comp in ComponentManager.EntityQuery<AiControllerComponent>())
+            foreach (var message in _queuedSleepMessages)
             {
-                if (_pauseManager.IsEntityPaused(comp.Owner))
+                switch (message.Sleep)
                 {
+                    case true:
+                        _awakeAi.Remove(message.Processor);
+                        break;
+                    case false:
+                        _awakeAi.Add(message.Processor);
+                        break;
+                }
+            }
+
+            _queuedSleepMessages.Clear();
+            var toRemove = new List<AiLogicProcessor>();
+
+            foreach (var processor in _awakeAi)
+            {
+                if (processor.SelfEntity.Deleted)
+                {
+                    toRemove.Add(processor);
                     continue;
                 }
                 
-                ProcessorInitialize(comp);
-
-                var processor = comp.Processor;
-
                 processor.Update(frameTime);
+            }
+
+            foreach (var processor in toRemove)
+            {
+                _awakeAi.Remove(processor);
             }
         }
 
+        private void HandleAiSleep(SleepAiMessage message)
+        {
+            _queuedSleepMessages.Add(message);
+        }
+
         /// <summary>
-        /// Will start up the controller's processor if not already done so
+        ///     Will start up the controller's processor if not already done so.
+        ///     Also add them to the awakeAi for updates.
         /// </summary>
         /// <param name="controller"></param>
         public void ProcessorInitialize(AiControllerComponent controller)
         {
-            if (controller.Processor != null) return;
+            if (controller.Processor != null || controller.LogicName == null) return;
             controller.Processor = CreateProcessor(controller.LogicName);
             controller.Processor.SelfEntity = controller.Owner;
             controller.Processor.Setup();
+            _awakeAi.Add(controller.Processor);
         }
 
         private AiLogicProcessor CreateProcessor(string name)
@@ -94,7 +128,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI
                                 + "\n    processorId: Class that inherits AiLogicProcessor and has an AiLogicProcessor attribute."
                                 + "\n    entityID: Uid of entity to add the AiControllerComponent to. Open its VV menu to find this.";
 
-            public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+            public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
             {
                 if(args.Length != 2)
                 {

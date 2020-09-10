@@ -67,7 +67,7 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
             Gui ??= new DoAfterGui();
             Gui.AttachedEntity = entity;
 
-            if (entity.TryGetComponent(out DoAfterComponent doAfterComponent))
+            if (entity.TryGetComponent(out DoAfterComponent? doAfterComponent))
             {
                 foreach (var (_, doAfter) in doAfterComponent.DoAfters)
                 {
@@ -87,7 +87,7 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
                 return;
             }
 
-            if (!_player.TryGetComponent(out DoAfterComponent doAfterComponent))
+            if (!_player.TryGetComponent(out DoAfterComponent? doAfterComponent))
             {
                 return;
             }
@@ -98,7 +98,7 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
                 return;
             }
 
-            var userGrid = _player.Transform.GridPosition;
+            var userGrid = _player.Transform.Coordinates;
 
             // Check cancellations / finishes
             foreach (var (id, doAfter) in doAfters)
@@ -133,7 +133,7 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
                 {
                     var targetEntity = _entityManager.GetEntity(doAfter.TargetUid);
 
-                    if (targetEntity.Transform.GridPosition != doAfter.TargetGrid)
+                    if (targetEntity.Transform.Coordinates != doAfter.TargetGrid)
                     {
                         doAfterComponent.Cancel(id, currentTime);
                         continue;

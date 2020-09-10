@@ -21,7 +21,7 @@ namespace Content.Server.GameObjects.Components.GUI
         {
             base.Initialize();
 
-            _inventory = Owner.GetComponent<InventoryComponent>();
+            _inventory = Owner.EnsureComponent<InventoryComponent>();
         }
 
         bool IInventoryController.CanEquip(Slots slot, IEntity entity, bool flagsCheck, out string reason)

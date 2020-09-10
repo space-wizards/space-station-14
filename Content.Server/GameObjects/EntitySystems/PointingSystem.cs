@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Pointing;
+using Content.Server.Players;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Interfaces;
@@ -40,6 +41,8 @@ namespace Content.Server.GameObjects.EntitySystems
         /// </summary>
         private readonly Dictionary<ICommonSession, TimeSpan> _pointers = new Dictionary<ICommonSession, TimeSpan>();
 
+        private const float PointingRange = 15f;
+
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
         {
             if (e.NewStatus != SessionStatus.Disconnected)
@@ -72,14 +75,14 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        public bool InRange(GridCoordinates from, GridCoordinates to)
+        public bool InRange(EntityCoordinates from, EntityCoordinates to)
         {
-            return from.InRange(_mapManager, to, 15);
+            return from.InRange(EntityManager, to, 15);
         }
 
-        public bool TryPoint(ICommonSession? session, GridCoordinates coords, EntityUid uid)
+        public bool TryPoint(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
-            var player = session?.AttachedEntity;
+            var player = (session as IPlayerSession)?.ContentData()?.Mind?.CurrentEntity;
             if (player == null)
             {
                 return false;
@@ -97,30 +100,41 @@ namespace Content.Server.GameObjects.EntitySystems
                 return false;
             }
 
-            if (!InRange(coords, player.Transform.GridPosition))
+            if (!InRange(coords, player.Transform.Coordinates))
             {
-                player.PopupMessage(player, Loc.GetString("You can't reach there!"));
+                player.PopupMessage(Loc.GetString("You can't reach there!"));
                 return false;
             }
 
             if (ActionBlockerSystem.CanChangeDirection(player))
             {
-                var diff = coords.ToMapPos(_mapManager) - player.Transform.MapPosition.Position;
+                var diff = coords.ToMapPos(EntityManager) - player.Transform.MapPosition.Position;
                 if (diff.LengthSquared > 0.01f)
                 {
                     player.Transform.LocalRotation = new Angle(diff);
                 }
             }
 
-            var viewers = _playerManager.GetPlayersInRange(player.Transform.GridPosition, 15);
-
             var arrow = EntityManager.SpawnEntity("pointingarrow", coords);
 
-            if (player.TryGetComponent(out VisibilityComponent playerVisibility))
+            var layer = (int)VisibilityFlags.Normal;
+            if (player.TryGetComponent(out VisibilityComponent? playerVisibility))
             {
                 var arrowVisibility = arrow.EnsureComponent<VisibilityComponent>();
-                arrowVisibility.Layer = playerVisibility.Layer;
+                layer = arrowVisibility.Layer = playerVisibility.Layer;
             }
+
+            // Get players that are in range and whose visibility layer matches the arrow's.
+            var viewers = _playerManager.GetPlayersBy((playerSession) =>
+            {
+                if ((playerSession.VisibilityMask & layer) == 0)
+                    return false;
+
+                var ent = playerSession.ContentData()?.Mind?.CurrentEntity;
+
+                return ent != null
+                       && ent.Transform.MapPosition.InRange(player.Transform.MapPosition, PointingRange);
+            });
 
             string selfMessage;
             string viewerMessage;
@@ -140,7 +154,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
             else
             {
-                var tileRef = _mapManager.GetGrid(coords.GridID).GetTileRef(coords);
+                var tileRef = _mapManager.GetGrid(coords.GetGridId(EntityManager)).GetTileRef(coords);
                 var tileDef = _tileDefinitionManager[tileRef.Tile.TypeId];
 
                 selfMessage = Loc.GetString("You point at {0}.", tileDef.DisplayName);

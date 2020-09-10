@@ -1,0 +1,32 @@
+﻿using Content.Server.GameObjects.Components.Power.AME;
+using JetBrains.Annotations;
+using Robust.Shared.GameObjects.Systems;
+
+namespace Content.Server.GameObjects.EntitySystems
+{
+    [UsedImplicitly]
+    public class AntimatterEngineSystem : EntitySystem
+    {
+        private float _accumulatedFrameTime;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+        }
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+            _accumulatedFrameTime += frameTime;
+            if (_accumulatedFrameTime >= 10)
+            {
+                foreach (var comp in ComponentManager.EntityQuery<AMEControllerComponent>())
+                {
+                    comp.OnUpdate(frameTime);
+                }
+                _accumulatedFrameTime -= 10;
+            }
+
+        }
+    }
+}
