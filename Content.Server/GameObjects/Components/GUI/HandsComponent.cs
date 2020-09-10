@@ -179,7 +179,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public void PutInHandOrDrop(ItemComponent item, bool mobCheck = true)
         {
-            if (!PutInHand(item, mobCheck))
+            if (!PutInHand(item, mobCheck) || item == null)
             {
                 item.Owner.Transform.Coordinates = Owner.Transform.Coordinates;
             }
@@ -187,7 +187,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public bool CanPutInHand(ItemComponent item, bool mobCheck = true)
         {
-            if (mobCheck && !ActionBlockerSystem.CanPickup(Owner))
+            if (mobCheck && !ActionBlockerSystem.CanPickup(Owner) || item == null)
                 return false;
 
             foreach (var handName in ActivePriorityEnumerable())
@@ -204,7 +204,8 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public bool CanPutInHand(ItemComponent item, string index, bool mobCheck = true)
         {
-            if (mobCheck && !ActionBlockerSystem.CanPickup(Owner))
+
+            if (mobCheck && !ActionBlockerSystem.CanPickup(Owner) || item == null)
                 return false;
 
             return GetHand(index)?.Container.CanInsert(item.Owner) == true;

@@ -298,6 +298,9 @@ namespace Content.Server.GameObjects.Components.GUI
                 if (!inventory.HasSlot(slot))
                     return false;
 
+                if (user == null || slot == null)
+                    return false;
+
                 if (!inventory.TryGetSlotItem(slot, out ItemComponent itemToTake))
                 {
                     // so the way i see things is have options always there, and just deny em when it's no good.

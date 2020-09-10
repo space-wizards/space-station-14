@@ -45,19 +45,24 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             _stripMenu.OpenToLeft();
 
 
-
             foreach (var (slot, button) in _stripMenu.Buttons)
             {
                 if (button != null)
                 {
                     Logger.DebugS(LoggerName, $"The {(slot, button)} button has been created.");
-                    button.OnHover = (ev) => SendMessage(new StrippingInventoryButtonPressed(slot));
+                    button.OnPressed = (e) => SendMessage(new StrippingInventoryButtonPressed(slot));
+                    //button.OnHover = (e) => SendMessage(new StrippingInventoryButtonPressed(slot));
                     //button.OnPressed = (e) => SendMessage(new StrippingInventoryButtonPressed(slot));
                     // it was a silly test, but this one doesn't call things twice and crash things to shit.
                     // what's wrong with press? I'll see how spriting works on the meanwhile.
+
+
+                    // UPDATE: Middleclicks only call OnPressed once. Left/Rights do em twice.
+                    // manually trying to overstuff a body sometimes causes redbars to popup everytime you move. investicate later.
+
                 }
                 // according to the logger the buttons are only being made once?
-
+                // I'm not going to try to tackle on hands or cuffs yet. One step at at time.
 
                 // button.OnStoragePressed = (e) => OpenStorage(e, slot);
                 // button.OnHover = (e) => RequestItemHover(slot);
@@ -67,9 +72,12 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             // UpdateMenu();
         }
 
+        // more thoughts: the old code deleted a button right after it was clicked, so the whole doublepress thing didn't matter?
+
         // SendMessage(new StrippingHandcuffButtonPressed(id));
         // SendMessage(new StrippingHandButtonPressed(hand));
 
+        // Generic function for closing the UI. 
         protected override void Dispose(bool disposing)
         {
             Logger.DebugS(LoggerName, $"Dispose called.");
@@ -80,45 +88,32 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             return;
         }
 
-
-        private void UpdateMenu()
-        {
-            Logger.DebugS(LoggerName, $"Update menu called.");
-            // _stripMenu.ClearButtons();
-            // this was an innate part of the old one.
-
-            //if (_stripMenu == null) return;
-            //if (Inventory != null)
-            //{
-            //    foreach (var (slot, button) in _stripMenu.Buttons)
-            //    {
-            //        button.OnPressed = (e) => SendMessage(new StrippingInventoryButtonPressed(slot));
-            //        // button.OnKeyBindDown += (e) => SendMessage(new StrippingInventoryButtonPressed(slot));
-            //        // with above on, stripping someone created two progressbars, and crashed on completion.
-
-            //        // System.NullReferenceException: 'Object reference not set to an instance of an object.'
-
-            //        // with below on, crashed for i think double assigning something to a list?
-            //        //_invButtons.Add(slot, new List<ItemSlotButton> { button });
-            //    }
-            //}
-            //// okay. wrapping it in antinull. like tinfoil. didn't work. i'll keep it there anyways.
-
-            // here is where you rebuild all of the buttons, icons, and interactions. i think.
-
-            return;
-        }
+        // Trashed update menu. I think I'll do it's functionality inside UpdateState.
 
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             Logger.DebugS(LoggerName, $"Update state called.");
+            // old stuff won't touch.
             base.UpdateState(state);
-
             if (!(state is StrippingBoundUserInterfaceState stripState)) return;
-
             Inventory = stripState.Inventory;
             Hands = stripState.Hands;
             Handcuffs = stripState.Handcuffs;
+            // old stuff not touching yet.
+
+
+            foreach (var (slot, button) in _stripMenu.Buttons)
+            {
+                return;
+                // remove picture for each buttons
+
+                // if button valid, add new button.
+                //if (Owner.TryGetSlot(slot, out var entity))
+                //{
+                    // add new pictures.
+                //}
+            }
+
 
             // UpdateMenu();
         }
@@ -165,6 +160,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
                 // 0,0 is top left.
                 // x,x is bottom right.
                 // still needs slots for hands, handcuffs? not sure how handcuffs going to work here.
+                // i might need some sort of secondary dictionary that ties a texturename to a position.
 
                 AddButton(Slots.EYES, "glasses", (0, 0));
                 AddButton(Slots.NECK, "neck", (0, 1));
@@ -179,14 +175,13 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
                 AddButton(Slots.IDCARD, "id", (2, 1));
                 AddButton(Slots.EXOSUITSLOT1, "suit_storage", (2, 2));
                 AddButton(Slots.POCKET1, "pocket", (2, 3));
+                AddButton(Slots.LHAND, "gloves", (2, 4));
 
                 AddButton(Slots.BACKPACK, "back", (3, 0));
                 AddButton(Slots.BELT, "belt", (3, 1));
                 AddButton(Slots.GLOVES, "gloves", (3, 2));
                 AddButton(Slots.POCKET2, "pocket", (3, 3));
-
-                AddButton(Slots.LHAND, "gloves", (4, 2));
-                AddButton(Slots.RHAND, "gloves", (4, 3));
+                AddButton(Slots.RHAND, "gloves", (3, 4));
             }
         }
 

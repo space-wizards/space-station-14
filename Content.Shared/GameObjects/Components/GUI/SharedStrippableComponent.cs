@@ -6,6 +6,9 @@ using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Serialization;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
+using Robust.Shared.Log;
+
+
 namespace Content.Shared.GameObjects.Components.GUI
 {
     public class SharedStrippableComponent : Component
@@ -18,14 +21,19 @@ namespace Content.Shared.GameObjects.Components.GUI
             Key,
         }
     }
+    
 
     [NetSerializable, Serializable]
     public class StrippingInventoryButtonPressed : BoundUserInterfaceMessage
     {
         public Slots Slot { get; }
 
+
+        private const string LoggerName = "Storage";
+
         public StrippingInventoryButtonPressed(Slots slot)
         {
+            Logger.DebugS(LoggerName, $"SIBP called for {slot}.");
             Slot = slot;
         }
     }
