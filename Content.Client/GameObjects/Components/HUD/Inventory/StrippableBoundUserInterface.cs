@@ -33,8 +33,6 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
 
-        private readonly Dictionary<Slots, List<ItemSlotButton>> _invButtons
-            = new Dictionary<Slots, List<ItemSlotButton>>();
 
         public StrippableBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
@@ -48,6 +46,14 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             _stripMenu.OnClose += Close;
             _stripMenu.OpenToLeft();
 
+            foreach (var (slot, button) in _stripMenu.Buttons)
+            {
+                button.OnPressed = (e) => SendMessage(new StrippingInventoryButtonPressed(slot));
+                // button.OnStoragePressed = (e) => OpenStorage(e, slot);
+                // button.OnHover = (e) => RequestItemHover(slot);
+                // _invButtons.Add(slot, new List<ItemSlotButton> { button });
+            }
+
             UpdateMenu();
         }
 
@@ -60,64 +66,78 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             return;
         }
 
+
         private void UpdateMenu()
         {
-            if (_stripMenu == null) return;
-            if (Inventory != null)
-            {
-                foreach (var (slot, button) in _stripMenu.Buttons)
-                {
-                    button.OnPressed = (e) => SendMessage(new StrippingInventoryButtonPressed(slot));
-                    // with above on, stripping someone created two progressbars, and crashed on completion.
 
-                    // System.NullReferenceException: 'Object reference not set to an instance of an object.'
+            // _stripMenu.ClearButtons();
+            // this was an innate part of the old one.
 
-                    // with below on, crashed for i think double assigning something to a list?
-                    //_invButtons.Add(slot, new List<ItemSlotButton> { button });
-                }
-            }
-            // okay. wrapping it in antinull. like tinfoil. didn't work. i'll keep it there anyways.
+            //if (_stripMenu == null) return;
+            //if (Inventory != null)
+            //{
+            //    foreach (var (slot, button) in _stripMenu.Buttons)
+            //    {
+            //        button.OnPressed = (e) => SendMessage(new StrippingInventoryButtonPressed(slot));
+            //        // button.OnKeyBindDown += (e) => SendMessage(new StrippingInventoryButtonPressed(slot));
+            //        // with above on, stripping someone created two progressbars, and crashed on completion.
 
+            //        // System.NullReferenceException: 'Object reference not set to an instance of an object.'
 
-
-            //_strippingMenu.ClearButtons();
+            //        // with below on, crashed for i think double assigning something to a list?
+            //        //_invButtons.Add(slot, new List<ItemSlotButton> { button });
+            //    }
+            //}
+            //// okay. wrapping it in antinull. like tinfoil. didn't work. i'll keep it there anyways.
 
             //if (Inventory != null)
             //{
-            //    foreach (var (slot, name) in Inventory)
+            //    foreach (var (slot,name) in Inventory)
             //    {
-            //        _strippingMenu.AddButton(EquipmentSlotDefines.SlotNames[slot], name, (ev) =>
-            //        {
-            //            SendMessage(new StrippingInventoryButtonPressed(slot));
-            //        });
+
             //    }
             //}
 
-            //if (Hands != null)
-            //{
-            //    foreach (var (hand, name) in Hands)
-            //    {
-            //        _strippingMenu.AddButton(hand, name, (ev) =>
-            //        {
-            //            SendMessage(new StrippingHandButtonPressed(hand));
-            //        });
-            //    }
-            //}
+            // moving button checks to Open() see how that goes.
 
-            //if (Handcuffs != null)
-            //{
-            //    foreach (var (id, name) in Handcuffs)
-            //    {
-            //        _strippingMenu.AddButton(Loc.GetString("Restraints"), name, (ev) =>
-            //        {
-            //            SendMessage(new StrippingHandcuffButtonPressed(id));
-            //        });
-            //    }
-            //}
+                //_stripMenu.ClearButtons();
 
-            // here is where you rebuild all of the buttons, icons, and interactions. i think.
+                //if (Inventory != null)
+                //{
+                //    foreach (var (slot, name) in Inventory)
+                //    {
+                //        _strippingMenu.AddButton(EquipmentSlotDefines.SlotNames[slot], name, (ev) =>
+                //        {
+                //            SendMessage(new StrippingInventoryButtonPressed(slot));
+                //        });
+                //    }
+                //}
 
-            return;
+                //if (Hands != null)
+                //{
+                //    foreach (var (hand, name) in Hands)
+                //    {
+                //        _strippingMenu.AddButton(hand, name, (ev) =>
+                //        {
+                //            SendMessage(new StrippingHandButtonPressed(hand));
+                //        });
+                //    }
+                //}
+
+                //if (Handcuffs != null)
+                //{
+                //    foreach (var (id, name) in Handcuffs)
+                //    {
+                //        _strippingMenu.AddButton(Loc.GetString("Restraints"), name, (ev) =>
+                //        {
+                //            SendMessage(new StrippingHandcuffButtonPressed(id));
+                //        });
+                //    }
+                //}
+
+                // here is where you rebuild all of the buttons, icons, and interactions. i think.
+
+                return;
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
@@ -139,7 +159,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             private const int ButtonSeparation = 2;
             private const int RightSeparation = 2;
 
-            public IReadOnlyDictionary<Slots, ItemSlotButton> Buttons { get; }
+            public Dictionary<Slots, ItemSlotButton> Buttons { get; }
 
             public StrippingInventoryWindow(IResourceCache resourceCache)
             {
@@ -167,6 +187,8 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
                     LayoutContainer.SetPosition(button, position);
 
                     windowContents.AddChild(button);
+
+                    // took this out, but then it didn't withdraw anything.
                     buttonDict.Add(slot, button);
                 }
 
