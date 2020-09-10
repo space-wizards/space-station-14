@@ -16,7 +16,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
 {
     // Dynamically instantiated by ClientInventoryComponent.
     [UsedImplicitly]
-    public class HumanInventoryInterfaceController : InventoryInterfaceController
+    public class StrippingInventoryInterfaceController : InventoryInterfaceController
     {
         [Dependency] private readonly ILocalizationManager _loc = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
@@ -25,14 +25,9 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         private readonly Dictionary<Slots, List<ItemSlotButton>> _inventoryButtons
             = new Dictionary<Slots, List<ItemSlotButton>>();
 
-        private ItemSlotButton _hudButtonPocket1;
-        private ItemSlotButton _hudButtonPocket2;
-        private ItemSlotButton _hudButtonBelt;
-        private ItemSlotButton _hudButtonBack;
-        private ItemSlotButton _hudButtonId;
         private Control _quickButtonsContainer;
 
-        public HumanInventoryInterfaceController(ClientInventoryComponent owner) : base(owner)
+        public StrippingInventoryInterfaceController(ClientInventoryComponent owner) : base(owner)
         {
         }
 
@@ -40,50 +35,20 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         {
             base.Initialize();
 
-            _window = new HumanInventoryWindow(_loc, _resourceCache);
-            _window.OnClose += () => GameHud.InventoryButtonDown = false;
+            _window = new StrippingInventoryWindow(_loc, _resourceCache);
+
+            // behavior of the buttons i'll have to change eventually with SBUI code.
+            // gotta figure out how to summon the screen in the first place.
             foreach (var (slot, button) in _window.Buttons)
             {
-                button.OnPressed = (e) => AddToInventory(e, slot);
-                button.OnStoragePressed = (e) => OpenStorage(e, slot);
-                button.OnHover = (e) => RequestItemHover(slot);
-                _inventoryButtons.Add(slot, new List<ItemSlotButton> {button});
+               // button.OnPressed = (e) => SendMessage(new StrippingInventoryButtonPressed(slot));
+            //    button.OnHover = (e) => RequestItemHover(slot);
+                _inventoryButtons.Add(slot, new List<ItemSlotButton> { button });
             }
-
-            void AddButton(out ItemSlotButton variable, Slots slot, string textureName)
-            {
-                var texture = _resourceCache.GetTexture($"/Textures/Interface/Inventory/{textureName}.png");
-                var storageTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/back.png");
-                variable = new ItemSlotButton(texture, storageTexture)
-                {
-                    OnPressed = (e) => AddToInventory(e, slot),
-                    OnStoragePressed = (e) => OpenStorage(e, slot),
-                    OnHover = (e) => RequestItemHover(slot)
-                };
-                _inventoryButtons[slot].Add(variable);
-            }
-
-            AddButton(out _hudButtonPocket1, Slots.POCKET1, "pocket");
-            AddButton(out _hudButtonPocket2, Slots.POCKET2, "pocket");
-            AddButton(out _hudButtonBack, Slots.BACKPACK, "back");
-            AddButton(out _hudButtonBelt, Slots.BELT, "belt");
-            AddButton(out _hudButtonId, Slots.IDCARD, "id");
-
-            _quickButtonsContainer = new HBoxContainer
-            {
-                Children =
-                {
-                    _hudButtonId,
-                    _hudButtonBelt,
-                    _hudButtonBack,
-                    _hudButtonPocket1,
-                    _hudButtonPocket2,
-                }
-            };
         }
 
         public override SS14Window Window => _window;
-        private HumanInventoryWindow _window;
+        private StrippingInventoryWindow _window;
 
         public override void AddToSlot(Slots slot, IEntity entity)
         {
@@ -184,7 +149,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             }
         }
 
-        private class HumanInventoryWindow : SS14Window
+        private class StrippingInventoryWindow : SS14Window
         {
             private const int ButtonSize = 64;
             private const int ButtonSeparation = 2;
@@ -192,7 +157,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
 
             public IReadOnlyDictionary<Slots, ItemSlotButton> Buttons { get; }
 
-            public HumanInventoryWindow(ILocalizationManager loc, IResourceCache resourceCache)
+            public StrippingInventoryWindow(ILocalizationManager loc, IResourceCache resourceCache)
             {
                 Title = loc.GetString("Your Inventory");
                 Resizable = false;
@@ -246,3 +211,6 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         }
     }
 }
+
+
+// no longer planning on using this file outside of reference material i think. Issues with owner classes.
