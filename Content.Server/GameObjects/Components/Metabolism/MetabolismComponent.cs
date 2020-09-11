@@ -180,8 +180,8 @@ namespace Content.Server.GameObjects.Components.Metabolism
                 return;
             }
 
-            var usedPercentages = new List<float>();
             var needs = NeedsAndDeficit(frameTime);
+            var used = 0f;
             foreach (var (gas, amountNeeded) in needs)
             {
                 var bloodstreamAmount = bloodstream.Air.GetMoles(gas);
@@ -214,12 +214,10 @@ namespace Content.Server.GameObjects.Components.Metabolism
 
                 DeficitGases[gas] = deficit;
 
-                var used = amountNeeded - deficit;
-                usedPercentages.Add(used / amountNeeded);
+                used += (amountNeeded - deficit) / amountNeeded;
             }
 
-            var usedAverage = usedPercentages.Average();
-            var produced = GasProduced(usedAverage);
+            var produced = GasProduced(used / needs.Count);
 
             foreach (var (gas, amountProduced) in produced)
             {
