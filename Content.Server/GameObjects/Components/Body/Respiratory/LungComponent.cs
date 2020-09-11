@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Body.Circulatory;
 using Content.Server.Interfaces;
+using Content.Server.Utility;
 using Content.Shared.Atmos;
 using Content.Shared.Interfaces;
 using Robust.Shared.GameObjects;
@@ -170,7 +171,7 @@ namespace Content.Server.GameObjects.Components.Body.Respiratory
 
         public void Gasp()
         {
-            Owner.PopupMessage("Gasp");
+            Owner.PopupMessageOtherClients("Gasp");
             Inhale(CycleDelay);
         }
     }
