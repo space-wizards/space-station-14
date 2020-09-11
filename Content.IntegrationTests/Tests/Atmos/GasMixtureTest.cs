@@ -51,6 +51,7 @@ namespace Content.IntegrationTests.Tests.Atmos
         [TestCase(0.75f)]
         [TestCase(1f)]
         [TestCase(0f)]
+        [TestCase(Atmospherics.BreathPercentage)]
         public async Task RemoveRatio(float ratio)
         {
             var server = StartServerDummyTicker();
