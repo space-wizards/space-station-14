@@ -33,7 +33,8 @@ namespace Content.Shared.GameObjects.Components.GUI
 
         public StrippingInventoryButtonPressed(Slots slot)
         {
-            Logger.DebugS(LoggerName, $"SIBP called for {slot}.");
+            // Logger.DebugS(LoggerName, $"SIBP called for {slot}.");
+            // l/r click for doubletaps for some reason. middles safe.
             Slot = slot;
         }
     }

@@ -33,7 +33,8 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
 
-        
+        // the crossover that was never meant to be.
+
         public StrippableBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
         }
@@ -61,16 +62,11 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
                     // manually trying to overstuff a body sometimes causes redbars to popup everytime you move. investicate later.
                     // overstuffing gets a "you can't drop that." investigate why it's dropping in the first place?
                 }
-
-                // entityDict.TryGetValue(slot, out IEntity entity)
-                // slot.TryGetValue(slow, outitem)
-                // _itemSlotManager.SetItemSlot(button, entity);
-                
                 // I'm not going to try to tackle on hands or cuffs yet. One step at at time.
             }
-            // UpdateMenu();
         }
 
+        // old messages to keep in mind.
         // SendMessage(new StrippingHandcuffButtonPressed(id));
         // SendMessage(new StrippingHandButtonPressed(hand));
 
@@ -87,17 +83,13 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
 
         public void AddToSlot(Slots slot, IEntity entity)
         {
-            if (!_stripMenu.Buttons.TryGetValue(slot, out var buttons))
+            if (!_stripMenu.Buttons.TryGetValue(slot, out var button))
                 return;
 
-            foreach ((Slots slotcheck, ItemSlotButton button) in _stripMenu.Buttons)
-            {
-                _itemSlotManager.SetItemSlot(button, entity);
-            }
+            _itemSlotManager.SetItemSlot(button, entity);
         }
-        // unused, wip. i'll figgur it out? i need to find where to get the entity to feed into ientity.
-        //    var entity = Owner.EntityManager.GetEntity(entityUid);
-        //     _itemSlotManager.SetItemSlot(button, entity);
+        //  i need to find where to get the entity to feed into ientity.
+        //  end goal function to fill in the inventory sprites.
 
         protected override void UpdateState(BoundUserInterfaceState state)
         {
@@ -110,39 +102,9 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             Handcuffs = stripState.Handcuffs;
             // old stuff not touching yet.
 
-            foreach(var item in Inventory)
-            {
-                Logger.DebugS(LoggerName, $"{item}");
-            }
-            // its keypairs of the slot, and the itemname as a string.
-            
-            // once something changes, kill everything, summon it again?
-            void ClearSprite()
-            {
-                return;
-            }
 
-            // end goal: iterate through _stripMenu for slots.
-            // see which parts of person ain't nekked, get their item type.
-            // have some array-thingy to pair slots with location. gross.
-            void AddSprite(string textureName, Vector2 position)
-            {
-                return;
-                //_itemSlotManager.SetItemSlot(button, entity);
-            }
 
-            foreach (var (slot, button) in _stripMenu.Buttons)
-            {
-                // something about AddSprite.
-                return;  
-            }
 
-            
-
-            ClearSprite();
-            AddSprite("gun", (2, 1));
-
-            // UpdateMenu();
         }
 
         // Okay. So I have slots, buttons. I need to have some way to convert a slot -> entity.
@@ -185,15 +147,15 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
 
                     // took this out, but then it didn't withdraw anything.
                     buttonDict.Add(slot, button);
-                    Logger.DebugS(LoggerName, $"dictionary holds {(slot,button)}");
+                    // Logger.DebugS(LoggerName, $"dictionary holds {(slot,button)}");
 
                     
 
 
                 }
 
-                // 0,0 is top left.
-                // x,x is bottom right.
+                // 0,0  top left.
+                // x,x  bottom right.
                 // still needs slots for hands, handcuffs? not sure how handcuffs going to work here.
 
                 AddButton(Slots.EYES, "glasses", (0, 0));
