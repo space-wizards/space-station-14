@@ -185,6 +185,8 @@ namespace Content.Server.GameObjects.Components.Atmos
             {
                 if(!Tiles.ContainsKey(tile.GridIndices))
                     Tiles.Add(tile.GridIndices, new TileAtmosphere(this, tile.GridIndex, tile.GridIndices, new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C}));
+
+                Invalidate(tile.GridIndices);
             }
 
             foreach (var (_, tile) in Tiles.ToArray())
@@ -246,7 +248,6 @@ namespace Content.Server.GameObjects.Components.Atmos
                     var otherIndices = indices.Offset(direction.ToDirection());
                     var otherTile = GetTile(otherIndices);
                     AddActiveTile(otherTile);
-                    otherTile?.UpdateAdjacent(direction.GetOpposite());
                 }
             }
 
