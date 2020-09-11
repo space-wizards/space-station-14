@@ -33,5 +33,20 @@ namespace Content.Server.Utility
                 source.PopupMessage(viewer.AttachedEntity, message);
             }
         }
+
+        /// <summary>
+        ///     Pops up a message at the given entity's location for everyone,
+        ///     including itself, to see.
+        /// </summary>
+        /// <param name="source">The entity above which to show the message.</param>
+        /// <param name="message">The message to be seen.</param>
+        /// <param name="range">
+        ///     The range in which to search for players, defaulting to one screen.
+        /// </param>
+        public static void PopupMessageEveryone(this IEntity source, string message, int range = 15)
+        {
+            source.PopupMessage(message);
+            source.PopupMessageOtherClients(message, range);
+        }
     }
 }

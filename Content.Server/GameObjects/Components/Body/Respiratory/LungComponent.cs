@@ -171,7 +171,7 @@ namespace Content.Server.GameObjects.Components.Body.Respiratory
 
         public void Gasp()
         {
-            Owner.PopupMessageOtherClients("Gasp");
+            Owner.PopupMessageEveryone("Gasp");
             Inhale(CycleDelay);
         }
     }
