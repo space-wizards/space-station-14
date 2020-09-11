@@ -9,15 +9,16 @@ namespace Content.Server.GameObjects.EntitySystems
 {
     internal sealed class ListeningSystem : EntitySystem
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
-
-        public void PingListeners(IEntity source, GridCoordinates sourcePos, string message)
+        public void PingListeners(IEntity source, EntityCoordinates sourcePos, string message)
         {
             foreach (var listener in ComponentManager.EntityQuery<ListeningComponent>())
             {
-                var dist = sourcePos.Distance(_mapManager, listener.Owner.Transform.GridPosition);
+                if (!sourcePos.TryDistance(EntityManager, listener.Owner.Transform.Coordinates, out var distance))
+                {
+                    return;
+                }
 
-                listener.PassSpeechData(message, source, dist);
+                listener.PassSpeechData(message, source, distance);
             }
         }
     }

@@ -17,7 +17,7 @@
   id: WaterTankFull
   suffix: Full
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.H2O

@@ -52,7 +52,7 @@ namespace Content.Client.GameObjects.EntitySystems.AI
                     continue;
                 }
 
-                var (x, y) = _eyeManager.WorldToScreen(entity.Transform.GridPosition).Position;
+                var (x, y) = _eyeManager.CoordinatesToScreen(entity.Transform.Coordinates).Position;
                 var offsetPosition = new Vector2(x - panel.Width / 2, y - panel.Height - 50f);
                 panel.Visible = true;
 

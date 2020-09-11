@@ -11,13 +11,13 @@
   - type: Item
     sprite: Objects/Specific/Chemistry/beakers.rsi
     HeldPrefix: beaker
-  - type: Solution
+  - type: SolutionContainer
     fillingState: beaker
     maxVol: 50
-    caps: 27
+    caps: AddTo, RemoveFrom, FitsInDispenser # can add and remove solutions and fits in the chemmaster.
   - type: Pourable
     transferAmount: 5.0
-  - type: CanSpill
+  - type: Spillable
 
 - type: entity
   name: large beaker
@@ -32,13 +32,13 @@
   - type: Item
     sprite: Objects/Specific/Chemistry/beakers.rsi
     HeldPrefix: beaker
-  - type: Solution
+  - type: SolutionContainer
     fillingState: beakerlarge
     maxVol: 100
-    caps: 27
+    caps: AddTo, RemoveFrom, FitsInDispenser
   - type: Pourable
     transferAmount: 5.0
-  - type: CanSpill
+  - type: Spillable
 
 - type: entity
   name: dropper
@@ -50,14 +50,14 @@
     texture: Objects/Specific/Chemistry/dropper.rsi/dropper.png
   - type: Icon
     texture: Objects/Specific/Chemistry/dropper.rsi/dropper.png
-  - type: Solution
+  - type: SolutionContainer
     fillingState: dropper
     fillingSteps: 2
     maxVol: 5
-    caps: 19
+    caps: AddTo, RemoveFrom
   - type: Pourable
     transferAmount: 5.0
-  - type: CanSpill
+  - type: Spillable
 
 - type: entity
   name: syringe
@@ -69,14 +69,14 @@
     texture: Objects/Specific/Chemistry/syringe.rsi/0.png
   - type: Icon
     texture: Objects/Specific/Chemistry/syringe.rsi/0.png
-  - type: Solution
+  - type: SolutionContainer
     fillingState: syringe
     fillingSteps: 5
     maxVol: 15
-    caps: 19
+    caps: AddTo, RemoveFrom
   - type: Injector
     injectOnly: false
-  - type: CanSpill
+  - type: Spillable
 
 - type: entity
   name: bottle
@@ -84,15 +84,16 @@
   id: bottle
   components:
     - type: Drink
-    - type: Solution
+    - type: SolutionContainer
       maxVol: 30
+      caps: AddTo, RemoveFrom
     - type: Pourable
       transferAmount: 5
     - type: Sprite
       texture: Objects/Specific/Chemistry/bottle.rsi/bottle.png
     - type: Icon
       texture: Objects/Specific/Chemistry/bottle.rsi/bottle.png
-    - type: CanSpill
+    - type: Spillable
 
 - type: entity
   name: pill
@@ -101,8 +102,9 @@
   description: It's not a suppository.
   components:
     - type: Pill
-    - type: Solution
+    - type: SolutionContainer
       maxVol: 50
+      caps: RemoveFrom
     - type: Sprite
       texture: Objects/Specific/Chemistry/pills.rsi/pill.png
     - type: Icon

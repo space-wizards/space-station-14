@@ -41,7 +41,7 @@ namespace Content.Server.Atmos
 
         public void AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (!Owner.TryGetComponent(out SolutionComponent tank))
+            if (!Owner.TryGetComponent(out SolutionContainerComponent tank))
                 return;
 
             if (tank.Solution.GetReagentQuantity(_fuelType) == 0)
@@ -53,7 +53,7 @@ namespace Content.Server.Atmos
             {
                 tank.TryRemoveReagent(_fuelType, ReagentUnit.New(_fuelCost));
 
-                var playerPos = eventArgs.User.Transform.GridPosition;
+                var playerPos = eventArgs.User.Transform.Coordinates;
                 var direction = (eventArgs.ClickLocation.Position - playerPos.Position).Normalized;
                 playerPos.Offset(direction/2);
 

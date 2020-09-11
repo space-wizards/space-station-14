@@ -29,7 +29,7 @@ namespace Content.Server.GameObjects.Components.Research
 
         private const string SoundCollectionName = "keyboard";
 
-        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+        [ViewVariables] private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ResearchConsoleUiKey.Key);
 
@@ -57,8 +57,7 @@ namespace Content.Server.GameObjects.Components.Research
             switch (message.Message)
             {
                 case ConsoleUnlockTechnologyMessage msg:
-                    var protoMan = IoCManager.Resolve<IPrototypeManager>();
-                    if (!protoMan.TryIndex(msg.Id, out TechnologyPrototype tech)) break;
+                    if (!_prototypeManager.TryIndex(msg.Id, out TechnologyPrototype tech)) break;
                     if (client.Server == null) break;
                     if (!client.Server.CanUnlockTechnology(tech)) break;
                     if (client.Server.UnlockTechnology(tech))

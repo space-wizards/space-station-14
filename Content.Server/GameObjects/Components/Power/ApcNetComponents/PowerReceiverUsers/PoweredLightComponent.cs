@@ -31,6 +31,8 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
     [RegisterComponent]
     public class PoweredLightComponent : Component, IInteractHand, IInteractUsing, IMapInit, ISignalReceiver
     {
+        [Dependency] private IGameTiming _gameTiming = default!;
+
         public override string Name => "PoweredLight";
 
         private static readonly TimeSpan _thunkDelay = TimeSpan.FromSeconds(2);
@@ -40,6 +42,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
         private LightBulbType BulbType = LightBulbType.Tube;
         [ViewVariables] private ContainerSlot _lightBulbContainer;
+
         [ViewVariables]
         private LightBulbComponent LightBulb
         {
@@ -165,7 +168,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
             if (!user.TryGetComponent(out HandsComponent hands)
                 || !hands.PutInHand(bulb.Owner.GetComponent<ItemComponent>()))
-                bulb.Owner.Transform.GridPosition = user.Transform.GridPosition;
+                bulb.Owner.Transform.Coordinates = user.Transform.Coordinates;
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -209,7 +212,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                         sprite.LayerSetState(0, "on");
                         light.Enabled = true;
                         light.Color = LightBulb.Color;
-                        var time = IoCManager.Resolve<IGameTiming>().CurTime;
+                        var time = _gameTiming.CurTime;
                         if (time > _lastThunk + _thunkDelay)
                         {
                             _lastThunk = time;
@@ -264,7 +267,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-            var entity = Owner.EntityManager.SpawnEntity(prototype, Owner.Transform.GridPosition);
+            var entity = Owner.EntityManager.SpawnEntity(prototype, Owner.Transform.Coordinates);
             _lightBulbContainer.Insert(entity);
         }
     }

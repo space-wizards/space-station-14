@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Shared.Utility;
 using NUnit.Framework;
-using Robust.Server.Interfaces.Maps;
 using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -53,7 +53,7 @@ namespace Content.IntegrationTests.Tests
 
                 var tileDefinition = tileDefinitionManager["underplating"];
                 var tile = new Tile(tileDefinition.TileId);
-                var coordinates = new GridCoordinates(0, 0, gridId);
+                var coordinates = grid.ToCoordinates();
 
                 grid.SetTile(coordinates, tile);
 
@@ -62,7 +62,7 @@ namespace Content.IntegrationTests.Tests
 
             server.Assert(() =>
             {
-                var testLocation = new GridCoordinates(new Vector2(0, 0), grid);
+                var testLocation = grid.ToCoordinates();
 
                 //Generate list of non-abstract prototypes to test
                 foreach (var prototype in prototypeMan.EnumeratePrototypes<EntityPrototype>())
@@ -161,7 +161,7 @@ namespace Content.IntegrationTests.Tests
 
                 var tileDefinition = tileDefinitionManager["underplating"];
                 var tile = new Tile(tileDefinition.TileId);
-                var coordinates = new GridCoordinates(0, 0, gridId);
+                var coordinates = grid.ToCoordinates();
 
                 grid.SetTile(coordinates, tile);
 
@@ -170,7 +170,7 @@ namespace Content.IntegrationTests.Tests
 
             server.Assert(() =>
             {
-                var testLocation = new GridCoordinates(new Vector2(0, 0), grid);
+                var testLocation = grid.ToCoordinates();
 
                 foreach (var type in componentFactory.AllRegisteredTypes)
                 {
@@ -256,7 +256,7 @@ namespace Content.IntegrationTests.Tests
 
                 var tileDefinition = tileDefinitionManager["underplating"];
                 var tile = new Tile(tileDefinition.TileId);
-                var coordinates = new GridCoordinates(0, 0, gridId);
+                var coordinates = grid.ToCoordinates();
 
                 grid.SetTile(coordinates, tile);
 
@@ -301,7 +301,7 @@ namespace Content.IntegrationTests.Tests
             {
                 foreach (var distinct in distinctComponents)
                 {
-                    var testLocation = new GridCoordinates(new Vector2(0, 0), grid);
+                    var testLocation = grid.ToCoordinates();
                     var entity = entityManager.SpawnEntity("AllComponentsOneEntityDeleteTestEntity", testLocation);
 
                     Assert.That(entity.Initialized);

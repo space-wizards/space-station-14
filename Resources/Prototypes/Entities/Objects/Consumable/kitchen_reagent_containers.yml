@@ -4,8 +4,9 @@
   name: flour
   description: Not to be confused with flower.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 50
+    caps: AddTo, RemoveFrom
     contents:
       reagents:
       - ReagentId: chem.Flour
@@ -19,4 +20,4 @@
   - type: Icon
     sprite: Objects/Consumable/Food/flour.rsi
     state: icon
-  - type: CanSpill
+  - type: Spillable

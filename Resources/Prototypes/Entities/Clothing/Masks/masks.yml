@@ -95,3 +95,18 @@
     state: icon
   - type: Clothing
     sprite: Clothing/Masks/mask_mime.rsi
+
+- type: entity
+  parent: MasksBase
+  id: MaskSterile
+  name: sterile mask
+  description:
+  components:
+  - type: Sprite
+    sprite: Clothing/Masks/mask_sterile.rsi
+    state: icon
+  - type: Icon
+    sprite: Clothing/Masks/mask_sterile.rsi
+    state: icon
+  - type: Clothing
+    sprite: Clothing/Masks/mask_sterile.rsi

@@ -9,8 +9,10 @@
             "Breakable",
             "Pickaxe",
             "Interactable",
+            "CloningPod",
             "Destructible",
             "Temperature",
+            "AtmosExposed",
             "Explosive",
             "OnUseTimerTrigger",
             "ToolboxElectricalFill",
@@ -58,7 +60,6 @@
             "AccessReader",
             "IdCardConsole",
             "Airlock",
-            "MedicalScanner",
             "WirePlacer",
             "Drink",
             "Food",
@@ -172,6 +173,9 @@
             "SignalTransmitter",
             "SignalButton",
             "SignalLinker",
+            "ExtinguisherCabinet",
+            "ExtinguisherCabinetFilled",
+            "FireExtinguisher",
         };
     }
 }

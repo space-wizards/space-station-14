@@ -35,8 +35,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         [ViewVariables]
         private int TotalReceivers => _providerReceivers.SelectMany(kvp => kvp.Value).Count();
 
-        private IEnumerable<BatteryComponent> AvailableBatteries => _apcBatteries.Where(kvp => kvp.Key.MainBreakerEnabled).Select(kvp => kvp.Value);
-
         public static readonly IApcNet NullNet = new NullApcNet();
 
         #region IApcNet Methods
@@ -88,8 +86,11 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         {
             var totalCharge = 0.0;
             var totalMaxCharge = 0;
-            foreach (var battery in AvailableBatteries)
+            foreach (var (apc, battery) in _apcBatteries)
             {
+                if (!apc.MainBreakerEnabled)
+                    continue;
+                
                 totalCharge += battery.CurrentCharge;
                 totalMaxCharge += battery.MaxCharge;
             }
@@ -102,8 +103,11 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         private bool TryUsePower(float neededCharge)
         {
-            foreach (var battery in AvailableBatteries)
+            foreach (var (apc, battery) in _apcBatteries)
             {
+                if (!apc.MainBreakerEnabled)
+                    continue;
+                
                 if (battery.TryUseCharge(neededCharge)) //simplification - all power needed must come from one battery
                 {
                     return true;

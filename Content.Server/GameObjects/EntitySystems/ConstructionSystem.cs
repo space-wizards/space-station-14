@@ -6,7 +6,6 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Stack;
-using Content.Server.Utility;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Interactable;
@@ -20,7 +19,6 @@ using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -36,7 +34,6 @@ namespace Content.Server.GameObjects.EntitySystems
     internal class ConstructionSystem : SharedConstructionSystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
 
         private readonly Dictionary<string, ConstructionPrototype> _craftRecipes = new Dictionary<string, ConstructionPrototype>();
 
@@ -240,7 +237,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 { ConstructionStepMaterial.MaterialType.Glass, "GlassSheet1" }
             };
 
-        private bool TryStartStructureConstruction(IEntity placingEnt, GridCoordinates loc, string prototypeName, Angle angle)
+        private bool TryStartStructureConstruction(IEntity placingEnt, EntityCoordinates loc, string prototypeName, Angle angle)
         {
             var prototype = _prototypeManager.Index<ConstructionPrototype>(prototypeName);
 
@@ -380,7 +377,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             var stage = constructPrototype.Stages[constructionComponent.Stage];
 
-            if (await TryProcessStep(constructEntity, stage.Forward, handTool, user, transformComponent.GridPosition))
+            if (await TryProcessStep(constructEntity, stage.Forward, handTool, user, transformComponent.Coordinates))
             {
                 constructionComponent.Stage++;
                 if (constructionComponent.Stage == constructPrototype.Stages.Count - 1)
@@ -402,7 +399,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 }
             }
 
-            else if (await TryProcessStep(constructEntity, stage.Backward, handTool, user, transformComponent.GridPosition))
+            else if (await TryProcessStep(constructEntity, stage.Backward, handTool, user, transformComponent.Coordinates))
             {
                 constructionComponent.Stage--;
                 stage = constructPrototype.Stages[constructionComponent.Stage];
@@ -439,7 +436,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        private async Task<bool> TryProcessStep(IEntity constructEntity, ConstructionStep step, IEntity slapped, IEntity user, GridCoordinates gridCoords)
+        private async Task<bool> TryProcessStep(IEntity constructEntity, ConstructionStep step, IEntity slapped, IEntity user, EntityCoordinates gridCoords)
         {
             if (step == null)
             {

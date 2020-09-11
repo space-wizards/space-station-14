@@ -162,7 +162,7 @@ namespace Content.Server.GameObjects.Components.Buckle
             }
         }
 
-        private bool CanBuckle(IEntity user, IEntity to, [MaybeNullWhen(false)] out StrapComponent strap)
+        private bool CanBuckle(IEntity? user, IEntity to, [MaybeNullWhen(false)] out StrapComponent strap)
         {
             strap = null;
 
@@ -426,9 +426,9 @@ namespace Content.Server.GameObjects.Components.Buckle
                 return;
             }
 
-            var bucklePosition = BuckledTo.Owner.Transform.GridPosition.Offset(BuckleOffset.Value);
+            var bucklePosition = BuckledTo.Owner.Transform.Coordinates.Offset(BuckleOffset.Value);
 
-            if (moveEvent.NewPosition.InRange(_mapManager, bucklePosition, 0.2f))
+            if (moveEvent.NewPosition.InRange(_entityManager, bucklePosition, 0.2f))
             {
                 return;
             }
