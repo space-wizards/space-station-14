@@ -118,6 +118,12 @@ namespace Content.Server.GameObjects.Components.GUI
         {
             var dictionary = new Dictionary<Slots, string>();
 
+            // note to future self. prob where i want to change something.
+
+            // i want this to spit out <slots, ientity>
+
+            // dunno how though. netcode / understanding components hard.
+
             if (!Owner.TryGetComponent(out InventoryComponent? inventory))
             {
                 return dictionary;

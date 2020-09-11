@@ -13,8 +13,9 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Maths;
 using Robust.Shared.IoC;
-
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Log;
+using Namotion.Reflection;
 
 namespace Content.Client.GameObjects.Components.HUD.Inventory
 {
@@ -25,16 +26,20 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         public Dictionary<string, string> Hands { get; private set; }
         public Dictionary<EntityUid, string> Handcuffs { get; private set; }
 
+
         // [ViewVariables]
         private StrippingInventoryWindow _stripMenu;
 
         [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
 
+        
         public StrippableBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
         }
 
         private const string LoggerName = "Storage";
+
 
         protected override void Open()
         {
@@ -44,6 +49,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             _stripMenu.OnClose += Close;
             _stripMenu.OpenToLeft();
 
+            var entityDict = new Dictionary<Slots, IEntity>();
 
             foreach (var (slot, button) in _stripMenu.Buttons)
             {
@@ -51,29 +57,19 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
                 {
                     Logger.DebugS(LoggerName, $"The {(slot, button)} button has been created.");
                     button.OnPressed = (e) => SendMessage(new StrippingInventoryButtonPressed(slot));
-                    //button.OnHover = (e) => SendMessage(new StrippingInventoryButtonPressed(slot));
-                    //button.OnPressed = (e) => SendMessage(new StrippingInventoryButtonPressed(slot));
-                    // it was a silly test, but this one doesn't call things twice and crash things to shit.
-                    // what's wrong with press? I'll see how spriting works on the meanwhile.
-
-
                     // UPDATE: Middleclicks only call OnPressed once. Left/Rights do em twice.
                     // manually trying to overstuff a body sometimes causes redbars to popup everytime you move. investicate later.
                     // overstuffing gets a "you can't drop that." investigate why it's dropping in the first place?
-
                 }
-                // according to the logger the buttons are only being made once?
+
+                // entityDict.TryGetValue(slot, out IEntity entity)
+                // slot.TryGetValue(slow, outitem)
+                // _itemSlotManager.SetItemSlot(button, entity);
+                
                 // I'm not going to try to tackle on hands or cuffs yet. One step at at time.
-
-                // button.OnStoragePressed = (e) => OpenStorage(e, slot);
-                // button.OnHover = (e) => RequestItemHover(slot);
-                //_invButtons.Add(slot, new List<ItemSlotButton> { button });
             }
-
             // UpdateMenu();
         }
-
-        // more thoughts: the old code deleted a button right after it was clicked, so the whole doublepress thing didn't matter?
 
         // SendMessage(new StrippingHandcuffButtonPressed(id));
         // SendMessage(new StrippingHandButtonPressed(hand));
@@ -89,7 +85,19 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             return;
         }
 
-        // Trashed update menu. I think I'll do it's functionality inside UpdateState.
+        public void AddToSlot(Slots slot, IEntity entity)
+        {
+            if (!_stripMenu.Buttons.TryGetValue(slot, out var buttons))
+                return;
+
+            foreach ((Slots slotcheck, ItemSlotButton button) in _stripMenu.Buttons)
+            {
+                _itemSlotManager.SetItemSlot(button, entity);
+            }
+        }
+        // unused, wip. i'll figgur it out? i need to find where to get the entity to feed into ientity.
+        //    var entity = Owner.EntityManager.GetEntity(entityUid);
+        //     _itemSlotManager.SetItemSlot(button, entity);
 
         protected override void UpdateState(BoundUserInterfaceState state)
         {
@@ -102,7 +110,12 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             Handcuffs = stripState.Handcuffs;
             // old stuff not touching yet.
 
-
+            foreach(var item in Inventory)
+            {
+                Logger.DebugS(LoggerName, $"{item}");
+            }
+            // its keypairs of the slot, and the itemname as a string.
+            
             // once something changes, kill everything, summon it again?
             void ClearSprite()
             {
@@ -115,6 +128,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             void AddSprite(string textureName, Vector2 position)
             {
                 return;
+                //_itemSlotManager.SetItemSlot(button, entity);
             }
 
             foreach (var (slot, button) in _stripMenu.Buttons)
@@ -123,11 +137,16 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
                 return;  
             }
 
+            
+
             ClearSprite();
             AddSprite("gun", (2, 1));
 
             // UpdateMenu();
         }
+
+        // Okay. So I have slots, buttons. I need to have some way to convert a slot -> entity.
+        // That way I can sprite it with itemslotmanager. At least that's what I'm seeing.
 
         private class StrippingInventoryWindow : SS14Window
         {
@@ -140,7 +159,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             public StrippingInventoryWindow(IResourceCache resourceCache)
             {
                 Logger.DebugS(LoggerName, $"StrippingInventoryWindow called.");
-                Title = "oh yay corpses!";
+                Title = "strip window.";
                 Resizable = false;
 
                 var buttonDict = new Dictionary<Slots, ItemSlotButton>();
@@ -156,7 +175,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
                 void AddButton(Slots slot, string textureName, Vector2 position)
                 {
                     var texture = resourceCache.GetTexture($"/Textures/Interface/Inventory/{textureName}.png");
-                    // why the fuck is storagetexture a thing?
+                    //why is storagetexture a thing? only the first input seems to matter.
                     //var storageTexture = resourceCache.GetTexture("/Textures/Interface/Inventory/back.png");
                     var button = new ItemSlotButton(texture, texture);
 
@@ -167,12 +186,15 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
                     // took this out, but then it didn't withdraw anything.
                     buttonDict.Add(slot, button);
                     Logger.DebugS(LoggerName, $"dictionary holds {(slot,button)}");
+
+                    
+
+
                 }
 
                 // 0,0 is top left.
                 // x,x is bottom right.
                 // still needs slots for hands, handcuffs? not sure how handcuffs going to work here.
-                // i might need some sort of secondary dictionary that ties a texturename to a position.
 
                 AddButton(Slots.EYES, "glasses", (0, 0));
                 AddButton(Slots.NECK, "neck", (0, 1));
@@ -196,7 +218,5 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
                 AddButton(Slots.LHAND, "hand_l_no_letter", (3, 4));
             }
         }
-
-
     }
 }
