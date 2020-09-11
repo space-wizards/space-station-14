@@ -3,6 +3,7 @@ using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Metabolism;
 using Content.Server.Interfaces;
+using Content.Shared.Atmos;
 using Content.Shared.Chemistry;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
@@ -46,7 +47,7 @@ namespace Content.Server.GameObjects.Components.Body.Circulatory
         {
             base.ExposeData(serializer);
 
-            Air = new GasMixture(6);
+            Air = new GasMixture(6) {Temperature = Atmospherics.NormalBodyTemperature};
 
             serializer.DataField(ref _initialMaxVolume, "maxVolume", ReagentUnit.New(250));
         }

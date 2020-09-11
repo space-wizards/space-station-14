@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Body.Respiratory;
+using Content.Server.GameObjects.Components.Metabolism;
 using Content.Shared.Atmos;
 using NUnit.Framework;
 using Robust.Server.Interfaces.Maps;
@@ -8,6 +9,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -80,28 +82,43 @@ namespace Content.IntegrationTests.Tests
         {
             var server = StartServerDummyTicker();
             await server.WaitIdleAsync();
+
             var mapLoader = server.ResolveDependency<IMapLoader>();
             var mapManager = server.ResolveDependency<IMapManager>();
-            server.Post(() =>
+            var entityManager = server.ResolveDependency<IEntityManager>();
+
+            MapId mapId;
+            IMapGrid grid = null;
+            LungComponent lung = null;
+            MetabolismComponent metabolism = null;
+            IEntity human = null;
+
+            var testMapName = "Maps/Test/Breathing/3by3-20oxy-80nit.yml";
+
+            await server.WaitPost(() =>
             {
-                mapLoader.SaveBlueprint(new GridId(2), "save load save 1.yml");
-                var mapId = mapManager.CreateMap();
-                var grid = mapLoader.LoadBlueprint(mapId, "save load save 1.yml");
-                mapLoader.SaveBlueprint(grid.Index, "save load save 2.yml");
+                mapId = mapManager.CreateMap();
+                grid = mapLoader.LoadBlueprint(mapId, testMapName);
             });
 
-            server.Assert(() =>
+            Assert.NotNull(grid, $"Test blueprint {testMapName} not found.");
+
+            await server.WaitAssertion(() =>
             {
-                var mapManager = IoCManager.Resolve<IMapManager>();
+                var center = new Vector2(0.5f, -1.5f);
+                var coordinates = new EntityCoordinates(grid.GridEntityId, center);
+                human = entityManager.SpawnEntity("HumanMob_Content", coordinates);
 
-                mapManager.CreateNewMapEntity(MapId.Nullspace);
-
-                var entityManager = IoCManager.Resolve<IEntityManager>();
-
-                var human = entityManager.SpawnEntity("HumanMob_Content", MapCoordinates.Nullspace);
-                var lung = human.GetComponent<LungComponent>();
-                var gas = new GasMixture(1);
+                Assert.True(human.TryGetComponent(out lung));
+                Assert.True(human.TryGetComponent(out metabolism));
+                Assert.False(metabolism.Suffocating);
             });
+
+            for (var tick = 0; tick < 600; tick++)
+            {
+                await server.WaitRunTicks(tick);
+                Assert.False(metabolism.Suffocating, $"Entity {human.Name} is suffocating on tick {tick}");
+            }
 
             await server.WaitIdleAsync();
         }
