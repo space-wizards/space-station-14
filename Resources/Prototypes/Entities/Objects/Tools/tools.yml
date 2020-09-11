@@ -89,9 +89,9 @@
   - type: ItemCooldown
   - type: MeleeWeapon
   - type: ItemStatus
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 100
-    caps: 9
+    caps: AddTo, NoExamine
     contents:
       reagents:
         - ReagentId: chem.WeldingFuel

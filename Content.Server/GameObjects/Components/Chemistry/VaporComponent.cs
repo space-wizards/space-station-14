@@ -31,10 +31,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
         {
             base.Initialize();
 
-            if (!Owner.EnsureComponent(out SolutionComponent _))
+            if (!Owner.EnsureComponent(out SolutionContainerComponent _))
             {
                 Logger.Warning(
-                    $"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(SolutionComponent)}");
+                    $"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(SolutionContainerComponent)}");
             }
         }
 
@@ -59,7 +59,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         public void Update()
         {
-            if (!Owner.TryGetComponent(out SolutionComponent contents))
+            if (!Owner.TryGetComponent(out SolutionContainerComponent contents))
                 return;
 
             if (!_running)
@@ -94,7 +94,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return false;
             }
 
-            if (!Owner.TryGetComponent(out SolutionComponent contents))
+            if (!Owner.TryGetComponent(out SolutionContainerComponent contents))
             {
                 return false;
             }

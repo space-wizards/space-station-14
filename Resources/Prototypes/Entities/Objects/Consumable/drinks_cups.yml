@@ -5,8 +5,9 @@
   name: base cup
   abstract: true
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 20
+    caps: AddTo, RemoveFrom
   - type: Pourable
     transferAmount: 5
   - type: Drink
@@ -15,7 +16,7 @@
     state: icon
   - type: Icon
     state: icon
-  - type: CanSpill
+  - type: Spillable
 
 - type: entity
   parent: DrinkBaseCup
@@ -23,7 +24,7 @@
   name: golden cup
   description: A golden cup
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 10
   - type: Sprite
     sprite: Objects/Consumable/Drinks/golden_cup.rsi
@@ -36,7 +37,7 @@
   name: insulated pitcher
   description: A stainless steel insulated pitcher. Everyone's best friend in the morning.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 15
   - type: Sprite
     sprite: Objects/Consumable/Drinks/pitcher.rsi
@@ -55,7 +56,7 @@
   name: mug
   description: A plain white mug.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 10
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug.rsi
@@ -74,7 +75,7 @@
   name: mug black
   description: A sleek black mug.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 10
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_black.rsi
@@ -93,7 +94,7 @@
   name: mug blue
   description: A blue and black mug.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 10
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_blue.rsi
@@ -112,7 +113,7 @@
   name: mug green
   description: A pale green and pink mug.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 10
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_green.rsi
@@ -131,7 +132,7 @@
   name: mug heart
   description: A white mug, it prominently features a red heart.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 10
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_heart.rsi
@@ -150,7 +151,7 @@
   name: mug metal
   description: A metal mug. You're not sure which metal.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 10
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_metal.rsi
@@ -169,7 +170,7 @@
   name: mug moebius
   description: A mug with a Moebius Laboratories logo on it. Not even your morning coffee is safe from corporate advertising.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 10
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_moebius.rsi
@@ -188,7 +189,7 @@
   name: "#1 mug"
   description: "A white mug, it prominently features a #1."
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 10
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_one.rsi
@@ -207,7 +208,7 @@
   name: mug rainbow
   description: A rainbow mug. The colors are almost as blinding as a welder.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 10
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_rainbow.rsi
@@ -226,7 +227,7 @@
   name: mug red
   description: A red and black mug.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 10
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_red.rsi
@@ -257,7 +258,7 @@
   name: Coffee
   description: Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 20
     contents:
       reagents:
@@ -274,7 +275,7 @@
   name: Teacup
   description: A plain white porcelain teacup.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 20
     contents:
       reagents:
@@ -295,9 +296,9 @@
   parent: DrinkBaseCup
   id: DrinkLean
   name: Lean
-  description: Bro Drake has such a cool fade bro Drake is the best bro c'mon bro he's
+  description: Bro Drake has such a cool fade bro Drake is the best bro c'mon bro.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 20
     contents:
       reagents:

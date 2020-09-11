@@ -5,14 +5,15 @@
   components:
   - type: Drink
     openSounds: bottleOpenSounds
-  - type: Solution
+  - type: SolutionContainer
+    caps: AddTo, RemoveFrom
   - type: Pourable
     transferAmount: 5
   - type: Sprite
     state: icon
   - type: Icon
     state: icon
-  - type: CanSpill
+  - type: Spillable
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -44,7 +45,7 @@
   name: magm-ale
   description: A true dorf's drink of choice.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 80
     contents:
       reagents:
@@ -73,7 +74,7 @@
   name: cognac bottle
   description: A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. You might as well not scream 'SHITCURITY' this time.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 80
     contents:
       reagents:
@@ -114,7 +115,7 @@
   name: kahlua bottle
   description: A widely known, Mexican coffee-flavoured liqueur. In production since 1936, HONK
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 80
     contents:
       reagents:
@@ -191,7 +192,7 @@
   name: vodka bottle
   description: Aah, vodka. Prime choice of drink AND fuel by Russians worldwide.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 80
     contents:
       reagents:
@@ -208,7 +209,7 @@
   name: uncle git's special reserve
   description: A premium single-malt whiskey, gently matured inside the tunnels of a nuclear shelter. TUNNEL WHISKEY RULES.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 80
     contents:
       reagents:
@@ -225,7 +226,7 @@
   name: doublebearded bearded special wine bottle
   description: A faint aura of unease and asspainery surrounds the bottle.
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 80
     contents:
       reagents:

@@ -93,7 +93,7 @@ namespace Content.Server.Body
             }
             else
             {
-                body.DisconnectBodyPart(hand.Value, true);
+                body.RemovePart(hand.Value, true);
             }
         }
     }

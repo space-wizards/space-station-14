@@ -131,6 +131,7 @@ namespace Content.Client.State
                 _userInterfaceManager.Popup($"Unable to connect: {e.Message}", "Connection error.");
                 Logger.Warning(e.ToString());
                 _netManager.ConnectFailed -= _onConnectFailed;
+                _setConnectingState(false);
             }
         }
 

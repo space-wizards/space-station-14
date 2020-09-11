@@ -41,7 +41,7 @@ namespace Content.Server.Atmos
 
         public void AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (!Owner.TryGetComponent(out SolutionComponent tank))
+            if (!Owner.TryGetComponent(out SolutionContainerComponent tank))
                 return;
 
             if (tank.Solution.GetReagentQuantity(_fuelType) == 0)
