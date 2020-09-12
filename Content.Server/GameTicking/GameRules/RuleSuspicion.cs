@@ -14,6 +14,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameTicking.GameRules
@@ -124,10 +125,12 @@ namespace Content.Server.GameTicking.GameRules
                     break;
             }
 
+            var restartDelay = 10;
+
             _gameTicker.EndRound(text);
-            _chatManager.DispatchServerAnnouncement("Restarting in 10 seconds.");
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("Restarting in {0} seconds.", restartDelay));
             _checkTimerCancel.Cancel();
-            Timer.Spawn(TimeSpan.FromSeconds(10), () => _gameTicker.RestartRound());
+            Timer.Spawn(TimeSpan.FromSeconds(restartDelay), () => _gameTicker.RestartRound());
         }
     }
 }

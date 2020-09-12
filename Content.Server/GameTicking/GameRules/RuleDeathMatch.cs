@@ -10,6 +10,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameTicking.GameRules
@@ -91,9 +92,11 @@ namespace Content.Server.GameTicking.GameRules
                 _chatManager.DispatchServerAnnouncement($"{winner} wins the death match!");
             }
 
-            _chatManager.DispatchServerAnnouncement("Restarting in 10 seconds.");
+            var restartDelay = 10;
 
-            Timer.Spawn(TimeSpan.FromSeconds(10), () => _gameTicker.RestartRound());
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("Restarting in {0} seconds.", restartDelay));
+
+            Timer.Spawn(TimeSpan.FromSeconds(restartDelay), () => _gameTicker.RestartRound());
         }
 
         private void PlayerManagerOnPlayerStatusChanged(object sender, SessionStatusEventArgs e)
