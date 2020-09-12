@@ -1,7 +1,9 @@
+using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Metabolism;
 using Content.Server.Interfaces;
+using Content.Shared.Atmos;
 using Content.Shared.Chemistry;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
@@ -22,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Body.Circulatory
         /// <summary>
         ///     Internal solution for reagent storage
         /// </summary>
-        [ViewVariables] private SolutionComponent _internalSolution;
+        [ViewVariables] private SolutionContainerComponent _internalSolution;
 
         /// <summary>
         ///     Empty volume of internal solution
@@ -31,13 +33,13 @@ namespace Content.Server.GameObjects.Components.Body.Circulatory
 
         [ViewVariables] public GasMixture Air { get; set; }
 
-        [ViewVariables] public SolutionComponent Solution => _internalSolution;
+        [ViewVariables] public SolutionContainerComponent Solution => _internalSolution;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            _internalSolution = Owner.EnsureComponent<SolutionComponent>();
+            _internalSolution = Owner.EnsureComponent<SolutionContainerComponent>();
             _internalSolution.MaxVolume = _initialMaxVolume;
         }
 
@@ -45,7 +47,7 @@ namespace Content.Server.GameObjects.Components.Body.Circulatory
         {
             base.ExposeData(serializer);
 
-            Air = new GasMixture(6);
+            Air = new GasMixture(6) {Temperature = Atmospherics.NormalBodyTemperature};
 
             serializer.DataField(ref _initialMaxVolume, "maxVolume", ReagentUnit.New(250));
         }
@@ -68,17 +70,29 @@ namespace Content.Server.GameObjects.Components.Body.Circulatory
             return true;
         }
 
-        public void PumpToxins(GasMixture into, float pressure)
+        public void PumpToxins(GasMixture to)
         {
             if (!Owner.TryGetComponent(out MetabolismComponent metabolism))
             {
-                Air.PumpGasTo(into, pressure);
+                to.Merge(Air);
+                Air.Clear();
                 return;
             }
 
             var toxins = metabolism.Clean(this);
+            var toOld = to.Gases.ToArray();
 
-            toxins.PumpGasTo(into, pressure);
+            to.Merge(toxins);
+
+            for (var i = 0; i < toOld.Length; i++)
+            {
+                var newAmount = to.GetMoles(i);
+                var oldAmount = toOld[i];
+                var delta = newAmount - oldAmount;
+
+                toxins.AdjustMoles(i, -delta);
+            }
+
             Air.Merge(toxins);
         }
     }

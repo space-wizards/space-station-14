@@ -7,8 +7,8 @@
     offset: Center
   - type: Sprite
     drawdepth: FloorObjects
-  - type: Solution
-    caps: 1
+  - type: SolutionContainer
+    caps: AddTo, RemoveFrom
   - type: Puddle
     spill_sound: /Audio/Effects/Fluids/splat.ogg
     recolor: true

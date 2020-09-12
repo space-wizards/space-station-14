@@ -18,6 +18,7 @@
 - type: entity
   id: LargeBarSign
   name: large bar sign
+  abstract: true
   components:
   - type: Clickable
   - type: InteractionOutline

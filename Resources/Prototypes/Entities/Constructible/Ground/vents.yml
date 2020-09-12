@@ -15,6 +15,12 @@
   - type: Sprite
     sprite: Constructible/Atmos/pipeitems.rsi
     state: vent
+  - type: Appearance
+    visuals:
+    - type: PipeVisualizer
+      pipeRSI: Constructible/Atmos/pipe.rsi
+    - type: VentVisualizer
+      ventRSI: Constructible/Atmos/vent.rsi
   - type: Destructible
     thresholdvalue: 100
 

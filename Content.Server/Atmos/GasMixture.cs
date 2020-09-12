@@ -545,6 +545,10 @@ namespace Content.Server.Atmos
             serializer.DataField(ref _moles, "moles", new float[Atmospherics.TotalNumberOfGases]);
             serializer.DataField(ref _molesArchived, "molesArchived", new float[Atmospherics.TotalNumberOfGases]);
             serializer.DataField(ref _temperature, "temperature", Atmospherics.TCMB);
+
+            // The arrays MUST have a specific length.
+            Array.Resize(ref _moles, Atmospherics.TotalNumberOfGases);
+            Array.Resize(ref _molesArchived, Atmospherics.TotalNumberOfGases);
         }
 
         public override bool Equals(object? obj)

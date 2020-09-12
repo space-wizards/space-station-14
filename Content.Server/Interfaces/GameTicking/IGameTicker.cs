@@ -30,6 +30,7 @@ namespace Content.Server.Interfaces.GameTicking
         void MakeObserve(IPlayerSession player);
         void MakeJoinGame(IPlayerSession player, string jobId);
         void ToggleReady(IPlayerSession player, bool ready);
+        void ToggleDisallowLateJoin(bool disallowLateJoin);
 
         EntityCoordinates GetLateJoinSpawnPoint();
         EntityCoordinates GetJobSpawnPoint(string jobId);

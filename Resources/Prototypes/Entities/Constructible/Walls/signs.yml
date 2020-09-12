@@ -976,50 +976,6 @@
 
 - type: entity
   parent: BaseSign
-  id: PlaqueZum
-  name: zumos plaque
-  description: "This plaque commemorates the rise of the Atmos ZUM division. May they carry the torch that the Atmos ZAS, LINDA and FEA divisions left behind."
-  components:
-  - type: Collidable
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.3,-0.3,0.3,0.3"
-      layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
-      - Clickable
-  - type: Sprite
-    state: zumosplaque
-  - type: Icon
-    state: zumosplaque
-
-- type: entity
-  parent: BaseSign
-  id: PlaqueAtmos
-  name: atmos plaque
-  description: "This plaque commemorates the fall of the Atmos FEA division. For all the charred, dizzy, and brittle men who have died in its hands."
-  components:
-    - type: Collidable
-      shapes:
-        - !type:PhysShapeAabb
-          bounds: "-0.3,-0.3,0.3,0.3"
-          layer:
-            - Opaque
-            - Impassable
-            - MobImpassable
-            - VaultImpassable
-            - SmallImpassable
-            - Clickable
-    - type: Sprite
-      state: atmosplaque
-    - type: Icon
-      state: atmosplaque
-
-- type: entity
-  parent: BaseSign
   id: SignSmoking
   name: no smoking sign
   description: A warning sign which reads 'NO SMOKING'
