@@ -1095,13 +1095,13 @@ namespace Content.Server.Atmos
         {
             var reconsiderAdjacent = false;
 
-            foreach (var entity in GridIndices.GetEntitiesInTileFast(GridIndex))
+            foreach (var entity in GridIndices.GetEntitiesInTileFast(GridIndex, _gridAtmosphereComponent.GridTileLookupSystem))
             {
                 if (!entity.TryGetComponent(out FirelockComponent firelock)) continue;
                 reconsiderAdjacent |= firelock.EmergencyPressureStop();
             }
 
-            foreach (var entity in other.GridIndices.GetEntitiesInTileFast(other.GridIndex))
+            foreach (var entity in other.GridIndices.GetEntitiesInTileFast(other.GridIndex, _gridAtmosphereComponent.GridTileLookupSystem))
             {
                 if (!entity.TryGetComponent(out FirelockComponent firelock)) continue;
                 reconsiderAdjacent |= firelock.EmergencyPressureStop();

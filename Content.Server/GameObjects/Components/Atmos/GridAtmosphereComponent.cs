@@ -35,6 +35,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         [Robust.Shared.IoC.Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
         [Robust.Shared.IoC.Dependency] private IServerEntityManager _serverEntityManager = default!;
 
+        public GridTileLookupSystem GridTileLookupSystem { get; private set; } = default!;
 
         /// <summary>
         ///     Check current execution time every n instances processed.
@@ -169,6 +170,8 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             base.Initialize();
             RepopulateTiles();
+
+            GridTileLookupSystem = EntitySystem.Get<GridTileLookupSystem>();
         }
 
         public override void OnAdd()
