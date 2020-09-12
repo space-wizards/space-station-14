@@ -33,8 +33,7 @@ namespace Content.Server.GameTicking.GameRules
 
         public override void Added()
         {
-            var announcement = Loc.GetString("The game is now a death match. Kill everybody else to win!");
-            _chatManager.DispatchServerAnnouncement(announcement);
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("The game is now a death match. Kill everybody else to win!"));
 
             _entityManager.EventBus.SubscribeEvent<HealthChangedEventArgs>(EventSource.Local, this, OnHealthChanged);
             _playerManager.PlayerStatusChanged += PlayerManagerOnPlayerStatusChanged;
@@ -88,9 +87,8 @@ namespace Content.Server.GameTicking.GameRules
                 : Loc.GetString("{0} wins the death match!", winner));
 
             var restartDelay = 10;
-            var restartAnnouncement = Loc.GetString("Restarting in {0} seconds.", restartDelay);
 
-            _chatManager.DispatchServerAnnouncement(restartAnnouncement);
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("Restarting in {0} seconds.", restartDelay));
 
             Timer.Spawn(TimeSpan.FromSeconds(restartDelay), () => _gameTicker.RestartRound());
         }

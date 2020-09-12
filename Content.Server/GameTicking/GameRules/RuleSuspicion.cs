@@ -36,13 +36,11 @@ namespace Content.Server.GameTicking.GameRules
 
         public override void Added()
         {
-            var announcement = Loc.GetString("There are traitors on the station! Find them, and kill them!");
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("There are traitors on the station! Find them, and kill them!"));
 
-            _chatManager.DispatchServerAnnouncement(announcement);
+            bool Predicate(IPlayerSession session) => session.ContentData()?.Mind?.HasRole<SuspicionTraitorRole>() ?? false;
 
-            Func<IPlayerSession, bool> predicate = session => session.ContentData()?.Mind?.HasRole<SuspicionTraitorRole>() ?? false;
-
-            EntitySystem.Get<AudioSystem>().PlayGlobal("/Audio/Misc/tatoralert.ogg", AudioParams.Default, predicate);
+            EntitySystem.Get<AudioSystem>().PlayGlobal("/Audio/Misc/tatoralert.ogg", AudioParams.Default, Predicate);
 
             EntitySystem.Get<DoorSystem>().AccessType = DoorSystem.AccessTypes.AllowAllNoExternal;
 
@@ -90,24 +88,18 @@ namespace Content.Server.GameTicking.GameRules
 
             if (innocentsAlive + traitorsAlive == 0)
             {
-                var announcement = Loc.GetString("Everybody is dead, it's a stalemate!");
-
-                _chatManager.DispatchServerAnnouncement(announcement);
+                _chatManager.DispatchServerAnnouncement(Loc.GetString("Everybody is dead, it's a stalemate!"));
                 EndRound(Victory.Stalemate);
             }
 
             else if (traitorsAlive == 0)
             {
-                var announcement = Loc.GetString("The traitors are dead! The innocents win.");
-
-                _chatManager.DispatchServerAnnouncement(announcement);
+                _chatManager.DispatchServerAnnouncement(Loc.GetString("The traitors are dead! The innocents win."));
                 EndRound(Victory.Innocents);
             }
             else if (innocentsAlive == 0)
             {
-                var announcement = Loc.GetString("The innocents are dead! The traitors win.");
-
-                _chatManager.DispatchServerAnnouncement(announcement);
+                _chatManager.DispatchServerAnnouncement(Loc.GetString("The innocents are dead! The traitors win."));
                 EndRound(Victory.Traitors);
             }
         }
@@ -139,9 +131,8 @@ namespace Content.Server.GameTicking.GameRules
             _gameTicker.EndRound(text);
 
             var restartDelay = 10;
-            var restartAnnouncement = Loc.GetString("Restarting in {0} seconds.", restartDelay);
 
-            _chatManager.DispatchServerAnnouncement(restartAnnouncement);
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("Restarting in {0} seconds.", restartDelay));
             _checkTimerCancel.Cancel();
 
             Timer.Spawn(TimeSpan.FromSeconds(restartDelay), () => _gameTicker.RestartRound());
