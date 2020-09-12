@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Body.Circulatory;
+using Content.Server.GameObjects.Components.Body.Respiratory;
 using Content.Server.GameObjects.Components.Temperature;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry;
+using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.Chemistry;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -27,7 +27,6 @@ namespace Content.Server.GameObjects.Components.Metabolism
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-
 
         public override string Name => "Metabolism";
 
@@ -85,7 +84,7 @@ namespace Content.Server.GameObjects.Components.Metabolism
         /// </summary>
         public float ThermalRegulationTemperatureThreshold { get; private set; }
 
-        [ViewVariables] public bool Suffocating => SuffocatingPercentage() > 0;
+        [ViewVariables] public bool Suffocating { get; private set; }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -156,10 +155,14 @@ namespace Content.Server.GameObjects.Components.Metabolism
 
         private float GasProducedMultiplier(Gas gas, float usedAverage)
         {
-            if (!NeedsGases.TryGetValue(gas, out var needs) ||
-                !ProducesGases.TryGetValue(gas, out var produces))
+            if (!ProducesGases.TryGetValue(gas, out var produces))
             {
                 return 0;
+            }
+
+            if (!NeedsGases.TryGetValue(gas, out var needs))
+            {
+                needs = 1;
             }
 
             return needs * produces * usedAverage;
@@ -177,31 +180,44 @@ namespace Content.Server.GameObjects.Components.Metabolism
                 return;
             }
 
-            var usedPercentages = new float[Atmospherics.TotalNumberOfGases];
             var needs = NeedsAndDeficit(frameTime);
+            var used = 0f;
             foreach (var (gas, amountNeeded) in needs)
             {
                 var bloodstreamAmount = bloodstream.Air.GetMoles(gas);
                 var deficit = 0f;
 
-                if (bloodstreamAmount >= amountNeeded)
+                if (bloodstreamAmount < amountNeeded)
                 {
-                    bloodstream.Air.AdjustMoles(gas, -amountNeeded);
+                    // Panic inhale
+                    if (Owner.TryGetComponent(out LungComponent lung))
+                    {
+                        lung.Gasp();
+                        bloodstreamAmount = bloodstream.Air.GetMoles(gas);
+                    }
+
+                    deficit = Math.Max(0, amountNeeded - bloodstreamAmount);
+
+                    if (deficit > 0)
+                    {
+                        bloodstream.Air.SetMoles(gas, 0);
+                    }
+                    else
+                    {
+                        bloodstream.Air.AdjustMoles(gas, -amountNeeded);
+                    }
                 }
                 else
                 {
-                    deficit = amountNeeded - bloodstreamAmount;
-                    bloodstream.Air.SetMoles(gas, 0);
+                    bloodstream.Air.AdjustMoles(gas, -amountNeeded);
                 }
 
                 DeficitGases[gas] = deficit;
 
-                var used = amountNeeded - deficit;
-                usedPercentages[(int) gas] = used / amountNeeded;
+                used += (amountNeeded - deficit) / amountNeeded;
             }
 
-            var usedAverage = usedPercentages.Average();
-            var produced = GasProduced(usedAverage);
+            var produced = GasProduced(used / needs.Count);
 
             foreach (var (gas, amountProduced) in produced)
             {
@@ -280,7 +296,6 @@ namespace Content.Server.GameObjects.Components.Metabolism
             }
         }
 
-
         /// <summary>
         ///     Loops through each reagent in _internalSolution,
         ///     and calls <see cref="IMetabolizable.Metabolize"/> for each of them.
@@ -338,42 +353,65 @@ namespace Content.Server.GameObjects.Components.Metabolism
                 return;
             }
 
+            ProcessGases(_accumulatedFrameTime);
+            ProcessNutrients(_accumulatedFrameTime);
+            ProcessThermalRegulation(_accumulatedFrameTime);
+
             _accumulatedFrameTime -= 1;
 
-            ProcessGases(frameTime);
-            ProcessNutrients(frameTime);
-            ProcessThermalRegulation(frameTime);
-
-            if (Suffocating)
+            if (SuffocatingPercentage() > 0)
             {
-                // damageable.ChangeDamage(DamageClass.Airloss, _suffocationDamage, false);
+                TakeSuffocationDamage();
+                return;
             }
+
+            StopSuffocation();
         }
 
-        public void Transfer(BloodstreamComponent @from, GasMixture to, Gas gas, float pressure)
+        private void TakeSuffocationDamage()
         {
-            var transfer = new GasMixture();
-            var molesInBlood = @from.Air.GetMoles(gas);
+            Suffocating = true;
 
-            transfer.SetMoles(gas, molesInBlood);
-            transfer.ReleaseGasTo(to, pressure);
+            if (!Owner.TryGetComponent(out IDamageableComponent damageable))
+            {
+                return;
+            }
 
-            @from.Air.Merge(transfer);
+            damageable.ChangeDamage(DamageClass.Airloss, _suffocationDamage, false);
         }
 
-        public GasMixture Clean(BloodstreamComponent bloodstream, float pressure = 100)
+        private void StopSuffocation()
         {
-            var gasMixture = new GasMixture(bloodstream.Air.Volume);
+            Suffocating = false;
+        }
+
+        public GasMixture Clean(BloodstreamComponent bloodstream)
+        {
+            var gasMixture = new GasMixture(bloodstream.Air.Volume)
+            {
+                Temperature = bloodstream.Air.Temperature
+            };
 
             for (Gas gas = 0; gas < (Gas) Atmospherics.TotalNumberOfGases; gas++)
             {
-                if (NeedsGases.TryGetValue(gas, out var needed) &&
-                    bloodstream.Air.GetMoles(gas) < needed * 1.5f)
+                float amount;
+                var molesInBlood = bloodstream.Air.GetMoles(gas);
+
+                if (!NeedsGases.TryGetValue(gas, out var needed))
                 {
-                    continue;
+                    amount = molesInBlood;
+                }
+                else
+                {
+                    var overflowThreshold = needed * 1.5f;
+
+                    amount = molesInBlood > overflowThreshold
+                        ? molesInBlood - overflowThreshold
+                        : 0;
                 }
 
-                Transfer(bloodstream, gasMixture, gas, pressure);
+                gasMixture.AdjustMoles(gas, amount);
+                bloodstream.Air.AdjustMoles(gas, -amount);
             }
 
             return gasMixture;
