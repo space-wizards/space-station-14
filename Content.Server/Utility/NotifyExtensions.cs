@@ -13,12 +13,17 @@ namespace Content.Server.Utility
         /// </summary>
         /// <param name="source">The entity on which to popup the message.</param>
         /// <param name="message">The message to show.</param>
+        /// <param name="playerManager">
+        ///     The instance of player manager to use, will be resolved automatically
+        ///     if null.
+        /// </param>
         /// <param name="range">
         ///     The range in which to search for players, defaulting to one screen.
         /// </param>
-        public static void PopupMessageOtherClients(this IEntity source, string message, int range = 15)
+        public static void PopupMessageOtherClients(this IEntity source, string message, IPlayerManager playerManager = null, int range = 15)
         {
-            var playerManager = IoCManager.Resolve<IPlayerManager>();
+            playerManager ??= IoCManager.Resolve<IPlayerManager>();
+
             var viewers = playerManager.GetPlayersInRange(source.Transform.Coordinates, range);
 
             foreach (var viewer in viewers)
@@ -32,6 +37,25 @@ namespace Content.Server.Utility
 
                 source.PopupMessage(viewer.AttachedEntity, message);
             }
+        }
+
+        /// <summary>
+        ///     Pops up a message at the given entity's location for everyone,
+        ///     including itself, to see.
+        /// </summary>
+        /// <param name="source">The entity above which to show the message.</param>
+        /// <param name="message">The message to be seen.</param>
+        /// <param name="playerManager">
+        ///     The instance of player manager to use, will be resolved automatically
+        ///     if null.
+        /// </param>
+        /// <param name="range">
+        ///     The range in which to search for players, defaulting to one screen.
+        /// </param>
+        public static void PopupMessageEveryone(this IEntity source, string message, IPlayerManager playerManager = null, int range = 15)
+        {
+            source.PopupMessage(message);
+            source.PopupMessageOtherClients(message, playerManager, range);
         }
     }
 }

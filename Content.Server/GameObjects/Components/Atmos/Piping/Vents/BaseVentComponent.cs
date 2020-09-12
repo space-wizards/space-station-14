@@ -3,6 +3,8 @@ using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Atmos;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -23,6 +25,20 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Vents
 
         private AtmosphereSystem _atmosSystem;
 
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool VentEnabled
+        {
+            get => _ventEnabled;
+            set
+            {
+                _ventEnabled = value;
+                UpdateAppearance();
+            }
+        }
+        private bool _ventEnabled = true;
+
+        private AppearanceComponent _appearance;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -40,10 +56,15 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Vents
                 Logger.Error($"{typeof(BaseVentComponent)} on entity {Owner.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
                 return;
             }
+            Owner.TryGetComponent(out _appearance);
+            UpdateAppearance();
         }
 
         public override void Update()
         {
+            if (!VentEnabled)
+                return;
+
             var tileAtmos = Owner.Transform.Coordinates.GetTileAtmosphere(_entityManager);
             if (tileAtmos == null)
                 return;
@@ -52,5 +73,10 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Vents
         }
 
         protected abstract void VentGas(GasMixture inletGas, GasMixture outletGas);
+
+        private void UpdateAppearance()
+        {
+            _appearance?.SetData(VentVisuals.VisualState, new VentVisualState(VentEnabled));
+        }
     }
 }
