@@ -74,7 +74,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 body.Status = BodyStatus.OnGround;
 
                 Owner.RemoveComponent<ThrownItemComponent>();
-                EntitySystem.Get<InteractionSystem>().LandInteraction(User, Owner, Owner.Transform.GridPosition);
+                EntitySystem.Get<InteractionSystem>().LandInteraction(User, Owner, Owner.Transform.Coordinates);
             }
         }
 
@@ -109,7 +109,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 return;
             }
 
-            if (IoCManager.Resolve<IPhysicsManager>().IsWeightless(Owner.Transform.GridPosition))
+            if (IoCManager.Resolve<IPhysicsManager>().IsWeightless(Owner.Transform.Coordinates))
             {
                 StartStopTimer();
                 return;

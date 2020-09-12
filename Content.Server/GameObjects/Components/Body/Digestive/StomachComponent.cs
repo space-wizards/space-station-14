@@ -24,10 +24,10 @@ namespace Content.Server.GameObjects.Components.Body.Digestive
         /// </summary>
         public ReagentUnit MaxVolume
         {
-            get => Owner.TryGetComponent(out SolutionComponent? solution) ? solution.MaxVolume : ReagentUnit.Zero;
+            get => Owner.TryGetComponent(out SolutionContainerComponent? solution) ? solution.MaxVolume : ReagentUnit.Zero;
             set
             {
-                if (Owner.TryGetComponent(out SolutionComponent? solution))
+                if (Owner.TryGetComponent(out SolutionContainerComponent? solution))
                 {
                     solution.MaxVolume = value;
                 }
@@ -50,6 +50,7 @@ namespace Content.Server.GameObjects.Components.Body.Digestive
         /// <summary>
         ///     Used to track how long each reagent has been in the stomach
         /// </summary>
+        [ViewVariables]
         private readonly List<ReagentDelta> _reagentDeltas = new List<ReagentDelta>();
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -63,9 +64,9 @@ namespace Content.Server.GameObjects.Components.Body.Digestive
         {
             base.Startup();
 
-            if (!Owner.EnsureComponent(out SolutionComponent solution))
+            if (!Owner.EnsureComponent(out SolutionContainerComponent solution))
             {
-                Logger.Warning($"Entity {Owner} at {Owner.Transform.MapPosition} didn't have a {nameof(SolutionComponent)}");
+                Logger.Warning($"Entity {Owner} at {Owner.Transform.MapPosition} didn't have a {nameof(SolutionContainerComponent)}");
             }
 
             solution.MaxVolume = _initialMaxVolume;
@@ -73,7 +74,7 @@ namespace Content.Server.GameObjects.Components.Body.Digestive
 
         public bool TryTransferSolution(Solution solution)
         {
-            if (!Owner.TryGetComponent(out SolutionComponent? solutionComponent))
+            if (!Owner.TryGetComponent(out SolutionContainerComponent? solutionComponent))
             {
                 return false;
             }
@@ -103,7 +104,7 @@ namespace Content.Server.GameObjects.Components.Body.Digestive
         /// <param name="frameTime">The time since the last update in seconds.</param>
         public void Update(float frameTime)
         {
-            if (!Owner.TryGetComponent(out SolutionComponent? solutionComponent) ||
+            if (!Owner.TryGetComponent(out SolutionContainerComponent? solutionComponent) ||
                 !Owner.TryGetComponent(out BloodstreamComponent? bloodstream))
             {
                 return;

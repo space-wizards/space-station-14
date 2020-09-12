@@ -10,12 +10,14 @@ using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Interfaces;
+using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystemMessages;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -28,6 +30,7 @@ namespace Content.Server.GameObjects.EntitySystems
     internal sealed class HandsSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private const float ThrowForce = 1.5f; // Throwing force of mobs in Newtons
 
@@ -107,7 +110,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        private bool HandleDrop(ICommonSession session, GridCoordinates coords, EntityUid uid)
+        private bool HandleDrop(ICommonSession session, EntityCoordinates coords, EntityUid uid)
         {
             var ent = ((IPlayerSession) session).AttachedEntity;
 
@@ -120,13 +123,13 @@ namespace Content.Server.GameObjects.EntitySystems
             if (handsComp.GetActiveHand == null)
                 return false;
 
-            var entCoords = ent.Transform.GridPosition.Position;
+            var entCoords = ent.Transform.Coordinates.Position;
             var entToDesiredDropCoords = coords.Position - entCoords;
             var targetLength = Math.Min(entToDesiredDropCoords.Length, SharedInteractionSystem.InteractionRange - 0.001f); // InteractionRange is reduced due to InRange not dealing with floating point error
-            var newCoords = new GridCoordinates((entToDesiredDropCoords.Normalized * targetLength) + entCoords, coords.GridID);
-            var rayLength = Get<SharedInteractionSystem>().UnobstructedDistance(ent.Transform.MapPosition, newCoords.ToMap(_mapManager), ignoredEnt: ent);
+            var newCoords = coords.WithPosition((entToDesiredDropCoords.Normalized * targetLength) + entCoords).ToMap(_entityManager);
+            var rayLength = Get<SharedInteractionSystem>().UnobstructedDistance(ent.Transform.MapPosition, newCoords, ignoredEnt: ent);
 
-            handsComp.Drop(handsComp.ActiveHand, new GridCoordinates(entCoords + (entToDesiredDropCoords.Normalized * rayLength), coords.GridID));
+            handsComp.Drop(handsComp.ActiveHand, coords.WithPosition(entCoords + (entToDesiredDropCoords.Normalized * rayLength)));
 
             return true;
         }
@@ -139,7 +142,7 @@ namespace Content.Server.GameObjects.EntitySystems
             handsComp.ActivateItem();
         }
 
-        private bool HandleThrowItem(ICommonSession session, GridCoordinates coords, EntityUid uid)
+        private bool HandleThrowItem(ICommonSession session, EntityCoordinates coords, EntityUid uid)
         {
             var plyEnt = ((IPlayerSession)session).AttachedEntity;
 
@@ -165,14 +168,14 @@ namespace Content.Server.GameObjects.EntitySystems
             else
             {
                 stackComp.Use(1);
-                throwEnt = throwEnt.EntityManager.SpawnEntity(throwEnt.Prototype.ID, plyEnt.Transform.GridPosition);
+                throwEnt = throwEnt.EntityManager.SpawnEntity(throwEnt.Prototype.ID, plyEnt.Transform.Coordinates);
 
                 // can only throw one item at a time, regardless of what the prototype stack size is.
                 if (throwEnt.TryGetComponent<StackComponent>(out var newStackComp))
                     newStackComp.Count = 1;
             }
 
-            ThrowHelper.ThrowTo(throwEnt, ThrowForce, coords, plyEnt.Transform.GridPosition, false, plyEnt);
+            ThrowHelper.ThrowTo(throwEnt, ThrowForce, coords, plyEnt.Transform.Coordinates, false, plyEnt);
 
             return true;
         }
@@ -228,7 +231,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        private bool HandleMovePulledObject(ICommonSession session, GridCoordinates coords, EntityUid uid)
+        private bool HandleMovePulledObject(ICommonSession session, EntityCoordinates coords, EntityUid uid)
         {
             var playerEntity = session.AttachedEntity;
 
@@ -238,7 +241,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 return false;
             }
 
-            hands.MovePulledObject(playerEntity.Transform.GridPosition, coords);
+            hands.MovePulledObject(playerEntity.Transform.Coordinates, coords);
 
             return false;
         }

@@ -1,5 +1,6 @@
 ﻿using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
@@ -8,8 +9,11 @@ namespace Content.Server.GameObjects.Components.Atmos
     {
         public override string Name => "MovedByPressure";
 
+        [ViewVariables(VVAccess.ReadWrite)]
         public float PressureResistance { get; set; } = 1f;
+        [ViewVariables(VVAccess.ReadWrite)]
         public float MoveResist { get; set; } = 100f;
+        [ViewVariables]
         public int LastHighPressureMovementAirCycle { get; set; } = 0;
 
         public override void ExposeData(ObjectSerializer serializer)

@@ -2,6 +2,7 @@
   id: chem.Nutriment
   name: nutriment
   desc: All the vitamins, minerals, and carbohydrates the body needs in pure form.
+  physicalDesc: opaque
   color: "#664330"
   metabolism:
     - !type:DefaultFood
@@ -11,6 +12,7 @@
   id: chem.H2SO4
   name: sulfuric acid
   desc: A highly corrosive, oily, colorless liquid.
+  physicalDesc: oily
   color: "#BF8C00"
   boilingPoint: 337.0
   meltingPoint: 10.31
@@ -18,7 +20,8 @@
 - type: reagent
   id: chem.H2O
   name: water
-  desc: A tasty colorless liquid.
+  desc: A colorless liquid that humans need in order to survive.
+  physicalDesc: translucent
   color: "#c0e0ff20"
   boilingPoint: 100.0
   meltingPoint: 0.0
@@ -30,6 +33,7 @@
   id: chem.Ice
   name: ice
   desc: Frozen water.
+  physicalDesc: frosty
   color: "#bed8e6"
   meltingPoint: 0.0
   boilingPoint: 100.0
@@ -38,7 +42,8 @@
   id: chem.Phoron
   name: phoron
   desc: Funky, space-magic pixie dust. You probably shouldn't eat this, but we both know you will anyways.
-  color: "#500064"
+  physicalDesc: gaseous
+  color: "#7e009e"
   boilingPoint: -127.3 # Random values picked between the actual values for CO2 and O2
   meltingPoint: -186.4
 
@@ -46,6 +51,7 @@
   id: chem.Ethanol
   name: ethanol
   desc: A simple alcohol, makes you drunk if consumed, flammable.
+  physicalDesc: strong-smelling
   color: "#b05b3c"
   boilingPoint: 78.2
   meltingPoint: -114.1
@@ -54,6 +60,7 @@
   id: chem.Glucose
   name: glucose
   desc: A simple sugar found in many foods.
+  physicalDesc: syrupy
   color: "#ffffff"
   boilingPoint: 340282300000000000000000000000000000000 #Fun fact: Glucose can't boil. So let's just set it to the maximum float value.
   meltingPoint: 146.0
@@ -62,6 +69,7 @@
   id: chem.Ammonia
   name: ammonia
   desc: An effective fertilizer which is better than what is available to the botanist initially, though it isn't as powerful as Diethylamine
+  physicalDesc: pungent
   color: "#77b58e"
   boilingPoint: -33.0
   meltingPoint: -77.7
@@ -70,6 +78,7 @@
   id: chem.Bleach
   name: bleach
   desc: Heavy duty cleaner that can clean tiles the same as Space Cleaner and also decontaminate clothes. Extremely toxic when ingested.
+  physicalDesc: strong-smelling
   color: "#a1000b"
   boilingPoint: 111.0
   meltingPoint: -5.0
@@ -78,6 +87,7 @@
   id: chem.Diethylamine
   name: diethylamine
   desc: A very potent fertilizer.
+  physicalDesc: strong-smelling
   color: "#a1000b"
   boilingPoint: 55.5
   meltingPoint: -50.0
@@ -86,6 +96,7 @@
   id: chem.FoamingAgent
   name: foaming agent
   desc: Makes foam such as that required in metal foam grenades
+  physicalDesc: foamy
   color: "#215263"
   boilingPoint: 418.0 # I went with ammonium lauryl sulfate as the basis for this
   meltingPoint: 7.4 # I made this up
@@ -94,6 +105,7 @@
   id: chem.PolytrinicAcid
   name: polytrinic acid
   desc: An extremely corrosive chemical substance. The slightest touch of it will melt off most masks and headgear, and it deals extreme damage to anyone who comes directly into contact with it. Spraying it on other items will usually melt them too, which does make it useful if the clown has covered the entire hallway in banana peels.
+  physicalDesc: strong-smelling
   color: "#a1000b"
   boilingPoint: 78.2 # This isn't a real chemical...
   meltingPoint: -19.4
@@ -102,7 +114,8 @@
   id: chem.SpaceCleaner
   name: space cleaner
   desc: This is able to clean almost all surfaces of almost anything that may dirty them. The janitor is likely to appreciate refills.
-  color: "#215263"
+  physicalDesc: lemony fresh
+  color: "#c8ff69"
   boilingPoint: 147.0 # Made this up, loosely based on bleach
   meltingPoint: -11.0
 
@@ -110,6 +123,7 @@
   id: chem.SpaceLube
   name: space lube
   desc: Space Lube is a high performance lubricant intended for maintenance of extremely complex mechanical equipment (and certainly not used to make people slip).
+  physicalDesc: shiny
   color: "#77b58e"
   boilingPoint: 290.0 # Glycerin
   meltingPoint: 18.2
@@ -118,6 +132,7 @@
   id: chem.TableSalt
   name: table salt
   desc: Commonly known as salt, Sodium Chloride is often used to season food or kill borers instantly.
+  physicalDesc: grainy
   color: "#a1000b"
   boilingPoint: 1465.0
   meltingPoint: 800.7
@@ -126,7 +141,8 @@
   id: chem.Thermite
   name: thermite
   desc: A mixture that becomes extremely hot when ignited, and which can burn straight through walls when applied and ignited. It'll slowly inflict burn damage to anybody dumb enough to ingest it, but can't be ignited inside inside said dumb person.
-  color: "#77b58e"
+  physicalDesc: grainy
+  color: "#757245"
   boilingPoint: 2977.0 # Aluminum oxide
   meltingPoint: 2030.0
 
@@ -134,7 +150,8 @@
   id: chem.UnstableMutagen
   name: unstable mutagen
   desc: Causes mutations when injected into living people or plants. High doses may be lethal, especially in humans.
-  color: "#77b58e"
+  physicalDesc: glowing
+  color: "#00ff5f"
   boilingPoint: 340282300000000000000000000000000000000 # Ethidium bromide, which doesn't boil.
   meltingPoint: 261.0
 
@@ -142,6 +159,7 @@
   id: chem.WeldingFuel
   name: welding fuel
   desc: Used by welders to weld.
+  physicalDesc: oily
   color: "#a76b1c"
   boilingPoint: -84.7 # Acetylene. Close enough.
   meltingPoint: -80.7

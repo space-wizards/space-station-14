@@ -12,7 +12,12 @@
   - type: Icon
     texture: Constructible/Power/eightdirwire.png
   - type: Sprite
-    texture: Constructible/Power/eightdirwire.png
+  - type: Appearance
+    visuals:
+    - type: PipeVisualizer
+      pipeRSI: Constructible/Atmos/pipe.rsi
+    - type: SiphonVisualizer
+      siphonRSI: Constructible/Atmos/scrubber.rsi
   - type: Destructible
     thresholdvalue: 100
 

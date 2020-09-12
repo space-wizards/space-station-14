@@ -69,5 +69,8 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
         {
             return false;
         }
+
+        public bool CanShiver() => false;
+        public bool CanSweat() => false;
     }
 }
