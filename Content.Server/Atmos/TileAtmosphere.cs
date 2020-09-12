@@ -1093,7 +1093,6 @@ namespace Content.Server.Atmos
 
         private void ConsiderFirelocks(TileAtmosphere other)
         {
-            // TODO ATMOS firelocks!
             var reconsiderAdjacent = false;
 
             foreach (var entity in GridIndices.GetEntitiesInTileFast(GridIndex))

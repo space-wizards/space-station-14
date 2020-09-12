@@ -102,7 +102,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             var newAirBlockedDirs = AtmosDirection.Invalid;
 
-            // When we make multiZ atmos, special case this.
+            // TODO ATMOS MULTIZ When we make multiZ atmos, special case this.
             for (int i = 0; i < Atmospherics.Directions; i++)
             {
                 var direction = (AtmosDirection) (1 << i);
