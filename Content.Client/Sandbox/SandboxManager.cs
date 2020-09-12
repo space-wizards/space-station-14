@@ -1,12 +1,9 @@
 ﻿using System;
 using Content.Client.UserInterface;
-using Content.Client.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Sandbox;
 using Robust.Client.Console;
-using Robust.Client.Interfaces.Console;
 using Robust.Client.Interfaces.Input;
-using Robust.Client.Interfaces.Graphics.Lighting;
 using Robust.Client.Interfaces.Placement;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface.Controls;

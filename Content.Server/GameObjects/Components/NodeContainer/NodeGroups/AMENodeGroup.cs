@@ -1,12 +1,11 @@
-﻿using Content.Server.Explosions;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Content.Server.Explosions;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.GameObjects.Components.Power.AME;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.ViewVariables;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 {

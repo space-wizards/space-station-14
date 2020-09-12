@@ -16,7 +16,6 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Globalization;
 using Content.Shared.Body.Scanner;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;

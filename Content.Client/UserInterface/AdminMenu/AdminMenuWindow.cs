@@ -1,4 +1,7 @@
 ﻿#nullable enable
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Client.StationEvents;
 using Content.Shared.Atmos;
@@ -18,9 +21,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.UserInterface.AdminMenu

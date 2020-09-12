@@ -3,7 +3,6 @@ using Content.Client.UserInterface.Stylesheets;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
 namespace Content.Client.UserInterface

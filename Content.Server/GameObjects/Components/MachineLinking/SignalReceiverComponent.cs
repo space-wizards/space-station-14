@@ -1,4 +1,6 @@
-﻿using Content.Server.GameObjects.Components.Interactable;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Content.Server.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -7,8 +9,6 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Content.Server.GameObjects.Components.MachineLinking
 {

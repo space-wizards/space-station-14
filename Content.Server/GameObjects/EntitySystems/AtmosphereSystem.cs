@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Reactions;
-using Content.Server.GameObjects.Components.Atmos;
-using Content.Server.Interfaces;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
 using JetBrains.Annotations;
 using Robust.Server.Interfaces.Timing;

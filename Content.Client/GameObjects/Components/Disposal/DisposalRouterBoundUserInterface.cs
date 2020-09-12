@@ -2,7 +2,6 @@
 using JetBrains.Annotations;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Shared.GameObjects.Components.UserInterface;
-using Robust.Shared.Localization;
 using static Content.Shared.GameObjects.Components.Disposal.SharedDisposalRouterComponent;
 
 namespace Content.Client.GameObjects.Components.Disposal

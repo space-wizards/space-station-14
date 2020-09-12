@@ -1,6 +1,4 @@
 ﻿#nullable enable
-using System;
-using Content.Server.GameObjects.Components.Body;
 using Content.Server.GameObjects.Components.Medical;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Interfaces.GameTicking;
@@ -8,7 +6,6 @@ using Content.Server.Mobs;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Shared.GameObjects;
@@ -21,7 +18,6 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using Serilog.Debugging;
 
 namespace Content.Server.GameObjects.Components.Mobs
 {

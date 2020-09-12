@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Robust.Shared.GameObjects.Systems;
+﻿using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Shared.GameObjects.EntitySystems

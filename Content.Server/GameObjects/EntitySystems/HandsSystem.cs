@@ -9,7 +9,6 @@ using Content.Server.Throw;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Interfaces;
-using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystemMessages;
 using Robust.Server.Interfaces.Player;
