@@ -16,6 +16,7 @@ using Robust.Shared.GameObjects.Components.Map;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Map;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
@@ -33,6 +34,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         [Robust.Shared.IoC.Dependency] private IMapManager _mapManager = default!;
         [Robust.Shared.IoC.Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
         [Robust.Shared.IoC.Dependency] private IServerEntityManager _serverEntityManager = default!;
+
 
         /// <summary>
         ///     Check current execution time every n instances processed.

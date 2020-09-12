@@ -1101,7 +1101,7 @@ namespace Content.Server.Atmos
                 reconsiderAdjacent |= firelock.EmergencyPressureStop();
             }
 
-            foreach (var entity in other.GridIndices.GetEntitiesInTile(other.GridIndex))
+            foreach (var entity in other.GridIndices.GetEntitiesInTileFast(other.GridIndex))
             {
                 if (!entity.TryGetComponent(out FirelockComponent firelock)) continue;
                 reconsiderAdjacent |= firelock.EmergencyPressureStop();

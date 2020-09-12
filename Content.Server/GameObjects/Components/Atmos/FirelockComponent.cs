@@ -6,6 +6,7 @@ using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.Interfaces;
 using Content.Shared.GameObjects.Components.Doors;
 using Content.Shared.GameObjects.Components.Interactable;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
@@ -17,8 +18,6 @@ namespace Content.Server.GameObjects.Components.Atmos
     [RegisterComponent]
     public class FirelockComponent : ServerDoorComponent, IInteractUsing, ICollideBehavior
     {
-        [Dependency] private IServerNotifyManager _notifyManager = default!;
-
         public override string Name => "Firelock";
 
         protected override TimeSpan CloseTimeOne => TimeSpan.FromSeconds(0.1f);
@@ -87,7 +86,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (State == DoorState.Closed)
                 {
                     if(holdingPressure)
-                        _notifyManager.PopupMessage(Owner, eventArgs.User, "A gush of air blows in your face... Maybe you should reconsider.");
+                        Owner.PopupMessage(eventArgs.User, "A gush of air blows in your face... Maybe you should reconsider.");
                 }
 
                 if (!await tool.UseTool(eventArgs.User, Owner, holdingPressure || holdingFire ? 1.5f : 0.25f, ToolQuality.Prying)) return false;

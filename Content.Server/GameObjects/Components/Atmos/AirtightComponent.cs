@@ -24,6 +24,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private (GridId, MapIndices) _lastPosition;
+        private AtmosphereSystem _atmosphereSystem = default!;
 
         public override string Name => "Airtight";
 
@@ -78,6 +79,8 @@ namespace Content.Server.GameObjects.Components.Atmos
         public override void Initialize()
         {
             base.Initialize();
+
+            _atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
             // Using the SnapGrid is critical for performance, and thus if it is absent the component
             // will not be airtight. A warning is much easier to track down than the object magically
@@ -140,7 +143,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             UpdatePosition(_lastPosition.Item1, _lastPosition.Item2);
 
             if (_fixVacuum)
-                EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(_lastPosition.Item1)?.FixVacuum(_lastPosition.Item2);
+                _atmosphereSystem.GetGridAtmosphere(_lastPosition.Item1)?.FixVacuum(_lastPosition.Item2);
         }
 
         private void OnTransformMove()
@@ -162,7 +165,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         private void UpdatePosition(GridId gridId, MapIndices pos)
         {
-            var gridAtmos = EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(gridId);
+            var gridAtmos = _atmosphereSystem.GetGridAtmosphere(gridId);
 
             if (gridAtmos == null) return;
 

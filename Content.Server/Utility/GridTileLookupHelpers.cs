@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Content.Shared.Maps;
@@ -15,9 +16,9 @@ namespace Content.Server.Utility
         ///     Helper that returns all entities in a turf very fast.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerable<IEntity> GetEntitiesInTileFast(this TileRef turf)
+        public static IEnumerable<IEntity> GetEntitiesInTileFast(this TileRef turf, GridTileLookupSystem? gridTileLookup = null)
         {
-            var gridTileLookup = EntitySystem.Get<GridTileLookupSystem>();
+            gridTileLookup ??= EntitySystem.Get<GridTileLookupSystem>();
 
             return gridTileLookup.GetEntitiesIntersecting(turf.GridIndex, turf.GridIndices);
         }
@@ -26,14 +27,14 @@ namespace Content.Server.Utility
         ///     Helper that returns all entities in a turf.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerable<IEntity> GetEntitiesInTileFast(this MapIndices indices, GridId gridId)
+        public static IEnumerable<IEntity> GetEntitiesInTileFast(this MapIndices indices, GridId gridId, GridTileLookupSystem? gridTileLookup = null)
         {
             var turf = indices.GetTileRef(gridId);
 
             if (turf == null)
                 return Enumerable.Empty<IEntity>();
 
-            return GetEntitiesInTileFast(turf.Value);
+            return GetEntitiesInTileFast(turf.Value, gridTileLookup);
         }
     }
 }
