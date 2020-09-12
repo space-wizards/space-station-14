@@ -176,6 +176,9 @@
             "ExtinguisherCabinet",
             "ExtinguisherCabinetFilled",
             "FireExtinguisher",
+            "Firelock",
+            "AtmosPlaque",
+            "Spillable",
         };
     }
 }
