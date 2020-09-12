@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.Atmos;
+using Content.Server.GameObjects.Components.Body.Circulatory;
 using Content.Server.GameObjects.Components.Body.Respiratory;
 using Content.Server.GameObjects.Components.Metabolism;
 using Content.Shared.Atmos;
@@ -31,7 +33,10 @@ namespace Content.IntegrationTests.Tests
                 var entityManager = IoCManager.Resolve<IEntityManager>();
 
                 var human = entityManager.SpawnEntity("HumanMob_Content", MapCoordinates.Nullspace);
-                var lung = human.GetComponent<LungComponent>();
+
+                Assert.True(human.TryGetComponent(out LungComponent lung));
+                Assert.True(human.TryGetComponent(out BloodstreamComponent bloodstream));
+
                 var gas = new GasMixture(1);
 
                 var originalOxygen = 2;
@@ -46,8 +51,8 @@ namespace Content.IntegrationTests.Tests
                 var lungOxygen = originalOxygen * breathedPercentage;
                 var lungNitrogen = originalNitrogen * breathedPercentage;
 
-                Assert.That(lung.Air.GetMoles(Gas.Oxygen), Is.EqualTo(lungOxygen));
-                Assert.That(lung.Air.GetMoles(Gas.Nitrogen), Is.EqualTo(lungNitrogen));
+                Assert.That(bloodstream.Air.GetMoles(Gas.Oxygen), Is.EqualTo(lungOxygen));
+                Assert.That(bloodstream.Air.GetMoles(Gas.Nitrogen), Is.EqualTo(lungNitrogen));
 
                 var mixtureOxygen = originalOxygen - lungOxygen;
                 var mixtureNitrogen = originalNitrogen - lungNitrogen;
@@ -55,23 +60,43 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(gas.GetMoles(Gas.Oxygen), Is.EqualTo(mixtureOxygen));
                 Assert.That(gas.GetMoles(Gas.Nitrogen), Is.EqualTo(mixtureNitrogen));
 
+                var lungOxygenBeforeExhale = lung.Air.GetMoles(Gas.Oxygen);
+                var lungNitrogenBeforeExhale = lung.Air.GetMoles(Gas.Nitrogen);
+
+                // Empty after it transfer to the bloodstream
+                Assert.Zero(lungOxygenBeforeExhale);
+                Assert.Zero(lungNitrogenBeforeExhale);
+
                 lung.Exhale(1, gas);
 
-                var exhalePercentage = 0.5f;
-                var exhaledOxygen = lungOxygen * exhalePercentage;
-                var exhaledNitrogen = lungNitrogen * exhalePercentage;
+                var lungOxygenAfterExhale = lung.Air.GetMoles(Gas.Oxygen);
+                var exhaledOxygen = lungOxygenBeforeExhale - lungOxygenAfterExhale;
 
-                lungOxygen -= exhaledOxygen;
-                lungNitrogen -= exhaledNitrogen;
+                // Not completely empty
+                Assert.Positive(lung.Air.Gases.Sum());
 
-                Assert.That(lung.Air.GetMoles(Gas.Oxygen), Is.EqualTo(lungOxygen).Within(0.000001f));
-                Assert.That(lung.Air.GetMoles(Gas.Nitrogen), Is.EqualTo(lungNitrogen).Within(0.000001f));
+                // Retains needed gas
+                Assert.Positive(bloodstream.Air.GetMoles(Gas.Oxygen));
+
+                // Expels toxins
+                Assert.Zero(bloodstream.Air.GetMoles(Gas.Nitrogen));
 
                 mixtureOxygen += exhaledOxygen;
-                mixtureNitrogen += exhaledNitrogen;
 
+                var finalTotalOxygen = gas.GetMoles(Gas.Oxygen) +
+                                         bloodstream.Air.GetMoles(Gas.Oxygen) +
+                                         lung.Air.GetMoles(Gas.Oxygen);
+
+                // No ticks were run, metabolism doesn't run and so no oxygen is used up
+                Assert.That(finalTotalOxygen, Is.EqualTo(originalOxygen));
                 Assert.That(gas.GetMoles(Gas.Oxygen), Is.EqualTo(mixtureOxygen).Within(0.000001f));
-                Assert.That(gas.GetMoles(Gas.Nitrogen), Is.EqualTo(mixtureNitrogen).Within(0.000001f));
+
+                var finalTotalNitrogen = gas.GetMoles(Gas.Nitrogen) +
+                                         bloodstream.Air.GetMoles(Gas.Nitrogen) +
+                                         lung.Air.GetMoles(Gas.Nitrogen);
+
+                // Nitrogen stays constant
+                Assert.That(finalTotalNitrogen, Is.EqualTo(originalNitrogen).Within(0.000001f));
             });
 
             await server.WaitIdleAsync();

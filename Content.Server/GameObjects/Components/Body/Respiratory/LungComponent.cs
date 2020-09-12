@@ -85,6 +85,38 @@ namespace Content.Server.GameObjects.Components.Body.Respiratory
             _accumulatedFrameTime = absoluteTime - delay;
         }
 
+        public void Transfer(GasMixture from, GasMixture to, float ratio)
+        {
+            var removed = from.RemoveRatio(ratio);
+            var toOld = to.Gases.ToArray();
+
+            to.Merge(removed);
+
+            for (var gas = 0; gas < Atmospherics.TotalNumberOfGases; gas++)
+            {
+                var newAmount = to.GetMoles(gas);
+                var oldAmount = toOld[gas];
+                var delta = newAmount - oldAmount;
+
+                removed.AdjustMoles(gas, -delta);
+            }
+
+            from.Merge(removed);
+        }
+
+        public void ToBloodstream(GasMixture mixture)
+        {
+            if (!Owner.TryGetComponent(out BloodstreamComponent bloodstream))
+            {
+                return;
+            }
+
+            var to = bloodstream.Air;
+
+            to.Merge(mixture);
+            mixture.Clear();
+        }
+
         public void Inhale(float frameTime)
         {
             if (!Owner.Transform.Coordinates.TryGetTileAir(out var tileAir))
@@ -98,38 +130,9 @@ namespace Content.Server.GameObjects.Components.Body.Respiratory
         public void Inhale(float frameTime, GasMixture from)
         {
             var ratio = Atmospherics.BreathPercentage * frameTime;
-            var removed = from.RemoveRatio(ratio);
-            var airOld = Air.Gases.ToArray();
 
-            Air.Merge(removed);
-
-            for (var gas = 0; gas < Atmospherics.TotalNumberOfGases; gas++)
-            {
-                var newAmount = Air.GetMoles(gas);
-                var oldAmount = airOld[gas];
-                var delta = newAmount - oldAmount;
-
-                removed.AdjustMoles(gas, -delta);
-            }
-
-            from.Merge(removed);
-
-            if (!Owner.TryGetComponent(out BloodstreamComponent bloodstream))
-            {
-                return;
-            }
-
-            airOld = bloodstream.Air.Gases.ToArray();
-            bloodstream.Air.Merge(Air);
-
-            for (var gas = 0; gas < Atmospherics.TotalNumberOfGases; gas++)
-            {
-                var newAmount = bloodstream.Air.GetMoles(gas);
-                var oldAmount = airOld[gas];
-                var delta = newAmount - oldAmount;
-
-                Air.AdjustMoles(gas, -delta);
-            }
+            Transfer(from, Air, ratio);
+            ToBloodstream(Air);
         }
 
         public void Exhale(float frameTime)
