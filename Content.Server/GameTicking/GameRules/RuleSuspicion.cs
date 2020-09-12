@@ -36,10 +36,13 @@ namespace Content.Server.GameTicking.GameRules
 
         public override void Added()
         {
-            _chatManager.DispatchServerAnnouncement("There are traitors on the station! Find them, and kill them!");
+            var announcement = Loc.GetString("There are traitors on the station! Find them, and kill them!");
 
-            EntitySystem.Get<AudioSystem>().PlayGlobal("/Audio/Misc/tatoralert.ogg", AudioParams.Default,
-                (session) => session.ContentData().Mind?.HasRole<SuspicionTraitorRole>() ?? false);
+            _chatManager.DispatchServerAnnouncement(announcement);
+
+            Func<IPlayerSession, bool> predicate = session => session.ContentData()?.Mind?.HasRole<SuspicionTraitorRole>() ?? false;
+
+            EntitySystem.Get<AudioSystem>().PlayGlobal("/Audio/Misc/tatoralert.ogg", AudioParams.Default, predicate);
 
             EntitySystem.Get<DoorSystem>().AccessType = DoorSystem.AccessTypes.AllowAllNoExternal;
 
@@ -67,7 +70,7 @@ namespace Content.Server.GameTicking.GameRules
             {
                 if (playerSession.AttachedEntity == null
                     || !playerSession.AttachedEntity.TryGetComponent(out IDamageableComponent damageable)
-                    || !playerSession.AttachedEntity.TryGetComponent(out SuspicionRoleComponent suspicionRole))
+                    || !playerSession.AttachedEntity.HasComponent<SuspicionRoleComponent>())
                 {
                     continue;
                 }
@@ -77,26 +80,34 @@ namespace Content.Server.GameTicking.GameRules
                     continue;
                 }
 
-                if (playerSession.ContentData().Mind.HasRole<SuspicionTraitorRole>())
+                var mind = playerSession.ContentData()?.Mind;
+
+                if (mind != null && mind.HasRole<SuspicionTraitorRole>())
                     traitorsAlive++;
                 else
                     innocentsAlive++;
             }
 
-            if ((innocentsAlive + traitorsAlive) == 0)
+            if (innocentsAlive + traitorsAlive == 0)
             {
-                _chatManager.DispatchServerAnnouncement("Everybody is dead, it's a stalemate!");
+                var announcement = Loc.GetString("Everybody is dead, it's a stalemate!");
+
+                _chatManager.DispatchServerAnnouncement(announcement);
                 EndRound(Victory.Stalemate);
             }
 
             else if (traitorsAlive == 0)
             {
-                _chatManager.DispatchServerAnnouncement("The traitors are dead! The innocents win.");
+                var announcement = Loc.GetString("The traitors are dead! The innocents win.");
+
+                _chatManager.DispatchServerAnnouncement(announcement);
                 EndRound(Victory.Innocents);
             }
             else if (innocentsAlive == 0)
             {
-                _chatManager.DispatchServerAnnouncement("The innocents are dead! The traitors win.");
+                var announcement = Loc.GetString("The innocents are dead! The traitors win.");
+
+                _chatManager.DispatchServerAnnouncement(announcement);
                 EndRound(Victory.Traitors);
             }
         }
@@ -115,21 +126,24 @@ namespace Content.Server.GameTicking.GameRules
             switch (victory)
             {
                 case Victory.Innocents:
-                    text = "The innocents have won!";
+                    text = Loc.GetString("The innocents have won!");
                     break;
                 case Victory.Traitors:
-                    text = "The traitors have won!";
+                    text = Loc.GetString("The traitors have won!");
                     break;
                 default:
-                    text = "Nobody wins!";
+                    text = Loc.GetString("Nobody wins!");
                     break;
             }
 
-            var restartDelay = 10;
-
             _gameTicker.EndRound(text);
-            _chatManager.DispatchServerAnnouncement(Loc.GetString("Restarting in {0} seconds.", restartDelay));
+
+            var restartDelay = 10;
+            var restartAnnouncement = Loc.GetString("Restarting in {0} seconds.", restartDelay);
+
+            _chatManager.DispatchServerAnnouncement(restartAnnouncement);
             _checkTimerCancel.Cancel();
+
             Timer.Spawn(TimeSpan.FromSeconds(restartDelay), () => _gameTicker.RestartRound());
         }
     }

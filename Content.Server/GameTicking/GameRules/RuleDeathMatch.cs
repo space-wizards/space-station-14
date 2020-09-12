@@ -33,7 +33,8 @@ namespace Content.Server.GameTicking.GameRules
 
         public override void Added()
         {
-            _chatManager.DispatchServerAnnouncement("The game is now a death match. Kill everybody else to win!");
+            var announcement = Loc.GetString("The game is now a death match. Kill everybody else to win!");
+            _chatManager.DispatchServerAnnouncement(announcement);
 
             _entityManager.EventBus.SubscribeEvent<HealthChangedEventArgs>(EventSource.Local, this, OnHealthChanged);
             _playerManager.PlayerStatusChanged += PlayerManagerOnPlayerStatusChanged;
@@ -82,19 +83,14 @@ namespace Content.Server.GameTicking.GameRules
                 winner = playerSession;
             }
 
-            if (winner == null)
-            {
-                _chatManager.DispatchServerAnnouncement("Everybody is dead, it's a stalemate!");
-            }
-            else
-            {
-                // We have a winner!
-                _chatManager.DispatchServerAnnouncement($"{winner} wins the death match!");
-            }
+            _chatManager.DispatchServerAnnouncement(winner == null
+                ? Loc.GetString("Everybody is dead, it's a stalemate!")
+                : Loc.GetString("{0} wins the death match!", winner));
 
             var restartDelay = 10;
+            var restartAnnouncement = Loc.GetString("Restarting in {0} seconds.", restartDelay);
 
-            _chatManager.DispatchServerAnnouncement(Loc.GetString("Restarting in {0} seconds.", restartDelay));
+            _chatManager.DispatchServerAnnouncement(restartAnnouncement);
 
             Timer.Spawn(TimeSpan.FromSeconds(restartDelay), () => _gameTicker.RestartRound());
         }
