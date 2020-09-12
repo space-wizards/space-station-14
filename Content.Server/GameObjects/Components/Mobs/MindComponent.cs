@@ -178,7 +178,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             {
                 var aliveText =
                     $"[color=red]{Loc.GetString("{0:They} {0:are} totally catatonic. The stresses of life in deep-space must have been too much for {0:them}. Any recovery is unlikely.", Owner)}[/color]";
-                var deadText = "[color=purple]" + Loc.GetString("{0:Their} soul has departed.", Owner) + "[/color]";
+                var deadText = $"[color=purple]{Loc.GetString("{0:Their} soul has departed.", Owner)}[/color]";
 
                 message.AddMarkup(dead ? deadText : aliveText);
             }
