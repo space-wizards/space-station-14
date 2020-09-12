@@ -139,7 +139,7 @@ namespace Content.Server.Sandbox
             }
 
             var player = _playerManager.GetSessionByChannel(message.MsgChannel);
-            _shell.ExecuteCommand(player, $"suicide");
+            _shell.ExecuteCommand(player, "suicide");
         }
 
         private void UpdateSandboxStatusForAll()

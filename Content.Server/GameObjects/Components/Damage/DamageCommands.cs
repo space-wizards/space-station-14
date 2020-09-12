@@ -156,6 +156,7 @@ namespace Content.Server.GameObjects.Components.Damage
         public string Command => "godmode";
         public string Description => "Makes your entity or another invulnerable to almost anything. May have irreversible changes.";
         public string Help => $"Usage: {Command} / {Command} <entityUid>";
+
         public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
         {
             IEntity entity;

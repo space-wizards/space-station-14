@@ -213,7 +213,7 @@ namespace Content.Client.Sandbox
 
         private void OnToggleSubfloorButtonClicked(BaseButton.ButtonEventArgs args)
         {
-            ToggleSubfloor();
+            ToggleSubFloor();
         }
 
         private void OnShowMarkersButtonClicked(BaseButton.ButtonEventArgs args)
@@ -278,7 +278,7 @@ namespace Content.Client.Sandbox
             _console.ProcessCommand("togglelight");
         }
 
-        private void ToggleSubfloor()
+        private void ToggleSubFloor()
         {
             _console.ProcessCommand("showsubfloor");
         }

@@ -77,15 +77,15 @@ namespace Content.Client.GameObjects.Components.Kitchen
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-            if (!(state is MicrowaveUpdateUserInterfaceState cstate))
+            if (!(state is MicrowaveUpdateUserInterfaceState cState))
             {
                 return;
             }
-            _menu.ToggleBusyDisableOverlayPanel(cstate.IsMicrowaveBusy);
-            RefreshContentsDisplay(cstate.ReagentQuantities, cstate.ContainedSolids);
-            var currentlySelectedTimeButton = (Button) _menu.CookTimeButtonVbox.GetChild(cstate.ActiveButtonIndex);
+            _menu.ToggleBusyDisableOverlayPanel(cState.IsMicrowaveBusy);
+            RefreshContentsDisplay(cState.ReagentQuantities, cState.ContainedSolids);
+            var currentlySelectedTimeButton = (Button) _menu.CookTimeButtonVbox.GetChild(cState.ActiveButtonIndex);
             currentlySelectedTimeButton.Pressed = true;
-            var label = cstate.ActiveButtonIndex <= 0 ? Loc.GetString("INSTANT") : cstate.CurrentCookTime.ToString();
+            var label = cState.ActiveButtonIndex <= 0 ? Loc.GetString("INSTANT") : cState.CurrentCookTime.ToString();
             _menu._cookTimeInfoLabel.Text = $"{Loc.GetString("COOK TIME")}: {label}";
         }
 

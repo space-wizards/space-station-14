@@ -68,7 +68,7 @@ namespace Content.Server.GameTicking.GamePresets
 
             if (readyPlayers.Count == 0)
             {
-                _chatManager.DispatchServerAnnouncement($"No players readied up! Can't start Suspicion.");
+                _chatManager.DispatchServerAnnouncement("No players readied up! Can't start Suspicion.");
                 return false;
             }
 

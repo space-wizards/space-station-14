@@ -181,11 +181,11 @@ namespace Content.Server.GameObjects.Components.Mobs
             if (!HasMind)
             {
                 message.AddMarkup(!dead
-                    ? $"[color=red]" +
+                    ? "[color=red]" +
                       Loc.GetString(
                           "{0:They} {0:are} totally catatonic. The stresses of life in deep-space must have been too much for {0:them}. Any recovery is unlikely.",
                           Owner) + "[/color]"
-                    : $"[color=purple]" + Loc.GetString("{0:Their} soul has departed.", Owner) + "[/color]");
+                    : "[color=purple]" + Loc.GetString("{0:Their} soul has departed.", Owner) + "[/color]");
             }
             else if (Mind?.Session == null)
             {

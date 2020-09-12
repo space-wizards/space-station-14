@@ -91,7 +91,7 @@ namespace Content.Server.GameTicking.GameRules
                 _chatManager.DispatchServerAnnouncement($"{winner} wins the death match!");
             }
 
-            _chatManager.DispatchServerAnnouncement($"Restarting in 10 seconds.");
+            _chatManager.DispatchServerAnnouncement("Restarting in 10 seconds.");
 
             Timer.Spawn(TimeSpan.FromSeconds(10), () => _gameTicker.RestartRound());
         }

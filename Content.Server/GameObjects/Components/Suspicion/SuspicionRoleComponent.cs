@@ -188,8 +188,8 @@ namespace Content.Server.GameObjects.Components.Suspicion
             }
 
             var tooltip = IsTraitor()
-                ? Loc.GetString($"They were a [color=red]traitor[/color]!")
-                : Loc.GetString($"They were an [color=green]innocent[/color]!");
+                ? Loc.GetString("They were a [color=red]traitor[/color]!")
+                : Loc.GetString("They were an [color=green]innocent[/color]!");
 
             message.AddMarkup(tooltip);
         }

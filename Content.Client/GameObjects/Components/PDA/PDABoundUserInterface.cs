@@ -85,7 +85,7 @@ namespace Content.Client.GameObjects.Components.PDA
             base.UpdateState(state);
             DebugTools.Assert((state is PDAUBoundUserInterfaceState));
 
-            var cstate = (PDAUBoundUserInterfaceState)state;
+            var cState = (PDAUBoundUserInterfaceState)state;
             switch (state)
             {
                 case PDAUpdateState msg:

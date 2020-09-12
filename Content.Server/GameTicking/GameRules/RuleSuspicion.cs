@@ -126,7 +126,7 @@ namespace Content.Server.GameTicking.GameRules
             }
 
             _gameTicker.EndRound(text);
-            _chatManager.DispatchServerAnnouncement($"Restarting in 10 seconds.");
+            _chatManager.DispatchServerAnnouncement("Restarting in 10 seconds.");
             _checkTimerCancel.Cancel();
             Timer.Spawn(TimeSpan.FromSeconds(10), () => _gameTicker.RestartRound());
         }
