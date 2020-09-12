@@ -13,7 +13,8 @@ namespace Content.IntegrationTests.Tests
     {
         public readonly string[] SkippedMaps =
         {
-            "/Maps/Pathfinding/simple.yml"
+            "/Maps/Pathfinding/simple.yml",
+            "/Maps/Test/Breathing/3by3-20oxy-80nit.yml"
         };
 
         [Test]
