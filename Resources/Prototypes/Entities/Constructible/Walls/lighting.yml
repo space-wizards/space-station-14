@@ -11,7 +11,7 @@
     state: on
   - type: Icon
     sprite: Constructible/Lighting/light_tube.rsi
-    state: officon
+    state: onicon
   - type: PointLight
     radius: 8
     energy: 1.2
