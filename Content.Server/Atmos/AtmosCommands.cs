@@ -582,23 +582,34 @@ namespace Content.Server.Atmos
 
             var tiles = 0;
             var moles = 0f;
-            foreach (var tile in atmosphere)
+
+            if (gas == null)
             {
-                if (tile.Air == null || tile.Air.Immutable) continue;
-
-                tiles++;
-                moles += tile.Air.TotalMoles;
-
-                if (gas == null)
+                foreach (var tile in atmosphere)
                 {
-                    tile.Air?.Clear();
+                    if (tile.Air == null || tile.Air.Immutable) continue;
+
+                    tiles++;
+                    moles += tile.Air.TotalMoles;
+
+                    tile.Air.Clear();
+
+                    atmosphere.Invalidate(tile.GridIndices);
                 }
-                else
+            }
+            else
+            {
+                foreach (var tile in atmosphere)
                 {
+                    if (tile.Air == null || tile.Air.Immutable) continue;
+
+                    tiles++;
+                    moles += tile.Air.TotalMoles;
+
                     tile.Air.SetMoles(gas.Value, 0);
-                }
 
-                atmosphere.Invalidate(tile.GridIndices);
+                    atmosphere.Invalidate(tile.GridIndices);
+                }
             }
 
             if (gas == null)
