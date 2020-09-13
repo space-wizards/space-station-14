@@ -22,7 +22,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
     [UsedImplicitly]
     public class StrippableBoundUserInterface : BoundUserInterface
     {
-        public Dictionary<Slots, string> Inventory { get; private set; }
+        public Dictionary<Slots, EntityUid> Inventory { get; private set; }
         public Dictionary<string, string> Hands { get; private set; }
         public Dictionary<EntityUid, string> Handcuffs { get; private set; }
 
@@ -56,7 +56,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             {
                 if (button != null)
                 {
-                    Logger.DebugS(LoggerName, $"The {(slot, button)} button has been created.");
+                    // Logger.DebugS(LoggerName, $"The {(slot, button)} button has been created.");
                     button.OnPressed = (e) => SendMessage(new StrippingInventoryButtonPressed(slot));
                     // UPDATE: Middleclicks only call OnPressed once. Left/Rights do em twice.
                     // manually trying to overstuff a body sometimes causes redbars to popup everytime you move. investicate later.
@@ -81,19 +81,29 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             return;
         }
 
-        public void AddToSlot(Slots slot, IEntity entity)
+        public void AddToSlot(Slots slot, EntityUid uid)
         {
             if (!_stripMenu.Buttons.TryGetValue(slot, out var button))
                 return;
 
+            var entity = IoCManager.Resolve<IEntityManager>().GetEntity(uid);
             _itemSlotManager.SetItemSlot(button, entity);
         }
         //  i need to find where to get the entity to feed into ientity.
         //  end goal function to fill in the inventory sprites.
 
+        public void ClearSlots()
+        {
+            foreach (var (slot, button) in _stripMenu.Buttons)
+            {
+                _itemSlotManager.SetItemSlot(button, null);
+            }
+        }
+
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             Logger.DebugS(LoggerName, $"Update state called.");
+
             // old stuff won't touch.
             base.UpdateState(state);
             if (!(state is StrippingBoundUserInterfaceState stripState)) return;
@@ -103,7 +113,15 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             // old stuff not touching yet.
 
 
+            // preemptive clear all to refill in a second.
+            ClearSlots();
 
+            // PLEASE WORK PLEASE PLEASE PLEASE PLEASE
+            foreach (var (slot, uid) in Inventory)
+            {
+                Logger.DebugS(LoggerName, $"{slot} and {uid}");
+                AddToSlot(slot, uid);
+            }
 
         }
 

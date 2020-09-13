@@ -114,9 +114,9 @@ namespace Content.Server.GameObjects.Components.GUI
             return dictionary;
         }
 
-        private Dictionary<Slots, string> GetInventorySlots()
+        private Dictionary<Slots, EntityUid> GetInventorySlots()
         {
-            var dictionary = new Dictionary<Slots, string>();
+            var dictionary = new Dictionary<Slots, EntityUid>();
 
             // note to future self. prob where i want to change something.
 
@@ -131,7 +131,10 @@ namespace Content.Server.GameObjects.Components.GUI
 
             foreach (var slot in inventory.Slots)
             {
-                dictionary[slot] = inventory.GetSlotItem(slot)?.Owner.Name ?? "None";
+                if (inventory.GetSlotItem(slot) != null)
+                {
+                    dictionary[slot] = inventory.GetSlotItem(slot).Owner.Uid;
+                }
             }
 
             return dictionary;

@@ -64,11 +64,11 @@ namespace Content.Shared.GameObjects.Components.GUI
     [NetSerializable, Serializable]
     public class StrippingBoundUserInterfaceState : BoundUserInterfaceState
     {
-        public Dictionary<Slots, string> Inventory { get; }
+        public Dictionary<Slots, EntityUid> Inventory { get; }
         public Dictionary<string, string> Hands { get; }
         public Dictionary<EntityUid, string> Handcuffs { get; }
 
-        public StrippingBoundUserInterfaceState(Dictionary<Slots, string> inventory, Dictionary<string, string> hands, Dictionary<EntityUid, string> handcuffs)
+        public StrippingBoundUserInterfaceState(Dictionary<Slots, EntityUid> inventory, Dictionary<string, string> hands, Dictionary<EntityUid, string> handcuffs)
         {
             Inventory = inventory;
             Hands = hands;
