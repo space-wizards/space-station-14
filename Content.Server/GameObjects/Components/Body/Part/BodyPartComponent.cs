@@ -1,9 +1,13 @@
 ﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Body;
 using Content.Server.Utility;
 using Content.Shared.Body.Surgery;
+using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Body.Mechanism;
+using Content.Shared.GameObjects.Components.Body.Part;
+using Content.Shared.GameObjects.Components.Body.Surgery;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -13,43 +17,33 @@ using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Body
+namespace Content.Server.GameObjects.Components.Body.Part
 {
-    /// <summary>
-    ///     Component representing a dropped, tangible <see cref="BodyPart"/> entity.
-    /// </summary>
     [RegisterComponent]
-    public class DroppedBodyPartComponent : Component, IAfterInteract, IBodyPartContainer
+    [ComponentReference(typeof(SharedBodyPartComponent))]
+    [ComponentReference(typeof(IBodyPart))]
+    public class BodyPartComponent : SharedBodyPartComponent
     {
         private readonly Dictionary<int, object> _optionsCache = new Dictionary<int, object>();
-        private BodyManagerComponent? _bodyManagerComponentCache;
+
+        private IBody? _owningBodyCache;
+
         private int _idHash;
-        private IEntity? _performerCache;
 
-        public sealed override string Name => "DroppedBodyPart";
+        private IEntity? _surgeonCache;
 
-        [ViewVariables] public BodyPart ContainedBodyPart { get; private set; } = default!;
+        private SurgeryData? _surgeryData;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(GenericSurgeryUiKey.Key);
 
-        void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        public override void ExposeData(ObjectSerializer serializer)
         {
-            if (eventArgs.Target == null)
-            {
-                return;
-            }
+            base.ExposeData(serializer);
 
-            CloseAllSurgeryUIs();
-            _optionsCache.Clear();
-            _performerCache = null;
-            _bodyManagerComponentCache = null;
-
-            if (eventArgs.Target.TryGetComponent(out BodyManagerComponent? bodyManager))
-            {
-                SendBodySlotListToUser(eventArgs, bodyManager);
-            }
+            serializer.DataField(ref _surgeryData, "surgeryData", new BiologicalSurgeryData(this));
         }
 
         public override void Initialize()
@@ -58,47 +52,59 @@ namespace Content.Server.GameObjects.Components.Body
 
             if (UserInterface != null)
             {
-                UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
+                UserInterface.OnReceiveMessage += OnUIMessage;
             }
-        }
 
-        public void TransferBodyPartData(BodyPart data)
-        {
-            ContainedBodyPart = data;
-            Owner.Name = Loc.GetString(ContainedBodyPart.Name);
-
-            if (Owner.TryGetComponent(out SpriteComponent? component))
+            if (Owner.TryGetComponent(out SpriteComponent? sprite))
             {
-                component.LayerSetRSI(0, data.RSIPath);
-                component.LayerSetState(0, data.RSIState);
+                sprite.LayerSetRSI(0, RSIPath);
+                sprite.LayerSetState(0, RSIState);
 
-                if (data.RSIColor.HasValue)
+                if (RSIColor.HasValue)
                 {
-                    component.LayerSetColor(0, data.RSIColor.Value);
+                    sprite.LayerSetColor(0, RSIColor.Value);
                 }
             }
         }
 
-        private void SendBodySlotListToUser(AfterInteractEventArgs eventArgs, BodyManagerComponent bodyManager)
+        public void AfterInteract(AfterInteractEventArgs eventArgs)
+        {
+            if (eventArgs.Target == null)
+            {
+                return;
+            }
+
+            CloseAllSurgeryUIs();
+            _optionsCache.Clear();
+            _surgeonCache = null;
+            _owningBodyCache = null;
+
+            if (eventArgs.Target.TryGetComponent(out BodyComponent? bodyManager))
+            {
+                SendSlots(eventArgs, bodyManager);
+            }
+        }
+
+        private void SendSlots(AfterInteractEventArgs eventArgs, BodyComponent body)
         {
             // Create dictionary to send to client (text to be shown : data sent back if selected)
             var toSend = new Dictionary<string, int>();
 
             // Here we are trying to grab a list of all empty BodySlots adjacent to an existing BodyPart that can be
             // attached to. i.e. an empty left hand slot, connected to an occupied left arm slot would be valid.
-            var unoccupiedSlots = bodyManager.AllSlots.ToList().Except(bodyManager.OccupiedSlots.ToList()).ToList();
+            var unoccupiedSlots = body.AllSlots.ToList().Except(body.OccupiedSlots.ToList()).ToList();
             foreach (var slot in unoccupiedSlots)
             {
-                if (!bodyManager.TryGetSlotType(slot, out var typeResult) ||
-                    typeResult != ContainedBodyPart?.PartType ||
-                    !bodyManager.TryGetPartConnections(slot, out var parts))
+                if (!body.TryGetSlotType(slot, out var typeResult) ||
+                    typeResult != PartType ||
+                    !body.TryGetPartConnections(slot, out var parts))
                 {
                     continue;
                 }
 
                 foreach (var connectedPart in parts)
                 {
-                    if (!connectedPart.CanAttachPart(ContainedBodyPart))
+                    if (!connectedPart.CanAttachPart(this))
                     {
                         continue;
                     }
@@ -111,10 +117,10 @@ namespace Content.Server.GameObjects.Components.Body
             if (_optionsCache.Count > 0)
             {
                 OpenSurgeryUI(eventArgs.User.GetComponent<BasicActorComponent>().playerSession);
-                UpdateSurgeryUIBodyPartSlotRequest(eventArgs.User.GetComponent<BasicActorComponent>().playerSession,
+                BodyPartSlotRequest(eventArgs.User.GetComponent<BasicActorComponent>().playerSession,
                     toSend);
-                _performerCache = eventArgs.User;
-                _bodyManagerComponentCache = bodyManager;
+                _surgeonCache = eventArgs.User;
+                _owningBodyCache = body;
             }
             else // If surgery cannot be performed, show message saying so.
             {
@@ -126,17 +132,17 @@ namespace Content.Server.GameObjects.Components.Body
         /// <summary>
         ///     Called after the client chooses from a list of possible BodyPartSlots to install the limb on.
         /// </summary>
-        private void HandleReceiveBodyPartSlot(int key)
+        private void ReceiveBodyPartSlot(int key)
         {
-            if (_performerCache == null ||
-                !_performerCache.TryGetComponent(out IActorComponent? actor))
+            if (_surgeonCache == null ||
+                !_surgeonCache.TryGetComponent(out IActorComponent? actor))
             {
                 return;
             }
 
             CloseSurgeryUI(actor.playerSession);
 
-            if (_bodyManagerComponentCache == null)
+            if (_owningBodyCache == null)
             {
                 return;
             }
@@ -144,23 +150,18 @@ namespace Content.Server.GameObjects.Components.Body
             // TODO: sanity checks to see whether user is in range, user is still able-bodied, target is still the same, etc etc
             if (!_optionsCache.TryGetValue(key, out var targetObject))
             {
-                _bodyManagerComponentCache.Owner.PopupMessage(_performerCache,
+                _owningBodyCache.Owner.PopupMessage(_surgeonCache,
                     Loc.GetString("You see no useful way to attach {0:theName} anymore.", Owner));
             }
 
             var target = (string) targetObject!;
             string message;
 
-            if (_bodyManagerComponentCache.TryAddPart(target, this))
-            {
-                message = Loc.GetString("You attach {0:theName}.", ContainedBodyPart);
-            }
-            else
-            {
-                message = Loc.GetString("You can't attach it!");
-            }
+            message = _owningBodyCache.TryAddPart(target, this)
+                ? Loc.GetString("You attach {0:theName}.", Owner)
+                : Loc.GetString("You can't attach {0:theName}!", Owner);
 
-            _bodyManagerComponentCache.Owner.PopupMessage(_performerCache, message);
+            _owningBodyCache.Owner.PopupMessage(_surgeonCache, message);
         }
 
         private void OpenSurgeryUI(IPlayerSession session)
@@ -168,7 +169,7 @@ namespace Content.Server.GameObjects.Components.Body
             UserInterface?.Open(session);
         }
 
-        private void UpdateSurgeryUIBodyPartSlotRequest(IPlayerSession session, Dictionary<string, int> options)
+        private void BodyPartSlotRequest(IPlayerSession session, Dictionary<string, int> options)
         {
             UserInterface?.SendMessage(new RequestBodyPartSlotSurgeryUIMessage(options), session);
         }
@@ -183,14 +184,19 @@ namespace Content.Server.GameObjects.Components.Body
             UserInterface?.CloseAll();
         }
 
-        private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)
+        private void OnUIMessage(ServerBoundUserInterfaceMessage message)
         {
             switch (message.Message)
             {
                 case ReceiveBodyPartSlotSurgeryUIMessage msg:
-                    HandleReceiveBodyPartSlot(msg.SelectedOptionId);
+                    ReceiveBodyPartSlot(msg.SelectedOptionId);
                     break;
             }
+        }
+
+        public override bool DestroyMechanism(IMechanism mechanism)
+        {
+            throw new NotImplementedException();
         }
     }
 }

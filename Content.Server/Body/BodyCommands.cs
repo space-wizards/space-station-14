@@ -37,7 +37,7 @@ namespace Content.Server.Body
                 return;
             }
 
-            if (!player.AttachedEntity.TryGetComponent(out BodyManagerComponent? body))
+            if (!player.AttachedEntity.TryGetComponent(out BodyComponent? body))
             {
                 var random = IoCManager.Resolve<IRobustRandom>();
                 var text = $"You have no body{(random.Prob(0.2f) ? " and you must scream." : ".")}";
@@ -77,7 +77,7 @@ namespace Content.Server.Body
                 return;
             }
 
-            if (!player.AttachedEntity.TryGetComponent(out BodyManagerComponent? body))
+            if (!player.AttachedEntity.TryGetComponent(out BodyComponent? body))
             {
                 var random = IoCManager.Resolve<IRobustRandom>();
                 var text = $"You have no body{(random.Prob(0.2f) ? " and you must scream." : ".")}";
@@ -124,7 +124,7 @@ namespace Content.Server.Body
                 return;
             }
 
-            if (!player.AttachedEntity.TryGetComponent(out BodyManagerComponent? body))
+            if (!player.AttachedEntity.TryGetComponent(out BodyComponent? body))
             {
                 var random = IoCManager.Resolve<IRobustRandom>();
                 var text = $"You have no body{(random.Prob(0.2f) ? " and you must scream." : ".")}";
@@ -190,7 +190,7 @@ namespace Content.Server.Body
             var ignoreResistance = false;
             var entityUid = player != null && player.AttachedEntityUid.HasValue ? player.AttachedEntityUid.Value : EntityUid.Invalid;
             if (!int.TryParse(args[1], out var amount) ||
-                args.Length >= 3 && args[2] != "_" && !EntityUid.TryParse(args[2], out entityUid) || 
+                args.Length >= 3 && args[2] != "_" && !EntityUid.TryParse(args[2], out entityUid) ||
                 args.Length >= 4 && !bool.TryParse(args[3], out ignoreResistance))
             {
                 shell.SendText(player, Help);

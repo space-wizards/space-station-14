@@ -16,17 +16,6 @@ namespace Content.Shared.Body.Template
     /// </summary>
     public class BodyTemplate
     {
-        [ViewVariables] public bool Initialized { get; private set; }
-
-        [ViewVariables] public string Name { get; private set; } = "";
-
-        /// <summary>
-        ///     The name of the center BodyPart. For humans, this is set to "torso".
-        ///     Used in many calculations.
-        /// </summary>
-        [ViewVariables]
-        public string CenterSlot { get; set; } = "";
-
         /// <summary>
         ///     Maps all parts on this template to its BodyPartType.
         ///     For instance, "right arm" is mapped to "BodyPartType.arm" on the humanoid
@@ -106,7 +95,6 @@ namespace Content.Shared.Body.Template
             // One of the unit tests considers 0 to be an error, but it will be 0 if
             // the BodyTemplate is empty, so let's shift that up to 1.
             var hash = HashCode.Combine(
-                CenterSlot.GetHashCode(),
                 slotsHash,
                 connectionsHash);
 
@@ -123,7 +111,6 @@ namespace Content.Shared.Body.Template
             DebugTools.Assert(!Initialized, $"{nameof(BodyTemplate)} {Name} has already been initialized!");
 
             Name = prototype.Name;
-            CenterSlot = prototype.CenterSlot;
             Slots = new Dictionary<string, BodyPartType>(prototype.Slots);
             Connections = new Dictionary<string, List<string>>(prototype.Connections);
             Layers = new Dictionary<string, string>(prototype.Layers);

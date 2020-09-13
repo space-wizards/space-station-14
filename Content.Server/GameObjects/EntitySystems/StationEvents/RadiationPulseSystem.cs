@@ -30,7 +30,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
         public override void Initialize()
         {
             base.Initialize();
-            _speciesQuery = new TypeEntityQuery(typeof(ISharedBodyManager));
+            _speciesQuery = new TypeEntityQuery(typeof(IBody));
         }
 
         public override void Update(float frameTime)

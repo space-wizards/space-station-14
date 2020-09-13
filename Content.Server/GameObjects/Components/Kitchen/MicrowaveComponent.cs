@@ -477,7 +477,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
         public SuicideKind Suicide(IEntity victim, IChatManager chat)
         {
             var headCount = 0;
-            if (victim.TryGetComponent<BodyManagerComponent>(out var bodyManagerComponent))
+            if (victim.TryGetComponent<BodyComponent>(out var bodyManagerComponent))
             {
                 var heads = bodyManagerComponent.GetPartsOfType(BodyPartType.Head);
                 foreach (var head in heads)

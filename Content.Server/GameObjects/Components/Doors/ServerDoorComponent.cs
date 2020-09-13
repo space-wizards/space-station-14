@@ -89,7 +89,7 @@ namespace Content.Server.GameObjects.Components.Doors
         private bool _isWeldedShut;
 
         private bool _canWeldShut = true;
-        
+
         [ViewVariables(VVAccess.ReadWrite)]
         private bool _canCrush = true;
 
@@ -135,7 +135,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
             // Disabled because it makes it suck hard to walk through double doors.
 
-            if (entity.HasComponent<ISharedBodyManager>())
+            if (entity.HasComponent<IBody>())
             {
                 if (!entity.TryGetComponent<IMoverComponent>(out var mover)) return;
 

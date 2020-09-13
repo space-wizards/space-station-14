@@ -13,7 +13,7 @@
   compatibility: Biological
   damageContainer: biologicalDamageContainer
   resistances: defaultResistances
-  surgeryDataType: Content.Server.Body.Surgery.BiologicalSurgeryData
+  surgeryData: Content.Server.Body.Surgery.BiologicalSurgeryData
   mechanisms:
   - mechanism.Heart.BasicHuman
   - mechanism.Lungs.BasicHuman
@@ -34,7 +34,7 @@
   compatibility: Biological
   damageContainer: biologicalDamageContainer
   resistances: defaultResistances
-  surgeryDataType: Content.Server.Body.Surgery.BiologicalSurgeryData
+  surgeryData: Content.Server.Body.Surgery.BiologicalSurgeryData
   isVital: true
   mechanisms:
   - mechanism.Brain.BasicHuman
@@ -53,7 +53,7 @@
   compatibility: Biological
   damageContainer: biologicalDamageContainer
   resistances: defaultResistances
-  surgeryDataType: Content.Server.Body.Surgery.BiologicalSurgeryData
+  surgeryData: Content.Server.Body.Surgery.BiologicalSurgeryData
   properties:
   - !type:ExtensionProperty
     active: true
@@ -72,7 +72,7 @@
   compatibility: Biological
   damageContainer: biologicalDamageContainer
   resistances: defaultResistances
-  surgeryDataType: Content.Server.Body.Surgery.BiologicalSurgeryData
+  surgeryData: Content.Server.Body.Surgery.BiologicalSurgeryData
   properties:
   - !type:ExtensionProperty
     active: true
@@ -91,7 +91,7 @@
   compatibility: Biological
   damageContainer: biologicalDamageContainer
   resistances: defaultResistances
-  surgeryDataType: Content.Server.Body.Surgery.BiologicalSurgeryData
+  surgeryData: Content.Server.Body.Surgery.BiologicalSurgeryData
   properties:
   - !type:GraspProperty
     active: true
@@ -109,7 +109,7 @@
   compatibility: Biological
   damageContainer: biologicalDamageContainer
   resistances: defaultResistances
-  surgeryDataType: Content.Server.Body.Surgery.BiologicalSurgeryData
+  surgeryData: Content.Server.Body.Surgery.BiologicalSurgeryData
   properties:
   - !type:GraspProperty
     active: true
@@ -127,7 +127,7 @@
   compatibility: Biological
   damageContainer: biologicalDamageContainer
   resistances: defaultResistances
-  surgeryDataType: Content.Server.Body.Surgery.BiologicalSurgeryData
+  surgeryData: Content.Server.Body.Surgery.BiologicalSurgeryData
   properties:
   - !type:ExtensionProperty
     active: true
@@ -149,7 +149,7 @@
   compatibility: Biological
   damageContainer: biologicalDamageContainer
   resistances: defaultResistances
-  surgeryDataType: Content.Server.Body.Surgery.BiologicalSurgeryData
+  surgeryData: Content.Server.Body.Surgery.BiologicalSurgeryData
   properties:
   - !type:ExtensionProperty
     active: true
@@ -171,7 +171,7 @@
   compatibility: Biological
   damageContainer: biologicalDamageContainer
   resistances: defaultResistances
-  surgeryDataType: Content.Server.Body.Surgery.BiologicalSurgeryData
+  surgeryData: Content.Server.Body.Surgery.BiologicalSurgeryData
   properties:
   - !type:FootProperty
     active: true
@@ -189,7 +189,7 @@
   compatibility: Biological
   damageContainer: biologicalDamageContainer
   resistances: defaultResistances
-  surgeryDataType: Content.Server.Body.Surgery.BiologicalSurgeryData
+  surgeryData: Content.Server.Body.Surgery.BiologicalSurgeryData
   properties:
   - !type:FootProperty
     active: true

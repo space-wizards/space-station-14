@@ -21,7 +21,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Body
 {
-    public partial class BodyManagerComponent
+    public partial class BodyComponent
     {
         private readonly Dictionary<string, IBodyPart> _parts = new Dictionary<string, IBodyPart>();
 
@@ -152,7 +152,7 @@ namespace Content.Server.GameObjects.Components.Body
             IEntity? dropped = null;
             if (drop)
             {
-                part.SpawnDropped(out dropped);
+                part.Drop();
             }
 
             part.Body = null;
@@ -262,7 +262,7 @@ namespace Content.Server.GameObjects.Components.Body
                 }
             }
 
-            part.SpawnDropped(out var dropped);
+            part.Drop();
 
             OnBodyChanged();
             return dropped;
@@ -462,7 +462,7 @@ namespace Content.Server.GameObjects.Components.Body
         /// <summary>
         ///     Returns the combined length of the distance to the nearest <see cref="BodyPart"/> with a
         ///     <see cref="FootProperty"/>. Returns <see cref="float.MinValue"/>
-        ///     if there is no foot found. If you consider a <see cref="BodyManagerComponent"/> a node map, then it will look for
+        ///     if there is no foot found. If you consider a <see cref="BodyComponent"/> a node map, then it will look for
         ///     a foot node from the given node. It can
         ///     only search through BodyParts with <see cref="ExtensionProperty"/>.
         /// </summary>

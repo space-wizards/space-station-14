@@ -3,11 +3,11 @@ using System;
 using System.Collections.Generic;
 using Content.Server.Body;
 using Content.Server.Body.Mechanisms;
-using Content.Server.Body.Surgery;
 using Content.Server.Utility;
 using Content.Shared.Body.Surgery;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Body.Surgery;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -40,7 +40,7 @@ namespace Content.Server.GameObjects.Components.Body
 
         private float _baseOperateTime;
 
-        private BodyManagerComponent? _bodyManagerComponentCache;
+        private BodyComponent? _bodyManagerComponentCache;
 
         private ISurgeon.MechanismRequestCallback? _callbackCache;
 
@@ -72,7 +72,7 @@ namespace Content.Server.GameObjects.Components.Body
             _callbackCache = null;
 
             // Attempt surgery on a BodyManagerComponent by sending a list of operable BodyParts to the client to choose from
-            if (eventArgs.Target.TryGetComponent(out BodyManagerComponent? body))
+            if (eventArgs.Target.TryGetComponent(out BodyComponent? body))
             {
                 // Create dictionary to send to client (text to be shown : data sent back if selected)
                 var toSend = new Dictionary<string, int>();

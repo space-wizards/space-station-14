@@ -249,7 +249,7 @@ namespace Content.Server.GameObjects.Components.Medical
 
         public bool CanDragDropOn(DragDropEventArgs eventArgs)
         {
-            return eventArgs.Dropped.HasComponent<BodyManagerComponent>();
+            return eventArgs.Dropped.HasComponent<BodyComponent>();
         }
 
         public bool DragDropOn(DragDropEventArgs eventArgs)

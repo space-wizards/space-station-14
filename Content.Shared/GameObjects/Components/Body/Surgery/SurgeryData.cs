@@ -1,10 +1,9 @@
 ﻿#nullable enable
-using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Robust.Shared.Interfaces.GameObjects;
 
-namespace Content.Server.Body.Surgery
+namespace Content.Shared.GameObjects.Components.Body.Surgery
 {
     /// <summary>
     ///     This data class represents the state of a <see cref="IBodyPart"/> in regards to everything surgery related -

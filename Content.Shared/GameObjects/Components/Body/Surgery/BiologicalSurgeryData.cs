@@ -1,15 +1,14 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Body.Mechanisms;
-using Content.Server.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Body.Mechanism;
+using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.Interfaces;
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 
-namespace Content.Server.Body.Surgery
+namespace Content.Shared.GameObjects.Components.Body.Surgery
 {
     /// <summary>
     ///     Data class representing the surgery state of a biological entity.
@@ -23,7 +22,7 @@ namespace Content.Server.Body.Surgery
         private bool _skinRetracted;
         private bool _vesselsClamped;
 
-        public BiologicalSurgeryData(ISharedBodyPart parent) : base(parent) { }
+        public BiologicalSurgeryData(IBodyPart parent) : base(parent) { }
 
         protected override SurgeryAction? GetSurgeryStep(SurgeryType toolType)
         {
@@ -123,7 +122,7 @@ namespace Content.Server.Body.Surgery
             return _skinOpened && _vesselsClamped && _skinRetracted;
         }
 
-        public override bool CanAttachBodyPart(ISharedBodyPart part)
+        public override bool CanAttachBodyPart(IBodyPart part)
         {
             return true;
             // TODO: if a bodypart is disconnected, you should have to do some surgery to allow another bodypart to be attached.
@@ -185,7 +184,7 @@ namespace Content.Server.Body.Surgery
             }
         }
 
-        private void LoosenOrganSurgeryCallback(IMechanism target, IBodyPartContainer container, ISurgeon surgeon,
+        private void LoosenOrganSurgeryCallback(IMechanism? target, IBodyPartContainer container, ISurgeon surgeon,
             IEntity performer)
         {
             if (target == null || !Parent.Mechanisms.Contains(target))
@@ -216,7 +215,7 @@ namespace Content.Server.Body.Surgery
             }
         }
 
-        private void RemoveOrganSurgeryCallback(IMechanism target, IBodyPartContainer container, ISurgeon surgeon,
+        private void RemoveOrganSurgeryCallback(IMechanism? target, IBodyPartContainer container, ISurgeon surgeon,
             IEntity performer)
         {
             if (target == null || !Parent.Mechanisms.Contains(target))
@@ -227,19 +226,19 @@ namespace Content.Server.Body.Surgery
             performer.PopupMessage(Loc.GetString("Remove the organ..."));
 
             // TODO do_after: Delay
-            Parent.TryDropMechanism(performer, target, out _);
+            Parent.TryDropMechanism(performer, target);
             _disconnectedOrgans.Remove(target);
         }
 
         private void RemoveBodyPartSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
             // This surgery requires a DroppedBodyPartComponent.
-            if (!(container is BodyManagerComponent))
+            if (!(container is BodyComponent))
             {
                 return;
             }
 
-            var bmTarget = (BodyManagerComponent) container;
+            var bmTarget = (BodyComponent) container;
             performer.PopupMessage(Loc.GetString("Saw off the limb!"));
 
             // TODO do_after: Delay

@@ -171,7 +171,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
                 // only items that can be stored in an inventory, or a mob, can be eaten by a locker
                 if (!entity.HasComponent<StorableComponent>() &&
-                    !entity.HasComponent<BodyManagerComponent>())
+                    !entity.HasComponent<BodyComponent>())
                     continue;
 
                 if (!AddToContents(entity))

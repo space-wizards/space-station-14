@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using Content.Server.Body.Mechanisms;
-using Content.Server.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Body.Mechanism;
+using Content.Shared.GameObjects.Components.Body.Part;
 using Robust.Shared.Interfaces.GameObjects;
 
-namespace Content.Server.Body.Surgery
+namespace Content.Shared.GameObjects.Components.Body.Surgery
 {
     /// <summary>
     ///     Interface representing an entity capable of performing surgery (performing operations on an

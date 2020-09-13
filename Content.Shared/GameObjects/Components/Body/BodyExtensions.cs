@@ -6,7 +6,7 @@ namespace Content.Shared.GameObjects.Components.Body
 {
     public static class BodyExtensions
     {
-        public static ISharedBodyManager? GetBodyShared(this IEntity entity)
+        public static IBody? GetBodyShared(this IEntity entity)
         {
             if (!entity.TryGetComponent(out IHasBody? hasBody))
             {
@@ -16,7 +16,7 @@ namespace Content.Shared.GameObjects.Components.Body
             return hasBody.Body;
         }
 
-        public static bool TryGetBodyShared(this IEntity entity, [NotNullWhen(true)] out ISharedBodyManager? body)
+        public static bool TryGetBodyShared(this IEntity entity, [NotNullWhen(true)] out IBody? body)
         {
             return (body = entity.GetBodyShared()) != null;
         }

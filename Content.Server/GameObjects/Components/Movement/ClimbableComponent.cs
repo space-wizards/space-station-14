@@ -100,7 +100,7 @@ namespace Content.Server.GameObjects.Components.Movement
                 return false;
             }
 
-            var bodyManager = user.GetComponent<BodyManagerComponent>();
+            var bodyManager = user.GetComponent<BodyComponent>();
 
             if (bodyManager.GetPartsOfType(BodyPartType.Leg).Count == 0 ||
                 bodyManager.GetPartsOfType(BodyPartType.Foot).Count == 0)

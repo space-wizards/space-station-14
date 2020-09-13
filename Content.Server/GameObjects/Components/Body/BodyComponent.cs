@@ -1,8 +1,6 @@
 ﻿#nullable enable
 using System;
 using Content.Server.Body;
-using Content.Server.GameObjects.Components.Metabolism;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Observer;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Preset;
@@ -28,10 +26,9 @@ namespace Content.Server.GameObjects.Components.Body
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IDamageableComponent))]
-    [ComponentReference(typeof(ISharedBodyManager))]
+    [ComponentReference(typeof(IBody))]
     [ComponentReference(typeof(IBodyPartManager))]
-    [ComponentReference(typeof(IBodyManager))]
-    public partial class BodyManagerComponent : SharedBodyManagerComponent, IBodyPartContainer, IRelayMoveInput, IBodyManager
+    public partial class BodyComponent : SharedBodyComponent, IBodyPartContainer, IRelayMoveInput
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IReflectionManager _reflectionManager = default!;

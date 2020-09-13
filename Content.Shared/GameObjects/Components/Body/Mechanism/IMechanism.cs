@@ -9,8 +9,6 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
 
         string Id { get; }
 
-        string MechanismName { get; set; }
-
         /// <summary>
         ///     Professional description of the <see cref="IMechanism"/>.
         /// </summary>

@@ -156,7 +156,7 @@ namespace Content.Server.AI.Utility.AiLogic
             if (oldDeadState != _isDead)
             {
                 var entityManager = IoCManager.Resolve<IEntityManager>();
-                
+
                 switch (_isDead)
                 {
                     case true:

@@ -1,15 +1,30 @@
 using System;
+using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Damage;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Body
 {
-    public abstract class SharedBodyManagerComponent : DamageableComponent, ISharedBodyManager
+    public abstract class SharedBodyComponent : DamageableComponent, IBody
     {
         public override string Name => "BodyManager";
 
-        public override uint? NetID => ContentNetIDs.BODY_MANAGER;
+        public override uint? NetID => ContentNetIDs.BODY;
+
+        [ViewVariables]
+        public Dictionary<string, BodyPartType> Slots { get; private set; } = new Dictionary<string, BodyPartType>();
+
+        [ViewVariables]
+        public Dictionary<string, List<string>> Connections { get; private set; } = new Dictionary<string, List<string>>();
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+
+            serializer.DataField(this, b => b.Slots, "slots", new Dictionary<string, BodyPartType>());
+        }
     }
 
     [Serializable, NetSerializable]

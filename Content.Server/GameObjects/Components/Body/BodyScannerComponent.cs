@@ -29,7 +29,7 @@ namespace Content.Server.GameObjects.Components.Body
                 return;
             }
 
-            if (actor.playerSession.AttachedEntity.TryGetComponent(out BodyManagerComponent? attempt))
+            if (actor.playerSession.AttachedEntity.TryGetComponent(out BodyComponent? attempt))
             {
                 var state = InterfaceState(attempt.Template, attempt.Parts);
                 UserInterface?.SetState(state);

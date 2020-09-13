@@ -9,11 +9,15 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
     {
         public override string Name => "Mechanism";
 
-        public string Id { get; } = default!;
+        public string Id { get; } = string.Empty;
 
-        public string RSIPath { get; set; } = default!;
+        public string Description { get; set; } = string.Empty;
 
-        public string RSIState { get; set; } = default!;
+        public string ExamineMessage { get; set; } = string.Empty;
+
+        public string RSIPath { get; set; } = string.Empty;
+
+        public string RSIState { get; set; } = string.Empty;
 
         public int MaxDurability { get; set; }
 
@@ -29,7 +33,7 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
 
         public BodyPartCompatibility Compatibility { get; set; }
 
-        public ISharedBodyManager? Body => Part?.Body;
+        public IBody? Body => Part?.Body;
 
         public IBodyPart? Part { get; set; }
 
@@ -38,6 +42,10 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
             base.ExposeData(serializer);
 
             serializer.DataField(this, m => m.Id, "id", string.Empty);
+
+            serializer.DataField(this, m => m.Description, "description", string.Empty);
+
+            serializer.DataField(this, m => m.ExamineMessage, "examineMessage", string.Empty);
 
             serializer.DataField(this, m => m.RSIPath, "rsiPath", string.Empty);
 

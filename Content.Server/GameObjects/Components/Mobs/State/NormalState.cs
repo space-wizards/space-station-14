@@ -53,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Mobs.State
 
                     break;
                 }
-                case BodyManagerComponent body:
+                case BodyComponent body:
                 {
                     if (body.CriticalThreshold == null)
                     {

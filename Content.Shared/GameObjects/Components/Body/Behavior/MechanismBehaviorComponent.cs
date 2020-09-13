@@ -7,7 +7,7 @@ namespace Content.Shared.GameObjects.Components.Body.Behavior
 {
     public abstract class MechanismBehaviorComponent : Component, IMechanismBehavior
     {
-        public ISharedBodyManager? Body => Part?.Body;
+        public IBody? Body => Part?.Body;
 
         public IBodyPart? Part => Mechanism?.Part;
 
@@ -40,7 +40,7 @@ namespace Content.Shared.GameObjects.Components.Body.Behavior
         ///     <see cref="BodyManagerComponent"/>.
         ///     For instance, cutting off ones head will call this on the brain inside.
         /// </summary>
-        public void RemovedFromBody(ISharedBodyManager old)
+        public void RemovedFromBody(IBody old)
         {
             OnRemovedFromBody(old);
         }
@@ -74,7 +74,7 @@ namespace Content.Shared.GameObjects.Components.Body.Behavior
         ///     <see cref="BodyManagerComponent"/>.
         ///     For instance, cutting off ones head will call this on the brain inside.
         /// </summary>
-        protected virtual void OnRemovedFromBody(ISharedBodyManager old) { }
+        protected virtual void OnRemovedFromBody(IBody old) { }
 
         /// <summary>
         ///     Called when the parent <see cref="Mechanisms.Mechanism"/> is

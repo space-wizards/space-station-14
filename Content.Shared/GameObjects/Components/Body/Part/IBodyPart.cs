@@ -10,18 +10,14 @@ namespace Content.Shared.GameObjects.Components.Body.Part
 {
     public interface IBodyPart : IHasBody
     {
+        new IBody? Body { get; set; }
+
         /// <summary>
         ///     <see cref="BodyPartType"/> that this <see cref="IBodyPart"/> is considered
         ///     to be.
         ///     For example, <see cref="BodyPartType.Arm"/>.
         /// </summary>
         BodyPartType PartType { get; }
-
-        /// <summary>
-        ///     The name of this <see cref="IBodyPart"/>, often displayed to the user.
-        ///     For example, it could be named "advanced robotic arm".
-        /// </summary>
-        public string PartName { get; }
 
         /// <summary>
         ///     Plural version of this <see cref="IBodyPart"/> name.
@@ -79,7 +75,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         /// </summary>
         public bool IsVital { get; }
 
-        bool SpawnDropped([NotNullWhen(true)] out IEntity? dropped);
+        bool Drop();
 
         /// <summary>
         ///     Checks if the given <see cref="SurgeryType"/> can be used on

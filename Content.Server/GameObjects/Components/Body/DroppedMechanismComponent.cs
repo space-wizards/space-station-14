@@ -35,7 +35,7 @@ namespace Content.Server.GameObjects.Components.Body
 
         private readonly Dictionary<int, object> _optionsCache = new Dictionary<int, object>();
 
-        private BodyManagerComponent? _bodyManagerComponentCache;
+        private BodyComponent? _bodyManagerComponentCache;
 
         private int _idHash;
 
@@ -57,7 +57,7 @@ namespace Content.Server.GameObjects.Components.Body
             _performerCache = null;
             _bodyManagerComponentCache = null;
 
-            if (eventArgs.Target.TryGetComponent<BodyManagerComponent>(out var bodyManager))
+            if (eventArgs.Target.TryGetComponent<BodyComponent>(out var bodyManager))
             {
                 SendBodyPartListToUser(eventArgs, bodyManager);
             }
@@ -115,12 +115,12 @@ namespace Content.Server.GameObjects.Components.Body
             }
         }
 
-        private void SendBodyPartListToUser(AfterInteractEventArgs eventArgs, BodyManagerComponent bodyManager)
+        private void SendBodyPartListToUser(AfterInteractEventArgs eventArgs, BodyComponent body)
         {
             // Create dictionary to send to client (text to be shown : data sent back if selected)
             var toSend = new Dictionary<string, int>();
 
-            foreach (var (key, value) in bodyManager.Parts)
+            foreach (var (key, value) in body.Parts)
             {
                 // For each limb in the target, add it to our cache if it is a valid option.
                 if (value.CanInstallMechanism(ContainedMechanism))
@@ -136,7 +136,7 @@ namespace Content.Server.GameObjects.Components.Body
                 UpdateSurgeryUIBodyPartRequest(eventArgs.User.GetComponent<BasicActorComponent>().playerSession,
                     toSend);
                 _performerCache = eventArgs.User;
-                _bodyManagerComponentCache = bodyManager;
+                _bodyManagerComponentCache = body;
             }
             else // If surgery cannot be performed, show message saying so.
             {
