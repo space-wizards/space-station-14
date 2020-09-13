@@ -224,6 +224,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
                 AddButton(Slots.EYES, "glasses", (0, 0));
                 AddButton(Slots.NECK, "neck", (0, sizep));
                 AddButton(Slots.INNERCLOTHING, "uniform", (0, 2 * sizep));
+                AddButton(Slots.POCKET1, "pocket", (0, 3 * sizep));
 
                 // Middle column.
                 AddButton(Slots.HEAD, "head", (sizep, 0));
@@ -234,14 +235,12 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
                 // Right column
                 AddButton(Slots.EARS, "ears", (2 * sizep, 0));
                 AddButton(Slots.IDCARD, "id", (2 * sizep, sizep));
-                AddButton(Slots.EXOSUITSLOT1, "suit_storage", (2 * sizep, 2 * sizep));
-                AddButton(Slots.POCKET1, "pocket", (2 * sizep, 3 * sizep));
+                AddButton(Slots.GLOVES, "gloves", (2 * sizep, 2 * sizep));
+                AddButton(Slots.POCKET2, "pocket", (2 * sizep, 3 * sizep));
 
                 // Far right column.
                 AddButton(Slots.BACKPACK, "back", (3 * sizep, 0));
                 AddButton(Slots.BELT, "belt", (3 * sizep, sizep));
-                AddButton(Slots.GLOVES, "gloves", (3 * sizep, 2 * sizep));
-                AddButton(Slots.POCKET2, "pocket", (3 * sizep, 3 * sizep));
             }
         }
     }
