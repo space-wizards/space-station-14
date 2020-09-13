@@ -53,6 +53,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         [ViewVariables]
         public IReadOnlyCollection<IEntity>? StoredEntities => _storage?.ContainedEntities;
 
+        [ViewVariables(VVAccess.ReadWrite)]
         public bool OccludesLight
         {
             get => _occludesLight;

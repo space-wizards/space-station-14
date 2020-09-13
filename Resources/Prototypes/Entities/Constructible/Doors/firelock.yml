@@ -1,0 +1,108 @@
+﻿- type: entity
+  id: Firelock
+  name: firelock
+  description: Apply crowbar.
+  components:
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Sprite
+      netsync: false
+      drawdepth: Mobs # They're on the same layer as mobs, perspective.
+      sprite: Constructible/Structures/Doors/firelock.rsi
+      layers:
+        - state: closed
+          map: ["enum.DoorVisualLayers.Base"]
+        - state: closed_unlit
+          shader: unshaded
+          map: ["enum.DoorVisualLayers.BaseUnlit"]
+        - state: welded
+          map: ["enum.DoorVisualLayers.BaseWelded"]
+        - state: bolted
+          shader: unshaded
+          map: ["enum.DoorVisualLayers.BaseBolted"]
+        - state: panel_open
+          map: ["enum.WiresVisualLayers.MaintenancePanel"]
+    - type: Icon
+      sprite: Constructible/Structures/Doors/firelock.rsi
+      state: closed
+    - type: Collidable
+      shapes:
+        - !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,0.49" # don't want this colliding with walls or they won't close
+          mask:
+            - MobImpassable
+          layer:
+            - Opaque
+            - Impassable
+            - MobImpassable
+            - VaultImpassable
+            - SmallImpassable
+    - type: Firelock
+    - type: Appearance
+      visuals:
+        - type: AirlockVisualizer
+          open_sound: /Audio/Machines/airlock_open.ogg
+          close_sound: /Audio/Machines/airlock_close.ogg
+          deny_sound: /Audio/Machines/airlock_deny.ogg
+          animation_time: 0.6
+        - type: WiresVisualizer
+    - type: Wires
+      BoardName: "Firelock Control"
+      LayoutId: Firelock
+    - type: UserInterface
+      interfaces:
+        - key: enum.WiresUiKey.Key
+          type: WiresBoundUserInterface
+    - type: Airtight
+      fixVacuum: true
+    - type: Occluder
+    - type: SnapGrid
+      offset: Center
+  placement:
+    mode: SnapgridCenter
+
+- type: entity
+  id: FirelockGlass
+  parent: Firelock
+  name: glass firelock
+  components:
+    - type: Firelock
+      occludes: false
+    - type: Occluder
+      enabled: false
+    - type: Sprite
+      sprite: Constructible/Structures/Doors/firelock_glass.rsi
+    - type: Icon
+      sprite: Constructible/Structures/Doors/firelock_glass.rsi
+
+- type: entity
+  id: FirelockEdge
+  parent: Firelock
+  name: firelock
+  prefix: south
+  components:
+    - type: Firelock
+      occludes: false
+      canCrush: false
+    - type: Occluder
+      enabled: false
+    - type: Sprite
+      sprite: Constructible/Structures/Doors/edge_door_hazard.rsi
+    - type: Icon
+      sprite: Constructible/Structures/Doors/edge_door_hazard.rsi
+    - type: Airtight
+      fixVacuum: true
+      airBlockedDirection:
+        - South
+    - type: Collidable
+      shapes:
+        - !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,-0.2,0.49" # don't want this colliding with walls or they won't close
+          mask:
+            - MobImpassable
+          layer:
+            - Opaque
+            - Impassable
+            - MobImpassable
+            - VaultImpassable
+            - SmallImpassable

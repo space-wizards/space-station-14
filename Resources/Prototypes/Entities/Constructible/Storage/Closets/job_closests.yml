@@ -10,7 +10,7 @@
       state: generic
       state_closed: red_door
   - type: Icon
-    state: red_door
+    state: red_icon
 
 # Atmospherics wardrobe
 - type: entity
@@ -24,5 +24,4 @@
       state: generic
       state_closed: atmos_wardrobe_door
   - type: Icon
-    state: atmos_door
-
+    state: atmos_icon

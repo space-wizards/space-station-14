@@ -53,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Paper
 
             _mode = PaperAction.Read;
             UpdateUserInterface();
-            UserInterface?.Open(actor.playerSession);
+            UserInterface?.Toggle(actor.playerSession);
             return true;
         }
 

@@ -25,6 +25,15 @@
             ]
         },
         {
+            "name": "emergency_light_icon",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
             "name": "emergency_light_on",
             "directions": 4,
             "delays": [
