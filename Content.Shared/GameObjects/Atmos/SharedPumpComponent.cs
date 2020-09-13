@@ -1,6 +1,6 @@
-﻿using Content.Shared.GameObjects.Components.Atmos;
+﻿using System;
+using Content.Shared.GameObjects.Components.Atmos;
 using Robust.Shared.Serialization;
-using System;
 
 namespace Content.Shared.GameObjects.Atmos
 {

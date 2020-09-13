@@ -1,11 +1,4 @@
-﻿using Microsoft.CodeAnalysis.Operations;
-using Microsoft.EntityFrameworkCore.Internal;
-using Robust.Shared.GameObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
+﻿using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Mobs.Speech
 {

@@ -1,6 +1,5 @@
 ﻿#nullable enable
 using System;
-using Content.Shared.GameObjects.Components.Research;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;

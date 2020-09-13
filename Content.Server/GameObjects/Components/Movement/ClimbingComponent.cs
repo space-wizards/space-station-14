@@ -1,8 +1,8 @@
-﻿using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
-using Content.Shared.Physics;
-using Content.Shared.GameObjects.Components.Movement;
+﻿using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Physics;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Maths;
 
 namespace Content.Server.GameObjects.Components.Movement
 {

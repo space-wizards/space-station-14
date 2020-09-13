@@ -13,7 +13,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
-using Color = Robust.Shared.Maths.Color;
+using Robust.Shared.Maths;
 
 namespace Content.Client.StationEvents
 {

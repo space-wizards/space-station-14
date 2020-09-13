@@ -1,17 +1,17 @@
-﻿using Content.Server.Atmos;
+﻿using System.Linq;
+using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Atmos;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Log;
-using Robust.Shared.ViewVariables;
-using System.Linq;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
+using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Atmos.Piping
+namespace Content.Server.GameObjects.Components.Atmos.Piping.Scrubbers
 {
     /// <summary>
     ///     Transfers gas from the tile it is on to a <see cref="PipeNode"/>.

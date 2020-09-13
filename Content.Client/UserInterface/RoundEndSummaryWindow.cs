@@ -53,9 +53,9 @@ namespace Content.Client.UserInterface
             //Round end text
             if (!string.IsNullOrEmpty(roundEnd))
             {
-                var roundendLabel = new RichTextLabel();
-                roundendLabel.SetMarkup(Loc.GetString(roundEnd));
-                RoundEndSummaryTab.AddChild(roundendLabel);
+                var roundEndLabel = new RichTextLabel();
+                roundEndLabel.SetMarkup(Loc.GetString(roundEnd));
+                RoundEndSummaryTab.AddChild(roundEndLabel);
             }
 
             //Duration
@@ -72,27 +72,27 @@ namespace Content.Client.UserInterface
             //Put observers at the bottom of the list. Put antags on top.
             var manifestSortedList = info.OrderBy(p => p.Observer).ThenBy(p => !p.Antag);
             //Create labels for each player info.
-            foreach (var plyinfo in manifestSortedList)
+            foreach (var playerInfo in manifestSortedList)
             {
                 var playerInfoText = new RichTextLabel()
                 {
                     SizeFlagsVertical = SizeFlags.Fill,
                 };
 
-                if (plyinfo.Observer)
+                if (playerInfo.Observer)
                 {
                     playerInfoText.SetMarkup(
                         Loc.GetString("[color=gray]{0}[/color] was [color=lightblue]{1}[/color], an observer.",
-                                        plyinfo.PlayerOOCName, plyinfo.PlayerICName));
+                                        playerInfo.PlayerOOCName, playerInfo.PlayerICName));
                 }
                 else
                 {
                     //TODO: On Hover display a popup detailing more play info.
                     //For example: their antag goals and if they completed them sucessfully.
-                    var icNameColor = plyinfo.Antag ? "red" : "white";
+                    var icNameColor = playerInfo.Antag ? "red" : "white";
                     playerInfoText.SetMarkup(
                         Loc.GetString("[color=gray]{0}[/color] was [color={1}]{2}[/color] playing role of [color=orange]{3}[/color].",
-                                        plyinfo.PlayerOOCName, icNameColor, plyinfo.PlayerICName, Loc.GetString(plyinfo.Role)));
+                                        playerInfo.PlayerOOCName, icNameColor, playerInfo.PlayerICName, Loc.GetString(playerInfo.Role)));
                 }
                 innerScrollContainer.AddChild(playerInfoText);
             }

@@ -117,7 +117,7 @@ namespace Content.Server.GameObjects.Components.Access
 
             if (!newAccessList.TrueForAll(x => _prototypeManager.HasIndex<AccessLevelPrototype>(x)))
             {
-                Logger.Warning($"Tried to write unknown access tag.");
+                Logger.Warning("Tried to write unknown access tag.");
                 return;
             }
             var targetIdAccess = targetIdEntity.GetComponent<AccessComponent>();

@@ -1,5 +1,4 @@
 ﻿using Content.Server.GameObjects.Components.Stack;
-using Content.Server.Utility;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using Robust.Server.Interfaces.GameObjects;

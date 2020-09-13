@@ -1,10 +1,14 @@
-﻿using Content.Server.GameObjects.Components.Body;
+﻿using System;
+using Content.Server.GameObjects.Components.Body;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
+using Content.Server.Utility;
+using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
@@ -16,9 +20,6 @@ using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using System;
-using Content.Server.Utility;
-using Content.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Movement
 {
@@ -101,8 +102,8 @@ namespace Content.Server.GameObjects.Components.Movement
 
             var bodyManager = user.GetComponent<BodyManagerComponent>();
 
-            if (bodyManager.GetPartsOfType(Shared.GameObjects.Components.Body.BodyPartType.Leg).Count == 0 ||
-                bodyManager.GetPartsOfType(Shared.GameObjects.Components.Body.BodyPartType.Foot).Count == 0)
+            if (bodyManager.GetPartsOfType(BodyPartType.Leg).Count == 0 ||
+                bodyManager.GetPartsOfType(BodyPartType.Foot).Count == 0)
             {
                 reason = Loc.GetString("You are unable to climb!");
                 return false;

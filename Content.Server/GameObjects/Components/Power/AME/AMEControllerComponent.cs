@@ -1,4 +1,6 @@
 ﻿#nullable enable
+using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.NodeContainer;
@@ -9,6 +11,7 @@ using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Power.AME;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -21,9 +24,6 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
-using System.Linq;
-using System.Threading.Tasks;
-using Content.Shared.Interfaces;
 
 namespace Content.Server.GameObjects.Components.Power.AME
 {
