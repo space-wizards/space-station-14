@@ -140,7 +140,6 @@
     deadThreshold: 200
     baseTemplate: bodyTemplate.Humanoid
     basePreset: bodyPreset.BasicHuman
-    damageSound: /Audio/Effects/hit_kick.ogg
   - type: Metabolism
     metabolismHeat: 5000
     radiatedHeat: 400
