@@ -8,6 +8,6 @@ namespace Content.Shared.GameObjects.Components.Body
         /// <summary>
         ///     The body that this component is currently a part of, if any.
         /// </summary>
-        ISharedBodyManager? Body { get; set; }
+        ISharedBodyManager? Body { get; }
     }
 }

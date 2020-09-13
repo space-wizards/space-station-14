@@ -13,8 +13,8 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Body.Behavior
 {
     [RegisterComponent]
-    [ComponentReference(typeof(SharedLungComponent))]
-    public class LungComponent : SharedLungComponent
+    [ComponentReference(typeof(SharedLungBehaviorComponent))]
+    public class LungBehaviorComponent : SharedLungBehaviorComponent
     {
         private float _accumulatedFrameTime;
 

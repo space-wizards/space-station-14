@@ -5,14 +5,14 @@ using Robust.Shared.GameObjects;
 namespace Content.Shared.GameObjects.Components.Body.Behavior
 {
     [RegisterComponent]
-    [ComponentReference(typeof(ISharedMechanismBehavior))]
-    public class HeartComponent : MechanismComponent
+    [ComponentReference(typeof(IMechanismBehavior))]
+    public class HeartBehaviorComponent : MechanismBehaviorComponent
     {
         public override string Name => "Heart";
 
         private float _accumulatedFrameTime;
 
-        public void Update(float frameTime)
+        public override void Update(float frameTime)
         {
             // TODO do between pre and metabolism
             if (Mechanism?.Body == null ||

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Body;
+using Content.Shared.Body.Template;
 using Content.Shared.GameObjects.Components.Body;
 using Robust.Shared.Interfaces.GameObjects;
 
@@ -76,7 +77,7 @@ namespace Content.Server.GameObjects.Components.Body
         ///     Finds the central <see cref="ISharedBodyPart"/>, if any, of this body based on
         ///     the <see cref="BodyTemplate"/>. For humans, this is the torso.
         /// </summary>
-        /// <returns>The <see cref="SharedBodyPart"/> if one exists, null otherwise.</returns>
+        /// <returns>The <see cref="BodyPart"/> if one exists, null otherwise.</returns>
         ISharedBodyPart? CenterPart();
 
         /// <summary>

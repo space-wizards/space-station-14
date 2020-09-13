@@ -19,12 +19,11 @@ using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using SharedBodyPart = Content.Server.Body.SharedBodyPart;
 
 namespace Content.Server.GameObjects.Components.Body
 {
     /// <summary>
-    ///     Component representing a collection of <see cref="ISharedBodyPart"></see>
+    ///     Component representing a collection of <see cref="IBodyPart"></see>
     ///     attached to each other.
     /// </summary>
     [RegisterComponent]
@@ -120,7 +119,7 @@ namespace Content.Server.GameObjects.Components.Body
 
                 // Add a new BodyPart with the BodyPartPrototype as a baseline to our
                 // BodyComponent.
-                var addedPart = new SharedBodyPart(newPartData);
+                var addedPart = new BodyPart(newPartData);
                 TryAddPart(slotName, addedPart);
             }
 
@@ -142,40 +141,6 @@ namespace Content.Server.GameObjects.Components.Body
         //
         //     OnBodyChanged();
         // }
-
-        /// <summary>
-        ///     This method is called by <see cref="BodySystem.Update"/> before
-        ///     <see cref="MetabolismComponent.Update"/> is called.
-        /// </summary>
-        public void PreMetabolism(float frameTime)
-        {
-            if (CurrentDamageState == DamageState.Dead)
-            {
-                return;
-            }
-
-            foreach (var part in Parts.Values)
-            {
-                part.PreMetabolism(frameTime);
-            }
-        }
-
-        /// <summary>
-        ///     This method is called by <see cref="BodySystem.Update"/> after
-        ///     <see cref="MetabolismComponent.Update"/> is called.
-        /// </summary>
-        public void PostMetabolism(float frameTime)
-        {
-            if (CurrentDamageState == DamageState.Dead)
-            {
-                return;
-            }
-
-            foreach (var part in Parts.Values)
-            {
-                part.PostMetabolism(frameTime);
-            }
-        }
 
         void IRelayMoveInput.MoveInputPressed(ICommonSession session)
         {

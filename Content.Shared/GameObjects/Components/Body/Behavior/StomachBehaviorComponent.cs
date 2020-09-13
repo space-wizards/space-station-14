@@ -5,18 +5,16 @@ using JetBrains.Annotations;
 namespace Content.Shared.GameObjects.Components.Body.Behavior
 {
     [UsedImplicitly]
-    public class StomachComponent : MechanismComponent
+    public class StomachBehaviorComponent : MechanismBehaviorComponent
     {
+        public override string Name => "Stomach";
+
         private float _accumulatedFrameTime;
 
-        protected override Type? Network => typeof(DigestiveNetwork);
-
-        public override void PreMetabolism(float frameTime)
+        public override void Update(float frameTime)
         {
-            base.PreMetabolism(frameTime);
-
-            if (Mechanism.Body == null ||
-                !Mechanism.Body.Owner.TryGetComponent(out StomachComponent? stomach))
+            if (Mechanism?.Body == null ||
+                !Mechanism.Body.Owner.TryGetComponent(out StomachBehaviorComponent? stomach))
             {
                 return;
             }

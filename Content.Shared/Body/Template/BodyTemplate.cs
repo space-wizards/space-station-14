@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components.Body;
-using Content.Shared.Body.Template;
 using Content.Shared.GameObjects.Components.Body;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Body
+namespace Content.Shared.Body.Template
 {
     /// <summary>
     ///     This class is a data capsule representing the standard format of a

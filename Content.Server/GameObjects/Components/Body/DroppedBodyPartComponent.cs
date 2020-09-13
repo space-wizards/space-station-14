@@ -18,7 +18,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Body
 {
     /// <summary>
-    ///     Component representing a dropped, tangible <see cref="SharedBodyPart"/> entity.
+    ///     Component representing a dropped, tangible <see cref="BodyPart"/> entity.
     /// </summary>
     [RegisterComponent]
     public class DroppedBodyPartComponent : Component, IAfterInteract, IBodyPartContainer
@@ -30,7 +30,7 @@ namespace Content.Server.GameObjects.Components.Body
 
         public sealed override string Name => "DroppedBodyPart";
 
-        [ViewVariables] public SharedBodyPart ContainedSharedBodyPart { get; private set; } = default!;
+        [ViewVariables] public BodyPart ContainedBodyPart { get; private set; } = default!;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(GenericSurgeryUiKey.Key);
 
@@ -62,10 +62,10 @@ namespace Content.Server.GameObjects.Components.Body
             }
         }
 
-        public void TransferBodyPartData(SharedBodyPart data)
+        public void TransferBodyPartData(BodyPart data)
         {
-            ContainedSharedBodyPart = data;
-            Owner.Name = Loc.GetString(ContainedSharedBodyPart.Name);
+            ContainedBodyPart = data;
+            Owner.Name = Loc.GetString(ContainedBodyPart.Name);
 
             if (Owner.TryGetComponent(out SpriteComponent? component))
             {
@@ -90,7 +90,7 @@ namespace Content.Server.GameObjects.Components.Body
             foreach (var slot in unoccupiedSlots)
             {
                 if (!bodyManager.TryGetSlotType(slot, out var typeResult) ||
-                    typeResult != ContainedSharedBodyPart?.PartType ||
+                    typeResult != ContainedBodyPart?.PartType ||
                     !bodyManager.TryGetPartConnections(slot, out var parts))
                 {
                     continue;
@@ -98,7 +98,7 @@ namespace Content.Server.GameObjects.Components.Body
 
                 foreach (var connectedPart in parts)
                 {
-                    if (!connectedPart.CanAttachPart(ContainedSharedBodyPart))
+                    if (!connectedPart.CanAttachPart(ContainedBodyPart))
                     {
                         continue;
                     }
@@ -153,7 +153,7 @@ namespace Content.Server.GameObjects.Components.Body
 
             if (_bodyManagerComponentCache.TryAddPart(target, this))
             {
-                message = Loc.GetString("You attach {0:theName}.", ContainedSharedBodyPart);
+                message = Loc.GetString("You attach {0:theName}.", ContainedBodyPart);
             }
             else
             {

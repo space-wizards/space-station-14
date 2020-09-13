@@ -4,15 +4,15 @@ using Content.Shared.GameObjects.Components.Body.Part;
 
 namespace Content.Shared.GameObjects.Components.Body.Behavior
 {
-    public interface ISharedMechanismBehavior : IHasBody
+    public interface IMechanismBehavior : IHasBody
     {
-        ISharedBodyPart? Part { get; }
+        IBodyPart? Part { get; }
 
         /// <summary>
-        ///     Upward reference to the parent <see cref="ISharedMechanism"/> that this
+        ///     Upward reference to the parent <see cref="IMechanism"/> that this
         ///     behavior is attached to.
         /// </summary>
-        ISharedMechanism? Mechanism { get; }
+        IMechanism? Mechanism { get; }
 
         void Update(float frameTime);
     }

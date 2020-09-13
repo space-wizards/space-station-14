@@ -3,14 +3,16 @@ using Content.Shared.GameObjects.Components.Body.Part;
 
 namespace Content.Shared.GameObjects.Components.Body.Mechanism
 {
-    public interface ISharedMechanism : IHasBody
+    public interface IMechanism : IHasBody
     {
+        IBodyPart? Part { get; set; }
+
         string Id { get; }
 
         string MechanismName { get; set; }
 
         /// <summary>
-        ///     Professional description of the <see cref="ISharedMechanism"/>.
+        ///     Professional description of the <see cref="IMechanism"/>.
         /// </summary>
         string Description { get; set; }
 
@@ -22,52 +24,46 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
 
         // TODO: Make RSI properties sane
         /// <summary>
-        ///     Path to the RSI that represents this <see cref="ISharedMechanism"/>.
+        ///     Path to the RSI that represents this <see cref="IMechanism"/>.
         /// </summary>
         string RSIPath { get; set; }
 
         /// <summary>
-        ///     RSI state that represents this <see cref="ISharedMechanism"/>.
+        ///     RSI state that represents this <see cref="IMechanism"/>.
         /// </summary>
         string RSIState { get; set; }
 
         /// <summary>
-        ///     Max HP of this <see cref="ISharedMechanism"/>.
+        ///     Max HP of this <see cref="IMechanism"/>.
         /// </summary>
         int MaxDurability { get; set; }
 
         /// <summary>
-        ///     Current HP of this <see cref="ISharedMechanism"/>.
+        ///     Current HP of this <see cref="IMechanism"/>.
         /// </summary>
         int CurrentDurability { get; set; }
 
         /// <summary>
-        ///     At what HP this <see cref="ISharedMechanism"/> is completely destroyed.
+        ///     At what HP this <see cref="IMechanism"/> is completely destroyed.
         /// </summary>
         int DestroyThreshold { get; set; }
 
         /// <summary>
-        ///     Armor of this <see cref="ISharedMechanism"/> against attacks.
+        ///     Armor of this <see cref="IMechanism"/> against attacks.
         /// </summary>
         int Resistance { get; set; }
 
         /// <summary>
         ///     Determines a handful of things - mostly whether this
-        ///     <see cref="ISharedMechanism"/> can fit into a <see cref="ISharedBodyPart"/>.
+        ///     <see cref="IMechanism"/> can fit into a <see cref="IBodyPart"/>.
         /// </summary>
         // TODO: OnSizeChanged
         int Size { get; set; }
 
         /// <summary>
-        ///     What kind of <see cref="ISharedBodyPart"/> this
-        ///     <see cref="ISharedMechanism"/> can be easily installed into.
+        ///     What kind of <see cref="IBodyPart"/> this
+        ///     <see cref="IMechanism"/> can be easily installed into.
         /// </summary>
         BodyPartCompatibility Compatibility { get; set; }
-
-        ISharedBodyPart? Part { get; set; }
-
-        void EnsureInitialize();
-
-        void InstalledIntoBody();
     }
 }

@@ -18,7 +18,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         {
             base.Update(frameTime);
 
-            foreach (var lung in ComponentManager.EntityQuery<SharedLungComponent>())
+            foreach (var lung in ComponentManager.EntityQuery<SharedLungBehaviorComponent>())
             {
                 lung.Update(frameTime);
             }

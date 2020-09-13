@@ -4,7 +4,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Body.Behavior
 {
-    public abstract class SharedLungComponent : MechanismComponent
+    public abstract class SharedLungBehaviorComponent : MechanismBehaviorComponent
     {
         public override string Name => "Lung";
 

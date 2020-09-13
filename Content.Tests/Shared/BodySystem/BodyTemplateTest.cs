@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Content.Server.Body;
+using Content.Shared.Body.Template;
 using Content.Shared.GameObjects.Components.Body;
 using NUnit.Framework;
 using Robust.UnitTesting;

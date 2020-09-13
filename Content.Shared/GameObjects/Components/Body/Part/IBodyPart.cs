@@ -8,58 +8,58 @@ using Robust.Shared.Maths;
 
 namespace Content.Shared.GameObjects.Components.Body.Part
 {
-    public interface ISharedBodyPart : IHasBody
+    public interface IBodyPart : IHasBody
     {
         /// <summary>
-        ///     <see cref="BodyPartType"/> that this <see cref="ISharedBodyPart"/> is considered
+        ///     <see cref="BodyPartType"/> that this <see cref="IBodyPart"/> is considered
         ///     to be.
         ///     For example, <see cref="BodyPartType.Arm"/>.
         /// </summary>
         BodyPartType PartType { get; }
 
         /// <summary>
-        ///     The name of this <see cref="ISharedBodyPart"/>, often displayed to the user.
+        ///     The name of this <see cref="IBodyPart"/>, often displayed to the user.
         ///     For example, it could be named "advanced robotic arm".
         /// </summary>
         public string PartName { get; }
 
         /// <summary>
-        ///     Plural version of this <see cref="ISharedBodyPart"/> name.
+        ///     Plural version of this <see cref="IBodyPart"/> name.
         /// </summary>
         public string Plural { get; }
 
         /// <summary>
         ///     Determines many things: how many mechanisms can be fit inside this
-        ///     <see cref="ISharedBodyPart"/>, whether a body can fit through tiny crevices,
+        ///     <see cref="IBodyPart"/>, whether a body can fit through tiny crevices,
         ///     etc.
         /// </summary>
         int Size { get; }
 
         /// <summary>
-        ///     Max HP of this <see cref="ISharedBodyPart"/>.
+        ///     Max HP of this <see cref="IBodyPart"/>.
         /// </summary>
         int MaxDurability { get; }
 
         /// <summary>
-        ///     Current HP of this <see cref="ISharedBodyPart"/> based on sum of all damage types.
+        ///     Current HP of this <see cref="IBodyPart"/> based on sum of all damage types.
         /// </summary>
         int CurrentDurability { get; }
 
         /// <summary>
-        ///     Collection of all <see cref="ISharedMechanism"/>s currently inside this
-        ///     <see cref="ISharedBodyPart"/>.
+        ///     Collection of all <see cref="IMechanism"/>s currently inside this
+        ///     <see cref="IBodyPart"/>.
         ///     To add and remove from this list see <see cref="AddMechanism"/> and
         ///     <see cref="RemoveMechanism"/>
         /// </summary>
-        IReadOnlyCollection<ISharedMechanism> Mechanisms { get; }
+        IReadOnlyCollection<IMechanism> Mechanisms { get; }
 
         /// <summary>
-        ///     Path to the RSI that represents this <see cref="ISharedBodyPart"/>.
+        ///     Path to the RSI that represents this <see cref="IBodyPart"/>.
         /// </summary>
         public string RSIPath { get; }
 
         /// <summary>
-        ///     RSI state that represents this <see cref="ISharedBodyPart"/>.
+        ///     RSI state that represents this <see cref="IBodyPart"/>.
         /// </summary>
         public string RSIState { get; }
 
@@ -83,41 +83,41 @@ namespace Content.Shared.GameObjects.Components.Body.Part
 
         /// <summary>
         ///     Checks if the given <see cref="SurgeryType"/> can be used on
-        ///     the current state of this <see cref="ISharedBodyPart"/>.
+        ///     the current state of this <see cref="IBodyPart"/>.
         /// </summary>
         /// <returns>True if it can be used, false otherwise.</returns>
         bool SurgeryCheck(SurgeryType surgery);
 
         /// <summary>
-        ///     Checks if another <see cref="ISharedBodyPart"/> can be connected to this one.
+        ///     Checks if another <see cref="IBodyPart"/> can be connected to this one.
         /// </summary>
         /// <param name="part">The part to connect.</param>
         /// <returns>True if it can be connected, false otherwise.</returns>
-        bool CanAttachPart(ISharedBodyPart part);
+        bool CanAttachPart(IBodyPart part);
 
         /// <summary>
         ///     Checks if a <see cref="IMechanism"/> can be installed on this
-        ///     <see cref="ISharedBodyPart"/>.
+        ///     <see cref="IBodyPart"/>.
         /// </summary>
         /// <returns>True if it can be installed, false otherwise.</returns>
-        bool CanInstallMechanism(ISharedMechanism mechanism);
+        bool CanInstallMechanism(IMechanism mechanism);
 
         /// <summary>
-        ///     Tries to remove the given <see cref="ISharedMechanism"/> from
-        ///     this <see cref="ISharedBodyPart"/>.
+        ///     Tries to remove the given <see cref="IMechanism"/> from
+        ///     this <see cref="IBodyPart"/>.
         /// </summary>
         /// <returns>
         ///     True if the mechanism was dropped, false otherwise.
         /// </returns>
-        bool TryDropMechanism(IEntity dropLocation, ISharedMechanism mechanismTarget);
+        bool TryDropMechanism(IEntity dropLocation, IMechanism mechanismTarget);
 
         /// <summary>
-        ///     Tries to destroy the given <see cref="ISharedMechanism"/> from
-        ///     this <see cref="ISharedBodyPart"/>.
+        ///     Tries to destroy the given <see cref="IMechanism"/> from
+        ///     this <see cref="IBodyPart"/>.
         /// </summary>
         /// <returns>
         ///     True if the mechanism was destroyed, false otherwise.
         /// </returns>
-        bool DestroyMechanism(ISharedMechanism mechanism);
+        bool DestroyMechanism(IMechanism mechanism);
     }
 }

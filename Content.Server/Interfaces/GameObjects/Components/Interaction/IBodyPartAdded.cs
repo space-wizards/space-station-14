@@ -15,13 +15,13 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 
     public class BodyPartAddedEventArgs : EventArgs
     {
-        public BodyPartAddedEventArgs(ISharedBodyPart part, string slotName)
+        public BodyPartAddedEventArgs(IBodyPart part, string slotName)
         {
             Part = part;
             SlotName = slotName;
         }
 
-        public ISharedBodyPart Part { get; }
+        public IBodyPart Part { get; }
 
         public string SlotName { get; }
     }
@@ -37,13 +37,13 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 
     public class BodyPartRemovedEventArgs : EventArgs
     {
-        public BodyPartRemovedEventArgs(ISharedBodyPart part, string slotName)
+        public BodyPartRemovedEventArgs(IBodyPart part, string slotName)
         {
             Part = part;
             SlotName = slotName;
         }
 
-        public ISharedBodyPart Part { get; }
+        public IBodyPart Part { get; }
 
         public string SlotName { get; }
     }

@@ -104,24 +104,24 @@ namespace Content.Server.GameObjects.Components.Body
                 // Attempt surgery on a DroppedBodyPart - there's only one possible target so no need for selection UI
                 _performerCache = eventArgs.User;
 
-                DebugTools.AssertNotNull(droppedBodyPart.ContainedSharedBodyPart);
+                DebugTools.AssertNotNull(droppedBodyPart.ContainedBodyPart);
 
                 // If surgery can be performed...
-                if (!droppedBodyPart.ContainedSharedBodyPart.SurgeryCheck(_surgeryType))
+                if (!droppedBodyPart.ContainedBodyPart.SurgeryCheck(_surgeryType))
                 {
                     SendNoUsefulWayToUsePopup();
                     return;
                 }
 
                 //...do the surgery.
-                if (droppedBodyPart.ContainedSharedBodyPart.AttemptSurgery(_surgeryType, droppedBodyPart, this,
+                if (droppedBodyPart.ContainedBodyPart.AttemptSurgery(_surgeryType, droppedBodyPart, this,
                     eventArgs.User))
                 {
                     return;
                 }
 
                 // Log error if the surgery fails somehow.
-                Logger.Debug($"Error when trying to perform surgery on ${nameof(SharedBodyPart)} {eventArgs.User.Name}");
+                Logger.Debug($"Error when trying to perform surgery on ${nameof(BodyPart)} {eventArgs.User.Name}");
                 throw new InvalidOperationException();
             }
         }
@@ -201,7 +201,7 @@ namespace Content.Server.GameObjects.Components.Body
 
         /// <summary>
         ///     Called after the client chooses from a list of possible
-        ///     <see cref="SharedBodyPart"/> that can be operated on.
+        ///     <see cref="BodyPart"/> that can be operated on.
         /// </summary>
         private void HandleReceiveBodyPart(int key)
         {
@@ -220,7 +220,7 @@ namespace Content.Server.GameObjects.Components.Body
                 return;
             }
 
-            var target = (SharedBodyPart) targetObject!;
+            var target = (BodyPart) targetObject!;
 
             if (!target.AttemptSurgery(_surgeryType, _bodyManagerComponentCache, this, _performerCache))
             {

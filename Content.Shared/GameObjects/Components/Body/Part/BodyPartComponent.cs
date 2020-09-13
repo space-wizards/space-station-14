@@ -9,7 +9,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Shared.GameObjects.Components.Body.Part
 {
-    public abstract class SharedBodyPart : Component, ISharedBodyPart
+    public abstract class BodyPartComponent : Component, IBodyPart
     {
         public override string Name => "BodyPart";
 
@@ -27,7 +27,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part
 
         public abstract int CurrentDurability { get; }
 
-        public abstract IReadOnlyCollection<ISharedMechanism> Mechanisms { get; }
+        public abstract IReadOnlyCollection<IMechanism> Mechanisms { get; }
 
         public abstract string RSIPath { get; }
 
@@ -43,12 +43,12 @@ namespace Content.Shared.GameObjects.Components.Body.Part
 
         public abstract bool SurgeryCheck(SurgeryType surgery);
 
-        public abstract bool CanAttachPart(ISharedBodyPart part);
+        public abstract bool CanAttachPart(IBodyPart part);
 
-        public abstract bool CanInstallMechanism(ISharedMechanism mechanism);
+        public abstract bool CanInstallMechanism(IMechanism mechanism);
 
-        public abstract bool TryDropMechanism(IEntity dropLocation, ISharedMechanism mechanismTarget);
+        public abstract bool TryDropMechanism(IEntity dropLocation, IMechanism mechanismTarget);
 
-        public abstract bool DestroyMechanism(ISharedMechanism mechanism);
+        public abstract bool DestroyMechanism(IMechanism mechanism);
     }
 }

@@ -2,23 +2,23 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Body;
-using Content.Server.GameObjects.Components.Metabolism;
 using Content.Shared.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Behavior;
+using Content.Shared.GameObjects.Components.Body.Part;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Body.Mechanisms
 {
     /// <summary>
-    ///     Data class representing a persistent item inside a <see cref="ISharedBodyPart"/>.
+    ///     Data class representing a persistent item inside a <see cref="IBodyPart"/>.
     ///     This includes livers, eyes, cameras, brains, explosive implants,
     ///     binary communicators, and other things.
     /// </summary>
     public class Mechanism : IMechanism
     {
-        private ISharedBodyPart? _part;
+        private IBodyPart? _part;
 
         public Mechanism(MechanismPrototype data)
         {
@@ -29,7 +29,7 @@ namespace Content.Server.Body.Mechanisms
             ExamineMessage = null!;
             RSIPath = null!;
             RSIState = null!;
-            _behaviors = new List<MechanismComponent>();
+            _behaviors = new List<MechanismBehaviorComponent>();
         }
 
         [ViewVariables] private bool Initialized { get; set; }
@@ -60,13 +60,13 @@ namespace Content.Server.Body.Mechanisms
 
         [ViewVariables] public BodyPartCompatibility Compatibility { get; set; }
 
-        private readonly List<MechanismComponent> _behaviors;
+        private readonly List<MechanismBehaviorComponent> _behaviors;
 
-        [ViewVariables] public IReadOnlyList<MechanismComponent> Behaviors => _behaviors;
+        [ViewVariables] public IReadOnlyList<MechanismBehaviorComponent> Behaviors => _behaviors;
 
         public IBodyManager? Body => Part?.Body;
 
-        public ISharedBodyPart? Part
+        public IBodyPart? Part
         {
             get => _part;
             set
@@ -134,16 +134,16 @@ namespace Content.Server.Body.Mechanisms
                 if (mechanismBehaviorType == null)
                 {
                     throw new InvalidOperationException(
-                        $"No {nameof(MechanismComponent)} found with name {mechanismBehaviorName}");
+                        $"No {nameof(MechanismBehaviorComponent)} found with name {mechanismBehaviorName}");
                 }
 
-                if (!mechanismBehaviorType.IsSubclassOf(typeof(MechanismComponent)))
+                if (!mechanismBehaviorType.IsSubclassOf(typeof(MechanismBehaviorComponent)))
                 {
                     throw new InvalidOperationException(
-                        $"Class {mechanismBehaviorName} is not a subtype of {nameof(MechanismComponent)} for mechanism prototype {data.ID}");
+                        $"Class {mechanismBehaviorName} is not a subtype of {nameof(MechanismBehaviorComponent)} for mechanism prototype {data.ID}");
                 }
 
-                var newBehavior = IoCManager.Resolve<IDynamicTypeFactory>().CreateInstance<MechanismComponent>(mechanismBehaviorType);
+                var newBehavior = IoCManager.Resolve<IDynamicTypeFactory>().CreateInstance<MechanismBehaviorComponent>(mechanismBehaviorType);
 
                 AddBehavior(newBehavior);
             }
@@ -181,13 +181,13 @@ namespace Content.Server.Body.Mechanisms
             }
         }
 
-        public void AddBehavior(MechanismComponent behavior)
+        public void AddBehavior(MechanismBehaviorComponent behavior)
         {
             _behaviors.Add(behavior);
             behavior.Initialize(this);
         }
 
-        public bool RemoveBehavior(MechanismComponent behavior)
+        public bool RemoveBehavior(MechanismBehaviorComponent behavior)
         {
             if (_behaviors.Remove(behavior))
             {

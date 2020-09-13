@@ -5,6 +5,7 @@ using Content.Server.Body.Mechanisms;
 using Content.Server.Utility;
 using Content.Shared.Body.Mechanism;
 using Content.Shared.Body.Surgery;
+using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -62,9 +63,9 @@ namespace Content.Server.GameObjects.Components.Body
             }
             else if (eventArgs.Target.TryGetComponent<DroppedBodyPartComponent>(out var droppedBodyPart))
             {
-                DebugTools.AssertNotNull(droppedBodyPart.ContainedSharedBodyPart);
+                DebugTools.AssertNotNull(droppedBodyPart.ContainedBodyPart);
 
-                if (!droppedBodyPart.ContainedSharedBodyPart.TryInstallDroppedMechanism(this))
+                if (!droppedBodyPart.ContainedBodyPart.TryInstallDroppedMechanism(this))
                 {
                     eventArgs.Target.PopupMessage(eventArgs.User, Loc.GetString("You can't fit it in!"));
                 }
@@ -170,7 +171,7 @@ namespace Content.Server.GameObjects.Components.Body
                 return;
             }
 
-            var target = (SharedBodyPart) targetObject;
+            var target = (BodyPart) targetObject;
             var message = target.TryInstallDroppedMechanism(this)
                 ? Loc.GetString("You jam the {0} inside {1:them}.", ContainedMechanism.Name, _performerCache)
                 : Loc.GetString("You can't fit it in!");

@@ -18,7 +18,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         {
             base.Update(frameTime);
 
-            foreach (var heart in ComponentManager.EntityQuery<HeartComponent>())
+            foreach (var heart in ComponentManager.EntityQuery<HeartBehaviorComponent>())
             {
                 heart.Update(frameTime);
             }
