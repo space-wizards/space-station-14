@@ -1,24 +1,24 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Server.Body.Mechanisms.Behaviors;
 using Content.Server.GameObjects.Components.Body;
 using Content.Server.GameObjects.Components.Metabolism;
 using Content.Shared.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Body.Behavior;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Body.Mechanisms
 {
     /// <summary>
-    ///     Data class representing a persistent item inside a <see cref="IBodyPart"/>.
+    ///     Data class representing a persistent item inside a <see cref="ISharedBodyPart"/>.
     ///     This includes livers, eyes, cameras, brains, explosive implants,
     ///     binary communicators, and other things.
     /// </summary>
     public class Mechanism : IMechanism
     {
-        private IBodyPart? _part;
+        private ISharedBodyPart? _part;
 
         public Mechanism(MechanismPrototype data)
         {
@@ -29,7 +29,7 @@ namespace Content.Server.Body.Mechanisms
             ExamineMessage = null!;
             RSIPath = null!;
             RSIState = null!;
-            _behaviors = new List<MechanismBehavior>();
+            _behaviors = new List<MechanismComponent>();
         }
 
         [ViewVariables] private bool Initialized { get; set; }
@@ -60,13 +60,13 @@ namespace Content.Server.Body.Mechanisms
 
         [ViewVariables] public BodyPartCompatibility Compatibility { get; set; }
 
-        private readonly List<MechanismBehavior> _behaviors;
+        private readonly List<MechanismComponent> _behaviors;
 
-        [ViewVariables] public IReadOnlyList<MechanismBehavior> Behaviors => _behaviors;
+        [ViewVariables] public IReadOnlyList<MechanismComponent> Behaviors => _behaviors;
 
-        public IBodyManagerComponent? Body => Part?.Body;
+        public IBodyManager? Body => Part?.Body;
 
-        public IBodyPart? Part
+        public ISharedBodyPart? Part
         {
             get => _part;
             set
@@ -134,16 +134,16 @@ namespace Content.Server.Body.Mechanisms
                 if (mechanismBehaviorType == null)
                 {
                     throw new InvalidOperationException(
-                        $"No {nameof(MechanismBehavior)} found with name {mechanismBehaviorName}");
+                        $"No {nameof(MechanismComponent)} found with name {mechanismBehaviorName}");
                 }
 
-                if (!mechanismBehaviorType.IsSubclassOf(typeof(MechanismBehavior)))
+                if (!mechanismBehaviorType.IsSubclassOf(typeof(MechanismComponent)))
                 {
                     throw new InvalidOperationException(
-                        $"Class {mechanismBehaviorName} is not a subtype of {nameof(MechanismBehavior)} for mechanism prototype {data.ID}");
+                        $"Class {mechanismBehaviorName} is not a subtype of {nameof(MechanismComponent)} for mechanism prototype {data.ID}");
                 }
 
-                var newBehavior = IoCManager.Resolve<IDynamicTypeFactory>().CreateInstance<MechanismBehavior>(mechanismBehaviorType);
+                var newBehavior = IoCManager.Resolve<IDynamicTypeFactory>().CreateInstance<MechanismComponent>(mechanismBehaviorType);
 
                 AddBehavior(newBehavior);
             }
@@ -157,7 +157,7 @@ namespace Content.Server.Body.Mechanisms
             }
         }
 
-        public void RemovedFromBody(IBodyManagerComponent old)
+        public void RemovedFromBody(IBodyManager old)
         {
             foreach (var behavior in Behaviors)
             {
@@ -181,13 +181,13 @@ namespace Content.Server.Body.Mechanisms
             }
         }
 
-        public void AddBehavior(MechanismBehavior behavior)
+        public void AddBehavior(MechanismComponent behavior)
         {
             _behaviors.Add(behavior);
             behavior.Initialize(this);
         }
 
-        public bool RemoveBehavior(MechanismBehavior behavior)
+        public bool RemoveBehavior(MechanismComponent behavior)
         {
             if (_behaviors.Remove(behavior))
             {

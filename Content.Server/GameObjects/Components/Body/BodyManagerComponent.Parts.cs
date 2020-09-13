@@ -9,6 +9,7 @@ using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.Body.Part.Properties.Movement;
 using Content.Shared.Body.Part.Properties.Other;
 using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Movement;
 using Robust.Shared.GameObjects.Systems;
@@ -16,29 +17,30 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
+using SharedBodyPart = Content.Server.Body.SharedBodyPart;
 
 namespace Content.Server.GameObjects.Components.Body
 {
     public partial class BodyManagerComponent
     {
-        private readonly Dictionary<string, IBodyPart> _parts = new Dictionary<string, IBodyPart>();
+        private readonly Dictionary<string, ISharedBodyPart> _parts = new Dictionary<string, ISharedBodyPart>();
 
         [ViewVariables] public BodyPreset Preset { get; private set; } = default!;
 
         /// <summary>
-        ///     All <see cref="IBodyPart"></see> with <see cref="LegProperty"></see>
+        ///     All <see cref="ISharedBodyPart"></see> with <see cref="LegProperty"></see>
         ///     that are currently affecting move speed, mapped to how big that leg
         ///     they're on is.
         /// </summary>
         [ViewVariables]
-        private readonly Dictionary<IBodyPart, float> _activeLegs = new Dictionary<IBodyPart, float>();
+        private readonly Dictionary<ISharedBodyPart, float> _activeLegs = new Dictionary<ISharedBodyPart, float>();
 
         /// <summary>
-        ///     Maps <see cref="BodyTemplate"/> slot name to the <see cref="IBodyPart"/>
+        ///     Maps <see cref="BodyTemplate"/> slot name to the <see cref="ISharedBodyPart"/>
         ///     object filling it (if there is one).
         /// </summary>
         [ViewVariables]
-        public IReadOnlyDictionary<string, IBodyPart> Parts => _parts;
+        public IReadOnlyDictionary<string, ISharedBodyPart> Parts => _parts;
 
         /// <summary>
         ///     List of all occupied slots in this body, taken from the values of
@@ -52,20 +54,7 @@ namespace Content.Server.GameObjects.Components.Body
         /// </summary>
         public IEnumerable<string> AllSlots => Template.Slots.Keys;
 
-        public bool TryAddPart(string slot, DroppedBodyPartComponent part, bool force = false)
-        {
-            DebugTools.AssertNotNull(part);
-
-            if (!TryAddPart(slot, part.ContainedBodyPart, force))
-            {
-                return false;
-            }
-
-            part.Owner.Delete();
-            return true;
-        }
-
-        public bool TryAddPart(string slot, IBodyPart part, bool force = false)
+        public bool TryAddPart(string slot, ISharedBodyPart part, bool force = false)
         {
             DebugTools.AssertNotNull(part);
             DebugTools.AssertNotNull(slot);
@@ -140,7 +129,7 @@ namespace Content.Server.GameObjects.Components.Body
             return _parts.ContainsKey(slot);
         }
 
-        public void RemovePart(IBodyPart part, bool drop)
+        public void RemovePart(ISharedBodyPart part, bool drop)
         {
             DebugTools.AssertNotNull(part);
 
@@ -229,7 +218,7 @@ namespace Content.Server.GameObjects.Components.Body
             return true;
         }
 
-        public bool RemovePart(IBodyPart part, [NotNullWhen(true)] out string? slot)
+        public bool RemovePart(ISharedBodyPart part, [NotNullWhen(true)] out string? slot)
         {
             DebugTools.AssertNotNull(part);
 
@@ -246,7 +235,7 @@ namespace Content.Server.GameObjects.Components.Body
             return RemovePart(slot, false);
         }
 
-        public IEntity? DropPart(IBodyPart part)
+        public IEntity? DropPart(ISharedBodyPart part)
         {
             DebugTools.AssertNotNull(part);
 
@@ -279,7 +268,7 @@ namespace Content.Server.GameObjects.Components.Body
             return dropped;
         }
 
-        public bool ConnectedToCenter(IBodyPart part)
+        public bool ConnectedToCenter(ISharedBodyPart part)
         {
             var searchedSlots = new List<string>();
 
@@ -318,7 +307,7 @@ namespace Content.Server.GameObjects.Components.Body
             return false;
         }
 
-        public IBodyPart? CenterPart()
+        public ISharedBodyPart? CenterPart()
         {
             Parts.TryGetValue(Template.CenterSlot, out var center);
             return center;
@@ -329,12 +318,12 @@ namespace Content.Server.GameObjects.Components.Body
             return Template.HasSlot(slot);
         }
 
-        public bool TryGetPart(string slot, [NotNullWhen(true)] out IBodyPart? result)
+        public bool TryGetPart(string slot, [NotNullWhen(true)] out ISharedBodyPart? result)
         {
             return Parts.TryGetValue(slot, out result);
         }
 
-        public bool TryGetSlot(IBodyPart part, [NotNullWhen(true)] out string? slot)
+        public bool TryGetSlot(ISharedBodyPart part, [NotNullWhen(true)] out string? slot)
         {
             // We enforce that there is only one of each value in the dictionary,
             // so we can iterate through the dictionary values to get the key from there.
@@ -354,7 +343,7 @@ namespace Content.Server.GameObjects.Components.Body
             return Template.Connections.TryGetValue(slot, out connections);
         }
 
-        public bool TryGetPartConnections(string slot, [NotNullWhen(true)] out List<IBodyPart>? result)
+        public bool TryGetPartConnections(string slot, [NotNullWhen(true)] out List<ISharedBodyPart>? result)
         {
             result = null;
 
@@ -363,7 +352,7 @@ namespace Content.Server.GameObjects.Components.Body
                 return false;
             }
 
-            var toReturn = new List<IBodyPart>();
+            var toReturn = new List<ISharedBodyPart>();
             foreach (var connection in connections)
             {
                 if (TryGetPart(connection, out var partResult))
@@ -381,7 +370,7 @@ namespace Content.Server.GameObjects.Components.Body
             return true;
         }
 
-        public bool TryGetPartConnections(IBodyPart part, [NotNullWhen(true)] out List<IBodyPart>? connections)
+        public bool TryGetPartConnections(ISharedBodyPart part, [NotNullWhen(true)] out List<ISharedBodyPart>? connections)
         {
             connections = null;
 
@@ -389,9 +378,9 @@ namespace Content.Server.GameObjects.Components.Body
                    TryGetPartConnections(slotName, out connections);
         }
 
-        public List<IBodyPart> GetPartsOfType(BodyPartType type)
+        public List<ISharedBodyPart> GetPartsOfType(BodyPartType type)
         {
-            var toReturn = new List<IBodyPart>();
+            var toReturn = new List<ISharedBodyPart>();
 
             foreach (var part in Parts.Values)
             {
@@ -471,24 +460,24 @@ namespace Content.Server.GameObjects.Components.Body
         }
 
         /// <summary>
-        ///     Returns the combined length of the distance to the nearest <see cref="BodyPart"/> with a
+        ///     Returns the combined length of the distance to the nearest <see cref="Server.Body.SharedBodyPart"/> with a
         ///     <see cref="FootProperty"/>. Returns <see cref="float.MinValue"/>
         ///     if there is no foot found. If you consider a <see cref="BodyManagerComponent"/> a node map, then it will look for
         ///     a foot node from the given node. It can
         ///     only search through BodyParts with <see cref="ExtensionProperty"/>.
         /// </summary>
-        public float DistanceToNearestFoot(IBodyPart source)
+        public float DistanceToNearestFoot(ISharedBodyPart source)
         {
             if (source.HasProperty<FootProperty>() && source.TryGetProperty<ExtensionProperty>(out var property))
             {
                 return property.ReachDistance;
             }
 
-            return LookForFootRecursion(source, new List<BodyPart>());
+            return LookForFootRecursion(source, new List<SharedBodyPart>());
         }
 
-        private float LookForFootRecursion(IBodyPart current,
-            ICollection<BodyPart> searchedParts)
+        private float LookForFootRecursion(ISharedBodyPart current,
+            ICollection<SharedBodyPart> searchedParts)
         {
             if (!current.TryGetProperty<ExtensionProperty>(out var extProperty))
             {

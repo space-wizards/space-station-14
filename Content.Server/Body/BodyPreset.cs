@@ -19,7 +19,7 @@ namespace Content.Server.Body
         [ViewVariables] public string Name { get; protected set; }
 
         /// <summary>
-        ///     Maps a template slot to the ID of the <see cref="IBodyPart"/>
+        ///     Maps a template slot to the ID of the <see cref="ISharedBodyPart"/>
         ///     that should fill it. E.g. "right arm" : "BodyPart.arm.basic_human".
         /// </summary>
         [ViewVariables]

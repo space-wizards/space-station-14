@@ -23,16 +23,16 @@ namespace Content.Server.GameObjects.Components.Body
         /// <returns>True if successful, false otherwise.</returns>
         bool TryAddPart(string slot, DroppedBodyPartComponent part, bool force = false);
 
-        bool TryAddPart(string slot, IBodyPart part, bool force = false);
+        bool TryAddPart(string slot, ISharedBodyPart part, bool force = false);
 
         bool HasPart(string slot);
 
         /// <summary>
-        ///     Removes the given <see cref="IBodyPart"/> reference, potentially
-        ///     dropping other <see cref="IBodyPart">BodyParts</see> if they
+        ///     Removes the given <see cref="ISharedBodyPart"/> reference, potentially
+        ///     dropping other <see cref="ISharedBodyPart">BodyParts</see> if they
         ///     were hanging off of it.
         /// </summary>
-        void RemovePart(IBodyPart part, bool drop);
+        void RemovePart(ISharedBodyPart part, bool drop);
 
         /// <summary>
         ///     Removes the body part in slot <see cref="slot"/> from this body,
@@ -40,7 +40,7 @@ namespace Content.Server.GameObjects.Components.Body
         /// </summary>
         /// <param name="slot">The slot to remove it from.</param>
         /// <param name="drop">
-        ///     Whether or not to drop the removed <see cref="IBodyPart"/>.
+        ///     Whether or not to drop the removed <see cref="ISharedBodyPart"/>.
         /// </param>
         /// <returns>True if the part was removed, false otherwise.</returns>
         bool RemovePart(string slot, bool drop);
@@ -51,18 +51,18 @@ namespace Content.Server.GameObjects.Components.Body
         /// <param name="part">The part to remove from this body.</param>
         /// <param name="slotName">The slot that the part was in, if any.</param>
         /// <returns>True if <see cref="part"/> was removed, false otherwise.</returns>
-        bool RemovePart(IBodyPart part, [NotNullWhen(true)] out string? slotName);
+        bool RemovePart(ISharedBodyPart part, [NotNullWhen(true)] out string? slotName);
 
         /// <summary>
-        ///     Disconnects the given <see cref="IBodyPart"/> reference, potentially
-        ///     dropping other <see cref="IBodyPart">BodyParts</see> if they were hanging
+        ///     Disconnects the given <see cref="ISharedBodyPart"/> reference, potentially
+        ///     dropping other <see cref="ISharedBodyPart">BodyParts</see> if they were hanging
         ///     off of it.
         /// </summary>
         /// <returns>
         ///     The <see cref="IEntity"/> representing the dropped
-        ///     <see cref="IBodyPart"/>, or null if none was dropped.
+        ///     <see cref="ISharedBodyPart"/>, or null if none was dropped.
         /// </returns>
-        IEntity? DropPart(IBodyPart part);
+        IEntity? DropPart(ISharedBodyPart part);
 
         /// <summary>
         ///     Recursively searches for if <see cref="part"/> is connected to
@@ -70,14 +70,14 @@ namespace Content.Server.GameObjects.Components.Body
         /// </summary>
         /// <param name="part">The body part to find the center for.</param>
         /// <returns>True if it is connected to the center, false otherwise.</returns>
-        bool ConnectedToCenter(IBodyPart part);
+        bool ConnectedToCenter(ISharedBodyPart part);
 
         /// <summary>
-        ///     Finds the central <see cref="IBodyPart"/>, if any, of this body based on
+        ///     Finds the central <see cref="ISharedBodyPart"/>, if any, of this body based on
         ///     the <see cref="BodyTemplate"/>. For humans, this is the torso.
         /// </summary>
-        /// <returns>The <see cref="BodyPart"/> if one exists, null otherwise.</returns>
-        IBodyPart? CenterPart();
+        /// <returns>The <see cref="SharedBodyPart"/> if one exists, null otherwise.</returns>
+        ISharedBodyPart? CenterPart();
 
         /// <summary>
         ///     Returns whether the given part slot name exists within the current
@@ -88,21 +88,21 @@ namespace Content.Server.GameObjects.Components.Body
         bool HasSlot(string slot);
 
         /// <summary>
-        ///     Finds the <see cref="IBodyPart"/> in the given <see cref="slot"/> if
+        ///     Finds the <see cref="ISharedBodyPart"/> in the given <see cref="slot"/> if
         ///     one exists.
         /// </summary>
         /// <param name="slot">The part slot to search in.</param>
         /// <param name="result">The body part in that slot, if any.</param>
         /// <returns>True if found, false otherwise.</returns>
-        bool TryGetPart(string slot, [NotNullWhen(true)] out IBodyPart? result);
+        bool TryGetPart(string slot, [NotNullWhen(true)] out ISharedBodyPart? result);
 
         /// <summary>
-        ///     Finds the slotName that the given <see cref="IBodyPart"/> resides in.
+        ///     Finds the slotName that the given <see cref="ISharedBodyPart"/> resides in.
         /// </summary>
-        /// <param name="part">The <see cref="IBodyPart"/> to find the slot for.</param>
+        /// <param name="part">The <see cref="ISharedBodyPart"/> to find the slot for.</param>
         /// <param name="slot">The slot found, if any.</param>
         /// <returns>True if a slot was found, false otherwise</returns>
-        bool TryGetSlot(IBodyPart part, [NotNullWhen(true)] out string? slot);
+        bool TryGetSlot(ISharedBodyPart part, [NotNullWhen(true)] out string? slot);
 
         /// <summary>
         ///     Finds the <see cref="BodyPartType"/> in the given
@@ -133,7 +133,7 @@ namespace Content.Server.GameObjects.Components.Body
         /// <returns>
         ///     True if successful, false if the slot couldn't be found on this body.
         /// </returns>
-        bool TryGetPartConnections(string slot, [NotNullWhen(true)] out List<IBodyPart>? connections);
+        bool TryGetPartConnections(string slot, [NotNullWhen(true)] out List<ISharedBodyPart>? connections);
 
         /// <summary>
         ///     Grabs all parts connected to the given <see cref="part"/>, regardless
@@ -144,11 +144,11 @@ namespace Content.Server.GameObjects.Components.Body
         /// <returns>
         ///     True if successful, false if the part couldn't be found on this body.
         /// </returns>
-        bool TryGetPartConnections(IBodyPart part, [NotNullWhen(true)] out List<IBodyPart>? connections);
+        bool TryGetPartConnections(ISharedBodyPart part, [NotNullWhen(true)] out List<ISharedBodyPart>? connections);
 
         /// <summary>
-        ///     Grabs all <see cref="IBodyPart"/> of the given type in this body.
+        ///     Grabs all <see cref="ISharedBodyPart"/> of the given type in this body.
         /// </summary>
-        List<IBodyPart> GetPartsOfType(BodyPartType type);
+        List<ISharedBodyPart> GetPartsOfType(BodyPartType type);
     }
 }

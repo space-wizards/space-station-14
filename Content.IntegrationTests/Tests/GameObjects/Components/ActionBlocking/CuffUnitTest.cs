@@ -83,7 +83,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             prototypeManager.TryIndex("bodyPart.LHand.BasicHuman", out BodyPartPrototype prototype);
 
-            var part = new BodyPart(prototype);
+            var part = new SharedBodyPart(prototype);
             var slot = part.GetHashCode().ToString();
 
             body.Template.Slots.Add(slot, BodyPartType.Hand);

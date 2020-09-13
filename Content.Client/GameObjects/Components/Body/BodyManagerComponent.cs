@@ -16,7 +16,7 @@ namespace Content.Client.GameObjects.Components.Body
 {
     [RegisterComponent]
     [ComponentReference(typeof(IDamageableComponent))]
-    [ComponentReference(typeof(ISharedBodyManagerComponent))]
+    [ComponentReference(typeof(ISharedBodyManager))]
     public class BodyManagerComponent : SharedBodyManagerComponent, IClientDraggable
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;

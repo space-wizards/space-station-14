@@ -1,6 +1,8 @@
-- type: bodyPart
-  id: bodyPart.Torso.BasicHuman
+- type: entity
+  id: TorsoHuman
   name: "human torso"
+  components:
+  - type: BodyPart
   plural: "human torsos"
   rsiPath: Mobs/Species/Human/parts.rsi
   rsiState: "torso_m"
@@ -19,8 +21,8 @@
   - mechanism.Liver.BasicHuman
   - mechanism.Kidneys.BasicHuman
 
-- type: bodyPart
-  id: bodyPart.Head.BasicHuman
+- type: entity
+  id: HeadHuman
   name: "human head"
   plural: "human heads"
   rsiPath: Mobs/Species/Human/parts.rsi
@@ -38,8 +40,8 @@
   - mechanism.Brain.BasicHuman
   - mechanism.Eyes.BasicHuman
 
-- type: bodyPart
-  id: bodyPart.LArm.BasicHuman
+- type: entity
+  id: LeftArmHuman
   name: "left human arm"
   plural: "left human arms"
   rsiPath: Mobs/Species/Human/parts.rsi
@@ -57,8 +59,8 @@
     active: true
     reachDistance: 2.4
 
-- type: bodyPart
-  id: bodyPart.RArm.BasicHuman
+- type: entity
+  id: RightArmHuman
   name: "right human arm"
   plural: "right human arms"
   rsiPath: Mobs/Species/Human/parts.rsi
@@ -76,8 +78,8 @@
     active: true
     reachDistance: 2.4
 
-- type: bodyPart
-  id: bodyPart.LHand.BasicHuman
+- type: entity
+  id: LeftHandHuman
   name: "left human hand"
   plural: "left human hands"
   rsiPath: Mobs/Species/Human/parts.rsi
@@ -94,8 +96,8 @@
   - !type:GraspProperty
     active: true
 
-- type: bodyPart
-  id: bodyPart.RHand.BasicHuman
+- type: entity
+  id: RightHandHuman
   name: "right human hand"
   plural: "right human hands"
   rsiPath: Mobs/Species/Human/parts.rsi
@@ -112,8 +114,8 @@
   - !type:GraspProperty
     active: true
 
-- type: bodyPart
-  id: bodyPart.LLeg.BasicHuman
+- type: entity
+  id: LeftLegHuman
   name: "left human leg"
   plural: "left human legs"
   rsiPath: Mobs/Species/Human/parts.rsi
@@ -134,8 +136,8 @@
     active: true
     speed: 2.6
 
-- type: bodyPart
-  id: bodyPart.RLeg.BasicHuman
+- type: entity
+  id: RightLegHuman
   name: "right human leg"
   plural: "right human legs"
   rsiPath: Mobs/Species/Human/parts.rsi
@@ -156,8 +158,8 @@
     active: true
     speed: 2.6
 
-- type: bodyPart
-  id: bodyPart.LFoot.BasicHuman
+- type: entity
+  id: LeftFootHuman
   name: "left human foot"
   plural: "left human feet"
   rsiPath: Mobs/Species/Human/parts.rsi
@@ -174,8 +176,8 @@
   - !type:FootProperty
     active: true
 
-- type: bodyPart
-  id: bodyPart.RFoot.BasicHuman
+- type: entity
+  id: RightFootHuman
   name: "right human foot"
   plural: "right human feet"
   rsiPath: Mobs/Species/Human/parts.rsi

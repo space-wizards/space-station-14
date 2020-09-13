@@ -134,7 +134,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
             // Disabled because it makes it suck hard to walk through double doors.
 
-            if (entity.HasComponent<ISharedBodyManagerComponent>())
+            if (entity.HasComponent<ISharedBodyManager>())
             {
                 if (!entity.TryGetComponent<IMoverComponent>(out var mover)) return;
 

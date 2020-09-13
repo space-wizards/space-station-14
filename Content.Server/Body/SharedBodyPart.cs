@@ -13,6 +13,8 @@ using Content.Shared.Body.Part.Properties;
 using Content.Shared.Damage.DamageContainer;
 using Content.Shared.Damage.ResistanceSet;
 using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Body.Mechanism;
+using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Damage;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Reflection;
@@ -32,13 +34,13 @@ namespace Content.Server.Body
     ///     which coordinates functions between BodyParts, or a
     ///     <see cref="DroppedBodyPartComponent"/>.
     /// </summary>
-    public class BodyPart : IBodyPart
+    public class SharedBodyPart : ISharedBodyPart
     {
-        private IBodyManagerComponent? _body;
+        private ISharedBodyManager? _body;
 
-        private readonly HashSet<IMechanism> _mechanisms = new HashSet<IMechanism>();
+        private readonly HashSet<ISharedMechanism> _mechanisms = new HashSet<ISharedMechanism>();
 
-        public BodyPart(BodyPartPrototype data)
+        public SharedBodyPart(BodyPartPrototype data)
         {
             SurgeryData = null!;
             Properties = new HashSet<IExposeData>();
@@ -54,7 +56,7 @@ namespace Content.Server.Body
         }
 
         [ViewVariables]
-        public IBodyManagerComponent? Body
+        public ISharedBodyManager? Body
         {
             get => _body;
             set
@@ -120,25 +122,25 @@ namespace Content.Server.Body
 
         // TODO: Individual body part damage
         /// <summary>
-        ///     Current damage dealt to this <see cref="IBodyPart"/>.
+        ///     Current damage dealt to this <see cref="ISharedBodyPart"/>.
         /// </summary>
         [ViewVariables]
         public DamageContainer Damage { get; private set; }
 
         /// <summary>
-        ///     Armor of this <see cref="IBodyPart"/> against damages.
+        ///     Armor of this <see cref="ISharedBodyPart"/> against damages.
         /// </summary>
         [ViewVariables]
         public ResistanceSet Resistances { get; private set; }
 
         /// <summary>
-        ///     At what HP this <see cref="IBodyPart"/> destroyed.
+        ///     At what HP this <see cref="ISharedBodyPart"/> destroyed.
         /// </summary>
         [ViewVariables]
         public int DestroyThreshold { get; private set; }
 
         /// <summary>
-        ///     What types of BodyParts this <see cref="IBodyPart"/> can easily attach to.
+        ///     What types of BodyParts this <see cref="ISharedBodyPart"/> can easily attach to.
         ///     For the most part, most limbs aren't universal and require extra work to
         ///     attach between types.
         /// </summary>
@@ -147,10 +149,10 @@ namespace Content.Server.Body
 
         /// <summary>
         ///     Set of all <see cref="IMechanism"/> currently inside this
-        ///     <see cref="IBodyPart"/>.
+        ///     <see cref="ISharedBodyPart"/>.
         /// </summary>
         [ViewVariables]
-        public IReadOnlyCollection<IMechanism> Mechanisms => _mechanisms;
+        public IReadOnlyCollection<ISharedMechanism> Mechanisms => _mechanisms;
 
         /// <summary>
         /// Represents if body part is vital for creature.
@@ -158,32 +160,6 @@ namespace Content.Server.Body
         /// </summary>
         [ViewVariables]
         public bool IsVital { get; private set; }
-
-        /// <summary>
-        ///     This method is called by
-        ///     <see cref="IBodyManagerComponent.PreMetabolism"/> before
-        ///     <see cref="MetabolismComponent.Update"/> is called.
-        /// </summary>
-        public void PreMetabolism(float frameTime)
-        {
-            foreach (var mechanism in Mechanisms)
-            {
-                mechanism.PreMetabolism(frameTime);
-            }
-        }
-
-        /// <summary>
-        ///     This method is called by
-        ///     <see cref="IBodyManagerComponent.PostMetabolism"/> after
-        ///     <see cref="MetabolismComponent.Update"/> is called.
-        /// </summary>
-        public void PostMetabolism(float frameTime)
-        {
-            foreach (var mechanism in Mechanisms)
-            {
-                mechanism.PreMetabolism(frameTime);
-            }
-        }
 
         /// <summary>
         ///     Attempts to add the given <see cref="BodyPartProperty"/>.
@@ -230,13 +206,13 @@ namespace Content.Server.Body
         }
 
         /// <summary>
-        ///     Checks if the given type <see cref="T"/> is on this <see cref="IBodyPart"/>.
+        ///     Checks if the given type <see cref="T"/> is on this <see cref="ISharedBodyPart"/>.
         /// </summary>
         /// <typeparam name="T">
         ///     The subtype of <see cref="BodyPartProperty"/> to look for.
         /// </typeparam>
         /// <returns>
-        ///     True if this <see cref="IBodyPart"/> has a property of type
+        ///     True if this <see cref="ISharedBodyPart"/> has a property of type
         ///     <see cref="T"/>, false otherwise.
         /// </returns>
         public bool HasProperty<T>() where T : BodyPartProperty
@@ -246,13 +222,13 @@ namespace Content.Server.Body
 
         /// <summary>
         ///     Checks if a subtype of <see cref="BodyPartProperty"/> is on this
-        ///     <see cref="IBodyPart"/>.
+        ///     <see cref="ISharedBodyPart"/>.
         /// </summary>
         /// <param name="propertyType">
         ///     The subtype of <see cref="BodyPartProperty"/> to look for.
         /// </param>
         /// <returns>
-        ///     True if this <see cref="IBodyPart"/> has a property of type
+        ///     True if this <see cref="ISharedBodyPart"/> has a property of type
         ///     <see cref="propertyType"/>, false otherwise.
         /// </returns>
         public bool HasProperty(Type propertyType)
@@ -260,12 +236,12 @@ namespace Content.Server.Body
             return Properties.Count(x => x.GetType() == propertyType) > 0;
         }
 
-        public bool CanAttachPart(IBodyPart part)
+        public bool CanAttachPart(ISharedBodyPart part)
         {
             return SurgeryData.CanAttachBodyPart(part);
         }
 
-        public bool CanInstallMechanism(IMechanism mechanism)
+        public bool CanInstallMechanism(ISharedMechanism mechanism)
         {
             return SizeUsed + mechanism.Size <= Size &&
                    SurgeryData.CanInstallMechanism(mechanism);
@@ -280,9 +256,9 @@ namespace Content.Server.Body
         /// <param name="mechanism">The mechanism to try to install.</param>
         /// <returns>
         ///     True if successful, false if there was an error
-        ///     (e.g. not enough room in <see cref="IBodyPart"/>).
+        ///     (e.g. not enough room in <see cref="ISharedBodyPart"/>).
         /// </returns>
-        private bool TryInstallMechanism(IMechanism mechanism)
+        private bool TryInstallMechanism(ISharedMechanism mechanism)
         {
             if (!CanInstallMechanism(mechanism))
             {
@@ -296,13 +272,13 @@ namespace Content.Server.Body
 
         /// <summary>
         ///     Tries to install a <see cref="DroppedMechanismComponent"/> into this
-        ///     <see cref="IBodyPart"/>, potentially deleting the dropped
+        ///     <see cref="ISharedBodyPart"/>, potentially deleting the dropped
         ///     <see cref="IEntity"/>.
         /// </summary>
         /// <param name="droppedMechanism">The mechanism to install.</param>
         /// <returns>
         ///     True if successful, false if there was an error
-        ///     (e.g. not enough room in <see cref="BodyPart"/>).
+        ///     (e.g. not enough room in <see cref="SharedBodyPart"/>).
         /// </returns>
         public bool TryInstallDroppedMechanism(DroppedMechanismComponent droppedMechanism)
         {
@@ -339,11 +315,11 @@ namespace Content.Server.Body
 
         /// <summary>
         ///     Tries to destroy the given <see cref="IMechanism"/> in this
-        ///     <see cref="IBodyPart"/>. Does NOT spawn a dropped entity.
+        ///     <see cref="ISharedBodyPart"/>. Does NOT spawn a dropped entity.
         /// </summary>
         /// <summary>
         ///     Tries to destroy the given <see cref="IMechanism"/> in this
-        ///     <see cref="IBodyPart"/>.
+        ///     <see cref="ISharedBodyPart"/>.
         /// </summary>
         /// <param name="mechanismTarget">The mechanism to destroy.</param>
         /// <returns>True if successful, false otherwise.</returns>
@@ -363,7 +339,7 @@ namespace Content.Server.Body
         }
 
         /// <summary>
-        ///     Attempts to perform surgery on this <see cref="IBodyPart"/> with the given
+        ///     Attempts to perform surgery on this <see cref="ISharedBodyPart"/> with the given
         ///     tool.
         /// </summary>
         /// <returns>True if successful, false if there was an error.</returns>
@@ -372,7 +348,7 @@ namespace Content.Server.Body
             return SurgeryData.PerformSurgery(toolType, target, surgeon, performer);
         }
 
-        private void AddMechanism(IMechanism mechanism)
+        private void AddMechanism(ISharedMechanism mechanism)
         {
             DebugTools.AssertNotNull(mechanism);
 
@@ -405,7 +381,7 @@ namespace Content.Server.Body
 
         /// <summary>
         ///     Tries to remove the given <see cref="mechanism"/> from this
-        ///     <see cref="IBodyPart"/>.
+        ///     <see cref="ISharedBodyPart"/>.
         /// </summary>
         /// <param name="mechanism">The mechanism to remove.</param>
         /// <returns>True if it was removed, false otherwise.</returns>
@@ -446,7 +422,7 @@ namespace Content.Server.Body
 
         /// <summary>
         ///     Loads the given <see cref="BodyPartPrototype"/>.
-        ///     Current data on this <see cref="IBodyPart"/> will be overwritten!
+        ///     Current data on this <see cref="ISharedBodyPart"/> will be overwritten!
         /// </summary>
         protected virtual void LoadFromPrototype(BodyPartPrototype data)
         {

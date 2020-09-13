@@ -1,12 +1,13 @@
 ﻿#nullable enable
-using Content.Server.Body.Mechanisms;
 using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Body.Mechanism;
+using Content.Shared.GameObjects.Components.Body.Part;
 using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.Body.Surgery
 {
     /// <summary>
-    ///     This data class represents the state of a <see cref="IBodyPart"/> in regards to everything surgery related -
+    ///     This data class represents the state of a <see cref="ISharedBodyPart"/> in regards to everything surgery related -
     ///     whether there's an incision on it, whether the bone is broken, etc.
     /// </summary>
     public abstract class SurgeryData
@@ -14,40 +15,40 @@ namespace Content.Server.Body.Surgery
         protected delegate void SurgeryAction(IBodyPartContainer container, ISurgeon surgeon, IEntity performer);
 
         /// <summary>
-        ///     The <see cref="IBodyPart"/> this surgeryData is attached to.
+        ///     The <see cref="ISharedBodyPart"/> this surgeryData is attached to.
         ///     The <see cref="SurgeryData"/> class should not exist without a
-        ///     <see cref="IBodyPart"/> that it represents, and will throw errors if it
+        ///     <see cref="ISharedBodyPart"/> that it represents, and will throw errors if it
         ///     is null.
         /// </summary>
-        protected readonly IBodyPart Parent;
+        protected readonly ISharedBodyPart Parent;
 
-        protected SurgeryData(IBodyPart parent)
+        protected SurgeryData(ISharedBodyPart parent)
         {
             Parent = parent;
         }
 
         /// <summary>
-        ///     The <see cref="BodyPartType"/> of the parent <see cref="IBodyPart"/>.
+        ///     The <see cref="BodyPartType"/> of the parent <see cref="ISharedBodyPart"/>.
         /// </summary>
         protected BodyPartType ParentType => Parent.PartType;
 
         /// <summary>
-        ///     Returns the description of this current <see cref="IBodyPart"/> to be shown
+        ///     Returns the description of this current <see cref="ISharedBodyPart"/> to be shown
         ///     upon observing the given entity.
         /// </summary>
         public abstract string GetDescription(IEntity target);
 
         /// <summary>
-        ///     Returns whether a <see cref="IMechanism"/> can be installed into the
-        ///     <see cref="IBodyPart"/> this <see cref="SurgeryData"/> represents.
+        ///     Returns whether a <see cref="ISharedMechanism"/> can be installed into the
+        ///     <see cref="ISharedBodyPart"/> this <see cref="SurgeryData"/> represents.
         /// </summary>
-        public abstract bool CanInstallMechanism(IMechanism mechanism);
+        public abstract bool CanInstallMechanism(ISharedMechanism mechanism);
 
         /// <summary>
-        ///     Returns whether the given <see cref="IBodyPart"/> can be connected to the
-        ///     <see cref="IBodyPart"/> this <see cref="SurgeryData"/> represents.
+        ///     Returns whether the given <see cref="ISharedBodyPart"/> can be connected to the
+        ///     <see cref="ISharedBodyPart"/> this <see cref="SurgeryData"/> represents.
         /// </summary>
-        public abstract bool CanAttachBodyPart(IBodyPart part);
+        public abstract bool CanAttachBodyPart(ISharedBodyPart part);
 
         /// <summary>
         ///     Gets the delegate corresponding to the surgery step using the given

@@ -23,7 +23,7 @@ namespace Content.Server.Body.Surgery
         private bool _skinRetracted;
         private bool _vesselsClamped;
 
-        public BiologicalSurgeryData(IBodyPart parent) : base(parent) { }
+        public BiologicalSurgeryData(ISharedBodyPart parent) : base(parent) { }
 
         protected override SurgeryAction? GetSurgeryStep(SurgeryType toolType)
         {
@@ -123,7 +123,7 @@ namespace Content.Server.Body.Surgery
             return _skinOpened && _vesselsClamped && _skinRetracted;
         }
 
-        public override bool CanAttachBodyPart(IBodyPart part)
+        public override bool CanAttachBodyPart(ISharedBodyPart part)
         {
             return true;
             // TODO: if a bodypart is disconnected, you should have to do some surgery to allow another bodypart to be attached.

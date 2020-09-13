@@ -1,9 +1,6 @@
 ﻿#nullable enable
 using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Content.Server.Body;
-using Content.Server.Body.Network;
 using Content.Server.GameObjects.Components.Metabolism;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Observer;
@@ -11,6 +8,7 @@ using Content.Shared.Body.Part;
 using Content.Shared.Body.Preset;
 using Content.Shared.Body.Template;
 using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Movement;
 using Robust.Server.Interfaces.Player;
@@ -20,29 +18,26 @@ using Robust.Shared.IoC;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
+using SharedBodyPart = Content.Server.Body.SharedBodyPart;
 
 namespace Content.Server.GameObjects.Components.Body
 {
     /// <summary>
-    ///     Component representing a collection of <see cref="IBodyPart"></see>
+    ///     Component representing a collection of <see cref="ISharedBodyPart"></see>
     ///     attached to each other.
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IDamageableComponent))]
-    [ComponentReference(typeof(ISharedBodyManagerComponent))]
+    [ComponentReference(typeof(ISharedBodyManager))]
     [ComponentReference(typeof(IBodyPartManager))]
-    [ComponentReference(typeof(IBodyManagerComponent))]
-    public partial class BodyManagerComponent : SharedBodyManagerComponent, IBodyPartContainer, IRelayMoveInput, IBodyManagerComponent
+    [ComponentReference(typeof(IBodyManager))]
+    public partial class BodyManagerComponent : SharedBodyManagerComponent, IBodyPartContainer, IRelayMoveInput, IBodyManager
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IBodyNetworkFactory _bodyNetworkFactory = default!;
         [Dependency] private readonly IReflectionManager _reflectionManager = default!;
 
         [ViewVariables] private string _presetName = default!;
-
-        [ViewVariables] private readonly Dictionary<Type, BodyNetwork> _networks = new Dictionary<Type, BodyNetwork>();
 
         [ViewVariables] public BodyTemplate Template { get; private set; } = default!;
 
@@ -125,7 +120,7 @@ namespace Content.Server.GameObjects.Components.Body
 
                 // Add a new BodyPart with the BodyPartPrototype as a baseline to our
                 // BodyComponent.
-                var addedPart = new BodyPart(newPartData);
+                var addedPart = new SharedBodyPart(newPartData);
                 TryAddPart(slotName, addedPart);
             }
 
@@ -163,11 +158,6 @@ namespace Content.Server.GameObjects.Components.Body
             {
                 part.PreMetabolism(frameTime);
             }
-
-            foreach (var network in _networks.Values)
-            {
-                network.PreMetabolism(frameTime);
-            }
         }
 
         /// <summary>
@@ -185,11 +175,6 @@ namespace Content.Server.GameObjects.Components.Body
             {
                 part.PostMetabolism(frameTime);
             }
-
-            foreach (var network in _networks.Values)
-            {
-                network.PostMetabolism(frameTime);
-            }
         }
 
         void IRelayMoveInput.MoveInputPressed(ICommonSession session)
@@ -199,84 +184,6 @@ namespace Content.Server.GameObjects.Components.Body
                 new Ghost().Execute(null, (IPlayerSession) session, null);
             }
         }
-
-        #region BodyNetwork Functions
-
-        private bool EnsureNetwork(BodyNetwork network)
-        {
-            DebugTools.AssertNotNull(network);
-
-            if (_networks.ContainsKey(network.GetType()))
-            {
-                return true;
-            }
-
-            _networks.Add(network.GetType(), network);
-            network.OnAdd(Owner);
-
-            return false;
-        }
-
-        /// <summary>
-        ///     Attempts to add a <see cref="BodyNetwork"/> of the given type to this body.
-        /// </summary>
-        /// <returns>
-        ///     True if successful, false if there was an error
-        ///     (such as passing in an invalid type or a network of that type already
-        ///     existing).
-        /// </returns>
-        public bool EnsureNetwork(Type networkType)
-        {
-            DebugTools.Assert(networkType.IsSubclassOf(typeof(BodyNetwork)));
-
-            var network = _bodyNetworkFactory.GetNetwork(networkType);
-            return EnsureNetwork(network);
-        }
-
-        /// <summary>
-        ///     Attempts to add a <see cref="BodyNetwork"/> of the given type to
-        ///     this body.
-        /// </summary>
-        /// <typeparam name="T">The type of network to add.</typeparam>
-        /// <returns>
-        ///     True if successful, false if there was an error
-        ///     (such as passing in an invalid type or a network of that type already
-        ///     existing).
-        /// </returns>
-        public bool EnsureNetwork<T>() where T : BodyNetwork
-        {
-            return EnsureNetwork(typeof(T));
-        }
-
-        public void RemoveNetwork(Type networkType)
-        {
-            DebugTools.AssertNotNull(networkType);
-
-            if (_networks.Remove(networkType, out var network))
-            {
-                network.OnRemove();
-            }
-        }
-
-        public void RemoveNetwork<T>() where T : BodyNetwork
-        {
-            RemoveNetwork(typeof(T));
-        }
-
-        /// <summary>
-        ///     Attempts to get the <see cref="BodyNetwork"/> of the given type in this body.
-        /// </summary>
-        /// <param name="networkType">The type to search for.</param>
-        /// <param name="result">
-        ///     The <see cref="BodyNetwork"/> if found, null otherwise.
-        /// </param>
-        /// <returns>True if found, false otherwise.</returns>
-        public bool TryGetNetwork(Type networkType, [NotNullWhen(true)] out BodyNetwork result)
-        {
-            return _networks.TryGetValue(networkType, out result!);
-        }
-
-        #endregion
     }
 
     public interface IBodyManagerHealthChangeParams

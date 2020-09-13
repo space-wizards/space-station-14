@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
         public override void Initialize()
         {
             base.Initialize();
-            _speciesQuery = new TypeEntityQuery(typeof(ISharedBodyManagerComponent));
+            _speciesQuery = new TypeEntityQuery(typeof(ISharedBodyManager));
         }
 
         public override void Update(float frameTime)

@@ -1,25 +1,22 @@
 #nullable enable
 using System;
-using Content.Server.Body.Network;
-using Content.Server.GameObjects.Components.Body.Circulatory;
 using JetBrains.Annotations;
 
-namespace Content.Server.Body.Mechanisms.Behaviors
+namespace Content.Shared.GameObjects.Components.Body.Behavior
 {
     [UsedImplicitly]
-    public class HeartBehavior : MechanismBehavior
+    public class StomachComponent : MechanismComponent
     {
         private float _accumulatedFrameTime;
 
-        protected override Type? Network => typeof(CirculatoryNetwork);
+        protected override Type? Network => typeof(DigestiveNetwork);
 
         public override void PreMetabolism(float frameTime)
         {
-            // TODO do between pre and metabolism
             base.PreMetabolism(frameTime);
 
             if (Mechanism.Body == null ||
-                !Mechanism.Body.Owner.TryGetComponent(out BloodstreamComponent? bloodstream))
+                !Mechanism.Body.Owner.TryGetComponent(out StomachComponent? stomach))
             {
                 return;
             }
@@ -27,10 +24,9 @@ namespace Content.Server.Body.Mechanisms.Behaviors
             // Update at most once per second
             _accumulatedFrameTime += frameTime;
 
-            // TODO: Move/accept/process bloodstream reagents only when the heart is pumping
             if (_accumulatedFrameTime >= 1)
             {
-                // bloodstream.Update(_accumulatedFrameTime);
+                stomach.Update(_accumulatedFrameTime);
                 _accumulatedFrameTime -= 1;
             }
         }

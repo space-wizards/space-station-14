@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Body
 {
-    public abstract class SharedBodyManagerComponent : DamageableComponent, ISharedBodyManagerComponent
+    public abstract class SharedBodyManagerComponent : DamageableComponent, ISharedBodyManager
     {
         public override string Name => "BodyManager";
 

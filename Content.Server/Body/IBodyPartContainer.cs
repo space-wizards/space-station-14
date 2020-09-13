@@ -11,8 +11,9 @@ namespace Content.Server.Body
     ///     it back to the original class type.
     ///     Every BodyPart also needs an <see cref="IBodyPartContainer"/> to be
     ///     its parent (i.e. the <see cref="BodyManagerComponent"/> holds many
-    ///     <see cref="IBodyPart"/>, each of which have an upward reference to it).
+    ///     <see cref="ISharedBodyPart"/>, each of which have an upward reference to it).
     /// </summary>
+    // TODO: Remove
     public interface IBodyPartContainer
     {
     }
