@@ -12,7 +12,7 @@ namespace Content.Shared
     {
         public abstract void PopupMessage(IEntity source, IEntity viewer, string message);
 
-        public abstract void PopupMessage(GridCoordinates coordinates, IEntity viewer, string message);
+        public abstract void PopupMessage(EntityCoordinates coordinates, IEntity viewer, string message);
 
         public abstract void PopupMessageCursor(IEntity viewer, string message);
 
@@ -50,12 +50,12 @@ namespace Content.Shared
             #endregion
 
             public string Message { get; set; }
-            public GridCoordinates Coordinates;
+            public EntityCoordinates Coordinates;
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
                 Message = buffer.ReadString();
-                Coordinates = buffer.ReadGridLocalCoordinates();
+                Coordinates = buffer.ReadEntityCoordinates();
             }
 
             public override void WriteToBuffer(NetOutgoingMessage buffer)

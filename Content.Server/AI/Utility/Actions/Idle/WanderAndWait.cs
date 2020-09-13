@@ -33,7 +33,7 @@ namespace Content.Server.AI.Utility.Actions.Idle
             var robustRandom = IoCManager.Resolve<IRobustRandom>();
             var randomGrid = FindRandomGrid(robustRandom);
             float waitTime;
-            if (randomGrid != GridCoordinates.InvalidGrid)
+            if (randomGrid != EntityCoordinates.Invalid)
             {
                 waitTime = robustRandom.Next(3, 8);
             }
@@ -60,7 +60,7 @@ namespace Content.Server.AI.Utility.Actions.Idle
             };
         }
 
-        private GridCoordinates FindRandomGrid(IRobustRandom robustRandom)
+        private EntityCoordinates FindRandomGrid(IRobustRandom robustRandom)
         {
             // Very inefficient (should weight each region by its node count) but better than the old system
             var reachableSystem = EntitySystem.Get<AiReachableSystem>();

@@ -8,7 +8,7 @@
     "copyright": "Taken from https://github.com/discordia-space/CEV-Eris/blob/master/icons/obj/machines/excelsior/autolathe.dmi at 40b254106b46981b8ad95ccd5589deb8fa56e765",
     "states": [
         {
-            "name": "tdoppler",
+            "name": "rndpointsource",
             "directions": 4,
             "delays": [
                 [
@@ -30,7 +30,7 @@
             ]
         },
         {
-            "name": "tdoppler-broken",
+            "name": "rndpointsource-broken",
             "directions": 1,
             "delays": [
                 [
@@ -41,7 +41,16 @@
             ]
         },
         {
-            "name": "tdoppler-off",
+            "name": "rndpointsource-off",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "rndpointsource-icon",
             "directions": 1,
             "delays": [
                 [

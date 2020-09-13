@@ -12,6 +12,7 @@
             "CloningPod",
             "Destructible",
             "Temperature",
+            "AtmosExposed",
             "Explosive",
             "OnUseTimerTrigger",
             "ToolboxElectricalFill",
@@ -175,6 +176,9 @@
             "ExtinguisherCabinet",
             "ExtinguisherCabinetFilled",
             "FireExtinguisher",
+            "Firelock",
+            "AtmosPlaque",
+            "Spillable",
         };
     }
 }

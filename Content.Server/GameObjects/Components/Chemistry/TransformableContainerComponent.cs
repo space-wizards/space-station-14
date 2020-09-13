@@ -42,13 +42,13 @@ namespace Content.Server.GameObjects.Components.Chemistry
         {
             base.Startup();
 
-            if (!Owner.EnsureComponent(out SolutionComponent solution))
+            if (!Owner.EnsureComponent(out SolutionContainerComponent solution))
             {
                 Logger.Warning(
-                    $"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(SolutionComponent)}");
+                    $"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(SolutionContainerComponent)}");
             }
 
-            solution.Capabilities |= SolutionCaps.FitsInDispenser;
+            solution.Capabilities |= SolutionContainerCaps.FitsInDispenser;
         }
 
         public void CancelTransformation()
@@ -68,7 +68,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         void ISolutionChange.SolutionChanged(SolutionChangeEventArgs eventArgs)
         {
-            var solution = eventArgs.Owner.GetComponent<SolutionComponent>();
+            var solution = eventArgs.Owner.GetComponent<SolutionContainerComponent>();
             //Transform container into initial state when emptied
             if (_currentReagent != null && solution.ReagentList.Count == 0)
             {

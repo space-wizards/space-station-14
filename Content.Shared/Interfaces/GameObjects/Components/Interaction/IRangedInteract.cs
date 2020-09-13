@@ -24,7 +24,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     {
         public IEntity User { get; set; }
         public IEntity Using { get; set; }
-        public GridCoordinates ClickLocation { get; set; }
+        public EntityCoordinates ClickLocation { get; set; }
     }
 
     /// <summary>
@@ -56,9 +56,9 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// <summary>
         ///     Location that the user clicked outside of their interaction range.
         /// </summary>
-        public GridCoordinates ClickLocation { get; }
+        public EntityCoordinates ClickLocation { get; }
 
-        public RangedInteractMessage(IEntity user, IEntity itemInHand, IEntity attacked, GridCoordinates clickLocation)
+        public RangedInteractMessage(IEntity user, IEntity itemInHand, IEntity attacked, EntityCoordinates clickLocation)
         {
             User = user;
             ItemInHand = itemInHand;

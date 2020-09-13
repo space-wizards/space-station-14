@@ -31,23 +31,23 @@ namespace Content.Shared.GameObjects.Components
     {
         // To see what these do look at DoAfter and DoAfterEventArgs
         public byte ID { get; }
-        
+
         public TimeSpan StartTime { get; }
-        
-        public GridCoordinates UserGrid { get; }
-        
-        public GridCoordinates TargetGrid { get; }
-        
+
+        public EntityCoordinates UserGrid { get; }
+
+        public EntityCoordinates TargetGrid { get; }
+
         public EntityUid TargetUid { get; }
 
         public float Delay { get; }
-        
+
         // TODO: The other ones need predicting
         public bool BreakOnUserMove { get; }
-        
+
         public bool BreakOnTargetMove { get; }
-        
-        public DoAfterMessage(byte id, GridCoordinates userGrid, GridCoordinates targetGrid, TimeSpan startTime, float delay, bool breakOnUserMove, bool breakOnTargetMove, EntityUid targetUid = default)
+
+        public DoAfterMessage(byte id, EntityCoordinates userGrid, EntityCoordinates targetGrid, TimeSpan startTime, float delay, bool breakOnUserMove, bool breakOnTargetMove, EntityUid targetUid = default)
         {
             ID = id;
             UserGrid = userGrid;

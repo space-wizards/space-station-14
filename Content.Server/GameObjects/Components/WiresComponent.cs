@@ -114,11 +114,13 @@ namespace Content.Server.GameObjects.Components
         /// <summary>
         /// Contains all registered wires.
         /// </summary>
+        [ViewVariables]
         public readonly List<Wire> WiresList = new List<Wire>();
 
         /// <summary>
         /// Status messages are displayed at the bottom of the UI.
         /// </summary>
+        [ViewVariables]
         private readonly Dictionary<object, object> _statuses = new Dictionary<object, object>();
 
         /// <summary>

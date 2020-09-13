@@ -2,8 +2,8 @@
 using System;
 using System.Linq;
 using Content.Shared.GameObjects.Components.Disposal;
-using Content.Shared.GameObjects.Verbs;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
@@ -273,7 +273,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                     }
 
                     _lastClang = _gameTiming.CurTime;
-                    EntitySystem.Get<AudioSystem>().PlayAtCoords(_clangSound, Owner.Transform.GridPosition);
+                    EntitySystem.Get<AudioSystem>().PlayAtCoords(_clangSound, Owner.Transform.Coordinates);
                     break;
             }
         }

@@ -72,7 +72,7 @@ namespace Content.Server.GameObjects.Components.PDA
                 UserInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
             }
 
-            var idCard = _entityManager.SpawnEntity(_startingIdCard, Owner.Transform.GridPosition);
+            var idCard = _entityManager.SpawnEntity(_startingIdCard, Owner.Transform.Coordinates);
             var idCardComponent = idCard.GetComponent<IdCardComponent>();
             _idSlot.Insert(idCardComponent.Owner);
             ContainedID = idCardComponent;
@@ -172,7 +172,7 @@ namespace Content.Server.GameObjects.Components.PDA
                 return;
             }
 
-            UserInterface?.Open(actor.playerSession);
+            UserInterface?.Toggle(actor.playerSession);
             UpdatePDAAppearance();
         }
 
@@ -183,7 +183,7 @@ namespace Content.Server.GameObjects.Components.PDA
                 return false;
             }
 
-            UserInterface?.Open(actor.playerSession);
+            UserInterface?.Toggle(actor.playerSession);
             UpdatePDAAppearance();
             return true;
         }

@@ -10,9 +10,17 @@
   - type: SnapGrid
     offset: Center
   - type: Icon
-    texture: Constructible/Power/eightdirwire.png
+    sprite: Constructible/Atmos/pipeitems.rsi
+    state: scrubber
   - type: Sprite
-    texture: Constructible/Power/eightdirwire.png
+    sprite: Constructible/Atmos/pipeitems.rsi
+    state: scrubber
+  - type: Appearance
+    visuals:
+    - type: PipeVisualizer
+      pipeRSI: Constructible/Atmos/pipe.rsi
+    - type: SiphonVisualizer
+      siphonRSI: Constructible/Atmos/scrubber.rsi
   - type: Destructible
     thresholdvalue: 100
 

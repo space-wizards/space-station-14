@@ -2,10 +2,12 @@
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.Components.MachineLinking;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.Damage;
+using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -20,8 +22,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using Content.Server.GameObjects.Components.MachineLinking;
-using Content.Shared.Interfaces;
 
 namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers
 {
@@ -168,7 +168,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
             if (!user.TryGetComponent(out HandsComponent hands)
                 || !hands.PutInHand(bulb.Owner.GetComponent<ItemComponent>()))
-                bulb.Owner.Transform.GridPosition = user.Transform.GridPosition;
+                bulb.Owner.Transform.Coordinates = user.Transform.Coordinates;
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -267,7 +267,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-            var entity = Owner.EntityManager.SpawnEntity(prototype, Owner.Transform.GridPosition);
+            var entity = Owner.EntityManager.SpawnEntity(prototype, Owner.Transform.Coordinates);
             _lightBulbContainer.Insert(entity);
         }
     }

@@ -1,6 +1,5 @@
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems.Click;
-using Content.Server.Utility;
 using Content.Shared.Utility;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -41,7 +40,7 @@ namespace Content.Server.AI.Operators.Inventory
 
             // Click on da thing
             var interactionSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InteractionSystem>();
-            interactionSystem.UseItemInHand(_owner, _useTarget.Transform.GridPosition, _useTarget.Uid);
+            interactionSystem.UseItemInHand(_owner, _useTarget.Transform.Coordinates, _useTarget.Uid);
 
             return Outcome.Success;
         }

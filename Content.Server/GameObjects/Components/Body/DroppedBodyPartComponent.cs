@@ -1,11 +1,11 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using System.Linq;
-using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Server.Body;
 using Content.Server.Utility;
 using Content.Shared.Body.Surgery;
 using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
@@ -91,7 +91,7 @@ namespace Content.Server.GameObjects.Components.Body
             {
                 if (!bodyManager.TryGetSlotType(slot, out var typeResult) ||
                     typeResult != ContainedBodyPart?.PartType ||
-                    !bodyManager.TryGetBodyPartConnections(slot, out var parts))
+                    !bodyManager.TryGetPartConnections(slot, out var parts))
                 {
                     continue;
                 }
@@ -151,7 +151,7 @@ namespace Content.Server.GameObjects.Components.Body
             var target = (string) targetObject!;
             string message;
 
-            if (_bodyManagerComponentCache.InstallDroppedBodyPart(this, target))
+            if (_bodyManagerComponentCache.TryAddPart(target, this))
             {
                 message = Loc.GetString("You attach {0:theName}.", ContainedBodyPart);
             }

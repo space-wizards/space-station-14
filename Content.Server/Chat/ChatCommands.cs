@@ -8,6 +8,7 @@ using Content.Server.Interfaces.GameObjects;
 using Content.Server.Observer;
 using Content.Server.Players;
 using Content.Server.Utility;
+using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.Interfaces;
 using Robust.Server.Interfaces.Console;
@@ -16,7 +17,6 @@ using Robust.Shared.Enums;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Content.Shared.Damage;
 
 namespace Content.Server.Chat
 {

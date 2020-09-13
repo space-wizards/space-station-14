@@ -6,7 +6,6 @@ using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Utensil;
-using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Utensil;
 using Content.Shared.Interfaces;
@@ -41,7 +40,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         {
             get
             {
-                if (!Owner.TryGetComponent(out SolutionComponent? solution))
+                if (!Owner.TryGetComponent(out SolutionContainerComponent? solution))
                 {
                     return 0;
                 }
@@ -83,7 +82,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         public override void Initialize()
         {
             base.Initialize();
-            Owner.EnsureComponent<SolutionComponent>();
+            Owner.EnsureComponent<SolutionContainerComponent>();
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
@@ -110,7 +109,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         public virtual bool TryUseFood(IEntity? user, IEntity? target, UtensilComponent? utensilUsed = null)
         {
-            if (!Owner.TryGetComponent(out SolutionComponent? solution))
+            if (!Owner.TryGetComponent(out SolutionContainerComponent? solution))
             {
                 return false;
             }
@@ -202,7 +201,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             }
 
             //We're empty. Become trash.
-            var position = Owner.Transform.GridPosition;
+            var position = Owner.Transform.Coordinates;
             var finisher = Owner.EntityManager.SpawnEntity(_trashPrototype, position);
 
             // If the user is holding the item

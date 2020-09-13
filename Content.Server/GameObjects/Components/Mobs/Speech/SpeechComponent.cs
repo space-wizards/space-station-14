@@ -1,10 +1,9 @@
-﻿using Robust.Server.Interfaces.Console;
+﻿using System;
+using System.Linq;
+using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
-using System;
-using System.Linq;
 
 namespace Content.Server.GameObjects.Components.Mobs.Speech
 {

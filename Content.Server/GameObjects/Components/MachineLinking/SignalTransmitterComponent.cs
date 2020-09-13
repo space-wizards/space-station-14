@@ -1,4 +1,6 @@
-﻿using Content.Server.GameObjects.Components.Interactable;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Content.Server.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -9,8 +11,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Content.Server.GameObjects.Components.MachineLinking
 {
@@ -98,7 +98,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
 
             foreach (var receiver in _receivers)
             {
-                if (Range > 0 && !Owner.Transform.GridPosition.InRange(_mapManager, receiver.Owner.Transform.GridPosition, Range))
+                if (Range > 0 && !Owner.Transform.Coordinates.InRange(Owner.EntityManager, receiver.Owner.Transform.Coordinates, Range))
                 {
                     continue;
                 }

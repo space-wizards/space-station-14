@@ -11,17 +11,17 @@ using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Interactable;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using Robust.Shared.Serialization;
-using Content.Shared.GameObjects.EntitySystems;
 
 namespace Content.Server.GameObjects.Components.Interactable
 {
@@ -48,7 +48,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         private bool _welderLit;
         private WelderSystem _welderSystem = default!;
         private SpriteComponent? _spriteComponent;
-        private SolutionComponent? _solutionComponent;
+        private SolutionContainerComponent? _solutionComponent;
         private PointLightComponent? _pointLightComponent;
 
         public string? WeldSoundCollection { get; set; }
@@ -201,7 +201,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             PlaySoundCollection("WelderOn", -5);
             _welderSystem.Subscribe(this);
 
-            Owner.Transform.GridPosition
+            Owner.Transform.Coordinates
                 .GetTileAtmosphere()?.HotspotExpose(700f, 50f, true);
 
             return true;
@@ -243,7 +243,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             _solutionComponent?.TryRemoveReagent("chem.WeldingFuel", ReagentUnit.New(FuelLossRate * frameTime));
 
-            Owner.Transform.GridPosition
+            Owner.Transform.Coordinates
                 .GetTileAtmosphere()?.HotspotExpose(700f, 50f, true);
 
             if (Fuel == 0)

@@ -4,6 +4,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Items.Storage.Fill
 {
@@ -14,6 +15,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage.Fill
 
         public override string Name => "StorageFill";
 
+        [ViewVariables]
         private List<string> _contents = new List<string>();
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -34,7 +36,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage.Fill
 
             void Spawn(string prototype)
             {
-                storage.Insert(_entityManager.SpawnEntity(prototype, Owner.Transform.GridPosition));
+                storage.Insert(_entityManager.SpawnEntity(prototype, Owner.Transform.Coordinates));
             }
 
             foreach (var prototype in _contents)

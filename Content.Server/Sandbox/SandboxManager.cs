@@ -1,11 +1,10 @@
-using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.Sandbox;
-using Robust.Server.Interfaces.Console;
 using Robust.Server.Console;
+using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Placement;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
@@ -115,7 +114,7 @@ namespace Content.Server.Sandbox
                 ;
                 hands.PutInHandOrDrop(
                     _entityManager.SpawnEntity("CaptainIDCard",
-                    player.AttachedEntity.Transform.GridPosition).GetComponent<ItemComponent>());
+                    player.AttachedEntity.Transform.Coordinates).GetComponent<ItemComponent>());
             }
         }
 
@@ -139,7 +138,7 @@ namespace Content.Server.Sandbox
             }
 
             var player = _playerManager.GetSessionByChannel(message.MsgChannel);
-            _shell.ExecuteCommand(player, $"suicide");
+            _shell.ExecuteCommand(player, "suicide");
         }
 
         private void UpdateSandboxStatusForAll()

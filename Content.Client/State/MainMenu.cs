@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using Content.Client.UserInterface;
 using Robust.Client;
 using Robust.Client.Interfaces;
 using Robust.Client.Interfaces.ResourceManagement;
@@ -7,7 +8,6 @@ using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
@@ -36,7 +36,7 @@ namespace Content.Client.State
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
 
         private MainMenuControl _mainMenuControl;
-        private OptionsMenu OptionsMenu;
+        private OptionsMenu _optionsMenu;
         private bool _isConnecting;
 
         // ReSharper disable once InconsistentNaming
@@ -56,7 +56,7 @@ namespace Content.Client.State
 
             _client.RunLevelChanged += RunLevelChanged;
 
-            OptionsMenu = new OptionsMenu(_configurationManager);
+            _optionsMenu = new OptionsMenu();
         }
 
         /// <inheritdoc />
@@ -66,7 +66,7 @@ namespace Content.Client.State
             _netManager.ConnectFailed -= _onConnectFailed;
 
             _mainMenuControl.Dispose();
-            OptionsMenu.Dispose();
+            _optionsMenu.Dispose();
         }
 
         private void QuitButtonPressed(BaseButton.ButtonEventArgs args)
@@ -76,7 +76,7 @@ namespace Content.Client.State
 
         private void OptionsButtonPressed(BaseButton.ButtonEventArgs args)
         {
-            OptionsMenu.OpenCentered();
+            _optionsMenu.OpenCentered();
         }
 
         private void DirectConnectButtonPressed(BaseButton.ButtonEventArgs args)
@@ -131,6 +131,7 @@ namespace Content.Client.State
                 _userInterfaceManager.Popup($"Unable to connect: {e.Message}", "Connection error.");
                 Logger.Warning(e.ToString());
                 _netManager.ConnectFailed -= _onConnectFailed;
+                _setConnectingState(false);
             }
         }
 
@@ -314,7 +315,7 @@ namespace Content.Client.State
 
                 VersionLabel = new Label
                 {
-                    Text = $"v0.1"
+                    Text = "v0.1"
                 };
 
                 LayoutContainer.SetAnchorPreset(VersionLabel, LayoutContainer.LayoutPreset.BottomRight);

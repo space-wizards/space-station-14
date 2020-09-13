@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using Content.Server.Body.Mechanisms.Behaviors;
 using Content.Server.GameObjects.Components.Body;
-using Content.Server.GameObjects.Components.Metabolism;
 using Content.Shared.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Body;
 using Robust.Shared.IoC;

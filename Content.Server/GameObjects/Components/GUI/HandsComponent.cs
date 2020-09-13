@@ -8,8 +8,8 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
-using Content.Shared.GameObjects.Components.Body;
 using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
@@ -29,7 +29,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
-using Content.Server.GameObjects.Components.ActionBlocking;
 
 namespace Content.Server.GameObjects.Components.GUI
 {
@@ -181,7 +180,7 @@ namespace Content.Server.GameObjects.Components.GUI
         {
             if (!PutInHand(item, mobCheck))
             {
-                item.Owner.Transform.GridPosition = Owner.Transform.GridPosition;
+                item.Owner.Transform.Coordinates = Owner.Transform.Coordinates;
             }
         }
 
@@ -224,8 +223,10 @@ namespace Content.Server.GameObjects.Components.GUI
                 if (!interactionSystem.TryDroppedInteraction(Owner, item.Owner))
                     return false;
             }
-
-            interactionSystem.DroppedInteraction(Owner, item.Owner);
+            else
+            {
+                interactionSystem.DroppedInteraction(Owner, item.Owner);
+            }
             return true;
         }
 
@@ -245,10 +246,10 @@ namespace Content.Server.GameObjects.Components.GUI
             return false;
         }
 
-        public bool Drop(string slot, GridCoordinates coords, bool doMobChecks = true)
+        public bool Drop(string slot, EntityCoordinates coords, bool doMobChecks = true)
         {
             var hand = GetHand(slot);
-            if (!CanDrop(slot) || hand?.Entity == null)
+            if (!CanDrop(slot, doMobChecks) || hand?.Entity == null)
             {
                 return false;
             }
@@ -260,58 +261,11 @@ namespace Content.Server.GameObjects.Components.GUI
                 return false;
             }
 
-            if (!DroppedInteraction(item, doMobChecks))
+            if (!DroppedInteraction(item, false))
                 return false;
 
             item.RemovedFromSlot();
-            item.Owner.Transform.GridPosition = coords;
-
-            if (ContainerHelpers.TryGetContainer(Owner, out var container))
-            {
-                container.Insert(item.Owner);
-            }
-
-            OnItemChanged?.Invoke();
-
-            Dirty();
-            return true;
-        }
-
-        public bool Drop(IEntity entity, GridCoordinates coords, bool doMobChecks = true)
-        {
-            if (entity == null)
-            {
-                throw new ArgumentNullException(nameof(entity));
-            }
-
-            if (!TryHand(entity, out var slot))
-            {
-                throw new ArgumentException("Entity must be held in one of our hands.", nameof(entity));
-            }
-
-            return Drop(slot, coords, doMobChecks);
-        }
-
-        public bool Drop(string slot, bool mobChecks = true)
-        {
-            var hand = GetHand(slot);
-            if (!CanDrop(slot, mobChecks) || hand?.Entity == null)
-            {
-                return false;
-            }
-
-            var item = hand.Entity.GetComponent<ItemComponent>();
-
-            if (!DroppedInteraction(item, mobChecks))
-                return false;
-
-            if (!hand.Container.Remove(hand.Entity))
-            {
-                return false;
-            }
-
-            item.RemovedFromSlot();
-            item.Owner.Transform.GridPosition = Owner.Transform.GridPosition;
+            item.Owner.Transform.Coordinates = coords;
 
             if (item.Owner.TryGetComponent<SpriteComponent>(out var spriteComponent))
             {
@@ -329,6 +283,26 @@ namespace Content.Server.GameObjects.Components.GUI
             return true;
         }
 
+        public bool Drop(IEntity entity, EntityCoordinates coords, bool doMobChecks = true)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
+            if (!TryHand(entity, out var slot))
+            {
+                throw new ArgumentException("Entity must be held in one of our hands.", nameof(entity));
+            }
+
+            return Drop(slot, coords, doMobChecks);
+        }
+
+        public bool Drop(string slot, bool mobChecks = true)
+        {
+            return Drop(slot, Owner.Transform.Coordinates, mobChecks);
+        }
+
         public bool Drop(IEntity entity, bool mobChecks = true)
         {
             if (entity == null)
@@ -341,7 +315,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 throw new ArgumentException("Entity must be held in one of our hands.", nameof(entity));
             }
 
-            return Drop(slot, mobChecks);
+            return Drop(slot, Owner.Transform.Coordinates, mobChecks);
         }
 
         public bool Drop(string slot, BaseContainer targetContainer, bool doMobChecks = true)
@@ -357,15 +331,10 @@ namespace Content.Server.GameObjects.Components.GUI
             }
 
             var hand = GetHand(slot);
-            if (!CanDrop(slot) || hand?.Entity == null)
+            if (!CanDrop(slot, doMobChecks) || hand?.Entity == null)
             {
                 return false;
             }
-
-            var item = hand.Entity.GetComponent<ItemComponent>();
-
-            if (!DroppedInteraction(item, doMobChecks))
-                return false;
 
             if (!hand.Container.CanRemove(hand.Entity))
             {
@@ -377,10 +346,15 @@ namespace Content.Server.GameObjects.Components.GUI
                 return false;
             }
 
+            var item = hand.Entity.GetComponent<ItemComponent>();
+
             if (!hand.Container.Remove(hand.Entity))
             {
                 throw new InvalidOperationException();
             }
+
+            if (!DroppedInteraction(item, doMobChecks))
+                return false;
 
             item.RemovedFromSlot();
 
@@ -564,7 +538,7 @@ namespace Content.Server.GameObjects.Components.GUI
             controller.StartPull(Owner.GetComponent<ICollidableComponent>());
         }
 
-        public void MovePulledObject(GridCoordinates puller, GridCoordinates to)
+        public void MovePulledObject(EntityCoordinates puller, EntityCoordinates to)
         {
             if (PulledObject != null &&
                 PulledObject.TryGetController(out PullController controller))
@@ -655,7 +629,7 @@ namespace Content.Server.GameObjects.Components.GUI
                         if (used != null)
                         {
                             interactionSystem.Interaction(Owner, used, hand.Entity,
-                                GridCoordinates.InvalidGrid);
+                                EntityCoordinates.Invalid);
                         }
                         else
                         {

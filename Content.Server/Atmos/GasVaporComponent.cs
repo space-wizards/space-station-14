@@ -1,5 +1,7 @@
-﻿using Content.Shared.Physics;
-using Content.Server.Atmos.Reactions;
+﻿using Content.Server.Atmos.Reactions;
+using Content.Server.Interfaces;
+using Content.Shared.Atmos;
+using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
@@ -8,9 +10,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using Content.Server.GameObjects.Components.Atmos;
-using Content.Server.Interfaces;
-using Content.Shared.Atmos;
 
 namespace Content.Server.Atmos
 {
@@ -18,6 +17,8 @@ namespace Content.Server.Atmos
     class GasVaporComponent : Component, ICollideBehavior, IGasMixtureHolder
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+
         public override string Name => "GasVapor";
 
         [ViewVariables] public GasMixture Air { get; set; }
@@ -76,10 +77,10 @@ namespace Content.Server.Atmos
 
                 foreach (var tile in tiles)
                 {
-                    var pos = tile.GridIndices.ToGridCoordinates(_mapManager, tile.GridIndex);
-                    var atmos = AtmosHelpers.GetTileAtmosphere(pos);
+                    var pos = tile.GridIndices.ToEntityCoordinates(_mapManager, tile.GridIndex);
+                    var atmos = pos.GetTileAtmosphere(_entityManager);
 
-                    if (atmos.Air == null)
+                    if (atmos?.Air == null)
                     {
                         return;
                     }

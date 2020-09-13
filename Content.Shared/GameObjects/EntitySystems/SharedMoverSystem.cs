@@ -5,7 +5,6 @@ using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
@@ -58,7 +57,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             collidable.EnsureController<MoverController>();
 
             var weightless = !transform.Owner.HasComponent<MovementIgnoreGravityComponent>() &&
-                             _physicsManager.IsWeightless(transform.GridPosition);
+                             _physicsManager.IsWeightless(transform.Coordinates);
 
             if (weightless)
             {

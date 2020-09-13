@@ -1,6 +1,8 @@
-﻿using Content.Server.GameObjects.Components.Interactable;
+﻿using System.Threading.Tasks;
+using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Interactable;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
@@ -8,8 +10,6 @@ using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using System.Threading.Tasks;
-using Content.Shared.Interfaces;
 
 namespace Content.Server.GameObjects.Components.Power.AME
 {
@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Power.AME
             if (activeHandEntity.TryGetComponent<ToolComponent>(out var multitool) && multitool.Qualities == ToolQuality.Multitool)
             {
 
-                var mapGrid = _mapManager.GetGrid(args.ClickLocation.GridID);
+                var mapGrid = _mapManager.GetGrid(args.ClickLocation.GetGridId(_serverEntityManager));
                 var tile = mapGrid.GetTileRef(args.ClickLocation);
                 var snapPos = mapGrid.SnapGridCellFor(args.ClickLocation, SnapGridOffset.Center);
 

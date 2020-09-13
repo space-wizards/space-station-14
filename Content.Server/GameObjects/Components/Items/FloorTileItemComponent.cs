@@ -1,5 +1,4 @@
 ﻿using Content.Server.GameObjects.Components.Stack;
-using Content.Server.Utility;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Maps;
 using Content.Shared.Utility;
@@ -40,7 +39,7 @@ namespace Content.Server.GameObjects.Components.Items
             if (!Owner.TryGetComponent(out StackComponent stack)) return;
 
             var attacked = eventArgs.Target;
-            var mapGrid = _mapManager.GetGrid(eventArgs.ClickLocation.GridID);
+            var mapGrid = _mapManager.GetGrid(eventArgs.ClickLocation.GetGridId(Owner.EntityManager));
             var tile = mapGrid.GetTileRef(eventArgs.ClickLocation);
             var tileDef = (ContentTileDefinition)_tileDefinitionManager[tile.Tile.TypeId];
 

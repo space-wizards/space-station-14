@@ -22,7 +22,6 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
     public class PowerReceiverComponent : Component, IExamine
     {
         [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
 
         public override string Name => "PowerReceiver";
 
@@ -64,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         private int _load;
 
         /// <summary>
-        ///     When true, causes this to appear powered even if not receiving power from an Apc.
+        ///     When false, causes this to appear powered even if not receiving power from an Apc.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public bool NeedsPower { get => _needsPower; set => SetNeedsPower(value); }
@@ -73,6 +72,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         /// <summary>
         ///     When true, causes this to never appear powered.
         /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
         public bool PowerDisabled { get => _powerDisabled; set => SetPowerDisabled(value); }
         private bool _powerDisabled;
 
@@ -128,11 +128,13 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
                 {
                     if (provider.Connectable)
                     {
-                        var distanceToProvider = provider.Owner.Transform.GridPosition.Distance(_mapManager, Owner.Transform.GridPosition);
-                        if (distanceToProvider < Math.Min(PowerReceptionRange, provider.PowerTransferRange))
+                        if (provider.Owner.Transform.Coordinates.TryDistance(_serverEntityManager, Owner.Transform.Coordinates, out var distance))
                         {
-                            foundProvider = provider;
-                            return true;
+                            if (distance < Math.Min(PowerReceptionRange, provider.PowerTransferRange))
+                            {
+                                foundProvider = provider;
+                                return true;
+                            }
                         }
                     }
                 }

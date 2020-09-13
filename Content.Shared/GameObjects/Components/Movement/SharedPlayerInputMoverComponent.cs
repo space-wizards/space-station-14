@@ -1,8 +1,6 @@
 ﻿#nullable enable
 using System;
 using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.Components.Rotation;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.Configuration;
@@ -78,7 +76,9 @@ namespace Content.Shared.GameObjects.Components.Movement
             }
         }
 
+        [ViewVariables(VVAccess.ReadWrite)]
         public float CurrentPushSpeed => 5;
+        [ViewVariables(VVAccess.ReadWrite)]
         public float GrabRange => 0.2f;
         public bool Sprinting => !HasFlag(_heldMoveButtons, MoveButtons.Walk);
 
@@ -132,7 +132,7 @@ namespace Content.Shared.GameObjects.Components.Movement
             }
         }
 
-        public abstract GridCoordinates LastPosition { get; set; }
+        public abstract EntityCoordinates LastPosition { get; set; }
         public abstract float StepSoundDistance { get; set; }
 
         /// <summary>

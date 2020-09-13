@@ -1,6 +1,5 @@
 ﻿#nullable enable
 using System;
-using Content.Shared.GameObjects.Components.Research;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -20,20 +19,19 @@ namespace Content.Shared.Interfaces.GameObjects.Components
 
     public class AttackEventArgs : EventArgs
     {
-        public AttackEventArgs(IEntity user, GridCoordinates clickLocation, bool wideAttack, EntityUid target = default)
+        public AttackEventArgs(IEntity user, EntityCoordinates clickLocation, bool wideAttack, EntityUid target = default)
         {
             User = user;
             ClickLocation = clickLocation;
             WideAttack = wideAttack;
             Target = target;
 
-            IEntity? targetEntity = null;
-            IoCManager.Resolve<IEntityManager>()?.TryGetEntity(Target, out targetEntity);
+            IoCManager.Resolve<IEntityManager>().TryGetEntity(Target, out var targetEntity);
             TargetEntity = targetEntity;
         }
 
         public IEntity User { get; }
-        public GridCoordinates ClickLocation { get; }
+        public EntityCoordinates ClickLocation { get; }
         public bool WideAttack { get; }
         public EntityUid Target { get; }
         public IEntity? TargetEntity { get; }

@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.MachineLinking;
+﻿using System.Collections.Generic;
+using Content.Server.GameObjects.Components.MachineLinking;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
@@ -10,7 +11,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
-using System.Collections.Generic;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -64,7 +64,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        private bool HandleUse(ICommonSession session, GridCoordinates coords, EntityUid uid)
+        private bool HandleUse(ICommonSession session, EntityCoordinates coords, EntityUid uid)
         {
             if (!_transmitters.TryGetValue(session.SessionId, out var signalTransmitter))
             {
@@ -72,11 +72,6 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             if (!EntityManager.TryGetEntity(uid, out var entity))
-            {
-                return false;
-            }
-
-            if (entity == null)
             {
                 return false;
             }

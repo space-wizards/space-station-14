@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Reactions;
-using Content.Server.Interfaces;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
 using JetBrains.Annotations;
 using Robust.Server.Interfaces.Timing;
@@ -64,8 +63,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             foreach (var (mapGridComponent, gridAtmosphereComponent) in EntityManager.ComponentManager.EntityQuery<IMapGridComponent, IGridAtmosphereComponent>())
             {
-                if (_pauseManager.IsGridPaused(mapGridComponent.GridIndex))
-                    continue;
+                if (_pauseManager.IsGridPaused(mapGridComponent.GridIndex)) continue;
 
                 gridAtmosphereComponent.Update(frameTime);
             }
