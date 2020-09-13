@@ -1,8 +1,6 @@
 ﻿#nullable enable
 using Content.Server.Interfaces;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.Atmos;
-using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;

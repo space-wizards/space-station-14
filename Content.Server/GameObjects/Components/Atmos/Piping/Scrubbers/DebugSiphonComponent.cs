@@ -1,7 +1,7 @@
 ﻿using Content.Server.Atmos;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.Components.Atmos.Piping
+namespace Content.Server.GameObjects.Components.Atmos.Piping.Scrubbers
 {
     /// <summary>
     ///     Placeholder example of scrubber functionality.

@@ -1,5 +1,4 @@
-﻿using System;
-using Content.Shared.GameObjects.Components.Mobs;
+﻿using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;

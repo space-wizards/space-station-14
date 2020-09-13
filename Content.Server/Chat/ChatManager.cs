@@ -1,4 +1,6 @@
-﻿using Content.Server.GameObjects.Components.Observer;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
@@ -11,9 +13,6 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using static Content.Server.Interfaces.Chat.IChatManager;
 
 namespace Content.Server.Chat

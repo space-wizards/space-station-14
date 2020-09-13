@@ -1,5 +1,7 @@
 ﻿using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.WorldState;
+using Content.Server.Body.Network;
+using Content.Server.GameObjects.Components.Mobs.Speech;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
@@ -14,7 +16,6 @@ using Robust.Shared.Interfaces.Log;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Timing;
-using Content.Server.GameObjects.Components.Mobs.Speech;
 
 namespace Content.Server
 {

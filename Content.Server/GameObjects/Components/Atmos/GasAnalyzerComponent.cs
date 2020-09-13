@@ -60,7 +60,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             _checkPlayer = true;
             _position = null;
-            UserInterface?.Open(session);
+            UserInterface?.Toggle(session);
             UpdateUserInterface();
             Resync();
         }
@@ -75,7 +75,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             _checkPlayer = false;
             _position = pos;
-            UserInterface?.Open(session);
+            UserInterface?.Toggle(session);
             UpdateUserInterface();
             Resync();
         }

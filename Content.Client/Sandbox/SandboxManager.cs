@@ -1,12 +1,9 @@
 ﻿using System;
 using Content.Client.UserInterface;
-using Content.Client.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Sandbox;
 using Robust.Client.Console;
-using Robust.Client.Interfaces.Console;
 using Robust.Client.Interfaces.Input;
-using Robust.Client.Interfaces.Graphics.Lighting;
 using Robust.Client.Interfaces.Placement;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
@@ -213,7 +210,7 @@ namespace Content.Client.Sandbox
 
         private void OnToggleSubfloorButtonClicked(BaseButton.ButtonEventArgs args)
         {
-            ToggleSubfloor();
+            ToggleSubFloor();
         }
 
         private void OnShowMarkersButtonClicked(BaseButton.ButtonEventArgs args)
@@ -278,7 +275,7 @@ namespace Content.Client.Sandbox
             _console.ProcessCommand("togglelight");
         }
 
-        private void ToggleSubfloor()
+        private void ToggleSubFloor()
         {
             _console.ProcessCommand("showsubfloor");
         }

@@ -10,7 +10,8 @@
   - type: SnapGrid
     offset: Center
   - type: Icon
-    texture: Constructible/Power/eightdirwire.png
+    sprite: Constructible/Atmos/pressurepump.rsi
+    state: pumpEnabledWest2East2
   - type: Sprite
   - type: Appearance
     visuals:
@@ -43,7 +44,7 @@
   - type: VolumePump
     inletDirection: South
     outletDirection: North
-    
+
 - type: entity
   parent: NorthwardLongitudinalPump
   id: NorthwardLongitudinalPressurePump
@@ -52,4 +53,3 @@
   - type: PressurePump
     inletDirection: South
     outletDirection: North
-    

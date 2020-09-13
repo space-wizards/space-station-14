@@ -4,7 +4,6 @@ using Content.Client.GameObjects.Components.MedicalScanner;
 using Content.Client.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.Components.Medical;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;

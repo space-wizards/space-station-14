@@ -1,14 +1,14 @@
 ﻿#nullable enable
 
 using System.Threading.Tasks;
+using Content.Server.GameObjects.Components.Movement;
+using Content.Shared.Physics;
 using NUnit.Framework;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Content.Server.GameObjects.Components.Movement;
-using Content.Shared.Physics;
-using Robust.Shared.GameObjects.Components;
 
 namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
 {

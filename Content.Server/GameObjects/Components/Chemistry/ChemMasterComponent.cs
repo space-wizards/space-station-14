@@ -45,7 +45,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         [ViewVariables] private bool HasBeaker => _beakerContainer.ContainedEntity != null;
         [ViewVariables] private bool _bufferModeTransfer = true;
 
-        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+        [ViewVariables] private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
 
         [ViewVariables] private readonly SolutionContainerComponent BufferSolution = new SolutionContainerComponent();
 

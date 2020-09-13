@@ -46,6 +46,7 @@ namespace Content.Server.GameObjects.Components.Doors
             protected set => _state = value;
         }
 
+        [ViewVariables]
         protected float OpenTimeCounter;
         [ViewVariables(VVAccess.ReadWrite)]
         protected bool AutoClose = true;

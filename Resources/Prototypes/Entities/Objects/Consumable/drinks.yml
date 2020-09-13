@@ -1244,54 +1244,6 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkRag
-  name: rag
-  description: ''
-  components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/rag.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/rag.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkRagLit
-  name: rag lit
-  description: ''
-  components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/rag_lit.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/rag_lit.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkRagSmall
-  name: rag small
-  description: ''
-  components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/rag_small.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/rag_small.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkRagSmallLit
-  name: rag small lit
-  description: ''
-  components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/rag_small_lit.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/rag_small_lit.rsi
-
-- type: entity
-  parent: DrinkGlassBase
   id: DrinkRamen
   name: cup ramen
   description: Just add 10ml water, self heats! A taste that reminds you of your school years.

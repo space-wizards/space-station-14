@@ -9,8 +9,6 @@ using Content.Server.Interfaces;
 using Content.Shared.Atmos;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Serialization;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 

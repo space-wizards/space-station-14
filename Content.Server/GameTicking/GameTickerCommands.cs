@@ -365,7 +365,7 @@ namespace Content.Server.GameTicking
 
             shell.ExecuteCommand(player, $"addmap {mapId} false");
             shell.ExecuteCommand(player, $"loadbp {mapId} \"{CommandParsing.Escape(mapName)}\"");
-            shell.ExecuteCommand(player, $"aghost");
+            shell.ExecuteCommand(player, "aghost");
             shell.ExecuteCommand(player, $"tp 0 0 {mapId}");
 
             var newGridId = mapManager.GetAllGrids().Max(g => (int) g.Index);

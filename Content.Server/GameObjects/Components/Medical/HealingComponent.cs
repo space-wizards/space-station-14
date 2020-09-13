@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Body;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Body;
@@ -7,8 +6,6 @@ using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Medical

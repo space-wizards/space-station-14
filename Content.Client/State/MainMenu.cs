@@ -36,7 +36,7 @@ namespace Content.Client.State
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
 
         private MainMenuControl _mainMenuControl;
-        private OptionsMenu OptionsMenu;
+        private OptionsMenu _optionsMenu;
         private bool _isConnecting;
 
         // ReSharper disable once InconsistentNaming
@@ -56,7 +56,7 @@ namespace Content.Client.State
 
             _client.RunLevelChanged += RunLevelChanged;
 
-            OptionsMenu = new OptionsMenu();
+            _optionsMenu = new OptionsMenu();
         }
 
         /// <inheritdoc />
@@ -66,7 +66,7 @@ namespace Content.Client.State
             _netManager.ConnectFailed -= _onConnectFailed;
 
             _mainMenuControl.Dispose();
-            OptionsMenu.Dispose();
+            _optionsMenu.Dispose();
         }
 
         private void QuitButtonPressed(BaseButton.ButtonEventArgs args)
@@ -76,7 +76,7 @@ namespace Content.Client.State
 
         private void OptionsButtonPressed(BaseButton.ButtonEventArgs args)
         {
-            OptionsMenu.OpenCentered();
+            _optionsMenu.OpenCentered();
         }
 
         private void DirectConnectButtonPressed(BaseButton.ButtonEventArgs args)
@@ -315,7 +315,7 @@ namespace Content.Client.State
 
                 VersionLabel = new Label
                 {
-                    Text = $"v0.1"
+                    Text = "v0.1"
                 };
 
                 LayoutContainer.SetAnchorPreset(VersionLabel, LayoutContainer.LayoutPreset.BottomRight);

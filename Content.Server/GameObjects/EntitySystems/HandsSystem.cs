@@ -6,11 +6,9 @@ using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Throw;
-using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Interfaces;
-using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystemMessages;
 using Robust.Server.Interfaces.Player;
@@ -23,6 +21,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
+using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -182,15 +181,15 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private void HandleSmartEquipBackpack(ICommonSession session)
         {
-            HandleSmartEquip(session, EquipmentSlotDefines.Slots.BACKPACK);
+            HandleSmartEquip(session, Slots.BACKPACK);
         }
 
         private void HandleSmartEquipBelt(ICommonSession session)
         {
-            HandleSmartEquip(session, EquipmentSlotDefines.Slots.BELT);
+            HandleSmartEquip(session, Slots.BELT);
         }
 
-        private void HandleSmartEquip(ICommonSession session, EquipmentSlotDefines.Slots equipementSlot)
+        private void HandleSmartEquip(ICommonSession session, Slots equipmentSlot)
         {
             var plyEnt = ((IPlayerSession) session).AttachedEntity;
 
@@ -201,11 +200,11 @@ namespace Content.Server.GameObjects.EntitySystems
                 !plyEnt.TryGetComponent(out InventoryComponent inventoryComp))
                 return;
 
-            if (!inventoryComp.TryGetSlotItem(equipementSlot, out ItemComponent equipmentItem)
+            if (!inventoryComp.TryGetSlotItem(equipmentSlot, out ItemComponent equipmentItem)
                 || !equipmentItem.Owner.TryGetComponent<ServerStorageComponent>(out var storageComponent))
             {
                 plyEnt.PopupMessage(Loc.GetString("You have no {0} to take something out of!",
-                    EquipmentSlotDefines.SlotNames[equipementSlot].ToLower()));
+                    SlotNames[equipmentSlot].ToLower()));
                 return;
             }
 
@@ -220,7 +219,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 if (storageComponent.StoredEntities.Count == 0)
                 {
                     plyEnt.PopupMessage(Loc.GetString("There's nothing in your {0} to take out!",
-                        EquipmentSlotDefines.SlotNames[equipementSlot].ToLower()));
+                        SlotNames[equipmentSlot].ToLower()));
                 }
                 else
                 {

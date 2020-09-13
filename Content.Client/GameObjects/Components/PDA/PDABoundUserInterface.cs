@@ -83,9 +83,8 @@ namespace Content.Client.GameObjects.Components.PDA
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-            DebugTools.Assert((state is PDAUBoundUserInterfaceState));
+            DebugTools.Assert(state is PDAUBoundUserInterfaceState);
 
-            var cstate = (PDAUBoundUserInterfaceState)state;
             switch (state)
             {
                 case PDAUpdateState msg:

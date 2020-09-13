@@ -1,10 +1,10 @@
-﻿using Content.Server.Atmos;
+﻿using System.Collections.Generic;
+using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.ViewVariables;
-using System.Collections.Generic;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 {
