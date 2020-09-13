@@ -10,8 +10,11 @@
   - type: SnapGrid
     offset: Center
   - type: Icon
-    texture: Constructible/Power/eightdirwire.png
+    sprite: Constructible/Atmos/pipeitems.rsi
+    state: vent
   - type: Sprite
+    sprite: Constructible/Atmos/pipeitems.rsi
+    state: vent
   - type: Appearance
     visuals:
     - type: PipeVisualizer

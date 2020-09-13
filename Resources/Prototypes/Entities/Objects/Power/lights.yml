@@ -6,11 +6,9 @@
   components:
   - type: LightBulb
     bulb: Bulb
-
   - type: Sprite
     sprite: Objects/Power/light_bulb.rsi
     state: normal
-
   - type: Icon
     sprite: Objects/Power/light_bulb.rsi
     state: normal
@@ -31,11 +29,9 @@
   components:
   - type: LightBulb
     bulb: Tube
-
   - type: Sprite
     sprite:  Objects/Power/light_tube.rsi
     state: normal
-
   - type: Icon
     sprite:  Objects/Power/light_tube.rsi
     state: normal

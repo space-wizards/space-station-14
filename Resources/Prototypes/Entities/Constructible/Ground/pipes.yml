@@ -10,7 +10,7 @@
   - type: SnapGrid
     offset: Center
   - type: Icon
-    texture: Constructible/Power/eightdirwire.png
+    texture: Constructible/Atmos/pipe.rsi/pipeLateral2.png
   - type: Sprite
   - type: Destructible
     thresholdvalue: 100
@@ -24,6 +24,8 @@
   id: FourwayPipe
   name: Fourway Pipe
   components:
+  - type: Icon
+    texture: Constructible/Atmos/pipe.rsi/pipeFourway2.png
   - type: NodeContainer
     nodes:
     - !type:PipeNode
@@ -35,6 +37,8 @@
   id: LongitudinalPipe
   name: Longitudinal Pipe
   components:
+  - type: Icon
+    texture: Constructible/Atmos/pipe.rsi/pipeLongitudinal2.png
   - type: NodeContainer
     nodes:
     - !type:PipeNode

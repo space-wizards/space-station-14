@@ -8,4 +8,4 @@
     - type: StorageVisualizer
       state: freezer
   - type: Icon
-    state: freezer_door
+    state: freezer_icon
