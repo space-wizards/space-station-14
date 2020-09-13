@@ -323,60 +323,6 @@ namespace Content.Server.Atmos
         }
     }
 
-    public class ClearAtmos : IClientCommand
-    {
-        public string Command => "clearatmos";
-        public string Description => "Clear a grid of all gases.";
-        public string Help => "clearatmos <GridId>";
-        public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
-        {
-            if (args.Length < 1) return;
-            if (!int.TryParse(args[0], out var id))
-            {
-                shell.SendText(player, "Not enough arguments!");
-            }
-
-            var gridId = new GridId(id);
-
-            var mapMan = IoCManager.Resolve<IMapManager>();
-
-            if (!gridId.IsValid() || !mapMan.TryGetGrid(gridId, out var gridComp))
-            {
-                shell.SendText(player, "Invalid grid ID.");
-                return;
-            }
-
-            var entMan = IoCManager.Resolve<IEntityManager>();
-
-            if (!entMan.TryGetEntity(gridComp.GridEntityId, out var grid))
-            {
-                shell.SendText(player, "Failed to get grid entity.");
-                return;
-            }
-
-            if (!grid.HasComponent<GridAtmosphereComponent>())
-            {
-                shell.SendText(player, "Grid doesn't have an atmosphere.");
-                return;
-            }
-
-            var gam = grid.GetComponent<GridAtmosphereComponent>();
-
-            var tiles = 0;
-            var moles = 0f;
-            foreach (var tile in gam)
-            {
-                if (tile.Air == null || tile.Air.Immutable) continue;
-                tiles++;
-                moles += tile.Air.TotalMoles;
-                tile.Air.RemoveRatio(1f);
-                gam.Invalidate(tile.GridIndices);
-            }
-
-            shell.SendText(player, $"Removed {moles} moles from {tiles} tiles.");
-        }
-    }
-
     public class SetTemperature : IClientCommand
     {
         public string Command => "settemp";
@@ -634,25 +580,34 @@ namespace Content.Server.Atmos
                 return;
             }
 
-            var i = 0;
-
-            if (gas == null)
+            var tiles = 0;
+            var moles = 0f;
+            foreach (var tile in atmosphere)
             {
-                foreach (var tile in atmosphere)
+                if (tile.Air == null || tile.Air.Immutable) continue;
+
+                tiles++;
+                moles += tile.Air.TotalMoles;
+
+                if (gas == null)
                 {
                     tile.Air?.Clear();
-                    i++;
                 }
-            }
-            else
-            {
-                foreach (var tile in atmosphere)
+                else
                 {
                     tile.Air.SetMoles(gas.Value, 0);
                 }
+
+                atmosphere.Invalidate(tile.GridIndices);
             }
 
-            shell.SendText(player, $"Cleared gas from {i} tiles");
+            if (gas == null)
+            {
+                shell.SendText(player, $"Removed {moles} moles from {tiles} tiles.");
+                return;
+            }
+
+            shell.SendText(player, $"Removed {moles} moles of gas {gas} from {tiles} tiles.");
         }
     }
 }
