@@ -29,8 +29,6 @@ namespace Content.Shared.GameObjects.Components.Damage
 
         private DamageFlag _flags;
 
-        private string _damageSound = "";
-
         public event Action<HealthChangedEventArgs>? HealthChangedEvent;
 
         /// <summary>
@@ -168,9 +166,6 @@ namespace Content.Shared.GameObjects.Components.Damage
 
                     return writeFlags;
                 });
-
-            // Data for damage-related sounds. TODO: Replace hit_kick.ogg with a different sound effect here..? There aren't any other suitable sounds at the moment
-            serializer.DataField(ref _damageSound, "damageSound", "/Audio/Effects/hit_kick.ogg");
 
             if (serializer.Reading)
             {
