@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.GameObjects.Components.Body;
-using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Body.Template
@@ -18,8 +17,8 @@ namespace Content.Shared.Body.Template
     {
         /// <summary>
         ///     Maps all parts on this template to its BodyPartType.
-        ///     For instance, "right arm" is mapped to "BodyPartType.arm" on the humanoid
-        ///     template.
+        ///     For instance, "right arm" is mapped to "BodyPartType.arm" on
+        ///     the humanoid template.
         /// </summary>
         [ViewVariables]
         public Dictionary<string, BodyPartType> Slots { get; private set; } = new Dictionary<string, BodyPartType>();
@@ -28,9 +27,9 @@ namespace Content.Shared.Body.Template
         ///     Maps limb name to the list of their connections to other limbs.
         ///     For instance, on the humanoid template "torso" is mapped to a list
         ///     containing "right arm", "left arm", "left leg", and "right leg".
-        ///     This is mapped both ways during runtime, but in the prototype only one
-        ///     way has to be defined, i.e., "torso" to "left arm" will automatically
-        ///     map "left arm" to "torso".
+        ///     This is mapped both ways during runtime, but in the prototype
+        ///     only one way has to be defined, i.e., "torso" to "left arm" will
+        ///     automatically map "left arm" to "torso".
         /// </summary>
         [ViewVariables]
         public Dictionary<string, List<string>> Connections { get; private set; } = new Dictionary<string, List<string>>();
@@ -104,19 +103,6 @@ namespace Content.Shared.Body.Template
             }
 
             return hash;
-        }
-
-        public virtual void Initialize(BodyTemplatePrototype prototype)
-        {
-            DebugTools.Assert(!Initialized, $"{nameof(BodyTemplate)} {Name} has already been initialized!");
-
-            Name = prototype.Name;
-            Slots = new Dictionary<string, BodyPartType>(prototype.Slots);
-            Connections = new Dictionary<string, List<string>>(prototype.Connections);
-            Layers = new Dictionary<string, string>(prototype.Layers);
-            MechanismLayers = new Dictionary<string, string>(prototype.MechanismLayers);
-
-            Initialized = true;
         }
     }
 }

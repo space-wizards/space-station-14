@@ -1,9 +1,10 @@
 ﻿#nullable enable
 using System.Collections.Generic;
-using Content.Server.Body;
 using Content.Server.Utility;
-using Content.Shared.Body.Scanner;
 using Content.Shared.Body.Template;
+using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Body.Part;
+using Content.Shared.GameObjects.Components.Body.Scanner;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
@@ -15,10 +16,9 @@ namespace Content.Server.GameObjects.Components.Body
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class BodyScannerComponent : Component, IActivate
+    [ComponentReference(typeof(SharedBodyScannerComponent))]
+    public class BodyScannerComponent : SharedBodyScannerComponent, IActivate
     {
-        public sealed override string Name => "BodyScanner";
-
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(BodyScannerUiKey.Key);
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
@@ -57,7 +57,7 @@ namespace Content.Server.GameObjects.Components.Body
         /// <summary>
         ///     Copy BodyTemplate and BodyPart data into a common data class that the client can read.
         /// </summary>
-        private BodyScannerInterfaceState InterfaceState(BodyTemplate template, IReadOnlyDictionary<string, ISharedBodyPart> bodyParts)
+        private BodyScannerInterfaceState InterfaceState(IBody body, IReadOnlyDictionary<string, IBodyPart> bodyParts)
         {
             var partsData = new Dictionary<string, BodyScannerBodyPartData>();
 
@@ -77,7 +77,7 @@ namespace Content.Server.GameObjects.Components.Body
                         part.CurrentDurability, mechanismData));
             }
 
-            var templateData = new BodyScannerTemplateData(template.Name, template.Slots);
+            var templateData = new BodyScannerTemplateData(body.TemplateName, body.Slots);
 
             return new BodyScannerInterfaceState(partsData, templateData);
         }

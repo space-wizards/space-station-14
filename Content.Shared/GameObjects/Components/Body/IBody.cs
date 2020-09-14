@@ -5,18 +5,18 @@ using Content.Shared.Body.Template;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Damage;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Body
 {
     public interface IBody : IDamageableComponent
     {
+        public string TemplateName { get; }
+
         /// <summary>
         ///     Maps all parts on this template to its BodyPartType.
         ///     For instance, "right arm" is mapped to "BodyPartType.arm" on the humanoid
         ///     template.
         /// </summary>
-        [ViewVariables]
         public Dictionary<string, BodyPartType> Slots { get; }
 
         /// <summary>
@@ -27,7 +27,6 @@ namespace Content.Shared.GameObjects.Components.Body
         ///     way has to be defined, i.e., "torso" to "left arm" will automatically
         ///     map "left arm" to "torso".
         /// </summary>
-        [ViewVariables]
         public Dictionary<string, List<string>> Connections { get; }
 
         /// <summary>

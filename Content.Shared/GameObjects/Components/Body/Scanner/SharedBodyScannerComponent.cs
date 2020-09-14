@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Shared.GameObjects.Components.Body;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Body.Scanner
+namespace Content.Shared.GameObjects.Components.Body.Scanner
 {
+    [RegisterComponent]
+    public abstract class SharedBodyScannerComponent : Component
+    {
+        public override string Name => "BodyScanner";
+    }
+
     [Serializable, NetSerializable]
     public enum BodyScannerUiKey
     {

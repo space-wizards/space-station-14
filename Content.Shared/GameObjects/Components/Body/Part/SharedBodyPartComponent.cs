@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Content.Shared.Body.Part.Properties;
 using Content.Shared.Damage.DamageContainer;
 using Content.Shared.Damage.ResistanceSet;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
@@ -211,82 +210,6 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         }
 
         public abstract bool DestroyMechanism(IMechanism mechanism);
-
-        /// <summary>
-        ///     Attempts to add the given <see cref="BodyPartProperty"/>.
-        /// </summary>
-        /// <returns>
-        ///     True if a <see cref="BodyPartProperty"/> of that type doesn't exist,
-        ///     false otherwise.
-        /// </returns>
-        public bool TryAddProperty(BodyPartProperty property)
-        {
-            if (HasProperty(property.GetType()))
-            {
-                return false;
-            }
-
-            Properties.Add(property);
-            return true;
-        }
-
-        /// <summary>
-        ///     Attempts to retrieve the given <see cref="BodyPartProperty"/> type.
-        ///     The resulting <see cref="BodyPartProperty"/> will be null if unsuccessful.
-        /// </summary>
-        /// <param name="property">The property if found, null otherwise.</param>
-        /// <typeparam name="T">The type of the property to find.</typeparam>
-        /// <returns>True if successful, false otherwise.</returns>
-        public bool TryGetProperty<T>([NotNullWhen(true)] out T? property) where T : BodyPartProperty
-        {
-            property = (T?) Properties.FirstOrDefault(x => x.GetType() == typeof(T));
-
-            return property != null;
-        }
-
-        /// <summary>
-        ///     Attempts to retrieve the given <see cref="BodyPartProperty"/> type.
-        ///     The resulting <see cref="BodyPartProperty"/> will be null if unsuccessful.
-        /// </summary>
-        /// <returns>True if successful, false otherwise.</returns>
-        public bool TryGetProperty(Type propertyType, [NotNullWhen(true)] out BodyPartProperty? property)
-        {
-            property = (BodyPartProperty?) Properties.First(x => x.GetType() == propertyType);
-
-            return property != null;
-        }
-
-        /// <summary>
-        ///     Checks if the given type <see cref="T"/> is on this
-        ///     <see cref="IBodyPart"/>.
-        /// </summary>
-        /// <typeparam name="T">
-        ///     The subtype of <see cref="BodyPartProperty"/> to look for.
-        /// </typeparam>
-        /// <returns>
-        ///     True if this <see cref="IBodyPart"/> has a property of type
-        ///     <see cref="T"/>, false otherwise.
-        /// </returns>
-        public bool HasProperty<T>() where T : BodyPartProperty
-        {
-            return Properties.Count(x => x.GetType() == typeof(T)) > 0;
-        }
-
-        /// <summary>
-        ///     Checks if a subtype of <see cref="BodyPartProperty"/> is on this
-        ///     <see cref="IBodyPart"/>.
-        /// </summary>
-        /// <param name="propertyType">
-        ///     The subtype of <see cref="BodyPartProperty"/> to look for.
-        /// </param>
-        /// <returns>
-        ///     True if this <see cref="IBodyPart"/> has a property of type
-        ///     <see cref="propertyType"/>, false otherwise.
-        /// </returns>
-        public bool HasProperty(Type propertyType)
-        {
-            return Properties.Count(x => x.GetType() == propertyType) > 0;
-        }
 
         private void OnHealthChanged(List<HealthChangeData> changes)
         {
