@@ -221,18 +221,15 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                     }
                     else
                     {
-                        powerReceiver.Load = 0;
                         sprite.LayerSetState(0, "off");
                         light.Enabled = false;
                     }
                     break;
                 case LightBulbState.Broken:
-                    powerReceiver.Load = 0;
                     sprite.LayerSetState(0, "broken");
                     light.Enabled = false;
                     break;
                 case LightBulbState.Burned:
-                    powerReceiver.Load = 0;
                     sprite.LayerSetState(0, "burned");
                     light.Enabled = false;
                     break;
