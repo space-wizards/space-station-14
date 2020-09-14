@@ -26,6 +26,7 @@ namespace Content.Client.Sandbox
         public Button GiveFullAccessButton;  //A button that just puts a captain's ID in your hands.
         public Button GiveAghostButton;
         public Button ToggleLightButton;
+        public Button ToggleFovButton;
         public Button SuicideButton;
         public Button ToggleSubfloorButton;
         public Button ShowMarkersButton; //Shows spawn points
@@ -57,6 +58,9 @@ namespace Content.Client.Sandbox
 
             ToggleLightButton = new Button { Text = loc.GetString("Toggle Lights"), ToggleMode = true };
             vBox.AddChild(ToggleLightButton);
+
+            ToggleFovButton = new Button { Text = loc.GetString("Toggle FOV"), ToggleMode = true };
+            vBox.AddChild(ToggleFovButton);
 
             ToggleSubfloorButton = new Button { Text = loc.GetString("Toggle Subfloor"), ToggleMode = true };
             vBox.AddChild(ToggleSubfloorButton);
@@ -173,6 +177,7 @@ namespace Content.Client.Sandbox
             _window.GiveFullAccessButton.OnPressed += OnGiveAdminAccessButtonClicked;
             _window.GiveAghostButton.OnPressed += OnGiveAghostButtonClicked;
             _window.ToggleLightButton.OnToggled += OnToggleLightButtonClicked;
+            _window.ToggleFovButton.OnToggled += OnToggleFovButtonClicked;
             _window.SuicideButton.OnPressed += OnSuicideButtonClicked;
             _window.ToggleSubfloorButton.OnPressed += OnToggleSubfloorButtonClicked;
             _window.ShowMarkersButton.OnPressed += OnShowMarkersButtonClicked;
@@ -206,6 +211,11 @@ namespace Content.Client.Sandbox
         private void OnToggleLightButtonClicked(BaseButton.ButtonEventArgs args)
         {
             ToggleLight();
+        }
+
+        private void OnToggleFovButtonClicked(BaseButton.ButtonEventArgs args)
+        {
+            ToggleFov();
         }
 
         private void OnToggleSubfloorButtonClicked(BaseButton.ButtonEventArgs args)
@@ -273,6 +283,11 @@ namespace Content.Client.Sandbox
         private void ToggleLight()
         {
             _console.ProcessCommand("togglelight");
+        }
+
+        private void ToggleFov()
+        {
+            _console.ProcessCommand("togglefov");
         }
 
         private void ToggleSubFloor()
