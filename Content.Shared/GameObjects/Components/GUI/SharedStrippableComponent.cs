@@ -6,8 +6,6 @@ using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Serialization;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
-using Robust.Shared.Log;
-
 
 namespace Content.Shared.GameObjects.Components.GUI
 {
@@ -28,13 +26,8 @@ namespace Content.Shared.GameObjects.Components.GUI
     {
         public Slots Slot { get; }
 
-
-        private const string LoggerName = "Storage";
-
         public StrippingInventoryButtonPressed(Slots slot)
         {
-            // Logger.DebugS(LoggerName, $"SIBP called for {slot}.");
-            // l/r click for doubletaps for some reason. middles safe.
             Slot = slot;
         }
     }
@@ -65,10 +58,10 @@ namespace Content.Shared.GameObjects.Components.GUI
     public class StrippingBoundUserInterfaceState : BoundUserInterfaceState
     {
         public Dictionary<Slots, EntityUid> Inventory { get; }
-        public Dictionary<string, string> Hands { get; }
+        public Dictionary<string, EntityUid> Hands { get; }
         public Dictionary<EntityUid, string> Handcuffs { get; }
 
-        public StrippingBoundUserInterfaceState(Dictionary<Slots, EntityUid> inventory, Dictionary<string, string> hands, Dictionary<EntityUid, string> handcuffs)
+        public StrippingBoundUserInterfaceState(Dictionary<Slots, EntityUid> inventory, Dictionary<string, EntityUid> hands, Dictionary<EntityUid, string> handcuffs)
         {
             Inventory = inventory;
             Hands = hands;

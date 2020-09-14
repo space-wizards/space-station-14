@@ -14,8 +14,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Maths;
 using Robust.Shared.IoC;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Log;
-using Namotion.Reflection;
+using Robust.Shared.Input;
 
 namespace Content.Client.GameObjects.Components.HUD.Inventory
 {
@@ -23,78 +22,75 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
     public class StrippableBoundUserInterface : BoundUserInterface
     {
         public Dictionary<Slots, EntityUid> Inventory { get; private set; }
-        public Dictionary<string, string> Hands { get; private set; }
-        public Dictionary<EntityUid, string> Handcuffs { get; private set; }
-
-
-        // [ViewVariables]
-        private StrippingInventoryWindow _stripMenu;
+        public Dictionary<string, EntityUid> Hands { get; private set; }
+        private StrippingInventoryWindow _stripUI;
 
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
-
-        // the crossover that was never meant to be.
-
+                
         public StrippableBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
         }
-
-        private const string LoggerName = "Storage";
-
 
         protected override void Open()
         {
             base.Open();
 
-            _stripMenu = new StrippingInventoryWindow(_resourceCache);
-            _stripMenu.OnClose += Close;
-            _stripMenu.OpenToLeft();
+            _stripUI = new StrippingInventoryWindow(_resourceCache, $"{Owner.Owner.Name}'s Inventory");
+            _stripUI.OnClose += Close;
+            _stripUI.OpenToLeft();
 
             var entityDict = new Dictionary<Slots, IEntity>();
 
-            foreach (var (slot, button) in _stripMenu.Buttons)
+            foreach (var (slot, button) in _stripUI.Buttons)
             {
                 if (button != null)
                 {
-                    // Logger.DebugS(LoggerName, $"The {(slot, button)} button has been created.");
-                    button.OnPressed = (e) => SendMessage(new StrippingInventoryButtonPressed(slot));
-                    // UPDATE: Middleclicks only call OnPressed once. Left/Rights do em twice.
-                    // manually trying to overstuff a body sometimes causes redbars to popup everytime you move. investicate later.
-                    // overstuffing gets a "you can't drop that." investigate why it's dropping in the first place?
+                    if (slot != Slots.LHAND && slot != Slots.RHAND)
+                    {
+                        button.OnPressed += args => {
+                                if (args.Function == EngineKeyFunctions.Use)
+                                    SendMessage(new StrippingInventoryButtonPressed(slot)); };
+                    }
+                    else
+                    {
+                        var whichhand = "";
+                        if (slot == Slots.LHAND)
+                            whichhand = "left hand";
+                        if (slot == Slots.RHAND)
+                            whichhand = "right hand";
+                        
+                        button.OnPressed += args => {
+                            if (args.Function == EngineKeyFunctions.Use)
+                                SendMessage(new StrippingHandButtonPressed(whichhand)); };
+                    }
                 }
-                // I'm not going to try to tackle on hands or cuffs yet. One step at at time.
             }
         }
 
-        // old messages to keep in mind.
-        // SendMessage(new StrippingHandcuffButtonPressed(id));
-        // SendMessage(new StrippingHandButtonPressed(hand));
+        // okay future incoming problems. special snowflakes indian gods with 16 hands. 
 
-        // Generic function for closing the UI. 
         protected override void Dispose(bool disposing)
         {
-            Logger.DebugS(LoggerName, $"Dispose called.");
             base.Dispose(disposing);
             if (!disposing) return;
-            _stripMenu.Dispose();
-            _stripMenu.Close();
+            _stripUI.Dispose();
+            _stripUI.Close();
             return;
         }
 
         public void AddToSlot(Slots slot, EntityUid uid)
         {
-            if (!_stripMenu.Buttons.TryGetValue(slot, out var button))
+            if (!_stripUI.Buttons.TryGetValue(slot, out var button))
                 return;
 
             var entity = IoCManager.Resolve<IEntityManager>().GetEntity(uid);
             _itemSlotManager.SetItemSlot(button, entity);
         }
-        //  i need to find where to get the entity to feed into ientity.
-        //  end goal function to fill in the inventory sprites.
-
+       
         public void ClearSlots()
         {
-            foreach (var (slot, button) in _stripMenu.Buttons)
+            foreach (var (slot, button) in _stripUI.Buttons)
             {
                 _itemSlotManager.SetItemSlot(button, null);
             }
@@ -102,31 +98,30 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
 
         protected override void UpdateState(BoundUserInterfaceState state)
         {
-            Logger.DebugS(LoggerName, $"Update state called.");
-
-            // old stuff won't touch.
             base.UpdateState(state);
             if (!(state is StrippingBoundUserInterfaceState stripState)) return;
             Inventory = stripState.Inventory;
             Hands = stripState.Hands;
-            Handcuffs = stripState.Handcuffs;
-            // old stuff not touching yet.
 
-
-            // preemptive clear all to refill in a second.
             ClearSlots();
 
-            // PLEASE WORK PLEASE PLEASE PLEASE PLEASE
-            foreach (var (slot, uid) in Inventory)
+            foreach (var (hand, hold) in Hands)
             {
-                Logger.DebugS(LoggerName, $"{slot} and {uid}");
-                AddToSlot(slot, uid);
+                if (hand == "left hand")
+                {
+                    AddToSlot(Slots.LHAND, hold);
+                }
+                else if (hand == "right hand")
+                {
+                    AddToSlot(Slots.RHAND, hold);
+                }
             }
 
+            foreach (var (slot, uid) in Inventory)
+            {
+                AddToSlot(slot, uid);
+            }
         }
-
-        // Okay. So I have slots, buttons. I need to have some way to convert a slot -> entity.
-        // That way I can sprite it with itemslotmanager. At least that's what I'm seeing.
 
         private class StrippingInventoryWindow : SS14Window
         {
@@ -136,17 +131,16 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
 
             public Dictionary<Slots, ItemSlotButton> Buttons { get; }
 
-            public StrippingInventoryWindow(IResourceCache resourceCache)
+            public StrippingInventoryWindow(IResourceCache resourceCache, string title)
             {
-                Logger.DebugS(LoggerName, $"StrippingInventoryWindow called.");
-                Title = "strip window.";
+                Title = title;
                 Resizable = false;
 
                 var buttonDict = new Dictionary<Slots, ItemSlotButton>();
                 Buttons = buttonDict;
 
                 const int width = ButtonSize * 4 + ButtonSeparation * 3 + RightSeparation;
-                const int height = ButtonSize * 5 + ButtonSeparation * 3;
+                const int height = ButtonSize * 4 + ButtonSeparation * 3;
                 const int sizep = (ButtonSize + ButtonSeparation);
 
                 var windowContents = new LayoutContainer { CustomMinimumSize = (width, height) };
@@ -155,47 +149,42 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
                 void AddButton(Slots slot, string textureName, Vector2 position)
                 {
                     var texture = resourceCache.GetTexture($"/Textures/Interface/Inventory/{textureName}.png");
-                    //why is storagetexture a thing? only the first input seems to matter.
-                    //var storageTexture = resourceCache.GetTexture("/Textures/Interface/Inventory/back.png");
                     var button = new ItemSlotButton(texture, texture);
 
-                    position = position * sizep;
+                    position *= sizep;
                     LayoutContainer.SetPosition(button, position);
                     windowContents.AddChild(button);
 
-                    // took this out, but then it didn't withdraw anything.
                     buttonDict.Add(slot, button);
-                    // Logger.DebugS(LoggerName, $"dictionary holds {(slot,button)}");
-
-                    
-
-
                 }
 
                 // 0,0  top left.
                 // x,x  bottom right.
-                // still needs slots for hands, handcuffs? not sure how handcuffs going to work here.
+                // so i don't have hands tied to slots in a consistent smart way quite yet.
 
+                // Left column
                 AddButton(Slots.EYES, "glasses", (0, 0));
                 AddButton(Slots.NECK, "neck", (0, 1));
                 AddButton(Slots.INNERCLOTHING, "uniform", (0, 2));
+                AddButton(Slots.BACKPACK, "back", (0, 3));
 
+                // Middle column
                 AddButton(Slots.HEAD, "head", (1, 0));
                 AddButton(Slots.MASK, "mask", (1, 1));
                 AddButton(Slots.OUTERCLOTHING, "suit", (1, 2));
                 AddButton(Slots.SHOES, "shoes", (1, 3));
 
+                // Right column
                 AddButton(Slots.EARS, "ears", (2, 0));
-                AddButton(Slots.IDCARD, "id", (2, 1));
-                AddButton(Slots.EXOSUITSLOT1, "suit_storage", (2, 2));
-                AddButton(Slots.POCKET1, "pocket", (2, 3));
-                AddButton(Slots.RHAND, "hand_r_no_letter", (2, 4));
+                AddButton(Slots.GLOVES, "gloves", (2, 1));
+                AddButton(Slots.RHAND, "hand_r_no_letter", (2, 2));
+                AddButton(Slots.POCKET2, "pocket", (2, 3));
 
-                AddButton(Slots.BACKPACK, "back", (3, 0));
+                // Far right column
+                AddButton(Slots.IDCARD, "id", (3, 0));
                 AddButton(Slots.BELT, "belt", (3, 1));
-                AddButton(Slots.GLOVES, "gloves", (3, 2));
-                AddButton(Slots.POCKET2, "pocket", (3, 3));
-                AddButton(Slots.LHAND, "hand_l_no_letter", (3, 4));
+                AddButton(Slots.LHAND, "hand_l_no_letter", (3, 2));
+                AddButton(Slots.POCKET1, "pocket", (3, 3));
             }
         }
     }

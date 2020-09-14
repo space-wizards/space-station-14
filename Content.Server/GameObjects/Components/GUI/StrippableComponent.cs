@@ -118,11 +118,11 @@ namespace Content.Server.GameObjects.Components.GUI
         {
             var dictionary = new Dictionary<Slots, EntityUid>();
 
-            // note to future self. prob where i want to change something.
+            // changed it from spitting out a string attached to the slot to a entityuid
+            //      which is then converted into an ientity on the other side.
+            // had problems sending an ientity directly, shit kept crashing so this'.
 
-            // i want this to spit out <slots, ientity>
-
-            // dunno how though. netcode / understanding components hard.
+            // currently attempting to include hands with the same format, keeps things a bit har
 
             if (!Owner.TryGetComponent(out InventoryComponent? inventory))
             {
@@ -137,12 +137,13 @@ namespace Content.Server.GameObjects.Components.GUI
                 }
             }
 
+
             return dictionary;
         }
 
-        private Dictionary<string, string> GetHandSlots()
+        private Dictionary<string, EntityUid> GetHandSlots()
         {
-            var dictionary = new Dictionary<string, string>();
+            var dictionary = new Dictionary<string, EntityUid>();
 
             if (!Owner.TryGetComponent(out HandsComponent? hands))
             {
@@ -151,7 +152,13 @@ namespace Content.Server.GameObjects.Components.GUI
 
             foreach (var hand in hands.Hands)
             {
-                dictionary[hand] = hands.GetItem(hand)?.Owner.Name ?? "None";
+                if (hands.GetItem(hand) != null)
+                {
+                    dictionary[hand] = hands.GetItem(hand)!.Owner.Uid;
+                    // okay i think the !. is bad code someone please save me.
+                    // but hopefully wrapping it with the if-null check will be enough?
+                }
+                
             }
 
             return dictionary;
