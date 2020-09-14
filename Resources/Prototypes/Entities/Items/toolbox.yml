@@ -1,0 +1,64 @@
+- type: entity
+  id: ToolboxBase
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Storage
+    Capacity: 60
+  - type: Item
+    Size: 9999
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    hitSound: "/Audio/weapons/smash.ogg"
+
+- type: entity
+  name: Emergency Toolbox
+  parent: ToolboxBase
+  id: RedToolboxItem
+  description: A bright red toolbox, stocked with emergency tools
+  components:
+  - type: Sprite
+    texture: Objects/Tools/toolbox_r.png
+
+  - type: Icon
+    texture: Objects/Tools/toolbox_r.png
+
+- type: entity
+  name: Mechanical Toolbox
+  parent: ToolboxBase
+  id: BlueToolboxItem
+  description: A blue box, stocked with mechanical tools
+  components:
+  - type: Sprite
+    texture: Objects/Tools/Toolbox_b.png
+  - type: Icon
+    texture: Objects/Tools/Toolbox_b.png
+
+- type: entity
+  name: Electrical Toolbox
+  parent: ToolboxBase
+  id: YellowToolboxItem
+  description: A toolbox typically stocked with electrical gear
+  components:
+  - type: Sprite
+    texture: Objects/Tools/Toolbox_y.png
+  - type: Icon
+    texture: Objects/Tools/Toolbox_y.png
+
+- type: entity
+  id: YellowToolboxItemFilled
+  suffix: Filled
+  parent: YellowToolboxItem
+  components:
+  - type: StorageFill
+    contents:
+      - name: Screwdriver
+      - name: Crowbar
+      - name: Wirecutter
+      - name: CableStack
+      - name: CableStack
+      - name: GlovesYellow
+        prob: 0.05
+        group: test
+      - name: CableStack
+        group: test

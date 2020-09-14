@@ -1,0 +1,42 @@
+- type: entity
+  parent: Clothing
+  id: BeltBase
+  abstract: true
+  components:
+  - type: Clothing
+    Slots: [belt]
+
+
+- type: entity
+  parent: BeltBase
+  id: UtilityBeltClothing
+  name: Utility Belt
+  description: Belt for holding all your usual tools
+  components:
+  - type: Sprite
+    sprite: Clothing/belt_utility.rsi
+    state: utilitybelt
+  - type: Icon
+    sprite: Clothing/belt_utility.rsi
+    state: utilitybelt
+  - type: Clothing
+    Size: 50
+    QuickEquip: false
+    sprite: Clothing/belt_utility.rsi
+  - type: Storage
+    Capacity: 40 # Full tool loadout is 35, plus an extra
+
+- type: entity
+  id: UtilityBeltClothingFilled
+  suffix: Filled
+  parent: UtilityBeltClothing
+  components:
+  - type: StorageFill
+    contents:
+      - name: Crowbar
+      - name: Wrench
+      - name: Screwdriver
+      - name: Wirecutter
+      - name: Welder
+      - name: Multitool
+      - name: CableStack
