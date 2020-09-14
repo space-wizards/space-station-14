@@ -70,7 +70,18 @@
   suffix: Filled
   parent: ToolboxElectrical
   components:
-  - type: ToolboxElectricalFill
+    - type: StorageFill
+      contents:
+        - name: Screwdriver
+        - name: Crowbar
+        - name: Wirecutter
+        - name: ApcExtensionCableStack
+        - name: MVWireStack
+        - name: GlovesYellow
+          prob: 0.05
+          group: group1
+        - name: HVWireStack
+          group: group1
 
 - type: entity
   name: artistic toolbox

@@ -11,7 +11,36 @@
   parent: LockerTool
   suffix: Filled
   components:
-  - type: ToolLockerFill
+    - type: StorageFill
+      contents:
+        - name: OuterclothingHazard
+          prob: 0.4
+        - name: FlashlightLantern
+          prob: 0.7
+        - name: Screwdriver
+          prob: 0.7
+        - name: Wrench
+          prob: 0.7
+        - name: Welder
+          prob: 0.7
+        - name: Crowbar
+          prob: 0.7
+        - name: Wirecutter
+          prob: 0.7
+        - name: Multitool
+          prob: 0.2
+        - name: UtilityBeltClothing
+          prob: 0.2
+        - name: GlovesYellow
+          prob: 0.05
+        - name: HatHardhatRed
+          prob: 0.4
+        - name: ApcExtensionCableStack
+          prob: 0.3
+        - name: ApcExtensionCableStack
+          prob: 0.3
+        - name: ApcExtensionCableStack
+          prob: 0.3
 
 - type: entity
   id: LockerEmergencyFilledRandom
