@@ -21,7 +21,7 @@
     state: emergency_light_off
   - type: Icon
     sprite: Constructible/Lighting/emergency_light.rsi
-    state: emergency_light_icon
+    state: emergency_light_off
   placement:
     snap:
     - Wallmount
