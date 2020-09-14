@@ -9,7 +9,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 
-namespace Content.Server.GameObjects.Components.Items.Storage.Fill
+namespace Content.Server.GameObjects.Components.Items.Storage
 {
     [RegisterComponent]
     internal sealed class StorageFillComponent : Component, IMapInit
@@ -41,7 +41,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage.Fill
 
             void Spawn(string prototype)
             {
-                storage.Insert(_entityManager.SpawnEntity(prototype, Owner.Transform.GridPosition));
+                storage.Insert(_entityManager.SpawnEntity(prototype, Owner.Transform.Coordinates));
             }
 
             var alreadySpawnedGroups = new List<string>();
