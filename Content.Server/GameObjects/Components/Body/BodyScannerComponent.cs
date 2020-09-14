@@ -1,7 +1,6 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using Content.Server.Utility;
-using Content.Shared.Body.Template;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Body.Scanner;
@@ -57,9 +56,9 @@ namespace Content.Server.GameObjects.Components.Body
         /// <summary>
         ///     Copy BodyTemplate and BodyPart data into a common data class that the client can read.
         /// </summary>
-        private BodyScannerInterfaceState InterfaceState(IBody body, IReadOnlyDictionary<string, IBodyPart> bodyParts)
+        private BodyScannerUIState InterfaceState(IBody body, IReadOnlyDictionary<string, IBodyPart> bodyParts)
         {
-            var partsData = new Dictionary<string, BodyScannerBodyPartData>();
+            var partsData = new Dictionary<string, BodyScannerPartData>();
 
             foreach (var (slotName, part) in bodyParts)
             {
@@ -73,13 +72,13 @@ namespace Content.Server.GameObjects.Components.Body
                 }
 
                 partsData.Add(slotName,
-                    new BodyScannerBodyPartData(part.Name, part.RSIPath, part.RSIState, part.MaxDurability,
+                    new BodyScannerPartData(part.Name, part.RSIPath, part.RSIState, part.MaxDurability,
                         part.CurrentDurability, mechanismData));
             }
 
             var templateData = new BodyScannerTemplateData(body.TemplateName, body.Slots);
 
-            return new BodyScannerInterfaceState(partsData, templateData);
+            return new BodyScannerUIState(partsData, templateData);
         }
     }
 }

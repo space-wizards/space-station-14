@@ -2,9 +2,8 @@
 using System;
 using System.Linq;
 using Content.Server.GameObjects.Components.Body;
-using Content.Shared.Body.Part;
 using Content.Shared.Damage;
-using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Damage;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
@@ -21,10 +20,16 @@ namespace Content.Server.Body
     {
         public string Command => "addhand";
         public string Description => "Adds a hand to your entity.";
-        public string Help => $"Usage: {Command}";
+        public string Help => $"Usage: {Command} <handEntityId> / {Command}";
 
         public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
         {
+            if (args.Length > 1)
+            {
+                shell.SendText(player, Help);
+                return;
+            }
+
             if (player == null)
             {
                 shell.SendText(player, "Only a player can run this command.");
@@ -47,9 +52,22 @@ namespace Content.Server.Body
             }
 
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            prototypeManager.TryIndex("bodyPart.LHand.BasicHuman", out BodyPartPrototype prototype);
+            var handEntityId = args.Length == 1 ? args[0] : "LeftHandHuman";
 
-            var part = new BodyPart(prototype);
+            if (!prototypeManager.HasIndex<EntityPrototype>(handEntityId))
+            {
+                shell.SendText(player, $"No entity exists with id {handEntityId}.");
+            }
+
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var hand = entityManager.SpawnEntity("LeftHandHuman", player.AttachedEntity.Transform.Coordinates);
+
+            if (!hand.TryGetComponent(out IBodyPart? part))
+            {
+                shell.SendText(player, $"Entity {handEntityId} does not have a {nameof(IBodyPart)} component.");
+                return;
+            }
+
             var slot = part.GetHashCode().ToString();
 
             body.Template.Slots.Add(slot, BodyPartType.Hand);

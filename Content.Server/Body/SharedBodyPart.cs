@@ -1,8 +1,6 @@
 ﻿#nullable enable
 using System;
 using Content.Server.GameObjects.Components.Body;
-using Content.Shared.Body.Mechanism;
-using Content.Shared.Body.Part;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Body.Part;

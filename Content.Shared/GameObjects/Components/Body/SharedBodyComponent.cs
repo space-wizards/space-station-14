@@ -1,10 +1,10 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Damage;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -16,8 +16,9 @@ namespace Content.Shared.GameObjects.Components.Body
 
         public override uint? NetID => ContentNetIDs.BODY;
 
-        [ViewVariables]
-        public string TemplateName { get; private set; }
+        private Dictionary<string, string> _partIds = new Dictionary<string, string>();
+
+        [ViewVariables] public string TemplateName { get; private set; } = string.Empty;
 
         [ViewVariables]
         public Dictionary<string, BodyPartType> Slots { get; private set; } = new Dictionary<string, BodyPartType>();
@@ -25,7 +26,7 @@ namespace Content.Shared.GameObjects.Components.Body
         [ViewVariables]
         public Dictionary<string, List<string>> Connections { get; private set; } = new Dictionary<string, List<string>>();
 
-        public BodyPreset Preset { get; }
+        [ViewVariables] public IReadOnlyDictionary<string, string> PartIDs { get; protected set; }
 
         public bool TryAddPart(string slot, IBodyPart part, bool force = false)
         {
@@ -47,12 +48,12 @@ namespace Content.Shared.GameObjects.Components.Body
             throw new NotImplementedException();
         }
 
-        public bool RemovePart(IBodyPart part, out string? slotName)
+        public bool RemovePart(IBodyPart part, [NotNullWhen(true)] out string? slotName)
         {
             throw new NotImplementedException();
         }
 
-        public IEntity? DropPart(IBodyPart part)
+        public List<IBodyPart> DropPart(IBodyPart part)
         {
             throw new NotImplementedException();
         }
@@ -67,12 +68,12 @@ namespace Content.Shared.GameObjects.Components.Body
             throw new NotImplementedException();
         }
 
-        public bool TryGetPart(string slot, out IBodyPart? result)
+        public bool TryGetPart(string slot, [NotNullWhen(true)] out IBodyPart? result)
         {
             throw new NotImplementedException();
         }
 
-        public bool TryGetSlot(IBodyPart part, out string? slot)
+        public bool TryGetSlot(IBodyPart part, [NotNullWhen(true)] out string? slot)
         {
             throw new NotImplementedException();
         }
@@ -82,17 +83,17 @@ namespace Content.Shared.GameObjects.Components.Body
             throw new NotImplementedException();
         }
 
-        public bool TryGetSlotConnections(string slot, out List<string>? connections)
+        public bool TryGetSlotConnections(string slot, [NotNullWhen(true)] out List<string>? connections)
         {
             throw new NotImplementedException();
         }
 
-        public bool TryGetPartConnections(string slot, out List<IBodyPart>? connections)
+        public bool TryGetPartConnections(string slot, [NotNullWhen(true)] out List<IBodyPart>? connections)
         {
             throw new NotImplementedException();
         }
 
-        public bool TryGetPartConnections(IBodyPart part, out List<IBodyPart>? connections)
+        public bool TryGetPartConnections(IBodyPart part, [NotNullWhen(true)] out List<IBodyPart>? connections)
         {
             throw new NotImplementedException();
         }
@@ -106,10 +107,12 @@ namespace Content.Shared.GameObjects.Components.Body
         {
             base.ExposeData(serializer);
 
-            // TODO Slots/Connections
+            // TODO Connections
             serializer.DataField(this, b => b.TemplateName, "template", string.Empty);
 
             serializer.DataField(this, b => b.Slots, "slots", new Dictionary<string, BodyPartType>());
+
+            serializer.DataField(this, b => b.PartIDs, "partIds", new Dictionary<string, string>());
         }
     }
 
@@ -165,33 +168,6 @@ namespace Content.Shared.GameObjects.Components.Body
             Directed = true;
             RSIMap = rsiMap;
         }
-    }
-
-    /// <summary>
-    ///     Used to determine whether a BodyPart can connect to another BodyPart.
-    /// </summary>
-    [Serializable, NetSerializable]
-    public enum BodyPartCompatibility
-    {
-        Universal = 0,
-        Biological,
-        Mechanical
-    }
-
-    /// <summary>
-    ///     Each BodyPart has a BodyPartType used to determine a variety of things.
-    ///     For instance, what slots it can fit into.
-    /// </summary>
-    [Serializable, NetSerializable]
-    public enum BodyPartType
-    {
-        Other = 0,
-        Torso,
-        Head,
-        Arm,
-        Hand,
-        Leg,
-        Foot
     }
 
     /// <summary>

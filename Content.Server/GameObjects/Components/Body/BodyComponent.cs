@@ -2,7 +2,6 @@
 using System;
 using Content.Server.Body;
 using Content.Server.Observer;
-using Content.Shared.Body.Part;
 using Content.Shared.Body.Preset;
 using Content.Shared.Body.Template;
 using Content.Shared.GameObjects.Components.Body;
@@ -27,7 +26,6 @@ namespace Content.Server.GameObjects.Components.Body
     [RegisterComponent]
     [ComponentReference(typeof(IDamageableComponent))]
     [ComponentReference(typeof(IBody))]
-    [ComponentReference(typeof(IBodyPartManager))]
     public partial class BodyComponent : SharedBodyComponent, IBodyPartContainer, IRelayMoveInput
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;

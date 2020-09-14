@@ -4,7 +4,6 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Body.Template;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Damage;
-using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Shared.GameObjects.Components.Body
 {
@@ -30,9 +29,10 @@ namespace Content.Shared.GameObjects.Components.Body
         public Dictionary<string, List<string>> Connections { get; }
 
         /// <summary>
-        ///     The <see cref="BodyPreset"/> that this instance is adhering to.
+        ///     Maps a template slot to the ID of the <see cref="IBodyPart"/>
+        ///     that should fill it. E.g. "right arm" : "BodyPart.arm.basic_human".
         /// </summary>
-        public BodyPreset Preset { get; }
+        public IReadOnlyDictionary<string, string> PartIds { get; }
 
         /// <summary>
         ///     Installs the given <see cref="IBodyPart"/> into the given slot.
@@ -74,10 +74,9 @@ namespace Content.Shared.GameObjects.Components.Body
         ///     were hanging off of it.
         /// </summary>
         /// <returns>
-        ///     The <see cref="IEntity"/> representing the dropped
-        ///     <see cref="IBodyPart"/>, or null if none was dropped.
+        ///     The <see cref="IBodyPart"/>s that were dropped.
         /// </returns>
-        IEntity? DropPart(IBodyPart part);
+        List<IBodyPart>? DropPart(IBodyPart part);
 
         /// <summary>
         ///     Recursively searches for if <see cref="part"/> is connected to

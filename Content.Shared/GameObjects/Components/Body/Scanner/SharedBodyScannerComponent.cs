@@ -19,12 +19,12 @@ namespace Content.Shared.GameObjects.Components.Body.Scanner
     }
 
     [Serializable, NetSerializable]
-    public class BodyScannerInterfaceState : BoundUserInterfaceState
+    public class BodyScannerUIState : BoundUserInterfaceState
     {
-        public readonly Dictionary<string, BodyScannerBodyPartData> Parts;
+        public readonly Dictionary<string, BodyScannerPartData> Parts;
         public readonly BodyScannerTemplateData Template;
 
-        public BodyScannerInterfaceState(Dictionary<string, BodyScannerBodyPartData> parts,
+        public BodyScannerUIState(Dictionary<string, BodyScannerPartData> parts,
             BodyScannerTemplateData template)
         {
             Template = template;
@@ -33,7 +33,7 @@ namespace Content.Shared.GameObjects.Components.Body.Scanner
     }
 
     [Serializable, NetSerializable]
-    public class BodyScannerBodyPartData
+    public class BodyScannerPartData
     {
         public readonly int CurrentDurability;
         public readonly int MaxDurability;
@@ -42,7 +42,7 @@ namespace Content.Shared.GameObjects.Components.Body.Scanner
         public readonly string RSIPath;
         public readonly string RSIState;
 
-        public BodyScannerBodyPartData(string name, string rsiPath, string rsiState, int maxDurability,
+        public BodyScannerPartData(string name, string rsiPath, string rsiState, int maxDurability,
             int currentDurability, List<BodyScannerMechanismData> mechanisms)
         {
             Name = name;
