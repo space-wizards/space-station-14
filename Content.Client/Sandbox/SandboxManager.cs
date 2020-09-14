@@ -27,6 +27,7 @@ namespace Content.Client.Sandbox
         public Button GiveAghostButton;
         public Button ToggleLightButton;
         public Button ToggleFovButton;
+        public Button ToggleShadowsButton;
         public Button SuicideButton;
         public Button ToggleSubfloorButton;
         public Button ShowMarkersButton; //Shows spawn points
@@ -61,6 +62,9 @@ namespace Content.Client.Sandbox
 
             ToggleFovButton = new Button { Text = loc.GetString("Toggle FOV"), ToggleMode = true };
             vBox.AddChild(ToggleFovButton);
+
+            ToggleShadowsButton = new Button { Text = loc.GetString("Toggle Shadows"), ToggleMode = true };
+            vBox.AddChild(ToggleShadowsButton);
 
             ToggleSubfloorButton = new Button { Text = loc.GetString("Toggle Subfloor"), ToggleMode = true };
             vBox.AddChild(ToggleSubfloorButton);
@@ -178,6 +182,7 @@ namespace Content.Client.Sandbox
             _window.GiveAghostButton.OnPressed += OnGiveAghostButtonClicked;
             _window.ToggleLightButton.OnToggled += OnToggleLightButtonClicked;
             _window.ToggleFovButton.OnToggled += OnToggleFovButtonClicked;
+            _window.ToggleShadowsButton.OnToggled += OnToggleShadowsButtonClicked;
             _window.SuicideButton.OnPressed += OnSuicideButtonClicked;
             _window.ToggleSubfloorButton.OnPressed += OnToggleSubfloorButtonClicked;
             _window.ShowMarkersButton.OnPressed += OnShowMarkersButtonClicked;
@@ -216,6 +221,11 @@ namespace Content.Client.Sandbox
         private void OnToggleFovButtonClicked(BaseButton.ButtonEventArgs args)
         {
             ToggleFov();
+        }
+
+        private void OnToggleShadowsButtonClicked(BaseButton.ButtonEventArgs args)
+        {
+            ToggleShadows();
         }
 
         private void OnToggleSubfloorButtonClicked(BaseButton.ButtonEventArgs args)
@@ -288,6 +298,11 @@ namespace Content.Client.Sandbox
         private void ToggleFov()
         {
             _console.ProcessCommand("togglefov");
+        }
+
+        private void ToggleShadows()
+        {
+            _console.ProcessCommand("toggleshadows");
         }
 
         private void ToggleSubFloor()
