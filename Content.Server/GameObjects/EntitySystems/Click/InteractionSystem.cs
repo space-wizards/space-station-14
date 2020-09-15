@@ -198,7 +198,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
             if (entity.TryGetComponent(out CombatModeComponent combatMode) && combatMode.IsInCombatMode)
             {
-                DoAttack(entity, coords, false);
+                DoAttack(entity, coords, false, uid);
             }
             else
             {
