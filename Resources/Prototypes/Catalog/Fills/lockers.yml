@@ -4,7 +4,14 @@
   name: "custodial closet"
   description: "It's a storage unit for janitorial clothes and gear."
   components:
-  - type: CustodialClosetFill
+  - type: StorageFill
+    contents:
+      - name: MopItem
+      - name: MopBucket
+      - name: WetFloorSign
+        amount: 3
+      - name: TrashBag
+        amount: 2
 
 - type: entity
   id: LockerToolFilled
