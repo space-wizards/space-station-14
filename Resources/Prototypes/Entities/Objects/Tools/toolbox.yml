@@ -34,16 +34,16 @@
   components:
   - type: StorageFill
     contents:
-      - name: BreathMaskClothing
-        amount: 2
-      - name: FoodChocolateBar
-      - name: FlashlightLantern
-        amount: 2
-      - name: HarmonicaInstrument
-        prob: 0.15
-        group: group1
-      - name: FoodChocolateBar
-        group: group1
+    - name: BreathMaskClothing
+      amount: 2
+    - name: FoodChocolateBar
+    - name: FlashlightLantern
+      amount: 2
+    - name: HarmonicaInstrument
+      prob: 0.15
+      group: group1
+    - name: FoodChocolateBar
+      group: group1
 
 - type: entity
   name: mechanical toolbox
@@ -81,18 +81,18 @@
   suffix: Filled
   parent: ToolboxElectrical
   components:
-    - type: StorageFill
-      contents:
-        - name: Screwdriver
-        - name: Crowbar
-        - name: Wirecutter
-        - name: ApcExtensionCableStack
-        - name: MVWireStack
-        - name: GlovesYellow
-          prob: 0.05
-          group: group1
-        - name: HVWireStack
-          group: group1
+  - type: StorageFill
+    contents:
+    - name: Screwdriver
+    - name: Crowbar
+    - name: Wirecutter
+    - name: ApcExtensionCableStack
+    - name: MVWireStack
+    - name: GlovesYellow
+      prob: 0.05
+      group: group1
+    - name: HVWireStack
+      group: group1
 
 - type: entity
   name: artistic toolbox
@@ -147,10 +147,10 @@
   components:
   - type: StorageFill
     contents:
-      - name: GoldStack
-        amount: 5
-      - name: DrinkGoldenCup
-        prob: 0.05
-        group: group1
-      - name: GoldStack
-        group: group1
+    - name: GoldStack
+      amount: 5
+    - name: DrinkGoldenCup
+      prob: 0.05
+      group: group1
+    - name: GoldStack
+      group: group1

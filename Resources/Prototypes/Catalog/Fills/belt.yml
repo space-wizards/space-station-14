@@ -5,10 +5,10 @@
   components:
   - type: StorageFill
     contents:
-      - name: Crowbar
-      - name: Wrench
-      - name: Screwdriver
-      - name: Wirecutter
-      - name: Welder
-      - name: Multitool
-      - name: ApcExtensionCableStack
+    - name: Crowbar
+    - name: Wrench
+    - name: Screwdriver
+    - name: Wirecutter
+    - name: Welder
+    - name: Multitool
+    - name: ApcExtensionCableStack
