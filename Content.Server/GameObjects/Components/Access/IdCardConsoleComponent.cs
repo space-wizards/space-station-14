@@ -8,6 +8,8 @@ using Content.Shared.Access;
 using Content.Shared.GameObjects.Components.Access;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.GameObjects.Verbs;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
@@ -31,6 +33,9 @@ namespace Content.Server.GameObjects.Components.Access
         private ContainerSlot _targetIdContainer = default!;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(IdCardConsoleUiKey.Key);
+
+        private bool PrivledgedIDEmpty => _privilegedIdContainer.ContainedEntities.Count < 1;
+        private bool TargetIDEmpty => _targetIdContainer.ContainedEntities.Count < 1;
 
         public override void Initialize()
         {
@@ -222,5 +227,56 @@ namespace Content.Server.GameObjects.Components.Access
 
             UserInterface?.Open(actor.playerSession);
         }
+
+        [Verb]
+        public sealed class EjectPrivlidgedIDVerb : Verb<IdCardConsoleComponent>
+        {
+            protected override void GetData(IEntity user, IdCardConsoleComponent component, VerbData data)
+            {
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
+                data.Text = Loc.GetString("Eject Privledged ID");
+                data.Visibility = component.PrivledgedIDEmpty ? VerbVisibility.Invisible : VerbVisibility.Visible;
+            }
+
+            protected override void Activate(IEntity user, IdCardConsoleComponent component)
+            {
+                if (!user.TryGetComponent(out IHandsComponent? hand))
+                {
+                    return;
+                }
+                component.PutIdInHand(component._privilegedIdContainer, hand);
+            }
+        }
+
+        public sealed class EjectTargetIDVerb : Verb<IdCardConsoleComponent>
+        {
+            protected override void GetData(IEntity user, IdCardConsoleComponent component, VerbData data)
+            {
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
+                data.Text = Loc.GetString("Eject Target ID");
+                data.Visibility = component.TargetIDEmpty ? VerbVisibility.Invisible : VerbVisibility.Visible;
+            }
+
+            protected override void Activate(IEntity user, IdCardConsoleComponent component)
+            {
+                if (!user.TryGetComponent(out IHandsComponent? hand))
+                {
+                    return;
+                }
+                component.PutIdInHand(component._targetIdContainer, hand);
+            }
+        }
+
+
     }
 }
