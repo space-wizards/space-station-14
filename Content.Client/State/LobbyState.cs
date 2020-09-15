@@ -220,10 +220,10 @@ namespace Content.Client.State
                 if (!_clientGameTicker.IsGameStarted)
                 {
                     var status = PlayerStatus.NotReady;
-                    if (session.SessionId == _playerManager.LocalPlayer.SessionId)
+                    if (session.UserId == _playerManager.LocalPlayer.UserId)
                         status = _clientGameTicker.AreWeReady ? PlayerStatus.Ready : PlayerStatus.NotReady;
                     else
-                        _clientGameTicker.Status.TryGetValue(session.SessionId, out status);
+                        _clientGameTicker.Status.TryGetValue(session.UserId, out status);
 
                     readyState = status switch
                     {

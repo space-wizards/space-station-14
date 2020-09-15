@@ -84,20 +84,20 @@ namespace Content.Server.Preferences
 
         private async void HandleSelectCharacterMessage(MsgSelectCharacter message)
         {
-            await _preferencesDb.SaveSelectedCharacterIndexAsync(message.MsgChannel.SessionId.Username,
+            await _preferencesDb.SaveSelectedCharacterIndexAsync(message.MsgChannel.UserId.UserId,
                 message.SelectedCharacterIndex);
         }
 
         private async void HandleUpdateCharacterMessage(MsgUpdateCharacter message)
         {
-            await _preferencesDb.SaveCharacterSlotAsync(message.MsgChannel.SessionId.Username, message.Profile,
+            await _preferencesDb.SaveCharacterSlotAsync(message.MsgChannel.UserId.UserId, message.Profile,
                 message.Slot);
         }
 
         public async void OnClientConnected(IPlayerSession session)
         {
             var msg = _netManager.CreateNetMessage<MsgPreferencesAndSettings>();
-            msg.Preferences = await GetPreferencesAsync(session.SessionId.Username);
+            msg.Preferences = await GetPreferencesAsync(session.UserId.UserId);
             msg.Settings = new GameSettings
             {
                 MaxCharacterSlots = _configuration.GetCVar<int>("game.maxcharacterslots")
@@ -108,29 +108,29 @@ namespace Content.Server.Preferences
         /// <summary>
         /// Returns the requested <see cref="PlayerPreferences"/> or null if not found.
         /// </summary>
-        private async Task<PlayerPreferences> GetFromSql(string username)
+        private async Task<PlayerPreferences> GetFromSql(Guid userId)
         {
-            return await _preferencesDb.GetPlayerPreferencesAsync(username);
+            return await _preferencesDb.GetPlayerPreferencesAsync(userId);
         }
 
         /// <summary>
         /// Retrieves preferences for the given username from storage.
         /// Creates and saves default preferences if they are not found, then returns them.
         /// </summary>
-        public async Task<PlayerPreferences> GetPreferencesAsync(string username)
+        public async Task<PlayerPreferences> GetPreferencesAsync(Guid userId)
         {
-            var prefs = await GetFromSql(username);
+            var prefs = await GetFromSql(userId);
             if (prefs is null)
             {
-                await _preferencesDb.SaveSelectedCharacterIndexAsync(username, 0);
-                await _preferencesDb.SaveCharacterSlotAsync(username, HumanoidCharacterProfile.Default(), 0);
-                prefs = await GetFromSql(username);
+                await _preferencesDb.SaveSelectedCharacterIndexAsync(userId, 0);
+                await _preferencesDb.SaveCharacterSlotAsync(userId, HumanoidCharacterProfile.Default(), 0);
+                prefs = await GetFromSql(userId);
             }
 
             return prefs;
         }
 
-        public async Task<IEnumerable<KeyValuePair<string, ICharacterProfile>>> GetSelectedProfilesForPlayersAsync(List<string> usernames)
+        public async Task<IEnumerable<KeyValuePair<Guid, ICharacterProfile>>> GetSelectedProfilesForPlayersAsync(List<Guid> usernames)
         {
             return await _preferencesDb.GetSelectedProfilesForPlayersAsync(usernames);
         }

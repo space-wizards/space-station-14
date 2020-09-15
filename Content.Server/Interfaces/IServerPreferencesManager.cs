@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Shared.Preferences;
@@ -9,8 +10,8 @@ namespace Content.Server.Interfaces
     {
         void FinishInit();
         void OnClientConnected(IPlayerSession session);
-        Task<PlayerPreferences> GetPreferencesAsync(string username);
-        Task<IEnumerable<KeyValuePair<string, ICharacterProfile>>> GetSelectedProfilesForPlayersAsync(List<string> usernames);
+        Task<PlayerPreferences> GetPreferencesAsync(Guid userId);
+        Task<IEnumerable<KeyValuePair<Guid, ICharacterProfile>>> GetSelectedProfilesForPlayersAsync(List<Guid> userIds);
         void StartInit();
     }
 }

@@ -22,22 +22,22 @@ namespace Content.Server.Database
             _prefsCtx.Database.Migrate();
         }
 
-        public async Task<Prefs?> GetPlayerPreferences(string username)
+        public async Task<Prefs?> GetPlayerPreferences(Guid userId)
         {
             return await _prefsCtx
                 .Preferences
                 .Include(p => p.HumanoidProfiles).ThenInclude(h => h.Jobs)
                 .Include(p => p.HumanoidProfiles).ThenInclude(h => h.Antags)
-                .SingleOrDefaultAsync(p => p.Username == username);
+                .SingleOrDefaultAsync(p => p.UserId == userId);
         }
 
-        public async Task SaveSelectedCharacterIndex(string username, int slot)
+        public async Task SaveSelectedCharacterIndex(Guid userId, int slot)
         {
-            var prefs = _prefsCtx.Preferences.SingleOrDefault(p => p.Username == username);
+            var prefs = _prefsCtx.Preferences.SingleOrDefault(p => p.UserId == userId);
             if (prefs is null)
                 _prefsCtx.Preferences.Add(new Prefs
                 {
-                    Username = username,
+                    UserId = userId,
                     SelectedCharacterSlot = slot
                 });
             else
@@ -45,11 +45,11 @@ namespace Content.Server.Database
             await _prefsCtx.SaveChangesAsync();
         }
 
-        public async Task SaveCharacterSlotAsync(string username, HumanoidProfile newProfile)
+        public async Task SaveCharacterSlotAsync(Guid userId, HumanoidProfile newProfile)
         {
             var prefs = _prefsCtx
                 .Preferences
-                .Single(p => p.Username == username);
+                .Single(p => p.UserId == userId);
             var oldProfile = prefs
                 .HumanoidProfiles
                 .SingleOrDefault(h => h.Slot == newProfile.Slot);
@@ -58,17 +58,17 @@ namespace Content.Server.Database
             await _prefsCtx.SaveChangesAsync();
         }
 
-        public async Task DeleteCharacterSlotAsync(string username, int slot)
+        public async Task DeleteCharacterSlotAsync(Guid userId, int slot)
         {
             var profile = _prefsCtx
                 .Preferences
-                .Single(p => p.Username == username)
+                .Single(p => p.UserId == userId)
                 .HumanoidProfiles
                 .RemoveAll(h => h.Slot == slot);
             await _prefsCtx.SaveChangesAsync();
         }
 
-        public async Task<Dictionary<string, HumanoidProfile>> GetProfilesForPlayersAsync(List<string> usernames)
+        public async Task<Dictionary<Guid, HumanoidProfile>> GetProfilesForPlayersAsync(List<Guid> userIds)
         {
             return await _prefsCtx.HumanoidProfile
                 .Include(p => p.Jobs)
@@ -76,9 +76,9 @@ namespace Content.Server.Database
                 .Join(_prefsCtx.Preferences,
                     profile => new {profile.Slot, profile.PrefsId},
                     prefs => new {Slot = prefs.SelectedCharacterSlot, prefs.PrefsId},
-                    (profile, prefs) => new {prefs.Username, profile})
-                .Where(p => usernames.Contains(p.Username))
-                .ToDictionaryAsync(arg => arg.Username, arg => arg.profile);
+                    (profile, prefs) => new {prefs.UserId, profile})
+                .Where(p => userIds.Contains(p.UserId))
+                .ToDictionaryAsync(arg => arg.UserId, arg => arg.profile);
         }
     }
 }

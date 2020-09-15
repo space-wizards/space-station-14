@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -49,14 +50,15 @@ namespace Content.Tests.Server.Preferences
         public async Task TestUserDoesNotExist()
         {
             var db = GetDb();
-            Assert.Null(await db.GetPlayerPreferencesAsync("[The database should be empty so any string should do]"));
+            // Database should be empty so a new GUID should do it.
+            Assert.Null(await db.GetPlayerPreferencesAsync(Guid.NewGuid()));
         }
 
         [Test]
         public async Task TestUserDoesExist()
         {
             var db = GetDb();
-            const string username = "bobby";
+            var username = new Guid("9efe231c-47a6-40f3-9dc2-317e9571de6e");
             await db.SaveSelectedCharacterIndexAsync(username, 0);
             var prefs = await db.GetPlayerPreferencesAsync(username);
             Assert.NotNull(prefs);
@@ -68,7 +70,7 @@ namespace Content.Tests.Server.Preferences
         public async Task TestUpdateCharacter()
         {
             var db = GetDb();
-            const string username = "charlie";
+            var username = new Guid("640bd619-fc8d-4fe2-bf3c-4a5fb17d6ddd");
             const int slot = 0;
             var originalProfile = CharlieCharlieson();
             await db.SaveSelectedCharacterIndexAsync(username, slot);
@@ -81,7 +83,7 @@ namespace Content.Tests.Server.Preferences
         public async Task TestDeleteCharacter()
         {
             var db = GetDb();
-            const string username = "charlie";
+            var username = new Guid("640bd619-fc8d-4fe2-bf3c-4a5fb17d6ddd");
             const int slot = 0;
             await db.SaveSelectedCharacterIndexAsync(username, slot);
             await db.SaveCharacterSlotAsync(username, CharlieCharlieson(), slot);
@@ -94,7 +96,7 @@ namespace Content.Tests.Server.Preferences
         public async Task TestInvalidSlot()
         {
             var db = GetDb();
-            const string username = "charlie";
+            var username = new Guid("640bd619-fc8d-4fe2-bf3c-4a5fb17d6ddd");
             const int slot = -1;
 
             await db.SaveSelectedCharacterIndexAsync(username, slot);

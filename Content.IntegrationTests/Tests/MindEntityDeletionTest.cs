@@ -38,7 +38,7 @@ namespace Content.IntegrationTests.Tests
                 playerEnt = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
                 visitEnt = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
 
-                mind = new Mind(player.SessionId);
+                mind = new Mind(player.UserId);
                 player.ContentData().Mind = mind;
 
                 mind.TransferTo(playerEnt);
@@ -82,7 +82,7 @@ namespace Content.IntegrationTests.Tests
 
                 playerEnt = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
 
-                mind = new Mind(player.SessionId);
+                mind = new Mind(player.UserId);
                 player.ContentData().Mind = mind;
 
                 mind.TransferTo(playerEnt);
@@ -131,7 +131,7 @@ namespace Content.IntegrationTests.Tests
 
                 playerEnt = entMgr.SpawnEntity(null, grid.ToCoordinates());
 
-                mind = new Mind(player.SessionId);
+                mind = new Mind(player.UserId);
                 player.ContentData().Mind = mind;
 
                 mind.TransferTo(playerEnt);

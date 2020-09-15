@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
 namespace Content.Server.Database
@@ -58,7 +59,7 @@ namespace Content.Server.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Prefs>()
-                .HasIndex(p => p.Username)
+                .HasIndex(p => p.UserId)
                 .IsUnique();
 
             modelBuilder.Entity<HumanoidProfile>()
@@ -74,7 +75,7 @@ namespace Content.Server.Database
     public class Prefs
     {
         public int PrefsId { get; set; }
-        public string Username { get; set; } = null!;
+        public Guid UserId { get; set; }
         public int SelectedCharacterSlot { get; set; }
         public List<HumanoidProfile> HumanoidProfiles { get; } = new List<HumanoidProfile>();
     }

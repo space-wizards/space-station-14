@@ -29,12 +29,12 @@ namespace Content.Server.Preferences
             _prefsDb = new PrefsDb(dbConfig);
         }
 
-        public async Task<PlayerPreferences> GetPlayerPreferencesAsync(string username)
+        public async Task<PlayerPreferences> GetPlayerPreferencesAsync(Guid userId)
         {
             await _prefsSemaphore.WaitAsync();
             try
             {
-                var prefs = await _prefsDb.GetPlayerPreferences(username);
+                var prefs = await _prefsDb.GetPlayerPreferences(userId);
                 if (prefs is null) return null;
 
                 var profiles = new ICharacterProfile[_maxCharacterSlots];
@@ -55,13 +55,13 @@ namespace Content.Server.Preferences
             }
         }
 
-        public async Task SaveSelectedCharacterIndexAsync(string username, int index)
+        public async Task SaveSelectedCharacterIndexAsync(Guid userId, int index)
         {
             await _prefsSemaphore.WaitAsync();
             try
             {
                 index = MathHelper.Clamp(index, 0, _maxCharacterSlots - 1);
-                await _prefsDb.SaveSelectedCharacterIndex(username, index);
+                await _prefsDb.SaveSelectedCharacterIndex(userId, index);
             }
             finally
             {
@@ -69,7 +69,7 @@ namespace Content.Server.Preferences
             }
         }
 
-        public async Task SaveCharacterSlotAsync(string username, ICharacterProfile profile, int slot)
+        public async Task SaveCharacterSlotAsync(Guid userId, ICharacterProfile profile, int slot)
         {
             if (slot < 0 || slot >= _maxCharacterSlots)
                 return;
@@ -79,7 +79,7 @@ namespace Content.Server.Preferences
             {
                 if (profile is null)
                 {
-                    await DeleteCharacterSlotAsync(username, slot);
+                    await DeleteCharacterSlotAsync(userId, slot);
                     return;
                 }
 
@@ -111,7 +111,7 @@ namespace Content.Server.Preferences
                     humanoid.AntagPreferences
                         .Select(a => new Antag {AntagName = a})
                 );
-                await _prefsDb.SaveCharacterSlotAsync(username, entity);
+                await _prefsDb.SaveCharacterSlotAsync(userId, entity);
             }
             finally
             {
@@ -120,20 +120,20 @@ namespace Content.Server.Preferences
         }
 
 
-        private async Task DeleteCharacterSlotAsync(string username, int slot)
+        private async Task DeleteCharacterSlotAsync(Guid userId, int slot)
         {
-            await _prefsDb.DeleteCharacterSlotAsync(username, slot);
+            await _prefsDb.DeleteCharacterSlotAsync(userId, slot);
         }
 
-        public async Task<IEnumerable<KeyValuePair<string, ICharacterProfile>>> GetSelectedProfilesForPlayersAsync(
-            List<string> usernames)
+        public async Task<IEnumerable<KeyValuePair<Guid, ICharacterProfile>>> GetSelectedProfilesForPlayersAsync(
+            List<Guid> userIds)
         {
             await _prefsSemaphore.WaitAsync();
             try
             {
-                var profiles = await _prefsDb.GetProfilesForPlayersAsync(usernames);
+                var profiles = await _prefsDb.GetProfilesForPlayersAsync(userIds);
                 return profiles.Select(
-                    p => new KeyValuePair<string, ICharacterProfile>(p.Key, ConvertProfiles(p.Value)));
+                    p => new KeyValuePair<Guid, ICharacterProfile>(p.Key, ConvertProfiles(p.Value)));
             }
             finally
             {

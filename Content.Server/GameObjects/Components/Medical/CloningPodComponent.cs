@@ -169,11 +169,10 @@ namespace Content.Server.GameObjects.Components.Medical
 
 
                     var mob = _entityManager.SpawnEntity("HumanMob_Content", Owner.Transform.MapPosition);
-                    var client = _playerManager
-                        .GetPlayersBy(x => x.SessionId == mind.SessionId).First();
+                    var client = _playerManager.GetSessionByUserId(mind.UserId!.Value);
                     mob.GetComponent<HumanoidAppearanceComponent>()
-                        .UpdateFromProfile(GetPlayerProfileAsync(client.Name).Result);
-                    mob.Name = GetPlayerProfileAsync(client.Name).Result.Name;
+                        .UpdateFromProfile(GetPlayerProfileAsync(client.UserId).Result);
+                    mob.Name = GetPlayerProfileAsync(client.UserId).Result.Name;
 
                     _bodyContainer.Insert(mob);
                     _capturedMind = mind;
@@ -211,9 +210,9 @@ namespace Content.Server.GameObjects.Components.Medical
         }
 
 
-        private async Task<HumanoidCharacterProfile> GetPlayerProfileAsync(string username)
+        private async Task<HumanoidCharacterProfile> GetPlayerProfileAsync(NetUserId userId)
         {
-            return (HumanoidCharacterProfile) (await _prefsManager.GetPreferencesAsync(username))
+            return (HumanoidCharacterProfile) (await _prefsManager.GetPreferencesAsync(userId.UserId))
                 .SelectedCharacter;
         }
 

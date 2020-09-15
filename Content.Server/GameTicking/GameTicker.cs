@@ -255,14 +255,14 @@ namespace Content.Server.GameTicking
             // Get the profiles for each player for easier lookup.
             var profiles = (await _prefsManager.GetSelectedProfilesForPlayersAsync(
                 readyPlayers
-                    .Select(p => p.Name).ToList()))
-                    .ToDictionary(p => p.Key, p => (HumanoidCharacterProfile) p.Value);
+                    .Select(p => p.UserId.UserId).ToList()))
+                    .ToDictionary(p => new NetUserId(p.Key), p => (HumanoidCharacterProfile) p.Value);
 
             foreach (var readyPlayer in readyPlayers)
             {
-                if (!profiles.ContainsKey(readyPlayer.Name))
+                if (!profiles.ContainsKey(readyPlayer.UserId))
                 {
-                    profiles.Add(readyPlayer.Name, HumanoidCharacterProfile.Default());
+                    profiles.Add(readyPlayer.UserId, HumanoidCharacterProfile.Default());
                 }
             }
 
@@ -276,7 +276,7 @@ namespace Content.Server.GameTicking
                     continue;
                 }
 
-                var profile = profiles[player.Name];
+                var profile = profiles[player.UserId];
                 if (profile.PreferenceUnavailable == PreferenceUnavailableMode.SpawnAsOverflow)
                 {
                     assignedJobs.Add(player, OverflowJob);
@@ -286,7 +286,7 @@ namespace Content.Server.GameTicking
             // Spawn everybody in!
             foreach (var (player, job) in assignedJobs)
             {
-                SpawnPlayer(player, profiles[player.Name], job, false);
+                SpawnPlayer(player, profiles[player.UserId], job, false);
             }
 
             // Time to start the preset.
@@ -330,7 +330,7 @@ namespace Content.Server.GameTicking
         }
 
         private async Task<HumanoidCharacterProfile> GetPlayerProfileAsync(IPlayerSession p) =>
-            (HumanoidCharacterProfile) (await _prefsManager.GetPreferencesAsync(p.SessionId.Username))
+            (HumanoidCharacterProfile) (await _prefsManager.GetPreferencesAsync(p.UserId.UserId))
             .SelectedCharacter;
 
         public void EndRound(string roundEndText = "")
@@ -712,7 +712,7 @@ namespace Content.Server.GameTicking
 
                 case SessionStatus.Connected:
                 {
-                    _chatManager.DispatchServerAnnouncement($"Player {args.Session.SessionId} joined server!");
+                    _chatManager.DispatchServerAnnouncement($"Player {args.Session.Name} joined server!");
 
                     if (LobbyEnabled && _roundStartCountdownHasNotStartedYetDueToNoPlayers)
                     {
@@ -756,7 +756,7 @@ namespace Content.Server.GameTicking
                 {
                     if (_playersInLobby.ContainsKey(session)) _playersInLobby.Remove(session);
 
-                    _chatManager.DispatchServerAnnouncement($"Player {args.Session.SessionId} left server!");
+                    _chatManager.DispatchServerAnnouncement($"Player {args.Session.UserId} left server!");
                     ServerEmptyUpdateRestartCheck();
                     break;
                 }
@@ -797,7 +797,7 @@ namespace Content.Server.GameTicking
         private async void SpawnPlayerAsync(IPlayerSession session, string jobId = null, bool lateJoin = true)
         {
             var character = (HumanoidCharacterProfile) (await _prefsManager
-                    .GetPreferencesAsync(session.SessionId.Username))
+                    .GetPreferencesAsync(session.UserId.UserId))
                 .SelectedCharacter;
 
             SpawnPlayer(session, character, jobId, lateJoin);
@@ -818,7 +818,7 @@ namespace Content.Server.GameTicking
 
             var data = session.ContentData();
             data.WipeMind();
-            data.Mind = new Mind(session.SessionId)
+            data.Mind = new Mind(session.UserId)
             {
                 CharacterName = character.Name
             };
@@ -880,12 +880,12 @@ namespace Content.Server.GameTicking
             _playerJoinGame(session);
 
             var name = (await _prefsManager
-                    .GetPreferencesAsync(session.SessionId.Username))
+                    .GetPreferencesAsync(session.UserId.UserId))
                 .SelectedCharacter.Name;
 
             var data = session.ContentData();
             data.WipeMind();
-            data.Mind = new Mind(session.SessionId);
+            data.Mind = new Mind(session.UserId);
 
             var mob = _spawnObserverMob();
             mob.Name = name;
@@ -916,11 +916,11 @@ namespace Content.Server.GameTicking
         private MsgTickerLobbyReady GetPlayerStatus()
         {
             var msg = _netManager.CreateNetMessage<MsgTickerLobbyReady>();
-            msg.PlayerStatus = new Dictionary<NetSessionId, PlayerStatus>();
+            msg.PlayerStatus = new Dictionary<NetUserId, PlayerStatus>();
             foreach (var player in _playersInLobby.Keys)
             {
                 _playersInLobby.TryGetValue(player, out var status);
-                msg.PlayerStatus.Add(player.SessionId, status);
+                msg.PlayerStatus.Add(player.UserId, status);
             }
             return msg;
         }
@@ -928,9 +928,9 @@ namespace Content.Server.GameTicking
         private MsgTickerLobbyReady GetStatusSingle(IPlayerSession player, PlayerStatus status)
         {
             var msg = _netManager.CreateNetMessage<MsgTickerLobbyReady>();
-            msg.PlayerStatus = new Dictionary<NetSessionId, PlayerStatus>
+            msg.PlayerStatus = new Dictionary<NetUserId, PlayerStatus>
             {
-                { player.SessionId, status }
+                { player.UserId, status }
             };
             return msg;
         }
@@ -976,7 +976,7 @@ The current game mode is: [color=white]{0}[/color].
             _netManager.ServerSendToMany(infoMsg, _playersInLobby.Keys.Select(p => p.ConnectedClient).ToList());
         }
 
-        private GamePreset MakeGamePreset(Dictionary<string, HumanoidCharacterProfile> readyProfiles)
+        private GamePreset MakeGamePreset(Dictionary<NetUserId, HumanoidCharacterProfile> readyProfiles)
         {
             var preset = _dynamicTypeFactory.CreateInstance<GamePreset>(_presetType ?? typeof(PresetSandbox));
             preset.readyProfiles = readyProfiles;
