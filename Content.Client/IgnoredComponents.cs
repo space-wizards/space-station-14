@@ -91,7 +91,6 @@
             "SolarPanel",
             "BodyScanner",
             "Stunbaton",
-            "EmergencyClosetFill",
             "Tool",
             "TilePrying",
             "RandomSpriteColor",

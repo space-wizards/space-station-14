@@ -54,7 +54,23 @@
   parent: LockerEmergency
   suffix: Filled, Random
   components:
-  - type: EmergencyClosetFill
+  - type: StorageFill
+    contents:
+      - name: ToolboxEmergencyFilled
+        prob: 0.4
+      - name: BreathMaskClothing
+        prob: 0.4
+      - name: BreathMaskClothing
+        prob: 0.25
+      # TODO: uncomment when we actually have these items.
+      #- name: TankOxygenSmallFilled
+      #  prob: 0.4
+      #- name: TankOxygenSmallFilled
+      #  prob: 0.25
+      #- name: MedkitOxygenFilled
+      #  prob: 0.25
+      #- name: TankOxygenFilled
+      #  prob: 0.2
 
 - type: entity
   id: LockerBoozeFilled
