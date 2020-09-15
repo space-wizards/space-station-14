@@ -1,14 +1,15 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
+using Content.Shared.GameObjects.Components.Body.Surgery;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
 namespace Content.Shared.GameObjects.Components.Body.Part
 {
-    public interface IBodyPart : IHasBody
+    public interface IBodyPart : IHasBody, IBodyPartContainer
     {
         new IBody? Body { get; set; }
 
@@ -41,6 +42,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         /// </summary>
         int CurrentDurability { get; }
 
+        // TODO: Mechanisms occupying different parts at the body level
         /// <summary>
         ///     Collection of all <see cref="IMechanism"/>s currently inside this
         ///     <see cref="IBodyPart"/>.
@@ -85,6 +87,14 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         bool SurgeryCheck(SurgeryType surgery);
 
         /// <summary>
+        ///     Attempts to perform surgery on this <see cref="IBodyPart"/> with the given
+        ///     tool.
+        /// </summary>
+        /// <returns>True if successful, false if there was an error.</returns>
+        public bool AttemptSurgery(SurgeryType toolType, IBodyPartContainer target, ISurgeon surgeon,
+            IEntity performer);
+
+        /// <summary>
         ///     Checks if another <see cref="IBodyPart"/> can be connected to this one.
         /// </summary>
         /// <param name="part">The part to connect.</param>
@@ -98,22 +108,34 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         /// <returns>True if it can be installed, false otherwise.</returns>
         bool CanInstallMechanism(IMechanism mechanism);
 
+        bool TryInstallMechanism(IMechanism mechanism);
+
         /// <summary>
-        ///     Tries to remove the given <see cref="IMechanism"/> from
-        ///     this <see cref="IBodyPart"/>.
+        ///     Tries to remove the given <see cref="mechanism"/> from this
+        ///     <see cref="IBodyPart"/>.
         /// </summary>
-        /// <returns>
-        ///     True if the mechanism was dropped, false otherwise.
-        /// </returns>
-        bool TryDropMechanism(IEntity dropLocation, IMechanism mechanismTarget);
+        /// <param name="mechanism">The mechanism to remove.</param>
+        /// <returns>True if it was removed, false otherwise.</returns>
+        bool RemoveMechanism(IMechanism mechanism);
+
+        /// <summary>
+        ///     Tries to remove the given <see cref="mechanism"/> from this
+        ///     <see cref="IBodyPart"/> and drops it at the specified coordinates.
+        /// </summary>
+        /// <param name="mechanism">The mechanism to remove.</param>
+        /// <param name="dropAt">The coordinates to drop it at.</param>
+        /// <returns>True if it was removed, false otherwise.</returns>
+        bool RemoveMechanism(IMechanism mechanism, EntityCoordinates dropAt);
 
         /// <summary>
         ///     Tries to destroy the given <see cref="IMechanism"/> from
         ///     this <see cref="IBodyPart"/>.
+        ///     The mechanism won't be deleted if it is not in this body part.
         /// </summary>
         /// <returns>
-        ///     True if the mechanism was destroyed, false otherwise.
+        ///     True if the mechanism was in this body part and destroyed,
+        ///     false otherwise.
         /// </returns>
-        bool DestroyMechanism(IMechanism mechanism);
+        bool DeleteMechanism(IMechanism mechanism);
     }
 }

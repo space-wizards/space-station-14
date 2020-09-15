@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using YamlDotNet.RepresentationModel;
 
-namespace Content.Shared.Body.Preset
+namespace Content.Shared.GameObjects.Components.Body.Preset
 {
     /// <summary>
     ///     Prototype for the BodyPreset class.

@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Utility;
-using Content.Shared.Body.Surgery;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Body.Part;
@@ -37,7 +36,7 @@ namespace Content.Server.GameObjects.Components.Body.Part
 
         private SurgeryData? _surgeryData;
 
-        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(GenericSurgeryUiKey.Key);
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(SurgeryUIKey.Key);
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -192,11 +191,6 @@ namespace Content.Server.GameObjects.Components.Body.Part
                     ReceiveBodyPartSlot(msg.SelectedOptionId);
                     break;
             }
-        }
-
-        public override bool DestroyMechanism(IMechanism mechanism)
-        {
-            throw new NotImplementedException();
         }
     }
 }

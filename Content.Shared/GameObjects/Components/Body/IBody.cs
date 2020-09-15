@@ -1,13 +1,12 @@
 #nullable enable
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Content.Shared.Body.Template;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Damage;
 
 namespace Content.Shared.GameObjects.Components.Body
 {
-    public interface IBody : IDamageableComponent
+    public interface IBody : IDamageableComponent, IBodyPartContainer
     {
         public string TemplateName { get; }
 
@@ -17,6 +16,11 @@ namespace Content.Shared.GameObjects.Components.Body
         ///     template.
         /// </summary>
         public Dictionary<string, BodyPartType> Slots { get; }
+
+        /// <summary>
+        ///     Maps slots to the part filling each one.
+        /// </summary>
+        public IReadOnlyDictionary<string, IBodyPart> Parts { get; }
 
         /// <summary>
         ///     Maps limb name to the list of their connections to other limbs.
@@ -33,6 +37,8 @@ namespace Content.Shared.GameObjects.Components.Body
         ///     that should fill it. E.g. "right arm" : "BodyPart.arm.basic_human".
         /// </summary>
         public IReadOnlyDictionary<string, string> PartIds { get; }
+
+        public IReadOnlyDictionary<string, string> MechanismLayers { get; }
 
         /// <summary>
         ///     Installs the given <see cref="IBodyPart"/> into the given slot.
@@ -73,10 +79,14 @@ namespace Content.Shared.GameObjects.Components.Body
         ///     dropping other <see cref="IBodyPart">BodyParts</see> if they
         ///     were hanging off of it.
         /// </summary>
+        /// <param name="part">The part to drop.</param>
+        /// <param name="dropped">
+        ///     All of the parts that were dropped, including <see cref="part"/>.
+        /// </param>
         /// <returns>
-        ///     The <see cref="IBodyPart"/>s that were dropped.
+        ///     True if the part was dropped, false otherwise.
         /// </returns>
-        List<IBodyPart>? DropPart(IBodyPart part);
+        bool TryDropPart(IBodyPart part, [NotNullWhen(true)] out List<IBodyPart>? dropped);
 
         /// <summary>
         ///     Recursively searches for if <see cref="part"/> is connected to

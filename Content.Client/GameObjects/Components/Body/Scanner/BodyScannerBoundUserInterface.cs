@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Content.Shared.Body.Scanner;
+using Content.Shared.GameObjects.Components.Body.Scanner;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Shared.GameObjects.Components.UserInterface;
@@ -17,7 +17,7 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
         private BodyScannerTemplateData _template;
 
         [ViewVariables]
-        private Dictionary<string, BodyScannerBodyPartData> _parts;
+        private Dictionary<string, BodyScannerPartData> _parts;
 
         public BodyScannerBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey) { }
 
@@ -33,7 +33,7 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
         {
             base.UpdateState(state);
 
-            if (!(state is BodyScannerInterfaceState scannerState))
+            if (!(state is BodyScannerUIState scannerState))
             {
                 return;
             }

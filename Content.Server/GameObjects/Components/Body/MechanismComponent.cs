@@ -1,0 +1,169 @@
+﻿#nullable enable
+using System.Collections.Generic;
+using Content.Server.Utility;
+using Content.Shared.GameObjects.Components.Body.Mechanism;
+using Content.Shared.GameObjects.Components.Body.Part;
+using Content.Shared.GameObjects.Components.Body.Surgery;
+using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.GameObjects.Components;
+using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.Components.UserInterface;
+using Robust.Server.Interfaces.GameObjects;
+using Robust.Server.Interfaces.Player;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Localization;
+using Robust.Shared.Utility;
+using Robust.Shared.ViewVariables;
+
+namespace Content.Server.GameObjects.Components.Body
+{
+    [RegisterComponent]
+    [ComponentReference(typeof(SharedMechanismComponent))]
+    [ComponentReference(typeof(IMechanism))]
+    public class MechanismComponent : SharedMechanismComponent, IAfterInteract
+    {
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(SurgeryUIKey.Key);
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
+            }
+
+            // TODO Remove
+            if (Owner.TryGetComponent(out SpriteComponent? component))
+            {
+                component.LayerSetRSI(0, RSIPath);
+                component.LayerSetState(0, RSIState);
+            }
+        }
+
+
+        void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        {
+            if (eventArgs.Target == null)
+            {
+                return;
+            }
+
+            CloseAllSurgeryUIs();
+            OptionsCache.Clear();
+            PerformerCache = null;
+            BodyManagerComponentCache = null;
+
+            if (eventArgs.Target.TryGetComponent<BodyComponent>(out var bodyManager))
+            {
+                SendBodyPartListToUser(eventArgs, bodyManager);
+            }
+            else if (eventArgs.Target.TryGetComponent<IBodyPart>(out var part))
+            {
+                DebugTools.AssertNotNull(part);
+
+                if (!part.TryInstallMechanism(this))
+                {
+                    eventArgs.Target.PopupMessage(eventArgs.User, Loc.GetString("You can't fit it in!"));
+                }
+            }
+        }
+
+        private void SendBodyPartListToUser(AfterInteractEventArgs eventArgs, BodyComponent body)
+        {
+            // Create dictionary to send to client (text to be shown : data sent back if selected)
+            var toSend = new Dictionary<string, int>();
+
+            foreach (var (key, value) in body.Parts)
+            {
+                // For each limb in the target, add it to our cache if it is a valid option.
+                if (value.CanInstallMechanism(this))
+                {
+                    OptionsCache.Add(IdHash, value);
+                    toSend.Add(key + ": " + value.Name, IdHash++);
+                }
+            }
+
+            if (OptionsCache.Count > 0 &&
+                eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            {
+                OpenSurgeryUI(actor.playerSession);
+                UpdateSurgeryUIBodyPartRequest(eventArgs.User.GetComponent<BasicActorComponent>().playerSession,
+                    toSend);
+                PerformerCache = eventArgs.User;
+                BodyManagerComponentCache = body;
+            }
+            else // If surgery cannot be performed, show message saying so.
+            {
+                eventArgs.Target.PopupMessage(eventArgs.User,
+                    Loc.GetString("You see no way to install the {0}.", Owner.Name));
+            }
+        }
+
+        /// <summary>
+        ///     Called after the client chooses from a list of possible BodyParts that can be operated on.
+        /// </summary>
+        private void HandleReceiveBodyPart(int key)
+        {
+            if (PerformerCache == null ||
+                !PerformerCache.TryGetComponent(out IActorComponent? actor))
+            {
+                return;
+            }
+
+            CloseSurgeryUI(actor.playerSession);
+
+            if (BodyManagerComponentCache == null)
+            {
+                return;
+            }
+
+            // TODO: sanity checks to see whether user is in range, user is still able-bodied, target is still the same, etc etc
+            if (!OptionsCache.TryGetValue(key, out var targetObject))
+            {
+                BodyManagerComponentCache.Owner.PopupMessage(PerformerCache,
+                    Loc.GetString("You see no useful way to use the {0} anymore.", Owner.Name));
+                return;
+            }
+
+            var target = (IBodyPart) targetObject;
+            var message = target.TryInstallMechanism(this)
+                ? Loc.GetString("You jam {0:theName} inside {1:them}.", Owner, PerformerCache)
+                : Loc.GetString("You can't fit it in!");
+
+            BodyManagerComponentCache.Owner.PopupMessage(PerformerCache, message);
+
+            // TODO: {1:theName}
+        }
+
+        private void OpenSurgeryUI(IPlayerSession session)
+        {
+            UserInterface?.Open(session);
+        }
+
+        private void UpdateSurgeryUIBodyPartRequest(IPlayerSession session, Dictionary<string, int> options)
+        {
+            UserInterface?.SendMessage(new RequestBodyPartSurgeryUIMessage(options), session);
+        }
+
+        private void CloseSurgeryUI(IPlayerSession session)
+        {
+            UserInterface?.Close(session);
+        }
+
+        private void CloseAllSurgeryUIs()
+        {
+            UserInterface?.CloseAll();
+        }
+
+        private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)
+        {
+            switch (message.Message)
+            {
+                case ReceiveBodyPartSurgeryUIMessage msg:
+                    HandleReceiveBodyPart(msg.SelectedOptionId);
+                    break;
+            }
+        }
+    }
+}

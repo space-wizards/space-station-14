@@ -7,7 +7,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using YamlDotNet.RepresentationModel;
 
-namespace Content.Shared.Body.Template
+namespace Content.Shared.GameObjects.Components.Body.Template
 {
     /// <summary>
     ///     Prototype for the BodyTemplate class.

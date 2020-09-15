@@ -226,23 +226,21 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
             performer.PopupMessage(Loc.GetString("Remove the organ..."));
 
             // TODO do_after: Delay
-            Parent.TryDropMechanism(performer, target);
+            Parent.RemoveMechanism(target, performer.Transform.Coordinates);
             _disconnectedOrgans.Remove(target);
         }
 
         private void RemoveBodyPartSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
-            // This surgery requires a DroppedBodyPartComponent.
-            if (!(container is BodyComponent))
+            if (!(container is IBody body))
             {
                 return;
             }
 
-            var bmTarget = (BodyComponent) container;
             performer.PopupMessage(Loc.GetString("Saw off the limb!"));
 
             // TODO do_after: Delay
-            bmTarget.RemovePart(Parent, true);
+            body.RemovePart(Parent, true);
         }
     }
 }

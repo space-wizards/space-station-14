@@ -1,7 +1,6 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Damage.DamageContainer;
 using Content.Shared.Damage.ResistanceSet;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
@@ -9,8 +8,13 @@ using Content.Shared.GameObjects.Components.Body.Surgery;
 using Content.Shared.GameObjects.Components.Damage;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Reflection;
+using Robust.Shared.IoC;
+using Robust.Shared.Log;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Body.Part
@@ -163,20 +167,34 @@ namespace Content.Shared.GameObjects.Components.Body.Part
             return SurgeryData.CheckSurgery(surgery);
         }
 
+        /// <summary>
+        ///     Attempts to perform surgery on this <see cref="IBodyPart"/> with the given
+        ///     tool.
+        /// </summary>
+        /// <returns>True if successful, false if there was an error.</returns>
+        public bool AttemptSurgery(SurgeryType toolType, IBodyPartContainer target, ISurgeon surgeon, IEntity performer)
+        {
+            DebugTools.AssertNotNull(toolType);
+            DebugTools.AssertNotNull(target);
+            DebugTools.AssertNotNull(surgeon);
+            DebugTools.AssertNotNull(performer);
+
+            return SurgeryData.PerformSurgery(toolType, target, surgeon, performer);
+        }
+
         public bool CanAttachPart(IBodyPart part)
         {
+            DebugTools.AssertNotNull(part);
+
             return SurgeryData.CanAttachBodyPart(part);
         }
 
         public bool CanInstallMechanism(IMechanism mechanism)
         {
+            DebugTools.AssertNotNull(mechanism);
+
             return SizeUsed + mechanism.Size <= Size &&
                    SurgeryData.CanInstallMechanism(mechanism);
-        }
-
-        private bool AddMechanism(IMechanism mechanism)
-        {
-            return _mechanisms.Add(mechanism);
         }
 
         /// <summary>
@@ -187,29 +205,104 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         ///     True if successful, false if there was an error
         ///     (e.g. not enough room in <see cref="IBodyPart"/>).
         /// </returns>
-        private bool TryInstallMechanism(IMechanism mechanism)
+        public bool TryInstallMechanism(IMechanism mechanism)
         {
+            DebugTools.AssertNotNull(mechanism);
+
             if (!CanInstallMechanism(mechanism))
             {
                 return false;
             }
 
-            return AddMechanism(mechanism);
+            if (_mechanisms.Add(mechanism))
+            {
+                mechanism.Part = this;
+                SizeUsed += mechanism.Size;
+
+                if (Body == null)
+                {
+                    return true;
+                }
+
+                if (!Body.MechanismLayers.TryGetValue(mechanism.Id, out var mapString))
+                {
+                    return true;
+                }
+
+                if (!IoCManager.Resolve<IReflectionManager>().TryParseEnumReference(mapString, out var @enum))
+                {
+                    Logger.Warning($"Template {Body.TemplateName} has an invalid RSI map key {mapString} for mechanism {mechanism.Id}.");
+                    return true;
+                }
+
+                var message = new MechanismSpriteAddedMessage(@enum);
+
+                Body.Owner.SendNetworkMessage(Body, message);
+
+                return true;
+            }
+
+            return false;
         }
 
-        public bool TryDropMechanism(IEntity dropLocation, IMechanism mechanismTarget)
+        public bool RemoveMechanism(IMechanism mechanism)
         {
-            if (!_mechanisms.Remove(mechanismTarget))
+            DebugTools.AssertNotNull(mechanism);
+
+            if (!_mechanisms.Remove(mechanism))
             {
                 return false;
             }
 
-            SizeUsed -= mechanismTarget.Size;
+            mechanism.Part = null;
+            SizeUsed -= mechanism.Size;
+
+            if (Body == null)
+            {
+                return true;
+            }
+
+            if (!Body.MechanismLayers.TryGetValue(mechanism.Id, out var mapString))
+            {
+                return true;
+            }
+
+            if (!IoCManager.Resolve<IReflectionManager>().TryParseEnumReference(mapString, out var @enum))
+            {
+                Logger.Warning($"Template {Body.TemplateName} has an invalid RSI map key {mapString} for mechanism {mechanism.Id}.");
+                return true;
+            }
+
+            var message = new MechanismSpriteRemovedMessage(@enum);
+
+            Body.Owner.SendNetworkMessage(Body, message);
 
             return true;
         }
 
-        public abstract bool DestroyMechanism(IMechanism mechanism);
+        public bool RemoveMechanism(IMechanism mechanism, EntityCoordinates coordinates)
+        {
+            if (RemoveMechanism(mechanism))
+            {
+                mechanism.Owner.Transform.Coordinates = coordinates;
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool DeleteMechanism(IMechanism mechanism)
+        {
+            DebugTools.AssertNotNull(mechanism);
+
+            if (!RemoveMechanism(mechanism))
+            {
+                return false;
+            }
+
+            mechanism.Owner.Delete();
+            return true;
+        }
 
         private void OnHealthChanged(List<HealthChangeData> changes)
         {

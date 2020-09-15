@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Content.Shared.Body.Scanner;
+using Content.Shared.GameObjects.Components.Body.Scanner;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
@@ -13,11 +13,11 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
     {
         private BodyScannerTemplateData _template;
 
-        private Dictionary<string, BodyScannerBodyPartData> _parts;
+        private Dictionary<string, BodyScannerPartData> _parts;
 
         private List<string> _slots;
 
-        private BodyScannerBodyPartData _currentBodyPart;
+        private BodyScannerPartData _currentBodyPart;
 
         public BodyScannerDisplay(BodyScannerBoundUserInterface owner)
         {
@@ -102,7 +102,7 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
 
         private RichTextLabel MechanismInfoLabel { get; }
 
-        public void UpdateDisplay(BodyScannerTemplateData template, Dictionary<string, BodyScannerBodyPartData> parts)
+        public void UpdateDisplay(BodyScannerTemplateData template, Dictionary<string, BodyScannerPartData> parts)
         {
             _template = template;
             _parts = parts;
@@ -128,7 +128,7 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
             }
         }
 
-        private void UpdateBodyPartBox(BodyScannerBodyPartData part, string slotName)
+        private void UpdateBodyPartBox(BodyScannerPartData part, string slotName)
         {
             BodyPartLabel.Text = $"{Loc.GetString(slotName)}: {Loc.GetString(part.Name)}";
             BodyPartHealth.Text = $"{part.CurrentDurability}/{part.MaxDurability}";

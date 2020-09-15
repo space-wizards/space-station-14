@@ -1,12 +1,11 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Server.Body;
-using Content.Server.Body.Mechanisms;
 using Content.Server.Utility;
-using Content.Shared.Body.Surgery;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Body.Mechanism;
+using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Body.Surgery;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -19,7 +18,6 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Body
@@ -40,7 +38,7 @@ namespace Content.Server.GameObjects.Components.Body
 
         private float _baseOperateTime;
 
-        private BodyComponent? _bodyManagerComponentCache;
+        private IBody? _bodyManagerComponentCache;
 
         private ISurgeon.MechanismRequestCallback? _callbackCache;
 
@@ -50,7 +48,7 @@ namespace Content.Server.GameObjects.Components.Body
 
         private SurgeryType _surgeryType;
 
-        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(GenericSurgeryUiKey.Key);
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(SurgeryUIKey.Key);
 
         void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
@@ -99,29 +97,27 @@ namespace Content.Server.GameObjects.Components.Body
                     SendNoUsefulWayToUsePopup();
                 }
             }
-            else if (eventArgs.Target.TryGetComponent<DroppedBodyPartComponent>(out var droppedBodyPart))
+            else if (eventArgs.Target.TryGetComponent<IBodyPart>(out var part))
             {
                 // Attempt surgery on a DroppedBodyPart - there's only one possible target so no need for selection UI
                 _performerCache = eventArgs.User;
 
-                DebugTools.AssertNotNull(droppedBodyPart.ContainedBodyPart);
-
                 // If surgery can be performed...
-                if (!droppedBodyPart.ContainedBodyPart.SurgeryCheck(_surgeryType))
+                if (!part.SurgeryCheck(_surgeryType))
                 {
                     SendNoUsefulWayToUsePopup();
                     return;
                 }
 
-                //...do the surgery.
-                if (droppedBodyPart.ContainedBodyPart.AttemptSurgery(_surgeryType, droppedBodyPart, this,
+                // ...do the surgery.
+                if (part.AttemptSurgery(_surgeryType, part, this,
                     eventArgs.User))
                 {
                     return;
                 }
 
                 // Log error if the surgery fails somehow.
-                Logger.Debug($"Error when trying to perform surgery on ${nameof(BodyPart)} {eventArgs.User.Name}");
+                Logger.Debug($"Error when trying to perform surgery on ${nameof(IBodyPart)} {eventArgs.User.Name}");
                 throw new InvalidOperationException();
             }
         }
@@ -201,7 +197,7 @@ namespace Content.Server.GameObjects.Components.Body
 
         /// <summary>
         ///     Called after the client chooses from a list of possible
-        ///     <see cref="BodyPart"/> that can be operated on.
+        ///     <see cref="IBodyPart"/> that can be operated on.
         /// </summary>
         private void HandleReceiveBodyPart(int key)
         {
@@ -220,8 +216,9 @@ namespace Content.Server.GameObjects.Components.Body
                 return;
             }
 
-            var target = (BodyPart) targetObject!;
+            var target = (IBodyPart) targetObject!;
 
+            // TODO tf is this
             if (!target.AttemptSurgery(_surgeryType, _bodyManagerComponentCache, this, _performerCache))
             {
                 SendNoUsefulWayToUseAnymorePopup();
@@ -243,7 +240,7 @@ namespace Content.Server.GameObjects.Components.Body
                 return;
             }
 
-            var target = targetObject as Mechanism;
+            var target = targetObject as MechanismComponent;
 
             CloseSurgeryUI(actor.playerSession);
             _callbackCache?.Invoke(target, _bodyManagerComponentCache, this, _performerCache);

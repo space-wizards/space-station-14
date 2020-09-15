@@ -1,7 +1,6 @@
 ﻿#nullable enable
 using System;
 using System.Linq;
-using Content.Server.GameObjects.Components.Body;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Damage;
@@ -14,7 +13,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
-namespace Content.Server.Body
+namespace Content.Server.GameObjects.Components.Body
 {
     class AddHandCommand : IClientCommand
     {
@@ -70,7 +69,7 @@ namespace Content.Server.Body
 
             var slot = part.GetHashCode().ToString();
 
-            body.Template.Slots.Add(slot, BodyPartType.Hand);
+            body.Slots.Add(slot, BodyPartType.Hand);
             body.TryAddPart(slot, part, true);
         }
     }
@@ -158,7 +157,7 @@ namespace Content.Server.Body
             {
                 if (mechanism.Name.ToLowerInvariant() == mechanismName)
                 {
-                    part.DestroyMechanism(mechanism);
+                    part.DeleteMechanism(mechanism);
                     shell.SendText(player, $"Mechanism with name {mechanismName} has been destroyed.");
                     return;
                 }

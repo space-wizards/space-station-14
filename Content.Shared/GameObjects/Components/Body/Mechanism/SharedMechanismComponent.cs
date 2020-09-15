@@ -1,13 +1,27 @@
 ﻿#nullable enable
+using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Body.Mechanism
 {
-    public class MechanismComponent : Component, IMechanism
+    public abstract class SharedMechanismComponent : Component, IMechanism
     {
         public override string Name => "Mechanism";
+
+        protected readonly Dictionary<int, object> OptionsCache = new Dictionary<int, object>();
+
+        protected IBody? BodyManagerComponentCache;
+
+        protected int IdHash;
+
+        protected IEntity? PerformerCache;
+
+        public IBody? Body => Part?.Body;
+
+        public IBodyPart? Part { get; set; }
 
         public string Id { get; } = string.Empty;
 
@@ -32,10 +46,6 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
         public int Size { get; set; }
 
         public BodyPartCompatibility Compatibility { get; set; }
-
-        public IBody? Body => Part?.Body;
-
-        public IBodyPart? Part { get; set; }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
