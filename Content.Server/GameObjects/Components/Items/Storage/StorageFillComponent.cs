@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using NFluidsynth;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -8,19 +9,19 @@ using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using Serilog;
+using Logger = Robust.Shared.Log.Logger;
 
 namespace Content.Server.GameObjects.Components.Items.Storage
 {
     [RegisterComponent]
     internal sealed class StorageFillComponent : Component, IMapInit
     {
+        [Dependency] private readonly IEntityManager _entityManager;
+
         public override string Name => "StorageFill";
 
         private List<PrototypeItemData> _contents = new List<PrototypeItemData>();
-
-#pragma warning disable 649
-        [Dependency] private readonly IEntityManager _entityManager;
-#pragma warning restore 649
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -36,13 +37,12 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 return;
             }
 
-            var storage = Owner.GetComponent<IStorageComponent>();
-            var random = IoCManager.Resolve<IRobustRandom>();
-
-            void Spawn(string prototype)
+            if (!Owner.TryGetComponent(out IStorageComponent storage))
             {
-                storage.Insert(_entityManager.SpawnEntity(prototype, Owner.Transform.Coordinates));
+                Logger.Error($"StorageFillComponent couldn't find any StorageComponent ({Owner})");
+                return;
             }
+            var random = IoCManager.Resolve<IRobustRandom>();
 
             var alreadySpawnedGroups = new List<string>();
             foreach (var storageItem in _contents)
@@ -50,19 +50,19 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 if (storageItem.PrototypeName == null) continue;
                 if (storageItem.GroupId != null && alreadySpawnedGroups.Contains(storageItem.GroupId)) continue;
 
-                if (!(Math.Abs(storageItem.SpawnProbability - 1f) < 0.001f) &&
+                if (storageItem.SpawnProbability != 1f &&
                     !random.Prob(storageItem.SpawnProbability))
                 {
                     continue;
                 }
 
-                Spawn(storageItem.PrototypeName);
+                storage.Insert(_entityManager.SpawnEntity(storageItem.PrototypeName, Owner.Transform.Coordinates));
                 if(storageItem.GroupId != null) alreadySpawnedGroups.Add(storageItem.GroupId);
             }
         }
 
         [Serializable]
-        protected struct PrototypeItemData : IExposeData
+        private struct PrototypeItemData : IExposeData
         {
             public string PrototypeName;
             public float SpawnProbability;
