@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems;
@@ -7,6 +8,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.StationEvents
 {
@@ -28,6 +30,13 @@ namespace Content.Server.StationEvents
         private float _elapsedTime;
         private int _failDuration;
         
+        /// <summary>
+        ///     So we don't overlap the announcement with power-down sounds we'll delay it a few seconds.
+        /// </summary>
+        private bool _announced;
+
+        private CancellationTokenSource _announceCancelToken;
+        
         private List<IEntity> _powered = new List<IEntity>();
         
 
@@ -35,8 +44,8 @@ namespace Content.Server.StationEvents
         public override void Startup()
         {
             base.Startup();
-            EntitySystem.Get<AudioSystem>().PlayGlobal("/Audio/Announcements/power_off.ogg");
 
+            _announced = false;
             _elapsedTime = 0.0f;
             _failDuration = IoCManager.Resolve<IRobustRandom>().Next(30, 120);
             var componentManager = IoCManager.Resolve<IComponentManager>();
@@ -51,7 +60,6 @@ namespace Content.Server.StationEvents
         public override void Shutdown()
         {
             base.Shutdown();
-            EntitySystem.Get<AudioSystem>().PlayGlobal("/Audio/Announcements/power_on.ogg");
 
             foreach (var entity in _powered)
             {
@@ -63,6 +71,12 @@ namespace Content.Server.StationEvents
                 }
             }
             
+            _announceCancelToken?.Cancel();
+            _announceCancelToken = new CancellationTokenSource();
+            Timer.Spawn(3000, () =>
+            {
+                EntitySystem.Get<AudioSystem>().PlayGlobal("/Audio/Announcements/power_on.ogg");
+            }, _announceCancelToken.Token);
             _powered.Clear();
         }
 
@@ -71,6 +85,12 @@ namespace Content.Server.StationEvents
             if (!Running)
             {
                 return;
+            }
+
+            if (!_announced && _elapsedTime > 3.0f)
+            {
+                EntitySystem.Get<AudioSystem>().PlayGlobal("/Audio/Announcements/power_off.ogg");
+                _announced = true;
             }
             
             _elapsedTime += frameTime;
