@@ -41,9 +41,9 @@
         amount: 2
       - name: HarmonicaInstrument
         prob: 0.15
-        group: group1
+        orGroup: HarmonicaOrChocolate
       - name: FoodChocolateBar
-        group: group1
+        orGroup: HarmonicaOrChocolate
 
 - type: entity
   name: mechanical toolbox
@@ -90,9 +90,9 @@
       - name: MVWireStack
       - name: GlovesYellow
         prob: 0.05
-        group: group1
+        orGroup: GlovesOrWires
       - name: HVWireStack
-        group: group1
+        orGroup: GlovesOrWires
 
 - type: entity
   name: artistic toolbox
@@ -151,6 +151,6 @@
         amount: 5
       - name: DrinkGoldenCup
         prob: 0.05
-        group: group1
+        orGroup: CupOrGold
       - name: GoldStack
-        group: group1
+        orGroup: CupOrGold

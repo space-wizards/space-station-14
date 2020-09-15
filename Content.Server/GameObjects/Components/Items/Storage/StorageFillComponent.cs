@@ -74,7 +74,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 serializer.DataField(ref PrototypeName, "name", null);
                 serializer.DataField(ref Amount, "amount", 1);
                 serializer.DataField(ref SpawnProbability, "prob", 1f);
-                serializer.DataField(ref GroupId, "group", null);
+                serializer.DataField(ref GroupId, "orGroup", null);
             }
         }
     }
