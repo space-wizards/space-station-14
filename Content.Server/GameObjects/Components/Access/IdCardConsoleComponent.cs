@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
@@ -8,6 +9,8 @@ using Content.Shared.Access;
 using Content.Shared.GameObjects.Components.Access;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.GameObjects.Verbs;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
@@ -23,7 +26,7 @@ namespace Content.Server.GameObjects.Components.Access
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class IdCardConsoleComponent : SharedIdCardConsoleComponent, IActivate
+    public class IdCardConsoleComponent : SharedIdCardConsoleComponent, IActivate, IInteractUsing
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -31,6 +34,9 @@ namespace Content.Server.GameObjects.Components.Access
         private ContainerSlot _targetIdContainer = default!;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(IdCardConsoleUiKey.Key);
+
+        private bool PrivilegedIDEmpty => _privilegedIdContainer.ContainedEntities.Count < 1;
+        private bool TargetIDEmpty => _targetIdContainer.ContainedEntities.Count < 1;
 
         public override void Initialize()
         {
@@ -222,5 +228,85 @@ namespace Content.Server.GameObjects.Components.Access
 
             UserInterface?.Open(actor.playerSession);
         }
+
+        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        {
+            var item = eventArgs.Using;
+            var user = eventArgs.User;
+
+            if (!PrivilegedIDEmpty && !TargetIDEmpty)
+            {
+                return false;
+            }
+
+            if (!item.TryGetComponent<IdCardComponent>(out var idCardComponent) || !user.TryGetComponent(out IHandsComponent? hand))
+            {
+                return false;
+            }
+
+            if (PrivilegedIDEmpty)
+            {
+                InsertIdFromHand(user, _privilegedIdContainer, hand);
+            }
+
+            else if (TargetIDEmpty)
+            {
+                InsertIdFromHand(user, _targetIdContainer, hand);
+            }
+
+            UpdateUserInterface();
+            return true;
+        }
+
+        [Verb]
+        public sealed class EjectPrivilegedIDVerb : Verb<IdCardConsoleComponent>
+        {
+            protected override void GetData(IEntity user, IdCardConsoleComponent component, VerbData data)
+            {
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
+                data.Text = Loc.GetString("Eject Privileged ID");
+                data.Visibility = component.PrivilegedIDEmpty ? VerbVisibility.Invisible : VerbVisibility.Visible;
+            }
+
+            protected override void Activate(IEntity user, IdCardConsoleComponent component)
+            {
+                if (!user.TryGetComponent(out IHandsComponent? hand))
+                {
+                    return;
+                }
+                component.PutIdInHand(component._privilegedIdContainer, hand);
+            }
+        }
+
+        public sealed class EjectTargetIDVerb : Verb<IdCardConsoleComponent>
+        {
+            protected override void GetData(IEntity user, IdCardConsoleComponent component, VerbData data)
+            {
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
+                data.Text = Loc.GetString("Eject Target ID");
+                data.Visibility = component.TargetIDEmpty ? VerbVisibility.Invisible : VerbVisibility.Visible;
+            }
+
+            protected override void Activate(IEntity user, IdCardConsoleComponent component)
+            {
+                if (!user.TryGetComponent(out IHandsComponent? hand))
+                {
+                    return;
+                }
+                component.PutIdInHand(component._targetIdContainer, hand);
+            }
+        }
+
+
     }
 }
