@@ -10,8 +10,6 @@ namespace Content.Client.UserInterface.Cargo
 {
     public class GalacticBankSelectionMenu : SS14Window
     {
-        [Dependency] private readonly ILocalizationManager _loc = default!;
-
         private ItemList _accounts;
         private int _accountCount = 0;
         private string[] _accountNames = new string[] { };
@@ -26,7 +24,7 @@ namespace Content.Client.UserInterface.Cargo
         {
             IoCManager.InjectDependencies(this);
 
-            Title = _loc.GetString("Galactic Bank Selection");
+            Title = Loc.GetString("Galactic Bank Selection");
 
             _accounts = new ItemList() { SelectMode = ItemList.ItemListSelectMode.Single };
 

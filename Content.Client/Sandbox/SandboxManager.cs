@@ -31,7 +31,7 @@ namespace Content.Client.Sandbox
         public Button ShowMarkersButton; //Shows spawn points
         public Button ShowBbButton; //Shows bounding boxes
 
-        public SandboxWindow(ILocalizationManager loc)
+        public SandboxWindow()
         {
             Resizable = false;
 
@@ -40,34 +40,34 @@ namespace Content.Client.Sandbox
             var vBox = new VBoxContainer { SeparationOverride = 4 };
             Contents.AddChild(vBox);
 
-            RespawnButton = new Button { Text = loc.GetString("Respawn") };
+            RespawnButton = new Button { Text = Loc.GetString("Respawn") };
             vBox.AddChild(RespawnButton);
 
-            SpawnEntitiesButton = new Button { Text = loc.GetString("Spawn Entities") };
+            SpawnEntitiesButton = new Button { Text = Loc.GetString("Spawn Entities") };
             vBox.AddChild(SpawnEntitiesButton);
 
-            SpawnTilesButton = new Button { Text = loc.GetString("Spawn Tiles") };
+            SpawnTilesButton = new Button { Text = Loc.GetString("Spawn Tiles") };
             vBox.AddChild(SpawnTilesButton);
 
-            GiveFullAccessButton = new Button { Text = loc.GetString("Give AA Id") };
+            GiveFullAccessButton = new Button { Text = Loc.GetString("Give AA Id") };
             vBox.AddChild(GiveFullAccessButton);
 
-            GiveAghostButton = new Button { Text = loc.GetString("Ghost") };
+            GiveAghostButton = new Button { Text = Loc.GetString("Ghost") };
             vBox.AddChild(GiveAghostButton);
 
-            ToggleLightButton = new Button { Text = loc.GetString("Toggle Lights"), ToggleMode = true };
+            ToggleLightButton = new Button { Text = Loc.GetString("Toggle Lights"), ToggleMode = true };
             vBox.AddChild(ToggleLightButton);
 
-            ToggleSubfloorButton = new Button { Text = loc.GetString("Toggle Subfloor"), ToggleMode = true };
+            ToggleSubfloorButton = new Button { Text = Loc.GetString("Toggle Subfloor"), ToggleMode = true };
             vBox.AddChild(ToggleSubfloorButton);
 
-            SuicideButton = new Button { Text = loc.GetString("Suicide") };
+            SuicideButton = new Button { Text = Loc.GetString("Suicide") };
             vBox.AddChild(SuicideButton);
 
-            ShowMarkersButton = new Button { Text = loc.GetString("Show Spawns"), ToggleMode = true };
+            ShowMarkersButton = new Button { Text = Loc.GetString("Show Spawns"), ToggleMode = true };
             vBox.AddChild(ShowMarkersButton);
 
-            ShowBbButton = new Button { Text = loc.GetString("Show Bb"), ToggleMode = true };
+            ShowBbButton = new Button { Text = Loc.GetString("Show Bb"), ToggleMode = true };
             vBox.AddChild(ShowBbButton);
         }
     }
@@ -77,7 +77,7 @@ namespace Content.Client.Sandbox
         [Dependency] private readonly IClientConsole _console = default!;
         [Dependency] private readonly IGameHud _gameHud = default!;
         [Dependency] private readonly IClientNetManager _netManager = default!;
-        [Dependency] private readonly ILocalizationManager _localization = default!;
+        [Dependency] private readonly ILocalizationManager _localization = default!; 
         [Dependency] private readonly IPlacementManager _placementManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
@@ -163,7 +163,7 @@ namespace Content.Client.Sandbox
                 return;
             }
 
-            _window = new SandboxWindow(_localization);
+            _window = new SandboxWindow();
 
             _window.OnClose += WindowOnOnClose;
 

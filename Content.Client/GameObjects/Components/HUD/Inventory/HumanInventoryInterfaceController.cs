@@ -18,7 +18,6 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
     [UsedImplicitly]
     public class HumanInventoryInterfaceController : InventoryInterfaceController
     {
-        [Dependency] private readonly ILocalizationManager _loc = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
 
@@ -40,7 +39,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         {
             base.Initialize();
 
-            _window = new HumanInventoryWindow(_loc, _resourceCache);
+            _window = new HumanInventoryWindow(_resourceCache);
             _window.OnClose += () => GameHud.InventoryButtonDown = false;
             foreach (var (slot, button) in _window.Buttons)
             {
@@ -192,9 +191,9 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
 
             public IReadOnlyDictionary<Slots, ItemSlotButton> Buttons { get; }
 
-            public HumanInventoryWindow(ILocalizationManager loc, IResourceCache resourceCache)
+            public HumanInventoryWindow(IResourceCache resourceCache)
             {
-                Title = loc.GetString("Your Inventory");
+                Title = Loc.GetString("Your Inventory");
                 Resizable = false;
 
                 var buttonDict = new Dictionary<Slots, ItemSlotButton>();

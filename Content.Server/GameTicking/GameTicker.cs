@@ -960,7 +960,7 @@ namespace Content.Server.GameTicking
         {
             var gmTitle = MakeGamePreset(null).ModeTitle;
             var desc = MakeGamePreset(null).Description;
-            return _localization.GetString(@"Hi and welcome to [color=white]Space Station 14![/color]
+            return Loc.GetString(@"Hi and welcome to [color=white]Space Station 14![/color]
 
 The current game mode is: [color=white]{0}[/color].
 [color=yellow]{1}[/color]", gmTitle, desc);
@@ -989,7 +989,6 @@ The current game mode is: [color=white]{0}[/color].
         [Dependency] private IServerNetManager _netManager = default!;
         [Dependency] private IDynamicTypeFactory _dynamicTypeFactory = default!;
         [Dependency] private IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly ILocalizationManager _localization = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly IServerPreferencesManager _prefsManager = default!;
         [Dependency] private readonly IBaseServer _baseServer = default!;
