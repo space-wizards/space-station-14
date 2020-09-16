@@ -9,9 +9,6 @@
   - type: Sprite
     sprite: Objects/Power/light_bulb.rsi
     state: normal
-  - type: Icon
-    sprite: Objects/Power/light_bulb.rsi
-    state: normal
 
 - type: entity
   parent: BaseItem
@@ -32,9 +29,6 @@
   - type: Sprite
     sprite:  Objects/Power/light_tube.rsi
     state: normal
-  - type: Icon
-    sprite:  Objects/Power/light_tube.rsi
-    state: normal
 
 - type: entity
   parent: BaseLightbulb
@@ -47,8 +41,5 @@
     BurningTemperature: 350
     PowerUse: 9
   - type: Sprite
-    sprite:  Objects/Power/light_tube.rsi
-    state: normal
-  - type: Icon
     sprite:  Objects/Power/light_tube.rsi
     state: normal

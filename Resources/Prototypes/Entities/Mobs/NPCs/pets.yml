@@ -70,9 +70,7 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: corgi
-  - type: Icon
-    sprite: Mobs/Pets/corgi.rsi
-    state: corgi
+
   - type: Physics
     mass: 10
   - type: Collidable
@@ -108,9 +106,7 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: ian
-  - type: Icon
-    sprite: Mobs/Pets/corgi.rsi
-    state: ian
+
   - type: Physics
     mass: 10
   - type: Collidable
@@ -146,9 +142,7 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: cat
-  - type: Icon
-    sprite: Mobs/Pets/cat.rsi
-    state: cat
+
   - type: Physics
     mass: 10
   - type: Collidable
@@ -184,9 +178,7 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: cat2
-  - type: Icon
-    sprite: Mobs/Pets/cat.rsi
-    state: cat
+
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -223,9 +215,7 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: sloth
-  - type: Icon
-    sprite: Mobs/Pets/sloth.rsi
-    state: sloth
+
   - type: Physics
     mass: 10
   - type: Collidable

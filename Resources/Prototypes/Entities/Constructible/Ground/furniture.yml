@@ -10,9 +10,7 @@
     sprite: Constructible/Misc/furniture.rsi
     state: stool_base
     color: "#8e9799"
-  - type: Icon
-    sprite: Constructible/Misc/furniture.rsi
-    state: stool_base
+
   - type: Strap
     position: Stand
   - type: Anchorable
@@ -29,8 +27,7 @@
   - type: Sprite
     state: bar_stool
     color: "white"
-  - type: Icon
-    state: bar_stool
+
 
 - type: entity
   name: white office chair
@@ -44,9 +41,7 @@
   - type: Sprite
     sprite: Constructible/Misc/furniture.rsi
     state: officechair_white
-  - type: Icon
-    sprite: Constructible/Misc/furniture.rsi
-    state: officechair_white
+
   - type: Strap
     position: Stand
   - type: Anchorable
@@ -63,9 +58,7 @@
   - type: Sprite
     sprite: Constructible/Misc/furniture.rsi
     state: officechair_dark
-  - type: Icon
-    sprite: Constructible/Misc/furniture.rsi
-    state: officechair_dark
+
 
 
 - type: entity
@@ -80,9 +73,7 @@
     sprite: Constructible/Misc/furniture.rsi
     state: chair
     color: "#8e9799"
-  - type: Icon
-    sprite: Constructible/Misc/furniture.rsi
-    state: chair
+
   - type: Strap
     position: Stand
   - type: Anchorable
@@ -100,9 +91,7 @@
   - type: Sprite
     sprite: Constructible/Misc/furniture.rsi
     state: comfychair_preview
-  - type: Icon
-    sprite: Constructible/Misc/furniture.rsi
-    state: comfychair_preview
+
 
 
 
@@ -114,8 +103,7 @@
   - type: Sprite
     state: wooden_chair
     color: "white"
-  - type: Icon
-    state: wooden_chair
+
   - type: Anchorable
   - type: Pullable
 
@@ -130,9 +118,7 @@
   - type: Sprite
     sprite: Constructible/Misc/furniture.rsi
     state: bed
-  - type: Icon
-    sprite: Constructible/Misc/furniture.rsi
-    state: bed
+
   - type: Strap
     position: Down
     rotation: -90

@@ -5,8 +5,7 @@
   components:
   - type: Sprite
     texture: Constructible/Power/mixer.rsi/mixer_loaded.png
-  - type: Icon
-    texture: Constructible/Power/mixer.rsi/mixer_loaded.png
+
   - type: ChemMaster
   - type: PowerReceiver
   - type: Clickable
