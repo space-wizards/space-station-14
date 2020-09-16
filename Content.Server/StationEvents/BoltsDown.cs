@@ -24,7 +24,7 @@ namespace Content.Server.StationEvents
         private float _elapsedTime;
         private int _eventDuration;   
         protected override string StartAnnouncement => Loc.GetString(
-            "All the airlocks have their bolts down due to the hacker known as 4chan. We have dispatched high quality hacking equipment at every crewmember location so that this productive shift can continue");
+            "The clover hat hackers turned the bolts of all the airlocks in the station down. We have dispatched high quality hacking equipment at every crewmember location so that this productive shift can continue");
         protected override string EndAnnouncement => Loc.GetString(
             "Our cybersecurity team has dealt with the problem and restarted all the airlocks bolts in the station. Have a nice shift.");
         public override void Startup()
