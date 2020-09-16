@@ -9,6 +9,7 @@
   - type: Sprite
     netsync: false
     sprite: Constructible/Tiles/catwalk.rsi
+    preview_state: catwalk_preview
     drawdepth: FloorTiles
 
   - type: SnapGrid
