@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using NFluidsynth;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -9,7 +8,6 @@ using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
-using Serilog;
 using Logger = Robust.Shared.Log.Logger;
 
 namespace Content.Server.GameObjects.Components.Items.Storage
@@ -21,7 +19,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
         public override string Name => "StorageFill";
 
-        private List<PrototypeItemData> _contents = new List<PrototypeItemData>();
+        private List<PrototypeItemData> _contents;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
