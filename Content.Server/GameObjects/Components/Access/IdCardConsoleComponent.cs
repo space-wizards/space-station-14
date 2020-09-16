@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
@@ -25,7 +26,7 @@ namespace Content.Server.GameObjects.Components.Access
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class IdCardConsoleComponent : SharedIdCardConsoleComponent, IActivate
+    public class IdCardConsoleComponent : SharedIdCardConsoleComponent, IActivate, IInteractUsing
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -34,7 +35,7 @@ namespace Content.Server.GameObjects.Components.Access
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(IdCardConsoleUiKey.Key);
 
-        private bool PrivledgedIDEmpty => _privilegedIdContainer.ContainedEntities.Count < 1;
+        private bool PriviledgedIDEmpty => _privilegedIdContainer.ContainedEntities.Count < 1;
         private bool TargetIDEmpty => _targetIdContainer.ContainedEntities.Count < 1;
 
         public override void Initialize()
@@ -228,8 +229,37 @@ namespace Content.Server.GameObjects.Components.Access
             UserInterface?.Open(actor.playerSession);
         }
 
+        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        {
+            var item = eventArgs.Using;
+            var user = eventArgs.User;
+
+            if (!PriviledgedIDEmpty && !TargetIDEmpty)
+            {
+                return false;
+            }
+
+            if (!item.TryGetComponent<IdCardComponent>(out var idCardComponent) || !user.TryGetComponent(out IHandsComponent? hand))
+            {
+                return false;
+            }
+
+            if (PriviledgedIDEmpty)
+            {
+                InsertIdFromHand(user, _privilegedIdContainer, hand);
+            }
+
+            else if (TargetIDEmpty)
+            {
+                InsertIdFromHand(user, _targetIdContainer, hand);
+            }
+
+            UpdateUserInterface();
+            return true;
+        }
+
         [Verb]
-        public sealed class EjectPrivlidgedIDVerb : Verb<IdCardConsoleComponent>
+        public sealed class EjectPrivilidgedIDVerb : Verb<IdCardConsoleComponent>
         {
             protected override void GetData(IEntity user, IdCardConsoleComponent component, VerbData data)
             {
@@ -239,8 +269,8 @@ namespace Content.Server.GameObjects.Components.Access
                     return;
                 }
 
-                data.Text = Loc.GetString("Eject Privledged ID");
-                data.Visibility = component.PrivledgedIDEmpty ? VerbVisibility.Invisible : VerbVisibility.Visible;
+                data.Text = Loc.GetString("Eject Priviledged ID");
+                data.Visibility = component.PriviledgedIDEmpty ? VerbVisibility.Invisible : VerbVisibility.Visible;
             }
 
             protected override void Activate(IEntity user, IdCardConsoleComponent component)
