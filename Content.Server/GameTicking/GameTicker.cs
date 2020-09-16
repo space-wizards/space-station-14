@@ -756,7 +756,7 @@ namespace Content.Server.GameTicking
                 {
                     if (_playersInLobby.ContainsKey(session)) _playersInLobby.Remove(session);
 
-                    _chatManager.DispatchServerAnnouncement($"Player {args.Session.UserId} left server!");
+                    _chatManager.DispatchServerAnnouncement($"Player {args.Session} left server!");
                     ServerEmptyUpdateRestartCheck();
                     break;
                 }
