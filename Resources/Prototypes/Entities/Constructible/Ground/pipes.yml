@@ -9,8 +9,6 @@
   - type: Collidable
   - type: SnapGrid
     offset: Center
-  - type: Icon
-    texture: Constructible/Atmos/pipe.rsi/pipeLateral2.png
   - type: Sprite
   - type: Destructible
     thresholdvalue: 100

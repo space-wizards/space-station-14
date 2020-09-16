@@ -35,7 +35,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
         private int _maxPressurePumpTarget;
 
         /// <summary>
-        ///     Every upate, this pump will only increase the outlet pressure by this fraction of the amount needed to reach the <see cref="PressurePumpTarget"/>.
+        ///     Every update, this pump will only increase the outlet pressure by this fraction of the amount needed to reach the <see cref="PressurePumpTarget"/>.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public float TransferRatio
