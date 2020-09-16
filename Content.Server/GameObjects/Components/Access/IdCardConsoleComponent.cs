@@ -35,7 +35,7 @@ namespace Content.Server.GameObjects.Components.Access
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(IdCardConsoleUiKey.Key);
 
-        private bool PriviledgedIDEmpty => _privilegedIdContainer.ContainedEntities.Count < 1;
+        private bool PrivilegedIDEmpty => _privilegedIdContainer.ContainedEntities.Count < 1;
         private bool TargetIDEmpty => _targetIdContainer.ContainedEntities.Count < 1;
 
         public override void Initialize()
@@ -234,7 +234,7 @@ namespace Content.Server.GameObjects.Components.Access
             var item = eventArgs.Using;
             var user = eventArgs.User;
 
-            if (!PriviledgedIDEmpty && !TargetIDEmpty)
+            if (!PrivilegedIDEmpty && !TargetIDEmpty)
             {
                 return false;
             }
@@ -244,7 +244,7 @@ namespace Content.Server.GameObjects.Components.Access
                 return false;
             }
 
-            if (PriviledgedIDEmpty)
+            if (PrivilegedIDEmpty)
             {
                 InsertIdFromHand(user, _privilegedIdContainer, hand);
             }
@@ -259,7 +259,7 @@ namespace Content.Server.GameObjects.Components.Access
         }
 
         [Verb]
-        public sealed class EjectPrivilidgedIDVerb : Verb<IdCardConsoleComponent>
+        public sealed class EjectPrivilegedIDVerb : Verb<IdCardConsoleComponent>
         {
             protected override void GetData(IEntity user, IdCardConsoleComponent component, VerbData data)
             {
@@ -269,8 +269,8 @@ namespace Content.Server.GameObjects.Components.Access
                     return;
                 }
 
-                data.Text = Loc.GetString("Eject Priviledged ID");
-                data.Visibility = component.PriviledgedIDEmpty ? VerbVisibility.Invisible : VerbVisibility.Visible;
+                data.Text = Loc.GetString("Eject Privileged ID");
+                data.Visibility = component.PrivilegedIDEmpty ? VerbVisibility.Invisible : VerbVisibility.Visible;
             }
 
             protected override void Activate(IEntity user, IdCardConsoleComponent component)
