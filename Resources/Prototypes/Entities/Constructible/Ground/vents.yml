@@ -34,5 +34,5 @@
     - !type:PipeNode
       nodeGroupID: Pipe
       pipeDirection: South
-  - type: DebugVent
+  - type: PressureVent
     ventInletDirection: South
