@@ -14,7 +14,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Vents
         public override string Name => "PressureVent";
 
         /// <summary>
-        ///     The pressure this vent will try to bring its oulet too.
+        ///     The pressure this vent will try to bring its oulet to.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public float VentPressureTarget
@@ -36,7 +36,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Vents
         private float _maxVentPressureTarget;
 
         /// <summary>
-        ///     Every upate, this vent will only increase the outlet pressure by this fraction of the amount needed to reach the <see cref="VentPressureTarget"/>.
+        ///     Every update, this vent will only increase the outlet pressure by this fraction of the amount needed to reach the <see cref="VentPressureTarget"/>.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public float TransferRatio
