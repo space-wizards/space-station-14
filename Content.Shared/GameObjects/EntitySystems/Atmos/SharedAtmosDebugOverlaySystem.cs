@@ -20,11 +20,13 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
         {
             public readonly float Temperature;
             public readonly float[] Moles;
+            public readonly AtmosDirection PressureDirection;
 
-            public AtmosDebugOverlayData(float temperature, float[] moles)
+            public AtmosDebugOverlayData(float temperature, float[] moles, AtmosDirection pressureDirection)
             {
                 Temperature = temperature;
                 Moles = moles;
+                PressureDirection = pressureDirection;
             }
         }
 

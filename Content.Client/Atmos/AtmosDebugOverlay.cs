@@ -40,27 +40,52 @@ namespace Content.Client.Atmos
             var worldBounds = Box2.CenteredAround(eye.Position.Position,
                 _clyde.ScreenSize / (float) EyeManager.PixelsPerMeter * eye.Zoom);
 
+            // IF YOU ARE ABOUT TO INTRODUCE CHUNKING OR SOME OTHER OPTIMIZATION INTO THIS CODE:
+            //  -- THINK! --
+            // 1. "Is this going to make a critical atmos debugging tool harder to debug itself?"
+            // 2. "Is this going to do anything that could cause the atmos debugging tool to use resources, server-side or client-side, when nobody's using it?"
+            // 3. "Is this going to make it harder for atmos programmers to add data that may not be chunk-friendly into the atmos debugger?"
+            // Nanotrasen needs YOU! to avoid premature optimization in critical debugging tools - 20kdc
+
             foreach (var mapGrid in _mapManager.FindGridsIntersecting(mapId, worldBounds))
             {
                 if (!_atmosDebugOverlaySystem.HasData(mapGrid.Index))
                     continue;
 
                 var gridBounds = new Box2(mapGrid.WorldToLocal(worldBounds.BottomLeft), mapGrid.WorldToLocal(worldBounds.TopRight));
-                
-                foreach (var tile in mapGrid.GetTilesIntersecting(gridBounds))
+
+                for (var pass = 0; pass < 2; pass++)
                 {
-                    var dataMaybeNull = _atmosDebugOverlaySystem.GetData(mapGrid.Index, tile.GridIndices);
-                    if (dataMaybeNull != null)
+                    foreach (var tile in mapGrid.GetTilesIntersecting(gridBounds))
                     {
-                        var data = (SharedAtmosDebugOverlaySystem.AtmosDebugOverlayData) dataMaybeNull!;
-                        float total = 0;
-                        foreach (float f in data.Moles)
+                        var dataMaybeNull = _atmosDebugOverlaySystem.GetData(mapGrid.Index, tile.GridIndices);
+                        if (dataMaybeNull != null)
                         {
-                            total += f;
+                            var data = (SharedAtmosDebugOverlaySystem.AtmosDebugOverlayData) dataMaybeNull!;
+                            if (pass == 0)
+                            {
+                                float total = 0;
+                                foreach (float f in data.Moles)
+                                {
+                                    total += f;
+                                }
+                                var interp = total / (Atmospherics.MolesCellStandard * 2);
+                                var res = Color.InterpolateBetween(Color.Red, Color.Green, interp).WithAlpha(0.75f);
+                                drawHandle.DrawRect(Box2.FromDimensions(mapGrid.LocalToWorld(new Vector2(tile.X, tile.Y)), new Vector2(1, 1)), res);
+                            }
+                            else if (pass == 1)
+                            {
+                                if (data.PressureDirection != AtmosDirection.Invalid)
+                                {
+                                    var atmosAngle = data.PressureDirection.ToAngle();
+                                    var atmosAngleOfs = atmosAngle.ToVec() * 0.4f;
+                                    var tileCentre = new Vector2(tile.X + 0.5f, tile.Y + 0.5f);
+                                    var basisA = mapGrid.LocalToWorld(tileCentre);
+                                    var basisB = mapGrid.LocalToWorld(tileCentre + atmosAngleOfs);
+                                    drawHandle.DrawLine(basisA, basisB, Color.Blue);
+                                }
+                            }
                         }
-                        var interp = total / (Atmospherics.MolesCellStandard * 2);
-                        var res = Color.InterpolateBetween(Color.Red, Color.Green, interp).WithAlpha(0.75f);
-                        drawHandle.DrawRect(Box2.FromDimensions(mapGrid.LocalToWorld(new Vector2(tile.X, tile.Y)), new Vector2(1, 1)), res);
                     }
                 }
             }
