@@ -118,25 +118,26 @@ namespace Content.Shared.GameObjects.Components.Body.Part
             base.ExposeData(serializer);
 
             // TODO BODY Separate damage from the rest of body system
+            // TODO serialize any changed properties?
             serializer.DataReadWriteFunction(
                 "damagePrototype",
-                null,
+                DefaultDamageContainer,
                 prototype =>
                 {
-                    _damagePrototype = prototype ?? _prototypeManager.Index<DamageContainerPrototype>(DefaultDamageContainer);
+                    _damagePrototype = _prototypeManager.Index<DamageContainerPrototype>(prototype);
                     Damage = new DamageContainer(OnHealthChanged, _damagePrototype);
                 },
-                () => _damagePrototype);
+                () => _damagePrototype.ID);
 
             serializer.DataReadWriteFunction(
                 "resistancePrototype",
-                null,
+                DefaultResistanceSet,
                 prototype =>
                 {
-                    _resistancePrototype = prototype ?? _prototypeManager.Index<ResistanceSetPrototype>(DefaultResistanceSet);
+                    _resistancePrototype = _prototypeManager.Index<ResistanceSetPrototype>(prototype);
                     Resistances = new ResistanceSet(_resistancePrototype);
                 },
-                () => _resistancePrototype);
+                () => _resistancePrototype.ID);
 
             serializer.DataField(this, b => b.PartType, "partType", BodyPartType.Other);
 
@@ -264,6 +265,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part
                 _mechanismIds.Add(prototypeId);
             }
 
+            mechanism.Owner.Transform.AttachParent(Owner);
             mechanism.Part = this;
             SizeUsed += mechanism.Size;
 
