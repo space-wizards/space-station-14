@@ -21,12 +21,14 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
             public readonly float Temperature;
             public readonly float[] Moles;
             public readonly AtmosDirection PressureDirection;
+            public readonly bool InExcitedGroup;
 
-            public AtmosDebugOverlayData(float temperature, float[] moles, AtmosDirection pressureDirection)
+            public AtmosDebugOverlayData(float temperature, float[] moles, AtmosDirection pressureDirection, bool inExcited)
             {
                 Temperature = temperature;
                 Moles = moles;
                 PressureDirection = pressureDirection;
+                InExcitedGroup = inExcited;
             }
         }
 

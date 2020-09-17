@@ -74,7 +74,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
             var gases = new float[Atmospherics.TotalNumberOfGases];
             if (tile?.Air == null)
             {
-                return new AtmosDebugOverlayData(0, gases, AtmosDirection.Invalid);
+                return new AtmosDebugOverlayData(0, gases, AtmosDirection.Invalid, false);
             }
             else
             {
@@ -82,7 +82,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
                 {
                     gases[i] = tile.Air.GetMoles(i);
                 }
-                return new AtmosDebugOverlayData(tile.Air.Temperature, gases, tile.PressureDirectionForDebugOverlay);
+                return new AtmosDebugOverlayData(tile.Air.Temperature, gases, tile.PressureDirectionForDebugOverlay, tile.ExcitedGroup != null);
             }
         }
 

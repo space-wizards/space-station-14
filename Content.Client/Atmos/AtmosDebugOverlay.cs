@@ -54,7 +54,7 @@ namespace Content.Client.Atmos
 
                 var gridBounds = new Box2(mapGrid.WorldToLocal(worldBounds.BottomLeft), mapGrid.WorldToLocal(worldBounds.TopRight));
 
-                for (var pass = 0; pass < 2; pass++)
+                for (var pass = 0; pass < 3; pass++)
                 {
                     foreach (var tile in mapGrid.GetTilesIntersecting(gridBounds))
                     {
@@ -83,6 +83,19 @@ namespace Content.Client.Atmos
                                     var basisA = mapGrid.LocalToWorld(tileCentre);
                                     var basisB = mapGrid.LocalToWorld(tileCentre + atmosAngleOfs);
                                     drawHandle.DrawLine(basisA, basisB, Color.Blue);
+                                }
+                            }
+                            else if (pass == 2)
+                            {
+                                if (data.InExcitedGroup)
+                                {
+                                    var tilePos = new Vector2(tile.X, tile.Y);
+                                    var basisA = mapGrid.LocalToWorld(tilePos);
+                                    var basisB = mapGrid.LocalToWorld(tilePos + new Vector2(1.0f, 1.0f));
+                                    var basisC = mapGrid.LocalToWorld(tilePos + new Vector2(0.0f, 1.0f));
+                                    var basisD = mapGrid.LocalToWorld(tilePos + new Vector2(1.0f, 0.0f));
+                                    drawHandle.DrawLine(basisA, basisB, Color.Cyan);
+                                    drawHandle.DrawLine(basisC, basisD, Color.Cyan);
                                 }
                             }
                         }
