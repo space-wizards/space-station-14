@@ -1,7 +1,6 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Content.Shared.Damage.DamageContainer;
 using Content.Shared.Damage.ResistanceSet;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
@@ -32,7 +31,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         public override string Name => "BodyPart";
 
         // TODO Remove
-        private HashSet<string> _mechanismIds = new HashSet<string>();
+        private List<string> _mechanismIds = new List<string>();
 
         private DamageContainerPrototype _damagePrototype = default!;
         private ResistanceSetPrototype _resistancePrototype = default!;
@@ -159,7 +158,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part
 
             serializer.DataField(this, m => m.IsVital, "vital", false);
 
-            serializer.DataField(ref _mechanismIds, "mechanisms", new HashSet<string>());
+            serializer.DataField(ref _mechanismIds, "mechanisms", new List<string>());
         }
 
         public override void Initialize()
@@ -259,7 +258,12 @@ namespace Content.Shared.GameObjects.Components.Body.Part
 
         private void OnMechanismAdded(IMechanism mechanism)
         {
-            _mechanismIds.Add(mechanism.Owner.Prototype!.ID);
+            var prototypeId = mechanism.Owner.Prototype!.ID;
+            if (!_mechanismIds.Contains(prototypeId))
+            {
+                _mechanismIds.Add(prototypeId);
+            }
+
             mechanism.Part = this;
             SizeUsed += mechanism.Size;
 

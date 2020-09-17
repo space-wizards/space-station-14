@@ -60,7 +60,7 @@ namespace Content.Shared.GameObjects.Components.Body
         public Dictionary<string, string> Layers { get; private set; } = new Dictionary<string, string>();
 
         [ViewVariables]
-        public Dictionary<string, HashSet<string>> Connections { get; private set; } = new Dictionary<string, HashSet<string>>();
+        public Dictionary<string, List<string>> Connections { get; private set; } = new Dictionary<string, List<string>>();
 
         /// <summary>
         ///     Maps slots to the part filling each one.
@@ -381,7 +381,7 @@ namespace Content.Shared.GameObjects.Components.Body
             return Slots.TryGetValue(slot, out result);
         }
 
-        public bool TryGetSlotConnections(string slot, [NotNullWhen(true)] out HashSet<string>? connections)
+        public bool TryGetSlotConnections(string slot, [NotNullWhen(true)] out List<string>? connections)
         {
             return Connections.TryGetValue(slot, out connections);
         }
@@ -618,12 +618,12 @@ namespace Content.Shared.GameObjects.Components.Body
 
             serializer.DataReadWriteFunction(
                 "connections",
-                new Dictionary<string, HashSet<string>>(),
+                new Dictionary<string, List<string>>(),
                 connections =>
                 {
                     foreach (var (from, to) in connections)
                     {
-                        Connections.GetOrNew(from).UnionWith(to);
+                        Connections.GetOrNew(from).AddRange(to);
                     }
                 },
                 () => Connections);
@@ -686,10 +686,10 @@ namespace Content.Shared.GameObjects.Components.Body
 
             // Our prototypes don't force the user to define a BodyPart connection twice. E.g. Head: Torso v.s. Torso: Head.
             // The user only has to do one. We want it to be that way in the code, though, so this cleans that up.
-            var cleanedConnections = new Dictionary<string, HashSet<string>>();
+            var cleanedConnections = new Dictionary<string, List<string>>();
             foreach (var targetSlotName in Slots.Keys)
             {
-                var tempConnections = new HashSet<string>();
+                var tempConnections = new List<string>();
                 foreach (var (slotName, slotConnections) in Connections)
                 {
                     if (slotName == targetSlotName)
@@ -731,10 +731,6 @@ namespace Content.Shared.GameObjects.Components.Body
                 part.Transform.AttachParent(Owner);
 
                 TryAddPart(slot, partComponent, true);
-
-                foreach (var partComponentMechanism in partComponent.Mechanisms)
-                {
-                }
             }
         }
 

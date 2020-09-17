@@ -179,6 +179,7 @@
             "Firelock",
             "AtmosPlaque",
             "Spillable",
+            "Lung",
         };
     }
 }

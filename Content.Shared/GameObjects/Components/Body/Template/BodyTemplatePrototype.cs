@@ -20,7 +20,7 @@ namespace Content.Shared.GameObjects.Components.Body.Template
         private string _name;
         private string _centerSlot;
         private Dictionary<string, BodyPartType> _slots;
-        private Dictionary<string, HashSet<string>> _connections;
+        private Dictionary<string, List<string>> _connections;
         private Dictionary<string, string> _layers;
         private Dictionary<string, string> _mechanismLayers;
 
@@ -33,8 +33,8 @@ namespace Content.Shared.GameObjects.Components.Body.Template
         [ViewVariables] public Dictionary<string, BodyPartType> Slots => new Dictionary<string, BodyPartType>(_slots);
 
         [ViewVariables]
-        public Dictionary<string, HashSet<string>> Connections =>
-            _connections.ToDictionary(x => x.Key, x => x.Value.ToHashSet());
+        public Dictionary<string, List<string>> Connections =>
+            _connections.ToDictionary(x => x.Key, x => x.Value.ToList());
 
         [ViewVariables] public Dictionary<string, string> Layers => new Dictionary<string, string>(_layers);
 
@@ -47,16 +47,16 @@ namespace Content.Shared.GameObjects.Components.Body.Template
             serializer.DataField(ref _name, "name", string.Empty);
             serializer.DataField(ref _centerSlot, "centerSlot", string.Empty);
             serializer.DataField(ref _slots, "slots", new Dictionary<string, BodyPartType>());
-            serializer.DataField(ref _connections, "connections", new Dictionary<string, HashSet<string>>());
+            serializer.DataField(ref _connections, "connections", new Dictionary<string, List<string>>());
             serializer.DataField(ref _layers, "layers", new Dictionary<string, string>());
             serializer.DataField(ref _mechanismLayers, "mechanismLayers", new Dictionary<string, string>());
 
             //Our prototypes don't force the user to define a BodyPart connection twice. E.g. Head: Torso v.s. Torso: Head.
             //The user only has to do one. We want it to be that way in the code, though, so this cleans that up.
-            var cleanedConnections = new Dictionary<string, HashSet<string>>();
+            var cleanedConnections = new Dictionary<string, List<string>>();
             foreach (var targetSlotName in _slots.Keys)
             {
-                var tempConnections = new HashSet<string>();
+                var tempConnections = new List<string>();
                 foreach (var (slotName, slotConnections) in _connections)
                 {
                     if (slotName == targetSlotName)
