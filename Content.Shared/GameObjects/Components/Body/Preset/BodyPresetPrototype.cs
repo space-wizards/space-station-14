@@ -22,7 +22,7 @@ namespace Content.Shared.GameObjects.Components.Body.Preset
 
         [ViewVariables] public string Name => _name;
 
-        [ViewVariables] public Dictionary<string, string> PartIDs => _partIDs;
+        [ViewVariables] public Dictionary<string, string> PartIDs => new Dictionary<string, string>(_partIDs);
 
         public virtual void LoadFrom(YamlMappingNode mapping)
         {

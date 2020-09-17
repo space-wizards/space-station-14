@@ -1,5 +1,5 @@
 - type: bodyTemplate
-  id: bodyTemplate.Humanoid
+  id: HumanoidTemplate
   name: "humanoid"
   centerSlot: "torso"
   slots:
@@ -41,4 +41,4 @@
     right leg: "enum.HumanoidVisualLayers.RLeg"
     right foot: "enum.HumanoidVisualLayers.RFoot"
   mechanismLayers:
-    mechanism.Eyes.BasicHuman: "enum.HumanoidVisualLayers.Eyes"
+    EyesHuman: "enum.HumanoidVisualLayers.Eyes"

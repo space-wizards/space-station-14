@@ -138,8 +138,8 @@
   - type: BodyManager
     criticalThreshold: 100
     deadThreshold: 200
-    baseTemplate: bodyTemplate.Humanoid
-    basePreset: bodyPreset.BasicHuman
+    template: HumanoidTemplate
+    preset: HumanPreset
   - type: Metabolism
     metabolismHeat: 5000
     radiatedHeat: 400
@@ -285,8 +285,8 @@
     - type: BodyManager
       criticalThreshold: 100
       deadThreshold: 200
-      baseTemplate: bodyTemplate.Humanoid
-      basePreset: bodyPreset.BasicHuman
+      template: HumanoidTemplate
+      preset: HumanPreset
     - type: MobStateManager
     - type: Appearance
       visuals:

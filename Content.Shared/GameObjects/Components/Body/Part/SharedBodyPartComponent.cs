@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Shared.Damage.DamageContainer;
 using Content.Shared.Damage.ResistanceSet;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
@@ -13,19 +14,29 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Body.Part
 {
-    public abstract class SharedBodyPartComponent : Component, IBodyPart, IBodyPartContainer
+    public abstract class SharedBodyPartComponent : Component, IBodyPart
     {
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
+        // TODO define these in yaml?
+        public const string DefaultDamageContainer = "biologicalDamageContainer";
+        public const string DefaultResistanceSet = "defaultResistances";
+
         public override string Name => "BodyPart";
+
+        // TODO Remove
+        private HashSet<string> _mechanismIds = new HashSet<string>();
 
         private DamageContainerPrototype _damagePrototype = default!;
         private ResistanceSetPrototype _resistancePrototype = default!;
-        // TODO Serialize
+
         private HashSet<IMechanism> _mechanisms = new HashSet<IMechanism>();
 
         [ViewVariables] public IBody? Body { get; set; }
@@ -100,7 +111,8 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         public ResistanceSet Resistances { get; private set; } = default!;
 
         // TODO
-        [ViewVariables] public SurgeryData SurgeryData { get; private set; } = default!;
+        [ViewVariables]
+        public SurgeryDataComponent? SurgeryDataComponent => Owner.GetComponentOrNull<SurgeryDataComponent>();
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -112,7 +124,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part
                 null,
                 prototype =>
                 {
-                    _damagePrototype = prototype ?? throw new NullReferenceException();
+                    _damagePrototype = prototype ?? _prototypeManager.Index<DamageContainerPrototype>(DefaultDamageContainer);
                     Damage = new DamageContainer(OnHealthChanged, _damagePrototype);
                 },
                 () => _damagePrototype);
@@ -122,7 +134,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part
                 null,
                 prototype =>
                 {
-                    _resistancePrototype = prototype ?? throw new NullReferenceException();
+                    _resistancePrototype = prototype ?? _prototypeManager.Index<ResistanceSetPrototype>(DefaultResistanceSet);
                     Resistances = new ResistanceSet(_resistancePrototype);
                 },
                 () => _resistancePrototype);
@@ -146,6 +158,22 @@ namespace Content.Shared.GameObjects.Components.Body.Part
             serializer.DataField(this, m => m.RSIColor, "rsiColor", null);
 
             serializer.DataField(this, m => m.IsVital, "vital", false);
+
+            serializer.DataField(ref _mechanismIds, "mechanisms", new HashSet<string>());
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            // TODO move this to server, same for body parts in body component
+            foreach (var mechanismId in _mechanismIds)
+            {
+                var mechanism = Owner.EntityManager.SpawnEntity(mechanismId, Owner.Transform.MapPosition);
+                var mechanismComponent = mechanism.GetComponent<IMechanism>();
+
+                TryInstallMechanism(mechanismComponent, true);
+            }
         }
 
         public bool Drop()
@@ -164,7 +192,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part
 
         public bool SurgeryCheck(SurgeryType surgery)
         {
-            return SurgeryData.CheckSurgery(surgery);
+            return SurgeryDataComponent?.CheckSurgery(surgery) ?? false;
         }
 
         /// <summary>
@@ -179,70 +207,81 @@ namespace Content.Shared.GameObjects.Components.Body.Part
             DebugTools.AssertNotNull(surgeon);
             DebugTools.AssertNotNull(performer);
 
-            return SurgeryData.PerformSurgery(toolType, target, surgeon, performer);
+            return SurgeryDataComponent?.PerformSurgery(toolType, target, surgeon, performer) ?? false;
         }
 
         public bool CanAttachPart(IBodyPart part)
         {
             DebugTools.AssertNotNull(part);
 
-            return SurgeryData.CanAttachBodyPart(part);
+            return SurgeryDataComponent?.CanAttachBodyPart(part) ?? false;
         }
 
         public bool CanInstallMechanism(IMechanism mechanism)
         {
             DebugTools.AssertNotNull(mechanism);
 
-            return SizeUsed + mechanism.Size <= Size &&
-                   SurgeryData.CanInstallMechanism(mechanism);
+            return SurgeryDataComponent != null &&
+                   SizeUsed + mechanism.Size <= Size &&
+                   SurgeryDataComponent.CanInstallMechanism(mechanism);
         }
 
         /// <summary>
         ///     Tries to install a mechanism onto this body part.
         /// </summary>
         /// <param name="mechanism">The mechanism to try to install.</param>
+        /// <param name="force">
+        ///     Whether or not to check if the mechanism can be installed.
+        /// </param>
         /// <returns>
         ///     True if successful, false if there was an error
         ///     (e.g. not enough room in <see cref="IBodyPart"/>).
+        ///     Will return false even when forced if the mechanism is already
+        ///     installed in this <see cref="IBodyPart"/>.
         /// </returns>
-        public bool TryInstallMechanism(IMechanism mechanism)
+        public bool TryInstallMechanism(IMechanism mechanism, bool force = false)
         {
             DebugTools.AssertNotNull(mechanism);
 
-            if (!CanInstallMechanism(mechanism))
+            if (!force && !CanInstallMechanism(mechanism))
             {
                 return false;
             }
 
-            if (_mechanisms.Add(mechanism))
+            if (!_mechanisms.Add(mechanism))
             {
-                mechanism.Part = this;
-                SizeUsed += mechanism.Size;
-
-                if (Body == null)
-                {
-                    return true;
-                }
-
-                if (!Body.MechanismLayers.TryGetValue(mechanism.Id, out var mapString))
-                {
-                    return true;
-                }
-
-                if (!IoCManager.Resolve<IReflectionManager>().TryParseEnumReference(mapString, out var @enum))
-                {
-                    Logger.Warning($"Template {Body.TemplateName} has an invalid RSI map key {mapString} for mechanism {mechanism.Id}.");
-                    return true;
-                }
-
-                var message = new MechanismSpriteAddedMessage(@enum);
-
-                Body.Owner.SendNetworkMessage(Body, message);
-
-                return true;
+                return false;
             }
 
-            return false;
+            OnMechanismAdded(mechanism);
+            return true;
+        }
+
+        private void OnMechanismAdded(IMechanism mechanism)
+        {
+            _mechanismIds.Add(mechanism.Owner.Prototype!.ID);
+            mechanism.Part = this;
+            SizeUsed += mechanism.Size;
+
+            if (Body == null)
+            {
+                return;
+            }
+
+            if (!Body.MechanismLayers.TryGetValue(mechanism.Owner.Prototype!.ID, out var mapString))
+            {
+                return;
+            }
+
+            if (!IoCManager.Resolve<IReflectionManager>().TryParseEnumReference(mapString, out var @enum))
+            {
+                Logger.Warning($"Template {Body.TemplateName} has an invalid RSI map key {mapString} for mechanism {mechanism.Owner.Prototype!.ID}.");
+                return;
+            }
+
+            var message = new MechanismSpriteAddedMessage(@enum);
+
+            Body.Owner.SendNetworkMessage(Body, message);
         }
 
         public bool RemoveMechanism(IMechanism mechanism)
@@ -254,6 +293,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part
                 return false;
             }
 
+            _mechanismIds.Remove(mechanism.Owner.Prototype!.ID);
             mechanism.Part = null;
             SizeUsed -= mechanism.Size;
 
@@ -262,14 +302,14 @@ namespace Content.Shared.GameObjects.Components.Body.Part
                 return true;
             }
 
-            if (!Body.MechanismLayers.TryGetValue(mechanism.Id, out var mapString))
+            if (!Body.MechanismLayers.TryGetValue(mechanism.Owner.Prototype!.ID, out var mapString))
             {
                 return true;
             }
 
             if (!IoCManager.Resolve<IReflectionManager>().TryParseEnumReference(mapString, out var @enum))
             {
-                Logger.Warning($"Template {Body.TemplateName} has an invalid RSI map key {mapString} for mechanism {mechanism.Id}.");
+                Logger.Warning($"Template {Body.TemplateName} has an invalid RSI map key {mapString} for mechanism {mechanism.Owner.Prototype!.ID}.");
                 return true;
             }
 
@@ -308,32 +348,5 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         {
             // TODO
         }
-    }
-
-    /// <summary>
-    ///     Used to determine whether a BodyPart can connect to another BodyPart.
-    /// </summary>
-    [Serializable, NetSerializable]
-    public enum BodyPartCompatibility
-    {
-        Universal = 0,
-        Biological,
-        Mechanical
-    }
-
-    /// <summary>
-    ///     Each BodyPart has a BodyPartType used to determine a variety of things.
-    ///     For instance, what slots it can fit into.
-    /// </summary>
-    [Serializable, NetSerializable]
-    public enum BodyPartType
-    {
-        Other = 0,
-        Torso,
-        Head,
-        Arm,
-        Hand,
-        Leg,
-        Foot
     }
 }

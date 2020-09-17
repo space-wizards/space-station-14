@@ -13,15 +13,15 @@ namespace Content.Client.GameObjects.Components.Body.Surgery
     ///     of limbs or organs to operate on.
     /// </summary>
     [UsedImplicitly]
-    public class GenericSurgeryBoundUserInterface : BoundUserInterface
+    public class SurgeryBoundUserInterface : BoundUserInterface
     {
-        private GenericSurgeryWindow? _window;
+        private SurgeryWindow? _window;
 
-        public GenericSurgeryBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey) { }
+        public SurgeryBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey) { }
 
         protected override void Open()
         {
-            _window = new GenericSurgeryWindow();
+            _window = new SurgeryWindow();
 
             _window.OpenCentered();
             _window.OnClose += Close;

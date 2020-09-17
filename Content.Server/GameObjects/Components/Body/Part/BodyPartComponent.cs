@@ -1,10 +1,8 @@
 ﻿#nullable enable
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Body.Surgery;
 using Content.Shared.Interfaces;
@@ -16,7 +14,6 @@ using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Body.Part
@@ -24,7 +21,7 @@ namespace Content.Server.GameObjects.Components.Body.Part
     [RegisterComponent]
     [ComponentReference(typeof(SharedBodyPartComponent))]
     [ComponentReference(typeof(IBodyPart))]
-    public class BodyPartComponent : SharedBodyPartComponent
+    public class BodyPartComponent : SharedBodyPartComponent, IAfterInteract
     {
         private readonly Dictionary<int, object> _optionsCache = new Dictionary<int, object>();
 
@@ -34,16 +31,7 @@ namespace Content.Server.GameObjects.Components.Body.Part
 
         private IEntity? _surgeonCache;
 
-        private SurgeryData? _surgeryData;
-
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(SurgeryUIKey.Key);
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _surgeryData, "surgeryData", new BiologicalSurgeryData(this));
-        }
 
         public override void Initialize()
         {
@@ -68,6 +56,7 @@ namespace Content.Server.GameObjects.Components.Body.Part
 
         public void AfterInteract(AfterInteractEventArgs eventArgs)
         {
+            // TODO
             if (eventArgs.Target == null)
             {
                 return;

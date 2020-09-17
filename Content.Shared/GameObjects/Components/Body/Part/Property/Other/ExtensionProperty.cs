@@ -1,8 +1,10 @@
-﻿using Robust.Shared.Serialization;
+﻿using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Body.Part.Property.Other
 {
-    public abstract class ExtensionProperty : BodyPartPropertyComponent
+    [RegisterComponent]
+    public class ExtensionProperty : BodyPartPropertyComponent
     {
         public override string Name => "Extension";
 

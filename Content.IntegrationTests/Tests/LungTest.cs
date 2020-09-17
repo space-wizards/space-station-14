@@ -1,10 +1,12 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Body.Behavior;
 using Content.Server.GameObjects.Components.Body.Circulatory;
 using Content.Server.GameObjects.Components.Metabolism;
 using Content.Shared.Atmos;
+using Content.Shared.GameObjects.Components.Body.Mechanism;
 using NUnit.Framework;
 using Robust.Server.Interfaces.Maps;
 using Robust.Shared.Interfaces.GameObjects;
@@ -34,7 +36,8 @@ namespace Content.IntegrationTests.Tests
 
                 var human = entityManager.SpawnEntity("HumanMob_Content", MapCoordinates.Nullspace);
 
-                Assert.True(human.TryGetComponent(out LungBehaviorComponent lung));
+                Assert.True(human.TryGetMechanismBehaviors(out List<LungBehaviorComponent> lungs));
+                Assert.That(lungs.Count, Is.EqualTo(1));
                 Assert.True(human.TryGetComponent(out BloodstreamComponent bloodstream));
 
                 var gas = new GasMixture(1);
@@ -46,6 +49,7 @@ namespace Content.IntegrationTests.Tests
                 gas.AdjustMoles(Gas.Oxygen, originalOxygen);
                 gas.AdjustMoles(Gas.Nitrogen, originalNitrogen);
 
+                var lung = lungs[0];
                 lung.Inhale(1, gas);
 
                 var lungOxygen = originalOxygen * breathedPercentage;
@@ -133,7 +137,7 @@ namespace Content.IntegrationTests.Tests
                 var coordinates = new EntityCoordinates(grid.GridEntityId, center);
                 human = entityManager.SpawnEntity("HumanMob_Content", coordinates);
 
-                Assert.True(human.HasComponent<LungBehaviorComponent>());
+                Assert.True(human.HasMechanismBehavior<LungBehaviorComponent>());
                 Assert.True(human.TryGetComponent(out metabolism));
                 Assert.False(metabolism.Suffocating);
             });

@@ -1,11 +1,12 @@
 ﻿using Content.Shared.GameObjects.Components.Body.Behavior;
+using Content.Shared.GameObjects.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
 
-namespace Content.Shared.GameObjects.EntitySystems
+namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    public class SharedLungSystem : EntitySystem
+    public class LungSystem : EntitySystem
     {
         public override void Initialize()
         {

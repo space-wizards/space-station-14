@@ -1,8 +1,10 @@
-﻿using Robust.Shared.Serialization;
+﻿using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Body.Part.Property.Movement
 {
-    public abstract class LegProperty : BodyPartPropertyComponent
+    [RegisterComponent]
+    public class LegProperty : BodyPartPropertyComponent
     {
         public override string Name => "Leg";
 

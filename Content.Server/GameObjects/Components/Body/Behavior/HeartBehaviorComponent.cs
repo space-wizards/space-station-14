@@ -1,15 +1,13 @@
-#nullable enable
+﻿using Content.Shared.GameObjects.Components.Body.Behavior;
 using Content.Shared.GameObjects.Components.Body.Networks;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.GameObjects.Components.Body.Behavior
+namespace Content.Server.GameObjects.Components.Body.Behavior
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IMechanismBehavior))]
-    public class HeartBehaviorComponent : MechanismBehaviorComponent
+    [ComponentReference(typeof(SharedHeartBehaviorComponent))]
+    public class HeartBehaviorComponent : SharedHeartBehaviorComponent
     {
-        public override string Name => "Heart";
-
         private float _accumulatedFrameTime;
 
         public override void Update(float frameTime)

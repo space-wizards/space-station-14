@@ -6,6 +6,8 @@ using System.Linq;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Body.Part.Property.Movement;
 using Content.Shared.GameObjects.Components.Body.Part.Property.Other;
+using Content.Shared.GameObjects.Components.Body.Preset;
+using Content.Shared.GameObjects.Components.Body.Template;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
@@ -15,6 +17,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -24,12 +27,13 @@ namespace Content.Shared.GameObjects.Components.Body
     public abstract class SharedBodyComponent : DamageableComponent, IBody
     {
         [Dependency] private readonly IReflectionManager _reflectionManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override string Name => "BodyManager";
 
         public override uint? NetID => ContentNetIDs.BODY;
 
-        private string _centerSlot = string.Empty;
+        private string? _centerSlot = null;
 
         private Dictionary<string, string> _partIds = new Dictionary<string, string>();
 
@@ -45,7 +49,9 @@ namespace Content.Shared.GameObjects.Components.Body
         [ViewVariables]
         private readonly Dictionary<IBodyPart, float> _activeLegs = new Dictionary<IBodyPart, float>();
 
-        [ViewVariables] public string TemplateName { get; private set; } = string.Empty;
+        [ViewVariables] public string? TemplateName { get; private set; }
+
+        [ViewVariables] public string? PresetName { get; private set; }
 
         [ViewVariables]
         public Dictionary<string, BodyPartType> Slots { get; private set; } = new Dictionary<string, BodyPartType>();
@@ -54,7 +60,7 @@ namespace Content.Shared.GameObjects.Components.Body
         public Dictionary<string, string> Layers { get; private set; } = new Dictionary<string, string>();
 
         [ViewVariables]
-        public Dictionary<string, List<string>> Connections { get; private set; } = new Dictionary<string, List<string>>();
+        public Dictionary<string, HashSet<string>> Connections { get; private set; } = new Dictionary<string, HashSet<string>>();
 
         /// <summary>
         ///     Maps slots to the part filling each one.
@@ -85,22 +91,22 @@ namespace Content.Shared.GameObjects.Components.Body
             DebugTools.AssertNotNull(slot);
 
             // Make sure the given slot exists
-            if (!force)
+            if (force)
             {
                 if (!HasSlot(slot))
                 {
-                    return false;
+                    Slots[slot] = part.PartType;
                 }
 
+                _parts[slot] = part;
+            }
+            else
+            {
                 // And that nothing is in it
                 if (!_parts.TryAdd(slot, part))
                 {
                     return false;
                 }
-            }
-            else
-            {
-                _parts[slot] = part;
             }
 
             part.Body = this;
@@ -130,14 +136,14 @@ namespace Content.Shared.GameObjects.Components.Body
 
             foreach (var mechanism in part.Mechanisms)
             {
-                if (!MechanismLayers.TryGetValue(mechanism.Id, out var mechanismMap))
+                if (!MechanismLayers.TryGetValue(mechanism.Owner.Prototype!.ID, out var mechanismMap))
                 {
                     continue;
                 }
 
                 if (!_reflectionManager.TryParseEnumReference(mechanismMap, out var mechanismEnum))
                 {
-                    Logger.Warning($"Template {TemplateName} has an invalid RSI map key {mechanismMap} for mechanism {mechanism.Id}.");
+                    Logger.Warning($"Template {TemplateName} has an invalid RSI map key {mechanismMap} for mechanism {mechanism.Owner.Prototype!.ID}.");
                     continue;
                 }
 
@@ -198,14 +204,14 @@ namespace Content.Shared.GameObjects.Components.Body
 
             foreach (var mechanism in part.Mechanisms)
             {
-                if (!MechanismLayers.TryGetValue(mechanism.Id, out var mechanismMap))
+                if (!MechanismLayers.TryGetValue(mechanism.Owner.Prototype!.ID, out var mechanismMap))
                 {
                     continue;
                 }
 
                 if (!_reflectionManager.TryParseEnumReference(mechanismMap, out var mechanismEnum))
                 {
-                    Logger.Warning($"Template {TemplateName} has an invalid RSI map key {mechanismMap} for mechanism {mechanism.Id}.");
+                    Logger.Warning($"Template {TemplateName} has an invalid RSI map key {mechanismMap} for mechanism {mechanism.Owner.Prototype!.ID}.");
                     continue;
                 }
 
@@ -345,6 +351,8 @@ namespace Content.Shared.GameObjects.Components.Body
 
         public IBodyPart? CenterPart()
         {
+            if (_centerSlot == null) return null;
+
             return Parts.GetValueOrDefault(_centerSlot);
         }
 
@@ -373,7 +381,7 @@ namespace Content.Shared.GameObjects.Components.Body
             return Slots.TryGetValue(slot, out result);
         }
 
-        public bool TryGetSlotConnections(string slot, [NotNullWhen(true)] out List<string>? connections)
+        public bool TryGetSlotConnections(string slot, [NotNullWhen(true)] out HashSet<string>? connections)
         {
             return Connections.TryGetValue(slot, out connections);
         }
@@ -515,8 +523,7 @@ namespace Content.Shared.GameObjects.Components.Body
             return LookForFootRecursion(source, new List<IBodyPart>());
         }
 
-        private float LookForFootRecursion(IBodyPart current,
-            ICollection<IBodyPart> searchedParts)
+        private float LookForFootRecursion(IBodyPart current, ICollection<IBodyPart> searchedParts)
         {
             if (!current.TryGetProperty<ExtensionProperty>(out var extProperty))
             {
@@ -565,36 +572,124 @@ namespace Content.Shared.GameObjects.Components.Body
             }
 
             return float.MinValue;
-
-            // No extension property, no go.
         }
-
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(this, b => b._centerSlot, "centerSlot", string.Empty);
+            serializer.DataReadWriteFunction(
+                "template",
+                null,
+                name =>
+                {
+                    if (string.IsNullOrEmpty(name))
+                    {
+                        return;
+                    }
 
-            serializer.DataField(this, b => b.TemplateName, "template", string.Empty);
+                    var template = _prototypeManager.Index<BodyTemplatePrototype>(name);
 
-            serializer.DataField(this, b => b.Connections, "connections", new Dictionary<string, List<string>>());
+                    Connections = template.Connections;
+                    Layers = template.Layers;
+                    _mechanismLayers = template.MechanismLayers;
+                    Slots = template.Slots;
+                    _centerSlot = template.CenterSlot;
 
-            serializer.DataField(this, b => b.Slots, "slots", new Dictionary<string, BodyPartType>());
+                    TemplateName = name;
+                },
+                () => TemplateName);
 
-            serializer.DataField(this, b => b.PartIDs, "partIds", new Dictionary<string, string>());
+            serializer.DataReadWriteFunction(
+                "preset",
+                null,
+                name =>
+                {
+                    if (string.IsNullOrEmpty(name))
+                    {
+                        return;
+                    }
 
-            serializer.DataField(this, b => b.Layers, "layers", new Dictionary<string, string>());
+                    var preset = _prototypeManager.Index<BodyPresetPrototype>(name);
 
-            serializer.DataField(ref _mechanismLayers, "mechanismLayers", new Dictionary<string, string>());
+                    _partIds = preset.PartIDs;
+                },
+                () => PresetName);
 
+            serializer.DataReadWriteFunction(
+                "connections",
+                new Dictionary<string, HashSet<string>>(),
+                connections =>
+                {
+                    foreach (var (from, to) in connections)
+                    {
+                        Connections.GetOrNew(from).UnionWith(to);
+                    }
+                },
+                () => Connections);
+
+            // TODO remove after parenting parts is in
+            serializer.DataReadWriteFunction(
+                "layers",
+                new Dictionary<string, string>(),
+                layers =>
+                {
+                    foreach (var (slot, layer) in layers)
+                    {
+                        Layers[slot] = layer;
+                    }
+                },
+                () => Layers);
+
+            serializer.DataReadWriteFunction(
+                "mechanismLayers",
+                new Dictionary<string, string>(),
+                layers =>
+                {
+                    foreach (var (mechanism, layer) in layers)
+                    {
+                        _mechanismLayers[mechanism] = layer;
+                    }
+                },
+                () => _mechanismLayers);
+
+            serializer.DataReadWriteFunction(
+                "slots",
+                new Dictionary<string, BodyPartType>(),
+                slots =>
+                {
+                    foreach (var (part, type) in slots)
+                    {
+                        Slots[part] = type;
+                    }
+                },
+                () => Slots);
+
+            // TODO
+            serializer.DataReadWriteFunction(
+                "centerSlot",
+                null,
+                slot => _centerSlot = slot,
+                () => _centerSlot);
+
+            serializer.DataReadWriteFunction(
+                "partIds",
+                new Dictionary<string, string>(),
+                partIds =>
+                {
+                    foreach (var (slot, part) in partIds)
+                    {
+                        _partIds[slot] = part;
+                    }
+                },
+                () => _partIds);
 
             // Our prototypes don't force the user to define a BodyPart connection twice. E.g. Head: Torso v.s. Torso: Head.
             // The user only has to do one. We want it to be that way in the code, though, so this cleans that up.
-            var cleanedConnections = new Dictionary<string, List<string>>();
+            var cleanedConnections = new Dictionary<string, HashSet<string>>();
             foreach (var targetSlotName in Slots.Keys)
             {
-                var tempConnections = new List<string>();
+                var tempConnections = new HashSet<string>();
                 foreach (var (slotName, slotConnections) in Connections)
                 {
                     if (slotName == targetSlotName)
@@ -620,6 +715,27 @@ namespace Content.Shared.GameObjects.Components.Body
             }
 
             Connections = cleanedConnections;
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            foreach (var (slot, partId) in _partIds)
+            {
+                // Using EntityCoordinates instead of MapPosition here leads
+                // to a crash within the character preview menu in the lobby
+                var part = Owner.EntityManager.SpawnEntity(partId, Owner.Transform.MapPosition);
+                var partComponent = part.GetComponent<IBodyPart>();
+
+                part.Transform.AttachParent(Owner);
+
+                TryAddPart(slot, partComponent, true);
+
+                foreach (var partComponentMechanism in partComponent.Mechanisms)
+                {
+                }
+            }
         }
 
         protected override void Startup()
@@ -683,20 +799,5 @@ namespace Content.Shared.GameObjects.Components.Body
             Directed = true;
             RSIMap = rsiMap;
         }
-    }
-
-    /// <summary>
-    ///     Defines a surgery operation that can be performed.
-    /// </summary>
-    [Serializable, NetSerializable]
-    public enum SurgeryType
-    {
-        None = 0,
-        Incision,
-        Retraction,
-        Cauterization,
-        VesselCompression,
-        Drilling,
-        Amputation
     }
 }

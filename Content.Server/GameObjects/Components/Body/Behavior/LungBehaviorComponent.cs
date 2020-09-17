@@ -70,7 +70,12 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
 
         public void ToBloodstream(GasMixture mixture)
         {
-            if (!Owner.TryGetComponent(out BloodstreamComponent? bloodstream))
+            if (Body == null)
+            {
+                return;
+            }
+
+            if (!Body.Owner.TryGetComponent(out BloodstreamComponent? bloodstream))
             {
                 return;
             }
@@ -151,7 +156,12 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
         public void Exhale(float frameTime, GasMixture to)
         {
             // TODO: Make the bloodstream separately pump toxins into the lungs, making the lungs' only job to empty.
-            if (!Owner.TryGetComponent(out BloodstreamComponent? bloodstream))
+            if (Body == null)
+            {
+                return;
+            }
+
+            if (!Body.Owner.TryGetComponent(out BloodstreamComponent? bloodstream))
             {
                 return;
             }

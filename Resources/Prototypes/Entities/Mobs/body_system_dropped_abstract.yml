@@ -10,8 +10,8 @@
   - type: Icon
   - type: UserInterface
     interfaces:
-    - key: enum.GenericSurgeryUiKey.Key
-      type: GenericSurgeryBoundUserInterface
+    - key: enum.SurgeryUIKey.Key
+      type: SurgeryBoundUserInterface
 
 - type: entity
   name: "basedroppedmechanism"
@@ -25,5 +25,5 @@
   - type: Icon
   - type: UserInterface
     interfaces:
-    - key: enum.GenericSurgeryUiKey.Key
-      type: GenericSurgeryBoundUserInterface
+    - key: enum.SurgeryUIKey.Key
+      type: SurgeryBoundUserInterface

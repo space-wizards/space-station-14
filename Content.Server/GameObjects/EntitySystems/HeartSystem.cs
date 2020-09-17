@@ -1,11 +1,12 @@
 ﻿using Content.Shared.GameObjects.Components.Body.Behavior;
+using Content.Shared.GameObjects.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
 
-namespace Content.Shared.GameObjects.EntitySystems
+namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    public class SharedHeartSystem : EntitySystem
+    public class HeartSystem : EntitySystem
     {
         public override void Initialize()
         {
@@ -18,7 +19,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         {
             base.Update(frameTime);
 
-            foreach (var heart in ComponentManager.EntityQuery<HeartBehaviorComponent>())
+            foreach (var heart in ComponentManager.EntityQuery<SharedHeartBehaviorComponent>())
             {
                 heart.Update(frameTime);
             }

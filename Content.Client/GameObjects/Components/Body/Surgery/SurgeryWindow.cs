@@ -8,7 +8,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Client.GameObjects.Components.Body.Surgery
 {
-    public class GenericSurgeryWindow : SS14Window
+    public class SurgeryWindow : SS14Window
     {
         public delegate void OptionSelectedCallback(int selectedOptionData);
 
@@ -17,7 +17,7 @@ namespace Content.Client.GameObjects.Components.Body.Surgery
 
         protected override Vector2? CustomSize => (300, 400);
 
-        public GenericSurgeryWindow()
+        public SurgeryWindow()
         {
             Title = Loc.GetString("Select surgery target...");
             RectClipContent = true;

@@ -8,8 +8,11 @@ namespace Content.Shared.GameObjects.Components.Body
 {
     public interface IBody : IDamageableComponent, IBodyPartContainer
     {
-        public string TemplateName { get; }
+        public string? TemplateName { get; }
 
+        public string? PresetName { get; }
+
+        // TODO tf is this
         /// <summary>
         ///     Maps all parts on this template to its BodyPartType.
         ///     For instance, "right arm" is mapped to "BodyPartType.arm" on the humanoid
@@ -22,6 +25,7 @@ namespace Content.Shared.GameObjects.Components.Body
         /// </summary>
         public IReadOnlyDictionary<string, IBodyPart> Parts { get; }
 
+        // TODO what am i doing
         /// <summary>
         ///     Maps limb name to the list of their connections to other limbs.
         ///     For instance, on the humanoid template "torso" is mapped to a list
@@ -30,7 +34,7 @@ namespace Content.Shared.GameObjects.Components.Body
         ///     way has to be defined, i.e., "torso" to "left arm" will automatically
         ///     map "left arm" to "torso".
         /// </summary>
-        public Dictionary<string, List<string>> Connections { get; }
+        public Dictionary<string, HashSet<string>> Connections { get; }
 
         /// <summary>
         ///     Maps a template slot to the ID of the <see cref="IBodyPart"/>
@@ -148,7 +152,7 @@ namespace Content.Shared.GameObjects.Components.Body
         /// <param name="slot">The slot to search in.</param>
         /// <param name="connections">The connections found, if any.</param>
         /// <returns>True if the connections are found, false otherwise.</returns>
-        bool TryGetSlotConnections(string slot, [NotNullWhen(true)] out List<string>? connections);
+        bool TryGetSlotConnections(string slot, [NotNullWhen(true)] out HashSet<string>? connections);
 
         /// <summary>
         ///     Grabs all occupied slots connected to the given slot,

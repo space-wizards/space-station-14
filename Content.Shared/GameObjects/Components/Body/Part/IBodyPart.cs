@@ -108,7 +108,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         /// <returns>True if it can be installed, false otherwise.</returns>
         bool CanInstallMechanism(IMechanism mechanism);
 
-        bool TryInstallMechanism(IMechanism mechanism);
+        bool TryInstallMechanism(IMechanism mechanism, bool force = false);
 
         /// <summary>
         ///     Tries to remove the given <see cref="mechanism"/> from this

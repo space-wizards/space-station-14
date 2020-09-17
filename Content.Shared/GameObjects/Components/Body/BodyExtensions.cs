@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.GameObjects.Components.Body.Part;
 using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Shared.GameObjects.Components.Body
@@ -8,12 +9,7 @@ namespace Content.Shared.GameObjects.Components.Body
     {
         public static IBody? GetBodyShared(this IEntity entity)
         {
-            if (!entity.TryGetComponent(out IHasBody? hasBody))
-            {
-                return null;
-            }
-
-            return hasBody.Body;
+            return entity.GetComponentOrNull<IBody>();
         }
 
         public static bool TryGetBodyShared(this IEntity entity, [NotNullWhen(true)] out IBody? body)

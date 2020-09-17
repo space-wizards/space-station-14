@@ -23,8 +23,6 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
 
         public IBodyPart? Part { get; set; }
 
-        public string Id { get; } = string.Empty;
-
         public string Description { get; set; } = string.Empty;
 
         public string ExamineMessage { get; set; } = string.Empty;
@@ -50,8 +48,6 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-
-            serializer.DataField(this, m => m.Id, "id", string.Empty);
 
             serializer.DataField(this, m => m.Description, "description", string.Empty);
 

@@ -1,7 +1,9 @@
 ﻿#nullable enable
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Body.Part;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Body.Surgery
 {
@@ -10,26 +12,21 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
     ///     regards to everything surgery related - whether there's an incision on
     ///     it, whether the bone is broken, etc.
     /// </summary>
-    public abstract class SurgeryData
+    public abstract class SurgeryDataComponent : Component
     {
         protected delegate void SurgeryAction(IBodyPartContainer container, ISurgeon surgeon, IEntity performer);
 
         /// <summary>
-        ///     The <see cref="IBodyPart"/> this <see cref="SurgeryData"/> is
-        ///     attached to.
+        ///     The <see cref="IBodyPart"/> this
+        ///     <see cref="SurgeryDataComponent"/> is attached to.
         /// </summary>
-        protected readonly IBodyPart Parent;
-
-        protected SurgeryData(IBodyPart parent)
-        {
-            Parent = parent;
-        }
+        protected IBodyPart? Parent => Owner.GetComponentOrNull<IBodyPart>();
 
         /// <summary>
         ///     The <see cref="BodyPartType"/> of the parent
         ///     <see cref="IBodyPart"/>.
         /// </summary>
-        protected BodyPartType ParentType => Parent.PartType;
+        protected BodyPartType? ParentType => Parent?.PartType;
 
         /// <summary>
         ///     Returns the description of this current <see cref="IBodyPart"/> to
@@ -39,13 +36,13 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
 
         /// <summary>
         ///     Returns whether a <see cref="IMechanism"/> can be installed into the
-        ///     <see cref="IBodyPart"/> this <see cref="SurgeryData"/> represents.
+        ///     <see cref="IBodyPart"/> this <see cref="SurgeryDataComponent"/> represents.
         /// </summary>
         public abstract bool CanInstallMechanism(IMechanism mechanism);
 
         /// <summary>
         ///     Returns whether the given <see cref="IBodyPart"/> can be connected
-        ///     to the <see cref="IBodyPart"/> this <see cref="SurgeryData"/>
+        ///     to the <see cref="IBodyPart"/> this <see cref="SurgeryDataComponent"/>
         ///     represents.
         /// </summary>
         public abstract bool CanAttachBodyPart(IBodyPart part);
@@ -63,7 +60,7 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
         /// <summary>
         ///     Returns whether the given <see cref="SurgeryType"/> can be used to
         ///     perform a surgery on the <see cref="IBodyPart"/> this
-        ///     <see cref="SurgeryData"/> represents.
+        ///     <see cref="SurgeryDataComponent"/> represents.
         /// </summary>
         public bool CheckSurgery(SurgeryType toolType)
         {
@@ -97,5 +94,7 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
             step(container, surgeon, performer);
             return true;
         }
+
+        public virtual void ExposeData(ObjectSerializer serializer) { }
     }
 }

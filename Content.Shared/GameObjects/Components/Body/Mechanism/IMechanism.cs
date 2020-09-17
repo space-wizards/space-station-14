@@ -7,8 +7,6 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
     {
         IBodyPart? Part { get; set; }
 
-        string Id { get; }
-
         /// <summary>
         ///     Professional description of the <see cref="IMechanism"/>.
         /// </summary>

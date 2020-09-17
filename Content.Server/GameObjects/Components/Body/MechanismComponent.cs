@@ -41,7 +41,6 @@ namespace Content.Server.GameObjects.Components.Body
             }
         }
 
-
         void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (eventArgs.Target == null)
@@ -88,8 +87,7 @@ namespace Content.Server.GameObjects.Components.Body
                 eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
                 OpenSurgeryUI(actor.playerSession);
-                UpdateSurgeryUIBodyPartRequest(eventArgs.User.GetComponent<BasicActorComponent>().playerSession,
-                    toSend);
+                UpdateSurgeryUIBodyPartRequest(actor.playerSession, toSend);
                 PerformerCache = eventArgs.User;
                 BodyManagerComponentCache = body;
             }

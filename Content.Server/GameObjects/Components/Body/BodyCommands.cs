@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using Content.Shared.Damage;
+using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Damage;
 using Robust.Server.Interfaces.Console;
@@ -17,9 +18,11 @@ namespace Content.Server.GameObjects.Components.Body
 {
     class AddHandCommand : IClientCommand
     {
+        public const string DefaultHandPrototype = "LeftHandHuman";
+
         public string Command => "addhand";
         public string Description => "Adds a hand to your entity.";
-        public string Help => $"Usage: {Command} <handEntityId> / {Command}";
+        public string Help => $"Usage: {Command} <entityUid> <handPrototypeId> / {Command} <entityUid> / {Command} <handPrototypeId> / {Command}";
 
         public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
         {
@@ -29,19 +32,100 @@ namespace Content.Server.GameObjects.Components.Body
                 return;
             }
 
-            if (player == null)
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+
+            IEntity entity;
+            IEntity hand;
+
+            switch (args.Length)
             {
-                shell.SendText(player, "Only a player can run this command.");
-                return;
+                case 0:
+                {
+                    if (player == null)
+                    {
+                        shell.SendText(player, "Only a player can run this command without arguments.");
+                        return;
+                    }
+
+                    if (player.AttachedEntity == null)
+                    {
+                        shell.SendText(player, "You don't have an entity to add a hand to.");
+                        return;
+                    }
+
+                    entity = player.AttachedEntity;
+                    hand = entityManager.SpawnEntity(DefaultHandPrototype, entity.Transform.Coordinates);
+                    break;
+                }
+                case 1:
+                {
+                    if (EntityUid.TryParse(args[0], out var uid))
+                    {
+                        if (!entityManager.TryGetEntity(uid, out var parsedEntity))
+                        {
+                            shell.SendText(player, $"No entity found with uid {uid}");
+                            return;
+                        }
+
+                        entity = parsedEntity;
+                        hand = entityManager.SpawnEntity(DefaultHandPrototype, entity.Transform.Coordinates);
+                    }
+                    else
+                    {
+                        if (player == null)
+                        {
+                            shell.SendText(player,
+                                "You must specify an entity to add a hand to when using this command from the server terminal.");
+                            return;
+                        }
+
+                        if (player.AttachedEntity == null)
+                        {
+                            shell.SendText(player, "You don't have an entity to add a hand to.");
+                            return;
+                        }
+
+                        entity = player.AttachedEntity;
+                        hand = entityManager.SpawnEntity(args[0], entity.Transform.Coordinates);
+                    }
+
+                    break;
+                }
+                case 2:
+                {
+                    if (!EntityUid.TryParse(args[0], out var uid))
+                    {
+                        shell.SendText(player, $"{args[0]} is not a valid entity uid.");
+                        return;
+                    }
+
+                    if (!entityManager.TryGetEntity(uid, out var parsedEntity))
+                    {
+                        shell.SendText(player, $"No entity exists with uid {uid}.");
+                        return;
+                    }
+
+                    entity = parsedEntity;
+
+                    if (!prototypeManager.HasIndex<EntityPrototype>(args[1]))
+                    {
+                        shell.SendText(player, $"No hand entity exists with id {args[1]}.");
+                        return;
+                    }
+
+                    hand = entityManager.SpawnEntity(args[1], entity.Transform.Coordinates);
+
+                    break;
+                }
+                default:
+                {
+                    shell.SendText(player, Help);
+                    return;
+                }
             }
 
-            if (player.AttachedEntity == null)
-            {
-                shell.SendText(player, "You have no entity.");
-                return;
-            }
-
-            if (!player.AttachedEntity.TryGetComponent(out BodyComponent? body))
+            if (!entity.TryGetComponent(out IBody? body))
             {
                 var random = IoCManager.Resolve<IRobustRandom>();
                 var text = $"You have no body{(random.Prob(0.2f) ? " and you must scream." : ".")}";
@@ -50,27 +134,18 @@ namespace Content.Server.GameObjects.Components.Body
                 return;
             }
 
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            var handEntityId = args.Length == 1 ? args[0] : "LeftHandHuman";
-
-            if (!prototypeManager.HasIndex<EntityPrototype>(handEntityId))
-            {
-                shell.SendText(player, $"No entity exists with id {handEntityId}.");
-            }
-
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            var hand = entityManager.SpawnEntity("LeftHandHuman", player.AttachedEntity.Transform.Coordinates);
-
             if (!hand.TryGetComponent(out IBodyPart? part))
             {
-                shell.SendText(player, $"Entity {handEntityId} does not have a {nameof(IBodyPart)} component.");
+                shell.SendText(player, $"Hand entity {hand} does not have a {nameof(IBodyPart)} component.");
                 return;
             }
 
             var slot = part.GetHashCode().ToString();
+            var response = body.TryAddPart(slot, part, true)
+                ? $"Added hand to entity {entity.Name}"
+                : $"Error occurred trying to add a hand to entity {entity.Name}";
 
-            body.Slots.Add(slot, BodyPartType.Hand);
-            body.TryAddPart(slot, part, true);
+            shell.SendText(player, response);
         }
     }
 
@@ -104,7 +179,7 @@ namespace Content.Server.GameObjects.Components.Body
             }
 
             var hand = body.Parts.FirstOrDefault(x => x.Value.PartType == BodyPartType.Hand);
-            if (hand.Value == null)
+            if (hand.Value.Equals(default))
             {
                 shell.SendText(player, "You have no hands.");
             }

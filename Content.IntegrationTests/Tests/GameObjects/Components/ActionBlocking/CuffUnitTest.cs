@@ -61,8 +61,8 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
                 Assert.True(cuffed.CuffedHandCount > 0, "Handcuffing a player did not result in their hands being cuffed");
 
                 // Test to ensure a player with 4 hands will still only have 2 hands cuffed
-                AddHand();
-                AddHand();
+                AddHand(cuffed.Owner);
+                AddHand(cuffed.Owner);
                 Assert.True(cuffed.CuffedHandCount == 2 && hands.Hands.Count() == 4, "Player doesn't have correct amount of hands cuffed");
 
                 // Test to give a player with 4 hands 2 sets of cuffs
@@ -74,10 +74,10 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
             await server.WaitIdleAsync();
         }
 
-        private void AddHand()
+        private void AddHand(IEntity to)
         {
             var shell = IoCManager.Resolve<IConsoleShell>();
-            shell.ExecuteCommand("addhand");
+            shell.ExecuteCommand($"addhand {to.Uid}");
         }
     }
 }

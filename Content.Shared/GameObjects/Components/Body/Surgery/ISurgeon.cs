@@ -7,7 +7,7 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
 {
     /// <summary>
     ///     Interface representing an entity capable of performing surgery (performing operations on an
-    ///     <see cref="SurgeryData"/> class).
+    ///     <see cref="SurgeryDataComponent"/> class).
     ///     For an example see <see cref="SurgeryToolComponent"/>, which inherits from this class.
     /// </summary>
     public interface ISurgeon
@@ -24,7 +24,7 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
         public float BaseOperationTime { get; set; }
 
         /// <summary>
-        ///     When performing a surgery, the <see cref="SurgeryData"/> may sometimes require selecting from a set of Mechanisms
+        ///     When performing a surgery, the <see cref="SurgeryDataComponent"/> may sometimes require selecting from a set of Mechanisms
         ///     to operate on.
         ///     This function is called in that scenario, and it is expected that you call the callback with one mechanism from the
         ///     provided list.
