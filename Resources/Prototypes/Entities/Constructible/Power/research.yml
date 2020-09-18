@@ -34,7 +34,7 @@
       map: ["enum.PowerDeviceVisualLayers.Powered"]
   - type: Icon
     sprite: Constructible/Power/rndpointsource.rsi
-    state: rndpointsource
+    state: rndpointsource-icon
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable

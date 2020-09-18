@@ -11,7 +11,7 @@
     state: on
   - type: Icon
     sprite: Constructible/Lighting/light_tube.rsi
-    state: onicon
+    state: off
   - type: PointLight
     radius: 8
     energy: 1.2
@@ -32,7 +32,7 @@
     state: off
   - type: Icon
     sprite: Constructible/Lighting/light_tube.rsi
-    state: onicon
+    state: on
   - type: PointLight
     enabled: false
   - type: PoweredLight

@@ -8,24 +8,6 @@
   "copyright": "https://github.com/discordia-space/CEV-Eris/blob/2b969adc2dfd3e9621bf3597c5cbffeb3ac8c9f0/icons/obj/lighting.dmi",
   "states": [
     {
-      "name": "onicon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "officon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
       "name": "broken",
       "directions": 4,
       "delays": [

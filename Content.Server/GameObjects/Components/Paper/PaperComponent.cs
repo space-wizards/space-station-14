@@ -70,6 +70,7 @@ namespace Content.Server.GameObjects.Components.Paper
                 sprite.LayerSetState(1, "paper_words");
             }
 
+            Owner.Description = "";
             UpdateUserInterface();
         }
 
