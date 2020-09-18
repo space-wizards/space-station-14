@@ -1,7 +1,7 @@
 ﻿- type: entity
   id: Table
   name: "table"
-  description: A square piece of metal standing on four metal legs. It can not move.
+  description: A square piece of metal standing on four metal legs. 
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -27,7 +27,6 @@
     deadThreshold: 50
     spawnOnDestroy: SteelSheet1
 
-# TODO: drop wood instead of steel when destroyed when that's added
 - type: entity
   id: TableWood
   name: "wood table"
