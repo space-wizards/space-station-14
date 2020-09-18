@@ -118,8 +118,6 @@ namespace Content.Server.Chat
 
     internal class SuicideCommand : IClientCommand
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-
         public string Command => "suicide";
 
         public string Description => "Commits suicide";

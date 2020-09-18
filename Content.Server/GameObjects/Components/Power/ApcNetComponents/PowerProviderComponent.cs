@@ -24,7 +24,6 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
     [RegisterComponent]
     public class PowerProviderComponent : BaseApcNetComponent, IPowerProvider
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IServerEntityManager _serverEntityManager;
 
         public override string Name => "PowerProvider";
