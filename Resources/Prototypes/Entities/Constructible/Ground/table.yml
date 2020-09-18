@@ -55,4 +55,4 @@
   - type: Climbable
   - type: Destructible
     deadThreshold: 15
-    spawnOnDestroy: SteelSheet1
+    spawnOnDestroy: WoodPlank
