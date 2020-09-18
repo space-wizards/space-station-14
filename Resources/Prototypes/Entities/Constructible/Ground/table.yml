@@ -30,15 +30,29 @@
 # TODO: drop wood instead of steel when destroyed when that's added
 - type: entity
   id: TableWood
-  parent: Table
   name: "wood table"
   description: Do not apply fire to this. Rumour says it burns easily.
   components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: PlaceableSurface
   - type: Sprite
+    netsync: false
     sprite: Constructible/Structures/Tables/wood.rsi
+  - type: Icon
+    sprite: Constructible/Structures/Tables/wood.rsi
+    state: icon
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      layer:
+      - VaultImpassable
+  - type: SnapGrid
+    offset: Center
   - type: IconSmooth
     key: wood
     base: wood_
+  - type: Climbable
   - type: Destructible
-    deadThreshold: 50
+    deadThreshold: 15
     spawnOnDestroy: SteelSheet1
