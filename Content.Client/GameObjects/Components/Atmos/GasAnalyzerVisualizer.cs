@@ -1,11 +1,24 @@
 ﻿using Content.Shared.GameObjects.Components.Atmos;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Shared.Utility;
+using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Atmos
 {
-    class GasAnalyzerVisualizer : AppearanceVisualizer
+    public class GasAnalyzerVisualizer : AppearanceVisualizer
     {
+        private string _stateOff;
+        private string _stateWorking;
+
+        public override void LoadData(YamlMappingNode node)
+        {
+            base.LoadData(node);
+
+            _stateOff = node.GetNode("state_off").AsString();
+            _stateWorking = node.GetNode("state_working").AsString();
+        }
+
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
@@ -25,10 +38,10 @@ namespace Content.Client.GameObjects.Components.Atmos
                 switch (visualState)
                 {
                     case GasAnalyzerVisualState.Off:
-                        sprite.LayerSetState(0, "icon");
+                        sprite.LayerSetState(0, _stateOff);
                         break;
                     case GasAnalyzerVisualState.Working:
-                        sprite.LayerSetState(0, "working");
+                        sprite.LayerSetState(0, _stateWorking);
                         break;
                     default:
                         break;

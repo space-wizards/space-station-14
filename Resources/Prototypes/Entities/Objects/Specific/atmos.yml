@@ -18,3 +18,5 @@
   - type: Appearance
     visuals:
     - type: GasAnalyzerVisualizer
+      state_off: icon
+      state_working: working
