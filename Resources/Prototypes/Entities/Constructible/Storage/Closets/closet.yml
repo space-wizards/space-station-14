@@ -43,6 +43,7 @@
   - type: PlaceableSurface
   - type: Destructible
     deadThreshold: 100
+    resistances: metallicResistances
   - type: Appearance
     visuals:
     - type: StorageVisualizer

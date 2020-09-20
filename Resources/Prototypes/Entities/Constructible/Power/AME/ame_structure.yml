@@ -23,6 +23,7 @@
       - SmallImpassable
   - type: Destructible
     maxHP: 500
+    resistances: metallicResistances
     spawnondestroy: AMEPart
   - type: SnapGrid
     offset: Center

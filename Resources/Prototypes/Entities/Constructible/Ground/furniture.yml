@@ -19,6 +19,7 @@
   - type: Pullable
   - type: Destructible
     deadThreshold: 50
+    resistances: metallicResistances
 
 - type: entity
   name: bar stool
@@ -52,6 +53,7 @@
   - type: Pullable
   - type: Destructible
     deadThreshold: 50
+    resistances: metallicResistances
 
 - type: entity
   name: dark office chair
@@ -87,6 +89,7 @@
   - type: Pullable
   - type: Destructible
     deadThreshold: 50
+    resistances: metallicResistances
 
 - type: entity
   parent: Chair
@@ -135,5 +138,6 @@
     rotation: -90
   - type: Destructible
     deadThreshold: 75
+    resistances: metallicResistances
   placement:
     mode: SnapgridCenter
