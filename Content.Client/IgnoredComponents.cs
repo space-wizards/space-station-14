@@ -165,6 +165,7 @@
             "AMEShield",
             "DebugPump",
             "PressurePump",
+            "PressureVent",
             "VolumePump",
             "DebugVent",
             "DebugSiphon",

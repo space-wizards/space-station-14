@@ -266,10 +266,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
                 if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype proto))
                 {
-                    var colorStr = $" [color={proto.GetSubstanceTextColor().ToHexNoAlpha()}]";
-                    message.AddText(Loc.GetString("It contains a"));
-                    message.AddMarkup(colorStr + Loc.GetString(proto.PhysicalDescription) + "[/color] ");
-                    message.AddText(Loc.GetString("substance."));
+                    message.AddMarkup(
+                        Loc.GetString("It contains a [color={0}]{1}[/color] substance.",
+                            proto.GetSubstanceTextColor().ToHexNoAlpha(),
+                            Loc.GetString(proto.PhysicalDescription)));
                 }
             }
             else
@@ -278,10 +278,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
                 if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype proto))
                 {
-                    var colorStr = $" [color={SubstanceColor.ToHexNoAlpha()}]";
-                    message.AddText(Loc.GetString("It contains a"));
-                    message.AddMarkup(colorStr + Loc.GetString(proto.PhysicalDescription) + "[/color] ");
-                    message.AddText(Loc.GetString("mixture of substances."));
+                    message.AddMarkup(
+                        Loc.GetString("It contains a [color={0}]{1}[/color] mixture of substances.",
+                            SubstanceColor.ToHexNoAlpha(),
+                            Loc.GetString(proto.PhysicalDescription)));
                 }
             }
         }

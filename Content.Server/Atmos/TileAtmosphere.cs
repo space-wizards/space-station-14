@@ -93,6 +93,9 @@ namespace Content.Server.Atmos
 
         private AtmosDirection _pressureDirection;
 
+        // I'm assuming there's a good reason the original variable was made private, but this information is also important.
+        public AtmosDirection PressureDirectionForDebugOverlay => _pressureDirection;
+
         [ViewVariables, UsedImplicitly]
         private int PressureDirectionInt => (int)_pressureDirection;
 

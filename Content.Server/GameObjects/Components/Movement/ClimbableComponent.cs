@@ -27,8 +27,6 @@ namespace Content.Server.GameObjects.Components.Movement
     [ComponentReference(typeof(IClimbable))]
     public class ClimbableComponent : SharedClimbableComponent, IDragDropOn
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-
         /// <summary>
         ///     The range from which this entity can be climbed.
         /// </summary>
