@@ -70,7 +70,7 @@
   parent: MasksBase
   id: MaskJoy
   name: joy mask
-  description:
+  description: Express your happiness or hide your sorrows with this laughing face with crying tears of joy cutout.
   components:
   - type: Sprite
     sprite: Clothing/Masks/mask_joy.rsi
@@ -85,7 +85,7 @@
   parent: MasksBase
   id: MaskMime
   name: mime mask
-  description:
+  description: The traditional mime's mask. It has an eerie facial posture.
   components:
   - type: Sprite
     sprite: Clothing/Masks/mask_mime.rsi
@@ -100,7 +100,7 @@
   parent: MasksBase
   id: MaskSterile
   name: sterile mask
-  description:
+  description: A sterile mask designed to help prevent the spread of diseases.
   components:
   - type: Sprite
     sprite: Clothing/Masks/mask_sterile.rsi
