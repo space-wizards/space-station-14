@@ -30,6 +30,7 @@
     drawRate: 50
   - type: Breakable
     deadThreshold: 100
+    resistances: metallicResistances
   - type: Anchorable
 
 - type: entity

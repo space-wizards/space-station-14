@@ -188,3 +188,4 @@
     offset: Center
   - type: Breakable
     deadThreshold: 100
+    resistances: metallicResistances
