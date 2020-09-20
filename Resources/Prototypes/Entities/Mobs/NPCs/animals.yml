@@ -62,6 +62,8 @@
       normal: monkey
       dead: dead
   - type: Pullable
+  - type: Butcherable
+    meat: FoodMeat
 
 - type: entity
   save: false

@@ -23,4 +23,5 @@
   - type: Pullable
   - type: Destructible
     deadThreshold: 50
+  - type: KitchenSpike
 
