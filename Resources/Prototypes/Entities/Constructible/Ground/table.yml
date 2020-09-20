@@ -1,7 +1,7 @@
 ﻿- type: entity
   id: Table
   name: "table"
-  description: A square piece of metal standing on four metal legs. It can not move.
+  description: A square piece of metal standing on four metal legs. 
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -27,18 +27,31 @@
     deadThreshold: 50
     spawnOnDestroy: SteelSheet1
 
-# TODO: drop wood instead of steel when destroyed when that's added
 - type: entity
   id: TableWood
-  parent: Table
   name: "wood table"
   description: Do not apply fire to this. Rumour says it burns easily.
   components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: PlaceableSurface
   - type: Sprite
+    netsync: false
     sprite: Constructible/Structures/Tables/wood.rsi
+  - type: Icon
+    sprite: Constructible/Structures/Tables/wood.rsi
+    state: icon
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      layer:
+      - VaultImpassable
+  - type: SnapGrid
+    offset: Center
   - type: IconSmooth
     key: wood
     base: wood_
+  - type: Climbable
   - type: Destructible
-    deadThreshold: 50
-    spawnOnDestroy: SteelSheet1
+    deadThreshold: 15
+    spawnOnDestroy: WoodPlank
