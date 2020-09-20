@@ -12,6 +12,7 @@
   - type: Sprite
   - type: Destructible
     thresholdvalue: 100
+    resistances: metallicResistances
   - type: Appearance
     visuals:
     - type: PipeVisualizer

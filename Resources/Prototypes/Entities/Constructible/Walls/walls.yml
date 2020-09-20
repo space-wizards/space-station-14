@@ -52,6 +52,7 @@
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy: Girder
+    resistances: metallicResistances
   - type: IconSmooth
     key: walls
     base: brick
@@ -68,6 +69,7 @@
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy: Girder
+    resistances: metallicResistances
   - type: IconSmooth
     key: walls
     base: clock
@@ -84,6 +86,7 @@
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy: Girder
+    resistances: metallicResistances
   - type: IconSmooth
     key: walls
     base: clown
@@ -101,6 +104,7 @@
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy: Girder
+    resistances: metallicResistances
   - type: IconSmooth
     key: walls
     base: cult
@@ -117,6 +121,7 @@
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy: Girder
+    resistances: metallicResistances
   - type: IconSmooth
     key: walls
     base: debug
@@ -133,6 +138,7 @@
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy: Girder
+    resistances: metallicResistances
   - type: IconSmooth
     key: walls
     base: diamond
@@ -150,6 +156,7 @@
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy: Girder
+    resistances: metallicResistances
   - type: IconSmooth
     key: walls
     base: gold
@@ -166,6 +173,7 @@
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy: Girder
+    resistances: metallicResistances
   - type: IconSmooth
     key: walls
     base: ice
@@ -182,6 +190,7 @@
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy: Girder
+    resistances: metallicResistances
   - type: IconSmooth
     key: walls
     base: metal
@@ -198,6 +207,7 @@
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy: Girder
+    resistances: metallicResistances
   - type: IconSmooth
     key: walls
     base: plasma
@@ -214,6 +224,7 @@
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy: Girder
+    resistances: metallicResistances
   - type: IconSmooth
     key: walls
     base: plastic
@@ -232,6 +243,7 @@
   - type: Destructible
     deadThreshold: 600
     spawnOnDestroy: Girder
+    resistances: metallicResistances
   - type: ReinforcedWall
     key: walls
     base: solid
@@ -250,6 +262,7 @@
   - type: Destructible
     deadThreshold: 1000
     spawnOnDestroy: Girder
+    resistances: metallicResistances
   - type: IconSmooth
     key: walls
     base: riveted
@@ -266,6 +279,7 @@
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy: Girder
+    resistances: metallicResistances
   - type: IconSmooth
     key: walls
     base: sandstone
@@ -282,6 +296,7 @@
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy: Girder
+    resistances: metallicResistances
   - type: IconSmooth
     key: walls
     base: silver
@@ -300,6 +315,7 @@
     deadThreshold: 300
     spawnOnDestroy: Girder
     destroySound: /Audio/Effects/metalbreak.ogg
+    resistances: metallicResistances
   - type: IconSmooth
     key: walls
     base: solid
@@ -316,6 +332,7 @@
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy: Girder
+    resistances: metallicResistances
   - type: IconSmooth
     key: walls
     base: uranium
@@ -332,6 +349,7 @@
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy: Girder
+    resistances: metallicResistances
   - type: IconSmooth
     key: walls
     base: wood

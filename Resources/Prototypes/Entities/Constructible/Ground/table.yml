@@ -1,7 +1,7 @@
 ﻿- type: entity
   id: Table
   name: "table"
-  description: A square piece of metal standing on four metal legs. 
+  description: A square piece of metal standing on four metal legs.
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -25,6 +25,7 @@
   - type: Climbable
   - type: Destructible
     deadThreshold: 50
+    resistances: metallicResistances
     spawnOnDestroy: SteelSheet1
 
 - type: entity
@@ -54,4 +55,5 @@
   - type: Climbable
   - type: Destructible
     deadThreshold: 15
+    resistances: metallicResistances
     spawnOnDestroy: WoodPlank

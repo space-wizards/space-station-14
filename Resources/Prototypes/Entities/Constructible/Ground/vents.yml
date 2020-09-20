@@ -22,6 +22,7 @@
     - type: VentVisualizer
       ventRSI: Constructible/Atmos/vent.rsi
   - type: Destructible
+    resistances: metallicResistances
     thresholdvalue: 100
 
 - type: entity
