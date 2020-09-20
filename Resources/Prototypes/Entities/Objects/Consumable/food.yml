@@ -1807,10 +1807,14 @@
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 10
+    maxVol: 11 # needs room for water
+    caps: AddTo, RemoveFrom, FitsInDispenser
   - type: Sprite
     sprite: Objects/Consumable/Food/monkeycube.rsi
   - type: Icon
     sprite: Objects/Consumable/Food/monkeycube.rsi
+  - type: Rehydratable
+    target: MonkeyMob_Content
 
 - type: entity
   parent: FoodBase
