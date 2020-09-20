@@ -1,22 +1,9 @@
-using System.Collections.Generic;
-using System.Threading;
-using Content.Server.GameObjects.Components.Damage;
-using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.StationEvents;
-using Content.Server.Interfaces.GameObjects.Components;
-using Content.Shared.Damage;
-using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.Interfaces.GameObjects.Components;
 using JetBrains.Annotations;
-using Robust.Server.Interfaces.GameObjects;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameObjects.EntitySystems.StationEvents
 {
