@@ -1,10 +1,8 @@
 #nullable enable
 using System;
 using System.Threading;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Physics;
 using Content.Shared.Utility;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 
 // ReSharper disable UnassignedReadonlyField

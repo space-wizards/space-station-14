@@ -1,15 +1,15 @@
-﻿using Content.Server.Atmos;
+﻿using System.Linq;
+using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
-using Content.Shared.GameObjects.Components.Atmos;
 using Content.Shared.GameObjects.Atmos;
+using Content.Shared.GameObjects.Components.Atmos;
 using Robust.Server.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using System.Linq;
 
-namespace Content.Server.GameObjects.Components.Atmos.Piping
+namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
 {
     /// <summary>
     ///     Transfer gas from one <see cref="PipeNode"/> to another.

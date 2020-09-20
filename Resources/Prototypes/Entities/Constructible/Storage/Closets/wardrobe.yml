@@ -16,7 +16,7 @@
       state: generic
       state_closed: blue_door
   - type: Icon
-    state: blue_door
+    state: blue_icon
 
 # Pink wardrobe
 - type: entity
@@ -30,7 +30,7 @@
       state: generic
       state_closed: pink_door
   - type: Icon
-    state: pink_door
+    state: pink_icon
 
 # Black wardrobe
 - type: entity
@@ -44,7 +44,7 @@
       state: generic
       state_closed: black_door
   - type: Icon
-    state: black_door
+    state: black_icon
 
 # Green wardrobe
 - type: entity
@@ -58,7 +58,7 @@
       state: generic
       state_closed: green_door
   - type: Icon
-    state: green_door
+    state: green_icon
 
 # Prison wardrobe
 - type: entity
@@ -72,7 +72,7 @@
       state: generic
       state_closed: orange_door
   - type: Icon
-    state: orange_door
+    state: orange_icon
 
 # Yellow wardrobe
 - type: entity
@@ -86,7 +86,7 @@
       state: generic
       state_closed: yellow_door
   - type: Icon
-    state: yellow_door
+    state: yellow_icon
 
 # White wardrobe
 - type: entity
@@ -100,7 +100,7 @@
       state: generic
       state_closed: white_door
   - type: Icon
-    state: white_door
+    state: white_icon
 
 # Grey wardrobe
 - type: entity
@@ -114,7 +114,7 @@
       state: generic
       state_closed: grey_door
   - type: Icon
-    state: grey_door
+    state: grey_icon
 
 # Mixed wardrobe
 - type: entity
@@ -128,4 +128,4 @@
       state: generic
       state_closed: mixed_door
   - type: Icon
-    state: mixed_door
+    state: mixed_icon

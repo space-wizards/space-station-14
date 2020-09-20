@@ -40,8 +40,9 @@ namespace Content.Server.GameObjects.Components.Disposal
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedDisposalUnitComponent))]
+    [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IInteractUsing))]
-    public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IInteractUsing, IDragDropOn
+    public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IActivate, IInteractUsing, IDragDropOn
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -55,23 +56,25 @@ namespace Content.Server.GameObjects.Components.Disposal
         /// <summary>
         ///     Last time that an entity tried to exit this disposal unit.
         /// </summary>
+        [ViewVariables]
         private TimeSpan _lastExitAttempt;
 
         /// <summary>
         ///     The current pressure of this disposal unit.
         ///     Prevents it from flushing if it is not equal to or bigger than 1.
         /// </summary>
+        [ViewVariables]
         private float _pressure;
 
         private bool _engaged;
 
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         private TimeSpan _automaticEngageTime;
 
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         private TimeSpan _flushDelay;
 
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         private float _entryDelay;
 
         /// <summary>
@@ -101,7 +104,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         [ViewVariables]
         private PressureState State => _pressure >= 1 ? PressureState.Ready : PressureState.Pressurizing;
 
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         private bool Engaged
         {
             get => _engaged;
@@ -608,8 +611,8 @@ namespace Content.Server.GameObjects.Components.Disposal
                     break;
             }
         }
-
-        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
+    
+        bool IsValidInteraction(ITargetedInteractEventArgs eventArgs)
         {
             if (!ActionBlockerSystem.CanInteract(eventArgs.User))
             {
@@ -622,11 +625,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("You can't reach there!"));
                 return false;
             }
-
-            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
-            {
-                return false;
-            }
+            // This popup message doesn't appear on clicks, even when code was seperate. Unsure why.
 
             if (!eventArgs.User.HasComponent<IHandsComponent>())
             {
@@ -634,9 +633,42 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
-            UserInterface?.Open(actor.playerSession);
             return true;
         }
+
+
+        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
+        {
+            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            {
+                return false;
+            }
+            // Duplicated code here, not sure how else to get actor inside to make UserInterface happy. 
+          
+            if (IsValidInteraction(eventArgs))
+            {
+                UserInterface?.Open(actor.playerSession);
+                return true;
+            }
+
+            return false;
+        }
+
+        void IActivate.Activate(ActivateEventArgs eventArgs)
+        {
+            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            {
+                return;
+            }
+
+            if (IsValidInteraction(eventArgs))
+            {
+                UserInterface?.Open(actor.playerSession);
+            }
+
+            return;
+        }
+
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {

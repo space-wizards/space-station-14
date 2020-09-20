@@ -29,7 +29,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         [ViewVariables]
         private string _trashPrototype;
         [ViewVariables]
-        private SolutionComponent _contents;
+        private SolutionContainerComponent _contents;
         [ViewVariables]
         private ReagentUnit _transferAmount;
 
@@ -45,7 +45,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
         public override void Initialize()
         {
             base.Initialize();
-            _contents = Owner.GetComponent<SolutionComponent>();
+            
+            _contents = Owner.GetComponent<SolutionContainerComponent>();
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)

@@ -19,9 +19,9 @@ namespace Content.Server.Atmos
             return gridAtmos?.GetTile(coordinates);
         }
 
-        public static GasMixture? GetTileAir(this EntityCoordinates coordinates)
+        public static GasMixture? GetTileAir(this EntityCoordinates coordinates, IEntityManager? entityManager = null)
         {
-            return coordinates.GetTileAtmosphere()?.Air;
+            return coordinates.GetTileAtmosphere(entityManager)?.Air;
         }
 
         public static bool TryGetTileAtmosphere(this EntityCoordinates coordinates, [MaybeNullWhen(false)] out TileAtmosphere atmosphere)
@@ -30,10 +30,10 @@ namespace Content.Server.Atmos
             return !Equals(atmosphere = coordinates.GetTileAtmosphere()!, default);
         }
 
-        public static bool TryGetTileAir(this EntityCoordinates coordinates, [MaybeNullWhen(false)] out GasMixture air)
+        public static bool TryGetTileAir(this EntityCoordinates coordinates, [MaybeNullWhen(false)] out GasMixture air, IEntityManager? entityManager = null)
         {
             // ReSharper disable once ConditionIsAlwaysTrueOrFalse
-            return !Equals(air = coordinates.GetTileAir()!, default);
+            return !Equals(air = coordinates.GetTileAir(entityManager)!, default);
         }
 
         public static TileAtmosphere? GetTileAtmosphere(this MapIndices indices, GridId gridId)

@@ -1,4 +1,4 @@
-version: 1 # Not used right now, whatever.
+﻿version: 1 # Not used right now, whatever.
 binds:
 - function: UIClick
   type: State
@@ -117,6 +117,9 @@ binds:
   type: State
   key: MouseRight
   mod1: Control
+- function: ReleasePulledObject
+  type: State
+  key: H
 - function: OpenContextMenu
   type: State
   key: MouseRight

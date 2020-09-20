@@ -6,8 +6,9 @@
   - type: Drink
     openSounds: canOpenSounds
     pressurized: true
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 20
+    caps: AddTo, RemoveFrom
     contents:
       reagents:
       - ReagentId: chem.Cola
@@ -18,7 +19,7 @@
     state: icon
   - type: Icon
     state: icon
-  - type: CanSpill
+  - type: Spillable
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -26,7 +27,7 @@
   name: space cola
   description: A refreshing beverage.
   components:
-  - type: Solution
+  - type: SolutionContainer
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cola.rsi
   - type: Icon
@@ -37,8 +38,8 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkIceTeaCan
-  name: ice tea can
-  description: A can of refreshing ice tea.
+  name: iced tea can
+  description: A refreshing can of iced tea.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/ice_tea_can.rsi
@@ -51,7 +52,7 @@
   parent: DrinkCanBaseFull
   id: DrinkLemonLimeCan
   name: lemon-lime can
-  description: You wanted ORANGE. It gave you Lemon Lime.
+  description: You wanted ORANGE. It gave you Lemon-Lime.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lemon-lime.rsi
@@ -64,7 +65,7 @@
   parent: DrinkCanBaseFull
   id: DrinkGrapeCan
   name: grape soda can
-  description: 'Sweetened drink with a grape flavor and a deep purple color.'
+  description: Sweetened drink with a grape flavor and a deep purple color.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/purple_can.rsi
@@ -156,8 +157,8 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkEnergyDrink
-  name: Energy drink
-  description: ''
+  name: red bool energy drink
+  description: A can of Red Bool, with enough caffeine to kill a horse.
   components:
   - type: Drink
   - type: Sprite

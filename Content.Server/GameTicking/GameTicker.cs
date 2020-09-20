@@ -22,9 +22,7 @@ using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs;
 using Content.Server.Mobs.Roles;
 using Content.Server.Players;
-using Content.Shared;
 using Content.Shared.Chat;
-using Content.Shared.GameObjects.Components.PDA;
 using Content.Shared.Network.NetMessages;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
@@ -49,7 +47,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -409,6 +406,12 @@ namespace Content.Server.GameTicking
             _playersInLobby[player] = ready ? PlayerStatus.Ready : PlayerStatus.NotReady;
             _netManager.ServerSendMessage(_getStatusMsg(player), player.ConnectedClient);
             _netManager.ServerSendToAll(GetStatusSingle(player, status));
+        }
+
+        public void ToggleDisallowLateJoin(bool disallowLateJoin)
+        {
+            DisallowLateJoin = disallowLateJoin;
+            UpdateLateJoinStatus();
         }
 
         public T AddGameRule<T>() where T : GameRule, new()
@@ -957,7 +960,7 @@ namespace Content.Server.GameTicking
         {
             var gmTitle = MakeGamePreset(null).ModeTitle;
             var desc = MakeGamePreset(null).Description;
-            return _localization.GetString(@"Hi and welcome to [color=white]Space Station 14![/color]
+            return Loc.GetString(@"Hi and welcome to [color=white]Space Station 14![/color]
 
 The current game mode is: [color=white]{0}[/color].
 [color=yellow]{1}[/color]", gmTitle, desc);
@@ -986,7 +989,6 @@ The current game mode is: [color=white]{0}[/color].
         [Dependency] private IServerNetManager _netManager = default!;
         [Dependency] private IDynamicTypeFactory _dynamicTypeFactory = default!;
         [Dependency] private IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly ILocalizationManager _localization = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly IServerPreferencesManager _prefsManager = default!;
         [Dependency] private readonly IBaseServer _baseServer = default!;

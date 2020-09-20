@@ -260,6 +260,10 @@ namespace Content.Shared.GameObjects.Components.Mobs
 
         public bool CanUnequip() => (!Stunned);
         public bool CanChangeDirection() => true;
+
+        public bool CanShiver() => !Stunned;
+        public bool CanSweat() => true;
+
         #endregion
 
         [ViewVariables]

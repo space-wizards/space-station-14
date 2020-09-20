@@ -4,9 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects.Components.Items;
-using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
@@ -26,6 +24,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Items.Storage
 {
@@ -38,7 +37,6 @@ namespace Content.Server.GameObjects.Components.Items.Storage
     public class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IUse, IActivate, IStorageComponent, IDestroyAct, IExAct,
         IDragDrop
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private const string LoggerName = "Storage";
@@ -51,8 +49,10 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         private int _storageCapacityMax;
         public readonly HashSet<IPlayerSession> SubscribedSessions = new HashSet<IPlayerSession>();
 
+        [ViewVariables]
         public IReadOnlyCollection<IEntity>? StoredEntities => _storage?.ContainedEntities;
 
+        [ViewVariables(VVAccess.ReadWrite)]
         public bool OccludesLight
         {
             get => _occludesLight;

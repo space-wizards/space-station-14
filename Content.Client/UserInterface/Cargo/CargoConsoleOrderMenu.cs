@@ -8,8 +8,6 @@ namespace Content.Client.UserInterface.Cargo
 {
     class CargoConsoleOrderMenu : SS14Window
     {
-        [Dependency] private readonly ILocalizationManager _loc = default!;
-
         public LineEdit Requester { get; set; }
         public LineEdit Reason { get; set; }
         public SpinBox Amount { get; set; }
@@ -19,22 +17,22 @@ namespace Content.Client.UserInterface.Cargo
         {
             IoCManager.InjectDependencies(this);
 
-            Title = _loc.GetString("Order Form");
+            Title = Loc.GetString("Order Form");
 
             var vBox = new VBoxContainer();
             var gridContainer = new GridContainer { Columns = 2 };
 
-            var requesterLabel = new Label { Text = _loc.GetString("Name:") };
+            var requesterLabel = new Label { Text = Loc.GetString("Name:") };
             Requester = new LineEdit();
             gridContainer.AddChild(requesterLabel);
             gridContainer.AddChild(Requester);
 
-            var reasonLabel = new Label { Text = _loc.GetString("Reason:") };
+            var reasonLabel = new Label { Text = Loc.GetString("Reason:") };
             Reason = new LineEdit();
             gridContainer.AddChild(reasonLabel);
             gridContainer.AddChild(Reason);
 
-            var amountLabel = new Label { Text = _loc.GetString("Amount:") };
+            var amountLabel = new Label { Text = Loc.GetString("Amount:") };
             Amount = new SpinBox
             {
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
@@ -51,7 +49,7 @@ namespace Content.Client.UserInterface.Cargo
 
             SubmitButton = new Button()
             {
-                Text = _loc.GetString("OK"),
+                Text = Loc.GetString("OK"),
                 TextAlign = Label.AlignMode.Center,
             };
             vBox.AddChild(SubmitButton);

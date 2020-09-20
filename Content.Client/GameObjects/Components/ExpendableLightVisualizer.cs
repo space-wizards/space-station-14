@@ -2,7 +2,6 @@
 using Content.Shared.GameObjects.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using System;
 
 namespace Content.Client.GameObjects.Components
 {

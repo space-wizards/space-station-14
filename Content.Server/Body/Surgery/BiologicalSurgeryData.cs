@@ -243,7 +243,7 @@ namespace Content.Server.Body.Surgery
             performer.PopupMessage(Loc.GetString("Saw off the limb!"));
 
             // TODO do_after: Delay
-            bmTarget.DisconnectBodyPart(Parent, true);
+            bmTarget.RemovePart(Parent, true);
         }
     }
 }

@@ -9,7 +9,6 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Robust.Shared.Localization;
 using static Content.Shared.GameObjects.Components.Medical.SharedCloningPodComponent;
 
 namespace Content.Client.GameObjects.Components.CloningPod

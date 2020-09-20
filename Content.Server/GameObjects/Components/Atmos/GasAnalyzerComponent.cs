@@ -14,7 +14,6 @@ using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
@@ -25,7 +24,6 @@ namespace Content.Server.GameObjects.Components.Atmos
     [RegisterComponent]
     public class GasAnalyzerComponent : SharedGasAnalyzerComponent, IAfterInteract, IDropped, IUse
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private GasAnalyzerDanger _pressureDanger;
@@ -60,7 +58,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             _checkPlayer = true;
             _position = null;
-            UserInterface?.Open(session);
+            UserInterface?.Toggle(session);
             UpdateUserInterface();
             Resync();
         }
@@ -75,7 +73,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             _checkPlayer = false;
             _position = pos;
-            UserInterface?.Open(session);
+            UserInterface?.Toggle(session);
             UpdateUserInterface();
             Resync();
         }

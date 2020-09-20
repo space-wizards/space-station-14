@@ -15,7 +15,7 @@
       map: ["enum.StorageVisualLayers.Welded"]
   - type: Icon
     sprite: Constructible/Structures/closet.rsi
-    state: generic_door
+    state: generic_icon
   - type: Clickable
   - type: MovedByPressure
   - type: DamageOnHighSpeedImpact

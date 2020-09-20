@@ -58,6 +58,10 @@ namespace Content.IntegrationTests
         {
         }
 
+        public void ToggleDisallowLateJoin(bool disallowLateJoin)
+        {
+        }
+
         public EntityCoordinates GetLateJoinSpawnPoint() => EntityCoordinates.Invalid;
         public EntityCoordinates GetJobSpawnPoint(string jobId) => EntityCoordinates.Invalid;
         public EntityCoordinates GetObserverSpawnPoint() => EntityCoordinates.Invalid;

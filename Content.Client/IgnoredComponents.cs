@@ -12,6 +12,7 @@
             "CloningPod",
             "Destructible",
             "Temperature",
+            "AtmosExposed",
             "Explosive",
             "OnUseTimerTrigger",
             "ToolboxElectricalFill",
@@ -164,6 +165,7 @@
             "AMEShield",
             "DebugPump",
             "PressurePump",
+            "PressureVent",
             "VolumePump",
             "DebugVent",
             "DebugSiphon",
@@ -175,6 +177,9 @@
             "ExtinguisherCabinet",
             "ExtinguisherCabinetFilled",
             "FireExtinguisher",
+            "Firelock",
+            "AtmosPlaque",
+            "Spillable",
         };
     }
 }

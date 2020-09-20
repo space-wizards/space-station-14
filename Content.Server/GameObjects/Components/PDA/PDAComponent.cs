@@ -172,7 +172,7 @@ namespace Content.Server.GameObjects.Components.PDA
                 return;
             }
 
-            UserInterface?.Open(actor.playerSession);
+            UserInterface?.Toggle(actor.playerSession);
             UpdatePDAAppearance();
         }
 
@@ -183,7 +183,7 @@ namespace Content.Server.GameObjects.Components.PDA
                 return false;
             }
 
-            UserInterface?.Open(actor.playerSession);
+            UserInterface?.Toggle(actor.playerSession);
             UpdatePDAAppearance();
             return true;
         }

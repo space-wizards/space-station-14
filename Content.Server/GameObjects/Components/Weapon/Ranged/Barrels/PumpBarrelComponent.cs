@@ -18,6 +18,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 {
@@ -47,9 +48,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         private Stack<IEntity> _spawnedAmmo;
         private Container _ammoContainer;
 
+        [ViewVariables]
         private BallisticCaliber _caliber;
 
+        [ViewVariables]
         private string _fillPrototype;
+        [ViewVariables]
         private int _unspawnedCount;
 
         private bool _manualCycle;
