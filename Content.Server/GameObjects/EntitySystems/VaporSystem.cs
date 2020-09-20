@@ -10,7 +10,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             foreach (var vaporComp in ComponentManager.EntityQuery<VaporComponent>())
             {
-                vaporComp.Update();
+                vaporComp.Update(frameTime);
             }
         }
     }

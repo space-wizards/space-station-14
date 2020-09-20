@@ -1,5 +1,4 @@
-﻿using Content.Shared.GameObjects.Atmos;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Interfaces.GameObjects.Components;
@@ -10,6 +9,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Utility;
 using System;
+using Content.Shared.GameObjects.Components.Atmos;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Atmos
