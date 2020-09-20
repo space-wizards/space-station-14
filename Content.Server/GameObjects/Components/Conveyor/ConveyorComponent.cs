@@ -29,7 +29,6 @@ namespace Content.Server.GameObjects.Components.Conveyor
     public class ConveyorComponent : Component, IInteractUsing
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
 
         public override string Name => "Conveyor";
 

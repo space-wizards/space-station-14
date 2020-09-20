@@ -15,8 +15,6 @@ namespace Content.Server.GameObjects.Components.MachineLinking
     [RegisterComponent]
     public class SignalReceiverComponent : Component, IInteractUsing
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
-
         public override string Name => "SignalReceiver";
 
         private List<SignalTransmitterComponent> _transmitters;
