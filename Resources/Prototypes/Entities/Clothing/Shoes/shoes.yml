@@ -172,7 +172,7 @@
   parent: ShoesBase
   id: ShoesMagboots
   name: magboots
-  description: Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle. Currently off.
+  description: Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/magboots.rsi
