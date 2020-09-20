@@ -17,7 +17,6 @@ namespace Content.Server.GameObjects.Components.MachineLinking
     [RegisterComponent]
     public class SignalTransmitterComponent : Component, IInteractUsing
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public override string Name => "SignalTransmitter";
