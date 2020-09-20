@@ -1,87 +1,56 @@
-using System.Collections.Generic;
 using Content.Server.GameObjects.Components.StationEvents;
-using Content.Shared.Damage;
-using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.Interfaces.GameObjects.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Map;
 
 namespace Content.Server.GameObjects.EntitySystems.StationEvents
 {
     [UsedImplicitly]
     public sealed class RadiationPulseSystem : EntitySystem
     {
-        // Rather than stuffing around with collidables and checking entities on initialize etc. we'll just tick over
-        // for each entity in range. Seemed easier than checking entities on spawn, then checking collidables, etc.
-        // Especially considering each pulse is a big chonker, + no circle hitboxes yet.
+        private const string RadiationPrototype = "RadiationPulse";
 
-        private TypeEntityQuery _speciesQuery;
-
-        /// <summary>
-        ///     Damage works with ints so we'll just accumulate damage and once we hit this threshold we'll apply it.
-        /// </summary>
-        /// This also server to stop spamming the damagethreshold with 1 damage continuously.
-        private const int DamageThreshold = 10;
-
-        private Dictionary<IEntity, float> _accumulatedDamage = new Dictionary<IEntity, float>();
-
-        public override void Initialize()
+        public IEntity RadiationPulse(EntityCoordinates coordinates, float range, int dps, bool decay = true, float minPulseLifespan = 0.8f, float maxPulseLifespan = 2.5f, string sound = null)
         {
-            base.Initialize();
-            _speciesQuery = new TypeEntityQuery(typeof(ISharedBodyManagerComponent));
+            var radiationEntity = EntityManager.SpawnEntity(RadiationPrototype, coordinates);
+            var radiation = radiationEntity.GetComponent<RadiationPulseComponent>();
+
+            radiation.Range = range;
+            radiation.RadsPerSecond = dps;
+            radiation.Draw = false;
+            radiation.Decay = decay;
+            radiation.MinPulseLifespan = minPulseLifespan;
+            radiation.MaxPulseLifespan = maxPulseLifespan;
+            radiation.Sound = sound;
+
+            radiation.DoPulse();
+
+            return radiationEntity;
         }
 
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
-            var anyPulses = false;
 
             foreach (var comp in ComponentManager.EntityQuery<RadiationPulseComponent>())
             {
-                anyPulses = true;
+                comp.Update(frameTime);
+                var ent = comp.Owner;
 
-                foreach (var species in EntityManager.GetEntities(_speciesQuery))
+                if (ent.Deleted) continue;
+
+                foreach (var entity in EntityManager.GetEntitiesInRange(ent.Transform.Coordinates, comp.Range, true))
                 {
-                    // Work out if we're in range and accumulate more damage
-                    // If we've hit the DamageThreshold we'll also apply that damage to the mob
-                    // If we're really lagging server can apply multiples of the DamageThreshold at once
-                    if (species.Transform.MapID != comp.Owner.Transform.MapID) continue;
+                    if (entity.Deleted) continue;
 
-                    if ((species.Transform.WorldPosition - comp.Owner.Transform.WorldPosition).Length > comp.Range)
+                    foreach (var radiation in entity.GetAllComponents<IRadiationAct>())
                     {
-                        continue;
+                        radiation.RadiationAct(frameTime, comp);
                     }
-
-                    var totalDamage = frameTime * comp.DPS;
-
-                    if (!_accumulatedDamage.TryGetValue(species, out var accumulatedSpecies))
-                    {
-                        _accumulatedDamage[species] = 0.0f;
-                    }
-
-                    totalDamage += accumulatedSpecies;
-                    _accumulatedDamage[species] = totalDamage;
-
-                    if (totalDamage < DamageThreshold) continue;
-                    if (!species.TryGetComponent(out DamageableComponent damageableComponent)) continue;
-
-                    var damageMultiple = (int) (totalDamage / DamageThreshold);
-                    _accumulatedDamage[species] = totalDamage % DamageThreshold;
-
-                    damageableComponent.ChangeDamage(DamageType.Heat, damageMultiple * DamageThreshold, false, comp.Owner);
                 }
             }
-
-            if (anyPulses)
-            {
-                return;
-            }
-
-            // probably don't need to worry about clearing this at roundreset unless you have a radiation pulse at roundstart
-            // (which is currently not possible)
-            _accumulatedDamage.Clear();
         }
     }
 }

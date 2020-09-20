@@ -27,6 +27,7 @@
     Anchored: false
   - type: Destructible
     deadThreshold: 10
+    resistances: metallicResistances
   - type: SolutionContainer
     maxVol: 1500
     caps: RemoveFrom

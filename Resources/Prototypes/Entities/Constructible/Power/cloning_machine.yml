@@ -35,6 +35,7 @@
       cloningTime: 10.0
     - type: Destructible
       deadThreshold: 100
+      resistances: metallicResistances
     - type: Appearance
       visuals:
         - type: CloningPodVisualizer

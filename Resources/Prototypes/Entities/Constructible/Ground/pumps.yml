@@ -21,6 +21,7 @@
       pumpRSI: Constructible/Atmos/pressurepump.rsi
   - type: Destructible
     thresholdvalue: 100
+    resistances: metallicResistances
 
 - type: entity
   abstract: true

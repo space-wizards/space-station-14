@@ -35,6 +35,7 @@
   - type: MedicalScanner
   - type: Destructible
     deadThreshold: 100
+    resistances: metallicResistances
   - type: Appearance
     visuals:
     - type: MedicalScannerVisualizer
