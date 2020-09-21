@@ -90,7 +90,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             }
 
             _meatPrototype = food.MeatPrototype;
-            _meatParts = food.MeatParts;
+            _meatParts = 5;
             _meatSource1p = Loc.GetString("You remove some meat from {0:theName}.", victim);
             _meatSource0 = Loc.GetString("You remove the last piece of meat from {0:theName}!", victim);
 
