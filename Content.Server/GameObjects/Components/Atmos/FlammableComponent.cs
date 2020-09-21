@@ -5,12 +5,14 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Temperature;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Atmos;
+using Content.Shared.Chemistry;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Atmos;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
@@ -25,7 +27,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Atmos
 {
     [RegisterComponent]
-    public class FlammableComponent : SharedFlammableComponent, ICollideBehavior, IFireAct
+    public class FlammableComponent : SharedFlammableComponent, ICollideBehavior, IFireAct, IReagentReaction
     {
         [Dependency] private IEntityManager _entityManager = default!;
 
@@ -64,11 +66,9 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public void Extinguish()
         {
-            if (OnFire)
-            {
-                OnFire = false;
-                FireStacks = 0;
-            }
+            if (!OnFire) return;
+            OnFire = false;
+            FireStacks = 0;
 
             _collided.Clear();
 
@@ -211,6 +211,26 @@ namespace Content.Server.GameObjects.Components.Atmos
                 FireStacks -= 2f;
                 UpdateAppearance();
             });
+        }
+
+        public ReagentUnit ReagentReactTouch(ReagentPrototype reagent, ReagentUnit volume)
+        {
+            switch (reagent.ID)
+            {
+                case "chem.H2O":
+                    Extinguish();
+                    return ReagentUnit.Zero;
+
+                case "chem.WeldingFuel":
+                case "chem.Thermite":
+                case "chem.Phoron":
+                case "chem.Ethanol":
+                    AdjustFireStacks(volume.Float() / 10f);
+                    return volume;
+
+                default:
+                    return ReagentUnit.Zero;
+            }
         }
     }
 }
