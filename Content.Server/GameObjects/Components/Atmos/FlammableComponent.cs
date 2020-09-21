@@ -77,7 +77,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public void AdjustFireStacks(float relativeFireStacks)
         {
-            FireStacks += relativeFireStacks;
+            FireStacks = MathF.Max(MathF.Min(-10f, FireStacks + relativeFireStacks), 20f);
             if (OnFire && FireStacks <= 0)
                 Extinguish();
 
@@ -219,6 +219,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             {
                 case "chem.H2O":
                     Extinguish();
+                    AdjustFireStacks(-1.5f);
                     return ReagentUnit.Zero;
 
                 case "chem.WeldingFuel":
