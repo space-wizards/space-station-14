@@ -229,10 +229,12 @@ namespace Content.Server.GameObjects.Components.Chemistry
                             actualAmount = ReagentUnit.Min(reagent.Quantity, amount, beakerSolution.EmptyVolume);
                         }
 
+
                         BufferSolution.Solution.RemoveReagent(id, actualAmount);
                         if (_bufferModeTransfer)
                         {
-                            beakerSolution.Solution.AddReagent(id, actualAmount);
+                            beakerSolution.TryAddReagent(id, actualAmount, out var _);
+                            // beakerSolution.Solution.AddReagent(id, actualAmount);
                         }
                         break;
                     }
@@ -283,7 +285,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     var bufferSolution = BufferSolution.Solution.SplitSolution(actualVolume);
 
                     bottle.TryGetComponent<SolutionContainerComponent>(out var bottleSolution);
-                    bottleSolution?.Solution.AddSolution(bufferSolution);
+                    bottleSolution?.TryAddSolution(bufferSolution);
 
                     //Try to give them the bottle
                     if (user.TryGetComponent<HandsComponent>(out var hands) &&
@@ -317,7 +319,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     var bufferSolution = BufferSolution.Solution.SplitSolution(actualVolume);
 
                     pill.TryGetComponent<SolutionContainerComponent>(out var pillSolution);
-                    pillSolution?.Solution.AddSolution(bufferSolution);
+                    pillSolution?.TryAddSolution(bufferSolution);
 
                     //Try to give them the bottle
                     if (user.TryGetComponent<HandsComponent>(out var hands) &&
@@ -393,7 +395,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 {
                     Owner.PopupMessage(args.User, Loc.GetString("This ChemMaster already has a container in it."));
                 }
-                else if (!solution.CanUseWithChemDispenser) 
+                else if (!solution.CanUseWithChemDispenser)
                 {
                     //If it can't fit in the chem master, don't put it in. For example, buckets and mop buckets can't fit.
                     Owner.PopupMessage(args.User, Loc.GetString("The {0:theName} is too large for the ChemMaster!", activeHandEntity));
