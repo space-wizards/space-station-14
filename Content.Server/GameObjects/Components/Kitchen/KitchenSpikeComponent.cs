@@ -51,6 +51,8 @@ namespace Content.Server.GameObjects.Components.Kitchen
         {
             var victim = eventArgs.User.GetComponent<HandsComponent>().PulledObject?.Owner;
 
+            var sprite = Owner.GetComponent<SpriteComponent>();
+
             if (victim == null)
             {
                 if (_meatParts == 0)
@@ -70,13 +72,14 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 }
                 else
                 {
+                    sprite.LayerSetState(0, "spike");
                     eventArgs.User.PopupMessage(_meatSource0);
                 }
                 return;
             }
             else if (_meatParts > 0)
             {
-                eventArgs.User.PopupMessage(Loc.GetString("The spike already has something on it, finish collecting its meat first!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("The spike already has something on it, finish collecting its meat first!"));
                 return;
             }
 
@@ -87,11 +90,13 @@ namespace Content.Server.GameObjects.Components.Kitchen
             }
 
             _meatPrototype = food.MeatPrototype;
-            _meatParts = 5;
+            _meatParts = food.MeatParts;
             _meatSource1p = Loc.GetString("You remove some meat from {0:theName}.", victim);
             _meatSource0 = Loc.GetString("You remove the last piece of meat from {0:theName}!", victim);
 
-            Owner.PopupMessage(eventArgs.User, Loc.GetString("{0:theName} has forced {1:theName} onto the spike, killing them instantly!", eventArgs.User, victim));
+            sprite.LayerSetState(0, "spikebloody");
+
+            Owner.PopupMessageEveryone(Loc.GetString("{0:theName} has forced {1:theName} onto the spike, killing them instantly!", eventArgs.User, victim));
             victim.Delete();
         }
 

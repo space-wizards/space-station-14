@@ -14,8 +14,8 @@
       - Impassable
   - type: Sprite
     # temp to make clickmask work
-    sprite: Constructible/Misc/furniture.rsi
-    state: officechair_white
+    sprite: Constructible/Misc/kitchen.rsi
+    state: spike
   - type: Icon
     sprite: Constructible/Misc/kitchen.rsi
     state: spike
