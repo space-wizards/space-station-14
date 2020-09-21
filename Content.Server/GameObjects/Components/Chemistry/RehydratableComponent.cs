@@ -33,7 +33,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IReagentReaction))]
-    public class RehydratableComponent : Component, IReagentReaction
+    [ComponentReference(typeof(ISolutionChange))]
+    public class RehydratableComponent : Component, IReagentReaction, ISolutionChange
     {
         public override string Name => "Rehydratable";
 
@@ -61,6 +62,15 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 Expand();
             }
             return ReagentUnit.Zero;
+        }
+
+        void ISolutionChange.SolutionChanged(SolutionChangeEventArgs eventArgs)
+        {
+            var solution = eventArgs.Owner.GetComponent<SolutionContainerComponent>();
+            if (solution.Solution.GetReagentQuantity(_catalystPrototype) > ReagentUnit.Zero)
+            {
+                Expand();
+            }
         }
 
         // Try not to make this public if you can help it.
