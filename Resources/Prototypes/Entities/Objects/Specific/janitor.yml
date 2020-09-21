@@ -181,9 +181,43 @@
       paralyzeTime: 7
 
 - type: entity
+  id: Vapor
+  name: "vapor"
+  abstract: true
+  components:
+    - type: SnapGrid
+      offset: Center
+    - type: SolutionContainer
+      maxVol: 50
+    - type: Vapor
+    - type: AnimationPlayer
+    - type: Sprite
+      sprite: Effects/chempuff.rsi
+      layers:
+        - state: chempuff
+          map: [ "enum.VaporVisualLayers.Base" ]
+    - type: Icon
+      sprite: Effects/chempuff.rsi
+      state: chempuff
+    - type: Physics
+    - type: Collidable
+      hard: false
+      shapes:
+        - !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+          mask:
+            - Impassable
+            - MobImpassable
+            - SmallImpassable
+    - type: Appearance
+      visuals:
+        - type: VaporVisualizer
+
+- type: entity
   name: spray bottle
   id: SprayBottle
   parent: BaseItem
+  suffix: Empty
   description: A spray bottle with an unscrewable top.
   components:
   - type: Sprite
@@ -196,7 +230,37 @@
   - type: Pourable
     transferAmount: 5.0
   - type: Spillable
+  - type: ItemCooldown
   - type: Spray
     transferAmount: 10
-    sprayVelocity: 5
-    spraySound: /Audio/Effects/spray.ogg
+    sprayVelocity: 2
+    spraySound: /Audio/Effects/spray2.ogg
+
+- type: entity
+  name: spray bottle
+  id: SprayBottleWater
+  suffix: Filled
+  parent: SprayBottle
+  components:
+    - type: SolutionContainer
+      maxVol: 100
+      caps: AddTo, RemoveFrom
+      contents:
+        reagents:
+          - ReagentId: chem.H2O
+            Quantity: 100
+
+- type: entity
+  name: space cleaner
+  description: BLAM!-brand non-foaming space cleaner!
+  id: SprayBottleSpaceCleaner
+  parent: SprayBottle
+  suffix: ""
+  components:
+    - type: SolutionContainer
+      maxVol: 100
+      caps: AddTo, RemoveFrom
+      contents:
+        reagents:
+          - ReagentId: chem.SpaceCleaner
+            Quantity: 100

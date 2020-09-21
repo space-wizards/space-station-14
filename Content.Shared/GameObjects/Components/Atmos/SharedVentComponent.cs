@@ -1,7 +1,7 @@
-﻿using Robust.Shared.Serialization;
-using System;
+﻿using System;
+using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Atmos
+namespace Content.Shared.GameObjects.Components.Atmos
 {
     [Serializable, NetSerializable]
     public enum VentVisuals

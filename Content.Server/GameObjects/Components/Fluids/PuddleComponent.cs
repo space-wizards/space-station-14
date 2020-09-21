@@ -164,6 +164,16 @@ namespace Content.Server.GameObjects.Components.Fluids
             }
         }
 
+        /// <summary>
+        ///     Whether adding this solution to this puddle would overflow.
+        /// </summary>
+        /// <param name="solution"></param>
+        /// <returns></returns>
+        public bool WouldOverflow(Solution solution)
+        {
+            return (CurrentVolume + solution.TotalVolume > _overflowVolume);
+        }
+
         // Flow rate should probably be controlled globally so this is it for now
         internal bool TryAddSolution(Solution solution, bool sound = true, bool checkForEvaporate = true, bool checkForOverflow = true)
         {
