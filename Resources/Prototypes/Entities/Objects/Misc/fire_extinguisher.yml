@@ -7,24 +7,63 @@
     - type: Sprite
       sprite: Objects/Misc/fire_extinguisher.rsi
       layers:
-        - state: fire_extinguisher_open
+        - state: fire_extinguisher_closed
+          map: [ "enum.SprayVisualLayers.Base" ]
     - type: Icon
       sprite: Objects/Misc/fire_extinguisher.rsi
-      state: fire_extinguisher_open
+      state: fire_extinguisher_closed
     - type: Item
       sprite: Objects/Misc/fire_extinguisher.rsi
       size: 10
     - type: SolutionContainer
-      maxVol: 1000
+      maxVol: 100
       caps: AddTo, RemoveFrom, NoExamine
       contents:
         reagents:
           - ReagentId: chem.H2O
-            Quantity: 1000
-    - type: GasSprayer
-      spraySound: /Audio/Effects/spray.ogg
-      sprayType: ExtinguisherSpray
-      fuelType: chem.H2O
-      fuelName: water
-      fuelCost: 50
+            Quantity: 100
+    - type: ItemCooldown
+    - type: Spray
+      spraySound: /Audio/Effects/extinguish.ogg
+      sprayedPrototype: ExtinguisherSpray
+      hasSafety: true
+      vaporAmount: 3
+      vaporSpread: 90
+      sprayVelocity: 2.0
+      sprayTimeAlive: 1.5
+      transferAmount: 5
     - type: FireExtinguisher
+    - type: Appearance
+      visuals:
+        - type: SprayVisualizer
+          safety_on_state: fire_extinguisher_closed
+          safety_off_state: fire_extinguisher_open
+
+- type: entity
+  name: extinguisher spray
+  id: ExtinguisherSpray
+  parent: Vapor
+  abstract: true
+  components:
+    - type: Sprite
+      sprite: Effects/extinguisherSpray.rsi
+      layers:
+        - state: extinguish
+          map: [ "enum.VaporVisualLayers.Base" ]
+    - type: Icon
+      sprite: Effects/extinguisherSpray.rsi
+      state: extinguish
+    - type: Collidable
+      hard: false
+      shapes:
+        - !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+          mask:
+            - Impassable
+            - MobImpassable
+            - SmallImpassable
+    - type: Appearance
+      visuals:
+        - type: VaporVisualizer
+          animation_delay: 0.8
+          animation_state: extinguish

@@ -1,8 +1,7 @@
 ﻿using System;
-using Content.Shared.GameObjects.Components.Atmos;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Atmos
+namespace Content.Shared.GameObjects.Components.Atmos
 {
     [Serializable, NetSerializable]
     public enum PumpVisuals
