@@ -5,6 +5,8 @@
   components:
   - type: Food
   - type: LoopingSound
+  - type: SolutionContainer
+    caps: NoExamine
   - type: Sprite
     state: icon
     netsync: false
