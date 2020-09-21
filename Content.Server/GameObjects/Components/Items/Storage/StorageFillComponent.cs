@@ -45,8 +45,8 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             var alreadySpawnedGroups = new List<string>();
             foreach (var storageItem in _contents)
             {
-                if (storageItem.PrototypeName == null) continue;
-                if (storageItem.GroupId != null && alreadySpawnedGroups.Contains(storageItem.GroupId)) continue;
+                if (string.IsNullOrEmpty(storageItem.PrototypeName)) continue;
+                if (string.IsNullOrEmpty(storageItem.GroupId) && alreadySpawnedGroups.Contains(storageItem.GroupId)) continue;
 
                 if (storageItem.SpawnProbability != 1f &&
                     !random.Prob(storageItem.SpawnProbability))
@@ -55,7 +55,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 }
 
                 storage.Insert(_entityManager.SpawnEntity(storageItem.PrototypeName, Owner.Transform.Coordinates));
-                if(storageItem.GroupId != null) alreadySpawnedGroups.Add(storageItem.GroupId);
+                if(string.IsNullOrEmpty(storageItem.GroupId)) alreadySpawnedGroups.Add(storageItem.GroupId);
             }
         }
 
