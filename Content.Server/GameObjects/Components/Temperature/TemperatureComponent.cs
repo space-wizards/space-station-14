@@ -76,7 +76,6 @@ namespace Content.Server.GameObjects.Components.Temperature
 
             if (!Owner.TryGetComponent(out IDamageableComponent component)) return;
             component.ChangeDamage(damageType.Value, tempDamage, false);
-            Debug.Write($"Temp is: {CurrentTemperature}");
         }
 
         /// <summary>
