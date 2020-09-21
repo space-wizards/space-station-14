@@ -6,12 +6,8 @@
   components:
   - type: StorageFill
     contents:
-      - FoodDonkPocket
-      - FoodDonkPocket
-      - FoodDonkPocket
-      - FoodDonkPocket
-      - FoodDonkPocket
-      - FoodDonkPocket
+      - name: FoodDonkPocket
+        amount: 6
   - type: Sprite
     sprite: Objects/Storage/donkpocket.rsi
     state: icon

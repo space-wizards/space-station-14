@@ -6,18 +6,8 @@
   components:
   - type: StorageFill
     contents:
-      - LightBulb
-      - LightBulb
-      - LightBulb
-      - LightBulb
-      - LightBulb
-      - LightBulb
-      - LightBulb
-      - LightBulb
-      - LightBulb
-      - LightBulb
-      - LightBulb
-      - LightBulb
+      - name: LightBulb
+        amount: 12
   - type: Sprite
     layers:
       - state: box
@@ -34,18 +24,8 @@
   components:
   - type: StorageFill
     contents:
-      - LightTube
-      - LightTube
-      - LightTube
-      - LightTube
-      - LightTube
-      - LightTube
-      - LightTube
-      - LightTube
-      - LightTube
-      - LightTube
-      - LightTube
-      - LightTube
+      - name: LightTube
+        amount: 12
   - type: Sprite
     layers:
       - state: box
@@ -62,18 +42,8 @@
   components:
   - type: StorageFill
     contents:
-      - LightTube
-      - LightTube
-      - LightTube
-      - LightTube
-      - LightTube
-      - LightTube
-      - LightBulb
-      - LightBulb
-      - LightBulb
-      - LightBulb
-      - LightBulb
-      - LightBulb
+      - name: LightTube
+        amount: 12
   - type: Sprite
     layers:
       - state: box
@@ -90,9 +60,8 @@
   components:
   - type: StorageFill
     contents:
-      - AssistantPDA
-      - AssistantPDA
-      - AssistantPDA
+      - name: AssistantPDA
+        amount: 3
   - type: Sprite
     layers:
       - state: box
@@ -111,10 +80,8 @@
   components:
   - type: StorageFill
     contents:
-      - MesonGlasses
-      - MesonGlasses
-      - MesonGlasses
-      - MesonGlasses
+      - name: MesonGlasses
+        amount: 4
   - type: Sprite
     layers:
       - state: box
@@ -133,9 +100,9 @@
   components:
   - type: StorageFill
     contents:
-      - BreathMaskClothing
-      #- O2 Canister
-      #- Injector
+      - name: BreathMaskClothing
+      #- name: O2 Canister
+      #- name: Injector
   - type: Sprite
     layers:
       - state: box

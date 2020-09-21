@@ -32,7 +32,18 @@
   parent: ToolboxEmergency
   suffix: Filled
   components:
-  - type: ToolboxEmergencyFill
+  - type: StorageFill
+    contents:
+      - name: BreathMaskClothing
+        amount: 2
+      - name: FoodChocolateBar
+      - name: FlashlightLantern
+        amount: 2
+      - name: HarmonicaInstrument
+        prob: 0.15
+        orGroup: HarmonicaOrChocolate
+      - name: FoodChocolateBar
+        orGroup: HarmonicaOrChocolate
 
 - type: entity
   name: mechanical toolbox
@@ -70,7 +81,18 @@
   suffix: Filled
   parent: ToolboxElectrical
   components:
-  - type: ToolboxElectricalFill
+  - type: StorageFill
+    contents:
+      - name: Screwdriver
+      - name: Crowbar
+      - name: Wirecutter
+      - name: ApcExtensionCableStack
+      - name: MVWireStack
+      - name: GlovesYellow
+        prob: 0.05
+        orGroup: GlovesOrWires
+      - name: HVWireStack
+        orGroup: GlovesOrWires
 
 - type: entity
   name: artistic toolbox
@@ -123,4 +145,12 @@
   parent: ToolboxGolden
   suffix: Filled
   components:
-  - type: ToolboxGoldFill
+  - type: StorageFill
+    contents:
+      - name: GoldStack
+        amount: 5
+      - name: DrinkGoldenCup
+        prob: 0.05
+        orGroup: CupOrGold
+      - name: GoldStack
+        orGroup: CupOrGold

@@ -6,12 +6,10 @@
   components:
   - type: StorageFill
     contents:
-      - Beaker
-      - Beaker
-      - Beaker
-      - LargeBeaker
-      - LargeBeaker
-      - LargeBeaker
+      - name: Beaker
+        amount: 3
+      - name: LargeBeaker
+        amount: 3
   - type: Sprite
     layers:
       - state: box
