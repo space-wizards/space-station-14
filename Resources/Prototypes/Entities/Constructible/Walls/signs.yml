@@ -10,6 +10,7 @@
     - !type:PhysShapeAabb
   - type: Destructible
     thresholdvalue: 5
+    resistances: metallicResistances
   - type: Sprite
     drawdepth: WallTops
     sprite: Constructible/Misc/decals.rsi

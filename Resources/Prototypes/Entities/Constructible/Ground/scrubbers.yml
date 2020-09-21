@@ -23,6 +23,7 @@
       siphonRSI: Constructible/Atmos/scrubber.rsi
   - type: Destructible
     thresholdvalue: 100
+    resistances: metallicResistances
 
 - type: entity
   parent: ScrubberBase

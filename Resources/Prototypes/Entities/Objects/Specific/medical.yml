@@ -15,9 +15,16 @@
 
 - type: entity
   id: MedkitFilled
+  suffix: Filled
   parent: Medkit
   components:
-  - type: MedkitFill # 3 Ointment, 3 Roll of Gauze. TODO 1 Health Analyzer once it exists
+  - type: StorageFill
+    contents:
+      - name: Brutepack
+        amount: 3
+      - name: Ointment
+        amount: 3
+      # todo 1 Health Analyzer once it exists
 
 - type: entity
   name: medical stack

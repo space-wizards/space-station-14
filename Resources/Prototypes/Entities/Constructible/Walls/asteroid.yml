@@ -18,6 +18,7 @@
       layer: [MobMask]
   - type: Destructible
     deadThreshold: 100
+    resistances: metallicResistances
   - type: Occluder
     sizeX: 32
     sizeY: 32

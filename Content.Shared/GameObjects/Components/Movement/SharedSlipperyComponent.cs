@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
@@ -29,25 +30,31 @@ namespace Content.Shared.GameObjects.Components.Movement
         ///     How many seconds the mob will be paralyzed for.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        private float ParalyzeTime { get; set; } = 3f;
+        public virtual float ParalyzeTime { get; set; } = 2f;
 
         /// <summary>
         ///     Percentage of shape intersection for a slip to occur.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        private float IntersectPercentage { get; set; } = 0.3f;
+        public virtual float IntersectPercentage { get; set; } = 0.3f;
 
         /// <summary>
         ///     Entities will only be slipped if their speed exceeds this limit.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        private float RequiredSlipSpeed { get; set; } = 0f;
+        public virtual float RequiredSlipSpeed { get; set; } = 0f;
+
+        /// <summary>
+        ///     The entity's speed will be multiplied by this to slip it forwards.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public virtual float LaunchForwardsMultiplier { get; set; } = 1f;
 
         /// <summary>
         ///     Whether or not this component will try to slip entities.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool Slippery { get; set; }
+        public virtual bool Slippery { get; set; }
 
         private bool TrySlip(IEntity entity)
         {
@@ -81,7 +88,7 @@ namespace Content.Shared.GameObjects.Components.Movement
             if (entity.TryGetComponent(out ICollidableComponent collidable))
             {
                 var controller = collidable.EnsureController<SlipController>();
-                controller.LinearVelocity = collidable.LinearVelocity;
+                controller.LinearVelocity = collidable.LinearVelocity * LaunchForwardsMultiplier;
             }
 
             stun.Paralyze(5);
@@ -140,10 +147,30 @@ namespace Content.Shared.GameObjects.Components.Movement
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(this, x => ParalyzeTime, "paralyzeTime", 3f);
-            serializer.DataField(this, x  => IntersectPercentage, "intersectPercentage", 0.3f);
-            serializer.DataField(this, x => RequiredSlipSpeed, "requiredSlipSpeed", 0f);
+            serializer.DataField(this, x => x.ParalyzeTime, "paralyzeTime", 3f);
+            serializer.DataField(this, x  => x.IntersectPercentage, "intersectPercentage", 0.3f);
+            serializer.DataField(this, x => x.RequiredSlipSpeed, "requiredSlipSpeed", 0f);
+            serializer.DataField(this, x => x.LaunchForwardsMultiplier, "launchForwardsMultiplier", 1f);
             serializer.DataField(this, x => x.Slippery, "slippery", true);
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class SlipperyComponentState : ComponentState
+    {
+        public float ParalyzeTime { get; }
+        public float IntersectPercentage { get; }
+        public float RequiredSlipSpeed { get; }
+        public float LaunchForwardsMultiplier { get; }
+        public bool Slippery { get; }
+
+        public SlipperyComponentState(float paralyzeTime, float intersectPercentage, float requiredSlipSpeed, float launchForwardsMultiplier, bool slippery) : base(ContentNetIDs.SLIP)
+        {
+            ParalyzeTime = paralyzeTime;
+            IntersectPercentage = intersectPercentage;
+            RequiredSlipSpeed = requiredSlipSpeed;
+            LaunchForwardsMultiplier = launchForwardsMultiplier;
+            Slippery = slippery;
         }
     }
 }

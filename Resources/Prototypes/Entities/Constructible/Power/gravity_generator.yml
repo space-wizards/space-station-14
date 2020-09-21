@@ -30,6 +30,7 @@
   - type: InteractionOutline
   - type: Breakable
     deadThreshold: 150
+    resistances: metallicResistances
   - type: GravityGenerator
   - type: UserInterface
     interfaces:

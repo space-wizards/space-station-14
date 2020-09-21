@@ -29,6 +29,7 @@
       - SmallImpassable
   - type: Destructible
     deadThreshold: 100
+    resistances: metallicResistances
   - type: SnapGrid
     offset: Center
   - type: Airtight

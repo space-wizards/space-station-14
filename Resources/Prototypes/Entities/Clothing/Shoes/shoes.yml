@@ -13,32 +13,6 @@
 
 - type: entity
   parent: ShoesBase
-  id: ShoesAtmosMagboots0
-  name: atmos magboots (off)
-  description: Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle. Currently off.
-  components:
-  - type: Sprite
-    sprite: Clothing/Shoes/atmosmagboots0.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/atmosmagboots0.rsi
-  - type: Clothing
-    sprite: Clothing/Shoes/atmosmagboots0.rsi
-
-- type: entity
-  parent: ShoesBase
-  id: ShoesAtmosMagboots1
-  name: atmos magboots (on)
-  description: Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle. Currently on.
-  components:
-  - type: Sprite
-    sprite: Clothing/Shoes/atmosmagboots1.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/atmosmagboots1.rsi
-  - type: Clothing
-    sprite: Clothing/Shoes/atmosmagboots1.rsi
-
-- type: entity
-  parent: ShoesBase
   id: ShoesBlack
   name: black shoes
   description: Stylish black shoes.
@@ -143,19 +117,6 @@
 
 - type: entity
   parent: ShoesBase
-  id: ShoesDigiboots
-  name: digiboots
-  description: A pair of digi boots.
-  components:
-  - type: Sprite
-    sprite: Clothing/Shoes/digiboots.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/digiboots.rsi
-  - type: Clothing
-    sprite: Clothing/Shoes/digiboots.rsi
-
-- type: entity
-  parent: ShoesBase
   id: ShoesFlippers
   name: flippers
   description: A pair of rubber flippers that improves swimming ability when worn.
@@ -209,55 +170,16 @@
 
 - type: entity
   parent: ShoesBase
-  id: ShoesMagboots0
-  name: magboots (off)
-  description: Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle. Currently off.
+  id: ShoesMagboots
+  name: magboots
+  description: Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle.
   components:
   - type: Sprite
-    sprite: Clothing/Shoes/magboots0.rsi
+    sprite: Clothing/Shoes/magboots.rsi
   - type: Icon
-    sprite: Clothing/Shoes/magboots0.rsi
+    sprite: Clothing/Shoes/magboots.rsi
   - type: Clothing
-    sprite: Clothing/Shoes/magboots0.rsi
-
-- type: entity
-  parent: ShoesBase
-  id: ShoesMagboots1
-  name: magboots (on)
-  description: Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle. Currently on.
-  components:
-  - type: Sprite
-    sprite: Clothing/Shoes/magboots1.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/magboots1.rsi
-  - type: Clothing
-    sprite: Clothing/Shoes/magboots1.rsi
-
-- type: entity
-  parent: ShoesBase
-  id: ShoesMercboots0
-  name: merc boots
-  description: A pair of boots with extra padding and armor.
-  components:
-  - type: Sprite
-    sprite: Clothing/Shoes/mercboots0.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/mercboots0.rsi
-  - type: Clothing
-    sprite: Clothing/Shoes/mercboots0.rsi
-
-- type: entity
-  parent: ShoesBase
-  id: ShoesMercboots1
-  name: merc boots
-  description: A pair of boots with extra padding and armor.
-  components:
-  - type: Sprite
-    sprite: Clothing/Shoes/mercboots1.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/mercboots1.rsi
-  - type: Clothing
-    sprite: Clothing/Shoes/mercboots1.rsi
+    sprite: Clothing/Shoes/magboots.rsi
 
 - type: entity
   parent: ShoesBase
@@ -287,19 +209,6 @@
 
 - type: entity
   parent: ShoesBase
-  id: ShoesOrange1
-  name: orange shoes
-  description: Stylish orange shoes.
-  components:
-  - type: Sprite
-    sprite: Clothing/Shoes/orange1.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/orange1.rsi
-  - type: Clothing
-    sprite: Clothing/Shoes/orange1.rsi
-
-- type: entity
-  parent: ShoesBase
   id: ShoesPurple
   name: purple shoes
   description: Stylish purple shoes.
@@ -318,17 +227,17 @@
   description: A pair of rainbow shoes.
   components:
   - type: Sprite
-    sprite: Clothing/Shoes/rain_bow.rsi
+    sprite: Clothing/Shoes/rainbow.rsi
   - type: Icon
-    sprite: Clothing/Shoes/rain_bow.rsi
+    sprite: Clothing/Shoes/rainbow.rsi
   - type: Clothing
-    sprite: Clothing/Shoes/rain_bow.rsi
+    sprite: Clothing/Shoes/rainbow.rsi
 
 - type: entity
   parent: ShoesBase
   id: ShoesRed
   name: red shoes
-  description: Stylish purple shoes.
+  description: Stylish red shoes.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/red.rsi
@@ -336,19 +245,6 @@
     sprite: Clothing/Shoes/red.rsi
   - type: Clothing
     sprite: Clothing/Shoes/red.rsi
-
-- type: entity
-  parent: ShoesBase
-  id: ShoesReinforced
-  name: reinforced shoes
-  description: A pair of reinforced shoes.
-  components:
-  - type: Sprite
-    sprite: Clothing/Shoes/reinforced.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/reinforced.rsi
-  - type: Clothing
-    sprite: Clothing/Shoes/reinforced.rsi
 
 - type: entity
   parent: ShoesBase
@@ -362,19 +258,6 @@
     sprite: Clothing/Shoes/slippers.rsi
   - type: Clothing
     sprite: Clothing/Shoes/slippers.rsi
-
-- type: entity
-  parent: ShoesBase
-  id: ShoesSlippersWorn
-  name: slippers (worn)
-  description: Fluffy...
-  components:
-  - type: Sprite
-    sprite: Clothing/Shoes/slippers_worn.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/slippers_worn.rsi
-  - type: Clothing
-    sprite: Clothing/Shoes/slippers_worn.rsi
 
 - type: entity
   parent: ShoesBase
@@ -505,3 +388,16 @@
     sprite: Clothing/Shoes/codersocks.rsi
   - type: Clothing
     sprite: Clothing/Shoes/codersocks.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesJackboots
+  name: jackboots
+  description: Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/jackboots.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/jackboots.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/jackboots.rsi

@@ -201,3 +201,13 @@
   components:
   - type: Stack
     count: 1
+
+- type: entity
+  name: wood plank
+  id: WoodPlank
+  parent: BaseItem
+  components:
+  - type: Sprite
+    texture: Objects/Materials/wood.png
+  - type: Icon
+    texture: Objects/Materials/wood.png

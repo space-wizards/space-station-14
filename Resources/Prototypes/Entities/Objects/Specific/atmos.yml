@@ -15,3 +15,8 @@
     interfaces:
     - key: enum.GasAnalyzerUiKey.Key
       type: GasAnalyzerBoundUserInterface
+  - type: Appearance
+    visuals:
+    - type: GasAnalyzerVisualizer
+      state_off: icon
+      state_working: working

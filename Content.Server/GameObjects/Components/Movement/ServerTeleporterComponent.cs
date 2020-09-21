@@ -26,7 +26,6 @@ namespace Content.Server.GameObjects.Components.Movement
     [RegisterComponent]
     public class ServerTeleporterComponent : Component, IAfterInteract
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
         [Dependency] private readonly IRobustRandom _spreadRandom = default!;
 
@@ -96,7 +95,7 @@ namespace Content.Server.GameObjects.Components.Movement
         public void TryDirectedTeleport(IEntity user, MapCoordinates mapCoords)
         {
             // Checks
-            if ((user.Transform.WorldPosition - mapCoords.Position).LengthSquared > (_range * _range))
+            if ((user.Transform.WorldPosition - mapCoords.Position).LengthSquared > _range * _range)
             {
                 return;
             }

@@ -61,6 +61,7 @@
     offset: Center
   - type: Destructible
     deadThreshold: 500
+    resistances: metallicResistances
   placement:
     mode: SnapgridCenter
 

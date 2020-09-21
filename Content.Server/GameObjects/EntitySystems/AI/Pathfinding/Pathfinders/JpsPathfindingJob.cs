@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -494,13 +494,13 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
             }
 
             if ((closedNeighborOne == null || !PathfindingHelpers.Traversable(_pathfindingArgs.CollisionMask, _pathfindingArgs.Access, closedNeighborOne)) &&
-                (openNeighborOne != null && PathfindingHelpers.Traversable(_pathfindingArgs.CollisionMask, _pathfindingArgs.Access, openNeighborOne)))
+                openNeighborOne != null && PathfindingHelpers.Traversable(_pathfindingArgs.CollisionMask, _pathfindingArgs.Access, openNeighborOne))
             {
                 return true;
             }
 
             if ((closedNeighborTwo == null || !PathfindingHelpers.Traversable(_pathfindingArgs.CollisionMask, _pathfindingArgs.Access, closedNeighborTwo)) &&
-                (openNeighborTwo != null && PathfindingHelpers.Traversable(_pathfindingArgs.CollisionMask, _pathfindingArgs.Access, openNeighborTwo)))
+                openNeighborTwo != null && PathfindingHelpers.Traversable(_pathfindingArgs.CollisionMask, _pathfindingArgs.Access, openNeighborTwo))
             {
                 return true;
             }
