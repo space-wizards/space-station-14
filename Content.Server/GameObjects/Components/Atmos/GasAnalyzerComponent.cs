@@ -1,13 +1,14 @@
 ﻿#nullable enable
-using System.Collections.Generic;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components;
+using Content.Shared.GameObjects.Components.Atmos;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
@@ -18,6 +19,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.ViewVariables;
+using System.Collections.Generic;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
@@ -31,6 +33,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         private const float TimeBetweenSyncs = 2f;
         private bool _checkPlayer = false; // Check at the player pos or at some other tile?
         private EntityCoordinates? _position; // The tile that we scanned
+        private AppearanceComponent? _appearance;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(GasAnalyzerUiKey.Key);
 
@@ -41,7 +44,10 @@ namespace Content.Server.GameObjects.Components.Atmos
             if (UserInterface != null)
             {
                 UserInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
+                UserInterface.OnClosed += UserInterfaceOnClose;
             }
+
+            Owner.TryGetComponent(out _appearance);
         }
 
         public override ComponentState GetComponentState()
@@ -58,8 +64,9 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             _checkPlayer = true;
             _position = null;
-            UserInterface?.Toggle(session);
+            UserInterface?.Open(session);
             UpdateUserInterface();
+            UpdateAppearance(true);
             Resync();
         }
 
@@ -73,16 +80,40 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             _checkPlayer = false;
             _position = pos;
-            UserInterface?.Toggle(session);
+            UserInterface?.Open(session);
             UpdateUserInterface();
+            UpdateAppearance(true);
             Resync();
+        }
+
+        public void ToggleInterface(IPlayerSession session)
+        {
+            if (UserInterface == null)
+                return;
+
+            if (UserInterface.SessionHasOpen(session))
+                CloseInterface(session);
+            else
+                OpenInterface(session);
         }
 
         public void CloseInterface(IPlayerSession session)
         {
             _position = null;
             UserInterface?.Close(session);
+            // Our OnClose will do the appearance stuff
             Resync();
+        }
+
+        private void UserInterfaceOnClose(IPlayerSession obj)
+        {
+            UpdateAppearance(false);
+        }
+
+        private void UpdateAppearance(bool open)
+        {
+            _appearance?.SetData(GasAnalyzerVisuals.VisualState,
+                open ? GasAnalyzerVisualState.Working : GasAnalyzerVisualState.Off);
         }
 
         public void Update(float frameTime)
@@ -234,7 +265,6 @@ namespace Content.Server.GameObjects.Components.Atmos
             if (eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
                 OpenInterface(actor.playerSession, eventArgs.ClickLocation);
-                //TODO: show other sprite when ui open?
             }
         }
 
@@ -245,7 +275,6 @@ namespace Content.Server.GameObjects.Components.Atmos
             if (eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
                 CloseInterface(actor.playerSession);
-                //TODO: if other sprite is shown, change again
             }
         }
 
@@ -253,8 +282,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             if (eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
-                OpenInterface(actor.playerSession);
-                //TODO: show other sprite when ui open?
+                ToggleInterface(actor.playerSession);
                 return true;
             }
             return false;
