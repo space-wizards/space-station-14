@@ -1,4 +1,5 @@
 ﻿using System;
+using Content.Shared.GameObjects.Components;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -6,7 +7,6 @@ using Robust.Client.GameObjects.Components.Animations;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Animations;
 using Robust.Shared.Maths;
-using Content.Shared.GameObjects.Components;
 
 namespace Content.Client.GameObjects.Components.Atmos
 {

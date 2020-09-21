@@ -10,9 +10,9 @@
   - type: Microwave
   - type: Clickable
   - type: InteractionOutline
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 100
-    caps: 1
+    caps: AddTo
   - type: Appearance
     visuals:
     - type: MicrowaveVisualizer

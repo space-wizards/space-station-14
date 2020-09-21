@@ -192,9 +192,10 @@
   - fillgas
   - listgases
   - removegas
-  - clearatmos
   - settemp
   - setatmostemp
+  - deletegas
+  - showatmos
   - tilewalls
   - events
   - destroymechanism

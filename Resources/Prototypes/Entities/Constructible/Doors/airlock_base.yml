@@ -56,12 +56,12 @@
       type: WiresBoundUserInterface
   - type: Airtight
     fixVacuum: true
-    adjacentAtmosphere: true
   - type: Occluder
   - type: SnapGrid
     offset: Center
   - type: Destructible
     deadThreshold: 500
+    resistances: metallicResistances
   placement:
     mode: SnapgridCenter
 

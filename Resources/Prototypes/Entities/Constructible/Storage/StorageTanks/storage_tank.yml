@@ -27,9 +27,10 @@
     Anchored: false
   - type: Destructible
     deadThreshold: 10
-  - type: Solution
+    resistances: metallicResistances
+  - type: SolutionContainer
     maxVol: 1500
-    caps: 2
+    caps: RemoveFrom
   - type: Pourable
     transferAmount: 100.0
   placement:

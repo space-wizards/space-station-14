@@ -1,5 +1,4 @@
 using Content.Server.Interfaces.Chat;
-using Robust.Server.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.StationEvents

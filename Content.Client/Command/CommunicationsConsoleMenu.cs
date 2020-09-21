@@ -12,8 +12,6 @@ namespace Content.Client.Command
 {
     public class CommunicationsConsoleMenu : SS14Window
     {
-        [Dependency] private readonly ILocalizationManager _localizationManager = default!;
-
         protected override Vector2? CustomSize => new Vector2(600, 400);
 
         private CommunicationsConsoleBoundUserInterface Owner { get; set; }
@@ -25,7 +23,7 @@ namespace Content.Client.Command
         {
             IoCManager.InjectDependencies(this);
 
-            Title = _localizationManager.GetString("Communications Console");
+            Title = Loc.GetString("Communications Console");
             Owner = owner;
 
             _countdownLabel = new RichTextLabel(){CustomMinimumSize = new Vector2(0, 200)};
@@ -53,11 +51,11 @@ namespace Content.Client.Command
             if (!Owner.CountdownStarted)
             {
                 _countdownLabel.SetMessage("");
-                _emergencyShuttleButton.Text = _localizationManager.GetString("Call emergency shuttle");
+                _emergencyShuttleButton.Text = Loc.GetString("Call emergency shuttle");
                 return;
             }
 
-            _emergencyShuttleButton.Text = _localizationManager.GetString("Recall emergency shuttle");
+            _emergencyShuttleButton.Text = Loc.GetString("Recall emergency shuttle");
             _countdownLabel.SetMessage($"Time remaining\n{Owner.Countdown.ToString()}s");
         }
 

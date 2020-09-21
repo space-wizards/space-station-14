@@ -1,8 +1,6 @@
 ﻿using Content.Server.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.Server.GameObjects.EntitySystems

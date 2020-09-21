@@ -1,27 +1,26 @@
-﻿using Content.Server.GameTicking.GameRules;
-using Content.Server.Interfaces.Chat;
-using Content.Server.Interfaces.GameTicking;
-using Content.Server.Players;
-using Robust.Server.Interfaces.Player;
-using Robust.Shared.Interfaces.Random;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.PDA;
 using Content.Server.GameObjects.Components.Suspicion;
-using Content.Server.Mobs.Roles;
+using Content.Server.GameTicking.GameRules;
+using Content.Server.Interfaces.Chat;
+using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs.Roles.Suspicion;
+using Content.Server.Players;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.PDA;
 using Content.Shared.Roles;
+using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Configuration;
+using Robust.Shared.Interfaces.Random;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.GamePresets
 {
@@ -68,7 +67,7 @@ namespace Content.Server.GameTicking.GamePresets
 
             if (readyPlayers.Count == 0)
             {
-                _chatManager.DispatchServerAnnouncement($"No players readied up! Can't start Suspicion.");
+                _chatManager.DispatchServerAnnouncement("No players readied up! Can't start Suspicion.");
                 return false;
             }
 

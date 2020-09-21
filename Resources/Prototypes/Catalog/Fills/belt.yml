@@ -5,13 +5,13 @@
   components:
   - type: StorageFill
     contents:
-      - Crowbar
-      - Wrench
-      - Screwdriver
-      - Wirecutter
-      - Welder
-      - Multitool
-      - ApcExtensionCableStack
+      - name: Crowbar
+      - name: Wrench
+      - name: Screwdriver
+      - name: Wirecutter
+      - name: Welder
+      - name: Multitool
+      - name: ApcExtensionCableStack
 
 - type: entity
   id: UtilityBeltClothingFilledEvent
@@ -20,6 +20,6 @@
   components:
   - type: StorageFill
     contents:
-      - Crowbar
-      - Screwdriver
-      - Multitool
+      - name: Crowbar
+      - name: Screwdriver
+      - name: Multitool

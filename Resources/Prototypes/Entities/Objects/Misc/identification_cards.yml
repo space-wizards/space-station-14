@@ -45,7 +45,7 @@
     - state: assigned
     - state: idcaptain
   - type: Icon
-    state: gold
+    state: idcaptain_icon
   - type: Clothing
     HeldPrefix: gold
   - type: PresetIdCard
@@ -62,7 +62,7 @@
     - state: assigned
     - state: idsecurityofficer
   - type: Icon
-    state: idsecurityofficer
+    state: idsecurityofficer_icon
   - type: PresetIdCard
     job: SecurityOfficer
 
@@ -77,7 +77,7 @@
     - state: assigned
     - state: idstationengineer
   - type: Icon
-    state: idstationengineer
+    state: idstationengineer_icon
   - type: PresetIdCard
     job: StationEngineer
 
@@ -92,7 +92,7 @@
     - state: assigned
     - state: idmedicaldoctor
   - type: Icon
-    state: idmedicaldoctor
+    state: idmedicaldoctor_icon
   - type: PresetIdCard
     job: MedicalDoctor
 
@@ -107,7 +107,7 @@
     - state: assigned
     - state: idcargotechnician
   - type: Icon
-    state: idcargotechnician
+    state: idcargotechnician_icon
   - type: PresetIdCard
     job: CargoTechnician
 
@@ -122,7 +122,7 @@
     - state: assigned
     - state: idscientist
   - type: Icon
-    state: idscientist
+    state: idscientist_icon
   - type: PresetIdCard
     job: Scientist
 
@@ -137,7 +137,7 @@
     - state: assigned
     - state: idclown
   - type: Icon
-    state: idclown
+    state: idclown_icon
   - type: PresetIdCard
     job: Clown
 
@@ -152,7 +152,7 @@
     - state: assigned
     - state: idmime
   - type: Icon
-    state: idmime
+    state: idmime_icon
   - type: PresetIdCard
     job: Mime
 
@@ -167,7 +167,7 @@
     - state: assigned
     - state: idjanitor
   - type: Icon
-    state: idjanitor
+    state: idjanitor_icon
   - type: PresetIdCard
     job: Janitor
 
@@ -182,7 +182,7 @@
     - state: assigned
     - state: idbartender
   - type: Icon
-    state: idbartender
+    state: idbartender_icon
   - type: PresetIdCard
     job: Bartender
 
@@ -197,7 +197,7 @@
     - state: assigned
     - state: idcook
   - type: Icon
-    state: idcook
+    state: idcook_icon
   - type: PresetIdCard
     job: Chef
 
@@ -212,7 +212,7 @@
     - state: assigned
     - state: idheadofpersonnel
   - type: Icon
-    state: idheadofpersonnel
+    state: idheadofpersonnel_icon
   - type: Clothing
     HeldPrefix: silver
   - type: PresetIdCard
@@ -229,7 +229,7 @@
     - state: assigned
     - state: idchiefengineer
   - type: Icon
-    state: idchiefengineer
+    state: idchiefengineer_icon
   - type: Clothing
     HeldPrefix: silver
   - type: PresetIdCard
@@ -246,7 +246,7 @@
     - state: assigned
     - state: idchiefmedicalofficer
   - type: Icon
-    state: idchiefmedicalofficer
+    state: idchiefmedicalofficer_icon
   - type: Clothing
     HeldPrefix: silver
   - type: PresetIdCard
@@ -263,7 +263,7 @@
     - state: assigned
     - state: idresearchdirector
   - type: Icon
-    state: idresearchdirector
+    state: idresearchdirector_icon
   - type: Clothing
     HeldPrefix: silver
   - type: PresetIdCard
@@ -280,7 +280,7 @@
     - state: assigned
     - state: idheadofsecurity
   - type: Icon
-    state: idheadofsecurity
+    state: idheadofsecurity_icon
   - type: Clothing
     HeldPrefix: silver
   - type: PresetIdCard
@@ -297,7 +297,7 @@
     - state: assigned
     - state: idcentcom
   - type: Icon
-    state: idcentcom
+    state: idcentcom_icon
   - type: Clothing
     HeldPrefix: gold
   - type: IdCard

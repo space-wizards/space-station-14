@@ -4,13 +4,10 @@ using Content.Server.AI.Utility.Actions;
 using Content.Server.AI.Utility.Actions.Combat.Melee;
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.Utility.Considerations.Combat.Melee;
-using Content.Server.AI.Utils;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.EntitySystems.AI;
-using Content.Shared.GameObjects.Components.Body;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.IoC;
 

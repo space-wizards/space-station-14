@@ -1,6 +1,5 @@
 ﻿using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Temperature;
-using Content.Shared.Atmos;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Atmos

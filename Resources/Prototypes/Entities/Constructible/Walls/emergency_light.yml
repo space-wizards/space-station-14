@@ -10,7 +10,7 @@
     energy: 2.5
     offset: "0.5, 0"
     color: "#FF4020"
-    mask: /Textures/emergency_mask.png
+    mask: /Textures/Effects/LightMasks/emergency_mask.png
   - type: EmergencyLight
   - type: PowerReceiver
   - type: Battery

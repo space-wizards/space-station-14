@@ -19,8 +19,8 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             _lastUpdate += frameTime;
             if (_lastUpdate < UpdateDelay) return;
-            var atmoSystem = EntitySystemManager.GetEntitySystem<AtmosphereSystem>();
-            // creadth: everything exposable by atmo should be updated as well
+            var atmosSystem = EntitySystemManager.GetEntitySystem<AtmosphereSystem>();
+            // creadth: everything exposable by atmos should be updated as well
             foreach (var atmosExposedComponent in EntityManager.ComponentManager.EntityQuery<AtmosExposedComponent>())
             {
                 var tile = atmosExposedComponent.Owner.Transform.Coordinates.GetTileAtmosphere(_entityManager);

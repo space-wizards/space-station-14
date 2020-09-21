@@ -32,6 +32,7 @@
     offset: Center
   - type: Breakable
     deadThreshold: 50
+    resistances: metallicResistances
   - type: UserInterface
     interfaces:
     - key: enum.VendingMachineUiKey.Key

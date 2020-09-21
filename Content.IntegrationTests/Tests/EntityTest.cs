@@ -10,9 +10,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using Logger = Robust.Shared.Log.Logger;
 
 namespace Content.IntegrationTests.Tests
 {

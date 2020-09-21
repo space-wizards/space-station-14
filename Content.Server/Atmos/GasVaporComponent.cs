@@ -1,5 +1,7 @@
-﻿using Content.Shared.Physics;
-using Content.Server.Atmos.Reactions;
+﻿using Content.Server.Atmos.Reactions;
+using Content.Server.Interfaces;
+using Content.Shared.Atmos;
+using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
@@ -8,9 +10,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using Content.Server.Interfaces;
-using Content.Shared.Atmos;
-using Robust.Shared.Map;
 
 namespace Content.Server.Atmos
 {

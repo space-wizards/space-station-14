@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.MachineLinking;
+﻿using System.Collections.Generic;
+using Content.Server.GameObjects.Components.MachineLinking;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
@@ -10,7 +11,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
-using System.Collections.Generic;
 
 namespace Content.Server.GameObjects.EntitySystems
 {

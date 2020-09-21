@@ -1,4 +1,6 @@
-﻿using Content.Client.Interfaces;
+﻿using System;
+using System.Linq;
+using Content.Client.Interfaces;
 using Content.Client.Interfaces.Chat;
 using Content.Client.UserInterface;
 using Content.Shared.Input;
@@ -16,8 +18,6 @@ using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
-using System;
-using System.Linq;
 using static Content.Shared.SharedGameTicker;
 
 namespace Content.Client.State

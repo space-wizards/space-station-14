@@ -48,22 +48,22 @@ namespace Content.Server.GameObjects.Components.Chemistry
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             //Get target solution component
-            if (!Owner.TryGetComponent<SolutionComponent>(out var targetSolution))
+            if (!Owner.TryGetComponent<SolutionContainerComponent>(out var targetSolution))
                 return false;
 
             //Get attack solution component
             var attackEntity = eventArgs.Using;
-            if (!attackEntity.TryGetComponent<SolutionComponent>(out var attackSolution))
+            if (!attackEntity.TryGetComponent<SolutionContainerComponent>(out var attackSolution))
                 return false;
 
             // Calculate possibe solution transfer
-            if (targetSolution.CanPourIn && attackSolution.CanPourOut)
+            if (targetSolution.CanAddSolutions && attackSolution.CanRemoveSolutions)
             {
                 // default logic (beakers and glasses)
                 // transfer solution from object in hand to attacked
                 return TryTransfer(eventArgs, attackSolution, targetSolution);
             }
-            else if (targetSolution.CanPourOut && attackSolution.CanPourIn)
+            else if (targetSolution.CanRemoveSolutions && attackSolution.CanAddSolutions)
             {
                 // storage tanks and sinks logic
                 // drain solution from attacked object to object in hand
@@ -74,26 +74,38 @@ namespace Content.Server.GameObjects.Components.Chemistry
             return false;
         }
 
-        bool TryTransfer(InteractUsingEventArgs eventArgs, SolutionComponent fromSolution, SolutionComponent toSolution)
+        bool TryTransfer(InteractUsingEventArgs eventArgs, SolutionContainerComponent fromSolution, SolutionContainerComponent toSolution)
         {
             var fromEntity = fromSolution.Owner;
-            if (!fromEntity.TryGetComponent<PourableComponent>(out var fromPourable))
-                return false;
 
-            //Get transfer amount. May be smaller than _transferAmount if not enough room
-            var realTransferAmount = ReagentUnit.Min(fromPourable.TransferAmount, toSolution.EmptyVolume);
-            if (realTransferAmount <= 0) //Special message if container is full
+            if (!fromEntity.TryGetComponent<PourableComponent>(out var fromPourable))
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("Container is full"));
                 return false;
             }
 
+            //Get transfer amount. May be smaller than _transferAmount if not enough room
+            var realTransferAmount = ReagentUnit.Min(fromPourable.TransferAmount, toSolution.EmptyVolume);
+
+            if (realTransferAmount <= 0) // Special message if container is full
+            {
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("{0:theName} is full!", toSolution.Owner));
+                return false;
+            }
+            
             //Move units from attackSolution to targetSolution
             var removedSolution = fromSolution.SplitSolution(realTransferAmount);
-            if (!toSolution.TryAddSolution(removedSolution))
-                return false;
 
-            Owner.PopupMessage(eventArgs.User, Loc.GetString("Transferred {0}u", removedSolution.TotalVolume));
+            if (removedSolution.TotalVolume <= ReagentUnit.Zero)
+            {
+                return false;
+            }
+
+            if (!toSolution.TryAddSolution(removedSolution))
+            {
+                return false;
+            }
+
+            Owner.PopupMessage(eventArgs.User, Loc.GetString("You transfer {0}u to {1:theName}.", removedSolution.TotalVolume, toSolution.Owner));
 
             return true;
         }

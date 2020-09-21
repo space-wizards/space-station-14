@@ -22,6 +22,7 @@
       - SmallImpassable
   - type: Destructible
     maxHP: 500
+    resistances: metallicResistances
   - type: SnapGrid
     offset: Center
   - type: Anchorable

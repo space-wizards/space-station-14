@@ -1,4 +1,5 @@
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.Components.StationEvents;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
@@ -114,7 +115,8 @@ namespace Content.Server.StationEvents
 
         private void SpawnPulse(IMapGrid mapGrid)
         {
-            _entityManager.SpawnEntity("RadiationPulse", FindRandomGrid(mapGrid));
+            var pulse = _entityManager.SpawnEntity("RadiationPulse", FindRandomGrid(mapGrid));
+            pulse.GetComponent<RadiationPulseComponent>().DoPulse();
             _timeUntilPulse = _robustRandom.NextFloat() * (MaxPulseDelay - MinPulseDelay) + MinPulseDelay;
             _pulsesRemaining -= 1;
         }

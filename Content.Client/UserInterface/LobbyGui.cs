@@ -9,8 +9,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using System;
-using System.Collections.Generic;
 
 namespace Content.Client.UserInterface
 {
