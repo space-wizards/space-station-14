@@ -1,17 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Server.Atmos;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Temperature;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Atmos;
 using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Atmos
@@ -21,6 +29,7 @@ namespace Content.Server.GameObjects.Components.Atmos
     {
         [Dependency] private IEntityManager _entityManager = default!;
 
+        private bool _resisting = false;
         private readonly List<EntityUid> _collided = new List<EntityUid>();
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -32,10 +41,14 @@ namespace Content.Server.GameObjects.Components.Atmos
         [ViewVariables(VVAccess.ReadWrite)]
         public bool FireSpread { get; private set; } = false;
 
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool CanResistFire { get; private set; } = false;
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
             serializer.DataField(this, x => x.FireSpread, "fireSpread", false);
+            serializer.DataField(this, x => x.CanResistFire, "canResistFire", false);
         }
 
         public void Ignite()
@@ -79,22 +92,31 @@ namespace Content.Server.GameObjects.Components.Atmos
                 FireStacks = MathF.Min(0, FireStacks + 1);
             }
 
+            Owner.TryGetComponent(out ServerStatusEffectsComponent status);
+
             if (!OnFire)
+            {
+                status?.RemoveStatusEffect(StatusEffect.Fire);
                 return;
+            }
+
+            status?.ChangeStatusEffect(StatusEffect.Fire, "/Textures/Interface/StatusEffects/Fire/fire.png", null);
 
             if (FireStacks > 0)
             {
                 if(Owner.TryGetComponent(out TemperatureComponent temp))
                 {
-                    temp.ReceiveHeat(50 * FireStacks);
+                    temp.ReceiveHeat(200 * FireStacks);
                 }
 
-                if (Owner.TryGetComponent(out DamageableComponent damageable))
+                if (Owner.TryGetComponent(out IDamageableComponent damageable))
                 {
-                    damageable.ChangeDamage(DamageClass.Burn, (int)(FireStacks * 2.5f), false);
+                    // TODO ATMOS Fire resistance from armor
+                    var damage = Math.Min((int) (FireStacks * 2.5f), 10);
+                    damageable.ChangeDamage(DamageClass.Burn, damage, false);
                 }
 
-                AdjustFireStacks(-0.1f);
+                AdjustFireStacks(-0.1f * (_resisting ? 10f : 1f));
             }
             else
             {
@@ -162,7 +184,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         private void UpdateAppearance()
         {
-            if (!Owner.TryGetComponent(out AppearanceComponent appearanceComponent)) return;
+            if (Owner.Deleted || !Owner.TryGetComponent(out AppearanceComponent appearanceComponent)) return;
             appearanceComponent.SetData(FireVisuals.OnFire, OnFire);
             appearanceComponent.SetData(FireVisuals.FireStacks, FireStacks);
         }
@@ -171,6 +193,24 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             AdjustFireStacks(3);
             Ignite();
+        }
+
+        // This needs some improvements...
+        public void Resist()
+        {
+            if (!OnFire || !ActionBlockerSystem.CanInteract(Owner) || _resisting || !Owner.TryGetComponent(out StunnableComponent stunnable)) return;
+
+            _resisting = true;
+
+            Owner.PopupMessage(Loc.GetString("You stop, drop, and roll!"));
+            stunnable.Paralyze(2f);
+
+            Timer.Spawn(2000, () =>
+            {
+                _resisting = false;
+                FireStacks -= 2f;
+                UpdateAppearance();
+            });
         }
     }
 }

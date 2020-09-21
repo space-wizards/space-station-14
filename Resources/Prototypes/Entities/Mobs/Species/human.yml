@@ -135,6 +135,7 @@
   - type: AtmosExposed
   - type: Flammable
     fireSpread: true
+    canResistFire: true
   - type: Temperature
     heatDamageThreshold: 360
     coldDamageThreshold: 260
