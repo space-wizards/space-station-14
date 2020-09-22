@@ -21,7 +21,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
     public class PipeNode : Node, IGasMixtureHolder
     {
         [ViewVariables]
-        public PipeDirection PipeDirection => _pipeDirection;
+        public PipeDirection PipeDirection { get => _pipeDirection; set => SetPipeDirection(value); }
         private PipeDirection _pipeDirection;
 
         /// <summary>
@@ -150,6 +150,13 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
                 .Select(pipeNode => pipeNode.PipeVisualState)
                 .ToArray();
             _appearance?.SetData(PipeVisuals.VisualState, new PipeVisualStateSet(pipeVisualStates));
+        }
+
+        private void SetPipeDirection(PipeDirection pipeDirection)
+        {
+            _pipeDirection = pipeDirection;
+            RefreshNodeGroup();
+            UpdateAppearance();
         }
 
         private enum CardinalDirection
