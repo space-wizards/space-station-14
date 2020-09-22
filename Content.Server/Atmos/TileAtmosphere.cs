@@ -821,8 +821,14 @@ namespace Content.Server.Atmos
 
             if (tileRef == null) return;
 
-            _gridAtmosphereComponent.Owner.EntityManager.
-                EventBus.QueueEvent(EventSource.Local, new FireActEvent(Hotspot.Temperature, Hotspot.Volume));
+            foreach (var entity in tileRef?.GetEntitiesInTileFast(_gridTileLookupSystem))
+            {
+                foreach (var fireAct in entity.GetAllComponents<IFireAct>())
+                {
+
+                    fireAct.FireAct(Hotspot.Temperature, Hotspot.Volume);
+                }
+            }
         }
 
         private bool ConsiderSuperconductivity()
