@@ -29,10 +29,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 solution.Solution.SpillAt(Owner, "PuddleSmear", false);
             }
 
-            if (Owner.TryGetComponent(out FoodComponent food))
-            {
-                food.Trash();
-            }
+            Owner.Delete();
         }
     }
 }
