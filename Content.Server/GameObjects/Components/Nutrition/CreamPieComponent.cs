@@ -16,7 +16,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         public void PlaySound()
         {
             EntitySystem.Get<AudioSystem>()
-                .PlayFromEntity(AudioHelpers.GetRandomFileFromSoundCollection("desceration"), Owner,
+                .PlayFromEntity(AudioHelpers.GetRandomFileFromSoundCollection("desecration"), Owner,
                 AudioHelpers.WithVariation(0.125f));
         }
 
