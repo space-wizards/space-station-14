@@ -9,6 +9,7 @@ using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
@@ -19,6 +20,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI
     [UsedImplicitly]
     internal class AiSystem : EntitySystem
     {
+        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IDynamicTypeFactory _typeFactory = default!;
         [Dependency] private readonly IReflectionManager _reflectionManager = default!;
 
@@ -38,6 +40,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI
         public override void Initialize()
         {
             base.Initialize();
+            _configurationManager.RegisterCVar("ai.maxupdates", 64);
             SubscribeLocalEvent<SleepAiMessage>(HandleAiSleep);
 
             var processors = _reflectionManager.GetAllChildren<AiLogicProcessor>();
@@ -68,9 +71,16 @@ namespace Content.Server.GameObjects.EntitySystems.AI
 
             _queuedSleepMessages.Clear();
             var toRemove = new List<AiLogicProcessor>();
+            var maxUpdates = Math.Min(_awakeAi.Count, _configurationManager.GetCVar<int>("ai.maxupdates"));
+            var count = 0;
 
             foreach (var processor in _awakeAi)
             {
+                if (count >= maxUpdates)
+                {
+                    break;
+                }
+
                 if (processor.SelfEntity.Deleted)
                 {
                     toRemove.Add(processor);
@@ -78,6 +88,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI
                 }
                 
                 processor.Update(frameTime);
+                count++;
             }
 
             foreach (var processor in toRemove)
