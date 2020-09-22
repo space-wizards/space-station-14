@@ -112,6 +112,10 @@
       sprite: Mobs/Customization/human_hair.rsi
     - map: ["enum.Slots.MASK"]
     - map: ["enum.Slots.HEAD"]
+    - map: ["enum.CreamPiedVisualLayers.Pie"]
+      sprite: Effects/creampie.rsi
+      state: creampie_human
+      visible: false
   - type: Icon
     sprite: Mobs/Species/Human/parts.rsi
     state: full
@@ -159,6 +163,7 @@
     visuals:
     - type: RotationVisualizer
     - type: BuckleVisualizer
+    - type: CreamPiedVisualizer
   - type: CombatMode
   - type: Climbing
   - type: Cuffable
@@ -176,6 +181,7 @@
     proper: true
   - type: Pullable
   - type: DoAfter
+  - type: CreamPied
   - type: Strippable
   - type: UserInterface
     interfaces:

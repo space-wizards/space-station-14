@@ -626,6 +626,32 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         }
 
         /// <summary>
+        ///     Calls ThrowCollide on all components that implement the IThrowCollide interface
+        ///     on a thrown entity and the target entity it hit.
+        /// </summary>
+        public void ThrowCollideInteraction(IEntity user, IEntity thrown, IEntity target, EntityCoordinates location)
+        {
+            var collideMsg = new ThrowCollideMessage(user, thrown, target, location);
+            RaiseLocalEvent(collideMsg);
+            if (collideMsg.Handled)
+            {
+                return;
+            }
+
+            var eventArgs = new ThrowCollideEventArgs(user, thrown, target, location);
+
+            foreach (var comp in thrown.GetAllComponents<IThrowCollide>().ToArray())
+            {
+                comp.DoHit(eventArgs);
+            }
+
+            foreach (var comp in target.GetAllComponents<IThrowCollide>().ToArray())
+            {
+                comp.HitBy(eventArgs);
+            }
+        }
+
+        /// <summary>
         ///     Calls Equipped on all components that implement the IEquipped interface
         ///     on an entity that has been equipped.
         /// </summary>
