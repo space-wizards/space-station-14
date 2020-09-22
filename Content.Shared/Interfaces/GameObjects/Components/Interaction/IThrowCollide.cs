@@ -7,7 +7,8 @@ namespace Content.Shared.Interfaces.GameObjects.Components
 {
     public interface IThrowCollide
     {
-        void ThrowCollide(ThrowCollideEventArgs eventArgs);
+        void HitBy(ThrowCollideEventArgs eventArgs) {}
+        void DoHit(ThrowCollideEventArgs eventArgs) {}
     }
 
     public class ThrowCollideEventArgs : EventArgs
