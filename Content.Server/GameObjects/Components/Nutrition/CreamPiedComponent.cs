@@ -55,8 +55,8 @@ namespace Content.Server.GameObjects.Components.Nutrition
             if (eventArgs.Target != Owner || !eventArgs.Thrown.TryGetComponent(out CreamPieComponent creamPie) || CreamPied) return;
 
             CreamPied = true;
-            Owner.PopupMessage(Loc.GetString("You have been creamed by {0:theName}!", eventArgs.User));
-            Owner.PopupMessageOtherClients(Loc.GetString("{0:theName} has been creamed by {1:theName}!", Owner, eventArgs.User));
+            Owner.PopupMessage(Loc.GetString("You have been creamed by {0:theName}!", eventArgs.Thrown));
+            Owner.PopupMessageOtherClients(Loc.GetString("{0:theName} has been creamed by {1:theName}!", Owner, eventArgs.Thrown));
 
             if (Owner.TryGetComponent(out StunnableComponent stun))
             {
