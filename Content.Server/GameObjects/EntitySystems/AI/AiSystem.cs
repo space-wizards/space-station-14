@@ -13,6 +13,7 @@ using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.EntitySystems.AI
@@ -56,22 +57,33 @@ namespace Content.Server.GameObjects.EntitySystems.AI
         /// <inheritdoc />
         public override void Update(float frameTime)
         {
+            var cvarMaxUpdates = _configurationManager.GetCVar<int>("ai.maxupdates");
+            
             foreach (var message in _queuedSleepMessages)
             {
                 switch (message.Sleep)
                 {
                     case true:
+                        if (_awakeAi.Count == cvarMaxUpdates)
+                        {
+                            Logger.Warning($"Under AI limit again: {_awakeAi.Count - 1} / {cvarMaxUpdates}");
+                        }
                         _awakeAi.Remove(message.Processor);
                         break;
                     case false:
                         _awakeAi.Add(message.Processor);
+                        
+                        if (_awakeAi.Count > cvarMaxUpdates)
+                        {
+                            Logger.Warning($"AI limit exceeded: {_awakeAi.Count} / {cvarMaxUpdates}");
+                        }
                         break;
                 }
             }
 
             _queuedSleepMessages.Clear();
             var toRemove = new List<AiLogicProcessor>();
-            var maxUpdates = Math.Min(_awakeAi.Count, _configurationManager.GetCVar<int>("ai.maxupdates"));
+            var maxUpdates = Math.Min(_awakeAi.Count, cvarMaxUpdates);
             var count = 0;
 
             foreach (var processor in _awakeAi)
