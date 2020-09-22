@@ -4,6 +4,7 @@ using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
@@ -104,10 +105,14 @@ namespace Content.Server.StationEvents
 
             if (_timeUntilPulse <= 0.0f)
             {
+                var pauseManager = IoCManager.Resolve<IPauseManager>();
+                
                 // TODO: Probably rate-limit this for small grids (e.g. no more than 25% covered)
                 foreach (var grid in _mapManager.GetAllGrids())
                 {
-                    if (grid.IsDefaultGrid) continue;
+                    if (grid.IsDefaultGrid || pauseManager.IsGridPaused(grid.Index)) 
+                        continue;
+                    
                     SpawnPulse(grid);
                 }
             }
