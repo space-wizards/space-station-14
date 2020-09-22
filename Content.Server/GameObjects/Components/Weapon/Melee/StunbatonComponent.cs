@@ -285,9 +285,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
         public void DoHit(ThrowCollideEventArgs eventArgs)
         {
-            // Check we're the entity being thrown.
-            if (eventArgs.Thrown != Owner) return;
-
             if (!Activated || Cell == null || !Cell.TryUseCharge(EnergyPerUse) || !eventArgs.Target.TryGetComponent(out StunnableComponent stunnable))
                 return;
 
