@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Movement;
 using JetBrains.Annotations;
@@ -58,13 +59,15 @@ namespace Content.Server.GameObjects.EntitySystems.AI
         public override void Update(float frameTime)
         {
             var cvarMaxUpdates = _configurationManager.GetCVar<int>("ai.maxupdates");
-            
+            if (cvarMaxUpdates <= 0)
+                return;
+
             foreach (var message in _queuedSleepMessages)
             {
                 switch (message.Sleep)
                 {
                     case true:
-                        if (_awakeAi.Count == cvarMaxUpdates)
+                        if (_awakeAi.Count == cvarMaxUpdates && _awakeAi.Contains(message.Processor))
                         {
                             Logger.Warning($"Under AI limit again: {_awakeAi.Count - 1} / {cvarMaxUpdates}");
                         }
