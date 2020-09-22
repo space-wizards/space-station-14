@@ -1,6 +1,7 @@
 ﻿- type: entity
   id: ResearchAndDevelopmentServer
   name: "R&D server"
+  description: 'Thats a R&D server'
   components:
   - type: Sprite
     sprite: Constructible/Power/server.rsi
@@ -25,15 +26,15 @@
   # We should make this abstract once there are actual point sources.
   components:
   - type: Sprite
-    sprite: Constructible/Power/tdopler.rsi
+    sprite: Constructible/Power/rndpointsource.rsi
     layers:
-    - state: tdoppler-off
-    - state: tdoppler
+    - state: rndpointsource-off
+    - state: rndpointsource
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
   - type: Icon
-    sprite: Constructible/Power/tdopler.rsi
-    state: tdoppler
+    sprite: Constructible/Power/rndpointsource.rsi
+    state: rndpointsource-icon
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable
@@ -61,4 +62,4 @@
   - type: Anchorable
   - type: Physics
     mass: 25
-    Anchored: true
+    anchored: true

@@ -1,6 +1,6 @@
 ﻿#nullable enable
-using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
@@ -17,6 +17,7 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -30,13 +31,12 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     internal class MoverSystem : SharedMoverSystem
     {
-#pragma warning disable 649
         [Dependency] private readonly IPauseManager _pauseManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
-#pragma warning restore 649
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private AudioSystem _audioSystem = default!;
 
@@ -58,23 +58,13 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public override void Update(float frameTime)
         {
-            foreach (var entity in RelevantEntities)
+            foreach (var (moverComponent, collidableComponent) in EntityManager.ComponentManager.EntityQuery<IMoverComponent, ICollidableComponent>())
             {
+                var entity = moverComponent.Owner;
                 if (_pauseManager.IsEntityPaused(entity))
-                {
                     continue;
-                }
 
-                var mover = entity.GetComponent<IMoverComponent>();
-                var physics = entity.GetComponent<IPhysicsComponent>();
-                if (entity.TryGetComponent<ICollidableComponent>(out var collider))
-                {
-                    UpdateKinematics(entity.Transform, mover, physics, collider);
-                }
-                else
-                {
-                    UpdateKinematics(entity.Transform, mover, physics);
-                }
+                UpdateKinematics(entity.Transform, moverComponent, collidableComponent);
             }
         }
 
@@ -93,7 +83,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 ev.Entity.RemoveComponent<PlayerInputMoverComponent>();
             }
 
-            if (ev.Entity.TryGetComponent(out IPhysicsComponent physics) &&
+            if (ev.Entity.TryGetComponent(out ICollidableComponent? physics) &&
                 physics.TryGetController(out MoverController controller))
             {
                 controller.StopMoving();
@@ -104,14 +94,19 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             var transform = mover.Owner.Transform;
             // Handle footsteps.
-            if (_mapManager.GridExists(mover.LastPosition.GridID))
+            if (_mapManager.GridExists(mover.LastPosition.GetGridId(EntityManager)))
             {
                 // Can happen when teleporting between grids.
-                var distance = transform.GridPosition.Distance(_mapManager, mover.LastPosition);
+                if (!transform.Coordinates.TryDistance(_entityManager, mover.LastPosition, out var distance))
+                {
+                    mover.LastPosition = transform.Coordinates;
+                    return;
+                }
+
                 mover.StepSoundDistance += distance;
             }
 
-            mover.LastPosition = transform.GridPosition;
+            mover.LastPosition = transform.Coordinates;
             float distanceNeeded;
             if (mover.Sprinting)
             {
@@ -139,15 +134,15 @@ namespace Content.Server.GameObjects.EntitySystems
                 }
                 else
                 {
-                    PlayFootstepSound(transform.GridPosition);
+                    PlayFootstepSound(transform.Coordinates);
                 }
             }
         }
 
-        private void PlayFootstepSound(GridCoordinates coordinates)
+        private void PlayFootstepSound(EntityCoordinates coordinates)
         {
             // Step one: figure out sound collection prototype.
-            var grid = _mapManager.GetGrid(coordinates.GridID);
+            var grid = _mapManager.GetGrid(coordinates.GetGridId(EntityManager));
             var tile = grid.GetTileRef(coordinates);
 
             // If the coordinates have a catwalk, it's always catwalk.

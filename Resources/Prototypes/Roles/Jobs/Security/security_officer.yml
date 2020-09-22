@@ -16,8 +16,8 @@
   id: SecurityOfficerGear
   equipment:
     innerclothing: UniformSec
-    backpack: SecPack
+    backpack: SecPackFilled
     shoes: ShoesJackboots
     eyes: SecGlasses
-    outerclothing: OuterclothingArmorVestAlt
+    outerclothing: OuterclothingArmorVest
     idcard: SecurityPDA

@@ -1,7 +1,6 @@
-using System.Threading.Tasks;
 using Content.Client.GameObjects.Components.Instruments;
 using Content.Client.UserInterface.Stylesheets;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Client.Utility;
 using Robust.Client.Audio.Midi;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.UserInterface;
@@ -10,7 +9,6 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
@@ -21,10 +19,8 @@ namespace Content.Client.Instruments
 {
     public class InstrumentMenu : SS14Window
     {
-#pragma warning disable 649
-        [Dependency] private IMidiManager _midiManager;
-        [Dependency] private IFileDialogManager _fileDialogManager;
-#pragma warning restore 649
+        [Dependency] private readonly IMidiManager _midiManager = default!;
+        [Dependency] private readonly IFileDialogManager _fileDialogManager = default!;
 
         private InstrumentBoundUserInterface _owner;
         private Button midiLoopButton;
@@ -200,9 +196,7 @@ namespace Content.Client.Instruments
                                         || conMan.Owner != localPlayer.ControlledEntity))) return;
 
             // We check that we're in range unobstructed just in case.
-            if(!EntitySystem.Get<SharedInteractionSystem>()
-                    .InRangeUnobstructed(localPlayer.ControlledEntity.Transform.MapPosition,
-                        instrumentEnt.Transform.MapPosition, ignoredEnt:instrumentEnt)) return;
+            if (!localPlayer.InRangeUnobstructed(instrumentEnt)) return;
 
             if (!_midiManager.IsMidiFile(filename))
             {

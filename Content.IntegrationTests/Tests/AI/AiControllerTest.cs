@@ -1,23 +1,19 @@
-﻿using NUnit.Framework;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Movement;
-using Content.Shared.VendingMachines;
+using Content.Shared.Utility;
+using NUnit.Framework;
 using Robust.Server.AI;
-using Robust.Shared.Log;
-using Robust.Server.Interfaces.Maps;
-using Robust.Server.Interfaces.Timing;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
-using Robust.Shared.Maths;
+using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
-namespace Content.IntegrationTests.Tests
+namespace Content.IntegrationTests.Tests.AI
 {
     [TestFixture]
     [TestOf(typeof(AiControllerTest))]
@@ -47,14 +43,14 @@ namespace Content.IntegrationTests.Tests
                     Assert.That(attrib != null, $"No AiLogicProcessorAttribute found on {processor.Name}");
                     processorNames.Add(attrib.SerializeName);
                 }
-                
+
                 foreach (var entity in prototypeManager.EnumeratePrototypes<EntityPrototype>())
                 {
                     var comps = entity.Components;
 
                     if (!comps.ContainsKey("AiController")) continue;
 
-                    var aiEntity = entityManager.SpawnEntity(entity.ID, new GridCoordinates(new Vector2(0, 0), grid.Index));
+                    var aiEntity = entityManager.SpawnEntity(entity.ID, grid.ToCoordinates());
                     var aiController = aiEntity.GetComponent<AiControllerComponent>();
                     Assert.That(processorNames.Contains(aiController.LogicName), $"Could not find valid processor named {aiController.LogicName} on entity {entity.ID}");
                 }
@@ -62,6 +58,5 @@ namespace Content.IntegrationTests.Tests
 
             await server.WaitIdleAsync();
         }
-
     }
 }

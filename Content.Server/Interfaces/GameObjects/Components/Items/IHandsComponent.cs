@@ -1,6 +1,8 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components;
+using System.Diagnostics.CodeAnalysis;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.Components.Container;
@@ -13,9 +15,19 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
     public interface IHandsComponent : ISharedHandsComponent
     {
         /// <summary>
+        ///     Invoked when the hand contents changes or when a hand is added/removed.
+        /// </summary>
+        event Action? OnItemChanged;
+
+        /// <summary>
+        ///     The hands in this component.
+        /// </summary>
+        IEnumerable<string> Hands { get; }
+
+        /// <summary>
         ///     The hand name of the currently active hand.
         /// </summary>
-        string ActiveHand { get; set; }
+        string? ActiveHand { get; set; }
 
         /// <summary>
         ///     Enumerates over every held item.
@@ -27,19 +39,28 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// </summary>
         /// <param name="handName">The name of the hand to get.</param>
         /// <returns>The item in the held, null if no item is held</returns>
-        ItemComponent GetItem(string handName);
+        ItemComponent? GetItem(string handName);
+
+        /// <summary>
+        ///     Attempts to get an item in a hand.
+        /// </summary>
+        /// <param name="handName">The name of the hand to get.</param>
+        /// <param name="item">The item in the held, null if no item is held</param>
+        /// <returns>Whether it was holding an item</returns>
+        bool TryGetItem(string handName, [MaybeNullWhen(false)] out ItemComponent item);
 
         /// <summary>
         /// Gets item held by the current active hand
         /// </summary>
-        ItemComponent GetActiveHand { get; }
+        ItemComponent? GetActiveHand { get; }
 
         /// <summary>
         ///     Puts an item into any empty hand, preferring the active hand.
         /// </summary>
         /// <param name="item">The item to put in a hand.</param>
+        /// <param name="mobCheck">Whether to perform an ActionBlocker check to the entity.</param>
         /// <returns>True if the item was inserted, false otherwise.</returns>
-        bool PutInHand(ItemComponent item);
+        bool PutInHand(ItemComponent item, bool mobCheck = true);
 
         /// <summary>
         ///     Puts an item into a specific hand.
@@ -48,24 +69,27 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <param name="index">The name of the hand to put the item into.</param>
         /// <param name="fallback">
         ///     If true and the provided hand is full, the method will fall back to <see cref="PutInHand(ItemComponent)" />
+        /// <param name="mobCheck">Whether to perform an ActionBlocker check to the entity.</param>
         /// </param>
         /// <returns>True if the item was inserted into a hand, false otherwise.</returns>
-        bool PutInHand(ItemComponent item, string index, bool fallback=true);
+        bool PutInHand(ItemComponent item, string index, bool fallback=true, bool mobCheck = true);
 
         /// <summary>
         ///     Checks to see if an item can be put in any hand.
         /// </summary>
         /// <param name="item">The item to check for.</param>
+        /// <param name="mobCheck">Whether to perform an ActionBlocker check to the entity.</param>
         /// <returns>True if the item can be inserted, false otherwise.</returns>
-        bool CanPutInHand(ItemComponent item);
+        bool CanPutInHand(ItemComponent item, bool mobCheck = true);
 
         /// <summary>
         ///     Checks to see if an item can be put in the specified hand.
         /// </summary>
         /// <param name="item">The item to check for.</param>
         /// <param name="index">The name for the hand to check for.</param>
+        /// <param name="mobCheck">Whether to perform an ActionBlocker check to the entity.</param>
         /// <returns>True if the item can be inserted, false otherwise.</returns>
-        bool CanPutInHand(ItemComponent item, string index);
+        bool CanPutInHand(ItemComponent item, string index, bool mobCheck = true);
 
         /// <summary>
         ///     Finds the hand slot holding the specified entity, if any.
@@ -78,21 +102,21 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <returns>
         ///     true if the entity is held, false otherwise
         /// </returns>
-        bool TryHand(IEntity entity, out string handName);
+        bool TryHand(IEntity entity, [MaybeNullWhen(false)] out string handName);
 
         /// <summary>
         ///     Drops the item contained in the slot to the same position as our entity.
         /// </summary>
         /// <param name="slot">The slot of which to drop to drop the item.</param>
-        /// <param name="doMobChecks">Whether to check the <see cref="ActionBlockerSystem.CanDrop()"/> for the mob or not.</param>
+        /// <param name="mobChecks">Whether to check the <see cref="ActionBlockerSystem.CanDrop()"/> for the mob or not.</param>
         /// <returns>True on success, false if something blocked the drop.</returns>
-        bool Drop(string slot, bool doMobChecks = true);
+        bool Drop(string slot, bool mobChecks = true);
 
         /// <summary>
         ///     Drops an item held by one of our hand slots to the same position as our owning entity.
         /// </summary>
         /// <param name="entity">The item to drop.</param>
-        /// <param name="doMobChecks">Whether to check the <see cref="ActionBlockerSystem.CanDrop()"/> for the mob or not.</param>
+        /// <param name="mobChecks">Whether to check the <see cref="ActionBlockerSystem.CanDrop()"/> for the mob or not.</param>
         /// <returns>True on success, false if something blocked the drop.</returns>
         /// <exception cref="ArgumentNullException">
         ///     Thrown if <see cref="entity"/> is null.
@@ -100,7 +124,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <exception cref="ArgumentException">
         ///     Thrown if <see cref="entity"/> is not actually held in any hand.
         /// </exception>
-        bool Drop(IEntity entity, bool doMobChecks = true);
+        bool Drop(IEntity entity, bool mobChecks = true);
 
         /// <summary>
         ///     Drops the item in a slot.
@@ -109,7 +133,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <param name="coords"></param>
         /// <param name="doMobChecks">Whether to check the <see cref="ActionBlockerSystem.CanDrop()"/> for the mob or not.</param>
         /// <returns>True if an item was dropped, false otherwise.</returns>
-        bool Drop(string slot, GridCoordinates coords, bool doMobChecks = true);
+        bool Drop(string slot, EntityCoordinates coords, bool doMobChecks = true);
 
         /// <summary>
         ///     Drop the specified entity in our hands to a certain position.
@@ -131,7 +155,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <exception cref="ArgumentException">
         ///     Thrown if <see cref="entity"/> is not actually held in any hand.
         /// </exception>
-        bool Drop(IEntity entity, GridCoordinates coords, bool doMobChecks = true);
+        bool Drop(IEntity entity, EntityCoordinates coords, bool doMobChecks = true);
 
         /// <summary>
         ///     Drop the item contained in a slot into another container.
@@ -171,10 +195,11 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         ///     Checks whether the item in the specified hand can be dropped.
         /// </summary>
         /// <param name="name">The hand to check for.</param>
+        /// <param name="mobCheck">Whether to perform an ActionBlocker check to the entity.</param>
         /// <returns>
         ///     True if the item can be dropped, false if the hand is empty or the item in the hand cannot be dropped.
         /// </returns>
-        bool CanDrop(string name);
+        bool CanDrop(string name, bool mobCheck = true);
 
         /// <summary>
         ///     Adds a new hand to this hands component.

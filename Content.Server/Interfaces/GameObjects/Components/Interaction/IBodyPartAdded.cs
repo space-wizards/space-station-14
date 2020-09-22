@@ -1,5 +1,5 @@
 ﻿using System;
-using Content.Server.BodySystem;
+using Content.Server.Body;
 
 namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 {
@@ -14,13 +14,13 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 
     public class BodyPartAddedEventArgs : EventArgs
     {
-        public BodyPartAddedEventArgs(BodyPart part, string slotName)
+        public BodyPartAddedEventArgs(IBodyPart part, string slotName)
         {
             Part = part;
             SlotName = slotName;
         }
 
-        public BodyPart Part { get; }
+        public IBodyPart Part { get; }
 
         public string SlotName { get; }
     }
@@ -36,13 +36,13 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 
     public class BodyPartRemovedEventArgs : EventArgs
     {
-        public BodyPartRemovedEventArgs(BodyPart part, string slotName)
+        public BodyPartRemovedEventArgs(IBodyPart part, string slotName)
         {
             Part = part;
             SlotName = slotName;
         }
 
-        public BodyPart Part { get; }
+        public IBodyPart Part { get; }
 
         public string SlotName { get; }
     }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects;
+using Content.Shared.Damage;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Projectiles;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
@@ -35,6 +36,8 @@ namespace Content.Server.GameObjects.Components.Projectiles
         private string _soundHit;
         private string _soundHitSpecies;
 
+        private bool _damagedEntity;
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -63,6 +66,11 @@ namespace Content.Server.GameObjects.Components.Projectiles
         /// <param name="entity"></param>
         void ICollideBehavior.CollideWith(IEntity entity)
         {
+            if (_damagedEntity)
+            {
+                return;
+            }
+
             // This is so entities that shouldn't get a collision are ignored.
             if (entity.TryGetComponent(out ICollidableComponent collidable) && collidable.Hard == false)
             {
@@ -70,30 +78,34 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 return;
             }
             else
+            {
                 _deleteOnCollide = true;
-
-            if (_soundHitSpecies != null && entity.HasComponent<SpeciesComponent>())
-            {
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHitSpecies, entity.Transform.GridPosition);
-            } else if (_soundHit != null)
-            {
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHit, entity.Transform.GridPosition);
             }
 
-            if (entity.TryGetComponent(out DamageableComponent damage))
+            if (_soundHitSpecies != null && entity.HasComponent<IDamageableComponent>())
+            {
+                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHitSpecies, entity.Transform.Coordinates);
+            } else if (_soundHit != null)
+            {
+                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHit, entity.Transform.Coordinates);
+            }
+
+            if (entity.TryGetComponent(out IDamageableComponent damage))
             {
                 Owner.EntityManager.TryGetEntity(_shooter, out var shooter);
 
                 foreach (var (damageType, amount) in _damages)
                 {
-                    damage.TakeDamage(damageType, amount, Owner, shooter);
+                    damage.ChangeDamage(damageType, amount, false, shooter);
                 }
+
+                _damagedEntity = true;
             }
 
             if (!entity.Deleted && entity.TryGetComponent(out CameraRecoilComponent recoilComponent)
-                                && Owner.TryGetComponent(out IPhysicsComponent physicsComponent))
+                                && Owner.TryGetComponent(out ICollidableComponent collidableComponent))
             {
-                var direction = physicsComponent.LinearVelocity.Normalized;
+                var direction = collidableComponent.LinearVelocity.Normalized;
                 recoilComponent.Kick(direction);
             }
         }

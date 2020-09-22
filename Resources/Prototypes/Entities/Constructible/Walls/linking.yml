@@ -1,0 +1,37 @@
+- type: entity
+  id: SignalSwitch
+  name: "signal switch"
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: Sprite
+    sprite: Constructible/Linking/switch.rsi
+    state: on
+  - type: Icon
+    sprite: Constructible/Linking/switch.rsi
+    state: on
+  - type: SignalSwitch
+  - type: SignalTransmitter
+  placement:
+    snap:
+    - Wallmount
+
+- type: entity
+  id: SignalButton
+  name: "signal button"
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: Sprite
+    sprite: Constructible/Linking/switch.rsi
+    state: dead
+  - type: Icon
+    sprite: Constructible/Linking/switch.rsi
+    state: dead
+  - type: SignalButton
+  - type: SignalTransmitter
+  placement:
+    snap:
+    - Wallmount

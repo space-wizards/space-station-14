@@ -2,14 +2,13 @@
 using System.Collections.Immutable;
 using System.Linq;
 using Content.Client.GameObjects.Components;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Client.Utility;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Interfaces.GameObjects;
-using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Interfaces.Input;
-using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Interfaces.State;
+using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
@@ -29,17 +28,15 @@ namespace Content.Client.State
     // Instantiated dynamically through the StateManager, Dependencies will be resolved.
     public partial class GameScreenBase : Robust.Client.State.State
     {
-#pragma warning disable 649
-        [Dependency] protected readonly IClientEntityManager EntityManager;
-        [Dependency] protected readonly IInputManager InputManager;
-        [Dependency] protected readonly IPlayerManager PlayerManager;
-        [Dependency] protected readonly IEyeManager EyeManager;
-        [Dependency] protected readonly IEntitySystemManager EntitySystemManager;
-        [Dependency] protected readonly IGameTiming Timing;
-        [Dependency] protected readonly IMapManager MapManager;
-        [Dependency] protected readonly IUserInterfaceManager UserInterfaceManager;
-        [Dependency] protected readonly IConfigurationManager ConfigurationManager;
-#pragma warning restore 649
+        [Dependency] protected readonly IClientEntityManager EntityManager = default!;
+        [Dependency] protected readonly IInputManager InputManager = default!;
+        [Dependency] protected readonly IPlayerManager PlayerManager = default!;
+        [Dependency] protected readonly IEyeManager EyeManager = default!;
+        [Dependency] protected readonly IEntitySystemManager EntitySystemManager = default!;
+        [Dependency] protected readonly IGameTiming Timing = default!;
+        [Dependency] protected readonly IMapManager MapManager = default!;
+        [Dependency] protected readonly IUserInterfaceManager UserInterfaceManager = default!;
+        [Dependency] protected readonly IConfigurationManager ConfigurationManager = default!;
 
         private IEntity _lastHoveredEntity;
 
@@ -70,13 +67,7 @@ namespace Content.Client.State
             var inRange = false;
             if (localPlayer.ControlledEntity != null && entityToClick != null)
             {
-                var playerPos = localPlayer.ControlledEntity.Transform.MapPosition;
-                var entityPos = entityToClick.Transform.MapPosition;
-                inRange = EntitySystemManager.GetEntitySystem<SharedInteractionSystem>()
-                    .InRangeUnobstructed(playerPos, entityPos,
-                        predicate: entity =>
-                            entity == localPlayer.ControlledEntity || entity == entityToClick,
-                        ignoreInsideBlocker: true);
+                inRange = localPlayer.InRangeUnobstructed(entityToClick, ignoreInsideBlocker: true);
             }
 
             InteractionOutlineComponent outline;
@@ -119,9 +110,9 @@ namespace Content.Client.State
             return entitiesUnderPosition.Count > 0 ? entitiesUnderPosition[0] : null;
         }
 
-        public IList<IEntity> GetEntitiesUnderPosition(GridCoordinates coordinates)
+        public IList<IEntity> GetEntitiesUnderPosition(EntityCoordinates coordinates)
         {
-            return GetEntitiesUnderPosition(coordinates.ToMap(MapManager));
+            return GetEntitiesUnderPosition(coordinates.ToMap(EntityManager));
         }
 
         public IList<IEntity> GetEntitiesUnderPosition(MapCoordinates coordinates)
@@ -160,7 +151,7 @@ namespace Content.Client.State
         /// <param name="stateManager">state manager to use to get the current game screen</param>
         /// <param name="coordinates">coordinates to check</param>
         /// <returns>the entities under the position, empty list if none found</returns>
-        public static IList<IEntity> GetEntitiesUnderPosition(IStateManager stateManager, GridCoordinates coordinates)
+        public static IList<IEntity> GetEntitiesUnderPosition(IStateManager stateManager, EntityCoordinates coordinates)
         {
             if (stateManager.CurrentState is GameScreenBase gameScreenBase)
             {
@@ -190,9 +181,9 @@ namespace Content.Client.State
                 }
                 */
 
-                var transx = x.clicked.Transform;
-                var transy = y.clicked.Transform;
-                val = transx.GridPosition.Y.CompareTo(transy.GridPosition.Y);
+                var transX = x.clicked.Transform;
+                var transY = y.clicked.Transform;
+                val = transX.Coordinates.Y.CompareTo(transY.Coordinates.Y);
                 if (val != 0)
                 {
                     return val;
@@ -227,7 +218,10 @@ namespace Content.Client.State
 
             // client side command handlers will always be sent the local player session.
             var session = PlayerManager.LocalPlayer.Session;
-            inputSys.HandleInputCommand(session, func, message);
+            if (inputSys.HandleInputCommand(session, func, message))
+            {
+                args.Handle();
+            }
         }
     }
 }

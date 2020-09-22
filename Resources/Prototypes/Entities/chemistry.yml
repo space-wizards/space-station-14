@@ -4,5 +4,5 @@
   name: "reagent item"
   abstract: true
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 5

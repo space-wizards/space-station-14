@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Shared.Antags;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Preferences
@@ -14,7 +11,7 @@ namespace Content.Shared.Preferences
         private readonly Dictionary<string, JobPriority> _jobPriorities;
         private readonly List<string> _antagPreferences;
         public static int MinimumAge = 18;
-        public static int MaximumAge = 90;
+        public static int MaximumAge = 120;
 
         private HumanoidCharacterProfile(
             string name,
@@ -72,7 +69,7 @@ namespace Content.Shared.Preferences
 
         public HumanoidCharacterProfile WithAge(int age)
         {
-            return new HumanoidCharacterProfile(Name, age, Sex, Appearance, _jobPriorities, PreferenceUnavailable, _antagPreferences);
+            return new HumanoidCharacterProfile(Name, Math.Clamp(age, MinimumAge, MaximumAge), Sex, Appearance, _jobPriorities, PreferenceUnavailable, _antagPreferences);
         }
 
         public HumanoidCharacterProfile WithSex(Sex sex)

@@ -1,5 +1,6 @@
 ﻿using Content.Server.GameObjects.Components.Stack;
-using Content.Server.Utility;
+using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
@@ -7,17 +8,14 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using Content.Shared.Interfaces.GameObjects.Components;
 
 namespace Content.Server.GameObjects.Components.Power
 {
     [RegisterComponent]
     internal class WirePlacerComponent : Component, IAfterInteract
     {
-#pragma warning disable 649
-        [Dependency] private readonly IServerEntityManager _entityManager;
-        [Dependency] private readonly IMapManager _mapManager;
-#pragma warning restore 649
+        [Dependency] private readonly IServerEntityManager _entityManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         /// <inheritdoc />
         public override string Name => "WirePlacer";
@@ -38,8 +36,8 @@ namespace Content.Server.GameObjects.Components.Power
         /// <inheritdoc />
         public void AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
-            if(!_mapManager.TryGetGrid(eventArgs.ClickLocation.GridID, out var grid))
+            if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true)) return;
+            if(!_mapManager.TryGetGrid(eventArgs.ClickLocation.GetGridId(_entityManager), out var grid))
                 return;
             var snapPos = grid.SnapGridCellFor(eventArgs.ClickLocation, SnapGridOffset.Center);
             var snapCell = grid.GetSnapGridCell(snapPos, SnapGridOffset.Center);

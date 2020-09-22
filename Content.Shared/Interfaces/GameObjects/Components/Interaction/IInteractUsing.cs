@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -13,15 +14,21 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     public interface IInteractUsing
     {
         /// <summary>
+        /// The interaction priority. Higher numbers get called first.
+        /// </summary>
+        /// <value>Priority defaults to 0</value>
+        int Priority => 0;
+
+        /// <summary>
         /// Called when using one object on another when user is in range of the target entity.
         /// </summary>
-        bool InteractUsing(InteractUsingEventArgs eventArgs);
+        Task<bool> InteractUsing(InteractUsingEventArgs eventArgs);
     }
 
     public class InteractUsingEventArgs : EventArgs, ITargetedInteractEventArgs
     {
         public IEntity User { get; set; }
-        public GridCoordinates ClickLocation { get; set; }
+        public EntityCoordinates ClickLocation { get; set; }
         public IEntity Using { get; set; }
         public IEntity Target { get; set; }
     }
@@ -55,9 +62,9 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// <summary>
         ///     The original location that was clicked by the user.
         /// </summary>
-        public GridCoordinates ClickLocation { get; }
+        public EntityCoordinates ClickLocation { get; }
 
-        public InteractUsingMessage(IEntity user, IEntity itemInHand, IEntity attacked, GridCoordinates clickLocation)
+        public InteractUsingMessage(IEntity user, IEntity itemInHand, IEntity attacked, EntityCoordinates clickLocation)
         {
             User = user;
             ItemInHand = itemInHand;

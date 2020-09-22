@@ -1,0 +1,548 @@
+# Bounds Guide
+#1D2L3U4R
+
+- type: entity
+  save: false
+  name: monkey
+  id: MonkeyMob_Content
+  description: A description.
+  drawdepth: Mobs
+  suffix: AI
+  components:
+  - type: AiController
+    logic: Civilian
+  - type: AiFactionTag
+    factions:
+    - SimpleNeutral
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 4
+    baseSprintSpeed : 4
+  - type: InteractionOutline
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: monkey
+      sprite: Mobs/Animals/monkey.rsi
+  - type: Icon
+    sprite: Mobs/Animals/monkey.rsi
+    state: monkey
+  - type: Clickable
+  - type: Physics
+    mass: 50
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.30,-0.25,0.40,0.25"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+  - type: Damageable
+    criticalThreshold: 50
+    deadThreshold: 100
+  - type: MobStateManager
+  - type: HeatResistance
+  - type: CombatMode
+  - type: Teleportable
+  - type: Stunnable
+  - type: UnarmedCombat
+    range: 1.5
+    arcwidth: 0
+    arc: bite
+    damage: 50
+  - type: MovementIgnoreGravity
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: monkey
+      dead: dead
+  - type: Pullable
+
+- type: entity
+  save: false
+  name: gorilla
+  parent: MonkeyMob_Content
+  id: GorillaMob_Content
+  description:
+  drawdepth: Mobs
+  suffix: AI
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: crawling
+      sprite: Mobs/Animals/gorilla.rsi
+  - type: Icon
+    sprite: Mobs/Animals/gorilla.rsi
+    state: icon
+  - type: Physics
+    mass: 90
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.90,-0.50,0.05,0.50"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: crawling
+      dead: dead
+
+- type: entity
+  save: false
+  name: chicken
+  parent: MonkeyMob_Content
+  id: ChickenMob_Content
+  description:
+  drawdepth: Mobs
+  suffix: AI
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: chicken-0
+      sprite: Mobs/Animals/chicken.rsi
+  - type: Icon
+    sprite: Mobs/Animals/chicken.rsi
+    state: icon-0
+  - type: Physics
+    mass: 20
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.45,-0.20,0.10,0.20"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: chicken-0
+      dead: dead-0
+
+- type: entity
+  save: false
+  name: butterfly
+  parent: MonkeyMob_Content
+  id: ButterflyMob_Content
+  description:
+  drawdepth: Mobs
+  suffix: AI
+  components:
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 6
+    baseSprintSpeed : 6
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: butterfly
+      sprite: Mobs/Animals/butterfly.rsi
+  - type: Icon
+    sprite: Mobs/Animals/butterfly.rsi
+    state: butterfly
+  - type: Physics
+    mass: 5
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.20,-0.20,0.20,0.20"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+  - type: RandomSpriteColor
+    state: butterfly
+    colors:
+      blue: "#1861d5"
+      red: "#951710"
+      pink: "#d5188d"
+      brown: "#a05212"
+      green: "#0e7f1b"
+      cyan: "#18a2d5"
+      yellow: "#d58c18"
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: butterfly
+      dead: dead
+
+- type: entity
+  save: false
+  name: bat
+  parent: MonkeyMob_Content
+  id: BatMob_Content
+  description:
+  drawdepth: Mobs
+  suffix: AI
+  components:
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 6
+    baseSprintSpeed : 6
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: bat
+      sprite: Mobs/Animals/bat.rsi
+  - type: Icon
+    sprite: Mobs/Animals/bat.rsi
+    state: bat
+  - type: Physics
+    mass: 5
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.20,-0.20,0.20,0.20"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: bat
+      dead: dead
+
+- type: entity
+  save: false
+  name: bee
+  parent: MonkeyMob_Content
+  id: BeeMob_Content
+  description:
+  drawdepth: Mobs
+  suffix: AI
+  components:
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 7
+    baseSprintSpeed : 7
+  - type: AsteroidRock
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: 0
+      sprite: Mobs/Animals/bee.rsi
+  - type: Icon
+    sprite: Objects/Fun/toys.rsi
+    state: plushie_h
+  - type: Physics
+    mass: 5
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.10,-0.10,0.10,0.10"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: 0
+      dead: dead
+
+- type: entity
+  save: false
+  name: goat
+  parent: MonkeyMob_Content
+  id: GoatMob_Content
+  description:
+  drawdepth: Mobs
+  suffix: AI
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: goat
+      sprite: Mobs/Animals/goat.rsi
+  - type: Icon
+    sprite: Mobs/Animals/goat.rsi
+    state: goat
+  - type: Physics
+    mass: 20
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.60,-0.50,0.05,0.50"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: goat
+      dead: dead
+
+# Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin
+- type: entity
+  save: false
+  name: goose
+  parent: MonkeyMob_Content
+  id: GooseMob_Content
+  description:
+  drawdepth: Mobs
+  suffix: AI
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: goose
+      sprite: Mobs/Animals/goose.rsi
+  - type: Icon
+    sprite: Mobs/Animals/goose.rsi
+    state: goose
+  - type: Physics
+    mass: 20
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.45,-0.35,0.45,0.35"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: goose
+      dead: dead
+
+# Would be cool to have some functionality for the parrot to be able to sit on stuff
+- type: entity
+  save: false
+  name: parrot
+  parent: MonkeyMob_Content
+  id: ParrotMob_Content
+  description:
+  drawdepth: Mobs
+  suffix: AI
+  components:
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 6
+    baseSprintSpeed : 6
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: parrot
+      sprite: Mobs/Animals/parrot.rsi
+  - type: Icon
+    sprite: Mobs/Animals/parrot.rsi
+    state: icon
+  - type: Physics
+    mass: 20
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.30,-0.35,0.35,0.35"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: parrot
+      dead: dead
+
+- type: entity
+  save: false
+  name: snake
+  parent: MonkeyMob_Content
+  id: SnakeMob_Content
+  description:
+  drawdepth: Mobs
+  suffix: AI
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: snake
+      sprite: Mobs/Animals/snake.rsi
+  - type: Icon
+    sprite: Mobs/Animals/snake.rsi
+    state: icon
+  - type: Physics
+    mass: 10
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.30,-0.30,0.25,0.30"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: snake
+# It's death animation is animated so hopefully this should push for separation between "dying" and "death" states.
+      dead: dead
+
+# Code unique spider prototypes or combine them all into one spider and get a
+# random sprite state when you spawn it.
+- type: entity
+  save: false
+  name: tarantula
+  parent: MonkeyMob_Content
+  id: GiantSpiderMob_Content
+  description:
+  drawdepth: Mobs
+  suffix: AI
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: tarantula
+      sprite: Mobs/Animals/spider.rsi
+  - type: Icon
+    sprite: Mobs/Animals/spider.rsi
+    state: tarantula
+  - type: Physics
+    mass: 10
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.30,-0.40,0.45,0.40"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: tarantula
+      dead: dead
+
+- type: entity
+  save: false
+  name: crab
+  parent: MonkeyMob_Content
+  id: CrabMob_Content
+  description:
+  drawdepth: Mobs
+  suffix: AI
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: crab
+      sprite: Mobs/Animals/crab.rsi
+  - type: Icon
+    sprite: Mobs/Animals/crab.rsi
+    state: crab
+  - type: Physics
+    mass: 10
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.40,-0.35,0.20,0.35"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: crab
+      dead: dead
+
+- type: entity
+  save: false
+  name: penguin
+  parent: MonkeyMob_Content
+  id: PenguinMob_Content
+  description:
+  drawdepth: Mobs
+  suffix: AI
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: penguin
+      sprite: Mobs/Animals/penguin.rsi
+  - type: Icon
+    sprite: Mobs/Animals/penguin.rsi
+    state: penguin
+  - type: Physics
+    mass: 10
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.50,-0.30,0.35,0.30"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: penguin
+      dead: penguin_dead

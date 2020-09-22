@@ -69,7 +69,7 @@ namespace Content.Client.GameObjects.Components.Cargo
                 _orderMenu.Requester.Text = null;
                 _orderMenu.Reason.Text = null;
                 _orderMenu.Amount.Value = 1;
-                _orderMenu.OpenCenteredMinSize();
+                _orderMenu.OpenCentered();
             };
             _menu.OnOrderApproved += ApproveOrder;
             _menu.OnOrderCanceled += RemoveOrder;
@@ -87,17 +87,17 @@ namespace Content.Client.GameObjects.Components.Cargo
         {
             base.UpdateState(state);
 
-            if (!(state is CargoConsoleInterfaceState cstate))
+            if (!(state is CargoConsoleInterfaceState cState))
                 return;
-            if (RequestOnly != cstate.RequestOnly)
+            if (RequestOnly != cState.RequestOnly)
             {
-                RequestOnly = cstate.RequestOnly;
+                RequestOnly = cState.RequestOnly;
                 _menu.UpdateRequestOnly();
             }
-            BankId = cstate.BankId;
-            BankName = cstate.BankName;
-            BankBalance = cstate.BankBalance;
-            ShuttleCapacity = cstate.ShuttleCapacity;
+            BankId = cState.BankId;
+            BankName = cState.BankName;
+            BankBalance = cState.BankBalance;
+            ShuttleCapacity = cState.ShuttleCapacity;
             _menu.UpdateCargoCapacity();
             _menu.UpdateBankData();
         }

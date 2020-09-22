@@ -13,9 +13,9 @@
   - type: Collidable
   - type: Clickable
   - type: InteractionOutline
-  - type: Damageable
   - type: Destructible
-    thresholdvalue: 100
+    deadThreshold: 100
+    resistances: metallicResistances
   - type: Physics
   - type: ShuttleController
   - type: Strap

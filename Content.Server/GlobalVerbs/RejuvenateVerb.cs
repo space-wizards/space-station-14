@@ -1,11 +1,12 @@
-﻿using Content.Server.GameObjects;
-using Content.Server.GameObjects.Components.Mobs;
+﻿using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Nutrition;
-using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Verbs;
 using Robust.Server.Console;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 
 namespace Content.Server.GlobalVerbs
 {
@@ -16,10 +17,11 @@ namespace Content.Server.GlobalVerbs
     class RejuvenateVerb : GlobalVerb
     {
         public override bool RequireInteractionRange => false;
+        public override bool BlockedByContainers => false;
 
         public override void GetData(IEntity user, IEntity target, VerbData data)
         {
-            data.Text = "Rejuvenate";
+            data.Text = Loc.GetString("Rejuvenate");
             data.CategoryData = VerbCategories.Debug;
             data.Visibility = VerbVisibility.Invisible;
 
@@ -27,7 +29,7 @@ namespace Content.Server.GlobalVerbs
 
             if (user.TryGetComponent<IActorComponent>(out var player))
             {
-                if (!target.HasComponent<DamageableComponent>() && !target.HasComponent<HungerComponent>() &&
+                if (!target.HasComponent<IDamageableComponent>() && !target.HasComponent<HungerComponent>() &&
                     !target.HasComponent<ThirstComponent>())
                 {
                     return;
@@ -49,20 +51,24 @@ namespace Content.Server.GlobalVerbs
                     PerformRejuvenate(target);
             }
         }
+
         public static void PerformRejuvenate(IEntity target)
         {
-            if (target.TryGetComponent(out DamageableComponent damage))
+            if (target.TryGetComponent(out IDamageableComponent damage))
             {
-                damage.HealAllDamage();
+                damage.Heal();
             }
+
             if (target.TryGetComponent(out HungerComponent hunger))
             {
                 hunger.ResetFood();
             }
+
             if (target.TryGetComponent(out ThirstComponent thirst))
             {
                 thirst.ResetThirst();
             }
+
             if (target.TryGetComponent(out StunnableComponent stun))
             {
                 stun.ResetStuns();

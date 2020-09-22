@@ -1,6 +1,9 @@
 ﻿using Content.Shared.Construction;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Construction
@@ -9,7 +12,7 @@ namespace Content.Server.GameObjects.Components.Construction
     /// Holds data about an entity that is in the process of being constructed or destructed.
     /// </summary>
     [RegisterComponent]
-    public class ConstructionComponent : Component
+    public class ConstructionComponent : Component, IExamine
     {
         /// <inheritdoc />
         public override string Name => "Construction";
@@ -36,6 +39,11 @@ namespace Content.Server.GameObjects.Components.Construction
 
             serializer.DataReadWriteFunction("stage", 0,
                 value => Stage = value, () => Stage);
+        }
+
+        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
+        {
+            EntitySystem.Get<SharedConstructionSystem>().DoExamine(message, Prototype, Stage, inDetailsRange);
         }
     }
 }

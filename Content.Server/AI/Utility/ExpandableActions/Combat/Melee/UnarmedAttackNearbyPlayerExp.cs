@@ -1,19 +1,32 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Content.Server.AI.Utility.Actions;
 using Content.Server.AI.Utility.Actions.Combat.Melee;
-using Content.Server.AI.Utils;
+using Content.Server.AI.Utility.Considerations;
+using Content.Server.AI.Utility.Considerations.Combat.Melee;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
-using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components.Movement;
-using Robust.Server.GameObjects;
+using Content.Server.GameObjects.EntitySystems.AI;
+using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.ExpandableActions.Combat.Melee
 {
     public sealed class UnarmedAttackNearbyPlayerExp : ExpandableUtilityAction
     {
         public override float Bonus => UtilityAction.CombatBonus;
+
+        protected override IEnumerable<Func<float>> GetCommonConsiderations(Blackboard context)
+        {
+            var considerationsManager = IoCManager.Resolve<ConsiderationsManager>();
+
+            return new[]
+            {
+                considerationsManager.Get<CanUnarmedCombatCon>()
+                    .BoolCurve(context),
+            };
+        }
 
         public override IEnumerable<UtilityAction> GetActions(Blackboard context)
         {
@@ -23,13 +36,10 @@ namespace Content.Server.AI.Utility.ExpandableActions.Combat.Melee
                 throw new InvalidOperationException();
             }
 
-            foreach (var entity in Visibility.GetEntitiesInRange(owner.Transform.GridPosition, typeof(SpeciesComponent),
-                controller.VisionRadius))
+            foreach (var target in EntitySystem.Get<AiFactionTagSystem>()
+                .GetNearbyHostiles(owner, controller.VisionRadius))
             {
-                if (entity.HasComponent<BasicActorComponent>() && entity != owner)
-                {
-                    yield return new UnarmedAttackEntity(owner, entity, Bonus);
-                }
+                yield return new UnarmedAttackEntity(owner, target, Bonus);
             }
         }
     }

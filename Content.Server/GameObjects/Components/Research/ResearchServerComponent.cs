@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Research;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 
 namespace Content.Server.GameObjects.Components.Research
 {
@@ -73,7 +73,7 @@ namespace Content.Server.GameObjects.Components.Research
             base.Initialize();
             Id = ServerCount++;
             EntitySystem.Get<ResearchSystem>()?.RegisterServer(this);
-            Database = Owner.GetComponent<TechnologyDatabaseComponent>();
+            Database = Owner.EnsureComponent<TechnologyDatabaseComponent>();
             Owner.TryGetComponent(out _powerReceiver);
         }
 

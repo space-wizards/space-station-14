@@ -1,18 +1,19 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.BodySystem;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Players;
-using Content.Shared.BodySystem;
-using Content.Shared.Jobs;
+using Content.Shared.Maps;
+using Content.Shared.Roles;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
-using Robust.Shared.Interfaces.Random;
+using Robust.Shared.GameObjects.Components.Transform;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking
@@ -99,7 +100,7 @@ namespace Content.Server.GameTicking
         }
     }
 
-    class NewRoundCommand : IClientCommand
+    public class NewRoundCommand : IClientCommand
     {
         public string Command => "restartround";
         public string Description => "Moves the server from PostRound to a new PreRoundLobby.";
@@ -183,9 +184,8 @@ namespace Content.Server.GameTicking
 
     class JoinGameCommand : IClientCommand
     {
-#pragma warning disable 649
-        [Dependency] private IPrototypeManager _prototypeManager;
-#pragma warning restore 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         public string Command => "joingame";
         public string Description => "";
         public string Help => "";
@@ -242,6 +242,26 @@ namespace Content.Server.GameTicking
 
             var ticker = IoCManager.Resolve<IGameTicker>();
             ticker.ToggleReady(player, bool.Parse(args[0]));
+        }
+    }
+
+    class ToggleDisallowLateJoinCommand: IClientCommand
+    {
+        public string Command => "toggledisallowlatejoin";
+        public string Description => "Allows or disallows latejoining during mid-game.";
+        public string Help => $"Usage: {Command} <disallow>";
+
+        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        {
+            if (args.Length != 1)
+            {
+                shell.SendText(player, "Need exactly one argument.");
+                return;
+            }
+
+            var ticker = IoCManager.Resolve<IGameTicker>();
+
+            ticker.ToggleDisallowLateJoin(bool.Parse(args[0]));
         }
     }
 
@@ -302,7 +322,7 @@ namespace Content.Server.GameTicking
     {
         public string Command => "mapping";
         public string Description => "Creates and teleports you to a new uninitialized map for mapping.";
-        public string Help => $"Usage: {Command} <id> <mapname>";
+        public string Help => $"Usage: {Command} <mapname> / {Command} <id> <mapname>";
 
         public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
         {
@@ -312,84 +332,143 @@ namespace Content.Server.GameTicking
                 return;
             }
 
-            if (args.Length != 2)
+            var mapManager = IoCManager.Resolve<IMapManager>();
+            int mapId;
+            string mapName;
+
+            switch (args.Length)
             {
-                shell.SendText(player, Help);
-                return;
+                case 1:
+                    if (player.AttachedEntity == null)
+                    {
+                        shell.SendText(player, "The map name argument cannot be omitted if you have no entity.");
+                        return;
+                    }
+
+                    mapId = (int) mapManager.NextMapId();
+                    mapName = args[0];
+                    break;
+                case 2:
+                    if (!int.TryParse(args[0], out var id))
+                    {
+                        shell.SendText(player, $"{args[0]} is not a valid integer.");
+                        return;
+                    }
+
+                    mapId = id;
+                    mapName = args[1];
+                    break;
+                default:
+                    shell.SendText(player, Help);
+                    return;
             }
 
-            shell.ExecuteCommand(player, $"addmap {args[0]} false");
-            shell.ExecuteCommand(player, $"loadbp {args[0]} \"{CommandParsing.Escape(args[1])}\"");
-            shell.ExecuteCommand(player, $"aghost");
-            shell.ExecuteCommand(player, $"tp 0 0 {args[0]}");
+            shell.ExecuteCommand(player, $"addmap {mapId} false");
+            shell.ExecuteCommand(player, $"loadbp {mapId} \"{CommandParsing.Escape(mapName)}\"");
+            shell.ExecuteCommand(player, "aghost");
+            shell.ExecuteCommand(player, $"tp 0 0 {mapId}");
 
-            shell.SendText(player, $"Created unloaded map from file {args[1]} with id {args[0]}. Use \"savebp 4 foo.yml\" to save it.");
+            var newGridId = mapManager.GetAllGrids().Max(g => (int) g.Index);
+
+            shell.SendText(player, $"Created unloaded map from file {mapName} with id {mapId}. Use \"savebp {newGridId} foo.yml\" to save the new grid as a map.");
         }
     }
 
-    class AddHandCommand : IClientCommand
+    class TileWallsCommand : IClientCommand
     {
-        public string Command => "addhand";
-        public string Description => "Adds a hand to your entity.";
-        public string Help => $"Usage: {Command}";
+        // ReSharper disable once StringLiteralTypo
+        public string Command => "tilewalls";
+        public string Description => "Puts an underplating tile below every wall on a grid.";
+        public string Help => $"Usage: {Command} <gridId> | {Command}";
 
         public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
         {
-            if (player == null)
+            GridId gridId;
+
+            switch (args.Length)
             {
-                shell.SendText((IPlayerSession) null, "Only a player can run this command.");
+                case 0:
+                    if (player?.AttachedEntity == null)
+                    {
+                        shell.SendText((IPlayerSession) null, "Only a player can run this command.");
+                        return;
+                    }
+
+                    gridId = player.AttachedEntity.Transform.GridID;
+                    break;
+                case 1:
+                    if (!int.TryParse(args[0], out var id))
+                    {
+                        shell.SendText(player, $"{args[0]} is not a valid integer.");
+                        return;
+                    }
+
+                    gridId = new GridId(id);
+                    break;
+                default:
+                    shell.SendText(player, Help);
+                    return;
+            }
+
+            var mapManager = IoCManager.Resolve<IMapManager>();
+            if (!mapManager.TryGetGrid(gridId, out var grid))
+            {
+                shell.SendText(player, $"No grid exists with id {gridId}");
                 return;
             }
 
-            if (player.AttachedEntity == null)
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            if (!entityManager.TryGetEntity(grid.GridEntityId, out var gridEntity))
             {
-                shell.SendText(player, "You have no entity.");
+                shell.SendText(player, $"Grid {gridId} doesn't have an associated grid entity.");
                 return;
             }
 
-            if (!player.AttachedEntity.TryGetComponent(out BodyManagerComponent body))
+            var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
+            var underplating = tileDefinitionManager["underplating"];
+            var underplatingTile = new Tile(underplating.TileId);
+            var changed = 0;
+            foreach (var childUid in gridEntity.Transform.ChildEntityUids)
             {
-                var random = IoCManager.Resolve<IRobustRandom>();
-                var text = $"You have no body{(random.Prob(0.2f) ? " and you must scream." : ".")}";
+                if (!entityManager.TryGetEntity(childUid, out var childEntity))
+                {
+                    continue;
+                }
 
-                shell.SendText(player, text);
-                return;
+                var prototype = childEntity.Prototype;
+                while (true)
+                {
+                    if (prototype?.Parent == null)
+                    {
+                        break;
+                    }
+
+                    prototype = prototype.Parent;
+                }
+
+                if (prototype?.ID != "base_wall")
+                {
+                    continue;
+                }
+
+                if (!childEntity.TryGetComponent(out SnapGridComponent snapGrid))
+                {
+                    continue;
+                }
+
+                var tile = grid.GetTileRef(childEntity.Transform.Coordinates);
+                var tileDef = (ContentTileDefinition) tileDefinitionManager[tile.Tile.TypeId];
+
+                if (tileDef.Name == "underplating")
+                {
+                    continue;
+                }
+
+                grid.SetTile(childEntity.Transform.Coordinates, underplatingTile);
+                changed++;
             }
 
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            prototypeManager.TryIndex("bodyPart.Hand.BasicHuman", out BodyPartPrototype prototype);
-
-            var part = new BodyPart(prototype);
-            var slot = part.GetHashCode().ToString();
-
-            body.Template.Slots.Add(slot, BodyPartType.Hand);
-            body.InstallBodyPart(part, slot);
-        }
-    }
-
-    class RemoveHandCommand : IClientCommand
-    {
-        public string Command => "removehand";
-        public string Description => "Removes a hand from your entity.";
-        public string Help => $"Usage: {Command}";
-
-        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
-        {
-            if (player == null)
-            {
-                shell.SendText(player, "Only a player can run this command.");
-                return;
-            }
-
-            if (player.AttachedEntity == null)
-            {
-                shell.SendText(player, "You have no entity.");
-                return;
-            }
-
-            var manager = player.AttachedEntity.GetComponent<BodyManagerComponent>();
-            var hand = manager.PartDictionary.First(x => x.Value.PartType == BodyPartType.Hand);
-            manager.DisconnectBodyPart(hand.Value, true);
+            shell.SendText(player, $"Changed {changed} tiles.");
         }
     }
 }

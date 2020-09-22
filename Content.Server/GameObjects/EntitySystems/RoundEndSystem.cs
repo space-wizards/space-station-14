@@ -6,14 +6,12 @@ using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Timer = Robust.Shared.Timers.Timer;
 
-namespace Content.Server.Interfaces.GameObjects.Components.Interaction
+namespace Content.Server.GameObjects.EntitySystems
 {
     public class RoundEndSystem : EntitySystem
     {
-#pragma warning disable 649
-        [Dependency] private IGameTicker _gameTicker;
-        [Dependency] private IGameTiming _gameTiming;
-#pragma warning restore 649
+        [Dependency] private readonly IGameTicker _gameTicker = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         private CancellationTokenSource _roundEndCancellationTokenSource = new CancellationTokenSource();
         public bool IsRoundEndCountdownStarted { get; private set; }

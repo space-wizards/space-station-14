@@ -8,14 +8,12 @@ using Content.Server.GameObjects.EntitySystems.AI.Pathfinding;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders;
 using Content.Server.GameObjects.EntitySystems.JobQueues;
 using Content.Shared.GameObjects.EntitySystems;
-using Robust.Server.GameObjects;
+using Content.Shared.Utility;
 using Robust.Server.Interfaces.Timing;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -27,12 +25,10 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
     public sealed class AiSteeringSystem : EntitySystem
     {
         // http://www.red3d.com/cwr/papers/1999/gdc99steer.html for a steering overview
-         
-#pragma warning disable 649
-        [Dependency] private IMapManager _mapManager;
-        [Dependency] private IEntityManager _entityManager;
-        [Dependency] private IPauseManager _pauseManager;
-#pragma warning restore 649
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IPauseManager _pauseManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+
         private PathfindingSystem _pathfindingSystem;
 
         /// <summary>
@@ -45,9 +41,14 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         /// How close we need to get to the center of each tile
         /// </summary>
         private const float TileTolerance = 0.8f;
-        
+
+        /// <summary>
+        ///     How long to wait between checks (if necessary).
+        /// </summary>
+        private const float InRangeUnobstructedCooldown = 0.25f;
+
         private Dictionary<IEntity, IAiSteeringRequest> RunningAgents => _agentLists[_listIndex];
-        
+
         // We'll cycle the running list every tick as all we're doing is getting a vector2 for the
         // agent's steering. Should help a lot given this is the most expensive operator by far.
         // The AI will keep moving, it's just it'll keep moving in its existing direction.
@@ -55,40 +56,40 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         private readonly List<Dictionary<IEntity, IAiSteeringRequest>> _agentLists = new List<Dictionary<IEntity, IAiSteeringRequest>>(AgentListCount);
         private const int AgentListCount = 2;
         private int _listIndex;
-        
+
         // Cache nextGrid
-        private readonly Dictionary<IEntity, GridCoordinates> _nextGrid = new Dictionary<IEntity, GridCoordinates>();
-        
+        private readonly Dictionary<IEntity, EntityCoordinates> _nextGrid = new Dictionary<IEntity, EntityCoordinates>();
+
         /// <summary>
         /// Current live paths for AI
         /// </summary>
         private readonly Dictionary<IEntity, Queue<TileRef>> _paths = new Dictionary<IEntity, Queue<TileRef>>();
-        
+
         /// <summary>
         /// Pathfinding request jobs we're waiting on
         /// </summary>
-        private readonly Dictionary<IEntity, (CancellationTokenSource CancelToken, Job<Queue<TileRef>> Job)> _pathfindingRequests = 
+        private readonly Dictionary<IEntity, (CancellationTokenSource CancelToken, Job<Queue<TileRef>> Job)> _pathfindingRequests =
             new Dictionary<IEntity, (CancellationTokenSource, Job<Queue<TileRef>>)>();
-        
+
         /// <summary>
         /// Keep track of how long we've been in 1 position and re-path if it's been too long
         /// </summary>
         private readonly Dictionary<IEntity, int> _stuckCounter = new Dictionary<IEntity, int>();
-        
+
         /// <summary>
         /// Get a fixed position for the target entity; if they move then re-path
         /// </summary>
-        private readonly Dictionary<IEntity, GridCoordinates> _entityTargetPosition = new Dictionary<IEntity, GridCoordinates>();
-        
+        private readonly Dictionary<IEntity, EntityCoordinates> _entityTargetPosition = new Dictionary<IEntity, EntityCoordinates>();
+
         // Anti-Stuck
         // Given the collision avoidance can lead to twitching need to store a reference position and check if we've been near this too long
-        private readonly Dictionary<IEntity, GridCoordinates> _stuckPositions = new Dictionary<IEntity, GridCoordinates>();
+        private readonly Dictionary<IEntity, EntityCoordinates> _stuckPositions = new Dictionary<IEntity, EntityCoordinates>();
 
         public override void Initialize()
         {
             base.Initialize();
             _pathfindingSystem = Get<PathfindingSystem>();
-            
+
             for (var i = 0; i < AgentListCount; i++)
             {
                 _agentLists.Add(new Dictionary<IEntity, IAiSteeringRequest>());
@@ -111,14 +112,14 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
                 var agentList = _agentLists[i];
                 // Register shouldn't be called twice; if it is then someone dun fucked up
                 DebugTools.Assert(!agentList.ContainsKey(entity));
-                
+
                 if (agentList.Count < lowestListCount)
                 {
                     lowestListCount = agentList.Count;
                     lowestListIndex = i;
                 }
             }
-            
+
             _agentLists[lowestListIndex].Add(entity, steeringRequest);
         }
 
@@ -133,7 +134,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             {
                 controller.VelocityDir = Vector2.Zero;
             }
-            
+
             if (_pathfindingRequests.TryGetValue(entity, out var request))
             {
                 switch (request.Job.Status)
@@ -157,7 +158,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
                 }
                 _pathfindingRequests.Remove(entity);
             }
-            
+
             if (_paths.ContainsKey(entity))
             {
                 _paths.Remove(entity);
@@ -177,7 +178,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             {
                 _entityTargetPosition.Remove(entity);
             }
-            
+
             foreach (var agentList in _agentLists)
             {
                 if (agentList.ContainsKey(entity))
@@ -212,9 +213,10 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
 
             foreach (var (agent, steering) in RunningAgents)
             {
-                var result = Steer(agent, steering);
+                // Yeah look it's not true frametime but good enough.
+                var result = Steer(agent, steering, frameTime * RunningAgents.Count);
                 steering.Status = result;
-                
+
                 switch (result)
                 {
                     case SteeringStatus.Pending:
@@ -240,13 +242,22 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="steeringRequest"></param>
+        /// <param name="frameTime"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        private SteeringStatus Steer(IEntity entity, IAiSteeringRequest steeringRequest)
+        private SteeringStatus Steer(IEntity entity, IAiSteeringRequest steeringRequest, float frameTime)
         {
             // Main optimisation to be done below is the redundant calls and adding more variables
-            if (!entity.TryGetComponent(out AiControllerComponent controller) || !ActionBlockerSystem.CanMove(entity))
+            if (entity.Deleted || !entity.TryGetComponent(out AiControllerComponent controller) || !ActionBlockerSystem.CanMove(entity))
             {
+                return SteeringStatus.NoPath;
+            }
+
+            var entitySteering = steeringRequest as EntityTargetSteeringRequest;
+
+            if (entitySteering != null && entitySteering.Target.Deleted)
+            {
+                controller.VelocityDir = Vector2.Zero;
                 return SteeringStatus.NoPath;
             }
 
@@ -255,26 +266,40 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
                 controller.VelocityDir = Vector2.Zero;
                 return SteeringStatus.Pending;
             }
-            
+
             // Validation
             // Check if we can even arrive -> Currently only samegrid movement supported
-            if (entity.Transform.GridID != steeringRequest.TargetGrid.GridID)
+            if (entity.Transform.GridID != steeringRequest.TargetGrid.GetGridId(_entityManager))
             {
                 controller.VelocityDir = Vector2.Zero;
                 return SteeringStatus.NoPath;
             }
-            
+
             // Check if we have arrived
             var targetDistance = (entity.Transform.MapPosition.Position - steeringRequest.TargetMap.Position).Length;
-            if (targetDistance <= steeringRequest.ArrivalDistance)
+            steeringRequest.TimeUntilInteractionCheck -= frameTime;
+
+            if (targetDistance <= steeringRequest.ArrivalDistance && steeringRequest.TimeUntilInteractionCheck <= 0.0f)
             {
-                // TODO: If we need LOS and are moving to an entity then we may not be in range yet
-                // Chuck out a ray every half second or so and keep moving until we are?
-                // Alternatively could use tile-based LOS checks via the pathfindingsystem I guess
-                controller.VelocityDir = Vector2.Zero;
-                return SteeringStatus.Arrived;
+                if (!steeringRequest.RequiresInRangeUnobstructed ||
+                    entity.InRangeUnobstructed(steeringRequest.TargetMap, steeringRequest.ArrivalDistance, popup: true))
+                {
+                    // TODO: Need cruder LOS checks for ranged weaps
+                    controller.VelocityDir = Vector2.Zero;
+                    return SteeringStatus.Arrived;
+                }
+
+                steeringRequest.TimeUntilInteractionCheck = InRangeUnobstructedCooldown;
+                // Welp, we'll keep on moving.
             }
-            
+
+            // If we're really close don't swiggity swoogity back and forth and just wait for the interaction check maybe?
+            if (steeringRequest.TimeUntilInteractionCheck > 0.0f && targetDistance <= 0.1f)
+            {
+                controller.VelocityDir = Vector2.Zero;
+                return SteeringStatus.Moving;
+            }
+
             // Handle pathfinding job
             // If we still have an existing path then keep following that until the new path arrives
             if (_pathfindingRequests.TryGetValue(entity, out var pathRequest) && pathRequest.Job.Status == JobStatus.Finished)
@@ -297,14 +322,14 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
                     controller.VelocityDir = Vector2.Zero;
                     return SteeringStatus.NoPath;
                 }
-                
+
                 // If we're closer to next tile then we don't want to walk backwards to our tile's center
                 UpdatePath(entity, path);
 
                 // If we're targeting entity get a fixed tile; if they move from it then re-path (at least til we get a better solution)
-                if (steeringRequest is EntityTargetSteeringRequest entitySteeringRequest)
+                if (entitySteering != null)
                 {
-                    _entityTargetPosition[entity] = entitySteeringRequest.TargetGrid;
+                    _entityTargetPosition[entity] = entitySteering.TargetGrid;
                 }
 
                 // Move next tick
@@ -319,31 +344,26 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
                 RequestPath(entity, steeringRequest);
                 return SteeringStatus.Pending;
             }
-            
-            var ignoredCollision = new List<EntityUid>();
+
+            var ignoredCollision = new List<IEntity>();
             // Check if the target entity has moved - If so then re-path
             // TODO: Patch the path from the target's position back towards us, stopping if it ever intersects the current path
             // Probably need a separate "PatchPath" job
-            if (steeringRequest is EntityTargetSteeringRequest entitySteer)
+            if (entitySteering != null)
             {
-                if (entitySteer.Target.Deleted)
-                {
-                    controller.VelocityDir = Vector2.Zero;
-                    return SteeringStatus.NoPath;
-                }
-                
                 // Check if target's moved too far
-                if (_entityTargetPosition.TryGetValue(entity, out var targetGrid) && (entitySteer.TargetGrid.Position - targetGrid.Position).Length >= entitySteer.TargetMaxMove)
+                if (_entityTargetPosition.TryGetValue(entity, out var targetGrid) &&
+                    (entitySteering.TargetGrid.Position - targetGrid.Position).Length >= entitySteering.TargetMaxMove)
                 {
                     // We'll just repath and keep following the existing one until we get a new one
                     RequestPath(entity, steeringRequest);
                 }
-                
-                ignoredCollision.Add(entitySteer.Target.Uid);
+
+                ignoredCollision.Add(entitySteering.Target);
             }
 
             HandleStuck(entity);
-            
+
             // TODO: Probably need a dedicated queuing solver (doorway congestion FML)
             // Get the target grid (either next tile or target itself) and pass it in to the steering behaviors
             // If there's nowhere to go then just stop and wait
@@ -353,14 +373,14 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
                 controller.VelocityDir = Vector2.Zero;
                 return SteeringStatus.NoPath;
             }
-            
+
             // Validate that we can even get to the next grid (could probably just check if we can use nextTile if we're not near the target grid)
             if (!_pathfindingSystem.CanTraverse(entity, nextGrid.Value))
             {
                 controller.VelocityDir = Vector2.Zero;
                 return SteeringStatus.NoPath;
             }
-            
+
             // Now we can /finally/ move
             var movementVector = Vector2.Zero;
 
@@ -370,10 +390,10 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             movementVector += Seek(entity, nextGrid.Value);
             if (CollisionAvoidanceEnabled)
             {
-                movementVector += CollisionAvoidance(entity, movementVector, ignoredCollision);   
+                movementVector += CollisionAvoidance(entity, movementVector, ignoredCollision);
             }
             // Group behaviors would also go here e.g. separation, cohesion, alignment
-            
+
             // Move towards it
             DebugTools.Assert(movementVector != new Vector2(float.NaN, float.NaN));
             controller.VelocityDir = movementVector.Normalized;
@@ -391,10 +411,10 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             {
                 return;
             }
-            
+
             var cancelToken = new CancellationTokenSource();
             var gridManager = _mapManager.GetGrid(entity.Transform.GridID);
-            var startTile = gridManager.GetTileRef(entity.Transform.GridPosition);
+            var startTile = gridManager.GetTileRef(entity.Transform.Coordinates);
             var endTile = gridManager.GetTileRef(steeringRequest.TargetGrid);
             var collisionMask = 0;
             if (entity.TryGetComponent(out ICollidableComponent collidableComponent))
@@ -403,7 +423,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             }
 
             var access = AccessReader.FindAccessTags(entity);
-                    
+
             var job = _pathfindingSystem.RequestPath(new PathfindingArgs(
                 entity.Uid,
                 access,
@@ -423,11 +443,11 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         private void UpdatePath(IEntity entity, Queue<TileRef> path)
         {
             _pathfindingRequests.Remove(entity);
-            
-            var entityTile = _mapManager.GetGrid(entity.Transform.GridID).GetTileRef(entity.Transform.GridPosition);
+
+            var entityTile = _mapManager.GetGrid(entity.Transform.GridID).GetTileRef(entity.Transform.Coordinates);
             var tile = path.Dequeue();
             var closestDistance = PathfindingHelpers.OctileDistance(entityTile, tile);
-            
+
             for (var i = 0; i < path.Count; i++)
             {
                 tile = path.Peek();
@@ -441,38 +461,38 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
                     break;
                 }
             }
-            
+
             _paths[entity] = path;
         }
 
         /// <summary>
-        /// Get the next tile as GridCoordinates
+        /// Get the next tile as EntityCoordinates
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="steeringRequest"></param>
         /// <returns></returns>
-        private GridCoordinates? NextGrid(IEntity entity, IAiSteeringRequest steeringRequest)
+        private EntityCoordinates? NextGrid(IEntity entity, IAiSteeringRequest steeringRequest)
         {
             // Remove the cached grid
             if (!_paths.ContainsKey(entity) && _nextGrid.ContainsKey(entity))
             {
                 _nextGrid.Remove(entity);
             }
-            
+
             // If no tiles left just move towards the target (if we're close)
             if (!_paths.ContainsKey(entity) || _paths[entity].Count == 0)
             {
-                if ((steeringRequest.TargetGrid.Position - entity.Transform.GridPosition.Position).Length <= 2.0f)
+                if ((steeringRequest.TargetGrid.Position - entity.Transform.Coordinates.Position).Length <= 2.0f)
                 {
-                    return steeringRequest.TargetGrid;   
+                    return steeringRequest.TargetGrid;
                 }
 
                 // Too far so we need a re-path
                 return null;
             }
-            
-            if (!_nextGrid.TryGetValue(entity, out var nextGrid) || 
-                (nextGrid.Position - entity.Transform.GridPosition.Position).Length <= TileTolerance)
+
+            if (!_nextGrid.TryGetValue(entity, out var nextGrid) ||
+                (nextGrid.Position - entity.Transform.Coordinates.Position).Length <= TileTolerance)
             {
                 UpdateGridCache(entity);
                 nextGrid = _nextGrid[entity];
@@ -483,7 +503,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         }
 
         /// <summary>
-        /// Rather than converting TileRef to GridCoordinates over and over we'll just cache it
+        /// Rather than converting TileRef to EntityCoordinates over and over we'll just cache it
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="dequeue"></param>
@@ -496,19 +516,19 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         }
 
         /// <summary>
-        /// Check if we've been near our last GridCoordinates too long and try to fix it
+        /// Check if we've been near our last EntityCoordinates too long and try to fix it
         /// </summary>
         /// <param name="entity"></param>
         private void HandleStuck(IEntity entity)
         {
             if (!_stuckPositions.TryGetValue(entity, out var stuckPosition))
             {
-                _stuckPositions[entity] = entity.Transform.GridPosition;
+                _stuckPositions[entity] = entity.Transform.Coordinates;
                 _stuckCounter[entity] = 0;
                 return;
             }
 
-            if ((entity.Transform.GridPosition.Position - stuckPosition.Position).Length <= 1.0f)
+            if ((entity.Transform.Coordinates.Position - stuckPosition.Position).Length <= 1.0f)
             {
                 _stuckCounter.TryGetValue(entity, out var stuckCount);
                 _stuckCounter[entity] = stuckCount + 1;
@@ -516,7 +536,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             else
             {
                 // No longer stuck
-                _stuckPositions[entity] = entity.Transform.GridPosition;
+                _stuckPositions[entity] = entity.Transform.Coordinates;
                 _stuckCounter[entity] = 0;
                 return;
             }
@@ -526,7 +546,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             {
                 return;
             }
-            
+
             // Okay now we're stuck
             _paths.Remove(entity);
             _stuckCounter[entity] = 0;
@@ -539,11 +559,13 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         /// <param name="entity"></param>
         /// <param name="grid"></param>
         /// <returns></returns>
-        private Vector2 Seek(IEntity entity, GridCoordinates grid)
+        private Vector2 Seek(IEntity entity, EntityCoordinates grid)
         {
             // is-even much
-            var entityPos = entity.Transform.GridPosition;
-            return entityPos == grid ? Vector2.Zero : (grid.Position - entityPos.Position).Normalized;
+            var entityPos = entity.Transform.Coordinates;
+            return entityPos == grid
+                ? Vector2.Zero
+                : (grid.Position - entityPos.Position).Normalized;
         }
 
         /// <summary>
@@ -553,9 +575,9 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         /// <param name="grid"></param>
         /// <param name="slowingDistance"></param>
         /// <returns></returns>
-        private Vector2 Arrival(IEntity entity, GridCoordinates grid, float slowingDistance = 1.0f)
+        private Vector2 Arrival(IEntity entity, EntityCoordinates grid, float slowingDistance = 1.0f)
         {
-            var entityPos = entity.Transform.GridPosition;
+            var entityPos = entity.Transform.Coordinates;
             DebugTools.Assert(slowingDistance > 0.0f);
             if (entityPos == grid)
             {
@@ -574,14 +596,14 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         /// <returns></returns>
         private Vector2 Pursuit(IEntity entity, IEntity target)
         {
-            var entityPos = entity.Transform.GridPosition;
-            var targetPos = target.Transform.GridPosition;
+            var entityPos = entity.Transform.Coordinates;
+            var targetPos = target.Transform.Coordinates;
             if (entityPos == targetPos)
             {
                 return Vector2.Zero;
             }
-            
-            if (target.TryGetComponent(out IPhysicsComponent physicsComponent))
+
+            if (target.TryGetComponent(out ICollidableComponent physicsComponent))
             {
                 var targetDistance = (targetPos.Position - entityPos.Position);
                 targetPos = targetPos.Offset(physicsComponent.LinearVelocity * targetDistance);
@@ -597,13 +619,13 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         /// <param name="direction">entity's travel direction</param>
         /// <param name="ignoredTargets"></param>
         /// <returns></returns>
-        private Vector2 CollisionAvoidance(IEntity entity, Vector2 direction, ICollection<EntityUid> ignoredTargets)
+        private Vector2 CollisionAvoidance(IEntity entity, Vector2 direction, ICollection<IEntity> ignoredTargets)
         {
             if (direction == Vector2.Zero || !entity.TryGetComponent(out ICollidableComponent collidableComponent))
             {
                 return Vector2.Zero;
             }
-            
+
             // We'll check tile-by-tile
             // Rewriting this frequently so not many comments as they'll go stale
             // I realise this is bad so please rewrite it ;-;
@@ -611,7 +633,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             var avoidanceVector = Vector2.Zero;
             var checkTiles = new HashSet<TileRef>();
             var avoidTiles = new HashSet<TileRef>();
-            var entityGridCoords = entity.Transform.GridPosition;
+            var entityGridCoords = entity.Transform.Coordinates;
             var grid = _mapManager.GetGrid(entity.Transform.GridID);
             var currentTile = grid.GetTileRef(entityGridCoords);
             var halfwayTile = grid.GetTileRef(entityGridCoords.Offset(direction / 2));
@@ -627,31 +649,31 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             {
                 var node = _pathfindingSystem.GetNode(tile);
                 // Assume the immovables have already been checked
-                foreach (var (uid, layer) in node.PhysicsLayers)
+                foreach (var (physicsEntity, layer) in node.PhysicsLayers)
                 {
                     // Ignore myself / my target if applicable / if my mask doesn't collide
-                    if (uid == entity.Uid || ignoredTargets.Contains(uid) || (entityCollisionMask & layer) == 0) continue;
+                    if (physicsEntity == entity || ignoredTargets.Contains(physicsEntity) || (entityCollisionMask & layer) == 0) continue;
                     // God there's so many ways to do this
                     // err for now we'll just assume the first entity is the center and just add a vector for it
-                    var collisionEntity = _entityManager.GetEntity(uid);
 
                     //Pathfinding updates are deferred so this may not be done yet.
-                    if (collisionEntity.Deleted) continue;
-                    
+                    if (physicsEntity.Deleted) continue;
+
                     // if we're moving in the same direction then ignore
                     // So if 2 entities are moving towards each other and both detect a collision they'll both move in the same direction
                     // i.e. towards the right
-                    if (collisionEntity.TryGetComponent(out IPhysicsComponent physicsComponent) &&
+                    if (physicsEntity.TryGetComponent(out ICollidableComponent physicsComponent) &&
                         Vector2.Dot(physicsComponent.LinearVelocity, direction) > 0)
                     {
                         continue;
                     }
-                    var centerGrid = collisionEntity.Transform.GridPosition;
+
+                    var centerGrid = physicsEntity.Transform.Coordinates;
                     // Check how close we are to center of tile and get the inverse; if we're closer this is stronger
                     var additionalVector = (centerGrid.Position - entityGridCoords.Position);
                     var distance = additionalVector.Length;
                     // If we're too far no point, if we're close then cap it at the normalized vector
-                    distance = Math.Clamp(2.5f - distance, 0.0f, 1.0f);
+                    distance = MathHelper.Clamp(2.5f - distance, 0.0f, 1.0f);
                     additionalVector = new Angle(90 * distance).RotateVec(additionalVector);
                     avoidanceVector += additionalVector;
                     // if we do need to avoid that means we'll have to lookahead for the next tile

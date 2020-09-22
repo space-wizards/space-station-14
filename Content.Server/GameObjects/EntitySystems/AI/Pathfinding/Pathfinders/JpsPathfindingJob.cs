@@ -1,10 +1,8 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.EntitySystems.JobQueues;
-using Content.Server.GameObjects.EntitySystems.Pathfinding;
 using Content.Shared.AI;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
@@ -284,7 +282,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
             // If we're going diagonally need to check all cardinals.
             // I tried just casting direction ints and offsets to make it smaller but brain no worky.
             // From NorthEast we check (Closed / Open) S - SE, W - NW
-            
+
             PathfindingNode openNeighborOne = null;
             PathfindingNode closedNeighborOne = null;
             PathfindingNode openNeighborTwo = null;
@@ -496,13 +494,13 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
             }
 
             if ((closedNeighborOne == null || !PathfindingHelpers.Traversable(_pathfindingArgs.CollisionMask, _pathfindingArgs.Access, closedNeighborOne)) &&
-                (openNeighborOne != null && PathfindingHelpers.Traversable(_pathfindingArgs.CollisionMask, _pathfindingArgs.Access, openNeighborOne)))
+                openNeighborOne != null && PathfindingHelpers.Traversable(_pathfindingArgs.CollisionMask, _pathfindingArgs.Access, openNeighborOne))
             {
                 return true;
             }
 
             if ((closedNeighborTwo == null || !PathfindingHelpers.Traversable(_pathfindingArgs.CollisionMask, _pathfindingArgs.Access, closedNeighborTwo)) &&
-                (openNeighborTwo != null && PathfindingHelpers.Traversable(_pathfindingArgs.CollisionMask, _pathfindingArgs.Access, openNeighborTwo)))
+                openNeighborTwo != null && PathfindingHelpers.Traversable(_pathfindingArgs.CollisionMask, _pathfindingArgs.Access, openNeighborTwo))
             {
                 return true;
             }

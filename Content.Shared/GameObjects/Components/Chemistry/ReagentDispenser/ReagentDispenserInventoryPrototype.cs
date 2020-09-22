@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using YamlDotNet.RepresentationModel;
 
-namespace Content.Shared.GameObjects.Components.Chemistry
+namespace Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser
 {
     /// <summary>
     /// Is simply a list of reagents defined in yaml. This can then be set as a

@@ -8,6 +8,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.Log;
+using Robust.Shared.Interfaces.Resources;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Utility;
@@ -18,11 +19,9 @@ namespace Content.Client.Parallax
 {
     internal sealed class ParallaxManager : IParallaxManager, IPostInjectInit
     {
-#pragma warning disable 649
-        [Dependency] private readonly IResourceCache _resourceCache;
-        [Dependency] private readonly ILogManager _logManager;
-        [Dependency] private readonly IConfigurationManager _configurationManager;
-#pragma warning restore 649
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private readonly ILogManager _logManager = default!;
+        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
         private static readonly ResourcePath ParallaxConfigPath = new ResourcePath("/parallax_config.toml");
 
@@ -59,16 +58,11 @@ namespace Content.Client.Parallax
 
                 if (!debugParallax && _resourceCache.UserData.Exists(ParallaxConfigOld))
                 {
-                    bool match;
-                    using (var data = _resourceCache.UserData.Open(ParallaxConfigOld, FileMode.Open))
-                    using (var reader = new StreamReader(data, EncodingHelpers.UTF8))
-                    {
-                        match = reader.ReadToEnd() == contents;
-                    }
+                    var match = _resourceCache.UserData.ReadAllText(ParallaxConfigOld) == contents;
 
                     if (match)
                     {
-                        using (var stream = _resourceCache.UserData.Open(ParallaxPath, FileMode.Open))
+                        using (var stream = _resourceCache.UserData.OpenRead(ParallaxPath))
                         {
                             ParallaxTexture = Texture.LoadFromPNGStream(stream, "Parallax");
                         }
@@ -95,7 +89,7 @@ namespace Content.Client.Parallax
             ParallaxTexture = Texture.LoadFromImage(image, "Parallax");
 
             // Store it and CRC so further game starts don't need to regenerate it.
-            using (var stream = _resourceCache.UserData.Open(ParallaxPath, FileMode.Create))
+            using (var stream = _resourceCache.UserData.Create(ParallaxPath))
             {
                 image.SaveAsPng(stream);
             }
@@ -105,8 +99,7 @@ namespace Content.Client.Parallax
                 var i = 0;
                 foreach (var debugImage in debugImages)
                 {
-                    using (var stream = _resourceCache.UserData.Open(new ResourcePath($"/parallax_debug_{i}.png"),
-                        FileMode.Create))
+                    using (var stream = _resourceCache.UserData.Create(new ResourcePath($"/parallax_debug_{i}.png")))
                     {
                         debugImage.SaveAsPng(stream);
                     }
@@ -117,7 +110,7 @@ namespace Content.Client.Parallax
 
             image.Dispose();
 
-            using (var stream = _resourceCache.UserData.Open(ParallaxConfigOld, FileMode.Create))
+            using (var stream = _resourceCache.UserData.Create(ParallaxConfigOld))
             using (var writer = new StreamWriter(stream, EncodingHelpers.UTF8))
             {
                 writer.Write(contents);

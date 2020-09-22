@@ -1,39 +1,55 @@
 ﻿using System.Collections.Generic;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
-using Content.Server.Interfaces;
-using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.EntitySystems;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Damage
 {
+    // TODO: Repair needs to set CurrentDamageState to DamageState.Alive, but it doesn't exist... should be easy enough if it's just an interface you can slap on BreakableComponent
+
+    /// <summary>
+    ///     When attached to an <see cref="IEntity"/>, allows it to take damage and sets it to a "broken state" after taking
+    ///     enough damage.
+    /// </summary>
     [RegisterComponent]
-    public class BreakableComponent : Component, IOnDamageBehavior, IExAct
+    [ComponentReference(typeof(IDamageableComponent))]
+    public class BreakableComponent : RuinableComponent, IExAct
     {
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
-        #pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-        #pragma warning restore 649
-        /// <inheritdoc />
         public override string Name => "Breakable";
-        public DamageThreshold Threshold { get; private set; }
-
-        public DamageType damageType = DamageType.Total;
-        public int damageValue = 0;
-        public bool broken = false;
 
         private ActSystem _actSystem;
+        private DamageState _currentDamageState;
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public override List<DamageState> SupportedDamageStates =>
+            new List<DamageState> {DamageState.Alive, DamageState.Dead};
+
+        public override DamageState CurrentDamageState => _currentDamageState;
+
+        void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
         {
-            base.ExposeData(serializer);
+            switch (eventArgs.Severity)
+            {
+                case ExplosionSeverity.Destruction:
+                case ExplosionSeverity.Heavy:
+                    PerformDestruction();
+                    break;
+                case ExplosionSeverity.Light:
+                    if (_random.Prob(0.5f))
+                    {
+                        PerformDestruction();
+                    }
 
-            serializer.DataField(ref damageValue, "thresholdvalue", 100);
-            serializer.DataField(ref damageType, "thresholdtype", DamageType.Total);
+                    break;
+            }
         }
 
         public override void Initialize()
@@ -42,38 +58,21 @@ namespace Content.Server.GameObjects.Components.Damage
             _actSystem = _entitySystemManager.GetEntitySystem<ActSystem>();
         }
 
-        public List<DamageThreshold> GetAllDamageThresholds()
+        // Might want to move this down and have a more standardized method of revival
+        public void FixAllDamage()
         {
-            Threshold = new DamageThreshold(damageType, damageValue, ThresholdType.Breakage);
-            return new List<DamageThreshold>() {Threshold};
+            Heal();
+            _currentDamageState = DamageState.Alive;
         }
 
-        public void OnDamageThresholdPassed(object obj, DamageThresholdPassedEventArgs e)
+        protected override void DestructionBehavior()
         {
-            if (e.Passed && e.DamageThreshold == Threshold && broken == false)
+            _actSystem.HandleBreakage(Owner);
+            if (!Owner.Deleted && DestroySound != string.Empty)
             {
-                broken = true;
-                _actSystem.HandleBreakage(Owner);
+                var pos = Owner.Transform.Coordinates;
+                EntitySystem.Get<AudioSystem>().PlayAtCoords(DestroySound, pos);
             }
         }
-
-        public void OnExplosion(ExplosionEventArgs eventArgs)
-        {
-            var prob = IoCManager.Resolve<IRobustRandom>();
-            switch (eventArgs.Severity)
-            {
-                case ExplosionSeverity.Destruction:
-                    _actSystem.HandleBreakage(Owner);
-                    break;
-                case ExplosionSeverity.Heavy:
-                    _actSystem.HandleBreakage(Owner);
-                    break;
-                case ExplosionSeverity.Light:
-                    if(prob.Prob(0.4f))
-                        _actSystem.HandleBreakage(Owner);
-                    break;
-            }
-        }
-
     }
 }

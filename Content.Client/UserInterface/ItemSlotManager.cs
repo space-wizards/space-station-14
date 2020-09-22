@@ -1,17 +1,12 @@
-﻿using System;
-using Content.Client.GameObjects;
-using Content.Client.GameObjects.Components.Storage;
+﻿using Content.Client.GameObjects.Components.Storage;
 using Content.Client.GameObjects.EntitySystems;
-using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.EntitySystems;
-using Robust.Client.Graphics;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Interfaces.Input;
-using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Shared.Input;
@@ -26,15 +21,13 @@ namespace Content.Client.UserInterface
 {
     public class ItemSlotManager : IItemSlotManager
     {
-#pragma warning disable 0649
-        [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private readonly IGameTiming _gameTiming;
-        [Dependency] private readonly IInputManager _inputManager;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-        [Dependency] private readonly IEntityManager _entityManager;
-        [Dependency] private readonly IEyeManager _eyeManager;
-        [Dependency] private readonly IMapManager _mapManager;
-#pragma warning restore 0649
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IEyeManager _eyeManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         public bool SetItemSlot(ItemSlotButton button, IEntity entity)
         {
@@ -112,7 +105,7 @@ namespace Content.Client.UserInterface
                 var progress = (_gameTiming.CurTime - start).TotalSeconds / length;
                 var ratio = (progress <= 1 ? (1 - progress) : (_gameTiming.CurTime - end).TotalSeconds * -5);
 
-                cooldownDisplay.Progress = (float)ratio.Clamp(-1, 1);
+                cooldownDisplay.Progress = MathHelper.Clamp((float)ratio, -1, 1);
 
                 if (ratio > -1f)
                 {

@@ -1,5 +1,6 @@
 ﻿using Content.Server.Explosions;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
@@ -33,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Explosion
             if (_beingExploded) return true;
             _beingExploded = true;
 
-            ExplosionHelper.SpawnExplosion(Owner.Transform.GridPosition, DevastationRange, HeavyImpactRange, LightImpactRange, FlashRange);
+            ExplosionHelper.SpawnExplosion(Owner.Transform.Coordinates, DevastationRange, HeavyImpactRange, LightImpactRange, FlashRange);
 
             Owner.Delete();
             return true;

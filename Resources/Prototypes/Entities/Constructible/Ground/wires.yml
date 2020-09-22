@@ -1,6 +1,7 @@
-- type: entity
+﻿- type: entity
   abstract: true
   id: WireBase
+  description: A flexible superconducting cable for heavy-duty power transfer
   placement:
     mode: SnapgridCenter
   components:
@@ -12,15 +13,14 @@
   - type: Icon
     texture: Constructible/Power/eightdirwire.png
   - type: Sprite
-    drawdepth: BelowFloor  
+    drawdepth: BelowFloor
   - type: IconSmooth
     mode: CardinalFlags
   - type: Destructible
     thresholdvalue: 100
+    resistances: metallicResistances
   - type: SubFloorHide
-  - type: Physics
-    Anchored: true
-  
+
 - type: entity
   parent: WireBase
   id: HVWire
@@ -33,13 +33,16 @@
     base: hvcable_
     key: hv_cables
   - type: NodeContainer
-    nodeTypes: { HVPower : ["AdjacentNode"] }
+    nodes:
+    - !type:AdjacentNode
+      nodeGroupID: HVPower
   - type: Wire
     wireDroppedOnCutPrototype: HVWireStack1
     wireType: HighVoltage
   - type: Destructible
+    resistances: metallicResistances
     spawnondestroy: HVWireStack1
-  
+
 - type: entity
   parent: WireBase
   id: MVWire
@@ -53,13 +56,16 @@
     base: mvcable_
     key: mv_cables
   - type: NodeContainer
-    nodeTypes: { MVPower : ["AdjacentNode"] }
+    nodes:
+    - !type:AdjacentNode
+      nodeGroupID: MVPower
   - type: Wire
     wireDroppedOnCutPrototype: MVWireStack1
     wireType: MediumVoltage
   - type: Destructible
+    resistances: metallicResistances
     spawnondestroy: MVWireStack1
-    
+
 - type: entity
   parent: WireBase
   id: ApcExtensionCable
@@ -73,31 +79,14 @@
     base: lvcable_
     key: lv_cables
   - type: NodeContainer
-    nodeTypes: { Apc : ["AdjacentNode"] }
+    nodes:
+    - !type:AdjacentNode
+      nodeGroupID: Apc
   - type: PowerProvider
     voltage: Apc
   - type: Wire
     wireDroppedOnCutPrototype: ApcExtensionCableStack1
     wireType: Apc
   - type: Destructible
+    resistances: metallicResistances
     spawnondestroy: ApcExtensionCableStack1
-    
-#Depriciated, to be removed from maps
-
-- type: entity
-  id: Wire
-  name: Depriciated Wire
-  parent: ApcExtensionCable
-  components:
-  - type: NodeContainer
-    nodeTypes: { HVPower : ["AdjacentNode"], Apc : ["AdjacentNode"] }
-
-- type: entity
-  id: Generator
-  name: Depriciated Generator
-  parent: DebugGenerator
-  components:
-  - type: PowerSupplier
-    voltage: High
-    supplyRate: 100000
-  

@@ -1,1 +1,8 @@
-{"version": 1, "size": {"x": 32, "y": 32}, "states": [{"name": "handcuff", "directions": 1, "delays": [[1.0]]}, {"name": "inhand-left", "directions": 4, "delays": [[1.0], [1.0], [1.0], [1.0]]}, {"name": "inhand-right", "directions": 4, "delays": [[1.0], [1.0], [1.0], [1.0]]}, {"name": "equipped-BELT", "directions": 4, "delays": [[1.0], [1.0], [1.0], [1.0]]}]}
+{"version": 1, "size": {"x": 32, "y": 32}, "states": [
+{"name": "body-overlay-2", "directions": 4, "delays": [[1.0],[1.0],[1.0],[1.0]]},
+{"name": "body-overlay-4", "directions": 4, "delays": [[1.0],[1.0],[1.0],[1.0]]},
+{"name": "handcuff", "directions": 1, "delays": [[1.0]]}, 
+{"name": "inhand-left", "directions": 4, "delays": [[1.0], [1.0], [1.0], [1.0]]}, 
+{"name": "inhand-right", "directions": 4, "delays": [[1.0], [1.0], [1.0], [1.0]]}, 
+{"name": "equipped-BELT", "directions": 4, "delays": [[1.0], [1.0], [1.0], [1.0]]}
+]}

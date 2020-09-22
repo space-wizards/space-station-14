@@ -1,8 +1,9 @@
-using System;
+﻿using System;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
-using Content.Shared.GameObjects;
+using Content.Shared.Damage;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
@@ -12,6 +13,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.Interfaces.Timing;
@@ -19,6 +21,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -29,6 +32,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
     [RegisterComponent]
     public sealed class ServerRangedWeaponComponent : SharedRangedWeaponComponent, IHandSelected
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
+
         private TimeSpan _lastFireTime;
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -38,7 +45,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
 
         public Func<bool> WeaponCanFireHandler;
         public Func<IEntity, bool> UserCanFireHandler;
-        public Action<IEntity, GridCoordinates> FireHandler;
+        public Action<IEntity, Vector2> FireHandler;
 
         public ServerRangedBarrelComponent Barrel
         {
@@ -77,6 +84,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
             serializer.DataField(this, p => p.ClumsyExplodeChance, "clumsyExplodeChance", 0.5f);
         }
 
+        /// <inheritdoc />
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
         {
             base.HandleNetworkMessage(message, channel, session);
@@ -95,7 +103,24 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
                         return;
                     }
 
-                    _tryFire(user, msg.Target);
+                    if (msg.TargetGrid != GridId.Invalid)
+                    {
+                        // grid pos
+                        if (!_mapManager.TryGetGrid(msg.TargetGrid, out var grid))
+                        {
+                            // Client sent us a message with an invalid grid.
+                            break;
+                        }
+
+                        var targetPos = grid.LocalToWorld(msg.TargetPosition);
+                        TryFire(user, targetPos);
+                    }
+                    else
+                    {
+                        // map pos
+                        TryFire(user, msg.TargetPosition);
+                    }
+
                     break;
             }
         }
@@ -105,7 +130,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
             return new RangedWeaponComponentState(FireRateSelector);
         }
 
-        private void _tryFire(IEntity user, GridCoordinates coordinates)
+        /// <summary>
+        /// Tries to fire a round of ammo out of the weapon.
+        /// </summary>
+        /// <param name="user">Entity that is operating the weapon, usually the player.</param>
+        /// <param name="targetPos">Target position on the map to shoot at.</param>
+        private void TryFire(IEntity user, Vector2 targetPos)
         {
             if (!user.TryGetComponent(out HandsComponent hands) || hands.GetActiveHand?.Owner != Owner)
             {
@@ -121,7 +151,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
                 return;
             }
 
-            var curTime = IoCManager.Resolve<IGameTiming>().CurTime;
+            var curTime = _gameTiming.CurTime;
             var span = curTime - _lastFireTime;
             if (span.TotalSeconds < 1 / _barrel.FireRate)
             {
@@ -132,19 +162,19 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
 
             if (ClumsyCheck &&
                 user.HasComponent<ClumsyComponent>() &&
-                IoCManager.Resolve<IRobustRandom>().Prob(ClumsyExplodeChance))
+                _random.Prob(ClumsyExplodeChance))
             {
                 var soundSystem = EntitySystem.Get<AudioSystem>();
                 soundSystem.PlayAtCoords("/Audio/Items/bikehorn.ogg",
-                    Owner.Transform.GridPosition, AudioParams.Default, 5);
+                    Owner.Transform.Coordinates, AudioParams.Default, 5);
 
                 soundSystem.PlayAtCoords("/Audio/Weapons/Guns/Gunshots/bang.ogg",
-                    Owner.Transform.GridPosition, AudioParams.Default, 5);
+                    Owner.Transform.Coordinates, AudioParams.Default, 5);
 
-                if (user.TryGetComponent(out DamageableComponent health))
+                if (user.TryGetComponent(out IDamageableComponent health))
                 {
-                    health.TakeDamage(DamageType.Brute, 10);
-                    health.TakeDamage(DamageType.Heat, 5);
+                    health.ChangeDamage(DamageType.Blunt, 10, false, user);
+                    health.ChangeDamage(DamageType.Heat, 5, false, user);
                 }
 
                 if (user.TryGetComponent(out StunnableComponent stun))
@@ -152,13 +182,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
                     stun.Paralyze(3f);
                 }
 
-                user.PopupMessage(user, Loc.GetString("The gun blows up in your face!"));
+                user.PopupMessage(Loc.GetString("The gun blows up in your face!"));
 
                 Owner.Delete();
                 return;
             }
 
-            FireHandler?.Invoke(user, coordinates);
+            FireHandler?.Invoke(user, targetPos);
         }
 
         // Probably a better way to do this.

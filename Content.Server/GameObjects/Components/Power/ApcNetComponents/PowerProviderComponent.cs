@@ -1,13 +1,13 @@
-﻿using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 {
@@ -24,6 +24,8 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
     [RegisterComponent]
     public class PowerProviderComponent : BaseApcNetComponent, IPowerProvider
     {
+        [Dependency] private readonly IServerEntityManager _serverEntityManager;
+
         public override string Name => "PowerProvider";
 
         /// <summary>
@@ -91,14 +93,13 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         private List<PowerReceiverComponent> FindAvailableReceivers()
         {
-            var mapManager = IoCManager.Resolve<IMapManager>();
-            var nearbyEntities = IoCManager.Resolve<IServerEntityManager>()
+            var nearbyEntities = _serverEntityManager
                 .GetEntitiesInRange(Owner, PowerTransferRange);
             return nearbyEntities.Select(entity => entity.TryGetComponent<PowerReceiverComponent>(out var receiver) ? receiver : null)
                 .Where(receiver => receiver != null)
                 .Where(receiver => receiver.Connectable)
                 .Where(receiver => receiver.NeedsProvider)
-                .Where(receiver => receiver.Owner.Transform.GridPosition.Distance(mapManager, Owner.Transform.GridPosition) < Math.Min(PowerTransferRange, receiver.PowerReceptionRange))
+                .Where(receiver => receiver.Owner.Transform.Coordinates.TryDistance(_serverEntityManager, Owner.Transform.Coordinates, out var distance) && distance < Math.Min(PowerTransferRange, receiver.PowerReceptionRange))
                 .ToList();
         }
 

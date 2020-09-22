@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   name: wirecutter
   parent: BaseItem
   id: Wirecutter
@@ -18,7 +18,7 @@
     qualities:
       - Cutting
     useSound: /Audio/Items/wirecutter.ogg
-  - type: RandomToolColor
+  - type: RandomSpriteColor
     state: cutters
     colors:
       blue: "#1861d5"
@@ -55,7 +55,7 @@
     qualities:
       - Screwing
     useSoundCollection: Screwdriver
-  - type: RandomToolColor
+  - type: RandomSpriteColor
     state: screwdriver
     colors:
       blue: "#1861d5"
@@ -70,7 +70,7 @@
   name: welding tool
   parent: BaseItem
   id: Welder
-  description: Melts anything as long as it's fueled, don't forget your eye protection!
+  description: 'Melts anything as long as it''s fueled, don''t forget your eye protection!'
   components:
   - type: Sprite
     sprite: Objects/Tools/welder.rsi
@@ -89,15 +89,15 @@
   - type: ItemCooldown
   - type: MeleeWeapon
   - type: ItemStatus
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 100
-    caps: 9
+    caps: AddTo, NoExamine
     contents:
       reagents:
         - ReagentId: chem.WeldingFuel
           Quantity: 100
   - type: Welder
-    useSoundCollection: Welder
+    weldSoundCollection: Welder
   - type: PointLight
     enabled: false
     radius: 1.5
@@ -185,6 +185,7 @@
   - type: Tool
     qualities:
       - Multitool
+  - type: SignalLinker
 
 - type: entity
   name: jaws of life
@@ -249,7 +250,7 @@
   name: RCD
   parent: BaseItem
   id: RCD
-  description: An advanced construction device which can place floors / walls down quickly.
+  description: An advanced construction device which can place/remove walls, floors, and airlocks quickly.
   components:
   - type: RCD
   - type: UseDelay
@@ -262,3 +263,17 @@
     state: rcd
   - type: Item
     sprite: Objects/Tools/rcd.rsi
+
+- type: entity
+  name: RCD Ammo
+  parent: BaseItem
+  id: RCDAmmo
+  description: Ammo cartridge for an RCD.
+  components:
+    - type: RCDAmmo
+    - type: Sprite
+      sprite: Objects/Tools/rcd.rsi
+      state: rcd_ammo
+    - type: Icon
+      sprite: Objects/Tools/rcd.rsi
+      state: rcd_ammo

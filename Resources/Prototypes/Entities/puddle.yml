@@ -7,18 +7,21 @@
     offset: Center
   - type: Sprite
     drawdepth: FloorObjects
-  - type: Solution
-    caps: 1
+  - type: SolutionContainer
+    caps: AddTo, RemoveFrom
   - type: Puddle
     spill_sound: /Audio/Effects/Fluids/splat.ogg
     recolor: true
   - type: LoopingSound
   - type: InteractionOutline
   - type: Clickable
+  - type: Slippery
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.5,-0.5,0.5,0.5"
+      bounds: "-0.4,-0.4,0.4,0.4"
+      layer:
+      - MobImpassable
     hard: false
 
 - type: entity

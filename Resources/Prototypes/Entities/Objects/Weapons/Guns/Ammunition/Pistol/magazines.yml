@@ -104,6 +104,32 @@
       zeroVisible: false
 
 - type: entity
+  id: MagazinePistolCalicoTopMounted
+  name: Calico Magazine (.35 auto top-mounted)
+  parent: MagazinePistolSmgBase
+  components:
+  - type: RangedMagazine
+    caliber: Pistol
+    magazineType: CalicoTopMounted
+    fillPrototype: CartridgePistol
+    capacity: 100
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/calico_mag.rsi
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/calico_mag.rsi
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      shader: unshaded
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 1
+      zeroVisible: false
+
+- type: entity
   id: MagazinePistol
   name: magazine (.35 auto)
   parent: MagazinePistolBase

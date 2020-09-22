@@ -1,6 +1,6 @@
-using System.Collections.Generic;
-using Content.Server.GameObjects;
+﻿using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Movement;
+using Content.Shared.GameObjects.Components.Damage;
 using JetBrains.Annotations;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.GameObjects;
@@ -23,11 +23,11 @@ namespace Content.Server.AI.WorldState.States.Mobs
             }
 
             var playerManager = IoCManager.Resolve<IPlayerManager>();
-            var nearbyPlayers = playerManager.GetPlayersInRange(Owner.Transform.GridPosition, (int) controller.VisionRadius);
+            var nearbyPlayers = playerManager.GetPlayersInRange(Owner.Transform.Coordinates, (int) controller.VisionRadius);
 
             foreach (var player in nearbyPlayers)
             {
-                if (player.AttachedEntity != Owner && player.AttachedEntity.HasComponent<SpeciesComponent>())
+                if (player.AttachedEntity != Owner && player.AttachedEntity.HasComponent<IDamageableComponent>())
                 {
                     result.Add(player.AttachedEntity);
                 }

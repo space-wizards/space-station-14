@@ -1,9 +1,10 @@
-﻿using Content.Server.GameObjects.Components.Nutrition;
+﻿using Content.Server.GameObjects.Components.Body.Digestive;
+using Content.Server.GameObjects.Components.Nutrition;
 using Content.Server.GameObjects.Components.Utensil;
-using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -19,9 +20,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
     [ComponentReference(typeof(IAfterInteract))]
     public class PillComponent : FoodComponent, IUse, IAfterInteract
     {
-#pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystem;
-#pragma warning restore 649
+        [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
+
         public override string Name => "Pill";
 
         [ViewVariables]
@@ -29,7 +29,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         [ViewVariables]
         private string _trashPrototype;
         [ViewVariables]
-        private SolutionComponent _contents;
+        private SolutionContainerComponent _contents;
         [ViewVariables]
         private ReagentUnit _transferAmount;
 
@@ -45,9 +45,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
         public override void Initialize()
         {
             base.Initialize();
-            _contents = Owner.GetComponent<SolutionComponent>();
-            _transferAmount = _contents.CurrentVolume;
-
+            
+            _contents = Owner.GetComponent<SolutionContainerComponent>();
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
@@ -80,7 +79,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return false;
             }
 
-            if (!InteractionChecks.InRangeUnobstructed(user, trueTarget.Transform.MapPosition))
+            if (!user.InRangeUnobstructed(trueTarget, popup: true))
             {
                 return false;
             }

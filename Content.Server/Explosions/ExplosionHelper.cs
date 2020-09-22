@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Maps;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
@@ -26,13 +26,14 @@ namespace Content.Server.Explosions
         /// </summary>
         private static Vector2 _epicenterDistance = (0.1f, 0.1f);
 
-        public static void SpawnExplosion(GridCoordinates coords, int devastationRange, int heavyImpactRange, int lightImpactRange, int flashRange)
+        public static void SpawnExplosion(EntityCoordinates coords, int devastationRange, int heavyImpactRange, int lightImpactRange, int flashRange)
         {
             var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
             var serverEntityManager = IoCManager.Resolve<IServerEntityManager>();
             var entitySystemManager = IoCManager.Resolve<IEntitySystemManager>();
             var mapManager = IoCManager.Resolve<IMapManager>();
             var robustRandom = IoCManager.Resolve<IRobustRandom>();
+            var entityManager = IoCManager.Resolve<IEntityManager>();
 
             var maxRange = MathHelper.Max(devastationRange, heavyImpactRange, lightImpactRange, 0f);
             //Entity damage calculation
@@ -45,17 +46,21 @@ namespace Content.Server.Explosions
                 if (!entity.Transform.IsMapTransform)
                     continue;
 
-                var distanceFromEntity = (int)entity.Transform.GridPosition.Distance(mapManager, coords);
+                if (!entity.Transform.Coordinates.TryDistance(entityManager, coords, out var distance))
+                {
+                    continue;
+                }
+
                 ExplosionSeverity severity;
-                if (distanceFromEntity < devastationRange)
+                if (distance < devastationRange)
                 {
                     severity = ExplosionSeverity.Destruction;
                 }
-                else if (distanceFromEntity < heavyImpactRange)
+                else if (distance < heavyImpactRange)
                 {
                     severity = ExplosionSeverity.Heavy;
                 }
-                else if (distanceFromEntity < lightImpactRange)
+                else if (distance < lightImpactRange)
                 {
                     severity = ExplosionSeverity.Light;
                 }
@@ -70,7 +75,7 @@ namespace Content.Server.Explosions
 
             //Tile damage calculation mockup
             //TODO: make it into some sort of actual damage component or whatever the boys think is appropriate
-            var mapGrid = mapManager.GetGrid(coords.GridID);
+            var mapGrid = mapManager.GetGrid(coords.GetGridId(entityManager));
             var circle = new Circle(coords.Position, maxRange);
             var tiles = mapGrid.GetTilesIntersecting(circle);
             foreach (var tile in tiles)
@@ -82,30 +87,30 @@ namespace Content.Server.Explosions
                 {
                     continue;
                 }
-                var distanceFromTile = (int) tileLoc.Distance(mapManager, coords);
-                if (distanceFromTile < devastationRange)
+
+                if (!tileLoc.TryDistance(entityManager, coords, out var distance))
                 {
-                    mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager[baseTurfs[0]].TileId));
+                    continue;
                 }
 
-                else if (distanceFromTile < heavyImpactRange)
-                {
-                    if (robustRandom.Prob(0.8f))
-                    {
-                        mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager[baseTurfs[^1]].TileId));
-                    }
-                    else
-                    {
-                        mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager[baseTurfs[0]].TileId));
-                    }
-                }
+                var zeroTile = new Tile(tileDefinitionManager[baseTurfs[0]].TileId);
+                var previousTile = new Tile(tileDefinitionManager[baseTurfs[^1]].TileId);
 
-                else if (distanceFromTile < lightImpactRange)
+                switch (distance)
                 {
-                    if (robustRandom.Prob(0.5f))
-                    {
-                        mapGrid.SetTile(tileLoc, new Tile(tileDefinitionManager[baseTurfs[^1]].TileId));
-                    }
+                    case var d when d < devastationRange:
+                        mapGrid.SetTile(tileLoc, zeroTile);
+                        break;
+                    case var d when d < heavyImpactRange
+                                    && !previousTile.IsEmpty
+                                    && robustRandom.Prob(0.8f):
+                        mapGrid.SetTile(tileLoc, previousTile);
+                        break;
+                    case var d when d < lightImpactRange
+                                    && !previousTile.IsEmpty
+                                    && robustRandom.Prob(0.5f):
+                        mapGrid.SetTile(tileLoc, previousTile);
+                        break;
                 }
             }
 
@@ -141,13 +146,13 @@ namespace Content.Server.Explosions
                 }
 
                 var playerPos = player.AttachedEntity.Transform.WorldPosition;
-                var delta = coords.ToMapPos(mapManager) - playerPos;
+                var delta = coords.ToMapPos(entityManager) - playerPos;
                 //Change if zero. Will result in a NaN later breaking camera shake if not changed
                 if (delta.EqualsApprox((0.0f, 0.0f)))
                     delta = _epicenterDistance;
 
                 var distance = delta.LengthSquared;
-                var effect = 1 / (1 + 0.2f * distance);
+                var effect = 10 * (1 / (1 + distance));
                 if (effect > 0.01f)
                 {
                     var kick = -delta.Normalized * effect;

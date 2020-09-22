@@ -17,3 +17,6 @@
   - type: CameraRecoil
   - type: Examiner
   - type: HumanInventoryController
+  - type: AiFactionTag
+    factions:
+    - NanoTransen

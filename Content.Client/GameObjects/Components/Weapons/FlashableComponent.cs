@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Threading;
 using Content.Shared.GameObjects.Components.Weapons;
 using Robust.Client.Graphics.Drawing;
@@ -116,7 +116,7 @@ namespace Content.Client.GameObjects.Components.Weapons
             Duration = duration;
         }
 
-        protected override void Draw(DrawingHandleBase handle)
+        protected override void Draw(DrawingHandleBase handle, OverlaySpace currentSpace)
         {
             var elapsedTime = (_timer.CurTime - StartTime).TotalSeconds;
             if (elapsedTime > Duration)
@@ -141,7 +141,7 @@ namespace Content.Client.GameObjects.Components.Weapons
             const float xOffset = 0.0f;
 
             // Overkill but easy to adjust if you want to mess around with the design
-            var result = (float) Math.Clamp(slope * (float) Math.Pow(ratio - xOffset, exponent) + yOffset, 0.0, 1.0);
+            var result = (float) MathHelper.Clamp(slope * (float) Math.Pow(ratio - xOffset, exponent) + yOffset, 0.0, 1.0);
             DebugTools.Assert(!float.IsNaN(result));
             return result;
         }

@@ -5,6 +5,8 @@
   components:
   - type: Food
   - type: LoopingSound
+  - type: SolutionContainer
+    caps: NoExamine
   - type: Sprite
     state: icon
     netsync: false
@@ -27,7 +29,7 @@
   components:
   - type: Food
     trash: TrashRaisins
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -45,7 +47,7 @@
   id: FoodAesirSalad
   description: Probably too incredible for mortal men to fully enjoy.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -62,7 +64,7 @@
   id: FoodAmanitaPie
   description: Sweet and tasty poison pie.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -80,7 +82,7 @@
   components:
   - type: Food
     trash: TrashSnackBowl
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -97,7 +99,7 @@
 #  description:
 #  components:
 #  - type: Food
-#  - type: Solution
+#  - type: SolutionContainer
 #    uses: 1
 #  - type: Sprite
 #    sprite: Objects/Consumable/Food/ambrosiavulgariscrushed.rsi
@@ -112,7 +114,7 @@
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -128,7 +130,7 @@
   id: FoodApplePie
   description: A pie containing sweet sweet love... or apple.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -146,7 +148,7 @@
 #  description:
 #  components:
 #  - type: Food
-#  - type: Solution
+#  - type: SolutionContainer
 #    uses: 1
 #  - type: Sprite
 #    sprite: Objects/Consumable/Food/bacon.rsi
@@ -159,7 +161,7 @@
   id: FoodBadRecipe
   description: Someone should be demoted from chef for this.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -175,7 +177,7 @@
   id: FoodBaguette
   description: Bon appetit!
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -189,11 +191,11 @@
   name: bread (slice)
   parent: FoodBase
   id: FoodBreadSlice
-  description:
+  description: A slice of bread.
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -207,11 +209,11 @@
   name: banana bread (slice)
   parent: FoodBase
   id: FoodBananaBreadSlice
-  description:
+  description: A slice of delicious banana bread.
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -229,7 +231,8 @@
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: CreamPie
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -246,7 +249,7 @@
 #  description:
 #  components:
 #  - type: Food
-#  - type: Solution
+#  - type: SolutionContainer
 #    uses: 1
 #  - type: Sprite
 #    sprite: Objects/Consumable/Food/bearmeat.rsi
@@ -261,7 +264,7 @@
   components:
   - type: Food
     trash: TrashSnackBowl
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -279,7 +282,7 @@
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -297,7 +300,7 @@
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -315,7 +318,7 @@
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -329,11 +332,11 @@
   name: brain cake (slice)
   parent: FoodBase
   id: FoodBrainCakeSlice
-  description: ''
+  description: Braaains.
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -351,7 +354,7 @@
   components:
   - type: Food
     trash: TrashCandy
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -369,7 +372,7 @@
   id: FoodCandyCorn
   description: It's a handful of candy corn. Cannot be stored in a detective's hat, alas.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -387,7 +390,7 @@
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -405,7 +408,7 @@
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -423,7 +426,7 @@
   components:
   - type: Food
     trash: TrashSnackBowl
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -439,7 +442,7 @@
   id: FoodCheeseburger
   description: The cheese adds a good flavor.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -459,7 +462,7 @@
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -475,7 +478,7 @@
   id: FoodCheeseWedge
   description: A wedge of delicious Cheddar. The cheese wheel it was cut from can't have gone far.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -493,7 +496,7 @@
   components:
   - type: Food
     trash: TrashCheesieHonkers
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -511,7 +514,7 @@
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -527,7 +530,7 @@
   id: FoodCherryPie
   description: Taste so good, make a grown man cry.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -545,7 +548,7 @@
   components:
   - type: Food
     trash: TrashChips
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -565,7 +568,7 @@
   components:
   - type: Item
     size: 10
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -583,7 +586,7 @@
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -599,7 +602,7 @@
   id: FoodChocolateEgg
   description: Such sweet, fattening food.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -615,7 +618,7 @@
   id: FoodClownBurger
   description: This tastes funny...
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -633,7 +636,7 @@
   id: FoodClownsTears
   description: Not very funny.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -650,7 +653,7 @@
 #  description:
 #  components:
 #  - type: Food
-#  - type: Solution
+#  - type: SolutionContainer
 #    uses: 1
 #    restore_amount: 3
 #  - type: Sprite
@@ -666,7 +669,7 @@
   components:
   - type: Food
     trash: TrashSnackBowl
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -683,7 +686,7 @@
 #  description: ''
 #  components:
 #  - type: Food
-#  - type: Solution
+#  - type: SolutionContainer
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -697,7 +700,7 @@
   name: cookie!!!
   description: COOKIE!!!
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -713,7 +716,7 @@
   name: cracker
   description: It's a salted cracker.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -731,7 +734,7 @@
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -749,7 +752,7 @@
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -766,7 +769,7 @@
 #  description: ''
 #  components:
 #  - type: Food
-#  - type: Solution
+#  - type: SolutionContainer
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -780,7 +783,7 @@
   name: donk-pocket
   description: The food of choice for the seasoned traitor.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -796,7 +799,7 @@
   name: donut
   description: Goes great with Robust Coffee.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -814,7 +817,7 @@
   name: frosted donut
   description: Goes great with Robust Coffee.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -832,7 +835,7 @@
   name: egg-blue
   description: An egg!
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -850,7 +853,7 @@
   name: egg-green
   description: An egg!
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -868,7 +871,7 @@
   name: egg-mime
   description: An egg!
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -886,7 +889,7 @@
   name: egg-orange
   description: An egg!
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -904,7 +907,7 @@
   name: egg-purple
   description: An egg!
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -922,7 +925,7 @@
   name: egg-rainbow
   description: An egg!
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -940,7 +943,7 @@
   name: egg-red
   description: An egg!
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -959,7 +962,7 @@
   name: egg-yellow
   description: An egg!
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -977,7 +980,7 @@
   name: egg
   description: An egg!
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -997,7 +1000,7 @@
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1014,7 +1017,7 @@
 #  description: ''
 #  components:
 #  - type: Food
-#  - type: Solution
+#  - type: SolutionContainer
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -1030,7 +1033,7 @@
   components:
   - type: Food
     trash: TrashTray
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1047,7 +1050,7 @@
 #  description: ''
 #  components:
 #  - type: Food
-#  - type: Solution
+#  - type: SolutionContainer
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -1062,7 +1065,7 @@
 #  description: ''
 #  components:
 #  - type: Food
-#  - type: Solution
+#  - type: SolutionContainer
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -1076,7 +1079,7 @@
   name: fish and chips
   description: I do say so myself chap.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1092,7 +1095,7 @@
   name: fillet -o- carp sandwich
   description: Almost like a carp is yelling somewhere... Give me back that fillet -o- carp, give me that carp.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1111,7 +1114,7 @@
 #  description: ''
 #  components:
 #  - type: Food
-#  - type: Solution
+#  - type: SolutionContainer
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -1125,7 +1128,7 @@
   name: fish fingers
   description: A finger of fish.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1142,7 +1145,7 @@
 #  description: ''
 #  components:
 #  - type: Food
-#  - type: Solution
+#  - type: SolutionContainer
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -1156,7 +1159,7 @@
   name: fortune cookie
   description: A true prophecy in each cookie!
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1172,7 +1175,7 @@
   name: fried egg
   description: A fried egg, with a touch of salt and pepper.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1190,7 +1193,7 @@
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1208,7 +1211,7 @@
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1226,7 +1229,7 @@
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1242,7 +1245,7 @@
   name: human-burger
   description: A bloody burger.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1262,7 +1265,7 @@
   components:
   - type: Food
     trash: TrashSnackBowl
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1279,7 +1282,7 @@
 #  description: ''
 #  components:
 #  - type: Food
-#  - type: Solution
+#  - type: SolutionContainer
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -1295,7 +1298,7 @@
   components:
   - type: Food
     trash: TrashSnackBowl
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1311,7 +1314,7 @@
   name: hotdog
   description: Unrelated to dogs, maybe.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1328,7 +1331,7 @@
 #  description: ''
 #  components:
 #  - type: Food
-#  - type: Solution
+#  - type: SolutionContainer
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -1342,7 +1345,7 @@
   name: huge mushroom (slice)
   description: A slice from a huge mushroom.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1360,7 +1363,7 @@
   components:
   - type: Food
     # trash: TODO
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1376,7 +1379,7 @@
   name: jelly donut
   description: You jelly?
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1392,7 +1395,7 @@
   name: frosted jelly donut
   description: You jelly?
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1408,7 +1411,7 @@
   name: jelly burger
   description: Culinary delight..?
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1428,7 +1431,7 @@
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1446,7 +1449,7 @@
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1465,7 +1468,7 @@
   components:
   - type: Food
     # trash: TODO
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1482,7 +1485,7 @@
 #  description: ''
 #  components:
 #  - type: Food
-#  - type: Solution
+#  - type: SolutionContainer
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -1497,7 +1500,7 @@
 #  description: ''
 #  components:
 #  - type: Food
-#  - type: Solution
+#  - type: SolutionContainer
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -1513,7 +1516,7 @@
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1531,7 +1534,7 @@
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1547,7 +1550,7 @@
   name: liquidfood ration #\improper?
   description: A prepackaged grey slurry of all the essential nutrients for a spacefarer on the go. Should this be crunchy?
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1563,7 +1566,7 @@
   name: loaded baked potato
   description: Totally baked.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1579,7 +1582,7 @@
   name: meat
   description: A slab of meat.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1595,7 +1598,7 @@
   name: meatball
   description: A great meal all round.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1615,7 +1618,7 @@
   components:
   - type: Food
     trash: TrashSnackBowl
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1633,7 +1636,7 @@
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1651,7 +1654,7 @@
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1669,7 +1672,7 @@
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1685,7 +1688,7 @@
   name: meat pizza (slice)
   description: A slice of a meaty pizza.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1703,7 +1706,7 @@
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1721,7 +1724,7 @@
   components:
   - type: Food
     trash: TrashSnackBowl
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1737,7 +1740,7 @@
   name: mime burger
   description: Its taste defies language.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1753,7 +1756,7 @@
   name: mint
   description: It is only wafer thin.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1770,7 +1773,7 @@
 #  description: ''
 #  components:
 #  - type: Food
-#  - type: Solution
+#  - type: SolutionContainer
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -1784,7 +1787,7 @@
   name: monkey-burger
   description: The cornerstone of every nutritious breakfast.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1802,7 +1805,7 @@
   name: monkey cube
   description: Just add water!
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1820,7 +1823,7 @@
   components:
   - type: Food
     trash: TrashTray
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1837,7 +1840,7 @@
 #  description: ''
 #  components:
 #  - type: Food
-#  - type: Solution
+#  - type: SolutionContainer
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -1852,7 +1855,7 @@
 #  description: ''
 #  components:
 #  - type: Food
-#  - type: Solution
+#  - type: SolutionContainer
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -1866,7 +1869,7 @@
   name: mushroom pizza slice
   description: Maybe it is the last slice of pizza in your life.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1884,7 +1887,7 @@
   components:
   - type: Food
     trash: TrashSnackBowl
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1903,7 +1906,7 @@
   components:
   - type: Food
     trash: TrashSnackBowl
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1921,7 +1924,7 @@
   components:
   - type: Food
     trash: TrashSnackBowl
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1938,7 +1941,7 @@
 #  description: ''
 #  components:
 #  - type: Food
-#  - type: Solution
+#  - type: SolutionContainer
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -1954,7 +1957,7 @@
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1972,7 +1975,7 @@
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1990,7 +1993,7 @@
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2007,7 +2010,7 @@
 #  description: ''
 #  components:
 #  - type: Food
-#  - type: Solution
+#  - type: SolutionContainer
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -2021,7 +2024,7 @@
   name: plump helm biscuit
   description: This is a finely-prepared plump helmet biscuit. The ingredients are exceptionally minced plump helmet, and well-minced dwarven wheat flour.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2037,7 +2040,7 @@
   name: margherita pizza (slice)
   description: A slice of the classic pizza.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2055,7 +2058,7 @@
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2071,7 +2074,7 @@
   name: plump pie
   description: I bet you love stuff made out of plump helmets!
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2089,7 +2092,7 @@
   components:
   - type: Food
     trash: TrashPopcorn
-  - type: Solution
+  - type: SolutionContainer
     transfer_amount: 1
     contents:
       reagents:
@@ -2106,7 +2109,7 @@
   name: poppy pretzel
   description: It's all twisted up!
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2124,7 +2127,7 @@
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2142,7 +2145,7 @@
 #  description: ''
 #  components:
 #  - type: Food
-#  - type: Solution
+#  - type: SolutionContainer
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -2156,7 +2159,7 @@
   name: roburger
   description: The lettuce is the only organic component. Beep.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2174,7 +2177,7 @@
   components:
   - type: Food
     trash: TrashWaffles
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2191,7 +2194,7 @@
 #  description: ''
 #  components:
 #  - type: Food
-#  - type: Solution
+#  - type: SolutionContainer
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -2206,7 +2209,7 @@
 #  description: ''
 #  components:
 #  - type: Food
-#  - type: Solution
+#  - type: SolutionContainer
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -2222,7 +2225,7 @@
   components:
   - type: Food
     trash: TrashSnackBowl
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2240,7 +2243,7 @@
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2257,7 +2260,7 @@
 #  description: ''
 #  components:
 #  - type: Food
-#  - type: Solution
+#  - type: SolutionContainer
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -2272,7 +2275,7 @@
 #  description: ''
 #  components:
 #  - type: Food
-#  - type: Solution
+#  - type: SolutionContainer
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -2286,7 +2289,7 @@
   name: sausage  # sanga
   description: A piece of mixed, long meat.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2303,7 +2306,7 @@
 #  description: ''
 #  components:
 #  - type: Food
-#  - type: Solution
+#  - type: SolutionContainer
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -2318,7 +2321,7 @@
 #  description: ''
 #  components:
 #  - type: Food
-#  - type: Solution
+#  - type: SolutionContainer
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -2332,7 +2335,7 @@
   name: scaredy's private reserve beef jerky
   description: Beef jerky made from the finest space cows.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2353,7 +2356,7 @@
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2371,7 +2374,7 @@
   components:
   - type: Food
     trash: TrashWaffles
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2390,7 +2393,7 @@
   components:
   - type: Food
     trash: TrashWaffles
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2407,7 +2410,7 @@
 #  description: ''
 #  components:
 #  - type: Food
-#  - type: Solution
+#  - type: SolutionContainer
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -2421,7 +2424,7 @@
   name: space twinkie
   description: Guaranteed to survive longer then you will.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2439,7 +2442,7 @@
   components:
   - type: Food
     trash: TrashSnackBowl
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2455,7 +2458,7 @@
   name: spaghetti
   description: A bundle of raw spaghetti.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2471,7 +2474,7 @@
   name: spell burger
   description: This is absolutely Ei Nath.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2489,7 +2492,7 @@
   name: spesslaw
   description: A lawyers favourite
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2505,7 +2508,7 @@
   name: stew
   description: A nice and warm stew. Healthy and strong.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2523,7 +2526,7 @@
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2539,7 +2542,7 @@
   name: stuffing
   description: Moist, peppery breadcrumbs for filling the body cavities of dead birds. Dig in!
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2556,7 +2559,7 @@
 #  description: ''
 #  components:
 #  - type: Food
-#  - type: Solution
+#  - type: SolutionContainer
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -2571,7 +2574,7 @@
 #  description: ''
 #  components:
 #  - type: Food
-#  - type: Solution
+#  - type: SolutionContainer
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -2585,7 +2588,7 @@
   name: Super Bite Burger
   description: This is a mountain of a burger. FOOD!
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2603,7 +2606,7 @@
   components:
   - type: Food
     trash: TrashSyndiCakes
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2619,7 +2622,7 @@
   name: taco
   description: Take a bite!
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2637,7 +2640,7 @@
   components:
   - type: Food
     trash: TrashTastyBread
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2655,7 +2658,7 @@
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2671,7 +2674,7 @@
   name: tofu
   description: We all love tofu.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2689,7 +2692,7 @@
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2705,7 +2708,7 @@
   name: tofu burger
   description: What.. is that meat?
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2725,7 +2728,7 @@
   components:
   - type: Food
     # trash: TODO
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2741,7 +2744,7 @@
   name: tofurkey
   description: A fake turkey made from tofu.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2757,7 +2760,7 @@
   name: tomato slice
   description: A slice from a huge tomato
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2775,7 +2778,7 @@
   components:
   - type: Food
     trash: TrashSnackBowl
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2791,7 +2794,7 @@
   name: two bread
   description: It is very bitter and winy.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2809,7 +2812,7 @@
   components:
   - type: Food
     trash: TrashSnackBowl
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2825,7 +2828,7 @@
   name: vegetable pizza (slice)
   description: A slice of the most green pizza of all pizzas not containing green ingredients
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2843,7 +2846,7 @@
   components:
   - type: Food
     trash: TrashSnackBowl
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2861,7 +2864,7 @@
   components:
   - type: Food
     trash: TrashWaffles
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2877,7 +2880,7 @@
   name: watermelon (slice)
   description: A slice of watery goodness.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2895,7 +2898,7 @@
   components:
   - type: Food
     trash: TrashSnackBowl
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2913,7 +2916,7 @@
   components:
   - type: Food
     trash: TrashSnackBowl
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2929,7 +2932,7 @@
   name: xenoburger
   description: Smells caustic. Tastes like heresy.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2949,7 +2952,7 @@
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2965,7 +2968,7 @@
   name: xenomeat
   description: Yum.
   components:
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2983,7 +2986,7 @@
   components:
   - type: Food
     trash: TrashPlate
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -3001,7 +3004,7 @@
   components:
   - type: Food
     trash: TrashSnackBowl
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Bleach
@@ -3020,7 +3023,7 @@
   components:
   - type: Food
     trash: TrashSnackBowl
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -3038,7 +3041,7 @@
   components:
     - type: Food
       trash: TrashBananaPeel
-    - type: Solution
+    - type: SolutionContainer
       contents:
         reagents:
           - ReagentId: chem.Nutriment
@@ -3047,3 +3050,22 @@
       sprite: Objects/Consumable/Food/banana.rsi
     - type: Icon
       sprite: Objects/Consumable/Food/banana.rsi
+
+- type: entity
+  name: memory leek
+  parent: FoodBase
+  id: FoodMemoryLeek
+  description: It makes you irrationally angry just looking at it.
+  components:
+    - type: Food
+    - type: SolutionContainer
+      contents:
+        reagents:
+          - ReagentId: chem.Nutriment
+            Quantity: 9999999999
+    - type: Sprite
+      sprite: Objects/Consumable/Food/memoryleek.rsi
+      state: memoryLeek
+    - type: Icon
+      sprite: Objects/Consumable/Food/memoryleek.rsi
+      state: memoryLeek

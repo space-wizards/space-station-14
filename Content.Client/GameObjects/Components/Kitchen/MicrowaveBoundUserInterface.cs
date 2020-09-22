@@ -1,30 +1,28 @@
 ﻿using System;
-using Robust.Client.GameObjects.Components.UserInterface;
-using Content.Shared.Kitchen;
-using Robust.Shared.GameObjects.Components.UserInterface;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
-using Content.Shared.Chemistry;
-using Robust.Shared.GameObjects;
 using System.Collections.Generic;
-using Robust.Shared.Interfaces.GameObjects;
+using Content.Shared.Chemistry;
+using Content.Shared.Kitchen;
 using Robust.Client.GameObjects;
+using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.UserInterface;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.GameObjects.Components.Kitchen
 {
     public  class MicrowaveBoundUserInterface : BoundUserInterface
     {
-#pragma warning disable 649
-        [Dependency] private readonly IEntityManager _entityManager;
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-#pragma warning restore 649
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         private MicrowaveMenu _menu;
 
         private Dictionary<int, EntityUid> _solids = new Dictionary<int, EntityUid>();
@@ -79,15 +77,15 @@ namespace Content.Client.GameObjects.Components.Kitchen
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-            if (!(state is MicrowaveUpdateUserInterfaceState cstate))
+            if (!(state is MicrowaveUpdateUserInterfaceState cState))
             {
                 return;
             }
-            _menu.ToggleBusyDisableOverlayPanel(cstate.IsMicrowaveBusy);
-            RefreshContentsDisplay(cstate.ReagentQuantities, cstate.ContainedSolids);
-            var currentlySelectedTimeButton = (Button) _menu.CookTimeButtonVbox.GetChild(cstate.ActiveButtonIndex);
+            _menu.ToggleBusyDisableOverlayPanel(cState.IsMicrowaveBusy);
+            RefreshContentsDisplay(cState.ReagentQuantities, cState.ContainedSolids);
+            var currentlySelectedTimeButton = (Button) _menu.CookTimeButtonVbox.GetChild(cState.ActiveButtonIndex);
             currentlySelectedTimeButton.Pressed = true;
-            var label = cstate.ActiveButtonIndex <= 0 ? Loc.GetString("INSTANT") : cstate.CurrentCookTime.ToString();
+            var label = cState.ActiveButtonIndex <= 0 ? Loc.GetString("INSTANT") : cState.CurrentCookTime.ToString();
             _menu._cookTimeInfoLabel.Text = $"{Loc.GetString("COOK TIME")}: {label}";
         }
 

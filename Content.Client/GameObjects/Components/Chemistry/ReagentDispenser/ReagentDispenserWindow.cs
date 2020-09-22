@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using Content.Client.UserInterface;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.Components.Chemistry;
+using Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -12,15 +11,17 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using static Content.Shared.GameObjects.Components.Chemistry.SharedReagentDispenserComponent;
+using static Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser.SharedReagentDispenserComponent;
 
-namespace Content.Client.GameObjects.Components.Chemistry
+namespace Content.Client.GameObjects.Components.Chemistry.ReagentDispenser
 {
     /// <summary>
     /// Client-side UI used to control a <see cref="SharedReagentDispenserComponent"/>
     /// </summary>
     public class ReagentDispenserWindow : SS14Window
     {
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         /// <summary>Contains info about the reagent container such as it's contents, if one is loaded into the dispenser.</summary>
         private readonly VBoxContainer ContainerInfo;
 
@@ -51,11 +52,6 @@ namespace Content.Client.GameObjects.Components.Chemistry
         /// <summary>A grid of buttons for each reagent which can be dispensed.</summary>
         public GridContainer ChemicalList { get; }
 
-#pragma warning disable 649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-#pragma warning restore 649
-
         protected override Vector2? CustomSize => (500, 600);
 
         /// <summary>
@@ -77,7 +73,7 @@ namespace Content.Client.GameObjects.Components.Chemistry
                     {
                         Children =
                         {
-                            new Label {Text = _localizationManager.GetString("Amount")},
+                            new Label {Text = Loc.GetString("Amount")},
                             //Padding
                             new Control {CustomMinimumSize = (20, 0)},
                             (DispenseButton1 = new Button {Text = "1", Group = dispenseAmountGroup, StyleClasses = { StyleBase.ButtonOpenRight }}),
@@ -101,9 +97,9 @@ namespace Content.Client.GameObjects.Components.Chemistry
                     {
                         Children =
                         {
-                            new Label {Text = _localizationManager.GetString("Container: ")},
-                            (ClearButton = new Button {Text = _localizationManager.GetString("Clear"), StyleClasses = {StyleBase.ButtonOpenRight}}),
-                            (EjectButton = new Button {Text = _localizationManager.GetString("Eject"), StyleClasses = {StyleBase.ButtonOpenLeft}})
+                            new Label {Text = Loc.GetString("Container: ")},
+                            (ClearButton = new Button {Text = Loc.GetString("Clear"), StyleClasses = {StyleBase.ButtonOpenRight}}),
+                            (EjectButton = new Button {Text = Loc.GetString("Eject"), StyleClasses = {StyleBase.ButtonOpenLeft}})
                         }
                     },
                     //Wrap the container info in a PanelContainer so we can color it's background differently.
@@ -126,7 +122,7 @@ namespace Content.Client.GameObjects.Components.Chemistry
                                 {
                                     new Label
                                     {
-                                        Text = _localizationManager.GetString("No container loaded.")
+                                        Text = Loc.GetString("No container loaded.")
                                     }
                                 }
                             }),
@@ -156,7 +152,30 @@ namespace Content.Client.GameObjects.Components.Chemistry
                 }
                 else
                 {
-                    ChemicalList.AddChild(new Button {Text = _localizationManager.GetString("Reagent name not found")});
+                    ChemicalList.AddChild(new Button {Text = Loc.GetString("Reagent name not found")});
+                }
+            }
+        }
+
+        /// <summary>
+        /// This searches recursively through all the children of "parent"
+        /// and sets the Disabled value of any buttons found to "val"
+        /// </summary>
+        /// <param name="parent">The control which childrens get searched</param>
+        /// <param name="val">The value to which disabled gets set</param>
+        private void SetButtonDisabledRecursive(Control parent, bool val)
+        {
+            foreach (var child in parent.Children)
+            {
+                if (child is Button but)
+                {
+                    but.Disabled = val;
+                    continue;
+                }
+
+                if (child.Children != null)
+                {
+                    SetButtonDisabledRecursive(child, val);
                 }
             }
         }
@@ -170,6 +189,20 @@ namespace Content.Client.GameObjects.Components.Chemistry
             var castState = (ReagentDispenserBoundUserInterfaceState) state;
             Title = castState.DispenserName;
             UpdateContainerInfo(castState);
+
+            // Disable all buttons if not powered
+            if (Contents.Children != null)
+            {
+                SetButtonDisabledRecursive(Contents, !castState.HasPower);
+                EjectButton.Disabled = false;
+            }
+
+            // Disable the Clear & Eject button if no beaker
+            if (!castState.HasBeaker)
+            {
+                ClearButton.Disabled = true;
+                EjectButton.Disabled = true;
+            }
 
             switch (castState.SelectedDispenseAmount.Int())
             {
@@ -207,7 +240,7 @@ namespace Content.Client.GameObjects.Components.Chemistry
 
             if (!state.HasBeaker)
             {
-                ContainerInfo.Children.Add(new Label {Text = _localizationManager.GetString("No container loaded.")});
+                ContainerInfo.Children.Add(new Label {Text = Loc.GetString("No container loaded.")});
                 return;
             }
 
@@ -231,7 +264,7 @@ namespace Content.Client.GameObjects.Components.Chemistry
 
             foreach (var reagent in state.ContainerReagents)
             {
-                var name = _localizationManager.GetString("Unknown reagent");
+                var name = Loc.GetString("Unknown reagent");
                 //Try to the prototype for the given reagent. This gives us it's name.
                 if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype proto))
                 {

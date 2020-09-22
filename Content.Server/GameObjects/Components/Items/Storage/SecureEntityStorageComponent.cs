@@ -1,8 +1,7 @@
 ﻿using Content.Server.GameObjects.Components.Access;
-using Content.Server.Interfaces;
-using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -11,7 +10,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -126,8 +124,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             {
                 if (!reader.IsAllowed(user))
                 {
-                    IoCManager.Resolve<IServerNotifyManager>()
-                        .PopupMessage(Owner, user, Loc.GetString("Access denied"));
+                    Owner.PopupMessage(user, Loc.GetString("Access denied"));
                     return true;
                 }
             }
@@ -146,7 +143,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                     return;
                 }
 
-                data.Text = component.Locked ? Loc.GetString("Unlock") : Loc.GetString("Lock");
+                data.Text = Loc.GetString(component.Locked ? "Unlock" : "Lock");
             }
 
             protected override void Activate(IEntity user, SecureEntityStorageComponent component)

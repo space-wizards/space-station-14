@@ -36,6 +36,9 @@
   - listplayers
   - loc
   - hostlogin
+  - events
+  - factions
+  CanAdminMenu: true
 
 - Index: 100
   Name: Administrator
@@ -88,8 +91,25 @@
   - mapping
   - addhand
   - removehand
+  - tilepry
+  - anchor
+  - unanchor
+  - tubeconnections
+  - tilewalls
+  - events
+  - destroymechanism
+  - addaccent
+  - readyall
+  - factions
+  - signallink
+  - adddamageflag
+  - removedamageflag
+  - godmode
+  - deleteewi
+  - hurt
   CanViewVar: true
   CanAdminPlace: true
+  CanAdminMenu: true
 
 - Index: 200
   Name: Host
@@ -163,6 +183,32 @@
   - mapping
   - addhand
   - removehand
+  - tilepry
+  - anchor
+  - unanchor
+  - tubeconnections
+  - addatmos
+  - addgas
+  - fillgas
+  - listgases
+  - removegas
+  - settemp
+  - setatmostemp
+  - deletegas
+  - showatmos
+  - tilewalls
+  - events
+  - destroymechanism
+  - addaccent
+  - readyall
+  - factions
+  - signallink
+  - adddamageflag
+  - removedamageflag
+  - godmode
+  - deleteewi
+  - hurt
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true
+  CanAdminMenu: true

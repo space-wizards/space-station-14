@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using Content.Server.AI.Utility.Actions;
 using Content.Server.AI.Utility.Actions.Clothing.OuterClothing;
+using Content.Server.AI.Utility.Considerations;
+using Content.Server.AI.Utility.Considerations.Clothing;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Content.Server.AI.WorldState.States.Inventory;
-using Content.Server.GameObjects;
-using Content.Server.GameObjects.Components.Movement;
+using Content.Server.GameObjects.Components.Items.Clothing;
 using Content.Shared.GameObjects.Components.Inventory;
+using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.ExpandableActions.Clothing.OuterClothing
 {
@@ -17,6 +19,17 @@ namespace Content.Server.AI.Utility.ExpandableActions.Clothing.OuterClothing
     public sealed class EquipAnyOuterClothingExp : ExpandableUtilityAction
     {
         public override float Bonus => UtilityAction.NormalBonus;
+
+        protected override IEnumerable<Func<float>> GetCommonConsiderations(Blackboard context)
+        {
+            var considerationsManager = IoCManager.Resolve<ConsiderationsManager>();
+
+            return new[]
+            {
+                considerationsManager.Get<ClothingInSlotCon>().Slot(EquipmentSlotDefines.Slots.OUTERCLOTHING, context)
+                    .InverseBoolCurve(context),
+            };
+        }
 
         public override IEnumerable<UtilityAction> GetActions(Blackboard context)
         {

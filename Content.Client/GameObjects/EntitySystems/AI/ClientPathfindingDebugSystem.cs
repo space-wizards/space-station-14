@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.AI;
@@ -136,7 +136,7 @@ namespace Content.Client.GameObjects.EntitySystems.AI
                 var systemMessage = new SharedAiDebug.RequestPathfindingGraphMessage();
                 EntityManager.EntityNetManager.SendSystemNetworkMessage(systemMessage);
             }
-            
+
             // TODO: Request region graph, although the client system messages didn't seem to be going through anymore
             // So need further investigation.
         }
@@ -171,30 +171,31 @@ namespace Content.Client.GameObjects.EntitySystems.AI
     {
         private IEyeManager _eyeManager;
         private IPlayerManager _playerManager;
-        
+
         // TODO: Add a box like the debug one and show the most recent path stuff
         public override OverlaySpace Space => OverlaySpace.ScreenSpace;
+        private readonly ShaderInstance _shader;
 
         public PathfindingDebugMode Modes { get; set; } = PathfindingDebugMode.None;
 
         // Graph debugging
         public readonly Dictionary<int, List<Vector2>> Graph = new Dictionary<int, List<Vector2>>();
         private readonly Dictionary<int, Color> _graphColors = new Dictionary<int, Color>();
-        
+
         // Cached regions
-        public readonly Dictionary<GridId, Dictionary<int, List<Vector2>>> CachedRegions = 
+        public readonly Dictionary<GridId, Dictionary<int, List<Vector2>>> CachedRegions =
                     new Dictionary<GridId, Dictionary<int, List<Vector2>>>();
-        
-        private readonly Dictionary<GridId, Dictionary<int, Color>> _cachedRegionColors = 
+
+        private readonly Dictionary<GridId, Dictionary<int, Color>> _cachedRegionColors =
                      new Dictionary<GridId, Dictionary<int, Color>>();
-        
+
         // Regions
-        public readonly Dictionary<GridId, Dictionary<int, Dictionary<int, List<Vector2>>>> Regions = 
+        public readonly Dictionary<GridId, Dictionary<int, Dictionary<int, List<Vector2>>>> Regions =
                     new Dictionary<GridId, Dictionary<int, Dictionary<int, List<Vector2>>>>();
-        
-        private readonly Dictionary<GridId, Dictionary<int, Dictionary<int, Color>>> _regionColors = 
+
+        private readonly Dictionary<GridId, Dictionary<int, Dictionary<int, Color>>> _regionColors =
                      new Dictionary<GridId, Dictionary<int, Dictionary<int, Color>>>();
-        
+
         // Route debugging
         // As each pathfinder is very different you'll likely want to draw them completely different
         public readonly List<SharedAiDebug.AStarRouteMessage> AStarRoutes = new List<SharedAiDebug.AStarRouteMessage>();
@@ -202,7 +203,7 @@ namespace Content.Client.GameObjects.EntitySystems.AI
 
         public DebugPathfindingOverlay() : base(nameof(DebugPathfindingOverlay))
         {
-            Shader = IoCManager.Resolve<IPrototypeManager>().Index<ShaderPrototype>("unshaded").Instance();
+            _shader = IoCManager.Resolve<IPrototypeManager>().Index<ShaderPrototype>("unshaded").Instance();
             _eyeManager = IoCManager.Resolve<IEyeManager>();
             _playerManager = IoCManager.Resolve<IPlayerManager>();
         }
@@ -251,7 +252,7 @@ namespace Content.Client.GameObjects.EntitySystems.AI
                 CachedRegions.Add(gridId, new Dictionary<int, List<Vector2>>());
                 _cachedRegionColors.Add(gridId, new Dictionary<int, Color>());
             }
-            
+
             foreach (var (region, nodes) in messageRegions)
             {
                 CachedRegions[gridId][region] = nodes;
@@ -263,7 +264,7 @@ namespace Content.Client.GameObjects.EntitySystems.AI
                 {
                     _cachedRegionColors[gridId][region] = Color.Green.WithAlpha(0.3f);
                 }
-                
+
                 Timer.Spawn(3000, () =>
                 {
                     if (CachedRegions[gridId].ContainsKey(region))
@@ -295,12 +296,12 @@ namespace Content.Client.GameObjects.EntitySystems.AI
                         screenTile.Y - 15.0f,
                         screenTile.X + 15.0f,
                         screenTile.Y + 15.0f);
-                        
+
                     screenHandle.DrawRect(box, _cachedRegionColors[attachedEntity.Transform.GridID][region]);
                 }
             }
         }
-        
+
         public void UpdateRegions(GridId gridId, Dictionary<int, Dictionary<int, List<Vector2>>> messageRegions)
         {
             if (!Regions.ContainsKey(gridId))
@@ -308,13 +309,13 @@ namespace Content.Client.GameObjects.EntitySystems.AI
                 Regions.Add(gridId, new Dictionary<int, Dictionary<int, List<Vector2>>>());
                 _regionColors.Add(gridId, new Dictionary<int, Dictionary<int, Color>>());
             }
-            
+
             var robustRandom = IoCManager.Resolve<IRobustRandom>();
             foreach (var (chunk, regions) in messageRegions)
             {
                 Regions[gridId][chunk] = new Dictionary<int, List<Vector2>>();
                 _regionColors[gridId][chunk] = new Dictionary<int, Color>();
-                
+
                 foreach (var (region, nodes) in regions)
                 {
                     Regions[gridId][chunk].Add(region, nodes);
@@ -323,7 +324,7 @@ namespace Content.Client.GameObjects.EntitySystems.AI
                 }
             }
         }
-        
+
         private void DrawRegions(DrawingHandleScreen screenHandle, Box2 viewport)
         {
             var attachedEntity = _playerManager.LocalPlayer?.ControlledEntity;
@@ -346,7 +347,7 @@ namespace Content.Client.GameObjects.EntitySystems.AI
                             screenTile.Y - 15.0f,
                             screenTile.X + 15.0f,
                             screenTile.Y + 15.0f);
-                        
+
                         screenHandle.DrawRect(box, _regionColors[attachedEntity.Transform.GridID][chunk][region]);
                     }
                 }
@@ -379,7 +380,7 @@ namespace Content.Client.GameObjects.EntitySystems.AI
         {
             foreach (var route in AStarRoutes)
             {
-                var highestgScore = route.GScores.Values.Max();
+                var highestGScore = route.GScores.Values.Max();
 
                 foreach (var (tile, score) in route.GScores)
                 {
@@ -398,8 +399,8 @@ namespace Content.Client.GameObjects.EntitySystems.AI
 
                     screenHandle.DrawRect(box, new Color(
                         0.0f,
-                        score / highestgScore,
-                        1.0f - (score / highestgScore),
+                        score / highestGScore,
+                        1.0f - (score / highestGScore),
                         0.1f));
                 }
             }
@@ -455,13 +456,14 @@ namespace Content.Client.GameObjects.EntitySystems.AI
 
         #endregion
 
-        protected override void Draw(DrawingHandleBase handle)
+        protected override void Draw(DrawingHandleBase handle, OverlaySpace currentSpace)
         {
             if (Modes == 0)
             {
                 return;
             }
 
+            handle.UseShader(_shader);
             var screenHandle = (DrawingHandleScreen) handle;
             var viewport = _eyeManager.GetWorldViewport();
 

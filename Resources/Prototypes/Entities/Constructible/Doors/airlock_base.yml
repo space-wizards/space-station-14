@@ -4,6 +4,7 @@
   description: It opens, it closes, and maybe crushes you.
   components:
   - type: Clickable
+  - type: RCDDeconstructWhitelist
   - type: InteractionOutline
   - type: Sprite
     netsync: false
@@ -15,6 +16,8 @@
     - state: closed_unlit
       shader: unshaded
       map: ["enum.DoorVisualLayers.BaseUnlit"]
+    - state: welded
+      map: ["enum.DoorVisualLayers.BaseWelded"]
     - state: bolted
       shader: unshaded
       map: ["enum.DoorVisualLayers.BaseBolted"]
@@ -51,9 +54,14 @@
     interfaces:
     - key: enum.WiresUiKey.Key
       type: WiresBoundUserInterface
+  - type: Airtight
+    fixVacuum: true
   - type: Occluder
   - type: SnapGrid
     offset: Center
+  - type: Destructible
+    deadThreshold: 500
+    resistances: metallicResistances
   placement:
     mode: SnapgridCenter
 

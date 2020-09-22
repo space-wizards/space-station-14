@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameObjects.Components;
 using Content.Client.Interfaces;
-using Content.Client.Utility;
 using Content.Shared;
-using Content.Shared.Jobs;
-using Content.Shared.Antags;
 using Content.Shared.Preferences;
+using Content.Shared.Roles;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -18,7 +16,6 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using static Content.Client.StaticIoC;
 
 namespace Content.Client.UserInterface
 {

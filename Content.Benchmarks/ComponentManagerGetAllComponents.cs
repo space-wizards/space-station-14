@@ -1,5 +1,4 @@
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using BenchmarkDotNet.Attributes;
 using Moq;
 using Robust.Shared.Exceptions;
@@ -80,7 +79,7 @@ namespace Content.Benchmarks
         {
             var count = 0;
 
-            foreach (var _ in _componentManager.GetAllComponents<DummyComponent>())
+            foreach (var _ in _componentManager.EntityQuery<DummyComponent>())
             {
                 count += 1;
             }

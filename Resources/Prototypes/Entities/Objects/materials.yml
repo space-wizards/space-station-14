@@ -67,9 +67,11 @@
     count: 1
 
 - type: entity
-  id: CableStack
   abstract: true
   parent: BaseItem
+  id: CableStack1
+  name: cable stack 1
+  suffix: Full
   components:
   - type: Stack
     stacktype: enum.StackType.Cable
@@ -79,21 +81,11 @@
     texture: Objects/Tools/cable_coil.png
   - type: WirePlacer
   - type: Clickable
-    bounds:
-      all: -0.15,-0.15,0.15,0.15
 
 - type: entity
-  id: CableStack1
-  name: cable stack 1
-  parent: CableStack
-  components:
-  - type: Stack
-    count: 1
-
-- type: entity
+  parent: CableStack1
   id: HVWireStack
   name: HV Wire Coil
-  parent: CableStack
   components:
   - type: Sprite
     color: Orange
@@ -102,9 +94,9 @@
     blockingWireType: HighVoltage
 
 - type: entity
+  parent: CableStack1
   id: MVWireStack
   name: MV Wire Coil
-  parent: CableStack
   components:
   - type: Sprite
     color: Yellow
@@ -113,40 +105,40 @@
     blockingWireType: MediumVoltage
 
 - type: entity
+  parent: CableStack1
   id: ApcExtensionCableStack
   name: Apc Extension Cable Coil
-  parent: CableStack
   components:
   - type: Sprite
     color: Green
   - type: WirePlacer
     wirePrototypeID: ApcExtensionCable
     blockingWireType: Apc
-    
+
 - type: entity
-  id: HVWireStack1
-  name: HV Wire stack 1
   parent: HVWireStack
+  id: HVWireStack1
+  suffix: 1
   components:
   - type: Stack
     count: 1
-    
+
 - type: entity
-  id: MVWireStack1
-  name: MV Wire stack 1
   parent: MVWireStack
+  id: MVWireStack1
+  suffix: 1
   components:
   - type: Stack
     count: 1
-    
+
 - type: entity
-  id: ApcExtensionCableStack1
-  name: Apc Extension Cable stack 1
   parent: ApcExtensionCableStack
+  id: ApcExtensionCableStack1
+  suffix: 1
   components:
   - type: Stack
     count: 1
-  
+
 - type: entity
   name: gold bar
   id: GoldStack
@@ -209,3 +201,13 @@
   components:
   - type: Stack
     count: 1
+
+- type: entity
+  name: wood plank
+  id: WoodPlank
+  parent: BaseItem
+  components:
+  - type: Sprite
+    texture: Objects/Materials/wood.png
+  - type: Icon
+    texture: Objects/Materials/wood.png

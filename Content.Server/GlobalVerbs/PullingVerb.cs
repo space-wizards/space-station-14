@@ -1,9 +1,9 @@
-using Content.Server.GameObjects.Components.GUI;
+﻿using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Movement;
-using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Physics;
+using Content.Shared.GameObjects.Verbs;
+using Content.Shared.Physics.Pull;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
@@ -30,7 +30,7 @@ namespace Content.Server.GlobalVerbs
                 return;
             }
 
-            var dist = user.Transform.GridPosition.Position - target.Transform.GridPosition.Position;
+            var dist = user.Transform.Coordinates.Position - target.Transform.Coordinates.Position;
             if (dist.LengthSquared > SharedInteractionSystem.InteractionRangeSquared)
             {
                 return;
@@ -38,7 +38,8 @@ namespace Content.Server.GlobalVerbs
 
             if (!user.HasComponent<ISharedHandsComponent>() ||
                 !user.TryGetComponent(out ICollidableComponent userCollidable) ||
-                !target.TryGetComponent(out ICollidableComponent targetCollidable))
+                !target.TryGetComponent(out ICollidableComponent targetCollidable) ||
+                targetCollidable.Anchored)
             {
                 return;
             }
@@ -55,6 +56,7 @@ namespace Content.Server.GlobalVerbs
         {
             if (!user.TryGetComponent(out ICollidableComponent userCollidable) ||
                 !target.TryGetComponent(out ICollidableComponent targetCollidable) ||
+                targetCollidable.Anchored ||
                 !target.TryGetComponent(out PullableComponent pullable) ||
                 !user.TryGetComponent(out HandsComponent hands))
             {

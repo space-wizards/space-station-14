@@ -1,0 +1,45 @@
+﻿- type: entity
+  abstract: true
+  id: PipeBase
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: SnapGrid
+    offset: Center
+  - type: Sprite
+  - type: Destructible
+    thresholdvalue: 100
+    resistances: metallicResistances
+  - type: Appearance
+    visuals:
+    - type: PipeVisualizer
+      pipeRSI: Constructible/Atmos/pipe.rsi
+
+- type: entity
+  parent: PipeBase
+  id: FourwayPipe
+  name: Fourway Pipe
+  components:
+  - type: Icon
+    texture: Constructible/Atmos/pipe.rsi/pipeFourway2.png
+  - type: NodeContainer
+    nodes:
+    - !type:PipeNode
+      nodeGroupID: Pipe
+      pipeDirection: Fourway
+
+- type: entity
+  parent: PipeBase
+  id: LongitudinalPipe
+  name: Longitudinal Pipe
+  components:
+  - type: Icon
+    texture: Constructible/Atmos/pipe.rsi/pipeLongitudinal2.png
+  - type: NodeContainer
+    nodes:
+    - !type:PipeNode
+      nodeGroupID: Pipe
+      pipeDirection: Longitudinal

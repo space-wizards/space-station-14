@@ -1,14 +1,19 @@
 ﻿#nullable enable
+using Content.Server.GameObjects.Components.Medical;
 using Content.Server.GameObjects.Components.Observer;
-using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs;
+using Content.Server.Utility;
+using Content.Shared.GameObjects.Components;
+using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.EntitySystems;
+using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
-using Robust.Shared.Map;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
 using Robust.Shared.Utility;
@@ -49,6 +54,45 @@ namespace Content.Server.GameObjects.Components.Mobs
             set => _showExamineInfo = value;
         }
 
+        [ViewVariables]
+        private BoundUserInterface? UserInterface =>
+            Owner.GetUIOrNull(SharedAcceptCloningComponent.AcceptCloningUiKey.Key);
+
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            Owner.EntityManager.EventBus.SubscribeEvent<CloningPodComponent.CloningStartedMessage>(
+                EventSource.Local, this,
+                HandleCloningStartedMessage);
+
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += OnUiAcceptCloningMessage;
+            }
+        }
+
+        private void HandleCloningStartedMessage(CloningPodComponent.CloningStartedMessage ev)
+        {
+            if (ev.CapturedMind == Mind)
+            {
+                UserInterface?.Open(Mind.Session);
+            }
+        }
+
+        private void OnUiAcceptCloningMessage(ServerBoundUserInterfaceMessage obj)
+        {
+            if (!(obj.Message is SharedAcceptCloningComponent.UiButtonPressedMessage message)) return;
+            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new GhostComponent.GhostReturnMessage(Mind));
+        }
+
+        public override void OnRemove()
+        {
+            base.OnRemove();
+            Owner.EntityManager.EventBus.UnsubscribeEvent<CloningPodComponent.CloningStartedMessage>(EventSource.Local, this);
+            if (UserInterface != null) UserInterface.OnReceiveMessage -= OnUiAcceptCloningMessage;
+        }
+
         /// <summary>
         ///     Don't call this unless you know what the hell you're doing.
         ///     Use <see cref="Mind.TransferTo(IEntity)"/> instead.
@@ -78,7 +122,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                 var visiting = Mind?.VisitingEntity;
                 if (visiting != null)
                 {
-                    if (visiting.TryGetComponent(out GhostComponent ghost))
+                    if (visiting.TryGetComponent(out GhostComponent? ghost))
                     {
                         ghost.CanReturnToBody = false;
                     }
@@ -87,13 +131,14 @@ namespace Content.Server.GameObjects.Components.Mobs
                 }
                 else
                 {
-                    var spawnPosition = Owner.Transform.GridPosition;
+                    var spawnPosition = Owner.Transform.Coordinates;
                     Timer.Spawn(0, () =>
                     {
                         // Async this so that we don't throw if the grid we're on is being deleted.
                         var mapMan = IoCManager.Resolve<IMapManager>();
 
-                        if (spawnPosition.GridID == GridId.Invalid || !mapMan.GridExists(spawnPosition.GridID))
+                        var gridId = spawnPosition.GetGridId(Owner.EntityManager);
+                        if (gridId == GridId.Invalid || !mapMan.GridExists(gridId))
                         {
                             spawnPosition = IoCManager.Resolve<IGameTicker>().GetObserverSpawnPoint();
                         }
@@ -126,18 +171,25 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
 
             var dead =
-                Owner.TryGetComponent<SpeciesComponent>(out var species) &&
-                species.CurrentDamageState is DeadState;
+                Owner.TryGetComponent<IDamageableComponent>(out var damageable) &&
+                damageable.CurrentDamageState == DamageState.Dead;
 
             if (!HasMind)
             {
-                message.AddMarkup(!dead
-                    ? $"[color=red]" + Loc.GetString("{0:They} are totally catatonic. The stresses of life in deep-space must have been too much for {0:them}. Any recovery is unlikely.", Owner) + "[/color]"
-                    : $"[color=purple]" + Loc.GetString("{0:Their} soul has departed.", Owner) + "[/color]");
+                var aliveText =
+                    $"[color=red]{Loc.GetString("{0:They} {0:are} totally catatonic. The stresses of life in deep-space must have been too much for {0:them}. Any recovery is unlikely.", Owner)}[/color]";
+                var deadText = $"[color=purple]{Loc.GetString("{0:Their} soul has departed.", Owner)}[/color]";
+
+                message.AddMarkup(dead ? deadText : aliveText);
             }
             else if (Mind?.Session == null)
             {
-                message.AddMarkup("[color=yellow]" + Loc.GetString("{0:They} have a blank, absent-minded stare and appears completely unresponsive to anything. {0:They} may snap out of it soon.", Owner) + "[/color]");
+                if (dead) return;
+
+                var text =
+                    $"[color=yellow]{Loc.GetString("{0:They} {0:have} a blank, absent-minded stare and appears completely unresponsive to anything. {0:They} may snap out of it soon.", Owner)}[/color]";
+
+                message.AddMarkup(text);
             }
         }
     }

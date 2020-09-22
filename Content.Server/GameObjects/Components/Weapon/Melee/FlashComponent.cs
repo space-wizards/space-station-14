@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -13,20 +13,16 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timers;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameObjects.Components.Weapon.Melee
 {
     [RegisterComponent]
     public class FlashComponent : MeleeWeaponComponent, IUse, IExamine
     {
-#pragma warning disable 649
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-        [Dependency] private readonly IEntityManager _entityManager;
-        [Dependency] private readonly ISharedNotifyManager _notifyManager;
-#pragma warning restore 649
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public override string Name => "Flash";
 
@@ -87,7 +83,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 return false;
             }
 
-            foreach (var entity in _entityManager.GetEntitiesInRange(Owner.Transform.GridPosition, _range))
+            foreach (var entity in _entityManager.GetEntitiesInRange(Owner.Transform.Coordinates, _range))
             {
                 Flash(entity, eventArgs.User, _aoeFlashDuration);
             }
@@ -104,7 +100,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 {
                     sprite.LayerSetState(0, "burnt");
 
-                    _notifyManager.PopupMessage(Owner, user, Loc.GetString("The flash burns out!"));
+                    Owner.PopupMessage(user, Loc.GetString("The flash burns out!"));
                 }
                 else if (!_flashing)
                 {
@@ -118,7 +114,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                     });
                 }
 
-                EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Weapons/flash.ogg", Owner.Transform.GridPosition,
+                EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Weapons/flash.ogg", Owner.Transform.Coordinates,
                     AudioParams.Default);
 
                 return true;
@@ -158,7 +154,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
             if (entity != user)
             {
-                _notifyManager.PopupMessage(user, entity, Loc.GetString("{0:TheName} blinds you with {1:theName}", user, Owner));
+                user.PopupMessage(entity, Loc.GetString("{0:TheName} blinds you with {1:theName}", user, Owner));
             }
         }
 
@@ -173,10 +169,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             if (inDetailsRange)
             {
                 message.AddMarkup(
-                    _localizationManager.GetString(
+                    Loc.GetString(
                         "The flash has [color=green]{0}[/color] {1} remaining.",
                         Uses,
-                        _localizationManager.GetPluralString("use", "uses", Uses)
+                        Loc.GetPluralString("use", "uses", Uses)
                     )
                 );
             }
