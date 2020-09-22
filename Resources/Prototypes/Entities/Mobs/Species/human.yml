@@ -112,6 +112,10 @@
       sprite: Mobs/Customization/human_hair.rsi
     - map: ["enum.Slots.MASK"]
     - map: ["enum.Slots.HEAD"]
+    - map: ["enum.CreamPiedVisualLayers.Pie"]
+      sprite: Effects/creampie.rsi
+      state: creampie_human
+      visible: false
     - map: ["enum.FireVisualLayers.Fire"]
       sprite: Mobs/Effects/onfire.rsi
       state: Generic_mob_burning
@@ -170,6 +174,7 @@
       normalState: Generic_mob_burning
       alternateState: Standing
       fireStackAlternateState: 3
+    - type: CreamPiedVisualizer
   - type: CombatMode
   - type: Climbing
   - type: Cuffable
@@ -187,6 +192,7 @@
     proper: true
   - type: Pullable
   - type: DoAfter
+  - type: CreamPied
   - type: Strippable
   - type: UserInterface
     interfaces:

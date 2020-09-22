@@ -35,5 +35,5 @@
     - !type:PipeNode
       nodeGroID: Pipe
       pipeDirection: South
-  - type: DebugSiphon
+  - type: PressureSiphon
     scrubberOutletDirection: South

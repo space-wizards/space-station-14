@@ -27,7 +27,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Fluids
 {
     [RegisterComponent]
-    class SprayComponent : SharedSprayComponent, IAfterInteract, IUse, IActivate
+    class SprayComponent : SharedSprayComponent, IAfterInteract, IUse, IActivate, IDropped
     {
         public const float SprayDistance = 3f;
 
@@ -209,6 +209,12 @@ namespace Content.Server.GameObjects.Components.Fluids
             _safety = state;
 
             if(Owner.TryGetComponent(out AppearanceComponent appearance))
+                appearance.SetData(SprayVisuals.Safety, _safety);
+        }
+
+        public void Dropped(DroppedEventArgs eventArgs)
+        {
+            if(_hasSafety && Owner.TryGetComponent(out AppearanceComponent appearance))
                 appearance.SetData(SprayVisuals.Safety, _safety);
         }
     }
