@@ -116,6 +116,10 @@
       sprite: Effects/creampie.rsi
       state: creampie_human
       visible: false
+    - map: ["enum.FireVisualLayers.Fire"]
+      sprite: Mobs/Effects/onfire.rsi
+      state: Generic_mob_burning
+      visible: false
   - type: Icon
     sprite: Mobs/Species/Human/parts.rsi
     state: full
@@ -133,6 +137,9 @@
       - Opaque
       - MobImpassable
   - type: AtmosExposed
+  - type: Flammable
+    fireSpread: true
+    canResistFire: true
   - type: Temperature
     heatDamageThreshold: 360
     coldDamageThreshold: 260
@@ -163,6 +170,10 @@
     visuals:
     - type: RotationVisualizer
     - type: BuckleVisualizer
+    - type: FireVisualizer
+      normalState: Generic_mob_burning
+      alternateState: Standing
+      fireStackAlternateState: 3
     - type: CreamPiedVisualizer
   - type: CombatMode
   - type: Climbing

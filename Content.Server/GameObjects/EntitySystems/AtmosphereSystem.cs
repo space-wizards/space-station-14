@@ -7,9 +7,11 @@ using Content.Server.Atmos.Reactions;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects.EntitySystems.TileLookup;
 using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Map;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
@@ -29,6 +31,7 @@ namespace Content.Server.GameObjects.EntitySystems
         private GasReactionPrototype[] _gasReactions = Array.Empty<GasReactionPrototype>();
 
         private SpaceGridAtmosphereComponent _spaceAtmos = default!;
+        private GridTileLookupSystem? _gridTileLookup = null;
 
         /// <summary>
         ///     List of gas reactions ordered by priority.
@@ -39,6 +42,8 @@ namespace Content.Server.GameObjects.EntitySystems
         ///     EventBus reference for gas reactions.
         /// </summary>
         public IEventBus EventBus => _entityManager.EventBus;
+
+        public GridTileLookupSystem GridTileLookupSystem => _gridTileLookup ??= Get<GridTileLookupSystem>();
 
         public override void Initialize()
         {

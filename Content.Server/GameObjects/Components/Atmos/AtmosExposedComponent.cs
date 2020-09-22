@@ -5,7 +5,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.GameObjects.Components.Atmos
 {
     /// <summary>
-    /// Represents that entity can be exposed to Atmo
+    /// Represents that entity can be exposed to Atmos
     /// </summary>
     [RegisterComponent]
     public class AtmosExposedComponent
@@ -13,7 +13,7 @@ namespace Content.Server.GameObjects.Components.Atmos
     {
         public override string Name => "AtmosExposed";
 
-        public void Update(TileAtmosphere tile, float timeDelta)
+        public void Update(TileAtmosphere tile, float frameDelta)
         {
             if (Owner.TryGetComponent<TemperatureComponent>(out var temperatureComponent))
             {
@@ -31,6 +31,10 @@ namespace Content.Server.GameObjects.Components.Atmos
                 barotraumaComponent.Update(tile.Air?.Pressure ?? 0);
             }
 
+            if (Owner.TryGetComponent<FlammableComponent>(out var flammableComponent))
+            {
+                flammableComponent.Update(tile);
+            }
         }
 
     }

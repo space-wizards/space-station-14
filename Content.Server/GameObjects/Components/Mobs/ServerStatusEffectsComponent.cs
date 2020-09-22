@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.Buckle;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Movement;
@@ -94,28 +95,30 @@ namespace Content.Server.GameObjects.Components.Mobs
                     {
                         case StatusEffect.Buckled:
                             if (!player.TryGetComponent(out BuckleComponent buckle))
-                            {
                                 break;
-                            }
 
                             buckle.TryUnbuckle(player);
                             break;
                         case StatusEffect.Piloting:
                             if (!player.TryGetComponent(out ShuttleControllerComponent controller))
-                            {
                                 break;
-                            }
 
                             controller.RemoveController();
                             break;
                         case StatusEffect.Pulling:
                             if (!player.TryGetComponent(out HandsComponent hands))
-                            {
                                 break;
-                            }
 
                             hands.StopPull();
                             break;
+
+                        case StatusEffect.Fire:
+                            if (!player.TryGetComponent(out FlammableComponent flammable))
+                                break;
+
+                            flammable.Resist();
+                            break;
+
                         default:
                             player.PopupMessage(msg.Effect.ToString());
                             break;
