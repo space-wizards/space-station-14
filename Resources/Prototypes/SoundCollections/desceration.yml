@@ -1,0 +1,6 @@
+- type: soundCollection
+  id: desceration
+  files:
+  - /Audio/Effects/desceration-01.ogg
+  - /Audio/Effects/desceration-02.ogg
+  - /Audio/Effects/desceration-03.ogg

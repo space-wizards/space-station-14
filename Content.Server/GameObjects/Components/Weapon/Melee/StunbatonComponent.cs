@@ -28,7 +28,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Weapon.Melee
 {
     [RegisterComponent]
-    public class StunbatonComponent : MeleeWeaponComponent, IUse, IExamine, IMapInit, IInteractUsing
+    public class StunbatonComponent : MeleeWeaponComponent, IUse, IExamine, IMapInit, IInteractUsing, IThrowCollide
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
@@ -281,6 +281,19 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             {
                 component.EjectCell(user);
             }
+        }
+
+        public void ThrowCollide(ThrowCollideEventArgs eventArgs)
+        {
+            // Check we're the entity being thrown.
+            if (eventArgs.Thrown != Owner) return;
+
+            if (!Activated || Cell == null || !Cell.TryUseCharge(EnergyPerUse) || !eventArgs.Target.TryGetComponent(out StunnableComponent stunnable))
+                return;
+
+            EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Weapons/egloves.ogg", Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
+
+            stunnable.Paralyze(_paralyzeTime);
         }
     }
 }

@@ -224,5 +224,12 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             return true;
         }
+
+        public IEntity Trash()
+        {
+            var trash = Owner.EntityManager.SpawnEntity(_trashPrototype, Owner.Transform.Coordinates);
+            Owner.Delete();
+            return trash;
+        }
     }
 }
