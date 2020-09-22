@@ -283,7 +283,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             }
         }
 
-        public void ThrowCollide(ThrowCollideEventArgs eventArgs)
+        public void DoHit(ThrowCollideEventArgs eventArgs)
         {
             // Check we're the entity being thrown.
             if (eventArgs.Thrown != Owner) return;

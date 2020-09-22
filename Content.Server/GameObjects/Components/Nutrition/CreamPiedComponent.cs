@@ -50,7 +50,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             return ReagentUnit.Zero;
         }
 
-        public void ThrowCollide(ThrowCollideEventArgs eventArgs)
+        public void HitBy(ThrowCollideEventArgs eventArgs)
         {
             if (eventArgs.Target != Owner || !eventArgs.Thrown.TryGetComponent(out CreamPieComponent creamPie) || CreamPied) return;
 

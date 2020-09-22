@@ -642,12 +642,12 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
             foreach (var comp in thrown.GetAllComponents<IThrowCollide>().ToArray())
             {
-                comp.ThrowCollide(eventArgs);
+                comp.DoHit(eventArgs);
             }
 
             foreach (var comp in target.GetAllComponents<IThrowCollide>().ToArray())
             {
-                comp.ThrowCollide(eventArgs);
+                comp.HitBy(eventArgs);
             }
         }
 
