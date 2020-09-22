@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.VendingMachines;
 using Content.Server.Utility;
@@ -12,6 +13,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Arcade
@@ -26,10 +28,26 @@ namespace Content.Server.GameObjects.Components.Arcade
         [ViewVariables] private bool _overflowFlag;
         [ViewVariables] private bool _playerInvincibilityFlag;
         [ViewVariables] private bool _enemyInvincibilityFlag;
-        [ViewVariables] private SpaceVillainGame _game;
+        [ViewVariables] private SpaceVillainGame _game = null!;
 
-        public SpaceVillainArcadeComponent()
+        [ViewVariables(VVAccess.ReadWrite)] private List<string> _possibleFightVerbs = null!;
+        [ViewVariables(VVAccess.ReadWrite)] private List<string> _possibleFirstEnemyNames = null!;
+        [ViewVariables(VVAccess.ReadWrite)] private List<string> _possibleLastEnemyNames = null!;
+
+        public override void ExposeData(ObjectSerializer serializer)
         {
+            serializer.DataField(ref _possibleFightVerbs, "possibleFightVerbs", new List<string>()
+                {"Defeat", "Annihilate", "Save", "Strike", "Stop", "Destroy", "Robust", "Romance", "Pwn", "Own"});
+            serializer.DataField(ref _possibleFirstEnemyNames, "possibleFirstEnemyNames", new List<string>(){
+                "the Automatic", "Farmer", "Lord", "Professor", "the Cuban", "the Evil", "the Dread King",
+                "the Space", "Lord", "the Great", "Duke", "General"
+            });
+            serializer.DataField(ref _possibleLastEnemyNames, "possibleLastEnemyNames", new List<string>()
+            {
+                "Melonoid", "Murdertron", "Sorcerer", "Ruin", "Jeff", "Ectoplasm", "Crushulon", "Uhangoid",
+                "Vhakoid", "Peteoid", "slime", "Griefer", "ERPer", "Lizard Man", "Unicorn"
+            });
+
             _game = new SpaceVillainGame(this);
         }
 
@@ -166,6 +184,17 @@ namespace Content.Server.GameObjects.Components.Arcade
             //todo set visuals
         }
 
+        public string GenerateFightVerb()
+        {
+            return IoCManager.Resolve<IRobustRandom>().Pick(_possibleFightVerbs);
+        }
+
+        public string GenerateEnemyName()
+        {
+            var random = IoCManager.Resolve<IRobustRandom>();
+            return $"{random.Pick(_possibleFirstEnemyNames)} {random.Pick(_possibleLastEnemyNames)}";
+        }
+
         public class SpaceVillainGame
         {
             [Dependency] private readonly IRobustRandom _random = default!;
@@ -188,30 +217,7 @@ namespace Content.Server.GameObjects.Components.Arcade
 
             [ViewVariables] private bool _running = true;
 
-            public static string GenerateFightVerb()
-            {
-                var choices = new string[]
-                    {"Defeat", "Annihilate", "Save", "Strike", "Stop", "Destroy", "Robust", "Romance", "Pwn", "Own"};
-                return IoCManager.Resolve<IRobustRandom>().Pick(choices);
-            }
-
-            public static string GenerateEnemyName()
-            {
-                var random = IoCManager.Resolve<IRobustRandom>();
-                var firstName = random.Pick(new string[]
-                {
-                    "the Automatic", "Farmer", "Lord", "Professor", "the Cuban", "the Evil", "the Dread King",
-                    "the Space", "Lord", "the Great", "Duke", "General"
-                });
-                var lastName = random.Pick(new string[]
-                {
-                    "Melonoid", "Murdertron", "Sorcerer", "Ruin", "Jeff", "Ectoplasm", "Crushulon", "Uhangoid",
-                    "Vhakoid", "Peteoid", "slime", "Griefer", "ERPer", "Lizard Man", "Unicorn"
-                });
-                return $"{firstName} {lastName}";
-            }
-
-            public SpaceVillainGame(SpaceVillainArcadeComponent owner) : this(owner, GenerateFightVerb(), GenerateEnemyName()){}
+            public SpaceVillainGame(SpaceVillainArcadeComponent owner) : this(owner, owner.GenerateFightVerb(), owner.GenerateEnemyName()){}
 
             public SpaceVillainGame(SpaceVillainArcadeComponent owner, string fightVerb, string enemyName)
             {
@@ -249,7 +255,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                         var pointAmount = _random.Next(1, 3);
                         var healAmount = _random.Next(6, 8);
                         actionMessage = $"You use {pointAmount} magic to heal for {healAmount} damage!";
-                        _playerMp -= pointAmount;
+                        if(!Owner._playerInvincibilityFlag) _playerMp -= pointAmount;
                         _playerHp += healAmount;
                         _turtleTracker++;
                         break;
