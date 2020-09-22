@@ -10,7 +10,7 @@ namespace Content.Server.AI.Utility.Considerations.Nutrition.Food
         {
             var target = context.GetState<TargetEntityState>().GetValue();
 
-            if (!target.TryGetComponent(out SolutionContainerComponent food))
+            if (target.Deleted || !target.TryGetComponent(out SolutionContainerComponent food))
             {
                 return 0.0f;
             }
