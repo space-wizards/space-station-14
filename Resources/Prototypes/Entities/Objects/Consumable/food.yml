@@ -231,6 +231,7 @@
   components:
   - type: Food
     trash: TrashPlate
+  - type: CreamPie
   - type: SolutionContainer
     contents:
       reagents:
