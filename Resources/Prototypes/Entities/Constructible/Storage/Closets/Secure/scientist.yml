@@ -7,5 +7,4 @@
     visuals:
     - type: StorageVisualizer
       state: rd
-  - type: Icon
-    state: rd_icon
+

@@ -9,9 +9,7 @@
     layers:
     - state: paper_words
     - state: paper
-  - type: Icon
-    sprite: Objects/Misc/bureaucracy.rsi
-    state: paper
+
   - type: Paper
   - type: UserInterface
     interfaces:
@@ -27,7 +25,5 @@
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: pen
-  - type: Icon
-    sprite: Objects/Misc/bureaucracy.rsi
-    state: pen
+
   - type: Write

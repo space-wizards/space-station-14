@@ -3,8 +3,7 @@
   name: arcade
   parent: ComputerBase
   components:
-  - type: Icon
-    state: arcade
+
   - type: PowerReceiver
   - type: Sprite
     layers:

@@ -7,9 +7,6 @@
   - type: Sprite
     sprite: Objects/Specific/Janitorial/mop.rsi
     state: mop
-  - type: Icon
-    sprite: Objects/Specific/Janitorial/mop.rsi
-    state: mop
   - type: Item
     size: 10
     sprite: Objects/Specific/Janitorial/mop.rsi
@@ -28,8 +25,6 @@
   - type: Sprite
     texture: Objects/Specific/Janitorial/mopbucket.png
     drawdepth: Objects
-  - type: Icon
-    texture: Objects/Specific/Janitorial/mopbucket.png
   - type: InteractionOutline
   - type: Bucket
   - type: LoopingSound
@@ -62,8 +57,6 @@
   - type: Sprite
     texture: Objects/Specific/Janitorial/bucket.png
     drawdepth: Objects
-  - type: Icon
-    texture: Objects/Specific/Janitorial/bucket.png
   - type: Bucket
   - type: LoopingSound
   - type: SolutionContainer
@@ -90,9 +83,6 @@
   - type: Sprite
     sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
     state: caution
-  - type: Icon
-    sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
-    state: caution
   - type: Item
     sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
 
@@ -103,9 +93,6 @@
   description: A cheap bar of soap. Doesn't smell.
   components:
   - type: Sprite
-    sprite: Objects/Specific/Janitorial/soap.rsi
-    state: soap
-  - type: Icon
     sprite: Objects/Specific/Janitorial/soap.rsi
     state: soap
   - type: Item
@@ -127,8 +114,6 @@
   components:
     - type: Sprite
       state: soapnt
-    - type: Icon
-      state: soapnt
 
 - type: entity
   name: soap
@@ -138,8 +123,6 @@
   components:
     - type: Sprite
       state: soapdeluxe
-    - type: Icon
-      state: soapdeluxe
 
 - type: entity
   name: soap
@@ -148,8 +131,6 @@
   description: An untrustworthy bar of soap. Smells of fear.
   components:
     - type: Sprite
-      state: soapsyndie
-    - type: Icon
       state: soapsyndie
     - type: Slippery
       paralyzeTime: 5
@@ -162,8 +143,6 @@
   components:
     - type: Sprite
       state: soapgibs
-    - type: Icon
-      state: soapgibs
     - type: Slippery
       paralyzeTime: 2
 
@@ -174,8 +153,6 @@
   description: The most advanced soap known to mankind. Smells of bluespace.
   components:
     - type: Sprite
-      state: soapomega
-    - type: Icon
       state: soapomega
     - type: Slippery
       paralyzeTime: 7
@@ -196,9 +173,6 @@
       layers:
         - state: chempuff
           map: [ "enum.VaporVisualLayers.Base" ]
-    - type: Icon
-      sprite: Effects/chempuff.rsi
-      state: chempuff
     - type: Physics
     - type: Collidable
       hard: false
@@ -221,8 +195,6 @@
   description: A spray bottle with an unscrewable top.
   components:
   - type: Sprite
-    texture: Objects/Specific/Janitorial/cleaner.png
-  - type: Icon
     texture: Objects/Specific/Janitorial/cleaner.png
   - type: SolutionContainer
     maxVol: 100

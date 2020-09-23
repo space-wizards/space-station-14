@@ -16,8 +16,7 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/deathsquad.rsi
-  - type: Icon
-    sprite: Clothing/OuterClothing/deathsquad.rsi
+
   - type: Clothing
     sprite: Clothing/OuterClothing/deathsquad.rsi
   - type: PressureProtection
@@ -32,8 +31,7 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/ihvoidsuit.rsi
-  - type: Icon
-    sprite: Clothing/OuterClothing/ihvoidsuit.rsi
+
   - type: Clothing
     sprite: Clothing/OuterClothing/ihvoidsuit.rsi
   - type: PressureProtection
@@ -48,8 +46,7 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/hardsuit_atmos.rsi
-  - type: Icon
-    sprite: Clothing/OuterClothing/hardsuit_atmos.rsi
+
   - type: Clothing
     sprite: Clothing/OuterClothing/hardsuit_atmos.rsi
   - type: PressureProtection
@@ -64,8 +61,7 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/hardsuit_engineering.rsi
-  - type: Icon
-    sprite: Clothing/OuterClothing/hardsuit_engineering.rsi
+
   - type: Clothing
     sprite: Clothing/OuterClothing/hardsuit_engineering.rsi
   - type: PressureProtection
@@ -80,8 +76,7 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/hardsuit_hazardhardsuit.rsi
-  - type: Icon
-    sprite: Clothing/OuterClothing/hardsuit_hazardhardsuit.rsi
+
   - type: Clothing
     sprite: Clothing/OuterClothing/hardsuit_hazardhardsuit.rsi
   - type: PressureProtection
@@ -96,8 +91,7 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/hardsuit_medical.rsi
-  - type: Icon
-    sprite: Clothing/OuterClothing/hardsuit_medical.rsi
+
   - type: Clothing
     sprite: Clothing/OuterClothing/hardsuit_medical.rsi
   - type: PressureProtection
@@ -112,8 +106,7 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/hardsuit_mining.rsi
-  - type: Icon
-    sprite: Clothing/OuterClothing/hardsuit_mining.rsi
+
   - type: Clothing
     sprite: Clothing/OuterClothing/hardsuit_mining.rsi
   - type: PressureProtection
@@ -128,8 +121,7 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/hardsuit_sectg.rsi
-  - type: Icon
-    sprite: Clothing/OuterClothing/hardsuit_sectg.rsi
+
   - type: Clothing
     sprite: Clothing/OuterClothing/hardsuit_sectg.rsi
   - type: PressureProtection
@@ -144,8 +136,7 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/hardsuit_syndie.rsi
-  - type: Icon
-    sprite: Clothing/OuterClothing/hardsuit_syndie.rsi
+
   - type: Clothing
     sprite: Clothing/OuterClothing/hardsuit_syndie.rsi
   - type: PressureProtection
@@ -161,8 +152,7 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/hardsuit_ce.rsi
-  - type: Icon
-    sprite: Clothing/OuterClothing/hardsuit_ce.rsi
+
   - type: Clothing
     sprite: Clothing/OuterClothing/hardsuit_ce.rsi
   - type: PressureProtection
@@ -177,8 +167,7 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/hardsuit_wiz.rsi
-  - type: Icon
-    sprite: Clothing/OuterClothing/hardsuit_wiz.rsi
+
   - type: Clothing
     sprite: Clothing/OuterClothing/hardsuit_wiz.rsi
   - type: PressureProtection
@@ -194,8 +183,7 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/tdgreen.rsi
-  - type: Icon
-    sprite: Clothing/OuterClothing/tdgreen.rsi
+
   - type: Clothing
     sprite: Clothing/OuterClothing/tdgreen.rsi
   - type: PressureProtection
@@ -210,8 +198,7 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/tdred.rsi
-  - type: Icon
-    sprite: Clothing/OuterClothing/tdred.rsi
+
   - type: Clothing
     sprite: Clothing/OuterClothing/tdred.rsi
   - type: PressureProtection

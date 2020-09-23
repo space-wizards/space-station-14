@@ -9,9 +9,7 @@
     size: 4
     state: butch
 
-  - type: Icon
-    sprite: Objects/Weapons/Melee/cleaver.rsi
-    state: butch
+
 
   - type: ItemCooldown
   - type: MeleeWeapon

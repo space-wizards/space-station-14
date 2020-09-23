@@ -8,8 +8,6 @@
     - shoes
   - type: Sprite
     state: icon
-  - type: Icon
-    state: icon
 
 - type: entity
   parent: ShoesBase
@@ -19,8 +17,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Shoes/black.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/black.rsi
+
   - type: Clothing
     sprite: Clothing/Shoes/black.rsi
 
@@ -32,8 +29,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Shoes/blue.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/blue.rsi
+
   - type: Clothing
     sprite: Clothing/Shoes/blue.rsi
 
@@ -45,8 +41,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Shoes/boots.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/boots.rsi
+
   - type: Clothing
     sprite: Clothing/Shoes/boots.rsi
 
@@ -58,8 +53,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Shoes/brown.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/brown.rsi
+
   - type: Clothing
     sprite: Clothing/Shoes/brown.rsi
 
@@ -71,8 +65,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Shoes/chef.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/chef.rsi
+
   - type: Clothing
     sprite: Clothing/Shoes/chef.rsi
 
@@ -84,8 +77,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Shoes/cowboy.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/cowboy.rsi
+
   - type: Clothing
     sprite: Clothing/Shoes/cowboy.rsi
 
@@ -97,8 +89,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Shoes/cult.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/cult.rsi
+
   - type: Clothing
     sprite: Clothing/Shoes/cult.rsi
 
@@ -110,8 +101,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Shoes/detective.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/detective.rsi
+
   - type: Clothing
     sprite: Clothing/Shoes/detective.rsi
 
@@ -123,8 +113,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Shoes/flippers.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/flippers.rsi
+
   - type: Clothing
     sprite: Clothing/Shoes/flippers.rsi
 
@@ -136,8 +125,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Shoes/galoshes.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/galoshes.rsi
+
   - type: Clothing
     sprite: Clothing/Shoes/galoshes.rsi
   - type: NoSlip
@@ -150,8 +138,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Shoes/green.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/green.rsi
+
   - type: Clothing
     sprite: Clothing/Shoes/green.rsi
 
@@ -163,8 +150,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Shoes/leather.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/leather.rsi
+
   - type: Clothing
     sprite: Clothing/Shoes/leather.rsi
 
@@ -175,9 +161,8 @@
   description: Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle.
   components:
   - type: Sprite
-    sprite: Clothing/Shoes/magboots.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/magboots.rsi
+    sprite: Clothing/Shoes/magboots0.rsi
+
   - type: Clothing
     sprite: Clothing/Shoes/magboots.rsi
 
@@ -189,8 +174,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Shoes/mime.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/mime.rsi
+
   - type: Clothing
     sprite: Clothing/Shoes/mime.rsi
 
@@ -202,8 +186,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Shoes/orange.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/orange.rsi
+
   - type: Clothing
     sprite: Clothing/Shoes/orange.rsi
 
@@ -215,8 +198,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Shoes/purple.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/purple.rsi
+
   - type: Clothing
     sprite: Clothing/Shoes/purple.rsi
 
@@ -227,9 +209,8 @@
   description: A pair of rainbow shoes.
   components:
   - type: Sprite
-    sprite: Clothing/Shoes/rainbow.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/rainbow.rsi
+    sprite: Clothing/Shoes/rain_bow.rsi
+
   - type: Clothing
     sprite: Clothing/Shoes/rainbow.rsi
 
@@ -241,8 +222,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Shoes/red.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/red.rsi
+
   - type: Clothing
     sprite: Clothing/Shoes/red.rsi
 
@@ -254,8 +234,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Shoes/slippers.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/slippers.rsi
+
   - type: Clothing
     sprite: Clothing/Shoes/slippers.rsi
 
@@ -267,8 +246,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Shoes/springjacks.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/springjacks.rsi
+
   - type: Clothing
     sprite: Clothing/Shoes/springjacks.rsi
 
@@ -280,8 +258,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Shoes/swat.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/swat.rsi
+
   - type: Clothing
     sprite: Clothing/Shoes/swat.rsi
 
@@ -293,8 +270,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Shoes/s_ninja.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/s_ninja.rsi
+
   - type: Clothing
     sprite: Clothing/Shoes/s_ninja.rsi
 
@@ -306,8 +282,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Shoes/tourist.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/tourist.rsi
+
   - type: Clothing
     sprite: Clothing/Shoes/tourist.rsi
 
@@ -319,8 +294,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Shoes/white.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/white.rsi
+
   - type: Clothing
     sprite: Clothing/Shoes/white.rsi
 
@@ -332,8 +306,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Shoes/wizard.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/wizard.rsi
+
   - type: Clothing
     sprite: Clothing/Shoes/wizard.rsi
 
@@ -345,8 +318,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Shoes/workboots.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/workboots.rsi
+
   - type: Clothing
     sprite: Clothing/Shoes/workboots.rsi
 
@@ -358,8 +330,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Shoes/yellow.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/yellow.rsi
+
   - type: Clothing
     sprite: Clothing/Shoes/yellow.rsi
 
@@ -371,8 +342,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Shoes/beesocks.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/beesocks.rsi
+
   - type: Clothing
     sprite: Clothing/Shoes/beesocks.rsi
 
@@ -384,8 +354,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Shoes/codersocks.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/codersocks.rsi
+
   - type: Clothing
     sprite: Clothing/Shoes/codersocks.rsi
 
@@ -396,8 +365,6 @@
   description: Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time.
   components:
   - type: Sprite
-    sprite: Clothing/Shoes/jackboots.rsi
-  - type: Icon
     sprite: Clothing/Shoes/jackboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/jackboots.rsi

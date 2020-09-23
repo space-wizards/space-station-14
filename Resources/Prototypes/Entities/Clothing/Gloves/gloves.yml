@@ -5,8 +5,7 @@
   components:
   - type: Sprite
     state: icon
-  - type: Icon
-    state: icon
+
   - type: Clothing
     Slots:
     - gloves
@@ -19,8 +18,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Gloves/black.rsi
-  - type: Icon
-    sprite: Clothing/Gloves/black.rsi
+
   - type: Clothing
     sprite: Clothing/Gloves/black.rsi
 
@@ -32,8 +30,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Gloves/blue.rsi
-  - type: Icon
-    sprite: Clothing/Gloves/blue.rsi
+
   - type: Clothing
     sprite: Clothing/Gloves/blue.rsi
 
@@ -45,8 +42,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Gloves/boxing.rsi
-  - type: Icon
-    sprite: Clothing/Gloves/boxing.rsi
+
   - type: Clothing
     sprite: Clothing/Gloves/boxing.rsi
 
@@ -58,8 +54,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Gloves/boxingblue.rsi
-  - type: Icon
-    sprite: Clothing/Gloves/boxingblue.rsi
+
   - type: Clothing
     sprite: Clothing/Gloves/boxingblue.rsi
 
@@ -71,8 +66,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Gloves/boxinggreen.rsi
-  - type: Icon
-    sprite: Clothing/Gloves/boxinggreen.rsi
+
   - type: Clothing
     sprite: Clothing/Gloves/boxinggreen.rsi
 
@@ -84,8 +78,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Gloves/boxingyellow.rsi
-  - type: Icon
-    sprite: Clothing/Gloves/boxingyellow.rsi
+
   - type: Clothing
     sprite: Clothing/Gloves/boxingyellow.rsi
 
@@ -97,8 +90,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Gloves/brown.rsi
-  - type: Icon
-    sprite: Clothing/Gloves/brown.rsi
+
   - type: Clothing
     sprite: Clothing/Gloves/brown.rsi
 
@@ -110,8 +102,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Gloves/captain.rsi
-  - type: Icon
-    sprite: Clothing/Gloves/captain.rsi
+
   - type: Clothing
     sprite: Clothing/Gloves/captain.rsi
 
@@ -123,8 +114,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Gloves/gray.rsi
-  - type: Icon
-    sprite: Clothing/Gloves/gray.rsi
+
   - type: Clothing
     sprite: Clothing/Gloves/gray.rsi
 
@@ -136,8 +126,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Gloves/green.rsi
-  - type: Icon
-    sprite: Clothing/Gloves/green.rsi
+
   - type: Clothing
     sprite: Clothing/Gloves/green.rsi
 
@@ -149,8 +138,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Gloves/ihscombat.rsi
-  - type: Icon
-    sprite: Clothing/Gloves/ihscombat.rsi
+
   - type: Clothing
     sprite: Clothing/Gloves/ihscombat.rsi
 
@@ -162,8 +150,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Gloves/latex.rsi
-  - type: Icon
-    sprite: Clothing/Gloves/latex.rsi
+
   - type: Clothing
     sprite: Clothing/Gloves/latex.rsi
 
@@ -175,8 +162,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Gloves/leather.rsi
-  - type: Icon
-    sprite: Clothing/Gloves/leather.rsi
+
   - type: Clothing
     sprite: Clothing/Gloves/leather.rsi
     HeatResistance: 1400
@@ -189,8 +175,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Gloves/lightbrown.rsi
-  - type: Icon
-    sprite: Clothing/Gloves/lightbrown.rsi
+
   - type: Clothing
     sprite: Clothing/Gloves/lightbrown.rsi
 
@@ -202,8 +187,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Gloves/orange.rsi
-  - type: Icon
-    sprite: Clothing/Gloves/orange.rsi
+
   - type: Clothing
     sprite: Clothing/Gloves/orange.rsi
 
@@ -215,8 +199,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Gloves/powerglove.rsi
-  - type: Icon
-    sprite: Clothing/Gloves/powerglove.rsi
+
   - type: Clothing
     sprite: Clothing/Gloves/powerglove.rsi
 
@@ -228,8 +211,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Gloves/powerglove_active.rsi
-  - type: Icon
-    sprite: Clothing/Gloves/powerglove_active.rsi
+
   - type: Clothing
     sprite: Clothing/Gloves/powerglove_active.rsi
 
@@ -241,8 +223,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Gloves/purple.rsi
-  - type: Icon
-    sprite: Clothing/Gloves/purple.rsi
+
   - type: Clothing
     sprite: Clothing/Gloves/purple.rsi
 
@@ -254,8 +235,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Gloves/rainbow.rsi
-  - type: Icon
-    sprite: Clothing/Gloves/rainbow.rsi
+
   - type: Clothing
     sprite: Clothing/Gloves/rainbow.rsi
 
@@ -267,8 +247,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Gloves/red.rsi
-  - type: Icon
-    sprite: Clothing/Gloves/red.rsi
+
   - type: Clothing
     sprite: Clothing/Gloves/red.rsi
 
@@ -280,8 +259,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Gloves/robohands.rsi
-  - type: Icon
-    sprite: Clothing/Gloves/robohands.rsi
+
   - type: Clothing
     sprite: Clothing/Gloves/robohands.rsi
 
@@ -293,8 +271,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Gloves/s_ninja.rsi
-  - type: Icon
-    sprite: Clothing/Gloves/s_ninja.rsi
+
   - type: Clothing
     sprite: Clothing/Gloves/s_ninja.rsi
 
@@ -306,8 +283,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Gloves/s_ninjak.rsi
-  - type: Icon
-    sprite: Clothing/Gloves/s_ninjak.rsi
+
   - type: Clothing
     sprite: Clothing/Gloves/s_ninjak.rsi
 
@@ -319,8 +295,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Gloves/s_ninjan.rsi
-  - type: Icon
-    sprite: Clothing/Gloves/s_ninjan.rsi
+
   - type: Clothing
     sprite: Clothing/Gloves/s_ninjan.rsi
 
@@ -332,8 +307,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Gloves/white.rsi
-  - type: Icon
-    sprite: Clothing/Gloves/white.rsi
+
   - type: Clothing
     sprite: Clothing/Gloves/white.rsi
 
@@ -345,7 +319,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Gloves/yellow.rsi
-  - type: Icon
-    sprite: Clothing/Gloves/yellow.rsi
+
   - type: Clothing
     sprite: Clothing/Gloves/yellow.rsi

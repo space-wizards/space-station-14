@@ -35,9 +35,7 @@
     drawdepth: BelowFloor
     sprite: Constructible/Power/disposal.rsi
     state: conpipe-s
-  - type: Icon
-    sprite: Constructible/Power/disposal.rsi
-    state: conpipe-s
+
   - type: DisposalTransit
   - type: Appearance
     visuals:
@@ -56,9 +54,7 @@
     drawdepth: BelowFloor
     sprite: Constructible/Power/disposal.rsi
     state: conpipe-tagger
-  - type: Icon
-    sprite: Constructible/Power/disposal.rsi
-    state: conpipe-tagger
+
   - type: DisposalTagger
   - type: Appearance
     visuals:
@@ -81,9 +77,7 @@
     drawdepth: BelowFloor
     sprite: Constructible/Power/disposal.rsi
     state: conpipe-t
-  - type: Icon
-    sprite: Constructible/Power/disposal.rsi
-    state: conpipe-t
+
   - type: DisposalEntry
   - type: Appearance
     visuals:
@@ -111,9 +105,7 @@
       map: ["enum.DisposalUnitVisualLayers.Handle"]
     - state: dispover-ready
       map: ["enum.DisposalUnitVisualLayers.Light"]
-  - type: Icon
-    sprite: Constructible/Power/disposal.rsi
-    state: disposal
+
   - type: PowerReceiver
   - type: DisposalUnit
     flushTime: 2
@@ -170,9 +162,7 @@
     drawdepth: BelowFloor
     sprite: Constructible/Power/disposal.rsi
     state: conpipe-j1s
-  - type: Icon
-    sprite: Constructible/Power/disposal.rsi
-    state: conpipe-j1s
+
   - type: DisposalRouter
     degrees:
     - 0
@@ -200,9 +190,7 @@
     drawdepth: BelowFloor
     sprite: Constructible/Power/disposal.rsi
     state: conpipe-j2s
-  - type: Icon
-    sprite: Constructible/Power/disposal.rsi
-    state: conpipe-j2s
+
   - type: DisposalRouter
     degrees:
     - 0
@@ -227,9 +215,7 @@
     drawdepth: BelowFloor
     sprite: Constructible/Power/disposal.rsi
     state: conpipe-j1
-  - type: Icon
-    sprite: Constructible/Power/disposal.rsi
-    state: conpipe-j1
+
   - type: DisposalJunction
     degrees:
     - 0
@@ -253,9 +239,7 @@
     drawdepth: BelowFloor
     sprite: Constructible/Power/disposal.rsi
     state: conpipe-j2
-  - type: Icon
-    sprite: Constructible/Power/disposal.rsi
-    state: conpipe-j2
+
   - type: DisposalJunction
     degrees:
     - 0
@@ -280,9 +264,7 @@
     drawdepth: BelowFloor
     sprite: Constructible/Power/disposal.rsi
     state: conpipe-y
-  - type: Icon
-    sprite: Constructible/Power/disposal.rsi
-    state: conpipe-y
+
   - type: DisposalJunction
     degrees:
     - 0
@@ -305,9 +287,7 @@
     drawdepth: BelowFloor
     sprite: Constructible/Power/disposal.rsi
     state: conpipe-c
-  - type: Icon
-    sprite: Constructible/Power/disposal.rsi
-    state: conpipe-c
+
   - type: DisposalBend
   - type: Appearance
     visuals:

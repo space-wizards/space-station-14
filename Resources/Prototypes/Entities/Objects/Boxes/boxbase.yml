@@ -5,8 +5,6 @@
   components:
   - type: Sprite
     sprite: Objects/Storage/boxes.rsi
-  - type: Icon
-    sprite: Objects/Storage/boxicons.rsi
   - type: Item
     sprite: Objects/Storage/boxes.rsi
     size: 9999

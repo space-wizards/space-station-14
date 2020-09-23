@@ -15,9 +15,7 @@
     netsync: false
     drawdepth: WallTops
     sprite: Constructible/Structures/Windows/window.rsi
-  - type: Icon
-    sprite: Constructible/Structures/Windows/window.rsi
-    state: full
+
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -46,6 +44,4 @@
     sprite: Constructible/Structures/Windows/reinforced_window.rsi
   - type: Window
     base: rwindow
-  - type: Icon
-    sprite: Constructible/Structures/Windows/reinforced_window.rsi
-    state: full
+

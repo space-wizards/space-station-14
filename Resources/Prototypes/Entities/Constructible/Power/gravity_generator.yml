@@ -10,9 +10,7 @@
       - sprite: Constructible/Power/gravity_generator_core.rsi
         state: activated
         shader: unshaded
-  - type: Icon
-    sprite: Constructible/Power/gravity_generator.rsi
-    state: on
+
   - type: SnapGrid
     offset: Center
   - type: PowerReceiver

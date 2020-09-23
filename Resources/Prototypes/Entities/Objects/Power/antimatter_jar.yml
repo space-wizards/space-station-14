@@ -10,7 +10,4 @@
   - type: Sprite
     sprite: Objects/Power/AME/ame_jar.rsi
     state: jar
-  - type: Icon
-    sprite: Objects/Power/AME/ame_jar.rsi
-    state: jar
   - type: AMEFuelContainer

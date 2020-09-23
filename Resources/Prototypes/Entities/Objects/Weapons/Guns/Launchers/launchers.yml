@@ -7,8 +7,6 @@
   components:
   - type: Sprite
     netsync: false
-  - type: Icon
-    state: icon
   - type: Item
     size: 24
     state: icon
@@ -26,8 +24,7 @@
         map: ["enum.RangedBarrelVisualLayers.Base"]
       - state: bolt-closed
         map: ["enum.RangedBarrelVisualLayers.Bolt"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
+
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
@@ -60,8 +57,7 @@
         map: ["enum.RangedBarrelVisualLayers.Base"]
       - state: mag-0
         map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
+
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
