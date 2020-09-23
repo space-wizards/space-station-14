@@ -2,7 +2,7 @@
   name: donkpocket box
   parent: BoxBase
   id: BoxDonkpocket
-  description:
+  description: 'Instructions: Heat in microwave. Product will cool if not eaten within seven minutes.'
   components:
   - type: StorageFill
     contents:
