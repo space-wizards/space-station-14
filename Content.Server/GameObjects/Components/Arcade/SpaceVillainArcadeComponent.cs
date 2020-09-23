@@ -12,6 +12,7 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
@@ -24,6 +25,8 @@ namespace Content.Server.GameObjects.Components.Arcade
     [ComponentReference(typeof(IActivate))]
     public class SpaceVillainArcadeComponent : SharedSpaceVillainArcadeComponent, IActivate, IWires
     {
+        [Dependency] private IRobustRandom _random = null!;
+
         private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(SpaceVillainArcadeUiKey.Key);
@@ -35,6 +38,7 @@ namespace Content.Server.GameObjects.Components.Arcade
         [ViewVariables(VVAccess.ReadWrite)] private List<string> _possibleFightVerbs = null!;
         [ViewVariables(VVAccess.ReadWrite)] private List<string> _possibleFirstEnemyNames = null!;
         [ViewVariables(VVAccess.ReadWrite)] private List<string> _possibleLastEnemyNames = null!;
+        [ViewVariables(VVAccess.ReadWrite)] private List<string> _possibleRewards = null!;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -48,6 +52,12 @@ namespace Content.Server.GameObjects.Components.Arcade
             {
                 "Melonoid", "Murdertron", "Sorcerer", "Ruin", "Jeff", "Ectoplasm", "Crushulon", "Uhangoid",
                 "Vhakoid", "Peteoid", "slime", "Griefer", "ERPer", "Lizard Man", "Unicorn"
+            });
+            serializer.DataField(ref _possibleRewards, "possibleRewards", new List<string>()
+            {
+                "ToyMouse", "ToyAi", "ToyNuke", "ToyAssistant", "ToyGriffin", "ToyHonk", "ToyIan",
+                "ToyMarauder", "ToyMauler", "ToyGygax", "ToyOdysseus", "ToyOwlman", "ToyDeathRipley",
+                "ToyPhazon", "ToyFireRipley", "ToyReticence", "ToyRipley", "ToySeraph", "ToyDurand", "ToySkeleton"
             });
 
             _game = new SpaceVillainGame(this);
@@ -82,29 +92,8 @@ namespace Content.Server.GameObjects.Components.Arcade
             {
                 UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
             }
-
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
-            {
-                receiver.OnPowerStateChanged += UpdatePower;
-                TrySetVisualState(receiver.Powered ? SpaceVillainArcadeVisualState.Normal : SpaceVillainArcadeVisualState.Off);
-            }
         }
 
-        public override void OnRemove()
-        {
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
-            {
-                receiver.OnPowerStateChanged -= UpdatePower;
-            }
-
-            base.OnRemove();
-        }
-
-        private void UpdatePower(object? sender, PowerStateEventArgs args)
-        {
-            var state = args.Powered ? SpaceVillainArcadeVisualState.Normal : SpaceVillainArcadeVisualState.Off;
-            TrySetVisualState(state);
-        }
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
         {
@@ -176,15 +165,13 @@ namespace Content.Server.GameObjects.Components.Arcade
             }
         }
 
-        private void TrySetVisualState(SpaceVillainArcadeVisualState state)
+        /// <summary>
+        /// Called when the user wins the game.
+        /// </summary>
+        public void processWin()
         {
-            var finalState = state;
-            if (!Powered)
-            {
-                finalState = SpaceVillainArcadeVisualState.Off;
-            }
-
-            //todo set visuals
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            entityManager.SpawnEntity(_random.Pick(_possibleRewards), Owner.Transform.MapPosition);
         }
 
         /// <summary>
@@ -193,7 +180,7 @@ namespace Content.Server.GameObjects.Components.Arcade
         /// <returns>A fight-verb.</returns>
         public string GenerateFightVerb()
         {
-            return IoCManager.Resolve<IRobustRandom>().Pick(_possibleFightVerbs);
+            return _random.Pick(_possibleFightVerbs);
         }
 
         /// <summary>
@@ -202,8 +189,7 @@ namespace Content.Server.GameObjects.Components.Arcade
         /// <returns>An enemy-name.</returns>
         public string GenerateEnemyName()
         {
-            var random = IoCManager.Resolve<IRobustRandom>();
-            return $"{random.Pick(_possibleFirstEnemyNames)} {random.Pick(_possibleLastEnemyNames)}";
+            return $"{_random.Pick(_possibleFirstEnemyNames)} {_random.Pick(_possibleLastEnemyNames)}";
         }
 
         /// <summary>
@@ -322,6 +308,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                 {
                     UpdateUi("You won!", $"{_enemyName} dies.");
                     EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/win.ogg", Owner.Owner, AudioParams.Default.WithVolume(-4f));
+                    Owner.processWin();
                     return false;
                 }
                 if ((_playerHp <= 0 || _playerMp <= 0) && _enemyHp > 0 && _enemyMp > 0)
