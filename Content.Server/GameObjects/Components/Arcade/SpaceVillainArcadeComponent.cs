@@ -231,6 +231,9 @@ namespace Content.Server.GameObjects.Components.Arcade
 
             [ViewVariables] private bool _running = true;
 
+            private string _latestPlayerActionMessage = "";
+            private string _latestEnemyActionMessage = "";
+
             public SpaceVillainGame(SpaceVillainArcadeComponent owner) : this(owner, owner.GenerateFightVerb(), owner.GenerateEnemyName()){}
 
             public SpaceVillainGame(SpaceVillainArcadeComponent owner, string fightVerb, string enemyName)
@@ -264,12 +267,11 @@ namespace Content.Server.GameObjects.Components.Arcade
             {
                 if (!_running) return;
 
-                var actionMessage = "";
                 switch (action)
                 {
                     case PlayerAction.Attack:
                         var attackAmount = _random.Next(2, 6);
-                        actionMessage = $"You attack {_enemyName} for {attackAmount}!";
+                        _latestPlayerActionMessage = $"You attack {_enemyName} for {attackAmount}!";
                         EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/player_attack.ogg", Owner.Owner, AudioParams.Default.WithVolume(-4f));
                         if(!Owner._enemyInvincibilityFlag) _enemyHp -= attackAmount;
                         _turtleTracker -= _turtleTracker > 0 ? 1 : 0;
@@ -277,7 +279,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                     case PlayerAction.Heal:
                         var pointAmount = _random.Next(1, 3);
                         var healAmount = _random.Next(6, 8);
-                        actionMessage = $"You use {pointAmount} magic to heal for {healAmount} damage!";
+                        _latestPlayerActionMessage = $"You use {pointAmount} magic to heal for {healAmount} damage!";
                         EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/player_heal.ogg", Owner.Owner, AudioParams.Default.WithVolume(-4f));
                         if(!Owner._playerInvincibilityFlag) _playerMp -= pointAmount;
                         _playerHp += healAmount;
@@ -285,7 +287,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                         break;
                     case PlayerAction.Recharge:
                         var charge_amount = _random.Next(4, 7);
-                        actionMessage = $"You regain {charge_amount} points";
+                        _latestPlayerActionMessage = $"You regain {charge_amount} points";
                         EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/player_charge.ogg", Owner.Owner, AudioParams.Default.WithVolume(-4f));
                         _playerMp += charge_amount;
                         _turtleTracker -= _turtleTracker > 0 ? 1 : 0;
@@ -299,7 +301,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                 }
 
                 ValidateVars();
-                var enemyActionMessage = ExecuteAiAction();
+                ExecuteAiAction();
 
                 if (!CheckGameConditions())
                 {
@@ -307,7 +309,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                     return;
                 }
                 ValidateVars();
-                UpdateUi(actionMessage, enemyActionMessage);
+                UpdateUi();
             }
 
             /// <summary>
@@ -341,49 +343,51 @@ namespace Content.Server.GameObjects.Components.Arcade
             /// <summary>
             /// Updates the UI.
             /// </summary>
-            /// <param name="playerActionMessage">Content of the Playeraction-field.</param>
-            /// <param name="enemyActionMessage">Content of the Enemyaction-field.</param>
-            private void UpdateUi(string playerActionMessage, string enemyActionMessage)
+            private void UpdateUi()
             {
-                Owner.UserInterface?.SendMessage(GenerateUpdateMessage(playerActionMessage, enemyActionMessage));
+                Owner.UserInterface?.SendMessage(GenerateUpdateMessage(_latestPlayerActionMessage, _latestEnemyActionMessage));
+            }
+
+            private void UpdateUi(string message1, string message2)
+            {
+                _latestPlayerActionMessage = message1;
+                _latestEnemyActionMessage = message2;
+                UpdateUi();
             }
 
             /// <summary>
             /// Handles the logic of the AI
             /// </summary>
             /// <returns>An Enemyaction-message.</returns>
-            private string ExecuteAiAction()
+            private void ExecuteAiAction()
             {
-                var actionMessage = "";
                 if (_turtleTracker >= 4)
                 {
                     var boomAmount = _random.Next(5, 10);
-                    actionMessage = $"{_enemyName} throws a bomb, exploding you for {boomAmount} damage!";
-                    if (Owner._playerInvincibilityFlag) return actionMessage;
+                    _latestEnemyActionMessage = $"{_enemyName} throws a bomb, exploding you for {boomAmount} damage!";
+                    if (Owner._playerInvincibilityFlag) return;
                     _playerHp -= boomAmount;
                     _turtleTracker--;
                 }else if (_enemyMp <= 5 && _random.Prob(0.7f))
                 {
                     var stealAmount = _random.Next(2, 3);
-                    actionMessage = $"{_enemyName} steals {stealAmount} of your power!";
-                    if (Owner._playerInvincibilityFlag) return actionMessage;
+                    _latestEnemyActionMessage = $"{_enemyName} steals {stealAmount} of your power!";
+                    if (Owner._playerInvincibilityFlag) return;
                     _playerMp -= stealAmount;
                     _enemyMp += stealAmount;
                 }else if (_enemyHp <= 10 && _enemyMp > 4)
                 {
                     _enemyHp += 4;
                     _enemyMp -= 4;
-                    actionMessage = $"{_enemyName} heals for 4 health!";
+                    _latestEnemyActionMessage = $"{_enemyName} heals for 4 health!";
                 }
                 else
                 {
                     var attackAmount = _random.Next(3, 6);
-                    actionMessage = $"{_enemyName} attacks you for {attackAmount} damage!";
-                    if (Owner._playerInvincibilityFlag) return actionMessage;
+                    _latestEnemyActionMessage = $"{_enemyName} attacks you for {attackAmount} damage!";
+                    if (Owner._playerInvincibilityFlag) return;
                     _playerHp -= attackAmount;
                 }
-
-                return actionMessage;
             }
 
             /// <summary>
@@ -392,7 +396,7 @@ namespace Content.Server.GameObjects.Components.Arcade
             /// <returns>A Metadata-message.</returns>
             public SpaceVillainArcadeMetaDataUpdateMessage GenerateMetaDataMessage()
             {
-                return new SpaceVillainArcadeMetaDataUpdateMessage(_playerHp, _playerMp, _enemyHp, _enemyMp, Name);
+                return new SpaceVillainArcadeMetaDataUpdateMessage(_playerHp, _playerMp, _enemyHp, _enemyMp, _latestPlayerActionMessage, _latestEnemyActionMessage, Name);
             }
 
             /// <summary>
