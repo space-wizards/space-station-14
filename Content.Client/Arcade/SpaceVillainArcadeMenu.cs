@@ -11,7 +11,9 @@ namespace Content.Client.Arcade
         protected override Vector2? CustomSize => (400, 200);
         public SpaceVillainArcadeBoundUserInterface Owner { get; set; }
 
-        private Label _infoLabel;
+        private Label _enemyNameLabel;
+        private Label _playerInfoLabel;
+        private Label _enemyInfoLabel;
         private Label _playerActionLabel;
         private Label _enemyActionLabel;
         public SpaceVillainArcadeMenu(SpaceVillainArcadeBoundUserInterface owner)
@@ -22,9 +24,21 @@ namespace Content.Client.Arcade
             GridContainer grid = new GridContainer();
             grid.Columns = 1;
 
-            _infoLabel = new Label();
-            _infoLabel.Align = Label.AlignMode.Center;
-            grid.AddChild(_infoLabel);
+            GridContainer infoGrid = new GridContainer();
+            infoGrid.Columns = 3;
+            infoGrid.AddChild(new Label{ Text = "Player", Align = Label.AlignMode.Center });
+            infoGrid.AddChild(new Label{ Text = "|", Align = Label.AlignMode.Center });
+            _enemyNameLabel = new Label{ Align = Label.AlignMode.Center};
+            infoGrid.AddChild(_enemyNameLabel);
+
+            _playerInfoLabel = new Label {Align = Label.AlignMode.Center};
+            infoGrid.AddChild(_playerInfoLabel);
+            infoGrid.AddChild(new Label{ Text = "|", Align = Label.AlignMode.Center });
+            _enemyInfoLabel = new Label {Align = Label.AlignMode.Center};
+            infoGrid.AddChild(_enemyInfoLabel);
+            CenterContainer centerContainer = new CenterContainer();
+            centerContainer.AddChild(infoGrid);
+            grid.AddChild(centerContainer);
 
             _playerActionLabel = new Label();
             _playerActionLabel.Align = Label.AlignMode.Center;
@@ -48,7 +62,7 @@ namespace Content.Client.Arcade
             recharge.Text = "RECHARGE";
             buttonGrid.AddChild(recharge);
 
-            CenterContainer centerContainer = new CenterContainer();
+            centerContainer = new CenterContainer();
             centerContainer.AddChild(buttonGrid);
             grid.AddChild(centerContainer);
 
@@ -61,11 +75,20 @@ namespace Content.Client.Arcade
             Contents.AddChild(centerContainer);
         }
 
-        public void UpdateInfo(int player_hp, int player_mp, int enemy_hp, int enemy_mp, string player_action, string enemy_action)
+        private void UpdateMetadata(SharedSpaceVillainArcadeComponent.SpaceVillainArcadeMetaDataUpdateMessage message)
         {
-            _infoLabel.Text = $"HP: {player_hp} MP: {player_mp} | HP: {enemy_hp} MP: {enemy_mp}";
-            _playerActionLabel.Text = player_action;
-            _enemyActionLabel.Text = enemy_action;
+            Title = message.GameTitle;
+            _enemyNameLabel.Text = message.EnemyName;
+        }
+
+        public void UpdateInfo(SharedSpaceVillainArcadeComponent.SpaceVillainArcadeDataUpdateMessage message)
+        {
+            if(message is SharedSpaceVillainArcadeComponent.SpaceVillainArcadeMetaDataUpdateMessage metaMessage) UpdateMetadata(metaMessage);
+
+            _playerInfoLabel.Text = $"HP: {message.PlayerHP} MP: {message.PlayerMP}";
+            _enemyInfoLabel.Text = $"HP: {message.EnemyHP} MP: {message.EnemyMP}";
+            _playerActionLabel.Text = message.PlayerActionMessage;
+            _enemyActionLabel.Text = message.EnemyActionMessage;
         }
 
         private class ActionButton : Button

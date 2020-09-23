@@ -42,9 +42,7 @@ namespace Content.Client.GameObjects.Components.Arcade
 
         protected override void ReceiveMessage(BoundUserInterfaceMessage message)
         {
-            if (message is SharedSpaceVillainArcadeComponent.SpaceVillainArcadeMetaDataUpdateMessage metaData)
-                _menu.Title = metaData.GameTitle;
-            if(message is SharedSpaceVillainArcadeComponent.SpaceVillainArcadeDataUpdateMessage msg) _menu?.UpdateInfo(msg.PlayerHP, msg.PlayerMP, msg.EnemyHP, msg.EnemyMP, msg.PlayerActionMessage, msg.EnemyActionMessage);
+            if(message is SharedSpaceVillainArcadeComponent.SpaceVillainArcadeDataUpdateMessage msg) _menu.UpdateInfo(msg);
         }
 
         protected override void Dispose(bool disposing)

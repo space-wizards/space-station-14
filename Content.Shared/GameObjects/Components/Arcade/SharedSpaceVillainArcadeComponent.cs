@@ -50,9 +50,11 @@ namespace Content.Shared.GameObjects.Components.Arcade
         public class SpaceVillainArcadeMetaDataUpdateMessage : SpaceVillainArcadeDataUpdateMessage
         {
             public readonly string GameTitle;
-            public SpaceVillainArcadeMetaDataUpdateMessage(int playerHp, int playerMp, int enemyHp, int enemyMp, string playerActionMessage, string enemyActionMessage, string gameTitle) : base(playerHp, playerMp, enemyHp, enemyMp, playerActionMessage, enemyActionMessage)
+            public readonly string EnemyName;
+            public SpaceVillainArcadeMetaDataUpdateMessage(int playerHp, int playerMp, int enemyHp, int enemyMp, string playerActionMessage, string enemyActionMessage, string gameTitle, string enemyName) : base(playerHp, playerMp, enemyHp, enemyMp, playerActionMessage, enemyActionMessage)
             {
                 GameTitle = gameTitle;
+                EnemyName = enemyName;
             }
         }
 

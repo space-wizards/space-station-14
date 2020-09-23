@@ -168,7 +168,7 @@ namespace Content.Server.GameObjects.Components.Arcade
         /// <summary>
         /// Called when the user wins the game.
         /// </summary>
-        public void processWin()
+        public void ProcessWin()
         {
             var entityManager = IoCManager.Resolve<IEntityManager>();
             entityManager.SpawnEntity(_random.Pick(_possibleRewards), Owner.Transform.MapPosition);
@@ -308,7 +308,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                 {
                     UpdateUi("You won!", $"{_enemyName} dies.");
                     EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/win.ogg", Owner.Owner, AudioParams.Default.WithVolume(-4f));
-                    Owner.processWin();
+                    Owner.ProcessWin();
                     return false;
                 }
                 if ((_playerHp <= 0 || _playerMp <= 0) && _enemyHp > 0 && _enemyMp > 0)
@@ -383,7 +383,7 @@ namespace Content.Server.GameObjects.Components.Arcade
             /// <returns>A Metadata-message.</returns>
             public SpaceVillainArcadeMetaDataUpdateMessage GenerateMetaDataMessage()
             {
-                return new SpaceVillainArcadeMetaDataUpdateMessage(_playerHp, _playerMp, _enemyHp, _enemyMp, _latestPlayerActionMessage, _latestEnemyActionMessage, Name);
+                return new SpaceVillainArcadeMetaDataUpdateMessage(_playerHp, _playerMp, _enemyHp, _enemyMp, _latestPlayerActionMessage, _latestEnemyActionMessage, Name, _enemyName);
             }
 
             /// <summary>
