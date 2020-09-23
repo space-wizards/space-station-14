@@ -1,4 +1,5 @@
 ﻿using System;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Atmos
@@ -63,6 +64,59 @@ namespace Content.Shared.GameObjects.Components.Atmos
         Fourway = North | South | East | West,
 
         All = -1,
+    }
+
+    public static class PipeDirectionHelpers
+    {
+        public const int PipeDirections = 4;
+
+        public static Angle ToAngle(this PipeDirection pipeDirection)
+        {
+            return pipeDirection switch
+            {
+                PipeDirection.East => Angle.FromDegrees(0),
+                PipeDirection.North => Angle.FromDegrees(90),
+                PipeDirection.West => Angle.FromDegrees(180),
+                PipeDirection.South => Angle.FromDegrees(270),
+                _ => throw new ArgumentOutOfRangeException(nameof(pipeDirection), $"{pipeDirection} does not have an associated angle."),
+            };
+        }
+
+        public static PipeDirection ToPipeDirection(this Direction direction)
+        {
+            return direction switch
+            {
+                Direction.North => PipeDirection.North,
+                Direction.South => PipeDirection.South,
+                Direction.East => PipeDirection.East,
+                Direction.West => PipeDirection.West,
+                _ => throw new ArgumentOutOfRangeException(nameof(direction)),
+            };
+        }
+
+        public static Direction ToDirection(this PipeDirection pipeDirection)
+        {
+            return pipeDirection switch
+            {
+                PipeDirection.North => Direction.North,
+                PipeDirection.South => Direction.South,
+                PipeDirection.East => Direction.East,
+                PipeDirection.West => Direction.West,
+                _ => throw new ArgumentOutOfRangeException(nameof(pipeDirection)),
+            };
+        }
+
+        public static PipeDirection GetOpposite(this PipeDirection pipeDirection)
+        {
+            return pipeDirection switch
+            {
+                PipeDirection.North => PipeDirection.South,
+                PipeDirection.South => PipeDirection.North,
+                PipeDirection.East => PipeDirection.West,
+                PipeDirection.West => PipeDirection.East,
+                _ => throw new ArgumentOutOfRangeException(nameof(pipeDirection)),
+            };
+        }
     }
 
     public enum ConduitLayer
