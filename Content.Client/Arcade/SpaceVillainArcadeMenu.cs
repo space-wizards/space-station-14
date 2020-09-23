@@ -63,7 +63,7 @@ namespace Content.Client.Arcade
 
         public void UpdateInfo(int player_hp, int player_mp, int enemy_hp, int enemy_mp, string player_action, string enemy_action)
         {
-            _infoLabel.Text = $"HP:{player_hp} MP:{player_mp} | HP:{enemy_hp} MP:{enemy_mp}";
+            _infoLabel.Text = $"HP: {player_hp} MP: {player_mp} | HP: {enemy_hp} MP: {enemy_mp}";
             _playerActionLabel.Text = player_action;
             _enemyActionLabel.Text = enemy_action;
         }
