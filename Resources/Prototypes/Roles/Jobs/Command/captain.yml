@@ -4,6 +4,8 @@
   head: true
   positions: 1
   startingGear: CaptainGear
+  requireAdminNotify: true
+  supervisors: NanoTrasen officers and Space law
   department:
   - Command
   icon: "Captain"

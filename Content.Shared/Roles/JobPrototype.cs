@@ -40,6 +40,10 @@ namespace Content.Shared.Roles
 
         public string Icon { get; private set; }
 
+        public string Supervisors { get; private set; }
+
+        public bool RequireAdminNotify { get; private set; }
+
         public JobSpecial Special { get; private set; }
 
         public IReadOnlyCollection<string> Department { get; private set; }
@@ -59,6 +63,8 @@ namespace Content.Shared.Roles
             srz.DataField(this, p => p.Access, "access", Array.Empty<string>());
             srz.DataField(this, p => p.Icon, "icon", null);
             srz.DataField(this, p => p.Special, "special", null);
+            srz.DataField(this, p => p.Supervisors, "supervisors", string.Empty);
+            srz.DataField(this, p => p.RequireAdminNotify, "requireAdminNotify", false);
         }
     }
 }

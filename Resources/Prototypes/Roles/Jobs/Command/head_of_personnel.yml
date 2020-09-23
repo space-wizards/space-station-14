@@ -3,6 +3,7 @@
   name: "head of personnel"
   head: true
   positions: 1
+  supervisors: the captain
   startingGear: HoPGear
   department:
   - Command
