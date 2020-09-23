@@ -170,6 +170,9 @@
             "Firelock",
             "AtmosPlaque",
             "Spillable",
+            "Flammable",
+            "CreamPie",
+            "CreamPied",
         };
     }
 }
