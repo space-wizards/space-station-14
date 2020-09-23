@@ -173,9 +173,6 @@
       layers:
         - state: chempuff
           map: [ "enum.VaporVisualLayers.Base" ]
-    - type: Icon
-      sprite: Effects/chempuff.rsi
-      state: chempuff
     - type: Physics
     - type: Collidable
       hard: false

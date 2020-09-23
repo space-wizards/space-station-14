@@ -366,7 +366,5 @@
   components:
   - type: Sprite
     sprite: Clothing/Shoes/jackboots.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/jackboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/jackboots.rsi
