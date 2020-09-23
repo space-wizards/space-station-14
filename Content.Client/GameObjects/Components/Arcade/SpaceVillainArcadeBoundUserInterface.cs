@@ -1,6 +1,5 @@
 ﻿using Content.Client.Arcade;
 using Content.Shared.GameObjects.Components.Arcade;
-using Content.Shared.GameObjects.Components.VendingMachines;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Shared.GameObjects.Components.UserInterface;

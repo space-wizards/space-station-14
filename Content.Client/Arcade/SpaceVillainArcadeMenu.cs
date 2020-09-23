@@ -22,24 +22,18 @@ namespace Content.Client.Arcade
             GridContainer grid = new GridContainer();
             grid.Columns = 1;
 
-            //maybe make this dynamic somehow
             _infoLabel = new Label();
-            CenterContainer centerContainer = new CenterContainer();
-            centerContainer.AddChild(_infoLabel);
-            grid.AddChild(centerContainer);
+            _infoLabel.Align = Label.AlignMode.Center;
+            grid.AddChild(_infoLabel);
 
             _playerActionLabel = new Label();
-            centerContainer = new CenterContainer();
-            centerContainer.AddChild(_playerActionLabel);
-            grid.AddChild(centerContainer);
+            _playerActionLabel.Align = Label.AlignMode.Center;
+            grid.AddChild(_playerActionLabel);
 
             _enemyActionLabel = new Label();
-            centerContainer = new CenterContainer();
-            centerContainer.AddChild(_enemyActionLabel);
-            grid.AddChild(centerContainer);
-            //----
+            _enemyActionLabel.Align = Label.AlignMode.Center;
+            grid.AddChild(_enemyActionLabel);
 
-            //make this dynamic somehow
             GridContainer buttonGrid = new GridContainer();
             buttonGrid.Columns = 3;
             Button attack = new ActionButton(Owner, SharedSpaceVillainArcadeComponent.PlayerAction.Attack);
@@ -54,10 +48,9 @@ namespace Content.Client.Arcade
             recharge.Text = "RECHARGE";
             buttonGrid.AddChild(recharge);
 
-            centerContainer = new CenterContainer();
+            CenterContainer centerContainer = new CenterContainer();
             centerContainer.AddChild(buttonGrid);
             grid.AddChild(centerContainer);
-            //---
 
             Button newGame = new ActionButton(Owner, SharedSpaceVillainArcadeComponent.PlayerAction.NewGame);
             newGame.Text = "New Game";

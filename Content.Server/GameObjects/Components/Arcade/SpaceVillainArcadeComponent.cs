@@ -5,11 +5,13 @@ using Content.Server.GameObjects.Components.VendingMachines;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Arcade;
-using Content.Shared.GameObjects.Components.VendingMachines;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.Components.UserInterface;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
@@ -123,6 +125,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                     _game?.ExecutePlayerAction(msg.PlayerAction);
                     break;
                 case PlayerAction.NewGame:
+                    EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/newgame.ogg", Owner, AudioParams.Default.WithVolume(-4f));
                     _game = new SpaceVillainGame(this);
                     UserInterface?.SendMessage(_game.GenerateMetaDataMessage());
                     break;
@@ -248,6 +251,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                     case PlayerAction.Attack:
                         var attackAmount = _random.Next(2, 6);
                         actionMessage = $"You attack {_enemyName} for {attackAmount}!";
+                        EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/player_attack.ogg", Owner.Owner, AudioParams.Default.WithVolume(-4f));
                         if(!Owner._enemyInvincibilityFlag) _enemyHp -= attackAmount;
                         _turtleTracker -= _turtleTracker > 0 ? 1 : 0;
                         break;
@@ -255,6 +259,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                         var pointAmount = _random.Next(1, 3);
                         var healAmount = _random.Next(6, 8);
                         actionMessage = $"You use {pointAmount} magic to heal for {healAmount} damage!";
+                        EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/player_heal.ogg", Owner.Owner, AudioParams.Default.WithVolume(-4f));
                         if(!Owner._playerInvincibilityFlag) _playerMp -= pointAmount;
                         _playerHp += healAmount;
                         _turtleTracker++;
@@ -262,12 +267,17 @@ namespace Content.Server.GameObjects.Components.Arcade
                     case PlayerAction.Recharge:
                         var charge_amount = _random.Next(4, 7);
                         actionMessage = $"You regain {charge_amount} points";
+                        EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/player_charge.ogg", Owner.Owner, AudioParams.Default.WithVolume(-4f));
                         _playerMp += charge_amount;
                         _turtleTracker -= _turtleTracker > 0 ? 1 : 0;
                         break;
                 }
 
-                CheckGameConditions();
+                if (!CheckGameConditions())
+                {
+                    _running = false;
+                    return;
+                }
 
                 ValidateVars();
                 var enemyActionMessage = ExecuteAiAction();
@@ -286,16 +296,19 @@ namespace Content.Server.GameObjects.Components.Arcade
                 if ((_enemyHp <= 0 || _enemyMp <= 0) && (_playerHp > 0 && _playerMp > 0))
                 {
                     UpdateUi("You won!", $"{_enemyName} dies.");
+                    EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/win.ogg", Owner.Owner, AudioParams.Default.WithVolume(-4f));
                     return false;
                 }
                 if ((_playerHp <= 0 || _playerMp <= 0) && _enemyHp > 0 && _enemyMp > 0)
                 {
                     UpdateUi("You lost!", $"{_enemyName} cheers.");
+                    EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/gameover.ogg", Owner.Owner, AudioParams.Default.WithVolume(-4f));
                     return false;
                 }
                 if ((_playerHp <= 0 || _playerMp <= 0) && (_enemyHp <= 0 || _enemyMp <= 0))
                 {
                     UpdateUi("You lost!", $"{_enemyName} dies, but takes you with him.");
+                    EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/gameover.ogg", Owner.Owner, AudioParams.Default.WithVolume(-4f));
                     return false;
                 }
 
