@@ -170,7 +170,10 @@
             "Firelock",
             "AtmosPlaque",
             "Spillable",
-            "SpaceVillainArcade"
+            "SpaceVillainArcade",
+            "Flammable",
+            "CreamPie",
+            "CreamPied",
         };
     }
 }
