@@ -138,15 +138,15 @@ namespace Content.Server.GameObjects.Components.Arcade
         public enum Wires
         {
             /// <summary>
-            /// Disables Max Health&Mana
+            /// Disables Max Health&Mana for both Enemy and Player.
             /// </summary>
             Overflow,
             /// <summary>
-            /// Makes Player Invincible
+            /// Makes Player Invincible.
             /// </summary>
             PlayerInvincible,
             /// <summary>
-            /// Makes Enemy Invincible
+            /// Makes Enemy Invincible.
             /// </summary>
             EnemyInvincible
         }
@@ -187,17 +187,28 @@ namespace Content.Server.GameObjects.Components.Arcade
             //todo set visuals
         }
 
+        /// <summary>
+        /// Picks a fight-verb from the list of possible Verbs.
+        /// </summary>
+        /// <returns>A fight-verb.</returns>
         public string GenerateFightVerb()
         {
             return IoCManager.Resolve<IRobustRandom>().Pick(_possibleFightVerbs);
         }
 
+        /// <summary>
+        /// Generates an enemy-name comprised of a first- and last-name.
+        /// </summary>
+        /// <returns>An enemy-name.</returns>
         public string GenerateEnemyName()
         {
             var random = IoCManager.Resolve<IRobustRandom>();
             return $"{random.Pick(_possibleFirstEnemyNames)} {random.Pick(_possibleLastEnemyNames)}";
         }
 
+        /// <summary>
+        /// A Class to handle all the game-logic of the SpaceVillain-game.
+        /// </summary>
         public class SpaceVillainGame
         {
             [Dependency] private readonly IRobustRandom _random = default!;
@@ -231,6 +242,10 @@ namespace Content.Server.GameObjects.Components.Arcade
                 _enemyName = enemyName;
             }
 
+            /// <summary>
+            /// Validates all vars incase they overshoot their max-values.
+            /// Does not check if vars surpass 0.
+            /// </summary>
             private void ValidateVars()
             {
                 if(Owner._overflowFlag) return;
@@ -241,6 +256,10 @@ namespace Content.Server.GameObjects.Components.Arcade
                 if (_enemyMp > _enemyMpMax) _enemyMp = _enemyMpMax;
             }
 
+            /// <summary>
+            /// Called by the SpaceVillainArcadeComponent when Userinput is received.
+            /// </summary>
+            /// <param name="action">The action the user picked.</param>
             public void ExecutePlayerAction(PlayerAction action)
             {
                 if (!_running) return;
@@ -291,6 +310,10 @@ namespace Content.Server.GameObjects.Components.Arcade
                 UpdateUi(actionMessage, enemyActionMessage);
             }
 
+            /// <summary>
+            /// Checks the Game conditions and Updates the Ui & Plays a sound accordingly.
+            /// </summary>
+            /// <returns>A bool indicating if the game should continue.</returns>
             private bool CheckGameConditions()
             {
                 if ((_enemyHp <= 0 || _enemyMp <= 0) && (_playerHp > 0 && _playerMp > 0))
@@ -315,11 +338,20 @@ namespace Content.Server.GameObjects.Components.Arcade
                 return true;
             }
 
+            /// <summary>
+            /// Updates the UI.
+            /// </summary>
+            /// <param name="playerActionMessage">Content of the Playeraction-field.</param>
+            /// <param name="enemyActionMessage">Content of the Enemyaction-field.</param>
             private void UpdateUi(string playerActionMessage, string enemyActionMessage)
             {
                 Owner.UserInterface?.SendMessage(GenerateUpdateMessage(playerActionMessage, enemyActionMessage));
             }
 
+            /// <summary>
+            /// Handles the logic of the AI
+            /// </summary>
+            /// <returns>An Enemyaction-message.</returns>
             private string ExecuteAiAction()
             {
                 var actionMessage = "";
@@ -354,11 +386,21 @@ namespace Content.Server.GameObjects.Components.Arcade
                 return actionMessage;
             }
 
+            /// <summary>
+            /// Generates a Metadata-message based on the objects values.
+            /// </summary>
+            /// <returns>A Metadata-message.</returns>
             public SpaceVillainArcadeMetaDataUpdateMessage GenerateMetaDataMessage()
             {
                 return new SpaceVillainArcadeMetaDataUpdateMessage(_playerHp, _playerMp, _enemyHp, _enemyMp, Name);
             }
 
+            /// <summary>
+            /// Creates an Update-message based on the objects values.
+            /// </summary>
+            /// <param name="playerAction">Content of the Playeraction-field.</param>
+            /// <param name="enemyAction">Content of the Enemyaction-field.</param>
+            /// <returns></returns>
             public SpaceVillainArcadeDataUpdateMessage
                 GenerateUpdateMessage(string playerAction = "", string enemyAction = "")
             {
