@@ -12,8 +12,7 @@
     layers:
       - state: box_security
       - state: handcuff
-  - type: Icon
-    state: handcuff
+
   - type: Item
   - type: Storage
     capacity: 6
@@ -32,8 +31,7 @@
     layers:
       - state: box_security
       - state: flashbang
-  - type: Icon
-    state: flashbang
+
   - type: Item
   - type: Storage
     capacity: 20
@@ -52,8 +50,7 @@
     layers:
       - state: box_security
       - state: sechud
-  - type: Icon
-    state: sechud
+
   - type: Item
   - type: Storage
     capacity: 20

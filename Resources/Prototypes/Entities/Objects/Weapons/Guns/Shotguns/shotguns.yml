@@ -8,8 +8,6 @@
   - type: Sprite
     netsync: false
     state: icon
-  - type: Icon
-    state: icon
   - type: Item
     size: 24
   - type: PumpBarrel
@@ -44,9 +42,6 @@
       map: ["enum.RangedBarrelVisualLayers.Bolt"]
     - state: mag-0
       map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Shotguns/bojevic.rsi
-    state: icon
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/bojevic.rsi
   - type: RangedWeapon
@@ -88,9 +83,6 @@
         map: ["enum.RangedBarrelVisualLayers.Base"]
       - state: bolt-closed
         map: ["enum.RangedBarrelVisualLayers.Bolt"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
-    state: icon
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
     state: icon
@@ -131,8 +123,6 @@
       - state: mag-unshaded-1
         map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
         shader: unshaded
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Shotguns/bull.rsi
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/bull.rsi
   - type: RangedWeapon
@@ -155,8 +145,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/gladstone.rsi
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Shotguns/gladstone.rsi
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/gladstone.rsi
   - type: RangedWeapon
@@ -172,8 +160,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/regulator.rsi
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Shotguns/regulator.rsi
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/regulator.rsi
   - type: RangedWeapon
@@ -188,8 +174,6 @@
   description: When an old Remington design meets modern materials, this is the result. A favourite weapon of militia forces throughout many worlds.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
-  - type: Icon
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
@@ -212,9 +196,6 @@
         map: ["enum.RangedBarrelVisualLayers.Base"]
       - state: bolt-closed
         map: ["enum.RangedBarrelVisualLayers.Bolt"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
-    state: icon
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
     state: icon

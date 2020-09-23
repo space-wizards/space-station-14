@@ -109,11 +109,11 @@ namespace Content.Client.GameObjects.Components.Kitchen
                 {
                     return;
                 }
-                if (entity.Deleted || !entity.TryGetComponent(out IconComponent icon))
+                if (entity.Deleted || !entity.TryGetComponent(out SpriteComponent spriteComponent))
                 {
                     continue;
                 }
-                var solidItem = _menu.IngredientsList.AddItem(entity.Name, icon.Icon.Default);
+                var solidItem = _menu.IngredientsList.AddItem(entity.Name, spriteComponent.Icon);
                 var solidIndex = _menu.IngredientsList.IndexOf(solidItem);
                 _solids.Add(solidIndex, containedSolids[j]);
 

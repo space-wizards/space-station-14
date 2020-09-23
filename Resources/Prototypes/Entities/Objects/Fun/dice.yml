@@ -19,9 +19,7 @@
   - type: Sprite
     sprite: Objects/Fun/dice.rsi
     state: d100100
-  - type: Icon
-    sprite: Objects/Fun/dice.rsi
-    state: d100100
+
 
 - type: entity
   name: "d20"
@@ -34,9 +32,7 @@
   - type: Sprite
     sprite: Objects/Fun/dice.rsi
     state: d2020
-  - type: Icon
-    sprite: Objects/Fun/dice.rsi
-    state: d2020
+
 
 - type: entity
   name: "d12"
@@ -49,9 +45,7 @@
   - type: Sprite
     sprite: Objects/Fun/dice.rsi
     state: d1212
-  - type: Icon
-    sprite: Objects/Fun/dice.rsi
-    state: d1212
+
 
 - type: entity
   name: "d10"
@@ -64,9 +58,7 @@
   - type: Sprite
     sprite: Objects/Fun/dice.rsi
     state: d1010
-  - type: Icon
-    sprite: Objects/Fun/dice.rsi
-    state: d1010
+
 
 - type: entity
   name: "d8"
@@ -79,9 +71,7 @@
   - type: Sprite
     sprite: Objects/Fun/dice.rsi
     state: d88
-  - type: Icon
-    sprite: Objects/Fun/dice.rsi
-    state: d88
+
 
 - type: entity
   name: "d6"
@@ -94,9 +84,7 @@
   - type: Sprite
     sprite: Objects/Fun/dice.rsi
     state: d66
-  - type: Icon
-    sprite: Objects/Fun/dice.rsi
-    state: d66
+
 
 - type: entity
   name: "d4"
@@ -109,6 +97,4 @@
   - type: Sprite
     sprite: Objects/Fun/dice.rsi
     state: d44
-  - type: Icon
-    sprite: Objects/Fun/dice.rsi
-    state: d44
+

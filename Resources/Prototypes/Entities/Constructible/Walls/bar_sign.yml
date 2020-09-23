@@ -9,9 +9,7 @@
     drawdepth: WallTops
     sprite: Constructible/Misc/barsign.rsi
     state: empty
-  - type: Icon
-    sprite: Constructible/Misc/barsign.rsi
-    state: empty
+
   - type: PowerReceiver
   - type: BarSign
 
@@ -27,9 +25,7 @@
     drawdepth: WallTops
     sprite: Constructible/Misc/sylphs.rsi
     state: sylph
-  - type: Icon
-    sprite: Constructible/Misc/sylphs.rsi
-    state: sylph
+
   - type: PowerReceiver
   - type: BarSign
 

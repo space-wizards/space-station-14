@@ -10,8 +10,7 @@
   - type: Sprite
     state: icon
     netsync: false
-  - type: Icon
-    state: icon
+
   # Only use visualizer if there's multiple steps available
 # - type: Appearance
 #     visuals:
@@ -36,8 +35,7 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/4no_raisins.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/4no_raisins.rsi
+
   - type: Item
     sprite: Objects/Consumable/Food/4no_raisins.rsi
 
@@ -55,8 +53,7 @@
     trash: TrashSnackBowl
   - type: Sprite
     sprite: Objects/Consumable/Food/aesirsalad.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/aesirsalad.rsi
+
 
 - type: entity
   name: amanita pie
@@ -71,8 +68,7 @@
         Quantity: 10
   - type: Sprite
     sprite: Objects/Consumable/Food/amanita_pie.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/amanita_pie.rsi
+
 
 - type: entity
   name: amanita jelly
@@ -89,8 +85,7 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/amanitajelly.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/amanitajelly.rsi
+
 
 #- type: entity
 #  name: ambrosia vulgar is crushed
@@ -103,8 +98,7 @@
 #    uses: 1
 #  - type: Sprite
 #    sprite: Objects/Consumable/Food/ambrosiavulgariscrushed.rsi
-#  - type: Icon
-#    sprite: Objects/Consumable/Food/ambrosiavulgariscrushed.rsi
+
 
 - type: entity
   name: apple cake (slice)
@@ -121,8 +115,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/apple_cake_slice.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/apple_cake_slice.rsi
+
 
 - type: entity
   name: apple pie
@@ -137,8 +130,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/apple_pie.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/apple_pie.rsi
+
 
 # TODO: BREADSLICE?
 #- type: entity
@@ -152,8 +144,7 @@
 #    uses: 1
 #  - type: Sprite
 #    sprite: Objects/Consumable/Food/bacon.rsi
-#  - type: Icon
-#    sprite: Objects/Consumable/Food/bacon.rsi
+
 
 - type: entity
   name: bad recipe
@@ -168,8 +159,7 @@
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/badrecipe.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/badrecipe.rsi
+
 
 - type: entity
   name: baguette
@@ -184,8 +174,7 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/baguette.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/baguette.rsi
+
 
 - type: entity
   name: bread (slice)
@@ -202,8 +191,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/breadslice.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/breadslice.rsi
+
 
 - type: entity
   name: banana bread (slice)
@@ -220,8 +208,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/bananabreadslice.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/bananabreadslice.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -239,8 +226,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/pie.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/pie.rsi
+
 
 #- type: entity
 #  name: bear meat
@@ -253,8 +239,7 @@
 #    uses: 1
 #  - type: Sprite
 #    sprite: Objects/Consumable/Food/bearmeat.rsi
-#  - type: Icon
-#    sprite: Objects/Consumable/Food/bearmeat.rsi
+
 
 - type: entity
   name: beet soup
@@ -271,8 +256,7 @@
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/beetsoup.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/beetsoup.rsi
+
 
 - type: entity
   name: berry clafoutis
@@ -289,8 +273,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/berryclafoutis.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/berryclafoutis.rsi
+
 
 - type: entity
   name: birthday cake (slice)
@@ -307,8 +290,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/birthday_cake_slice.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/birthday_cake_slice.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -325,8 +307,7 @@
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/spaghettiboiled.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/spaghettiboiled.rsi
+
 
 - type: entity
   name: brain cake (slice)
@@ -343,8 +324,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/brain_cake_slice.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/brain_cake_slice.rsi
+
 
 - type: entity
   name: candy
@@ -361,8 +341,7 @@
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Food/candy.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/candy.rsi
+
   - type: Item
     sprite: Objects/Consumable/Food/candy.rsi
 
@@ -379,8 +358,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/candy_corn.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/candy_corn.rsi
+
 
 - type: entity
   name: carrot cake (slice)
@@ -397,8 +375,7 @@
         Quantity: 10
   - type: Sprite
     sprite: Objects/Consumable/Food/carrotcake_slice.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/carrotcake_slice.rsi
+
 
 - type: entity
   name: carrot fries
@@ -415,8 +392,7 @@
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/carrotfries.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/carrotfries.rsi
+
 
 - type: entity
   name: chawan mushi
@@ -433,8 +409,7 @@
         Quantity: 10
   - type: Sprite
     sprite: Objects/Consumable/Food/chawanmushi.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/chawanmushi.rsi
+
 
 - type: entity
   name: cheeseburger
@@ -449,8 +424,7 @@
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/cheeseburger.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/cheeseburger.rsi
+
   - type: Item
     sprite: Objects/Consumable/Food/cheeseburger.rsi
 
@@ -469,8 +443,7 @@
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/cheesecake_slice.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/cheesecake_slice.rsi
+
 
 - type: entity
   name: cheese wedge
@@ -485,8 +458,7 @@
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/cheesewedge.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/cheesewedge.rsi
+
 
 - type: entity
   name: cheesie honkers
@@ -503,8 +475,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/cheesie_honkers.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/cheesie_honkers.rsi
+
 
 - type: entity
   name: cheesy fries
@@ -521,8 +492,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/cheesyfries.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/cheesyfries.rsi
+
 
 - type: entity
   name: cherry pie
@@ -537,8 +507,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/cherrypie.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/cherrypie.rsi
+
 
 - type: entity
   name: chips
@@ -555,8 +524,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/chips.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/chips.rsi
+
   - type: Item
     sprite: Objects/Consumable/Food/chips.rsi
 
@@ -575,8 +543,7 @@
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/chocolatebar.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/chocolatebar.rsi
+
 
 - type: entity
   name: chocolate cake (slice)
@@ -593,8 +560,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/chocolatecake_slice.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/chocolatecake_slice.rsi
+
 
 - type: entity
   name: chocolate egg
@@ -609,8 +575,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/chocolateegg.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/chocolateegg.rsi
+
 
 - type: entity
   name: clown burger
@@ -625,8 +590,7 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/clownburger.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/clownburger.rsi
+
   - type: Item
     sprite: Objects/Consumable/Food/clownburger.rsi
 
@@ -643,8 +607,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/clownstears.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/clownstears.rsi
+
 
 #- type: entity
 #  name: cocoa
@@ -658,8 +621,7 @@
 #    restore_amount: 3
 #  - type: Sprite
 #    sprite: Objects/Consumable/Food/cocoa.rsi
-#  - type: Icon
-#    sprite: Objects/Consumable/Food/cocoa.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -676,8 +638,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/coldchili.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/coldchili.rsi
+
 
 #- type: entity
 #  parent: FoodBase
@@ -691,8 +652,7 @@
 #    restore_amount: 1
 #  - type: Sprite
 #    sprite: Objects/Consumable/Food/coldsauce.rsi
-#  - type: Icon
-#    sprite: Objects/Consumable/Food/coldsauce.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -707,8 +667,7 @@
         Quantity: 10
   - type: Sprite
     sprite: Objects/Consumable/Food/cookie!!!.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/cookie!!!.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -723,8 +682,7 @@
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/cracker.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/cracker.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -741,8 +699,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/creamcheesebreadslice.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/creamcheesebreadslice.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -759,8 +716,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/cubancarp.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/cubancarp.rsi
+
 
 #- type: entity
 #  parent: FoodBase
@@ -774,8 +730,7 @@
 #    restore_amount: 1
 #  - type: Sprite
 #    sprite: Objects/Consumable/Food/dionaroast.rsi
-#  - type: Icon
-#    sprite: Objects/Consumable/Food/dionaroast.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -790,8 +745,7 @@
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/donkpocket.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/donkpocket.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -806,8 +760,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/donut1.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/donut1.rsi
+
   - type: Item
     sprite: Objects/Consumable/Food/donut1.rsi
 
@@ -824,8 +777,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/donut2.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/donut2.rsi
+
   - type: Item
     sprite: Objects/Consumable/Food/donut2.rsi.rsi
 
@@ -842,8 +794,7 @@
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-blue.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/egg-blue.rsi
+
   - type: Item
     sprite: Objects/Consumable/Food/egg-blue.rsi.rsi
 
@@ -860,8 +811,7 @@
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-green.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/egg-green.rsi
+
   - type: Item
     sprite: Objects/Consumable/Food/egg-green.rsi.rsi
 
@@ -878,8 +828,7 @@
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-mime.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/egg-mime.rsi
+
   - type: Item
     sprite: Objects/Consumable/Food/egg-mime.rsi.rsi
 
@@ -896,8 +845,7 @@
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-orange.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/egg-orange.rsi
+
   - type: Item
     sprite: Objects/Consumable/Food/egg-orange.rsi.rsi
 
@@ -914,8 +862,7 @@
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-purple.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/egg-purple.rsi
+
   - type: Item
     sprite: Objects/Consumable/Food/egg-purple.rsi.rsi
 
@@ -932,8 +879,7 @@
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-rainbow.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/egg-rainbow.rsi
+
   - type: Item
     sprite: Objects/Consumable/Food/egg-rainbow.rsi.rsi
 
@@ -950,8 +896,7 @@
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-red.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/egg-red.rsi
+
   - type: Item
     sprite: Objects/Consumable/Food/egg-red.rsi.rsi
 
@@ -969,8 +914,7 @@
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-yellow.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/egg-yellow.rsi
+
   - type: Item
     sprite: Objects/Consumable/Food/egg-yellow.rsi
 
@@ -987,8 +931,7 @@
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/egg.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/egg.rsi
+
   - type: Item
     sprite: Objects/Consumable/Food/egg.rsi
 
@@ -1007,8 +950,7 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/eggplantparm.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/eggplantparm.rsi
+
 
 #- type: entity
 #  parent: FoodBase
@@ -1022,8 +964,7 @@
 #    restore_amount: 1
 #  - type: Sprite
 #    sprite: Objects/Consumable/Food/emptycondiment.rsi
-#  - type: Icon
-#    sprite: Objects/Consumable/Food/emptycondiment.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1040,8 +981,7 @@
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/enchiladas.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/enchiladas.rsi
+
 
 #- type: entity
 #  parent: FoodBase
@@ -1055,8 +995,7 @@
 #    restore_amount: 1
 #  - type: Sprite
 #    sprite: Objects/Consumable/Food/enchiladasold.rsi
-#  - type: Icon
-#    sprite: Objects/Consumable/Food/enchiladasold.rsi
+
 
 #- type: entity
 #  parent: FoodBase
@@ -1070,8 +1009,7 @@
 #    restore_amount: 1
 #  - type: Sprite
 #    sprite: Objects/Consumable/Food/enzyme.rsi
-#  - type: Icon
-#    sprite: Objects/Consumable/Food/enzyme.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1086,8 +1024,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/fishandchips.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/fishandchips.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1102,8 +1039,7 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/fishburger.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/fishburger.rsi
+
   - type: Item
     sprite: Objects/Consumable/Food/fishburger.rsi
 
@@ -1119,8 +1055,7 @@
 #    restore_amount: 1
 #  - type: Sprite
 #    sprite: Objects/Consumable/Food/fishfillet.rsi
-#  - type: Icon
-#    sprite: Objects/Consumable/Food/fishfillet.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1135,8 +1070,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/fishfingers.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/fishfingers.rsi
+
 
 #- type: entity
 #  parent: FoodBase
@@ -1150,8 +1084,7 @@
 #    restore_amount: 1
 #  - type: Sprite
 #    sprite: Objects/Consumable/Food/flour.rsi
-#  - type: Icon
-#    sprite: Objects/Consumable/Food/flour.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1166,8 +1099,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/fortune_cookie.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/fortune_cookie.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1182,8 +1114,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/friedegg.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/friedegg.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1200,8 +1131,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/fries.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/fries.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1218,8 +1148,7 @@
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/gappletart.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/gappletart.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1236,8 +1165,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/toastedsandwich.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/toastedsandwich.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1252,8 +1180,7 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/hburger.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/hburger.rsi
+
   - type: Item
     sprite: Objects/Consumable/Food/hburger.rsi
 
@@ -1272,8 +1199,7 @@
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/herbsalad.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/herbsalad.rsi
+
 
 #- type: entity
 #  parent: FoodBase
@@ -1287,8 +1213,7 @@
 #    restore_amount: 1
 #  - type: Sprite
 #    sprite: Objects/Consumable/Food/honeycomb.rsi
-#  - type: Icon
-#    sprite: Objects/Consumable/Food/honeycomb.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1305,8 +1230,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/hotchili.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/hotchili.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1321,8 +1245,7 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/hotdog.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/hotdog.rsi
+
 
 #- type: entity
 #  parent: FoodBase
@@ -1336,8 +1259,7 @@
 #    restore_amount: 1
 #  - type: Sprite
 #    sprite: Objects/Consumable/Food/hotsauce.rsi
-#  - type: Icon
-#    sprite: Objects/Consumable/Food/hotsauce.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1352,8 +1274,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/hugemushroomslice.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/hugemushroomslice.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1370,8 +1291,7 @@
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/kabob.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/kabob.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1386,8 +1306,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/jdonut1.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/jdonut1.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1402,8 +1321,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/jdonut2.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/jdonut2.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1418,8 +1336,7 @@
         Quantity: 10
   - type: Sprite
     sprite: Objects/Consumable/Food/jellyburger.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/jellyburger.rsi
+
   - type: Item
     sprite: Objects/Consumable/Food/jellyburger.rsi
 
@@ -1438,8 +1355,7 @@
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/jellysandwich.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/jellysandwich.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1456,8 +1372,7 @@
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/jellytoast.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/jellytoast.rsi
+
 
 # TODO: Add more pies. Anything that shares a sprite
 - type: entity
@@ -1475,8 +1390,7 @@
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/kabob.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/kabob.rsi
+
 
 #- type: entity
 #  parent: FoodBase
@@ -1490,8 +1404,7 @@
 #    restore_amount: 1
 #  - type: Sprite
 #    sprite: Objects/Consumable/Food/ketchup.rsi
-#  - type: Icon
-#    sprite: Objects/Consumable/Food/ketchup.rsi
+
 
 #- type: entity
 #  parent: FoodBase
@@ -1505,8 +1418,7 @@
 #    restore_amount: 1
 #  - type: Sprite
 #    sprite: Objects/Consumable/Food/ketchupold.rsi
-#  - type: Icon
-#    sprite: Objects/Consumable/Food/ketchupold.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1523,8 +1435,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/lemoncake_slice.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/lemoncake_slice.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1541,8 +1452,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/limecake_slice.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/limecake_slice.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1557,8 +1467,7 @@
         Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Food/liquidfood.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/liquidfood.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1573,8 +1482,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/loadedbakedpotato.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/loadedbakedpotato.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1589,8 +1497,7 @@
         Quantity: 5
   - type: Sprite
     sprite: Objects/Consumable/Food/meat.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/meat.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1605,8 +1512,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/meatball.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/meatball.rsi
+
   - type: Item
     sprite: Objects/Consumable/Food/meatball.rsi
 
@@ -1625,8 +1531,7 @@
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/meatballsoup.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/meatballsoup.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1643,8 +1548,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/meatballspaghetti.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/meatballspaghetti.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1661,8 +1565,7 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/meatbreadslice.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/meatbreadslice.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1679,8 +1582,7 @@
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Food/meatpie.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/meatpie.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1695,8 +1597,7 @@
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/meatpizzaslice.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/meatpizzaslice.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1713,8 +1614,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/meatsteak.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/meatsteak.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1731,8 +1631,7 @@
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/milosoup.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/milosoup.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1747,8 +1646,7 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/mimeburger.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/mimeburger.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1763,8 +1661,7 @@
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/mint.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/mint.rsi
+
 
 #- type: entity
 #  parent: FoodBase
@@ -1778,8 +1675,7 @@
 #    restore_amount: 1
 #  - type: Sprite
 #    sprite: Objects/Consumable/Food/mixedcondiments.rsi
-#  - type: Icon
-#    sprite: Objects/Consumable/Food/mixedcondiments.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1794,8 +1690,7 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/hburger.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/hburger.rsi
+
   - type: Item
     sprite: Objects/Consumable/Food/hburger.rsi
 
@@ -1812,8 +1707,7 @@
         Quantity: 10
   - type: Sprite
     sprite: Objects/Consumable/Food/monkeycube.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/monkeycube.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1830,8 +1724,7 @@
         Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Food/monkeysdelight.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/monkeysdelight.rsi
+
 
 #- type: entity
 #  parent: FoodBase
@@ -1845,8 +1738,7 @@
 #    restore_amount: 1
 #  - type: Sprite
 #    sprite: Objects/Consumable/Food/mtearp.rsi
-#  - type: Icon
-#    sprite: Objects/Consumable/Food/mtearp.rsi
+
 
 #- type: entity
 #  parent: FoodBase
@@ -1860,8 +1752,7 @@
 #    restore_amount: 1
 #  - type: Sprite
 #    sprite: Objects/Consumable/Food/muffin.rsi
-#  - type: Icon
-#    sprite: Objects/Consumable/Food/muffin.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1876,8 +1767,7 @@
         Quantity: 10
   - type: Sprite
     sprite: Objects/Consumable/Food/mushroompizzaslice.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/mushroompizzaslice.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1894,8 +1784,7 @@
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/mushroomsoup.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/mushroomsoup.rsi
+
 
 # TODO: More in this one
 - type: entity
@@ -1913,8 +1802,7 @@
         Quantity: 1
   - type: Sprite
     sprite: Objects/Consumable/Food/mysterysoup.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/mysterysoup.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1931,8 +1819,7 @@
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/nettlesoup.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/nettlesoup.rsi
+
 
 #- type: entity
 #  parent: FoodBase
@@ -1946,8 +1833,7 @@
 #    restore_amount: 1
 #  - type: Sprite
 #    sprite: Objects/Consumable/Food/oliveoil.rsi
-#  - type: Icon
-#    sprite: Objects/Consumable/Food/oliveoil.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1964,8 +1850,7 @@
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/omelette.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/omelette.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -1982,8 +1867,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/orangecake_slice.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/orangecake_slice.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2000,8 +1884,7 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/pastatomato.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/pastatomato.rsi
+
 
 #- type: entity
 #  parent: FoodBase
@@ -2015,8 +1898,7 @@
 #    restore_amount: 1
 #  - type: Sprite
 #    sprite: Objects/Consumable/Food/peppermillsmall.rsi
-#  - type: Icon
-#    sprite: Objects/Consumable/Food/peppermillsmall.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2031,8 +1913,7 @@
         Quantity: 10
   - type: Sprite
     sprite: Objects/Consumable/Food/phelmbiscuit.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/phelmbiscuit.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2047,8 +1928,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/pizzamargheritaslice.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/pizzamargheritaslice.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2065,8 +1945,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/plaincake_slice.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/plaincake_slice.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2081,8 +1960,7 @@
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/plump_pie.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/plump_pie.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2100,8 +1978,7 @@
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/popcorn.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/popcorn.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2116,8 +1993,7 @@
         Quantity: 10
   - type: Sprite
     sprite: Objects/Consumable/Food/poppypretzel.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/poppypretzel.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2134,8 +2010,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/pumpkinpieslice.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/pumpkinpieslice.rsi
+
 
 # TODO: Boiled rice?
 #- type: entity
@@ -2150,8 +2025,7 @@
 #    restore_amount: 1
 #  - type: Sprite
 #    sprite: Objects/Consumable/Food/rice.rsi
-#  - type: Icon
-#    sprite: Objects/Consumable/Food/rice.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2166,8 +2040,7 @@
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/roburger.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/roburger.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2184,8 +2057,7 @@
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/rofflewaffles.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/rofflewaffles.rsi
+
 
 #- type: entity
 #  parent: FoodBase
@@ -2199,8 +2071,7 @@
 #    restore_amount: 1
 #  - type: Sprite
 #    sprite: Objects/Consumable/Food/rorosoup.rsi
-#  - type: Icon
-#    sprite: Objects/Consumable/Food/rorosoup.rsi
+
 
 #- type: entity
 #  parent: FoodBase
@@ -2214,8 +2085,7 @@
 #    restore_amount: 1
 #  - type: Sprite
 #    sprite: Objects/Consumable/Food/rottenmeat.rsi
-#  - type: Icon
-#    sprite: Objects/Consumable/Food/rottenmeat.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2232,8 +2102,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/rpudding.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/rpudding.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2250,8 +2119,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/sandwich.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/sandwich.rsi
+
 
 #- type: entity
 #  parent: FoodBase
@@ -2265,8 +2133,7 @@
 #    restore_amount: 1
 #  - type: Sprite
 #    sprite: Objects/Consumable/Food/sandwich_filling.rsi
-#  - type: Icon
-#    sprite: Objects/Consumable/Food/sandwich_filling.rsi
+
 
 #- type: entity
 #  parent: FoodBase
@@ -2280,8 +2147,7 @@
 #    restore_amount: 1
 #  - type: Sprite
 #    sprite: Objects/Consumable/Food/sandwich_top.rsi
-#  - type: Icon
-#    sprite: Objects/Consumable/Food/sandwich_top.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2296,8 +2162,7 @@
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/sausage.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/sausage.rsi
+
 
 #- type: entity
 #  parent: FoodBase
@@ -2311,8 +2176,7 @@
 #    restore_amount: 1
 #  - type: Sprite
 #    sprite: Objects/Consumable/Food/shandp.rsi
-#  - type: Icon
-#    sprite: Objects/Consumable/Food/shandp.rsi
+
 
 #- type: entity
 #  parent: FoodBase
@@ -2326,8 +2190,7 @@
 #    restore_amount: 1
 #  - type: Sprite
 #    sprite: Objects/Consumable/Food/skrellsnacks.rsi
-#  - type: Icon
-#    sprite: Objects/Consumable/Food/skrellsnacks.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2343,8 +2206,7 @@
     trash: TrashSOSJerky
   - type: Sprite
     sprite: Objects/Consumable/Food/sosjerky.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/sosjerky.rsi
+
   - type: Item
     sprite: Objects/Consumable/Food/sosjerky.rsi
 
@@ -2363,8 +2225,7 @@
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/soydope.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/soydope.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2381,8 +2242,7 @@
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/soylent_green.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/soylent_green.rsi
+
 
 # why these were named different i have no idea
 - type: entity
@@ -2400,8 +2260,7 @@
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/soylent_yellow.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/soylent_yellow.rsi
+
 
 #- type: entity
 #  parent: FoodBase
@@ -2415,8 +2274,7 @@
 #    restore_amount: 1
 #  - type: Sprite
 #    sprite: Objects/Consumable/Food/soysauce.rsi
-#  - type: Icon
-#    sprite: Objects/Consumable/Food/soysauce.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2431,8 +2289,7 @@
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/space_twinkie.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/space_twinkie.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2449,8 +2306,7 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/spacylibertyduff.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/spacylibertyduff.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2465,8 +2321,7 @@
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/spaghetti.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/spaghetti.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2481,8 +2336,7 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/spellburger.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/spellburger.rsi
+
   - type: Item
     sprite: Objects/Consumable/Food/spellburger.rsi
 
@@ -2499,8 +2353,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/spesslaw.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/spesslaw.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2515,8 +2368,7 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/stew.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/stew.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2533,8 +2385,7 @@
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/stewedsoymeat.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/stewedsoymeat.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2549,8 +2400,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/stuffing.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/stuffing.rsi
+
 
 #- type: entity
 #  parent: FoodBase
@@ -2564,8 +2414,7 @@
 #    restore_amount: 1
 #  - type: Sprite
 #    sprite: Objects/Consumable/Food/sugar.rsi
-#  - type: Icon
-#    sprite: Objects/Consumable/Food/sugar.rsi
+
 
 #- type: entity
 #  parent: FoodBase
@@ -2579,8 +2428,7 @@
 #    restore_amount: 1
 #  - type: Sprite
 #    sprite: Objects/Consumable/Food/sugarsmall.rsi
-#  - type: Icon
-#    sprite: Objects/Consumable/Food/sugarsmall.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2595,8 +2443,7 @@
         Quantity: 40
   - type: Sprite
     sprite: Objects/Consumable/Food/superbiteburger.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/superbiteburger.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2613,8 +2460,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/syndi_cakes.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/syndi_cakes.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2629,8 +2475,7 @@
         Quantity: 8
   - type: Sprite
     sprite: Objects/Consumable/Food/taco.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/taco.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2647,8 +2492,7 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/tastybread.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/tastybread.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2665,8 +2509,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/toastedsandwich.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/toastedsandwich.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2681,8 +2524,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/tofu.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/tofu.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2699,8 +2541,7 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/tofubreadslice.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/tofubreadslice.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2715,8 +2556,7 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/tofuburger.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/tofuburger.rsi
+
   - type: Item
     sprite: Objects/Consumable/Food/tofuburger.rsi
 
@@ -2735,8 +2575,7 @@
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/kabob.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/kabob.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2751,8 +2590,7 @@
         Quantity: 24
   - type: Sprite
     sprite: Objects/Consumable/Food/tofurkey.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/tofurkey.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2767,8 +2605,7 @@
         Quantity: 6
   - type: Sprite
     sprite: Objects/Consumable/Food/tomatomeat.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/tomatomeat.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2785,8 +2622,7 @@
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/tomatosoup.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/tomatosoup.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2801,8 +2637,7 @@
         Quantity: 4
   - type: Sprite
     sprite: Objects/Consumable/Food/twobread.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/twobread.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2819,8 +2654,7 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/validsalad.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/validsalad.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2835,8 +2669,7 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/vegetablepizzaslice.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/vegetablepizzaslice.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2853,8 +2686,7 @@
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/vegetablesoup.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/vegetablesoup.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2871,8 +2703,7 @@
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/waffles.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/waffles.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2887,8 +2718,7 @@
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/watermelonslice.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/watermelonslice.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2905,8 +2735,7 @@
         Quantity: 12
   - type: Sprite
     sprite: Objects/Consumable/Food/wingfangchu.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/wingfangchu.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2923,8 +2752,7 @@
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/wishsoup.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/wishsoup.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2939,8 +2767,7 @@
         Quantity: 16
   - type: Sprite
     sprite: Objects/Consumable/Food/xburger.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/xburger.rsi
+
   - type: Item
     sprite: Objects/Consumable/Food/xburger.rsi
 
@@ -2959,8 +2786,7 @@
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Food/xenobreadslice.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/xenobreadslice.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2975,8 +2801,7 @@
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Food/xenomeat.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/xenomeat.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -2993,8 +2818,7 @@
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Food/xenomeatpie.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/xenomeatpie.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -3011,8 +2835,7 @@
         Quantity: 15
   - type: Sprite
     sprite: Objects/Consumable/Food/stew.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/stew.rsi
+
 
 - type: entity
   parent: FoodBase
@@ -3030,8 +2853,7 @@
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Food/milkape.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Food/milkape.rsi
+
 
 - type: entity
   name: banana
@@ -3048,8 +2870,7 @@
             Quantity: 6
     - type: Sprite
       sprite: Objects/Consumable/Food/banana.rsi
-    - type: Icon
-      sprite: Objects/Consumable/Food/banana.rsi
+
 
 - type: entity
   name: memory leek
@@ -3066,6 +2887,4 @@
     - type: Sprite
       sprite: Objects/Consumable/Food/memoryleek.rsi
       state: memoryLeek
-    - type: Icon
-      sprite: Objects/Consumable/Food/memoryleek.rsi
-      state: memoryLeek
+

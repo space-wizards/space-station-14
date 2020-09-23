@@ -9,9 +9,6 @@
     - type: Sprite
       sprite: Constructible/Misc/extinguisher_cabinet.rsi
       state: extinguisher_closed
-    - type: Icon
-      sprite: Constructible/Misc/extinguisher_cabinet.rsi
-      state: extinguisher_closed
     - type: ExtinguisherCabinet
     - type: Appearance
       visuals:

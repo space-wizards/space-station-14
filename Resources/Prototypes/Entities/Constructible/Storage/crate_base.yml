@@ -10,9 +10,7 @@
     - state: crate
     - state: crate_door
       map: ["enum.StorageVisualLayers.Door"]
-  - type: Icon
-    sprite: Constructible/Structures/Crates/generic.rsi
-    state: crate
+
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable

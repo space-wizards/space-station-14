@@ -14,8 +14,7 @@
   - type: Sprite
     netsync: false
     drawdepth: Walls
-  - type: Icon
-    state: full
+
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -47,8 +46,7 @@
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/brick.rsi
-  - type: Icon
-    sprite: Constructible/Structures/Walls/brick.rsi
+
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy: Girder
@@ -64,8 +62,7 @@
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/clock.rsi
-  - type: Icon
-    sprite: Constructible/Structures/Walls/clock.rsi
+
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy: Girder
@@ -81,8 +78,7 @@
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/clown.rsi
-  - type: Icon
-    sprite: Constructible/Structures/Walls/clown.rsi
+
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy: Girder
@@ -99,8 +95,7 @@
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/cult.rsi
-  - type: Icon
-    sprite: Constructible/Structures/Walls/cult.rsi
+
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy: Girder
@@ -116,8 +111,7 @@
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/debug.rsi
-  - type: Icon
-    sprite: Constructible/Structures/Walls/debug.rsi
+
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy: Girder
@@ -133,8 +127,7 @@
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/diamond.rsi
-  - type: Icon
-    sprite: Constructible/Structures/Walls/diamond.rsi
+
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy: Girder
@@ -151,8 +144,7 @@
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/gold.rsi
-  - type: Icon
-    sprite: Constructible/Structures/Walls/gold.rsi
+
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy: Girder
@@ -168,8 +160,7 @@
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/ice.rsi
-  - type: Icon
-    sprite: Constructible/Structures/Walls/ice.rsi
+
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy: Girder
@@ -185,8 +176,7 @@
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/metal.rsi
-  - type: Icon
-    sprite: Constructible/Structures/Walls/metal.rsi
+
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy: Girder
@@ -202,8 +192,7 @@
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/plasma.rsi
-  - type: Icon
-    sprite: Constructible/Structures/Walls/plasma.rsi
+
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy: Girder
@@ -219,8 +208,7 @@
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/plastic.rsi
-  - type: Icon
-    sprite: Constructible/Structures/Walls/plastic.rsi
+
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy: Girder
@@ -237,9 +225,7 @@
   - type: Sprite
     color: "#889192"
     sprite: Constructible/Structures/Walls/solid.rsi
-  - type: Icon
-    sprite: Constructible/Structures/Walls/solid.rsi
-    state: rgeneric
+
   - type: Destructible
     deadThreshold: 600
     spawnOnDestroy: Girder
@@ -257,8 +243,7 @@
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/riveted.rsi
-  - type: Icon
-    sprite: Constructible/Structures/Walls/riveted.rsi
+
   - type: Destructible
     deadThreshold: 1000
     spawnOnDestroy: Girder
@@ -274,8 +259,7 @@
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/sandstone.rsi
-  - type: Icon
-    sprite: Constructible/Structures/Walls/sandstone.rsi
+
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy: Girder
@@ -291,8 +275,7 @@
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/silver.rsi
-  - type: Icon
-    sprite: Constructible/Structures/Walls/silver.rsi
+
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy: Girder
@@ -309,8 +292,7 @@
   - type: Sprite
     color: "#889192"
     sprite: Constructible/Structures/Walls/solid.rsi
-  - type: Icon
-    sprite: Constructible/Structures/Walls/solid.rsi
+
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy: Girder
@@ -327,8 +309,7 @@
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/uranium.rsi
-  - type: Icon
-    sprite: Constructible/Structures/Walls/uranium.rsi
+
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy: Girder
@@ -344,8 +325,7 @@
   components:
   - type: Sprite
     sprite: Constructible/Structures/Walls/wood.rsi
-  - type: Icon
-    sprite: Constructible/Structures/Walls/wood.rsi
+
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy: Girder

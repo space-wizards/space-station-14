@@ -9,9 +9,7 @@
   - type: Sprite
     netsync: false
     sprite: Constructible/Structures/Tables/generic.rsi
-  - type: Icon
-    sprite: Constructible/Structures/Tables/generic.rsi
-    state: plain_preview
+
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -39,9 +37,7 @@
   - type: Sprite
     netsync: false
     sprite: Constructible/Structures/Tables/wood.rsi
-  - type: Icon
-    sprite: Constructible/Structures/Tables/wood.rsi
-    state: icon
+    preview_state: icon
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb

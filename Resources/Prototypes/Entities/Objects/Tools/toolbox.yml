@@ -20,9 +20,6 @@
   - type: Sprite
     sprite: Objects/Tools/Toolboxes/toolbox_red.rsi
     state: icon
-  - type: Icon
-    sprite: Objects/Tools/Toolboxes/toolbox_red.rsi
-    state: icon
   - type: Item
     sprite: Objects/Tools/Toolboxes/toolbox_red.rsi
 
@@ -54,9 +51,6 @@
   - type: Sprite
     sprite: Objects/Tools/Toolboxes/toolbox_blue.rsi
     state: icon
-  - type: Icon
-    sprite: Objects/Tools/Toolboxes/toolbox_blue.rsi
-    state: icon
   - type: Item
     sprite: Objects/Tools/Toolboxes/toolbox_blue.rsi
 
@@ -67,9 +61,6 @@
   description: A toolbox typically stocked with electrical gear
   components:
   - type: Sprite
-    sprite: Objects/Tools/Toolboxes/toolbox_yellow.rsi
-    state: icon
-  - type: Icon
     sprite: Objects/Tools/Toolboxes/toolbox_yellow.rsi
     state: icon
   - type: Item
@@ -103,9 +94,6 @@
   - type: Sprite
     sprite: Objects/Tools/Toolboxes/toolbox_green.rsi
     state: icon
-  - type: Icon
-    sprite: Objects/Tools/Toolboxes/toolbox_green.rsi
-    state: icon
   - type: Item
     sprite: Objects/Tools/Toolboxes/toolbox_green.rsi
 
@@ -118,9 +106,6 @@
   - type: Sprite
     sprite: Objects/Tools/Toolboxes/toolbox_syn.rsi
     state: icon
-  - type: Icon
-    sprite: Objects/Tools/Toolboxes/toolbox_syn.rsi
-    state: icon
   - type: Item
     sprite: Objects/Tools/Toolboxes/toolbox_syn.rsi
 
@@ -131,9 +116,6 @@
   description: A solid gold toolbox. A rapper would kill for this.
   components:
   - type: Sprite
-    sprite: Objects/Tools/Toolboxes/toolbox_gold.rsi
-    state: icon
-  - type: Icon
     sprite: Objects/Tools/Toolboxes/toolbox_gold.rsi
     state: icon
   - type: Item

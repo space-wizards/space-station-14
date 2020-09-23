@@ -12,8 +12,6 @@
     layers:
       - state: box
       - state: light
-  - type: Icon
-    state: light
   - type: Item
 
 - type: entity
@@ -30,8 +28,6 @@
     layers:
       - state: box
       - state: lighttube
-  - type: Icon
-    state: lighttube
   - type: Item
 
 - type: entity
@@ -48,8 +44,6 @@
     layers:
       - state: box
       - state: lightmixed
-  - type: Icon
-    state: lightmixed
   - type: Item
 
 - type: entity
@@ -66,8 +60,6 @@
     layers:
       - state: box
       - state: pda
-  - type: Icon
-    state: pda
   - type: Item
   - type: Storage
     capacity: 3
@@ -86,8 +78,6 @@
     layers:
       - state: box
       - state: meson
-  - type: Icon
-    state: meson
   - type: Item
   - type: Storage
     capacity: 20
@@ -107,8 +97,6 @@
     layers:
       - state: box
       - state: writing
-  - type: Icon
-    state: box
   - type: Item
     size: 15
   - type: Storage

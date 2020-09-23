@@ -7,9 +7,7 @@
   - type: Sprite
     sprite: Objects/Specific/Atmos/gasanalyzer.rsi
     state: icon
-  - type: Icon
-    sprite: Objects/Specific/Atmos/gasanalyzer.rsi
-    state: icon
+
   - type: GasAnalyzer
   - type: UserInterface
     interfaces:

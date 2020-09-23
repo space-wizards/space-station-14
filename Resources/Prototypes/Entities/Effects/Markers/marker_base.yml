@@ -12,7 +12,5 @@
     sprite: Interface/Misc/markers.rsi
     state: cross_blue
 
-  - type: Icon
-    sprite: Interface/Misc/markers.rsi
-    state: cross_blue
+
 

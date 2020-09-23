@@ -10,8 +10,7 @@
     drawdepth: Walls
     sprite: Constructible/Power/ame_shielding.rsi
     state: shield_0
-  - type: Icon
-    texture: Constructible/Power/ame_shielding_base.png
+
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb

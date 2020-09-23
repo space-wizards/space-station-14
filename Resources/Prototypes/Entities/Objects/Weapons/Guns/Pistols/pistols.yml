@@ -14,8 +14,7 @@
         map: ["enum.RangedBarrelVisualLayers.Bolt"]
       - state: mag-0
         map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    state: icon
+
   - type: Item
     size: 12
     state: icon
@@ -55,8 +54,7 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
+
   - type: Item
     size: 12
     sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
@@ -85,8 +83,7 @@
         map: ["enum.RangedBarrelVisualLayers.Base"]
       - state: bolt-closed
         map: ["enum.RangedBarrelVisualLayers.Bolt"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Pistols/colt.rsi
+
   - type: Item
     size: 12
     sprite: Objects/Weapons/Guns/Pistols/colt.rsi
@@ -112,8 +109,7 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/giskard.rsi
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Pistols/giskard.rsi
+
   - type: Item
     size: 12
     sprite: Objects/Weapons/Guns/Pistols/giskard.rsi
@@ -142,9 +138,7 @@
         map: ["enum.RangedBarrelVisualLayers.Base"]
       - state: bolt-closed
         map: ["enum.RangedBarrelVisualLayers.Bolt"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Pistols/hm_pistol.rsi
-    state: icon
+
   - type: Item
     size: 12
     sprite: Objects/Weapons/Guns/Pistols/hm_pistol.rsi
@@ -187,8 +181,7 @@
       map: ["enum.RangedBarrelVisualLayers.Base"]
     - state: mag-0
       map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Pistols/gyro_pistol.rsi
+
   - type: Item
     size: 12
     sprite: Objects/Weapons/Guns/Pistols/gyro_pistol.rsi
@@ -231,8 +224,7 @@
       map: ["enum.RangedBarrelVisualLayers.Bolt"]
     - state: mag-0
       map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Pistols/mandella.rsi
+
   - type: Item
     size: 12
     sprite: Objects/Weapons/Guns/Pistols/mandella.rsi
@@ -263,8 +255,7 @@
       map: ["enum.RangedBarrelVisualLayers.Base"]
     - state: bolt-closed
       map: ["enum.RangedBarrelVisualLayers.Bolt"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
+
   - type: Item
     size: 12
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
@@ -295,8 +286,7 @@
       map: ["enum.RangedBarrelVisualLayers.Base"]
     - state: bolt-closed
       map: ["enum.RangedBarrelVisualLayers.Bolt"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Pistols/mk58_wood.rsi
+
   - type: Item
     size: 12
     sprite: Objects/Weapons/Guns/Pistols/mk58_wood.rsi
@@ -322,8 +312,7 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/molly.rsi
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Pistols/molly.rsi
+
   - type: Item
     size: 12
     sprite: Objects/Weapons/Guns/Pistols/molly.rsi
@@ -357,8 +346,7 @@
       map: ["enum.RangedBarrelVisualLayers.Base"]
     - state: bolt-closed
       map: ["enum.RangedBarrelVisualLayers.Bolt"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Pistols/olivaw_civil.rsi
+
   - type: Item
     size: 12
     sprite: Objects/Weapons/Guns/Pistols/olivaw_civil.rsi
@@ -385,8 +373,7 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/paco.rsi
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Pistols/paco.rsi
+
   - type: Item
     size: 12
     sprite: Objects/Weapons/Guns/Pistols/paco.rsi
