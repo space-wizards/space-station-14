@@ -77,7 +77,6 @@ namespace Content.Client.Sandbox
         [Dependency] private readonly IClientConsole _console = default!;
         [Dependency] private readonly IGameHud _gameHud = default!;
         [Dependency] private readonly IClientNetManager _netManager = default!;
-        [Dependency] private readonly ILocalizationManager _localization = default!; 
         [Dependency] private readonly IPlacementManager _placementManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
@@ -241,7 +240,7 @@ namespace Content.Client.Sandbox
         private void ToggleEntitySpawnWindow()
         {
             if (_spawnWindow == null)
-                _spawnWindow = new EntitySpawnWindow(_placementManager, _prototypeManager, _resourceCache, _localization);
+                _spawnWindow = new EntitySpawnWindow(_placementManager, _prototypeManager, _resourceCache);
 
             if (_spawnWindow.IsOpen)
             {
@@ -249,7 +248,7 @@ namespace Content.Client.Sandbox
             }
             else
             {
-                _spawnWindow = new EntitySpawnWindow(_placementManager, _prototypeManager, _resourceCache, _localization);
+                _spawnWindow = new EntitySpawnWindow(_placementManager, _prototypeManager, _resourceCache);
                 _spawnWindow.OpenToLeft();
             }
         }
