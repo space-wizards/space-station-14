@@ -22,3 +22,12 @@
       bodyBroken: arcade
   - type: Anchorable
   - type: Pullable
+  - type: SpaceVillainArcade
+  - type: Wires
+    BoardName: "Arcade"
+  - type: UserInterface
+    interfaces:
+    - key: enum.SpaceVillainArcadeUiKey.Key
+      type: SpaceVillainArcadeBoundUserInterface
+    - key: enum.WiresUiKey.Key
+      type: WiresBoundUserInterface
