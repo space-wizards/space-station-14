@@ -22,8 +22,8 @@
 
 - type: entity
   parent: PipeBase
-  id: PipeLongitudinal
-  suffix: Longitudinal
+  id: PipeStraight
+  suffix: Straight
   components:
   - type: Icon
     texture: Constructible/Atmos/pipe.rsi/pipeLongitudinal2.png
@@ -35,21 +35,8 @@
 
 - type: entity
   parent: PipeBase
-  id: PipeLateral
-  suffix: Lateral
-  components:
-  - type: Icon
-    texture: Constructible/Atmos/pipe.rsi/pipeLateral2.png
-  - type: NodeContainer
-    nodes:
-    - !type:PipeNode
-      nodeGroupID: Pipe
-      pipeDirection: Lateral
-
-- type: entity
-  parent: PipeBase
-  id: PipeNWBend
-  suffix: NWBend
+  id: PipeBend
+  suffix: Bend
   components:
   - type: Icon
     texture: Constructible/Atmos/pipe.rsi/pipeNWBend2.png
@@ -61,47 +48,8 @@
 
 - type: entity
   parent: PipeBase
-  id: PipeNEBend
-  suffix: NEBend
-  components:
-  - type: Icon
-    texture: Constructible/Atmos/pipe.rsi/pipeNEBend2.png
-  - type: NodeContainer
-    nodes:
-    - !type:PipeNode
-      nodeGroupID: Pipe
-      pipeDirection: NEBend
-
-- type: entity
-  parent: PipeBase
-  id: PipeSWBend
-  suffix: SWBend
-  components:
-  - type: Icon
-    texture: Constructible/Atmos/pipe.rsi/pipeSWBend2.png
-  - type: NodeContainer
-    nodes:
-    - !type:PipeNode
-      nodeGroupID: Pipe
-      pipeDirection: SWBend
-
-- type: entity
-  parent: PipeBase
-  id: PipeSEBend
-  suffix: SEBend
-  components:
-  - type: Icon
-    texture: Constructible/Atmos/pipe.rsi/pipeSEBend2.png
-  - type: NodeContainer
-    nodes:
-    - !type:PipeNode
-      nodeGroupID: Pipe
-      pipeDirection: SEBend
-
-- type: entity
-  parent: PipeBase
-  id: PipeTNorth
-  suffix: TNorth
+  id: PipeTJunction
+  suffix: TJunction
   components:
   - type: Icon
     texture: Constructible/Atmos/pipe.rsi/pipeTNorth2.png
@@ -110,45 +58,6 @@
     - !type:PipeNode
       nodeGroupID: Pipe
       pipeDirection: TNorth
-
-- type: entity
-  parent: PipeBase
-  id: PipeTSouth
-  suffix: TSouth
-  components:
-  - type: Icon
-    texture: Constructible/Atmos/pipe.rsi/pipeTSouth2.png
-  - type: NodeContainer
-    nodes:
-    - !type:PipeNode
-      nodeGroupID: Pipe
-      pipeDirection: TSouth
-
-- type: entity
-  parent: PipeBase
-  id: PipeTWest
-  suffix: TWest
-  components:
-  - type: Icon
-    texture: Constructible/Atmos/pipe.rsi/pipeTWest2.png
-  - type: NodeContainer
-    nodes:
-    - !type:PipeNode
-      nodeGroupID: Pipe
-      pipeDirection: TWest
-
-- type: entity
-  parent: PipeBase
-  id: PipeTEast
-  suffix: TEast
-  components:
-  - type: Icon
-    texture: Constructible/Atmos/pipe.rsi/pipeTEast2.png
-  - type: NodeContainer
-    nodes:
-    - !type:PipeNode
-      nodeGroupID: Pipe
-      pipeDirection: TEast
 
 - type: entity
   parent: PipeBase
