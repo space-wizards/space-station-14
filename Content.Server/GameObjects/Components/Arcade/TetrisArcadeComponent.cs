@@ -79,12 +79,16 @@ namespace Content.Server.GameObjects.Components.Arcade
 
             private TetrisPiece _currentPiece;
             private TetrisPiece _nextPiece = TetrisPiece.GetRandom();
+
+            private bool _holdBlock = false;
+            private TetrisPiece? _heldPiece = null;
+
             private Vector2i _currentPiecePosition;
             private TetrisPieceRotation _currentRotation;
             private float _softDropOverride = 0.1f;
             private float _speed = 0.5f;
 
-            private float _pressCheckSpeed = 0.1f;
+            private float _pressCheckSpeed = 0.05f;
 
             private bool _running;
             private bool _initialized;
@@ -267,27 +271,30 @@ namespace Content.Server.GameObjects.Components.Arcade
 
             private void InitializeNewBlock()
             {
+                InitializeNewBlock(_nextPiece);
+                _nextPiece = TetrisPiece.GetRandom();
+                _holdBlock = false;
+
+                _component.UserInterface?.SendMessage(new TetrisMessages.TetrisUIUpdateMessage(_nextPiece.BlocksForPreview(), TetrisMessages.TetrisUIBlockType.NextBlock));
+            }
+
+            private void InitializeNewBlock(TetrisPiece piece)
+            {
                 _currentPiecePosition = new Vector2i(5,0);
 
                 _currentRotation = TetrisPieceRotation.North;
 
-                _currentPiece = _nextPiece;
-                _nextPiece = TetrisPiece.GetRandom();
-
-                var xOffset = 0;
-                var yOffset = 0;
-                foreach (var offset in _nextPiece.Offsets)
-                {
-                    if (offset.X < xOffset) xOffset = offset.X;
-                    if (offset.Y < yOffset) yOffset = offset.Y;
-                }
-                _component.UserInterface?.SendMessage(new TetrisMessages.TetrisUIUpdateMessage(_nextPiece.Blocks(new Vector2i(-xOffset, -yOffset), TetrisPieceRotation.North), TetrisMessages.TetrisUIBlockType.NextBlock));
+                _currentPiece = piece;
+                UpdateUI();
             }
 
-            private bool DropCheck(Vector2i position) => position.Y < 20 && _field.All(block => !position.Equals(block.Position));
+            private bool LowerBoundCheck(Vector2i position) => position.Y < 20;
+            private bool BorderCheck(Vector2i position) => position.X >= 0 && position.X < 10;
+            private bool ClearCheck(Vector2i position) => _field.All(block => !position.Equals(block.Position));
 
-            private bool MoveCheck(Vector2i position) => position.X >= 0 && position.X < 10 &&
-                                                         _field.All(block => !position.Equals(block.Position));
+            private bool DropCheck(Vector2i position) => LowerBoundCheck(position) && ClearCheck(position);
+            private bool MoveCheck(Vector2i position) => BorderCheck(position) && ClearCheck(position);
+            private bool RotateCheck(Vector2i position) => BorderCheck(position) && LowerBoundCheck(position) && ClearCheck(position);
 
             private bool IsGameOver => _field.Any(block => block.Position.Y == 0);
 
@@ -315,12 +322,10 @@ namespace Content.Server.GameObjects.Components.Arcade
                         _rightPressed = false;
                         break;
                     case TetrisPlayerAction.Rotate:
-                        _currentRotation = Next(_currentRotation, false);
-                        UpdateUI();
+                        TrySetRotation(Next(_currentRotation, false));
                         break;
                     case TetrisPlayerAction.CounterRotate:
-                        _currentRotation = Next(_currentRotation, true);
-                        UpdateUI();
+                        TrySetRotation(Next(_currentRotation, true));
                         break;
                     case TetrisPlayerAction.SoftdropStart:
                         _softDropPressed = true;
@@ -341,8 +346,45 @@ namespace Content.Server.GameObjects.Components.Arcade
                         if (!_gameOver) _running = true;
                         break;
                     case TetrisPlayerAction.Hold:
+                        HoldPiece();
                         break;
                 }
+            }
+
+            private void TrySetRotation(TetrisPieceRotation rotation)
+            {
+                if(!_running) return;
+
+                if (!_currentPiece.CanSpin) return;
+
+                if (!_currentPiece.Positions(_currentPiecePosition, rotation)
+                    .All(RotateCheck))
+                {
+                    return;
+                }
+
+                _currentRotation = rotation;
+                UpdateUI();
+            }
+
+            private void HoldPiece()
+            {
+                if (!_running) return;
+
+                if (_holdBlock) return;
+
+                var tempHeld = _heldPiece;
+                _heldPiece = _currentPiece;
+                _holdBlock = true;
+                _component.UserInterface?.SendMessage(new TetrisMessages.TetrisUIUpdateMessage(_heldPiece.Value.BlocksForPreview(), TetrisMessages.TetrisUIBlockType.HoldBlock));
+
+                if (!tempHeld.HasValue)
+                {
+                    InitializeNewBlock();
+                    return;
+                }
+
+                InitializeNewBlock(tempHeld.Value);
             }
 
             private void PerformHarddrop()
@@ -374,7 +416,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                 S,
                 SInverted,
                 T,
-                Block
+                O
             }
 
             private enum TetrisPieceRotation
@@ -401,6 +443,7 @@ namespace Content.Server.GameObjects.Components.Arcade
             {
                 public Vector2i[] Offsets;
                 private TetrisBlock.TetrisBlockColor _color;
+                public bool CanSpin;
 
                 public Vector2i[] Positions(Vector2i center,
                     TetrisPieceRotation rotation)
@@ -446,6 +489,19 @@ namespace Content.Server.GameObjects.Components.Arcade
                     return result;
                 }
 
+                public TetrisBlock[] BlocksForPreview()
+                {
+                    var xOffset = 0;
+                    var yOffset = 0;
+                    foreach (var offset in Offsets)
+                    {
+                        if (offset.X < xOffset) xOffset = offset.X;
+                        if (offset.Y < yOffset) yOffset = offset.Y;
+                    }
+
+                    return Blocks(new Vector2i(-xOffset, -yOffset), TetrisPieceRotation.North);
+                }
+
                 public static TetrisPiece GetRandom()
                 {
                     var random = IoCManager.Resolve<IRobustRandom>();
@@ -465,7 +521,8 @@ namespace Content.Server.GameObjects.Components.Arcade
                             {
                                 new Vector2i(0, -1), new Vector2i(0, 0), new Vector2i(0, 1), new Vector2i(0, 2),
                             },
-                            _color = TetrisBlock.TetrisBlockColor.LightBlue
+                            _color = TetrisBlock.TetrisBlockColor.LightBlue,
+                            CanSpin = true
                         },
                         TetrisPieceType.L => new TetrisPiece
                         {
@@ -473,7 +530,8 @@ namespace Content.Server.GameObjects.Components.Arcade
                             {
                                 new Vector2i(0, -1), new Vector2i(0, 0), new Vector2i(0, 1), new Vector2i(1, 1),
                             },
-                            _color = TetrisBlock.TetrisBlockColor.Orange
+                            _color = TetrisBlock.TetrisBlockColor.Orange,
+                            CanSpin = true
                         },
                         TetrisPieceType.LInverted => new TetrisPiece
                         {
@@ -482,7 +540,8 @@ namespace Content.Server.GameObjects.Components.Arcade
                                 new Vector2i(0, -1), new Vector2i(0, 0), new Vector2i(-1, 1),
                                 new Vector2i(0, 1),
                             },
-                            _color = TetrisBlock.TetrisBlockColor.Blue
+                            _color = TetrisBlock.TetrisBlockColor.Blue,
+                            CanSpin = true
                         },
                         TetrisPieceType.S => new TetrisPiece
                         {
@@ -491,7 +550,8 @@ namespace Content.Server.GameObjects.Components.Arcade
                                 new Vector2i(0, -1), new Vector2i(1, -1), new Vector2i(-1, 0),
                                 new Vector2i(0, 0),
                             },
-                            _color = TetrisBlock.TetrisBlockColor.Green
+                            _color = TetrisBlock.TetrisBlockColor.Green,
+                            CanSpin = true
                         },
                         TetrisPieceType.SInverted => new TetrisPiece
                         {
@@ -500,25 +560,28 @@ namespace Content.Server.GameObjects.Components.Arcade
                                 new Vector2i(-1, -1), new Vector2i(0, -1), new Vector2i(0, 0),
                                 new Vector2i(1, 0),
                             },
-                            _color = TetrisBlock.TetrisBlockColor.Red
+                            _color = TetrisBlock.TetrisBlockColor.Red,
+                            CanSpin = true
                         },
                         TetrisPieceType.T => new TetrisPiece
                         {
                             Offsets = new[]
                             {
-                                new Vector2i(-1, -1), new Vector2i(0, -1), new Vector2i(1, -1),
-                                new Vector2i(0, 0),
+                                new Vector2i(0, -1),
+                                new Vector2i(-1, 0), new Vector2i(0, 0), new Vector2i(1, 0),
                             },
-                            _color = TetrisBlock.TetrisBlockColor.Purple
+                            _color = TetrisBlock.TetrisBlockColor.Purple,
+                            CanSpin = true
                         },
-                        TetrisPieceType.Block => new TetrisPiece
+                        TetrisPieceType.O => new TetrisPiece
                         {
                             Offsets = new[]
                             {
                                 new Vector2i(0, -1), new Vector2i(1, -1), new Vector2i(0, 0),
                                 new Vector2i(1, 0),
                             },
-                            _color = TetrisBlock.TetrisBlockColor.Yellow
+                            _color = TetrisBlock.TetrisBlockColor.Yellow,
+                            CanSpin = false
                         },
                         _ => new TetrisPiece {Offsets = new[] {new Vector2i(0, 0)}}
                     };

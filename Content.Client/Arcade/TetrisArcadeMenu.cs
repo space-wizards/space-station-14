@@ -23,6 +23,7 @@ namespace Content.Client.Arcade
 
         private GridContainer _gameGrid;
         private GridContainer _nextBlockGrid;
+        private GridContainer _holdBlockGrid;
         private Button _startButton;
         private Label _pointsLabel;
 
@@ -35,57 +36,42 @@ namespace Content.Client.Arcade
 
             var mainGrid = new GridContainer
             {
-                Columns = 2
+                Columns = 3
             };
 
-            _gameGrid = new GridContainer
+            mainGrid.AddChild(new CenterContainer
             {
-                Columns = 10,
-                HSeparationOverride = 0,
-                VSeparationOverride = 0
-            };
-            UpdateBlocks(new TetrisBlock[0]);
+                Children = { SetupHoldBox()}
+            });
 
-            var panelTex = resourceCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
-            var back = new StyleBoxTexture
-            {
-                Texture = panelTex,
-                Modulate = Color.FromHex("#4a4a51")
-            };
-            back.SetPatchMargin(StyleBox.Margin.All, 10);
-
-            var gamePanel = new PanelContainer
-            {
-                PanelOverride = back
-            };
-            gamePanel.AddChild(_gameGrid);
-
-            mainGrid.AddChild(gamePanel);
-
+            mainGrid.AddChild(SetupGameGrid());
 
             var infoGrid = new GridContainer
             {
                 Columns = 1
             };
 
-            var nextCenterContainer = new CenterContainer();
-            _nextBlockGrid = new GridContainer();
-            nextCenterContainer.Children.Add(_nextBlockGrid);
-            infoGrid.AddChild(nextCenterContainer);
+            infoGrid.AddChild(SetupNextBox());
 
-            _pointsLabel = new Label();
+            _pointsLabel = new Label
+            {
+                Align = Label.AlignMode.Center
+            };
             UpdatePoints(0);
             infoGrid.AddChild(_pointsLabel);
 
             var highscoreLabel = new Label
             {
-                Text = "1.Parzival - 🔑\n2. Hackerman - 1337\n3. Pothead - 420"
+                Text = "1.Parzival - 🔑\n2. Hackerman - 1337\n3. Pothead - 420",
+                Align = Label.AlignMode.Center
             };
             infoGrid.AddChild(highscoreLabel);
 
             var pauseBtn = new Button
             {
-                Text = "Pause"
+                Text = "Pause",
+                TextAlign = Label.AlignMode.Center,
+                SizeFlagsVertical = SizeFlags.ShrinkEnd
             };
             infoGrid.AddChild(pauseBtn);
 
@@ -94,7 +80,120 @@ namespace Content.Client.Arcade
             Contents.AddChild(mainGrid);
 
             CanKeyboardFocus = true;
+            GrabKeyboardFocus();
             RaisePauseMenu(true);
+        }
+
+        private Control SetupGameGrid()
+        {
+            var resourceCache = IoCManager.Resolve<IResourceCache>();
+
+            _gameGrid = new GridContainer
+            {
+                Columns = 10,
+                HSeparationOverride = 1,
+                VSeparationOverride = 1
+            };
+            UpdateBlocks(new TetrisBlock[0]);
+
+            var panelTex = resourceCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
+            var back = new StyleBoxTexture
+            {
+                Texture = panelTex,
+                Modulate = Color.FromHex("#4a4a51"),
+            };
+            back.SetPatchMargin(StyleBox.Margin.All, 10);
+            //back.SetPadding(StyleBox.Margin.All,10);
+
+            var gamePanel = new PanelContainer
+            {
+                PanelOverride = back
+            };
+            var backgroundPanel = new PanelContainer
+            {
+                PanelOverride = new StyleBoxFlat{BackgroundColor = Color.FromHex("#86868d")}
+            };
+            backgroundPanel.AddChild(_gameGrid);
+            gamePanel.AddChild(backgroundPanel);
+            return gamePanel;
+        }
+
+        private Control SetupNextBox()
+        {
+            var resourceCache = IoCManager.Resolve<IResourceCache>();
+
+            var panelTex = resourceCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
+            var previewBack = new StyleBoxTexture
+            {
+                Texture = panelTex,
+                Modulate = Color.FromHex("#4a4a51")
+            };
+            previewBack.SetPatchMargin(StyleBox.Margin.All, 10);
+
+            var grid = new GridContainer
+            {
+                Columns = 1
+            };
+
+            var nextBlockPanel = new PanelContainer
+            {
+                PanelOverride = previewBack,
+                CustomMinimumSize = new Vector2(65,65),
+                SizeFlagsHorizontal = SizeFlags.None,
+                SizeFlagsVertical = SizeFlags.None
+            };
+            var nextCenterContainer = new CenterContainer();
+            _nextBlockGrid = new GridContainer
+            {
+                HSeparationOverride = 1,
+                VSeparationOverride = 1
+            };
+            nextCenterContainer.AddChild(_nextBlockGrid);
+            nextBlockPanel.AddChild(nextCenterContainer);
+            grid.AddChild(nextBlockPanel);
+
+            grid.AddChild(new Label{Text = "Next", Align = Label.AlignMode.Center});
+
+            return grid;
+        }
+
+        private Control SetupHoldBox()
+        {
+            var resourceCache = IoCManager.Resolve<IResourceCache>();
+
+            var panelTex = resourceCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
+            var previewBack = new StyleBoxTexture
+            {
+                Texture = panelTex,
+                Modulate = Color.FromHex("#4a4a51")
+            };
+            previewBack.SetPatchMargin(StyleBox.Margin.All, 10);
+
+            var grid = new GridContainer
+            {
+                Columns = 1
+            };
+
+            var holdBlockPanel = new PanelContainer
+            {
+                PanelOverride = previewBack,
+                CustomMinimumSize = new Vector2(65,65),
+                SizeFlagsHorizontal = SizeFlags.None,
+                SizeFlagsVertical = SizeFlags.None
+            };
+            var holdCenterContainer = new CenterContainer();
+            _holdBlockGrid = new GridContainer
+            {
+                HSeparationOverride = 1,
+                VSeparationOverride = 1
+            };
+            holdCenterContainer.AddChild(_holdBlockGrid);
+            holdBlockPanel.AddChild(holdCenterContainer);
+            grid.AddChild(holdBlockPanel);
+
+            grid.AddChild(new Label{Text = "Hold", Align = Label.AlignMode.Center});
+
+            return grid;
         }
 
         protected override void FocusExited()
@@ -138,7 +237,7 @@ namespace Content.Client.Arcade
             }
             else if (args.Function == ContentKeyFunctions.WideAttack)
             {
-                _owner.SendAction(TetrisPlayerAction.Harddrop);
+                _owner.SendAction(TetrisPlayerAction.Hold);
             }
         }
 
@@ -179,7 +278,23 @@ namespace Content.Client.Arcade
 
         public void UpdateHeldBlock(TetrisBlock[] blocks)
         {
-
+            _holdBlockGrid.RemoveAllChildren();
+            var columnCount = blocks.Max(b => b.Position.X) + 1;
+            var rowCount = blocks.Max(b => b.Position.Y) + 1;
+            _holdBlockGrid.Columns = columnCount;
+            for (int y = 0; y < rowCount; y++)
+            {
+                for (int x = 0; x < columnCount; x++)
+                {
+                    var c = GetColorForPosition(blocks, x, y);
+                    _holdBlockGrid.AddChild(new PanelContainer
+                    {
+                        PanelOverride = new StyleBoxFlat {BackgroundColor = c},
+                        CustomMinimumSize = new Vector2(10,10),
+                        RectDrawClipMargin = 0
+                    });
+                }
+            }
         }
 
         public void UpdateBlocks(TetrisBlock[] blocks)
