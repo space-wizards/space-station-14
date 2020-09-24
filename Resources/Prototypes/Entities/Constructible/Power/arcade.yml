@@ -31,3 +31,35 @@
       type: SpaceVillainArcadeBoundUserInterface
     - key: enum.WiresUiKey.Key
       type: WiresBoundUserInterface
+
+- type: entity
+  id: TetrisArcade
+  name: tetrisArcade
+  parent: ComputerBase
+  components:
+    - type: Icon
+      state: arcade
+    - type: PowerReceiver
+    - type: Sprite
+      layers:
+        - state: arcade
+          map: ["enum.ComputerVisualizer+Layers.Body"]
+        - state: invaders
+          shader: unshaded
+          map: ["enum.ComputerVisualizer+Layers.Screen"]
+    - type: Appearance
+      visuals:
+        - type: ComputerVisualizer
+          screen: invaders
+          key: ""
+          body: arcade
+          bodyBroken: arcade
+    - type: Anchorable
+    - type: Pullable
+    - type: TetrisArcade
+    - type: UserInterface
+      interfaces:
+        - key: enum.TetrisArcadeUiKey.Key
+          type: TetrisArcadeBoundUserInterface
+        - key: enum.WiresUiKey.Key
+          type: WiresBoundUserInterface
