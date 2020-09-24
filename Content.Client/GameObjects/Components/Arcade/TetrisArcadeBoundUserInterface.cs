@@ -1,4 +1,5 @@
-﻿using Content.Client.Arcade;
+﻿using System;
+using Content.Client.Arcade;
 using Content.Shared.Arcade;
 using Content.Shared.GameObjects.Components.Arcade;
 using JetBrains.Annotations;
@@ -28,9 +29,26 @@ namespace Content.Client.GameObjects.Components.Arcade
 
         protected override void ReceiveMessage(BoundUserInterfaceMessage message)
         {
-            if (!(message is TetrisMessages.TetrisUIUpdateMessage msg)) return;
-
-            _menu?.UpdateBlocks(msg.Blocks);
+            switch (message)
+            {
+                case TetrisMessages.TetrisUIUpdateMessage updateMessage:
+                    switch (updateMessage.Type)
+                    {
+                        case TetrisMessages.TetrisUIBlockType.GameField:
+                            _menu?.UpdateBlocks(updateMessage.Blocks);
+                            break;
+                        case TetrisMessages.TetrisUIBlockType.HoldBlock:
+                            _menu?.UpdateHeldBlock(updateMessage.Blocks);
+                            break;
+                        case TetrisMessages.TetrisUIBlockType.NextBlock:
+                            _menu?.UpdateNextBlock(updateMessage.Blocks);
+                            break;
+                    }
+                    break;
+                case TetrisMessages.TetrisScoreUpdate scoreUpdate:
+                    _menu?.UpdatePoints(scoreUpdate.Points);
+                    break;
+            }
         }
 
         public void StartGame()

@@ -78,6 +78,7 @@ namespace Content.Server.GameObjects.Components.Arcade
             private List<TetrisBlock> _field = new List<TetrisBlock>();
 
             private TetrisPiece _currentPiece;
+            private TetrisPiece _nextPiece = TetrisPiece.GetRandom();
             private Vector2i _currentPiecePosition;
             private TetrisPieceRotation _currentRotation;
             private float _softDropOverride = 0.1f;
@@ -92,6 +93,9 @@ namespace Content.Server.GameObjects.Components.Arcade
             private bool _leftPressed;
             private bool _rightPressed;
             private bool _softDropPressed;
+
+            private int _points;
+            private int _level = 0;
 
             public TetrisGame(TetrisArcadeComponent component)
             {
@@ -189,9 +193,76 @@ namespace Content.Server.GameObjects.Components.Arcade
                     InitializeNewBlock();
                 }
 
+                CheckField();
+
                 UpdateUI();
 
                 _accumulatedFieldFrameTime -= checkTime;
+            }
+
+            private void CheckField()
+            {
+                int pointsToAdd = 0;
+                int consecutiveLines = 0;
+                for (int y = 0; y < 20; y++)
+                {
+                    if (CheckLine(y))
+                    {
+                        //line was cleared
+                        y--;
+                        consecutiveLines++;
+                    }
+                    else if(consecutiveLines != 0)
+                    {
+                        var mod = consecutiveLines switch
+                        {
+                            1 => 40,
+                            2 => 100,
+                            3 => 300,
+                            4 => 1200,
+                            _ => 0
+                        };
+                        pointsToAdd += mod * (_level + 1);
+                    }
+                }
+
+                AddPoints(pointsToAdd);
+            }
+
+            private void AddPoints(int amount)
+            {
+                if (amount == 0) return;
+
+                _points += amount;
+                _component.UserInterface?.SendMessage(new TetrisMessages.TetrisScoreUpdate(_points));
+            }
+
+            private bool CheckLine(int y)
+            {
+                for (var x = 0; x < 10; x++)
+                {
+                    if (!_field.Any(b => b.Position.X == x && b.Position.Y == y)) return false;
+                }
+
+                //clear line
+                _field.RemoveAll(b => b.Position.Y == y);
+                //move everything down
+                FillLine(y);
+
+                return true;
+            }
+
+            private void FillLine(int y)
+            {
+                for (int c_y = y; c_y > 0; c_y--)
+                {
+                    for (int j = 0; j < _field.Count; j++)
+                    {
+                        if(_field[j].Position.Y != c_y-1) continue;
+
+                        _field[j] = new TetrisBlock(_field[j].Position.AddToY(1), _field[j].Color);
+                    }
+                }
             }
 
             private void InitializeNewBlock()
@@ -200,7 +271,17 @@ namespace Content.Server.GameObjects.Components.Arcade
 
                 _currentRotation = TetrisPieceRotation.North;
 
-                _currentPiece = TetrisPiece.GetRandom();
+                _currentPiece = _nextPiece;
+                _nextPiece = TetrisPiece.GetRandom();
+
+                var xOffset = 0;
+                var yOffset = 0;
+                foreach (var offset in _nextPiece.Offsets)
+                {
+                    if (offset.X < xOffset) xOffset = offset.X;
+                    if (offset.Y < yOffset) yOffset = offset.Y;
+                }
+                _component.UserInterface?.SendMessage(new TetrisMessages.TetrisUIUpdateMessage(_nextPiece.Blocks(new Vector2i(-xOffset, -yOffset), TetrisPieceRotation.North), TetrisMessages.TetrisUIBlockType.NextBlock));
             }
 
             private bool DropCheck(Vector2i position) => position.Y < 20 && _field.All(block => !position.Equals(block.Position));
@@ -274,7 +355,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                 if (!_initialized) return;
 
                 var computedField = ComputeField();
-                _component.UserInterface?.SendMessage(new TetrisMessages.TetrisUIUpdateMessage(computedField.ToArray()));
+                _component.UserInterface?.SendMessage(new TetrisMessages.TetrisUIUpdateMessage(computedField.ToArray(), TetrisMessages.TetrisUIBlockType.GameField));
             }
 
             public List<TetrisBlock> ComputeField()
@@ -318,7 +399,7 @@ namespace Content.Server.GameObjects.Components.Arcade
 
             private struct TetrisPiece
             {
-                private Vector2i[] _offsets;
+                public Vector2i[] Offsets;
                 private TetrisBlock.TetrisBlockColor _color;
 
                 public Vector2i[] Positions(Vector2i center,
@@ -329,7 +410,7 @@ namespace Content.Server.GameObjects.Components.Arcade
 
                 private Vector2i[] RotatedOffsets(TetrisPieceRotation rotation)
                 {
-                    Vector2i[] rotatedOffsets = (Vector2i[])_offsets.Clone();
+                    Vector2i[] rotatedOffsets = (Vector2i[])Offsets.Clone();
                     //until i find a better algo
                     var amount = rotation switch
                     {
@@ -380,7 +461,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                     {
                         TetrisPieceType.I => new TetrisPiece
                         {
-                            _offsets = new[]
+                            Offsets = new[]
                             {
                                 new Vector2i(0, -1), new Vector2i(0, 0), new Vector2i(0, 1), new Vector2i(0, 2),
                             },
@@ -388,7 +469,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                         },
                         TetrisPieceType.L => new TetrisPiece
                         {
-                            _offsets = new[]
+                            Offsets = new[]
                             {
                                 new Vector2i(0, -1), new Vector2i(0, 0), new Vector2i(0, 1), new Vector2i(1, 1),
                             },
@@ -396,7 +477,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                         },
                         TetrisPieceType.LInverted => new TetrisPiece
                         {
-                            _offsets = new[]
+                            Offsets = new[]
                             {
                                 new Vector2i(0, -1), new Vector2i(0, 0), new Vector2i(-1, 1),
                                 new Vector2i(0, 1),
@@ -405,7 +486,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                         },
                         TetrisPieceType.S => new TetrisPiece
                         {
-                            _offsets = new[]
+                            Offsets = new[]
                             {
                                 new Vector2i(0, -1), new Vector2i(1, -1), new Vector2i(-1, 0),
                                 new Vector2i(0, 0),
@@ -414,7 +495,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                         },
                         TetrisPieceType.SInverted => new TetrisPiece
                         {
-                            _offsets = new[]
+                            Offsets = new[]
                             {
                                 new Vector2i(-1, -1), new Vector2i(0, -1), new Vector2i(0, 0),
                                 new Vector2i(1, 0),
@@ -423,7 +504,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                         },
                         TetrisPieceType.T => new TetrisPiece
                         {
-                            _offsets = new[]
+                            Offsets = new[]
                             {
                                 new Vector2i(-1, -1), new Vector2i(0, -1), new Vector2i(1, -1),
                                 new Vector2i(0, 0),
@@ -432,14 +513,14 @@ namespace Content.Server.GameObjects.Components.Arcade
                         },
                         TetrisPieceType.Block => new TetrisPiece
                         {
-                            _offsets = new[]
+                            Offsets = new[]
                             {
                                 new Vector2i(0, -1), new Vector2i(1, -1), new Vector2i(0, 0),
                                 new Vector2i(1, 0),
                             },
                             _color = TetrisBlock.TetrisBlockColor.Yellow
                         },
-                        _ => new TetrisPiece {_offsets = new[] {new Vector2i(0, 0)}}
+                        _ => new TetrisPiece {Offsets = new[] {new Vector2i(0, 0)}}
                     };
                 }
             }

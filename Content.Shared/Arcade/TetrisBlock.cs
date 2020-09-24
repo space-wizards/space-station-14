@@ -7,7 +7,7 @@ namespace Content.Shared.Arcade
     [Serializable, NetSerializable]
     public struct TetrisBlock
     {
-        public readonly Vector2i Position;
+        public Vector2i Position;
         public readonly TetrisBlockColor Color;
 
         public TetrisBlock(Vector2i position, TetrisBlockColor color)
