@@ -21,10 +21,14 @@ namespace Content.Client.Arcade
 
         public TetrisArcadeMenu(TetrisArcadeBoundUserInterface owner)
         {
+            Title = "Tetris!";
+
             _owner = owner;
             _uiGrid = new GridContainer
             {
-                Columns = 10
+                Columns = 10,
+                HSeparationOverride = 0,
+                VSeparationOverride = 0
             };
 
             _startButton = new Button();
@@ -33,15 +37,20 @@ namespace Content.Client.Arcade
             CanKeyboardFocus = true;
         }
 
+        protected override void FocusExited()
+        {
+            //todo pause and grab keyboard focus on unpause
+        }
+
         protected override void KeyBindDown(GUIBoundKeyEventArgs args)
         {
             if (args.Function == EngineKeyFunctions.MoveLeft)
             {
-                _owner.SendAction(TetrisPlayerAction.Left);
+                _owner.SendAction(TetrisPlayerAction.StartLeft);
             }
             else if (args.Function == EngineKeyFunctions.MoveRight)
             {
-                _owner.SendAction(TetrisPlayerAction.Right);
+                _owner.SendAction(TetrisPlayerAction.StartRight);
             }
             else if (args.Function == EngineKeyFunctions.MoveUp)
             {
@@ -62,8 +71,14 @@ namespace Content.Client.Arcade
         }
 
         protected override void KeyBindUp(GUIBoundKeyEventArgs args)
-        {
-            if (args.Function == EngineKeyFunctions.MoveDown)
+        {if (args.Function == EngineKeyFunctions.MoveLeft)
+            {
+                _owner.SendAction(TetrisPlayerAction.EndLeft);
+            }
+            else if (args.Function == EngineKeyFunctions.MoveRight)
+            {
+                _owner.SendAction(TetrisPlayerAction.EndRight);
+            }else if (args.Function == EngineKeyFunctions.MoveDown)
             {
                 _owner.SendAction(TetrisPlayerAction.SoftdropEnd);
             }
@@ -103,7 +118,8 @@ namespace Content.Client.Arcade
                     _uiGrid.AddChild(new PanelContainer
                     {
                         PanelOverride = new StyleBoxFlat {BackgroundColor = c},
-                        CustomMinimumSize = new Vector2(5,5)
+                        CustomMinimumSize = new Vector2(10,10),
+                        RectDrawClipMargin = 0
                     });
                 }
             }

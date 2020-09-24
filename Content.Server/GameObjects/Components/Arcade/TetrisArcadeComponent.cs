@@ -80,11 +80,18 @@ namespace Content.Server.GameObjects.Components.Arcade
             private TetrisPiece _currentPiece;
             private Vector2i _currentPiecePosition;
             private TetrisPieceRotation _currentRotation;
-            private int _softDropMultiplier = 1;
+            private float _softDropOverride = 0.1f;
             private float _speed = 0.5f;
+
+            private float _pressCheckSpeed = 0.1f;
 
             private bool _running;
             private bool _initialized;
+            private bool _gameOver;
+
+            private bool _leftPressed;
+            private bool _rightPressed;
+            private bool _softDropPressed;
 
             public TetrisGame(TetrisArcadeComponent component)
             {
@@ -101,19 +108,69 @@ namespace Content.Server.GameObjects.Components.Arcade
                 _initialized = true;
             }
 
-            private float _accumulatedFrameTime;
             public void GameTick(float frameTime)
             {
                 if (!_running) return;
 
-                _accumulatedFrameTime += frameTime;
+                InputTick(frameTime);
 
-                var checkTime = _speed * _softDropMultiplier;
+                FieldTick(frameTime);
+            }
 
-                if (_accumulatedFrameTime < checkTime) return;
+            private float _accumulatedLeftPressTime;
+            private float _accumulatedRightPressTime;
+            private void InputTick(float frameTime)
+            {
+                bool anythingChanged = false;
+                if (_leftPressed)
+                {
+                    _accumulatedLeftPressTime += frameTime;
+
+                    if (_accumulatedLeftPressTime >= _pressCheckSpeed)
+                    {
+
+                        if (_currentPiece.Positions(_currentPiecePosition.AddToX(-1), _currentRotation)
+                            .All(MoveCheck))
+                        {
+                            _currentPiecePosition = _currentPiecePosition.AddToX(-1);
+                            anythingChanged = true;
+                        }
+
+                        _accumulatedLeftPressTime -= _pressCheckSpeed;
+                    }
+                }
+
+                if (_rightPressed)
+                {
+                    _accumulatedRightPressTime += frameTime;
+
+                    if (_accumulatedRightPressTime >= _pressCheckSpeed)
+                    {
+                        if (_currentPiece.Positions(_currentPiecePosition.AddToX(1), _currentRotation)
+                            .All(MoveCheck))
+                        {
+                            _currentPiecePosition = _currentPiecePosition.AddToX(1);
+                            anythingChanged = true;
+                        }
+
+                        _accumulatedRightPressTime -= _pressCheckSpeed;
+                    }
+                }
+
+                if(anythingChanged) UpdateUI();
+            }
+
+            private float _accumulatedFieldFrameTime;
+            private void FieldTick(float frameTime)
+            {
+                _accumulatedFieldFrameTime += frameTime;
+
+                var checkTime = _softDropPressed && _speed > _softDropOverride ? _softDropOverride : _speed;
+
+                if (_accumulatedFieldFrameTime < checkTime) return;
 
                 if (_currentPiece.Positions(_currentPiecePosition.AddToY(1), _currentRotation)
-                    .All(PositionClear))
+                    .All(DropCheck))
                 {
                     _currentPiecePosition = _currentPiecePosition.AddToY(1);
                 }
@@ -134,7 +191,7 @@ namespace Content.Server.GameObjects.Components.Arcade
 
                 UpdateUI();
 
-                _accumulatedFrameTime -= checkTime;
+                _accumulatedFieldFrameTime -= checkTime;
             }
 
             private void InitializeNewBlock()
@@ -146,13 +203,17 @@ namespace Content.Server.GameObjects.Components.Arcade
                 _currentPiece = TetrisPiece.GetRandom();
             }
 
-            private bool PositionClear(Vector2i position) => _field.All(block => !position.Equals(block.Position)) && position.Y < 20;
+            private bool DropCheck(Vector2i position) => position.Y < 20 && _field.All(block => !position.Equals(block.Position));
+
+            private bool MoveCheck(Vector2i position) => position.X >= 0 && position.X < 10 &&
+                                                         _field.All(block => !position.Equals(block.Position));
 
             private bool IsGameOver => _field.Any(block => block.Position.Y == 0);
 
             private void InvokeGameover()
             {
                 _running = false;
+                _gameOver = true;
                 //todo add feedback
             }
 
@@ -160,13 +221,17 @@ namespace Content.Server.GameObjects.Components.Arcade
             {
                 switch (action)
                 {
-                    case TetrisPlayerAction.Left:
-                        _currentPiecePosition = _currentPiecePosition.AddToX(-1); //todo validate
-                        UpdateUI();
+                    case TetrisPlayerAction.StartLeft:
+                        _leftPressed = true;
                         break;
-                    case TetrisPlayerAction.Right:
-                        _currentPiecePosition = _currentPiecePosition.AddToX(1); //todo validate
-                        UpdateUI();
+                    case TetrisPlayerAction.EndLeft:
+                        _leftPressed = false;
+                        break;
+                    case TetrisPlayerAction.StartRight:
+                        _rightPressed = true;
+                        break;
+                    case TetrisPlayerAction.EndRight:
+                        _rightPressed = false;
                         break;
                     case TetrisPlayerAction.Rotate:
                         _currentRotation = Next(_currentRotation, false);
@@ -177,16 +242,24 @@ namespace Content.Server.GameObjects.Components.Arcade
                         UpdateUI();
                         break;
                     case TetrisPlayerAction.SoftdropStart:
-                        _softDropMultiplier = 2;
+                        _softDropPressed = true;
                         break;
                     case TetrisPlayerAction.SoftdropEnd:
-                        _softDropMultiplier = 1;
+                        _softDropPressed = false;
                         break;
                     case TetrisPlayerAction.Harddrop:
                         PerformHarddrop();
                         break;
                     case TetrisPlayerAction.StartGame:
                         StartGame();
+                        break;
+                    case TetrisPlayerAction.Pause:
+                        _running = false;
+                        break;
+                    case TetrisPlayerAction.Unpause:
+                        if (!_gameOver) _running = true;
+                        break;
+                    case TetrisPlayerAction.Hold:
                         break;
                 }
             }
@@ -256,7 +329,7 @@ namespace Content.Server.GameObjects.Components.Arcade
 
                 private Vector2i[] RotatedOffsets(TetrisPieceRotation rotation)
                 {
-                    Vector2i[] rotatedOffsets = _offsets;
+                    Vector2i[] rotatedOffsets = (Vector2i[])_offsets.Clone();
                     //until i find a better algo
                     var amount = rotation switch
                     {
@@ -352,7 +425,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                         {
                             _offsets = new[]
                             {
-                                new Vector2i(0, -1), new Vector2i(1, -1), new Vector2i(-1, 0),
+                                new Vector2i(-1, -1), new Vector2i(0, -1), new Vector2i(1, -1),
                                 new Vector2i(0, 0),
                             },
                             _color = TetrisBlock.TetrisBlockColor.Purple

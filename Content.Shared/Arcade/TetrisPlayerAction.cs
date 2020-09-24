@@ -6,16 +6,19 @@ namespace Content.Shared.Arcade
     [Serializable, NetSerializable]
     public enum TetrisPlayerAction
     {
-        NewGame, //todo
-        StartGame, //todo
-        Left,
-        Right,
+        NewGame,
+        StartGame,
+        StartLeft,
+        EndLeft,
+        StartRight,
+        EndRight,
         Rotate,
         CounterRotate,
         SoftdropStart,
         SoftdropEnd,
         Harddrop,
-
-        //todo Hold
+        Pause,
+        Unpause,
+        Hold
     }
 }
