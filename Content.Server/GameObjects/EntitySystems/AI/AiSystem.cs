@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Movement;
 using JetBrains.Annotations;
@@ -9,9 +10,11 @@ using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.EntitySystems.AI
@@ -19,6 +22,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI
     [UsedImplicitly]
     internal class AiSystem : EntitySystem
     {
+        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IDynamicTypeFactory _typeFactory = default!;
         [Dependency] private readonly IReflectionManager _reflectionManager = default!;
 
@@ -38,6 +42,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI
         public override void Initialize()
         {
             base.Initialize();
+            _configurationManager.RegisterCVar("ai.maxupdates", 64);
             SubscribeLocalEvent<SleepAiMessage>(HandleAiSleep);
 
             var processors = _reflectionManager.GetAllChildren<AiLogicProcessor>();
@@ -53,24 +58,44 @@ namespace Content.Server.GameObjects.EntitySystems.AI
         /// <inheritdoc />
         public override void Update(float frameTime)
         {
+            var cvarMaxUpdates = _configurationManager.GetCVar<int>("ai.maxupdates");
+            if (cvarMaxUpdates <= 0)
+                return;
+
             foreach (var message in _queuedSleepMessages)
             {
                 switch (message.Sleep)
                 {
                     case true:
+                        if (_awakeAi.Count == cvarMaxUpdates && _awakeAi.Contains(message.Processor))
+                        {
+                            Logger.Warning($"Under AI limit again: {_awakeAi.Count - 1} / {cvarMaxUpdates}");
+                        }
                         _awakeAi.Remove(message.Processor);
                         break;
                     case false:
                         _awakeAi.Add(message.Processor);
+                        
+                        if (_awakeAi.Count > cvarMaxUpdates)
+                        {
+                            Logger.Warning($"AI limit exceeded: {_awakeAi.Count} / {cvarMaxUpdates}");
+                        }
                         break;
                 }
             }
 
             _queuedSleepMessages.Clear();
             var toRemove = new List<AiLogicProcessor>();
+            var maxUpdates = Math.Min(_awakeAi.Count, cvarMaxUpdates);
+            var count = 0;
 
             foreach (var processor in _awakeAi)
             {
+                if (count >= maxUpdates)
+                {
+                    break;
+                }
+
                 if (processor.SelfEntity.Deleted)
                 {
                     toRemove.Add(processor);
@@ -78,6 +103,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI
                 }
                 
                 processor.Update(frameTime);
+                count++;
             }
 
             foreach (var processor in toRemove)
