@@ -6,10 +6,10 @@
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/Human/organs.rsi
-    state: brain_human
+    state: brain
   - type: Icon
     sprite: Mobs/Species/Human/organs.rsi
-    state: brain_human
+    state: brain
   - type: Mechanism
     durability: 10
     size: 1
