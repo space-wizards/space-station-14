@@ -9,8 +9,7 @@
   - type: Collidable
   - type: SnapGrid
     offset: Center
-  - type: Icon
-    texture: Constructible/Power/eightdirwire.png
+
   - type: Sprite
   - type: Appearance
     visuals:
@@ -20,6 +19,7 @@
       pumpRSI: Constructible/Atmos/pressurepump.rsi
   - type: Destructible
     thresholdvalue: 100
+    resistances: metallicResistances
 
 - type: entity
   abstract: true
@@ -43,7 +43,7 @@
   - type: VolumePump
     inletDirection: South
     outletDirection: North
-    
+
 - type: entity
   parent: NorthwardLongitudinalPump
   id: NorthwardLongitudinalPressurePump
@@ -52,4 +52,3 @@
   - type: PressurePump
     inletDirection: South
     outletDirection: North
-    

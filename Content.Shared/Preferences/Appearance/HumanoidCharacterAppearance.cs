@@ -20,6 +20,7 @@ namespace Content.Shared.Preferences.Appearance
         RFoot,
         LFoot,
         Handcuffs,
-        StencilMask
+        StencilMask,
+        Fire,
     }
 }

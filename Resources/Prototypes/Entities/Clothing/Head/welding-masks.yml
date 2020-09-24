@@ -6,8 +6,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/welding.rsi
-  - type: Icon
-    sprite: Clothing/Head/welding.rsi
+
   - type: Clothing
     sprite: Clothing/Head/welding.rsi
 
@@ -19,8 +18,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/weldingup.rsi
-  - type: Icon
-    sprite: Clothing/Head/weldingup.rsi
+
   - type: Clothing
     sprite: Clothing/Head/weldingup.rsi
 
@@ -32,8 +30,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/fire_welding_mask_1.rsi
-  - type: Icon
-    sprite: Clothing/Head/fire_welding_mask_1.rsi
+
   - type: Clothing
     sprite: Clothing/Head/fire_welding_mask_1.rsi
 
@@ -45,8 +42,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/fire_welding_mask_1up.rsi
-  - type: Icon
-    sprite: Clothing/Head/fire_welding_mask_1up.rsi
+
   - type: Clothing
     sprite: Clothing/Head/fire_welding_mask_1up.rsi
 
@@ -58,8 +54,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/blue_flame_welding_mask_1.rsi
-  - type: Icon
-    sprite: Clothing/Head/blue_flame_welding_mask_1.rsi
+
   - type: Clothing
     sprite: Clothing/Head/blue_flame_welding_mask_1.rsi
 
@@ -71,8 +66,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/blue_flame_welding_mask_1up.rsi
-  - type: Icon
-    sprite: Clothing/Head/blue_flame_welding_mask_1up.rsi
+
   - type: Clothing
     sprite: Clothing/Head/blue_flame_welding_mask_1up.rsi
 
@@ -84,8 +78,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/paintedwelding.rsi
-  - type: Icon
-    sprite: Clothing/Head/paintedwelding.rsi
+
   - type: Clothing
     sprite: Clothing/Head/paintedwelding.rsi
 
@@ -97,7 +90,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/paintedweldingup.rsi
-  - type: Icon
-    sprite: Clothing/Head/paintedweldingup.rsi
+
   - type: Clothing
     sprite: Clothing/Head/paintedweldingup.rsi

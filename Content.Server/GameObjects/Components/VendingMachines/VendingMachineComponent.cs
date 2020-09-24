@@ -62,7 +62,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
                 wires.OpenInterface(actor.playerSession);
             } else
             {
-                UserInterface?.Open(actor.playerSession);
+                UserInterface?.Toggle(actor.playerSession);
             }
         }
 

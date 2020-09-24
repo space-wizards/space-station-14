@@ -15,8 +15,7 @@
       - SmallImpassable
       - Clickable
 
-  - type: Icon
-    state: atmosplaque
+
   - type: Sprite
     state: atmosplaque
   - type: AtmosPlaque

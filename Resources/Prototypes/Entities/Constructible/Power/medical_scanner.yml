@@ -12,9 +12,7 @@
     - state: scanner_terminal_blue
       map: ["enum.MedicalScannerVisualLayers.Terminal"]
   - type: PowerReceiver
-  - type: Icon
-    sprite: Constructible/Power/medical_scanner.rsi
-    state: scanner_open
+
   - type: Anchorable
   - type: Clickable
   - type: InteractionOutline
@@ -36,6 +34,7 @@
   - type: MedicalScanner
   - type: Destructible
     deadThreshold: 100
+    resistances: metallicResistances
   - type: Appearance
     visuals:
     - type: MedicalScannerVisualizer

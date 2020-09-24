@@ -2,7 +2,6 @@
 using Content.Server.AI.Utility;
 using Content.Server.AI.WorldState.States.Inventory;
 using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.Utility;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using Robust.Shared.Containers;

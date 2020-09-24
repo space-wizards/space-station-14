@@ -1,22 +1,21 @@
-﻿using Content.Server.GameObjects.EntitySystems.DoAfter;
+﻿using System;
+using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.EntitySystems.DoAfter;
+using Content.Shared.GameObjects.Components.ActionBlocking;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
-using Content.Server.GameObjects.Components.GUI;
-using Robust.Shared.Serialization;
-using Robust.Shared.Log;
 using Robust.Shared.Localization;
-using Robust.Shared.ViewVariables;
-using Robust.Server.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.Components.ActionBlocking;
-using Content.Server.GameObjects.Components.Mobs;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
-using System;
-using Content.Shared.Utility;
+using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.ActionBlocking
 {

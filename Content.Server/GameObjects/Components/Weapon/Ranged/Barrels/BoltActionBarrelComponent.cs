@@ -56,6 +56,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
         [ViewVariables]
         private string _fillPrototype;
+        [ViewVariables]
         private int _unspawnedCount;
 
         public bool BoltOpen

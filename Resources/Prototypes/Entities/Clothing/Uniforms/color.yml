@@ -7,8 +7,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/color.rsi
 
-  - type: Icon
-    sprite: Clothing/Uniforms/color.rsi
+
 
   - type: Clothing
     sprite: Clothing/Uniforms/color.rsi
@@ -22,8 +21,7 @@
   components:
   - type: Sprite
     state: grey
-  - type: Icon
-    state: grey
+
   - type: Clothing
     HeldPrefix: grey
 
@@ -35,8 +33,7 @@
   components:
   - type: Sprite
     state: grey_skirt
-  - type: Icon
-    state: grey_skirt
+
   - type: Clothing
     ClothingPrefix: grey_skirt
     femaleMask: UniformTop
@@ -51,8 +48,7 @@
   components:
   - type: Sprite
     state: black
-  - type: Icon
-    state: black
+
   - type: Clothing
     HeldPrefix: black
 
@@ -64,8 +60,7 @@
   components:
   - type: Sprite
     state: black_skirt
-  - type: Icon
-    state: black_skirt
+
   - type: Clothing
     ClothingPrefix: black_skirt
     femaleMask: UniformTop
@@ -80,8 +75,7 @@
   components:
   - type: Sprite
     state: blue
-  - type: Icon
-    state: blue
+
   - type: Clothing
     HeldPrefix: blue
 
@@ -93,8 +87,7 @@
   components:
   - type: Sprite
     state: blue_skirt
-  - type: Icon
-    state: blue_skirt
+
   - type: Clothing
     ClothingPrefix: blue_skirt
     femaleMask: UniformTop
@@ -109,8 +102,7 @@
   components:
   - type: Sprite
     state: green
-  - type: Icon
-    state: green
+
   - type: Clothing
     HeldPrefix: green
 
@@ -122,8 +114,7 @@
   components:
   - type: Sprite
     state: green_skirt
-  - type: Icon
-    state: green_skirt
+
   - type: Clothing
     ClothingPrefix: green_skirt
     femaleMask: UniformTop
@@ -138,8 +129,7 @@
   components:
   - type: Sprite
     state: orange
-  - type: Icon
-    state: orange
+
   - type: Clothing
     HeldPrefix: orange
 
@@ -151,8 +141,7 @@
   components:
   - type: Sprite
     state: orange_skirt
-  - type: Icon
-    state: orange_skirt
+
   - type: Clothing
     ClothingPrefix: orange_skirt
     femaleMask: UniformTop
@@ -167,8 +156,7 @@
   components:
   - type: Sprite
     state: pink
-  - type: Icon
-    state: pink
+
   - type: Clothing
     ClothingPrefix: pink
     HeldPrefix: pink
@@ -181,8 +169,7 @@
   components:
   - type: Sprite
     state: pink_skirt
-  - type: Icon
-    state: pink_skirt
+
   - type: Clothing
     ClothingPrefix: pink_skirt
     femaleMask: UniformTop
@@ -195,8 +182,7 @@
   components:
   - type: Sprite
     state: s
-  - type: Icon
-    state: s
+
   - type: Clothing
     HeldPrefix: s
 
@@ -209,8 +195,7 @@
   components:
   - type: Sprite
     state: red
-  - type: Icon
-    state: red
+
   - type: Clothing
     HeldPrefix: red
 
@@ -222,8 +207,7 @@
   components:
   - type: Sprite
     state: red_skirt
-  - type: Icon
-    state: red_skirt
+
   - type: Clothing
     ClothingPrefix: red_skirt
     femaleMask: UniformTop
@@ -238,8 +222,7 @@
   components:
   - type: Sprite
     state: white
-  - type: Icon
-    state: white
+
   - type: Clothing
     HeldPrefix: white
 
@@ -251,8 +234,7 @@
   components:
   - type: Sprite
     state: white_skirt
-  - type: Icon
-    state: white_skirt
+
   - type: Clothing
     ClothingPrefix: white_skirt
     femaleMask: UniformTop
@@ -267,8 +249,7 @@
   components:
   - type: Sprite
     state: yellow
-  - type: Icon
-    state: yellow
+
   - type: Clothing
     HeldPrefix: yellow
 
@@ -280,8 +261,7 @@
   components:
   - type: Sprite
     state: yellow_skirt
-  - type: Icon
-    state: yellow_skirt
+
   - type: Clothing
     ClothingPrefix: yellow_skirt
     femaleMask: UniformTop
@@ -296,8 +276,7 @@
   components:
   - type: Sprite
     state: darkblue
-  - type: Icon
-    state: darkblue
+
   - type: Clothing
     ClothingPrefix: darkblue
     HeldPrefix: darkblue
@@ -310,8 +289,7 @@
   components:
   - type: Sprite
     state: darkblue_skirt
-  - type: Icon
-    state: darkblue_skirt
+
   - type: Clothing
     ClothingPrefix: darkblue_skirt
     femaleMask: UniformTop
@@ -326,8 +304,7 @@
   components:
   - type: Sprite
     state: teal
-  - type: Icon
-    state: teal
+
   - type: Clothing
     ClothingPrefix: teal
     HeldPrefix: teal
@@ -340,8 +317,7 @@
   components:
   - type: Sprite
     state: teal_skirt
-  - type: Icon
-    state: teal_skirt
+
   - type: Clothing
     ClothingPrefix: teal_skirt
     femaleMask: UniformTop
@@ -356,8 +332,7 @@
   components:
   - type: Sprite
     state: lightpurple
-  - type: Icon
-    state: lightpurple
+
   - type: Clothing
     ClothingPrefix: lightpurple
     HeldPrefix: lightpurple
@@ -370,8 +345,7 @@
   components:
   - type: Sprite
     state: lightpurple_skirt
-  - type: Icon
-    state: lightpurple_skirt
+
   - type: Clothing
     ClothingPrefix: lightpurple_skirt
     femaleMask: UniformTop
@@ -386,8 +360,7 @@
   components:
   - type: Sprite
     state: darkgreen
-  - type: Icon
-    state: darkgreen
+
   - type: Clothing
     ClothingPrefix: darkgreen
     HeldPrefix: green
@@ -400,8 +373,7 @@
   components:
   - type: Sprite
     state: darkgreen_skirt
-  - type: Icon
-    state: darkgreen_skirt
+
   - type: Clothing
     ClothingPrefix: darkgreen_skirt
     femaleMask: UniformTop
@@ -416,8 +388,7 @@
   components:
   - type: Sprite
     state: lightbrown
-  - type: Icon
-    state: lightbrown
+
   - type: Clothing
     HeldPrefix: lightbrown
 
@@ -429,8 +400,7 @@
   components:
   - type: Sprite
     state: lightbrown_skirt
-  - type: Icon
-    state: lightbrown_skirt
+
   - type: Clothing
     ClothingPrefix: lightbrown_skirt
     femaleMask: UniformTop
@@ -445,8 +415,7 @@
   components:
   - type: Sprite
     state: brown
-  - type: Icon
-    state: brown
+
   - type: Clothing
     ClothingPrefix: brown
     HeldPrefix: lightbrown
@@ -459,8 +428,7 @@
   components:
   - type: Sprite
     state: brown_skirt
-  - type: Icon
-    state: brown_skirt
+
   - type: Clothing
     ClothingPrefix: brown_skirt
     femaleMask: UniformTop
@@ -474,8 +442,7 @@
   components:
   - type: Sprite
     state: maroon
-  - type: Icon
-    state: maroon
+
   - type: Clothing
     ClothingPrefix: maroon
     HeldPrefix: maroon
@@ -488,8 +455,7 @@
   components:
   - type: Sprite
     state: maroon_skirt
-  - type: Icon
-    state: maroon_skirt
+
   - type: Clothing
     ClothingPrefix: maroon_skirt
     femaleMask: UniformTop
@@ -504,8 +470,7 @@
   components:
   - type: Sprite
     state: rainbow
-  - type: Icon
-    state: rainbow
+
   - type: Clothing
     HeldPrefix: rainbow
 
@@ -517,8 +482,7 @@
   components:
   - type: Sprite
     state: rainbow_skirt
-  - type: Icon
-    state: rainbow_skirt
+
   - type: Clothing
     ClothingPrefix: rainbow_skirt
     femaleMask: UniformTop

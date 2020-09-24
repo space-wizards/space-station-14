@@ -9,9 +9,6 @@
   - type: Sprite
     sprite: Constructible/Lighting/light_tube.rsi
     state: on
-  - type: Icon
-    sprite: Constructible/Lighting/light_tube.rsi
-    state: on
   - type: PointLight
     radius: 8
     energy: 1.2
@@ -30,9 +27,6 @@
   - type: Sprite
     sprite: Constructible/Lighting/light_tube.rsi
     state: off
-  - type: Icon
-    sprite: Constructible/Lighting/light_tube.rsi
-    state: off
   - type: PointLight
     enabled: false
   - type: PoweredLight
@@ -40,6 +34,7 @@
   - type: PowerReceiver
   - type: Destructible
     deadThreshold: 50
+    resistances: metallicResistances
 
 - type: entity
   name: small light
@@ -47,9 +42,6 @@
   parent: WallLight
   components:
   - type: Sprite
-    sprite: Constructible/Lighting/light_small.rsi
-    state: off
-  - type: Icon
     sprite: Constructible/Lighting/light_small.rsi
     state: off
   - type: PointLight
@@ -61,3 +53,4 @@
   - type: PowerReceiver
   - type: Destructible
     deadThreshold: 25
+    resistances: metallicResistances

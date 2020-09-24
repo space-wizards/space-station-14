@@ -9,16 +9,14 @@ namespace Content.Client.UserInterface
     internal sealed class EscapeMenu : SS14Window
     {
         private readonly IClientConsole _console;
-        private readonly ILocalizationManager _localizationManager;
 
         private BaseButton DisconnectButton;
         private BaseButton QuitButton;
         private BaseButton OptionsButton;
         private OptionsMenu optionsMenu;
 
-        public EscapeMenu(IClientConsole console, ILocalizationManager localizationManager)
+        public EscapeMenu(IClientConsole console)
         {
-            _localizationManager = localizationManager;
             _console = console;
 
             IoCManager.InjectDependencies(this);
@@ -37,15 +35,15 @@ namespace Content.Client.UserInterface
             var vBox = new VBoxContainer {SeparationOverride = 4};
             Contents.AddChild(vBox);
 
-            OptionsButton = new Button {Text = _localizationManager.GetString("Options")};
+            OptionsButton = new Button {Text = Loc.GetString("Options")};
             OptionsButton.OnPressed += OnOptionsButtonClicked;
             vBox.AddChild(OptionsButton);
 
-            DisconnectButton = new Button {Text = _localizationManager.GetString("Disconnect")};
+            DisconnectButton = new Button {Text = Loc.GetString("Disconnect")};
             DisconnectButton.OnPressed += OnDisconnectButtonClicked;
             vBox.AddChild(DisconnectButton);
 
-            QuitButton = new Button {Text = _localizationManager.GetString("Quit Game")};
+            QuitButton = new Button {Text = Loc.GetString("Quit Game")};
             QuitButton.OnPressed += OnQuitButtonClicked;
             vBox.AddChild(QuitButton);
         }

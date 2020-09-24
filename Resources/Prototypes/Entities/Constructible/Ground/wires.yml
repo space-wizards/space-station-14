@@ -10,14 +10,14 @@
   - type: Collidable
   - type: SnapGrid
     offset: Center
-  - type: Icon
-    texture: Constructible/Power/eightdirwire.png
+
   - type: Sprite
     drawdepth: BelowFloor
   - type: IconSmooth
     mode: CardinalFlags
   - type: Destructible
     thresholdvalue: 100
+    resistances: metallicResistances
   - type: SubFloorHide
 
 - type: entity
@@ -39,6 +39,7 @@
     wireDroppedOnCutPrototype: HVWireStack1
     wireType: HighVoltage
   - type: Destructible
+    resistances: metallicResistances
     spawnondestroy: HVWireStack1
 
 - type: entity
@@ -61,6 +62,7 @@
     wireDroppedOnCutPrototype: MVWireStack1
     wireType: MediumVoltage
   - type: Destructible
+    resistances: metallicResistances
     spawnondestroy: MVWireStack1
 
 - type: entity
@@ -85,4 +87,5 @@
     wireDroppedOnCutPrototype: ApcExtensionCableStack1
     wireType: Apc
   - type: Destructible
+    resistances: metallicResistances
     spawnondestroy: ApcExtensionCableStack1

@@ -1,9 +1,9 @@
-﻿using Content.Shared.GameObjects.EntitySystems;
+﻿using System;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
 using Robust.Shared.Maths;
+using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using System;
 
 namespace Content.Shared.GameObjects.Components.ActionBlocking
 {

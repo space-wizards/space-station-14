@@ -44,6 +44,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         private AppearanceComponent _appearanceComponent;
         [ViewVariables]
         private string _fillPrototype;
+        [ViewVariables]
         private int _unspawnedCount;
 
         // Sounds

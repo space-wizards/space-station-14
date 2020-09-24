@@ -99,6 +99,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 // Can happen when teleporting between grids.
                 if (!transform.Coordinates.TryDistance(_entityManager, mover.LastPosition, out var distance))
                 {
+                    mover.LastPosition = transform.Coordinates;
                     return;
                 }
 

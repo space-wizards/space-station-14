@@ -31,12 +31,11 @@ namespace Content.Client.State
         [Dependency] private readonly IClientNetManager _netManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IGameController _controllerProxy = default!;
-        [Dependency] private readonly ILocalizationManager _loc = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
 
         private MainMenuControl _mainMenuControl;
-        private OptionsMenu OptionsMenu;
+        private OptionsMenu _optionsMenu;
         private bool _isConnecting;
 
         // ReSharper disable once InconsistentNaming
@@ -56,7 +55,7 @@ namespace Content.Client.State
 
             _client.RunLevelChanged += RunLevelChanged;
 
-            OptionsMenu = new OptionsMenu();
+            _optionsMenu = new OptionsMenu();
         }
 
         /// <inheritdoc />
@@ -66,7 +65,7 @@ namespace Content.Client.State
             _netManager.ConnectFailed -= _onConnectFailed;
 
             _mainMenuControl.Dispose();
-            OptionsMenu.Dispose();
+            _optionsMenu.Dispose();
         }
 
         private void QuitButtonPressed(BaseButton.ButtonEventArgs args)
@@ -76,7 +75,7 @@ namespace Content.Client.State
 
         private void OptionsButtonPressed(BaseButton.ButtonEventArgs args)
         {
-            OptionsMenu.OpenCentered();
+            _optionsMenu.OpenCentered();
         }
 
         private void DirectConnectButtonPressed(BaseButton.ButtonEventArgs args)
@@ -105,10 +104,10 @@ namespace Content.Client.State
             var inputName = _mainMenuControl.UserNameBox.Text.Trim();
             if (!UsernameHelpers.IsNameValid(inputName, out var reason))
             {
-                var invalidReason = _loc.GetString(reason.ToText());
+                var invalidReason = Loc.GetString(reason.ToText());
                 _userInterfaceManager.Popup(
-                    _loc.GetString("Invalid username:\n{0}", invalidReason),
-                    _loc.GetString("Invalid Username"));
+                    Loc.GetString("Invalid username:\n{0}", invalidReason),
+                    Loc.GetString("Invalid Username"));
                 return;
             }
 
@@ -131,6 +130,7 @@ namespace Content.Client.State
                 _userInterfaceManager.Popup($"Unable to connect: {e.Message}", "Connection error.");
                 Logger.Warning(e.ToString());
                 _netManager.ConnectFailed -= _onConnectFailed;
+                _setConnectingState(false);
             }
         }
 
@@ -314,7 +314,7 @@ namespace Content.Client.State
 
                 VersionLabel = new Label
                 {
-                    Text = $"v0.1"
+                    Text = "v0.1"
                 };
 
                 LayoutContainer.SetAnchorPreset(VersionLabel, LayoutContainer.LayoutPreset.BottomRight);

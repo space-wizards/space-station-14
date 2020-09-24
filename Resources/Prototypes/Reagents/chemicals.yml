@@ -28,6 +28,9 @@
   metabolism:
     - !type:DefaultDrink
       rate: 1
+  tileReactions:
+    - !type:ExtinguishTileReaction {}
+    - !type:SpillIfPuddlePresentTileReaction {}
 
 - type: reagent
   id: chem.Ice
@@ -46,6 +49,9 @@
   color: "#7e009e"
   boilingPoint: -127.3 # Random values picked between the actual values for CO2 and O2
   meltingPoint: -186.4
+  tileReactions:
+    - !type:FlammableTileReaction
+      temperatureMultiplier: 1.5
 
 - type: reagent
   id: chem.Ethanol
@@ -55,6 +61,9 @@
   color: "#b05b3c"
   boilingPoint: 78.2
   meltingPoint: -114.1
+  tileReactions:
+    - !type:FlammableTileReaction
+      temperatureMultiplier: 1.35
 
 - type: reagent
   id: chem.Glucose
@@ -118,6 +127,7 @@
   color: "#c8ff69"
   boilingPoint: 147.0 # Made this up, loosely based on bleach
   meltingPoint: -11.0
+  # You should probably add a tile reaction here that tries to clean the tile.
 
 - type: reagent
   id: chem.SpaceLube
@@ -127,6 +137,11 @@
   color: "#77b58e"
   boilingPoint: 290.0 # Glycerin
   meltingPoint: 18.2
+  tileReactions:
+    - !type:SpillTileReaction
+      paralyzeTime: 3
+      launchForwardsMultiplier: 2
+      requiredSlipSpeed: 1
 
 - type: reagent
   id: chem.TableSalt
@@ -145,6 +160,9 @@
   color: "#757245"
   boilingPoint: 2977.0 # Aluminum oxide
   meltingPoint: 2030.0
+  tileReactions:
+    - !type:FlammableTileReaction
+      temperatureMultiplier: 1.35
 
 - type: reagent
   id: chem.UnstableMutagen
@@ -163,3 +181,5 @@
   color: "#a76b1c"
   boilingPoint: -84.7 # Acetylene. Close enough.
   meltingPoint: -80.7
+  tileReactions:
+    - !type:FlammableTileReaction

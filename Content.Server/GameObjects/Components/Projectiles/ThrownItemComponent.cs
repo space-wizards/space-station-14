@@ -39,6 +39,9 @@ namespace Content.Server.GameObjects.Components.Projectiles
                     return;
 
                 _shouldStop = true; // hit something hard => stop after this collision
+
+                // Raise an event.
+                EntitySystem.Get<InteractionSystem>().ThrowCollideInteraction(User, Owner, entity, Owner.Transform.Coordinates);
             }
             if (entity.TryGetComponent(out IDamageableComponent damage))
             {

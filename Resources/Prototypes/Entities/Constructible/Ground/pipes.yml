@@ -9,8 +9,7 @@
   - type: Collidable
   - type: SnapGrid
     offset: Center
-  - type: Icon
-    texture: Constructible/Power/eightdirwire.png
+
   - type: Sprite
   - type: Destructible
     thresholdvalue: 100
@@ -24,6 +23,7 @@
   id: FourwayPipe
   name: Fourway Pipe
   components:
+
   - type: NodeContainer
     nodes:
     - !type:PipeNode
@@ -35,6 +35,7 @@
   id: LongitudinalPipe
   name: Longitudinal Pipe
   components:
+
   - type: NodeContainer
     nodes:
     - !type:PipeNode
