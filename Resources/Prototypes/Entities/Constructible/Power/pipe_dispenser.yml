@@ -5,16 +5,15 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Icon
-    sprite: Constructible/Power/VendingMachines/boozeomat.rsi
+    sprite: Constructible/Power/pipe_d.rsi
     state: "off"
   - type: Sprite
-    sprite: Constructible/Power/VendingMachines/boozeomat.rsi
+    sprite: Constructible/Power/pipe_d.rsi
     layers:
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.Unlit"]
+      map: ["enum.PipeDispenserVisualLayers.Unlit"]
     - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
+      map: ["enum.PipeDispenserVisualLayers.Base"]
   - type: Collidable
     anchored: true
     shapes:
@@ -31,7 +30,14 @@
   - type: PipeDispenser
     inventory:
       - DisposalPipe
+      - DisposalBend
+      - DisposalYJunction
+      - DisposalJunction
+      - DisposalTrunk
+      - DisposalTagger
+      - DisposalRouter
   - type: Anchorable
+  - type: Pullable
   - type: UserInterface
     interfaces:
     - key: enum.PipeDispenserUiKey.Key
@@ -39,6 +45,6 @@
   - type: PowerReceiver
   - type: Appearance
     visuals:
-    - type: VendingMachineVisualizer
+    - type: PipeDispenserVisualizer
       normalUnshaded: true
-      broken: true
+      eject: true

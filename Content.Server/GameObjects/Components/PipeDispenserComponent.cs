@@ -36,7 +36,8 @@ namespace Content.Server.GameObjects.Components
 
         private string _soundVend = "";
 
-        private Direction _accessDirection;
+        [ViewVariables]
+        private Direction _accessDirection = Direction.Invalid;
 
         [ViewVariables] private BoundUserInterface UserInterface => Owner.GetUIOrNull(PipeDispenserUiKey.Key);
 
@@ -57,7 +58,13 @@ namespace Content.Server.GameObjects.Components
             serializer.DataField(ref _inventory, "inventory", new List<string>());
             // Grabbed from: https://github.com/discordia-space/CEV-Eris/blob/f702afa271136d093ddeb415423240a2ceb212f0/sound/machines/vending_drop.ogg
             serializer.DataField(ref _soundVend, "soundVend", "/Audio/Machines/machine_vend.ogg");
-            //serializer.DataField(ref _ejectDelay, "delay", TimeSpan.FromSeconds(2));
+
+            serializer.DataReadWriteFunction(
+                "delay",
+                2,
+                seconds => _ejectDelay = TimeSpan.FromSeconds(seconds),
+                () => (int) _ejectDelay.TotalSeconds);
+
         }
 
         public override void Initialize()
@@ -137,9 +144,14 @@ namespace Content.Server.GameObjects.Components
             {
                 _ejecting = false;
                 TrySetVisualState(PipeDispenserVisualState.Normal);
-                for (int i = 0; i < amount; i++)
+
+                var position = Owner.Transform.Coordinates;
+                if (_accessDirection != Direction.Invalid)
+                    position = position.Offset(_accessDirection.ToVec());
+
+                for (var i = 0; i < amount; i++)
                 {
-                    var e = Owner.EntityManager.SpawnEntity(id, Owner.Transform.GridPositio);
+                    var e = Owner.EntityManager.SpawnEntity(id, position);
                     if(e.TryGetComponent(out CollidableComponent collidable))
                         collidable.Anchored = false;
                 }

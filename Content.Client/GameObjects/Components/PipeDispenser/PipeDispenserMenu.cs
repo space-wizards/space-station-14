@@ -8,18 +8,16 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using static Content.Shared.GameObjects.Components.SharedPipeDispenserComponent;
 
 namespace Content.Client.GameObjects.Components.PipeDispenser
 {
     public class PipeDispenserMenu : SS14Window
     {
-        //[Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         private readonly ItemList _itemList;
         private readonly Label _selectedLabel;
         private readonly LineEdit _searchBar;
-        protected override Vector2? CustomSize => (300, 450);
+        protected override Vector2? CustomSize => (400, 450);
 
         public PipeDispenserBoundUserInterface Owner { get; set; }
 
@@ -145,10 +143,10 @@ namespace Content.Client.GameObjects.Components.PipeDispenser
             hBoxFilter.AddChild(_searchBar);
             hBoxFilter.AddChild(filterButton);
 
-            vBox.AddChild(hBoxButtons);
             vBox.AddChild(hBoxFilter);
             vBox.AddChild(_itemList);
             vBox.AddChild(hBoxSelected);
+            vBox.AddChild(hBoxButtons);
 
             margin.AddChild(vBox);
 

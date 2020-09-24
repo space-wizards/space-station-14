@@ -27,14 +27,14 @@ namespace Content.Client.GameObjects.Components.PipeDispenser
         {
             base.Open();
 
-            if(!Owner.Owner.TryGetComponent(out SharedPipeDispenserComponent PipeDispenser))
+            if(!Owner.Owner.TryGetComponent(out SharedPipeDispenserComponent pipeDispenser))
             {
                 return;
             }
 
-            this.PipeDispenser = PipeDispenser;
+            this.PipeDispenser = pipeDispenser;
 
-            _menu = new PipeDispenserMenu() { Owner = this, Title = Owner.Owner.Name };
+            _menu = new PipeDispenserMenu() { Owner = this, Title = "Pipe Dispenser Menu" };
 
             _menu.OnClose += Close;
             _menu.OpenCentered();
