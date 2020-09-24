@@ -1,5 +1,4 @@
 ﻿using System;
-using Content.Shared.GameObjects.Components.Medical;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using static Content.Shared.GameObjects.Components.Medical.SharedCloningPodComponent;

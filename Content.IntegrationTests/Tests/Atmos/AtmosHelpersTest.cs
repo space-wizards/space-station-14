@@ -11,7 +11,7 @@ namespace Content.IntegrationTests.Tests.Atmos
     public class AtmosHelpersTest : ContentIntegrationTest
     {
         [Test]
-        public async Task GetTileAtmosphereEntityCoordinatesNullTest()
+        public async Task GetTileAtmosphereEntityCoordinatesNotNullTest()
         {
             var server = StartServerDummyTicker();
 
@@ -26,8 +26,8 @@ namespace Content.IntegrationTests.Tests.Atmos
                     var atmosphere1 = default(EntityCoordinates).GetTileAtmosphere();
                     var atmosphere2 = default(EntityCoordinates).GetTileAtmosphere(entityManager);
 
-                    Assert.Null(atmosphere1);
-                    Assert.Null(atmosphere2);
+                    Assert.NotNull(atmosphere1);
+                    Assert.NotNull(atmosphere2);
                 });
             });
 
@@ -35,7 +35,7 @@ namespace Content.IntegrationTests.Tests.Atmos
         }
 
         [Test]
-        public async Task GetTileAirEntityCoordinatesNullTest()
+        public async Task GetTileAirEntityCoordinatesNotNullTest()
         {
             var server = StartServerDummyTicker();
 
@@ -45,7 +45,7 @@ namespace Content.IntegrationTests.Tests.Atmos
                 {
                     var air = default(EntityCoordinates).GetTileAir();
 
-                    Assert.Null(air);
+                    Assert.NotNull(air);
                 });
             });
 
@@ -53,7 +53,7 @@ namespace Content.IntegrationTests.Tests.Atmos
         }
 
         [Test]
-        public async Task TryGetTileAtmosphereEntityCoordinatesNullTest()
+        public async Task TryGetTileAtmosphereEntityCoordinatesNotNullTest()
         {
             var server = StartServerDummyTicker();
 
@@ -63,8 +63,8 @@ namespace Content.IntegrationTests.Tests.Atmos
                 {
                     var hasAtmosphere = default(EntityCoordinates).TryGetTileAtmosphere(out var atmosphere);
 
-                    Assert.False(hasAtmosphere);
-                    Assert.Null(atmosphere);
+                    Assert.True(hasAtmosphere);
+                    Assert.NotNull(atmosphere);
                 });
             });
 
@@ -72,7 +72,7 @@ namespace Content.IntegrationTests.Tests.Atmos
         }
 
         [Test]
-        public async Task TryGetTileTileAirEntityCoordinatesNullTest()
+        public async Task TryGetTileTileAirEntityCoordinatesNotNullTest()
         {
             var server = StartServerDummyTicker();
 
@@ -82,8 +82,8 @@ namespace Content.IntegrationTests.Tests.Atmos
                 {
                     var hasAir = default(EntityCoordinates).TryGetTileAir(out var air);
 
-                    Assert.False(hasAir);
-                    Assert.Null(air);
+                    Assert.True(hasAir);
+                    Assert.NotNull(air);
                 });
             });
 
@@ -91,7 +91,7 @@ namespace Content.IntegrationTests.Tests.Atmos
         }
 
         [Test]
-        public async Task GetTileAtmosphereMapIndicesNullTest()
+        public async Task GetTileAtmosphereMapIndicesNotNullTest()
         {
             var server = StartServerDummyTicker();
 
@@ -101,7 +101,7 @@ namespace Content.IntegrationTests.Tests.Atmos
                 {
                     var atmosphere = default(MapIndices).GetTileAtmosphere(default);
 
-                    Assert.Null(atmosphere);
+                    Assert.NotNull(atmosphere);
                 });
             });
 
@@ -109,7 +109,7 @@ namespace Content.IntegrationTests.Tests.Atmos
         }
 
         [Test]
-        public async Task GetTileAirMapIndicesNullTest()
+        public async Task GetTileAirMapIndicesNotNullTest()
         {
             var server = StartServerDummyTicker();
 
@@ -119,7 +119,7 @@ namespace Content.IntegrationTests.Tests.Atmos
                 {
                     var air = default(MapIndices).GetTileAir(default);
 
-                    Assert.Null(air);
+                    Assert.NotNull(air);
                 });
             });
 
@@ -127,7 +127,7 @@ namespace Content.IntegrationTests.Tests.Atmos
         }
 
         [Test]
-        public async Task TryGetTileAtmosphereMapIndicesNullTest()
+        public async Task TryGetTileAtmosphereMapIndicesNotNullTest()
         {
             var server = StartServerDummyTicker();
 
@@ -137,8 +137,8 @@ namespace Content.IntegrationTests.Tests.Atmos
                 {
                     var hasAtmosphere = default(MapIndices).TryGetTileAtmosphere(default, out var atmosphere);
 
-                    Assert.False(hasAtmosphere);
-                    Assert.Null(atmosphere);
+                    Assert.True(hasAtmosphere);
+                    Assert.NotNull(atmosphere);
                 });
             });
 
@@ -146,7 +146,7 @@ namespace Content.IntegrationTests.Tests.Atmos
         }
 
         [Test]
-        public async Task TryGetTileAirMapIndicesNullTest()
+        public async Task TryGetTileAirMapIndicesNotNullTest()
         {
             var server = StartServerDummyTicker();
 
@@ -156,8 +156,8 @@ namespace Content.IntegrationTests.Tests.Atmos
                 {
                     var hasAir = default(MapIndices).TryGetTileAir(default, out var air);
 
-                    Assert.False(hasAir);
-                    Assert.Null(air);
+                    Assert.True(hasAir);
+                    Assert.NotNull(air);
                 });
             });
 

@@ -16,22 +16,19 @@ namespace Content.Server.Administration
         {
             get
             {
-                var localizationManager = IoCManager.Resolve<ILocalizationManager>();
-                return localizationManager.GetString("Deletes entities with the specified components.");
+                return Loc.GetString("Deletes entities with the specified components.");
             }
         }
         public string Help
         {
             get
             {
-                var localizationManager = IoCManager.Resolve<ILocalizationManager>();
-                return localizationManager.GetString("Usage: deleteewc <componentName_1> <componentName_2> ... <componentName_n>\nDeletes any entities with the components specified.");
+                return Loc.GetString("Usage: deleteewc <componentName_1> <componentName_2> ... <componentName_n>\nDeletes any entities with the components specified.");
             }
         }
 
         public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
         {
-            var localizationManager = IoCManager.Resolve<ILocalizationManager>();
             if (args.Length < 1)
             {
                 shell.SendText(player, Help);
@@ -55,7 +52,7 @@ namespace Content.Server.Administration
                 count += 1;
             }
 
-            shell.SendText(player, localizationManager.GetString("Deleted {0} entities", count));
+            shell.SendText(player, Loc.GetString("Deleted {0} entities", count));
         }
     }
 }

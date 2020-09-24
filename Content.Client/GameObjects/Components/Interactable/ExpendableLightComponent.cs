@@ -1,7 +1,6 @@
 ﻿
 using Content.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects;
-using Robust.Client.GameObjects;
 
 namespace Content.Client.GameObjects.Components.Interactable
 {

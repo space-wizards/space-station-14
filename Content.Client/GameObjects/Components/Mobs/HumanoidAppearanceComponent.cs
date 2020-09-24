@@ -1,9 +1,9 @@
-﻿using Content.Shared.GameObjects.Components.Mobs;
+﻿using Content.Client.GameObjects.Components.ActionBlocking;
+using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Preferences;
 using Content.Shared.Preferences.Appearance;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using Content.Client.GameObjects.Components.ActionBlocking;
 
 namespace Content.Client.GameObjects.Components.Mobs
 {

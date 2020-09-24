@@ -8,9 +8,7 @@
       visible: false
       sprite: Interface/Misc/markers.rsi
       state: cross_blue
-    - type: Icon
-      sprite: Interface/Misc/markers.rsi
-      state: cross_blue
+
     - type: Marker
     - type: Clickable
     - type: InteractionOutline
@@ -29,9 +27,7 @@
       visible: false
       sprite: Interface/Misc/markers.rsi
       state: spawner_ai
-    - type: Icon
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_ai
+
     - type: TimedSpawner
       prototypes:
         - HumanMob_Spirate
@@ -51,9 +47,7 @@
       visible: false
       sprite: Interface/Misc/markers.rsi
       state: spawner_xenoai
-    - type: Icon
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_xenoai
+
     - type: TimedSpawner
       prototypes:
         - XenoMob_Content

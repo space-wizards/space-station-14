@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Items;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
@@ -14,8 +16,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using Content.Shared.Damage;
-using Content.Shared.Interfaces.GameObjects.Components;
 
 namespace Content.Server.GameObjects.Components.Weapon.Melee
 {
@@ -29,8 +29,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         private TimeSpan _lastAttackTime;
         private TimeSpan _cooldownEnd;
 
-        private string _hitSound;
-        private string _missSound;
+        private readonly string _hitSound;
+        private readonly string _missSound;
         public float ArcCooldownTime { get; private set; } = 1f;
         public float CooldownTime { get; private set; } = 0.5f;
 
@@ -191,7 +191,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         private HashSet<IEntity> ArcRayCast(Vector2 position, Angle angle, IEntity ignore)
         {
             var widthRad = Angle.FromDegrees(ArcWidth);
-            var increments = 1 + (35 * (int) Math.Ceiling(widthRad / (2 * Math.PI)));
+            var increments = 1 + 35 * (int) Math.Ceiling(widthRad / (2 * Math.PI));
             var increment = widthRad / increments;
             var baseAngle = angle - widthRad / 2;
 

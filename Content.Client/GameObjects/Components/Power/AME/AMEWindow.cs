@@ -5,9 +5,6 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using static Content.Shared.GameObjects.Components.Power.AME.SharedAMEControllerComponent;
 
 namespace Content.Client.GameObjects.Components.Power.AME

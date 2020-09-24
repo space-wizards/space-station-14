@@ -43,6 +43,7 @@ namespace Content.Server.GameObjects.Components.Research
 
         [ViewVariables]
         private LatheRecipePrototype? _producingRecipe;
+        [ViewVariables]
         private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
 
         private static readonly TimeSpan InsertionTime = TimeSpan.FromSeconds(0.9f);

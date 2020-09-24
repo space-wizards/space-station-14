@@ -12,7 +12,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.GameObjects.Components.Atmos
 {
     [RegisterComponent]
-    class GasAnalyzerComponent : SharedGasAnalyzerComponent, IItemStatus
+    internal class GasAnalyzerComponent : SharedGasAnalyzerComponent, IItemStatus
     {
         [ViewVariables(VVAccess.ReadWrite)] private bool _uiUpdateNeeded;
         [ViewVariables] public GasAnalyzerDanger Danger { get; private set; }

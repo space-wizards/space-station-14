@@ -16,7 +16,6 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
@@ -35,7 +34,6 @@ namespace Content.Client.GameObjects.EntitySystems
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
 
         // drag will be triggered when mouse leaves this deadzone around the click position.
         private const float DragDeadzone = 2f;

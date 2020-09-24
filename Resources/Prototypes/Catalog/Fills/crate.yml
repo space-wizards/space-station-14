@@ -5,11 +5,8 @@
   components:
   - type: StorageFill
     contents:
-      - FlashlightLantern
-      - FlashlightLantern
-      - FlashlightLantern
-      - FlashlightLantern
-      - FlashlightLantern
+      - name: FlashlightLantern
+        amount: 5
 
 - type: entity
   id: CrateLightBulb
@@ -18,16 +15,8 @@
   components:
   - type: StorageFill
     contents:
-      - LightBulb
-      - LightBulb
-      - LightBulb
-      - LightBulb
-      - LightBulb
-      - LightBulb
-      - LightBulb
-      - LightBulb
-      - LightBulb
-      - LightBulb
+      - name: LightBulb
+        amount: 10
 
 - type: entity
   id: CrateFireExtinguisher
@@ -36,9 +25,8 @@
   components:
   - type: StorageFill
     contents:
-      - FireExtinguisher
-      - FireExtinguisher
-      - FireExtinguisher
+      - name: FireExtinguisher
+        amount: 3
 
 - type: entity
   id: CratePen
@@ -47,16 +35,8 @@
   components:
   - type: StorageFill
     contents:
-      - Pen
-      - Pen
-      - Pen
-      - Pen
-      - Pen
-      - Pen
-      - Pen
-      - Pen
-      - Pen
-      - Pen
+      - name: Pen
+        amount: 10
 
 - type: entity
   id: CrateBikeHorn
@@ -65,11 +45,8 @@
   components:
   - type: StorageFill
     contents:
-      - BikeHorn
-      - BikeHorn
-      - BikeHorn
-      - BikeHorn
-      - BikeHorn
+      - name: BikeHorn
+        amount: 5
 
 - type: entity
   id: CrateCleaver
@@ -78,11 +55,8 @@
   components:
   - type: StorageFill
     contents:
-      - ButchCleaver
-      - ButchCleaver
-      - ButchCleaver
-      - ButchCleaver
-      - ButchCleaver
+      - name: ButchCleaver
+        amount: 5
 
 - type: entity
   id: CrateFuelTank
@@ -91,7 +65,7 @@
   components:
   - type: StorageFill
     contents:
-      - WeldingFuelTank
+      - name: WeldingFuelTank
 
 - type: entity
   id: CrateMedicalScanner
@@ -100,7 +74,7 @@
   components:
   - type: StorageFill
     contents:
-      - MedicalScanner
+      - name: MedicalScanner
 
 - type: entity
   id: CrateGlass
@@ -109,7 +83,7 @@
   components:
   - type: StorageFill
     contents:
-      - GlassStack
+      - name: GlassStack
 
 - type: entity
   id: CrateCable
@@ -118,4 +92,4 @@
   components:
   - type: StorageFill
     contents:
-      - CableStack1
+      - name: CableStack1

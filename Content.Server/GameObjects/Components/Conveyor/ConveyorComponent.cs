@@ -20,7 +20,6 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
-using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -30,7 +29,6 @@ namespace Content.Server.GameObjects.Components.Conveyor
     public class ConveyorComponent : Component, IInteractUsing
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
 
         public override string Name => "Conveyor";
 

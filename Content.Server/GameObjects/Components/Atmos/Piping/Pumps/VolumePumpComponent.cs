@@ -1,10 +1,8 @@
-﻿using Content.Server.Atmos;
-using Content.Shared.Atmos;
+﻿using System;
+using Content.Server.Atmos;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using System;
-using System.Diagnostics;
 
 namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
 {

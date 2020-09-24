@@ -50,7 +50,7 @@ namespace Content.Client.VendingMachines
                 Texture icon = null;
                 if(_prototypeManager.TryIndex(entry.ID, out EntityPrototype prototype))
                 {
-                    icon = IconComponent.GetPrototypeIcon(prototype, _resourceCache).TextureFor(Direction.South);
+                    icon = SpriteComponent.GetPrototypeIcon(prototype, _resourceCache);
                 }
                 _items.AddItem($"{itemName} ({entry.Amount} left)", icon);
             }
