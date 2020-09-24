@@ -18,7 +18,6 @@
 
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
-        [Dependency] private readonly ILocalizationManager _localizationManager = default!;
 
         public override void PreInit()
         {
@@ -28,7 +27,7 @@
             textMacroFactory.DoAutoRegistrations();
 
             // Default to en-US.
-            _localizationManager.LoadCulture(new CultureInfo(Culture));
+            Loc.LoadCulture(new CultureInfo(Culture));
         }
 
         public override void Init()
