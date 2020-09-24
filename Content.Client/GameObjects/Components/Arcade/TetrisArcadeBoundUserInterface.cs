@@ -23,6 +23,7 @@ namespace Content.Client.GameObjects.Components.Arcade
             _menu.OnClose += Close;
             _menu.OpenCentered();
             SendAction(TetrisPlayerAction.NewGame);
+            StartGame(); //todo remove
         }
 
         protected override void ReceiveMessage(BoundUserInterfaceMessage message)

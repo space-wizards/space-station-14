@@ -16,30 +16,76 @@ namespace Content.Client.Arcade
     {
         private TetrisArcadeBoundUserInterface _owner;
 
-        private GridContainer _uiGrid;
+        private GridContainer _gameGrid;
         private Button _startButton;
 
         public TetrisArcadeMenu(TetrisArcadeBoundUserInterface owner)
         {
             Title = "Tetris!";
-
             _owner = owner;
-            _uiGrid = new GridContainer
+
+            var mainGrid = new GridContainer
+            {
+                Columns = 2
+            };
+
+            _gameGrid = new GridContainer
             {
                 Columns = 10,
                 HSeparationOverride = 0,
                 VSeparationOverride = 0
             };
+            UpdateBlocks(new TetrisBlock[0]);
+            mainGrid.AddChild(_gameGrid);
 
-            _startButton = new Button();
-            _startButton.OnPressed += StartButtonOnOnPressed;
-            Contents.AddChild(_startButton);
+
+            var infoGrid = new GridContainer
+            {
+                Columns = 1
+            };
+
+            var holdContainer = new PanelContainer
+            {
+                CustomMinimumSize = new Vector2(40,40)
+            };
+            infoGrid.AddChild(holdContainer);
+
+            var pointsLabel = new Label
+            {
+                Text = "Points: XYZ"
+            };
+            infoGrid.AddChild(pointsLabel);
+
+            var highscoreLabel = new Label
+            {
+                Text = "1.Parzival - 🔑\n2. Hackerman - 1337\n3. Pothead - 420"
+            };
+            infoGrid.AddChild(highscoreLabel);
+
+            var pauseBtn = new Button
+            {
+                Text = "Pause"
+            };
+            infoGrid.AddChild(pauseBtn);
+
+            mainGrid.AddChild(infoGrid);
+
+            Contents.AddChild(mainGrid);
+
             CanKeyboardFocus = true;
+            RaisePauseMenu(true);
         }
 
         protected override void FocusExited()
         {
             //todo pause and grab keyboard focus on unpause
+            _owner.SendAction(TetrisPlayerAction.Pause);
+            RaisePauseMenu();
+        }
+
+        protected void RaisePauseMenu(bool onlyNewGame = false)
+        {
+            //todo show pause menu
         }
 
         protected override void KeyBindDown(GUIBoundKeyEventArgs args)
@@ -84,22 +130,14 @@ namespace Content.Client.Arcade
             }
         }
 
-        private void StartButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
-        {
-            Contents.RemoveAllChildren();
-            Contents.AddChild(_uiGrid);
-            GrabKeyboardFocus();
-            _owner.StartGame();
-        }
-
         public void UpdateBlocks(TetrisBlock[] blocks)
         {
-            _uiGrid.RemoveAllChildren();
+            _gameGrid.RemoveAllChildren();
             for (int y = 0; y < 20; y++)
             {
                 for (int x = 0; x < 10; x++)
                 {
-                    Color c = Color.White;
+                    Color c = Color.Transparent;
                     var matchingBlock = blocks.FirstOrNull(b => b.Position.X == x && b.Position.Y == y);
                     if (matchingBlock.HasValue)
                     {
@@ -115,7 +153,7 @@ namespace Content.Client.Arcade
                             _ => Color.Olive //olive is error
                         };
                     }
-                    _uiGrid.AddChild(new PanelContainer
+                    _gameGrid.AddChild(new PanelContainer
                     {
                         PanelOverride = new StyleBoxFlat {BackgroundColor = c},
                         CustomMinimumSize = new Vector2(10,10),
