@@ -36,34 +36,6 @@
     netsync: false
     drawdepth: Mobs
     layers:
-    - map: ["enum.HumanoidVisualLayers.Chest"]
-      color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
-      state: torso_m
-    - map: ["enum.HumanoidVisualLayers.Head"]
-      color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
-      state: head_m
-    - map: ["enum.HumanoidVisualLayers.Eyes"]
-      color: "#008800"
-      sprite: Mobs/Customization/eyes.rsi
-      state: eyes
-    - map: ["enum.HumanoidVisualLayers.RArm"]
-      color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
-      state: r_arm
-    - map: ["enum.HumanoidVisualLayers.LArm"]
-      color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
-      state: l_arm
-    - map: ["enum.HumanoidVisualLayers.RLeg"]
-      color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
-      state: r_leg
-    - map: ["enum.HumanoidVisualLayers.LLeg"]
-      color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
-      state: l_leg
     - shader: StencilClear
       sprite: Mobs/Species/Human/parts.rsi
       state: l_leg
@@ -74,22 +46,6 @@
       visible: false
     - map: ["enum.Slots.INNERCLOTHING"]
       shader: StencilDraw
-    - map: ["enum.HumanoidVisualLayers.LHand"]
-      color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
-      state: l_hand
-    - map: ["enum.HumanoidVisualLayers.RHand"]
-      color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
-      state: r_hand
-    - map: ["enum.HumanoidVisualLayers.LFoot"]
-      color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
-      state: l_foot
-    - map: ["enum.HumanoidVisualLayers.RFoot"]
-      color: "#e8b59b"
-      sprite: Mobs/Species/Human/parts.rsi
-      state: r_foot
     - map: ["enum.HumanoidVisualLayers.Handcuffs"]
       color: "#ffffff"
       sprite: Objects/Misc/handcuffs.rsi
@@ -179,11 +135,10 @@
   - type: Strippable
   - type: UserInterface
     interfaces:
-      - key: enum.StrippingUiKey.Key
-        type: StrippableBoundUserInterface
-      - key: enum.AcceptCloningUiKey.Key
-        type: AcceptCloningBoundUserInterface
-
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
+    - key: enum.AcceptCloningUiKey.Key
+      type: AcceptCloningBoundUserInterface
 
 - type: entity
   save: false
@@ -197,6 +152,7 @@
     - type: Sprite
       netsync: false
       drawdepth: Mobs
+      # TODO BODY Turn these into individual body parts?
       layers:
       - map: ["enum.HumanoidVisualLayers.Chest"]
         color: "#e8b59b"
@@ -273,15 +229,15 @@
       mass: 85
     - type: Collidable
       shapes:
-        - !type:PhysShapeAabb
-          bounds: "-0.35,-0.35,0.35,0.35"
-          mask:
-          - Impassable
-          - MobImpassable
-          - VaultImpassable
-          - SmallImpassable
-          layer:
-          - MobImpassable
+      - !type:PhysShapeAabb
+        bounds: "-0.35,-0.35,0.35,0.35"
+        mask:
+        - Impassable
+        - MobImpassable
+        - VaultImpassable
+        - SmallImpassable
+        layer:
+        - MobImpassable
     - type: BodyManager
       criticalThreshold: 100
       deadThreshold: 200
@@ -290,7 +246,7 @@
     - type: MobStateManager
     - type: Appearance
       visuals:
-        - type: RotationVisualizer
+      - type: RotationVisualizer
     - type: HumanoidAppearance
     - type: Grammar
       proper: true

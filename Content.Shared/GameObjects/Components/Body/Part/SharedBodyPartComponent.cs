@@ -1,18 +1,17 @@
 ﻿#nullable enable
-using System;
 using System.Collections.Generic;
 using Content.Shared.Damage.DamageContainer;
 using Content.Shared.Damage.ResistanceSet;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Body.Surgery;
 using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Verbs;
+using Content.Shared.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -20,7 +19,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Body.Part
 {
-    public abstract class SharedBodyPartComponent : Component, IBodyPart
+    public abstract class SharedBodyPartComponent : Component, IBodyPart, ICanExamine, IShowContextMenu
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -30,6 +29,8 @@ namespace Content.Shared.GameObjects.Components.Body.Part
 
         public override string Name => "BodyPart";
 
+        private IBody? _body;
+
         // TODO Remove
         private List<string> _mechanismIds = new List<string>();
 
@@ -38,7 +39,36 @@ namespace Content.Shared.GameObjects.Components.Body.Part
 
         private HashSet<IMechanism> _mechanisms = new HashSet<IMechanism>();
 
-        [ViewVariables] public IBody? Body { get; set; }
+        [ViewVariables]
+        public IBody? Body
+        {
+            get => _body;
+            set
+            {
+                if (_body == value)
+                {
+                    return;
+                }
+
+                var old = _body;
+                _body = value;
+
+                if (value != null)
+                {
+                    foreach (var mechanism in _mechanisms)
+                    {
+                        mechanism.OnBodyAdd(old, value);
+                    }
+                }
+                else if (old != null)
+                {
+                    foreach (var mechanism in _mechanisms)
+                    {
+                        mechanism.OnBodyRemove(old);
+                    }
+                }
+            }
+        }
 
         [ViewVariables] public BodyPartType PartType { get; private set; }
 
@@ -78,14 +108,6 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         /// </summary>
         [ViewVariables]
         public IReadOnlyCollection<IMechanism> Mechanisms => _mechanisms;
-
-        [ViewVariables] public string RSIPath { get; private set; } = string.Empty;
-
-        [ViewVariables] public string RSIState { get; private set; } = string.Empty;
-
-        [ViewVariables] public Enum? RSIMap { get; set; }
-
-        [ViewVariables] public Color? RSIColor { get; set; }
 
         // TODO Replace with a simulation of organs
         /// <summary>
@@ -149,14 +171,6 @@ namespace Content.Shared.GameObjects.Components.Body.Part
 
             serializer.DataField(this, b => b.CurrentDurability, "currentDurability", MaxDurability);
 
-            serializer.DataField(this, m => m.RSIPath, "rsiPath", string.Empty);
-
-            serializer.DataField(this, m => m.RSIState, "rsiState", string.Empty);
-
-            serializer.DataField(this, m => m.RSIMap, "rsiMap", null);
-
-            serializer.DataField(this, m => m.RSIColor, "rsiColor", null);
-
             serializer.DataField(this, m => m.IsVital, "vital", false);
 
             serializer.DataField(ref _mechanismIds, "mechanisms", new List<string>());
@@ -178,15 +192,8 @@ namespace Content.Shared.GameObjects.Components.Body.Part
 
         public bool Drop()
         {
-            var grandParent = Owner.Transform.Parent?.Parent;
-
-            if (grandParent?.Parent == null)
-            {
-                Owner.Transform.AttachToGridOrMap();
-                return true;
-            }
-
-            Owner.Transform.AttachParent(grandParent.Parent);
+            Body = null;
+            Owner.AttachToGrandparent();
             return true;
         }
 
@@ -265,29 +272,8 @@ namespace Content.Shared.GameObjects.Components.Body.Part
                 _mechanismIds.Add(prototypeId);
             }
 
-            mechanism.Owner.Transform.AttachParent(Owner);
             mechanism.Part = this;
             SizeUsed += mechanism.Size;
-
-            if (Body == null)
-            {
-                return;
-            }
-
-            if (!Body.MechanismLayers.TryGetValue(mechanism.Owner.Prototype!.ID, out var mapString))
-            {
-                return;
-            }
-
-            if (!IoCManager.Resolve<IReflectionManager>().TryParseEnumReference(mapString, out var @enum))
-            {
-                Logger.Warning($"Template {Body.TemplateName} has an invalid RSI map key {mapString} for mechanism {mechanism.Owner.Prototype!.ID}.");
-                return;
-            }
-
-            var message = new MechanismSpriteAddedMessage(@enum);
-
-            Body.Owner.SendNetworkMessage(Body, message);
         }
 
         public bool RemoveMechanism(IMechanism mechanism)
@@ -302,26 +288,6 @@ namespace Content.Shared.GameObjects.Components.Body.Part
             _mechanismIds.Remove(mechanism.Owner.Prototype!.ID);
             mechanism.Part = null;
             SizeUsed -= mechanism.Size;
-
-            if (Body == null)
-            {
-                return true;
-            }
-
-            if (!Body.MechanismLayers.TryGetValue(mechanism.Owner.Prototype!.ID, out var mapString))
-            {
-                return true;
-            }
-
-            if (!IoCManager.Resolve<IReflectionManager>().TryParseEnumReference(mapString, out var @enum))
-            {
-                Logger.Warning($"Template {Body.TemplateName} has an invalid RSI map key {mapString} for mechanism {mechanism.Owner.Prototype!.ID}.");
-                return true;
-            }
-
-            var message = new MechanismSpriteRemovedMessage(@enum);
-
-            Body.Owner.SendNetworkMessage(Body, message);
 
             return true;
         }
@@ -353,6 +319,16 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         private void OnHealthChanged(List<HealthChangeData> changes)
         {
             // TODO
+        }
+
+        public bool ShowContextMenu(IEntity examiner)
+        {
+            return Body == null;
+        }
+
+        public bool CanExamine(IEntity entity)
+        {
+            return Body == null;
         }
     }
 }

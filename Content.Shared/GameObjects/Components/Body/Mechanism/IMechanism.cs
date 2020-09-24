@@ -18,17 +18,6 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
         /// </summary>
         string ExamineMessage { get; set; }
 
-        // TODO: Make RSI properties sane
-        /// <summary>
-        ///     Path to the RSI that represents this <see cref="IMechanism"/>.
-        /// </summary>
-        string RSIPath { get; set; }
-
-        /// <summary>
-        ///     RSI state that represents this <see cref="IMechanism"/>.
-        /// </summary>
-        string RSIState { get; set; }
-
         /// <summary>
         ///     Max HP of this <see cref="IMechanism"/>.
         /// </summary>
@@ -61,5 +50,21 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
         ///     <see cref="IMechanism"/> can be easily installed into.
         /// </summary>
         BodyPartCompatibility Compatibility { get; set; }
+
+        /// <summary>
+        ///     Called when the part housing this mechanism is added to a body.
+        ///     DO NOT CALL THIS DIRECTLY FROM OUTSIDE BODY PART CODE!
+        /// </summary>
+        /// <param name="old">The previous body, if any.</param>
+        /// <param name="current">The new body.</param>
+        void OnBodyAdd(IBody? old, IBody current);
+
+        /// <summary>
+        ///     Called when the part housing this mechanism is removed from
+        ///     a body.
+        ///     DO NOT CALL THIS DIRECTLY FROM OUTSIDE BODY PART CODE!
+        /// </summary>
+        /// <param name="old">The old body.</param>
+        void OnBodyRemove(IBody old);
     }
 }

@@ -12,7 +12,7 @@ namespace Content.Shared.GameObjects.Components.Body
 
         public string? PresetName { get; }
 
-        // TODO tf is this
+        // TODO BODY tf is this
         /// <summary>
         ///     Maps all parts on this template to its BodyPartType.
         ///     For instance, "right arm" is mapped to "BodyPartType.arm" on the humanoid
@@ -25,7 +25,7 @@ namespace Content.Shared.GameObjects.Components.Body
         /// </summary>
         public IReadOnlyDictionary<string, IBodyPart> Parts { get; }
 
-        // TODO what am i doing
+        // TODO BODY what am i doing
         /// <summary>
         ///     Maps limb name to the list of their connections to other limbs.
         ///     For instance, on the humanoid template "torso" is mapped to a list
@@ -41,8 +41,6 @@ namespace Content.Shared.GameObjects.Components.Body
         ///     that should fill it. E.g. "right arm" : "BodyPart.arm.basic_human".
         /// </summary>
         public IReadOnlyDictionary<string, string> PartIds { get; }
-
-        public IReadOnlyDictionary<string, string> MechanismLayers { get; }
 
         /// <summary>
         ///     Installs the given <see cref="IBodyPart"/> into the given slot.
@@ -180,5 +178,10 @@ namespace Content.Shared.GameObjects.Components.Body
         ///     Grabs all <see cref="IBodyPart"/> of the given type in this body.
         /// </summary>
         List<IBodyPart> GetPartsOfType(BodyPartType type);
+
+        // TODO BODY Make a slot object that makes sense to the human mind, and make it serializable. Imagine the possibilities!
+        KeyValuePair<string, BodyPartType> SlotAt(int index);
+
+        KeyValuePair<string, IBodyPart> PartAt(int index);
     }
 }

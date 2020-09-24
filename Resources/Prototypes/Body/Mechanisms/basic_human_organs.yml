@@ -1,22 +1,10 @@
 - type: entity
-  id: HeartMechanismDebug
-  name: "human heart (debug)"
-  components:
-  - type: Sprite
-    sprite: Mobs/Species/Human/organs.rsi
-    state: heart-on
-  - type: Icon
-    sprite: Mobs/Species/Human/organs.rsi
-    state: heart-on
-  - type: Mechanism
-  - type: Heart
-
-- type: entity
   id: BrainHuman
   name: "human brain"
   description: "The source of incredible, unending intelligence. Honk."
   components:
   - type: Sprite
+    netsync: false
     sprite: Mobs/Species/Human/organs.rsi
     state: brain_human
   - type: Icon
@@ -34,6 +22,7 @@
   description: "Ocular organ capable of turning light into a colorful visual."
   components:
   - type: Sprite
+    netsync: false
     sprite: Mobs/Species/Human/organs.rsi
     state: eyeballs
   - type: Icon
@@ -50,6 +39,7 @@
   description: "Pumps blood throughout a body. Essential for any entity with blood."
   components:
   - type: Sprite
+    netsync: false
     sprite: Mobs/Species/Human/organs.rsi
     state: heart-on
   - type: Icon
@@ -67,6 +57,7 @@
   description: "Filters oxygen from an atmosphere, which is then sent into the bloodstream to be used as an electron carrier."
   components:
   - type: Sprite
+    netsync: false
     sprite: Mobs/Species/Human/organs.rsi
     state: lungs
   - type: Icon
@@ -84,6 +75,7 @@
   description: "Gross. This is hard to stomach."
   components:
   - type: Sprite
+    netsync: false
     sprite: Mobs/Species/Human/organs.rsi
     state: stomach
   - type: Icon
@@ -101,6 +93,7 @@
   description: "Filters impurities out of a bloodstream and provides other important functionality to a human."
   components:
   - type: Sprite
+    netsync: false
     sprite: Mobs/Species/Human/organs.rsi
     state: liver
   - type: Icon
@@ -117,6 +110,7 @@
   description: "Filters toxins out of a bloodstream."
   components:
   - type: Sprite
+    netsync: false
     sprite: Mobs/Species/Human/organs.rsi
     state: kidneys
   - type: Icon

@@ -41,17 +41,6 @@ namespace Content.Server.GameObjects.Components.Body.Part
             {
                 UserInterface.OnReceiveMessage += OnUIMessage;
             }
-
-            if (Owner.TryGetComponent(out SpriteComponent? sprite))
-            {
-                sprite.LayerSetRSI(0, RSIPath);
-                sprite.LayerSetState(0, RSIState);
-
-                if (RSIColor.HasValue)
-                {
-                    sprite.LayerSetColor(0, RSIColor.Value);
-                }
-            }
         }
 
         public void AfterInteract(AfterInteractEventArgs eventArgs)

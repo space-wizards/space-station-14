@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using Content.Server.Utility;
+using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Body.Surgery;
@@ -30,14 +31,7 @@ namespace Content.Server.GameObjects.Components.Body
 
             if (UserInterface != null)
             {
-                UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
-            }
-
-            // TODO Remove
-            if (Owner.TryGetComponent(out SpriteComponent? component))
-            {
-                component.LayerSetRSI(0, RSIPath);
-                component.LayerSetState(0, RSIState);
+                UserInterface.OnReceiveMessage += OnUIMessage;
             }
         }
 
@@ -154,13 +148,33 @@ namespace Content.Server.GameObjects.Components.Body
             UserInterface?.CloseAll();
         }
 
-        private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)
+        private void OnUIMessage(ServerBoundUserInterfaceMessage message)
         {
             switch (message.Message)
             {
                 case ReceiveBodyPartSurgeryUIMessage msg:
                     HandleReceiveBodyPart(msg.SelectedOptionId);
                     break;
+            }
+        }
+
+        protected override void OnPartAdd(IBodyPart? old, IBodyPart current)
+        {
+            base.OnPartAdd(old, current);
+
+            if (Owner.TryGetComponent(out SpriteComponent? sprite))
+            {
+                sprite.Visible = false;
+            }
+        }
+
+        protected override void OnPartRemove(IBodyPart old)
+        {
+            base.OnPartRemove(old);
+
+            if (Owner.TryGetComponent(out SpriteComponent? sprite))
+            {
+                sprite.Visible = true;
             }
         }
     }

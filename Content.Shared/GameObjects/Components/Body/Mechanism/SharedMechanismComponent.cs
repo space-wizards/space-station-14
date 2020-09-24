@@ -1,15 +1,20 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Body.Part;
+using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Verbs;
+using Content.Shared.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Body.Mechanism
 {
-    public abstract class SharedMechanismComponent : Component, IMechanism
+    public abstract class SharedMechanismComponent : Component, IMechanism, ICanExamine, IShowContextMenu
     {
         public override string Name => "Mechanism";
+
+        private IBodyPart? _part;
 
         protected readonly Dictionary<int, object> OptionsCache = new Dictionary<int, object>();
 
@@ -21,15 +26,33 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
 
         public IBody? Body => Part?.Body;
 
-        public IBodyPart? Part { get; set; }
+        public IBodyPart? Part
+        {
+            get => _part;
+            set
+            {
+                if (_part == value)
+                {
+                    return;
+                }
+
+                var old = _part;
+                _part = value;
+
+                if (value != null)
+                {
+                    OnPartAdd(old, value);
+                }
+                else if (old != null)
+                {
+                    OnPartRemove(old);
+                }
+            }
+        }
 
         public string Description { get; set; } = string.Empty;
 
         public string ExamineMessage { get; set; } = string.Empty;
-
-        public string RSIPath { get; set; } = string.Empty;
-
-        public string RSIState { get; set; } = string.Empty;
 
         public int MaxDurability { get; set; }
 
@@ -53,10 +76,6 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
 
             serializer.DataField(this, m => m.ExamineMessage, "examineMessage", string.Empty);
 
-            serializer.DataField(this, m => m.RSIPath, "rsiPath", string.Empty);
-
-            serializer.DataField(this, m => m.RSIState, "rsiState", string.Empty);
-
             serializer.DataField(this, m => m.MaxDurability, "maxDurability", 10);
 
             serializer.DataField(this, m => m.CurrentDurability, "currentDurability", MaxDurability);
@@ -68,6 +87,30 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
             serializer.DataField(this, m => m.Size, "size", 1);
 
             serializer.DataField(this, m => m.Compatibility, "compatibility", BodyPartCompatibility.Universal);
+        }
+
+        public bool ShowContextMenu(IEntity examiner)
+        {
+            return Body == null;
+        }
+
+        public bool CanExamine(IEntity entity)
+        {
+            return Body == null;
+        }
+
+        public virtual void OnBodyAdd(IBody? old, IBody current) { }
+
+        public virtual void OnBodyRemove(IBody old) { }
+
+        protected virtual void OnPartAdd(IBodyPart? old, IBodyPart current)
+        {
+            Owner.Transform.AttachParent(current.Owner);
+        }
+
+        protected virtual void OnPartRemove(IBodyPart old)
+        {
+            Owner.AttachToGrandparent();
         }
     }
 }

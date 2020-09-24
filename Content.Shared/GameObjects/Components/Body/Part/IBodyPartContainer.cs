@@ -10,7 +10,7 @@
     ///     its parent (i.e. the <see cref="IBody"/> holds many
     ///     <see cref="IBodyPart"/>s, each of which have an upward reference to it).
     /// </summary>
-    // TODO: Remove
+    // TODO BODY Remove
     public interface IBodyPartContainer
     {
     }

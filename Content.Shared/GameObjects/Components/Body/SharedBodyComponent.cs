@@ -11,12 +11,8 @@ using Content.Shared.GameObjects.Components.Body.Template;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -26,18 +22,15 @@ namespace Content.Shared.GameObjects.Components.Body
 {
     public abstract class SharedBodyComponent : DamageableComponent, IBody
     {
-        [Dependency] private readonly IReflectionManager _reflectionManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override string Name => "BodyManager";
 
         public override uint? NetID => ContentNetIDs.BODY;
 
-        private string? _centerSlot = null;
+        private string? _centerSlot;
 
         private Dictionary<string, string> _partIds = new Dictionary<string, string>();
-
-        private Dictionary<string, string> _mechanismLayers = new Dictionary<string, string>();
 
         private readonly Dictionary<string, IBodyPart> _parts = new Dictionary<string, IBodyPart>();
 
@@ -55,9 +48,6 @@ namespace Content.Shared.GameObjects.Components.Body
 
         [ViewVariables]
         public Dictionary<string, BodyPartType> Slots { get; private set; } = new Dictionary<string, BodyPartType>();
-
-        [ViewVariables]
-        public Dictionary<string, string> Layers { get; private set; } = new Dictionary<string, string>();
 
         [ViewVariables]
         public Dictionary<string, List<string>> Connections { get; private set; } = new Dictionary<string, List<string>>();
@@ -80,8 +70,6 @@ namespace Content.Shared.GameObjects.Components.Body
         public IEnumerable<string> AllSlots => Slots.Keys;
 
         public IReadOnlyDictionary<string, string> PartIds => _partIds;
-
-        public IReadOnlyDictionary<string, string> MechanismLayers => _mechanismLayers;
 
         [ViewVariables] public IReadOnlyDictionary<string, string> PartIDs => _partIds;
 
@@ -109,6 +97,7 @@ namespace Content.Shared.GameObjects.Components.Body
                 }
             }
 
+            part.Owner.Transform.AttachParent(Owner);
             part.Body = this;
 
             var argsAdded = new BodyPartAddedEventArgs(part, slot);
@@ -120,37 +109,6 @@ namespace Content.Shared.GameObjects.Components.Body
 
             // TODO: Sort this duplicate out
             OnBodyChanged();
-
-            if (!Layers.TryGetValue(slot, out var partMap) ||
-                !_reflectionManager.TryParseEnumReference(partMap, out var partEnum))
-            {
-                Logger.Warning($"Template {TemplateName} has an invalid RSI map key {partMap} for body part {part.Name}.");
-                return false;
-            }
-
-            part.RSIMap = partEnum;
-
-            var partMessage = new BodyPartAddedMessage(part.RSIPath, part.RSIState, partEnum);
-
-            SendNetworkMessage(partMessage);
-
-            foreach (var mechanism in part.Mechanisms)
-            {
-                if (!MechanismLayers.TryGetValue(mechanism.Owner.Prototype!.ID, out var mechanismMap))
-                {
-                    continue;
-                }
-
-                if (!_reflectionManager.TryParseEnumReference(mechanismMap, out var mechanismEnum))
-                {
-                    Logger.Warning($"Template {TemplateName} has an invalid RSI map key {mechanismMap} for mechanism {mechanism.Owner.Prototype!.ID}.");
-                    continue;
-                }
-
-                var mechanismMessage = new MechanismSpriteAddedMessage(mechanismEnum);
-
-                SendNetworkMessage(mechanismMessage);
-            }
 
             return true;
         }
@@ -166,7 +124,10 @@ namespace Content.Shared.GameObjects.Components.Body
 
             var slotName = _parts.FirstOrDefault(x => x.Value == part).Key;
 
-            if (string.IsNullOrEmpty(slotName)) return;
+            if (string.IsNullOrEmpty(slotName))
+            {
+                return;
+            }
 
             RemovePart(slotName, drop);
         }
@@ -181,10 +142,15 @@ namespace Content.Shared.GameObjects.Components.Body
                 return false;
             }
 
-            IEntity? dropped = null;
             if (drop)
             {
                 part.Drop();
+            }
+
+            // TODO BODY Move to Body part
+            if (!part.Owner.Transform.Deleted)
+            {
+                part.Owner.Transform.AttachParent(Owner);
             }
 
             part.Body = null;
@@ -194,30 +160,6 @@ namespace Content.Shared.GameObjects.Components.Body
             foreach (var component in Owner.GetAllComponents<IBodyPartRemoved>())
             {
                 component.BodyPartRemoved(args);
-            }
-
-            if (part.RSIMap != null)
-            {
-                var message = new BodyPartRemovedMessage(part.RSIMap, dropped?.Uid);
-                SendNetworkMessage(message);
-            }
-
-            foreach (var mechanism in part.Mechanisms)
-            {
-                if (!MechanismLayers.TryGetValue(mechanism.Owner.Prototype!.ID, out var mechanismMap))
-                {
-                    continue;
-                }
-
-                if (!_reflectionManager.TryParseEnumReference(mechanismMap, out var mechanismEnum))
-                {
-                    Logger.Warning($"Template {TemplateName} has an invalid RSI map key {mechanismMap} for mechanism {mechanism.Owner.Prototype!.ID}.");
-                    continue;
-                }
-
-                var mechanismMessage = new MechanismSpriteRemovedMessage(mechanismEnum);
-
-                SendNetworkMessage(mechanismMessage);
             }
 
             if (CurrentDamageState == DamageState.Dead) return true;
@@ -574,6 +516,17 @@ namespace Content.Shared.GameObjects.Components.Body
             return float.MinValue;
         }
 
+        // TODO BODY optimize this
+        public KeyValuePair<string, BodyPartType> SlotAt(int index)
+        {
+            return Slots.ElementAt(index);
+        }
+
+        public KeyValuePair<string, IBodyPart> PartAt(int index)
+        {
+            return Parts.ElementAt(index);
+        }
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -591,8 +544,6 @@ namespace Content.Shared.GameObjects.Components.Body
                     var template = _prototypeManager.Index<BodyTemplatePrototype>(name);
 
                     Connections = template.Connections;
-                    Layers = template.Layers;
-                    _mechanismLayers = template.MechanismLayers;
                     Slots = template.Slots;
                     _centerSlot = template.CenterSlot;
 
@@ -627,31 +578,6 @@ namespace Content.Shared.GameObjects.Components.Body
                     }
                 },
                 () => Connections);
-
-            // TODO remove after parenting parts is in
-            serializer.DataReadWriteFunction(
-                "layers",
-                new Dictionary<string, string>(),
-                layers =>
-                {
-                    foreach (var (slot, layer) in layers)
-                    {
-                        Layers[slot] = layer;
-                    }
-                },
-                () => Layers);
-
-            serializer.DataReadWriteFunction(
-                "mechanismLayers",
-                new Dictionary<string, string>(),
-                layers =>
-                {
-                    foreach (var (mechanism, layer) in layers)
-                    {
-                        _mechanismLayers[mechanism] = layer;
-                    }
-                },
-                () => _mechanismLayers);
 
             serializer.DataReadWriteFunction(
                 "slots",
@@ -728,8 +654,6 @@ namespace Content.Shared.GameObjects.Components.Body
                 var part = Owner.EntityManager.SpawnEntity(partId, Owner.Transform.MapPosition);
                 var partComponent = part.GetComponent<IBodyPart>();
 
-                part.Transform.AttachParent(Owner);
-
                 TryAddPart(slot, partComponent, true);
             }
         }
@@ -740,60 +664,6 @@ namespace Content.Shared.GameObjects.Components.Body
 
             // Just in case something activates at default health.
             ForceHealthChangedEvent();
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public sealed class BodyPartAddedMessage : ComponentMessage
-    {
-        public readonly string RSIPath;
-        public readonly string RSIState;
-        public readonly Enum RSIMap;
-
-        public BodyPartAddedMessage(string rsiPath, string rsiState, Enum rsiMap)
-        {
-            Directed = true;
-            RSIPath = rsiPath;
-            RSIState = rsiState;
-            RSIMap = rsiMap;
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public sealed class BodyPartRemovedMessage : ComponentMessage
-    {
-        public readonly Enum RSIMap;
-        public readonly EntityUid? Dropped;
-
-        public BodyPartRemovedMessage(Enum rsiMap, EntityUid? dropped = null)
-        {
-            Directed = true;
-            RSIMap = rsiMap;
-            Dropped = dropped;
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public sealed class MechanismSpriteAddedMessage : ComponentMessage
-    {
-        public readonly Enum RSIMap;
-
-        public MechanismSpriteAddedMessage(Enum rsiMap)
-        {
-            Directed = true;
-            RSIMap = rsiMap;
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public sealed class MechanismSpriteRemovedMessage : ComponentMessage
-    {
-        public readonly Enum RSIMap;
-
-        public MechanismSpriteRemovedMessage(Enum rsiMap)
-        {
-            Directed = true;
-            RSIMap = rsiMap;
         }
     }
 }

@@ -18,12 +18,9 @@ namespace Content.Client.GameObjects.Components.Body
     [ComponentReference(typeof(IBody))]
     public class BodyComponent : SharedBodyComponent, IClientDraggable
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-
         public bool ClientCanDropOn(CanDropEventArgs eventArgs)
         {
-            if (
-                eventArgs.Target.HasComponent<DisposalUnitComponent>()||
+            if (eventArgs.Target.HasComponent<DisposalUnitComponent>() ||
                 eventArgs.Target.HasComponent<MedicalScannerComponent>())
             {
                 return true;
@@ -34,43 +31,6 @@ namespace Content.Client.GameObjects.Components.Body
         public bool ClientCanDrag(CanDragEventArgs eventArgs)
         {
             return true;
-        }
-
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null)
-        {
-            if (!Owner.TryGetComponent(out ISpriteComponent? sprite))
-            {
-                return;
-            }
-
-            switch (message)
-            {
-                case BodyPartAddedMessage partAdded:
-                    sprite.LayerSetVisible(partAdded.RSIMap, true);
-                    sprite.LayerSetRSI(partAdded.RSIMap, partAdded.RSIPath);
-                    sprite.LayerSetState(partAdded.RSIMap, partAdded.RSIState);
-                    break;
-                case BodyPartRemovedMessage partRemoved:
-                    sprite.LayerSetVisible(partRemoved.RSIMap, false);
-
-                    if (!partRemoved.Dropped.HasValue ||
-                        !_entityManager.TryGetEntity(partRemoved.Dropped.Value, out var entity) ||
-                        !entity.TryGetComponent(out ISpriteComponent? droppedSprite))
-                    {
-                        break;
-                    }
-
-                    var color = sprite[partRemoved.RSIMap].Color;
-
-                    droppedSprite.LayerSetColor(0, color);
-                    break;
-                case MechanismSpriteAddedMessage mechanismAdded:
-                    sprite.LayerSetVisible(mechanismAdded.RSIMap, true);
-                    break;
-                case MechanismSpriteRemovedMessage mechanismRemoved:
-                    sprite.LayerSetVisible(mechanismRemoved.RSIMap, false);
-                    break;
-            }
         }
     }
 }

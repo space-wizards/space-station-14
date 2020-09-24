@@ -1,11 +1,9 @@
 ﻿#nullable enable
-using System;
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Body.Surgery;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 
 namespace Content.Shared.GameObjects.Components.Body.Part
 {
@@ -50,27 +48,6 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         ///     <see cref="RemoveMechanism"/>
         /// </summary>
         IReadOnlyCollection<IMechanism> Mechanisms { get; }
-
-        /// <summary>
-        ///     Path to the RSI that represents this <see cref="IBodyPart"/>.
-        /// </summary>
-        public string RSIPath { get; }
-
-        /// <summary>
-        ///     RSI state that represents this <see cref="IBodyPart"/>.
-        /// </summary>
-        public string RSIState { get; }
-
-        /// <summary>
-        ///     RSI map keys that this body part changes on the sprite.
-        /// </summary>
-        public Enum? RSIMap { get; set; }
-
-        /// <summary>
-        ///     RSI color of this body part.
-        /// </summary>
-        // TODO: SpriteComponent rework
-        public Color? RSIColor { get; set; }
 
         /// <summary>
         /// If body part is vital

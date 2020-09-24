@@ -3,6 +3,7 @@
   name: "human torso"
   components:
   - type: Sprite
+    netsync: false
     sprite: Mobs/Species/Human/parts.rsi
     state: "torso_m"
   - type: Icon
@@ -30,6 +31,7 @@
   name: "human head"
   components:
   - type: Sprite
+    netsync: false
     sprite: Mobs/Species/Human/parts.rsi
     state: "head_m"
   - type: Icon
@@ -55,6 +57,7 @@
   name: "left human arm"
   components:
   - type: Sprite
+    netsync: false
     sprite: Mobs/Species/Human/parts.rsi
     state: "l_arm"
   - type: Icon
@@ -80,6 +83,7 @@
   name: "right human arm"
   components:
   - type: Sprite
+    netsync: false
     sprite: Mobs/Species/Human/parts.rsi
     state: "r_arm"
   - type: Icon
@@ -105,6 +109,7 @@
   name: "left human hand"
   components:
   - type: Sprite
+    netsync: false
     sprite: Mobs/Species/Human/parts.rsi
     state: "l_hand"
   - type: Icon
@@ -129,6 +134,7 @@
   name: "right human hand"
   components:
   - type: Sprite
+    netsync: false
     sprite: Mobs/Species/Human/parts.rsi
     state: "r_hand"
   - type: Icon
@@ -153,6 +159,7 @@
   name: "left human leg"
   components:
   - type: Sprite
+    netsync: false
     sprite: Mobs/Species/Human/parts.rsi
     state: "l_leg"
   - type: Icon
@@ -181,6 +188,7 @@
   name: "right human leg"
   components:
   - type: Sprite
+    netsync: false
     sprite: Mobs/Species/Human/parts.rsi
     state: "r_leg"
   - type: Icon
@@ -209,6 +217,7 @@
   name: "left human foot"
   components:
   - type: Sprite
+    netsync: false
     sprite: Mobs/Species/Human/parts.rsi
     state: "l_foot"
   - type: Icon
@@ -233,6 +242,7 @@
   name: "right human foot"
   components:
   - type: Sprite
+    netsync: false
     sprite: Mobs/Species/Human/parts.rsi
     state: "r_foot"
   - type: Icon
