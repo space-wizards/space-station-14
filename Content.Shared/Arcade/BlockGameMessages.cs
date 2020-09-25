@@ -126,5 +126,15 @@ namespace Content.Shared.Arcade
                 return Score.CompareTo(entry.Score);
             }
         }
+
+        [Serializable, NetSerializable]
+        public class BlockGameLevelUpdateMessage : BoundUserInterfaceMessage
+        {
+            public readonly int Level;
+            public BlockGameLevelUpdateMessage(int level)
+            {
+                Level = level;
+            }
+        }
     }
 }

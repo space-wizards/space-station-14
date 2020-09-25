@@ -19,6 +19,7 @@ using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Arcade
 {
@@ -200,7 +201,11 @@ namespace Content.Server.GameObjects.Components.Arcade
             private Vector2i _currentPiecePosition;
             private BlockGamePieceRotation _currentRotation;
             private float _softDropOverride = 0.1f;
-            private float _speed = 0.5f;
+
+            private float Speed => !_softDropPressed
+                ? (float) (_baseSpeed * Math.Max(0.2f, Math.Min(1f, (-Math.Log(Math.Sqrt(Level / 5f)) + 0.4f))))
+                : _softDropOverride;
+            private float _baseSpeed = 0.5f;
 
             private float _pressCheckSpeed = 0.08f;
 
@@ -214,7 +219,7 @@ namespace Content.Server.GameObjects.Components.Arcade
             private bool _rightPressed;
             private bool _softDropPressed;
 
-            private int _points
+            private int Points
             {
                 get => _internalPoints;
                 set
@@ -230,15 +235,50 @@ namespace Content.Server.GameObjects.Components.Arcade
 
             private void SendPointsUpdate()
             {
-                _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameScoreUpdateMessage(_points));
+                _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameScoreUpdateMessage(Points));
             }
 
             private void SendPointsUpdate(IPlayerSession session)
             {
-                _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameScoreUpdateMessage(_points));
+                _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameScoreUpdateMessage(Points));
             }
 
+            public int Level
+            {
+                get => _level;
+                set
+                {
+                    _level = value;
+                    SendLevelUpdate();
+                }
+            }
             private int _level = 0;
+            private void SendLevelUpdate()
+            {
+                _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameLevelUpdateMessage(Level));
+            }
+
+            private void SendLevelUpdate(IPlayerSession session)
+            {
+                _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameLevelUpdateMessage(Level));
+            }
+
+            private int ClearedLines
+            {
+                get => _clearedLines;
+                set
+                {
+                    _clearedLines = value;
+
+                    if (_clearedLines < LevelRequirement) return;
+
+                    _clearedLines -= LevelRequirement;
+                    Level++;
+                }
+            }
+
+            private int _clearedLines = 0;
+            private int LevelRequirement => Math.Min(100, Math.Max(Level * 10 - 50, 10));
 
             public BlockGame(BlockGameArcadeComponent component)
             {
@@ -276,6 +316,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                 SendNextPieceUpdate();
                 SendPointsUpdate();
                 SendHighscoreUpdate();
+                SendLevelUpdate();
             }
 
             private void FullUpdate(IPlayerSession session)
@@ -285,6 +326,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                 SendNextPieceUpdate(session);
                 SendHoldPieceUpdate(session);
                 SendHighscoreUpdate(session);
+                SendLevelUpdate(session);
             }
 
             public void GameTick(float frameTime)
@@ -344,10 +386,19 @@ namespace Content.Server.GameObjects.Components.Arcade
             {
                 _accumulatedFieldFrameTime += frameTime;
 
-                var checkTime = _softDropPressed && _speed > _softDropOverride ? _softDropOverride : _speed;
+                var checkTime = Speed;
 
                 if (_accumulatedFieldFrameTime < checkTime) return;
 
+                if(_softDropPressed) AddPoints(1);
+
+                InternalFieldTick();
+
+                _accumulatedFieldFrameTime -= checkTime;
+            }
+
+            private void InternalFieldTick()
+            {
                 if (_currentPiece.Positions(_currentPiecePosition.AddToY(1), _currentRotation)
                     .All(DropCheck))
                 {
@@ -371,14 +422,13 @@ namespace Content.Server.GameObjects.Components.Arcade
                 CheckField();
 
                 UpdateAllFieldUI();
-
-                _accumulatedFieldFrameTime -= checkTime;
             }
 
             private void CheckField()
             {
                 int pointsToAdd = 0;
                 int consecutiveLines = 0;
+                int clearedLines = 0;
                 for (int y = 0; y < 20; y++)
                 {
                     if (CheckLine(y))
@@ -386,6 +436,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                         //line was cleared
                         y--;
                         consecutiveLines++;
+                        clearedLines++;
                     }
                     else if(consecutiveLines != 0)
                     {
@@ -401,6 +452,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                     }
                 }
 
+                ClearedLines += clearedLines;
                 AddPoints(pointsToAdd);
             }
 
@@ -423,7 +475,7 @@ namespace Content.Server.GameObjects.Components.Arcade
             {
                 if (amount == 0) return;
 
-                _points += amount;
+                Points += amount;
             }
 
             private void FillLine(int y)
@@ -555,7 +607,16 @@ namespace Content.Server.GameObjects.Components.Arcade
 
             private void PerformHarddrop()
             {
-                //todo move piece to lowest possible position (and force a gametick)
+                int spacesDropped = 0;
+                while (_currentPiece.Positions(_currentPiecePosition.AddToY(1), _currentRotation)
+                    .All(DropCheck))
+                {
+                    _currentPiecePosition = _currentPiecePosition.AddToY(1);
+                    spacesDropped++;
+                }
+                AddPoints(spacesDropped * 2);
+
+                InternalFieldTick();
             }
 
             public void UpdateAllFieldUI()
@@ -584,17 +645,17 @@ namespace Content.Server.GameObjects.Components.Arcade
                 {
                     var blockGameSystem = EntitySystem.Get<BlockGameSystem>();
 
-                    _highScorePlacement = blockGameSystem.RegisterHighScore(_component._player.AttachedEntity.Name, _points);
+                    _highScorePlacement = blockGameSystem.RegisterHighScore(_component._player.AttachedEntity.Name, Points);
                     SendHighscoreUpdate();
                 }
-                _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameGameOverScreenMessage(_points, _highScorePlacement?.LocalPlacement, _highScorePlacement?.GlobalPlacement));
+                _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameGameOverScreenMessage(Points, _highScorePlacement?.LocalPlacement, _highScorePlacement?.GlobalPlacement));
             }
 
             public void UpdateNewPlayerUI(IPlayerSession session)
             {
                 if (_gameOver)
                 {
-                    _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameGameOverScreenMessage(_points, _highScorePlacement?.LocalPlacement, _highScorePlacement?.GlobalPlacement), session);
+                    _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameGameOverScreenMessage(Points, _highScorePlacement?.LocalPlacement, _highScorePlacement?.GlobalPlacement), session);
                 }
                 else
                 {

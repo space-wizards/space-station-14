@@ -60,6 +60,9 @@ namespace Content.Client.GameObjects.Components.Arcade
                     _menu?.UpdateHighscores(highScoreUpdateMessage.LocalHighscores,
                         highScoreUpdateMessage.GlobalHighscores);
                     break;
+                case BlockGameMessages.BlockGameLevelUpdateMessage levelUpdateMessage:
+                    _menu?.UpdateLevel(levelUpdateMessage.Level);
+                    break;
             }
         }
 

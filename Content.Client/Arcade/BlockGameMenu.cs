@@ -37,6 +37,7 @@ namespace Content.Client.Arcade
         private GridContainer _nextBlockGrid;
         private GridContainer _holdBlockGrid;
         private Label _pointsLabel;
+        private Label _levelLabel;
         private Button _pauseButton;
 
         private PanelContainer _menuRootContainer;
@@ -301,12 +302,22 @@ namespace Content.Client.Arcade
             // building the game container
             _gameRootContainer = new VBoxContainer();
 
+            _levelLabel = new Label
+            {
+                Align = Label.AlignMode.Center,
+                SizeFlagsHorizontal = SizeFlags.FillExpand
+            };
+            _gameRootContainer.AddChild(_levelLabel);
+            _gameRootContainer.AddChild(new Control
+            {
+                CustomMinimumSize = new Vector2(1,5)
+            });
+
             _pointsLabel = new Label
             {
                 Align = Label.AlignMode.Center,
                 SizeFlagsHorizontal = SizeFlags.FillExpand
             };
-            UpdatePoints(0);
             _gameRootContainer.AddChild(_pointsLabel);
             _gameRootContainer.AddChild(new Control
             {
@@ -518,6 +529,11 @@ namespace Content.Client.Arcade
         public void UpdatePoints(int points)
         {
             _pointsLabel.Text = $"Points: {points}";
+        }
+
+        public void UpdateLevel(int level)
+        {
+            _levelLabel.Text = $"Level {level + 1}";
         }
 
         public void UpdateHighscores(List<BlockGameMessages.HighScoreEntry> localHighscores,
