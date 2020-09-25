@@ -98,11 +98,11 @@ namespace Content.Client.Arcade
                 SizeFlagsHorizontal = SizeFlags.ShrinkCenter
             };
 
-
+            var c = new Color(overlayBackgroundColor.R,overlayBackgroundColor.G,overlayBackgroundColor.B,220);
             var innerBack = new StyleBoxTexture
             {
                 Texture = backgroundTexture,
-                Modulate = overlayBackgroundColor
+                Modulate = c
             };
             innerBack.SetPatchMargin(StyleBox.Margin.All, 10);
             var menuInnerPanel = new PanelContainer

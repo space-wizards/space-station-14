@@ -203,9 +203,8 @@ namespace Content.Server.GameObjects.Components.Arcade
             private float _softDropOverride = 0.1f;
 
             private float Speed => !_softDropPressed
-                ? (float) (_baseSpeed * Math.Max(0.2f, Math.Min(1f, (-Math.Log(Math.Sqrt(Level / 5f)) + 0.4f))))
+                ? -0.03f * Level + 1
                 : _softDropOverride;
-            private float _baseSpeed = 0.5f;
 
             private float _pressCheckSpeed = 0.08f;
 
