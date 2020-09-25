@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Content.Client.GameObjects.Components
+namespace Content.Client.GameObjects.Components.Crayon
 {
     public class CrayonDecalVisualizer : AppearanceVisualizer
     {

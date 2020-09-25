@@ -16,18 +16,13 @@ using System.Text;
 namespace Content.Server.GameObjects.Components
 {
     [RegisterComponent]
-    public class CrayonComponent : Component, IAfterInteract, IUse
+    public class CrayonComponent : SharedCrayonComponent, IAfterInteract, IUse
     {
-        public override string Name => "Crayon";
-
         //TODO: useSound
         private string _useSound;
-        private string _color;
-        public Color Color { get; private set; }
-        public string SelectedState { get; set; } = "corgi";
+        public Color Color { get; set; }
+        
         //TODO: charges?
-
-        //TODO: ItemStatus
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -35,6 +30,18 @@ namespace Content.Server.GameObjects.Components
             serializer.DataField(ref _useSound, "useSound", "");
             serializer.DataField(ref _color, "color", "white");
             Color = Color.FromName(_color);
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            SelectedState = "corgi";
+            Dirty();
+        }
+
+        public override ComponentState GetComponentState()
+        {
+            return new CrayonComponentState(_color, SelectedState);
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
@@ -47,6 +54,7 @@ namespace Content.Server.GameObjects.Components
             var nextIndex = (crayonDecals.Decals.IndexOf(SelectedState) + 1) % crayonDecals.Decals.Count;
             SelectedState = crayonDecals.Decals[nextIndex];
             eventArgs.User.PopupMessage($"Now drawing {SelectedState}");
+            Dirty();
             return true;
         }
 
