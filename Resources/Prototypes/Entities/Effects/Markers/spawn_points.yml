@@ -8,8 +8,7 @@
     visible: false
     sprite: Interface/Misc/markers.rsi
     state: cross_blue
-  - type: Icon
-    sprite: Interface/Misc/markers.rsi
+
   - type: SpawnPoint
   - type: Marker
   - type: Clickable
@@ -27,8 +26,7 @@
     state: cross_red
   - type: SpawnPoint
     spawn_type: LateJoin
-  - type: Icon
-    state: cross_red
+
 
 - type: entity
   name: observer spawn point
@@ -39,5 +37,4 @@
     state: observer_start
   - type: SpawnPoint
     spawn_type: Observer
-  - type: Icon
-    state: observer_start
+

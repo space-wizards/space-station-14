@@ -8,8 +8,7 @@
     - Helmet
   - type: Sprite
     state: icon
-  - type: Icon
-    state: icon
+
 
 - type: entity
   parent: HatBase
@@ -19,8 +18,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/bandana.rsi
-  - type: Icon
-    sprite: Clothing/Head/bandana.rsi
+
   - type: Clothing
     sprite: Clothing/Head/bandana.rsi
 
@@ -32,8 +30,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/bandblack.rsi
-  - type: Icon
-    sprite: Clothing/Head/bandblack.rsi
+
   - type: Clothing
     sprite: Clothing/Head/bandblack.rsi
 
@@ -45,8 +42,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/bandblue.rsi
-  - type: Icon
-    sprite: Clothing/Head/bandblue.rsi
+
   - type: Clothing
     sprite: Clothing/Head/bandblue.rsi
 
@@ -58,8 +54,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/bandbotany.rsi
-  - type: Icon
-    sprite: Clothing/Head/bandbotany.rsi
+
   - type: Clothing
     sprite: Clothing/Head/bandbotany.rsi
 
@@ -71,8 +66,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/bandcamo.rsi
-  - type: Icon
-    sprite: Clothing/Head/bandcamo.rsi
+
   - type: Clothing
     sprite: Clothing/Head/bandcamo.rsi
 
@@ -84,8 +78,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/bandgold.rsi
-  - type: Icon
-    sprite: Clothing/Head/bandgold.rsi
+
   - type: Clothing
     sprite: Clothing/Head/bandgold.rsi
 
@@ -97,8 +90,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/bandgreen.rsi
-  - type: Icon
-    sprite: Clothing/Head/bandgreen.rsi
+
   - type: Clothing
     sprite: Clothing/Head/bandgreen.rsi
 
@@ -110,8 +102,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/bandorange.rsi
-  - type: Icon
-    sprite: Clothing/Head/bandorange.rsi
+
   - type: Clothing
     sprite: Clothing/Head/bandorange.rsi
 
@@ -123,8 +114,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/bandpurple.rsi
-  - type: Icon
-    sprite: Clothing/Head/bandpurple.rsi
+
   - type: Clothing
     sprite: Clothing/Head/bandpurple.rsi
 
@@ -136,8 +126,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/bandred.rsi
-  - type: Icon
-    sprite: Clothing/Head/bandred.rsi
+
   - type: Clothing
     sprite: Clothing/Head/bandred.rsi
 
@@ -149,8 +138,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/bandskull.rsi
-  - type: Icon
-    sprite: Clothing/Head/bandskull.rsi
+
   - type: Clothing
     sprite: Clothing/Head/bandskull.rsi
 
@@ -162,8 +150,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/bearpelt.rsi
-  - type: Icon
-    sprite: Clothing/Head/bearpelt.rsi
+
   - type: Clothing
     sprite: Clothing/Head/bearpelt.rsi
 
@@ -175,8 +162,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/beaver_hat.rsi
-  - type: Icon
-    sprite: Clothing/Head/beaver_hat.rsi
+
   - type: Clothing
     sprite: Clothing/Head/beaver_hat.rsi
 
@@ -188,8 +174,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/beret.rsi
-  - type: Icon
-    sprite: Clothing/Head/beret.rsi
+
   - type: Clothing
     sprite: Clothing/Head/beret.rsi
 
@@ -201,8 +186,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/beret_engineering.rsi
-  - type: Icon
-    sprite: Clothing/Head/beret_engineering.rsi
+
   - type: Clothing
     sprite: Clothing/Head/beret_engineering.rsi
 
@@ -215,9 +199,7 @@
   - type: Sprite
     sprite: Clothing/Head/beret_hos.rsi
     state: beret_hos
-  - type: Icon
-    sprite: Clothing/Head/beret_hos.rsi
-    state: beret_hos
+
   - type: Clothing
     sprite: Clothing/Head/beret_hos.rsi
 
@@ -229,8 +211,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/beret_warden.rsi
-  - type: Icon
-    sprite: Clothing/Head/beret_warden.rsi
+
   - type: Clothing
     sprite: Clothing/Head/beret_warden.rsi
 
@@ -242,8 +223,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/bluesoft.rsi
-  - type: Icon
-    sprite: Clothing/Head/bluesoft.rsi
+
   - type: Clothing
     sprite: Clothing/Head/bluesoft.rsi
 
@@ -255,8 +235,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/bluesoft_flipped.rsi
-  - type: Icon
-    sprite: Clothing/Head/bluesoft_flipped.rsi
+
   - type: Clothing
     sprite: Clothing/Head/bluesoft_flipped.rsi
 
@@ -268,8 +247,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/boater_hat.rsi
-  - type: Icon
-    sprite: Clothing/Head/boater_hat.rsi
+
   - type: Clothing
     sprite: Clothing/Head/boater_hat.rsi
 
@@ -281,8 +259,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/bowler.rsi
-  - type: Icon
-    sprite: Clothing/Head/bowler.rsi
+
   - type: Clothing
     sprite: Clothing/Head/bowler.rsi
 
@@ -294,8 +271,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/bowler_hat.rsi
-  - type: Icon
-    sprite: Clothing/Head/bowler_hat.rsi
+
   - type: Clothing
     sprite: Clothing/Head/bowler_hat.rsi
 
@@ -307,8 +283,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/bunny.rsi
-  - type: Icon
-    sprite: Clothing/Head/bunny.rsi
+
   - type: Clothing
     sprite: Clothing/Head/bunny.rsi
 
@@ -320,8 +295,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/cake0.rsi
-  - type: Icon
-    sprite: Clothing/Head/cake0.rsi
+
   - type: Clothing
     sprite: Clothing/Head/cake0.rsi
 
@@ -333,8 +307,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/cake1.rsi
-  - type: Icon
-    sprite: Clothing/Head/cake1.rsi
+
   - type: Clothing
     sprite: Clothing/Head/cake1.rsi
 
@@ -346,8 +319,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/capcap.rsi
-  - type: Icon
-    sprite: Clothing/Head/capcap.rsi
+
   - type: Clothing
     sprite: Clothing/Head/capcap.rsi
 
@@ -359,8 +331,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/capspace.rsi
-  - type: Icon
-    sprite: Clothing/Head/capspace.rsi
+
   - type: Clothing
     sprite: Clothing/Head/capspace.rsi
 
@@ -372,8 +343,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/captain.rsi
-  - type: Icon
-    sprite: Clothing/Head/captain.rsi
+
   - type: Clothing
     sprite: Clothing/Head/captain.rsi
 
@@ -385,8 +355,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/cardborg_h.rsi
-  - type: Icon
-    sprite: Clothing/Head/cardborg_h.rsi
+
   - type: Clothing
     sprite: Clothing/Head/cardborg_h.rsi
 
@@ -398,8 +367,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/cargosoft.rsi
-  - type: Icon
-    sprite: Clothing/Head/cargosoft.rsi
+
   - type: Clothing
     sprite: Clothing/Head/cargosoft.rsi
 
@@ -411,8 +379,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/cargosoft_flipped.rsi
-  - type: Icon
-    sprite: Clothing/Head/cargosoft_flipped.rsi
+
   - type: Clothing
     sprite: Clothing/Head/cargosoft_flipped.rsi
 
@@ -424,8 +391,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/centcom.rsi
-  - type: Icon
-    sprite: Clothing/Head/centcom.rsi
+
   - type: Clothing
     sprite: Clothing/Head/centcom.rsi
 
@@ -437,8 +403,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/chefhat.rsi
-  - type: Icon
-    sprite: Clothing/Head/chefhat.rsi
+
   - type: Clothing
     sprite: Clothing/Head/chefhat.rsi
 
@@ -450,8 +415,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/chickenhead.rsi
-  - type: Icon
-    sprite: Clothing/Head/chickenhead.rsi
+
   - type: Clothing
     sprite: Clothing/Head/chickenhead.rsi
 
@@ -463,8 +427,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/corpsoft.rsi
-  - type: Icon
-    sprite: Clothing/Head/corpsoft.rsi
+
   - type: Clothing
     sprite: Clothing/Head/corpsoft.rsi
 
@@ -476,8 +439,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/corpsoft_flipped.rsi
-  - type: Icon
-    sprite: Clothing/Head/corpsoft_flipped.rsi
+
   - type: Clothing
     sprite: Clothing/Head/corpsoft_flipped.rsi
 
@@ -489,8 +451,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/cosmonaut.rsi
-  - type: Icon
-    sprite: Clothing/Head/cosmonaut.rsi
+
   - type: Clothing
     sprite: Clothing/Head/cosmonaut.rsi
 
@@ -502,8 +463,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/cowboy.rsi
-  - type: Icon
-    sprite: Clothing/Head/cowboy.rsi
+
   - type: Clothing
     sprite: Clothing/Head/cowboy.rsi
 
@@ -515,8 +475,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/deathsquad.rsi
-  - type: Icon
-    sprite: Clothing/Head/deathsquad.rsi
+
   - type: Clothing
     sprite: Clothing/Head/deathsquad.rsi
 
@@ -528,8 +487,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/brownfedora.rsi
-  - type: Icon
-    sprite: Clothing/Head/brownfedora.rsi
+
   - type: Clothing
     sprite: Clothing/Head/brownfedora.rsi
 
@@ -541,8 +499,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/greyfedora.rsi
-  - type: Icon
-    sprite: Clothing/Head/greyfedora.rsi
+
   - type: Clothing
     sprite: Clothing/Head/greyfedora.rsi
 
@@ -554,8 +511,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/fez.rsi
-  - type: Icon
-    sprite: Clothing/Head/fez.rsi
+
   - type: Clothing
     sprite: Clothing/Head/fez.rsi
 
@@ -567,8 +523,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/gladiator.rsi
-  - type: Icon
-    sprite: Clothing/Head/gladiator.rsi
+
   - type: Clothing
     sprite: Clothing/Head/gladiator.rsi
 
@@ -580,8 +535,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/greenbandana.rsi
-  - type: Icon
-    sprite: Clothing/Head/greenbandana.rsi
+
   - type: Clothing
     sprite: Clothing/Head/greenbandana.rsi
 
@@ -593,8 +547,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/greensoft.rsi
-  - type: Icon
-    sprite: Clothing/Head/greensoft.rsi
+
   - type: Clothing
     sprite: Clothing/Head/greensoft.rsi
 
@@ -606,8 +559,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/greensoft_flipped.rsi
-  - type: Icon
-    sprite: Clothing/Head/greensoft_flipped.rsi
+
   - type: Clothing
     sprite: Clothing/Head/greensoft_flipped.rsi
 
@@ -619,8 +571,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/greysoft.rsi
-  - type: Icon
-    sprite: Clothing/Head/greysoft.rsi
+
   - type: Clothing
     sprite: Clothing/Head/greysoft.rsi
 
@@ -632,8 +583,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/greysoft_flipped.rsi
-  - type: Icon
-    sprite: Clothing/Head/greysoft_flipped.rsi
+
   - type: Clothing
     sprite: Clothing/Head/greysoft_flipped.rsi
 
@@ -645,8 +595,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/hairflower.rsi
-  - type: Icon
-    sprite: Clothing/Head/hairflower.rsi
+
   - type: Clothing
     sprite: Clothing/Head/hairflower.rsi
 
@@ -658,8 +607,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/headslime.rsi
-  - type: Icon
-    sprite: Clothing/Head/headslime.rsi
+
   - type: Clothing
     sprite: Clothing/Head/headslime.rsi
 
@@ -671,8 +619,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/helmet.rsi
-  - type: Icon
-    sprite: Clothing/Head/helmet.rsi
+
   - type: Clothing
     sprite: Clothing/Head/helmet.rsi
 
@@ -684,8 +631,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/helmetold.rsi
-  - type: Icon
-    sprite: Clothing/Head/helmetold.rsi
+
   - type: Clothing
     sprite: Clothing/Head/helmetold.rsi
 
@@ -697,8 +643,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/hopcap.rsi
-  - type: Icon
-    sprite: Clothing/Head/hopcap.rsi
+
   - type: Clothing
     sprite: Clothing/Head/hopcap.rsi
 
@@ -710,8 +655,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/hoshat.rsi
-  - type: Icon
-    sprite: Clothing/Head/hoshat.rsi
+
   - type: Clothing
     sprite: Clothing/Head/hoshat.rsi
 
@@ -723,8 +667,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/ihsvoidhelm.rsi
-  - type: Icon
-    sprite: Clothing/Head/ihsvoidhelm.rsi
+
   - type: Clothing
     sprite: Clothing/Head/ihsvoidhelm.rsi
 
@@ -736,8 +679,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/ihsvoidhelm_on.rsi
-  - type: Icon
-    sprite: Clothing/Head/ihsvoidhelm_on.rsi
+
   - type: Clothing
     sprite: Clothing/Head/ihsvoidhelm_on.rsi
 
@@ -749,8 +691,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/witchhat.rsi
-  - type: Icon
-    sprite: Clothing/Head/witchhat.rsi
+
   - type: Clothing
     sprite: Clothing/Head/witchhat.rsi
 
@@ -762,8 +703,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/wizardhelm.rsi
-  - type: Icon
-    sprite: Clothing/Head/wizardhelm.rsi
+
   - type: Clothing
     sprite: Clothing/Head/wizardhelm.rsi
 
@@ -775,8 +715,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/mimesoft.rsi
-  - type: Icon
-    sprite: Clothing/Head/mimesoft.rsi
+
   - type: Clothing
     sprite: Clothing/Head/mimesoft.rsi
 
@@ -788,8 +727,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/mimesoft_flipped.rsi
-  - type: Icon
-    sprite: Clothing/Head/mimesoft_flipped.rsi
+
   - type: Clothing
     sprite: Clothing/Head/mimesoft_flipped.rsi
 
@@ -801,8 +739,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/nursehat.rsi
-  - type: Icon
-    sprite: Clothing/Head/nursehat.rsi
+
   - type: Clothing
     sprite: Clothing/Head/nursehat.rsi
 
@@ -814,8 +751,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/orangesoft.rsi
-  - type: Icon
-    sprite: Clothing/Head/orangesoft.rsi
+
   - type: Clothing
     sprite: Clothing/Head/orangesoft.rsi
 
@@ -827,8 +763,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/orangesoft_flipped.rsi
-  - type: Icon
-    sprite: Clothing/Head/orangesoft_flipped.rsi
+
   - type: Clothing
     sprite: Clothing/Head/orangesoft_flipped.rsi
 
@@ -840,8 +775,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/orange_bandana.rsi
-  - type: Icon
-    sprite: Clothing/Head/orange_bandana.rsi
+
   - type: Clothing
     sprite: Clothing/Head/orange_bandana.rsi
 
@@ -853,8 +787,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/paper.rsi
-  - type: Icon
-    sprite: Clothing/Head/paper.rsi
+
   - type: Clothing
     sprite: Clothing/Head/paper.rsi
 - type: entity
@@ -865,8 +798,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/philosopher_wig.rsi
-  - type: Icon
-    sprite: Clothing/Head/philosopher_wig.rsi
+
   - type: Clothing
     sprite: Clothing/Head/philosopher_wig.rsi
 
@@ -878,8 +810,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/pirate.rsi
-  - type: Icon
-    sprite: Clothing/Head/pirate.rsi
+
   - type: Clothing
     sprite: Clothing/Head/pirate.rsi
 
@@ -891,8 +822,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/plaguedoctor.rsi
-  - type: Icon
-    sprite: Clothing/Head/plaguedoctor.rsi
+
   - type: Clothing
     sprite: Clothing/Head/plaguedoctor.rsi
 
@@ -904,8 +834,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/purplesoft.rsi
-  - type: Icon
-    sprite: Clothing/Head/purplesoft.rsi
+
   - type: Clothing
     sprite: Clothing/Head/purplesoft.rsi
 
@@ -917,8 +846,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/purplesoft_flipped.rsi
-  - type: Icon
-    sprite: Clothing/Head/purplesoft_flipped.rsi
+
   - type: Clothing
     sprite: Clothing/Head/purplesoft_flipped.rsi
 
@@ -930,8 +858,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/pwig.rsi
-  - type: Icon
-    sprite: Clothing/Head/pwig.rsi
+
   - type: Clothing
     sprite: Clothing/Head/pwig.rsi
 
@@ -943,8 +870,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/rainbowsoft.rsi
-  - type: Icon
-    sprite: Clothing/Head/rainbowsoft.rsi
+
   - type: Clothing
     sprite: Clothing/Head/rainbowsoft.rsi
 
@@ -956,8 +882,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/rainbowsoft_flipped.rsi
-  - type: Icon
-    sprite: Clothing/Head/rainbowsoft_flipped.rsi
+
   - type: Clothing
     sprite: Clothing/Head/rainbowsoft_flipped.rsi
 
@@ -969,8 +894,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/redsoft.rsi
-  - type: Icon
-    sprite: Clothing/Head/redsoft.rsi
+
   - type: Clothing
     sprite: Clothing/Head/redsoft.rsi
 
@@ -982,8 +906,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/redsoft_flipped.rsi
-  - type: Icon
-    sprite: Clothing/Head/redsoft_flipped.rsi
+
   - type: Clothing
     sprite: Clothing/Head/redsoft_flipped.rsi
 
@@ -995,8 +918,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/redwizard.rsi
-  - type: Icon
-    sprite: Clothing/Head/redwizard.rsi
+
   - type: Clothing
     sprite: Clothing/Head/redwizard.rsi
 
@@ -1008,8 +930,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/richard.rsi
-  - type: Icon
-    sprite: Clothing/Head/richard.rsi
+
   - type: Clothing
     sprite: Clothing/Head/richard.rsi
 
@@ -1021,8 +942,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/s-ninja.rsi
-  - type: Icon
-    sprite: Clothing/Head/s-ninja.rsi
+
   - type: Clothing
     sprite: Clothing/Head/s-ninja.rsi
 
@@ -1034,8 +954,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/santahat.rsi
-  - type: Icon
-    sprite: Clothing/Head/santahat.rsi
+
   - type: Clothing
     sprite: Clothing/Head/santahat.rsi
 
@@ -1047,8 +966,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/secsoft.rsi
-  - type: Icon
-    sprite: Clothing/Head/secsoft.rsi
+
   - type: Clothing
     sprite: Clothing/Head/secsoft.rsi
 
@@ -1060,8 +978,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/secsoft_flipped.rsi
-  - type: Icon
-    sprite: Clothing/Head/secsoft_flipped.rsi
+
   - type: Clothing
     sprite: Clothing/Head/secsoft_flipped.rsi
 
@@ -1073,8 +990,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/sombrero.rsi
-  - type: Icon
-    sprite: Clothing/Head/sombrero.rsi
+
   - type: Clothing
     sprite: Clothing/Head/sombrero.rsi
 
@@ -1086,8 +1002,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/surgcap_blue.rsi
-  - type: Icon
-    sprite: Clothing/Head/surgcap_blue.rsi
+
   - type: Clothing
     sprite: Clothing/Head/surgcap_blue.rsi
 
@@ -1099,8 +1014,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/surgcap_green.rsi
-  - type: Icon
-    sprite: Clothing/Head/surgcap_green.rsi
+
   - type: Clothing
     sprite: Clothing/Head/surgcap_green.rsi
 
@@ -1112,8 +1026,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/surgcap_purple.rsi
-  - type: Icon
-    sprite: Clothing/Head/surgcap_purple.rsi
+
   - type: Clothing
     sprite: Clothing/Head/surgcap_purple.rsi
 
@@ -1125,8 +1038,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/syndicate.rsi
-  - type: Icon
-    sprite: Clothing/Head/syndicate.rsi
+
   - type: Clothing
     sprite: Clothing/Head/syndicate.rsi
 
@@ -1138,8 +1050,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/thunderdome.rsi
-  - type: Icon
-    sprite: Clothing/Head/thunderdome.rsi
+
   - type: Clothing
     sprite: Clothing/Head/thunderdome.rsi
 
@@ -1151,8 +1062,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/tophat.rsi
-  - type: Icon
-    sprite: Clothing/Head/tophat.rsi
+
   - type: Clothing
     sprite: Clothing/Head/tophat.rsi
 
@@ -1164,8 +1074,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/ushankadown.rsi
-  - type: Icon
-    sprite: Clothing/Head/ushankadown.rsi
+
   - type: Clothing
     sprite: Clothing/Head/ushankadown.rsi
 
@@ -1177,8 +1086,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/ushankaup.rsi
-  - type: Icon
-    sprite: Clothing/Head/ushankaup.rsi
+
   - type: Clothing
     sprite: Clothing/Head/ushankaup.rsi
 
@@ -1190,8 +1098,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/nightvis.rsi
-  - type: Icon
-    sprite: Clothing/Head/nightvis.rsi
+
   - type: Clothing
     sprite: Clothing/Head/nightvis.rsi
 
@@ -1203,8 +1110,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/violetwizard.rsi
-  - type: Icon
-    sprite: Clothing/Head/violetwizard.rsi
+
   - type: Clothing
     sprite: Clothing/Head/violetwizard.rsi
 
@@ -1216,8 +1122,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/void.rsi
-  - type: Icon
-    sprite: Clothing/Head/void.rsi
+
   - type: Clothing
     sprite: Clothing/Head/void.rsi
 
@@ -1229,8 +1134,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/witch.rsi
-  - type: Icon
-    sprite: Clothing/Head/witch.rsi
+
   - type: Clothing
     sprite: Clothing/Head/witch.rsi
 
@@ -1242,8 +1146,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/wizard-fake.rsi
-  - type: Icon
-    sprite: Clothing/Head/wizard-fake.rsi
+
   - type: Clothing
     sprite: Clothing/Head/wizard-fake.rsi
 
@@ -1255,8 +1158,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/wizardhat.rsi
-  - type: Icon
-    sprite: Clothing/Head/wizardhat.rsi
+
   - type: Clothing
     sprite: Clothing/Head/wizardhat.rsi
 
@@ -1268,8 +1170,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/xenom.rsi
-  - type: Icon
-    sprite: Clothing/Head/xenom.rsi
+
   - type: Clothing
     sprite: Clothing/Head/xenom.rsi
 
@@ -1281,8 +1182,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/xenos.rsi
-  - type: Icon
-    sprite: Clothing/Head/xenos.rsi
+
   - type: Clothing
     sprite: Clothing/Head/xenos.rsi
 
@@ -1294,8 +1194,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/xmashat.rsi
-  - type: Icon
-    sprite: Clothing/Head/xmashat.rsi
+
   - type: Clothing
     sprite: Clothing/Head/xmashat.rsi
 
@@ -1307,8 +1206,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/yellowsoft.rsi
-  - type: Icon
-    sprite: Clothing/Head/yellowsoft.rsi
+
   - type: Clothing
     sprite: Clothing/Head/yellowsoft.rsi
 
@@ -1320,7 +1218,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/yellowsoft_flipped.rsi
-  - type: Icon
-    sprite: Clothing/Head/yellowsoft_flipped.rsi
+
   - type: Clothing
     sprite: Clothing/Head/yellowsoft_flipped.rsi

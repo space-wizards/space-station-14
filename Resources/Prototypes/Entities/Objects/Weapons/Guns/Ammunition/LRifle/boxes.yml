@@ -7,8 +7,7 @@
   - type: AmmoBox
     caliber: LRifle
     capacity: 30
-  - type: Icon
-    state: icon
+
   - type: Sprite
     netsync: false
     layers:
@@ -32,8 +31,7 @@
   - type: AmmoBox
     capacity: 200
     fillPrototype: CartridgeLRifle
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/LRifle/l_rifle_big_box.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/LRifle/l_rifle_big_box.rsi
 
@@ -45,8 +43,7 @@
   - type: AmmoBox
     capacity: 50
     fillPrototype: CartridgeLRifleHV
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/LRifle/l_rifle_box_hv.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/LRifle/l_rifle_box_hv.rsi
 
@@ -58,8 +55,7 @@
   - type: AmmoBox
     capacity: 50
     fillPrototype: CartridgeLRiflePractice
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/LRifle/l_rifle_box_practice.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/LRifle/l_rifle_box_practice.rsi
 
@@ -71,7 +67,6 @@
   - type: AmmoBox
     capacity: 50
     fillPrototype: CartridgeLRifleRubber
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/LRifle/l_rifle_box_rubber.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/LRifle/l_rifle_box_rubber.rsi

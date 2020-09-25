@@ -24,7 +24,6 @@ using Content.Server.Mobs.Roles;
 using Content.Server.Players;
 using Content.Shared;
 using Content.Shared.Chat;
-using Content.Shared.GameObjects.Components.PDA;
 using Content.Shared.Network.NetMessages;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
@@ -49,7 +48,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -131,13 +129,6 @@ namespace Content.Server.GameTicking
 
             DebugTools.Assert(!_initialized);
 
-            _configurationManager.RegisterCVar("game.lobbyenabled", false, CVar.ARCHIVE);
-            _configurationManager.RegisterCVar("game.lobbyduration", 20, CVar.ARCHIVE);
-            _configurationManager.RegisterCVar("game.defaultpreset", "Suspicion", CVar.ARCHIVE);
-            _configurationManager.RegisterCVar("game.fallbackpreset", "Sandbox", CVar.ARCHIVE);
-
-            _configurationManager.RegisterCVar("game.enablewin", true, CVar.CHEAT);
-
             PresetSuspicion.RegisterCVars(_configurationManager);
 
             _netManager.RegisterNetMessage<MsgTickerJoinLobby>(nameof(MsgTickerJoinLobby));
@@ -150,7 +141,7 @@ namespace Content.Server.GameTicking
             _netManager.RegisterNetMessage<MsgRequestWindowAttention>(nameof(MsgRequestWindowAttention));
             _netManager.RegisterNetMessage<MsgTickerLateJoinStatus>(nameof(MsgTickerLateJoinStatus));
 
-            SetStartPreset(_configurationManager.GetCVar<string>("game.defaultpreset"));
+            SetStartPreset(_configurationManager.GetCVar(CCVars.GameLobbyDefaultPreset));
 
             RestartRound();
 
@@ -963,7 +954,7 @@ namespace Content.Server.GameTicking
         {
             var gmTitle = MakeGamePreset(null).ModeTitle;
             var desc = MakeGamePreset(null).Description;
-            return _localization.GetString(@"Hi and welcome to [color=white]Space Station 14![/color]
+            return Loc.GetString(@"Hi and welcome to [color=white]Space Station 14![/color]
 
 The current game mode is: [color=white]{0}[/color].
 [color=yellow]{1}[/color]", gmTitle, desc);
@@ -992,7 +983,6 @@ The current game mode is: [color=white]{0}[/color].
         [Dependency] private IServerNetManager _netManager = default!;
         [Dependency] private IDynamicTypeFactory _dynamicTypeFactory = default!;
         [Dependency] private IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly ILocalizationManager _localization = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly IServerPreferencesManager _prefsManager = default!;
         [Dependency] private readonly IBaseServer _baseServer = default!;

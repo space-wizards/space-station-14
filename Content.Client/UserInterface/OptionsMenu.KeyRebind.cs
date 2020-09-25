@@ -147,6 +147,7 @@ namespace Content.Client.UserInterface
                 AddButton(ContentKeyFunctions.ThrowItemInHand, "Throw item");
                 AddButton(ContentKeyFunctions.TryPullObject, "Pull object");
                 AddButton(ContentKeyFunctions.MovePulledObject, "Move pulled object");
+                AddButton(ContentKeyFunctions.ReleasePulledObject, "Release pulled object");
                 AddButton(ContentKeyFunctions.Point, "Point at location");
 
 

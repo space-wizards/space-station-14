@@ -22,9 +22,6 @@
     netsync: false
     sprite: Objects/Fun/toys.rsi
     state: foamdart
-  - type: Icon
-    sprite: Objects/Fun/toys.rsi
-    state: foamdart
   - type: Projectile
     damages:
       Blunt: 1

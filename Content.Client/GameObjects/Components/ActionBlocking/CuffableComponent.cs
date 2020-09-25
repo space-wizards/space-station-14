@@ -1,10 +1,8 @@
-﻿using Robust.Client.Graphics;
-using Robust.Client.Interfaces.ResourceManagement;
-using Robust.Shared.IoC;
-using Robust.Shared.GameObjects;
-using Content.Shared.GameObjects.Components.ActionBlocking;
+﻿using Content.Shared.GameObjects.Components.ActionBlocking;
 using Content.Shared.Preferences.Appearance;
 using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 

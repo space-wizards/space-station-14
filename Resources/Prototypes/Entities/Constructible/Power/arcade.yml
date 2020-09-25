@@ -3,8 +3,7 @@
   name: arcade
   parent: ComputerBase
   components:
-  - type: Icon
-    state: arcade
+
   - type: PowerReceiver
   - type: Sprite
     layers:
@@ -22,3 +21,12 @@
       bodyBroken: arcade
   - type: Anchorable
   - type: Pullable
+  - type: SpaceVillainArcade
+  - type: Wires
+    BoardName: "Arcade"
+  - type: UserInterface
+    interfaces:
+    - key: enum.SpaceVillainArcadeUiKey.Key
+      type: SpaceVillainArcadeBoundUserInterface
+    - key: enum.WiresUiKey.Key
+      type: WiresBoundUserInterface

@@ -1,6 +1,6 @@
-﻿using Robust.Shared.Network;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Robust.Shared.Network;
 using static Content.Shared.SharedGameTicker;
 
 namespace Content.Client.Interfaces

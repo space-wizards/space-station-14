@@ -29,7 +29,7 @@ namespace Content.Server.GameObjects.Components
         {
             var random = IoCManager.Resolve<IRobustRandom>();
             var rand = random.Next(100);
-            // Let's not pad ourselves on the back too hard.
+            // Let's not pat ourselves on the back too hard.
             // 1% chance of zumos
             if (rand == 0) Type = PlaqueType.Zumos;
             // 9% FEA

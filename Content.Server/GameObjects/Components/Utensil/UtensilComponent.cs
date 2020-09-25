@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Nutrition;
-using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Utensil;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;

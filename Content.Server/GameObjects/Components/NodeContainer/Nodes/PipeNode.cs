@@ -1,4 +1,7 @@
-﻿using Content.Server.Atmos;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.Interfaces;
 using Content.Shared.GameObjects.Components.Atmos;
@@ -8,9 +11,6 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 {

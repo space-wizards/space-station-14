@@ -1,8 +1,11 @@
 using System;
+using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Body.Circulatory;
 using Content.Server.Interfaces;
+using Content.Server.Utility;
 using Content.Shared.Atmos;
+using Content.Shared.Interfaces;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -16,27 +19,31 @@ namespace Content.Server.GameObjects.Components.Body.Respiratory
 
         private float _accumulatedFrameTime;
 
-        /// <summary>
-        ///     The pressure that this lung exerts on the air around it
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)] private float Pressure { get; set; }
-
         [ViewVariables] public GasMixture Air { get; set; }
 
         [ViewVariables] public LungStatus Status { get; set; }
+
+        [ViewVariables] public float CycleDelay { get; set; }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
-            Air = new GasMixture();
+            Air = new GasMixture {Temperature = Atmospherics.NormalBodyTemperature};
 
             serializer.DataReadWriteFunction(
                 "volume",
                 6,
                 vol => Air.Volume = vol,
                 () => Air.Volume);
-            serializer.DataField(this, l => l.Pressure, "pressure", 100);
+
+            serializer.DataReadWriteFunction(
+                "temperature",
+                Atmospherics.NormalBodyTemperature,
+                temp => Air.Temperature = temp,
+                () => Air.Temperature);
+
+            serializer.DataField(this, l => l.CycleDelay, "cycleDelay", 2);
         }
 
         public void Update(float frameTime)
@@ -54,7 +61,9 @@ namespace Content.Server.GameObjects.Components.Body.Respiratory
             };
 
             var absoluteTime = Math.Abs(_accumulatedFrameTime);
-            if (absoluteTime < 2)
+            var delay = CycleDelay;
+
+            if (absoluteTime < delay)
             {
                 return;
             }
@@ -73,50 +82,100 @@ namespace Content.Server.GameObjects.Components.Body.Respiratory
                     throw new ArgumentOutOfRangeException();
             }
 
-            _accumulatedFrameTime = absoluteTime - 2;
+            _accumulatedFrameTime = absoluteTime - delay;
+        }
+
+        public void Transfer(GasMixture from, GasMixture to, float ratio)
+        {
+            var removed = from.RemoveRatio(ratio);
+            var toOld = to.Gases.ToArray();
+
+            to.Merge(removed);
+
+            for (var gas = 0; gas < Atmospherics.TotalNumberOfGases; gas++)
+            {
+                var newAmount = to.GetMoles(gas);
+                var oldAmount = toOld[gas];
+                var delta = newAmount - oldAmount;
+
+                removed.AdjustMoles(gas, -delta);
+            }
+
+            from.Merge(removed);
+        }
+
+        public void ToBloodstream(GasMixture mixture)
+        {
+            if (!Owner.TryGetComponent(out BloodstreamComponent bloodstream))
+            {
+                return;
+            }
+
+            var to = bloodstream.Air;
+
+            to.Merge(mixture);
+            mixture.Clear();
         }
 
         public void Inhale(float frameTime)
         {
-            if (!Owner.TryGetComponent(out BloodstreamComponent bloodstream))
-            {
-                return;
-            }
-
             if (!Owner.Transform.Coordinates.TryGetTileAir(out var tileAir))
             {
                 return;
             }
 
-            var amount = Atmospherics.BreathPercentage * frameTime;
-            var volumeRatio = amount / tileAir.Volume;
-            var temp = tileAir.RemoveRatio(volumeRatio);
+            Inhale(frameTime, tileAir);
+        }
 
-            temp.PumpGasTo(Air, Pressure);
-            Air.PumpGasTo(bloodstream.Air, Pressure);
-            tileAir.Merge(temp);
+        public void Inhale(float frameTime, GasMixture from)
+        {
+            var ratio = Atmospherics.BreathPercentage * frameTime;
+
+            Transfer(from, Air, ratio);
+            ToBloodstream(Air);
         }
 
         public void Exhale(float frameTime)
         {
-            if (!Owner.TryGetComponent(out BloodstreamComponent bloodstream))
-            {
-                return;
-            }
-
             if (!Owner.Transform.Coordinates.TryGetTileAir(out var tileAir))
             {
                 return;
             }
 
-            bloodstream.PumpToxins(Air, Pressure);
+            Exhale(frameTime, tileAir);
+        }
 
-            var amount = Atmospherics.BreathPercentage * frameTime;
-            var volumeRatio = amount / tileAir.Volume;
-            var temp = tileAir.RemoveRatio(volumeRatio);
+        public void Exhale(float frameTime, GasMixture to)
+        {
+            // TODO: Make the bloodstream separately pump toxins into the lungs, making the lungs' only job to empty.
+            if (!Owner.TryGetComponent(out BloodstreamComponent bloodstream))
+            {
+                return;
+            }
 
-            temp.PumpGasTo(tileAir, Pressure);
-            Air.Merge(temp);
+            bloodstream.PumpToxins(Air);
+
+            var lungRemoved = Air.RemoveRatio(0.5f);
+            var toOld = to.Gases.ToArray();
+
+            to.Merge(lungRemoved);
+
+            for (var gas = 0; gas < Atmospherics.TotalNumberOfGases; gas++)
+            {
+                var newAmount = to.GetMoles(gas);
+                var oldAmount = toOld[gas];
+                var delta = newAmount - oldAmount;
+
+                lungRemoved.AdjustMoles(gas, -delta);
+            }
+
+            Air.Merge(lungRemoved);
+        }
+
+        public void Gasp()
+        {
+            Owner.PopupMessageEveryone("Gasp");
+            Inhale(CycleDelay);
         }
     }
 

@@ -21,9 +21,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
       sprite: Mobs/Aliens/Xenos/xeno_hunter.rsi
-  - type: Icon
-    sprite: Mobs/Aliens/Xenos/xeno_hunter.rsi
-    state: standing
+
   - type: Clickable
   - type: Physics
     mass: 85

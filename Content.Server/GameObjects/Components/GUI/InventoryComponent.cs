@@ -445,8 +445,8 @@ namespace Content.Server.GameObjects.Components.GUI
                     {
                         if (activeHand != null)
                         {
-                            interactionSystem.Interaction(Owner, activeHand.Owner, itemContainedInSlot.Owner,
-                                new EntityCoordinates());
+                                _ = interactionSystem.Interaction(Owner, activeHand.Owner, itemContainedInSlot.Owner,
+                                    new EntityCoordinates());
                         }
                         else if (Unequip(msg.Inventoryslot))
                         {

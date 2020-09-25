@@ -1,10 +1,8 @@
 ﻿#nullable enable
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Vector2 = Robust.Shared.Maths.Vector2;
+using Robust.Shared.Maths;
 
 namespace Content.Shared.Utility
 {

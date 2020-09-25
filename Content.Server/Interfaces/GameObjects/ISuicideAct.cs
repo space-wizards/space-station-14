@@ -23,6 +23,5 @@ namespace Content.Server.Interfaces.GameObjects
         Radiation,
         Asphyxiation,
         Bloodloss
-
     }
 }
