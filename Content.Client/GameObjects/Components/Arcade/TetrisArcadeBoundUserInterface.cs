@@ -50,9 +50,11 @@ namespace Content.Client.GameObjects.Components.Arcade
                 case TetrisMessages.TetrisUserMessage userMessage:
                     _menu?.SetUsability(userMessage.IsPlayer);
                     break;
-                case TetrisMessages.TetrisGameStatusMessage statusMessage:
-                    _menu?.SetScreen(statusMessage.isPaused);
+                case TetrisMessages.TetrisSetScreenMessage statusMessage:
                     if (statusMessage.isStarted) _menu?.SetStarted();
+                    _menu?.SetScreen(statusMessage.Screen);
+                    if (statusMessage is TetrisMessages.TetrisGameOverScreenMessage gameOverScreenMessage)
+                        _menu?.SetGameoverPoints(gameOverScreenMessage.FinalScore);
                     break;
             }
         }

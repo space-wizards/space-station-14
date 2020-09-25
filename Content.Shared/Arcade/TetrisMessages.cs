@@ -60,15 +60,33 @@ namespace Content.Shared.Arcade
         public class TetrisUserUnregisterMessage : BoundUserInterfaceMessage{}
 
         [Serializable, NetSerializable]
-        public class TetrisGameStatusMessage : BoundUserInterfaceMessage
+        public class TetrisSetScreenMessage : BoundUserInterfaceMessage
         {
-            public readonly bool isPaused;
+            public readonly TetrisScreen Screen;
             public readonly bool isStarted;
-            public TetrisGameStatusMessage(bool isPaused, bool isStarted = true)
+            public TetrisSetScreenMessage(TetrisScreen screen, bool isStarted = true)
             {
-                this.isPaused = isPaused;
+                Screen = screen;
                 this.isStarted = isStarted;
             }
+        }
+
+        [Serializable, NetSerializable]
+        public class TetrisGameOverScreenMessage : TetrisSetScreenMessage
+        {
+            public readonly int FinalScore;
+            public TetrisGameOverScreenMessage(int finalScore) : base(TetrisScreen.Gameover)
+            {
+                FinalScore = finalScore;
+            }
+        }
+
+        [Serializable, NetSerializable]
+        public enum TetrisScreen
+        {
+            Game,
+            Pause,
+            Gameover
         }
     }
 }

@@ -27,10 +27,15 @@ namespace Content.Server.GameObjects.Components.Arcade
         private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
         private BoundUserInterface? UserInterface => Owner.GetUIOrNull(TetrisArcadeUiKey.Key);
 
-        private TetrisGame? _game;
+        private TetrisGame _game;
 
         private IPlayerSession? _player;
         private List<IPlayerSession> _spectators = new List<IPlayerSession>();
+
+        public TetrisArcadeComponent()
+        {
+            _game = new TetrisGame(this);
+        }
 
         public void Activate(ActivateEventArgs eventArgs)
         {
@@ -53,7 +58,7 @@ namespace Content.Server.GameObjects.Components.Arcade
             else _spectators.Add(session);
 
             UpdatePlayerStatus(session);
-            UserInterface?.SendMessage(new TetrisMessages.TetrisGameStatusMessage(!_game?.Paused ?? true, _game?.Started ?? false), session);
+            _game.UpdateNewPlayerUI(session);
         }
 
         private void UnRegisterPlayerSession(IPlayerSession session)
@@ -95,21 +100,21 @@ namespace Content.Server.GameObjects.Components.Arcade
             if (!(obj.Message is TetrisMessages.TetrisPlayerActionMessage message)) return;
             if (message.PlayerAction == TetrisPlayerAction.NewGame)
             {
-                _game = new TetrisGame(this);
+                if(_game.Started) _game = new TetrisGame(this);
                 _game.StartGame();
             }
             else
             {
-                _game?.ProcessInput(message.PlayerAction);
+                _game.ProcessInput(message.PlayerAction);
             }
         }
 
         public void DoGameTick(float frameTime)
         {
-            _game?.GameTick(frameTime);
+            _game.GameTick(frameTime);
         }
 
-        private class TetrisGame : IDisposable
+        private class TetrisGame
         {
             //note: field is 10(0 -> 9) wide and 20(0 -> 19) high
 
@@ -118,10 +123,52 @@ namespace Content.Server.GameObjects.Components.Arcade
             private List<TetrisBlock> _field = new List<TetrisBlock>();
 
             private TetrisPiece _currentPiece;
-            private TetrisPiece _nextPiece = TetrisPiece.GetRandom();
+
+            private TetrisPiece _nextPiece
+            {
+                get => _internalNextPiece;
+                set
+                {
+                    _internalNextPiece = value;
+                    SendNextPieceUpdate();
+                }
+            }
+            private TetrisPiece _internalNextPiece =TetrisPiece.GetRandom();
+
+            private void SendNextPieceUpdate()
+            {
+                _component.UserInterface?.SendMessage(new TetrisMessages.TetrisUIUpdateMessage(_nextPiece.BlocksForPreview(), TetrisMessages.TetrisUIBlockType.NextBlock));
+            }
+
+            private void SendNextPieceUpdate(IPlayerSession session)
+            {
+                _component.UserInterface?.SendMessage(new TetrisMessages.TetrisUIUpdateMessage(_nextPiece.BlocksForPreview(), TetrisMessages.TetrisUIBlockType.NextBlock), session);
+            }
 
             private bool _holdBlock = false;
-            private TetrisPiece? _heldPiece = null;
+            private TetrisPiece? _heldPiece
+            {
+                get => _internalHeldPiece;
+                set
+                {
+                    _internalHeldPiece = value;
+                    SendHoldPieceUpdate();
+                }
+            }
+
+            private TetrisPiece? _internalHeldPiece = null;
+
+            private void SendHoldPieceUpdate()
+            {
+                if(_heldPiece.HasValue) _component.UserInterface?.SendMessage(new TetrisMessages.TetrisUIUpdateMessage(_heldPiece.Value.BlocksForPreview(), TetrisMessages.TetrisUIBlockType.HoldBlock));
+                else _component.UserInterface?.SendMessage(new TetrisMessages.TetrisUIUpdateMessage(new TetrisBlock[0], TetrisMessages.TetrisUIBlockType.HoldBlock));
+            }
+
+            private void SendHoldPieceUpdate(IPlayerSession session)
+            {
+                if(_heldPiece.HasValue) _component.UserInterface?.SendMessage(new TetrisMessages.TetrisUIUpdateMessage(_heldPiece.Value.BlocksForPreview(), TetrisMessages.TetrisUIBlockType.HoldBlock), session);
+                else _component.UserInterface?.SendMessage(new TetrisMessages.TetrisUIUpdateMessage(new TetrisBlock[0], TetrisMessages.TetrisUIBlockType.HoldBlock), session);
+            }
 
             private Vector2i _currentPiecePosition;
             private TetrisPieceRotation _currentRotation;
@@ -131,16 +178,37 @@ namespace Content.Server.GameObjects.Components.Arcade
             private float _pressCheckSpeed = 0.08f;
 
             private bool _running;
-            public bool Paused => _running == _initialized;
-            private bool _initialized;
-            public bool Started => _initialized;
+            public bool Paused => !(_running && _started);
+            private bool _started;
+            public bool Started => _started;
             private bool _gameOver;
 
             private bool _leftPressed;
             private bool _rightPressed;
             private bool _softDropPressed;
 
-            private int _points;
+            private int _points
+            {
+                get => _internalPoints;
+                set
+                {
+                    if (_internalPoints == value) return;
+                    _internalPoints = value;
+                    SendPointsUpdate();
+                }
+            }
+            private int _internalPoints;
+
+            private void SendPointsUpdate()
+            {
+                _component.UserInterface?.SendMessage(new TetrisMessages.TetrisScoreUpdate(_points));
+            }
+
+            private void SendPointsUpdate(IPlayerSession session)
+            {
+                _component.UserInterface?.SendMessage(new TetrisMessages.TetrisScoreUpdate(_points));
+            }
+
             private int _level = 0;
 
             public TetrisGame(TetrisArcadeComponent component)
@@ -152,12 +220,12 @@ namespace Content.Server.GameObjects.Components.Arcade
             {
                 InitializeNewBlock();
 
-                _component.UserInterface?.SendMessage(new TetrisMessages.TetrisGameStatusMessage(false));
+                _component.UserInterface?.SendMessage(new TetrisMessages.TetrisSetScreenMessage(TetrisMessages.TetrisScreen.Game));
 
-                UpdateUI();
+                UpdateAllFieldUI();
 
                 _running = true;
-                _initialized = true;
+                _started = true;
             }
 
             public void GameTick(float frameTime)
@@ -209,7 +277,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                     }
                 }
 
-                if(anythingChanged) UpdateUI();
+                if(anythingChanged) UpdateAllFieldUI();
             }
 
             private float _accumulatedFieldFrameTime;
@@ -243,7 +311,7 @@ namespace Content.Server.GameObjects.Components.Arcade
 
                 CheckField();
 
-                UpdateUI();
+                UpdateAllFieldUI();
 
                 _accumulatedFieldFrameTime -= checkTime;
             }
@@ -277,14 +345,6 @@ namespace Content.Server.GameObjects.Components.Arcade
                 AddPoints(pointsToAdd);
             }
 
-            private void AddPoints(int amount)
-            {
-                if (amount == 0) return;
-
-                _points += amount;
-                _component.UserInterface?.SendMessage(new TetrisMessages.TetrisScoreUpdate(_points));
-            }
-
             private bool CheckLine(int y)
             {
                 for (var x = 0; x < 10; x++)
@@ -298,6 +358,13 @@ namespace Content.Server.GameObjects.Components.Arcade
                 FillLine(y);
 
                 return true;
+            }
+
+            private void AddPoints(int amount)
+            {
+                if (amount == 0) return;
+
+                _points += amount;
             }
 
             private void FillLine(int y)
@@ -329,7 +396,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                 _currentRotation = TetrisPieceRotation.North;
 
                 _currentPiece = piece;
-                UpdateUI();
+                UpdateAllFieldUI();
             }
 
             private bool LowerBoundCheck(Vector2i position) => position.Y < 20;
@@ -339,15 +406,6 @@ namespace Content.Server.GameObjects.Components.Arcade
             private bool DropCheck(Vector2i position) => LowerBoundCheck(position) && ClearCheck(position);
             private bool MoveCheck(Vector2i position) => BorderCheck(position) && ClearCheck(position);
             private bool RotateCheck(Vector2i position) => BorderCheck(position) && LowerBoundCheck(position) && ClearCheck(position);
-
-            private bool IsGameOver => _field.Any(block => block.Position.Y == 0);
-
-            private void InvokeGameover()
-            {
-                _running = false;
-                _gameOver = true;
-                //todo add feedback
-            }
 
             public void ProcessInput(TetrisPlayerAction action)
             {
@@ -382,13 +440,13 @@ namespace Content.Server.GameObjects.Components.Arcade
                         break;
                     case TetrisPlayerAction.Pause:
                         _running = false;
-                        _component.UserInterface?.SendMessage(new TetrisMessages.TetrisGameStatusMessage(true));
+                        _component.UserInterface?.SendMessage(new TetrisMessages.TetrisSetScreenMessage(TetrisMessages.TetrisScreen.Pause));
                         break;
                     case TetrisPlayerAction.Unpause:
                         if (!_gameOver)
                         {
                             _running = true;
-                            _component.UserInterface?.SendMessage(new TetrisMessages.TetrisGameStatusMessage(false));
+                            _component.UserInterface?.SendMessage(new TetrisMessages.TetrisSetScreenMessage(TetrisMessages.TetrisScreen.Game));
                         }
                         break;
                     case TetrisPlayerAction.Hold:
@@ -410,7 +468,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                 }
 
                 _currentRotation = rotation;
-                UpdateUI();
+                UpdateAllFieldUI();
             }
 
             private void HoldPiece()
@@ -422,7 +480,6 @@ namespace Content.Server.GameObjects.Components.Arcade
                 var tempHeld = _heldPiece;
                 _heldPiece = _currentPiece;
                 _holdBlock = true;
-                _component.UserInterface?.SendMessage(new TetrisMessages.TetrisUIUpdateMessage(_heldPiece.Value.BlocksForPreview(), TetrisMessages.TetrisUIBlockType.HoldBlock));
 
                 if (!tempHeld.HasValue)
                 {
@@ -438,12 +495,52 @@ namespace Content.Server.GameObjects.Components.Arcade
                 //todo move piece to lowest possible position (and force a gametick)
             }
 
-            public void UpdateUI()
+            public void UpdateAllFieldUI()
             {
-                if (!_initialized) return;
+                if (!_started) return;
 
                 var computedField = ComputeField();
                 _component.UserInterface?.SendMessage(new TetrisMessages.TetrisUIUpdateMessage(computedField.ToArray(), TetrisMessages.TetrisUIBlockType.GameField));
+            }
+
+            public void UpdateFieldUI(IPlayerSession session)
+            {
+                if (!_started) return;
+
+                var computedField = ComputeField();
+                _component.UserInterface?.SendMessage(new TetrisMessages.TetrisUIUpdateMessage(computedField.ToArray(), TetrisMessages.TetrisUIBlockType.GameField), session);
+            }
+
+            private bool IsGameOver => _field.Any(block => block.Position.Y == 0);
+            private void InvokeGameover()
+            {
+                _running = false;
+                _gameOver = true;
+                _component.UserInterface?.SendMessage(new TetrisMessages.TetrisGameOverScreenMessage(_points));
+            }
+
+            public void UpdateNewPlayerUI(IPlayerSession session)
+            {
+                if (_gameOver)
+                {
+                    _component.UserInterface?.SendMessage(new TetrisMessages.TetrisGameOverScreenMessage(_points), session);
+                }
+                else
+                {
+                    if (Paused)
+                    {
+                        _component.UserInterface?.SendMessage(new TetrisMessages.TetrisSetScreenMessage(TetrisMessages.TetrisScreen.Pause, Started), session);
+                    }
+                    else
+                    {
+                        _component.UserInterface?.SendMessage(new TetrisMessages.TetrisSetScreenMessage(TetrisMessages.TetrisScreen.Game, Started), session);
+                    }
+                }
+
+                UpdateFieldUI(session);
+                SendPointsUpdate(session);
+                SendNextPieceUpdate(session);
+                SendHoldPieceUpdate(session);
             }
 
             public List<TetrisBlock> ComputeField()
@@ -632,11 +729,6 @@ namespace Content.Server.GameObjects.Components.Arcade
                         _ => new TetrisPiece {Offsets = new[] {new Vector2i(0, 0)}}
                     };
                 }
-            }
-
-            public void Dispose()
-            {
-                throw new NotImplementedException();
             }
         }
     }

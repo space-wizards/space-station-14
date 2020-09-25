@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Linq;
+using System.Net.Mime;
 using Content.Client.GameObjects.Components.Arcade;
 using Content.Client.Utility;
 using Content.Shared.Arcade;
 using Content.Shared.GameObjects.Components.Arcade;
 using Content.Shared.Input;
+using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -22,71 +24,144 @@ namespace Content.Client.Arcade
     {
         private TetrisArcadeBoundUserInterface _owner;
 
-        private VBoxContainer _gameContainer;
+        private PanelContainer _mainPanel;
+
+        private VBoxContainer _gameRootContainer;
         private GridContainer _gameGrid;
         private GridContainer _nextBlockGrid;
         private GridContainer _holdBlockGrid;
         private Label _pointsLabel;
         private Button _pauseButton;
 
-        private VBoxContainer _menuContainer;
+        private PanelContainer _menuRootContainer;
         private Button _unpauseButton;
+        private Control _unpauseButtonMargin;
         private Button _newGameButton;
         private Button _scoreBoardButton;
 
+        private PanelContainer _gameOverRootContainer;
+        private Label _finalScoreLabel;
+        private Button _finalNewGameButton;
+
         private bool _isPlayer = false;
+        private bool _gameOver = false;
 
         public TetrisArcadeMenu(TetrisArcadeBoundUserInterface owner)
         {
             Title = "Tetris!";
             _owner = owner;
 
-            // building the game container
-            _gameContainer = new VBoxContainer();
+            var resourceCache = IoCManager.Resolve<IResourceCache>();
+            var backgroundTexture = resourceCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
 
-            _pointsLabel = new Label
+            _mainPanel = new PanelContainer();
+
+            SetupGameMenu(backgroundTexture);
+            _mainPanel.AddChild(_gameRootContainer);
+
+            SetupPauseMenu(backgroundTexture);
+
+            SetupGameoverScreen(backgroundTexture);
+
+            Contents.AddChild(_mainPanel);
+
+            CanKeyboardFocus = true;
+        }
+
+        private void SetupGameoverScreen(Texture backgroundTexture)
+        {
+            var rootBack = new StyleBoxTexture
             {
-                Align = Label.AlignMode.Center,
-                SizeFlagsHorizontal = SizeFlags.FillExpand
+                Texture = backgroundTexture,
+                Modulate = new Color(0,0,0,83)
             };
-            UpdatePoints(0);
-            _gameContainer.AddChild(_pointsLabel);
-            _gameContainer.AddChild(new Control
+            rootBack.SetPatchMargin(StyleBox.Margin.All, 10);
+            _gameOverRootContainer = new PanelContainer
             {
-                CustomMinimumSize = new Vector2(1,10)
-            });
+                PanelOverride = rootBack,
+                SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                SizeFlagsHorizontal = SizeFlags.ShrinkCenter
+            };
 
-            var gameBox = new HBoxContainer();
-            gameBox.AddChild(SetupHoldBox());
-            gameBox.AddChild(new Control
+            var innerBack = new StyleBoxTexture
             {
-                CustomMinimumSize = new Vector2(10,1)
-            });
-            gameBox.AddChild(SetupGameGrid());
-            gameBox.AddChild(new Control
+                Texture = backgroundTexture,
+                Modulate = new Color(74,74,81,120)
+            };
+            innerBack.SetPatchMargin(StyleBox.Margin.All, 10);
+            var menuInnerPanel = new PanelContainer
             {
-                CustomMinimumSize = new Vector2(10,1)
-            });
-            gameBox.AddChild(SetupNextBox());
+                PanelOverride = innerBack,
+                SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                SizeFlagsHorizontal = SizeFlags.ShrinkCenter
+            };
 
-            _gameContainer.AddChild(gameBox);
+            _gameOverRootContainer.AddChild(menuInnerPanel);
 
-            _gameContainer.AddChild(new Control
+            var menuContainer = new VBoxContainer
             {
-                CustomMinimumSize = new Vector2(1,10)
-            });
+                SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
+                SizeFlagsVertical = SizeFlags.ShrinkCenter
+            };
 
-            _pauseButton = new Button
+            menuContainer.AddChild(new Label{Text = "Gameover!",Align = Label.AlignMode.Center});
+            menuContainer.AddChild(new Control{CustomMinimumSize = new Vector2(1,10)});
+
+
+            _finalScoreLabel = new Label{Align = Label.AlignMode.Center};
+            menuContainer.AddChild(_finalScoreLabel);
+            menuContainer.AddChild(new Control{CustomMinimumSize = new Vector2(1,10)});
+
+            _finalNewGameButton = new Button
             {
-                Text = "Pause",
+                Text = "New Game",
                 TextAlign = Label.AlignMode.Center
             };
-            _pauseButton.OnPressed += (e) => TryPause();
-            _gameContainer.AddChild(_pauseButton);
+            _finalNewGameButton.OnPressed += (e) =>
+            {
+                _owner.SendAction(TetrisPlayerAction.NewGame);
+            };
+            menuContainer.AddChild(_finalNewGameButton);
+
+            menuInnerPanel.AddChild(menuContainer);
+        }
+
+        private void SetupPauseMenu(Texture backgroundTexture)
+        {
+            var rootBack = new StyleBoxTexture
+            {
+                Texture = backgroundTexture,
+                Modulate = new Color(0,0,0,83)
+            };
+            rootBack.SetPatchMargin(StyleBox.Margin.All, 10);
+            _menuRootContainer = new PanelContainer
+            {
+                PanelOverride = rootBack,
+                SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                SizeFlagsHorizontal = SizeFlags.ShrinkCenter
+            };
+
+            var innerBack = new StyleBoxTexture
+            {
+                Texture = backgroundTexture,
+                Modulate = new Color(74,74,81,120)
+            };
+            innerBack.SetPatchMargin(StyleBox.Margin.All, 10);
+            var menuInnerPanel = new PanelContainer
+            {
+                PanelOverride = innerBack,
+                SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                SizeFlagsHorizontal = SizeFlags.ShrinkCenter
+            };
+
+            _menuRootContainer.AddChild(menuInnerPanel);
 
 
-            //building the menu container
-            _menuContainer = new VBoxContainer();
+            var menuContainer = new VBoxContainer
+            {
+                SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
+                SizeFlagsVertical = SizeFlags.ShrinkCenter
+            };
 
             _newGameButton = new Button
             {
@@ -97,7 +172,8 @@ namespace Content.Client.Arcade
             {
                 _owner.SendAction(TetrisPlayerAction.NewGame);
             };
-            _menuContainer.AddChild(_newGameButton);
+            menuContainer.AddChild(_newGameButton);
+            menuContainer.AddChild(new Control{CustomMinimumSize = new Vector2(1,10)});
 
             _scoreBoardButton = new Button
             {
@@ -105,7 +181,9 @@ namespace Content.Client.Arcade
                 TextAlign = Label.AlignMode.Center
             };
             //todo scoreBoardButton.OnPressed += (e) => ;
-            _menuContainer.AddChild(_scoreBoardButton);
+            menuContainer.AddChild(_scoreBoardButton);
+            _unpauseButtonMargin = new Control {CustomMinimumSize = new Vector2(1, 10), Visible = false};
+            menuContainer.AddChild(_unpauseButtonMargin);
 
             _unpauseButton = new Button
             {
@@ -117,11 +195,9 @@ namespace Content.Client.Arcade
             {
                 _owner.SendAction(TetrisPlayerAction.Unpause);
             };
-            _menuContainer.AddChild(_unpauseButton);
+            menuContainer.AddChild(_unpauseButton);
 
-            Contents.AddChild(_menuContainer);
-
-            CanKeyboardFocus = true;
+            menuInnerPanel.AddChild(menuContainer);
         }
 
         public void SetUsability(bool isPlayer)
@@ -136,12 +212,57 @@ namespace Content.Client.Arcade
             _newGameButton.Disabled = !_isPlayer;
             _scoreBoardButton.Disabled = !_isPlayer;
             _unpauseButton.Disabled = !_isPlayer;
+            _finalNewGameButton.Disabled = !_isPlayer;
         }
 
-        private Control SetupGameGrid()
+        private void SetupGameMenu(Texture backgroundTexture)
         {
-            var resourceCache = IoCManager.Resolve<IResourceCache>();
+            // building the game container
+            _gameRootContainer = new VBoxContainer();
 
+            _pointsLabel = new Label
+            {
+                Align = Label.AlignMode.Center,
+                SizeFlagsHorizontal = SizeFlags.FillExpand
+            };
+            UpdatePoints(0);
+            _gameRootContainer.AddChild(_pointsLabel);
+            _gameRootContainer.AddChild(new Control
+            {
+                CustomMinimumSize = new Vector2(1,10)
+            });
+
+            var gameBox = new HBoxContainer();
+            gameBox.AddChild(SetupHoldBox(backgroundTexture));
+            gameBox.AddChild(new Control
+            {
+                CustomMinimumSize = new Vector2(10,1)
+            });
+            gameBox.AddChild(SetupGameGrid(backgroundTexture));
+            gameBox.AddChild(new Control
+            {
+                CustomMinimumSize = new Vector2(10,1)
+            });
+            gameBox.AddChild(SetupNextBox(backgroundTexture));
+
+            _gameRootContainer.AddChild(gameBox);
+
+            _gameRootContainer.AddChild(new Control
+            {
+                CustomMinimumSize = new Vector2(1,10)
+            });
+
+            _pauseButton = new Button
+            {
+                Text = "Pause",
+                TextAlign = Label.AlignMode.Center
+            };
+            _pauseButton.OnPressed += (e) => TryPause();
+            _gameRootContainer.AddChild(_pauseButton);
+        }
+
+        private Control SetupGameGrid(Texture panelTex)
+        {
             _gameGrid = new GridContainer
             {
                 Columns = 10,
@@ -150,7 +271,6 @@ namespace Content.Client.Arcade
             };
             UpdateBlocks(new TetrisBlock[0]);
 
-            var panelTex = resourceCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
             var back = new StyleBoxTexture
             {
                 Texture = panelTex,
@@ -173,11 +293,8 @@ namespace Content.Client.Arcade
             return gamePanel;
         }
 
-        private Control SetupNextBox()
+        private Control SetupNextBox(Texture panelTex)
         {
-            var resourceCache = IoCManager.Resolve<IResourceCache>();
-
-            var panelTex = resourceCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
             var previewBack = new StyleBoxTexture
             {
                 Texture = panelTex,
@@ -214,11 +331,8 @@ namespace Content.Client.Arcade
             return grid;
         }
 
-        private Control SetupHoldBox()
+        private Control SetupHoldBox(Texture panelTex)
         {
-            var resourceCache = IoCManager.Resolve<IResourceCache>();
-
-            var panelTex = resourceCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
             var previewBack = new StyleBoxTexture
             {
                 Texture = panelTex,
@@ -257,6 +371,8 @@ namespace Content.Client.Arcade
 
         protected override void FocusExited()
         {
+            if (!IsOpen) return;
+            if(_gameOver) return;
             TryPause();
         }
 
@@ -267,23 +383,49 @@ namespace Content.Client.Arcade
 
         public void SetStarted()
         {
+            _gameOver = false;
             _unpauseButton.Visible = true;
+            _unpauseButtonMargin.Visible = true;
         }
 
-        public void SetScreen(bool isPaused)
+        public void SetScreen(TetrisMessages.TetrisScreen screen)
         {
-            if (isPaused)
+            if (_gameOver) return;
+
+            switch (screen)
             {
-                Contents.RemoveAllChildren();
-                Contents.AddChild(_menuContainer);
-            }
-            else
-            {
-                GrabKeyboardFocus();
-                Contents.RemoveAllChildren();
-                Contents.AddChild(_gameContainer);
+                case TetrisMessages.TetrisScreen.Game:
+                    GrabKeyboardFocus();
+                    CloseMenus();
+                    _pauseButton.Disabled = !_isPlayer;
+                    break;
+                case TetrisMessages.TetrisScreen.Pause:
+                    ReleaseKeyboardFocus();
+                    CloseMenus();
+                    _mainPanel.AddChild(_menuRootContainer);
+                    _pauseButton.Disabled = true;
+                    break;
+                case TetrisMessages.TetrisScreen.Gameover:
+                    _gameOver = true;
+                    _pauseButton.Disabled = true;
+                    ReleaseKeyboardFocus();
+                    CloseMenus();
+                    _mainPanel.AddChild(_gameOverRootContainer);
+                    break;
             }
         }
+
+        private void CloseMenus()
+        {
+            if(_mainPanel.Children.Contains(_menuRootContainer)) _mainPanel.RemoveChild(_menuRootContainer);
+            if(_mainPanel.Children.Contains(_gameOverRootContainer)) _mainPanel.RemoveChild(_gameOverRootContainer);
+        }
+
+        public void SetGameoverPoints(int amount)
+        {
+            _finalScoreLabel.Text = $"Points: {amount}";
+        }
+
 
         public void UpdatePoints(int points)
         {
@@ -340,6 +482,7 @@ namespace Content.Client.Arcade
         public void UpdateNextBlock(TetrisBlock[] blocks)
         {
             _nextBlockGrid.RemoveAllChildren();
+            if (blocks.Length == 0) return;
             var columnCount = blocks.Max(b => b.Position.X) + 1;
             var rowCount = blocks.Max(b => b.Position.Y) + 1;
             _nextBlockGrid.Columns = columnCount;
@@ -361,6 +504,7 @@ namespace Content.Client.Arcade
         public void UpdateHeldBlock(TetrisBlock[] blocks)
         {
             _holdBlockGrid.RemoveAllChildren();
+            if (blocks.Length == 0) return;
             var columnCount = blocks.Max(b => b.Position.X) + 1;
             var rowCount = blocks.Max(b => b.Position.Y) + 1;
             _holdBlockGrid.Columns = columnCount;
