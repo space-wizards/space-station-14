@@ -17,7 +17,7 @@ namespace Content.Shared.GameObjects.Components.Body.Behavior
 
         /// <summary>
         ///     Called when the containing <see cref="IBodyPart"/> is attached to a
-        ///     <see cref="BodyManagerComponent"/>.
+        ///     <see cref="IBody"/>.
         ///     For instance, attaching a head to a body will call this on the brain inside.
         /// </summary>
         public void InstalledIntoBody()
@@ -26,7 +26,7 @@ namespace Content.Shared.GameObjects.Components.Body.Behavior
         }
 
         /// <summary>
-        ///     Called when the parent <see cref="Mechanisms.Mechanism"/> is
+        ///     Called when the parent <see cref="Mechanism"/> is
         ///     installed into a <see cref="IBodyPart"/>.
         ///     For instance, putting a brain into an empty head.
         /// </summary>
@@ -37,7 +37,7 @@ namespace Content.Shared.GameObjects.Components.Body.Behavior
 
         /// <summary>
         ///     Called when the containing <see cref="IBodyPart"/> is removed from a
-        ///     <see cref="BodyManagerComponent"/>.
+        ///     <see cref="IBody"/>.
         ///     For instance, cutting off ones head will call this on the brain inside.
         /// </summary>
         public void RemovedFromBody(IBody old)
@@ -46,7 +46,7 @@ namespace Content.Shared.GameObjects.Components.Body.Behavior
         }
 
         /// <summary>
-        ///     Called when the parent <see cref="Mechanisms.Mechanism"/> is
+        ///     Called when the parent <see cref="Mechanism"/> is
         ///     removed from a <see cref="IBodyPart"/>.
         ///     For instance, taking a brain out of ones head.
         /// </summary>
@@ -57,13 +57,13 @@ namespace Content.Shared.GameObjects.Components.Body.Behavior
 
         /// <summary>
         ///     Called when the containing <see cref="IBodyPart"/> is attached to a
-        ///     <see cref="BodyManagerComponent"/>.
+        ///     <see cref="IBody"/>.
         ///     For instance, attaching a head to a body will call this on the brain inside.
         /// </summary>
         protected virtual void OnInstalledIntoBody() { }
 
         /// <summary>
-        ///     Called when the parent <see cref="Mechanisms.Mechanism"/> is
+        ///     Called when the parent <see cref="Mechanism"/> is
         ///     installed into a <see cref="IBodyPart"/>.
         ///     For instance, putting a brain into an empty head.
         /// </summary>
@@ -71,13 +71,13 @@ namespace Content.Shared.GameObjects.Components.Body.Behavior
 
         /// <summary>
         ///     Called when the containing <see cref="IBodyPart"/> is removed from a
-        ///     <see cref="BodyManagerComponent"/>.
+        ///     <see cref="IBody"/>.
         ///     For instance, cutting off ones head will call this on the brain inside.
         /// </summary>
         protected virtual void OnRemovedFromBody(IBody old) { }
 
         /// <summary>
-        ///     Called when the parent <see cref="Mechanisms.Mechanism"/> is
+        ///     Called when the parent <see cref="Mechanism"/> is
         ///     removed from a <see cref="IBodyPart"/>.
         ///     For instance, taking a brain out of ones head.
         /// </summary>

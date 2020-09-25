@@ -24,7 +24,7 @@ namespace Content.Shared.GameObjects.Components.Body
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        public override string Name => "BodyManager";
+        public override string Name => "Body";
 
         public override uint? NetID => ContentNetIDs.BODY;
 
@@ -376,6 +376,7 @@ namespace Content.Shared.GameObjects.Components.Body
 
             return toReturn;
         }
+
         private void CalculateSpeed()
         {
             if (!Owner.TryGetComponent(out MovementSpeedModifierComponent? playerMover))
@@ -641,21 +642,6 @@ namespace Content.Shared.GameObjects.Components.Body
             }
 
             Connections = cleanedConnections;
-        }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            foreach (var (slot, partId) in _partIds)
-            {
-                // Using EntityCoordinates instead of MapPosition here leads
-                // to a crash within the character preview menu in the lobby
-                var part = Owner.EntityManager.SpawnEntity(partId, Owner.Transform.MapPosition);
-                var partComponent = part.GetComponent<IBodyPart>();
-
-                TryAddPart(slot, partComponent, true);
-            }
         }
 
         protected override void Startup()

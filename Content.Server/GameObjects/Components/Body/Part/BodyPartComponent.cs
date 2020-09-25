@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Body.Surgery;
 using Content.Shared.Interfaces;
@@ -33,13 +34,24 @@ namespace Content.Server.GameObjects.Components.Body.Part
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(SurgeryUIKey.Key);
 
-        public override void Initialize()
+        protected override void Startup()
         {
-            base.Initialize();
+            base.Startup();
 
             if (UserInterface != null)
             {
                 UserInterface.OnReceiveMessage += OnUIMessage;
+            }
+
+            // This is ran in Startup as entities spawned in Initialize
+            // are not synced to the client since they are assumed to be
+            // identical on it
+            foreach (var mechanismId in MechanismIds)
+            {
+                var mechanism = Owner.EntityManager.SpawnEntity(mechanismId, Owner.Transform.MapPosition);
+                var mechanismComponent = mechanism.GetComponent<IMechanism>();
+
+                TryInstallMechanism(mechanismComponent, true);
             }
         }
 

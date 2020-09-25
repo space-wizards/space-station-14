@@ -33,6 +33,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part
 
         // TODO Remove
         private List<string> _mechanismIds = new List<string>();
+        public IReadOnlyList<string> MechanismIds => _mechanismIds;
 
         private DamageContainerPrototype _damagePrototype = default!;
         private ResistanceSetPrototype _resistancePrototype = default!;
@@ -174,20 +175,6 @@ namespace Content.Shared.GameObjects.Components.Body.Part
             serializer.DataField(this, m => m.IsVital, "vital", false);
 
             serializer.DataField(ref _mechanismIds, "mechanisms", new List<string>());
-        }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            // TODO move this to server, same for body parts in body component
-            foreach (var mechanismId in _mechanismIds)
-            {
-                var mechanism = Owner.EntityManager.SpawnEntity(mechanismId, Owner.Transform.MapPosition);
-                var mechanismComponent = mechanism.GetComponent<IMechanism>();
-
-                TryInstallMechanism(mechanismComponent, true);
-            }
         }
 
         public bool Drop()
