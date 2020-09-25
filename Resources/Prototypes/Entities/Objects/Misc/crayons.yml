@@ -4,6 +4,11 @@
   name: crayon
   abstract: true
   description: "A colourful crayon. Looks tasty. Mmmm..."
+  components:
+  - type: UserInterface
+    interfaces:
+    - key: enum.CrayonUiKey.Key
+      type: CrayonBoundUserInterface
 
 - type: entity
   parent: Crayon

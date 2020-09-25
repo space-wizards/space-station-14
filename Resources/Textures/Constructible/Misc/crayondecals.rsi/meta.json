@@ -8,78 +8,6 @@
     "copyright": "From https://github.com/tgstation/tgstation/blob/master/icons/effects/crayondecal.dmi at c6803492ab2a5e523aae7b9b1a9e847ba155f1cf",
     "states": [
         {
-            "name": "!",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "#",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "%",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "&",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "+",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": ",",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "-",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": ".",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
             "name": "0",
             "directions": 1,
             "delays": [
@@ -162,15 +90,6 @@
         },
         {
             "name": "9",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "=",
             "directions": 1,
             "delays": [
                 [
@@ -359,6 +278,15 @@
             ]
         },
         {
+            "name": "ampersand",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
             "name": "amyjon",
             "directions": 1,
             "delays": [
@@ -503,6 +431,15 @@
             ]
         },
         {
+            "name": "comma",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
             "name": "corgi",
             "directions": 1,
             "delays": [
@@ -557,6 +494,15 @@
             ]
         },
         {
+            "name": "dot",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
             "name": "dwarf",
             "directions": 1,
             "delays": [
@@ -602,7 +548,25 @@
             ]
         },
         {
+            "name": "equals",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
             "name": "evac",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "exclamationmark",
             "directions": 1,
             "delays": [
                 [
@@ -800,6 +764,15 @@
             ]
         },
         {
+            "name": "minus",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
             "name": "n",
             "directions": 1,
             "delays": [
@@ -846,6 +819,33 @@
         },
         {
             "name": "peace",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "percent",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "plus",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "pound",
             "directions": 1,
             "delays": [
                 [

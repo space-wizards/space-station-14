@@ -1,4 +1,5 @@
 ﻿using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -16,6 +17,22 @@ namespace Content.Shared.GameObjects.Components
 
         public string SelectedState { get; set; }
         protected string _color;
+
+        [Serializable, NetSerializable]
+        public enum CrayonUiKey
+        {
+            Key,
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class CrayonSelectMessage : BoundUserInterfaceMessage
+    {
+        public readonly string State;
+        public CrayonSelectMessage(string selected)
+        {
+            State = selected;
+        }
     }
 
     [Serializable, NetSerializable]
