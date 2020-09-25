@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
-using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Utility;
 using Content.Shared.Arcade;
 using Content.Shared.GameObjects;
@@ -19,7 +18,6 @@ using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Arcade
 {
@@ -27,20 +25,17 @@ namespace Content.Server.GameObjects.Components.Arcade
     [ComponentReference(typeof(IActivate))]
     public class BlockGameArcadeComponent : Component, IActivate
     {
+        [Dependency] private IRobustRandom _random = null!;
+
         public override string Name => "BlockGameArcade";
         public override uint? NetID => ContentNetIDs.BLOCKGAME_ARCADE;
         private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
         private BoundUserInterface? UserInterface => Owner.GetUIOrNull(BlockGameUiKey.Key);
 
-        private BlockGame _game;
+        private BlockGame _game = null!;
 
         private IPlayerSession? _player;
         private List<IPlayerSession> _spectators = new List<IPlayerSession>();
-
-        public BlockGameArcadeComponent()
-        {
-            _game = new BlockGame(this);
-        }
 
         public void Activate(ActivateEventArgs eventArgs)
         {
@@ -109,6 +104,7 @@ namespace Content.Server.GameObjects.Components.Arcade
             {
                 UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
             }
+            _game = new BlockGame(this);
         }
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage obj)
@@ -161,7 +157,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                     SendNextPieceUpdate();
                 }
             }
-            private BlockGamePiece _internalNextPiece =BlockGamePiece.GetRandom();
+            private BlockGamePiece _internalNextPiece;
 
             private void SendNextPieceUpdate()
             {
@@ -282,6 +278,7 @@ namespace Content.Server.GameObjects.Components.Arcade
             public BlockGame(BlockGameArcadeComponent component)
             {
                 _component = component;
+                _internalNextPiece = BlockGamePiece.GetRandom(_component._random);
             }
 
             private void SendHighscoreUpdate()
@@ -493,7 +490,7 @@ namespace Content.Server.GameObjects.Components.Arcade
             private void InitializeNewBlock()
             {
                 InitializeNewBlock(_nextPiece);
-                _nextPiece = BlockGamePiece.GetRandom();
+                _nextPiece = BlockGamePiece.GetRandom(_component._random);
                 _holdBlock = false;
 
                 _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameVisualUpdateMessage(_nextPiece.BlocksForPreview(), BlockGameMessages.BlockGameVisualType.NextBlock));
@@ -773,9 +770,8 @@ namespace Content.Server.GameObjects.Components.Arcade
                     return Blocks(new Vector2i(-xOffset, -yOffset), BlockGamePieceRotation.North);
                 }
 
-                public static BlockGamePiece GetRandom()
+                public static BlockGamePiece GetRandom(IRobustRandom random)
                 {
-                    var random = IoCManager.Resolve<IRobustRandom>();
                     var pieces = (BlockGamePieceType[])Enum.GetValues(typeof(BlockGamePieceType));
                     var choice = random.Pick(pieces);
                     return GetPiece(choice);
