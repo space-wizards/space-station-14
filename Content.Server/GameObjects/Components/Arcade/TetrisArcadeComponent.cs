@@ -9,6 +9,7 @@ using Content.Shared.GameObjects;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
+using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -28,6 +29,9 @@ namespace Content.Server.GameObjects.Components.Arcade
 
         private TetrisGame? _game;
 
+        private IPlayerSession? _player;
+        private List<IPlayerSession> _spectators = new List<IPlayerSession>();
+
         public void Activate(ActivateEventArgs eventArgs)
         {
             if(!eventArgs.User.TryGetComponent(out IActorComponent? actor))
@@ -40,6 +44,34 @@ namespace Content.Server.GameObjects.Components.Arcade
             }
 
             UserInterface?.Toggle(actor.playerSession);
+            RegisterPlayerSession(actor.playerSession);
+        }
+
+        private void RegisterPlayerSession(IPlayerSession session)
+        {
+            if (_player == null) _player = session;
+            else _spectators.Add(session);
+
+            UpdatePlayerStatus(session);
+            UserInterface?.SendMessage(new TetrisMessages.TetrisGameStatusMessage(!_game?.Paused ?? true, _game?.Started ?? false), session);
+        }
+
+        private void UnRegisterPlayerSession(IPlayerSession session)
+        {
+            if (_player == session) _player = null;
+            else _spectators.Remove(session);
+
+            if (_spectators.Count == 0) return;
+
+            _player = _spectators[0];
+            _spectators.Remove(_player);
+
+            UpdatePlayerStatus(_player);
+        }
+
+        private void UpdatePlayerStatus(IPlayerSession session)
+        {
+            UserInterface?.SendMessage(new TetrisMessages.TetrisUserMessage(_player == session), session);
         }
 
         public override void Initialize()
@@ -53,10 +85,18 @@ namespace Content.Server.GameObjects.Components.Arcade
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
+            if (obj.Message is TetrisMessages.TetrisUserUnregisterMessage unregisterMessage)
+            {
+                UnRegisterPlayerSession(obj.Session);
+                return;
+            }
+
+            if (obj.Session != _player) return;
             if (!(obj.Message is TetrisMessages.TetrisPlayerActionMessage message)) return;
             if (message.PlayerAction == TetrisPlayerAction.NewGame)
             {
                 _game = new TetrisGame(this);
+                _game.StartGame();
             }
             else
             {
@@ -88,10 +128,12 @@ namespace Content.Server.GameObjects.Components.Arcade
             private float _softDropOverride = 0.1f;
             private float _speed = 0.5f;
 
-            private float _pressCheckSpeed = 0.05f;
+            private float _pressCheckSpeed = 0.08f;
 
             private bool _running;
+            public bool Paused => _running == _initialized;
             private bool _initialized;
+            public bool Started => _initialized;
             private bool _gameOver;
 
             private bool _leftPressed;
@@ -109,6 +151,8 @@ namespace Content.Server.GameObjects.Components.Arcade
             public void StartGame()
             {
                 InitializeNewBlock();
+
+                _component.UserInterface?.SendMessage(new TetrisMessages.TetrisGameStatusMessage(false));
 
                 UpdateUI();
 
@@ -336,14 +380,16 @@ namespace Content.Server.GameObjects.Components.Arcade
                     case TetrisPlayerAction.Harddrop:
                         PerformHarddrop();
                         break;
-                    case TetrisPlayerAction.StartGame:
-                        StartGame();
-                        break;
                     case TetrisPlayerAction.Pause:
                         _running = false;
+                        _component.UserInterface?.SendMessage(new TetrisMessages.TetrisGameStatusMessage(true));
                         break;
                     case TetrisPlayerAction.Unpause:
-                        if (!_gameOver) _running = true;
+                        if (!_gameOver)
+                        {
+                            _running = true;
+                            _component.UserInterface?.SendMessage(new TetrisMessages.TetrisGameStatusMessage(false));
+                        }
                         break;
                     case TetrisPlayerAction.Hold:
                         HoldPiece();

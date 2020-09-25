@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Client.GameObjects.Components.Arcade;
 using Content.Client.Utility;
 using Content.Shared.Arcade;
+using Content.Shared.GameObjects.Components.Arcade;
 using Content.Shared.Input;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.ResourceManagement;
@@ -21,67 +22,120 @@ namespace Content.Client.Arcade
     {
         private TetrisArcadeBoundUserInterface _owner;
 
+        private VBoxContainer _gameContainer;
         private GridContainer _gameGrid;
         private GridContainer _nextBlockGrid;
         private GridContainer _holdBlockGrid;
-        private Button _startButton;
         private Label _pointsLabel;
+        private Button _pauseButton;
+
+        private VBoxContainer _menuContainer;
+        private Button _unpauseButton;
+        private Button _newGameButton;
+        private Button _scoreBoardButton;
+
+        private bool _isPlayer = false;
 
         public TetrisArcadeMenu(TetrisArcadeBoundUserInterface owner)
         {
             Title = "Tetris!";
             _owner = owner;
 
-            var resourceCache = IoCManager.Resolve<IResourceCache>();
-
-            var mainGrid = new GridContainer
-            {
-                Columns = 3
-            };
-
-            mainGrid.AddChild(new CenterContainer
-            {
-                Children = { SetupHoldBox()}
-            });
-
-            mainGrid.AddChild(SetupGameGrid());
-
-            var infoGrid = new GridContainer
-            {
-                Columns = 1
-            };
-
-            infoGrid.AddChild(SetupNextBox());
+            // building the game container
+            _gameContainer = new VBoxContainer();
 
             _pointsLabel = new Label
             {
-                Align = Label.AlignMode.Center
+                Align = Label.AlignMode.Center,
+                SizeFlagsHorizontal = SizeFlags.FillExpand
             };
             UpdatePoints(0);
-            infoGrid.AddChild(_pointsLabel);
-
-            var highscoreLabel = new Label
+            _gameContainer.AddChild(_pointsLabel);
+            _gameContainer.AddChild(new Control
             {
-                Text = "1.Parzival - 🔑\n2. Hackerman - 1337\n3. Pothead - 420",
-                Align = Label.AlignMode.Center
-            };
-            infoGrid.AddChild(highscoreLabel);
+                CustomMinimumSize = new Vector2(1,10)
+            });
 
-            var pauseBtn = new Button
+            var gameBox = new HBoxContainer();
+            gameBox.AddChild(SetupHoldBox());
+            gameBox.AddChild(new Control
+            {
+                CustomMinimumSize = new Vector2(10,1)
+            });
+            gameBox.AddChild(SetupGameGrid());
+            gameBox.AddChild(new Control
+            {
+                CustomMinimumSize = new Vector2(10,1)
+            });
+            gameBox.AddChild(SetupNextBox());
+
+            _gameContainer.AddChild(gameBox);
+
+            _gameContainer.AddChild(new Control
+            {
+                CustomMinimumSize = new Vector2(1,10)
+            });
+
+            _pauseButton = new Button
             {
                 Text = "Pause",
-                TextAlign = Label.AlignMode.Center,
-                SizeFlagsVertical = SizeFlags.ShrinkEnd
+                TextAlign = Label.AlignMode.Center
             };
-            infoGrid.AddChild(pauseBtn);
+            _pauseButton.OnPressed += (e) => TryPause();
+            _gameContainer.AddChild(_pauseButton);
 
-            mainGrid.AddChild(infoGrid);
 
-            Contents.AddChild(mainGrid);
+            //building the menu container
+            _menuContainer = new VBoxContainer();
+
+            _newGameButton = new Button
+            {
+                Text = "New Game",
+                TextAlign = Label.AlignMode.Center
+            };
+            _newGameButton.OnPressed += (e) =>
+            {
+                _owner.SendAction(TetrisPlayerAction.NewGame);
+            };
+            _menuContainer.AddChild(_newGameButton);
+
+            _scoreBoardButton = new Button
+            {
+                Text = "Scoreboard",
+                TextAlign = Label.AlignMode.Center
+            };
+            //todo scoreBoardButton.OnPressed += (e) => ;
+            _menuContainer.AddChild(_scoreBoardButton);
+
+            _unpauseButton = new Button
+            {
+                Text = "Unpause",
+                TextAlign = Label.AlignMode.Center,
+                Visible = false
+            };
+            _unpauseButton.OnPressed += (e) =>
+            {
+                _owner.SendAction(TetrisPlayerAction.Unpause);
+            };
+            _menuContainer.AddChild(_unpauseButton);
+
+            Contents.AddChild(_menuContainer);
 
             CanKeyboardFocus = true;
-            GrabKeyboardFocus();
-            RaisePauseMenu(true);
+        }
+
+        public void SetUsability(bool isPlayer)
+        {
+            _isPlayer = isPlayer;
+            UpdateUsability();
+        }
+
+        private void UpdateUsability()
+        {
+            _pauseButton.Disabled = !_isPlayer;
+            _newGameButton.Disabled = !_isPlayer;
+            _scoreBoardButton.Disabled = !_isPlayer;
+            _unpauseButton.Disabled = !_isPlayer;
         }
 
         private Control SetupGameGrid()
@@ -103,11 +157,12 @@ namespace Content.Client.Arcade
                 Modulate = Color.FromHex("#4a4a51"),
             };
             back.SetPatchMargin(StyleBox.Margin.All, 10);
-            //back.SetPadding(StyleBox.Margin.All,10);
 
             var gamePanel = new PanelContainer
             {
-                PanelOverride = back
+                PanelOverride = back,
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                SizeFlagsStretchRatio = 60
             };
             var backgroundPanel = new PanelContainer
             {
@@ -132,7 +187,9 @@ namespace Content.Client.Arcade
 
             var grid = new GridContainer
             {
-                Columns = 1
+                Columns = 1,
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                SizeFlagsStretchRatio = 20
             };
 
             var nextBlockPanel = new PanelContainer
@@ -171,7 +228,9 @@ namespace Content.Client.Arcade
 
             var grid = new GridContainer
             {
-                Columns = 1
+                Columns = 1,
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                SizeFlagsStretchRatio = 20
             };
 
             var holdBlockPanel = new PanelContainer
@@ -198,14 +257,32 @@ namespace Content.Client.Arcade
 
         protected override void FocusExited()
         {
-            //todo pause and grab keyboard focus on unpause
-            _owner.SendAction(TetrisPlayerAction.Pause);
-            RaisePauseMenu();
+            TryPause();
         }
 
-        private void RaisePauseMenu(bool onlyNewGame = false)
+        private void TryPause()
         {
-            //todo show pause menu
+            _owner.SendAction(TetrisPlayerAction.Pause);
+        }
+
+        public void SetStarted()
+        {
+            _unpauseButton.Visible = true;
+        }
+
+        public void SetScreen(bool isPaused)
+        {
+            if (isPaused)
+            {
+                Contents.RemoveAllChildren();
+                Contents.AddChild(_menuContainer);
+            }
+            else
+            {
+                GrabKeyboardFocus();
+                Contents.RemoveAllChildren();
+                Contents.AddChild(_gameContainer);
+            }
         }
 
         public void UpdatePoints(int points)
@@ -215,6 +292,8 @@ namespace Content.Client.Arcade
 
         protected override void KeyBindDown(GUIBoundKeyEventArgs args)
         {
+            if(!_isPlayer) return;
+
             if (args.Function == EngineKeyFunctions.MoveLeft)
             {
                 _owner.SendAction(TetrisPlayerAction.StartLeft);
@@ -242,7 +321,10 @@ namespace Content.Client.Arcade
         }
 
         protected override void KeyBindUp(GUIBoundKeyEventArgs args)
-        {if (args.Function == EngineKeyFunctions.MoveLeft)
+        {
+            if(!_isPlayer) return;
+
+            if (args.Function == EngineKeyFunctions.MoveLeft)
             {
                 _owner.SendAction(TetrisPlayerAction.EndLeft);
             }

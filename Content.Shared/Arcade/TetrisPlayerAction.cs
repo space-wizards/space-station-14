@@ -7,7 +7,6 @@ namespace Content.Shared.Arcade
     public enum TetrisPlayerAction
     {
         NewGame,
-        StartGame,
         StartLeft,
         EndLeft,
         StartRight,

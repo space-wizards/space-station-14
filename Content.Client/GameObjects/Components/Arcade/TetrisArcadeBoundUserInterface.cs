@@ -21,10 +21,9 @@ namespace Content.Client.GameObjects.Components.Arcade
             base.Open();
 
             _menu = new TetrisArcadeMenu(this);
+            _menu.OnClose += () => SendMessage(new TetrisMessages.TetrisUserUnregisterMessage());
             _menu.OnClose += Close;
             _menu.OpenCentered();
-            SendAction(TetrisPlayerAction.NewGame);
-            StartGame(); //todo remove
         }
 
         protected override void ReceiveMessage(BoundUserInterfaceMessage message)
@@ -48,12 +47,14 @@ namespace Content.Client.GameObjects.Components.Arcade
                 case TetrisMessages.TetrisScoreUpdate scoreUpdate:
                     _menu?.UpdatePoints(scoreUpdate.Points);
                     break;
+                case TetrisMessages.TetrisUserMessage userMessage:
+                    _menu?.SetUsability(userMessage.IsPlayer);
+                    break;
+                case TetrisMessages.TetrisGameStatusMessage statusMessage:
+                    _menu?.SetScreen(statusMessage.isPaused);
+                    if (statusMessage.isStarted) _menu?.SetStarted();
+                    break;
             }
-        }
-
-        public void StartGame()
-        {
-            SendAction(TetrisPlayerAction.StartGame);
         }
 
         public void SendAction(TetrisPlayerAction action)
