@@ -5,19 +5,19 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Arcade
 {
     [Serializable, NetSerializable]
-    public struct TetrisBlock
+    public struct BlockGameBlock
     {
         public Vector2i Position;
-        public readonly TetrisBlockColor Color;
+        public readonly BlockGameBlockColor GameBlockColor;
 
-        public TetrisBlock(Vector2i position, TetrisBlockColor color)
+        public BlockGameBlock(Vector2i position, BlockGameBlockColor gameBlockColor)
         {
             Position = position;
-            Color = color;
+            GameBlockColor = gameBlockColor;
         }
 
         [Serializable, NetSerializable]
-        public enum TetrisBlockColor
+        public enum BlockGameBlockColor
         {
             Red,
             Orange,
@@ -29,10 +29,10 @@ namespace Content.Shared.Arcade
         }
     }
 
-    public static class TetrisVector2Extensions{
-        public static TetrisBlock ToTetrisBlock(this Vector2i vector2, TetrisBlock.TetrisBlockColor color)
+    public static class BlockGameVector2Extensions{
+        public static BlockGameBlock ToBlockGameBlock(this Vector2i vector2, BlockGameBlock.BlockGameBlockColor gameBlockColor)
         {
-            return new TetrisBlock(vector2, color);
+            return new BlockGameBlock(vector2, gameBlockColor);
         }
 
         public static Vector2i AddToX(this Vector2i vector2, int amount)

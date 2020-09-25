@@ -20,9 +20,9 @@ using Serilog.Filters;
 
 namespace Content.Client.Arcade
 {
-    public class TetrisArcadeMenu : SS14Window
+    public class BlockGameMenu : SS14Window
     {
-        private TetrisArcadeBoundUserInterface _owner;
+        private BlockGameBoundUserInterface _owner;
 
         private PanelContainer _mainPanel;
 
@@ -46,9 +46,9 @@ namespace Content.Client.Arcade
         private bool _isPlayer = false;
         private bool _gameOver = false;
 
-        public TetrisArcadeMenu(TetrisArcadeBoundUserInterface owner)
+        public BlockGameMenu(BlockGameBoundUserInterface owner)
         {
-            Title = "Tetris!";
+            Title = "Block Game!";
             _owner = owner;
 
             var resourceCache = IoCManager.Resolve<IResourceCache>();
@@ -119,7 +119,7 @@ namespace Content.Client.Arcade
             };
             _finalNewGameButton.OnPressed += (e) =>
             {
-                _owner.SendAction(TetrisPlayerAction.NewGame);
+                _owner.SendAction(BlockGamePlayerAction.NewGame);
             };
             menuContainer.AddChild(_finalNewGameButton);
 
@@ -170,7 +170,7 @@ namespace Content.Client.Arcade
             };
             _newGameButton.OnPressed += (e) =>
             {
-                _owner.SendAction(TetrisPlayerAction.NewGame);
+                _owner.SendAction(BlockGamePlayerAction.NewGame);
             };
             menuContainer.AddChild(_newGameButton);
             menuContainer.AddChild(new Control{CustomMinimumSize = new Vector2(1,10)});
@@ -193,7 +193,7 @@ namespace Content.Client.Arcade
             };
             _unpauseButton.OnPressed += (e) =>
             {
-                _owner.SendAction(TetrisPlayerAction.Unpause);
+                _owner.SendAction(BlockGamePlayerAction.Unpause);
             };
             menuContainer.AddChild(_unpauseButton);
 
@@ -269,7 +269,7 @@ namespace Content.Client.Arcade
                 HSeparationOverride = 1,
                 VSeparationOverride = 1
             };
-            UpdateBlocks(new TetrisBlock[0]);
+            UpdateBlocks(new BlockGameBlock[0]);
 
             var back = new StyleBoxTexture
             {
@@ -378,7 +378,7 @@ namespace Content.Client.Arcade
 
         private void TryPause()
         {
-            _owner.SendAction(TetrisPlayerAction.Pause);
+            _owner.SendAction(BlockGamePlayerAction.Pause);
         }
 
         public void SetStarted()
@@ -388,24 +388,24 @@ namespace Content.Client.Arcade
             _unpauseButtonMargin.Visible = true;
         }
 
-        public void SetScreen(TetrisMessages.TetrisScreen screen)
+        public void SetScreen(BlockGameMessages.BlockGameScreen screen)
         {
             if (_gameOver) return;
 
             switch (screen)
             {
-                case TetrisMessages.TetrisScreen.Game:
+                case BlockGameMessages.BlockGameScreen.Game:
                     GrabKeyboardFocus();
                     CloseMenus();
                     _pauseButton.Disabled = !_isPlayer;
                     break;
-                case TetrisMessages.TetrisScreen.Pause:
+                case BlockGameMessages.BlockGameScreen.Pause:
                     ReleaseKeyboardFocus();
                     CloseMenus();
                     _mainPanel.AddChild(_menuRootContainer);
                     _pauseButton.Disabled = true;
                     break;
-                case TetrisMessages.TetrisScreen.Gameover:
+                case BlockGameMessages.BlockGameScreen.Gameover:
                     _gameOver = true;
                     _pauseButton.Disabled = true;
                     ReleaseKeyboardFocus();
@@ -438,27 +438,27 @@ namespace Content.Client.Arcade
 
             if (args.Function == EngineKeyFunctions.MoveLeft)
             {
-                _owner.SendAction(TetrisPlayerAction.StartLeft);
+                _owner.SendAction(BlockGamePlayerAction.StartLeft);
             }
             else if (args.Function == EngineKeyFunctions.MoveRight)
             {
-                _owner.SendAction(TetrisPlayerAction.StartRight);
+                _owner.SendAction(BlockGamePlayerAction.StartRight);
             }
             else if (args.Function == EngineKeyFunctions.MoveUp)
             {
-                _owner.SendAction(TetrisPlayerAction.Rotate);
+                _owner.SendAction(BlockGamePlayerAction.Rotate);
             }
             else if (args.Function == EngineKeyFunctions.Use)
             {
-                _owner.SendAction(TetrisPlayerAction.CounterRotate);
+                _owner.SendAction(BlockGamePlayerAction.CounterRotate);
             }
             else if (args.Function == EngineKeyFunctions.MoveDown)
             {
-                _owner.SendAction(TetrisPlayerAction.SoftdropStart);
+                _owner.SendAction(BlockGamePlayerAction.SoftdropStart);
             }
             else if (args.Function == ContentKeyFunctions.WideAttack)
             {
-                _owner.SendAction(TetrisPlayerAction.Hold);
+                _owner.SendAction(BlockGamePlayerAction.Hold);
             }
         }
 
@@ -468,18 +468,18 @@ namespace Content.Client.Arcade
 
             if (args.Function == EngineKeyFunctions.MoveLeft)
             {
-                _owner.SendAction(TetrisPlayerAction.EndLeft);
+                _owner.SendAction(BlockGamePlayerAction.EndLeft);
             }
             else if (args.Function == EngineKeyFunctions.MoveRight)
             {
-                _owner.SendAction(TetrisPlayerAction.EndRight);
+                _owner.SendAction(BlockGamePlayerAction.EndRight);
             }else if (args.Function == EngineKeyFunctions.MoveDown)
             {
-                _owner.SendAction(TetrisPlayerAction.SoftdropEnd);
+                _owner.SendAction(BlockGamePlayerAction.SoftdropEnd);
             }
         }
 
-        public void UpdateNextBlock(TetrisBlock[] blocks)
+        public void UpdateNextBlock(BlockGameBlock[] blocks)
         {
             _nextBlockGrid.RemoveAllChildren();
             if (blocks.Length == 0) return;
@@ -501,7 +501,7 @@ namespace Content.Client.Arcade
             }
         }
 
-        public void UpdateHeldBlock(TetrisBlock[] blocks)
+        public void UpdateHeldBlock(BlockGameBlock[] blocks)
         {
             _holdBlockGrid.RemoveAllChildren();
             if (blocks.Length == 0) return;
@@ -523,7 +523,7 @@ namespace Content.Client.Arcade
             }
         }
 
-        public void UpdateBlocks(TetrisBlock[] blocks)
+        public void UpdateBlocks(BlockGameBlock[] blocks)
         {
             _gameGrid.RemoveAllChildren();
             for (int y = 0; y < 20; y++)
@@ -541,21 +541,21 @@ namespace Content.Client.Arcade
             }
         }
 
-        private Color GetColorForPosition(TetrisBlock[] blocks, int x, int y)
+        private Color GetColorForPosition(BlockGameBlock[] blocks, int x, int y)
         {
             Color c = Color.Transparent;
             var matchingBlock = blocks.FirstOrNull(b => b.Position.X == x && b.Position.Y == y);
             if (matchingBlock.HasValue)
             {
-                c = matchingBlock.Value.Color switch
+                c = matchingBlock.Value.GameBlockColor switch
                 {
-                    TetrisBlock.TetrisBlockColor.Red => Color.Red,
-                    TetrisBlock.TetrisBlockColor.Orange => Color.Orange,
-                    TetrisBlock.TetrisBlockColor.Yellow => Color.Yellow,
-                    TetrisBlock.TetrisBlockColor.Green => Color.LimeGreen,
-                    TetrisBlock.TetrisBlockColor.Blue => Color.Blue,
-                    TetrisBlock.TetrisBlockColor.Purple => Color.Purple,
-                    TetrisBlock.TetrisBlockColor.LightBlue => Color.LightBlue,
+                    BlockGameBlock.BlockGameBlockColor.Red => Color.Red,
+                    BlockGameBlock.BlockGameBlockColor.Orange => Color.Orange,
+                    BlockGameBlock.BlockGameBlockColor.Yellow => Color.Yellow,
+                    BlockGameBlock.BlockGameBlockColor.Green => Color.LimeGreen,
+                    BlockGameBlock.BlockGameBlockColor.Blue => Color.Blue,
+                    BlockGameBlock.BlockGameBlockColor.Purple => Color.Purple,
+                    BlockGameBlock.BlockGameBlockColor.LightBlue => Color.LightBlue,
                     _ => Color.Olive //olive is error
                 };
             }

@@ -3,14 +3,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Utility;
 using Content.Shared.Arcade;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -20,21 +23,21 @@ namespace Content.Server.GameObjects.Components.Arcade
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class TetrisArcadeComponent : Component, IActivate
+    public class BlockGameArcadeComponent : Component, IActivate
     {
-        public override string Name => "TetrisArcade";
-        public override uint? NetID => ContentNetIDs.TETRIS_ARCADE;
+        public override string Name => "BlockGameArcade";
+        public override uint? NetID => ContentNetIDs.BLOCKGAME_ARCADE;
         private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
-        private BoundUserInterface? UserInterface => Owner.GetUIOrNull(TetrisArcadeUiKey.Key);
+        private BoundUserInterface? UserInterface => Owner.GetUIOrNull(BlockGameUiKey.Key);
 
-        private TetrisGame _game;
+        private BlockGame _game;
 
         private IPlayerSession? _player;
         private List<IPlayerSession> _spectators = new List<IPlayerSession>();
 
-        public TetrisArcadeComponent()
+        public BlockGameArcadeComponent()
         {
-            _game = new TetrisGame(this);
+            _game = new BlockGame(this);
         }
 
         public void Activate(ActivateEventArgs eventArgs)
@@ -47,6 +50,7 @@ namespace Content.Server.GameObjects.Components.Arcade
             {
                 return;
             }
+            if(!ActionBlockerSystem.CanInteract(Owner)) return;
 
             UserInterface?.Toggle(actor.playerSession);
             RegisterPlayerSession(actor.playerSession);
@@ -61,22 +65,39 @@ namespace Content.Server.GameObjects.Components.Arcade
             _game.UpdateNewPlayerUI(session);
         }
 
+        private void DeactivePlayer(IPlayerSession session)
+        {
+            if (_player != session) return;
+
+            var temp = _player;
+            _player = null;
+            if (_spectators.Count != 0)
+            {
+                _player = _spectators[0];
+                _spectators.Remove(_player);
+                UpdatePlayerStatus(_player);
+            }
+            _spectators.Add(temp);
+
+            UpdatePlayerStatus(temp);
+        }
+
         private void UnRegisterPlayerSession(IPlayerSession session)
         {
-            if (_player == session) _player = null;
-            else _spectators.Remove(session);
-
-            if (_spectators.Count == 0) return;
-
-            _player = _spectators[0];
-            _spectators.Remove(_player);
-
-            UpdatePlayerStatus(_player);
+            if (_player == session)
+            {
+                DeactivePlayer(_player);
+            }
+            else
+            {
+                _spectators.Remove(session);
+                UpdatePlayerStatus(session);
+            }
         }
 
         private void UpdatePlayerStatus(IPlayerSession session)
         {
-            UserInterface?.SendMessage(new TetrisMessages.TetrisUserMessage(_player == session), session);
+            UserInterface?.SendMessage(new BlockGameMessages.BlockGameUserStatusMessage(_player == session), session);
         }
 
         public override void Initialize()
@@ -90,17 +111,22 @@ namespace Content.Server.GameObjects.Components.Arcade
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
-            if (obj.Message is TetrisMessages.TetrisUserUnregisterMessage unregisterMessage)
+            if (obj.Message is BlockGameMessages.BlockGameUserUnregisterMessage unregisterMessage)
             {
                 UnRegisterPlayerSession(obj.Session);
                 return;
             }
-
             if (obj.Session != _player) return;
-            if (!(obj.Message is TetrisMessages.TetrisPlayerActionMessage message)) return;
-            if (message.PlayerAction == TetrisPlayerAction.NewGame)
+
+            if (!ActionBlockerSystem.CanInteract(Owner))
             {
-                if(_game.Started) _game = new TetrisGame(this);
+                DeactivePlayer(obj.Session);
+            }
+
+            if (!(obj.Message is BlockGameMessages.BlockGamePlayerActionMessage message)) return;
+            if (message.PlayerAction == BlockGamePlayerAction.NewGame)
+            {
+                if(_game.Started) _game = new BlockGame(this);
                 _game.StartGame();
             }
             else
@@ -114,17 +140,17 @@ namespace Content.Server.GameObjects.Components.Arcade
             _game.GameTick(frameTime);
         }
 
-        private class TetrisGame
+        private class BlockGame
         {
             //note: field is 10(0 -> 9) wide and 20(0 -> 19) high
 
-            private TetrisArcadeComponent _component;
+            private BlockGameArcadeComponent _component;
 
-            private List<TetrisBlock> _field = new List<TetrisBlock>();
+            private List<BlockGameBlock> _field = new List<BlockGameBlock>();
 
-            private TetrisPiece _currentPiece;
+            private BlockGamePiece _currentPiece;
 
-            private TetrisPiece _nextPiece
+            private BlockGamePiece _nextPiece
             {
                 get => _internalNextPiece;
                 set
@@ -133,20 +159,20 @@ namespace Content.Server.GameObjects.Components.Arcade
                     SendNextPieceUpdate();
                 }
             }
-            private TetrisPiece _internalNextPiece =TetrisPiece.GetRandom();
+            private BlockGamePiece _internalNextPiece =BlockGamePiece.GetRandom();
 
             private void SendNextPieceUpdate()
             {
-                _component.UserInterface?.SendMessage(new TetrisMessages.TetrisUIUpdateMessage(_nextPiece.BlocksForPreview(), TetrisMessages.TetrisUIBlockType.NextBlock));
+                _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameVisualUpdateMessage(_nextPiece.BlocksForPreview(), BlockGameMessages.BlockGameVisualType.NextBlock));
             }
 
             private void SendNextPieceUpdate(IPlayerSession session)
             {
-                _component.UserInterface?.SendMessage(new TetrisMessages.TetrisUIUpdateMessage(_nextPiece.BlocksForPreview(), TetrisMessages.TetrisUIBlockType.NextBlock), session);
+                _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameVisualUpdateMessage(_nextPiece.BlocksForPreview(), BlockGameMessages.BlockGameVisualType.NextBlock), session);
             }
 
             private bool _holdBlock = false;
-            private TetrisPiece? _heldPiece
+            private BlockGamePiece? _heldPiece
             {
                 get => _internalHeldPiece;
                 set
@@ -156,22 +182,22 @@ namespace Content.Server.GameObjects.Components.Arcade
                 }
             }
 
-            private TetrisPiece? _internalHeldPiece = null;
+            private BlockGamePiece? _internalHeldPiece = null;
 
             private void SendHoldPieceUpdate()
             {
-                if(_heldPiece.HasValue) _component.UserInterface?.SendMessage(new TetrisMessages.TetrisUIUpdateMessage(_heldPiece.Value.BlocksForPreview(), TetrisMessages.TetrisUIBlockType.HoldBlock));
-                else _component.UserInterface?.SendMessage(new TetrisMessages.TetrisUIUpdateMessage(new TetrisBlock[0], TetrisMessages.TetrisUIBlockType.HoldBlock));
+                if(_heldPiece.HasValue) _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameVisualUpdateMessage(_heldPiece.Value.BlocksForPreview(), BlockGameMessages.BlockGameVisualType.HoldBlock));
+                else _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameVisualUpdateMessage(new BlockGameBlock[0], BlockGameMessages.BlockGameVisualType.HoldBlock));
             }
 
             private void SendHoldPieceUpdate(IPlayerSession session)
             {
-                if(_heldPiece.HasValue) _component.UserInterface?.SendMessage(new TetrisMessages.TetrisUIUpdateMessage(_heldPiece.Value.BlocksForPreview(), TetrisMessages.TetrisUIBlockType.HoldBlock), session);
-                else _component.UserInterface?.SendMessage(new TetrisMessages.TetrisUIUpdateMessage(new TetrisBlock[0], TetrisMessages.TetrisUIBlockType.HoldBlock), session);
+                if(_heldPiece.HasValue) _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameVisualUpdateMessage(_heldPiece.Value.BlocksForPreview(), BlockGameMessages.BlockGameVisualType.HoldBlock), session);
+                else _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameVisualUpdateMessage(new BlockGameBlock[0], BlockGameMessages.BlockGameVisualType.HoldBlock), session);
             }
 
             private Vector2i _currentPiecePosition;
-            private TetrisPieceRotation _currentRotation;
+            private BlockGamePieceRotation _currentRotation;
             private float _softDropOverride = 0.1f;
             private float _speed = 0.5f;
 
@@ -201,17 +227,17 @@ namespace Content.Server.GameObjects.Components.Arcade
 
             private void SendPointsUpdate()
             {
-                _component.UserInterface?.SendMessage(new TetrisMessages.TetrisScoreUpdate(_points));
+                _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameScoreUpdateMessage(_points));
             }
 
             private void SendPointsUpdate(IPlayerSession session)
             {
-                _component.UserInterface?.SendMessage(new TetrisMessages.TetrisScoreUpdate(_points));
+                _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameScoreUpdateMessage(_points));
             }
 
             private int _level = 0;
 
-            public TetrisGame(TetrisArcadeComponent component)
+            public BlockGame(BlockGameArcadeComponent component)
             {
                 _component = component;
             }
@@ -220,7 +246,7 @@ namespace Content.Server.GameObjects.Components.Arcade
             {
                 InitializeNewBlock();
 
-                _component.UserInterface?.SendMessage(new TetrisMessages.TetrisSetScreenMessage(TetrisMessages.TetrisScreen.Game));
+                _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Game));
 
                 UpdateAllFieldUI();
 
@@ -375,7 +401,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                     {
                         if(_field[j].Position.Y != c_y-1) continue;
 
-                        _field[j] = new TetrisBlock(_field[j].Position.AddToY(1), _field[j].Color);
+                        _field[j] = new BlockGameBlock(_field[j].Position.AddToY(1), _field[j].GameBlockColor);
                     }
                 }
             }
@@ -383,17 +409,17 @@ namespace Content.Server.GameObjects.Components.Arcade
             private void InitializeNewBlock()
             {
                 InitializeNewBlock(_nextPiece);
-                _nextPiece = TetrisPiece.GetRandom();
+                _nextPiece = BlockGamePiece.GetRandom();
                 _holdBlock = false;
 
-                _component.UserInterface?.SendMessage(new TetrisMessages.TetrisUIUpdateMessage(_nextPiece.BlocksForPreview(), TetrisMessages.TetrisUIBlockType.NextBlock));
+                _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameVisualUpdateMessage(_nextPiece.BlocksForPreview(), BlockGameMessages.BlockGameVisualType.NextBlock));
             }
 
-            private void InitializeNewBlock(TetrisPiece piece)
+            private void InitializeNewBlock(BlockGamePiece piece)
             {
                 _currentPiecePosition = new Vector2i(5,0);
 
-                _currentRotation = TetrisPieceRotation.North;
+                _currentRotation = BlockGamePieceRotation.North;
 
                 _currentPiece = piece;
                 UpdateAllFieldUI();
@@ -407,55 +433,55 @@ namespace Content.Server.GameObjects.Components.Arcade
             private bool MoveCheck(Vector2i position) => BorderCheck(position) && ClearCheck(position);
             private bool RotateCheck(Vector2i position) => BorderCheck(position) && LowerBoundCheck(position) && ClearCheck(position);
 
-            public void ProcessInput(TetrisPlayerAction action)
+            public void ProcessInput(BlockGamePlayerAction action)
             {
                 switch (action)
                 {
-                    case TetrisPlayerAction.StartLeft:
+                    case BlockGamePlayerAction.StartLeft:
                         _leftPressed = true;
                         break;
-                    case TetrisPlayerAction.EndLeft:
+                    case BlockGamePlayerAction.EndLeft:
                         _leftPressed = false;
                         break;
-                    case TetrisPlayerAction.StartRight:
+                    case BlockGamePlayerAction.StartRight:
                         _rightPressed = true;
                         break;
-                    case TetrisPlayerAction.EndRight:
+                    case BlockGamePlayerAction.EndRight:
                         _rightPressed = false;
                         break;
-                    case TetrisPlayerAction.Rotate:
+                    case BlockGamePlayerAction.Rotate:
                         TrySetRotation(Next(_currentRotation, false));
                         break;
-                    case TetrisPlayerAction.CounterRotate:
+                    case BlockGamePlayerAction.CounterRotate:
                         TrySetRotation(Next(_currentRotation, true));
                         break;
-                    case TetrisPlayerAction.SoftdropStart:
+                    case BlockGamePlayerAction.SoftdropStart:
                         _softDropPressed = true;
                         break;
-                    case TetrisPlayerAction.SoftdropEnd:
+                    case BlockGamePlayerAction.SoftdropEnd:
                         _softDropPressed = false;
                         break;
-                    case TetrisPlayerAction.Harddrop:
+                    case BlockGamePlayerAction.Harddrop:
                         PerformHarddrop();
                         break;
-                    case TetrisPlayerAction.Pause:
+                    case BlockGamePlayerAction.Pause:
                         _running = false;
-                        _component.UserInterface?.SendMessage(new TetrisMessages.TetrisSetScreenMessage(TetrisMessages.TetrisScreen.Pause));
+                        _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Pause));
                         break;
-                    case TetrisPlayerAction.Unpause:
+                    case BlockGamePlayerAction.Unpause:
                         if (!_gameOver)
                         {
                             _running = true;
-                            _component.UserInterface?.SendMessage(new TetrisMessages.TetrisSetScreenMessage(TetrisMessages.TetrisScreen.Game));
+                            _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Game));
                         }
                         break;
-                    case TetrisPlayerAction.Hold:
+                    case BlockGamePlayerAction.Hold:
                         HoldPiece();
                         break;
                 }
             }
 
-            private void TrySetRotation(TetrisPieceRotation rotation)
+            private void TrySetRotation(BlockGamePieceRotation rotation)
             {
                 if(!_running) return;
 
@@ -500,7 +526,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                 if (!_started) return;
 
                 var computedField = ComputeField();
-                _component.UserInterface?.SendMessage(new TetrisMessages.TetrisUIUpdateMessage(computedField.ToArray(), TetrisMessages.TetrisUIBlockType.GameField));
+                _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameVisualUpdateMessage(computedField.ToArray(), BlockGameMessages.BlockGameVisualType.GameField));
             }
 
             public void UpdateFieldUI(IPlayerSession session)
@@ -508,7 +534,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                 if (!_started) return;
 
                 var computedField = ComputeField();
-                _component.UserInterface?.SendMessage(new TetrisMessages.TetrisUIUpdateMessage(computedField.ToArray(), TetrisMessages.TetrisUIBlockType.GameField), session);
+                _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameVisualUpdateMessage(computedField.ToArray(), BlockGameMessages.BlockGameVisualType.GameField), session);
             }
 
             private bool IsGameOver => _field.Any(block => block.Position.Y == 0);
@@ -516,24 +542,28 @@ namespace Content.Server.GameObjects.Components.Arcade
             {
                 _running = false;
                 _gameOver = true;
-                _component.UserInterface?.SendMessage(new TetrisMessages.TetrisGameOverScreenMessage(_points));
+                //playersession.AttachedEntity.Name
+                //EntitySystem.Get<BlockGameSystem>()
+
+
+                _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameGameOverScreenMessage(_points));
             }
 
             public void UpdateNewPlayerUI(IPlayerSession session)
             {
                 if (_gameOver)
                 {
-                    _component.UserInterface?.SendMessage(new TetrisMessages.TetrisGameOverScreenMessage(_points), session);
+                    _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameGameOverScreenMessage(_points), session);
                 }
                 else
                 {
                     if (Paused)
                     {
-                        _component.UserInterface?.SendMessage(new TetrisMessages.TetrisSetScreenMessage(TetrisMessages.TetrisScreen.Pause, Started), session);
+                        _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Pause, Started), session);
                     }
                     else
                     {
-                        _component.UserInterface?.SendMessage(new TetrisMessages.TetrisSetScreenMessage(TetrisMessages.TetrisScreen.Game, Started), session);
+                        _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Game, Started), session);
                     }
                 }
 
@@ -543,15 +573,15 @@ namespace Content.Server.GameObjects.Components.Arcade
                 SendHoldPieceUpdate(session);
             }
 
-            public List<TetrisBlock> ComputeField()
+            public List<BlockGameBlock> ComputeField()
             {
-                var result = new List<TetrisBlock>();
+                var result = new List<BlockGameBlock>();
                 result.AddRange(_field);
                 result.AddRange(_currentPiece.Blocks(_currentPiecePosition, _currentRotation));
                 return result;
             }
 
-            private enum TetrisPieceType
+            private enum BlockGamePieceType
             {
                 I,
                 L,
@@ -562,7 +592,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                 O
             }
 
-            private enum TetrisPieceRotation
+            private enum BlockGamePieceRotation
             {
                 North,
                 East,
@@ -570,40 +600,40 @@ namespace Content.Server.GameObjects.Components.Arcade
                 West
             }
 
-            private static TetrisPieceRotation Next(TetrisPieceRotation rotation, bool inverted)
+            private static BlockGamePieceRotation Next(BlockGamePieceRotation rotation, bool inverted)
             {
                 return rotation switch
                 {
-                    TetrisPieceRotation.North => inverted ? TetrisPieceRotation.West : TetrisPieceRotation.East,
-                    TetrisPieceRotation.East => inverted ? TetrisPieceRotation.North : TetrisPieceRotation.South,
-                    TetrisPieceRotation.South => inverted ? TetrisPieceRotation.East : TetrisPieceRotation.West,
-                    TetrisPieceRotation.West => inverted ? TetrisPieceRotation.South : TetrisPieceRotation.North,
+                    BlockGamePieceRotation.North => inverted ? BlockGamePieceRotation.West : BlockGamePieceRotation.East,
+                    BlockGamePieceRotation.East => inverted ? BlockGamePieceRotation.North : BlockGamePieceRotation.South,
+                    BlockGamePieceRotation.South => inverted ? BlockGamePieceRotation.East : BlockGamePieceRotation.West,
+                    BlockGamePieceRotation.West => inverted ? BlockGamePieceRotation.South : BlockGamePieceRotation.North,
                     _ => throw new ArgumentOutOfRangeException(nameof(rotation), rotation, null)
                 };
             }
 
-            private struct TetrisPiece
+            private struct BlockGamePiece
             {
                 public Vector2i[] Offsets;
-                private TetrisBlock.TetrisBlockColor _color;
+                private BlockGameBlock.BlockGameBlockColor _gameBlockColor;
                 public bool CanSpin;
 
                 public Vector2i[] Positions(Vector2i center,
-                    TetrisPieceRotation rotation)
+                    BlockGamePieceRotation rotation)
                 {
                     return RotatedOffsets(rotation).Select(v => center + v).ToArray();
                 }
 
-                private Vector2i[] RotatedOffsets(TetrisPieceRotation rotation)
+                private Vector2i[] RotatedOffsets(BlockGamePieceRotation rotation)
                 {
                     Vector2i[] rotatedOffsets = (Vector2i[])Offsets.Clone();
                     //until i find a better algo
                     var amount = rotation switch
                     {
-                        TetrisPieceRotation.North => 0,
-                        TetrisPieceRotation.East => 1,
-                        TetrisPieceRotation.South => 2,
-                        TetrisPieceRotation.West => 3,
+                        BlockGamePieceRotation.North => 0,
+                        BlockGamePieceRotation.East => 1,
+                        BlockGamePieceRotation.South => 2,
+                        BlockGamePieceRotation.West => 3,
                         _ => 0
                     };
 
@@ -618,21 +648,21 @@ namespace Content.Server.GameObjects.Components.Arcade
                     return rotatedOffsets;
                 }
 
-                public TetrisBlock[] Blocks(Vector2i center,
-                    TetrisPieceRotation rotation)
+                public BlockGameBlock[] Blocks(Vector2i center,
+                    BlockGamePieceRotation rotation)
                 {
                     var positions = Positions(center, rotation);
-                    var result = new TetrisBlock[positions.Length];
+                    var result = new BlockGameBlock[positions.Length];
                     var i = 0;
                     foreach (var position in positions)
                     {
-                        result[i++] = position.ToTetrisBlock(_color);
+                        result[i++] = position.ToBlockGameBlock(_gameBlockColor);
                     }
 
                     return result;
                 }
 
-                public TetrisBlock[] BlocksForPreview()
+                public BlockGameBlock[] BlocksForPreview()
                 {
                     var xOffset = 0;
                     var yOffset = 0;
@@ -642,91 +672,91 @@ namespace Content.Server.GameObjects.Components.Arcade
                         if (offset.Y < yOffset) yOffset = offset.Y;
                     }
 
-                    return Blocks(new Vector2i(-xOffset, -yOffset), TetrisPieceRotation.North);
+                    return Blocks(new Vector2i(-xOffset, -yOffset), BlockGamePieceRotation.North);
                 }
 
-                public static TetrisPiece GetRandom()
+                public static BlockGamePiece GetRandom()
                 {
                     var random = IoCManager.Resolve<IRobustRandom>();
-                    var pieces = (TetrisPieceType[])Enum.GetValues(typeof(TetrisPieceType));
+                    var pieces = (BlockGamePieceType[])Enum.GetValues(typeof(BlockGamePieceType));
                     var choice = random.Pick(pieces);
                     return GetPiece(choice);
                 }
 
-                public static TetrisPiece GetPiece(TetrisPieceType type)
+                public static BlockGamePiece GetPiece(BlockGamePieceType type)
                 {
                     //switch statement, hardcoded offsets
                     return type switch
                     {
-                        TetrisPieceType.I => new TetrisPiece
+                        BlockGamePieceType.I => new BlockGamePiece
                         {
                             Offsets = new[]
                             {
                                 new Vector2i(0, -1), new Vector2i(0, 0), new Vector2i(0, 1), new Vector2i(0, 2),
                             },
-                            _color = TetrisBlock.TetrisBlockColor.LightBlue,
+                            _gameBlockColor = BlockGameBlock.BlockGameBlockColor.LightBlue,
                             CanSpin = true
                         },
-                        TetrisPieceType.L => new TetrisPiece
+                        BlockGamePieceType.L => new BlockGamePiece
                         {
                             Offsets = new[]
                             {
                                 new Vector2i(0, -1), new Vector2i(0, 0), new Vector2i(0, 1), new Vector2i(1, 1),
                             },
-                            _color = TetrisBlock.TetrisBlockColor.Orange,
+                            _gameBlockColor = BlockGameBlock.BlockGameBlockColor.Orange,
                             CanSpin = true
                         },
-                        TetrisPieceType.LInverted => new TetrisPiece
+                        BlockGamePieceType.LInverted => new BlockGamePiece
                         {
                             Offsets = new[]
                             {
                                 new Vector2i(0, -1), new Vector2i(0, 0), new Vector2i(-1, 1),
                                 new Vector2i(0, 1),
                             },
-                            _color = TetrisBlock.TetrisBlockColor.Blue,
+                            _gameBlockColor = BlockGameBlock.BlockGameBlockColor.Blue,
                             CanSpin = true
                         },
-                        TetrisPieceType.S => new TetrisPiece
+                        BlockGamePieceType.S => new BlockGamePiece
                         {
                             Offsets = new[]
                             {
                                 new Vector2i(0, -1), new Vector2i(1, -1), new Vector2i(-1, 0),
                                 new Vector2i(0, 0),
                             },
-                            _color = TetrisBlock.TetrisBlockColor.Green,
+                            _gameBlockColor = BlockGameBlock.BlockGameBlockColor.Green,
                             CanSpin = true
                         },
-                        TetrisPieceType.SInverted => new TetrisPiece
+                        BlockGamePieceType.SInverted => new BlockGamePiece
                         {
                             Offsets = new[]
                             {
                                 new Vector2i(-1, -1), new Vector2i(0, -1), new Vector2i(0, 0),
                                 new Vector2i(1, 0),
                             },
-                            _color = TetrisBlock.TetrisBlockColor.Red,
+                            _gameBlockColor = BlockGameBlock.BlockGameBlockColor.Red,
                             CanSpin = true
                         },
-                        TetrisPieceType.T => new TetrisPiece
+                        BlockGamePieceType.T => new BlockGamePiece
                         {
                             Offsets = new[]
                             {
                                 new Vector2i(0, -1),
                                 new Vector2i(-1, 0), new Vector2i(0, 0), new Vector2i(1, 0),
                             },
-                            _color = TetrisBlock.TetrisBlockColor.Purple,
+                            _gameBlockColor = BlockGameBlock.BlockGameBlockColor.Purple,
                             CanSpin = true
                         },
-                        TetrisPieceType.O => new TetrisPiece
+                        BlockGamePieceType.O => new BlockGamePiece
                         {
                             Offsets = new[]
                             {
                                 new Vector2i(0, -1), new Vector2i(1, -1), new Vector2i(0, 0),
                                 new Vector2i(1, 0),
                             },
-                            _color = TetrisBlock.TetrisBlockColor.Yellow,
+                            _gameBlockColor = BlockGameBlock.BlockGameBlockColor.Yellow,
                             CanSpin = false
                         },
-                        _ => new TetrisPiece {Offsets = new[] {new Vector2i(0, 0)}}
+                        _ => new BlockGamePiece {Offsets = new[] {new Vector2i(0, 0)}}
                     };
                 }
             }

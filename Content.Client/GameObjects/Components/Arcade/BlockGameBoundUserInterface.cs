@@ -8,11 +8,11 @@ using Robust.Shared.GameObjects.Components.UserInterface;
 
 namespace Content.Client.GameObjects.Components.Arcade
 {
-    public class TetrisArcadeBoundUserInterface : BoundUserInterface
+    public class BlockGameBoundUserInterface : BoundUserInterface
     {
-        private TetrisArcadeMenu _menu;
+        private BlockGameMenu _menu;
 
-        public TetrisArcadeBoundUserInterface([NotNull] ClientUserInterfaceComponent owner, [NotNull] object uiKey) : base(owner, uiKey)
+        public BlockGameBoundUserInterface([NotNull] ClientUserInterfaceComponent owner, [NotNull] object uiKey) : base(owner, uiKey)
         {
         }
 
@@ -20,8 +20,8 @@ namespace Content.Client.GameObjects.Components.Arcade
         {
             base.Open();
 
-            _menu = new TetrisArcadeMenu(this);
-            _menu.OnClose += () => SendMessage(new TetrisMessages.TetrisUserUnregisterMessage());
+            _menu = new BlockGameMenu(this);
+            _menu.OnClose += () => SendMessage(new BlockGameMessages.BlockGameUserUnregisterMessage());
             _menu.OnClose += Close;
             _menu.OpenCentered();
         }
@@ -30,38 +30,38 @@ namespace Content.Client.GameObjects.Components.Arcade
         {
             switch (message)
             {
-                case TetrisMessages.TetrisUIUpdateMessage updateMessage:
-                    switch (updateMessage.Type)
+                case BlockGameMessages.BlockGameVisualUpdateMessage updateMessage:
+                    switch (updateMessage.GameVisualType)
                     {
-                        case TetrisMessages.TetrisUIBlockType.GameField:
+                        case BlockGameMessages.BlockGameVisualType.GameField:
                             _menu?.UpdateBlocks(updateMessage.Blocks);
                             break;
-                        case TetrisMessages.TetrisUIBlockType.HoldBlock:
+                        case BlockGameMessages.BlockGameVisualType.HoldBlock:
                             _menu?.UpdateHeldBlock(updateMessage.Blocks);
                             break;
-                        case TetrisMessages.TetrisUIBlockType.NextBlock:
+                        case BlockGameMessages.BlockGameVisualType.NextBlock:
                             _menu?.UpdateNextBlock(updateMessage.Blocks);
                             break;
                     }
                     break;
-                case TetrisMessages.TetrisScoreUpdate scoreUpdate:
+                case BlockGameMessages.BlockGameScoreUpdateMessage scoreUpdate:
                     _menu?.UpdatePoints(scoreUpdate.Points);
                     break;
-                case TetrisMessages.TetrisUserMessage userMessage:
+                case BlockGameMessages.BlockGameUserStatusMessage userMessage:
                     _menu?.SetUsability(userMessage.IsPlayer);
                     break;
-                case TetrisMessages.TetrisSetScreenMessage statusMessage:
+                case BlockGameMessages.BlockGameSetScreenMessage statusMessage:
                     if (statusMessage.isStarted) _menu?.SetStarted();
                     _menu?.SetScreen(statusMessage.Screen);
-                    if (statusMessage is TetrisMessages.TetrisGameOverScreenMessage gameOverScreenMessage)
+                    if (statusMessage is BlockGameMessages.BlockGameGameOverScreenMessage gameOverScreenMessage)
                         _menu?.SetGameoverPoints(gameOverScreenMessage.FinalScore);
                     break;
             }
         }
 
-        public void SendAction(TetrisPlayerAction action)
+        public void SendAction(BlockGamePlayerAction action)
         {
-            SendMessage(new TetrisMessages.TetrisPlayerActionMessage(action));
+            SendMessage(new BlockGameMessages.BlockGamePlayerActionMessage(action));
         }
 
         protected override void Dispose(bool disposing)
