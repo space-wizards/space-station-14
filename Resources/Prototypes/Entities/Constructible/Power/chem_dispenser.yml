@@ -6,14 +6,13 @@
   components:
   - type: Sprite
     texture: Constructible/Power/industrial_dispenser.rsi/industrial_dispenser.png
-  - type: Icon
-    texture: Constructible/Power/industrial_dispenser.rsi/industrial_dispenser.png
+
   - type: ReagentDispenser
     pack: ChemDispenserStandardInventory
   - type: PowerReceiver
   - type: Anchorable
   - type: Pullable
-  
+
 - type: reagentDispenserInventory
   id: ChemDispenserStandardInventory
   inventory:

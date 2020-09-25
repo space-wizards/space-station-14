@@ -29,9 +29,6 @@
   components:
   - type: PDA
     idCard: AssistantIDCard
-  - type: Icon
-    sprite: Objects/Devices/pda.rsi
-    state: pda
   - type: Sprite
     sprite: Objects/Devices/pda.rsi
     netsync: false
@@ -50,9 +47,6 @@
   components:
   - type: PDA
     idCard: ChefIDCard
-  - type: Icon
-    sprite: Objects/Devices/pda.rsi
-    state: pda-cook
   - type: Sprite
     sprite: Objects/Devices/pda.rsi
     netsync: false
@@ -71,9 +65,6 @@
   components:
   - type: PDA
     idCard: ClownIDCard
-  - type: Icon
-    sprite: Objects/Devices/pda.rsi
-    state: pda-clown
   - type: Sprite
     sprite: Objects/Devices/pda.rsi
     netsync: false
@@ -100,9 +91,6 @@
   components:
   - type: PDA
     idCard: MimeIDCard
-  - type: Icon
-    sprite: Objects/Devices/pda.rsi
-    state: pda-mime
   - type: Sprite
     sprite: Objects/Devices/pda.rsi
     netsync: false
@@ -121,9 +109,7 @@
   components:
   - type: PDA
     idCard: CargoIDCard
-  - type: Icon
-    sprite: Objects/Devices/pda.rsi
-    state: pda-cargo
+
   - type: Sprite
     sprite: Objects/Devices/pda.rsi
     netsync: false
@@ -142,9 +128,7 @@
   components:
   - type: PDA
     idCard: BartenderIDCard
-  - type: Icon
-    sprite: Objects/Devices/pda.rsi
-    state: pda-bartender
+
   - type: Sprite
     sprite: Objects/Devices/pda.rsi
     netsync: false
@@ -164,9 +148,7 @@
   components:
   - type: PDA
     idCard: JanitorIDCard
-  - type: Icon
-    sprite: Objects/Devices/pda.rsi
-    state: pda-janitor
+
   - type: Sprite
     sprite: Objects/Devices/pda.rsi
     netsync: false
@@ -185,9 +167,7 @@
   components:
   - type: PDA
     idCard: CaptainIDCard
-  - type: Icon
-    sprite: Objects/Devices/pda.rsi
-    state: pda-captain
+
   - type: Sprite
     sprite: Objects/Devices/pda.rsi
     netsync: false
@@ -205,9 +185,7 @@
   components:
   - type: PDA
     idCard: HoPIDCard
-  - type: Icon
-    sprite: Objects/Devices/pda.rsi
-    state: pda-hop
+
   - type: Sprite
     sprite: Objects/Devices/pda.rsi
     netsync: false
@@ -225,9 +203,7 @@
   components:
   - type: PDA
     idCard: CEIDCard
-  - type: Icon
-    sprite: Objects/Devices/pda.rsi
-    state: pda-ce
+
   - type: Sprite
     sprite: Objects/Devices/pda.rsi
     netsync: false
@@ -246,9 +222,7 @@
   components:
   - type: PDA
     idCard: EngineeringIDCard
-  - type: Icon
-    sprite: Objects/Devices/pda.rsi
-    state: pda-engineer
+
   - type: Sprite
     sprite: Objects/Devices/pda.rsi
     netsync: false
@@ -266,9 +240,7 @@
   components:
   - type: PDA
     idCard: CMOIDCard
-  - type: Icon
-    sprite: Objects/Devices/pda.rsi
-    state: pda-cmo
+
   - type: Sprite
     sprite: Objects/Devices/pda.rsi
     netsync: false
@@ -286,9 +258,7 @@
   components:
   - type: PDA
     idCard: MedicalIDCard
-  - type: Icon
-    sprite: Objects/Devices/pda.rsi
-    state: pda-medical
+
   - type: Sprite
     sprite: Objects/Devices/pda.rsi
     netsync: false
@@ -306,9 +276,7 @@
   components:
   - type: PDA
     idCard: RDIDCard
-  - type: Icon
-    sprite: Objects/Devices/pda.rsi
-    state: pda-rd
+
   - type: Sprite
     sprite: Objects/Devices/pda.rsi
     netsync: false
@@ -326,9 +294,7 @@
   components:
   - type: PDA
     idCard: ResearchIDCard
-  - type: Icon
-    sprite: Objects/Devices/pda.rsi
-    state: pda-rd
+
   - type: Sprite
     sprite: Objects/Devices/pda.rsi
     netsync: false
@@ -346,9 +312,7 @@
   components:
   - type: PDA
     idCard: HoSIDCard
-  - type: Icon
-    sprite: Objects/Devices/pda.rsi
-    state: pda-hos
+
   - type: Sprite
     sprite: Objects/Devices/pda.rsi
     netsync: false
@@ -366,9 +330,7 @@
   components:
   - type: PDA
     idCard: SecurityIDCard
-  - type: Icon
-    sprite: Objects/Devices/pda.rsi
-    state: pda-security
+
   - type: Sprite
     sprite: Objects/Devices/pda.rsi
     netsync: false

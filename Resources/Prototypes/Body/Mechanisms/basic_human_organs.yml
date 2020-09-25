@@ -6,9 +6,6 @@
   - type: Sprite
     sprite: Mobs/Species/Human/organs.rsi
     state: heart-on
-  - type: Icon
-    sprite: Mobs/Species/Human/organs.rsi
-    state: heart-on
   - type: DroppedMechanism
     debugLoadMechanismData: mechanism.Heart.BasicHuman
     behaviors:

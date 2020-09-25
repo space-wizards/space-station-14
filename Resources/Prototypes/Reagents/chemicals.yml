@@ -182,4 +182,4 @@
   boilingPoint: -84.7 # Acetylene. Close enough.
   meltingPoint: -80.7
   tileReactions:
-    - !type:FlammableTileReaction
+    - !type:FlammableTileReaction {}

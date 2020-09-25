@@ -6,9 +6,6 @@
   - type: Sprite
     sprite: Constructible/Misc/mirror.rsi
     state: mirror
-  - type: Icon
-    sprite: Constructible/Misc/mirror.rsi
-    state: mirror
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb

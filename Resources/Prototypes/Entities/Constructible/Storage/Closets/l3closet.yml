@@ -9,8 +9,7 @@
     visuals:
     - type: StorageVisualizer
       state: bio
-  - type: Icon
-    state: bio_icon
+
 
 # Virology variant
 - type: entity
@@ -21,8 +20,7 @@
     visuals:
     - type: StorageVisualizer
       state: bio_viro
-  - type: Icon
-    state: bio_viro_icon
+
 
 # Security variant
 - type: entity
@@ -33,8 +31,7 @@
     visuals:
     - type: StorageVisualizer
       state: bio_sec
-  - type: Icon
-    state: bio_sec_icon
+
 
 # Janitor variant
 - type: entity
@@ -45,5 +42,4 @@
     visuals:
     - type: StorageVisualizer
       state: bio_jan
-  - type: Icon
-    state: bio_jan_icon
+

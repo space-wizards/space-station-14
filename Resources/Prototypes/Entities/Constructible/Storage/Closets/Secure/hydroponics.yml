@@ -7,5 +7,4 @@
     visuals:
     - type: StorageVisualizer
       state: hydro
-  - type: Icon
-    state: hydro_icon
+

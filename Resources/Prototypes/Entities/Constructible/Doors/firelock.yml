@@ -22,9 +22,7 @@
           map: ["enum.DoorVisualLayers.BaseBolted"]
         - state: panel_open
           map: ["enum.WiresVisualLayers.MaintenancePanel"]
-    - type: Icon
-      sprite: Constructible/Structures/Doors/firelock.rsi
-      state: closed
+
     - type: Collidable
       shapes:
         - !type:PhysShapeAabb
@@ -72,8 +70,7 @@
       enabled: false
     - type: Sprite
       sprite: Constructible/Structures/Doors/firelock_glass.rsi
-    - type: Icon
-      sprite: Constructible/Structures/Doors/firelock_glass.rsi
+
 
 - type: entity
   id: FirelockEdge
@@ -88,8 +85,7 @@
       enabled: false
     - type: Sprite
       sprite: Constructible/Structures/Doors/edge_door_hazard.rsi
-    - type: Icon
-      sprite: Constructible/Structures/Doors/edge_door_hazard.rsi
+
     - type: Airtight
       fixVacuum: true
       airBlockedDirection:

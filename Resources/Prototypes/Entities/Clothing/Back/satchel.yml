@@ -7,9 +7,6 @@
   - type: Sprite
     sprite: Clothing/Back/Satchels/satchel.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Back/Satchels/satchel.rsi
-    state: icon
   - type: Clothing
     sprite: Clothing/Back/Satchels/satchel.rsi
   - type: Storage
@@ -24,9 +21,6 @@
   - type: Sprite
     sprite: Clothing/Back/Satchels/satchel_engineering.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Back/Satchels/satchel_engineering.rsi
-    state: icon
   - type: Clothing
     sprite: Clothing/Back/Satchels/satchel_engineering.rsi
 
@@ -37,9 +31,6 @@
   description: A sterile satchel used in medical departments.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchels/satchel_medical.rsi
-    state: icon
-  - type: Icon
     sprite: Clothing/Back/Satchels/satchel_medical.rsi
     state: icon
   - type: Clothing
@@ -54,9 +45,6 @@
   - type: Sprite
     sprite: Clothing/Back/Satchels/satchel_chemistry.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Back/Satchels/satchel_chemistry.rsi
-    state: icon
   - type: Clothing
     sprite: Clothing/Back/Satchels/satchel_chemistry.rsi
 
@@ -67,9 +55,6 @@
   description: Useful for holding research materials.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchels/satchel_science.rsi
-    state: icon
-  - type: Icon
     sprite: Clothing/Back/Satchels/satchel_science.rsi
     state: icon
   - type: Clothing
@@ -84,9 +69,6 @@
   - type: Sprite
     sprite: Clothing/Back/Satchels/satchel_security.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Back/Satchels/satchel_security.rsi
-    state: icon
   - type: Clothing
     sprite: Clothing/Back/Satchels/satchel_security.rsi
 
@@ -99,9 +81,6 @@
   - type: Sprite
     sprite: Clothing/Back/Satchels/satchel_captain.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Back/Satchels/satchel_captain.rsi
-    state: icon
   - type: Clothing
     sprite: Clothing/Back/Satchels/satchel_captain.rsi
 
@@ -112,9 +91,6 @@
   description: A satchel made of all natural fibers.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchels/satchel_hydroponics.rsi
-    state: icon
-  - type: Icon
     sprite: Clothing/Back/Satchels/satchel_hydroponics.rsi
     state: icon
   - type: Clothing

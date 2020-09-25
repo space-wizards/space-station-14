@@ -120,9 +120,7 @@
       sprite: Mobs/Effects/onfire.rsi
       state: Generic_mob_burning
       visible: false
-  - type: Icon
-    sprite: Mobs/Species/Human/parts.rsi
-    state: full
+
   - type: Physics
     mass: 85
   - type: Collidable
@@ -283,9 +281,7 @@
       - map: ["enum.Slots.HEAD"]
       - map: ["hand-left"]
       - map: ["hand-right"]
-    - type: Icon
-      sprite: Mobs/Species/Human/parts.rsi
-      state: full
+
     - type: Physics
       mass: 85
     - type: Collidable
