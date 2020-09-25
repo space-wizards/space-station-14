@@ -1,15 +1,17 @@
-﻿using Content.Shared.Interfaces;
+﻿using Content.Shared.GameObjects.Components;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
-using static Content.Shared.GameObjects.Components.SharedCrayonComponent;
 
 namespace Content.Server.GameObjects.Components
 {
@@ -18,11 +20,14 @@ namespace Content.Server.GameObjects.Components
     {
         public override string Name => "Crayon";
 
-        //TODO: useSound & Color
+        //TODO: useSound
         private string _useSound;
         private string _color;
         public Color Color { get; private set; }
         public string SelectedState { get; set; } = "corgi";
+        //TODO: charges?
+
+        //TODO: ItemStatus
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -34,7 +39,13 @@ namespace Content.Server.GameObjects.Components
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            SelectedState = SelectedState == "corgi" ? "body" : "corgi";
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            var crayonDecals = prototypeManager.EnumeratePrototypes<CrayonDecalPrototype>().FirstOrDefault();
+            if (crayonDecals == null)
+                return false;
+
+            var nextIndex = (crayonDecals.Decals.IndexOf(SelectedState) + 1) % crayonDecals.Decals.Count;
+            SelectedState = crayonDecals.Decals[nextIndex];
             eventArgs.User.PopupMessage($"Now drawing {SelectedState}");
             return true;
         }
@@ -42,6 +53,7 @@ namespace Content.Server.GameObjects.Components
         void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             var entityManager = IoCManager.Resolve<IServerEntityManager>();
+            //TODO: rotation?
             var entity = entityManager.SpawnEntity("CrayonDecal", eventArgs.ClickLocation);
             if (entity.TryGetComponent(out AppearanceComponent appearance))
             {
