@@ -18,6 +18,7 @@ namespace Content.Shared.Arcade
         Harddrop,
         Pause,
         Unpause,
-        Hold
+        Hold,
+        ShowHighscores
     }
 }

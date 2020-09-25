@@ -174,6 +174,7 @@
             "Flammable",
             "CreamPie",
             "CreamPied",
+            "BlockGameArcade"
         };
     }
 }

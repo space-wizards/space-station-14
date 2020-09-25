@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Utility;
 using Content.Shared.Arcade;
@@ -225,6 +226,8 @@ namespace Content.Server.GameObjects.Components.Arcade
             }
             private int _internalPoints;
 
+            private BlockGameSystem.HighScorePlacement? _highScorePlacement = null;
+
             private void SendPointsUpdate()
             {
                 _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameScoreUpdateMessage(_points));
@@ -242,16 +245,46 @@ namespace Content.Server.GameObjects.Components.Arcade
                 _component = component;
             }
 
+            private void SendHighscoreUpdate()
+            {
+                var entitySystem = EntitySystem.Get<BlockGameSystem>();
+                _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameHighScoreUpdateMessage(entitySystem.GetLocalHighscores(), entitySystem.GetGlobalHighscores()));
+            }
+
+            private void SendHighscoreUpdate(IPlayerSession session)
+            {
+                var entitySystem = EntitySystem.Get<BlockGameSystem>();
+                _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameHighScoreUpdateMessage(entitySystem.GetLocalHighscores(), entitySystem.GetGlobalHighscores()), session);
+            }
+
             public void StartGame()
             {
                 InitializeNewBlock();
 
                 _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Game));
 
-                UpdateAllFieldUI();
+                FullUpdate();
 
                 _running = true;
                 _started = true;
+            }
+
+            private void FullUpdate()
+            {
+                UpdateAllFieldUI();
+                SendHoldPieceUpdate();
+                SendNextPieceUpdate();
+                SendPointsUpdate();
+                SendHighscoreUpdate();
+            }
+
+            private void FullUpdate(IPlayerSession session)
+            {
+                UpdateFieldUI(session);
+                SendPointsUpdate(session);
+                SendNextPieceUpdate(session);
+                SendHoldPieceUpdate(session);
+                SendHighscoreUpdate(session);
             }
 
             public void GameTick(float frameTime)
@@ -478,6 +511,10 @@ namespace Content.Server.GameObjects.Components.Arcade
                     case BlockGamePlayerAction.Hold:
                         HoldPiece();
                         break;
+                    case BlockGamePlayerAction.ShowHighscores:
+                        _running = false;
+                        _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Highscores));
+                        break;
                 }
             }
 
@@ -542,18 +579,22 @@ namespace Content.Server.GameObjects.Components.Arcade
             {
                 _running = false;
                 _gameOver = true;
-                //playersession.AttachedEntity.Name
-                //EntitySystem.Get<BlockGameSystem>()
 
+                if (_component._player?.AttachedEntity != null)
+                {
+                    var blockGameSystem = EntitySystem.Get<BlockGameSystem>();
 
-                _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameGameOverScreenMessage(_points));
+                    _highScorePlacement = blockGameSystem.RegisterHighScore(_component._player.AttachedEntity.Name, _points);
+                    SendHighscoreUpdate();
+                }
+                _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameGameOverScreenMessage(_points, _highScorePlacement?.LocalPlacement, _highScorePlacement?.GlobalPlacement));
             }
 
             public void UpdateNewPlayerUI(IPlayerSession session)
             {
                 if (_gameOver)
                 {
-                    _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameGameOverScreenMessage(_points), session);
+                    _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameGameOverScreenMessage(_points, _highScorePlacement?.LocalPlacement, _highScorePlacement?.GlobalPlacement), session);
                 }
                 else
                 {
@@ -567,10 +608,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                     }
                 }
 
-                UpdateFieldUI(session);
-                SendPointsUpdate(session);
-                SendNextPieceUpdate(session);
-                SendHoldPieceUpdate(session);
+                FullUpdate(session);
             }
 
             public List<BlockGameBlock> ComputeField()

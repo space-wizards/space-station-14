@@ -54,7 +54,11 @@ namespace Content.Client.GameObjects.Components.Arcade
                     if (statusMessage.isStarted) _menu?.SetStarted();
                     _menu?.SetScreen(statusMessage.Screen);
                     if (statusMessage is BlockGameMessages.BlockGameGameOverScreenMessage gameOverScreenMessage)
-                        _menu?.SetGameoverPoints(gameOverScreenMessage.FinalScore);
+                        _menu?.SetGameoverInfo(gameOverScreenMessage.FinalScore, gameOverScreenMessage.LocalPlacement, gameOverScreenMessage.GlobalPlacement);
+                    break;
+                case BlockGameMessages.BlockGameHighScoreUpdateMessage highScoreUpdateMessage:
+                    _menu?.UpdateHighscores(highScoreUpdateMessage.LocalHighscores,
+                        highScoreUpdateMessage.GlobalHighscores);
                     break;
             }
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Serialization;
 
@@ -75,9 +76,13 @@ namespace Content.Shared.Arcade
         public class BlockGameGameOverScreenMessage : BlockGameSetScreenMessage
         {
             public readonly int FinalScore;
-            public BlockGameGameOverScreenMessage(int finalScore) : base(BlockGameScreen.Gameover)
+            public readonly int? LocalPlacement;
+            public readonly int? GlobalPlacement;
+            public BlockGameGameOverScreenMessage(int finalScore, int? localPlacement, int? globalPlacement) : base(BlockGameScreen.Gameover)
             {
                 FinalScore = finalScore;
+                LocalPlacement = localPlacement;
+                GlobalPlacement = globalPlacement;
             }
         }
 
@@ -86,7 +91,40 @@ namespace Content.Shared.Arcade
         {
             Game,
             Pause,
-            Gameover
+            Gameover,
+            Highscores
+        }
+
+        [Serializable, NetSerializable]
+        public class BlockGameHighScoreUpdateMessage : BoundUserInterfaceMessage
+        {
+            public List<HighScoreEntry> LocalHighscores;
+            public List<HighScoreEntry> GlobalHighscores;
+
+            public BlockGameHighScoreUpdateMessage(List<HighScoreEntry> localHighscores, List<HighScoreEntry> globalHighscores)
+            {
+                LocalHighscores = localHighscores;
+                GlobalHighscores = globalHighscores;
+            }
+        }
+
+        [Serializable, NetSerializable]
+        public class HighScoreEntry : IComparable
+        {
+            public string Name;
+            public int Score;
+
+            public HighScoreEntry(string name, int score)
+            {
+                Name = name;
+                Score = score;
+            }
+
+            public int CompareTo(object? obj)
+            {
+                if (!(obj is HighScoreEntry entry)) return 0;
+                return Score.CompareTo(entry.Score);
+            }
         }
     }
 }

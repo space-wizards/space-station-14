@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
 using Content.Client.GameObjects.Components.Arcade;
@@ -16,12 +17,17 @@ using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
-using Serilog.Filters;
 
 namespace Content.Client.Arcade
 {
     public class BlockGameMenu : SS14Window
     {
+
+        private static Color overlayBackgroundColor = new Color(74,74,81,180);
+        private static Color overlayShadowColor = new Color(0,0,0,83);
+
+        private static Vector2 blockSize = new Vector2(15,15);
+
         private BlockGameBoundUserInterface _owner;
 
         private PanelContainer _mainPanel;
@@ -43,12 +49,17 @@ namespace Content.Client.Arcade
         private Label _finalScoreLabel;
         private Button _finalNewGameButton;
 
+        private PanelContainer _highscoresRootContainer;
+        private Label _localHighscoresLabel;
+        private Label _globalHighscoresLabel;
+        private Button _highscoreBackButton;
+
         private bool _isPlayer = false;
         private bool _gameOver = false;
 
         public BlockGameMenu(BlockGameBoundUserInterface owner)
         {
-            Title = "Block Game!";
+            Title = "Nanotrasen Block Game";
             _owner = owner;
 
             var resourceCache = IoCManager.Resolve<IResourceCache>();
@@ -63,9 +74,78 @@ namespace Content.Client.Arcade
 
             SetupGameoverScreen(backgroundTexture);
 
+            SetupHighScoreScreen(backgroundTexture);
+
             Contents.AddChild(_mainPanel);
 
             CanKeyboardFocus = true;
+        }
+
+
+        private void SetupHighScoreScreen(Texture backgroundTexture)
+        {
+            var rootBack = new StyleBoxTexture
+            {
+                Texture = backgroundTexture,
+                Modulate = overlayShadowColor
+            };
+            rootBack.SetPatchMargin(StyleBox.Margin.All, 10);
+            _highscoresRootContainer = new PanelContainer
+            {
+                PanelOverride = rootBack,
+                SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                SizeFlagsHorizontal = SizeFlags.ShrinkCenter
+            };
+
+
+            var innerBack = new StyleBoxTexture
+            {
+                Texture = backgroundTexture,
+                Modulate = overlayBackgroundColor
+            };
+            innerBack.SetPatchMargin(StyleBox.Margin.All, 10);
+            var menuInnerPanel = new PanelContainer
+            {
+                PanelOverride = innerBack,
+                SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                SizeFlagsHorizontal = SizeFlags.ShrinkCenter
+            };
+
+            _highscoresRootContainer.AddChild(menuInnerPanel);
+
+            var menuContainer = new VBoxContainer()
+            {
+                SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
+                SizeFlagsVertical = SizeFlags.ShrinkCenter
+            };
+
+            menuContainer.AddChild(new Label{Text = "Highscores"});
+            menuContainer.AddChild(new Control{CustomMinimumSize = new Vector2(1,10)});
+
+            var highScoreBox = new HBoxContainer();
+
+            _localHighscoresLabel = new Label
+            {
+                Align = Label.AlignMode.Center
+            };
+            highScoreBox.AddChild(_localHighscoresLabel);
+            highScoreBox.AddChild(new Control{CustomMinimumSize = new Vector2(40,1)});
+            _globalHighscoresLabel = new Label
+            {
+                Align = Label.AlignMode.Center
+            };
+            highScoreBox.AddChild(_globalHighscoresLabel);
+            menuContainer.AddChild(highScoreBox);
+            menuContainer.AddChild(new Control{CustomMinimumSize = new Vector2(1,10)});
+            _highscoreBackButton = new Button
+            {
+                Text = "Back",
+                TextAlign = Label.AlignMode.Center
+            };
+            _highscoreBackButton.OnPressed += (e) => _owner.SendAction(BlockGamePlayerAction.Pause);
+            menuContainer.AddChild(_highscoreBackButton);
+
+            menuInnerPanel.AddChild(menuContainer);
         }
 
         private void SetupGameoverScreen(Texture backgroundTexture)
@@ -73,7 +153,7 @@ namespace Content.Client.Arcade
             var rootBack = new StyleBoxTexture
             {
                 Texture = backgroundTexture,
-                Modulate = new Color(0,0,0,83)
+                Modulate = overlayShadowColor
             };
             rootBack.SetPatchMargin(StyleBox.Margin.All, 10);
             _gameOverRootContainer = new PanelContainer
@@ -86,7 +166,7 @@ namespace Content.Client.Arcade
             var innerBack = new StyleBoxTexture
             {
                 Texture = backgroundTexture,
-                Modulate = new Color(74,74,81,120)
+                Modulate = overlayBackgroundColor
             };
             innerBack.SetPatchMargin(StyleBox.Margin.All, 10);
             var menuInnerPanel = new PanelContainer
@@ -131,7 +211,7 @@ namespace Content.Client.Arcade
             var rootBack = new StyleBoxTexture
             {
                 Texture = backgroundTexture,
-                Modulate = new Color(0,0,0,83)
+                Modulate = overlayShadowColor
             };
             rootBack.SetPatchMargin(StyleBox.Margin.All, 10);
             _menuRootContainer = new PanelContainer
@@ -144,7 +224,7 @@ namespace Content.Client.Arcade
             var innerBack = new StyleBoxTexture
             {
                 Texture = backgroundTexture,
-                Modulate = new Color(74,74,81,120)
+                Modulate = overlayBackgroundColor
             };
             innerBack.SetPatchMargin(StyleBox.Margin.All, 10);
             var menuInnerPanel = new PanelContainer
@@ -180,7 +260,7 @@ namespace Content.Client.Arcade
                 Text = "Scoreboard",
                 TextAlign = Label.AlignMode.Center
             };
-            //todo scoreBoardButton.OnPressed += (e) => ;
+            _scoreBoardButton.OnPressed += (e) => _owner.SendAction(BlockGamePlayerAction.ShowHighscores);
             menuContainer.AddChild(_scoreBoardButton);
             _unpauseButtonMargin = new Control {CustomMinimumSize = new Vector2(1, 10), Visible = false};
             menuContainer.AddChild(_unpauseButtonMargin);
@@ -213,6 +293,7 @@ namespace Content.Client.Arcade
             _scoreBoardButton.Disabled = !_isPlayer;
             _unpauseButton.Disabled = !_isPlayer;
             _finalNewGameButton.Disabled = !_isPlayer;
+            _highscoreBackButton.Disabled = !_isPlayer;
         }
 
         private void SetupGameMenu(Texture backgroundTexture)
@@ -312,7 +393,7 @@ namespace Content.Client.Arcade
             var nextBlockPanel = new PanelContainer
             {
                 PanelOverride = previewBack,
-                CustomMinimumSize = new Vector2(65,65),
+                CustomMinimumSize = blockSize * 6.5f,
                 SizeFlagsHorizontal = SizeFlags.None,
                 SizeFlagsVertical = SizeFlags.None
             };
@@ -350,7 +431,7 @@ namespace Content.Client.Arcade
             var holdBlockPanel = new PanelContainer
             {
                 PanelOverride = previewBack,
-                CustomMinimumSize = new Vector2(65,65),
+                CustomMinimumSize = blockSize * 6.5f,
                 SizeFlagsHorizontal = SizeFlags.None,
                 SizeFlagsVertical = SizeFlags.None
             };
@@ -400,7 +481,7 @@ namespace Content.Client.Arcade
                     _pauseButton.Disabled = !_isPlayer;
                     break;
                 case BlockGameMessages.BlockGameScreen.Pause:
-                    ReleaseKeyboardFocus();
+                    //ReleaseKeyboardFocus();
                     CloseMenus();
                     _mainPanel.AddChild(_menuRootContainer);
                     _pauseButton.Disabled = true;
@@ -408,9 +489,14 @@ namespace Content.Client.Arcade
                 case BlockGameMessages.BlockGameScreen.Gameover:
                     _gameOver = true;
                     _pauseButton.Disabled = true;
-                    ReleaseKeyboardFocus();
+                    //ReleaseKeyboardFocus();
                     CloseMenus();
                     _mainPanel.AddChild(_gameOverRootContainer);
+                    break;
+                case BlockGameMessages.BlockGameScreen.Highscores:
+                    //ReleaseKeyboardFocus();
+                    CloseMenus();
+                    _mainPanel.AddChild(_highscoresRootContainer);
                     break;
             }
         }
@@ -419,46 +505,69 @@ namespace Content.Client.Arcade
         {
             if(_mainPanel.Children.Contains(_menuRootContainer)) _mainPanel.RemoveChild(_menuRootContainer);
             if(_mainPanel.Children.Contains(_gameOverRootContainer)) _mainPanel.RemoveChild(_gameOverRootContainer);
+            if(_mainPanel.Children.Contains(_highscoresRootContainer)) _mainPanel.RemoveChild(_highscoresRootContainer);
         }
 
-        public void SetGameoverPoints(int amount)
+        public void SetGameoverInfo(int amount, int? localPlacement, int? globalPlacement)
         {
-            _finalScoreLabel.Text = $"Points: {amount}";
+            var globalPlacementText = globalPlacement == null ? "-" : $"#{globalPlacement}";
+            var localPlacementText = localPlacement == null ? "-" : $"#{localPlacement}";
+            _finalScoreLabel.Text = $"Global: {globalPlacementText}\nLocal: {localPlacementText}\nPoints: {amount}";
         }
-
 
         public void UpdatePoints(int points)
         {
             _pointsLabel.Text = $"Points: {points}";
         }
 
+        public void UpdateHighscores(List<BlockGameMessages.HighScoreEntry> localHighscores,
+            List<BlockGameMessages.HighScoreEntry> globalHighscores)
+        {
+            var localHighscoreText = "Station:\n";
+            var globalHighscoreText = "Nanotrasen:\n";
+            for (int i = 0; i < 5; i++)
+            {
+                localHighscoreText += $"#{i + 1} " + (localHighscores.Count > i
+                    ? $"{localHighscores[i].Name} - {localHighscores[i].Score}\n" : "??? - 0\n");
+                globalHighscoreText += $"#{i + 1} " + (globalHighscores.Count > i
+                    ? $"{globalHighscores[i].Name} - {globalHighscores[i].Score}\n" : "??? - 0\n");
+            }
+
+            _localHighscoresLabel.Text = localHighscoreText;
+            _globalHighscoresLabel.Text = globalHighscoreText;
+        }
+
         protected override void KeyBindDown(GUIBoundKeyEventArgs args)
         {
             if(!_isPlayer) return;
 
-            if (args.Function == EngineKeyFunctions.MoveLeft)
+            if (args.Function == ContentKeyFunctions.ArcadeLeft)
             {
                 _owner.SendAction(BlockGamePlayerAction.StartLeft);
             }
-            else if (args.Function == EngineKeyFunctions.MoveRight)
+            else if (args.Function == ContentKeyFunctions.ArcadeRight)
             {
                 _owner.SendAction(BlockGamePlayerAction.StartRight);
             }
-            else if (args.Function == EngineKeyFunctions.MoveUp)
+            else if (args.Function == ContentKeyFunctions.ArcadeUp)
             {
                 _owner.SendAction(BlockGamePlayerAction.Rotate);
             }
-            else if (args.Function == EngineKeyFunctions.Use)
+            else if (args.Function == ContentKeyFunctions.Arcade3)
             {
                 _owner.SendAction(BlockGamePlayerAction.CounterRotate);
             }
-            else if (args.Function == EngineKeyFunctions.MoveDown)
+            else if (args.Function == ContentKeyFunctions.ArcadeDown)
             {
                 _owner.SendAction(BlockGamePlayerAction.SoftdropStart);
             }
-            else if (args.Function == ContentKeyFunctions.WideAttack)
+            else if (args.Function == ContentKeyFunctions.Arcade2)
             {
                 _owner.SendAction(BlockGamePlayerAction.Hold);
+            }
+            else if (args.Function == ContentKeyFunctions.Arcade1)
+            {
+                _owner.SendAction(BlockGamePlayerAction.Harddrop);
             }
         }
 
@@ -466,14 +575,14 @@ namespace Content.Client.Arcade
         {
             if(!_isPlayer) return;
 
-            if (args.Function == EngineKeyFunctions.MoveLeft)
+            if (args.Function == ContentKeyFunctions.ArcadeLeft)
             {
                 _owner.SendAction(BlockGamePlayerAction.EndLeft);
             }
-            else if (args.Function == EngineKeyFunctions.MoveRight)
+            else if (args.Function == ContentKeyFunctions.ArcadeRight)
             {
                 _owner.SendAction(BlockGamePlayerAction.EndRight);
-            }else if (args.Function == EngineKeyFunctions.MoveDown)
+            }else if (args.Function == ContentKeyFunctions.ArcadeDown)
             {
                 _owner.SendAction(BlockGamePlayerAction.SoftdropEnd);
             }
@@ -494,7 +603,7 @@ namespace Content.Client.Arcade
                     _nextBlockGrid.AddChild(new PanelContainer
                     {
                         PanelOverride = new StyleBoxFlat {BackgroundColor = c},
-                        CustomMinimumSize = new Vector2(10,10),
+                        CustomMinimumSize = blockSize,
                         RectDrawClipMargin = 0
                     });
                 }
@@ -516,7 +625,7 @@ namespace Content.Client.Arcade
                     _holdBlockGrid.AddChild(new PanelContainer
                     {
                         PanelOverride = new StyleBoxFlat {BackgroundColor = c},
-                        CustomMinimumSize = new Vector2(10,10),
+                        CustomMinimumSize = blockSize,
                         RectDrawClipMargin = 0
                     });
                 }
@@ -534,7 +643,7 @@ namespace Content.Client.Arcade
                     _gameGrid.AddChild(new PanelContainer
                     {
                         PanelOverride = new StyleBoxFlat {BackgroundColor = c},
-                        CustomMinimumSize = new Vector2(10,10),
+                        CustomMinimumSize = blockSize,
                         RectDrawClipMargin = 0
                     });
                 }
