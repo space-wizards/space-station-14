@@ -183,11 +183,6 @@ namespace Content.Server.GameObjects.Components.Singularity
 
         void ICollideBehavior.CollideWith(IEntity entity)
         {
-            if (transition)
-            {
-                return;
-            }
-
             if (repelled)
             {
                 return;

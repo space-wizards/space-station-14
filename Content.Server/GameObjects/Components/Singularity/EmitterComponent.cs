@@ -1,4 +1,5 @@
 using System.Threading;
+using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -11,7 +12,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Timer = Robust.Shared.Timers.Timer;
 
-namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
+namespace Content.Server.GameObjects.Components.Singularity
 {
     [RegisterComponent]
     public class EmitterComponent : PowerConsumerComponent, IInteractHand
