@@ -1,15 +1,18 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Server.Interfaces;
+using Content.Shared;
 using Content.Shared.Preferences;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.Network;
-using Robust.Shared.Interfaces.Resources;
 using Robust.Shared.IoC;
+using Robust.Shared.Network;
+
+#nullable enable
 
 namespace Content.Server.Preferences
 {
@@ -20,119 +23,115 @@ namespace Content.Server.Preferences
     public class ServerPreferencesManager : SharedPreferencesManager, IServerPreferencesManager
     {
         [Dependency] private readonly IServerNetManager _netManager = default!;
-        [Dependency] private readonly IConfigurationManager _configuration = default!;
-        [Dependency] private readonly IResourceManager _resourceManager = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private readonly IServerDbManager _db = default!;
 
-        private PreferencesDatabase _preferencesDb;
-        private Task<PreferencesDatabase> _prefsDbLoadTask;
+        // Cache player prefs on the server so we don't need as much async hell related to them.
+        private readonly Dictionary<NetUserId, PlayerPrefData> _cachedPlayerPrefs =
+            new Dictionary<NetUserId, PlayerPrefData>();
 
-        public void StartInit()
+        public void Init()
         {
             _netManager.RegisterNetMessage<MsgPreferencesAndSettings>(nameof(MsgPreferencesAndSettings));
             _netManager.RegisterNetMessage<MsgSelectCharacter>(nameof(MsgSelectCharacter),
                 HandleSelectCharacterMessage);
             _netManager.RegisterNetMessage<MsgUpdateCharacter>(nameof(MsgUpdateCharacter),
                 HandleUpdateCharacterMessage);
-
-            _configuration.RegisterCVar("game.maxcharacterslots", 10);
-            _configuration.RegisterCVar("database.prefs_engine", "sqlite");
-            _configuration.RegisterCVar("database.prefs_sqlite_dbpath", "preferences.db");
-            _configuration.RegisterCVar("database.prefs_pg_host", "localhost");
-            _configuration.RegisterCVar("database.prefs_pg_port", 5432);
-            _configuration.RegisterCVar("database.prefs_pg_database", "ss14_prefs");
-            _configuration.RegisterCVar("database.prefs_pg_username", string.Empty);
-            _configuration.RegisterCVar("database.prefs_pg_password", string.Empty);
-
-            var engine = _configuration.GetCVar<string>("database.prefs_engine").ToLower();
-            IDatabaseConfiguration dbConfig;
-            switch (engine)
-            {
-                case "sqlite":
-                    var configPreferencesDbPath = _configuration.GetCVar<string>("database.prefs_sqlite_dbpath");
-                    var inMemory = _resourceManager.UserData.RootDir == null;
-                    var finalPreferencesDbPath = inMemory ?
-                        null :
-                        Path.Combine(_resourceManager.UserData.RootDir, configPreferencesDbPath);
-                    dbConfig = new SqliteConfiguration(finalPreferencesDbPath);
-                    break;
-                case "postgres":
-                    dbConfig = new PostgresConfiguration(
-                        _configuration.GetCVar<string>("database.prefs_pg_host"),
-                        _configuration.GetCVar<int>("database.prefs_pg_port"),
-                        _configuration.GetCVar<string>("database.prefs_pg_database"),
-                        _configuration.GetCVar<string>("database.prefs_pg_username"),
-                        _configuration.GetCVar<string>("database.prefs_pg_password")
-                    );
-                    break;
-                default:
-                    throw new NotImplementedException("Unknown database engine {engine}.");
-            }
-
-            var maxCharacterSlots = _configuration.GetCVar<int>("game.maxcharacterslots");
-
-            // Actually loading the preferences database takes a while,
-            // because EFCore has to initialize and run migrations.
-            // We load it in the thread pool here and then fetch the .Result in FinishInit.
-            // This means it'll run in parallel with other loading like prototypes & map load.
-            _prefsDbLoadTask = Task.Run(() => new PreferencesDatabase(dbConfig, maxCharacterSlots));
         }
 
-        public void FinishInit()
-        {
-            _preferencesDb = _prefsDbLoadTask.Result;
-        }
 
         private async void HandleSelectCharacterMessage(MsgSelectCharacter message)
         {
-            await _preferencesDb.SaveSelectedCharacterIndexAsync(message.MsgChannel.UserId.UserId,
-                message.SelectedCharacterIndex);
+            await _db.SaveSelectedCharacterIndexAsync(message.MsgChannel.UserId, message.SelectedCharacterIndex);
         }
 
         private async void HandleUpdateCharacterMessage(MsgUpdateCharacter message)
         {
-            await _preferencesDb.SaveCharacterSlotAsync(message.MsgChannel.UserId.UserId, message.Profile,
-                message.Slot);
+            await _db.SaveCharacterSlotAsync(message.MsgChannel.UserId, message.Profile, message.Slot);
         }
 
         public async void OnClientConnected(IPlayerSession session)
         {
-            var msg = _netManager.CreateNetMessage<MsgPreferencesAndSettings>();
-            msg.Preferences = await GetPreferencesAsync(session.UserId.UserId);
-            msg.Settings = new GameSettings
+            var prefsData = new PlayerPrefData();
+            var loadTask = LoadPrefs();
+            prefsData.PrefsLoaded = loadTask;
+            _cachedPlayerPrefs[session.UserId] = prefsData;
+
+            await loadTask;
+
+            async Task LoadPrefs()
             {
-                MaxCharacterSlots = _configuration.GetCVar<int>("game.maxcharacterslots")
-            };
-            _netManager.ServerSendMessage(msg, session.ConnectedClient);
+                var prefs = await GetOrCreatePreferencesAsync(session.UserId);
+                prefsData.Prefs = prefs;
+
+                var msg = _netManager.CreateNetMessage<MsgPreferencesAndSettings>();
+                msg.Preferences = prefs;
+                msg.Settings = new GameSettings
+                {
+                    MaxCharacterSlots = _cfg.GetCVar(CCVars.GameMaxCharacterSlots)
+                };
+                _netManager.ServerSendMessage(msg, session.ConnectedClient);
+            }
         }
 
-        /// <summary>
-        /// Returns the requested <see cref="PlayerPreferences"/> or null if not found.
-        /// </summary>
-        private async Task<PlayerPreferences> GetFromSql(Guid userId)
+        public void OnClientDisconnected(IPlayerSession session)
         {
-            return await _preferencesDb.GetPlayerPreferencesAsync(userId);
+            _cachedPlayerPrefs.Remove(session.UserId);
+        }
+
+        public bool HavePreferencesLoaded(IPlayerSession session)
+        {
+            return _cachedPlayerPrefs.ContainsKey(session.UserId);
+        }
+
+        public Task WaitPreferencesLoaded(IPlayerSession session)
+        {
+            return _cachedPlayerPrefs[session.UserId].PrefsLoaded;
         }
 
         /// <summary>
         /// Retrieves preferences for the given username from storage.
         /// Creates and saves default preferences if they are not found, then returns them.
         /// </summary>
-        public async Task<PlayerPreferences> GetPreferencesAsync(Guid userId)
+        public PlayerPreferences GetPreferences(NetUserId userId)
         {
-            var prefs = await GetFromSql(userId);
-            if (prefs is null)
+            var prefs = _cachedPlayerPrefs[userId].Prefs;
+            if (prefs == null)
             {
-                await _preferencesDb.SaveSelectedCharacterIndexAsync(userId, 0);
-                await _preferencesDb.SaveCharacterSlotAsync(userId, HumanoidCharacterProfile.Default(), 0);
-                prefs = await GetFromSql(userId);
+                throw new InvalidOperationException("Preferences for this player have not loaded yet.");
             }
 
             return prefs;
         }
 
-        public async Task<IEnumerable<KeyValuePair<Guid, ICharacterProfile>>> GetSelectedProfilesForPlayersAsync(List<Guid> usernames)
+        private async Task<PlayerPreferences> GetOrCreatePreferencesAsync(NetUserId userId)
         {
-            return await _preferencesDb.GetSelectedProfilesForPlayersAsync(usernames);
+            var prefs = await _db.GetPlayerPreferencesAsync(userId);
+            if (prefs is null)
+            {
+                return await _db.InitPrefsAsync(userId, HumanoidCharacterProfile.Default());
+            }
+
+            return prefs;
+        }
+
+        public IEnumerable<KeyValuePair<NetUserId, ICharacterProfile>> GetSelectedProfilesForPlayers(
+            List<NetUserId> usernames)
+        {
+            return usernames
+                .Select(p => (_cachedPlayerPrefs[p].Prefs, p))
+                .Where(p => p.Prefs != null)
+                .Select(p =>
+                {
+                    var idx = p.Prefs!.SelectedCharacterIndex;
+                    return new KeyValuePair<NetUserId, ICharacterProfile>(p.p, p.Prefs!.GetProfile(idx));
+                });
+        }
+
+        private sealed class PlayerPrefData
+        {
+            public Task PrefsLoaded = default!;
+            public PlayerPreferences? Prefs;
         }
     }
 }

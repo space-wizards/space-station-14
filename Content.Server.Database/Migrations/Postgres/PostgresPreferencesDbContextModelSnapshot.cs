@@ -30,20 +30,65 @@ namespace Content.Server.Database.Migrations.Postgres
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("HumanoidProfileId")
+                    b.Property<int>("ProfileId")
                         .HasColumnType("integer");
 
                     b.HasKey("AntagId");
 
-                    b.HasIndex("HumanoidProfileId", "AntagName")
+                    b.HasIndex("ProfileId", "AntagName")
                         .IsUnique();
 
                     b.ToTable("Antag");
                 });
 
-            modelBuilder.Entity("Content.Server.Database.HumanoidProfile", b =>
+            modelBuilder.Entity("Content.Server.Database.Job", b =>
                 {
-                    b.Property<int>("HumanoidProfileId")
+                    b.Property<int>("JobId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("JobName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Priority")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ProfileId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("JobId");
+
+                    b.HasIndex("ProfileId");
+
+                    b.ToTable("Job");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.Prefs", b =>
+                {
+                    b.Property<int>("PrefsId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("SelectedCharacterSlot")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("PrefsId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Preferences");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.Profile", b =>
+                {
+                    b.Property<int>("ProfileId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
@@ -92,88 +137,39 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Property<int>("Slot")
                         .HasColumnType("integer");
 
-                    b.Property<string>("SlotName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("HumanoidProfileId");
+                    b.HasKey("ProfileId");
 
                     b.HasIndex("PrefsId");
 
                     b.HasIndex("Slot", "PrefsId")
                         .IsUnique();
 
-                    b.ToTable("HumanoidProfile");
-                });
-
-            modelBuilder.Entity("Content.Server.Database.Job", b =>
-                {
-                    b.Property<int>("JobId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("JobName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("Priority")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ProfileHumanoidProfileId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("JobId");
-
-                    b.HasIndex("ProfileHumanoidProfileId");
-
-                    b.ToTable("Job");
-                });
-
-            modelBuilder.Entity("Content.Server.Database.Prefs", b =>
-                {
-                    b.Property<int>("PrefsId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<int>("SelectedCharacterSlot")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("PrefsId");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("Preferences");
+                    b.ToTable("Profiles");
                 });
 
             modelBuilder.Entity("Content.Server.Database.Antag", b =>
                 {
-                    b.HasOne("Content.Server.Database.HumanoidProfile", "Profile")
+                    b.HasOne("Content.Server.Database.Profile", "Profile")
                         .WithMany("Antags")
-                        .HasForeignKey("HumanoidProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Content.Server.Database.HumanoidProfile", b =>
-                {
-                    b.HasOne("Content.Server.Database.Prefs", "Prefs")
-                        .WithMany("HumanoidProfiles")
-                        .HasForeignKey("PrefsId")
+                        .HasForeignKey("ProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("Content.Server.Database.Job", b =>
                 {
-                    b.HasOne("Content.Server.Database.HumanoidProfile", "Profile")
+                    b.HasOne("Content.Server.Database.Profile", "Profile")
                         .WithMany("Jobs")
-                        .HasForeignKey("ProfileHumanoidProfileId")
+                        .HasForeignKey("ProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Content.Server.Database.Profile", b =>
+                {
+                    b.HasOne("Content.Server.Database.Prefs", "Prefs")
+                        .WithMany("Profiles")
+                        .HasForeignKey("PrefsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -22,13 +22,12 @@ namespace Content.Server.Database.Migrations.Sqlite
                 });
 
             migrationBuilder.CreateTable(
-                name: "HumanoidProfile",
+                name: "Profiles",
                 columns: table => new
                 {
-                    HumanoidProfileId = table.Column<int>(nullable: false)
+                    ProfileId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Slot = table.Column<int>(nullable: false),
-                    SlotName = table.Column<string>(nullable: false),
                     CharacterName = table.Column<string>(nullable: false),
                     Age = table.Column<int>(nullable: false),
                     Sex = table.Column<string>(nullable: false),
@@ -43,9 +42,9 @@ namespace Content.Server.Database.Migrations.Sqlite
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_HumanoidProfile", x => x.HumanoidProfileId);
+                    table.PrimaryKey("PK_Profiles", x => x.ProfileId);
                     table.ForeignKey(
-                        name: "FK_HumanoidProfile_Preferences_PrefsId",
+                        name: "FK_Profiles_Preferences_PrefsId",
                         column: x => x.PrefsId,
                         principalTable: "Preferences",
                         principalColumn: "PrefsId",
@@ -58,17 +57,17 @@ namespace Content.Server.Database.Migrations.Sqlite
                 {
                     AntagId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    HumanoidProfileId = table.Column<int>(nullable: false),
+                    ProfileId = table.Column<int>(nullable: false),
                     AntagName = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Antag", x => x.AntagId);
                     table.ForeignKey(
-                        name: "FK_Antag_HumanoidProfile_HumanoidProfileId",
-                        column: x => x.HumanoidProfileId,
-                        principalTable: "HumanoidProfile",
-                        principalColumn: "HumanoidProfileId",
+                        name: "FK_Antag_Profiles_ProfileId",
+                        column: x => x.ProfileId,
+                        principalTable: "Profiles",
+                        principalColumn: "ProfileId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -78,7 +77,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                 {
                     JobId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    ProfileHumanoidProfileId = table.Column<int>(nullable: false),
+                    ProfileId = table.Column<int>(nullable: false),
                     JobName = table.Column<string>(nullable: false),
                     Priority = table.Column<int>(nullable: false)
                 },
@@ -86,39 +85,39 @@ namespace Content.Server.Database.Migrations.Sqlite
                 {
                     table.PrimaryKey("PK_Job", x => x.JobId);
                     table.ForeignKey(
-                        name: "FK_Job_HumanoidProfile_ProfileHumanoidProfileId",
-                        column: x => x.ProfileHumanoidProfileId,
-                        principalTable: "HumanoidProfile",
-                        principalColumn: "HumanoidProfileId",
+                        name: "FK_Job_Profiles_ProfileId",
+                        column: x => x.ProfileId,
+                        principalTable: "Profiles",
+                        principalColumn: "ProfileId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Antag_HumanoidProfileId_AntagName",
+                name: "IX_Antag_ProfileId_AntagName",
                 table: "Antag",
-                columns: new[] { "HumanoidProfileId", "AntagName" },
+                columns: new[] { "ProfileId", "AntagName" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_HumanoidProfile_PrefsId",
-                table: "HumanoidProfile",
-                column: "PrefsId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_HumanoidProfile_Slot_PrefsId",
-                table: "HumanoidProfile",
-                columns: new[] { "Slot", "PrefsId" },
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Job_ProfileHumanoidProfileId",
+                name: "IX_Job_ProfileId",
                 table: "Job",
-                column: "ProfileHumanoidProfileId");
+                column: "ProfileId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Preferences_UserId",
                 table: "Preferences",
                 column: "UserId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Profiles_PrefsId",
+                table: "Profiles",
+                column: "PrefsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Profiles_Slot_PrefsId",
+                table: "Profiles",
+                columns: new[] { "Slot", "PrefsId" },
                 unique: true);
         }
 
@@ -131,7 +130,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                 name: "Job");
 
             migrationBuilder.DropTable(
-                name: "HumanoidProfile");
+                name: "Profiles");
 
             migrationBuilder.DropTable(
                 name: "Preferences");

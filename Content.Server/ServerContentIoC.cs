@@ -3,6 +3,7 @@ using Content.Server.AI.WorldState;
 using Content.Server.Body.Network;
 using Content.Server.Cargo;
 using Content.Server.Chat;
+using Content.Server.Database;
 using Content.Server.GameObjects.Components.Mobs.Speech;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.GameObjects.Components.Power.PowerNetComponents;
@@ -34,6 +35,7 @@ namespace Content.Server
             IoCManager.Register<ICargoOrderDataManager, CargoOrderDataManager>();
             IoCManager.Register<IModuleManager, ServerModuleManager>();
             IoCManager.Register<IServerPreferencesManager, ServerPreferencesManager>();
+            IoCManager.Register<IServerDbManager, ServerDbManager>();
             IoCManager.Register<RecipeManager, RecipeManager>();
             IoCManager.Register<IPDAUplinkManager,PDAUplinkManager>();
             IoCManager.Register<INodeGroupFactory, NodeGroupFactory>();

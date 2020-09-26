@@ -145,7 +145,7 @@ namespace Content.Server.GameObjects.Components.Medical
             UserInterface?.Open(actor.playerSession);
         }
 
-        private async void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
+        private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
             if (!(obj.Message is CloningPodUiButtonPressedMessage message)) return;
 
@@ -169,9 +169,9 @@ namespace Content.Server.GameObjects.Components.Medical
 
                     var mob = _entityManager.SpawnEntity("HumanMob_Content", Owner.Transform.MapPosition);
                     var client = _playerManager.GetSessionByUserId(mind.UserId!.Value);
-                    mob.GetComponent<HumanoidAppearanceComponent>()
-                        .UpdateFromProfile(GetPlayerProfileAsync(client.UserId).Result);
-                    mob.Name = GetPlayerProfileAsync(client.UserId).Result.Name;
+                    var profile = GetPlayerProfileAsync(client.UserId);
+                    mob.GetComponent<HumanoidAppearanceComponent>().UpdateFromProfile(profile);
+                    mob.Name = profile.Name;
 
                     _bodyContainer.Insert(mob);
                     _capturedMind = mind;
@@ -209,10 +209,9 @@ namespace Content.Server.GameObjects.Components.Medical
         }
 
 
-        private async Task<HumanoidCharacterProfile> GetPlayerProfileAsync(NetUserId userId)
+        private HumanoidCharacterProfile GetPlayerProfileAsync(NetUserId userId)
         {
-            return (HumanoidCharacterProfile) (await _prefsManager.GetPreferencesAsync(userId.UserId))
-                .SelectedCharacter;
+            return (HumanoidCharacterProfile) _prefsManager.GetPreferences(userId).SelectedCharacter;
         }
 
         private void HandleGhostReturn(GhostComponent.GhostReturnMessage message)

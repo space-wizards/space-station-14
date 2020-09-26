@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Content.Server.Database
 {
-    public class PostgresPreferencesDbContext : PreferencesDbContext
+    public sealed class PostgresPreferencesDbContext : PreferencesDbContext
     {
         // This is used by the "dotnet ef" CLI tool.
         public PostgresPreferencesDbContext()
@@ -21,7 +21,7 @@ namespace Content.Server.Database
         }
     }
 
-    public class SqlitePreferencesDbContext : PreferencesDbContext
+    public sealed class SqlitePreferencesDbContext : PreferencesDbContext
     {
         public SqlitePreferencesDbContext()
         {
@@ -54,7 +54,7 @@ namespace Content.Server.Database
         }
 
         public DbSet<Prefs> Preferences { get; set; } = null!;
-        public DbSet<HumanoidProfile> HumanoidProfile { get; set; } = null!;
+        public DbSet<Profile> Profiles { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -62,12 +62,12 @@ namespace Content.Server.Database
                 .HasIndex(p => p.UserId)
                 .IsUnique();
 
-            modelBuilder.Entity<HumanoidProfile>()
+            modelBuilder.Entity<Profile>()
                 .HasIndex(p => new {p.Slot, p.PrefsId})
                 .IsUnique();
 
             modelBuilder.Entity<Antag>()
-                .HasIndex(p => new {p.HumanoidProfileId , p.AntagName})
+                .HasIndex(p => new {HumanoidProfileId = p.ProfileId, p.AntagName})
                 .IsUnique();
         }
     }
@@ -77,14 +77,13 @@ namespace Content.Server.Database
         public int PrefsId { get; set; }
         public Guid UserId { get; set; }
         public int SelectedCharacterSlot { get; set; }
-        public List<HumanoidProfile> HumanoidProfiles { get; } = new List<HumanoidProfile>();
+        public List<Profile> Profiles { get; } = new List<Profile>();
     }
 
-    public class HumanoidProfile
+    public class Profile
     {
-        public int HumanoidProfileId { get; set; }
+        public int ProfileId { get; set; }
         public int Slot { get; set; }
-        public string SlotName { get; set; } = null!;
         public string CharacterName { get; set; } = null!;
         public int Age { get; set; }
         public string Sex { get; set; } = null!;
@@ -105,7 +104,7 @@ namespace Content.Server.Database
     public class Job
     {
         public int JobId { get; set; }
-        public HumanoidProfile Profile { get; set; } = null!;
+        public Profile Profile { get; set; } = null!;
 
         public string JobName { get; set; } = null!;
         public DbJobPriority Priority { get; set; }
@@ -123,8 +122,8 @@ namespace Content.Server.Database
     public class Antag
     {
         public int AntagId { get; set; }
-        public HumanoidProfile Profile { get; set; } = null!;
-        public int HumanoidProfileId { get; set; }
+        public Profile Profile { get; set; } = null!;
+        public int ProfileId { get; set; }
 
         public string AntagName { get; set; } = null!;
     }

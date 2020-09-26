@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -34,7 +33,6 @@ using Robust.Server.Interfaces.Maps;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
 using Robust.Server.ServerStatus;
-using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
@@ -222,7 +220,7 @@ namespace Content.Server.GameTicking
             }
         }
 
-        public async void StartRound(bool force = false)
+        public void StartRound(bool force = false)
         {
             DebugTools.Assert(RunLevel == GameRunLevel.PreRoundLobby);
             Logger.InfoS("ticker", "Starting round!");
@@ -244,10 +242,10 @@ namespace Content.Server.GameTicking
             RoundLengthMetric.Set(0);
 
             // Get the profiles for each player for easier lookup.
-            var profiles = (await _prefsManager.GetSelectedProfilesForPlayersAsync(
+            var profiles = _prefsManager.GetSelectedProfilesForPlayers(
                 readyPlayers
-                    .Select(p => p.UserId.UserId).ToList()))
-                    .ToDictionary(p => new NetUserId(p.Key), p => (HumanoidCharacterProfile) p.Value);
+                    .Select(p => p.UserId).ToList())
+                    .ToDictionary(p => p.Key, p => (HumanoidCharacterProfile) p.Value);
 
             foreach (var readyPlayer in readyPlayers)
             {
@@ -320,9 +318,10 @@ namespace Content.Server.GameTicking
             IoCManager.Resolve<IServerNetManager>().ServerSendToAll(msg);
         }
 
-        private async Task<HumanoidCharacterProfile> GetPlayerProfileAsync(IPlayerSession p) =>
-            (HumanoidCharacterProfile) (await _prefsManager.GetPreferencesAsync(p.UserId.UserId))
-            .SelectedCharacter;
+        private HumanoidCharacterProfile GetPlayerProfile(IPlayerSession p)
+        {
+            return (HumanoidCharacterProfile) _prefsManager.GetPreferences(p.UserId).SelectedCharacter;
+        }
 
         public void EndRound(string roundEndText = "")
         {
@@ -373,7 +372,7 @@ namespace Content.Server.GameTicking
             if (LobbyEnabled)
                 _playerJoinLobby(targetPlayer);
             else
-                SpawnPlayerAsync(targetPlayer);
+                SpawnPlayer(targetPlayer);
         }
 
         public void MakeObserve(IPlayerSession player)
@@ -389,12 +388,22 @@ namespace Content.Server.GameTicking
         {
             if (!_playersInLobby.ContainsKey(player)) return;
 
-            SpawnPlayerAsync(player, jobId);
+            if (!_prefsManager.HavePreferencesLoaded(player))
+            {
+                return;
+            }
+
+            SpawnPlayer(player, jobId);
         }
 
         public void ToggleReady(IPlayerSession player, bool ready)
         {
             if (!_playersInLobby.ContainsKey(player)) return;
+
+            if (!_prefsManager.HavePreferencesLoaded(player))
+            {
+                return;
+            }
 
             var status = ready ? PlayerStatus.Ready : PlayerStatus.NotReady;
             _playersInLobby[player] = ready ? PlayerStatus.Ready : PlayerStatus.NotReady;
@@ -716,6 +725,8 @@ namespace Content.Server.GameTicking
 
                 case SessionStatus.InGame:
                 {
+                    _prefsManager.OnClientConnected(session);
+
                     var data = session.ContentData();
                     if (data.Mind == null)
                     {
@@ -725,13 +736,14 @@ namespace Content.Server.GameTicking
                             return;
                         }
 
-                        SpawnPlayerAsync(session);
+
+                        SpawnWaitPrefs();
                     }
                     else
                     {
                         if (data.Mind.CurrentEntity == null)
                         {
-                            SpawnPlayerAsync(session);
+                            SpawnWaitPrefs();
                         }
                         else
                         {
@@ -749,8 +761,15 @@ namespace Content.Server.GameTicking
 
                     _chatManager.DispatchServerAnnouncement($"Player {args.Session} left server!");
                     ServerEmptyUpdateRestartCheck();
+                    _prefsManager.OnClientDisconnected(session);
                     break;
                 }
+            }
+
+            async void SpawnWaitPrefs()
+            {
+                await _prefsManager.WaitPreferencesLoaded(session);
+                SpawnPlayer(session);
             }
         }
 
@@ -785,11 +804,9 @@ namespace Content.Server.GameTicking
             }, _updateShutdownCts.Token);
         }
 
-        private async void SpawnPlayerAsync(IPlayerSession session, string jobId = null, bool lateJoin = true)
+        private void SpawnPlayer(IPlayerSession session, string jobId = null, bool lateJoin = true)
         {
-            var character = (HumanoidCharacterProfile) (await _prefsManager
-                    .GetPreferencesAsync(session.UserId.UserId))
-                .SelectedCharacter;
+            var character = GetPlayerProfile(session);
 
             SpawnPlayer(session, character, jobId, lateJoin);
         }
@@ -866,13 +883,11 @@ namespace Content.Server.GameTicking
             _manifest.Add(new ManifestEntry(characterName, jobId));
         }
 
-        private async void _spawnObserver(IPlayerSession session)
+        private void _spawnObserver(IPlayerSession session)
         {
             _playerJoinGame(session);
 
-            var name = (await _prefsManager
-                    .GetPreferencesAsync(session.UserId.UserId))
-                .SelectedCharacter.Name;
+            var name = GetPlayerProfile(session).Name;
 
             var data = session.ContentData();
             data.WipeMind();
@@ -888,7 +903,6 @@ namespace Content.Server.GameTicking
         {
             _playersInLobby.Add(session, PlayerStatus.NotReady);
 
-            _prefsManager.OnClientConnected(session);
             _netManager.ServerSendMessage(_netManager.CreateNetMessage<MsgTickerJoinLobby>(), session.ConnectedClient);
             _netManager.ServerSendMessage(_getStatusMsg(session), session.ConnectedClient);
             _netManager.ServerSendMessage(GetInfoMsg(), session.ConnectedClient);

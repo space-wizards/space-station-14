@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Content.Server.Database.Migrations.Sqlite
 {
     [DbContext(typeof(SqlitePreferencesDbContext))]
-    [Migration("20200915122445_Init")]
+    [Migration("20200926140955_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,20 +28,63 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("HumanoidProfileId")
+                    b.Property<int>("ProfileId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("AntagId");
 
-                    b.HasIndex("HumanoidProfileId", "AntagName")
+                    b.HasIndex("ProfileId", "AntagName")
                         .IsUnique();
 
                     b.ToTable("Antag");
                 });
 
-            modelBuilder.Entity("Content.Server.Database.HumanoidProfile", b =>
+            modelBuilder.Entity("Content.Server.Database.Job", b =>
                 {
-                    b.Property<int>("HumanoidProfileId")
+                    b.Property<int>("JobId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("JobName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Priority")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ProfileId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("JobId");
+
+                    b.HasIndex("ProfileId");
+
+                    b.ToTable("Job");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.Prefs", b =>
+                {
+                    b.Property<int>("PrefsId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("SelectedCharacterSlot")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("PrefsId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Preferences");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.Profile", b =>
+                {
+                    b.Property<int>("ProfileId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -89,86 +132,39 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Property<int>("Slot")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("SlotName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("HumanoidProfileId");
+                    b.HasKey("ProfileId");
 
                     b.HasIndex("PrefsId");
 
                     b.HasIndex("Slot", "PrefsId")
                         .IsUnique();
 
-                    b.ToTable("HumanoidProfile");
-                });
-
-            modelBuilder.Entity("Content.Server.Database.Job", b =>
-                {
-                    b.Property<int>("JobId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("JobName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Priority")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("ProfileHumanoidProfileId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("JobId");
-
-                    b.HasIndex("ProfileHumanoidProfileId");
-
-                    b.ToTable("Job");
-                });
-
-            modelBuilder.Entity("Content.Server.Database.Prefs", b =>
-                {
-                    b.Property<int>("PrefsId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("SelectedCharacterSlot")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("PrefsId");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("Preferences");
+                    b.ToTable("Profiles");
                 });
 
             modelBuilder.Entity("Content.Server.Database.Antag", b =>
                 {
-                    b.HasOne("Content.Server.Database.HumanoidProfile", "Profile")
+                    b.HasOne("Content.Server.Database.Profile", "Profile")
                         .WithMany("Antags")
-                        .HasForeignKey("HumanoidProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Content.Server.Database.HumanoidProfile", b =>
-                {
-                    b.HasOne("Content.Server.Database.Prefs", "Prefs")
-                        .WithMany("HumanoidProfiles")
-                        .HasForeignKey("PrefsId")
+                        .HasForeignKey("ProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("Content.Server.Database.Job", b =>
                 {
-                    b.HasOne("Content.Server.Database.HumanoidProfile", "Profile")
+                    b.HasOne("Content.Server.Database.Profile", "Profile")
                         .WithMany("Jobs")
-                        .HasForeignKey("ProfileHumanoidProfileId")
+                        .HasForeignKey("ProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Content.Server.Database.Profile", b =>
+                {
+                    b.HasOne("Content.Server.Database.Prefs", "Prefs")
+                        .WithMany("Profiles")
+                        .HasForeignKey("PrefsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
