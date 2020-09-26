@@ -16,12 +16,8 @@
     # temp to make clickmask work
     sprite: Constructible/Misc/kitchen.rsi
     state: spike
-  - type: Icon
-    sprite: Constructible/Misc/kitchen.rsi
-    state: spike
   - type: Anchorable
   - type: Pullable
   - type: Destructible
     deadThreshold: 50
   - type: KitchenSpike
-
