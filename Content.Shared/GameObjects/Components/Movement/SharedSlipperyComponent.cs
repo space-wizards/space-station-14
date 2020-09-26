@@ -112,6 +112,7 @@ namespace Content.Shared.GameObjects.Components.Movement
             {
                 if (!uid.IsValid() || !_entityManager.EntityExists(uid))
                 {
+                    _slipped.Remove(uid);
                     continue;
                 }
 

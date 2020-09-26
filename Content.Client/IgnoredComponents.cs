@@ -155,12 +155,10 @@
             "AMEPart",
             "AMEFuelContainer",
             "AMEShield",
-            "DebugPump",
             "PressurePump",
             "PressureVent",
             "VolumePump",
-            "DebugVent",
-            "DebugSiphon",
+            "PressureSiphon",
             "SignalReceiver",
             "SignalSwitch",
             "SignalTransmitter",
@@ -172,6 +170,11 @@
             "Firelock",
             "AtmosPlaque",
             "Spillable",
+            "SpaceVillainArcade",
+            "Flammable",
+            "CreamPie",
+            "CreamPied",
+            "BlockGameArcade"
         };
     }
 }

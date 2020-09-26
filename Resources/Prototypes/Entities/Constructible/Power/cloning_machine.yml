@@ -10,9 +10,7 @@
         - state: pod_0
           map: ["enum.CloningPodVisualLayers.Machine"]
     - type: PowerReceiver
-    - type: Icon
-      sprite: Objects/Specific/Medical/cloning.rsi
-      state: pod_0
+
     - type: Anchorable
     - type: Clickable
     - type: InteractionOutline

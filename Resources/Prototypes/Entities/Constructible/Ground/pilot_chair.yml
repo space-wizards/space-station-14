@@ -7,9 +7,7 @@
     sprite: Constructible/Misc/furniture.rsi
     state: chair
     color: "#8e9799"
-  - type: Icon
-    sprite: Constructible/Misc/furniture.rsi
-    state: chair
+
   - type: Collidable
   - type: Clickable
   - type: InteractionOutline

@@ -10,6 +10,7 @@
     netsync: false
     drawdepth: Mobs # They're on the same layer as mobs, perspective.
     sprite: Constructible/Structures/Doors/airlock_basic.rsi
+    preview_state: closed
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
@@ -23,9 +24,7 @@
       map: ["enum.DoorVisualLayers.BaseBolted"]
     - state: panel_open
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Icon
-    sprite: Constructible/Structures/Doors/airlock_basic.rsi
-    state: closed
+
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -76,8 +75,7 @@
     enabled: false
   - type: Sprite
     sprite: Constructible/Structures/Doors/airlock_glass.rsi
-  - type: Icon
-    sprite: Constructible/Structures/Doors/airlock_glass.rsi
+
 
 - type: entity
   parent: Airlock
@@ -86,5 +84,4 @@
   components:
   - type: Sprite
     sprite: Constructible/Structures/Doors/airlock_maint.rsi
-  - type: Icon
-    sprite: Constructible/Structures/Doors/airlock_maint.rsi
+

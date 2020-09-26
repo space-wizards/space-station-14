@@ -9,10 +9,9 @@
   - type: Sprite
     netsync: false
     sprite: Constructible/Tiles/catwalk.rsi
+    preview_state: catwalk_preview
     drawdepth: FloorTiles
-  - type: Icon
-    sprite: Constructible/Tiles/catwalk.rsi
-    state: catwalk_preview
+
   - type: SnapGrid
     offset: Center
   - type: IconSmooth

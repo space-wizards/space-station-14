@@ -15,9 +15,6 @@
   - type: Sprite
     sprite: Clothing/Belt/belt_utility.rsi
     state: utilitybelt
-  - type: Icon
-    sprite: Clothing/Belt/belt_utility.rsi
-    state: utilitybelt
   - type: Clothing
     size: 50
     QuickEquip: false
@@ -32,9 +29,6 @@
   description: For holding your pants up.
   components:
   - type: Sprite
-    sprite: Clothing/Belt/suspenders.rsi
-    state: icon
-  - type: Icon
     sprite: Clothing/Belt/suspenders.rsi
     state: icon
   - type: Clothing

@@ -1,13 +1,13 @@
 ﻿- type: entity
   name: emergency flare # todo: we need some sort of IgnitionSourceComponent we can add to this, so when it's lit it will cause fires when touching fuel
-  parent: BaseItem 
+  parent: BaseItem
   id: FlareBase
   description: A flare that produces a very bright light for a short while. Point the flame away from yourself.
   components:
     - type: ExpendableLight
       spentName: spent flare
       spentDesc: It looks like this flare has burnt out. What a bummer.
-      glowDuration: 400 
+      glowDuration: 400
       fadeOutDuration: 4
       iconStateOn: flare_unlit
       iconStateSpent: flare_spent
@@ -25,12 +25,9 @@
           shader: unshaded
         - state: flare_unlit
           color: "#FF0000"
-    - type: Icon
-      sprite: Objects/Misc/flare.rsi
-      state: flare_spent
     - type: Item
       sprite: Objects/Misc/flare.rsi
-      color: "#FF0000" 
+      color: "#FF0000"
       HeldPrefix: off
     - type: LoopingSound
     - type: Appearance

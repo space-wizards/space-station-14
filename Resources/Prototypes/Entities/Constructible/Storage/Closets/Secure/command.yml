@@ -7,8 +7,7 @@
     visuals:
     - type: StorageVisualizer
       state: cap
-  - type: Icon
-    state: cap_icon
+
 
 - type: entity
   id: LockerHeadOfPersonnel
@@ -19,5 +18,4 @@
     visuals:
     - type: StorageVisualizer
       state: hop
-  - type: Icon
-    state: hop_icon
+

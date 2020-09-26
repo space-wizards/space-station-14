@@ -17,7 +17,5 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/flour.rsi
     state: icon
-  - type: Icon
-    sprite: Objects/Consumable/Food/flour.rsi
-    state: icon
+
   - type: Spillable

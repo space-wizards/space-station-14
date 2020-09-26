@@ -14,9 +14,7 @@
     - type: StorageVisualizer
       state_open: plasticcrate_open
       state_closed: plasticcrate_door
-  - type: Icon
-    sprite: Constructible/Structures/Crates/plastic.rsi
-    state: plasticcrate
+
 
 - type: entity
   id: CrateFreezer
@@ -34,9 +32,7 @@
     - type: StorageVisualizer
       state_open: freezer_open
       state_closed: freezer_door
-  - type: Icon
-    sprite: Constructible/Structures/Crates/freezer.rsi
-    state: freezer
+
 
 - type: entity
   id: CrateHydroponics
@@ -54,9 +50,7 @@
     - type: StorageVisualizer
       state_open: hydrocrate_open
       state_closed: hydrocrate_door
-  - type: Icon
-    sprite: Constructible/Structures/Crates/hydro.rsi
-    state: hydrocrate
+
 
 - type: entity
   id: CrateMedical
@@ -74,9 +68,7 @@
     - type: StorageVisualizer
       state_open: medicalcrate_open
       state_closed: medicalcrate_door
-  - type: Icon
-    sprite: Constructible/Structures/Crates/medical.rsi
-    state: medicalcrate
+
 
 - type: entity
   id: CrateRadiation
@@ -95,9 +87,7 @@
     - type: StorageVisualizer
       state_open: radiationcrate_open
       state_closed: radiationcrate_door
-  - type: Icon
-    sprite: Constructible/Structures/Crates/radiation.rsi
-    state: radiationcrate
+
 
 - type: entity
   id: CrateInternals
@@ -115,6 +105,4 @@
     - type: StorageVisualizer
       state_open: o2crate_open
       state_closed: o2crate_door
-  - type: Icon
-    sprite: Constructible/Structures/Crates/o2.rsi
-    state: o2crate
+

@@ -7,9 +7,7 @@
   - type: Sprite
     sprite: Clothing/Earpieces/headset.rsi
     state: headset
-  - type: Icon
-    sprite: Clothing/Earpieces/headset.rsi
-    state: headset
+
   - type: Clothing
     Slots:
     - ears

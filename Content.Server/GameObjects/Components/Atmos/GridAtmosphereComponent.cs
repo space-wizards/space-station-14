@@ -18,6 +18,7 @@ using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
@@ -839,7 +840,16 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                 foreach (var (indices, mix) in tiles!)
                 {
-                    Tiles.Add(indices, new TileAtmosphere(this, gridId, indices, (GasMixture)uniqueMixes![mix].Clone()));
+                    try
+                    {
+                        Tiles.Add(indices, new TileAtmosphere(this, gridId, indices, (GasMixture)uniqueMixes![mix].Clone()));
+                    }
+                    catch (ArgumentOutOfRangeException e)
+                    {
+                        Logger.Error($"Error during atmos serialization! Tile at {indices} points to an unique mix ({mix}) out of range!");
+                        throw;
+                    }
+
                     Invalidate(indices);
                 }
             }

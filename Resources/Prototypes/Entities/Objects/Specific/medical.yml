@@ -6,8 +6,7 @@
   components:
   - type: Sprite
     texture: Objects/Specific/Medical/medkit_r.png
-  - type: Icon
-    texture: Objects/Specific/Medical/medkit_r.png
+
   - type: Storage
     capacity: 60
   - type: Item
@@ -44,8 +43,7 @@
   components:
   - type: Sprite
     texture: Objects/Specific/Medical/ointment.png
-  - type: Icon
-    texture: Objects/Specific/Medical/ointment.png
+
   - type: Healing
     heal:
       Heat: 10
@@ -62,8 +60,7 @@
   components:
   - type: Sprite
     texture: Objects/Specific/Medical/brutepack.png
-  - type: Icon
-    texture: Objects/Specific/Medical/brutepack.png
+
   - type: Healing
     heal:
       Blunt: 10

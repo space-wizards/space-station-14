@@ -10,8 +10,7 @@
   - type: Collidable
   - type: SnapGrid
     offset: Center
-  - type: Icon
-    texture: Constructible/Power/eightdirwire.png
+
   - type: Sprite
     drawdepth: BelowFloor
   - type: IconSmooth

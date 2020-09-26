@@ -14,8 +14,6 @@
   - type: Sprite
     drawdepth: WallTops
     sprite: Constructible/Misc/decals.rsi
-  - type: Icon
-    sprite: Constructible/Misc/decals.rsi
 
 # These signs would not have collision otherwise, they simply
 # need collision in order for them to be destructible. Once the
@@ -41,8 +39,6 @@
       - Clickable
   - type: Sprite
     state: monkey_painting
-  - type: Icon
-    state: monkey_painting
 
 # Directional Station Guide Signs
 
@@ -66,8 +62,6 @@
       - Clickable
   - type: Sprite
     state: direction_sec
-  - type: Icon
-    state: direction_sec
 
 - type: entity
   parent: BaseSign
@@ -89,8 +83,7 @@
       - Clickable
   - type: Sprite
     state: direction_evac
-  - type: Icon
-    state: direction_evac
+
 
 - type: entity
   parent: BaseSign
@@ -112,8 +105,7 @@
       - Clickable
   - type: Sprite
     state: direction_bridge
-  - type: Icon
-    state: direction_bridge
+
 
 - type: entity
   parent: BaseSign
@@ -135,8 +127,7 @@
       - Clickable
   - type: Sprite
     state: direction_med
-  - type: Icon
-    state: direction_med
+
 
 - type: entity
   parent: BaseSign
@@ -157,8 +148,6 @@
       - SmallImpassable
       - Clickable
   - type: Sprite
-    state: direction_eng
-  - type: Icon
     state: direction_eng
 
 - type: entity
@@ -181,8 +170,6 @@
       - Clickable
   - type: Sprite
     state: direction_sci
-  - type: Icon
-    state: direction_sci
 
 - type: entity
   parent: BaseSign
@@ -203,8 +190,6 @@
       - SmallImpassable
       - Clickable
   - type: Sprite
-    state: direction_supply
-  - type: Icon
     state: direction_supply
 
 # Regular Signs
@@ -227,8 +212,7 @@
       - Clickable
   - type: Sprite
     state: armory
-  - type: Icon
-    state: armory
+
 
 - type: entity
   parent: BaseSign
@@ -248,8 +232,7 @@
       - Clickable
   - type: Sprite
     state: ass
-  - type: Icon
-    state: ass
+
 
 - type: entity
   parent: BaseSign
@@ -269,8 +252,7 @@
       - Clickable
   - type: Sprite
     state: anomaly
-  - type: Icon
-    state: anomaly
+
 
 - type: entity
   parent: BaseSign
@@ -290,8 +272,7 @@
       - Clickable
   - type: Sprite
     state: atmos
-  - type: Icon
-    state: atmos
+
 
 - type: entity
   parent: BaseSign
@@ -311,8 +292,7 @@
       - Clickable
   - type: Sprite
     state: bar
-  - type: Icon
-    state: bar
+
 
 - type: entity
   parent: BaseSign
@@ -332,8 +312,7 @@
       - Clickable
   - type: Sprite
     state: biblio
-  - type: Icon
-    state: biblio
+
 
 - type: entity
   parent: BaseSign
@@ -353,8 +332,7 @@
       - Clickable
   - type: Sprite
     state: chapel
-  - type: Icon
-    state: chapel
+
 
 - type: entity
   parent: BaseSign
@@ -374,8 +352,7 @@
       - Clickable
   - type: Sprite
     state: commander
-  - type: Icon
-    state: commander
+
 
 - type: entity
   parent: BaseSign
@@ -395,8 +372,7 @@
       - Clickable
   - type: Sprite
     state: conference_room
-  - type: Icon
-    state: conference_room
+
 
 - type: entity
   parent: BaseSign
@@ -416,8 +392,7 @@
       - Clickable
   - type: Sprite
     state: drones
-  - type: Icon
-    state: drones
+
 
 - type: entity
   parent: BaseSign
@@ -437,8 +412,7 @@
       - Clickable
   - type: Sprite
     state: engine
-  - type: Icon
-    state: engine
+
 
 - type: entity
   parent: BaseSign
@@ -458,8 +432,7 @@
       - Clickable
   - type: Sprite
     state: cloning
-  - type: Icon
-    state: cloning
+
 
 - type: entity
   parent: BaseSign
@@ -479,8 +452,7 @@
       - Clickable
   - type: Sprite
     state: interrogation
-  - type: Icon
-    state: interrogation
+
 
 - type: entity
   parent: BaseSign
@@ -500,8 +472,7 @@
       - Clickable
   - type: Sprite
     state: surgery
-  - type: Icon
-    state: surgery
+
 
 - type: entity
   parent: BaseSign
@@ -521,8 +492,7 @@
       - Clickable
   - type: Sprite
     state: telecoms
-  - type: Icon
-    state: telecoms
+
 
 - type: entity
   parent: BaseSign
@@ -542,8 +512,7 @@
       - Clickable
   - type: Sprite
     state: cargo
-  - type: Icon
-    state: cargo
+
 
 - type: entity
   parent: BaseSign
@@ -563,8 +532,7 @@
       - Clickable
   - type: Sprite
     state: cargo_dock
-  - type: Icon
-    state: cargo_dock
+
 
 - type: entity
   parent: BaseSign
@@ -584,8 +552,7 @@
       - Clickable
   - type: Sprite
     state: chem
-  - type: Icon
-    state: chem
+
 
 - type: entity
   parent: BaseSign
@@ -605,8 +572,7 @@
       - Clickable
   - type: Sprite
     state: dock
-  - type: Icon
-    state: dock
+
 
 - type: entity
   parent: BaseSign
@@ -626,8 +592,7 @@
       - Clickable
   - type: Sprite
     state: eng
-  - type: Icon
-    state: eng
+
 
 - type: entity
   parent: BaseSign
@@ -647,8 +612,7 @@
       - Clickable
   - type: Sprite
     state: eva
-  - type: Icon
-    state: eva
+
 
 - type: entity
   parent: BaseSign
@@ -668,8 +632,7 @@
       - Clickable
   - type: Sprite
     state: gravi
-  - type: Icon
-    state: gravi
+
 
 - type: entity
   parent: BaseSign
@@ -689,8 +652,7 @@
       - Clickable
   - type: Sprite
     state: medbay
-  - type: Icon
-    state: medbay
+
 
 - type: entity
   parent: BaseSign
@@ -710,8 +672,7 @@
       - Clickable
   - type: Sprite
     state: morgue
-  - type: Icon
-    state: morgue
+
 
 - type: entity
   parent: BaseSign
@@ -732,8 +693,7 @@
       - Clickable
   - type: Sprite
     state: prison
-  - type: Icon
-    state: prison
+
 
 - type: entity
   parent: BaseSign
@@ -753,8 +713,7 @@
       - Clickable
   - type: Sprite
     state: rnd
-  - type: Icon
-    state: rnd
+
 
 - type: entity
   parent: BaseSign
@@ -774,8 +733,7 @@
       - Clickable
   - type: Sprite
     state: sci
-  - type: Icon
-    state: sci
+
 
 - type: entity
   parent: BaseSign
@@ -795,8 +753,7 @@
       - Clickable
   - type: Sprite
     state: toxins
-  - type: Icon
-    state: toxins
+
 
 - type: entity
   parent: BaseSign
@@ -816,8 +773,7 @@
       - Clickable
   - type: Sprite
     state: bridge
-  - type: Icon
-    state: bridge
+
 
 # Atmos Warnings
 
@@ -840,8 +796,7 @@
       - Clickable
   - type: Sprite
     state: atmos_air
-  - type: Icon
-    state: atmos_air
+
 
 - type: entity
   parent: BaseSign
@@ -862,8 +817,7 @@
       - Clickable
   - type: Sprite
     state: atmos_co2
-  - type: Icon
-    state: atmos_co2
+
 
 - type: entity
   parent: BaseSign
@@ -884,8 +838,7 @@
       - Clickable
   - type: Sprite
     state: atmos_n2
-  - type: Icon
-    state: atmos_n2
+
 
 - type: entity
   parent: BaseSign
@@ -906,8 +859,7 @@
       - Clickable
   - type: Sprite
     state: atmos_n2o
-  - type: Icon
-    state: atmos_n2o
+
 
 - type: entity
   parent: BaseSign
@@ -928,8 +880,7 @@
       - Clickable
   - type: Sprite
     state: atmos_o2
-  - type: Icon
-    state: atmos_o2
+
 
 - type: entity
   parent: BaseSign
@@ -950,8 +901,7 @@
       - Clickable
   - type: Sprite
     state: atmos_phoron
-  - type: Icon
-    state: atmos_phoron
+
 
 - type: entity
   parent: BaseSign
@@ -972,8 +922,7 @@
       - Clickable
   - type: Sprite
     state: atmos_waste
-  - type: Icon
-    state: atmos_waste
+
 
 - type: entity
   parent: BaseSign
@@ -994,8 +943,7 @@
       - Clickable
   - type: Sprite
     state: nosmoking2
-  - type: Icon
-    state: nosmoking2
+
 
 - type: entity
   parent: BaseSign
@@ -1016,8 +964,7 @@
       - Clickable
   - type: Sprite
     state: something-old1
-  - type: Icon
-    state: something-old1
+
 
 - type: entity
   parent: BaseSign
@@ -1038,5 +985,4 @@
       - Clickable
   - type: Sprite
     state: something-old2
-  - type: Icon
-    state: something-old2
+
