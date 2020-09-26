@@ -264,6 +264,12 @@ namespace Content.Shared.Chemistry
             }
 
             public int CompareTo(ReagentQuantity other) { return Quantity.Float().CompareTo(other.Quantity.Float()); }
+
+            public void Deconstruct(out string reagentId, out ReagentUnit quantity)
+            {
+                reagentId = ReagentId;
+                quantity = Quantity;
+            }
         }
 
         #region Enumeration
