@@ -97,6 +97,12 @@ namespace Content.Server.GameObjects.Components
             if (eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
                 UserInterface?.Toggle(actor.playerSession);
+                if (UserInterface?.SessionHasOpen(actor.playerSession) == true)
+                {
+                    // Tell the user interface the selected stuff
+                    UserInterface.SetState(
+                        new CrayonBoundUserInterfaceState(SelectedState, Color));
+                }
                 return true;
             }
             return false;
@@ -115,7 +121,6 @@ namespace Content.Server.GameObjects.Components
 
             var entityManager = IoCManager.Resolve<IServerEntityManager>();
             //TODO: rotation?
-            //TODO: check if the place is free
             var entity = entityManager.SpawnEntity("CrayonDecal", eventArgs.ClickLocation);
             if (entity.TryGetComponent(out AppearanceComponent appearance))
             {

@@ -1,5 +1,7 @@
-﻿using Content.Shared.GameObjects.Components;
+﻿using Content.Client.UserInterface.Stylesheets;
+using Content.Shared.GameObjects.Components;
 using Robust.Client.Graphics;
+using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -23,6 +25,8 @@ namespace Content.Client.GameObjects.Components.Crayon
         private readonly LineEdit _search;
         private readonly GridContainer _grid;
         private Dictionary<string, Texture> _decals;
+        private string _selected;
+        private Color _color;
 
         protected override Vector2? CustomSize => (250, 300);
 
@@ -71,15 +75,43 @@ namespace Content.Client.GameObjects.Components.Crayon
                     TextureNormal = tex,
                     Name = decal,
                     ToolTip = decal,
+                    Modulate = _color
                 };
                 button.OnPressed += Button_OnPressed;
-                _grid.AddChild(button);
+                if (_selected == decal)
+                {
+                    var panelContainer = new PanelContainer()
+                    {
+                        PanelOverride = new StyleBoxFlat()
+                        {
+                            BackgroundColor = StyleNano.ButtonColorDefault,
+                        },
+                        Children =
+                        {
+                            button
+                        }
+                    };
+                    _grid.AddChild(panelContainer);
+                }
+                else
+                {
+                    _grid.AddChild(button);
+                }
             }
         }
 
         private void Button_OnPressed(BaseButton.ButtonEventArgs obj)
         {
             Owner.Select(obj.Button.Name);
+            _selected = obj.Button.Name;
+            RefreshList();
+        }
+
+        public void UpdateState(CrayonBoundUserInterfaceState state)
+        {
+            _selected = state.Selected;
+            _color = state.Color;
+            RefreshList();
         }
 
         public void Populate(CrayonDecalPrototype proto)

@@ -58,6 +58,18 @@ namespace Content.Shared.GameObjects.Components
             Capacity = capacity;
         }
     }
+    [Serializable, NetSerializable]
+    public class CrayonBoundUserInterfaceState : BoundUserInterfaceState
+    {
+        public string Selected;
+        public Color Color;
+
+        public CrayonBoundUserInterfaceState(string selected, Color color)
+        {
+            Selected = selected;
+            Color = color;
+        }
+    }
 
     [Serializable, NetSerializable, Prototype("crayonDecal")]
     public class CrayonDecalPrototype : IPrototype

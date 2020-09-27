@@ -1,5 +1,6 @@
 ﻿using Content.Shared.GameObjects.Components;
 using Robust.Client.GameObjects.Components.UserInterface;
+using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using System.Linq;
@@ -25,6 +26,12 @@ namespace Content.Client.GameObjects.Components.Crayon
             if (crayonDecals != null)
                 _menu.Populate(crayonDecals);
             _menu.OpenCentered();
+        }
+
+        protected override void UpdateState(BoundUserInterfaceState state)
+        {
+            base.UpdateState(state);
+            _menu.UpdateState((CrayonBoundUserInterfaceState) state);
         }
 
         public void Select(string state)
