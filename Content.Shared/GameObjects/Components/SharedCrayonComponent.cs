@@ -47,10 +47,15 @@ namespace Content.Shared.GameObjects.Components
     {
         public readonly string Color;
         public readonly string State;
-        public CrayonComponentState(string color, string state) : base(ContentNetIDs.CRAYONS)
+        public readonly int Charges;
+        public readonly int Capacity;
+
+        public CrayonComponentState(string color, string state, int charges, int capacity) : base(ContentNetIDs.CRAYONS)
         {
             Color = color;
             State = state;
+            Charges = charges;
+            Capacity = capacity;
         }
     }
 

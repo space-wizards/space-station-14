@@ -1,5 +1,6 @@
 ﻿using Content.Server.Utility;
 using Content.Shared.GameObjects.Components;
+using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -7,6 +8,7 @@ using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -24,9 +26,14 @@ namespace Content.Server.GameObjects.Components
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         //TODO: useSound
         private string _useSound;
+        [ViewVariables]
         public Color Color { get; set; }
 
-        //TODO: charges?
+        [ViewVariables(VVAccess.ReadWrite)]
+        public int Charges { get; set; }
+        private int _capacity;
+        [ViewVariables]
+        public int Capacity => _capacity;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(CrayonUiKey.Key);
 
@@ -35,6 +42,7 @@ namespace Content.Server.GameObjects.Components
             base.ExposeData(serializer);
             serializer.DataField(ref _useSound, "useSound", "");
             serializer.DataField(ref _color, "color", "white");
+            serializer.DataField(ref _capacity, "capacity", 30);
             Color = Color.FromName(_color);
         }
 
@@ -45,6 +53,7 @@ namespace Content.Server.GameObjects.Components
             {
                 UserInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
             }
+            Charges = Capacity;
             SelectedState = "corgi"; //TODO: set to the first one in the list?
             Dirty();
         }
@@ -72,7 +81,7 @@ namespace Content.Server.GameObjects.Components
 
         public override ComponentState GetComponentState()
         {
-            return new CrayonComponentState(_color, SelectedState);
+            return new CrayonComponentState(_color, SelectedState, Charges, Capacity);
         }
 
         // Opens the selection window
@@ -88,6 +97,12 @@ namespace Content.Server.GameObjects.Components
 
         void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
+            if (Charges <= 0)
+            {
+                eventArgs.User.PopupMessage(Loc.GetString("It's empty."));
+                return;
+            }
+
             var entityManager = IoCManager.Resolve<IServerEntityManager>();
             //TODO: rotation?
             //TODO: check if the place is free
@@ -97,6 +112,10 @@ namespace Content.Server.GameObjects.Components
                 appearance.SetData(CrayonVisuals.State, SelectedState);
                 appearance.SetData(CrayonVisuals.Color, Color);
             }
+
+            // Decrease "Ammo"
+            Charges--;
+            Dirty();
         }
 
         void IDropped.Dropped(DroppedEventArgs eventArgs)

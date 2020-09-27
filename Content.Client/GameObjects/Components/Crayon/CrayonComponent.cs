@@ -18,6 +18,8 @@ namespace Content.Client.GameObjects.Components.Crayon
     {
         [ViewVariables(VVAccess.ReadWrite)] private bool _uiUpdateNeeded;
         [ViewVariables(VVAccess.ReadWrite)] private string Color => _color;
+        [ViewVariables] private int Charges { get; set; }
+        [ViewVariables] private int Capacity { get; set; }
 
         Control IItemStatus.MakeControl()
         {
@@ -31,6 +33,9 @@ namespace Content.Client.GameObjects.Components.Crayon
 
             _color = state.Color;
             SelectedState = state.State;
+            Charges = state.Charges;
+            Capacity = state.Capacity;
+
             _uiUpdateNeeded = true;
         }
 
@@ -58,9 +63,11 @@ namespace Content.Client.GameObjects.Components.Crayon
                 }
 
                 _parent._uiUpdateNeeded = false;
-                _label.SetMarkup(Loc.GetString("Drawing: [color={0}]{1}[/color]",
+                _label.SetMarkup(Loc.GetString("Drawing: [color={0}]{1}[/color] ({2}/{3})",
                     _parent.Color,
-                    _parent.SelectedState));
+                    _parent.SelectedState,
+                    _parent.Charges,
+                    _parent.Capacity));
             }
         }
     }

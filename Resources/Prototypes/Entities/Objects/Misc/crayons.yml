@@ -20,6 +20,7 @@
     state: crayonwhite
   - type: Crayon
     color: white
+    capacity: 30
 
 - type: entity
   parent: Crayon
@@ -31,6 +32,7 @@
     state: crayonred
   - type: Crayon
     color: red
+    capacity: 30
 
 - type: entity
   parent: Crayon
@@ -42,6 +44,7 @@
     state: crayongreen
   - type: Crayon
     color: green
+    capacity: 30
 
 - type: entity
   parent: Crayon
@@ -53,6 +56,7 @@
     state: crayonpurple
   - type: Crayon
     color: purple
+    capacity: 30
 
 - type: entity
   parent: Crayon
@@ -64,6 +68,7 @@
     state: crayonorange
   - type: Crayon
     color: orange
+    capacity: 30
 
 - type: entity
   parent: Crayon
@@ -75,6 +80,7 @@
     state: crayonyellow
   - type: Crayon
     color: yellow
+    capacity: 30
 
 - type: entity
   id: CrayonBox
