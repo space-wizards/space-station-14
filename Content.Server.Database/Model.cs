@@ -4,10 +4,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Content.Server.Database
 {
-    public sealed class PostgresPreferencesDbContext : PreferencesDbContext
+    public sealed class PostgresServerDbContext : ServerDbContext
     {
         // This is used by the "dotnet ef" CLI tool.
-        public PostgresPreferencesDbContext()
+        public PostgresServerDbContext()
         {
         }
         protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -16,14 +16,14 @@ namespace Content.Server.Database
                 options.UseNpgsql("dummy connection string");
         }
 
-        public PostgresPreferencesDbContext(DbContextOptions<PreferencesDbContext> options) : base(options)
+        public PostgresServerDbContext(DbContextOptions<ServerDbContext> options) : base(options)
         {
         }
     }
 
-    public sealed class SqlitePreferencesDbContext : PreferencesDbContext
+    public sealed class SqliteServerDbContext : ServerDbContext
     {
-        public SqlitePreferencesDbContext()
+        public SqliteServerDbContext()
         {
         }
         protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -32,12 +32,12 @@ namespace Content.Server.Database
                 options.UseSqlite("dummy connection string");
         }
 
-        public SqlitePreferencesDbContext(DbContextOptions<PreferencesDbContext> options) : base(options)
+        public SqliteServerDbContext(DbContextOptions<ServerDbContext> options) : base(options)
         {
         }
     }
 
-    public abstract class PreferencesDbContext : DbContext
+    public abstract class ServerDbContext : DbContext
     {
         /// <summary>
         /// The "dotnet ef" CLI tool uses the parameter-less constructor.
@@ -45,10 +45,10 @@ namespace Content.Server.Database
         /// To use the context within the application, the options need to be passed the constructor instead.
         /// </summary>
         protected readonly bool InitializedWithOptions;
-        public PreferencesDbContext()
+        public ServerDbContext()
         {
         }
-        public PreferencesDbContext(DbContextOptions<PreferencesDbContext> options) : base(options)
+        public ServerDbContext(DbContextOptions<ServerDbContext> options) : base(options)
         {
             InitializedWithOptions = true;
         }

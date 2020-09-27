@@ -5,16 +5,16 @@ namespace Content.Server.Database
 {
     public sealed class ServerDbPostgres : ServerDbBase
     {
-        private readonly DbContextOptions<PreferencesDbContext> _options;
+        private readonly DbContextOptions<ServerDbContext> _options;
         private readonly Task _dbReadyTask;
 
-        public ServerDbPostgres(DbContextOptions<PreferencesDbContext> options)
+        public ServerDbPostgres(DbContextOptions<ServerDbContext> options)
         {
             _options = options;
             
             _dbReadyTask = Task.Run(async () =>
             {
-                await using var ctx = new PostgresPreferencesDbContext(_options);
+                await using var ctx = new PostgresServerDbContext(_options);
                 await ctx.Database.MigrateAsync();
             });
         }
@@ -23,17 +23,17 @@ namespace Content.Server.Database
         {
             await _dbReadyTask;
 
-            return new DbGuardImpl(new PostgresPreferencesDbContext(_options));
+            return new DbGuardImpl(new PostgresServerDbContext(_options));
         }
 
         private sealed class DbGuardImpl : DbGuard
         {
-            public DbGuardImpl(PreferencesDbContext dbC)
+            public DbGuardImpl(ServerDbContext dbC)
             {
                 DbContext = dbC;
             }
 
-            public override PreferencesDbContext DbContext { get; }
+            public override ServerDbContext DbContext { get; }
 
             public override ValueTask DisposeAsync()
             {

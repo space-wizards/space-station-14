@@ -74,7 +74,7 @@ namespace Content.Server.Database
             return _db.GetPlayerPreferencesAsync(userId);
         }
 
-        private DbContextOptions<PreferencesDbContext> CreatePostgresOptions()
+        private DbContextOptions<ServerDbContext> CreatePostgresOptions()
         {
             var host = _cfg.GetCVar(CCVars.DatabasePgHost);
             var port = _cfg.GetCVar(CCVars.DatabasePgPort);
@@ -82,7 +82,7 @@ namespace Content.Server.Database
             var user = _cfg.GetCVar(CCVars.DatabasePgUsername);
             var pass =_cfg.GetCVar(CCVars.DatabasePgPassword);
 
-            var builder = new DbContextOptionsBuilder<PreferencesDbContext>();
+            var builder = new DbContextOptionsBuilder<ServerDbContext>();
             var connectionString = new NpgsqlConnectionStringBuilder
             {
                 Host = host,
@@ -96,9 +96,9 @@ namespace Content.Server.Database
             return builder.Options;
         }
 
-        private DbContextOptions<PreferencesDbContext> CreateSqliteOptions()
+        private DbContextOptions<ServerDbContext> CreateSqliteOptions()
         {
-            var builder = new DbContextOptionsBuilder<PreferencesDbContext>();
+            var builder = new DbContextOptionsBuilder<ServerDbContext>();
 
             var configPreferencesDbPath = _cfg.GetCVar(CCVars.DatabaseSqliteDbPath);
             var inMemory = _res.UserData.RootDir == null;
@@ -122,7 +122,7 @@ namespace Content.Server.Database
             return builder.Options;
         }
 
-        private void SetupLogging(DbContextOptionsBuilder<PreferencesDbContext> builder)
+        private void SetupLogging(DbContextOptionsBuilder<ServerDbContext> builder)
         {
             builder.UseLoggerFactory(LoggerFactory.Create(builder =>
             {

@@ -17,11 +17,11 @@ namespace Content.Server.Database
         private readonly SemaphoreSlim _prefsSemaphore = new SemaphoreSlim(1, 1);
 
         private readonly Task _dbReadyTask;
-        private readonly SqlitePreferencesDbContext _prefsCtx;
+        private readonly SqliteServerDbContext _prefsCtx;
 
-        public ServerDbSqlite(DbContextOptions<PreferencesDbContext> options)
+        public ServerDbSqlite(DbContextOptions<ServerDbContext> options)
         {
-            _prefsCtx = new SqlitePreferencesDbContext(options);
+            _prefsCtx = new SqliteServerDbContext(options);
 
             _dbReadyTask = Task.Run(() => _prefsCtx.Database.Migrate());
         }
@@ -43,7 +43,7 @@ namespace Content.Server.Database
                 _db = db;
             }
 
-            public override PreferencesDbContext DbContext => _db._prefsCtx;
+            public override ServerDbContext DbContext => _db._prefsCtx;
 
             public override ValueTask DisposeAsync()
             {

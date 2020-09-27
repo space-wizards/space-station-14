@@ -2,5 +2,11 @@
 
 param([String]$name)
 
-dotnet ef migrations add --context SqlitePreferencesDbContext -o Migrations/Sqlite $name
-dotnet ef migrations add --context PostgresPreferencesDbContext -o Migrations/Postgres $name
+if ($name -eq "")
+{
+    Write-Error "must specify migration name"
+    exit
+}
+
+dotnet ef migrations add --context SqliteServerDbContext -o Migrations/Sqlite $name
+dotnet ef migrations add --context PostgresServerDbContext -o Migrations/Postgres $name

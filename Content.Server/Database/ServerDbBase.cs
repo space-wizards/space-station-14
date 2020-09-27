@@ -172,7 +172,7 @@ namespace Content.Server.Database
 
         protected abstract class DbGuard : IAsyncDisposable
         {
-            public abstract PreferencesDbContext DbContext { get; }
+            public abstract ServerDbContext DbContext { get; }
 
             public abstract ValueTask DisposeAsync();
         }

@@ -44,7 +44,7 @@ namespace Content.Tests.Server.Preferences
 
         private static ServerDbSqlite GetDb()
         {
-            var builder = new DbContextOptionsBuilder<PreferencesDbContext>();
+            var builder = new DbContextOptionsBuilder<ServerDbContext>();
             var conn = new SqliteConnection("Data Source=:memory:");
             conn.Open();
             builder.UseSqlite(conn);
