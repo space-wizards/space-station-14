@@ -21,8 +21,7 @@ namespace Content.Client.GameObjects.Components.Crayon
     {
         public CrayonBoundUserInterface Owner { get; }
         private readonly LineEdit _search;
-        private readonly ItemList _decalList;
-        private readonly Button _selectButton;
+        private readonly GridContainer _grid;
         private Dictionary<string, Texture> _decals;
 
         protected override Vector2? CustomSize => (250, 300);
@@ -39,36 +38,25 @@ namespace Content.Client.GameObjects.Components.Crayon
             _search.OnTextChanged += (e) => RefreshList();
             vbox.AddChild(_search);
 
-            var margin = new MarginContainer()
+            _grid = new GridContainer()
+            {
+                Columns = 6,
+            };
+            var gridScroll = new ScrollContainer()
             {
                 SizeFlagsVertical = SizeFlags.FillExpand,
-                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                Children =
+                {
+                    _grid
+                }
             };
-            _decalList = new ItemList();
-            margin.AddChild(_decalList);
-            vbox.AddChild(margin);
-
-            _selectButton = new Button()
-            {
-                Text = "Select"
-            };
-            _selectButton.OnPressed += Select;
-            vbox.AddChild(_selectButton);
-        }
-
-        private void Select(BaseButton.ButtonEventArgs obj)
-        {
-            var selected = _decalList.GetSelected().FirstOrDefault();
-            if (selected == null)
-                return;
-
-            Owner.Select(selected.Text);
+            vbox.AddChild(gridScroll);
         }
 
         private void RefreshList()
         {
             // Clear
-            _decalList.Clear();
+            _grid.RemoveAllChildren();
             if (_decals == null)
                 return;
 
@@ -77,9 +65,21 @@ namespace Content.Client.GameObjects.Components.Crayon
             {
                 if (!decal.Contains(filter))
                     continue;
-                
-                _decalList.AddItem(decal, tex);
+
+                var button = new TextureButton()
+                {
+                    TextureNormal = tex,
+                    Name = decal,
+                    ToolTip = decal,
+                };
+                button.OnPressed += Button_OnPressed;
+                _grid.AddChild(button);
             }
+        }
+
+        private void Button_OnPressed(BaseButton.ButtonEventArgs obj)
+        {
+            Owner.Select(obj.Button.Name);
         }
 
         public void Populate(CrayonDecalPrototype proto)
