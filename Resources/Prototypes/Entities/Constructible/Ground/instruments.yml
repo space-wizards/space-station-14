@@ -18,7 +18,8 @@
    - type: SnapGrid
      offset: Center
    - type: Destructible
-     maxHP: 50
+     deadThreshold: 50
+     resistances: metallicResistances
    - type: UserInterface
      interfaces:
      - key: enum.InstrumentUiKey.Key
@@ -35,24 +36,20 @@
    - type: Sprite
      sprite: Objects/Fun/Instruments/otherinstruments.rsi
      state: piano
-   - type: Icon
-     sprite: Objects/Fun/Instruments/otherinstruments.rsi
-     state: piano
+
 
  - type: entity
    name: minimoog
    parent: BasePlaceableInstrument
    id: MinimoogInstrument
-   description: 'This is a minimoog, like a space piano, but more spacey!' 
+   description: 'This is a minimoog, like a space piano, but more spacey!'
    components:
    - type: Instrument
      program: 81
    - type: Sprite
      sprite: Objects/Fun/Instruments/otherinstruments.rsi
      state: minimoog
-   - type: Icon
-     sprite: Objects/Fun/Instruments/otherinstruments.rsi
-     state: minimoog
+
 
  - type: entity
    name: church organ
@@ -65,9 +62,7 @@
    - type: Sprite
      sprite: Objects/Fun/Instruments/otherinstruments.rsi
      state: church_organ
-   - type: Icon
-     sprite: Objects/Fun/Instruments/otherinstruments.rsi
-     state: church_organ
+
 
  - type: entity
    name: xylophone
@@ -81,6 +76,4 @@
    - type: Sprite
      sprite: Objects/Fun/Instruments/otherinstruments.rsi
      state: xylophone
-   - type: Icon
-     sprite: Objects/Fun/Instruments/otherinstruments.rsi
-     state: xylophone
+

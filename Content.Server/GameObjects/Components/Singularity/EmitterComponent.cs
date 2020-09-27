@@ -90,7 +90,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                 return false;
             }
 
-            var projectile = _entityManager.SpawnEntity("EmitterBolt", Owner.Transform.GridPosition);
+            var projectile = _entityManager.SpawnEntity("EmitterBolt", Owner.Transform.Coordinates);
 
             var physicsComponent = projectile.GetComponent<ICollidableComponent>();
             physicsComponent.Status = BodyStatus.InAir;

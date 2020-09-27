@@ -8,6 +8,9 @@
   components:
   - type: AiController
     logic: Xeno
+  - type: AiFactionTag
+    factions:
+    - SimpleHostile
   - type: MovementSpeedModifier
   - type: InteractionOutline
   - type: Sprite
@@ -16,9 +19,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: carp
       sprite: Mobs/Aliens/Carps/carp_space.rsi
-  - type: Icon
-    sprite: Mobs/Aliens/Carps/carp_space.rsi
-    state: icon
+
   - type: Clickable
   - type: Physics
     mass: 50
@@ -34,9 +35,10 @@
       layer:
       - Opaque
       - MobImpassable
-  - type: BodyManager
-    BaseTemplate: bodyTemplate.Humanoid
-    BasePreset: bodyPreset.BasicHuman
+  - type: Damageable
+    criticalThreshold: 50
+    deadThreshold: 100
+  - type: MobStateManager
   - type: HeatResistance
   - type: CombatMode
   - type: Teleportable
@@ -68,9 +70,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: magicarp
       sprite: Mobs/Aliens/Carps/carp_magic.rsi
-  - type: Icon
-    sprite: Mobs/Aliens/Carps/carp_magic.rsi
-    state: icon
+
   - type: Physics
     mass: 60
   - type: Appearance
@@ -94,9 +94,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: holocarp
       sprite: Mobs/Aliens/Carps/carp_holo.rsi
-  - type: Icon
-    sprite: Mobs/Aliens/Carps/carp_holo.rsi
-    state: icon
+
   - type: Physics
     mass: 5
   - type: Appearance

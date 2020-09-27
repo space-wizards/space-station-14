@@ -13,7 +13,7 @@ namespace Content.Server.Body.Surgery
     public interface ISurgeon
     {
         public delegate void MechanismRequestCallback(
-            Mechanism target,
+            IMechanism target,
             IBodyPartContainer container,
             ISurgeon surgeon,
             IEntity performer);
@@ -29,6 +29,6 @@ namespace Content.Server.Body.Surgery
         ///     This function is called in that scenario, and it is expected that you call the callback with one mechanism from the
         ///     provided list.
         /// </summary>
-        public void RequestMechanism(IEnumerable<Mechanism> options, MechanismRequestCallback callback);
+        public void RequestMechanism(IEnumerable<IMechanism> options, MechanismRequestCallback callback);
     }
 }

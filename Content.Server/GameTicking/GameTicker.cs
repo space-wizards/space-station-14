@@ -24,10 +24,10 @@ using Content.Server.Mobs.Roles;
 using Content.Server.Players;
 using Content.Shared;
 using Content.Shared.Chat;
-using Content.Shared.GameObjects.Components.PDA;
 using Content.Shared.Network.NetMessages;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Content.Shared.Utility;
 using Prometheus;
 using Robust.Server.Interfaces;
 using Robust.Server.Interfaces.Maps;
@@ -48,7 +48,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -91,7 +90,7 @@ namespace Content.Server.GameTicking
         [ViewVariables] private bool _roundStartCountdownHasNotStartedYetDueToNoPlayers;
         private DateTime _roundStartTimeUtc;
         [ViewVariables] private GameRunLevel _runLevel;
-        [ViewVariables(VVAccess.ReadWrite)] private GridCoordinates _spawnPoint;
+        [ViewVariables(VVAccess.ReadWrite)] private EntityCoordinates _spawnPoint;
 
         [ViewVariables] private bool DisallowLateJoin { get; set; } = false;
 
@@ -130,11 +129,6 @@ namespace Content.Server.GameTicking
 
             DebugTools.Assert(!_initialized);
 
-            _configurationManager.RegisterCVar("game.lobbyenabled", false, CVar.ARCHIVE);
-            _configurationManager.RegisterCVar("game.lobbyduration", 20, CVar.ARCHIVE);
-            _configurationManager.RegisterCVar("game.defaultpreset", "Suspicion", CVar.ARCHIVE);
-            _configurationManager.RegisterCVar("game.fallbackpreset", "Sandbox", CVar.ARCHIVE);
-
             PresetSuspicion.RegisterCVars(_configurationManager);
 
             _netManager.RegisterNetMessage<MsgTickerJoinLobby>(nameof(MsgTickerJoinLobby));
@@ -147,7 +141,7 @@ namespace Content.Server.GameTicking
             _netManager.RegisterNetMessage<MsgRequestWindowAttention>(nameof(MsgRequestWindowAttention));
             _netManager.RegisterNetMessage<MsgTickerLateJoinStatus>(nameof(MsgTickerLateJoinStatus));
 
-            SetStartPreset(_configurationManager.GetCVar<string>("game.defaultpreset"));
+            SetStartPreset(_configurationManager.GetCVar(CCVars.GameLobbyDefaultPreset));
 
             RestartRound();
 
@@ -352,6 +346,7 @@ namespace Content.Server.GameTicking
                 var mind = ply.ContentData().Mind;
                 if (mind != null)
                 {
+                    _playersInLobby.TryGetValue(ply, out var status);
                     var antag = mind.AllRoles.Any(role => role.Antagonist);
                     var playerEndRoundInfo = new RoundEndPlayerInfo()
                     {
@@ -360,7 +355,8 @@ namespace Content.Server.GameTicking
                         Role = antag
                             ? mind.AllRoles.First(role => role.Antagonist).Name
                             : mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("Unknown"),
-                        Antag = antag
+                        Antag = antag,
+                        Observer = status == PlayerStatus.Observer,
                     };
                     listOfPlayerInfo.Add(playerEndRoundInfo);
                 }
@@ -404,6 +400,12 @@ namespace Content.Server.GameTicking
             _playersInLobby[player] = ready ? PlayerStatus.Ready : PlayerStatus.NotReady;
             _netManager.ServerSendMessage(_getStatusMsg(player), player.ConnectedClient);
             _netManager.ServerSendToAll(GetStatusSingle(player, status));
+        }
+
+        public void ToggleDisallowLateJoin(bool disallowLateJoin)
+        {
+            DisallowLateJoin = disallowLateJoin;
+            UpdateLateJoinStatus();
         }
 
         public T AddGameRule<T>() where T : GameRule, new()
@@ -536,16 +538,23 @@ namespace Content.Server.GameTicking
 
         private IEntity _spawnPlayerMob(Job job, bool lateJoin = true)
         {
-            GridCoordinates coordinates = lateJoin ? GetLateJoinSpawnPoint() : GetJobSpawnPoint(job.Prototype.ID);
+            EntityCoordinates coordinates = lateJoin ? GetLateJoinSpawnPoint() : GetJobSpawnPoint(job.Prototype.ID);
             var entity = _entityManager.SpawnEntity(PlayerPrototypeName, coordinates);
             var startingGear = _prototypeManager.Index<StartingGearPrototype>(job.StartingGear);
+            EquipStartingGear(entity, startingGear);
+
+            return entity;
+        }
+
+        public void EquipStartingGear(IEntity entity, StartingGearPrototype startingGear)
+        {
             if (entity.TryGetComponent(out InventoryComponent inventory))
             {
                 var gear = startingGear.Equipment;
 
                 foreach (var (slot, equipmentStr) in gear)
                 {
-                    var equipmentEntity = _entityManager.SpawnEntity(equipmentStr, entity.Transform.GridPosition);
+                    var equipmentEntity = _entityManager.SpawnEntity(equipmentStr, entity.Transform.Coordinates);
                     inventory.Equip(slot, equipmentEntity.GetComponent<ItemComponent>());
                 }
             }
@@ -555,12 +564,10 @@ namespace Content.Server.GameTicking
                 var inhand = startingGear.Inhand;
                 foreach (var (hand, prototype) in inhand)
                 {
-                    var inhandEntity = _entityManager.SpawnEntity(prototype, entity.Transform.GridPosition);
+                    var inhandEntity = _entityManager.SpawnEntity(prototype, entity.Transform.Coordinates);
                     handsComponent.PutInHand(inhandEntity.GetComponent<ItemComponent>(), hand);
                 }
             }
-
-            return entity;
         }
 
         private void ApplyCharacterProfile(IEntity entity, ICharacterProfile profile)
@@ -577,15 +584,15 @@ namespace Content.Server.GameTicking
             return _entityManager.SpawnEntity(ObserverPrototypeName, coordinates);
         }
 
-        public GridCoordinates GetLateJoinSpawnPoint()
+        public EntityCoordinates GetLateJoinSpawnPoint()
         {
             var location = _spawnPoint;
 
-            var possiblePoints = new List<GridCoordinates>();
+            var possiblePoints = new List<EntityCoordinates>();
             foreach (var entity in _entityManager.GetEntities(new TypeEntityQuery(typeof(SpawnPointComponent))))
             {
                 var point = entity.GetComponent<SpawnPointComponent>();
-                if (point.SpawnType == SpawnPointType.LateJoin) possiblePoints.Add(entity.Transform.GridPosition);
+                if (point.SpawnType == SpawnPointType.LateJoin) possiblePoints.Add(entity.Transform.Coordinates);
             }
 
             if (possiblePoints.Count != 0) location = _robustRandom.Pick(possiblePoints);
@@ -593,16 +600,16 @@ namespace Content.Server.GameTicking
             return location;
         }
 
-        public GridCoordinates GetJobSpawnPoint(string jobId)
+        public EntityCoordinates GetJobSpawnPoint(string jobId)
         {
             var location = _spawnPoint;
 
-            var possiblePoints = new List<GridCoordinates>();
+            var possiblePoints = new List<EntityCoordinates>();
             foreach (var entity in _entityManager.GetEntities(new TypeEntityQuery(typeof(SpawnPointComponent))))
             {
                 var point = entity.GetComponent<SpawnPointComponent>();
                 if (point.SpawnType == SpawnPointType.Job && point.Job.ID == jobId)
-                    possiblePoints.Add(entity.Transform.GridPosition);
+                    possiblePoints.Add(entity.Transform.Coordinates);
             }
 
             if (possiblePoints.Count != 0) location = _robustRandom.Pick(possiblePoints);
@@ -610,16 +617,16 @@ namespace Content.Server.GameTicking
             return location;
         }
 
-        public GridCoordinates GetObserverSpawnPoint()
+        public EntityCoordinates GetObserverSpawnPoint()
         {
             var location = _spawnPoint;
 
-            var possiblePoints = new List<GridCoordinates>();
+            var possiblePoints = new List<EntityCoordinates>();
             foreach (var entity in _entityManager.GetEntities(new TypeEntityQuery(typeof(SpawnPointComponent))))
             {
                 var point = entity.GetComponent<SpawnPointComponent>();
                 if (point.SpawnType == SpawnPointType.Observer)
-                    possiblePoints.Add(entity.Transform.GridPosition);
+                    possiblePoints.Add(entity.Transform.Coordinates);
             }
 
             if (possiblePoints.Count != 0) location = _robustRandom.Pick(possiblePoints);
@@ -675,7 +682,7 @@ namespace Content.Server.GameTicking
             var startTime = _gameTiming.RealTime;
             var grid = _mapLoader.LoadBlueprint(newMapId, MapFile);
 
-            _spawnPoint = new GridCoordinates(Vector2.Zero, grid);
+            _spawnPoint = grid.ToCoordinates();
 
             var timeSpan = _gameTiming.RealTime - startTime;
             Logger.InfoS("ticker", $"Loaded map in {timeSpan.TotalMilliseconds:N2}ms.");
@@ -852,17 +859,6 @@ namespace Content.Server.GameTicking
             var accessTags = access.Tags;
             accessTags.UnionWith(jobPrototype.Access);
             pdaComponent.SetPDAOwner(characterName);
-            var mindComponent = mob.GetComponent<MindComponent>();
-            if (mindComponent.HasMind) //Redundancy checks.
-            {
-                if (mindComponent.Mind.AllRoles.Any(role => role.Antagonist)) //Give antags a new uplinkaccount.
-                {
-                    var uplinkAccount =
-                        new UplinkAccount(mob.Uid,
-                            20); //TODO: make me into a variable based on server pop or something.
-                    pdaComponent.InitUplinkAccount(uplinkAccount);
-                }
-            }
         }
 
         private void AddManifestEntry(string characterName, string jobId)
@@ -958,7 +954,7 @@ namespace Content.Server.GameTicking
         {
             var gmTitle = MakeGamePreset(null).ModeTitle;
             var desc = MakeGamePreset(null).Description;
-            return _localization.GetString(@"Hi and welcome to [color=white]Space Station 14![/color]
+            return Loc.GetString(@"Hi and welcome to [color=white]Space Station 14![/color]
 
 The current game mode is: [color=white]{0}[/color].
 [color=yellow]{1}[/color]", gmTitle, desc);
@@ -978,22 +974,19 @@ The current game mode is: [color=white]{0}[/color].
             return preset;
         }
 
-#pragma warning disable 649
-        [Dependency] private IEntityManager _entityManager;
-        [Dependency] private IMapManager _mapManager;
-        [Dependency] private IMapLoader _mapLoader;
-        [Dependency] private IGameTiming _gameTiming;
-        [Dependency] private IConfigurationManager _configurationManager;
-        [Dependency] private IChatManager _chatManager;
-        [Dependency] private IServerNetManager _netManager;
-        [Dependency] private IDynamicTypeFactory _dynamicTypeFactory;
-        [Dependency] private IPrototypeManager _prototypeManager;
-        [Dependency] private readonly ILocalizationManager _localization;
-        [Dependency] private readonly IRobustRandom _robustRandom;
-        [Dependency] private readonly IServerPreferencesManager _prefsManager;
-        [Dependency] private readonly IBaseServer _baseServer;
-        [Dependency] private readonly IWatchdogApi _watchdogApi;
-#pragma warning restore 649
+        [Dependency] private IEntityManager _entityManager = default!;
+        [Dependency] private IMapManager _mapManager = default!;
+        [Dependency] private IMapLoader _mapLoader = default!;
+        [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private IConfigurationManager _configurationManager = default!;
+        [Dependency] private IChatManager _chatManager = default!;
+        [Dependency] private IServerNetManager _netManager = default!;
+        [Dependency] private IDynamicTypeFactory _dynamicTypeFactory = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly IServerPreferencesManager _prefsManager = default!;
+        [Dependency] private readonly IBaseServer _baseServer = default!;
+        [Dependency] private readonly IWatchdogApi _watchdogApi = default!;
     }
 
     public enum GameRunLevel

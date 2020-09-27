@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Map;
@@ -18,7 +17,7 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
         {
             return new MapIndices((int) Math.Floor((float) indices.X / ChunkSize) * ChunkSize, (int) MathF.Floor((float) indices.Y / ChunkSize) * ChunkSize);
         }
-        
+
         [Serializable, NetSerializable]
         public struct GasData
         {
@@ -59,9 +58,9 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
                 {
                     return true;
                 }
-                
+
                 DebugTools.Assert(other.Gas != null);
-                
+
                 for (var i = 0; i < Gas.Length; i++)
                 {
                     var thisGas = Gas[i];

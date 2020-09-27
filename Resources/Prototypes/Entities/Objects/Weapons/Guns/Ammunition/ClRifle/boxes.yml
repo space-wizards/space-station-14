@@ -7,8 +7,7 @@
   - type: AmmoBox
     caliber: ClRifle
     capacity: 30
-  - type: Icon
-    state: icon
+
   - type: Sprite
     netsync: false
     layers:
@@ -32,8 +31,7 @@
   - type: AmmoBox
     capacity: 200
     fillPrototype: CartridgeClRifle
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/ClRifle/10x24_box.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/ClRifle/10x24_box.rsi
 
@@ -45,8 +43,7 @@
   - type: AmmoBox
     capacity: 200
     fillPrototype: CartridgeClRifle
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/ClRifle/cl_rifle_big_box.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/ClRifle/cl_rifle_big_box.rsi
 
@@ -58,8 +55,7 @@
   - type: AmmoBox
     capacity: 200
     fillPrototype: CartridgeClRifleRubber
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/ClRifle/cl_rifle_big_box_rubber.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/ClRifle/cl_rifle_big_box_rubber.rsi
 
@@ -71,8 +67,7 @@
   - type: AmmoBox
     capacity: 60
     fillPrototype: CartridgeClRifle
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/ClRifle/cl_rifle_box.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/ClRifle/cl_rifle_box.rsi
 
@@ -84,8 +79,7 @@
   - type: AmmoBox
     capacity: 60
     fillPrototype: CartridgeClRifleFlash
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/ClRifle/cl_rifle_box_flash.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/ClRifle/cl_rifle_box_flash.rsi
 
@@ -97,8 +91,7 @@
   - type: AmmoBox
     capacity: 60
     fillPrototype: CartridgeClRifleHV
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/ClRifle/cl_rifle_box_hv.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/ClRifle/cl_rifle_box_hv.rsi
 
@@ -110,8 +103,7 @@
   - type: AmmoBox
     capacity: 60
     fillPrototype: CartridgeClRiflePractice
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/ClRifle/cl_rifle_box_practice.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/ClRifle/cl_rifle_box_practice.rsi
 
@@ -123,7 +115,6 @@
   - type: AmmoBox
     capacity: 60
     fillPrototype: CartridgeClRifleRubber
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/ClRifle/cl_rifle_box_rubber.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/ClRifle/cl_rifle_box_rubber.rsi

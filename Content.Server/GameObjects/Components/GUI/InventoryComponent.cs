@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Items.Clothing;
 using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.Click;
-using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -28,10 +27,7 @@ namespace Content.Server.GameObjects.Components.GUI
     [RegisterComponent]
     public class InventoryComponent : SharedInventoryComponent, IExAct, IEffectBlocker, IPressureProtection
     {
-#pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-        [Dependency] private readonly IServerNotifyManager _serverNotifyManager;
-#pragma warning restore 649
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
         [ViewVariables]
         private readonly Dictionary<Slots, ContainerSlot> _slotContainers = new Dictionary<Slots, ContainerSlot>();
@@ -434,7 +430,7 @@ namespace Content.Server.GameObjects.Components.GUI
                             hands.PutInHand(clothing);
 
                             if (reason != null)
-                                _serverNotifyManager.PopupMessageCursor(Owner, reason);
+                                Owner.PopupMessageCursor(reason);
                         }
                     }
                     break;
@@ -449,8 +445,8 @@ namespace Content.Server.GameObjects.Components.GUI
                     {
                         if (activeHand != null)
                         {
-                            interactionSystem.Interaction(Owner, activeHand.Owner, itemContainedInSlot.Owner,
-                                new GridCoordinates());
+                                _ = interactionSystem.Interaction(Owner, activeHand.Owner, itemContainedInSlot.Owner,
+                                    new EntityCoordinates());
                         }
                         else if (Unequip(msg.Inventoryslot))
                         {

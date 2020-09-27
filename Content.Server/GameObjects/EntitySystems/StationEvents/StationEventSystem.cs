@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Content.Server.StationEvents;
+using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
+using Content.Server.StationEvents;
 using JetBrains.Annotations;
 using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
@@ -21,11 +22,9 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
     // Somewhat based off of TG's implementation of events
     public sealed class StationEventSystem : EntitySystem
     {
-#pragma warning disable 649
-        [Dependency] private readonly IServerNetManager _netManager;
-        [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private readonly IGameTicker _gameTicker;
-#pragma warning restore 649
+        [Dependency] private readonly IServerNetManager _netManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IGameTicker _gameTicker = default!;
 
         public StationEvent CurrentEvent { get; private set; }
         public IReadOnlyCollection<StationEvent> StationEvents => _stationEvents;
@@ -33,7 +32,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
         private List<StationEvent> _stationEvents = new List<StationEvent>();
 
         private const float MinimumTimeUntilFirstEvent = 600;
-        
+
         /// <summary>
         /// How long until the next check for an event runs
         /// </summary>
@@ -77,7 +76,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
 
             return result.ToString();
         }
-        
+
         /// <summary>
         /// Admins can forcibly run events by passing in the Name
         /// </summary>
@@ -88,14 +87,14 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
             // Could use a dictionary but it's such a minor thing, eh.
             // Wasn't sure on whether to localize this given it's a command
             var upperName = name.ToUpperInvariant();
-            
+
             foreach (var stationEvent in _stationEvents)
             {
                 if (stationEvent.Name.ToUpperInvariant() != upperName)
                 {
                     continue;
                 }
-                
+
                 CurrentEvent?.Shutdown();
                 CurrentEvent = stationEvent;
                 stationEvent.Startup();
@@ -114,12 +113,12 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
         {
             var availableEvents = AvailableEvents(true);
             var randomEvent = FindEvent(availableEvents);
-            
+
             if (randomEvent == null)
             {
                 return Loc.GetString("No valid events available");
             }
-            
+
             CurrentEvent?.Shutdown();
             CurrentEvent = randomEvent;
             CurrentEvent.Startup();
@@ -134,7 +133,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
         public string StopEvent()
         {
             string resultText;
-            
+
             if (CurrentEvent == null)
             {
                 resultText = Loc.GetString("No event running currently");
@@ -145,11 +144,11 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
                 CurrentEvent.Shutdown();
                 CurrentEvent = null;
             }
-            
+
             ResetTimer();
             return resultText;
         }
-        
+
         public override void Initialize()
         {
             base.Initialize();
@@ -198,7 +197,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
             }
 
             // Stop events from happening in lobby and force active event to end if the round ends
-            if (_gameTicker.RunLevel != GameTicking.GameRunLevel.InRound)
+            if (_gameTicker.RunLevel != GameRunLevel.InRound)
             {
                 if (CurrentEvent != null)
                 {
@@ -212,7 +211,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
             if (CurrentEvent != null)
             {
                 CurrentEvent.Update(frameTime);
-                
+
                 // Shutdown the event and set the timer for the next event
                 if (!CurrentEvent.Running)
                 {
@@ -239,6 +238,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
             else
             {
                 CurrentEvent = stationEvent;
+                CurrentEvent.Startup();
             }
         }
 
@@ -262,14 +262,14 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
             {
                 return null;
             }
-            
+
             var sumOfWeights = 0;
 
             foreach (var stationEvent in availableEvents)
             {
                 sumOfWeights += (int) stationEvent.Weight;
             }
-            
+
             var robustRandom = IoCManager.Resolve<IRobustRandom>();
             sumOfWeights = robustRandom.Next(sumOfWeights);
 
@@ -295,7 +295,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
         {
             TimeSpan currentTime;
             var playerCount = IoCManager.Resolve<IPlayerManager>().PlayerCount;
-            
+
             // playerCount does a lock so we'll just keep the variable here
             if (!ignoreEarliestStart)
             {
@@ -346,7 +346,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
                 CurrentEvent.Shutdown();
                 CurrentEvent = null;
             }
-            
+
             foreach (var stationEvent in _stationEvents)
             {
                 stationEvent.Occurrences = 0;

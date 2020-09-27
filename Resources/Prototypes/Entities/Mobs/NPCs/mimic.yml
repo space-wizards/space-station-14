@@ -9,6 +9,9 @@
   components:
   - type: AiController
     logic: Mimic
+  - type: AiFactionTag
+    factions:
+    - SimpleHostile
   - type: Hands
   - type: MovementSpeedModifier
   - type: InteractionOutline
@@ -17,9 +20,7 @@
     drawdepth: Mobs
     sprite: Constructible/Power/VendingMachines/cola.rsi
     state: normal
-  - type: Icon
-    sprite: Constructible/Power/VendingMachines/cola.rsi
-    state: normal
+
   - type: Physics
     mass: 85
   - type: Collidable
@@ -34,9 +35,9 @@
       layer:
       - Opaque
       - MobImpassable
-  - type: BodyManager
-    baseTemplate: bodyTemplate.Humanoid
-    basePreset: bodyPreset.BasicHuman
+  - type: Damageable
+    criticalThreshold: 100
+    deadThreshold: 200
   - type: MobStateManager
   - type: HeatResistance
   - type: CombatMode

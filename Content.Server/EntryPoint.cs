@@ -1,9 +1,10 @@
 ﻿using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.WorldState;
+using Content.Server.Body.Network;
+using Content.Server.GameObjects.Components.Mobs.Speech;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
-using Content.Server.Body.Network;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Interfaces.PDA;
 using Content.Server.Sandbox;
@@ -64,6 +65,7 @@ namespace Content.Server
             IoCManager.Resolve<IServerPreferencesManager>().StartInit();
             IoCManager.Resolve<INodeGroupFactory>().Initialize();
             IoCManager.Resolve<ISandboxManager>().Initialize();
+            IoCManager.Resolve<IAccentManager>().Initialize();
         }
 
         public override void PostInit()

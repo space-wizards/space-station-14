@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Server.GameObjects.Components.Body;
 using Content.Shared.Body.Template;
 using Content.Shared.GameObjects.Components.Body;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Body
@@ -11,35 +12,22 @@ namespace Content.Server.Body
     /// <summary>
     ///     This class is a data capsule representing the standard format of a
     ///     <see cref="BodyManagerComponent"/>.
-    ///     For instance, the "humanoid" BodyTemplate defines two arms, each connected to
-    ///     a torso and so on.
+    ///     For instance, the "humanoid" BodyTemplate defines two arms, each
+    ///     connected to a torso and so on.
     ///     Capable of loading data from a <see cref="BodyTemplatePrototype"/>.
     /// </summary>
     public class BodyTemplate
     {
-        public BodyTemplate()
-        {
-            Name = "empty";
-            CenterSlot = "";
-            Slots = new Dictionary<string, BodyPartType>();
-            Connections = new Dictionary<string, List<string>>();
-            Layers = new Dictionary<string, string>();
-            MechanismLayers = new Dictionary<string, string>();
-        }
+        [ViewVariables] public bool Initialized { get; private set; }
 
-        public BodyTemplate(BodyTemplatePrototype data)
-        {
-            LoadFromPrototype(data);
-        }
-
-        [ViewVariables] public string Name { get; private set; }
+        [ViewVariables] public string Name { get; private set; } = "";
 
         /// <summary>
         ///     The name of the center BodyPart. For humans, this is set to "torso".
         ///     Used in many calculations.
         /// </summary>
         [ViewVariables]
-        public string CenterSlot { get; set; }
+        public string CenterSlot { get; set; } = "";
 
         /// <summary>
         ///     Maps all parts on this template to its BodyPartType.
@@ -47,7 +35,7 @@ namespace Content.Server.Body
         ///     template.
         /// </summary>
         [ViewVariables]
-        public Dictionary<string, BodyPartType> Slots { get; private set; }
+        public Dictionary<string, BodyPartType> Slots { get; private set; } = new Dictionary<string, BodyPartType>();
 
         /// <summary>
         ///     Maps limb name to the list of their connections to other limbs.
@@ -58,13 +46,13 @@ namespace Content.Server.Body
         ///     map "left arm" to "torso".
         /// </summary>
         [ViewVariables]
-        public Dictionary<string, List<string>> Connections { get; private set; }
+        public Dictionary<string, List<string>> Connections { get; private set; } = new Dictionary<string, List<string>>();
 
         [ViewVariables]
-        public Dictionary<string, string> Layers { get; private set; }
+        public Dictionary<string, string> Layers { get; private set; } = new Dictionary<string, string>();
 
         [ViewVariables]
-        public Dictionary<string, string> MechanismLayers { get; private set; }
+        public Dictionary<string, string> MechanismLayers { get; private set; } = new Dictionary<string, string>();
 
         public bool Equals(BodyTemplate other)
         {
@@ -75,7 +63,7 @@ namespace Content.Server.Body
         ///     Checks if the given slot exists in this <see cref="BodyTemplate"/>.
         /// </summary>
         /// <returns>True if it does, false otherwise.</returns>
-        public bool SlotExists(string slotName)
+        public bool HasSlot(string slotName)
         {
             return Slots.Keys.Any(slot => slot == slotName);
         }
@@ -132,14 +120,18 @@ namespace Content.Server.Body
             return hash;
         }
 
-        protected virtual void LoadFromPrototype(BodyTemplatePrototype data)
+        public virtual void Initialize(BodyTemplatePrototype prototype)
         {
-            Name = data.Name;
-            CenterSlot = data.CenterSlot;
-            Slots = data.Slots;
-            Connections = data.Connections;
-            Layers = data.Layers;
-            MechanismLayers = data.MechanismLayers;
+            DebugTools.Assert(!Initialized, $"{nameof(BodyTemplate)} {Name} has already been initialized!");
+
+            Name = prototype.Name;
+            CenterSlot = prototype.CenterSlot;
+            Slots = new Dictionary<string, BodyPartType>(prototype.Slots);
+            Connections = new Dictionary<string, List<string>>(prototype.Connections);
+            Layers = new Dictionary<string, string>(prototype.Layers);
+            MechanismLayers = new Dictionary<string, string>(prototype.MechanismLayers);
+
+            Initialized = true;
         }
     }
 }

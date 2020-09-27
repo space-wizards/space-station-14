@@ -10,9 +10,6 @@
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/empty.rsi
     netsync: false
-  - type: Icon
-    sprite: Constructible/Power/VendingMachines/empty.rsi
-    state: "off"
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -31,7 +28,8 @@
   - type: SnapGrid
     offset: Center
   - type: Breakable
-    maxHP: 50
+    deadThreshold: 50
+    resistances: metallicResistances
   - type: UserInterface
     interfaces:
     - key: enum.VendingMachineUiKey.Key
@@ -52,8 +50,6 @@
   components:
   - type: VendingMachine
     pack: Booze-O-Mat
-  - type: Icon
-    sprite: Constructible/Power/VendingMachines/boozeomat.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/boozeomat.rsi
     layers:
@@ -78,8 +74,6 @@
   components:
   - type: VendingMachine
     pack: PTech
-  - type: Icon
-    sprite: Constructible/Power/VendingMachines/cart.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/cart.rsi
     layers:
@@ -106,8 +100,6 @@
   components:
   - type: VendingMachine
     pack: PietyVend
-  - type: Icon
-    sprite: Constructible/Power/VendingMachines/chapel.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/chapel.rsi
     layers:
@@ -133,8 +125,6 @@
   components:
   - type: VendingMachine
     pack: Cigarette machine
-  - type: Icon
-    sprite: Constructible/Power/VendingMachines/cigs.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/cigs.rsi
     layers:
@@ -161,8 +151,6 @@
   components:
   - type: VendingMachine
     pack: Hot Drinks machine
-  - type: Icon
-    sprite: Constructible/Power/VendingMachines/coffee.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/coffee.rsi
     layers:
@@ -193,8 +181,6 @@
   components:
   - type: VendingMachine
     pack: Robust Softdrinks
-  - type: Icon
-    sprite: Constructible/Power/VendingMachines/cola.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/cola.rsi
     layers:
@@ -221,8 +207,6 @@
   components:
   - type: VendingMachine
     pack: Dinnerware
-  - type: Icon
-    sprite: Constructible/Power/VendingMachines/dinnerware.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/dinnerware.rsi
     layers:
@@ -248,8 +232,6 @@
   components:
   - type: VendingMachine
     pack: Discount Dan's
-  - type: Icon
-    sprite: Constructible/Power/VendingMachines/discount.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/discount.rsi
     layers:
@@ -274,8 +256,6 @@
   components:
   - type: VendingMachine
     pack: Engi-Vend
-  - type: Icon
-    sprite: Constructible/Power/VendingMachines/engivend.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/engivend.rsi
     layers:
@@ -302,8 +282,6 @@
   components:
   - type: VendingMachine
     pack: Hatlord 9000
-  - type: Icon
-    sprite: Constructible/Power/VendingMachines/hats.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/hats.rsi
     layers:
@@ -328,8 +306,6 @@
   components:
   - type: VendingMachine
     pack: MagiVend
-  - type: Icon
-    sprite: Constructible/Power/VendingMachines/magivend.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/magivend.rsi
     layers:
@@ -354,8 +330,6 @@
   components:
   - type: VendingMachine
     pack: NanoMed Plus
-  - type: Icon
-    sprite: Constructible/Power/VendingMachines/medical.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/medical.rsi
     layers:
@@ -382,8 +356,6 @@
   components:
   - type: VendingMachine
     pack: Dwarven Mining Equipment
-  - type: Icon
-    sprite: Constructible/Power/VendingMachines/mining.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/mining.rsi
     layers:
@@ -409,8 +381,6 @@
   components:
   - type: VendingMachine
     pack: NutriMax
-  - type: Icon
-    sprite: Constructible/Power/VendingMachines/nutri.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/nutri.rsi
     layers:
@@ -437,8 +407,6 @@
   components:
   - type: VendingMachine
     pack: Robotech Deluxe
-  - type: Icon
-    sprite: Constructible/Power/VendingMachines/robotics.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/robotics.rsi
     layers:
@@ -464,8 +432,6 @@
   components:
   - type: VendingMachine
     pack: Sales
-  - type: Icon
-    sprite: Constructible/Power/VendingMachines/sale.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/sale.rsi
     layers:
@@ -491,8 +457,6 @@
   components:
   - type: VendingMachine
     pack: SecTech
-  - type: Icon
-    sprite: Constructible/Power/VendingMachines/sec.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/sec.rsi
     layers:
@@ -519,8 +483,7 @@
   components:
   - type: VendingMachine
     pack: MegaSeed Servitor
-  - type: Icon
-    sprite: Constructible/Power/VendingMachines/seeds.rsi
+
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/seeds.rsi
     layers:
@@ -546,8 +509,7 @@
   components:
   - type: VendingMachine
     pack: Shoelord 9000
-  - type: Icon
-    sprite: Constructible/Power/VendingMachines/shoes.rsi
+
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/shoes.rsi
     layers:
@@ -572,8 +534,7 @@
   components:
   - type: VendingMachine
     pack: SmartFridge
-  - type: Icon
-    sprite: Constructible/Power/VendingMachines/smartfridge.rsi
+
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/smartfridge.rsi
     layers:
@@ -598,8 +559,7 @@
   components:
   - type: VendingMachine
     pack: Getmore Chocolate Corp
-  - type: Icon
-    sprite: Constructible/Power/VendingMachines/snack.rsi
+
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/snack.rsi
     layers:
@@ -626,8 +586,7 @@
   components:
   - type: VendingMachine
     pack: BODA
-  - type: Icon
-    sprite: Constructible/Power/VendingMachines/sovietsoda.rsi
+
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/sovietsoda.rsi
     layers:
@@ -654,8 +613,7 @@
   components:
   - type: VendingMachine
     pack: Suitlord 9000
-  - type: Icon
-    sprite: Constructible/Power/VendingMachines/suits.rsi
+
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/suits.rsi
     layers:
@@ -680,8 +638,7 @@
   components:
   - type: VendingMachine
     pack: AutoDrobe
-  - type: Icon
-    sprite: Constructible/Power/VendingMachines/theater.rsi
+
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/theater.rsi
     layers:
@@ -712,8 +669,7 @@
   components:
   - type: VendingMachine
     pack: Vendomat
-  - type: Icon
-    sprite: Constructible/Power/VendingMachines/vendomat.rsi
+
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/vendomat.rsi
     layers:
@@ -741,8 +697,7 @@
   components:
   - type: VendingMachine
     pack: Trader Supply
-  - type: Icon
-    sprite: Constructible/Power/VendingMachines/vox.rsi
+
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/vox.rsi
     layers:
@@ -767,8 +722,7 @@
   components:
   - type: VendingMachine
     pack: NanoMed
-  - type: Icon
-    sprite: Constructible/Power/VendingMachines/wallmed.rsi
+
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/wallmed.rsi
     layers:
@@ -794,8 +748,7 @@
   components:
   - type: VendingMachine
     pack: YouTool
-  - type: Icon
-    sprite: Constructible/Power/VendingMachines/youtool.rsi
+
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/youtool.rsi
     layers:

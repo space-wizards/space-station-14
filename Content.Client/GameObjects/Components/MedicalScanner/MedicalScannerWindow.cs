@@ -24,7 +24,7 @@ namespace Content.Client.GameObjects.Components.MedicalScanner
                 {
                     (ScanButton = new Button
                     {
-                        Text = "Scan and Save DNA"
+                        Text = Loc.GetString("Scan and Save DNA")
                     }),
                     (_diagnostics = new Label
                     {

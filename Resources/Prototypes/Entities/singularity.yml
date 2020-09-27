@@ -21,9 +21,6 @@
   - type: Sprite
     sprite: Effects/Singularity/singularity_1.rsi
     state: singularity_1
-  - type: Icon
-    sprite: Effects/Singularity/singularity_1.rsi
-    state: singularity_1
     drawdepth: Items
 
 - type: entity
@@ -45,9 +42,6 @@
   - type: SnapGrid
     offset: Center
   - type: Sprite
-    sprite: Constructible/Power/radiation_panel.rsi
-    state: ca_active
-  - type: Icon
     sprite: Constructible/Power/radiation_panel.rsi
     state: ca_active
   - type: NodeContainer
@@ -78,9 +72,6 @@
   - type: Sprite
     sprite: Constructible/Power/field_generator.rsi
     state: Field_Gen
-  - type: Icon
-    sprite: Constructible/Power/field_generator.rsi
-    state: Field_Gen
   - type: ContainmentFieldGenerator
   - type: Anchorable
 
@@ -103,9 +94,6 @@
   - type: SnapGrid
     offset: Center
   - type: Sprite
-    sprite: Effects/contain_f.rsi
-    state: Contain_F
-  - type: Icon
     sprite: Effects/contain_f.rsi
     state: Contain_F
   - type: ContainmentField
@@ -131,9 +119,6 @@
   - type: Sprite
     sprite: Constructible/Power/emitter.rsi
     state: emitter
-  - type: Icon
-    sprite: Constructible/Power/emitter.rsi
-    state: emitter
   - type: Emitter
     voltage: Medium
   - type: NodeContainer
@@ -149,9 +134,6 @@
   parent: BulletBase
   components:
   - type: Sprite
-    sprite: Constructible/Power/emitter.rsi
-    state: emitter_projectile
-  - type: Icon
     sprite: Constructible/Power/emitter.rsi
     state: emitter_projectile
   - type: Projectile

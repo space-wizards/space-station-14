@@ -246,7 +246,7 @@ namespace Content.Shared.Chemistry
         }
 
         [Serializable, NetSerializable]
-        public readonly struct ReagentQuantity
+        public readonly struct ReagentQuantity: IComparable<ReagentQuantity>
         {
             public readonly string ReagentId;
             public readonly ReagentUnit Quantity;
@@ -261,6 +261,14 @@ namespace Content.Shared.Chemistry
             public override string ToString()
             {
                 return $"{ReagentId}:{Quantity}";
+            }
+
+            public int CompareTo(ReagentQuantity other) { return Quantity.Float().CompareTo(other.Quantity.Float()); }
+
+            public void Deconstruct(out string reagentId, out ReagentUnit quantity)
+            {
+                reagentId = ReagentId;
+                quantity = Quantity;
             }
         }
 

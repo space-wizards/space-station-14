@@ -13,9 +13,7 @@
     - state: welded
       visible: false
       map: ["enum.StorageVisualLayers.Welded"]
-  - type: Icon
-    sprite: Constructible/Structures/closet.rsi
-    state: generic_door
+
   - type: Clickable
   - type: MovedByPressure
   - type: DamageOnHighSpeedImpact
@@ -42,7 +40,8 @@
   - type: EntityStorage
   - type: PlaceableSurface
   - type: Destructible
-    maxHP: 100
+    deadThreshold: 100
+    resistances: metallicResistances
   - type: Appearance
     visuals:
     - type: StorageVisualizer

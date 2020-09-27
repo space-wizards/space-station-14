@@ -79,8 +79,7 @@ namespace Content.Server.GameObjects.Components.Singularity
         protected override void Startup()
         {
             SendNetworkMessage(new SingularitySoundMessage(true));
-            //Timer.Spawn(5421, () => transition = false);
-            transition = false;
+            Timer.Spawn(5421, () => transition = false);
         }
 
         public void Update()
@@ -119,7 +118,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                 _singularityController.Push(new Vector2((rand.Next(-10, 10)), rand.Next(-10, 10)).Normalized, 5f);
             }
 
-            foreach (var entity in _entityManager.GetEntitiesInRange(Owner.Transform.GridPosition, 15))
+            foreach (var entity in _entityManager.GetEntitiesInRange(Owner.Transform.Coordinates, 15))
             {
                 if (entity.TryGetComponent<RadiationPanelComponent>(out var radPanel))
                 {

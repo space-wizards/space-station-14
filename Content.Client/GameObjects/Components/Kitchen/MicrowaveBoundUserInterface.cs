@@ -20,10 +20,9 @@ namespace Content.Client.GameObjects.Components.Kitchen
 {
     public  class MicrowaveBoundUserInterface : BoundUserInterface
     {
-#pragma warning disable 649
-        [Dependency] private readonly IEntityManager _entityManager;
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-#pragma warning restore 649
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         private MicrowaveMenu _menu;
 
         private Dictionary<int, EntityUid> _solids = new Dictionary<int, EntityUid>();
@@ -78,15 +77,15 @@ namespace Content.Client.GameObjects.Components.Kitchen
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-            if (!(state is MicrowaveUpdateUserInterfaceState cstate))
+            if (!(state is MicrowaveUpdateUserInterfaceState cState))
             {
                 return;
             }
-            _menu.ToggleBusyDisableOverlayPanel(cstate.IsMicrowaveBusy);
-            RefreshContentsDisplay(cstate.ReagentQuantities, cstate.ContainedSolids);
-            var currentlySelectedTimeButton = (Button) _menu.CookTimeButtonVbox.GetChild(cstate.ActiveButtonIndex);
+            _menu.ToggleBusyDisableOverlayPanel(cState.IsMicrowaveBusy);
+            RefreshContentsDisplay(cState.ReagentQuantities, cState.ContainedSolids);
+            var currentlySelectedTimeButton = (Button) _menu.CookTimeButtonVbox.GetChild(cState.ActiveButtonIndex);
             currentlySelectedTimeButton.Pressed = true;
-            var label = cstate.ActiveButtonIndex <= 0 ? Loc.GetString("INSTANT") : cstate.CurrentCookTime.ToString();
+            var label = cState.ActiveButtonIndex <= 0 ? Loc.GetString("INSTANT") : cState.CurrentCookTime.ToString();
             _menu._cookTimeInfoLabel.Text = $"{Loc.GetString("COOK TIME")}: {label}";
         }
 
@@ -110,11 +109,11 @@ namespace Content.Client.GameObjects.Components.Kitchen
                 {
                     return;
                 }
-                if (entity.Deleted || !entity.TryGetComponent(out IconComponent icon))
+                if (entity.Deleted || !entity.TryGetComponent(out SpriteComponent spriteComponent))
                 {
                     continue;
                 }
-                var solidItem = _menu.IngredientsList.AddItem(entity.Name, icon.Icon.Default);
+                var solidItem = _menu.IngredientsList.AddItem(entity.Name, spriteComponent.Icon);
                 var solidIndex = _menu.IngredientsList.IndexOf(solidItem);
                 _solids.Add(solidIndex, containedSolids[j]);
 

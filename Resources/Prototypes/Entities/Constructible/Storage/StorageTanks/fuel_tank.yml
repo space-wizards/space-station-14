@@ -6,14 +6,13 @@
   components:
   - type: Sprite
     texture: Constructible/Misc/weldtank.png
-  - type: Icon
-    texture: Constructible/Misc/weldtank.png
+
   - type: Explosive
     devastationRange: 0
     heavyImpactRange: 2
     lightImpactRange: 6
     flashRange: 5
-  - type: Solution
+  - type: SolutionContainer
     contents:
       reagents:
       - ReagentId: chem.WeldingFuel

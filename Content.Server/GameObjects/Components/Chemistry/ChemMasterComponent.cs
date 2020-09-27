@@ -1,16 +1,21 @@
-﻿using System;
+﻿#nullable enable
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry.ChemMaster;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
+using Content.Shared.GameObjects.Verbs;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.GameObjects.EntitySystems;
@@ -19,11 +24,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Maths;
-using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -40,24 +41,16 @@ namespace Content.Server.GameObjects.Components.Chemistry
     [ComponentReference(typeof(IInteractUsing))]
     public class ChemMasterComponent : SharedChemMasterComponent, IActivate, IInteractUsing, ISolutionChange
     {
-#pragma warning disable 649
-        [Dependency] private readonly IServerNotifyManager _notifyManager;
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-#pragma warning restore 649
-
-        [ViewVariables] private BoundUserInterface _userInterface;
-        [ViewVariables] private ContainerSlot _beakerContainer;
-        [ViewVariables] private string _packPrototypeId;
-
+        [ViewVariables] private ContainerSlot _beakerContainer = default!;
+        [ViewVariables] private string _packPrototypeId = "";
         [ViewVariables] private bool HasBeaker => _beakerContainer.ContainedEntity != null;
+        [ViewVariables] private bool _bufferModeTransfer = true;
 
-        [ViewVariables] private bool BufferModeTransfer = true;
+        [ViewVariables] private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
 
-        private PowerReceiverComponent _powerReceiver;
-        private bool Powered => _powerReceiver.Powered;
+        [ViewVariables] private readonly SolutionContainerComponent BufferSolution = new SolutionContainerComponent();
 
-        private readonly SolutionComponent BufferSolution = new SolutionComponent();
-
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ChemMasterUiKey.Key);
 
         /// <summary>
         /// Shows the serializer how to save/load this components yaml prototype.
@@ -77,14 +70,19 @@ namespace Content.Server.GameObjects.Components.Chemistry
         public override void Initialize()
         {
             base.Initialize();
-            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
-                .GetBoundUserInterface(ChemMasterUiKey.Key);
-            _userInterface.OnReceiveMessage += OnUiReceiveMessage;
+
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += OnUiReceiveMessage;
+            }
 
             _beakerContainer =
                 ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-reagentContainerContainer", Owner);
-            _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
-            _powerReceiver.OnPowerStateChanged += OnPowerChanged;
+
+            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
+            {
+                receiver.OnPowerStateChanged += OnPowerChanged;
+            }
 
             //BufferSolution = Owner.BufferSolution
             BufferSolution.Solution = new Solution();
@@ -93,7 +91,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             UpdateUserInterface();
         }
 
-        private void OnPowerChanged(object sender, PowerStateEventArgs e)
+        private void OnPowerChanged(object? sender, PowerStateEventArgs e)
         {
             UpdateUserInterface();
         }
@@ -105,6 +103,11 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// <param name="obj">A user interface message from the client.</param>
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
+            if (obj.Session.AttachedEntity == null)
+            {
+                return;
+            }
+
             var msg = (UiActionMessage) obj.Message;
             var needsPower = msg.action switch
             {
@@ -124,11 +127,11 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     TransferReagent(msg.id, msg.amount, msg.isBuffer);
                     break;
                 case UiAction.Transfer:
-                    BufferModeTransfer = true;
+                    _bufferModeTransfer = true;
                     UpdateUserInterface();
                     break;
                 case UiAction.Discard:
-                    BufferModeTransfer = false;
+                    _bufferModeTransfer = false;
                     UpdateUserInterface();
                     break;
                 case UiAction.CreatePills:
@@ -147,7 +150,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// </summary>
         /// <param name="playerEntity">The player entity.</param>
         /// <returns>Returns true if the entity can use the chem master, and false if it cannot.</returns>
-        private bool PlayerCanUseChemMaster(IEntity playerEntity, bool needsPower = true)
+        private bool PlayerCanUseChemMaster(IEntity? playerEntity, bool needsPower = true)
         {
             //Need player entity to check if they are still able to use the chem master
             if (playerEntity == null)
@@ -172,22 +175,22 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if (beaker == null)
             {
                 return new ChemMasterBoundUserInterfaceState(Powered, false, ReagentUnit.New(0), ReagentUnit.New(0),
-                    "", Owner.Name, null, BufferSolution.ReagentList.ToList(), BufferModeTransfer, BufferSolution.CurrentVolume, BufferSolution.MaxVolume);
+                    "", Owner.Name, new List<Solution.ReagentQuantity>(), BufferSolution.ReagentList.ToList(), _bufferModeTransfer, BufferSolution.CurrentVolume, BufferSolution.MaxVolume);
             }
 
-            var solution = beaker.GetComponent<SolutionComponent>();
+            var solution = beaker.GetComponent<SolutionContainerComponent>();
             return new ChemMasterBoundUserInterfaceState(Powered, true, solution.CurrentVolume, solution.MaxVolume,
-                beaker.Name, Owner.Name, solution.ReagentList.ToList(), BufferSolution.ReagentList.ToList(), BufferModeTransfer, BufferSolution.CurrentVolume, BufferSolution.MaxVolume);
+                beaker.Name, Owner.Name, solution.ReagentList.ToList(), BufferSolution.ReagentList.ToList(), _bufferModeTransfer, BufferSolution.CurrentVolume, BufferSolution.MaxVolume);
         }
 
         private void UpdateUserInterface()
         {
             var state = GetUserInterfaceState();
-            _userInterface.SetState(state);
+            UserInterface?.SetState(state);
         }
 
         /// <summary>
-        /// If this component contains an entity with a <see cref="SolutionComponent"/>, eject it.
+        /// If this component contains an entity with a <see cref="SolutionContainerComponent"/>, eject it.
         /// Tries to eject into user's hands first, then ejects onto chem master if both hands are full.
         /// </summary>
         private void TryEject(IEntity user)
@@ -207,9 +210,9 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         private void TransferReagent(string id, ReagentUnit amount, bool isBuffer)
         {
-            if (!HasBeaker && BufferModeTransfer) return;
+            if (!HasBeaker && _bufferModeTransfer) return;
             var beaker = _beakerContainer.ContainedEntity;
-            var beakerSolution = beaker.GetComponent<SolutionComponent>();
+            var beakerSolution = beaker.GetComponent<SolutionContainerComponent>();
             if (isBuffer)
             {
                 foreach (var reagent in BufferSolution.Solution.Contents)
@@ -226,10 +229,12 @@ namespace Content.Server.GameObjects.Components.Chemistry
                             actualAmount = ReagentUnit.Min(reagent.Quantity, amount, beakerSolution.EmptyVolume);
                         }
 
+
                         BufferSolution.Solution.RemoveReagent(id, actualAmount);
-                        if (BufferModeTransfer)
+                        if (_bufferModeTransfer)
                         {
-                            beakerSolution.Solution.AddReagent(id, actualAmount);
+                            beakerSolution.TryAddReagent(id, actualAmount, out var _);
+                            // beakerSolution.Solution.AddReagent(id, actualAmount);
                         }
                         break;
                     }
@@ -263,8 +268,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         private void TryCreatePackage(IEntity user, UiAction action, int pillAmount, int bottleAmount)
         {
-            var random = IoCManager.Resolve<IRobustRandom>();
-
             if (BufferSolution.CurrentVolume == 0)
                 return;
 
@@ -277,12 +280,12 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 var actualVolume = ReagentUnit.Min(individualVolume, ReagentUnit.New(30));
                 for (int i = 0; i < bottleAmount; i++)
                 {
-                    var bottle = Owner.EntityManager.SpawnEntity("bottle", Owner.Transform.GridPosition);
+                    var bottle = Owner.EntityManager.SpawnEntity("bottle", Owner.Transform.Coordinates);
 
                     var bufferSolution = BufferSolution.Solution.SplitSolution(actualVolume);
 
-                    bottle.TryGetComponent<SolutionComponent>(out var bottleSolution);
-                    bottleSolution?.Solution.AddSolution(bufferSolution);
+                    bottle.TryGetComponent<SolutionContainerComponent>(out var bottleSolution);
+                    bottleSolution?.TryAddSolution(bufferSolution);
 
                     //Try to give them the bottle
                     if (user.TryGetComponent<HandsComponent>(out var hands) &&
@@ -293,15 +296,12 @@ namespace Content.Server.GameObjects.Components.Chemistry
                             hands.PutInHand(item);
                             continue;
                         }
-
                     }
 
                     //Put it on the floor
-                    bottle.Transform.GridPosition = user.Transform.GridPosition;
+                    bottle.Transform.Coordinates = user.Transform.Coordinates;
                     //Give it an offset
-                    var x_negative = random.Prob(0.5f) ? -1 : 1;
-                    var y_negative = random.Prob(0.5f) ? -1 : 1;
-                    bottle.Transform.LocalPosition += new Vector2(random.NextFloat() * 0.2f * x_negative, random.NextFloat() * 0.2f * y_negative);
+                    bottle.RandomOffset(0.2f);
                 }
 
             }
@@ -314,12 +314,12 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 var actualVolume = ReagentUnit.Min(individualVolume, ReagentUnit.New(50));
                 for (int i = 0; i < pillAmount; i++)
                 {
-                    var pill = Owner.EntityManager.SpawnEntity("pill", Owner.Transform.GridPosition);
+                    var pill = Owner.EntityManager.SpawnEntity("pill", Owner.Transform.Coordinates);
 
                     var bufferSolution = BufferSolution.Solution.SplitSolution(actualVolume);
 
-                    pill.TryGetComponent<SolutionComponent>(out var pillSolution);
-                    pillSolution?.Solution.AddSolution(bufferSolution);
+                    pill.TryGetComponent<SolutionContainerComponent>(out var pillSolution);
+                    pillSolution?.TryAddSolution(bufferSolution);
 
                     //Try to give them the bottle
                     if (user.TryGetComponent<HandsComponent>(out var hands) &&
@@ -334,11 +334,9 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     }
 
                     //Put it on the floor
-                    pill.Transform.GridPosition = user.Transform.GridPosition;
+                    pill.Transform.Coordinates = user.Transform.Coordinates;
                     //Give it an offset
-                    var x_negative = random.Prob(0.5f) ? -1 : 1;
-                    var y_negative = random.Prob(0.5f) ? -1 : 1;
-                    pill.Transform.LocalPosition += new Vector2(random.NextFloat() * 0.2f * x_negative, random.NextFloat() * 0.2f * y_negative);
+                    pill.RandomOffset(0.2f);
                 }
             }
 
@@ -351,54 +349,56 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
         void IActivate.Activate(ActivateEventArgs args)
         {
-            if (!args.User.TryGetComponent(out IActorComponent actor))
+            if (!args.User.TryGetComponent(out IActorComponent? actor))
             {
                 return;
             }
 
-            if (!args.User.TryGetComponent(out IHandsComponent hands))
+            if (!args.User.TryGetComponent(out IHandsComponent? hands))
             {
-                _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                    _localizationManager.GetString("You have no hands."));
+                Owner.PopupMessage(args.User, Loc.GetString("You have no hands."));
                 return;
             }
 
             var activeHandEntity = hands.GetActiveHand?.Owner;
             if (activeHandEntity == null)
             {
-                _userInterface.Open(actor.playerSession);
+                UserInterface?.Open(actor.playerSession);
             }
         }
 
         /// <summary>
         /// Called when you click the owner entity with something in your active hand. If the entity in your hand
-        /// contains a <see cref="SolutionComponent"/>, if you have hands, and if the chem master doesn't already
+        /// contains a <see cref="SolutionContainerComponent"/>, if you have hands, and if the chem master doesn't already
         /// hold a container, it will be added to the chem master.
         /// </summary>
         /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
         /// <returns></returns>
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)
         {
-            if (!args.User.TryGetComponent(out IHandsComponent hands))
+            if (!args.User.TryGetComponent(out IHandsComponent? hands))
             {
-                _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                    _localizationManager.GetString("You have no hands."));
+                Owner.PopupMessage(args.User, Loc.GetString("You have no hands!"));
                 return true;
             }
 
+            if (hands.GetActiveHand == null)
+            {
+                Owner.PopupMessage(args.User, Loc.GetString("You have nothing in your hand!"));
+                return false;
+            }
+
             var activeHandEntity = hands.GetActiveHand.Owner;
-            if (activeHandEntity.TryGetComponent<SolutionComponent>(out var solution))
+            if (activeHandEntity.TryGetComponent<SolutionContainerComponent>(out var solution))
             {
                 if (HasBeaker)
                 {
-                    _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                        _localizationManager.GetString("This ChemMaster already has a container in it."));
+                    Owner.PopupMessage(args.User, Loc.GetString("This ChemMaster already has a container in it."));
                 }
-                else if ((solution.Capabilities & SolutionCaps.FitsInDispenser) == 0) //Close enough to a chem master...
+                else if (!solution.CanUseWithChemDispenser)
                 {
                     //If it can't fit in the chem master, don't put it in. For example, buckets and mop buckets can't fit.
-                    _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                        _localizationManager.GetString("That can't fit in the ChemMaster."));
+                    Owner.PopupMessage(args.User, Loc.GetString("The {0:theName} is too large for the ChemMaster!", activeHandEntity));
                 }
                 else
                 {
@@ -408,8 +408,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
             else
             {
-                _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                    _localizationManager.GetString("You can't put this in the ChemMaster."));
+                Owner.PopupMessage(args.User, Loc.GetString("You can't put {0:theName} in the ChemMaster!", activeHandEntity));
             }
 
             return true;
@@ -419,8 +418,29 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         private void ClickSound()
         {
-
             EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
         }
+
+        [Verb]
+        public sealed class EjectBeakerVerb : Verb<ChemMasterComponent>
+        {
+            protected override void GetData(IEntity user, ChemMasterComponent component, VerbData data)
+            {
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
+                data.Text = Loc.GetString("Eject Beaker");
+                data.Visibility = component.HasBeaker ? VerbVisibility.Visible : VerbVisibility.Invisible;
+            }
+
+            protected override void Activate(IEntity user, ChemMasterComponent component)
+            {
+                component.TryEject(user);
+            }
+        }
+
     }
 }

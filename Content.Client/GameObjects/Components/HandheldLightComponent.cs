@@ -13,7 +13,10 @@ namespace Content.Client.GameObjects.Components
     [RegisterComponent]
     public sealed class HandheldLightComponent : SharedHandheldLightComponent, IItemStatus
     {
+        private bool _hasCell;
+
         [ViewVariables] public float? Charge { get; private set; }
+        [ViewVariables] protected override bool HasCell => _hasCell;
 
         public Control MakeControl()
         {
@@ -26,6 +29,7 @@ namespace Content.Client.GameObjects.Components
                 return;
 
             Charge = cast.Charge;
+            _hasCell = cast.HasCell;
         }
 
         private sealed class StatusControl : Control

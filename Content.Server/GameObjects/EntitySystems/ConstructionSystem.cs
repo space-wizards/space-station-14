@@ -6,22 +6,19 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Stack;
-using Content.Server.GameObjects.EntitySystems.Click;
-using Content.Server.Utility;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -36,10 +33,7 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     internal class ConstructionSystem : SharedConstructionSystem
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly IMapManager _mapManager;
-#pragma warning restore 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         private readonly Dictionary<string, ConstructionPrototype> _craftRecipes = new Dictionary<string, ConstructionPrototype>();
 
@@ -93,8 +87,7 @@ namespace Content.Server.GameObjects.EntitySystems
             if(targetEnt is null || handEnt is null)
                 return;
 
-            var interaction = Get<InteractionSystem>();
-            if(!interaction.InRangeUnobstructed(handEnt.Transform.MapPosition, targetEnt.Transform.MapPosition, ignoredEnt: targetEnt, ignoreInsideBlocker: true))
+            if (!handEnt.InRangeUnobstructed(targetEnt, ignoreInsideBlocker: true))
                 return;
 
             // Cannot deconstruct an entity with no prototype.
@@ -244,12 +237,11 @@ namespace Content.Server.GameObjects.EntitySystems
                 { ConstructionStepMaterial.MaterialType.Glass, "GlassSheet1" }
             };
 
-        private bool TryStartStructureConstruction(IEntity placingEnt, GridCoordinates loc, string prototypeName, Angle angle)
+        private bool TryStartStructureConstruction(IEntity placingEnt, EntityCoordinates loc, string prototypeName, Angle angle)
         {
             var prototype = _prototypeManager.Index<ConstructionPrototype>(prototypeName);
 
-            if (!InteractionChecks.InRangeUnobstructed(placingEnt, loc.ToMap(_mapManager),
-                ignoredEnt: placingEnt, ignoreInsideBlocker: prototype.CanBuildInImpassable))
+            if (!placingEnt.InRangeUnobstructed(loc, ignoreInsideBlocker: prototype.CanBuildInImpassable, popup: true))
             {
                 return false;
             }
@@ -307,6 +299,8 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private void TryStartItemConstruction(IEntity placingEnt, string prototypeName)
         {
+            if (!ActionBlockerSystem.CanInteract(placingEnt)) return;
+
             var prototype = _prototypeManager.Index<ConstructionPrototype>(prototypeName);
 
             if (prototype.Stages.Count < 2)
@@ -321,7 +315,8 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             // Try to find the stack with the material in the user's hand.
-            var hands = placingEnt.GetComponent<HandsComponent>();
+            if (!placingEnt.TryGetComponent(out HandsComponent hands)) return;
+
             var activeHand = hands.GetActiveHand?.Owner;
             if (activeHand == null)
             {
@@ -379,13 +374,13 @@ namespace Content.Server.GameObjects.EntitySystems
             var constructPrototype = constructionComponent.Prototype;
             if (constructPrototype.CanBuildInImpassable == false)
             {
-                if (!InteractionChecks.InRangeUnobstructed(user, constructEntity.Transform.MapPosition))
+                if (!user.InRangeUnobstructed(constructEntity, popup: true))
                     return false;
             }
 
             var stage = constructPrototype.Stages[constructionComponent.Stage];
 
-            if (await TryProcessStep(constructEntity, stage.Forward, handTool, user, transformComponent.GridPosition))
+            if (await TryProcessStep(constructEntity, stage.Forward, handTool, user, transformComponent.Coordinates))
             {
                 constructionComponent.Stage++;
                 if (constructionComponent.Stage == constructPrototype.Stages.Count - 1)
@@ -407,7 +402,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 }
             }
 
-            else if (await TryProcessStep(constructEntity, stage.Backward, handTool, user, transformComponent.GridPosition))
+            else if (await TryProcessStep(constructEntity, stage.Backward, handTool, user, transformComponent.Coordinates))
             {
                 constructionComponent.Stage--;
                 stage = constructPrototype.Stages[constructionComponent.Stage];
@@ -444,7 +439,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        private async Task<bool> TryProcessStep(IEntity constructEntity, ConstructionStep step, IEntity slapped, IEntity user, GridCoordinates gridCoords)
+        private async Task<bool> TryProcessStep(IEntity constructEntity, ConstructionStep step, IEntity slapped, IEntity user, EntityCoordinates gridCoords)
         {
             if (step == null)
             {

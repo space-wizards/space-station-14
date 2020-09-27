@@ -6,7 +6,10 @@ using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Shared.Damage;
+using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
+using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -15,6 +18,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -25,6 +29,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
     public sealed class ServerBatteryBarrelComponent : ServerRangedBarrelComponent
     {
         public override string Name => "BatteryBarrel";
+        public override uint? NetID => ContentNetIDs.BATTERY_BARREL;
 
         // The minimum change we need before we can fire
         [ViewVariables] private float _lowerChargeLimit;
@@ -88,13 +93,22 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             serializer.DataField(ref _soundPowerCellEject, "soundPowerCellEject", null);
         }
 
+        public override ComponentState GetComponentState()
+        {
+            (int, int)? count = (ShotsLeft, Capacity);
+
+            return new BatteryBarrelComponentState(
+                FireRateSelector,
+                count);
+        }
+
         public override void Initialize()
         {
             base.Initialize();
             _powerCellContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-powercell-container", Owner, out var existing);
             if (!existing && _powerCellPrototype != null)
             {
-                var powerCellEntity = Owner.EntityManager.SpawnEntity(_powerCellPrototype, Owner.Transform.GridPosition);
+                var powerCellEntity = Owner.EntityManager.SpawnEntity(_powerCellPrototype, Owner.Transform.Coordinates);
                 _powerCellContainer.Insert(powerCellEntity);
             }
 
@@ -108,6 +122,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 _appearanceComponent = appearanceComponent;
             }
 
+            Dirty();
             UpdateAppearance();
         }
 
@@ -125,14 +140,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             var ammo = _ammoContainer.ContainedEntity;
             if (ammo == null)
             {
-                ammo = Owner.EntityManager.SpawnEntity(_ammoPrototype, Owner.Transform.GridPosition);
+                ammo = Owner.EntityManager.SpawnEntity(_ammoPrototype, Owner.Transform.Coordinates);
                 _ammoContainer.Insert(ammo);
             }
 
             return ammo;
         }
 
-        public override IEntity TakeProjectile(GridCoordinates spawnAtGrid, MapCoordinates spawnAtMap)
+        public override IEntity TakeProjectile(EntityCoordinates spawnAtGrid, MapCoordinates spawnAtMap)
         {
             var powerCellEntity = _powerCellContainer.ContainedEntity;
 
@@ -162,7 +177,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             else
             {
                 entity = Owner.Transform.GridID != GridId.Invalid ?
-                    Owner.EntityManager.SpawnEntity(_ammoPrototype, Owner.Transform.GridPosition)
+                    Owner.EntityManager.SpawnEntity(_ammoPrototype, Owner.Transform.Coordinates)
                     : Owner.EntityManager.SpawnEntity(_ammoPrototype, Owner.Transform.MapPosition);
             }
 
@@ -188,8 +203,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 throw new InvalidOperationException("Ammo doesn't have hitscan or projectile?");
             }
 
+            Dirty();
             UpdateAppearance();
-            //Dirty();
             return entity;
         }
 
@@ -207,32 +222,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
             if (_soundPowerCellInsert != null)
             {
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundPowerCellInsert, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
+                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundPowerCellInsert, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
             }
 
             _powerCellContainer.Insert(entity);
+
+            Dirty();
             UpdateAppearance();
-            //Dirty();
             return true;
-        }
-
-        private IEntity RemovePowerCell()
-        {
-            if (!_powerCellRemovable || _powerCellContainer.ContainedEntity == null)
-            {
-                return null;
-            }
-
-            var entity = _powerCellContainer.ContainedEntity;
-            _powerCellContainer.Remove(entity);
-            if (_soundPowerCellEject != null)
-            {
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundPowerCellEject, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
-            }
-
-            UpdateAppearance();
-            //Dirty();
-            return entity;
         }
 
         public override bool UseEntity(UseEntityEventArgs eventArgs)
@@ -242,22 +239,44 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 return false;
             }
 
-            if (!eventArgs.User.TryGetComponent(out HandsComponent handsComponent) ||
-                PowerCellEntity == null)
+            if (PowerCellEntity == null)
             {
                 return false;
             }
 
-            var itemComponent = PowerCellEntity.GetComponent<ItemComponent>();
-            if (!handsComponent.CanPutInHand(itemComponent))
+            return TryEjectCell(eventArgs.User);
+        }
+
+        private bool TryEjectCell(IEntity user)
+        {
+            if (PowerCell == null || !_powerCellRemovable)
             {
                 return false;
             }
 
-            var powerCell = RemovePowerCell();
-            handsComponent.PutInHand(itemComponent);
-            powerCell.Transform.GridPosition = eventArgs.User.Transform.GridPosition;
+            if (!user.TryGetComponent(out HandsComponent hands))
+            {
+                return false;
+            }
 
+            var cell = PowerCell;
+            if (!_powerCellContainer.Remove(cell.Owner))
+            {
+                return false;
+            }
+
+            Dirty();
+            UpdateAppearance();
+
+            if (!hands.PutInHand(cell.Owner.GetComponent<ItemComponent>()))
+            {
+                cell.Owner.Transform.Coordinates = user.Transform.Coordinates;
+            }
+
+            if (_soundPowerCellEject != null)
+            {
+                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundPowerCellEject, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
+            }
             return true;
         }
 
@@ -269,6 +288,34 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
 
             return TryInsertPowerCell(eventArgs.Using);
+        }
+
+        [Verb]
+        public sealed class EjectCellVerb : Verb<ServerBatteryBarrelComponent>
+        {
+            protected override void GetData(IEntity user, ServerBatteryBarrelComponent component, VerbData data)
+            {
+                if (!ActionBlockerSystem.CanInteract(user) || !component._powerCellRemovable)
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
+                if (component.PowerCell == null)
+                {
+                    data.Text = Loc.GetString("Eject cell (cell missing)");
+                    data.Visibility = VerbVisibility.Disabled;
+                }
+                else
+                {
+                    data.Text = Loc.GetString("Eject cell");
+                }
+            }
+
+            protected override void Activate(IEntity user, ServerBatteryBarrelComponent component)
+            {
+                component.TryEjectCell(user);
+            }
         }
     }
 }

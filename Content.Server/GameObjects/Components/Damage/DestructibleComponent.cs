@@ -16,9 +16,7 @@ namespace Content.Server.GameObjects.Components.Damage
     [ComponentReference(typeof(IDamageableComponent))]
     public class DestructibleComponent : RuinableComponent, IDestroyAct
     {
-#pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-#pragma warning restore 649
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
         protected ActSystem ActSystem;
 
@@ -34,7 +32,7 @@ namespace Content.Server.GameObjects.Components.Damage
         {
             if (!string.IsNullOrWhiteSpace(SpawnOnDestroy) && eventArgs.IsSpawnWreck)
             {
-                Owner.EntityManager.SpawnEntity(SpawnOnDestroy, Owner.Transform.GridPosition);
+                Owner.EntityManager.SpawnEntity(SpawnOnDestroy, Owner.Transform.Coordinates);
             }
         }
 
@@ -55,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Damage
         {
             if (!Owner.Deleted)
             {
-                var pos = Owner.Transform.GridPosition;
+                var pos = Owner.Transform.Coordinates;
                 ActSystem.HandleDestruction(Owner,
                     true); //This will call IDestroyAct.OnDestroy on this component (and all other components on this entity)
                 if (DestroySound != string.Empty)

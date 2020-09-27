@@ -1,11 +1,10 @@
-using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.Sandbox;
-using Robust.Server.Interfaces.Console;
 using Robust.Server.Console;
+using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Placement;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
@@ -19,15 +18,13 @@ namespace Content.Server.Sandbox
 {
     internal sealed class SandboxManager : SharedSandboxManager, ISandboxManager
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private readonly IServerNetManager _netManager;
-        [Dependency] private readonly IGameTicker _gameTicker;
-        [Dependency] private readonly IPlacementManager _placementManager;
-        [Dependency] private readonly IConGroupController _conGroupController;
-        [Dependency] private readonly IEntityManager _entityManager;
-        [Dependency] private readonly IConsoleShell _shell;
-#pragma warning restore 649
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IServerNetManager _netManager = default!;
+        [Dependency] private readonly IGameTicker _gameTicker = default!;
+        [Dependency] private readonly IPlacementManager _placementManager = default!;
+        [Dependency] private readonly IConGroupController _conGroupController = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IConsoleShell _shell = default!;
 
         private bool _isSandboxEnabled;
 
@@ -117,7 +114,7 @@ namespace Content.Server.Sandbox
                 ;
                 hands.PutInHandOrDrop(
                     _entityManager.SpawnEntity("CaptainIDCard",
-                    player.AttachedEntity.Transform.GridPosition).GetComponent<ItemComponent>());
+                    player.AttachedEntity.Transform.Coordinates).GetComponent<ItemComponent>());
             }
         }
 
@@ -141,7 +138,7 @@ namespace Content.Server.Sandbox
             }
 
             var player = _playerManager.GetSessionByChannel(message.MsgChannel);
-            _shell.ExecuteCommand(player, $"suicide");
+            _shell.ExecuteCommand(player, "suicide");
         }
 
         private void UpdateSandboxStatusForAll()

@@ -18,7 +18,7 @@
   id: HoSGear
   equipment:
     innerclothing: UniformHoS
-    backpack: SecPack
+    backpack: SecPackFilled
     shoes: ShoesJackboots
     outerclothing: OuterclothingHoSTrenchcoat
     eyes: SecGlasses

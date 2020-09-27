@@ -1,18 +1,20 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Movement;
 using JetBrains.Annotations;
 using Robust.Server.AI;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
-using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.EntitySystems.AI
@@ -20,25 +22,27 @@ namespace Content.Server.GameObjects.EntitySystems.AI
     [UsedImplicitly]
     internal class AiSystem : EntitySystem
     {
+        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IDynamicTypeFactory _typeFactory = default!;
         [Dependency] private readonly IReflectionManager _reflectionManager = default!;
 
         private readonly Dictionary<string, Type> _processorTypes = new Dictionary<string, Type>();
-        
+
         /// <summary>
         ///     To avoid iterating over dead AI continuously they can wake and sleep themselves when necessary.
         /// </summary>
         private readonly HashSet<AiLogicProcessor> _awakeAi = new HashSet<AiLogicProcessor>();
-        
+
         // To avoid modifying awakeAi while iterating over it.
         private readonly List<SleepAiMessage> _queuedSleepMessages = new List<SleepAiMessage>();
 
         public bool IsAwake(AiLogicProcessor processor) => _awakeAi.Contains(processor);
-        
+
         /// <inheritdoc />
         public override void Initialize()
         {
             base.Initialize();
+            _configurationManager.RegisterCVar("ai.maxupdates", 64);
             SubscribeLocalEvent<SleepAiMessage>(HandleAiSleep);
 
             var processors = _reflectionManager.GetAllChildren<AiLogicProcessor>();
@@ -54,24 +58,57 @@ namespace Content.Server.GameObjects.EntitySystems.AI
         /// <inheritdoc />
         public override void Update(float frameTime)
         {
+            var cvarMaxUpdates = _configurationManager.GetCVar<int>("ai.maxupdates");
+            if (cvarMaxUpdates <= 0)
+                return;
+
             foreach (var message in _queuedSleepMessages)
             {
                 switch (message.Sleep)
                 {
                     case true:
+                        if (_awakeAi.Count == cvarMaxUpdates && _awakeAi.Contains(message.Processor))
+                        {
+                            Logger.Warning($"Under AI limit again: {_awakeAi.Count - 1} / {cvarMaxUpdates}");
+                        }
                         _awakeAi.Remove(message.Processor);
                         break;
                     case false:
                         _awakeAi.Add(message.Processor);
+                        
+                        if (_awakeAi.Count > cvarMaxUpdates)
+                        {
+                            Logger.Warning($"AI limit exceeded: {_awakeAi.Count} / {cvarMaxUpdates}");
+                        }
                         break;
                 }
             }
-            
+
             _queuedSleepMessages.Clear();
-            
+            var toRemove = new List<AiLogicProcessor>();
+            var maxUpdates = Math.Min(_awakeAi.Count, cvarMaxUpdates);
+            var count = 0;
+
             foreach (var processor in _awakeAi)
             {
+                if (count >= maxUpdates)
+                {
+                    break;
+                }
+
+                if (processor.SelfEntity.Deleted)
+                {
+                    toRemove.Add(processor);
+                    continue;
+                }
+                
                 processor.Update(frameTime);
+                count++;
+            }
+
+            foreach (var processor in toRemove)
+            {
+                _awakeAi.Remove(processor);
             }
         }
 
@@ -87,7 +124,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI
         /// <param name="controller"></param>
         public void ProcessorInitialize(AiControllerComponent controller)
         {
-            if (controller.Processor != null) return;
+            if (controller.Processor != null || controller.LogicName == null) return;
             controller.Processor = CreateProcessor(controller.LogicName);
             controller.Processor.SelfEntity = controller.Owner;
             controller.Processor.Setup();

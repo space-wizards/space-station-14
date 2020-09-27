@@ -22,9 +22,6 @@
   - type: Sprite
     sprite: Objects/Materials/sheets.rsi
     state: metal
-  - type: Icon
-    sprite: Objects/Materials/sheets.rsi
-    state: metal
   - type: Item
     sprite: Objects/Materials/sheets.rsi
     HeldPrefix: metal
@@ -51,9 +48,6 @@
   - type: Sprite
     sprite: Objects/Materials/sheets.rsi
     state: glass
-  - type: Icon
-    sprite: Objects/Materials/sheets.rsi
-    state: glass
   - type: Item
     sprite: Objects/Materials/sheets.rsi
     HeldPrefix: glass
@@ -77,12 +71,8 @@
     stacktype: enum.StackType.Cable
   - type: Sprite
     texture: Objects/Tools/cable_coil.png
-  - type: Icon
-    texture: Objects/Tools/cable_coil.png
   - type: WirePlacer
   - type: Clickable
-    bounds:
-      all: -0.15,-0.15,0.15,0.15
 
 - type: entity
   parent: CableStack1
@@ -154,8 +144,6 @@
     stacktype: enum.StackType.Gold
   - type: Sprite
     texture: Objects/Materials/goldbar_single.png
-  - type: Icon
-    texture: Objects/Materials/goldbar_single.png
 
 - type: entity
   id: GoldStack1
@@ -172,8 +160,6 @@
   components:
   - type: Sprite
     texture: Objects/Materials/phoron_ore.png
-  - type: Icon
-    texture: Objects/Materials/phoron_ore.png
 
 - type: entity
   name: phoron sheet
@@ -189,9 +175,6 @@
   - type: Sprite
     sprite: Objects/Materials/sheets.rsi
     state: phoron
-  - type: Icon
-    sprite: Objects/Materials/sheets.rsi
-    state: phoron
   - type: Item
     sprite: Objects/Materials/sheets.rsi
     HeldPrefix: phoron
@@ -203,3 +186,11 @@
   components:
   - type: Stack
     count: 1
+
+- type: entity
+  name: wood plank
+  id: WoodPlank
+  parent: BaseItem
+  components:
+  - type: Sprite
+    texture: Objects/Materials/wood.png

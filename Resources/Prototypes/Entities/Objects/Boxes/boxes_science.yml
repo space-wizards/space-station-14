@@ -1,0 +1,20 @@
+- type: entity
+  name: beaker box
+  parent: BoxBase
+  id: BoxBeaker
+  description:
+  components:
+  - type: StorageFill
+    contents:
+      - name: Beaker
+        amount: 3
+      - name: LargeBeaker
+        amount: 3
+  - type: Sprite
+    layers:
+      - state: box
+      - state: beaker
+
+  - type: Item
+  - type: Storage
+    capacity: 30

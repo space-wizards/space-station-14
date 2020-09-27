@@ -9,8 +9,7 @@
     - type: StorageVisualizer
       state: generic
       state_closed: red_door
-  - type: Icon
-    state: red_door
+
 
 # Atmospherics wardrobe
 - type: entity
@@ -23,6 +22,4 @@
     - type: StorageVisualizer
       state: generic
       state_closed: atmos_wardrobe_door
-  - type: Icon
-    state: atmos_door
 

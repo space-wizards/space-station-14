@@ -36,6 +36,8 @@ namespace Content.Server.GameObjects.Components.Projectiles
         private string _soundHit;
         private string _soundHitSpecies;
 
+        private bool _damagedEntity;
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -64,6 +66,11 @@ namespace Content.Server.GameObjects.Components.Projectiles
         /// <param name="entity"></param>
         void ICollideBehavior.CollideWith(IEntity entity)
         {
+            if (_damagedEntity)
+            {
+                return;
+            }
+
             // This is so entities that shouldn't get a collision are ignored.
             if (entity.TryGetComponent(out ICollidableComponent collidable) && collidable.Hard == false)
             {
@@ -77,10 +84,10 @@ namespace Content.Server.GameObjects.Components.Projectiles
 
             if (_soundHitSpecies != null && entity.HasComponent<IDamageableComponent>())
             {
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHitSpecies, entity.Transform.GridPosition);
+                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHitSpecies, entity.Transform.Coordinates);
             } else if (_soundHit != null)
             {
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHit, entity.Transform.GridPosition);
+                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHit, entity.Transform.Coordinates);
             }
 
             if (entity.TryGetComponent(out IDamageableComponent damage))
@@ -91,6 +98,8 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 {
                     damage.ChangeDamage(damageType, amount, false, shooter);
                 }
+
+                _damagedEntity = true;
             }
 
             if (!entity.Deleted && entity.TryGetComponent(out CameraRecoilComponent recoilComponent)

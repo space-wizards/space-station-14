@@ -21,5 +21,6 @@ namespace Content.Shared.GameObjects.Components.Doors
         Open,
         Closing,
         Deny,
+        Welded,
     }
 }

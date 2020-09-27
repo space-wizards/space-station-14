@@ -1,8 +1,9 @@
-using Content.Server.AI.Utility.Considerations;
+﻿using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.WorldState;
 using Content.Server.Body.Network;
 using Content.Server.Cargo;
 using Content.Server.Chat;
+using Content.Server.GameObjects.Components.Mobs.Speech;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Content.Server.GameTicking;
@@ -41,6 +42,7 @@ namespace Content.Server
             IoCManager.Register<BlackboardManager, BlackboardManager>();
             IoCManager.Register<ConsiderationsManager, ConsiderationsManager>();
             IoCManager.Register<IBodyNetworkFactory, BodyNetworkFactory>();
+            IoCManager.Register<IAccentManager, AccentManager>();
         }
     }
 }

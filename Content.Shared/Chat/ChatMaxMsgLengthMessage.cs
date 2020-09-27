@@ -1,9 +1,6 @@
 ﻿using Lidgren.Network;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Network;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Content.Shared.Chat
 {

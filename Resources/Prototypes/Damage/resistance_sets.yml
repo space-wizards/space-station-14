@@ -2,55 +2,79 @@
   id: defaultResistances
   coefficients:
     Blunt: 1.0
+    Slash: 1.0
     Piercing: 1.0
     Heat: 1.0
-    Disintegration: 1.0
-    Cellular: 1.0
-    DNA: 1.0
+    Shock: 1.0
+    Cold: 1.0
+    Poison: 1.0
+    Radiation: 1.0
     Asphyxiation: 1.0
+    Bloodloss: 1.0
+    Cellular: 1.0
   flatReductions:
     Blunt: 0
+    Slash: 0
     Piercing: 0
     Heat: 0
-    Disintegration: 0
+    Shock: 0
+    Cold: 0
+    Poison: 0
+    Radiation: 0
+    Asphyxiation: 0
+    Bloodloss: 0
     Cellular: 0
-    DNA: 0
-    Asphyxiation: 0 
    
 - type: resistanceSet
   id: dionaResistances
   coefficients:
     Blunt: 0.5
+    Slash: 1.2
     Piercing: 0.7
     Heat: 1.8
-    Disintegration: 1.8
-    Cellular: 1.0
-    DNA: 1.0
+    Shock: 0.5
+    Cold: 1.5
+    Poison: 0.8
+    Radiation: 0
     Asphyxiation: 1.0
+    Bloodloss: 1.0
+    Cellular: 1.0
   flatReductions:
     Blunt: 0
+    Slash: 0
     Piercing: 0
     Heat: 0
-    Disintegration: 0
-    Cellular: 0
-    DNA: 0
+    Shock: 0
+    Cold: 0
+    Poison: 0
+    Radiation: 0
     Asphyxiation: 0
+    Bloodloss: 0
+    Cellular: 0
     
 - type: resistanceSet
   id: metallicResistances
   coefficients:
     Blunt: 0.7
+    Slash: 0.5
     Piercing: 0.7
     Heat: 1.0
-    Disintegration: 1.0
-    Cellular: 0.0
-    DNA: 0.0
-    Asphyxiation: 0.0
+    Shock: 1.2
+    Cold: 0
+    Poison: 0
+    Radiation: 0
+    Asphyxiation: 0
+    Bloodloss: 0
+    Cellular: 0
   flatReductions:
     Blunt: 0
+    Slash: 0
     Piercing: 0
     Heat: 0
-    Disintegration: 0
-    Cellular: 0
-    DNA: 0
+    Shock: 0
+    Cold: 0
+    Poison: 0
+    Radiation: 0
     Asphyxiation: 0
+    Bloodloss: 0
+    Cellular: 0
