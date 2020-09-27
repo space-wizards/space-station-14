@@ -12,6 +12,7 @@ using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 
 #nullable enable
 
@@ -26,6 +27,7 @@ namespace Content.Server.Preferences
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IServerDbManager _db = default!;
+        [Dependency] private readonly IPrototypeManager _protos = default!;
 
         // Cache player prefs on the server so we don't need as much async hell related to them.
         private readonly Dictionary<NetUserId, PlayerPrefData> _cachedPlayerPrefs =
@@ -91,7 +93,7 @@ namespace Content.Server.Preferences
             var arr = new ICharacterProfile[MaxCharacterSlots];
             curPrefs.Characters.ToList().CopyTo(arr, 0);
 
-            arr[slot] = profile;
+            arr[slot] = HumanoidCharacterProfile.EnsureValid((HumanoidCharacterProfile) profile, _protos);
 
             prefsData.Prefs = new PlayerPreferences(arr, slot);
 
