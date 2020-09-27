@@ -57,10 +57,19 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         ///     Only for usage by <see cref="IPipeNet"/>s.
         /// </summary>
         [ViewVariables]
-        public GasMixture LocalAir { get; set; }
+        public GasMixture LocalAir { get; set; } = new GasMixture();
 
         [ViewVariables]
-        public float Volume { get; private set; }
+        public float Volume
+        {
+            get => _volume;
+            set
+            {
+                _volume = Math.Max(value, 0);
+                LocalAir.Volume = _volume;
+            }
+        }
+        private float _volume;
 
         private AppearanceComponent _appearance;
 
@@ -77,7 +86,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         public override void Initialize(IEntity owner)
         {
             base.Initialize(owner);
-            LocalAir = new GasMixture(Volume);
             Owner.TryGetComponent(out _appearance);
             UpdateAppearance();
         }
