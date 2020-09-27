@@ -6,7 +6,6 @@
   - type: Sprite
     sprite: Constructible/Misc/furniture.rsi
     state: shuttle_chair
-
   - type: Collidable
   - type: Clickable
   - type: InteractionOutline
