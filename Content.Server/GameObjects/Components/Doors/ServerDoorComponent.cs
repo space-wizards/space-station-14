@@ -162,6 +162,15 @@ namespace Content.Server.GameObjects.Components.Doors
             }
         }
 
+        private void SetState(DoorState state)
+        {
+            if (State == state)
+                return;
+            
+            State = state;
+            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new DoorStateMessage(this, State));
+        }
+
         public virtual bool CanOpen()
         {
             return !_isWeldedShut;
@@ -228,7 +237,7 @@ namespace Content.Server.GameObjects.Components.Doors
             }
 
             _canWeldShut = false;
-            State = DoorState.Opening;
+            SetState(DoorState.Opening);
             SetAppearance(DoorVisualState.Opening);
             if (_occludes && Owner.TryGetComponent(out OccluderComponent? occluder))
             {
@@ -249,7 +258,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
                 await Timer.Delay(OpenTimeTwo, _cancellationTokenSource.Token);
 
-                State = DoorState.Open;
+                SetState(DoorState.Open);
                 SetAppearance(DoorVisualState.Open);
             }, _cancellationTokenSource.Token);
 
@@ -385,7 +394,7 @@ namespace Content.Server.GameObjects.Components.Doors
                 shouldCheckCrush = true;
             }
 
-            State = DoorState.Closing;
+            SetState(DoorState.Closing);
             OpenTimeCounter = 0;
             SetAppearance(DoorVisualState.Closing);
             if (_occludes && Owner.TryGetComponent(out OccluderComponent? occluder))
@@ -413,7 +422,7 @@ namespace Content.Server.GameObjects.Components.Doors
                 await Timer.Delay(CloseTimeTwo, _cancellationTokenSource.Token);
 
                 _canWeldShut = true;
-                State = DoorState.Closed;
+                SetState(DoorState.Closed);
                 SetAppearance(DoorVisualState.Closed);
             }, _cancellationTokenSource.Token);
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new AccessReaderChangeMessage(Owner, true));
@@ -477,6 +486,18 @@ namespace Content.Server.GameObjects.Components.Doors
 
             IsWeldedShut ^= true;
             return true;
+        }
+    }
+
+    public sealed class DoorStateMessage : EntitySystemMessage
+    {
+        public ServerDoorComponent Component { get; }
+        public ServerDoorComponent.DoorState State { get; }
+
+        public DoorStateMessage(ServerDoorComponent component, ServerDoorComponent.DoorState state)
+        {
+            Component = component;
+            State = state;
         }
     }
 }
