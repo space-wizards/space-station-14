@@ -204,18 +204,6 @@
 
 - type: entity
   parent: ShoesBase
-  id: ShoesRainbow
-  name: rainbow shoes
-  description: A pair of rainbow shoes.
-  components:
-  - type: Sprite
-    sprite: Clothing/Shoes/rain_bow.rsi
-
-  - type: Clothing
-    sprite: Clothing/Shoes/rainbow.rsi
-
-- type: entity
-  parent: ShoesBase
   id: ShoesRed
   name: red shoes
   description: Stylish red shoes.

@@ -299,6 +299,8 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private void TryStartItemConstruction(IEntity placingEnt, string prototypeName)
         {
+            if (!ActionBlockerSystem.CanInteract(placingEnt)) return;
+
             var prototype = _prototypeManager.Index<ConstructionPrototype>(prototypeName);
 
             if (prototype.Stages.Count < 2)
@@ -313,7 +315,8 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             // Try to find the stack with the material in the user's hand.
-            var hands = placingEnt.GetComponent<HandsComponent>();
+            if (!placingEnt.TryGetComponent(out HandsComponent hands)) return;
+
             var activeHand = hands.GetActiveHand?.Owner;
             if (activeHand == null)
             {

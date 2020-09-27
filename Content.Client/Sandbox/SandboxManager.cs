@@ -26,6 +26,8 @@ namespace Content.Client.Sandbox
         public Button GiveFullAccessButton;  //A button that just puts a captain's ID in your hands.
         public Button GiveAghostButton;
         public Button ToggleLightButton;
+        public Button ToggleFovButton;
+        public Button ToggleShadowsButton;
         public Button SuicideButton;
         public Button ToggleSubfloorButton;
         public Button ShowMarkersButton; //Shows spawn points
@@ -58,6 +60,12 @@ namespace Content.Client.Sandbox
             ToggleLightButton = new Button { Text = Loc.GetString("Toggle Lights"), ToggleMode = true };
             vBox.AddChild(ToggleLightButton);
 
+            ToggleFovButton = new Button { Text = Loc.GetString("Toggle FOV"), ToggleMode = true };
+            vBox.AddChild(ToggleFovButton);
+
+            ToggleShadowsButton = new Button { Text = Loc.GetString("Toggle Shadows"), ToggleMode = true };
+            vBox.AddChild(ToggleShadowsButton);
+
             ToggleSubfloorButton = new Button { Text = Loc.GetString("Toggle Subfloor"), ToggleMode = true };
             vBox.AddChild(ToggleSubfloorButton);
 
@@ -77,7 +85,6 @@ namespace Content.Client.Sandbox
         [Dependency] private readonly IClientConsole _console = default!;
         [Dependency] private readonly IGameHud _gameHud = default!;
         [Dependency] private readonly IClientNetManager _netManager = default!;
-        [Dependency] private readonly ILocalizationManager _localization = default!; 
         [Dependency] private readonly IPlacementManager _placementManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
@@ -173,6 +180,8 @@ namespace Content.Client.Sandbox
             _window.GiveFullAccessButton.OnPressed += OnGiveAdminAccessButtonClicked;
             _window.GiveAghostButton.OnPressed += OnGiveAghostButtonClicked;
             _window.ToggleLightButton.OnToggled += OnToggleLightButtonClicked;
+            _window.ToggleFovButton.OnToggled += OnToggleFovButtonClicked;
+            _window.ToggleShadowsButton.OnToggled += OnToggleShadowsButtonClicked;
             _window.SuicideButton.OnPressed += OnSuicideButtonClicked;
             _window.ToggleSubfloorButton.OnPressed += OnToggleSubfloorButtonClicked;
             _window.ShowMarkersButton.OnPressed += OnShowMarkersButtonClicked;
@@ -208,6 +217,16 @@ namespace Content.Client.Sandbox
             ToggleLight();
         }
 
+        private void OnToggleFovButtonClicked(BaseButton.ButtonEventArgs args)
+        {
+            ToggleFov();
+        }
+
+        private void OnToggleShadowsButtonClicked(BaseButton.ButtonEventArgs args)
+        {
+            ToggleShadows();
+        }
+
         private void OnToggleSubfloorButtonClicked(BaseButton.ButtonEventArgs args)
         {
             ToggleSubFloor();
@@ -241,7 +260,7 @@ namespace Content.Client.Sandbox
         private void ToggleEntitySpawnWindow()
         {
             if (_spawnWindow == null)
-                _spawnWindow = new EntitySpawnWindow(_placementManager, _prototypeManager, _resourceCache, _localization);
+                _spawnWindow = new EntitySpawnWindow(_placementManager, _prototypeManager, _resourceCache);
 
             if (_spawnWindow.IsOpen)
             {
@@ -249,7 +268,7 @@ namespace Content.Client.Sandbox
             }
             else
             {
-                _spawnWindow = new EntitySpawnWindow(_placementManager, _prototypeManager, _resourceCache, _localization);
+                _spawnWindow = new EntitySpawnWindow(_placementManager, _prototypeManager, _resourceCache);
                 _spawnWindow.OpenToLeft();
             }
         }
@@ -273,6 +292,16 @@ namespace Content.Client.Sandbox
         private void ToggleLight()
         {
             _console.ProcessCommand("togglelight");
+        }
+
+        private void ToggleFov()
+        {
+            _console.ProcessCommand("togglefov");
+        }
+
+        private void ToggleShadows()
+        {
+            _console.ProcessCommand("toggleshadows");
         }
 
         private void ToggleSubFloor()
