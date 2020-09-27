@@ -8,16 +8,16 @@
   "copyright": "Taken from https://github.com/discordia-space/CEV-Eris/blob/0b3ab17dbad632ddf738b63900ef8df1926bba47/icons/obj/tables.dmi",
   "states": [
     {
-      "name": "wood_preview",
+      "name": "glass_preview",
       "directions": 1,
       "delays": [
         [
-          1
+          1.0
         ]
       ]
     },
     {
-      "name": "wood_0",
+      "name": "glass_0",
       "directions": 4,
       "delays": [
         [
@@ -35,7 +35,7 @@
       ]
     },
     {
-      "name": "wood_1",
+      "name": "glass_1",
       "directions": 4,
       "delays": [
         [
@@ -53,7 +53,7 @@
       ]
     },
     {
-      "name": "wood_2",
+      "name": "glass_2",
       "directions": 4,
       "delays": [
         [
@@ -71,7 +71,7 @@
       ]
     },
     {
-      "name": "wood_3",
+      "name": "glass_3",
       "directions": 4,
       "delays": [
         [
@@ -89,7 +89,7 @@
       ]
     },
     {
-      "name": "wood_4",
+      "name": "glass_4",
       "directions": 4,
       "delays": [
         [
@@ -107,7 +107,7 @@
       ]
     },
     {
-      "name": "wood_5",
+      "name": "glass_5",
       "directions": 4,
       "delays": [
         [
@@ -125,7 +125,7 @@
       ]
     },
     {
-      "name": "wood_6",
+      "name": "glass_6",
       "directions": 4,
       "delays": [
         [
@@ -143,7 +143,7 @@
       ]
     },
     {
-      "name": "wood_7",
+      "name": "glass_7",
       "directions": 4,
       "delays": [
         [

@@ -1,0 +1,210 @@
+- type: entity
+  id: TableBase
+  name: "table"
+  description: A square piece of metal standing on four metal legs.
+  abstract: true
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: PlaceableSurface
+  - type: Sprite
+    netsync: false
+    sprite: Constructible/Structures/Tables/generic.rsi
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      layer:
+      - VaultImpassable
+  - type: SnapGrid
+    offset: Center
+  - type: IconSmooth
+    key: generic
+    base: solid_
+  - type: Climbable
+
+- type: entity
+  id: Table
+  parent: TableBase
+  name: "table"
+  description: A square piece of metal standing on four metal legs.
+  components:
+  - type: Sprite
+    sprite: Constructible/Structures/Tables/generic.rsi
+  - type: IconSmooth
+    key: generic
+    base: solid_
+  - type: Destructible
+    deadThreshold: 15
+    destroySound: /Audio/Effects/metalbreak.ogg
+    resistances: metallicResistances
+    spawnOnDestroy: SteelSheet1
+
+- type: entity
+  id: TableFrame
+  parent: TableBase
+  name: "table frame"
+  description:
+  components:
+  - type: Sprite
+    sprite: Constructible/Structures/Tables/frame.rsi
+  - type: IconSmooth
+    key: frame
+    base: frame_
+  - type: Destructible
+    deadThreshold: 1
+    destroySound: /Audio/Effects/metalbreak.ogg
+    resistances: metallicResistances
+    spawnOnDestroy: SteelSheet1
+
+- type: entity
+  id: TableBar
+  parent: TableBase
+  name: "bar table"
+  description:
+  components:
+  - type: Sprite
+    sprite: Constructible/Structures/Tables/bar.rsi
+  - type: IconSmooth
+    key: bar
+    base: bar_
+  - type: Destructible
+    deadThreshold: 1
+    destroySound: /Audio/Effects/metalbreak.ogg
+    resistances: metallicResistances
+    spawnOnDestroy: SteelSheet1
+
+- type: entity
+  id: TableMetal
+  parent: TableBase
+  name: "metal table"
+  description:
+  components:
+  - type: Sprite
+    sprite: Constructible/Structures/Tables/metal.rsi
+  - type: IconSmooth
+    key: metal
+    base: metal_
+  - type: Destructible
+    deadThreshold: 15
+    destroySound: /Audio/Effects/metalbreak.ogg
+    resistances: metallicResistances
+    spawnOnDestroy: SteelSheet1
+
+- type: entity
+  id: TableR
+  parent: TableBase
+  name: "reinforced table"
+  description:
+  components:
+  - type: Sprite
+    sprite: Constructible/Structures/Tables/reinforced.rsi
+  - type: IconSmooth
+    key: reinf
+    base: reinf_
+  - type: Destructible
+    deadThreshold: 1
+    destroySound: /Audio/Effects/metalbreak.ogg
+    resistances: metallicResistances
+    spawnOnDestroy: SteelSheet1
+
+- type: entity
+  id: TableGlass
+  parent: TableBase
+  name: "glass table"
+  description:
+  components:
+  - type: Sprite
+    sprite: Constructible/Structures/Tables/glass.rsi
+  - type: IconSmooth
+    key: glass
+    base: glass_
+  - type: Destructible
+    deadThreshold: 5
+    destroySound: /Audio/Effects/glassbreak2.ogg
+    resistances: metallicResistances
+
+- type: entity
+  id: TableGlassR
+  parent: TableBase
+  name: "reinforced glass table"
+  description:
+  components:
+  - type: Sprite
+    sprite: Constructible/Structures/Tables/r_glass.rsi
+  - type: IconSmooth
+    key: r_glass
+    base: r_glass_
+  - type: Destructible
+    deadThreshold: 20
+    destroySound: /Audio/Effects/glassbreak2.ogg
+    resistances: metallicResistances
+
+- type: entity
+  id: TableWood
+  parent: TableBase
+  name: "wood table"
+  description: Do not apply fire to this. Rumour says it burns easily.
+  components:
+  - type: Sprite
+    sprite: Constructible/Structures/Tables/wood.rsi
+    preview_state: wood_preview
+  - type: IconSmooth
+    key: wood
+    base: wood_
+  - type: Destructible
+    deadThreshold: 15
+    destroySound: /Audio/Effects/woodhit.ogg
+    resistances: metallicResistances
+    spawnOnDestroy: WoodPlank
+
+- type: entity
+  id: TableCarpet
+  parent: TableBase
+  name: "gambling table"
+  description: Play em' cowboy.
+  components:
+  - type: Sprite
+    sprite: Constructible/Structures/Tables/carpet.rsi
+    preview_state: carpet_preview
+  - type: IconSmooth
+    key: carpet
+    base: carpet_
+  - type: Destructible
+    deadThreshold: 15
+    destroySound: /Audio/Effects/woodhit.ogg
+    resistances: metallicResistances
+    spawnOnDestroy: WoodPlank
+
+- type: entity
+  id: TableStone
+  parent: TableBase
+  name: "stone table"
+  description: Literally the sturdiest thing you have ever seen.
+  components:
+  - type: Sprite
+    sprite: Constructible/Structures/Tables/stone.rsi
+    preview_state: carpet_preview
+  - type: IconSmooth
+    key: stone
+    base: stone_
+  - type: Destructible
+    deadThreshold: 50
+    destroySound: /Audio/Effects/picaxe2.ogg
+    resistances: metallicResistances
+
+- type: entity
+  id: TableDebug
+  parent: TableBase
+  name: "debug table"
+  description: PUT ON THEM CODERSOCKS!!
+  components:
+  - type: Sprite
+    sprite: Constructible/Structures/Tables/debug.rsi
+    preview_state: debug_preview
+  - type: IconSmooth
+    key: debug
+    base: debug_
+  - type: Destructible
+    deadThreshold: 1
+    resistances: metallicResistances
