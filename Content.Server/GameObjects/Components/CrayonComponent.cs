@@ -89,7 +89,7 @@ namespace Content.Server.GameObjects.Components
         {
             if (eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
-                UserInterface?.Open(actor.playerSession);
+                UserInterface?.Toggle(actor.playerSession);
                 return true;
             }
             return false;
@@ -97,6 +97,12 @@ namespace Content.Server.GameObjects.Components
 
         void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
+            if (!eventArgs.CanReach)
+            {
+                eventArgs.User.PopupMessage(Loc.GetString("You can't reach there!"));
+                return;
+            }
+
             if (Charges <= 0)
             {
                 eventArgs.User.PopupMessage(Loc.GetString("It's empty."));
