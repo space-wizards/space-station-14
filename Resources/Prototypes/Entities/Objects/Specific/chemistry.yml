@@ -5,19 +5,18 @@
   id: Beaker
   components:
   - type: Sprite
-    texture: Objects/Specific/Chemistry/beakers.rsi/beaker.png
-  - type: Icon
-    texture: Objects/Specific/Chemistry/beakers.rsi/beaker.png
+    sprite: Objects/Specific/Chemistry/beakers.rsi
+    state: beaker
   - type: Item
     sprite: Objects/Specific/Chemistry/beakers.rsi
     HeldPrefix: beaker
-  - type: Solution
+  - type: SolutionContainer
     fillingState: beaker
     maxVol: 50
-    caps: 27
+    caps: AddTo, RemoveFrom, FitsInDispenser # can add and remove solutions and fits in the chemmaster.
   - type: Pourable
     transferAmount: 5.0
-  - type: CanSpill
+  - type: Spillable
 
 - type: entity
   name: large beaker
@@ -26,19 +25,18 @@
   id: LargeBeaker
   components:
   - type: Sprite
-    texture: Objects/Specific/Chemistry/beakers.rsi/beakerlarge.png
-  - type: Icon
-    texture: Objects/Specific/Chemistry/beakers.rsi/beakerlarge.png
+    sprite: Objects/Specific/Chemistry/beakers.rsi
+    state: beakerlarge
   - type: Item
     sprite: Objects/Specific/Chemistry/beakers.rsi
     HeldPrefix: beaker
-  - type: Solution
+  - type: SolutionContainer
     fillingState: beakerlarge
     maxVol: 100
-    caps: 27
+    caps: AddTo, RemoveFrom, FitsInDispenser
   - type: Pourable
     transferAmount: 5.0
-  - type: CanSpill
+  - type: Spillable
 
 - type: entity
   name: dropper
@@ -47,17 +45,16 @@
   id: Dropper
   components:
   - type: Sprite
-    texture: Objects/Specific/Chemistry/dropper.rsi/dropper.png
-  - type: Icon
-    texture: Objects/Specific/Chemistry/dropper.rsi/dropper.png
-  - type: Solution
+    sprite: Objects/Specific/Chemistry/dropper.rsi
+    state: dropper
+  - type: SolutionContainer
     fillingState: dropper
     fillingSteps: 2
     maxVol: 5
-    caps: 19
+    caps: AddTo, RemoveFrom
   - type: Pourable
     transferAmount: 5.0
-  - type: CanSpill
+  - type: Spillable
 
 - type: entity
   name: syringe
@@ -66,33 +63,32 @@
   id: Syringe
   components:
   - type: Sprite
-    texture: Objects/Specific/Chemistry/syringe.rsi/0.png
-  - type: Icon
-    texture: Objects/Specific/Chemistry/syringe.rsi/0.png
-  - type: Solution
+    sprite: Objects/Specific/Chemistry/syringe.rsi
+    state: 0
+  - type: SolutionContainer
     fillingState: syringe
     fillingSteps: 5
     maxVol: 15
-    caps: 19
+    caps: AddTo, RemoveFrom
   - type: Injector
     injectOnly: false
-  - type: CanSpill
+  - type: Spillable
 
 - type: entity
   name: bottle
   parent: BaseItem
   id: bottle
   components:
-    - type: Drink
-    - type: Solution
-      maxVol: 30
-    - type: Pourable
-      transferAmount: 5
-    - type: Sprite
-      texture: Objects/Specific/Chemistry/bottle.rsi/bottle.png
-    - type: Icon
-      texture: Objects/Specific/Chemistry/bottle.rsi/bottle.png
-    - type: CanSpill
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/bottle.rsi
+    state: bottle
+  - type: Drink
+  - type: SolutionContainer
+    maxVol: 30
+    caps: AddTo, RemoveFrom
+  - type: Pourable
+    transferAmount: 5
+  - type: Spillable
 
 - type: entity
   name: pill
@@ -100,10 +96,10 @@
   id: pill
   description: It's not a suppository.
   components:
-    - type: Pill
-    - type: Solution
-      maxVol: 50
-    - type: Sprite
-      texture: Objects/Specific/Chemistry/pills.rsi/pill.png
-    - type: Icon
-      texture: Objects/Specific/Chemistry/pills.rsi/pill.png
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/pills.rsi
+    state: pill
+  - type: Pill
+  - type: SolutionContainer
+    maxVol: 50
+    caps: RemoveFrom

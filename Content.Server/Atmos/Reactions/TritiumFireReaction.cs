@@ -1,7 +1,10 @@
 ﻿#nullable enable
 using Content.Server.Interfaces;
+using Content.Server.Utility;
 using Content.Shared.Atmos;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects.EntitySystems.TileLookup;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Atmos.Reactions
@@ -13,7 +16,7 @@ namespace Content.Server.Atmos.Reactions
         {
         }
 
-        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder)
+        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, GridTileLookupSystem gridTileLookup)
         {
             var energyReleased = 0f;
             var oldHeatCapacity = mixture.HeatCapacity;
@@ -66,7 +69,13 @@ namespace Content.Server.Atmos.Reactions
                 {
                     location.HotspotExpose(temperature, mixture.Volume);
 
-                    // TODO ATMOS Expose temperature all items on cell
+                    foreach (var entity in location.GridIndices.GetEntitiesInTileFast(location.GridIndex, gridTileLookup))
+                    {
+                        foreach (var temperatureExpose in entity.GetAllComponents<ITemperatureExpose>())
+                        {
+                            temperatureExpose.TemperatureExpose(mixture, temperature, mixture.Volume);
+                        }
+                    }
 
                     location.TemperatureExpose(mixture, temperature, mixture.Volume);
                 }

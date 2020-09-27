@@ -17,10 +17,8 @@ namespace Content.Client.GameTicking
 {
     public class ClientGameTicker : SharedGameTicker, IClientGameTicker
     {
-#pragma warning disable 649
-        [Dependency] private IClientNetManager _netManager;
-        [Dependency] private IStateManager _stateManager;
-#pragma warning restore 649
+        [Dependency] private readonly IClientNetManager _netManager = default!;
+        [Dependency] private readonly IStateManager _stateManager = default!;
 
         [ViewVariables] private bool _initialized;
 
@@ -30,7 +28,7 @@ namespace Content.Client.GameTicking
         [ViewVariables] public string ServerInfoBlob { get; private set; }
         [ViewVariables] public DateTime StartTime { get; private set; }
         [ViewVariables] public bool Paused { get; private set; }
-        [ViewVariables] public Dictionary<NetSessionId, PlayerStatus> Status { get; private set; }
+        [ViewVariables] public Dictionary<NetUserId, PlayerStatus> Status { get; private set; }
 
         public event Action InfoBlobUpdated;
         public event Action LobbyStatusUpdated;
@@ -54,7 +52,7 @@ namespace Content.Client.GameTicking
             });
             _netManager.RegisterNetMessage<MsgTickerLateJoinStatus>(nameof(MsgTickerLateJoinStatus), LateJoinStatus);
 
-            Status = new Dictionary<NetSessionId, PlayerStatus>();
+            Status = new Dictionary<NetUserId, PlayerStatus>();
             _initialized = true;
         }
 

@@ -7,8 +7,7 @@
   components:
   - type: Sprite
     netsync: false
-  - type: Icon
-    state: icon
+
   - type: Item
     size: 24
     state: icon
@@ -49,8 +48,7 @@
       map: ["enum.RangedBarrelVisualLayers.Bolt"]
     - state: mag-0
       map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/SMGs/atreides.rsi
+
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/SMGs/atreides.rsi
@@ -90,8 +88,7 @@
       map: ["enum.RangedBarrelVisualLayers.Bolt"]
     - state: mag-0
       map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
+
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
@@ -133,8 +130,7 @@
         map: ["enum.RangedBarrelVisualLayers.Bolt"]
       - state: mag-0
         map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
+
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
@@ -152,44 +148,6 @@
     maxAngle: 60
     angleIncrease: 12
     angleDecay: 60
-  - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
-    - type: MagVisualizer
-      magState: mag
-      steps: 1
-      zeroVisible: true
-
-- type: entity
-  name: Straylight
-  parent: SmgBase
-  id: SmgStraylight
-  description: Pla-ket-ket-ket-ket
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/SMGs/straylight.rsi
-    layers:
-      - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: bolt-closed
-        map: ["enum.RangedBarrelVisualLayers.Bolt"]
-      - state: mag-0
-        map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/SMGs/straylight.rsi
-  - type: Item
-    size: 24
-    sprite: Objects/Weapons/Guns/SMGs/straylight.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    currentSelector: Automatic
-    allSelectors:
-    - Single
-    - Automatic
-    fireRate: 10
-    caliber: Pistol
-    magazineTypes:
-    - Smg
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer
@@ -217,8 +175,7 @@
     - state: mag-unshaded-0
       map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
       shader: unshaded
-  - type: Icon
-    sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
+
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
@@ -254,8 +211,7 @@
       map: ["enum.RangedBarrelVisualLayers.Bolt"]
     - state: mag-0
       map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/SMGs/zoric.rsi
+
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/SMGs/zoric.rsi

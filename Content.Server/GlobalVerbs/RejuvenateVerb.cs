@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.Mobs;
+﻿using Content.Server.GameObjects.Components.Atmos;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Nutrition;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Verbs;
@@ -6,6 +7,7 @@ using Robust.Server.Console;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 
 namespace Content.Server.GlobalVerbs
 {
@@ -20,7 +22,7 @@ namespace Content.Server.GlobalVerbs
 
         public override void GetData(IEntity user, IEntity target, VerbData data)
         {
-            data.Text = "Rejuvenate";
+            data.Text = Loc.GetString("Rejuvenate");
             data.CategoryData = VerbCategories.Debug;
             data.Visibility = VerbVisibility.Invisible;
 
@@ -71,6 +73,16 @@ namespace Content.Server.GlobalVerbs
             if (target.TryGetComponent(out StunnableComponent stun))
             {
                 stun.ResetStuns();
+            }
+
+            if (target.TryGetComponent(out FlammableComponent flammable))
+            {
+                flammable.Extinguish();
+            }
+
+            if (target.TryGetComponent(out CreamPiedComponent creamPied))
+            {
+                creamPied.Wash();
             }
         }
     }

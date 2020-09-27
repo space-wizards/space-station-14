@@ -17,6 +17,8 @@ namespace Content.Shared.GameObjects.Components.Observer
         public bool CanPickup() => false;
         public bool CanEmote() => false;
         public bool CanAttack() => false;
+        public bool CanShiver() => false;
+        public bool CanSweat() => false;
     }
 
     [Serializable, NetSerializable]
@@ -34,5 +36,12 @@ namespace Content.Shared.GameObjects.Components.Observer
     public class ReturnToBodyComponentMessage : ComponentMessage
     {
         public ReturnToBodyComponentMessage() => Directed = true;
+    }
+
+
+    [Serializable, NetSerializable]
+    public class ReturnToCloneComponentMessage : ComponentMessage
+    {
+        public ReturnToCloneComponentMessage() => Directed = true;
     }
 }

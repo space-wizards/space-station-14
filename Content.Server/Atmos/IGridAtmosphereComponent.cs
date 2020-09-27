@@ -1,6 +1,11 @@
 ﻿using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Atmos;
+using Content.Server.GameObjects.Components.Atmos.Piping;
+using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+using Content.Shared.Atmos;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 
 namespace Content.Server.Atmos
 {
@@ -10,11 +15,6 @@ namespace Content.Server.Atmos
         ///     Number of times <see cref="Update"/> has been called.
         /// </summary>
         int UpdateCounter { get; }
-
-        /// <summary>
-        ///     How many tiles have high pressure delta.
-        /// </summary>
-        int HighPressureDeltaCount { get; }
 
         /// <summary>
         ///     Control variable for equalization.
@@ -44,6 +44,12 @@ namespace Content.Server.Atmos
         ///     Attempts to fix a sudden vacuum by creating gas.
         /// </summary>
         void FixVacuum(MapIndices indices);
+
+        /// <summary>
+        ///     Revalidates indices immediately.
+        /// </summary>
+        /// <param name="indices"></param>
+        void UpdateAdjacentBits(MapIndices indices);
 
         /// <summary>
         ///     Adds an active tile so it becomes processed every update until it becomes inactive.
@@ -112,24 +118,27 @@ namespace Content.Server.Atmos
         ///     Returns a tile.
         /// </summary>
         /// <param name="indices"></param>
+        /// <param name="createSpace"></param>
         /// <returns></returns>
-        TileAtmosphere GetTile(MapIndices indices);
+        TileAtmosphere GetTile(MapIndices indices, bool createSpace = true);
 
         /// <summary>
         ///     Returns a tile.
         /// </summary>
         /// <param name="coordinates"></param>
+        /// <param name="createSpace"></param>
         /// <returns></returns>
-        TileAtmosphere GetTile(GridCoordinates coordinates);
+        TileAtmosphere GetTile(EntityCoordinates coordinates, bool createSpace = true);
 
         /// <summary>
         ///     Returns if the tile in question is air-blocked.
         ///     This could be due to a wall, an airlock, etc.
-        ///     Also see AirtightComponent.
+        ///     <seealso cref="AirtightComponent"/>
         /// </summary>
         /// <param name="indices"></param>
+        /// <param name="direction"></param>
         /// <returns></returns>
-        bool IsAirBlocked(MapIndices indices);
+        bool IsAirBlocked(MapIndices indices, AtmosDirection direction);
 
         /// <summary>
         ///     Returns if the tile in question is space.
@@ -145,6 +154,19 @@ namespace Content.Server.Atmos
         /// <returns></returns>
         float GetVolumeForCells(int cellCount);
 
+        /// <summary>
+        ///     Returns a dictionary of adjacent TileAtmospheres.
+        /// </summary>
+        Dictionary<AtmosDirection, TileAtmosphere> GetAdjacentTiles(MapIndices indices, bool includeAirBlocked = false);
+
         void Update(float frameTime);
+
+        void AddPipeNet(IPipeNet pipeNet);
+
+        void RemovePipeNet(IPipeNet pipeNet);
+
+        void AddPipeNetDevice(PipeNetDeviceComponent pipeNetDevice);
+
+        void RemovePipeNetDevice(PipeNetDeviceComponent pipeNetDevice);
     }
 }

@@ -12,6 +12,9 @@
   components:
   - type: AiController
     logic: Civilian
+  - type: AiFactionTag
+    factions:
+    - SimpleNeutral
   - type: MovementSpeedModifier
     baseWalkSpeed : 5
     baseSprintSpeed : 5
@@ -31,9 +34,10 @@
       layer:
       - Opaque
       - MobImpassable
-  - type: BodyManager
-    BaseTemplate: bodyTemplate.Humanoid
-    BasePreset: bodyPreset.BasicHuman
+  - type: Damageable
+    criticalThreshold: 50
+    deadThreshold: 100
+  - type: MobStateManager
   - type: HeatResistance
   - type: CombatMode
   - type: Teleportable
@@ -66,9 +70,7 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: corgi
-  - type: Icon
-    sprite: Mobs/Pets/corgi.rsi
-    state: corgi
+
   - type: Physics
     mass: 10
   - type: Collidable
@@ -104,9 +106,7 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: ian
-  - type: Icon
-    sprite: Mobs/Pets/corgi.rsi
-    state: ian
+
   - type: Physics
     mass: 10
   - type: Collidable
@@ -142,9 +142,7 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: cat
-  - type: Icon
-    sprite: Mobs/Pets/cat.rsi
-    state: cat
+
   - type: Physics
     mass: 10
   - type: Collidable
@@ -167,6 +165,40 @@
 
 - type: entity
   save: false
+  name: calico cat
+  parent: PetBaseMob_Content
+  id: CatCalicoMob_Content
+  description:
+  drawdepth: Mobs
+  suffix: AI
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/cat.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: cat2
+
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.50,-0.25,0.30,0.25"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: cat2
+      dead: cat2_dead
+
+- type: entity
+  save: false
   name: sloth
   parent: PetBaseMob_Content
   id: SlothMob_Content
@@ -183,9 +215,7 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: sloth
-  - type: Icon
-    sprite: Mobs/Pets/sloth.rsi
-    state: sloth
+
   - type: Physics
     mass: 10
   - type: Collidable

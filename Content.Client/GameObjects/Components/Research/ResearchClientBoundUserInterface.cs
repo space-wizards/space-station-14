@@ -37,8 +37,8 @@ namespace Content.Client.GameObjects.Components.Research
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-            if (!(state is SharedResearchClientComponent.ResearchClientBoundInterfaceState rstate)) return;
-            _menu.Populate(rstate.ServerCount, rstate.ServerNames, rstate.ServerIds, rstate.SelectedServerId);
+            if (!(state is SharedResearchClientComponent.ResearchClientBoundInterfaceState rState)) return;
+            _menu.Populate(rState.ServerCount, rState.ServerNames, rState.ServerIds, rState.SelectedServerId);
 
         }
     }

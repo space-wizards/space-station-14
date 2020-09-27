@@ -7,9 +7,6 @@
   - type: Sprite
     sprite: Objects/Misc/skub.rsi
     state: icon
-  - type: Icon
-    sprite: Objects/Misc/skub.rsi
-    state: icon
   - type: Item
     sprite: Objects/Misc/skub.rsi
   - type: ItemCooldown

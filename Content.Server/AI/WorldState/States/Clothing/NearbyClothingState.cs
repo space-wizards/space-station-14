@@ -24,7 +24,7 @@ namespace Content.Server.AI.WorldState.States.Clothing
             }
 
             foreach (var entity in Visibility
-                .GetNearestEntities(Owner.Transform.GridPosition, typeof(ClothingComponent), controller.VisionRadius))
+                .GetNearestEntities(Owner.Transform.Coordinates, typeof(ClothingComponent), controller.VisionRadius))
             {
                 if (ContainerHelpers.TryGetContainer(entity, out var container))
                 {

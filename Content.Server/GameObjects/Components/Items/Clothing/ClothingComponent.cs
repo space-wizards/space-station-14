@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.Interfaces;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.Server.GameObjects.Components.Items.Clothing
@@ -20,20 +20,19 @@ namespace Content.Server.GameObjects.Components.Items.Clothing
     [ComponentReference(typeof(IItemComponent))]
     public class ClothingComponent : ItemComponent, IUse
     {
-#pragma warning disable 649
-        [Dependency] private readonly IServerNotifyManager _serverNotifyManager;
-#pragma warning restore 649
-
         public override string Name => "Clothing";
         public override uint? NetID => ContentNetIDs.CLOTHING;
 
+        [ViewVariables]
         public SlotFlags SlotFlags = SlotFlags.PREVENTEQUIP; //Different from None, NONE allows equips if no slot flags are required
 
         private bool _quickEquipEnabled = true;
         private int _heatResistance;
+        [ViewVariables(VVAccess.ReadWrite)]
         public int HeatResistance => _heatResistance;
 
         private string _clothingEquippedPrefix;
+        [ViewVariables(VVAccess.ReadWrite)]
         public string ClothingEquippedPrefix
         {
             get
@@ -63,7 +62,6 @@ namespace Content.Server.GameObjects.Components.Items.Clothing
             });
 
             serializer.DataField(ref _quickEquipEnabled, "QuickEquip", true);
-
             serializer.DataFieldCached(ref _heatResistance, "HeatResistance", 323);
         }
 
@@ -115,7 +113,7 @@ namespace Content.Server.GameObjects.Components.Items.Clothing
             if (!inv.Equip(slot, this, true, out var reason))
             {
                 if (reason != null)
-                    _serverNotifyManager.PopupMessage(Owner, user, reason);
+                    Owner.PopupMessage(user, reason);
 
                 return false;
             }

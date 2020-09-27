@@ -3,12 +3,10 @@ using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Pointing;
 using Content.Server.Players;
-using Content.Server.Utility;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Interfaces;
 using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Robust.Server.GameObjects.Components;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
@@ -77,14 +75,14 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        public bool InRange(GridCoordinates from, GridCoordinates to)
+        public bool InRange(EntityCoordinates from, EntityCoordinates to)
         {
-            return from.InRange(_mapManager, to, 15);
+            return from.InRange(EntityManager, to, 15);
         }
 
-        public bool TryPoint(ICommonSession? session, GridCoordinates coords, EntityUid uid)
+        public bool TryPoint(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
-            var player = (session as IPlayerSession)?.ContentData().Mind.CurrentEntity;
+            var player = (session as IPlayerSession)?.ContentData()?.Mind?.CurrentEntity;
             if (player == null)
             {
                 return false;
@@ -102,15 +100,15 @@ namespace Content.Server.GameObjects.EntitySystems
                 return false;
             }
 
-            if (!InRange(coords, player.Transform.GridPosition))
+            if (!InRange(coords, player.Transform.Coordinates))
             {
-                player.PopupMessage(player, Loc.GetString("You can't reach there!"));
+                player.PopupMessage(Loc.GetString("You can't reach there!"));
                 return false;
             }
 
             if (ActionBlockerSystem.CanChangeDirection(player))
             {
-                var diff = coords.ToMapPos(_mapManager) - player.Transform.MapPosition.Position;
+                var diff = coords.ToMapPos(EntityManager) - player.Transform.MapPosition.Position;
                 if (diff.LengthSquared > 0.01f)
                 {
                     player.Transform.LocalRotation = new Angle(diff);
@@ -132,7 +130,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 if ((playerSession.VisibilityMask & layer) == 0)
                     return false;
 
-                var ent = playerSession.ContentData().Mind.CurrentEntity;
+                var ent = playerSession.ContentData()?.Mind?.CurrentEntity;
 
                 return ent != null
                        && ent.Transform.MapPosition.InRange(player.Transform.MapPosition, PointingRange);
@@ -156,7 +154,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
             else
             {
-                var tileRef = _mapManager.GetGrid(coords.GridID).GetTileRef(coords);
+                var tileRef = _mapManager.GetGrid(coords.GetGridId(EntityManager)).GetTileRef(coords);
                 var tileDef = _tileDefinitionManager[tileRef.Tile.TypeId];
 
                 selfMessage = Loc.GetString("You point at {0}.", tileDef.DisplayName);

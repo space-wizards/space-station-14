@@ -1,8 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Content.Shared.Preferences;
 using Content.Shared.Preferences.Appearance;
 using Content.Shared.Text;
 using Robust.Shared.Interfaces.Random;
+using Robust.Shared.Maths;
 using Robust.Shared.Random;
 
 namespace Content.Client.UserInterface
@@ -51,9 +53,9 @@ namespace Content.Client.UserInterface
 
             var newHairColor = _random.Pick(HairStyles.RealisticHairColors);
             newHairColor = newHairColor
-                .WithRed(newHairColor.R + _random.Next(-25, 25) / 100f)
-                .WithGreen(newHairColor.G + _random.Next(-25, 25) / 100f)
-                .WithBlue(newHairColor.B + _random.Next(-25, 25) / 100f);
+                .WithRed(RandomizeColor(newHairColor.R))
+                .WithGreen(RandomizeColor(newHairColor.G))
+                .WithBlue(RandomizeColor(newHairColor.B));
 
             Profile = Profile.WithCharacterAppearance(
                 Profile.Appearance
@@ -62,6 +64,11 @@ namespace Content.Client.UserInterface
                     .WithHairColor(newHairColor)
                     .WithFacialHairColor(newHairColor));
             UpdateHairPickers();
+
+            float RandomizeColor(float channel)
+            {
+                return MathHelper.Clamp01(channel + _random.Next(-25, 25) / 100f);
+            }
         }
     }
 }

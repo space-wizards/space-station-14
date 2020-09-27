@@ -15,9 +15,7 @@ namespace Content.Server
 {
     public class ServerNotifyManager : SharedNotifyManager, IServerNotifyManager
     {
-#pragma warning disable 649
-        [Dependency] private IServerNetManager _netManager;
-#pragma warning restore 649
+        [Dependency] private readonly IServerNetManager _netManager = default!;
 
         private bool _initialized;
 
@@ -46,7 +44,7 @@ namespace Content.Server
             _netManager.ServerSendMessage(netMessage, actor.playerSession.ConnectedClient);
         }
 
-        public override void PopupMessage(GridCoordinates coordinates, IEntity viewer, string message)
+        public override void PopupMessage(EntityCoordinates coordinates, IEntity viewer, string message)
         {
             if (!viewer.TryGetComponent(out IActorComponent actor))
             {

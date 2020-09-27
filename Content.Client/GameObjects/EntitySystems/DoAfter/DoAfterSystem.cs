@@ -98,7 +98,7 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
                 return;
             }
 
-            var userGrid = _player.Transform.GridPosition;
+            var userGrid = _player.Transform.Coordinates;
 
             // Check cancellations / finishes
             foreach (var (id, doAfter) in doAfters)
@@ -131,9 +131,14 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
 
                 if (doAfter.BreakOnTargetMove)
                 {
-                    var targetEntity = _entityManager.GetEntity(doAfter.TargetUid);
+                    if (!_entityManager.TryGetEntity(doAfter.TargetUid, out var targetEntity))
+                    {
+                        // Cancel if the target entity doesn't exist.
+                        doAfterComponent.Cancel(id, currentTime);
+                        continue;
+                    }
 
-                    if (targetEntity.Transform.GridPosition != doAfter.TargetGrid)
+                    if (targetEntity.Transform.Coordinates != doAfter.TargetGrid)
                     {
                         doAfterComponent.Cancel(id, currentTime);
                         continue;

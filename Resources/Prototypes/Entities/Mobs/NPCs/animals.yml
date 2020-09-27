@@ -11,6 +11,9 @@
   components:
   - type: AiController
     logic: Civilian
+  - type: AiFactionTag
+    factions:
+    - SimpleNeutral
   - type: MovementSpeedModifier
     baseWalkSpeed : 4
     baseSprintSpeed : 4
@@ -21,9 +24,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: monkey
       sprite: Mobs/Animals/monkey.rsi
-  - type: Icon
-    sprite: Mobs/Animals/monkey.rsi
-    state: monkey
+
   - type: Clickable
   - type: Physics
     mass: 50
@@ -39,9 +40,10 @@
       layer:
       - Opaque
       - MobImpassable
-  - type: BodyManager
-    BaseTemplate: bodyTemplate.Humanoid
-    BasePreset: bodyPreset.BasicHuman
+  - type: Damageable
+    criticalThreshold: 50
+    deadThreshold: 100
+  - type: MobStateManager
   - type: HeatResistance
   - type: CombatMode
   - type: Teleportable
@@ -58,6 +60,8 @@
       normal: monkey
       dead: dead
   - type: Pullable
+  - type: Butcherable
+    meat: FoodMeat
 
 - type: entity
   save: false
@@ -74,9 +78,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: crawling
       sprite: Mobs/Animals/gorilla.rsi
-  - type: Icon
-    sprite: Mobs/Animals/gorilla.rsi
-    state: icon
+
   - type: Physics
     mass: 90
   - type: Collidable
@@ -112,9 +114,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: chicken-0
       sprite: Mobs/Animals/chicken.rsi
-  - type: Icon
-    sprite: Mobs/Animals/chicken.rsi
-    state: icon-0
+
   - type: Physics
     mass: 20
   - type: Collidable
@@ -153,9 +153,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: butterfly
       sprite: Mobs/Animals/butterfly.rsi
-  - type: Icon
-    sprite: Mobs/Animals/butterfly.rsi
-    state: butterfly
+
   - type: Physics
     mass: 5
   - type: Collidable
@@ -204,9 +202,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: bat
       sprite: Mobs/Animals/bat.rsi
-  - type: Icon
-    sprite: Mobs/Animals/bat.rsi
-    state: bat
+
   - type: Physics
     mass: 5
   - type: Collidable
@@ -246,9 +242,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: 0
       sprite: Mobs/Animals/bee.rsi
-  - type: Icon
-    sprite: Objects/Fun/toys.rsi
-    state: plushie_h
+
   - type: Physics
     mass: 5
   - type: Collidable
@@ -284,9 +278,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: goat
       sprite: Mobs/Animals/goat.rsi
-  - type: Icon
-    sprite: Mobs/Animals/goat.rsi
-    state: goat
+
   - type: Physics
     mass: 20
   - type: Collidable
@@ -323,9 +315,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: goose
       sprite: Mobs/Animals/goose.rsi
-  - type: Icon
-    sprite: Mobs/Animals/goose.rsi
-    state: goose
+
   - type: Physics
     mass: 20
   - type: Collidable
@@ -365,9 +355,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: parrot
       sprite: Mobs/Animals/parrot.rsi
-  - type: Icon
-    sprite: Mobs/Animals/parrot.rsi
-    state: icon
+
   - type: Physics
     mass: 20
   - type: Collidable
@@ -403,9 +391,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: snake
       sprite: Mobs/Animals/snake.rsi
-  - type: Icon
-    sprite: Mobs/Animals/snake.rsi
-    state: icon
+
   - type: Physics
     mass: 10
   - type: Collidable
@@ -444,9 +430,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: tarantula
       sprite: Mobs/Animals/spider.rsi
-  - type: Icon
-    sprite: Mobs/Animals/spider.rsi
-    state: tarantula
+
   - type: Physics
     mass: 10
   - type: Collidable
@@ -465,7 +449,7 @@
     visuals:
     - type: DamageStateVisualizer
       normal: tarantula
-      dead: dead
+      dead: tarantula_dead
 
 - type: entity
   save: false
@@ -482,9 +466,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: crab
       sprite: Mobs/Animals/crab.rsi
-  - type: Icon
-    sprite: Mobs/Animals/crab.rsi
-    state: crab
+
   - type: Physics
     mass: 10
   - type: Collidable
@@ -520,9 +502,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: penguin
       sprite: Mobs/Animals/penguin.rsi
-  - type: Icon
-    sprite: Mobs/Animals/penguin.rsi
-    state: penguin
+
   - type: Physics
     mass: 10
   - type: Collidable

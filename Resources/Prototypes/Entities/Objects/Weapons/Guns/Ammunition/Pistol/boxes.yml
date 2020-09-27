@@ -7,8 +7,7 @@
   - type: AmmoBox
     caliber: Pistol
     capacity: 30
-  - type: Icon
-    state: icon
+
   - type: Sprite
     netsync: false
     layers:
@@ -32,8 +31,7 @@
   - type: AmmoBox
     capacity: 60
     fillPrototype: CartridgePistol
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Pistol/pistol_box.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/Pistol/pistol_box.rsi
 
@@ -45,8 +43,7 @@
   - type: AmmoBox
     capacity: 60
     fillPrototype: CartridgePistolFlash
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Pistol/pistol_box_flash.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/Pistol/pistol_box_flash.rsi
 
@@ -58,8 +55,7 @@
   - type: AmmoBox
     capacity: 60
     fillPrototype: CartridgePistolHV
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Pistol/pistol_box_hv.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/Pistol/pistol_box_hv.rsi
 
@@ -71,8 +67,7 @@
   - type: AmmoBox
     capacity: 60
     fillPrototype: CartridgePistolPractice
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Pistol/pistol_box_practice.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/Pistol/pistol_box_practice.rsi
 
@@ -84,7 +79,6 @@
   - type: AmmoBox
     capacity: 60
     fillPrototype: CartridgePistolRubber
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Pistol/pistol_box_rubber.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/Pistol/pistol_box_rubber.rsi

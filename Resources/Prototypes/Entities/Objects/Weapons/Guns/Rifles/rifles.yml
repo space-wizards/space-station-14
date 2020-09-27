@@ -7,8 +7,7 @@
   components:
   - type: Sprite
     netsync: false
-  - type: Icon
-    state: icon
+
   - type: Item
     size: 24
     state: icon
@@ -43,8 +42,7 @@
         map: ["enum.RangedBarrelVisualLayers.Base"]
       - state: mag-0
         map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Rifles/ak.rsi
+
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Rifles/ak.rsi
@@ -82,8 +80,7 @@
         map: ["enum.RangedBarrelVisualLayers.Base"]
       - state: mag-0
         map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Rifles/black_ak.rsi
+
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Rifles/black_ak.rsi
@@ -123,8 +120,7 @@
         map: ["enum.RangedBarrelVisualLayers.Bolt"]
       - state: mag-0
         map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
+
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
@@ -164,8 +160,7 @@
         map: ["enum.RangedBarrelVisualLayers.Base"]
       - state: mag-0
         map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Rifles/dallas.rsi
+
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Rifles/dallas.rsi
@@ -174,7 +169,7 @@
     caliber: ClRifle
     magazineTypes:
     - Rifle
-    magFillPrototype: MagazineClRifle10x24
+    magFillPrototype: MagazineClRifle
     fireRate: 8
     minAngle: 10
     maxAngle: 60
@@ -206,8 +201,7 @@
         map: ["enum.RangedBarrelVisualLayers.Bolt"]
       - state: mag-0
         map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Rifles/sts.rsi
+
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Rifles/sts.rsi
@@ -248,8 +242,7 @@
         map: ["enum.RangedBarrelVisualLayers.Bolt"]
       - state: mag-0
         map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Rifles/vintorez.rsi
+
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Rifles/vintorez.rsi
@@ -287,8 +280,7 @@
         map: ["enum.RangedBarrelVisualLayers.Bolt"]
       - state: mag-0
         map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Rifles/wintermute.rsi
+
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Rifles/wintermute.rsi
@@ -311,6 +303,45 @@
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer
+    - type: MagVisualizer
+      magState: mag
+      steps: 1
+      zeroVisible: true
+
+- type: entity
+  name: calico m900
+  parent: RifleBase
+  id: RifleCalico
+  description: A carbine with a unique cylindrical magazine design which allows for high capacity loads.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Rifles/calico.rsi
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.RangedBarrelVisualLayers.Mag"]
+
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/Rifles/calico.rsi
+  - type: RangedWeapon
+  - type: MagazineBarrel
+    magFillPrototype: MagazinePistolCalicoTopMounted
+    caliber: Pistol
+    magazineTypes:
+    - CalicoTopMounted
+    fireRate: 3
+    minAngle: 0
+    maxAngle: 25
+    angleIncrease: 15
+    angleDecay: 25
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/rifle2.ogg
+    soundRack: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
+    soundMagInsert: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
+    soundMagEject: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+  - type: Appearance
+    visuals:
     - type: MagVisualizer
       magState: mag
       steps: 1

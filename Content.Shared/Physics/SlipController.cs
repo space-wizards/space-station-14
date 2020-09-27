@@ -6,9 +6,7 @@ namespace Content.Shared.Physics
 {
     public class SlipController : VirtualController
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPhysicsManager _physicsManager;
-#pragma warning restore 649
+        [Dependency] private readonly IPhysicsManager _physicsManager = default!;
 
         public SlipController()
         {
@@ -24,7 +22,7 @@ namespace Content.Shared.Physics
                 return;
             }
 
-            if (_physicsManager.IsWeightless(ControlledComponent.Owner.Transform.GridPosition))
+            if (_physicsManager.IsWeightless(ControlledComponent.Owner.Transform.Coordinates))
             {
                 return;
             }

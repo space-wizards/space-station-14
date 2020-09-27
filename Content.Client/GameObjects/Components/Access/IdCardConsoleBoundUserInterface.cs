@@ -10,10 +10,8 @@ namespace Content.Client.GameObjects.Components.Access
 {
     public class IdCardConsoleBoundUserInterface : BoundUserInterface
     {
-#pragma warning disable 649
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-#pragma warning restore 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         public IdCardConsoleBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
         }
@@ -24,7 +22,7 @@ namespace Content.Client.GameObjects.Components.Access
         {
             base.Open();
 
-            _window = new IdCardConsoleWindow(this, _localizationManager, _prototypeManager);
+            _window = new IdCardConsoleWindow(this, _prototypeManager);
             _window.Title = Owner.Owner.Name;
             _window.OnClose += Close;
             _window.OpenCentered();

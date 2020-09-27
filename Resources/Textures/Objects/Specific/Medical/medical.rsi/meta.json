@@ -1,0 +1,51 @@
+{
+	"version": 1,
+	"size": {
+		"x": 32,
+		"y": 32
+	},
+	"states": [
+		{
+			"name": "brutepack",
+			"directions": 1,
+			"delays": [
+				[1.0]
+			]
+		},
+		{
+			"name": "cast",
+			"directions": 1,
+			"delays": [
+				[1.0]
+			]
+		},
+		{
+			"name": "gauze",
+			"directions": 1,
+			"delays": [
+				[1.0]
+			]
+		},
+		{
+			"name": "medkit_r",
+			"directions": 1,
+			"delays": [
+				[1.0]
+			]
+		},
+		{
+			"name": "morphine",
+			"directions": 1,
+			"delays": [
+				[1.0]
+			]
+		},
+		{
+			"name": "ointment", 
+			"directions": 1,
+			"delays": [
+				[1.0]
+			]
+		}
+	]
+}

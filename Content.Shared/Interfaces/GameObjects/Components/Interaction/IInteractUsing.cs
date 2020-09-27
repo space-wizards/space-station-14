@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -29,7 +28,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     public class InteractUsingEventArgs : EventArgs, ITargetedInteractEventArgs
     {
         public IEntity User { get; set; }
-        public GridCoordinates ClickLocation { get; set; }
+        public EntityCoordinates ClickLocation { get; set; }
         public IEntity Using { get; set; }
         public IEntity Target { get; set; }
     }
@@ -63,9 +62,9 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// <summary>
         ///     The original location that was clicked by the user.
         /// </summary>
-        public GridCoordinates ClickLocation { get; }
+        public EntityCoordinates ClickLocation { get; }
 
-        public InteractUsingMessage(IEntity user, IEntity itemInHand, IEntity attacked, GridCoordinates clickLocation)
+        public InteractUsingMessage(IEntity user, IEntity itemInHand, IEntity attacked, EntityCoordinates clickLocation)
         {
             User = user;
             ItemInHand = itemInHand;

@@ -1,12 +1,10 @@
-﻿using Lidgren.Network;
+﻿using System.Collections.Generic;
+using System.IO;
+using Lidgren.Network;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 
 namespace Content.Shared.StationEvents
 {

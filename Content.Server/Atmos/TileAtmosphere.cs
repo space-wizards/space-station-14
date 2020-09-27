@@ -4,21 +4,23 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Reactions;
 using Content.Server.GameObjects.Components.Atmos;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.Atmos;
 using Content.Server.Interfaces;
+using Content.Server.Utility;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
 using Content.Shared.Maps;
+using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.GameObjects.EntitySystems.TileLookup;
 using Robust.Shared.Containers;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
@@ -28,51 +30,60 @@ namespace Content.Server.Atmos
 {
     public class TileAtmosphere : IGasMixtureHolder
     {
-        [Robust.Shared.IoC.Dependency] private IRobustRandom _robustRandom = default!;
-        [Robust.Shared.IoC.Dependency] private IEntityManager _entityManager = default!;
-        [Robust.Shared.IoC.Dependency] private IMapManager _mapManager = default!;
+        [Robust.Shared.IoC.Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Robust.Shared.IoC.Dependency] private readonly IEntityManager _entityManager = default!;
+        [Robust.Shared.IoC.Dependency] private readonly IMapManager _mapManager = default!;
+        private readonly GridTileLookupSystem _gridTileLookupSystem = default!;
 
 
-        private static readonly TileAtmosphereComparer _comparer = new TileAtmosphereComparer();
+        private static readonly TileAtmosphereComparer Comparer = new TileAtmosphereComparer();
 
-        [ViewVariables]
-        private int _archivedCycle = 0;
-
-        [ViewVariables]
-        private int _currentCycle = 0;
+        [ViewVariables] private int _archivedCycle;
+        [ViewVariables] private int _currentCycle;
 
         [ViewVariables]
         private static GasTileOverlaySystem _gasTileOverlaySystem;
 
         [ViewVariables]
-        private float _temperature = Atmospherics.T20C;
+        public int AtmosCooldown { get; set; } = 0;
+
+        [ViewVariables]
+        public float Temperature {get; private set; } = Atmospherics.T20C;
 
         [ViewVariables]
         private float _temperatureArchived = Atmospherics.T20C;
 
         // I know this being static is evil, but I seriously can't come up with a better solution to sound spam.
-        private static int _soundCooldown = 0;
+        private static int _soundCooldown;
 
         [ViewVariables]
-        public TileAtmosphere PressureSpecificTarget { get; set; } = null;
+        public TileAtmosphere PressureSpecificTarget { get; set; }
 
         [ViewVariables]
-        public float PressureDifference { get; set; } = 0;
+        public float PressureDifference { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float HeatCapacity { get; set; } = 1f;
 
         [ViewVariables]
-        public float ThermalConductivity => Tile?.Tile.GetContentTileDefinition().ThermalConductivity ?? 0.05f;
+        public float ThermalConductivity { get; set; } = 0.05f;
 
         [ViewVariables]
-        public bool Excited { get; set; } = false;
+        public bool Excited { get; set; }
 
         [ViewVariables]
-        private GridAtmosphereComponent _gridAtmosphereComponent;
+        private readonly GridAtmosphereComponent _gridAtmosphereComponent;
 
+        /// <summary>
+        ///     Adjacent tiles in the same order as <see cref="AtmosDirection"/>. (NSEW)
+        /// </summary>
         [ViewVariables]
-        private readonly Dictionary<Direction, TileAtmosphere> _adjacentTiles = new Dictionary<Direction, TileAtmosphere>();
+        private readonly TileAtmosphere[] _adjacentTiles = new TileAtmosphere[Atmospherics.Directions];
+
+        private AtmosDirection _adjacentBits = AtmosDirection.Invalid;
+
+        [ViewVariables, UsedImplicitly]
+        private int AdjacentBitsInt => (int)_adjacentBits;
 
         [ViewVariables]
         private TileAtmosInfo _tileAtmosInfo;
@@ -80,7 +91,13 @@ namespace Content.Server.Atmos
         [ViewVariables]
         public Hotspot Hotspot;
 
-        private Direction _pressureDirection;
+        private AtmosDirection _pressureDirection;
+
+        // I'm assuming there's a good reason the original variable was made private, but this information is also important.
+        public AtmosDirection PressureDirectionForDebugOverlay => _pressureDirection;
+
+        [ViewVariables, UsedImplicitly]
+        private int PressureDirectionInt => (int)_pressureDirection;
 
         [ViewVariables]
         public GridId GridIndex { get; }
@@ -97,17 +114,25 @@ namespace Content.Server.Atmos
         [ViewVariables]
         public GasMixture Air { get; set; }
 
-        [ViewVariables]
-        public bool BlocksAir => _gridAtmosphereComponent.IsAirBlocked(GridIndices);
+        [ViewVariables, UsedImplicitly]
+        private int _blockedAirflow => (int)BlockedAirflow;
 
-        public TileAtmosphere(GridAtmosphereComponent atmosphereComponent, GridId gridIndex, MapIndices gridIndices, GasMixture mixture = null)
+        public AtmosDirection BlockedAirflow { get; set; } = AtmosDirection.Invalid;
+
+        [ViewVariables]
+        public bool BlocksAllAir => BlockedAirflow == AtmosDirection.All;
+
+        public TileAtmosphere(GridAtmosphereComponent atmosphereComponent, GridId gridIndex, MapIndices gridIndices, GasMixture mixture = null, bool immutable = false)
         {
             IoCManager.InjectDependencies(this);
             _gridAtmosphereComponent = atmosphereComponent;
+            _gridTileLookupSystem = _entityManager.EntitySysManager.GetEntitySystem<GridTileLookupSystem>();
             GridIndex = gridIndex;
             GridIndices = gridIndices;
             Air = mixture;
-            ResetTileAtmosInfo();
+
+            if(immutable)
+                Air?.MarkImmutable();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -115,7 +140,7 @@ namespace Content.Server.Atmos
         {
             Air?.Archive();
             _archivedCycle = fireCount;
-            _temperatureArchived = _temperature;
+            _temperatureArchived = Temperature;
         }
 
         public void HotspotExpose(float exposedTemperature, float exposedVolume, bool soh = false)
@@ -163,7 +188,7 @@ namespace Content.Server.Atmos
             }
         }
 
-        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void HighPressureMovements()
         {
             // TODO ATMOS finish this
@@ -172,11 +197,10 @@ namespace Content.Server.Atmos
             {
                 if(_soundCooldown == 0)
                     EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Effects/space_wind.ogg",
-                        GridIndices.ToGridCoordinates(_mapManager, GridIndex), AudioHelpers.WithVariation(0.125f).WithVolume(MathHelper.Clamp(PressureDifference / 10, 10, 100)));
+                        GridIndices.ToEntityCoordinates(_mapManager, GridIndex), AudioHelpers.WithVariation(0.125f).WithVolume(MathHelper.Clamp(PressureDifference / 10, 10, 100)));
             }
 
-
-            foreach (var entity in _entityManager.GetEntitiesIntersecting(_mapManager.GetGrid(GridIndex).ParentMapId, Box2.UnitCentered.Translated(GridIndices)))
+            foreach (var entity in _gridTileLookupSystem.GetEntitiesIntersecting(GridIndex, GridIndices))
             {
                 if (!entity.TryGetComponent(out ICollidableComponent physics)
                     ||  !entity.TryGetComponent(out MovedByPressureComponent pressure)
@@ -188,14 +212,14 @@ namespace Content.Server.Atmos
                 var pressureMovements = physics.EnsureController<HighPressureMovementController>();
                 if (pressure.LastHighPressureMovementAirCycle < _gridAtmosphereComponent.UpdateCounter)
                 {
-                    pressureMovements.ExperiencePressureDifference(_gridAtmosphereComponent.UpdateCounter, PressureDifference, _pressureDirection, 0, PressureSpecificTarget?.GridIndices.ToGridCoordinates(_mapManager, GridIndex) ?? GridCoordinates.InvalidGrid);
+                    pressureMovements.ExperiencePressureDifference(_gridAtmosphereComponent.UpdateCounter, PressureDifference, _pressureDirection, 0, PressureSpecificTarget?.GridIndices.ToEntityCoordinates(_mapManager, GridIndex) ?? EntityCoordinates.Invalid);
                 }
 
             }
 
             if (PressureDifference > 100)
             {
-                // Do space wind graphics here!
+                // TODO ATMOS Do space wind graphics here!
             }
 
             _soundCooldown++;
@@ -220,20 +244,22 @@ namespace Content.Server.Atmos
             }
         }
 
-        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void EqualizePressureInZone(int cycleNum)
         {
             if (Air == null || (_tileAtmosInfo.LastCycle >= cycleNum)) return; // Already done.
 
-            ResetTileAtmosInfo();
-
+            _tileAtmosInfo = new TileAtmosInfo();
 
             var startingMoles = Air.TotalMoles;
             var runAtmos = false;
 
             // We need to figure if this is necessary
-            foreach (var (direction, other) in _adjacentTiles)
+            for (var i = 0; i < Atmospherics.Directions; i++)
             {
+                var direction = (AtmosDirection) (1 << i);
+                if (!_adjacentBits.HasFlag(direction)) continue;
+                var other = _adjacentTiles[i];
                 if (other?.Air == null) continue;
                 var comparisonMoles = other.Air.TotalMoles;
                 if (!(MathF.Abs(comparisonMoles - startingMoles) > Atmospherics.MinimumMolesDeltaToMove)) continue;
@@ -265,13 +291,15 @@ namespace Content.Server.Atmos
                     totalMoles += tileMoles;
                 }
 
-                foreach (var (_, adj) in exploring._adjacentTiles)
+                for (var j = 0; j < Atmospherics.Directions; j++)
                 {
+                    var direction = (AtmosDirection) (1 << j);
+                    if (!exploring._adjacentBits.HasFlag(direction)) continue;
+                    var adj = exploring._adjacentTiles[j];
                     if (adj?.Air == null) continue;
                     if(adj._tileAtmosInfo.LastQueueCycle == queueCycle) continue;
-                    adj.ResetTileAtmosInfo();
+                    adj._tileAtmosInfo = new TileAtmosInfo {LastQueueCycle = queueCycle};
 
-                    adj._tileAtmosInfo.LastQueueCycle = queueCycle;
                     if(tileCount < Atmospherics.ZumosHardTileLimit)
                         tiles[tileCount++] = adj;
                     if (adj.Air.Immutable)
@@ -326,47 +354,42 @@ namespace Content.Server.Atmos
             if (giverTilesLength > logN && takerTilesLength > logN)
             {
                 // Even if it fails, it will speed up the next part.
-                Array.Sort(tiles, 0, tileCount, _comparer);
+                Array.Sort(tiles, 0, tileCount, Comparer);
 
                 for (var i = 0; i < tileCount; i++)
                 {
                     var tile = tiles[i];
                     tile._tileAtmosInfo.FastDone = true;
                     if (!(tile._tileAtmosInfo.MoleDelta > 0)) continue;
-                    var eligibleDirections = ArrayPool<Direction>.Shared.Rent(4);
+                    var eligibleDirections = AtmosDirection.Invalid;
                     var eligibleDirectionCount = 0;
-                    foreach (var direction in Cardinal)
+                    for (var j = 0; j < Atmospherics.Directions; j++)
                     {
-                        if (!tile._adjacentTiles.TryGetValue(direction, out var tile2)) continue;
+                        var direction = (AtmosDirection) (1 << j);
+                        if (!tile._adjacentBits.HasFlag(direction)) continue;
+                        var tile2 = tile._adjacentTiles[j];
 
                         // skip anything that isn't part of our current processing block.
                         if (tile2._tileAtmosInfo.FastDone || tile2._tileAtmosInfo.LastQueueCycle != queueCycle)
                             continue;
 
-                        eligibleDirections[eligibleDirectionCount++] = direction;
+                        eligibleDirections |= direction;
+                        eligibleDirectionCount++;
                     }
 
                     if (eligibleDirectionCount <= 0)
                         continue; // Oof we've painted ourselves into a corner. Bad luck. Next part will handle this.
 
                     var molesToMove = tile._tileAtmosInfo.MoleDelta / eligibleDirectionCount;
-                    foreach (var direction in Cardinal)
+                    for (var j = 0; j < Atmospherics.Directions; j++)
                     {
-                        var hasDirection = false;
-                        for (var j = 0; j < eligibleDirectionCount; j++)
-                        {
-                            if (eligibleDirections[j] != direction) continue;
-                            hasDirection = true;
-                            break;
-                        }
+                        var direction = (AtmosDirection) (1 << j);
+                        if (!eligibleDirections.HasFlag(direction)) continue;
 
-                        if (hasDirection || !tile._adjacentTiles.TryGetValue(direction, out var tile2)) continue;
                         tile.AdjustEqMovement(direction, molesToMove);
                         tile._tileAtmosInfo.MoleDelta -= molesToMove;
-                        tile2._tileAtmosInfo.MoleDelta += molesToMove;
+                        tile._adjacentTiles[j]._tileAtmosInfo.MoleDelta += molesToMove;
                     }
-
-                    ArrayPool<Direction>.Shared.Return(eligibleDirections);
                 }
 
                 giverTilesLength = 0;
@@ -393,7 +416,7 @@ namespace Content.Server.Atmos
                     for (var j = 0; j < giverTilesLength; j++)
                     {
                         var giver = giverTiles[j];
-                        giver._tileAtmosInfo.CurrentTransferDirection = (Direction) (-1);
+                        giver._tileAtmosInfo.CurrentTransferDirection = AtmosDirection.Invalid;
                         giver._tileAtmosInfo.CurrentTransferAmount = 0;
                         var queueCycleSlow = ++_gridAtmosphereComponent.EqualizationQueueCycleControl;
                         var queueLength = 0;
@@ -405,9 +428,11 @@ namespace Content.Server.Atmos
                                 break; // We're done here now. Let's not do more work than needed.
 
                             var tile = queue[i];
-                            foreach (var direction in Cardinal)
+                            for (var k = 0; k < Atmospherics.Directions; k++)
                             {
-                                if (!tile._adjacentTiles.TryGetValue(direction, out var tile2)) continue;
+                                var direction = (AtmosDirection) (1 << k);
+                                if (!tile._adjacentBits.HasFlag(direction)) continue;
+                                var tile2 = tile._adjacentTiles[k];
                                 if (giver._tileAtmosInfo.MoleDelta <= 0) break; // We're done here now. Let's not do more work than needed.
                                 if (tile2._tileAtmosInfo.LastQueueCycle != queueCycle) continue;
                                 if (tile2._tileAtmosInfo.LastSlowQueueCycle == queueCycleSlow) continue;
@@ -441,15 +466,11 @@ namespace Content.Server.Atmos
                         for (var i = queueLength - 1; i >= 0; i--)
                         {
                             var tile = queue[i];
-                            if (tile._tileAtmosInfo.CurrentTransferAmount != 0 &&
-                                tile._tileAtmosInfo.CurrentTransferDirection != (Direction) (-1))
+                            if (tile._tileAtmosInfo.CurrentTransferAmount != 0 && tile._tileAtmosInfo.CurrentTransferDirection != AtmosDirection.Invalid)
                             {
-                                tile.AdjustEqMovement(tile._tileAtmosInfo.CurrentTransferDirection,
-                                    tile._tileAtmosInfo.CurrentTransferAmount);
-                                if (tile._adjacentTiles.TryGetValue(tile._tileAtmosInfo.CurrentTransferDirection,
-                                    out var adjacent))
-                                    adjacent._tileAtmosInfo.CurrentTransferAmount +=
-                                        tile._tileAtmosInfo.CurrentTransferAmount;
+                                tile.AdjustEqMovement(tile._tileAtmosInfo.CurrentTransferDirection, tile._tileAtmosInfo.CurrentTransferAmount);
+                                tile._adjacentTiles[tile._tileAtmosInfo.CurrentTransferDirection.ToIndex()]
+                                    ._tileAtmosInfo.CurrentTransferAmount += tile._tileAtmosInfo.CurrentTransferAmount;
                                 tile._tileAtmosInfo.CurrentTransferAmount = 0;
                             }
                         }
@@ -463,7 +484,7 @@ namespace Content.Server.Atmos
                     for (var j = 0; j < takerTilesLength; j++)
                     {
                         var taker = takerTiles[j];
-                        taker._tileAtmosInfo.CurrentTransferDirection = Direction.Invalid;
+                        taker._tileAtmosInfo.CurrentTransferDirection = AtmosDirection.Invalid;
                         taker._tileAtmosInfo.CurrentTransferAmount = 0;
                         var queueCycleSlow = ++_gridAtmosphereComponent.EqualizationQueueCycleControl;
                         var queueLength = 0;
@@ -475,10 +496,11 @@ namespace Content.Server.Atmos
                                 break; // We're done here now. Let's not do more work than needed.
 
                             var tile = queue[i];
-                            foreach (var direction in Cardinal)
+                            for (var k = 0; k < Atmospherics.Directions; k++)
                             {
-                                if (!tile._adjacentTiles.ContainsKey(direction)) continue;
-                                var tile2 = tile._adjacentTiles[direction];
+                                var direction = (AtmosDirection) (1 << k);
+                                if (!tile._adjacentBits.HasFlag(direction)) continue;
+                                var tile2 = tile._adjacentTiles[k];
 
                                 if (taker._tileAtmosInfo.MoleDelta >= 0) break; // We're done here now. Let's not do more work than needed.
                                 if (tile2._tileAtmosInfo.LastQueueCycle != queueCycle) continue;
@@ -512,16 +534,14 @@ namespace Content.Server.Atmos
                         for (var i = queueLength - 1; i >= 0; i--)
                         {
                             var tile = queue[i];
-                            if (tile._tileAtmosInfo.CurrentTransferAmount == 0 || tile._tileAtmosInfo.CurrentTransferDirection == Direction.Invalid)
+                            if (tile._tileAtmosInfo.CurrentTransferAmount == 0 || tile._tileAtmosInfo.CurrentTransferDirection == AtmosDirection.Invalid)
                                 continue;
 
                             tile.AdjustEqMovement(tile._tileAtmosInfo.CurrentTransferDirection, tile._tileAtmosInfo.CurrentTransferAmount);
 
-                            if (tile._adjacentTiles.TryGetValue(tile._tileAtmosInfo.CurrentTransferDirection, out var adjacent))
-                            {
-                                adjacent._tileAtmosInfo.CurrentTransferAmount += tile._tileAtmosInfo.CurrentTransferAmount;
-                                tile._tileAtmosInfo.CurrentTransferAmount = 0;
-                            }
+                            tile._adjacentTiles[tile._tileAtmosInfo.CurrentTransferDirection.ToIndex()]
+                                ._tileAtmosInfo.CurrentTransferAmount += tile._tileAtmosInfo.CurrentTransferAmount;
+                            tile._tileAtmosInfo.CurrentTransferAmount = 0;
                         }
                     }
 
@@ -537,9 +557,11 @@ namespace Content.Server.Atmos
                 for (var i = 0; i < tileCount; i++)
                 {
                     var tile = tiles[i];
-                    foreach (var direction in Cardinal)
+                    for (var j = 0; j < Atmospherics.Directions; j++)
                     {
-                        if (!tile._adjacentTiles.TryGetValue(direction, out var tile2)) continue;
+                        var direction = (AtmosDirection) (1 << j);
+                        if (!tile._adjacentBits.HasFlag(direction)) continue;
+                        var tile2 = tile._adjacentTiles[j];
                         if (tile2?.Air?.Compare(Air) == GasMixture.GasCompareResult.NoExchange) continue;
                         _gridAtmosphereComponent.AddActiveTile(tile2);
                         break;
@@ -555,69 +577,68 @@ namespace Content.Server.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void FinalizeEq()
         {
-            var transferDirections = new Dictionary<Direction, float>();
+            var transferDirections = new float[Atmospherics.Directions];
             var hasTransferDirs = false;
-            foreach (var direction in Cardinal)
+            for (var i = 0; i < Atmospherics.Directions; i++)
             {
-                var amount = _tileAtmosInfo[direction];
+                var amount = _tileAtmosInfo[i];
                 if (amount == 0) continue;
-                transferDirections[direction] = amount;
-                _tileAtmosInfo[direction] = 0;
+                transferDirections[i] = amount;
+                _tileAtmosInfo[i] = 0; // Set them to 0 to prevent infinite recursion.
                 hasTransferDirs = true;
             }
 
             if (!hasTransferDirs) return;
 
-            foreach (var (direction, amount) in transferDirections)
+            for(var i = 0; i < Atmospherics.Directions; i++)
             {
-                if (!_adjacentTiles.TryGetValue(direction, out var tile) || tile.Air == null) continue;
+                var direction = (AtmosDirection) (1 << i);
+                if (!_adjacentBits.HasFlag(direction)) continue;
+                var amount = transferDirections[i];
+                var tile = _adjacentTiles[i];
+                if (tile?.Air == null) continue;
                 if (amount > 0)
                 {
                     if (Air.TotalMoles < amount)
-                        FinalizeEqNeighbors(transferDirections.Keys);
+                        FinalizeEqNeighbors(transferDirections);
 
+                    tile._tileAtmosInfo[direction.GetOpposite()] = 0;
                     tile.Air.Merge(Air.Remove(amount));
                     UpdateVisuals();
                     tile.UpdateVisuals();
-                    ConsiderPressureDifference(direction, amount);
+                    ConsiderPressureDifference(tile, amount);
                 }
             }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void FinalizeEqNeighbors(IEnumerable<Direction> directions)
+        private void FinalizeEqNeighbors(in float[] transferDirs)
         {
-            foreach (var direction in directions)
+            for (var i = 0; i < Atmospherics.Directions; i++)
             {
-                var amount = _tileAtmosInfo[direction];
-                if(amount < 0 && _adjacentTiles.TryGetValue(direction, out var adjacent))
-                    adjacent.FinalizeEq();
+                var direction = (AtmosDirection) (1 << i);
+                var amount = transferDirs[i];
+                if(amount < 0 && _adjacentBits.HasFlag(direction))
+                    _adjacentTiles[i].FinalizeEq();  // A bit of recursion if needed.
             }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void ConsiderPressureDifference(Direction direction, float difference)
+        private void ConsiderPressureDifference(TileAtmosphere other, float difference)
         {
             _gridAtmosphereComponent.AddHighPressureDelta(this);
             if (difference > PressureDifference)
             {
                 PressureDifference = difference;
-                _pressureDirection = difference < 0 ? direction.GetOpposite() : direction;
+                _pressureDirection = ((Vector2i)(GridIndices - other.GridIndices)).GetDir().ToAtmosDirection();
             }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void AdjustEqMovement(Direction direction, float molesToMove)
+        private void AdjustEqMovement(AtmosDirection direction, float amount)
         {
-            _tileAtmosInfo[direction] += molesToMove;
-            if(direction != Direction.Invalid && _adjacentTiles.TryGetValue(direction, out var adj))
-                adj._tileAtmosInfo[direction.GetOpposite()] -= molesToMove;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void ResetTileAtmosInfo()
-        {
-            _tileAtmosInfo = new TileAtmosInfo {CurrentTransferDirection = Direction.Invalid};
+            _tileAtmosInfo[direction] += amount;
+            _adjacentTiles[direction.ToIndex()]._tileAtmosInfo[direction.GetOpposite()] -= amount;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -635,11 +656,23 @@ namespace Content.Server.Atmos
 
             _currentCycle = fireCount;
             var adjacentTileLength = 0;
-            foreach (var (direction, enemyTile) in _adjacentTiles)
+
+            AtmosCooldown++;
+            for (var i = 0; i < Atmospherics.Directions; i++)
             {
-                // If the tile is null or has no air, we don't do anything
+                var direction = (AtmosDirection) (1 << i);
+                if(_adjacentBits.HasFlag(direction))
+                    adjacentTileLength++;
+            }
+
+            for(var i = 0; i < Atmospherics.Directions; i++)
+            {
+                var direction = (AtmosDirection) (1 << i);
+                if (!_adjacentBits.HasFlag(direction)) continue;
+                var enemyTile = _adjacentTiles[i];
+
+                // If the tile is null or has no air, we don't do anything for it.
                 if(enemyTile?.Air == null) continue;
-                adjacentTileLength++;
                 if (fireCount <= enemyTile._currentCycle) continue;
                 enemyTile.Archive(fireCount);
 
@@ -685,11 +718,11 @@ namespace Content.Server.Atmos
                     // Space wind!
                     if (difference > 0)
                     {
-                        ConsiderPressureDifference(direction, difference);
+                        ConsiderPressureDifference(enemyTile, difference);
                     }
                     else
                     {
-                        enemyTile.ConsiderPressureDifference(direction.GetOpposite(), -difference);
+                        enemyTile.ConsiderPressureDifference(this, -difference);
                     }
 
                     LastShareCheck();
@@ -699,7 +732,13 @@ namespace Content.Server.Atmos
             React();
             UpdateVisuals();
 
-            if((!(Air.Temperature > Atmospherics.MinimumTemperatureStartSuperConduction && ConsiderSuperconductivity(true))) && ExcitedGroup == null)
+            var remove = true;
+
+            if(Air.Temperature > Atmospherics.MinimumTemperatureStartSuperConduction)
+                if (ConsiderSuperconductivity(true))
+                    remove = false;
+
+            if((ExcitedGroup == null && remove) || (AtmosCooldown > (Atmospherics.ExcitedGroupsDismantleCycles * 2)))
                 _gridAtmosphereComponent.RemoveActiveTile(this);
         }
 
@@ -737,7 +776,7 @@ namespace Content.Server.Atmos
                 if (Air.Temperature > Atmospherics.FireMinimumTemperatureToSpread)
                 {
                     var radiatedTemperature = Air.Temperature * Atmospherics.FireSpreadRadiosityScale;
-                    foreach (var (_, tile) in _adjacentTiles)
+                    foreach (var tile in _adjacentTiles)
                     {
                         if(!tile.Hotspot.Valid)
                             tile.HotspotExpose(radiatedTemperature, Atmospherics.CellVolume/4);
@@ -771,17 +810,23 @@ namespace Content.Server.Atmos
             else
             {
                 var affected = Air.RemoveRatio(Hotspot.Volume / Air.Volume);
-                if (affected != null)
-                {
-                    affected.Temperature = Hotspot.Temperature;
-                    affected.React(this);
-                    Hotspot.Temperature = affected.Temperature;
-                    Hotspot.Volume = affected.ReactionResults[GasReaction.Fire] * Atmospherics.FireGrowthRate;
-                    AssumeAir(affected);
-                }
+                affected.Temperature = Hotspot.Temperature;
+                affected.React(this);
+                Hotspot.Temperature = affected.Temperature;
+                Hotspot.Volume = affected.ReactionResults[GasReaction.Fire] * Atmospherics.FireGrowthRate;
+                AssumeAir(affected);
             }
 
-            // TODO ATMOS Let all entities in this tile know about the fire?
+            var tileRef = GridIndices.GetTileRef(GridIndex);
+
+            foreach (var entity in tileRef.GetEntitiesInTileFast(_gridTileLookupSystem))
+            {
+                foreach (var fireAct in entity.GetAllComponents<IFireAct>())
+                {
+
+                    fireAct.FireAct(Hotspot.Temperature, Hotspot.Volume);
+                }
+            }
         }
 
         private bool ConsiderSuperconductivity()
@@ -806,24 +851,24 @@ namespace Content.Server.Atmos
         public void Superconduct()
         {
             var directions = ConductivityDirections();
-            var adjacentTiles = _gridAtmosphereComponent.GetAdjacentTiles(GridIndices, true);
 
-            if (directions.Length > 0)
+            for(var i = 0; i < Atmospherics.Directions; i++)
             {
-                foreach (var direction in directions)
-                {
-                    if (!adjacentTiles.TryGetValue(direction, out var adjacent)) continue;
+                var direction = (AtmosDirection) (1 << i);
+                if (!directions.HasFlag(direction)) continue;
 
-                    if (adjacent.ThermalConductivity == 0f)
-                        continue;
+                var adjacent = _adjacentTiles[direction.ToIndex()];
 
-                    if(adjacent._archivedCycle < _gridAtmosphereComponent.UpdateCounter)
-                        adjacent.Archive(_gridAtmosphereComponent.UpdateCounter);
+                // TODO ATMOS handle adjacent being null.
+                if (adjacent == null || adjacent.ThermalConductivity == 0f)
+                    continue;
 
-                    adjacent.NeighborConductWithSource(this);
+                if(adjacent._archivedCycle < _gridAtmosphereComponent.UpdateCounter)
+                    adjacent.Archive(_gridAtmosphereComponent.UpdateCounter);
 
-                    adjacent.ConsiderSuperconductivity();
-                }
+                adjacent.NeighborConductWithSource(this);
+
+                adjacent.ConsiderSuperconductivity();
             }
 
             RadiateToSpace();
@@ -834,12 +879,12 @@ namespace Content.Server.Atmos
         private void FinishSuperconduction()
         {
             // Conduct with air on my tile if I have it
-            if (!BlocksAir)
+            if (!BlocksAllAir)
             {
-                _temperature = Air.TemperatureShare(ThermalConductivity, _temperature, HeatCapacity);
+                Temperature = Air.TemperatureShare(ThermalConductivity, Temperature, HeatCapacity);
             }
 
-            FinishSuperconduction(BlocksAir ? _temperature : Air.Temperature);
+            FinishSuperconduction(BlocksAllAir ? Temperature : Air.Temperature);
         }
 
         private void FinishSuperconduction(float temperature)
@@ -853,9 +898,9 @@ namespace Content.Server.Atmos
 
         private void NeighborConductWithSource(TileAtmosphere other)
         {
-            if (BlocksAir)
+            if (BlocksAllAir)
             {
-                if (!other.BlocksAir)
+                if (!other.BlocksAllAir)
                 {
                     other.TemperatureShareOpenToSolid(this);
                 }
@@ -864,11 +909,11 @@ namespace Content.Server.Atmos
                     other.TemperatureShareMutualSolid(this, ThermalConductivity);
                 }
 
-                TemperatureExpose(null, _temperature, _gridAtmosphereComponent.GetVolumeForCells(1));
+                TemperatureExpose(null, Temperature, _gridAtmosphereComponent.GetVolumeForCells(1));
                 return;
             }
 
-            if (!other.BlocksAir)
+            if (!other.BlocksAllAir)
             {
                 other.Air.TemperatureShare(Air, Atmospherics.WindowHeatTransferCoefficient);
             }
@@ -882,8 +927,8 @@ namespace Content.Server.Atmos
 
         private void TemperatureShareOpenToSolid(TileAtmosphere other)
         {
-            other._temperature =
-                Air.TemperatureShare(other.ThermalConductivity, other._temperature, other.HeatCapacity);
+            other.Temperature =
+                Air.TemperatureShare(other.ThermalConductivity, other.Temperature, other.HeatCapacity);
         }
 
         private void TemperatureShareMutualSolid(TileAtmosphere other, float conductionCoefficient)
@@ -895,15 +940,15 @@ namespace Content.Server.Atmos
                 var heat = conductionCoefficient * deltaTemperature *
                            (HeatCapacity * other.HeatCapacity / (HeatCapacity + other.HeatCapacity));
 
-                _temperature -= heat / HeatCapacity;
-                other._temperature += heat / other.HeatCapacity;
+                Temperature -= heat / HeatCapacity;
+                other.Temperature += heat / other.HeatCapacity;
             }
         }
 
         public void RadiateToSpace()
         {
             // Considering 0ºC as the break even point for radiation in and out.
-            if (_temperature > Atmospherics.T0C)
+            if (Temperature > Atmospherics.T0C)
             {
                 // Hardcoded space temperature.
                 var deltaTemperature = (_temperatureArchived - Atmospherics.TCMB);
@@ -912,25 +957,25 @@ namespace Content.Server.Atmos
                     var heat = ThermalConductivity * deltaTemperature * (HeatCapacity *
                         Atmospherics.HeatCapacityVacuum / (HeatCapacity + Atmospherics.HeatCapacityVacuum));
 
-                    _temperature -= heat;
+                    Temperature -= heat;
                 }
             }
         }
 
-        public Direction[] ConductivityDirections()
+        public AtmosDirection ConductivityDirections()
         {
-            if(BlocksAir)
+            if(BlocksAllAir)
             {
                 if(_archivedCycle < _gridAtmosphereComponent.UpdateCounter)
                     Archive(_gridAtmosphereComponent.UpdateCounter);
-                return Cardinal;
+                return AtmosDirection.All;
             }
 
             // TODO ATMOS check if this is correct
-            return Cardinal;
+            return AtmosDirection.All;
         }
 
-        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void ExplosivelyDepressurize(int cycleNum)
         {
             if (Air == null) return;
@@ -947,14 +992,13 @@ namespace Content.Server.Atmos
 
             tiles[tileCount++] = this;
 
-            ResetTileAtmosInfo();
-            _tileAtmosInfo.LastQueueCycle = queueCycle;
+            _tileAtmosInfo = new TileAtmosInfo {LastQueueCycle = queueCycle};
 
             for (var i = 0; i < tileCount; i++)
             {
                 var tile = tiles[i];
                 tile._tileAtmosInfo.LastCycle = cycleNum;
-                tile._tileAtmosInfo.CurrentTransferDirection = Direction.Invalid;
+                tile._tileAtmosInfo.CurrentTransferDirection = AtmosDirection.Invalid;
                 if (tile.Air.Immutable)
                 {
                     spaceTiles[spaceTileCount++] = tile;
@@ -962,18 +1006,19 @@ namespace Content.Server.Atmos
                 }
                 else
                 {
-                    foreach (var direction in Cardinal)
+                    for (var j = 0; j < Atmospherics.Directions; j++)
                     {
-                        if (!tile._adjacentTiles.TryGetValue(direction, out var tile2)) continue;
+                        var direction = (AtmosDirection) (1 << j);
+                        if (!tile._adjacentBits.HasFlag(direction)) continue;
+                        var tile2 = tile._adjacentTiles[j];
                         if (tile2.Air == null) continue;
                         if (tile2._tileAtmosInfo.LastQueueCycle == queueCycle) continue;
 
                         tile.ConsiderFirelocks(tile2);
 
                         // The firelocks might have closed on us.
-                        if (tile._adjacentTiles[direction]?.Air == null) continue;
-                        tile2.ResetTileAtmosInfo();
-                        tile2._tileAtmosInfo.LastQueueCycle = queueCycle;
+                        if (!tile._adjacentBits.HasFlag(direction)) continue;
+                        tile2._tileAtmosInfo = new TileAtmosInfo {LastQueueCycle = queueCycle};
                         tiles[tileCount++] = tile2;
                     }
                 }
@@ -991,18 +1036,21 @@ namespace Content.Server.Atmos
                 var tile = spaceTiles[i];
                 progressionOrder[progressionCount++] = tile;
                 tile._tileAtmosInfo.LastSlowQueueCycle = queueCycleSlow;
-                tile._tileAtmosInfo.CurrentTransferDirection = Direction.Invalid;
+                tile._tileAtmosInfo.CurrentTransferDirection = AtmosDirection.Invalid;
             }
 
             for (var i = 0; i < progressionCount; i++)
             {
                 var tile = progressionOrder[i];
-                foreach (var direction in Cardinal)
+                for (var j = 0; j < Atmospherics.Directions; j++)
                 {
-                    if (!tile._adjacentTiles.TryGetValue(direction, out var tile2)) continue;
+                    var direction = (AtmosDirection) (1 << j);
+                    // TODO ATMOS This is a terrible hack that accounts for the mess that are space TileAtmospheres.
+                    if (!tile._adjacentBits.HasFlag(direction) && !tile.Air.Immutable) continue;
+                    var tile2 = tile._adjacentTiles[j];
                     if (tile2?._tileAtmosInfo.LastQueueCycle != queueCycle) continue;
                     if (tile2._tileAtmosInfo.LastSlowQueueCycle == queueCycleSlow) continue;
-                    if(tile2.Air.Immutable) continue;
+                    if(tile2.Air?.Immutable ?? false) continue;
                     tile2._tileAtmosInfo.CurrentTransferDirection = direction.GetOpposite();
                     tile2._tileAtmosInfo.CurrentTransferAmount = 0;
                     tile2.PressureSpecificTarget = tile.PressureSpecificTarget;
@@ -1014,10 +1062,11 @@ namespace Content.Server.Atmos
             for (var i = progressionCount - 1; i >= 0; i--)
             {
                 var tile = progressionOrder[i];
-                if (tile._tileAtmosInfo.CurrentTransferDirection == Direction.Invalid) continue;
+                if (tile._tileAtmosInfo.CurrentTransferDirection == AtmosDirection.Invalid) continue;
                 _gridAtmosphereComponent.AddHighPressureDelta(tile);
                 _gridAtmosphereComponent.AddActiveTile(tile);
-                if (!tile._adjacentTiles.TryGetValue(tile._tileAtmosInfo.CurrentTransferDirection, out var tile2) || tile2.Air == null) continue;
+                var tile2 = tile._adjacentTiles[tile._tileAtmosInfo.CurrentTransferDirection.ToIndex()];
+                if (tile2?.Air == null) continue;
                 var sum = tile2.Air.TotalMoles;
                 totalGasesRemoved += sum;
                 tile._tileAtmosInfo.CurrentTransferAmount += sum;
@@ -1025,7 +1074,7 @@ namespace Content.Server.Atmos
                 tile.PressureDifference = tile._tileAtmosInfo.CurrentTransferAmount;
                 tile._pressureDirection = tile._tileAtmosInfo.CurrentTransferDirection;
 
-                if (tile2._tileAtmosInfo.CurrentTransferDirection == Direction.Invalid)
+                if (tile2._tileAtmosInfo.CurrentTransferDirection == AtmosDirection.Invalid)
                 {
                     tile2.PressureDifference = tile2._tileAtmosInfo.CurrentTransferAmount;
                     tile2._pressureDirection = tile._tileAtmosInfo.CurrentTransferDirection;
@@ -1050,7 +1099,25 @@ namespace Content.Server.Atmos
 
         private void ConsiderFirelocks(TileAtmosphere other)
         {
-            // TODO ATMOS firelocks!
+            var reconsiderAdjacent = false;
+
+            foreach (var entity in GridIndices.GetEntitiesInTileFast(GridIndex, _gridAtmosphereComponent.GridTileLookupSystem))
+            {
+                if (!entity.TryGetComponent(out FirelockComponent firelock)) continue;
+                reconsiderAdjacent |= firelock.EmergencyPressureStop();
+            }
+
+            foreach (var entity in other.GridIndices.GetEntitiesInTileFast(other.GridIndex, _gridAtmosphereComponent.GridTileLookupSystem))
+            {
+                if (!entity.TryGetComponent(out FirelockComponent firelock)) continue;
+                reconsiderAdjacent |= firelock.EmergencyPressureStop();
+            }
+
+            if (reconsiderAdjacent)
+            {
+                UpdateAdjacent();
+                other.UpdateAdjacent();
+            }
         }
 
         private void React()
@@ -1082,21 +1149,36 @@ namespace Content.Server.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void UpdateAdjacent()
         {
-            foreach (var direction in Cardinal)
+            for (var i = 0; i < Atmospherics.Directions; i++)
             {
-                if (!_gridAtmosphereComponent.IsAirBlocked(GridIndices.Offset(direction)))
+                var direction = (AtmosDirection) (1 << i);
+
+                var otherIndices = GridIndices.Offset(direction.ToDirection());
+
+                var isSpace = _gridAtmosphereComponent.IsSpace(GridIndices);
+                var adjacent = _gridAtmosphereComponent.GetTile(otherIndices, !isSpace);
+                _adjacentTiles[direction.ToIndex()] = adjacent;
+                adjacent?.UpdateAdjacent(direction.GetOpposite());
+
+                if (adjacent != null && !BlockedAirflow.HasFlag(direction) && !_gridAtmosphereComponent.IsAirBlocked(adjacent.GridIndices, direction.GetOpposite()))
                 {
-                    var adjacent = _gridAtmosphereComponent.GetTile(GridIndices.Offset(direction));
-                    _adjacentTiles[direction] = adjacent;
-                    adjacent.UpdateAdjacent(direction.GetOpposite());
+                    _adjacentBits |= direction;
                 }
             }
         }
 
-        public void UpdateAdjacent(Direction direction)
+        public void UpdateAdjacent(AtmosDirection direction)
         {
-            if (!_gridAtmosphereComponent.IsAirBlocked(GridIndices.Offset(direction)))
-                _adjacentTiles[direction] = _gridAtmosphereComponent.GetTile(GridIndices.Offset(direction));
+            _adjacentTiles[direction.ToIndex()] = _gridAtmosphereComponent.GetTile(GridIndices.Offset(direction.ToDirection()));
+
+            if (!BlockedAirflow.HasFlag(direction) && !_gridAtmosphereComponent.IsAirBlocked(GridIndices.Offset(direction.ToDirection()), direction.GetOpposite()))
+            {
+                _adjacentBits |= direction;
+            }
+            else
+            {
+                _adjacentBits &= ~direction;
+            }
         }
 
         private void LastShareCheck()
@@ -1105,19 +1187,15 @@ namespace Content.Server.Atmos
             if (lastShare > Atmospherics.MinimumAirToSuspend)
             {
                 ExcitedGroup.ResetCooldowns();
+                AtmosCooldown = 0;
             } else if (lastShare > Atmospherics.MinimumMolesDeltaToMove)
             {
                 ExcitedGroup.DismantleCooldown = 0;
+                AtmosCooldown = 0;
             }
         }
 
-        private static readonly Direction[] Cardinal =
-            new Direction[]
-            {
-                Direction.North, Direction.East, Direction.South, Direction.West
-            };
-
-        public void TemperatureExpose(GasMixture mixture, float temperature, float cellVolume)
+        public void TemperatureExpose(GasMixture air, float temperature, float volume)
         {
             // TODO ATMOS do this
         }

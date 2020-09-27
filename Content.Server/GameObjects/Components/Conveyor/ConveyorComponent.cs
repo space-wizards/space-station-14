@@ -10,6 +10,7 @@ using Content.Shared.GameObjects.Components.Conveyor;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -19,7 +20,6 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
-using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -28,10 +28,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
     [RegisterComponent]
     public class ConveyorComponent : Component, IInteractUsing
     {
-#pragma warning disable 649
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
-#pragma warning restore 649
 
         public override string Name => "Conveyor";
 
@@ -172,7 +169,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
 
                 Owner.AddComponent<ItemComponent>();
                 _group?.RemoveConveyor(this);
-                Owner.Transform.WorldPosition += (_random.NextFloat() * 0.4f - 0.2f, _random.NextFloat() * 0.4f - 0.2f);
+                Owner.RandomOffset(0.2f);
 
                 return true;
             }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Shared.GameObjects.Components.Inventory;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Serialization;
@@ -42,15 +41,28 @@ namespace Content.Shared.GameObjects.Components.GUI
     }
 
     [NetSerializable, Serializable]
+    public class StrippingHandcuffButtonPressed : BoundUserInterfaceMessage
+    {
+        public EntityUid Handcuff { get; }
+
+        public StrippingHandcuffButtonPressed(EntityUid handcuff)
+        {
+            Handcuff = handcuff;
+        }
+    }
+
+    [NetSerializable, Serializable]
     public class StrippingBoundUserInterfaceState : BoundUserInterfaceState
     {
         public Dictionary<Slots, string> Inventory { get; }
         public Dictionary<string, string> Hands { get; }
+        public Dictionary<EntityUid, string> Handcuffs { get; }
 
-        public StrippingBoundUserInterfaceState(Dictionary<Slots, string> inventory, Dictionary<string, string> hands)
+        public StrippingBoundUserInterfaceState(Dictionary<Slots, string> inventory, Dictionary<string, string> hands, Dictionary<EntityUid, string> handcuffs)
         {
             Inventory = inventory;
             Hands = hands;
+            Handcuffs = handcuffs;
         }
     }
 }

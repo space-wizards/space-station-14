@@ -66,7 +66,7 @@ namespace Content.Server.AI.Operators.Combat.Melee
             var meleeWeapon = hands.GetActiveHand.Owner;
             meleeWeapon.TryGetComponent(out MeleeWeaponComponent meleeWeaponComponent);
 
-            if ((_target.Transform.GridPosition.Position - _owner.Transform.GridPosition.Position).Length >
+            if ((_target.Transform.Coordinates.Position - _owner.Transform.Coordinates.Position).Length >
                 meleeWeaponComponent.Range)
             {
                 return Outcome.Failed;
@@ -74,7 +74,7 @@ namespace Content.Server.AI.Operators.Combat.Melee
 
             var interactionSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InteractionSystem>();
 
-            interactionSystem.UseItemInHand(_owner, _target.Transform.GridPosition, _target.Uid);
+            interactionSystem.UseItemInHand(_owner, _target.Transform.Coordinates, _target.Uid);
             _elapsedTime += frameTime;
             return Outcome.Continuing;
         }

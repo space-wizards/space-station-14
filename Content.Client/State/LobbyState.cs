@@ -24,19 +24,17 @@ namespace Content.Client.State
 {
     public class LobbyState : Robust.Client.State.State
     {
-#pragma warning disable 649
-        [Dependency] private readonly IBaseClient _baseClient;
-        [Dependency] private readonly IClientConsole _console;
-        [Dependency] private readonly IChatManager _chatManager;
-        [Dependency] private readonly IInputManager _inputManager;
-        [Dependency] private readonly IEntityManager _entityManager;
-        [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private readonly IResourceCache _resourceCache;
-        [Dependency] private readonly IClientGameTicker _clientGameTicker;
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
-        [Dependency] private readonly IClientPreferencesManager _preferencesManager;
-#pragma warning restore 649
+        [Dependency] private readonly IBaseClient _baseClient = default!;
+        [Dependency] private readonly IClientConsole _console = default!;
+        [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private readonly IClientGameTicker _clientGameTicker = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+        [Dependency] private readonly IClientPreferencesManager _preferencesManager = default!;
 
         [ViewVariables] private CharacterSetupGui _characterSetup;
         [ViewVariables] private LobbyGui _lobby;
@@ -211,22 +209,21 @@ namespace Content.Client.State
 
         private void UpdatePlayerList()
         {
-            _lobby.OnlinePlayerItemList.Clear();
-            _lobby.PlayerReadyList.Clear();
+            _lobby.OnlinePlayerList.Clear();
 
             foreach (var session in _playerManager.Sessions.OrderBy(s => s.Name))
             {
-                _lobby.OnlinePlayerItemList.AddItem(session.Name);
+
 
                 var readyState = "";
                 // Don't show ready state if we're ingame
                 if (!_clientGameTicker.IsGameStarted)
                 {
                     var status = PlayerStatus.NotReady;
-                    if (session.SessionId == _playerManager.LocalPlayer.SessionId)
+                    if (session.UserId == _playerManager.LocalPlayer.UserId)
                         status = _clientGameTicker.AreWeReady ? PlayerStatus.Ready : PlayerStatus.NotReady;
                     else
-                        _clientGameTicker.Status.TryGetValue(session.SessionId, out status);
+                        _clientGameTicker.Status.TryGetValue(session.UserId, out status);
 
                     readyState = status switch
                     {
@@ -236,7 +233,7 @@ namespace Content.Client.State
                         _ => "",
                     };
                 }
-                _lobby.PlayerReadyList.AddItem(readyState, null, false);
+                _lobby.OnlinePlayerList.AddItem(session.Name, readyState);
             }
         }
 

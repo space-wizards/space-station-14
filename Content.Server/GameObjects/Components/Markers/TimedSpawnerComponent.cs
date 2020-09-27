@@ -15,10 +15,8 @@ namespace Content.Server.GameObjects.Components.Markers
     [RegisterComponent]
     public class TimedSpawnerComponent : Component
     {
-#pragma warning disable 649
-        [Dependency] private IEntityManager _entityManager;
-        [Dependency] private IRobustRandom _robustRandom;
-#pragma warning restore 649
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         public override string Name => "TimedSpawner";
 
@@ -82,7 +80,7 @@ namespace Content.Server.GameObjects.Components.Markers
             for (int i = 0; i < number; i++)
             {
                 var entity = _robustRandom.Pick(Prototypes);
-                _entityManager.SpawnEntity(entity, Owner.Transform.GridPosition);
+                _entityManager.SpawnEntity(entity, Owner.Transform.Coordinates);
             }
         }
     }

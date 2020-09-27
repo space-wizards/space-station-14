@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Client.Command;
 using Content.Shared.GameObjects.Components.Command;
 using Robust.Client.GameObjects.Components.UserInterface;
@@ -11,12 +11,9 @@ namespace Content.Client.GameObjects.Components.Command
 {
     public class CommunicationsConsoleBoundUserInterface : BoundUserInterface
     {
-        [ViewVariables]
-        private CommunicationsConsoleMenu _menu;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-#pragma warning disable 649
-        [Dependency] private IGameTiming _gameTiming;
-#pragma warning restore 649
+        [ViewVariables] private CommunicationsConsoleMenu _menu;
 
         public bool CountdownStarted { get; private set; }
 
@@ -72,6 +69,7 @@ namespace Content.Client.GameObjects.Components.Command
         {
             base.Dispose(disposing);
             if (!disposing) return;
+
             _menu?.Dispose();
         }
     }

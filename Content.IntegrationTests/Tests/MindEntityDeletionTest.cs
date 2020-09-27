@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Content.Server.Mobs;
 using Content.Server.Players;
+using Content.Shared.Utility;
 using NUnit.Framework;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
@@ -9,7 +10,6 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -37,7 +37,7 @@ namespace Content.IntegrationTests.Tests
                 playerEnt = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
                 visitEnt = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
 
-                mind = new Mind(player.SessionId);
+                mind = new Mind(player.UserId);
                 player.ContentData().Mind = mind;
 
                 mind.TransferTo(playerEnt);
@@ -81,7 +81,7 @@ namespace Content.IntegrationTests.Tests
 
                 playerEnt = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
 
-                mind = new Mind(player.SessionId);
+                mind = new Mind(player.UserId);
                 player.ContentData().Mind = mind;
 
                 mind.TransferTo(playerEnt);
@@ -128,9 +128,9 @@ namespace Content.IntegrationTests.Tests
 
                 mapMan.CreateNewMapEntity(MapId.Nullspace);
 
-                playerEnt = entMgr.SpawnEntity(null, new GridCoordinates(Vector2.Zero, grid.Index));
+                playerEnt = entMgr.SpawnEntity(null, grid.ToCoordinates());
 
-                mind = new Mind(player.SessionId);
+                mind = new Mind(player.UserId);
                 player.ContentData().Mind = mind;
 
                 mind.TransferTo(playerEnt);

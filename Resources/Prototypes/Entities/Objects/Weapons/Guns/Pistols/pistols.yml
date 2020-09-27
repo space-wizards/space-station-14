@@ -14,10 +14,9 @@
         map: ["enum.RangedBarrelVisualLayers.Bolt"]
       - state: mag-0
         map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    state: icon
+
   - type: Item
-    size: 24
+    size: 12
     state: icon
   - type: MagazineBarrel
     caliber: Pistol
@@ -55,10 +54,9 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
+
   - type: Item
-    size: 24
+    size: 12
     sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -85,10 +83,9 @@
         map: ["enum.RangedBarrelVisualLayers.Base"]
       - state: bolt-closed
         map: ["enum.RangedBarrelVisualLayers.Bolt"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Pistols/colt.rsi
+
   - type: Item
-    size: 24
+    size: 12
     sprite: Objects/Weapons/Guns/Pistols/colt.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -112,10 +109,9 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/giskard.rsi
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Pistols/giskard.rsi
+
   - type: Item
-    size: 24
+    size: 12
     sprite: Objects/Weapons/Guns/Pistols/giskard.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -142,24 +138,25 @@
         map: ["enum.RangedBarrelVisualLayers.Base"]
       - state: bolt-closed
         map: ["enum.RangedBarrelVisualLayers.Bolt"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Pistols/hm_pistol.rsi
-    state: icon
+
   - type: Item
-    size: 24
+    size: 12
     sprite: Objects/Weapons/Guns/Pistols/hm_pistol.rsi
   - type: RangedWeapon
-  - type: BoltActionBarrel
+  - type: MagazineBarrel
     caliber: Pistol
     currentSelector: Single
     allSelectors:
     - Single
+    magazineTypes:
+    - Pistol
     capacity: 1
     fireRate: 8
     minAngle: 10
     maxAngle: 60
     angleIncrease: 10
     angleDecay: 60
+    magFillPrototype: MagazinePistol
     soundGunshot: /Audio/Weapons/Guns/Gunshots/pistol.ogg
     soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
     soundRack: /Audio/Weapons/Guns/Cock/pistol_cock.ogg
@@ -184,10 +181,9 @@
       map: ["enum.RangedBarrelVisualLayers.Base"]
     - state: mag-0
       map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Pistols/gyro_pistol.rsi
+
   - type: Item
-    size: 24
+    size: 12
     sprite: Objects/Weapons/Guns/Pistols/gyro_pistol.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -228,10 +224,9 @@
       map: ["enum.RangedBarrelVisualLayers.Bolt"]
     - state: mag-0
       map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Pistols/mandella.rsi
+
   - type: Item
-    size: 24
+    size: 12
     sprite: Objects/Weapons/Guns/Pistols/mandella.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -260,10 +255,9 @@
       map: ["enum.RangedBarrelVisualLayers.Base"]
     - state: bolt-closed
       map: ["enum.RangedBarrelVisualLayers.Bolt"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
+
   - type: Item
-    size: 24
+    size: 12
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -292,10 +286,9 @@
       map: ["enum.RangedBarrelVisualLayers.Base"]
     - state: bolt-closed
       map: ["enum.RangedBarrelVisualLayers.Bolt"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Pistols/mk58_wood.rsi
+
   - type: Item
-    size: 24
+    size: 12
     sprite: Objects/Weapons/Guns/Pistols/mk58_wood.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -319,10 +312,9 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/molly.rsi
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Pistols/molly.rsi
+
   - type: Item
-    size: 24
+    size: 12
     sprite: Objects/Weapons/Guns/Pistols/molly.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -354,10 +346,9 @@
       map: ["enum.RangedBarrelVisualLayers.Base"]
     - state: bolt-closed
       map: ["enum.RangedBarrelVisualLayers.Bolt"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Pistols/olivaw_civil.rsi
+
   - type: Item
-    size: 24
+    size: 12
     sprite: Objects/Weapons/Guns/Pistols/olivaw_civil.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -382,10 +373,9 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/paco.rsi
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Pistols/paco.rsi
+
   - type: Item
-    size: 24
+    size: 12
     sprite: Objects/Weapons/Guns/Pistols/paco.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
