@@ -10,7 +10,4 @@
   - type: Sprite
     sprite: Objects/Power/AME/ame_part.rsi
     state: box
-  - type: Icon
-    sprite: Objects/Power/AME/ame_part.rsi
-    state: box
   - type: AMEPart

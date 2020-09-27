@@ -2,6 +2,7 @@
 using System;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.Atmos;
 using Content.Shared.Atmos;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
@@ -621,4 +622,26 @@ namespace Content.Server.Atmos
             shell.SendText(player, $"Removed {moles} moles of gas {gas} from {tiles} tiles.");
         }
     }
-}
+
+    public class ShowAtmos : IClientCommand
+    {
+        public string Command => "showatmos";
+        public string Description => "Toggles seeing atmos debug overlay";
+        public string Help => $"Usage: {Command}";
+
+        public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
+        {
+            if (player == null) return;
+            var atmosDebug = EntitySystem.Get<AtmosDebugOverlaySystem>();
+            if (atmosDebug.PlayerObservers.Contains(player))
+            {
+                atmosDebug.PlayerObservers.Remove(player);
+                shell.SendText(player, $"Ok, disabled");
+            }
+            else
+            {
+                atmosDebug.PlayerObservers.Add(player);
+                shell.SendText(player, $"Ok, enabled");
+            }
+        }
+    }}

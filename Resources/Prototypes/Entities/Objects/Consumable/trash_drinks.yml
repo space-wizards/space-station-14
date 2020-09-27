@@ -9,8 +9,7 @@
   - type: LoopingSound
   - type: Sprite
     state: icon
-  - type: Icon
-    state: icon
+
   - type: SolutionContainer
     maxVol: 10
     caps: AddTo, RemoveFrom
@@ -29,8 +28,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/TrashDrinks/absinthebottle_empty.rsi
-  - type: Icon
-    sprite: Objects/Consumable/TrashDrinks/absinthebottle_empty.rsi
+
 
 - type: entity
   name: alcohol bottle
@@ -39,8 +37,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/TrashDrinks/alco-clear.rsi
-  - type: Icon
-    sprite: Objects/Consumable/TrashDrinks/alco-clear.rsi
+
 
 - type: entity
   name: ale bottle
@@ -49,8 +46,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/TrashDrinks/alebottle_empty.rsi
-  - type: Icon
-    sprite: Objects/Consumable/TrashDrinks/alebottle_empty.rsi
+
 
 - type: entity
   name: beer bottle
@@ -59,8 +55,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/TrashDrinks/beer_empty.rsi
-  - type: Icon
-    sprite: Objects/Consumable/TrashDrinks/beer_empty.rsi
+
 
 - type: entity
   name: broken bottle
@@ -69,8 +64,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/TrashDrinks/broken_bottle.rsi
-  - type: Icon
-    sprite: Objects/Consumable/TrashDrinks/broken_bottle.rsi
+
 
 - type: entity
   name: cognac bottle
@@ -79,8 +73,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/TrashDrinks/cognacbottle_empty.rsi
-  - type: Icon
-    sprite: Objects/Consumable/TrashDrinks/cognacbottle_empty.rsi
+
 
 - type: entity
   name: griffeater gin bottle
@@ -89,8 +82,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/TrashDrinks/ginbottle_empty.rsi
-  - type: Icon
-    sprite: Objects/Consumable/TrashDrinks/ginbottle_empty.rsi
+
 
 - type: entity
   name: goldschlager bottle
@@ -99,8 +91,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/TrashDrinks/goldschlagerbottle_empty.rsi
-  - type: Icon
-    sprite: Objects/Consumable/TrashDrinks/goldschlagerbottle_empty.rsi
+
 
 - type: entity
   name: kahlua bottle
@@ -109,8 +100,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/TrashDrinks/kahluabottle_empty.rsi
-  - type: Icon
-    sprite: Objects/Consumable/TrashDrinks/kahluabottle_empty.rsi
+
 
 - type: entity
   name: nt cahors bottle
@@ -119,8 +109,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/TrashDrinks/ntcahors_empty.rsi
-  - type: Icon
-    sprite: Objects/Consumable/TrashDrinks/ntcahors_empty.rsi
+
 
 - type: entity
   name: patron bottle
@@ -129,8 +118,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/TrashDrinks/patronbottle_empty.rsi
-  - type: Icon
-    sprite: Objects/Consumable/TrashDrinks/patronbottle_empty.rsi
+
 
 - type: entity
   name: poison wine bottle
@@ -139,8 +127,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/TrashDrinks/pwinebottle_empty.rsi
-  - type: Icon
-    sprite: Objects/Consumable/TrashDrinks/pwinebottle_empty.rsi
+
 
 - type: entity
   name: rum bottle
@@ -149,8 +136,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/TrashDrinks/rumbottle_empty.rsi
-  - type: Icon
-    sprite: Objects/Consumable/TrashDrinks/rumbottle_empty.rsi
+
 
 - type: entity
   name: tequila bottle
@@ -159,8 +145,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/TrashDrinks/tequillabottle_empty.rsi
-  - type: Icon
-    sprite: Objects/Consumable/TrashDrinks/tequillabottle_empty.rsi
+
 
 - type: entity
   name: vermouth bottle
@@ -169,8 +154,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/TrashDrinks/vermouthbottle_empty.rsi
-  - type: Icon
-    sprite: Objects/Consumable/TrashDrinks/vermouthbottle_empty.rsi
+
 
 - type: entity
   name: vodka bottle
@@ -179,8 +163,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/TrashDrinks/vodkabottle_empty.rsi
-  - type: Icon
-    sprite: Objects/Consumable/TrashDrinks/vodkabottle_empty.rsi
+
 
 - type: entity
   name: whiskey bottle
@@ -189,8 +172,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/TrashDrinks/whiskeybottle_empty.rsi
-  - type: Icon
-    sprite: Objects/Consumable/TrashDrinks/whiskeybottle_empty.rsi
+
 
 - type: entity
   name: wine bottle
@@ -199,5 +181,4 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/TrashDrinks/winebottle_empty.rsi
-  - type: Icon
-    sprite: Objects/Consumable/TrashDrinks/winebottle_empty.rsi
+

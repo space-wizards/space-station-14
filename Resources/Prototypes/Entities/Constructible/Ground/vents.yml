@@ -9,9 +9,7 @@
   - type: Collidable
   - type: SnapGrid
     offset: Center
-  - type: Icon
-    sprite: Constructible/Atmos/pipeitems.rsi
-    state: vent
+
   - type: Sprite
     sprite: Constructible/Atmos/pipeitems.rsi
     state: vent
@@ -22,6 +20,7 @@
     - type: VentVisualizer
       ventRSI: Constructible/Atmos/vent.rsi
   - type: Destructible
+    resistances: metallicResistances
     thresholdvalue: 100
 
 - type: entity

@@ -6,18 +6,13 @@
   components:
   - type: StorageFill
     contents:
-      - Handcuffs
-      - Handcuffs
-      - Handcuffs
-      - Handcuffs
-      - Handcuffs
-      - Handcuffs
+      - name: Handcuffs
+        amount: 6
   - type: Sprite
     layers:
       - state: box_security
       - state: handcuff
-  - type: Icon
-    state: handcuff
+
   - type: Item
   - type: Storage
     capacity: 6
@@ -30,16 +25,13 @@
   components:
   - type: StorageFill
     contents:
-      - GrenadeFlashBang
-      - GrenadeFlashBang
-      - GrenadeFlashBang
-      - GrenadeFlashBang
+      - name: GrenadeFlashBang
+        amount: 4
   - type: Sprite
     layers:
       - state: box_security
       - state: flashbang
-  - type: Icon
-    state: flashbang
+
   - type: Item
   - type: Storage
     capacity: 20
@@ -52,16 +44,13 @@
   components:
   - type: StorageFill
     contents:
-      - SecGlasses
-      - SecGlasses
-      - SecGlasses
-      - SecGlasses
+      - name: SecGlasses
+        amount: 4
   - type: Sprite
     layers:
       - state: box_security
       - state: sechud
-  - type: Icon
-    state: sechud
+
   - type: Item
   - type: Storage
     capacity: 20

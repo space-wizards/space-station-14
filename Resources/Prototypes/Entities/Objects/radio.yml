@@ -12,7 +12,5 @@
   components:
   - type: Sprite
     texture: Objects/Devices/radio.png
-  - type: Icon
-    texture: Objects/Devices/radio.png
   - type: Listening
   - type: Radio

@@ -19,6 +19,7 @@
      offset: Center
    - type: Destructible
      deadThreshold: 50
+     resistances: metallicResistances
    - type: UserInterface
      interfaces:
      - key: enum.InstrumentUiKey.Key
@@ -35,9 +36,7 @@
    - type: Sprite
      sprite: Objects/Fun/Instruments/otherinstruments.rsi
      state: piano
-   - type: Icon
-     sprite: Objects/Fun/Instruments/otherinstruments.rsi
-     state: piano
+
 
  - type: entity
    name: minimoog
@@ -50,9 +49,7 @@
    - type: Sprite
      sprite: Objects/Fun/Instruments/otherinstruments.rsi
      state: minimoog
-   - type: Icon
-     sprite: Objects/Fun/Instruments/otherinstruments.rsi
-     state: minimoog
+
 
  - type: entity
    name: church organ
@@ -65,9 +62,7 @@
    - type: Sprite
      sprite: Objects/Fun/Instruments/otherinstruments.rsi
      state: church_organ
-   - type: Icon
-     sprite: Objects/Fun/Instruments/otherinstruments.rsi
-     state: church_organ
+
 
  - type: entity
    name: xylophone
@@ -81,6 +76,4 @@
    - type: Sprite
      sprite: Objects/Fun/Instruments/otherinstruments.rsi
      state: xylophone
-   - type: Icon
-     sprite: Objects/Fun/Instruments/otherinstruments.rsi
-     state: xylophone
+

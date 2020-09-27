@@ -16,7 +16,6 @@ namespace Content.Client
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly IGameHud _gameHud = default!;
-        [Dependency] private readonly ILocalizationManager _localizationManager = default!;
 
         private EscapeMenu _escapeMenu;
 
@@ -32,7 +31,7 @@ namespace Content.Client
             if (obj.NewState is GameScreenBase)
             {
                 // Switched TO GameScreen.
-                _escapeMenu = new EscapeMenu(_clientConsole, _localizationManager);
+                _escapeMenu = new EscapeMenu(_clientConsole);
 
                 _escapeMenu.OnClose += () => _gameHud.EscapeButtonDown = false;
 

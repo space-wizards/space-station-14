@@ -8,7 +8,9 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -22,6 +24,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
     [RegisterComponent]
     public class InjectorComponent : SharedInjectorComponent, IAfterInteract, IUse
     {
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         /// <summary>
         /// Whether or not the injector is able to draw from containers or if it's a single use
         /// device that can only inject.
@@ -126,7 +130,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     else
                     {
                         eventArgs.User.PopupMessage(eventArgs.User, Loc.GetString("You aren't able to transfer to {0:theName}!", targetSolution.Owner));
-                    }     
+                    }
                 }
                 else if (_toggleState == InjectorToggleMode.Draw)
                 {
@@ -186,9 +190,25 @@ namespace Content.Server.GameObjects.Components.Chemistry
             // Move units from attackSolution to targetSolution
             var removedSolution = solution.SplitSolution(realTransferAmount);
 
-            if (!targetBloodstream.TryTransferSolution(removedSolution))
+            if (!solution.CanAddSolution(removedSolution))
             {
                 return;
+            }
+
+            // TODO: Account for partial transfer.
+
+            foreach (var (reagentId, quantity) in removedSolution.Contents)
+            {
+                if(!_prototypeManager.TryIndex(reagentId, out ReagentPrototype reagent)) continue;
+                removedSolution.RemoveReagent(reagentId, reagent.ReactionEntity(solution.Owner, ReactionMethod.Injection, quantity));
+            }
+
+            solution.TryAddSolution(removedSolution);
+
+            foreach (var (reagentId, quantity) in removedSolution.Contents)
+            {
+                if(!_prototypeManager.TryIndex(reagentId, out ReagentPrototype reagent)) continue;
+                reagent.ReactionEntity(targetBloodstream.Owner, ReactionMethod.Injection, quantity);
             }
 
             Owner.PopupMessage(user, Loc.GetString("You inject {0}u into {1:theName}!", removedSolution.TotalVolume, targetBloodstream.Owner));
@@ -214,10 +234,18 @@ namespace Content.Server.GameObjects.Components.Chemistry
             // Move units from attackSolution to targetSolution
             var removedSolution = solution.SplitSolution(realTransferAmount);
 
-            if (!targetSolution.TryAddSolution(removedSolution))
+            if (!targetSolution.CanAddSolution(removedSolution))
             {
                 return;
             }
+
+            foreach (var (reagentId, quantity) in removedSolution.Contents)
+            {
+                if(!_prototypeManager.TryIndex(reagentId, out ReagentPrototype reagent)) continue;
+                removedSolution.RemoveReagent(reagentId, reagent.ReactionEntity(targetSolution.Owner, ReactionMethod.Injection, quantity));
+            }
+
+            targetSolution.TryAddSolution(removedSolution);
 
             Owner.PopupMessage(user, Loc.GetString("You transfter {0}u to {1:theName}", removedSolution.TotalVolume, targetSolution.Owner));
             Dirty();

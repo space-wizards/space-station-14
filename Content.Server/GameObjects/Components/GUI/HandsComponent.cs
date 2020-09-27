@@ -628,8 +628,8 @@ namespace Content.Server.GameObjects.Components.GUI
                         var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
                         if (used != null)
                         {
-                            interactionSystem.Interaction(Owner, used, hand.Entity,
-                                EntityCoordinates.Invalid);
+                                _ = interactionSystem.Interaction(Owner, used, hand.Entity,
+                                    EntityCoordinates.Invalid);
                         }
                         else
                         {

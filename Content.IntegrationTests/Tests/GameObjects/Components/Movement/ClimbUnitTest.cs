@@ -24,7 +24,6 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
 
             IEntity human;
             IEntity table;
-            IEntity carpet;
             ClimbableComponent climbable;
             ClimbingComponent climbing;
 
@@ -41,20 +40,20 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
 
                 // Test for climb components existing
                 // Players and tables should have these in their prototypes.
-                Assert.True(human.TryGetComponent(out climbing!), "Human has no climbing");
-                Assert.True(table.TryGetComponent(out climbable!), "Table has no climbable");
+                Assert.That(human.TryGetComponent(out climbing!), "Human has no climbing", Is.True);
+                Assert.That(table.TryGetComponent(out climbable!), "Table has no climbable", Is.True);
 
                 // Now let's make the player enter a climbing transitioning state.
                 climbing.IsClimbing = true;
                 climbing.TryMoveTo(human.Transform.WorldPosition, table.Transform.WorldPosition);
                 var body = human.GetComponent<ICollidableComponent>();
 
-                Assert.True(body.HasController<ClimbController>(), "Player has no ClimbController");
+                Assert.That(body.HasController<ClimbController>(), "Player has no ClimbController", Is.True);
 
                 // Force the player out of climb state. It should immediately remove the ClimbController.
                 climbing.IsClimbing = false;
 
-                Assert.True(!body.HasController<ClimbController>(), "Player wrongly has a ClimbController");
+                Assert.That(!body.HasController<ClimbController>(), "Player wrongly has a ClimbController", Is.True);
 
             });
 

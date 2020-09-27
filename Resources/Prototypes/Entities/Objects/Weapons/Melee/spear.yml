@@ -7,9 +7,7 @@
     sprite: Objects/Weapons/Melee/spear.rsi
     state: spear
 
-  - type: Icon
-    sprite: Objects/Weapons/Melee/spear.rsi
-    state: spear
+
 
   - type: MeleeWeapon
     range: 1.5

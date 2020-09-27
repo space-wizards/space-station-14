@@ -406,7 +406,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             // InteractUsing/AfterInteract: We will either use the item on the nearby object
             if (item != null)
             {
-                Interaction(player, item, attacked, coordinates);
+                _ = Interaction(player, item, attacked, coordinates);
             }
             // InteractHand/Activate: Since our hand is empty we will use InteractHand/Activate
             else
@@ -622,6 +622,32 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             foreach (var comp in comps)
             {
                 comp.Land(new LandEventArgs(user, landLocation));
+            }
+        }
+
+        /// <summary>
+        ///     Calls ThrowCollide on all components that implement the IThrowCollide interface
+        ///     on a thrown entity and the target entity it hit.
+        /// </summary>
+        public void ThrowCollideInteraction(IEntity user, IEntity thrown, IEntity target, EntityCoordinates location)
+        {
+            var collideMsg = new ThrowCollideMessage(user, thrown, target, location);
+            RaiseLocalEvent(collideMsg);
+            if (collideMsg.Handled)
+            {
+                return;
+            }
+
+            var eventArgs = new ThrowCollideEventArgs(user, thrown, target, location);
+
+            foreach (var comp in thrown.GetAllComponents<IThrowCollide>().ToArray())
+            {
+                comp.DoHit(eventArgs);
+            }
+
+            foreach (var comp in target.GetAllComponents<IThrowCollide>().ToArray())
+            {
+                comp.HitBy(eventArgs);
             }
         }
 

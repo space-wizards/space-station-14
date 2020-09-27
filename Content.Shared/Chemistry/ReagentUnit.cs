@@ -110,14 +110,24 @@ namespace Content.Shared.Chemistry
             return a.ShiftDown() >= b;
         }
 
+        public static bool operator <(ReagentUnit a, int b)
+        {
+            return a.ShiftDown() < b;
+        }
+
+        public static bool operator >(ReagentUnit a, int b)
+        {
+            return a.ShiftDown() > b;
+        }
+
         public static bool operator ==(ReagentUnit a, int b)
         {
-            return a.ShiftDown() == b;
+            return a.Int() == b;
         }
 
         public static bool operator !=(ReagentUnit a, int b)
         {
-            return a.ShiftDown() != b;
+            return a.Int() != b;
         }
 
         public static bool operator ==(ReagentUnit a, ReagentUnit b)

@@ -7,8 +7,7 @@
   components:
   - type: Sprite
     texture: Constructible/Misc/watertank.png
-  - type: Icon
-    texture: Constructible/Misc/watertank.png
+
   - type: Anchorable
   - type: Pullable
 

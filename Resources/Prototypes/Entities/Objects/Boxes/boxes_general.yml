@@ -6,24 +6,12 @@
   components:
   - type: StorageFill
     contents:
-      - LightBulb
-      - LightBulb
-      - LightBulb
-      - LightBulb
-      - LightBulb
-      - LightBulb
-      - LightBulb
-      - LightBulb
-      - LightBulb
-      - LightBulb
-      - LightBulb
-      - LightBulb
+      - name: LightBulb
+        amount: 12
   - type: Sprite
     layers:
       - state: box
       - state: light
-  - type: Icon
-    state: light
   - type: Item
 
 - type: entity
@@ -34,24 +22,12 @@
   components:
   - type: StorageFill
     contents:
-      - LightTube
-      - LightTube
-      - LightTube
-      - LightTube
-      - LightTube
-      - LightTube
-      - LightTube
-      - LightTube
-      - LightTube
-      - LightTube
-      - LightTube
-      - LightTube
+      - name: LightTube
+        amount: 12
   - type: Sprite
     layers:
       - state: box
       - state: lighttube
-  - type: Icon
-    state: lighttube
   - type: Item
 
 - type: entity
@@ -62,24 +38,12 @@
   components:
   - type: StorageFill
     contents:
-      - LightTube
-      - LightTube
-      - LightTube
-      - LightTube
-      - LightTube
-      - LightTube
-      - LightBulb
-      - LightBulb
-      - LightBulb
-      - LightBulb
-      - LightBulb
-      - LightBulb
+      - name: LightTube
+        amount: 12
   - type: Sprite
     layers:
       - state: box
       - state: lightmixed
-  - type: Icon
-    state: lightmixed
   - type: Item
 
 - type: entity
@@ -90,15 +54,12 @@
   components:
   - type: StorageFill
     contents:
-      - AssistantPDA
-      - AssistantPDA
-      - AssistantPDA
+      - name: AssistantPDA
+        amount: 3
   - type: Sprite
     layers:
       - state: box
       - state: pda
-  - type: Icon
-    state: pda
   - type: Item
   - type: Storage
     capacity: 3
@@ -111,16 +72,12 @@
   components:
   - type: StorageFill
     contents:
-      - MesonGlasses
-      - MesonGlasses
-      - MesonGlasses
-      - MesonGlasses
+      - name: MesonGlasses
+        amount: 4
   - type: Sprite
     layers:
       - state: box
       - state: meson
-  - type: Icon
-    state: meson
   - type: Item
   - type: Storage
     capacity: 20
@@ -133,15 +90,13 @@
   components:
   - type: StorageFill
     contents:
-      - BreathMaskClothing
-      #- O2 Canister
-      #- Injector
+      - name: BreathMaskClothing
+      #- name: O2 Canister
+      #- name: Injector
   - type: Sprite
     layers:
       - state: box
       - state: writing
-  - type: Icon
-    state: box
   - type: Item
     size: 15
   - type: Storage

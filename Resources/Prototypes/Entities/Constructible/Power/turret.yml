@@ -9,8 +9,7 @@
   - type: Collidable
   - type: Sprite
     texture: Constructible/Misc/TurrBase.png
-  - type: Icon
-    texture: Constructible/Misc/TurrBase.png
+
 
 - type: entity
   id: TurretTopGun
@@ -25,8 +24,7 @@
     drawdepth: WallMountedItems
     texture: Constructible/Misc/TurrTop.png
     directional: false
-  - type: Icon
-    texture: Constructible/Misc/TurrTop.png
+
 
 - type: entity
   id: TurretTopLight
@@ -39,8 +37,7 @@
     drawdepth: WallMountedItems
     texture: Constructible/Misc/TurrLamp.png
     directional: false
-  - type: Icon
-    texture: Constructible/Misc/TurrLamp.png
+
   - type: PointLight
     radius: 512
     mask: flashlight_mask

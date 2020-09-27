@@ -20,8 +20,7 @@
     offset: Center
   - type: Sprite
     texture: Constructible/Power/wiredmachine.png
-  - type: Icon
-    texture: Constructible/Power/wiredmachine.png
+
   - type: NodeContainer
     nodes:
     - !type:AdjacentNode
@@ -30,6 +29,7 @@
     drawRate: 50
   - type: Breakable
     deadThreshold: 100
+    resistances: metallicResistances
   - type: Anchorable
 
 - type: entity
@@ -49,8 +49,7 @@
     offset: Center
   - type: Sprite
     texture: Constructible/Power/provider.png
-  - type: Icon
-    texture: Constructible/Power/provider.png
+
   - type: Battery
   - type: NodeContainer
     nodes:
@@ -77,8 +76,7 @@
     offset: Center
   - type: Sprite
     texture: Constructible/Power/provider.png
-  - type: Icon
-    texture: Constructible/Power/provider.png
+
   - type: Battery
   - type: NodeContainer
     nodes:
@@ -120,7 +118,6 @@
     offset: Center
   - type: Sprite
     texture: Constructible/Power/wirelessmachine.png
-  - type: Icon
-    texture: Constructible/Power/wirelessmachine.png
+
   - type: PowerReceiver
   - type: Anchorable

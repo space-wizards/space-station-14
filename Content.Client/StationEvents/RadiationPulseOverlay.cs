@@ -25,16 +25,16 @@ namespace Content.Client.StationEvents
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
-        
+
         /// <summary>
         /// Current color of a pulse
         /// </summary>
         private readonly Dictionary<IEntity, Color> _colors = new Dictionary<IEntity, Color>();
-        
+
         /// <summary>
         /// Whether our alpha is increasing or decreasing and at what time does it flip (or stop)
         /// </summary>
-        private readonly Dictionary<IEntity, (bool EasingIn, TimeSpan TransitionTime)> _transitions = 
+        private readonly Dictionary<IEntity, (bool EasingIn, TimeSpan TransitionTime)> _transitions =
                      new Dictionary<IEntity, (bool EasingIn, TimeSpan TransitionTime)>();
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Content.Client.StationEvents
         private readonly Dictionary<IEntity, float> _alphaRateOfChange = new Dictionary<IEntity, float>();
 
         private TimeSpan _lastTick;
-        
+
         // TODO: When worldHandle can do DrawCircle change this.
         public override OverlaySpace Space => OverlaySpace.ScreenSpace;
 
@@ -64,7 +64,7 @@ namespace Content.Client.StationEvents
         private Color GetColor(IEntity entity, float elapsedTime, TimeSpan endTime)
         {
             var currentTime = _gameTiming.CurTime;
-            
+
             // New pulse
             if (!_colors.ContainsKey(entity))
             {
@@ -92,7 +92,7 @@ namespace Content.Client.StationEvents
         {
             bool easingIn;
             TimeSpan transitionTime;
-            
+
             if (!_transitions.TryGetValue(entity, out var transition))
             {
                 // Start as false because it will immediately be flipped
@@ -104,12 +104,12 @@ namespace Content.Client.StationEvents
                 easingIn = transition.EasingIn;
                 transitionTime = endTime;
             }
-            
+
             _transitions[entity] = (!easingIn, transitionTime);
             _colors[entity] = Color.Green.WithAlpha(0.0f);
             _alphaRateOfChange[entity] = 1.0f / (float) (transitionTime - currentTime).TotalSeconds;
         }
-        
+
         protected override void Draw(DrawingHandleBase handle, OverlaySpace currentSpace)
         {
             // PVS should control the overlay pretty well so the overlay doesn't get instantiated unless we're near one...
@@ -134,17 +134,16 @@ namespace Content.Client.StationEvents
             {
                 foreach (var pulse in radiationPulses)
                 {
-                    if (grid.Index != pulse.Owner.Transform.GridID) continue;
-                    
+                    if (!pulse.Draw || grid.Index != pulse.Owner.Transform.GridID) continue;
+
                     // TODO: Check if viewport intersects circle
                     var circlePosition = _eyeManager.WorldToScreen(pulse.Owner.Transform.WorldPosition);
-                    var comp = (RadiationPulseComponent) pulse;
-                    
+
                     // change to worldhandle when implemented
                     screenHandle.DrawCircle(
-                        circlePosition, 
-                        comp.Range * 64,
-                        GetColor(pulse.Owner, elapsedTime, comp.EndTime));
+                        circlePosition,
+                        pulse.Range * 64,
+                        GetColor(pulse.Owner, pulse.Decay ? elapsedTime : 0, pulse.EndTime));
                 }
             }
         }

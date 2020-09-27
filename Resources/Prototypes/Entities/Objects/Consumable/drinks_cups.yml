@@ -14,8 +14,7 @@
     isOpen: true
   - type: Sprite
     state: icon
-  - type: Icon
-    state: icon
+
   - type: Spillable
 
 - type: entity
@@ -28,8 +27,7 @@
     maxVol: 10
   - type: Sprite
     sprite: Objects/Consumable/Drinks/golden_cup.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/golden_cup.rsi
+
 
 - type: entity
   parent: DrinkBaseCup
@@ -42,9 +40,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/pitcher.rsi
     state: icon-6
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/pitcher.rsi
-    state: icon-6
+
   - type: Appearance
     visuals:
     - type: DrinkFoodVisualizer
@@ -61,9 +57,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug.rsi
     state: icon-3
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/mug.rsi
-    state: icon-3
+
   - type: Appearance
     visuals:
     - type: DrinkFoodVisualizer
@@ -80,9 +74,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_black.rsi
     state: icon-3
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/mug_black.rsi
-    state: icon-3
+
   - type: Appearance
     visuals:
     - type: DrinkFoodVisualizer
@@ -99,9 +91,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_blue.rsi
     state: icon-3
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/mug_blue.rsi
-    state: icon-3
+
   - type: Appearance
     visuals:
     - type: DrinkFoodVisualizer
@@ -118,9 +108,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_green.rsi
     state: icon-3
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/mug_green.rsi
-    state: icon-3
+
   - type: Appearance
     visuals:
     - type: DrinkFoodVisualizer
@@ -137,9 +125,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_heart.rsi
     state: icon-3
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/mug_heart.rsi
-    state: icon-3
+
   - type: Appearance
     visuals:
     - type: DrinkFoodVisualizer
@@ -156,9 +142,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_metal.rsi
     state: icon-3
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/mug_metal.rsi
-    state: icon-3
+
   - type: Appearance
     visuals:
     - type: DrinkFoodVisualizer
@@ -175,9 +159,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_moebius.rsi
     state: icon-3
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/mug_moebius.rsi
-    state: icon-3
+
   - type: Appearance
     visuals:
     - type: DrinkFoodVisualizer
@@ -194,9 +176,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_one.rsi
     state: icon-3
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/mug_one.rsi
-    state: icon-3
+
   - type: Appearance
     visuals:
     - type: DrinkFoodVisualizer
@@ -213,9 +193,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_rainbow.rsi
     state: icon-3
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/mug_rainbow.rsi
-    state: icon-3
+
   - type: Appearance
     visuals:
     - type: DrinkFoodVisualizer
@@ -232,9 +210,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_red.rsi
     state: icon-3
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/mug_red.rsi
-    state: icon-3
+
   - type: Appearance
     visuals:
     - type: DrinkFoodVisualizer
@@ -249,8 +225,7 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/hot_coco.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/hot_coco.rsi
+
 
 - type: entity
   parent: DrinkBaseCup
@@ -266,8 +241,7 @@
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/hot_coffee.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/hot_coffee.rsi
+
 
 - type: entity
   parent: DrinkBaseCup
@@ -284,9 +258,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/teacup.rsi
     state: icon-1
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/teacup.rsi
-    state: icon-1
+
   - type: Appearance
     visuals:
     - type: DrinkFoodVisualizer
@@ -307,8 +279,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lean.rsi
     state: icon
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/lean.rsi
-    state: icon
+
   - type: Item
     sprite: Objects/Consumable/Drinks/lean.rsi

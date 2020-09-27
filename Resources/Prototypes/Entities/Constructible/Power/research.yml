@@ -6,9 +6,7 @@
   - type: Sprite
     sprite: Constructible/Power/server.rsi
     state: server
-  - type: Icon
-    sprite: Constructible/Power/server.rsi
-    state: server
+
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable
@@ -32,9 +30,7 @@
     - state: rndpointsource
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
-  - type: Icon
-    sprite: Constructible/Power/rndpointsource.rsi
-    state: rndpointsource-icon
+
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable

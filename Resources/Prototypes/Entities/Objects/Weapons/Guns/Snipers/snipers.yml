@@ -12,8 +12,6 @@
       map: ["enum.RangedBarrelVisualLayers.Base"]
     - state: bolt-closed
       map: ["enum.RangedBarrelVisualLayers.Bolt"]
-  - type: Icon
-    state: icon
   - type: Item
     size: 24
   - type: BoltActionBarrel
@@ -40,8 +38,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun.rsi
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Snipers/bolt_gun.rsi
   - type: Item
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun.rsi
   - type: RangedWeapon
@@ -58,8 +54,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
   - type: RangedWeapon
   - type: BoltActionBarrel
   - type: Appearance
@@ -73,8 +67,6 @@
   description: A portable anti-armour rifle, fitted with a scope, it was originally designed for use against armoured exosuits. It is capable of punching through windows and non-reinforced walls with ease. Fires armor piercing 14.5mm shells.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
-  - type: Icon
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
   - type: RangedWeapon
   - type: BoltActionBarrel
