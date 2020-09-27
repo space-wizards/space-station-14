@@ -1,0 +1,15 @@
+- type: entity
+  id: Carpet
+  name: "carpet"
+  description:
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: Sprite
+    sprite: Constructible/Carpets/red_carpet.rsi
+  - type: SnapGrid
+    offset: Center
+  - type: IconSmooth
+    key: full
+    base: carpet_
