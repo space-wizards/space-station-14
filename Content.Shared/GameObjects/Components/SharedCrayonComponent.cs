@@ -38,7 +38,8 @@ namespace Content.Shared.GameObjects.Components
     public enum CrayonVisuals
     {
         State,
-        Color
+        Color,
+        Rotation
     }
 
     [Serializable, NetSerializable]

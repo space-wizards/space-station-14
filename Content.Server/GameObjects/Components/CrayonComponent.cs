@@ -126,6 +126,7 @@ namespace Content.Server.GameObjects.Components
             {
                 appearance.SetData(CrayonVisuals.State, SelectedState);
                 appearance.SetData(CrayonVisuals.Color, Color);
+                appearance.SetData(CrayonVisuals.Rotation, eventArgs.User.Transform.LocalRotation);
             }
 
             if (!string.IsNullOrEmpty(_useSound))
