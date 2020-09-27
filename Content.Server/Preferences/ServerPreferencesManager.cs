@@ -10,6 +10,7 @@ using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Network;
 
 #nullable enable
@@ -30,6 +31,8 @@ namespace Content.Server.Preferences
         private readonly Dictionary<NetUserId, PlayerPrefData> _cachedPlayerPrefs =
             new Dictionary<NetUserId, PlayerPrefData>();
 
+        private int MaxCharacterSlots => _cfg.GetCVar(CCVars.GameMaxCharacterSlots);
+
         public void Init()
         {
             _netManager.RegisterNetMessage<MsgPreferencesAndSettings>(nameof(MsgPreferencesAndSettings));
@@ -42,37 +45,102 @@ namespace Content.Server.Preferences
 
         private async void HandleSelectCharacterMessage(MsgSelectCharacter message)
         {
-            await _db.SaveSelectedCharacterIndexAsync(message.MsgChannel.UserId, message.SelectedCharacterIndex);
+            var index = message.SelectedCharacterIndex;
+            var userId = message.MsgChannel.UserId;
+
+            if (!_cachedPlayerPrefs.TryGetValue(userId, out var prefsData) || !prefsData.PrefsLoaded.IsCompleted)
+            {
+                Logger.WarningS("prefs", $"User {userId} tried to modify preferences before they loaded.");
+                return;
+            }
+
+            if (index < 0 || index >= MaxCharacterSlots)
+            {
+                return;
+            }
+
+            var curPrefs = prefsData.Prefs!;
+
+            prefsData.Prefs = new PlayerPreferences(curPrefs.Characters, index);
+
+            if (ShouldStorePrefs(message.MsgChannel))
+            {
+                await _db.SaveSelectedCharacterIndexAsync(message.MsgChannel.UserId, message.SelectedCharacterIndex);
+            }
         }
 
         private async void HandleUpdateCharacterMessage(MsgUpdateCharacter message)
         {
-            await _db.SaveCharacterSlotAsync(message.MsgChannel.UserId, message.Profile, message.Slot);
+            var slot = message.Slot;
+            var profile = message.Profile;
+            var userId = message.MsgChannel.UserId;
+
+            if (!_cachedPlayerPrefs.TryGetValue(userId, out var prefsData) || !prefsData.PrefsLoaded.IsCompleted)
+            {
+                Logger.WarningS("prefs", $"User {userId} tried to modify preferences before they loaded.");
+                return;
+            }
+
+            if (slot < 0 || slot >= MaxCharacterSlots)
+            {
+                return;
+            }
+
+            var curPrefs = prefsData.Prefs!;
+
+            var arr = new ICharacterProfile[MaxCharacterSlots];
+            curPrefs.Characters.ToList().CopyTo(arr, 0);
+
+            arr[slot] = profile;
+
+            prefsData.Prefs = new PlayerPreferences(arr, slot);
+
+            if (ShouldStorePrefs(message.MsgChannel))
+            {
+                await _db.SaveCharacterSlotAsync(message.MsgChannel.UserId, message.Profile, message.Slot);
+            }
         }
 
         public async void OnClientConnected(IPlayerSession session)
         {
-            var prefsData = new PlayerPrefData();
-            var loadTask = LoadPrefs();
-            prefsData.PrefsLoaded = loadTask;
-            _cachedPlayerPrefs[session.UserId] = prefsData;
-
-            await loadTask;
-
-            async Task LoadPrefs()
+            if (!ShouldStorePrefs(session.ConnectedClient))
             {
-                var prefs = await GetOrCreatePreferencesAsync(session.UserId);
-                prefsData.Prefs = prefs;
-
-                var msg = _netManager.CreateNetMessage<MsgPreferencesAndSettings>();
-                msg.Preferences = prefs;
-                msg.Settings = new GameSettings
+                // Don't store data for guests.
+                var prefsData = new PlayerPrefData
                 {
-                    MaxCharacterSlots = _cfg.GetCVar(CCVars.GameMaxCharacterSlots)
+                    PrefsLoaded = Task.CompletedTask,
+                    Prefs = new PlayerPreferences(
+                        new ICharacterProfile[] {HumanoidCharacterProfile.Default()},
+                        0)
                 };
-                _netManager.ServerSendMessage(msg, session.ConnectedClient);
+
+                _cachedPlayerPrefs[session.UserId] = prefsData;
+            }
+            else
+            {
+                var prefsData = new PlayerPrefData();
+                var loadTask = LoadPrefs();
+                prefsData.PrefsLoaded = loadTask;
+                _cachedPlayerPrefs[session.UserId] = prefsData;
+
+                await loadTask;
+
+                async Task LoadPrefs()
+                {
+                    var prefs = await GetOrCreatePreferencesAsync(session.UserId);
+                    prefsData.Prefs = prefs;
+
+                    var msg = _netManager.CreateNetMessage<MsgPreferencesAndSettings>();
+                    msg.Preferences = prefs;
+                    msg.Settings = new GameSettings
+                    {
+                        MaxCharacterSlots = MaxCharacterSlots
+                    };
+                    _netManager.ServerSendMessage(msg, session.ConnectedClient);
+                }
             }
         }
+
 
         public void OnClientDisconnected(IPlayerSession session)
         {
@@ -126,6 +194,11 @@ namespace Content.Server.Preferences
                     var idx = p.Prefs!.SelectedCharacterIndex;
                     return new KeyValuePair<NetUserId, ICharacterProfile>(p.p, p.Prefs!.GetProfile(idx));
                 });
+        }
+
+        private bool ShouldStorePrefs(INetChannel channel)
+        {
+            return channel.AuthType.HasStaticUserId();
         }
 
         private sealed class PlayerPrefData
