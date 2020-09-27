@@ -65,6 +65,7 @@ namespace Content.Server.Database
 
             var prefs = await db.DbContext
                 .Preferences
+                .Include(p => p.Profiles)
                 .SingleAsync(p => p.UserId == userId.UserId);
 
             var oldProfile = prefs
