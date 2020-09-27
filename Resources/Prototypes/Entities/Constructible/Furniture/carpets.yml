@@ -13,3 +13,51 @@
   - type: IconSmooth
     key: full
     base: carpet_
+
+- type: entity
+  id: CarpetBlack
+  name: "black carpet"
+  description:
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: Sprite
+    sprite: Constructible/Carpets/black_carpet.rsi
+  - type: SnapGrid
+    offset: Center
+  - type: IconSmooth
+    key: full
+    base: carpet_
+
+- type: entity
+  id: CarpetGay
+  name: "pink carpet"
+  description:
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: Sprite
+    sprite: Constructible/Carpets/gay_carpet.rsi
+  - type: SnapGrid
+    offset: Center
+  - type: IconSmooth
+    key: full
+    base: carpet_
+
+- type: entity
+  id: CarpetBlue
+  name: "blue carpet"
+  description:
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: Sprite
+    sprite: Constructible/Carpets/blue_carpet.rsi
+  - type: SnapGrid
+    offset: Center
+  - type: IconSmooth
+    key: full
+    base: carpet_
