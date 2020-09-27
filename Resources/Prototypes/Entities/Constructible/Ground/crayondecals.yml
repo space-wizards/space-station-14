@@ -1,6 +1,6 @@
 - type: entity
   id: CrayonDecal
-  name: crayon decal
+  name: crayon drawing
   description: "Graffiti. Damn kids."
   components:
   - type: Clickable

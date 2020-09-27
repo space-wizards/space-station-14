@@ -1,7 +1,14 @@
-﻿using Robust.Client.UserInterface;
+﻿using Content.Shared.GameObjects.Components;
+using Robust.Client.Graphics;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Client.Utility;
+using Robust.Shared.Interfaces.Resources;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Utility;
+using SixLabors.ImageSharp.Drawing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +23,7 @@ namespace Content.Client.GameObjects.Components.Crayon
         private readonly LineEdit _search;
         private readonly ItemList _decalList;
         private readonly Button _selectButton;
-        private List<string> _decals;
+        private Dictionary<string, Texture> _decals;
 
         protected override Vector2? CustomSize => (250, 300);
 
@@ -66,18 +73,25 @@ namespace Content.Client.GameObjects.Components.Crayon
                 return;
 
             var filter = _search.Text;
-            foreach (var decal in _decals)
+            foreach (var (decal, tex) in _decals)
             {
                 if (!decal.Contains(filter))
                     continue;
-
-                _decalList.AddItem(decal); //TODO: get icon or show somewhere else
+                
+                _decalList.AddItem(decal, tex);
             }
         }
 
-        public void Populate(List<string> decals)
+        public void Populate(CrayonDecalPrototype proto)
         {
-            _decals = decals;
+            var path = new ResourcePath(proto.SpritePath);
+            _decals = new Dictionary<string, Texture>();
+            foreach (var state in proto.Decals)
+            {
+                var rsi = new SpriteSpecifier.Rsi(path, state);
+                _decals.Add(state, rsi.Frame0());
+            }
+            
             RefreshList();
         }
     }

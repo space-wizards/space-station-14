@@ -1,4 +1,5 @@
 - type: crayonDecal
+  spritePath: "Constructible/Misc/crayondecals.rsi"
   decals:
     - 0
     - 1

@@ -23,7 +23,7 @@ namespace Content.Client.GameObjects.Components.Crayon
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             var crayonDecals = prototypeManager.EnumeratePrototypes<CrayonDecalPrototype>().FirstOrDefault();
             if (crayonDecals != null)
-                _menu.Populate(crayonDecals.Decals);
+                _menu.Populate(crayonDecals);
             _menu.OpenCentered();
         }
 
