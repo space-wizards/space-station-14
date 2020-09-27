@@ -1,4 +1,6 @@
-﻿using Content.Server.Utility;
+﻿#nullable enable
+using Content.Server.Utility;
+using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.Interfaces;
@@ -6,8 +8,10 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
@@ -26,22 +30,22 @@ namespace Content.Server.GameObjects.Components
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         //TODO: useSound
-        private string _useSound;
+        private string? _useSound;
         [ViewVariables]
         public Color Color { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
         public int Charges { get; set; }
         private int _capacity;
-        [ViewVariables]
-        public int Capacity => _capacity;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public int Capacity { get => _capacity; set => _capacity = value; }
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(CrayonUiKey.Key);
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _useSound, "useSound", "");
+            serializer.DataField(ref _useSound, "useSound", string.Empty);
             serializer.DataField(ref _color, "color", "white");
             serializer.DataField(ref _capacity, "capacity", 30);
             Color = Color.FromName(_color);
@@ -122,10 +126,15 @@ namespace Content.Server.GameObjects.Components
             var entityManager = IoCManager.Resolve<IServerEntityManager>();
             //TODO: rotation?
             var entity = entityManager.SpawnEntity("CrayonDecal", eventArgs.ClickLocation);
-            if (entity.TryGetComponent(out AppearanceComponent appearance))
+            if (entity.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(CrayonVisuals.State, SelectedState);
                 appearance.SetData(CrayonVisuals.Color, Color);
+            }
+
+            if (!string.IsNullOrEmpty(_useSound))
+            {
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(_useSound, Owner, AudioHelpers.WithVariation(0.125f));
             }
 
             // Decrease "Ammo"
@@ -135,7 +144,7 @@ namespace Content.Server.GameObjects.Components
 
         void IDropped.Dropped(DroppedEventArgs eventArgs)
         {
-            if (eventArgs.User.TryGetComponent(out IActorComponent actor))
+            if (eventArgs.User.TryGetComponent(out IActorComponent? actor))
                 UserInterface?.Close(actor.playerSession);
         }
     }
