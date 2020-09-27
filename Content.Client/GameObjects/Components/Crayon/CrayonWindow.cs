@@ -2,20 +2,12 @@
 using Content.Shared.GameObjects.Components;
 using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
-using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Utility;
-using Robust.Shared.Interfaces.Resources;
-using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
-using SixLabors.ImageSharp.Drawing;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace Content.Client.GameObjects.Components.Crayon
 {

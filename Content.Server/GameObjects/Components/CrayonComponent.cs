@@ -2,7 +2,6 @@
 using Content.Server.Utility;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components;
-using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
@@ -18,10 +17,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Content.Server.GameObjects.Components
 {

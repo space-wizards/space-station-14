@@ -2,9 +2,6 @@
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Maths;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Content.Client.GameObjects.Components.Crayon
 {

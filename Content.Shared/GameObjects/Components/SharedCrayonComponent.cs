@@ -5,7 +5,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.GameObjects.Components

@@ -7,9 +7,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Content.Client.GameObjects.Components.Crayon
 {
