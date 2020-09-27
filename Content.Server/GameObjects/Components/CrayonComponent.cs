@@ -3,6 +3,7 @@ using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
@@ -54,7 +55,13 @@ namespace Content.Server.GameObjects.Components
                 UserInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
             }
             Charges = Capacity;
-            SelectedState = "corgi"; //TODO: set to the first one in the list?
+
+            // Get the first one from the catalog and set it as default
+            var decals = _prototypeManager.EnumeratePrototypes<CrayonDecalPrototype>().FirstOrDefault();
+            if (decals != null)
+            {
+                SelectedState = decals.Decals.First();
+            }
             Dirty();
         }
 
@@ -97,11 +104,8 @@ namespace Content.Server.GameObjects.Components
 
         void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (!eventArgs.CanReach)
-            {
-                eventArgs.User.PopupMessage(Loc.GetString("You can't reach there!"));
-                return;
-            }
+            if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: false, popup: true,
+                collisionMask: Shared.Physics.CollisionGroup.MobImpassable)) return;
 
             if (Charges <= 0)
             {
