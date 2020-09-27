@@ -55,6 +55,7 @@ namespace Content.Server.Database
 
         public DbSet<Prefs> Preferences { get; set; } = null!;
         public DbSet<Profile> Profiles { get; set; } = null!;
+        public DbSet<AssignedUserId> AssignedUserIds { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -68,6 +69,15 @@ namespace Content.Server.Database
 
             modelBuilder.Entity<Antag>()
                 .HasIndex(p => new {HumanoidProfileId = p.ProfileId, p.AntagName})
+                .IsUnique();
+
+            modelBuilder.Entity<AssignedUserId>()
+                .HasIndex(p => p.UserName)
+                .IsUnique();
+
+            // Can't have two usernames with the same user ID.
+            modelBuilder.Entity<AssignedUserId>()
+                .HasIndex(p => p.UserId)
                 .IsUnique();
         }
     }
@@ -133,5 +143,12 @@ namespace Content.Server.Database
         // These enum values HAVE to match the ones in PreferenceUnavailableMode in Shared.
         StayInLobby = 0,
         SpawnAsOverflow,
+    }
+
+    public class AssignedUserId
+    {
+        public int AssignedUserIdId { get; set; }
+        public string UserName { get; set; } = null!;
+        public Guid UserId { get; set; }
     }
 }

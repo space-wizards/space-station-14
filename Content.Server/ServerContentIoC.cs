@@ -45,6 +45,7 @@ namespace Content.Server
             IoCManager.Register<ConsiderationsManager, ConsiderationsManager>();
             IoCManager.Register<IBodyNetworkFactory, BodyNetworkFactory>();
             IoCManager.Register<IAccentManager, AccentManager>();
+            IoCManager.Register<IConnectionManager, ConnectionManager>();
         }
     }
 }

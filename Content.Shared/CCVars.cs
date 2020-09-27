@@ -25,12 +25,19 @@ namespace Content.Shared
         public static readonly CVarDef<int>
             GameMaxCharacterSlots = CVarDef.Create("game.maxcharacterslots", 10, CVar.ARCHIVE | CVar.SERVERONLY);
 
+        /// <summary>
+        ///     When enabled, guests will be assigned permanent UIDs and will have their preferences stored.
+        /// </summary>
+        public static readonly CVarDef<bool>
+            GamePersistGuests = CVarDef.Create("game.persistguests", true, CVar.ARCHIVE | CVar.SERVERONLY);
+
+
         /*
          * Database stuff
          */
 
-        public static readonly CVarDef<string> DatabaseType =
-            CVarDef.Create("database.type", "sqlite", CVar.SERVERONLY);
+        public static readonly CVarDef<string> DatabaseEngine =
+            CVarDef.Create("database.engine", "sqlite", CVar.SERVERONLY);
 
         public static readonly CVarDef<string> DatabaseSqliteDbPath =
             CVarDef.Create("database.sqlite_dbpath", "preferences.db", CVar.SERVERONLY);

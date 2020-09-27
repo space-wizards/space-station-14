@@ -21,10 +21,15 @@ namespace Content.Server.Database
     {
         void Init();
 
+        // Preferences
         Task<PlayerPreferences> InitPrefsAsync(NetUserId userId, ICharacterProfile defaultProfile);
         Task SaveSelectedCharacterIndexAsync(NetUserId userId, int index);
         Task SaveCharacterSlotAsync(NetUserId userId, ICharacterProfile profile, int slot);
         Task<PlayerPreferences> GetPlayerPreferencesAsync(NetUserId userId);
+
+        // Username assignment (for guest accounts, so they persist GUID)
+        Task AssignUserIdAsync(string name, NetUserId userId);
+        Task<NetUserId?> GetAssignedUserIdAsync(string name);
     }
 
     public sealed class ServerDbManager : IServerDbManager
@@ -38,7 +43,7 @@ namespace Content.Server.Database
 
         public void Init()
         {
-            var engine = _cfg.GetCVar(CCVars.DatabaseType).ToLower();
+            var engine = _cfg.GetCVar(CCVars.DatabaseEngine).ToLower();
             switch (engine)
             {
                 case "sqlite":
@@ -72,6 +77,16 @@ namespace Content.Server.Database
         public Task<PlayerPreferences> GetPlayerPreferencesAsync(NetUserId userId)
         {
             return _db.GetPlayerPreferencesAsync(userId);
+        }
+
+        public Task AssignUserIdAsync(string name, NetUserId userId)
+        {
+            return _db.AssignUserIdAsync(name, userId);
+        }
+
+        public Task<NetUserId?> GetAssignedUserIdAsync(string name)
+        {
+            return _db.GetAssignedUserIdAsync(name);
         }
 
         private DbContextOptions<ServerDbContext> CreatePostgresOptions()

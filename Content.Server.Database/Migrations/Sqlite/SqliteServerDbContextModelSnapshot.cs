@@ -37,6 +37,30 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.ToTable("Antag");
                 });
 
+            modelBuilder.Entity("Content.Server.Database.AssignedUserId", b =>
+                {
+                    b.Property<int>("AssignedUserIdId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("AssignedUserIdId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.HasIndex("UserName")
+                        .IsUnique();
+
+                    b.ToTable("AssignedUserIds");
+                });
+
             modelBuilder.Entity("Content.Server.Database.Job", b =>
                 {
                     b.Property<int>("JobId")

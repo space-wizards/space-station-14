@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Shared.Preferences;
@@ -166,6 +165,27 @@ namespace Content.Server.Database
             );
 
             return entity;
+        }
+
+        public async Task<NetUserId?> GetAssignedUserIdAsync(string name)
+        {
+            await using var db = await GetDb();
+
+            var assigned = await db.DbContext.AssignedUserIds.SingleOrDefaultAsync(p => p.UserName == name);
+            return assigned?.UserId is { } g ? new NetUserId(g) : default(NetUserId?);
+        }
+
+        public async Task AssignUserIdAsync(string name, NetUserId netUserId)
+        {
+            await using var db = await GetDb();
+
+            db.DbContext.AssignedUserIds.Add(new AssignedUserId
+            {
+                UserId = netUserId.UserId,
+                UserName = name
+            });
+
+            await db.DbContext.SaveChangesAsync();
         }
 
         protected abstract Task<DbGuard> GetDb();
