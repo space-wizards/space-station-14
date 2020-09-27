@@ -40,7 +40,7 @@
   name: sechud box
   parent: BoxBase
   id: BoxSechud
-  description:
+  description: A box of security glasses.
   components:
   - type: StorageFill
     contents:
