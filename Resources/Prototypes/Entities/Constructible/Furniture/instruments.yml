@@ -37,7 +37,6 @@
      sprite: Objects/Fun/Instruments/otherinstruments.rsi
      state: piano
 
-
  - type: entity
    name: minimoog
    parent: BasePlaceableInstrument
@@ -49,7 +48,6 @@
    - type: Sprite
      sprite: Objects/Fun/Instruments/otherinstruments.rsi
      state: minimoog
-
 
  - type: entity
    name: church organ
@@ -63,7 +61,6 @@
      sprite: Objects/Fun/Instruments/otherinstruments.rsi
      state: church_organ
 
-
  - type: entity
    name: xylophone
    parent: BasePlaceableInstrument
@@ -76,4 +73,3 @@
    - type: Sprite
      sprite: Objects/Fun/Instruments/otherinstruments.rsi
      state: xylophone
-

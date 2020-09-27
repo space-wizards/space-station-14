@@ -9,7 +9,6 @@
   - type: Sprite
     netsync: false
     sprite: Constructible/Structures/Tables/generic.rsi
-
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
