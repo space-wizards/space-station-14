@@ -13,8 +13,8 @@ namespace Content.Server.Administration
     public sealed class BanCommand : IClientCommand
     {
         public string Command => "ban";
-        public string Description { get; }
-        public string Help { get; }
+        public string Description => "Bans somebody";
+        public string Help => "Usage: <name or user ID> <reason> <duration in minutes, or 0 for permanent ban>";
 
         public async void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
         {
