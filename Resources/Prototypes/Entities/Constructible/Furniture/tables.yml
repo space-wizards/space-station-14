@@ -10,7 +10,12 @@
   - type: PlaceableSurface
   - type: Sprite
     netsync: false
-    sprite: Constructible/Structures/Tables/generic.rsi
+    drawdepth: FloorTiles
+  - type: Icon
+    state: full
+  - type: IconSmooth
+    key: state
+    base: state_
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -18,9 +23,6 @@
       - VaultImpassable
   - type: SnapGrid
     offset: Center
-  - type: IconSmooth
-    key: generic
-    base: solid_
   - type: Climbable
 
 - type: entity
@@ -31,9 +33,8 @@
   components:
   - type: Sprite
     sprite: Constructible/Structures/Tables/generic.rsi
-  - type: IconSmooth
-    key: generic
-    base: solid_
+  - type: Icon
+    sprite: Constructible/Structures/Tables/generic.rsi
   - type: Destructible
     deadThreshold: 15
     destroySound: /Audio/Effects/metalbreak.ogg
@@ -48,9 +49,8 @@
   components:
   - type: Sprite
     sprite: Constructible/Structures/Tables/frame.rsi
-  - type: IconSmooth
-    key: frame
-    base: frame_
+  - type: Icon
+    sprite: Constructible/Structures/Tables/frame.rsi
   - type: Destructible
     deadThreshold: 1
     destroySound: /Audio/Effects/metalbreak.ogg
@@ -65,9 +65,8 @@
   components:
   - type: Sprite
     sprite: Constructible/Structures/Tables/bar.rsi
-  - type: IconSmooth
-    key: bar
-    base: bar_
+  - type: Icon
+    sprite: Constructible/Structures/Tables/bar.rsi
   - type: Destructible
     deadThreshold: 1
     destroySound: /Audio/Effects/metalbreak.ogg
@@ -82,9 +81,8 @@
   components:
   - type: Sprite
     sprite: Constructible/Structures/Tables/metal.rsi
-  - type: IconSmooth
-    key: metal
-    base: metal_
+  - type: Icon
+    sprite: Constructible/Structures/Tables/metal.rsi
   - type: Destructible
     deadThreshold: 15
     destroySound: /Audio/Effects/metalbreak.ogg
@@ -99,9 +97,8 @@
   components:
   - type: Sprite
     sprite: Constructible/Structures/Tables/reinforced.rsi
-  - type: IconSmooth
-    key: reinf
-    base: reinf_
+  - type: Icon
+    sprite: Constructible/Structures/Tables/reinforced.rsi
   - type: Destructible
     deadThreshold: 1
     destroySound: /Audio/Effects/metalbreak.ogg
@@ -116,9 +113,8 @@
   components:
   - type: Sprite
     sprite: Constructible/Structures/Tables/glass.rsi
-  - type: IconSmooth
-    key: glass
-    base: glass_
+  - type: Icon
+    sprite: Constructible/Structures/Tables/glass.rsi
   - type: Destructible
     deadThreshold: 5
     destroySound: /Audio/Effects/glassbreak2.ogg
@@ -132,9 +128,8 @@
   components:
   - type: Sprite
     sprite: Constructible/Structures/Tables/r_glass.rsi
-  - type: IconSmooth
-    key: r_glass
-    base: r_glass_
+  - type: Icon
+    sprite: Constructible/Structures/Tables/r_glass.rsi
   - type: Destructible
     deadThreshold: 20
     destroySound: /Audio/Effects/glassbreak2.ogg
@@ -148,10 +143,8 @@
   components:
   - type: Sprite
     sprite: Constructible/Structures/Tables/wood.rsi
-    preview_state: wood_preview
-  - type: IconSmooth
-    key: wood
-    base: wood_
+  - type: Icon
+    sprite: Constructible/Structures/Tables/wood.rsi
   - type: Destructible
     deadThreshold: 15
     destroySound: /Audio/Effects/woodhit.ogg
@@ -166,10 +159,8 @@
   components:
   - type: Sprite
     sprite: Constructible/Structures/Tables/carpet.rsi
-    preview_state: carpet_preview
-  - type: IconSmooth
-    key: carpet
-    base: carpet_
+  - type: Icon
+    sprite: Constructible/Structures/Tables/carpet.rsi
   - type: Destructible
     deadThreshold: 15
     destroySound: /Audio/Effects/woodhit.ogg
@@ -184,10 +175,8 @@
   components:
   - type: Sprite
     sprite: Constructible/Structures/Tables/stone.rsi
-    preview_state: carpet_preview
-  - type: IconSmooth
-    key: stone
-    base: stone_
+  - type: Icon
+    sprite: Constructible/Structures/Tables/stone.rsi
   - type: Destructible
     deadThreshold: 50
     destroySound: /Audio/Effects/picaxe2.ogg
@@ -201,10 +190,8 @@
   components:
   - type: Sprite
     sprite: Constructible/Structures/Tables/debug.rsi
-    preview_state: debug_preview
-  - type: IconSmooth
-    key: debug
-    base: debug_
+  - type: Icon
+    sprite: Constructible/Structures/Tables/debug.rsi
   - type: Destructible
     deadThreshold: 1
     resistances: metallicResistances
