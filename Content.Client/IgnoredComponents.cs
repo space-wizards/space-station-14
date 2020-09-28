@@ -174,7 +174,10 @@
             "Flammable",
             "CreamPie",
             "CreamPied",
-            "BlockGameArcade"
+            "BlockGameArcade",
+            "KitchenSpike",
+            "Butcherable",
+            "Rehydratable"
         };
     }
 }

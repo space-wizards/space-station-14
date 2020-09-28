@@ -2,7 +2,7 @@
   name: beaker box
   parent: BoxBase
   id: BoxBeaker
-  description:
+  description: A box full of beakers.
   components:
   - type: StorageFill
     contents:
