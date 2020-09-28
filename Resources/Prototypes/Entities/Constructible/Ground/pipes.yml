@@ -25,8 +25,6 @@
   id: PipeStraight
   suffix: Straight
   components:
-  - type: Icon
-    texture: Constructible/Atmos/pipe.rsi/pipeLongitudinal2.png
   - type: NodeContainer
     nodes:
     - !type:PipeNode
@@ -38,8 +36,6 @@
   id: PipeBend
   suffix: Bend
   components:
-  - type: Icon
-    texture: Constructible/Atmos/pipe.rsi/pipeNWBend2.png
   - type: NodeContainer
     nodes:
     - !type:PipeNode
@@ -51,8 +47,6 @@
   id: PipeTJunction
   suffix: TJunction
   components:
-  - type: Icon
-    texture: Constructible/Atmos/pipe.rsi/pipeTNorth2.png
   - type: NodeContainer
     nodes:
     - !type:PipeNode
@@ -64,8 +58,6 @@
   id: PipeFourway
   suffix: Fourway
   components:
-  - type: Icon
-    texture: Constructible/Atmos/pipe.rsi/pipeFourway2.png
   - type: NodeContainer
     nodes:
     - !type:PipeNode
