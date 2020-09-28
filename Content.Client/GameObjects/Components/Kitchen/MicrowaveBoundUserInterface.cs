@@ -121,7 +121,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
                     texture = iconComponent.Icon?.Default;
                 }else if (entity.TryGetComponent(out SpriteComponent spriteComponent))
                 {
-                    texture = spriteComponent.Icon;
+                    texture = spriteComponent.Icon?.Default;
                 }else{continue;}
 
                 var solidItem = _menu.IngredientsList.AddItem(entity.Name, texture);
