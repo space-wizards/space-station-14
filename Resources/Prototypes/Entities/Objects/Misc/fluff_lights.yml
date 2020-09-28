@@ -79,14 +79,18 @@
   description:
   components:
     - type: Sprite
+      sprite: Objects/Misc/torch.rsi
       layers:
         - state: torch
         - state: torch_on
           shader: unshaded
           visible: false
+    - type: Item
+      sprite: Objects/Misc/torch.rsi
+      HeldPrefix: off
     - type: PointLight
       enabled: false
-      radius: 2
+      radius: 1
       energy: 4
       color: "#FFC458"
     - type: LoopingSound
