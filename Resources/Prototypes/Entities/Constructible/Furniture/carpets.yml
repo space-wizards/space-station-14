@@ -1,6 +1,7 @@
 - type: entity
   id: CarpetBase
   description:
+  abstract: true
   placement:
     mode: SnapgridCenter
   components:
