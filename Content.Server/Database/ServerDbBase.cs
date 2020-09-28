@@ -17,7 +17,7 @@ namespace Content.Server.Database
             await using var db = await GetDb();
 
             var prefs = await db.DbContext
-                .Preferences
+                .Preference
                 .Include(p => p.Profiles).ThenInclude(h => h.Jobs)
                 .Include(p => p.Profiles).ThenInclude(h => h.Antags)
                 .SingleOrDefaultAsync(p => p.UserId == userId.UserId);
@@ -42,7 +42,7 @@ namespace Content.Server.Database
         {
             await using var db = await GetDb();
 
-            var prefs = await db.DbContext.Preferences.SingleAsync(p => p.UserId == userId.UserId);
+            var prefs = await db.DbContext.Preference.SingleAsync(p => p.UserId == userId.UserId);
             prefs.SelectedCharacterSlot = index;
 
             await db.DbContext.SaveChangesAsync();
@@ -66,7 +66,7 @@ namespace Content.Server.Database
             var entity = ConvertProfiles(humanoid, slot);
 
             var prefs = await db.DbContext
-                .Preferences
+                .Preference
                 .Include(p => p.Profiles)
                 .SingleAsync(p => p.UserId == userId.UserId);
 
@@ -88,7 +88,7 @@ namespace Content.Server.Database
             await using var db = await GetDb();
 
             db.DbContext
-                .Preferences
+                .Preference
                 .Single(p => p.UserId == userId.UserId)
                 .Profiles
                 .RemoveAll(h => h.Slot == slot);
@@ -101,7 +101,7 @@ namespace Content.Server.Database
             await using var db = await GetDb();
 
             var profile = ConvertProfiles((HumanoidCharacterProfile) defaultProfile, 0);
-            var prefs = new Prefs
+            var prefs = new Preference
             {
                 UserId = userId.UserId,
                 SelectedCharacterSlot = 0
@@ -109,7 +109,7 @@ namespace Content.Server.Database
 
             prefs.Profiles.Add(profile);
 
-            db.DbContext.Preferences.Add(prefs);
+            db.DbContext.Preference.Add(prefs);
 
             await db.DbContext.SaveChangesAsync();
 
@@ -174,7 +174,7 @@ namespace Content.Server.Database
         {
             await using var db = await GetDb();
 
-            var assigned = await db.DbContext.AssignedUserIds.SingleOrDefaultAsync(p => p.UserName == name);
+            var assigned = await db.DbContext.AssignedUserId.SingleOrDefaultAsync(p => p.UserName == name);
             return assigned?.UserId is { } g ? new NetUserId(g) : default(NetUserId?);
         }
 
@@ -182,7 +182,7 @@ namespace Content.Server.Database
         {
             await using var db = await GetDb();
 
-            db.DbContext.AssignedUserIds.Add(new AssignedUserId
+            db.DbContext.AssignedUserId.Add(new AssignedUserId
             {
                 UserId = netUserId.UserId,
                 UserName = name

@@ -1,12 +1,13 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
 namespace Content.Server.Database
 {
     public sealed class SqliteServerDbContext : ServerDbContext
     {
-        public DbSet<SqliteServerBan> Bans { get; set; } = default!;
-        public DbSet<SqliteServerUnban> Unbans { get; set; } = default!;
+        public DbSet<SqliteServerBan> Ban { get; set; } = default!;
+        public DbSet<SqliteServerUnban> Unban { get; set; } = default!;
         public DbSet<SqlitePlayer> Player { get; set; } = default!;
         public DbSet<SqliteConnectionLog> ConnectionLog { get; set; } = default!;
 
@@ -25,53 +26,57 @@ namespace Content.Server.Database
         }
     }
 
+    [Table("ban")]
     public class SqliteServerBan
     {
-        public int Id { get; set; }
+        [Column("ban_id")] public int Id { get; set; }
 
-        public Guid? UserId { get; set; }
-        public string? Address { get; set; }
+        [Column("user_id")] public Guid? UserId { get; set; }
+        [Column("address")] public string? Address { get; set; }
 
-        public DateTime BanTime { get; set; }
-        public DateTime? ExpirationTime { get; set; }
-        public string Reason { get; set; } = null!;
-        public Guid? BanningAdmin { get; set; }
+        [Column("ban_time")] public DateTime BanTime { get; set; }
+        [Column("expiration_time")] public DateTime? ExpirationTime { get; set; }
+        [Column("reason")] public string Reason { get; set; } = null!;
+        [Column("banning_admin")] public Guid? BanningAdmin { get; set; }
 
         public SqliteServerUnban? Unban { get; set; }
     }
 
+    [Table("unban")]
     public class SqliteServerUnban
     {
-        public int Id { get; set; }
+        [Column("unban_id")] public int Id { get; set; }
 
-        public int BanId { get; set; }
+        [Column("ban_id")] public int BanId { get; set; }
         public SqliteServerBan Ban { get; set; } = null!;
 
-        public Guid? UnbanningAdmin { get; set; }
-        public DateTime UnbanTime { get; set; }
+        [Column("unbanning_admin")] public Guid? UnbanningAdmin { get; set; }
+        [Column("unban_time")] public DateTime UnbanTime { get; set; }
     }
 
+    [Table("player")]
     public class SqlitePlayer
     {
-        public int Id { get; set; }
+        [Column("player_id")] public int Id { get; set; }
 
         // Permanent data
-        public Guid UserId { get; set; }
-        public DateTime FirstSeenTime { get; set; }
+        [Column("user_id")] public Guid UserId { get; set; }
+        [Column("first_seen_time")] public DateTime FirstSeenTime { get; set; }
 
         // Data that gets updated on each join.
-        public string LastSeenUserName { get; set; } = null!;
-        public DateTime LastSeenTime { get; set; }
-        public string LastSeenAddress { get; set; } = null!;
+        [Column("last_seen_user_name")] public string LastSeenUserName { get; set; } = null!;
+        [Column("last_seen_time")] public DateTime LastSeenTime { get; set; }
+        [Column("last_seen_address")] public string LastSeenAddress { get; set; } = null!;
     }
 
+    [Table("connection_log")]
     public class SqliteConnectionLog
     {
-        public int Id { get; set; }
+        [Column("connection_log_id")] public int Id { get; set; }
 
-        public Guid UserId { get; set; }
-        public string UserName { get; set; } = null!;
-        public DateTime Time { get; set; }
-        public String Address { get; set; } = null!;
+        [Column("user_id")] public Guid UserId { get; set; }
+        [Column("user_name")] public string UserName { get; set; } = null!;
+        [Column("time")] public DateTime Time { get; set; }
+        [Column("address")] public string Address { get; set; } = null!;
     }
 }

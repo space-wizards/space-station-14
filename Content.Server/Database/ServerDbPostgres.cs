@@ -41,7 +41,7 @@ namespace Content.Server.Database
 
             await using var db = await GetDbImpl();
 
-            var query = db.PgDbContext.Bans
+            var query = db.PgDbContext.Ban
                 .Include(p => p.Unban)
                 .Where(p => p.Unban == null && (p.ExpirationTime == null || p.ExpirationTime.Value > DateTime.Now));
 
@@ -104,7 +104,7 @@ namespace Content.Server.Database
         {
             await using var db = await GetDbImpl();
 
-            db.PgDbContext.Bans.Add(new PostgresServerBan
+            db.PgDbContext.Ban.Add(new PostgresServerBan
             {
                 Address = serverBan.Address,
                 Reason = serverBan.Reason,

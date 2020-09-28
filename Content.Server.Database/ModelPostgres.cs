@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Net;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -12,15 +13,15 @@ namespace Content.Server.Database
         {
         }
 
-        public DbSet<PostgresServerBan> Bans { get; set; } = default!;
-        public DbSet<PostgresServerUnban> Unbans { get; set; } = default!;
+        public DbSet<PostgresServerBan> Ban { get; set; } = default!;
+        public DbSet<PostgresServerUnban> Unban { get; set; } = default!;
         public DbSet<PostgresPlayer> Player { get; set; } = default!;
         public DbSet<PostgresConnectionLog> ConnectionLog { get; set; } = default!;
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            if(!InitializedWithOptions)
+            if (!InitializedWithOptions)
                 options.UseNpgsql("dummy connection string");
 
             options.ReplaceService<IRelationalTypeMappingSource, CustomNpgsqlTypeMappingSource>();
@@ -38,10 +39,6 @@ namespace Content.Server.Database
                 .HasIndex(p => p.UserId);
 
             modelBuilder.Entity<PostgresServerBan>()
-                .Property(p => p.Address)
-                .HasColumnType("inet");
-
-            modelBuilder.Entity<PostgresServerBan>()
                 .HasIndex(p => p.Address);
 
             modelBuilder.Entity<PostgresServerBan>()
@@ -56,20 +53,8 @@ namespace Content.Server.Database
             // Enforce that an address cannot be IPv6-mapped IPv4.
             // So that IPv4 addresses are consistent between separate-socket and dual-stack socket modes.
             modelBuilder.Entity<PostgresServerBan>()
-                .HasCheckConstraint("AddressNotIPv6MappedIPv4", "NOT inet '::ffff:0.0.0.0/96' >>= \"Address\"")
-                .HasCheckConstraint("HaveEitherAddressOrUserId", "\"Address\" IS NOT NULL OR \"UserId\" IS NOT NULL");
-
-            modelBuilder.Entity<PostgresServerBan>()
-                .Property(p => p.BanTime)
-                .HasColumnType("timestamp with time zone");
-
-            modelBuilder.Entity<PostgresServerBan>()
-                .Property(p => p.ExpirationTime)
-                .HasColumnType("timestamp with time zone");
-
-            modelBuilder.Entity<PostgresServerUnban>()
-                .Property(p => p.UnbanTime)
-                .HasColumnType("timestamp with time zone");
+                .HasCheckConstraint("AddressNotIPv6MappedIPv4", "NOT inet '::ffff:0.0.0.0/96' >>= address")
+                .HasCheckConstraint("HaveEitherAddressOrUserId", "address IS NOT NULL OR user_id IS NOT NULL");
 
             modelBuilder.Entity<PostgresPlayer>()
                 .HasIndex(p => p.UserId)
@@ -78,73 +63,82 @@ namespace Content.Server.Database
             // ReSharper disable once StringLiteralTypo
             modelBuilder.Entity<PostgresPlayer>()
                 .HasCheckConstraint("LastSeenAddressNotIPv6MappedIPv4",
-                    "NOT inet '::ffff:0.0.0.0/96' >>= \"LastSeenAddress\"");
-
-            modelBuilder.Entity<PostgresPlayer>()
-                .Property(p => p.LastSeenTime)
-                .HasColumnType("timestamp with time zone");
-
-            modelBuilder.Entity<PostgresConnectionLog>()
-                .Property(p => p.Time)
-                .HasColumnType("timestamp with time zone");
+                    "NOT inet '::ffff:0.0.0.0/96' >>= last_seen_address");
 
             modelBuilder.Entity<PostgresConnectionLog>()
                 .HasIndex(p => p.UserId);
 
             modelBuilder.Entity<PostgresConnectionLog>()
                 .HasCheckConstraint("AddressNotIPv6MappedIPv4",
-                    "NOT inet '::ffff:0.0.0.0/96' >>= \"Address\"");
-
+                    "NOT inet '::ffff:0.0.0.0/96' >>= address");
         }
     }
 
+    [Table("server_ban")]
     public class PostgresServerBan
     {
-        public int Id { get; set; }
+        [Column("server_ban_id")] public int Id { get; set; }
 
-        public Guid? UserId { get; set; }
-        public (IPAddress, int)? Address { get; set; }
+        [Column("user_id")] public Guid? UserId { get; set; }
+        [Column("address", TypeName = "inet")] public (IPAddress, int)? Address { get; set; }
 
+        [Column("ban_time", TypeName = "timestamp with time zone")]
         public DateTime BanTime { get; set; }
+
+        [Column("expiration_time", TypeName = "timestamp with time zone")]
         public DateTime? ExpirationTime { get; set; }
-        public string Reason { get; set; } = null!;
-        public Guid? BanningAdmin { get; set; }
+
+        [Column("reason")] public string Reason { get; set; } = null!;
+        [Column("banning_admin")] public Guid? BanningAdmin { get; set; }
 
         public PostgresServerUnban? Unban { get; set; }
     }
 
+    [Table("server_unban")]
     public class PostgresServerUnban
     {
-        public int Id { get; set; }
+        [Column("unban_id")] public int Id { get; set; }
 
-        public int BanId { get; set; }
-        public PostgresServerBan Ban { get; set; } = null!;
+        [Column("ban_id")] public int BanId { get; set; }
+        [Column("ban")] public PostgresServerBan Ban { get; set; } = null!;
 
-        public Guid? UnbanningAdmin { get; set; }
+        [Column("unbanning_admin")] public Guid? UnbanningAdmin { get; set; }
+
+        [Column("unban_time", TypeName = "timestamp with time zone")]
         public DateTime UnbanTime { get; set; }
     }
 
+    [Table("player")]
     public class PostgresPlayer
     {
-        public int Id { get; set; }
+        [Column("player_id")] public int Id { get; set; }
 
         // Permanent data
-        public Guid UserId { get; set; }
+        [Column("user_id")] public Guid UserId { get; set; }
+
+        [Column("first_seen_time", TypeName = "timestamp with time zone")]
         public DateTime FirstSeenTime { get; set; }
 
         // Data that gets updated on each join.
-        public string LastSeenUserName { get; set; } = null!;
+        [Column("last_seen_user_name")] public string LastSeenUserName { get; set; } = null!;
+
+        [Column("last_seen_time", TypeName = "timestamp with time zone")]
         public DateTime LastSeenTime { get; set; }
-        public IPAddress LastSeenAddress { get; set; } = null!;
+
+        [Column("last_seen_address")] public IPAddress LastSeenAddress { get; set; } = null!;
     }
 
+    [Table("connection_log")]
     public class PostgresConnectionLog
     {
-        public int Id { get; set; }
+        [Column("connection_log_id")] public int Id { get; set; }
 
-        public Guid UserId { get; set; }
-        public string UserName { get; set; } = null!;
+        [Column("user_id")] public Guid UserId { get; set; }
+        [Column("user_name")] public string UserName { get; set; } = null!;
+
+        [Column("time", TypeName = "timestamp with time zone")]
         public DateTime Time { get; set; }
-        public IPAddress Address { get; set; } = null!;
+
+        [Column("address")] public IPAddress Address { get; set; } = null!;
     }
 }

@@ -40,7 +40,7 @@ namespace Content.Server.Database
 
             // SQLite can't do the net masking stuff we need to match IP address ranges.
             // So just pull down the whole list into memory.
-            var bans = await db.SqliteDbContext.Bans
+            var bans = await db.SqliteDbContext.Ban
                 .Include(p => p.Unban)
                 .Where(p => p.Unban == null && (p.ExpirationTime == null || p.ExpirationTime.Value > DateTime.UtcNow))
                 .ToListAsync();
@@ -71,7 +71,7 @@ namespace Content.Server.Database
                 addrStr = $"{addr.address}/{addr.cidrMask}";
             }
 
-            db.SqliteDbContext.Bans.Add(new SqliteServerBan
+            db.SqliteDbContext.Ban.Add(new SqliteServerBan
             {
                 Address = addrStr,
                 Reason = serverBan.Reason,
