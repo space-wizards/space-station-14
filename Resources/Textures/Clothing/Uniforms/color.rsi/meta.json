@@ -2,8 +2,10 @@
   "version": 1,
   "size": {
     "x": 32,
-    "y": 32
-  },
+    "y": 32,
+      },
+  "license": "CC-BY-SA-3.0/CCA-NC-SA-3.0",
+  "copyright": "Taken from https://github.com/tgstation/tgstation/commit/d836946e8e85910eaa4d132f70e21bdb9888c171 except rainbow jumpsuit which is https://github.com/goonstation/goonstation/commit/4059e4be90832b02b1228b1bee3db342094e4f1e",
   "states": [
     {
       "name": "black-equipped-INNERCLOTHING",
@@ -1715,7 +1717,6 @@
         ]
       ]
     },
-"__comment__": "rainbow jumpsuits are from https://github.com/goonstation/goonstation/commit/4059e4be90832b02b1228b1bee3db342094e4f1e",
     {
       "name": "rainbow-equipped-INNERCLOTHING",
       "directions": 4,
