@@ -8,6 +8,8 @@
   - type: Clickable
   - type: Sprite
     drawdepth: FloorTiles
+  - type: Icon
+    state: full
   - type: SnapGrid
     offset: Center
   - type: IconSmooth
@@ -22,6 +24,8 @@
   components:
   - type: Sprite
     sprite: Constructible/Carpets/red_carpet.rsi
+  - type: Icon
+    sprite: Constructible/Carpets/red_carpet.rsi
 
 - type: entity
   id: CarpetBlack
@@ -31,6 +35,8 @@
   components:
   - type: Clickable
   - type: Sprite
+    sprite: Constructible/Carpets/black_carpet.rsi
+  - type: Icon
     sprite: Constructible/Carpets/black_carpet.rsi
 
 - type: entity
@@ -42,6 +48,8 @@
   - type: Clickable
   - type: Sprite
     sprite: Constructible/Carpets/gay_carpet.rsi
+  - type: Icon
+    sprite: Constructible/Carpets/gay_carpet.rsi
 
 - type: entity
   id: CarpetBlue
@@ -51,6 +59,8 @@
   components:
   - type: Clickable
   - type: Sprite
+    sprite: Constructible/Carpets/blue_carpet.rsi
+  - type: Icon
     sprite: Constructible/Carpets/blue_carpet.rsi
 
 - type: entity
@@ -62,6 +72,8 @@
   - type: Clickable
   - type: Sprite
     sprite: Constructible/Carpets/green_carpet.rsi
+  - type: Icon
+    sprite: Constructible/Carpets/green_carpet.rsi
 
 - type: entity
   id: CarpetOrange
@@ -71,6 +83,8 @@
   components:
   - type: Clickable
   - type: Sprite
+    sprite: Constructible/Carpets/orange_carpet.rsi
+  - type: Icon
     sprite: Constructible/Carpets/orange_carpet.rsi
 
 - type: entity
@@ -82,6 +96,8 @@
   - type: Clickable
   - type: Sprite
     sprite: Constructible/Carpets/skyblue_carpet.rsi
+  - type: Icon
+    sprite: Constructible/Carpets/skyblue_carpet.rsi
 
 - type: entity
   id: CarpetPurple
@@ -91,4 +107,6 @@
   components:
   - type: Clickable
   - type: Sprite
+    sprite: Constructible/Carpets/purple_carpet.rsi
+  - type: Icon
     sprite: Constructible/Carpets/purple_carpet.rsi
