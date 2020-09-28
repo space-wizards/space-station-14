@@ -11,9 +11,6 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: plushie_h
-  - type: Icon
-    sprite: Objects/Fun/toys.rsi
-    state: plushie_h
   - type: ItemCooldown
   - type: UseDelay
     delay: 1.0
@@ -27,9 +24,6 @@
   - type: Toys
   - type: LoopingSound
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
-    state: plushie_nuke
-  - type: Icon
     sprite: Objects/Fun/toys.rsi
     state: plushie_nuke
   - type: ItemCooldown
@@ -47,9 +41,6 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: plushie_lizard
-  - type: Icon
-    sprite: Objects/Fun/toys.rsi
-    state: plushie_lizard
   - type: ItemCooldown
   - type: UseDelay
     delay: 1.0
@@ -65,9 +56,6 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: narplush
-  - type: Icon
-    sprite: Objects/Fun/toys.rsi
-    state: narplush
   - type: ItemCooldown
   - type: UseDelay
     delay: 1.0
@@ -81,9 +69,6 @@
   - type: Toys
   - type: LoopingSound
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
-    state: carpplush
-  - type: Icon
     sprite: Objects/Fun/toys.rsi
     state: carpplush
   - type: Item
@@ -104,9 +89,6 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: plushie_slime
-  - type: Icon
-    sprite: Objects/Fun/toys.rsi
-    state: plushie_slime
   - type: ItemCooldown
   - type: UseDelay
     delay: 1.0
@@ -118,9 +100,6 @@
   description: An adorable stuffed toy that resembles a snake. Not to be mistaken for the real thing.
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
-    state: plushie_snake
-  - type: Icon
     sprite: Objects/Fun/toys.rsi
     state: plushie_snake
   - type: ItemCooldown
@@ -139,9 +118,6 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: toy_mouse
-  - type: Icon
-    sprite: Objects/Fun/toys.rsi
-    state: toy_mouse
   - type: ItemCooldown
   - type: LoopingSound
   - type: EmitSoundOnUse
@@ -156,9 +132,6 @@
   description: Help me...
   components:
   - type: Sprite
-    sprite: Objects/Misc/carvings.rsi
-    state: help_me
-  - type: Icon
     sprite: Objects/Misc/carvings.rsi
     state: help_me
   - type: Item
@@ -183,9 +156,6 @@
   - type: Sprite
     sprite: Objects/Misc/carvings.rsi
     state: hello
-  - type: Icon
-    sprite: Objects/Misc/carvings.rsi
-    state: hello
   - type: Item
     sprite: Objects/Misc/carvings.rsi
   - type: EmitSoundOnThrow
@@ -204,9 +174,6 @@
   description: Thank you!
   components:
   - type: Sprite
-    sprite: Objects/Misc/carvings.rsi
-    state: thank_you
-  - type: Icon
     sprite: Objects/Misc/carvings.rsi
     state: thank_you
   - type: Item
@@ -229,9 +196,6 @@
   - type: Sprite
     sprite: Objects/Misc/carvings.rsi
     state: very_good
-  - type: Icon
-    sprite: Objects/Misc/carvings.rsi
-    state: very_good
   - type: Item
     sprite: Objects/Misc/carvings.rsi
   - type: EmitSoundOnThrow
@@ -250,9 +214,6 @@
   description: I'm sorry...
   components:
   - type: Sprite
-    sprite: Objects/Misc/carvings.rsi
-    state: im_sorry
-  - type: Icon
     sprite: Objects/Misc/carvings.rsi
     state: im_sorry
   - type: Item
@@ -277,9 +238,6 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: AI
-  - type: Icon
-    sprite: Objects/Fun/toys.rsi
-    state: AI
 
 - type: entity
   name: nuke toy
@@ -290,9 +248,6 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: nuketoy
-  - type: Icon
-    sprite: Objects/Fun/toys.rsi
-    state: nuketoy
 
 - type: entity
   name: assistant toy
@@ -301,9 +256,6 @@
   description: Grey tide world wide!
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
-    state: doll
-  - type: Icon
     sprite: Objects/Fun/toys.rsi
     state: doll
   - type: Item
@@ -319,9 +271,6 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: griffinprize
-  - type: Icon
-    sprite: Objects/Fun/toys.rsi
-    state: griffinprize
 
 - type: entity
   name: h.o.n.k. toy
@@ -332,9 +281,6 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: honkprize
-  - type: Icon
-    sprite: Objects/Fun/toys.rsi
-    state: honkprize
 
 - type: entity
   name: ian toy
@@ -343,9 +289,6 @@
   description: Ian action figure
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
-    state: ian
-  - type: Icon
     sprite: Objects/Fun/toys.rsi
     state: ian
   - type: ItemCooldown
@@ -364,9 +307,6 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: marauderprize
-  - type: Icon
-    sprite: Objects/Fun/toys.rsi
-    state: marauderprize
 
 - type: entity
   name: mauler toy
@@ -375,9 +315,6 @@
   description: Mini-Mecha action figure! Collect them all! 9/12.
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
-    state: maulerprize
-  - type: Icon
     sprite: Objects/Fun/toys.rsi
     state: maulerprize
 
@@ -390,9 +327,6 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: gygaxtoy
-  - type: Icon
-    sprite: Objects/Fun/toys.rsi
-    state: gygaxtoy
 
 - type: entity
   name: odysseus toy
@@ -401,9 +335,6 @@
   description: Mini-Mecha action figure! Collect them all! 10/12.
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
-    state: odysseusprize
-  - type: Icon
     sprite: Objects/Fun/toys.rsi
     state: odysseusprize
 
@@ -416,9 +347,6 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: owlprize
-  - type: Icon
-    sprite: Objects/Fun/toys.rsi
-    state: owlprize
 
 - type: entity
   name: deathripley toy
@@ -427,9 +355,6 @@
   description: Mini-Mecha action figure! Collect them all! 3/12.
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
-    state: deathripleytoy
-  - type: Icon
     sprite: Objects/Fun/toys.rsi
     state: deathripleytoy
 
@@ -442,9 +367,6 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: phazonprize
-  - type: Icon
-    sprite: Objects/Fun/toys.rsi
-    state: phazonprize
 
 - type: entity
   name: fire ripley
@@ -453,9 +375,6 @@
   description: Mini-Mecha action figure! Collect them all! 2/12.
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
-    state: fireripleytoy
-  - type: Icon
     sprite: Objects/Fun/toys.rsi
     state: fireripleytoy
 
@@ -468,9 +387,6 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: reticenceprize
-  - type: Icon
-    sprite: Objects/Fun/toys.rsi
-    state: reticenceprize
 
 - type: entity
   name: ripley toy
@@ -481,9 +397,7 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: ripleytoy
-  - type: Icon
-    sprite: Objects/Fun/toys.rsi
-    state: ripleytoy
+
 
 - type: entity
   name: seraph toy
@@ -494,9 +408,7 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: seraphprize
-  - type: Icon
-    sprite: Objects/Fun/toys.rsi
-    state: seraphprize
+
 
 - type: entity
   name: durand toy
@@ -507,9 +419,7 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: durandprize
-  - type: Icon
-    sprite: Objects/Fun/toys.rsi
-    state: durandprize
+
 
 ### Yeah I left these all mixed up for a future coder to puzzle over, it's lore.
 
@@ -522,9 +432,7 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: skeletonprize
-  - type: Icon
-    sprite: Objects/Fun/toys.rsi
-    state: skeletonprize
+
 
 ## Toyweapons
 
@@ -537,8 +445,7 @@
   components:
   - type: Sprite
     netsync: false
-  - type: Icon
-    state: icon
+
   - type: Item
     size: 24
     state: icon
@@ -552,9 +459,7 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: foamcrossbow
-  - type: Icon
-    sprite: Objects/Fun/toys.rsi
-    state: foamcrossbow
+
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi
@@ -580,7 +485,6 @@
   components:
   - type: Sprite
     netsync: false
-  - type: Icon
 
 - type: entity
   name: cap gun
@@ -595,9 +499,7 @@
       map: ["enum.RangedBarrelVisualLayers.Base"]
     - state: bolt-closed
       map: ["enum.RangedBarrelVisualLayers.Bolt"]
-  - type: Icon
-    sprite: Objects/Fun/toys.rsi
-    state: base
+
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi
@@ -626,9 +528,7 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: foamblade
-  - type: Icon
-    sprite: Objects/Fun/toys.rsi
-    state: foamblade
+
   - type: MeleeWeapon
     range: 2.0
     arcwidth: 0
@@ -650,14 +550,12 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: basketball
-  - type: Icon
-    sprite: Objects/Fun/toys.rsi
-    state: basketball
+
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi
     HeldPrefix: bask
-    
+
 - type: entity
   name: football
   parent: BaseItem
@@ -667,14 +565,12 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: football
-  - type: Icon
-    sprite: Objects/Fun/toys.rsi
-    state: football
+
   - type: Item
     size: 12
     sprite: Objects/Fun/toys.rsi
     HeldPrefix: footb
-  
+
 
 - type: entity
   name: syndie balloon
@@ -685,9 +581,7 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: synb
-  - type: Icon
-    sprite: Objects/Fun/toys.rsi
-    state: synb
+
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi
@@ -702,9 +596,7 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: corgib
-  - type: Icon
-    sprite: Objects/Fun/toys.rsi
-    state: corgib
+
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi

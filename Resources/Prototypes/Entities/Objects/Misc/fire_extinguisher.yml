@@ -9,9 +9,6 @@
       layers:
         - state: fire_extinguisher_closed
           map: [ "enum.SprayVisualLayers.Base" ]
-    - type: Icon
-      sprite: Objects/Misc/fire_extinguisher.rsi
-      state: fire_extinguisher_closed
     - type: Item
       sprite: Objects/Misc/fire_extinguisher.rsi
       size: 10
@@ -50,9 +47,6 @@
       layers:
         - state: extinguish
           map: [ "enum.VaporVisualLayers.Base" ]
-    - type: Icon
-      sprite: Effects/extinguisherSpray.rsi
-      state: extinguish
     - type: Collidable
       hard: false
       shapes:

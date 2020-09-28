@@ -8,8 +8,7 @@
     visuals:
     - type: StorageVisualizer
       state: ce
-  - type: Icon
-    state: ce_icon
+
 
 # Electrical supplies
 - type: entity
@@ -22,8 +21,7 @@
     - type: StorageVisualizer
       state: eng
       state_closed: eng_elec_door
-  - type: Icon
-    state: eng_elec_icon
+
 
 # Welding supplies
 - type: entity
@@ -36,8 +34,7 @@
     - type: StorageVisualizer
       state: eng
       state_closed: eng_weld_door
-  - type: Icon
-    state: eng_weld_icon
+
 
 # Atmos tech
 - type: entity
@@ -49,8 +46,7 @@
     visuals:
     - type: StorageVisualizer
       state: atmos
-  - type: Icon
-    state: atmos_icon
+
 
 # Engineer
 - type: entity
@@ -62,5 +58,4 @@
     visuals:
     - type: StorageVisualizer
       state: eng_secure
-  - type: Icon
-    state: eng_secure_icon
+

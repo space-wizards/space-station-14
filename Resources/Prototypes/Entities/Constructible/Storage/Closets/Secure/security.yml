@@ -8,8 +8,7 @@
     visuals:
     - type: StorageVisualizer
       state: hos
-  - type: Icon
-    state: hos_icon
+
 
 # Warden
 - type: entity
@@ -21,8 +20,7 @@
     visuals:
     - type: StorageVisualizer
       state: warden
-  - type: Icon
-    state: warden_icon
+
 
 # Security Officer
 - type: entity
@@ -34,8 +32,7 @@
     visuals:
     - type: StorageVisualizer
       state: sec
-  - type: Icon
-    state: sec_icon
+
 
 # Detective
 - type: entity
@@ -47,5 +44,4 @@
       visuals:
         - type: StorageVisualizer
           state: cabinet
-    - type: Icon
-      state: cabinet_icon
+

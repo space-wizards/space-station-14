@@ -7,7 +7,6 @@
   - type: DroppedBodyPart
   - type: Sprite
     texture: Mobs/Species/Human/parts.rsi/torso_m.png
-  - type: Icon
   - type: UserInterface
     interfaces:
     - key: enum.GenericSurgeryUiKey.Key
@@ -22,7 +21,6 @@
   - type: DroppedMechanism
   - type: Sprite
     texture: Mobs/Parts/Organs/eyeballs.png
-  - type: Icon
   - type: UserInterface
     interfaces:
     - key: enum.GenericSurgeryUiKey.Key

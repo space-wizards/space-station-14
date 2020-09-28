@@ -6,8 +6,7 @@
   components:
   - type: Sprite
     texture: Objects/Specific/Chemistry/beakers.rsi/beaker.png
-  - type: Icon
-    texture: Objects/Specific/Chemistry/beakers.rsi/beaker.png
+
   - type: Item
     sprite: Objects/Specific/Chemistry/beakers.rsi
     HeldPrefix: beaker
@@ -27,8 +26,7 @@
   components:
   - type: Sprite
     texture: Objects/Specific/Chemistry/beakers.rsi/beakerlarge.png
-  - type: Icon
-    texture: Objects/Specific/Chemistry/beakers.rsi/beakerlarge.png
+
   - type: Item
     sprite: Objects/Specific/Chemistry/beakers.rsi
     HeldPrefix: beaker
@@ -48,8 +46,7 @@
   components:
   - type: Sprite
     texture: Objects/Specific/Chemistry/dropper.rsi/dropper.png
-  - type: Icon
-    texture: Objects/Specific/Chemistry/dropper.rsi/dropper.png
+
   - type: SolutionContainer
     fillingState: dropper
     fillingSteps: 2
@@ -67,8 +64,7 @@
   components:
   - type: Sprite
     texture: Objects/Specific/Chemistry/syringe.rsi/0.png
-  - type: Icon
-    texture: Objects/Specific/Chemistry/syringe.rsi/0.png
+
   - type: SolutionContainer
     fillingState: syringe
     fillingSteps: 5
@@ -91,8 +87,7 @@
       transferAmount: 5
     - type: Sprite
       texture: Objects/Specific/Chemistry/bottle.rsi/bottle.png
-    - type: Icon
-      texture: Objects/Specific/Chemistry/bottle.rsi/bottle.png
+
     - type: Spillable
 
 - type: entity
@@ -107,5 +102,4 @@
       caps: RemoveFrom
     - type: Sprite
       texture: Objects/Specific/Chemistry/pills.rsi/pill.png
-    - type: Icon
-      texture: Objects/Specific/Chemistry/pills.rsi/pill.png
+

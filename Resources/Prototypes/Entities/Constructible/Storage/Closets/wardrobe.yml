@@ -15,8 +15,7 @@
     - type: StorageVisualizer
       state: generic
       state_closed: blue_door
-  - type: Icon
-    state: blue_icon
+
 
 # Pink wardrobe
 - type: entity
@@ -29,8 +28,7 @@
     - type: StorageVisualizer
       state: generic
       state_closed: pink_door
-  - type: Icon
-    state: pink_icon
+
 
 # Black wardrobe
 - type: entity
@@ -43,8 +41,7 @@
     - type: StorageVisualizer
       state: generic
       state_closed: black_door
-  - type: Icon
-    state: black_icon
+
 
 # Green wardrobe
 - type: entity
@@ -57,8 +54,7 @@
     - type: StorageVisualizer
       state: generic
       state_closed: green_door
-  - type: Icon
-    state: green_icon
+
 
 # Prison wardrobe
 - type: entity
@@ -71,8 +67,7 @@
     - type: StorageVisualizer
       state: generic
       state_closed: orange_door
-  - type: Icon
-    state: orange_icon
+
 
 # Yellow wardrobe
 - type: entity
@@ -85,8 +80,7 @@
     - type: StorageVisualizer
       state: generic
       state_closed: yellow_door
-  - type: Icon
-    state: yellow_icon
+
 
 # White wardrobe
 - type: entity
@@ -99,8 +93,7 @@
     - type: StorageVisualizer
       state: generic
       state_closed: white_door
-  - type: Icon
-    state: white_icon
+
 
 # Grey wardrobe
 - type: entity
@@ -113,8 +106,7 @@
     - type: StorageVisualizer
       state: generic
       state_closed: grey_door
-  - type: Icon
-    state: grey_icon
+
 
 # Mixed wardrobe
 - type: entity
@@ -127,5 +119,4 @@
     - type: StorageVisualizer
       state: generic
       state_closed: mixed_door
-  - type: Icon
-    state: mixed_icon
+

@@ -11,9 +11,6 @@
   - type: Sprite
     sprite: Objects/Storage/donkpocket.rsi
     state: icon
-  - type: Icon
-    sprite: Objects/Storage/donkpocket.rsi
-    state: icon
   - type: Item
     color: "#951710"
     sprite: Objects/Storage/donkpocket.rsi

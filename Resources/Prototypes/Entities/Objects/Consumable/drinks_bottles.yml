@@ -11,8 +11,7 @@
     transferAmount: 5
   - type: Sprite
     state: icon
-  - type: Icon
-    state: icon
+
   - type: Spillable
 
 - type: entity
@@ -24,8 +23,7 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/absinthebottle.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/absinthebottle.rsi
+
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -36,8 +34,7 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/alco-green.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/alco-green.rsi
+
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -53,8 +50,7 @@
         Quantity: 80
   - type: Sprite
     sprite: Objects/Consumable/Drinks/alebottle.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/alebottle.rsi
+
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -65,8 +61,7 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/bottleofnothing.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/bottleofnothing.rsi
+
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -82,8 +77,7 @@
         Quantity: 80
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cognacbottle.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/cognacbottle.rsi
+
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -94,8 +88,7 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/ginbottle.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/ginbottle.rsi
+
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -106,8 +99,7 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/goldschlagerbottle.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/goldschlagerbottle.rsi
+
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -123,8 +115,7 @@
         Quantity: 80
   - type: Sprite
     sprite: Objects/Consumable/Drinks/kahluabottle.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/kahluabottle.rsi
+
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -135,8 +126,7 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/patronbottle.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/patronbottle.rsi
+
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -147,8 +137,7 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/pwinebottle.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/pwinebottle.rsi
+
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -159,8 +148,7 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/rumbottle.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/rumbottle.rsi
+
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -171,8 +159,7 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/tequillabottle.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/tequillabottle.rsi
+
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -183,8 +170,7 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/vermouthbottle.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/vermouthbottle.rsi
+
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -200,8 +186,7 @@
         Quantity: 80
   - type: Sprite
     sprite: Objects/Consumable/Drinks/vodkabottle.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/vodkabottle.rsi
+
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -217,8 +202,7 @@
         Quantity: 80
   - type: Sprite
     sprite: Objects/Consumable/Drinks/whiskeybottle.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/whiskeybottle.rsi
+
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -234,5 +218,4 @@
         Quantity: 80
   - type: Sprite
     sprite: Objects/Consumable/Drinks/winebottle.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/winebottle.rsi
+

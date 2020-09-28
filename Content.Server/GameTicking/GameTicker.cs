@@ -22,6 +22,7 @@ using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs;
 using Content.Server.Mobs.Roles;
 using Content.Server.Players;
+using Content.Shared;
 using Content.Shared.Chat;
 using Content.Shared.Network.NetMessages;
 using Content.Shared.Preferences;
@@ -128,13 +129,6 @@ namespace Content.Server.GameTicking
 
             DebugTools.Assert(!_initialized);
 
-            _configurationManager.RegisterCVar("game.lobbyenabled", false, CVar.ARCHIVE);
-            _configurationManager.RegisterCVar("game.lobbyduration", 20, CVar.ARCHIVE);
-            _configurationManager.RegisterCVar("game.defaultpreset", "Suspicion", CVar.ARCHIVE);
-            _configurationManager.RegisterCVar("game.fallbackpreset", "Sandbox", CVar.ARCHIVE);
-
-            _configurationManager.RegisterCVar("game.enablewin", true, CVar.CHEAT);
-
             PresetSuspicion.RegisterCVars(_configurationManager);
 
             _netManager.RegisterNetMessage<MsgTickerJoinLobby>(nameof(MsgTickerJoinLobby));
@@ -147,7 +141,7 @@ namespace Content.Server.GameTicking
             _netManager.RegisterNetMessage<MsgRequestWindowAttention>(nameof(MsgRequestWindowAttention));
             _netManager.RegisterNetMessage<MsgTickerLateJoinStatus>(nameof(MsgTickerLateJoinStatus));
 
-            SetStartPreset(_configurationManager.GetCVar<string>("game.defaultpreset"));
+            SetStartPreset(_configurationManager.GetCVar(CCVars.GameLobbyDefaultPreset));
 
             RestartRound();
 
