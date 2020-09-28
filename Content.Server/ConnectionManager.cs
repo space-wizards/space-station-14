@@ -29,10 +29,57 @@ namespace Content.Server
         {
             _netMgr.Connecting += NetMgrOnConnecting;
             _netMgr.AssignUserIdCallback = AssignUserIdCallback;
+            // Approval-based IP bans disabled because they don't play well with Happy Eyeballs.
+            // _netMgr.HandleApprovalCallback = HandleApproval;
         }
 
-        private void NetMgrOnConnecting(object? sender, NetConnectingArgs e)
+        /*
+        private async Task<NetApproval> HandleApproval(NetApprovalEventArgs eventArgs)
         {
+            var ban = await _db.GetServerBanByIpAsync(eventArgs.Connection.RemoteEndPoint.Address);
+            if (ban != null)
+            {
+                var expires = "This is a permanent ban.";
+                if (ban.ExpirationTime is { } expireTime)
+                {
+                    var duration = expireTime - ban.BanTime;
+                    var utc = expireTime.ToUniversalTime();
+                    expires = $"This ban is for {duration.TotalMinutes} minutes and will expire at {utc:f} UTC.";
+                }
+                var reason = $@"You, or another user of this computer or connection is banned from playing here.
+The ban reason is: ""{ban.Reason}""
+{expires}";
+                return NetApproval.Deny(reason);
+            }
+
+            return NetApproval.Allow();
+        }
+        */
+
+        private async Task NetMgrOnConnecting(NetConnectingArgs e)
+        {
+            // Check if banned.
+            var addr = e.IP.Address;
+            var userId = e.UserId;
+            var ban = await _db.GetServerBanAsync(addr, userId);
+            if (ban != null)
+            {
+                var expires = "This is a permanent ban.";
+                if (ban.ExpirationTime is { } expireTime)
+                {
+                    var duration = expireTime - ban.BanTime;
+                    var utc = expireTime.ToUniversalTime();
+                    expires = $"This ban is for {duration.TotalMinutes:N0} minutes and will expire at {utc:f} UTC.";
+                }
+                var reason = $@"You, or another user of this computer or connection, are banned from playing here.
+The ban reason is: ""{ban.Reason}""
+{expires}";
+                e.Deny(reason);
+                return;
+            }
+
+            // TODO: Connection logs
+            // TODO: Last seen
         }
 
         private async Task<NetUserId?> AssignUserIdCallback(string name)

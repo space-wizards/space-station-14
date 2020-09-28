@@ -1,5 +1,7 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Content.Shared.Preferences;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +12,7 @@ namespace Content.Server.Database
 {
     public abstract class ServerDbBase
     {
-        public async Task<PlayerPreferences> GetPlayerPreferencesAsync(NetUserId userId)
+        public async Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId)
         {
             await using var db = await GetDb();
 
@@ -46,7 +48,7 @@ namespace Content.Server.Database
             await db.DbContext.SaveChangesAsync();
         }
 
-        public async Task SaveCharacterSlotAsync(NetUserId userId, ICharacterProfile profile, int slot)
+        public async Task SaveCharacterSlotAsync(NetUserId userId, ICharacterProfile? profile, int slot)
         {
             if (profile is null)
             {
@@ -188,6 +190,9 @@ namespace Content.Server.Database
 
             await db.DbContext.SaveChangesAsync();
         }
+
+        public abstract Task<ServerBanDef?> GetServerBanAsync(IPAddress? address, NetUserId? userId);
+        public abstract Task AddServerBanAsync(ServerBanDef serverBan);
 
         protected abstract Task<DbGuard> GetDb();
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using System.Threading.Tasks;
 using Content.Shared;
 using Content.Shared.Preferences;
@@ -15,6 +16,8 @@ using Robust.Shared.Network;
 using MSLogLevel = Microsoft.Extensions.Logging.LogLevel;
 using LogLevel = Robust.Shared.Log.LogLevel;
 
+#nullable enable
+
 namespace Content.Server.Database
 {
     public interface IServerDbManager
@@ -25,11 +28,15 @@ namespace Content.Server.Database
         Task<PlayerPreferences> InitPrefsAsync(NetUserId userId, ICharacterProfile defaultProfile);
         Task SaveSelectedCharacterIndexAsync(NetUserId userId, int index);
         Task SaveCharacterSlotAsync(NetUserId userId, ICharacterProfile profile, int slot);
-        Task<PlayerPreferences> GetPlayerPreferencesAsync(NetUserId userId);
+        Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId);
 
         // Username assignment (for guest accounts, so they persist GUID)
         Task AssignUserIdAsync(string name, NetUserId userId);
         Task<NetUserId?> GetAssignedUserIdAsync(string name);
+
+        // Ban stuff
+        public Task<ServerBanDef?> GetServerBanAsync(IPAddress? address, NetUserId? userId);
+        public Task AddServerBanAsync(ServerBanDef serverBan);
     }
 
     public sealed class ServerDbManager : IServerDbManager
@@ -38,8 +45,8 @@ namespace Content.Server.Database
         [Dependency] private readonly IResourceManager _res = default!;
         [Dependency] private readonly ILogManager _logMgr = default!;
 
-        private ServerDbBase _db;
-        private LoggingProvider _msLogProvider;
+        private ServerDbBase _db = default!;
+        private LoggingProvider _msLogProvider = default!;
 
         public void Init()
         {
@@ -74,7 +81,7 @@ namespace Content.Server.Database
             return _db.SaveCharacterSlotAsync(userId, profile, slot);
         }
 
-        public Task<PlayerPreferences> GetPlayerPreferencesAsync(NetUserId userId)
+        public Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId)
         {
             return _db.GetPlayerPreferencesAsync(userId);
         }
@@ -89,13 +96,23 @@ namespace Content.Server.Database
             return _db.GetAssignedUserIdAsync(name);
         }
 
+        public Task<ServerBanDef?> GetServerBanAsync(IPAddress? address, NetUserId? userId)
+        {
+            return _db.GetServerBanAsync(address, userId);
+        }
+
+        public Task AddServerBanAsync(ServerBanDef serverBan)
+        {
+            return _db.AddServerBanAsync(serverBan);
+        }
+
         private DbContextOptions<ServerDbContext> CreatePostgresOptions()
         {
             var host = _cfg.GetCVar(CCVars.DatabasePgHost);
             var port = _cfg.GetCVar(CCVars.DatabasePgPort);
             var db = _cfg.GetCVar(CCVars.DatabasePgDatabase);
             var user = _cfg.GetCVar(CCVars.DatabasePgUsername);
-            var pass =_cfg.GetCVar(CCVars.DatabasePgPassword);
+            var pass = _cfg.GetCVar(CCVars.DatabasePgPassword);
 
             var builder = new DbContextOptionsBuilder<ServerDbContext>();
             var connectionString = new NpgsqlConnectionStringBuilder
@@ -121,7 +138,7 @@ namespace Content.Server.Database
             SqliteConnection connection;
             if (!inMemory)
             {
-                var finalPreferencesDbPath = Path.Combine(_res.UserData.RootDir, configPreferencesDbPath);
+                var finalPreferencesDbPath = Path.Combine(_res.UserData.RootDir!, configPreferencesDbPath);
                 connection = new SqliteConnection($"Data Source={finalPreferencesDbPath}");
             }
             else
@@ -173,7 +190,8 @@ namespace Content.Server.Database
                 _sawmill = sawmill;
             }
 
-            public void Log<TState>(MSLogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
+            public void Log<TState>(MSLogLevel logLevel, EventId eventId, TState state, Exception exception,
+                Func<TState, Exception, string> formatter)
             {
                 var lvl = logLevel switch
                 {
@@ -197,7 +215,8 @@ namespace Content.Server.Database
 
             public IDisposable BeginScope<TState>(TState state)
             {
-                return null;
+                // TODO: this
+                return null!;
             }
         }
     }

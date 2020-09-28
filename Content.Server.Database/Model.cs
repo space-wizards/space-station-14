@@ -4,39 +4,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Content.Server.Database
 {
-    public sealed class PostgresServerDbContext : ServerDbContext
-    {
-        // This is used by the "dotnet ef" CLI tool.
-        public PostgresServerDbContext()
-        {
-        }
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-        {
-            if(!InitializedWithOptions)
-                options.UseNpgsql("dummy connection string");
-        }
-
-        public PostgresServerDbContext(DbContextOptions<ServerDbContext> options) : base(options)
-        {
-        }
-    }
-
-    public sealed class SqliteServerDbContext : ServerDbContext
-    {
-        public SqliteServerDbContext()
-        {
-        }
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-        {
-            if (!InitializedWithOptions)
-                options.UseSqlite("dummy connection string");
-        }
-
-        public SqliteServerDbContext(DbContextOptions<ServerDbContext> options) : base(options)
-        {
-        }
-    }
-
     public abstract class ServerDbContext : DbContext
     {
         /// <summary>
@@ -45,9 +12,11 @@ namespace Content.Server.Database
         /// To use the context within the application, the options need to be passed the constructor instead.
         /// </summary>
         protected readonly bool InitializedWithOptions;
+
         public ServerDbContext()
         {
         }
+
         public ServerDbContext(DbContextOptions<ServerDbContext> options) : base(options)
         {
             InitializedWithOptions = true;

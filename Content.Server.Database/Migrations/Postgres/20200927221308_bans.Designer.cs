@@ -4,15 +4,17 @@ using System.Net;
 using Content.Server.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Content.Server.Database.Migrations.Postgres
 {
     [DbContext(typeof(PostgresServerDbContext))]
-    partial class PostgresServerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200927221308_bans")]
+    partial class bans
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -101,13 +103,13 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Property<ValueTuple<IPAddress, int>?>("Address")
                         .HasColumnType("inet");
 
-                    b.Property<DateTime>("BanTime")
+                    b.Property<DateTimeOffset>("BanTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid?>("BanningAdmin")
+                    b.Property<Guid>("BanningAdmin")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime?>("ExpirationTime")
+                    b.Property<DateTimeOffset?>("ExpirationTime")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Reason")
@@ -125,7 +127,7 @@ namespace Content.Server.Database.Migrations.Postgres
 
                     b.ToTable("Bans");
 
-                    b.HasCheckConstraint("AddressNotIPv6MappedIPv4", "NOT inet '::ff:0.0.0.0/96' >>= \"Address\"");
+                    b.HasCheckConstraint("AddressIsIPv6", "family(\"Address\") = 6");
 
                     b.HasCheckConstraint("HaveEitherAddressOrUserId", "\"Address\" IS NOT NULL OR \"UserId\" IS NOT NULL");
                 });
@@ -140,10 +142,10 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Property<int>("BanId")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime>("UnbanTime")
+                    b.Property<DateTimeOffset>("UnbanTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid?>("UnbanningAdmin")
+                    b.Property<Guid>("UnbanningAdmin")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
