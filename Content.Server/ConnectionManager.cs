@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Content.Server.Database;
+using Content.Server.Preferences;
 using Content.Shared;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.Network;
@@ -78,8 +79,13 @@ The ban reason is: ""{ban.Reason}""
                 return;
             }
 
-            // TODO: Connection logs
-            // TODO: Last seen
+            if (!ServerPreferencesManager.ShouldStorePrefs(e.AuthType))
+            {
+                return;
+            }
+
+            await _db.UpdatePlayerRecordAsync(userId, e.UserName, addr);
+            await _db.AddConnectionLogAsync(userId, e.UserName, addr);
         }
 
         private async Task<NetUserId?> AssignUserIdCallback(string name)

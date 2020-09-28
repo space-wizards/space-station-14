@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Net;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace Content.Server.Database.Migrations.Postgres
+namespace Content.Server.Database.Migrations.Sqlite
 {
-    public partial class init : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +12,7 @@ namespace Content.Server.Database.Migrations.Postgres
                 columns: table => new
                 {
                     AssignedUserIdId = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     UserName = table.Column<string>(nullable: false),
                     UserId = table.Column<Guid>(nullable: false)
                 },
@@ -28,19 +26,34 @@ namespace Content.Server.Database.Migrations.Postgres
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     UserId = table.Column<Guid>(nullable: true),
-                    Address = table.Column<ValueTuple<IPAddress, int>>(type: "inet", nullable: true),
-                    BanTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    ExpirationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    Address = table.Column<string>(nullable: true),
+                    BanTime = table.Column<DateTime>(nullable: false),
+                    ExpirationTime = table.Column<DateTime>(nullable: true),
                     Reason = table.Column<string>(nullable: false),
                     BanningAdmin = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Bans", x => x.Id);
-                    table.CheckConstraint("AddressNotIPv6MappedIPv4", "NOT inet '::ff:0.0.0.0/96' >>= \"Address\"");
-                    table.CheckConstraint("HaveEitherAddressOrUserId", "\"Address\" IS NOT NULL OR \"UserId\" IS NOT NULL");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Player",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    UserId = table.Column<Guid>(nullable: false),
+                    FirstSeenTime = table.Column<DateTime>(nullable: false),
+                    LastSeenUserName = table.Column<string>(nullable: false),
+                    LastSeenTime = table.Column<DateTime>(nullable: false),
+                    LastSeenAddress = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Player", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -48,7 +61,7 @@ namespace Content.Server.Database.Migrations.Postgres
                 columns: table => new
                 {
                     PrefsId = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     UserId = table.Column<Guid>(nullable: false),
                     SelectedCharacterSlot = table.Column<int>(nullable: false)
                 },
@@ -62,10 +75,10 @@ namespace Content.Server.Database.Migrations.Postgres
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     BanId = table.Column<int>(nullable: false),
                     UnbanningAdmin = table.Column<Guid>(nullable: true),
-                    UnbanTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    UnbanTime = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -83,7 +96,7 @@ namespace Content.Server.Database.Migrations.Postgres
                 columns: table => new
                 {
                     ProfileId = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     Slot = table.Column<int>(nullable: false),
                     CharacterName = table.Column<string>(nullable: false),
                     Age = table.Column<int>(nullable: false),
@@ -113,7 +126,7 @@ namespace Content.Server.Database.Migrations.Postgres
                 columns: table => new
                 {
                     AntagId = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     ProfileId = table.Column<int>(nullable: false),
                     AntagName = table.Column<string>(nullable: false)
                 },
@@ -133,7 +146,7 @@ namespace Content.Server.Database.Migrations.Postgres
                 columns: table => new
                 {
                     JobId = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     ProfileId = table.Column<int>(nullable: false),
                     JobName = table.Column<string>(nullable: false),
                     Priority = table.Column<int>(nullable: false)
@@ -166,16 +179,6 @@ namespace Content.Server.Database.Migrations.Postgres
                 table: "AssignedUserIds",
                 column: "UserName",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Bans_Address",
-                table: "Bans",
-                column: "Address");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Bans_UserId",
-                table: "Bans",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Job_ProfileId",
@@ -216,6 +219,9 @@ namespace Content.Server.Database.Migrations.Postgres
 
             migrationBuilder.DropTable(
                 name: "Job");
+
+            migrationBuilder.DropTable(
+                name: "Player");
 
             migrationBuilder.DropTable(
                 name: "Unbans");

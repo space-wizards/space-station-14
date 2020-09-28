@@ -35,8 +35,14 @@ namespace Content.Server.Database
         Task<NetUserId?> GetAssignedUserIdAsync(string name);
 
         // Ban stuff
-        public Task<ServerBanDef?> GetServerBanAsync(IPAddress? address, NetUserId? userId);
-        public Task AddServerBanAsync(ServerBanDef serverBan);
+        Task<ServerBanDef?> GetServerBanAsync(IPAddress? address, NetUserId? userId);
+        Task AddServerBanAsync(ServerBanDef serverBan);
+
+        // Player records
+        Task UpdatePlayerRecordAsync(NetUserId userId, string userName, IPAddress address);
+
+        // Connection log
+        Task AddConnectionLogAsync(NetUserId userId, string userName, IPAddress address);
     }
 
     public sealed class ServerDbManager : IServerDbManager
@@ -104,6 +110,16 @@ namespace Content.Server.Database
         public Task AddServerBanAsync(ServerBanDef serverBan)
         {
             return _db.AddServerBanAsync(serverBan);
+        }
+
+        public Task UpdatePlayerRecordAsync(NetUserId userId, string userName, IPAddress address)
+        {
+            return _db.UpdatePlayerRecord(userId, userName, address);
+        }
+
+        public Task AddConnectionLogAsync(NetUserId userId, string userName, IPAddress address)
+        {
+            return _db.AddConnectionLogAsync(userId, userName, address);
         }
 
         private DbContextOptions<ServerDbContext> CreatePostgresOptions()

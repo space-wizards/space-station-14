@@ -8,7 +8,6 @@ using Content.Server.Preferences;
 using Content.Server.Utility;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Network;
-using Robust.Shared.Utility;
 
 #nullable enable
 
@@ -85,6 +84,27 @@ namespace Content.Server.Database
             await db.SqliteDbContext.SaveChangesAsync();
         }
 
+        public override async Task UpdatePlayerRecord(NetUserId userId, string userName, IPAddress address)
+        {
+            await using var db = await GetDbImpl();
+
+            var record = await db.SqliteDbContext.Player.SingleOrDefaultAsync(p => p.UserId == userId.UserId);
+            if (record == null)
+            {
+                db.SqliteDbContext.Player.Add(record = new SqlitePlayer
+                {
+                    FirstSeenTime = DateTime.UtcNow,
+                    UserId = userId.UserId,
+                });
+            }
+
+            record.LastSeenTime = DateTime.UtcNow;
+            record.LastSeenAddress = address.ToString();
+            record.LastSeenUserName = userName;
+
+            await db.SqliteDbContext.SaveChangesAsync();
+        }
+
         private static ServerBanDef? ConvertBan(SqliteServerBan? ban)
         {
             if (ban == null)
@@ -119,6 +139,21 @@ namespace Content.Server.Database
                 ban.ExpirationTime,
                 ban.Reason,
                 aUid);
+        }
+
+        public override async Task AddConnectionLogAsync(NetUserId userId, string userName, IPAddress address)
+        {
+            await using var db = await GetDbImpl();
+
+            db.SqliteDbContext.ConnectionLog.Add(new SqliteConnectionLog
+            {
+                Address = address.ToString(),
+                Time = DateTime.UtcNow,
+                UserId = userId.UserId,
+                UserName = userName
+            });
+
+            await db.SqliteDbContext.SaveChangesAsync();
         }
 
 

@@ -65,7 +65,7 @@ namespace Content.Server.Preferences
 
             prefsData.Prefs = new PlayerPreferences(curPrefs.Characters, index);
 
-            if (ShouldStorePrefs(message.MsgChannel))
+            if (ShouldStorePrefs(message.MsgChannel.AuthType))
             {
                 await _db.SaveSelectedCharacterIndexAsync(message.MsgChannel.UserId, message.SelectedCharacterIndex);
             }
@@ -97,7 +97,7 @@ namespace Content.Server.Preferences
 
             prefsData.Prefs = new PlayerPreferences(arr, slot);
 
-            if (ShouldStorePrefs(message.MsgChannel))
+            if (ShouldStorePrefs(message.MsgChannel.AuthType))
             {
                 await _db.SaveCharacterSlotAsync(message.MsgChannel.UserId, message.Profile, message.Slot);
             }
@@ -105,7 +105,7 @@ namespace Content.Server.Preferences
 
         public async void OnClientConnected(IPlayerSession session)
         {
-            if (!ShouldStorePrefs(session.ConnectedClient))
+            if (!ShouldStorePrefs(session.ConnectedClient.AuthType))
             {
                 // Don't store data for guests.
                 var prefsData = new PlayerPrefData
@@ -198,9 +198,9 @@ namespace Content.Server.Preferences
                 });
         }
 
-        private bool ShouldStorePrefs(INetChannel channel)
+        internal static bool ShouldStorePrefs(LoginType loginType)
         {
-            return channel.AuthType.HasStaticUserId();
+            return loginType.HasStaticUserId();
         }
 
         private sealed class PlayerPrefData

@@ -191,8 +191,22 @@ namespace Content.Server.Database
             await db.DbContext.SaveChangesAsync();
         }
 
+        /*
+         * BAN STUFF
+         */
         public abstract Task<ServerBanDef?> GetServerBanAsync(IPAddress? address, NetUserId? userId);
         public abstract Task AddServerBanAsync(ServerBanDef serverBan);
+
+        /*
+         * PLAYER RECORDS
+         */
+        public abstract Task UpdatePlayerRecord(NetUserId userId, string userName, IPAddress address);
+
+        /*
+         * CONNECTION LOG
+         */
+        public abstract Task AddConnectionLogAsync(NetUserId userId, string userName, IPAddress address);
+
 
         protected abstract Task<DbGuard> GetDb();
 
@@ -202,5 +216,6 @@ namespace Content.Server.Database
 
             public abstract ValueTask DisposeAsync();
         }
+
     }
 }

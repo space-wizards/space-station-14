@@ -21,7 +21,14 @@ namespace Content.Server.Database
             _dbReadyTask = Task.Run(async () =>
             {
                 await using var ctx = new PostgresServerDbContext(_options);
-                await ctx.Database.MigrateAsync();
+                try
+                {
+                    await ctx.Database.MigrateAsync();
+                }
+                finally
+                {
+                    await ctx.DisposeAsync();
+                }
             });
         }
 
@@ -105,6 +112,42 @@ namespace Content.Server.Database
                 BanTime = serverBan.BanTime.UtcDateTime,
                 ExpirationTime = serverBan.ExpirationTime?.UtcDateTime,
                 UserId = serverBan.UserId?.UserId
+            });
+
+            await db.PgDbContext.SaveChangesAsync();
+        }
+
+        public override async Task UpdatePlayerRecord(NetUserId userId, string userName, IPAddress address)
+        {
+            await using var db = await GetDbImpl();
+
+            var record = await db.PgDbContext.Player.SingleOrDefaultAsync(p => p.UserId == userId.UserId);
+            if (record == null)
+            {
+                db.PgDbContext.Player.Add(record = new PostgresPlayer
+                {
+                    FirstSeenTime = DateTime.UtcNow,
+                    UserId = userId.UserId,
+                });
+            }
+
+            record.LastSeenTime = DateTime.UtcNow;
+            record.LastSeenAddress = address;
+            record.LastSeenUserName = userName;
+
+            await db.PgDbContext.SaveChangesAsync();
+        }
+
+        public override async Task AddConnectionLogAsync(NetUserId userId, string userName, IPAddress address)
+        {
+            await using var db = await GetDbImpl();
+
+            db.PgDbContext.ConnectionLog.Add(new PostgresConnectionLog
+            {
+                Address = address,
+                Time = DateTime.UtcNow,
+                UserId = userId.UserId,
+                UserName = userName
             });
 
             await db.PgDbContext.SaveChangesAsync();
