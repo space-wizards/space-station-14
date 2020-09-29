@@ -145,7 +145,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 {
                     target.PopupMessage(Loc.GetString("{0:theName} is empty!", Owner));
                 }
-                
+
                 return false;
             }
 
@@ -157,7 +157,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             var transferAmount = ReagentUnit.Min(TransferAmount, _contents.CurrentVolume);
             var split = _contents.SplitSolution(transferAmount);
 
-            if (stomachComponent.TryTransferSolution(split))
+            if (stomachComponent.CanTransferSolution(split))
             {
                 if (_useSound == null)
                 {
@@ -167,6 +167,17 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 EntitySystem.Get<AudioSystem>().PlayFromEntity(_useSound, target, AudioParams.Default.WithVolume(-2f));
                 target.PopupMessage(Loc.GetString("Slurp"));
                 UpdateAppearance();
+
+                // TODO: Account for partial transfer.
+
+                foreach (var (reagentId, quantity) in split.Contents)
+                {
+                    if (!_prototypeManager.TryIndex(reagentId, out ReagentPrototype reagent)) continue;
+                    split.RemoveReagent(reagentId, reagent.ReactionEntity(target, ReactionMethod.Ingestion, quantity));
+                }
+
+                stomachComponent.TryTransferSolution(split);
+
                 return true;
             }
 

@@ -32,6 +32,9 @@
   - type: Inventory
   - type: Clickable
   - type: InteractionOutline
+  - type: Icon
+    sprite: Mobs/Species/Human/parts.rsi
+    state: full
   - type: Sprite
     netsync: false
     drawdepth: Mobs
@@ -209,6 +212,9 @@
   components:
     - type: Hands
     - type: Inventory
+    - type: Icon
+      sprite: Mobs/Species/Human/parts.rsi
+      state: full
     - type: Sprite
       netsync: false
       drawdepth: Mobs

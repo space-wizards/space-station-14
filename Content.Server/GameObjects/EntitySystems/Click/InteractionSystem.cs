@@ -144,7 +144,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             // all activates should only fire when in range / unbostructed
-            var activateEventArgs = new ActivateEventArgs {User = user, Target = used};
+            var activateEventArgs = new ActivateEventArgs { User = user, Target = used };
             if (activateEventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
             {
                 activateComp.Activate(activateEventArgs);
@@ -229,7 +229,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return true;
             }
 
-            if(userEntity.TryGetComponent(out CombatModeComponent combat) && combat.IsInCombatMode)
+            if (userEntity.TryGetComponent(out CombatModeComponent combat) && combat.IsInCombatMode)
                 DoAttack(userEntity, coords, false, uid);
             else
                 UserInteraction(userEntity, coords, uid);
@@ -352,6 +352,13 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return;
             }
 
+            // If in a container
+            if (ContainerHelpers.IsInContainer(player))
+            {
+                return;
+            }
+
+
             // In a container where the attacked entity is not the container's owner
             if (ContainerHelpers.TryGetContainer(player, out var playerContainer) &&
                 attacked != playerContainer.Owner)
@@ -428,7 +435,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             var afterInteracts = weapon.GetAllComponents<IAfterInteract>().ToList();
-            var afterInteractEventArgs = new AfterInteractEventArgs {User = user, ClickLocation = clickLocation, CanReach = canReach};
+            var afterInteractEventArgs = new AfterInteractEventArgs { User = user, ClickLocation = clickLocation, CanReach = canReach };
 
             foreach (var afterInteract in afterInteracts)
             {
@@ -502,7 +509,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             var attackHands = attacked.GetAllComponents<IInteractHand>().ToList();
-            var attackHandEventArgs = new InteractHandEventArgs {User = user, Target = attacked};
+            var attackHandEventArgs = new InteractHandEventArgs { User = user, Target = attacked };
 
             // all attackHands should only fire when in range / unobstructed
             if (attackHandEventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
@@ -561,7 +568,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             // Try to use item on any components which have the interface
             foreach (var use in uses)
             {
-                if (use.UseEntity(new UseEntityEventArgs {User = user}))
+                if (use.UseEntity(new UseEntityEventArgs { User = user }))
                 {
                     // If a Use returns a status completion we finish our attack
                     return;
@@ -830,7 +837,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             if (!ActionBlockerSystem.CanAttack(player) ||
-                (!wideAttack && !player.InRangeUnobstructed(coordinates, ignoreInsideBlocker:true)))
+                (!wideAttack && !player.InRangeUnobstructed(coordinates, ignoreInsideBlocker: true)))
             {
                 return;
             }
@@ -846,7 +853,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 {
                     foreach (var attackComponent in item.GetAllComponents<IAttack>())
                     {
-                        if(wideAttack ? attackComponent.WideAttack(eventArgs) : attackComponent.ClickAttack(eventArgs))
+                        if (wideAttack ? attackComponent.WideAttack(eventArgs) : attackComponent.ClickAttack(eventArgs))
                             return;
                     }
                 }

@@ -72,7 +72,7 @@ namespace Content.Server.GameObjects.Components.Body.Digestive
             solution.MaxVolume = _initialMaxVolume;
         }
 
-        public bool TryTransferSolution(Solution solution)
+        public bool CanTransferSolution(Solution solution)
         {
             if (!Owner.TryGetComponent(out SolutionContainerComponent? solutionComponent))
             {
@@ -80,10 +80,20 @@ namespace Content.Server.GameObjects.Components.Body.Digestive
             }
 
             // TODO: For now no partial transfers. Potentially change by design
-            if (solution.TotalVolume + solutionComponent.CurrentVolume > solutionComponent.MaxVolume)
+            if (!solutionComponent.CanAddSolution(solution))
             {
                 return false;
             }
+
+            return true;
+        }
+
+        public bool TryTransferSolution(Solution solution)
+        {
+            if (!CanTransferSolution(solution))
+                return false;
+
+            var solutionComponent = Owner.GetComponent<SolutionContainerComponent>();
 
             // Add solution to _stomachContents
             solutionComponent.TryAddSolution(solution, false, true);

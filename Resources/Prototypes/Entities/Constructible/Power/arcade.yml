@@ -30,3 +30,35 @@
       type: SpaceVillainArcadeBoundUserInterface
     - key: enum.WiresUiKey.Key
       type: WiresBoundUserInterface
+
+- type: entity
+  id: BlockGameArcade
+  name: blockGameArcade
+  parent: ComputerBase
+  components:
+    - type: Icon
+      state: arcade
+    - type: PowerReceiver
+    - type: Sprite
+      layers:
+        - state: arcade
+          map: ["enum.ComputerVisualizer+Layers.Body"]
+        - state: invaders
+          shader: unshaded
+          map: ["enum.ComputerVisualizer+Layers.Screen"]
+    - type: Appearance
+      visuals:
+        - type: ComputerVisualizer
+          screen: invaders
+          key: ""
+          body: arcade
+          bodyBroken: arcade
+    - type: Anchorable
+    - type: Pullable
+    - type: BlockGameArcade
+    - type: UserInterface
+      interfaces:
+        - key: enum.BlockGameUiKey.Key
+          type: BlockGameBoundUserInterface
+        - key: enum.WiresUiKey.Key
+          type: WiresBoundUserInterface

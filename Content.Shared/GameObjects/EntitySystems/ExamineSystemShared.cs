@@ -1,9 +1,11 @@
-﻿using Content.Shared.GameObjects.Components.Mobs;
+﻿using System.Linq;
+using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 using static Content.Shared.GameObjects.EntitySystems.SharedInteractionSystem;
@@ -56,7 +58,37 @@ namespace Content.Shared.GameObjects.EntitySystems
                 predicate += entity => entity == container.Owner;
             }
 
-            return examiner.InRangeUnobstructed(examined, ExamineRange, predicate: predicate, ignoreInsideBlocker: true);
+            return InRangeUnOccluded(
+                examiner.Transform.MapPosition,
+                examined.Transform.MapPosition,
+                ExamineRange,
+                predicate: predicate,
+                ignoreInsideBlocker: true);
+        }
+
+        private static bool InRangeUnOccluded(MapCoordinates origin, MapCoordinates other, float range, Ignored predicate, bool ignoreInsideBlocker = true)
+        {
+            var occluderSystem = Get<OccluderSystem>();
+            if (!origin.InRange(other, range)) return false;
+
+            var dir = other.Position - origin.Position;
+
+            if (dir.LengthSquared.Equals(0f)) return true;
+            if (range > 0f && !(dir.LengthSquared <= range * range)) return false;
+
+            predicate ??= _ => false;
+
+            var ray = new Ray(origin.Position, dir.Normalized);
+            var rayResults = occluderSystem
+                .IntersectRayWithPredicate(origin.MapId, ray, dir.Length, predicate.Invoke, false).ToList();
+
+            if (rayResults.Count == 0) return true;
+
+            if (!ignoreInsideBlocker) return false;
+
+            if (rayResults.Count <= 0) return false;
+
+            return (rayResults[0].HitPos - other.Position).Length < 1f;
         }
 
         public static FormattedMessage GetExamineText(IEntity entity, IEntity examiner)

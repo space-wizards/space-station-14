@@ -15,7 +15,6 @@
   color: "#808080"
   boilingPoint: -183.0
   meltingPoint: -218.4
-  gasOverlayTexture: /Textures/Effects/Gas/deleteme.png
 
 - type: reagent
   id: chem.S

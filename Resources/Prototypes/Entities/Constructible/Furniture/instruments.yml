@@ -1,0 +1,75 @@
+﻿ - type: entity
+   name: baseinstrument
+   id: BasePlaceableInstrument
+   abstract: true
+   components:
+   - type: Instrument
+     handheld: false
+   - type: Clickable
+   - type: InteractionOutline
+   - type: Anchorable
+   - type: Collidable
+     shapes:
+       - !type:PhysShapeAabb
+         mask:
+           - Impassable
+           - MobImpassable
+           - VaultImpassable
+   - type: SnapGrid
+     offset: Center
+   - type: Destructible
+     deadThreshold: 50
+     resistances: metallicResistances
+   - type: UserInterface
+     interfaces:
+     - key: enum.InstrumentUiKey.Key
+       type: InstrumentBoundUserInterface
+
+ - type: entity
+   name: piano
+   parent: BasePlaceableInstrument
+   id: PianoInstrument
+   description: Play Needles Piano Now.
+   components:
+   - type: Instrument
+     program: 1
+   - type: Sprite
+     sprite: Objects/Fun/Instruments/otherinstruments.rsi
+     state: piano
+
+ - type: entity
+   name: minimoog
+   parent: BasePlaceableInstrument
+   id: MinimoogInstrument
+   description: 'This is a minimoog, like a space piano, but more spacey!'
+   components:
+   - type: Instrument
+     program: 81
+   - type: Sprite
+     sprite: Objects/Fun/Instruments/otherinstruments.rsi
+     state: minimoog
+
+ - type: entity
+   name: church organ
+   parent: BasePlaceableInstrument
+   id: ChurchOrganInstrument
+   description: This thing really blows!
+   components:
+   - type: Instrument
+     program: 20
+   - type: Sprite
+     sprite: Objects/Fun/Instruments/otherinstruments.rsi
+     state: church_organ
+
+ - type: entity
+   name: xylophone
+   parent: BasePlaceableInstrument
+   id: XylophoneInstrument
+   # could not find the description for this item, so this is just temporary
+   description: That's a Xylophone
+   components:
+   - type: Instrument
+     program: 13
+   - type: Sprite
+     sprite: Objects/Fun/Instruments/otherinstruments.rsi
+     state: xylophone
