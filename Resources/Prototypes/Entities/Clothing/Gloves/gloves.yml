@@ -229,18 +229,6 @@
 
 - type: entity
   parent: GlovesBase
-  id: GlovesRainbow
-  name: rainbow gloves
-  description: A pair of rainbow gloves, they don't look special in any way. No really. Seriously.
-  components:
-  - type: Sprite
-    sprite: Clothing/Gloves/rainbow.rsi
-
-  - type: Clothing
-    sprite: Clothing/Gloves/rainbow.rsi
-
-- type: entity
-  parent: GlovesBase
   id: GlovesRed
   name: red gloves
   description: Regular red gloves that do not keep you from frying.

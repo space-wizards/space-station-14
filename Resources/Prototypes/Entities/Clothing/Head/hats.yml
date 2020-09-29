@@ -864,30 +864,6 @@
 
 - type: entity
   parent: HatBase
-  id: HatRainbowsoft
-  name: rainbowsoft
-  description: It's a baseball hat in a bright rainbow of colors. There's nothing special about. Seriously.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/rainbowsoft.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/rainbowsoft.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatRainbowsoftFlipped
-  name: rainbowsoft flipped
-  description: It's a flipped baseball hat in rainbow colours, there's nothing special about. Seriously.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/rainbowsoft_flipped.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/rainbowsoft_flipped.rsi
-
-- type: entity
-  parent: HatBase
   id: HatRedsoft
   name: redsoft
   description: It's a baseball hat in a tasteless red colour.
