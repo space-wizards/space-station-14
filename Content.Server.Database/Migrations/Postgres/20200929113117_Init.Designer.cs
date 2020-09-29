@@ -11,8 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Content.Server.Database.Migrations.Postgres
 {
     [DbContext(typeof(PostgresServerDbContext))]
-    [Migration("20200928183326_ConnectionLog")]
-    partial class ConnectionLog
+    [Migration("20200929113117_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,41 +24,47 @@ namespace Content.Server.Database.Migrations.Postgres
 
             modelBuilder.Entity("Content.Server.Database.Antag", b =>
                 {
-                    b.Property<int>("AntagId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnName("antag_id")
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("AntagName")
                         .IsRequired()
+                        .HasColumnName("antag_name")
                         .HasColumnType("text");
 
                     b.Property<int>("ProfileId")
+                        .HasColumnName("profile_id")
                         .HasColumnType("integer");
 
-                    b.HasKey("AntagId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ProfileId", "AntagName")
                         .IsUnique();
 
-                    b.ToTable("Antag");
+                    b.ToTable("antag");
                 });
 
             modelBuilder.Entity("Content.Server.Database.AssignedUserId", b =>
                 {
-                    b.Property<int>("AssignedUserIdId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnName("assigned_user_id_id")
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<Guid>("UserId")
+                        .HasColumnName("user_id")
                         .HasColumnType("uuid");
 
                     b.Property<string>("UserName")
                         .IsRequired()
+                        .HasColumnName("user_name")
                         .HasColumnType("text");
 
-                    b.HasKey("AssignedUserIdId");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId")
                         .IsUnique();
@@ -66,85 +72,100 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.HasIndex("UserName")
                         .IsUnique();
 
-                    b.ToTable("AssignedUserIds");
+                    b.ToTable("assigned_user_id");
                 });
 
             modelBuilder.Entity("Content.Server.Database.Job", b =>
                 {
-                    b.Property<int>("JobId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnName("job_id")
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("JobName")
                         .IsRequired()
+                        .HasColumnName("job_name")
                         .HasColumnType("text");
 
                     b.Property<int>("Priority")
+                        .HasColumnName("priority")
                         .HasColumnType("integer");
 
                     b.Property<int>("ProfileId")
+                        .HasColumnName("profile_id")
                         .HasColumnType("integer");
 
-                    b.HasKey("JobId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ProfileId");
 
-                    b.ToTable("Job");
+                    b.ToTable("job");
                 });
 
             modelBuilder.Entity("Content.Server.Database.PostgresConnectionLog", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnName("connection_log_id")
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<IPAddress>("Address")
                         .IsRequired()
+                        .HasColumnName("address")
                         .HasColumnType("inet");
 
                     b.Property<DateTime>("Time")
+                        .HasColumnName("time")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid>("UserId")
+                        .HasColumnName("user_id")
                         .HasColumnType("uuid");
 
                     b.Property<string>("UserName")
                         .IsRequired()
+                        .HasColumnName("user_name")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ConnectionLog");
+                    b.ToTable("connection_log");
 
-                    b.HasCheckConstraint("AddressNotIPv6MappedIPv4", "NOT inet '::ffff:0.0.0.0/96' >>= \"Address\"");
+                    b.HasCheckConstraint("AddressNotIPv6MappedIPv4", "NOT inet '::ffff:0.0.0.0/96' >>= address");
                 });
 
             modelBuilder.Entity("Content.Server.Database.PostgresPlayer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnName("player_id")
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<DateTime>("FirstSeenTime")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnName("first_seen_time")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<IPAddress>("LastSeenAddress")
                         .IsRequired()
+                        .HasColumnName("last_seen_address")
                         .HasColumnType("inet");
 
                     b.Property<DateTime>("LastSeenTime")
+                        .HasColumnName("last_seen_time")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("LastSeenUserName")
                         .IsRequired()
+                        .HasColumnName("last_seen_user_name")
                         .HasColumnType("text");
 
                     b.Property<Guid>("UserId")
+                        .HasColumnName("user_id")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
@@ -152,35 +173,42 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Player");
+                    b.ToTable("player");
 
-                    b.HasCheckConstraint("LastSeenAddressNotIPv6MappedIPv4", "NOT inet '::ffff:0.0.0.0/96' >>= \"LastSeenAddress\"");
+                    b.HasCheckConstraint("LastSeenAddressNotIPv6MappedIPv4", "NOT inet '::ffff:0.0.0.0/96' >>= last_seen_address");
                 });
 
             modelBuilder.Entity("Content.Server.Database.PostgresServerBan", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnName("server_ban_id")
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<ValueTuple<IPAddress, int>?>("Address")
+                        .HasColumnName("address")
                         .HasColumnType("inet");
 
                     b.Property<DateTime>("BanTime")
+                        .HasColumnName("ban_time")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid?>("BanningAdmin")
+                        .HasColumnName("banning_admin")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime?>("ExpirationTime")
+                        .HasColumnName("expiration_time")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Reason")
                         .IsRequired()
+                        .HasColumnName("reason")
                         .HasColumnType("text");
 
                     b.Property<Guid?>("UserId")
+                        .HasColumnName("user_id")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
@@ -189,27 +217,31 @@ namespace Content.Server.Database.Migrations.Postgres
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Bans");
+                    b.ToTable("server_ban");
 
-                    b.HasCheckConstraint("AddressNotIPv6MappedIPv4", "NOT inet '::ffff:0.0.0.0/96' >>= \"Address\"");
+                    b.HasCheckConstraint("AddressNotIPv6MappedIPv4", "NOT inet '::ffff:0.0.0.0/96' >>= address");
 
-                    b.HasCheckConstraint("HaveEitherAddressOrUserId", "\"Address\" IS NOT NULL OR \"UserId\" IS NOT NULL");
+                    b.HasCheckConstraint("HaveEitherAddressOrUserId", "address IS NOT NULL OR user_id IS NOT NULL");
                 });
 
             modelBuilder.Entity("Content.Server.Database.PostgresServerUnban", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnName("unban_id")
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<int>("BanId")
+                        .HasColumnName("ban_id")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("UnbanTime")
+                        .HasColumnName("unban_time")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid?>("UnbanningAdmin")
+                        .HasColumnName("unbanning_admin")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
@@ -217,89 +249,105 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.HasIndex("BanId")
                         .IsUnique();
 
-                    b.ToTable("Unbans");
+                    b.ToTable("server_unban");
                 });
 
-            modelBuilder.Entity("Content.Server.Database.Prefs", b =>
+            modelBuilder.Entity("Content.Server.Database.Preference", b =>
                 {
-                    b.Property<int>("PrefsId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnName("preference_id")
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<int>("SelectedCharacterSlot")
+                        .HasColumnName("selected_character_slot")
                         .HasColumnType("integer");
 
                     b.Property<Guid>("UserId")
+                        .HasColumnName("user_id")
                         .HasColumnType("uuid");
 
-                    b.HasKey("PrefsId");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Preferences");
+                    b.ToTable("preference");
                 });
 
             modelBuilder.Entity("Content.Server.Database.Profile", b =>
                 {
-                    b.Property<int>("ProfileId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnName("profile_id")
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<int>("Age")
+                        .HasColumnName("age")
                         .HasColumnType("integer");
 
                     b.Property<string>("CharacterName")
                         .IsRequired()
+                        .HasColumnName("char_name")
                         .HasColumnType("text");
 
                     b.Property<string>("EyeColor")
                         .IsRequired()
+                        .HasColumnName("eye_color")
                         .HasColumnType("text");
 
                     b.Property<string>("FacialHairColor")
                         .IsRequired()
+                        .HasColumnName("facial_hair_color")
                         .HasColumnType("text");
 
                     b.Property<string>("FacialHairName")
                         .IsRequired()
+                        .HasColumnName("facial_hair_name")
                         .HasColumnType("text");
 
                     b.Property<string>("HairColor")
                         .IsRequired()
+                        .HasColumnName("hair_color")
                         .HasColumnType("text");
 
                     b.Property<string>("HairName")
                         .IsRequired()
+                        .HasColumnName("hair_name")
                         .HasColumnType("text");
 
-                    b.Property<int>("PreferenceUnavailable")
+                    b.Property<int>("PreferenceId")
+                        .HasColumnName("preference_id")
                         .HasColumnType("integer");
 
-                    b.Property<int>("PrefsId")
+                    b.Property<int>("PreferenceUnavailable")
+                        .HasColumnName("pref_unavailable")
                         .HasColumnType("integer");
 
                     b.Property<string>("Sex")
                         .IsRequired()
+                        .HasColumnName("sex")
                         .HasColumnType("text");
 
                     b.Property<string>("SkinColor")
                         .IsRequired()
+                        .HasColumnName("skin_color")
                         .HasColumnType("text");
 
                     b.Property<int>("Slot")
+                        .HasColumnName("slot")
                         .HasColumnType("integer");
 
-                    b.HasKey("ProfileId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("PrefsId");
+                    b.HasIndex("PreferenceId");
 
-                    b.HasIndex("Slot", "PrefsId")
+                    b.HasIndex("Slot", "PreferenceId")
                         .IsUnique();
 
-                    b.ToTable("Profiles");
+                    b.ToTable("profile");
                 });
 
             modelBuilder.Entity("Content.Server.Database.Antag", b =>
@@ -331,9 +379,9 @@ namespace Content.Server.Database.Migrations.Postgres
 
             modelBuilder.Entity("Content.Server.Database.Profile", b =>
                 {
-                    b.HasOne("Content.Server.Database.Prefs", "Prefs")
+                    b.HasOne("Content.Server.Database.Preference", "Preference")
                         .WithMany("Profiles")
-                        .HasForeignKey("PrefsId")
+                        .HasForeignKey("PreferenceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
