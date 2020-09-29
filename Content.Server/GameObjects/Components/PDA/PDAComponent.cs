@@ -216,7 +216,7 @@ namespace Content.Server.GameObjects.Components.PDA
             UpdatePDAUserInterface();
         }
 
-        private void InsertIdCard(IdCardComponent card)
+        public void InsertIdCard(IdCardComponent card)
         {
             _idSlot.Insert(card.Owner);
             ContainedID = card;
