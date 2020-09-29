@@ -7,13 +7,18 @@ using Content.Client.Interfaces.Parallax;
 using Content.Client.Parallax;
 using Content.Client.Sandbox;
 using Content.Client.State;
+using Content.Client.StationEvents;
 using Content.Client.UserInterface;
+using Content.Client.UserInterface.AdminMenu;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Cargo;
 using Content.Shared.GameObjects.Components.Chemistry;
+using Content.Shared.GameObjects.Components.Chemistry.ChemMaster;
+using Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser;
 using Content.Shared.GameObjects.Components.Gravity;
 using Content.Shared.GameObjects.Components.Markers;
+using Content.Shared.GameObjects.Components.Power.AME;
 using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.GameObjects.Components.VendingMachines;
 using Content.Shared.Kitchen;
@@ -24,6 +29,7 @@ using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.State;
 using Robust.Client.Player;
 using Robust.Shared.ContentPack;
+using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
@@ -35,13 +41,12 @@ namespace Content.Client
 {
     public class EntryPoint : GameClient
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private readonly IBaseClient _baseClient;
-        [Dependency] private readonly IEscapeMenuOwner _escapeMenuOwner;
-        [Dependency] private readonly IGameController _gameController;
-        [Dependency] private readonly IStateManager _stateManager;
-#pragma warning restore 649
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IBaseClient _baseClient = default!;
+        [Dependency] private readonly IEscapeMenuOwner _escapeMenuOwner = default!;
+        [Dependency] private readonly IGameController _gameController = default!;
+        [Dependency] private readonly IStateManager _stateManager = default!;
+        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
         public override void Init()
         {
@@ -50,127 +55,7 @@ namespace Content.Client
 
             factory.DoAutoRegistrations();
 
-            var registerIgnore = new[]
-            {
-                "Anchorable",
-                "AmmoBox",
-                "Breakable",
-                "Pickaxe",
-                "Interactable",
-                "Destructible",
-                "Temperature",
-                "PowerTransfer",
-                "PowerNode",
-                "PowerProvider",
-                "PowerDevice",
-                "PowerStorage",
-                "PowerGenerator",
-                "Explosive",
-                "OnUseTimerTrigger",
-                "ToolboxElectricalFill",
-                "ToolboxEmergencyFill",
-                "WarpPoint",
-                "ToolboxGoldFill",
-                "ToolLockerFill",
-                "EmitSoundOnUse",
-                "FootstepModifier",
-                "HeatResistance",
-                "Teleportable",
-                "ItemTeleporter",
-                "Portal",
-                "EntityStorage",
-                "PlaceableSurface",
-                "Wirecutter",
-                "Screwdriver",
-                "Multitool",
-                "Wrench",
-                "Crowbar",
-                "HitscanWeapon",
-                "ProjectileWeapon",
-                "Projectile",
-                "MeleeWeapon",
-                "Storeable",
-                "Dice",
-                "Construction",
-                "Apc",
-                "Door",
-                "PoweredLight",
-                "Smes",
-                "Powercell",
-                "LightBulb",
-                "Healing",
-                "Catwalk",
-                "BallisticMagazine",
-                "BallisticBullet",
-                "HitscanWeaponCapacitor",
-                "PowerCell",
-                "WeaponCapacitorCharger",
-                "PowerCellCharger",
-                "AiController",
-                "PlayerInputMover",
-                "Computer",
-                "AsteroidRock",
-                "ResearchServer",
-                "ResearchPointSource",
-                "ResearchClient",
-                "IdCard",
-                "Access",
-                "AccessReader",
-                "IdCardConsole",
-                "Airlock",
-                "MedicalScanner",
-                "WirePlacer",
-                "Species",
-                "Drink",
-                "Food",
-                "FoodContainer",
-                "Stomach",
-                "Hunger",
-                "Thirst",
-                "Rotatable",
-                "MagicMirror",
-                "MedkitFill",
-                "FloorTile",
-                "FootstepSound",
-                "UtilityBeltClothingFill",
-                "ShuttleController",
-                "HumanInventoryController",
-                "UseDelay",
-                "Pourable",
-                "Paper",
-                "Write",
-                "Bloodstream",
-                "TransformableContainer",
-                "Mind",
-                "MovementSpeedModifier",
-                "StorageFill",
-                "Mop",
-                "Bucket",
-                "Puddle",
-                "CanSpill",
-                "RandomPottedPlant",
-                "CommunicationsConsole",
-                "BarSign",
-                "DroppedBodyPart",
-                "DroppedMechanism",
-                "BodyManager",
-                "Stunnable",
-                "SolarPanel",
-                "BodyScanner",
-                "Stunbaton",
-                "EmergencyClosetFill",
-                "Tool",
-                "TilePrying",
-                "RandomToolColor",
-                "ConditionalSpawner",
-                "PottedPlantHide",
-                "SecureEntityStorage",
-                "PresetIdCard",
-                "SolarControlConsole",
-                "Utensil",
-            };
-
-            foreach (var ignoreName in registerIgnore)
+            foreach (var ignoreName in IgnoredComponents.List)
             {
                 factory.RegisterIgnore(ignoreName);
             }
@@ -179,17 +64,20 @@ namespace Content.Client
             factory.Register<SharedLatheComponent>();
             factory.Register<SharedSpawnPointComponent>();
 
-            factory.Register<SharedSolutionComponent>();
+            factory.Register<SharedSolutionContainerComponent>();
 
             factory.Register<SharedVendingMachineComponent>();
             factory.Register<SharedWiresComponent>();
             factory.Register<SharedCargoConsoleComponent>();
             factory.Register<SharedReagentDispenserComponent>();
+            factory.Register<SharedChemMasterComponent>();
             factory.Register<SharedMicrowaveComponent>();
             factory.Register<SharedGravityGeneratorComponent>();
+            factory.Register<SharedAMEControllerComponent>();
 
             prototypes.RegisterIgnore("material");
             prototypes.RegisterIgnore("reaction"); //Chemical reactions only needed by server. Reactions checks are server-side.
+            prototypes.RegisterIgnore("gasReaction");
             prototypes.RegisterIgnore("barSign");
 
             ClientContentIoC.Register();
@@ -215,6 +103,8 @@ namespace Content.Client
             {
                 IoCManager.Resolve<IMapManager>().CreateNewMapEntity(MapId.Nullspace);
             };
+
+             _configurationManager.RegisterCVar("outline.enabled", true);
         }
 
         /// <summary>
@@ -241,7 +131,10 @@ namespace Content.Client
         /// </summary>
         public static void DetachPlayerFromEntity(EntityDetachedEventArgs eventArgs)
         {
-            eventArgs.OldEntity.RemoveComponent<CharacterInterface>();
+            if (!eventArgs.OldEntity.Deleted)
+            {
+                eventArgs.OldEntity.RemoveComponent<CharacterInterface>();
+            }
         }
 
         public override void PostInit()
@@ -259,6 +152,8 @@ namespace Content.Client
             IoCManager.Resolve<IChatManager>().Initialize();
             IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();
+            IoCManager.Resolve<IStationEventManager>().Initialize();
+            IoCManager.Resolve<IAdminMenuManager>().Initialize();
 
             _baseClient.RunLevelChanged += (sender, args) =>
             {

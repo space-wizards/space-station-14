@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Nutrition;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Utensil;
+using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -18,10 +19,8 @@ namespace Content.Server.GameObjects.Components.Utensil
     [RegisterComponent]
     public class UtensilComponent : SharedUtensilComponent, IAfterInteract
     {
-#pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystem;
-        [Dependency] private readonly IRobustRandom _random;
-#pragma warning restore 649
+        [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         protected UtensilType _types = UtensilType.None;
 
@@ -83,17 +82,26 @@ namespace Content.Server.GameObjects.Components.Utensil
         {
             base.ExposeData(serializer);
 
-            if (serializer.Reading)
-            {
-                var types = serializer.ReadDataField("types", new List<UtensilType>());
-                foreach (var type in types)
+            serializer.DataReadWriteFunction("types",
+                new List<UtensilType>(),
+                types => types.ForEach(AddType),
+                () =>
                 {
-                    AddType(type);
-                }
-            }
+                    var types = new List<UtensilType>();
+
+                    foreach (UtensilType type in Enum.GetValues(typeof(UtensilType)))
+                    {
+                        if ((Types & type) != 0)
+                        {
+                            types.Add(type);
+                        }
+                    }
+
+                    return types;
+                });
 
             serializer.DataField(ref _breakChance, "breakChance", 0);
-            serializer.DataField(ref _breakSound, "breakSound", "/Audio/items/snap.ogg");
+            serializer.DataField(ref _breakSound, "breakSound", "/Audio/Items/snap.ogg");
         }
 
         void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
@@ -113,7 +121,7 @@ namespace Content.Server.GameObjects.Components.Utensil
                 return;
             }
 
-            if (!InteractionChecks.InRangeUnobstructed(user, target.Transform.MapPosition))
+            if (!user.InRangeUnobstructed(target, popup: true))
             {
                 return;
             }

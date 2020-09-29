@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
@@ -13,6 +13,8 @@ namespace Content.Shared.GameObjects.Components.Mobs
     {
         public override string Name => "StatusEffectsUI";
         public override uint? NetID => ContentNetIDs.STATUSEFFECTS;
+
+        public abstract void ChangeStatusEffect(StatusEffect effect, string icon, ValueTuple<TimeSpan, TimeSpan>? cooldown);
     }
 
     [Serializable, NetSerializable]
@@ -23,6 +25,21 @@ namespace Content.Shared.GameObjects.Components.Mobs
         public StatusEffectComponentState(Dictionary<StatusEffect, StatusEffectStatus> statusEffects) : base(ContentNetIDs.STATUSEFFECTS)
         {
             StatusEffects = statusEffects;
+        }
+    }
+
+    /// <summary>
+    /// A message that calls the click interaction on a status effect
+    /// </summary>
+    [Serializable, NetSerializable]
+    public class ClickStatusMessage : ComponentMessage
+    {
+        public readonly StatusEffect Effect;
+
+        public ClickStatusMessage(StatusEffect effect)
+        {
+            Directed = true;
+            Effect = effect;
         }
     }
 
@@ -39,6 +56,14 @@ namespace Content.Shared.GameObjects.Components.Mobs
         Health,
         Hunger,
         Thirst,
+        Pressure,
+        Fire,
+        Temperature,
         Stun,
+        Cuffed,
+        Buckled,
+        Piloting,
+        Pulling,
+        Pulled
     }
 }

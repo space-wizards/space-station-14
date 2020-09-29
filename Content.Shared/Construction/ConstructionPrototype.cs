@@ -85,10 +85,10 @@ namespace Content.Shared.Construction
             ser.DataField(ref _id, "id", string.Empty);
             ser.DataField(ref _description, "description", string.Empty);
             ser.DataField(ref _icon, "icon", SpriteSpecifier.Invalid);
-            ser.DataField(ref _type, "objecttype", ConstructionType.Structure);
+            ser.DataField(ref _type, "objectType", ConstructionType.Structure);
             ser.DataField(ref _result, "result", null);
-            ser.DataField(ref _placementMode, "placementmode", "PlaceFree");
-            ser.DataField(ref _canBuildInImpassable, "canbuildinimpassable", false);
+            ser.DataField(ref _placementMode, "placementMode", "PlaceFree");
+            ser.DataField(ref _canBuildInImpassable, "canBuildInImpassable", false);
 
             _keywords = ser.ReadDataField<List<string>>("keywords", new List<string>());
             {
@@ -181,11 +181,13 @@ namespace Content.Shared.Construction
 
     public abstract class ConstructionStep
     {
-        public readonly int Amount = 1;
+        public readonly int Amount;
+        public readonly float DoAfterDelay;
 
-        protected ConstructionStep(int amount)
+        protected ConstructionStep(int amount, float doAfterDelay = 0f)
         {
             Amount = amount;
+            DoAfterDelay = doAfterDelay;
         }
     }
 
@@ -215,6 +217,7 @@ namespace Content.Shared.Construction
             Glass,
             Cable,
             Gold,
+            Phoron,
         }
     }
 }

@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.AI.Operators;
-using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.WorldState;
+using Content.Server.AI.WorldState.States.Utility;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Utility;
 
@@ -42,7 +42,9 @@ namespace Content.Server.AI.Utility.Actions
         /// All the considerations are multiplied together to get the final score; a consideration of 0.0 means the action is not possible.
         /// Ideally you put anything that's easy to assess and can cause an early-out first just so the rest aren't evaluated.
         /// </summary>
-        protected abstract Consideration[] Considerations { get; }
+        /// Uses Func<float> as you don't want to eval the later considerations unless necessary, but we also need the total count
+        /// so can't use IEnumerable
+        protected abstract IReadOnlyCollection<Func<float>> GetConsiderations(Blackboard context);
 
         /// <summary>
         /// To keep the operators simple we can chain them together here, e.g. move to can be chained with other operators.
@@ -103,37 +105,27 @@ namespace Content.Server.AI.Utility.Actions
         /// This is where the magic happens
         /// </summary>
         /// <param name="context"></param>
-        /// <param name="bonus"></param>
         /// <param name="min"></param>
         /// <returns></returns>
         public float GetScore(Blackboard context, float min)
         {
             UpdateBlackboard(context);
-            DebugTools.Assert(Considerations.Length > 0);
-            // I used the IAUS video although I did have some confusion on how to structure it overall
-            // as some of the slides seemed contradictory
+            var considerations = GetConsiderations(context);
+            DebugTools.Assert(considerations.Count > 0);
 
-            // Ideally we should early-out each action as cheaply as possible if it's not valid
-
-            // We also need some way to tell if the action isn't going to
-            // have a better score than the current action (if applicable) and early-out that way as well.
-
-            // 23:00 Building a better centaur
+            // Overall structure is based on Building a better centaur
+            // Ideally we should early-out each action as cheaply as possible if it's not valid, thus
+            // the finalScore can only go down over time.
+            
             var finalScore = 1.0f;
             var minThreshold = min / Bonus;
-            var modificationFactor = 1.0f - 1.0f / Considerations.Length;
-            // See 10:09 for this and the adjustments
+            context.GetState<ConsiderationState>().SetValue(considerations.Count);
 
-            foreach (var consideration in Considerations)
+            foreach (var consideration in considerations)
             {
-                var score = consideration.GetScore(context);
-                var makeUpValue = (1.0f - score) * modificationFactor;
-                var adjustedScore = score + makeUpValue * score;
-                var response = consideration.ComputeResponseCurve(adjustedScore);
-
-                finalScore *= response;
-
-                DebugTools.Assert(!float.IsNaN(response));
+                var score = consideration.Invoke();
+                finalScore *= score;
+                DebugTools.Assert(!float.IsNaN(score));
 
                 // The score can only ever go down from each consideration so if we're below minimum no point continuing.
                 if (0.0f >= finalScore || finalScore < minThreshold) {

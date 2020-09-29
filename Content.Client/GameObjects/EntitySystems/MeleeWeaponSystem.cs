@@ -1,10 +1,14 @@
-﻿using Content.Client.GameObjects.Components.Mobs;
+﻿using System;
+using Content.Client.GameObjects.Components.Mobs;
 using Content.Client.GameObjects.Components.Weapons.Melee;
 using Content.Shared.GameObjects.Components.Weapons.Melee;
 using JetBrains.Annotations;
+using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.EntitySystemMessages;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
@@ -17,23 +21,21 @@ namespace Content.Client.GameObjects.EntitySystems
     [UsedImplicitly]
     public sealed class MeleeWeaponSystem : EntitySystem
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-#pragma warning restore 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override void Initialize()
         {
             SubscribeNetworkEvent<PlayMeleeWeaponAnimationMessage>(PlayWeaponArc);
-            EntityQuery = new TypeEntityQuery(typeof(MeleeWeaponArcAnimationComponent));
         }
 
         public override void FrameUpdate(float frameTime)
         {
             base.FrameUpdate(frameTime);
 
-            foreach (var entity in RelevantEntities)
+            foreach (var arcAnimationComponent in EntityManager.ComponentManager.EntityQuery<MeleeWeaponArcAnimationComponent>())
             {
-                entity.GetComponent<MeleeWeaponArcAnimationComponent>().Update(frameTime);
+                arcAnimationComponent.Update(frameTime);
             }
         }
 
@@ -50,12 +52,32 @@ namespace Content.Client.GameObjects.EntitySystems
             var lunge = attacker.EnsureComponent<MeleeLungeComponent>();
             lunge.SetData(msg.Angle);
 
-            var entity = EntityManager.SpawnEntity("WeaponArc", attacker.Transform.GridPosition);
+            var entity = EntityManager.SpawnEntity(weaponArc.Prototype, attacker.Transform.Coordinates);
             entity.Transform.LocalRotation = msg.Angle;
 
             var weaponArcAnimation = entity.GetComponent<MeleeWeaponArcAnimationComponent>();
             weaponArcAnimation.SetData(weaponArc, msg.Angle, attacker);
 
+            // Due to ISpriteComponent limitations, weapons that don't use an RSI won't have this effect.
+            if (EntityManager.TryGetEntity(msg.Source, out var source) && msg.TextureEffect && source.TryGetComponent(out ISpriteComponent sourceSprite)
+            && sourceSprite.BaseRSI?.Path != null)
+            {
+                var sys = Get<EffectSystem>();
+                var curTime = _gameTiming.CurTime;
+                var effect = new EffectSystemMessage
+                {
+                    EffectSprite = sourceSprite.BaseRSI.Path.ToString(),
+                    RsiState = sourceSprite.LayerGetState(0).Name,
+                    Coordinates = attacker.Transform.Coordinates,
+                    Color = Vector4.Multiply(new Vector4(255, 255, 255, 125), 1.0f),
+                    ColorDelta = Vector4.Multiply(new Vector4(0, 0, 0, -10), 1.0f),
+                    Velocity = msg.Angle.ToVec(),
+                    Acceleration = msg.Angle.ToVec() * 5f,
+                    Born = curTime,
+                    DeathTime = curTime.Add(TimeSpan.FromMilliseconds(300f)),
+                };
+                sys.CreateEffect(effect);
+            }
 
             foreach (var uid in msg.Hits)
             {

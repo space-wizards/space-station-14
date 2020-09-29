@@ -1,6 +1,6 @@
 - type: soundCollection
   id: glassbreak
   files:
-  - /Audio/effects/glassbreak1.ogg
-  - /Audio/effects/glassbreak2.ogg
-  - /Audio/effects/glassbreak3.ogg
+  - /Audio/Effects/glassbreak1.ogg
+  - /Audio/Effects/glassbreak2.ogg
+  - /Audio/Effects/glassbreak3.ogg

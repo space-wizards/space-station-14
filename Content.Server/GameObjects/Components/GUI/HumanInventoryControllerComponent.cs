@@ -1,12 +1,12 @@
+using Content.Server.GameObjects.Components.Items.Storage;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Localization;
 using Robust.Shared.Timers;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
-namespace Content.Server.GameObjects
+namespace Content.Server.GameObjects.Components.GUI
 {
     // Handles the special behavior of pockets/ID card slot and their relation to uniforms.
     [RegisterComponent]
@@ -21,7 +21,7 @@ namespace Content.Server.GameObjects
         {
             base.Initialize();
 
-            _inventory = Owner.GetComponent<InventoryComponent>();
+            _inventory = Owner.EnsureComponent<InventoryComponent>();
         }
 
         bool IInventoryController.CanEquip(Slots slot, IEntity entity, bool flagsCheck, out string reason)

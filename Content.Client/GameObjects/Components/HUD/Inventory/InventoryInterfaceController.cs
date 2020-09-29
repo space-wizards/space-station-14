@@ -8,13 +8,11 @@ using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Client.GameObjects
+namespace Content.Client.GameObjects.Components.HUD.Inventory
 {
     public abstract class InventoryInterfaceController : IDisposable
     {
-#pragma warning disable 649
-        [Dependency] protected readonly IGameHud _gameHud;
-#pragma warning restore 649
+        [Dependency] protected readonly IGameHud GameHud = default!;
 
         protected InventoryInterfaceController(ClientInventoryComponent owner)
         {
@@ -31,8 +29,8 @@ namespace Content.Client.GameObjects
 
         public virtual void PlayerAttached()
         {
-            _gameHud.InventoryButtonVisible = true;
-            _gameHud.InventoryButtonToggled = b =>
+            GameHud.InventoryButtonVisible = true;
+            GameHud.InventoryButtonToggled = b =>
             {
                 if (b)
                 {
@@ -47,7 +45,7 @@ namespace Content.Client.GameObjects
 
         public virtual void PlayerDetached()
         {
-            _gameHud.InventoryButtonVisible = false;
+            GameHud.InventoryButtonVisible = false;
             Window.Close();
         }
 
@@ -56,6 +54,10 @@ namespace Content.Client.GameObjects
         }
 
         public virtual void AddToSlot(EquipmentSlotDefines.Slots slot, IEntity entity)
+        {
+        }
+
+        public virtual void HoverInSlot(EquipmentSlotDefines.Slots slot, IEntity entity, bool fits)
         {
         }
 
@@ -94,6 +96,11 @@ namespace Content.Client.GameObjects
             }
 
             Owner.SendOpenStorageUIMessage(slot);
+        }
+
+        protected void RequestItemHover(EquipmentSlotDefines.Slots slot)
+        {
+            Owner.SendHoverMessage(slot);
         }
     }
 }

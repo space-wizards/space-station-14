@@ -1,0 +1,8 @@
+﻿- type: entity
+  name: hover entity
+  id: hoverentity
+  abstract: true
+  components:
+    - type: Sprite
+      layers:
+        - shader: unshaded

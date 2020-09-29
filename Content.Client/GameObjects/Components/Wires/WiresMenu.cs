@@ -5,7 +5,6 @@ using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components;
 using Robust.Client.Animations;
-using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -43,7 +42,7 @@ namespace Content.Client.GameObjects.Components.Wires
 
             MouseFilter = MouseFilterMode.Stop;
 
-            var panelTex = resourceCache.GetTexture("/Nano/button.svg.96dpi.png");
+            var panelTex = resourceCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
             var back = new StyleBoxTexture
             {
                 Texture = panelTex,
@@ -306,7 +305,7 @@ namespace Content.Client.GameObjects.Components.Wires
 
         private sealed class WireControl : Control
         {
-            private const string TextureContact = "/Textures/UserInterface/WireHacking/contact.svg.96dpi.png";
+            private const string TextureContact = "/Textures/Interface/WireHacking/contact.svg.96dpi.png";
 
             public event Action WireClicked;
             public event Action ContactsClicked;
@@ -405,20 +404,20 @@ namespace Content.Client.GameObjects.Components.Wires
 
                 private static readonly string[] TextureNormal =
                 {
-                    "/Textures/UserInterface/WireHacking/wire_1.svg.96dpi.png",
-                    "/Textures/UserInterface/WireHacking/wire_2.svg.96dpi.png"
+                    "/Textures/Interface/WireHacking/wire_1.svg.96dpi.png",
+                    "/Textures/Interface/WireHacking/wire_2.svg.96dpi.png"
                 };
 
                 private static readonly string[] TextureCut =
                 {
-                    "/Textures/UserInterface/WireHacking/wire_1_cut.svg.96dpi.png",
-                    "/Textures/UserInterface/WireHacking/wire_2_cut.svg.96dpi.png",
+                    "/Textures/Interface/WireHacking/wire_1_cut.svg.96dpi.png",
+                    "/Textures/Interface/WireHacking/wire_2_cut.svg.96dpi.png",
                 };
 
                 private static readonly string[] TextureCopper =
                 {
-                    "/Textures/UserInterface/WireHacking/wire_1_copper.svg.96dpi.png",
-                    "/Textures/UserInterface/WireHacking/wire_2_copper.svg.96dpi.png"
+                    "/Textures/Interface/WireHacking/wire_1_copper.svg.96dpi.png",
+                    "/Textures/Interface/WireHacking/wire_2_copper.svg.96dpi.png"
                 };
 
                 public WireRender(WireColor color, bool isCut, bool flip, bool mirror, int type)
@@ -532,7 +531,7 @@ namespace Content.Client.GameObjects.Components.Wires
                         new TextureRect
                         {
                             Texture = resC.GetTexture(
-                                "/Textures/UserInterface/WireHacking/light_off_base.svg.96dpi.png"),
+                                "/Textures/Interface/WireHacking/light_off_base.svg.96dpi.png"),
                             Stretch = TextureRect.StretchMode.KeepCentered,
                             ModulateSelfOverride = dimColor
                         },
@@ -541,7 +540,7 @@ namespace Content.Client.GameObjects.Components.Wires
                             ModulateSelfOverride = data.Color.WithAlpha(0.4f),
                             Stretch = TextureRect.StretchMode.KeepCentered,
                             Texture =
-                                resC.GetTexture("/Textures/UserInterface/WireHacking/light_on_base.svg.96dpi.png"),
+                                resC.GetTexture("/Textures/Interface/WireHacking/light_on_base.svg.96dpi.png"),
                         })
                     }
                 };

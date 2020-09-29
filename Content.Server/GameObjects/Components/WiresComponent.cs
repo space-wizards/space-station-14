@@ -1,14 +1,19 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.VendingMachines;
 using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces;
-using Content.Server.Interfaces.GameObjects;
+using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
@@ -30,13 +35,9 @@ namespace Content.Server.GameObjects.Components
     [RegisterComponent]
     public class WiresComponent : SharedWiresComponent, IInteractUsing, IExamine, IMapInit
     {
-#pragma warning disable 649
-        [Dependency] private readonly IRobustRandom _random;
-        [Dependency] private readonly IServerNotifyManager _notifyManager;
-#pragma warning restore 649
-        private AudioSystem _audioSystem;
-        private AppearanceComponent _appearance;
-        private BoundUserInterface _userInterface;
+        [Dependency] private readonly IRobustRandom _random = default!;
+
+        private AudioSystem _audioSystem = default!;
 
         private bool _isPanelOpen;
 
@@ -92,7 +93,7 @@ namespace Content.Server.GameObjects.Components
         }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public string SerialNumber
+        public string? SerialNumber
         {
             get => _serialNumber;
             set
@@ -104,17 +105,22 @@ namespace Content.Server.GameObjects.Components
 
         private void UpdateAppearance()
         {
-            _appearance.SetData(WiresVisuals.MaintenancePanelState, IsPanelOpen && IsPanelVisible);
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            {
+                appearance.SetData(WiresVisuals.MaintenancePanelState, IsPanelOpen && IsPanelVisible);
+            }
         }
 
         /// <summary>
         /// Contains all registered wires.
         /// </summary>
+        [ViewVariables]
         public readonly List<Wire> WiresList = new List<Wire>();
 
         /// <summary>
         /// Status messages are displayed at the bottom of the UI.
         /// </summary>
+        [ViewVariables]
         private readonly Dictionary<object, object> _statuses = new Dictionary<object, object>();
 
         /// <summary>
@@ -126,26 +132,33 @@ namespace Content.Server.GameObjects.Components
         private readonly List<WireLetter> _availableLetters =
             new List<WireLetter>((WireLetter[]) Enum.GetValues(typeof(WireLetter)));
 
-        private string _boardName;
+        private string _boardName = default!;
 
-        private string _serialNumber;
+        private string? _serialNumber;
 
         // Used to generate wire appearance randomization client side.
         // We honestly don't care what it is or such but do care that it doesn't change between UI re-opens.
         [ViewVariables]
         private int _wireSeed;
         [ViewVariables]
-        private string _layoutId;
+        private string? _layoutId;
+
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(WiresUiKey.Key);
 
         public override void Initialize()
         {
             base.Initialize();
             _audioSystem = EntitySystem.Get<AudioSystem>();
-            _appearance = Owner.GetComponent<AppearanceComponent>();
-            _appearance.SetData(WiresVisuals.MaintenancePanelState, IsPanelOpen);
-            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
-                .GetBoundUserInterface(WiresUiKey.Key);
-            _userInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
+
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            {
+                appearance.SetData(WiresVisuals.MaintenancePanelState, IsPanelOpen);
+            }
+
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
+            }
         }
 
         private void GenerateSerialNumber()
@@ -185,7 +198,7 @@ namespace Content.Server.GameObjects.Components
             base.Startup();
 
 
-            WireLayout layout = null;
+            WireLayout? layout = null;
             var hackingSystem = EntitySystem.Get<WireHackingSystem>();
             if (_layoutId != null)
             {
@@ -298,9 +311,9 @@ namespace Content.Server.GameObjects.Components
         {
             [NotNull] private readonly WiresComponent _wires;
             [NotNull] private readonly IWires _owner;
-            [CanBeNull] private readonly WireLayout _layout;
+            private readonly WireLayout? _layout;
 
-            public WiresBuilder(WiresComponent wires, IWires owner, WireLayout layout)
+            public WiresBuilder(WiresComponent wires, IWires owner, WireLayout? layout)
             {
                 _wires = wires;
                 _owner = owner;
@@ -354,7 +367,7 @@ namespace Content.Server.GameObjects.Components
         /// </summary>
         public void OpenInterface(IPlayerSession session)
         {
-            _userInterface.Open(session);
+            UserInterface?.Open(session);
         }
 
         private void UserInterfaceOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
@@ -364,28 +377,26 @@ namespace Content.Server.GameObjects.Components
             {
                 case WiresActionMessage msg:
                     var wire = WiresList.Find(x => x.Id == msg.Id);
-                    if (wire == null)
-                    {
-                        return;
-                    }
-
                     var player = serverMsg.Session.AttachedEntity;
-                    if (!player.TryGetComponent(out IHandsComponent handsComponent))
+                    if (wire == null || player == null)
                     {
-                        _notifyManager.PopupMessage(Owner.Transform.GridPosition, player,
-                            Loc.GetString("You have no hands."));
                         return;
                     }
 
-                    if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(player.Transform.MapPosition, Owner.Transform.MapPosition, ignoredEnt: Owner))
+                    if (!player.TryGetComponent(out IHandsComponent? handsComponent))
                     {
-                        _notifyManager.PopupMessage(Owner.Transform.GridPosition, player,
-                            Loc.GetString("You can't reach there!"));
+                        Owner.PopupMessage(player, Loc.GetString("You have no hands."));
+                        return;
+                    }
+
+                    if (!player.InRangeUnobstructed(Owner))
+                    {
+                        Owner.PopupMessage(player, Loc.GetString("You can't reach there!"));
                         return;
                     }
 
                     var activeHandEntity = handsComponent.GetActiveHand?.Owner;
-                    ToolComponent tool = null;
+                    ToolComponent? tool = null;
                     activeHandEntity?.TryGetComponent(out tool);
 
                     switch (msg.Action)
@@ -393,8 +404,7 @@ namespace Content.Server.GameObjects.Components
                         case WiresAction.Cut:
                             if (tool == null || !tool.HasQuality(ToolQuality.Cutting))
                             {
-                                _notifyManager.PopupMessageCursor(player,
-                                    Loc.GetString("You need to hold a wirecutter in your hand!"));
+                                player.PopupMessageCursor(Loc.GetString("You need to hold a wirecutter in your hand!"));
                                 return;
                             }
 
@@ -405,8 +415,7 @@ namespace Content.Server.GameObjects.Components
                         case WiresAction.Mend:
                             if (tool == null || !tool.HasQuality(ToolQuality.Cutting))
                             {
-                                _notifyManager.PopupMessageCursor(player,
-                                    Loc.GetString("You need to hold a wirecutter in your hand!"));
+                                player.PopupMessageCursor(Loc.GetString("You need to hold a wirecutter in your hand!"));
                                 return;
                             }
 
@@ -417,19 +426,17 @@ namespace Content.Server.GameObjects.Components
                         case WiresAction.Pulse:
                             if (tool == null || !tool.HasQuality(ToolQuality.Multitool))
                             {
-                                _notifyManager.PopupMessageCursor(player,
-                                    Loc.GetString("You need to hold a multitool in your hand!"));
+                                player.PopupMessageCursor(Loc.GetString("You need to hold a multitool in your hand!"));
                                 return;
                             }
 
                             if (wire.IsCut)
                             {
-                                _notifyManager.PopupMessageCursor(player,
-                                    Loc.GetString("You can't pulse a wire that's been cut!"));
+                                player.PopupMessageCursor(Loc.GetString("You can't pulse a wire that's been cut!"));
                                 return;
                             }
 
-                            _audioSystem.PlayFromEntity("/Audio/effects/multitool_pulse.ogg", Owner);
+                            _audioSystem.PlayFromEntity("/Audio/Effects/multitool_pulse.ogg", Owner);
                             break;
                     }
 
@@ -447,7 +454,7 @@ namespace Content.Server.GameObjects.Components
                     entry.Letter));
             }
 
-            _userInterface.SetState(
+            UserInterface?.SetState(
                 new WiresBoundUserInterfaceState(
                     clientList.ToArray(),
                     _statuses.Select(p => new StatusEntry(p.Key, p.Value)).ToArray(),
@@ -466,25 +473,23 @@ namespace Content.Server.GameObjects.Components
             serializer.DataField(ref _layoutId, "LayoutId", null);
         }
 
-        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!eventArgs.Using.TryGetComponent<ToolComponent>(out var tool))
                 return false;
-            if (!tool.UseTool(eventArgs.User, Owner, ToolQuality.Screwing))
+            if (!await tool.UseTool(eventArgs.User, Owner, 0.5f, ToolQuality.Screwing))
                 return false;
 
             IsPanelOpen = !IsPanelOpen;
             EntitySystem.Get<AudioSystem>()
-                .PlayFromEntity(IsPanelOpen ? "/Audio/machines/screwdriveropen.ogg" : "/Audio/machines/screwdriverclose.ogg",
+                .PlayFromEntity(IsPanelOpen ? "/Audio/Machines/screwdriveropen.ogg" : "/Audio/Machines/screwdriverclose.ogg",
                     Owner);
             return true;
         }
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
-            var loc = IoCManager.Resolve<ILocalizationManager>();
-
-            message.AddMarkup(loc.GetString(IsPanelOpen
+            message.AddMarkup(Loc.GetString(IsPanelOpen
                 ? "The [color=lightgray]maintenance panel[/color] is [color=darkgreen]open[/color]."
                 : "The [color=lightgray]maintenance panel[/color] is [color=darkred]closed[/color]."));
         }

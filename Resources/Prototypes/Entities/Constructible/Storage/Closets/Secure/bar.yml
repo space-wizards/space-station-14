@@ -1,0 +1,10 @@
+- type: entity
+  id: LockerBooze
+  parent: LockerSecureBase
+  name: "booze storage"
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: cabinet
+

@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Threading;
 using Content.Client.State;
 using Content.Client.UserInterface;
 using Content.Client.Utility;
-using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.EntitySystemMessages;
+using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects.EntitySystems;
@@ -24,11 +23,9 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -40,18 +37,15 @@ using Timer = Robust.Shared.Timers.Timer;
 namespace Content.Client.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    public sealed class VerbSystem : EntitySystem
+    public sealed class VerbSystem : SharedVerbSystem
     {
-#pragma warning disable 649
-        [Dependency] private readonly IStateManager _stateManager;
-        [Dependency] private readonly IEntityManager _entityManager;
-        [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private readonly IInputManager _inputManager;
-        [Dependency] private readonly IItemSlotManager _itemSlotManager;
-        [Dependency] private readonly IGameTiming _gameTiming;
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
-        [Dependency] private readonly IMapManager _mapManager;
-#pragma warning restore 649
+        [Dependency] private readonly IStateManager _stateManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
 
         private EntityList _currentEntityList;
         private VerbPopup _currentVerbListRoot;
@@ -94,8 +88,11 @@ namespace Content.Client.GameObjects.EntitySystems
             _userInterfaceManager.ModalRoot.AddChild(_currentVerbListRoot);
             _currentVerbListRoot.OnPopupHide += CloseVerbMenu;
 
-            _currentVerbListRoot.List.AddChild(new Label {Text = "Waiting on Server..."});
-            RaiseNetworkEvent(new VerbSystemMessages.RequestVerbsMessage(_currentEntity));
+            if (!entity.Uid.IsClientSide())
+            {
+                _currentVerbListRoot.List.AddChild(new Label {Text = "Waiting on Server..."});
+                RaiseNetworkEvent(new VerbSystemMessages.RequestVerbsMessage(_currentEntity));
+            }
 
             var box = UIBox2.FromDimensions(screenCoordinates.Position, (1, 1));
             _currentVerbListRoot.Open(box);
@@ -114,11 +111,10 @@ namespace Content.Client.GameObjects.EntitySystems
                 return false;
             }
 
-            var mapCoordinates = args.Coordinates.ToMap(_mapManager);
-            var entities = _entityManager.GetEntitiesIntersecting(mapCoordinates.MapId,
-                Box2.CenteredAround(mapCoordinates.Position, (0.5f, 0.5f))).ToList();
+            var mapCoordinates = args.Coordinates.ToMap(_entityManager);
+            var playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
 
-            if (entities.Count == 0)
+            if (playerEntity == null || !TryGetContextEntities(playerEntity, mapCoordinates, out var entities))
             {
                 return false;
             }
@@ -147,7 +143,8 @@ namespace Content.Client.GameObjects.EntitySystems
                     });
                 }
 
-                _currentEntityList.List.AddChild(new EntityButton(this, entity));
+                var debugEnabled = _userInterfaceManager.DebugMonitors.Visible;
+                _currentEntityList.List.AddChild(new EntityButton(this, entity, debugEnabled));
                 first = false;
             }
 
@@ -203,8 +200,10 @@ namespace Content.Client.GameObjects.EntitySystems
             //Get verbs, component dependent.
             foreach (var (component, verb) in VerbUtility.GetVerbs(entity))
             {
-                if (verb.RequireInteractionRange && !VerbUtility.InVerbUseRange(user, entity))
+                if (!VerbUtility.VerbAccessChecks(user, entity, verb))
+                {
                     continue;
+                }
 
                 var verbData = verb.GetData(user, component);
 
@@ -225,8 +224,10 @@ namespace Content.Client.GameObjects.EntitySystems
             //Get global verbs. Visible for all entities regardless of their components.
             foreach (var globalVerb in VerbUtility.GetGlobalVerbs(Assembly.GetExecutingAssembly()))
             {
-                if (globalVerb.RequireInteractionRange && !VerbUtility.InVerbUseRange(user, entity))
+                if (!VerbUtility.VerbAccessChecks(user, entity, globalVerb))
+                {
                     continue;
+                }
 
                 var verbData = globalVerb.GetData(user, entity);
 
@@ -404,7 +405,7 @@ namespace Content.Client.GameObjects.EntitySystems
             private readonly VerbSystem _master;
             private readonly IEntity _entity;
 
-            public EntityButton(VerbSystem master, IEntity entity)
+            public EntityButton(VerbSystem master, IEntity entity, bool showUid)
             {
                 _master = master;
                 _entity = entity;
@@ -417,11 +418,16 @@ namespace Content.Client.GameObjects.EntitySystems
                     control.AddChild(new SpriteView {Sprite = sprite});
                 }
 
+                var text = entity.Name;
+                if (showUid)
+                {
+                    text = $"{text} ({entity.Uid})";
+                }
                 control.AddChild(new MarginContainer
                 {
                     MarginLeftOverride = 4,
                     MarginRightOverride = 4,
-                    Children = {new Label {Text = entity.Name}}
+                    Children = {new Label {Text = text}}
                 });
 
                 AddChild(control);
@@ -437,15 +443,25 @@ namespace Content.Client.GameObjects.EntitySystems
                     return;
                 }
 
-                if (args.Function == EngineKeyFunctions.Use)
+                if (args.Function == EngineKeyFunctions.Use ||
+                    args.Function == ContentKeyFunctions.Point ||
+                    args.Function == ContentKeyFunctions.TryPullObject ||
+                    args.Function == ContentKeyFunctions.MovePulledObject)
                 {
+                    // TODO: Remove an entity from the menu when it is deleted
+                    if (_entity.Deleted)
+                    {
+                        _master.CloseAllMenus();
+                        return;
+                    }
+
                     var inputSys = _master.EntitySystemManager.GetEntitySystem<InputSystem>();
 
                     var func = args.Function;
                     var funcId = _master._inputManager.NetworkBindMap.KeyFunctionID(args.Function);
 
-                    var message = new FullInputCmdMessage(_master._gameTiming.CurTick, funcId, BoundKeyState.Down,
-                        _entity.Transform.GridPosition,
+                    var message = new FullInputCmdMessage(_master._gameTiming.CurTick, _master._gameTiming.TickFraction, funcId, BoundKeyState.Down,
+                        _entity.Transform.Coordinates,
                         args.PointerLocation, _entity.Uid);
 
                     // client side command handlers will always be sent the local player session.
@@ -576,7 +592,7 @@ namespace Content.Client.GameObjects.EntitySystems
                         new TextureRect
                         {
                             Texture = IoCManager.Resolve<IResourceCache>()
-                                .GetTexture("/Textures/UserInterface/VerbIcons/group.svg.96dpi.png"),
+                                .GetTexture("/Textures/Interface/VerbIcons/group.svg.96dpi.png"),
                             Stretch = TextureRect.StretchMode.KeepCentered,
                         }
                     }

@@ -1,0 +1,29 @@
+- type: job
+  id: HeadOfPersonnel
+  name: "head of personnel"
+  head: true
+  positions: 1
+  startingGear: HoPGear
+  department:
+  - Command
+  - Civilian
+  icon: "HeadOfPersonnel"
+  access:
+  - Command
+  - HeadOfPersonnel
+  - Security # HoPcurity strikes again
+  - Service
+  - Cargo
+  - Maintenance
+  - Janitor
+  - Theatre
+  # I mean they'll give themselves the rest of the access levels *anyways*.
+
+- type: startingGear
+  id: HoPGear
+  equipment:
+    innerclothing: UniformHoP
+    backpack: BackpackClothingFilled
+    shoes: ShoesBrown
+    head: HatHopcap
+    idcard: HoPPDA

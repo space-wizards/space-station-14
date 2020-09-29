@@ -13,5 +13,6 @@ namespace Content.Server.Cargo
         void AddComponent(CargoOrderDatabaseComponent component);
         List<CargoOrderData> GetOrdersFromAccount(int accountId);
         List<CargoOrderData> RemoveAndGetApprovedFrom(CargoOrderDatabase database);
+        (int CurrentCapacity, int MaxCapacity) GetCapacity(int id);
     }
 }

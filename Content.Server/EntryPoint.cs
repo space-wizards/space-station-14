@@ -1,5 +1,10 @@
-﻿using Content.Server.Interfaces;
-﻿using Content.Server.AI.WorldState;
+﻿using Content.Server.AI.Utility.Considerations;
+using Content.Server.AI.WorldState;
+using Content.Server.Body.Network;
+using Content.Server.Database;
+using Content.Server.GameObjects.Components.Mobs.Speech;
+using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Interfaces.PDA;
@@ -29,25 +34,7 @@ namespace Content.Server
 
             factory.DoAutoRegistrations();
 
-            var registerIgnore = new[]
-            {
-                "ConstructionGhost",
-                "IconSmooth",
-                "SubFloorHide",
-                "LowWall",
-                "ReinforcedWall",
-                "Window",
-                "CharacterInfo",
-                "InteractionOutline",
-                "MeleeWeaponArcAnimation",
-                "AnimationsTest",
-                "ItemStatus",
-                "Marker",
-                "EmergencyLight",
-                "Clickable",
-            };
-
-            foreach (var ignoreName in registerIgnore)
+            foreach (var ignoreName in IgnoredComponents.List)
             {
                 factory.RegisterIgnore(ignoreName);
             }
@@ -62,6 +49,8 @@ namespace Content.Server
 
             IoCManager.BuildGraph();
 
+            IoCManager.Resolve<IBodyNetworkFactory>().DoAutoRegistrations();
+
             _gameTicker = IoCManager.Resolve<IGameTicker>();
 
             IoCManager.Resolve<IServerNotifyManager>().Initialize();
@@ -74,8 +63,12 @@ namespace Content.Server
             var logManager = IoCManager.Resolve<ILogManager>();
             logManager.GetSawmill("Storage").Level = LogLevel.Info;
 
-            IoCManager.Resolve<IServerPreferencesManager>().StartInit();
-
+            IoCManager.Resolve<IConnectionManager>().Initialize();
+            IoCManager.Resolve<IServerDbManager>().Init();
+            IoCManager.Resolve<IServerPreferencesManager>().Init();
+            IoCManager.Resolve<INodeGroupFactory>().Initialize();
+            IoCManager.Resolve<ISandboxManager>().Initialize();
+            IoCManager.Resolve<IAccentManager>().Initialize();
         }
 
         public override void PostInit()
@@ -83,10 +76,9 @@ namespace Content.Server
             base.PostInit();
 
             _gameTicker.Initialize();
-            IoCManager.Resolve<ISandboxManager>().Initialize();
-            IoCManager.Resolve<IServerPreferencesManager>().FinishInit();
             IoCManager.Resolve<RecipeManager>().Initialize();
             IoCManager.Resolve<BlackboardManager>().Initialize();
+            IoCManager.Resolve<ConsiderationsManager>().Initialize();
             IoCManager.Resolve<IPDAUplinkManager>().Initialize();
         }
 

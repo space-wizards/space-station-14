@@ -1,0 +1,24 @@
+- type: entity
+  id: Girder
+  name: girder
+  description: A large structural assembly made out of metal; It requires a layer of metal before it can be considered a wall.
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    texture: Constructible/Structures/Walls/wall_girder.png
+
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      layer: [MobMask, Opaque]
+  - type: Destructible
+    deadThreshold: 50
+    resistances: metallicResistances
+    spawnOnDestroy: SteelSheet1
+  - type: SnapGrid
+    offset: Edge
+
+  placement:
+    snap:
+    - Wall

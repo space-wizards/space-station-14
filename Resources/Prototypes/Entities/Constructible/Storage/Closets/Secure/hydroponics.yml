@@ -1,0 +1,10 @@
+- type: entity
+  id: LockerBotanist
+  parent: LockerSecureBase
+  name: "botanist's locker"
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: hydro
+

@@ -1,31 +1,38 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System;
+using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.EntitySystems;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.ViewVariables;
+using System.Threading.Tasks;
+using Content.Server.GameObjects.Components.Body;
 using Content.Server.GameObjects.Components.Chemistry;
-using Content.Shared.Chemistry;
-using Robust.Shared.Serialization;
-using Robust.Shared.Interfaces.GameObjects;
-using Content.Shared.Prototypes.Kitchen;
-using Content.Shared.Kitchen;
-using Robust.Shared.Timers;
-using Robust.Server.GameObjects;
-using Content.Shared.GameObjects.Components.Power;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.GameObjects.Components.Container;
-using Content.Server.GameObjects.Components.Power;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.Interfaces.GameObjects;
-using Robust.Shared.Localization;
-using Content.Server.Interfaces;
-using Robust.Shared.Audio;
-using Content.Server.Interfaces.GameObjects;
+using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.Chat;
-using Content.Server.BodySystem;
-using Content.Shared.BodySystem;
+using Content.Server.Interfaces.GameObjects;
+using Content.Server.Utility;
+using Content.Shared.Chemistry;
+using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Power;
+using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Kitchen;
+using Content.Shared.Prototypes.Kitchen;
+using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.Components.Container;
+using Robust.Server.GameObjects.Components.UserInterface;
+using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.Interfaces.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Localization;
+using Robust.Shared.Serialization;
+using Robust.Shared.Timers;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Kitchen
 {
@@ -33,25 +40,18 @@ namespace Content.Server.GameObjects.Components.Kitchen
     [ComponentReference(typeof(IActivate))]
     public class MicrowaveComponent : SharedMicrowaveComponent, IActivate, IInteractUsing, ISolutionChange, ISuicideAct
     {
-#pragma warning disable 649
-        [Dependency] private readonly IEntityManager _entityManager;
-        [Dependency] private readonly RecipeManager _recipeManager;
-        [Dependency] private readonly IServerNotifyManager _notifyManager;
-#pragma warning restore 649
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly RecipeManager _recipeManager = default!;
 
-#region YAMLSERIALIZE
+        #region YAMLSERIALIZE
         private int _cookTimeDefault;
         private int _cookTimeMultiplier; //For upgrades and stuff I guess?
-        private string _badRecipeName;
-        private string _startCookingSound;
-        private string _cookingCompleteSound;
+        private string _badRecipeName = "";
+        private string _startCookingSound = "";
+        private string _cookingCompleteSound = "";
 #endregion
 
-#region VIEWVARIABLES
-        [ViewVariables]
-        private SolutionComponent _solution;
-
-        [ViewVariables]
+[ViewVariables]
         private bool _busy = false;
 
         /// <summary>
@@ -61,20 +61,18 @@ namespace Content.Server.GameObjects.Components.Kitchen
         /// </summary>
         [ViewVariables]
         private uint _currentCookTimerTime = 1;
-#endregion
 
-        private bool _powered => _powerDevice.Powered;
-        private bool _hasContents => _solution.ReagentList.Count > 0 || _storage.ContainedEntities.Count > 0;
+        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+        private bool _hasContents => Owner.TryGetComponent(out SolutionContainerComponent? solution) && (solution.ReagentList.Count > 0 || _storage.ContainedEntities.Count > 0);
         private bool _uiDirty = true;
         private bool _lostPower = false;
         private int _currentCookTimeButtonIndex = 0;
 
         void ISolutionChange.SolutionChanged(SolutionChangeEventArgs eventArgs) => _uiDirty = true;
-        private AudioSystem _audioSystem;
-        private AppearanceComponent _appearance;
-        private PowerDeviceComponent _powerDevice;
-        private BoundUserInterface _userInterface;
-        private Container _storage;
+        private AudioSystem _audioSystem = default!;
+        private Container _storage = default!;
+
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(MicrowaveUiKey.Key);
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -82,29 +80,28 @@ namespace Content.Server.GameObjects.Components.Kitchen
             serializer.DataField(ref _badRecipeName, "failureResult", "FoodBadRecipe");
             serializer.DataField(ref _cookTimeDefault, "cookTime", 5);
             serializer.DataField(ref _cookTimeMultiplier, "cookTimeMultiplier", 1000);
-            serializer.DataField(ref _startCookingSound, "beginCookingSound","/Audio/machines/microwave_start_beep.ogg" );
-            serializer.DataField(ref _cookingCompleteSound, "foodDoneSound","/Audio/machines/microwave_done_beep.ogg" );
+            serializer.DataField(ref _startCookingSound, "beginCookingSound","/Audio/Machines/microwave_start_beep.ogg" );
+            serializer.DataField(ref _cookingCompleteSound, "foodDoneSound","/Audio/Machines/microwave_done_beep.ogg" );
         }
 
         public override void Initialize()
         {
             base.Initialize();
-            _solution ??= Owner.TryGetComponent(out SolutionComponent solutionComponent)
-                ? solutionComponent
-                : Owner.AddComponent<SolutionComponent>();
+
+            Owner.EnsureComponent<SolutionContainerComponent>();
 
             _storage = ContainerManagerComponent.Ensure<Container>("microwave_entity_container", Owner, out var existed);
-            _appearance = Owner.GetComponent<AppearanceComponent>();
-            _powerDevice = Owner.GetComponent<PowerDeviceComponent>();
             _audioSystem = EntitySystem.Get<AudioSystem>();
-            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
-                .GetBoundUserInterface(MicrowaveUiKey.Key);
-            _userInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
+
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
+            }
         }
 
         private void UserInterfaceOnReceiveMessage(ServerBoundUserInterfaceMessage message)
         {
-            if (!_powered || _busy)
+            if (!Powered || _busy)
             {
                 return;
             }
@@ -152,13 +149,13 @@ namespace Content.Server.GameObjects.Components.Kitchen
         public void OnUpdate()
         {
 
-            if (!_powered)
+            if (!Powered)
             {
                 //TODO:If someone cuts power currently, microwave magically keeps going. FIX IT!
                 SetAppearance(MicrowaveVisualState.Idle);
             }
 
-            if (_busy && !_powered)
+            if (_busy && !Powered)
             {
                 //we lost power while we were cooking/busy!
                 _lostPower = true;
@@ -168,11 +165,11 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 _uiDirty = true;
             }
 
-            if (_uiDirty)
+            if (_uiDirty && Owner.TryGetComponent(out SolutionContainerComponent? solution))
             {
-                _userInterface.SetState(new MicrowaveUpdateUserInterfaceState
+                UserInterface?.SetState(new MicrowaveUpdateUserInterfaceState
                 (
-                    _solution.Solution.Contents.ToArray(),
+                    solution.Solution.Contents.ToArray(),
                     _storage.ContainedEntities.Select(item => item.Uid).ToArray(),
                     _busy,
                     _currentCookTimeButtonIndex,
@@ -184,67 +181,75 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         private void SetAppearance(MicrowaveVisualState state)
         {
-            if (_appearance != null || Owner.TryGetComponent(out _appearance))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
-                _appearance.SetData(PowerDeviceVisuals.VisualState, state);
+                appearance.SetData(PowerDeviceVisuals.VisualState, state);
             }
-
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent actor) || !_powered)
+            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor) || !Powered)
             {
                 return;
             }
+
             _uiDirty = true;
-            _userInterface.Open(actor.playerSession);
+            UserInterface?.Toggle(actor.playerSession);
         }
 
-        public bool InteractUsing(InteractUsingEventArgs eventArgs)
+        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!_powered)
+            if (!Powered)
             {
-                _notifyManager.PopupMessage(Owner.Transform.GridPosition, eventArgs.User,
-                    Loc.GetString("It has no power!"));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("It has no power!"));
                 return false;
             }
 
-            var itemEntity = eventArgs.User.GetComponent<HandsComponent>().GetActiveHand.Owner;
+            var itemEntity = eventArgs.User.GetComponent<HandsComponent>().GetActiveHand?.Owner;
 
-            if(itemEntity.TryGetComponent<PourableComponent>(out var attackPourable))
+            if (itemEntity == null)
             {
-                if (!itemEntity.TryGetComponent<SolutionComponent>(out var attackSolution)
-                    || !attackSolution.CanPourOut)
+                eventArgs.User.PopupMessage(Loc.GetString("You have no active hand!"));
+                return false;
+            }
+
+            if (itemEntity.TryGetComponent<PourableComponent>(out var attackPourable))
+            {
+                if (!itemEntity.TryGetComponent<SolutionContainerComponent>(out var attackSolution)
+                    || !attackSolution.CanRemoveSolutions)
+                {
+                    return false;
+                }
+
+                if (!Owner.TryGetComponent(out SolutionContainerComponent? solution))
                 {
                     return false;
                 }
 
                 //Get transfer amount. May be smaller than _transferAmount if not enough room
-                var realTransferAmount = ReagentUnit.Min(attackPourable.TransferAmount, _solution.EmptyVolume);
+                var realTransferAmount = ReagentUnit.Min(attackPourable.TransferAmount, solution.EmptyVolume);
                 if (realTransferAmount <= 0) //Special message if container is full
                 {
-                    _notifyManager.PopupMessage(Owner.Transform.GridPosition, eventArgs.User,
-                        Loc.GetString("Container is full"));
+                    Owner.PopupMessage(eventArgs.User, Loc.GetString("Container is full"));
                     return false;
                 }
 
                 //Move units from attackSolution to targetSolution
                 var removedSolution = attackSolution.SplitSolution(realTransferAmount);
-                if (!_solution.TryAddSolution(removedSolution))
+                if (!solution.TryAddSolution(removedSolution))
                 {
                     return false;
                 }
 
-                _notifyManager.PopupMessage(Owner.Transform.GridPosition, eventArgs.User,
-                    Loc.GetString("Transferred {0}u", removedSolution.TotalVolume));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("Transferred {0}u", removedSolution.TotalVolume));
                 return true;
             }
 
             if (!itemEntity.TryGetComponent(typeof(ItemComponent), out var food))
             {
 
-                _notifyManager.PopupMessage(Owner, eventArgs.User, "That won't work!");
+                Owner.PopupMessage(eventArgs.User, "That won't work!");
                 return false;
             }
 
@@ -268,6 +273,11 @@ namespace Content.Server.GameObjects.Components.Kitchen
             var solidsDict = new Dictionary<string, int>();
             foreach(var item in _storage.ContainedEntities)
             {
+                if (item.Prototype == null)
+                {
+                    continue;
+                }
+
                 if(solidsDict.ContainsKey(item.Prototype.ID))
                 {
                     solidsDict[item.Prototype.ID]++;
@@ -291,7 +301,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             }
 
             // Check recipes
-            FoodRecipePrototype recipeToCook = null;
+            FoodRecipePrototype? recipeToCook = null;
             foreach (var r in _recipeManager.Recipes.Where(r => CanSatisfyRecipe(r, solidsDict) == MicrowaveSuccessState.RecipePass))
             {
                 recipeToCook = r;
@@ -302,7 +312,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                            (_currentCookTimerTime == (uint)recipeToCook.CookTime);
             SetAppearance(MicrowaveVisualState.Cooking);
             _audioSystem.PlayFromEntity(_startCookingSound, Owner, AudioParams.Default);
-            Timer.Spawn((int)(_currentCookTimerTime * _cookTimeMultiplier), (System.Action)(() =>
+            Timer.Spawn((int)(_currentCookTimerTime * _cookTimeMultiplier), (Action)(() =>
             {
                 if (_lostPower)
                 {
@@ -318,7 +328,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 {
                     if (goodMeal)
                     {
-                        SubtractContents(recipeToCook);
+                        SubtractContents(recipeToCook!);
                     }
                     else
                     {
@@ -329,7 +339,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                     if (recipeToCook != null)
                     {
                         var entityToSpawn = goodMeal ? recipeToCook.Result : _badRecipeName;
-                        _entityManager.SpawnEntity(entityToSpawn, Owner.Transform.GridPosition);
+                        _entityManager.SpawnEntity(entityToSpawn, Owner.Transform.Coordinates);
                     }
                 }
                 _audioSystem.PlayFromEntity(_cookingCompleteSound, Owner, AudioParams.Default.WithVolume(-1f));
@@ -345,12 +355,18 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         private void VaporizeReagents()
         {
-            _solution.RemoveAllSolution();
+            if (Owner.TryGetComponent(out SolutionContainerComponent? solution))
+            {
+                solution.RemoveAllSolution();
+            }
         }
 
         private void VaporizeReagentQuantity(Solution.ReagentQuantity reagentQuantity)
         {
-            _solution.TryRemoveReagent(reagentQuantity.ReagentId, reagentQuantity.Quantity);
+            if (Owner.TryGetComponent(out SolutionContainerComponent? solution))
+            {
+                solution?.TryRemoveReagent(reagentQuantity.ReagentId, reagentQuantity.Quantity);
+            }
         }
 
         private void VaporizeSolids()
@@ -383,9 +399,14 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         private void SubtractContents(FoodRecipePrototype recipe)
         {
+            if (!Owner.TryGetComponent(out SolutionContainerComponent? solution))
+            {
+                return;
+            }
+
             foreach(var recipeReagent in recipe.IngredientsReagents)
             {
-                _solution.TryRemoveReagent(recipeReagent.Key, ReagentUnit.New(recipeReagent.Value));
+                solution?.TryRemoveReagent(recipeReagent.Key, ReagentUnit.New(recipeReagent.Value));
             }
 
             foreach (var recipeSolid in recipe.IngredientsSolids)
@@ -394,6 +415,11 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 {
                     foreach (var item in _storage.ContainedEntities)
                     {
+                        if (item.Prototype == null)
+                        {
+                            continue;
+                        }
+
                         if (item.Prototype.ID == recipeSolid.Key)
                         {
                             _storage.Remove(item);
@@ -408,9 +434,14 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         private MicrowaveSuccessState CanSatisfyRecipe(FoodRecipePrototype recipe, Dictionary<string,int> solids)
         {
+            if (!Owner.TryGetComponent(out SolutionContainerComponent? solution))
+            {
+                return MicrowaveSuccessState.RecipeFail;
+            }
+
             foreach (var reagent in recipe.IngredientsReagents)
             {
-                if (!_solution.ContainsReagent(reagent.Key, out var amount))
+                if (!solution.ContainsReagent(reagent.Key, out var amount))
                 {
                     return MicrowaveSuccessState.RecipeFail;
                 }
@@ -440,23 +471,35 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         private void ClickSound()
         {
-            _audioSystem.PlayFromEntity("/Audio/machines/machine_switch.ogg",Owner,AudioParams.Default.WithVolume(-2f));
+            _audioSystem.PlayFromEntity("/Audio/Machines/machine_switch.ogg",Owner,AudioParams.Default.WithVolume(-2f));
         }
 
         public SuicideKind Suicide(IEntity victim, IChatManager chat)
         {
-            int headCount = 0;
+            var headCount = 0;
             if (victim.TryGetComponent<BodyManagerComponent>(out var bodyManagerComponent))
             {
-                var heads = bodyManagerComponent.GetBodyPartsOfType(BodyPartType.Head);
+                var heads = bodyManagerComponent.GetPartsOfType(BodyPartType.Head);
                 foreach (var head in heads)
                 {
-                    var droppedHead = bodyManagerComponent.DisconnectBodyPart(head, true);
+                    var droppedHead = bodyManagerComponent.DropPart(head);
+
+                    if (droppedHead == null)
+                    {
+                        continue;
+                    }
+
                     _storage.Insert(droppedHead);
                     headCount++;
                 }
             }
-            chat.EntityMe(victim, Loc.GetPluralString("is trying to cook {0:their} head!", "is trying to cook {0:their} heads!", headCount, victim));
+
+            var othersMessage = Loc.GetString("{0:theName} is trying to cook {0:their} head!", victim);
+            victim.PopupMessageOtherClients(othersMessage);
+
+            var selfMessage = Loc.GetString("You cook your head!");
+            victim.PopupMessage(selfMessage);
+
             _currentCookTimerTime = 10;
             ClickSound();
             _uiDirty = true;

@@ -8,9 +8,7 @@ namespace Content.Server.GameObjects.Components.Cargo
     [RegisterComponent]
     public class CargoOrderDatabaseComponent : SharedCargoOrderDatabaseComponent
     {
-#pragma warning disable 649
-        [Dependency] private readonly ICargoOrderDataManager _cargoOrderDataManager;
-#pragma warning restore 649
+        [Dependency] private readonly ICargoOrderDataManager _cargoOrderDataManager = default!;
 
         public CargoOrderDatabase Database { get; set; }
         public bool ConnectedToDatabase => Database != null;

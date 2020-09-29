@@ -1,0 +1,132 @@
+- type: entity
+  parent: Clothing
+  id: BackpackClothing
+  name: backpack
+  description: You wear this on your back and put items into it.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/backpack.rsi
+    state: icon
+  - type: Clothing
+    size: 9999
+    QuickEquip: false
+    Slots:
+    - back
+    sprite: Clothing/Back/Backpacks/backpack.rsi
+  - type: Storage
+    capacity: 100
+
+- type: entity
+  parent: BackpackClothing
+  id: ClownPack
+  name: giggles von honkerton
+  description: It's a backpack made by Honk! Co.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/clown.rsi
+    state: icon
+  - type: Clothing
+    sprite: Clothing/Back/Backpacks/clown.rsi
+
+- type: entity
+  parent: BackpackClothing
+  id: SecPack
+  name: security backpack
+  description: It's a very robust backpack.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/security.rsi
+    state: icon
+  - type: Clothing
+    sprite: Clothing/Back/Backpacks/security.rsi
+
+- type: entity
+  parent: BackpackClothing
+  id: BackpackEngineering
+  name: engineering backpack
+  description: It's a tough backpack for the daily grind of station life.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/engineering.rsi
+    state: icon
+  - type: Clothing
+    sprite: Clothing/Back/Backpacks/engineering.rsi
+
+- type: entity
+  parent: BackpackClothing
+  id: BackpackMedical
+  name: medical backpack
+  description: It's a backpack especially designed for use in a sterile environment.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/medical.rsi
+    state: icon
+  - type: Clothing
+    sprite: Clothing/Back/Backpacks/medical.rsi
+
+- type: entity
+  parent: BackpackClothing
+  id: BackpackCaptain
+  name: captain's backpack
+  description: It's a special backpack made exclusively for Nanotrasen officers.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/captain.rsi
+    state: icon
+  - type: Clothing
+    sprite: Clothing/Back/Backpacks/captain.rsi
+
+# Inhands/On mob aren't working until I refactor this file -Swept
+
+- type: entity
+  parent: BackpackClothing
+  id: BackpackMime
+  name: mime backpack
+  description: A silent backpack made for those silent workers. Silence Co.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/mime.rsi
+    state: icon
+  - type: Clothing
+    sprite: Clothing/Back/Backpacks/mime.rsi
+
+- type: entity
+  parent: BackpackClothing
+  id: BackpackChemistry
+  name: chemistry backpack
+  description: A backpack specially designed to repel stains and hazardous liquids.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/chemistry.rsi
+    state: icon
+  - type: Clothing
+    sprite: Clothing/Back/Backpacks/chemistry.rsi
+
+- type: entity
+  parent: BackpackClothing
+  id: BackpackBotany
+  name: botany backpack
+  description: It's a backpack made of all-natural fibers.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/botany.rsi
+    state: icon
+  - type: Clothing
+    sprite: Clothing/Back/Backpacks/botany.rsi
+
+- type: entity
+  parent: BackpackClothing
+  id: BackpackHolding
+  name: bag of holding
+  description: A backpack that opens into a localized pocket of bluespace.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/holding.rsi
+    state: holding
+    layers:
+    - state: holding
+    - state: holding-unlit
+      shader: unshaded
+  - type: Clothing
+    sprite: Clothing/Back/Backpacks/holding.rsi
+    HeldPrefix: holding

@@ -1,0 +1,10 @@
+- type: entity
+  id: LockerFreezer
+  parent: LockerSecureBase
+  name: "freezer"
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: freezer
+

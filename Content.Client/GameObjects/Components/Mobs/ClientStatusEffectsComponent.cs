@@ -1,3 +1,4 @@
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.UserInterface;
@@ -7,37 +8,37 @@ using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Player;
-using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Maths;
-using Robust.Shared.Players;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components.Mobs
 {
     /// <inheritdoc/>
     [RegisterComponent]
+    [ComponentReference(typeof(SharedStatusEffectsComponent))]
     public sealed class ClientStatusEffectsComponent : SharedStatusEffectsComponent
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private readonly IResourceCache _resourceCache;
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
-        [Dependency] private readonly IGameTiming _gameTiming;
-#pragma warning restore 649
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         private StatusEffectsUI _ui;
+        [ViewVariables]
         private Dictionary<StatusEffect, StatusEffectStatus> _status = new Dictionary<StatusEffect, StatusEffectStatus>();
+        [ViewVariables]
         private Dictionary<StatusEffect, CooldownGraphic> _cooldown = new Dictionary<StatusEffect, CooldownGraphic>();
 
         /// <summary>
         /// Allows calculating if we need to act due to this component being controlled by the current mob
         /// </summary>
+        [ViewVariables]
         private bool CurrentlyControlled => _playerManager.LocalPlayer != null && _playerManager.LocalPlayer.ControlledEntity == Owner;
 
         protected override void Shutdown()
@@ -63,7 +64,12 @@ namespace Content.Client.GameObjects.Components.Mobs
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
             base.HandleComponentState(curState, nextState);
-            if (!(curState is StatusEffectComponentState state) || _status == state.StatusEffects) return;
+
+            if (!(curState is StatusEffectComponentState state) || _status == state.StatusEffects)
+            {
+                return;
+            }
+
             _status = state.StatusEffects;
             UpdateStatusEffects();
         }
@@ -83,6 +89,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         {
             _ui?.Dispose();
             _ui = null;
+            _cooldown.Clear();
         }
 
         public void UpdateStatusEffects()
@@ -94,29 +101,35 @@ namespace Content.Client.GameObjects.Components.Mobs
             _cooldown.Clear();
             _ui.VBox.DisposeAllChildren();
 
-            foreach (var (key, statusEffect) in _status.OrderBy(x => (int) x.Key))
+            foreach (var (key, effect) in _status.OrderBy(x => (int) x.Key))
             {
-                var status = new Control()
+                var texture = _resourceCache.GetTexture(effect.Icon);
+                var status = new StatusControl(key, texture)
                 {
-                    Children =
-                    {
-                        new TextureRect
-                        {
-                            TextureScale = (2, 2),
-                            Texture = _resourceCache.GetTexture(statusEffect.Icon)
-                        },
-                    }
+                    ToolTip = key.ToString()
                 };
 
-                if (statusEffect.Cooldown.HasValue)
+                if (effect.Cooldown.HasValue)
                 {
                     var cooldown = new CooldownGraphic();
                     status.Children.Add(cooldown);
                     _cooldown[key] = cooldown;
                 }
 
+                status.OnPressed += args => StatusPressed(args, status);
+
                 _ui.VBox.AddChild(status);
             }
+        }
+
+        private void StatusPressed(BaseButton.ButtonEventArgs args, StatusControl status)
+        {
+            if (args.Event.Function != EngineKeyFunctions.UIClick)
+            {
+                return;
+            }
+
+            SendNetworkMessage(new ClickStatusMessage(status.Effect));
         }
 
         public void RemoveStatusEffect(StatusEffect name)
@@ -144,9 +157,20 @@ namespace Content.Client.GameObjects.Components.Mobs
                 var progress = (_gameTiming.CurTime - start).TotalSeconds / length;
                 var ratio = (progress <= 1 ? (1 - progress) : (_gameTiming.CurTime - end).TotalSeconds * -5);
 
-                cooldownGraphic.Progress = (float)ratio.Clamp(-1, 1);
+                cooldownGraphic.Progress = MathHelper.Clamp((float)ratio, -1, 1);
                 cooldownGraphic.Visible = ratio > -1f;
             }
+        }
+
+        public override void ChangeStatusEffect(StatusEffect effect, string icon, (TimeSpan, TimeSpan)? cooldown)
+        {
+            _status[effect] = new StatusEffectStatus()
+            {
+                Icon = icon,
+                Cooldown = cooldown
+            };
+
+            Dirty();
         }
     }
 }

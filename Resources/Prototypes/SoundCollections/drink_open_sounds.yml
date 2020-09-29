@@ -1,11 +1,11 @@
 - type: soundCollection
   id: canOpenSounds
   files:
-  - /Audio/items/can_open1.ogg
-  - /Audio/items/can_open2.ogg
-  - /Audio/items/can_open3.ogg
+  - /Audio/Items/can_open1.ogg
+  - /Audio/Items/can_open2.ogg
+  - /Audio/Items/can_open3.ogg
 
 - type: soundCollection
   id: bottleOpenSounds
   files:
-  - /Audio/items/bottle_open1.ogg
+  - /Audio/Items/bottle_open1.ogg

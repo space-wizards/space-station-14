@@ -1,11 +1,15 @@
-﻿using Content.Server.GameObjects.Components.Power;
-using Content.Server.GameObjects.Components.Sound;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces.GameObjects;
-using Content.Server.Utility;
-using Content.Shared.GameObjects;
+﻿#nullable enable
+using System.Threading.Tasks;
+using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Items.Clothing;
+using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.Components.Power;
+using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components;
+using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystems;
@@ -13,7 +17,6 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -24,28 +27,24 @@ namespace Content.Server.GameObjects.Components.Interactable
     ///     Component that represents a handheld lightsource which can be toggled on and off.
     /// </summary>
     [RegisterComponent]
-    internal sealed class HandheldLightComponent : SharedHandheldLightComponent, IUse, IExamine, IInteractUsing, IMapInit
+    internal sealed class HandheldLightComponent : SharedHandheldLightComponent, IUse, IExamine, IInteractUsing,
+        IMapInit
     {
-#pragma warning disable 649
-        [Dependency] private readonly ISharedNotifyManager _notifyManager;
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-#pragma warning restore 649
-
         [ViewVariables(VVAccess.ReadWrite)] public float Wattage { get; set; } = 10;
-        [ViewVariables] private ContainerSlot _cellContainer;
-        private PointLightComponent _pointLight;
-        private SpriteComponent _spriteComponent;
-        private ClothingComponent _clothingComponent;
+        [ViewVariables] private ContainerSlot _cellContainer = default!;
 
         [ViewVariables]
-        private PowerCellComponent Cell
+        private BatteryComponent? Cell
         {
             get
             {
                 if (_cellContainer.ContainedEntity == null) return null;
+                if (_cellContainer.ContainedEntity.TryGetComponent(out BatteryComponent? cell))
+                {
+                    return cell;
+                }
 
-                _cellContainer.ContainedEntity.TryGetComponent(out PowerCellComponent cell);
-                return cell;
+                return null;
             }
         }
 
@@ -55,9 +54,11 @@ namespace Content.Server.GameObjects.Components.Interactable
         [ViewVariables]
         public bool Activated { get; private set; }
 
-        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+        [ViewVariables] protected override bool HasCell => Cell != null;
+
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.Using.HasComponent<PowerCellComponent>()) return false;
+            if (!eventArgs.Using.HasComponent<BatteryComponent>()) return false;
 
             if (Cell != null) return false;
 
@@ -68,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Interactable
                 return false;
             }
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/items/weapons/pistol_magin.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/pistol_magin.ogg", Owner);
 
 
             Dirty();
@@ -78,11 +79,9 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
-            var loc = IoCManager.Resolve<ILocalizationManager>();
-
             if (Activated)
             {
-                message.AddMarkup(loc.GetString("The light is currently [color=darkgreen]on[/color]."));
+                message.AddMarkup(Loc.GetString("The light is currently [color=darkgreen]on[/color]."));
             }
         }
 
@@ -95,11 +94,11 @@ namespace Content.Server.GameObjects.Components.Interactable
         {
             base.Initialize();
 
-            _pointLight = Owner.GetComponent<PointLightComponent>();
-            _spriteComponent = Owner.GetComponent<SpriteComponent>();
-            Owner.TryGetComponent(out _clothingComponent);
+            Owner.EnsureComponent<PointLightComponent>();
             _cellContainer =
-                ContainerManagerComponent.Ensure<ContainerSlot>("flashlight_cell_container", Owner, out var existed);
+                ContainerManagerComponent.Ensure<ContainerSlot>("flashlight_cell_container", Owner, out _);
+
+            Dirty();
         }
 
         /// <summary>
@@ -108,14 +107,17 @@ namespace Content.Server.GameObjects.Components.Interactable
         /// <returns>True if the light's status was toggled, false otherwise.</returns>
         private bool ToggleStatus(IEntity user)
         {
+            var item = Owner.GetComponent<ItemComponent>();
             // Update sprite and light states to match the activation.
             if (Activated)
             {
                 TurnOff();
+                item.EquippedPrefix = "off";
             }
             else
             {
                 TurnOn(user);
+                item.EquippedPrefix = "on";
             }
 
             // Toggle always succeeds.
@@ -132,8 +134,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             SetState(false);
             Activated = false;
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/items/flashlight_toggle.ogg", Owner);
-
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/flashlight_toggle.ogg", Owner);
         }
 
         private void TurnOn(IEntity user)
@@ -146,46 +147,66 @@ namespace Content.Server.GameObjects.Components.Interactable
             var cell = Cell;
             if (cell == null)
             {
+                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/button.ogg", Owner);
 
-                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/machines/button.ogg", Owner);
-
-                _notifyManager.PopupMessage(Owner, user, _localizationManager.GetString("Cell missing..."));
+                Owner.PopupMessage(user, Loc.GetString("Cell missing..."));
                 return;
             }
 
             // To prevent having to worry about frame time in here.
             // Let's just say you need a whole second of charge before you can turn it on.
             // Simple enough.
-            if (cell.AvailableCharge(1) < Wattage)
+            if (Wattage > cell.CurrentCharge)
             {
-                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/machines/button.ogg", Owner);
-                _notifyManager.PopupMessage(Owner, user, _localizationManager.GetString("Dead cell..."));
+                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/button.ogg", Owner);
+                Owner.PopupMessage(user, Loc.GetString("Dead cell..."));
                 return;
             }
 
             Activated = true;
             SetState(true);
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/items/flashlight_toggle.ogg", Owner);
-
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/flashlight_toggle.ogg", Owner);
         }
 
         private void SetState(bool on)
         {
-            _spriteComponent.LayerSetVisible(1, on);
-            _pointLight.Enabled = on;
-            if (_clothingComponent != null)
+            if (Owner.TryGetComponent(out SpriteComponent? sprite))
             {
-                _clothingComponent.ClothingEquippedPrefix = on ? "On" : "Off";
+                sprite.LayerSetVisible(1, on);
+            }
+
+            if (Owner.TryGetComponent(out PointLightComponent? light))
+            {
+                light.Enabled = on;
+            }
+
+            if (Owner.TryGetComponent(out ClothingComponent? clothing))
+            {
+                clothing.ClothingEquippedPrefix = on ? "On" : "Off";
             }
         }
 
         public void OnUpdate(float frameTime)
         {
-            if (!Activated) return;
+            if (!Activated || Cell == null) return;
 
-            var cell = Cell;
-            if (cell == null || !cell.TryDeductWattage(Wattage, frameTime)) TurnOff();
+            var appearanceComponent = Owner.GetComponent<AppearanceComponent>();
+
+            if (Cell.MaxCharge - Cell.CurrentCharge < Cell.MaxCharge * 0.70)
+            {
+                appearanceComponent.SetData(HandheldLightVisuals.Power, HandheldLightPowerStates.FullPower);
+            }
+            else if (Cell.MaxCharge - Cell.CurrentCharge < Cell.MaxCharge * 0.90)
+            {
+                appearanceComponent.SetData(HandheldLightVisuals.Power, HandheldLightPowerStates.LowPower);
+            }
+            else
+            {
+                appearanceComponent.SetData(HandheldLightVisuals.Power, HandheldLightPowerStates.Dying);
+            }
+
+            if (Cell == null || !Cell.TryUseCharge(Wattage * frameTime)) TurnOff();
 
             Dirty();
         }
@@ -204,35 +225,36 @@ namespace Content.Server.GameObjects.Components.Interactable
                 return;
             }
 
-            if (!user.TryGetComponent(out HandsComponent hands))
+            Dirty();
+
+            if (!user.TryGetComponent(out HandsComponent? hands))
             {
                 return;
             }
 
             if (!hands.PutInHand(cell.Owner.GetComponent<ItemComponent>()))
             {
-                cell.Owner.Transform.GridPosition = user.Transform.GridPosition;
+                cell.Owner.Transform.Coordinates = user.Transform.Coordinates;
             }
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/items/weapons/pistol_magout.ogg", Owner);
-
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/pistol_magout.ogg", Owner);
         }
 
         public override ComponentState GetComponentState()
         {
             if (Cell == null)
             {
-                return new HandheldLightComponentState(null);
+                return new HandheldLightComponentState(null, false);
             }
 
-            if (Cell.AvailableCharge(1) < Wattage)
+            if (Wattage > Cell.CurrentCharge)
             {
                 // Practically zero.
                 // This is so the item status works correctly.
-                return new HandheldLightComponentState(0);
+                return new HandheldLightComponentState(0, HasCell);
             }
 
-            return new HandheldLightComponentState(Cell.Charge / Cell.Capacity);
+            return new HandheldLightComponentState(Cell.CurrentCharge / Cell.MaxCharge, HasCell);
         }
 
         [Verb]
@@ -240,14 +262,20 @@ namespace Content.Server.GameObjects.Components.Interactable
         {
             protected override void GetData(IEntity user, HandheldLightComponent component, VerbData data)
             {
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
                 if (component.Cell == null)
                 {
-                    data.Text = "Eject cell (cell missing)";
+                    data.Text = Loc.GetString("Eject cell (cell missing)");
                     data.Visibility = VerbVisibility.Disabled;
                 }
                 else
                 {
-                    data.Text = "Eject cell";
+                    data.Text = Loc.GetString("Eject cell");
                 }
             }
 
@@ -264,7 +292,7 @@ namespace Content.Server.GameObjects.Components.Interactable
                 return;
             }
 
-            var cell = Owner.EntityManager.SpawnEntity("PowerCellSmallHyper", Owner.Transform.GridPosition);
+            var cell = Owner.EntityManager.SpawnEntity("PowerCellSmallStandard", Owner.Transform.Coordinates);
             _cellContainer.Insert(cell);
         }
     }

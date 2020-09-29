@@ -1,0 +1,42 @@
+- type: entity
+  id: LowWall
+  name: low wall
+  description: Goes up to about your waist.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: Clickable
+  - type: RCDDeconstructWhitelist
+  - type: InteractionOutline
+  - type: Sprite
+    netsync: false
+    color: "#889192"
+    drawdepth: Walls
+    sprite: Constructible/Structures/Walls/low_wall.rsi
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      layer:
+      - VaultImpassable
+      - SmallImpassable
+  - type: Destructible
+    deadThreshold: 100
+    resistances: metallicResistances
+  - type: SnapGrid
+    offset: Center
+  - type: Climbable
+  - type: LowWall
+    key: walls
+    base: metal_
+
+- type: entity
+  id: LowWallOverlay
+  name: low wall overlay
+  abstract: true
+  components:
+  - type: Sprite
+    color: "#889192"
+    drawdepth: WallMountedItems
+    sprite: Constructible/Structures/Walls/low_wall.rsi

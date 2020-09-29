@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Content.Client.Interfaces;
 using Content.Shared.Preferences;
@@ -13,10 +14,9 @@ namespace Content.Client
     /// </summary>
     public class ClientPreferencesManager : SharedPreferencesManager, IClientPreferencesManager
     {
-#pragma warning disable 649
-        [Dependency] private readonly IClientNetManager _netManager;
-#pragma warning restore 649
+        [Dependency] private readonly IClientNetManager _netManager = default!;
 
+        public event Action OnServerDataLoaded;
         public GameSettings Settings { get; private set; }
         public PlayerPreferences Preferences { get; private set; }
 
@@ -24,6 +24,8 @@ namespace Content.Client
         {
             _netManager.RegisterNetMessage<MsgPreferencesAndSettings>(nameof(MsgPreferencesAndSettings),
                 HandlePreferencesAndSettings);
+            _netManager.RegisterNetMessage<MsgUpdateCharacter>(nameof(MsgUpdateCharacter));
+            _netManager.RegisterNetMessage<MsgSelectCharacter>(nameof(MsgSelectCharacter));
         }
 
         public void SelectCharacter(ICharacterProfile profile)
@@ -69,6 +71,8 @@ namespace Content.Client
         {
             Preferences = message.Preferences;
             Settings = message.Settings;
+
+            OnServerDataLoaded?.Invoke();
         }
     }
 }

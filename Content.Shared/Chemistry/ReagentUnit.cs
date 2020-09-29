@@ -1,7 +1,7 @@
-﻿using Robust.Shared.Interfaces.Serialization;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Linq;
+using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Shared.Chemistry
 {
@@ -110,14 +110,24 @@ namespace Content.Shared.Chemistry
             return a.ShiftDown() >= b;
         }
 
+        public static bool operator <(ReagentUnit a, int b)
+        {
+            return a.ShiftDown() < b;
+        }
+
+        public static bool operator >(ReagentUnit a, int b)
+        {
+            return a.ShiftDown() > b;
+        }
+
         public static bool operator ==(ReagentUnit a, int b)
         {
-            return a.ShiftDown() == b;
+            return a.Int() == b;
         }
 
         public static bool operator !=(ReagentUnit a, int b)
         {
-            return a.ShiftDown() != b;
+            return a.Int() != b;
         }
 
         public static bool operator ==(ReagentUnit a, ReagentUnit b)
@@ -173,6 +183,21 @@ namespace Content.Shared.Chemistry
         public static ReagentUnit Min(ReagentUnit a, ReagentUnit b)
         {
             return a < b ? a : b;
+        }
+
+        public static ReagentUnit Max(ReagentUnit a, ReagentUnit b)
+        {
+            return a > b ? a : b;
+        }
+
+        public static ReagentUnit Clamp(ReagentUnit reagent, ReagentUnit min, ReagentUnit max)
+        {
+            if (min > max)
+            {
+                throw new ArgumentException($"{nameof(min)} {min} cannot be larger than {nameof(max)} {max}");
+            }
+
+            return reagent < min ? min : reagent > max ? max : reagent;
         }
 
         public override bool Equals(object obj)

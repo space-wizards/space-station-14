@@ -21,13 +21,12 @@ namespace Content.Client
 {
     public class ClientNotifyManager : SharedNotifyManager, IClientNotifyManager
     {
-#pragma warning disable 649
-        [Dependency] private IPlayerManager _playerManager;
-        [Dependency] private IUserInterfaceManager _userInterfaceManager;
-        [Dependency] private IInputManager _inputManager;
-        [Dependency] private IEyeManager _eyeManager;
-        [Dependency] private IClientNetManager _netManager;
-#pragma warning restore 649
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+        [Dependency] private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly IEyeManager _eyeManager = default!;
+        [Dependency] private readonly IClientNetManager _netManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private readonly List<PopupLabel> _aliveLabels = new List<PopupLabel>();
         private bool _initialized;
@@ -36,31 +35,51 @@ namespace Content.Client
         {
             DebugTools.Assert(!_initialized);
 
-            _netManager.RegisterNetMessage<MsgDoNotify>(nameof(MsgDoNotify), DoNotifyMessage);
+            _netManager.RegisterNetMessage<MsgDoNotifyCursor>(nameof(MsgDoNotifyCursor), DoNotifyCursor);
+            _netManager.RegisterNetMessage<MsgDoNotifyCoordinates>(nameof(MsgDoNotifyCoordinates), DoNotifyCoordinates);
+            _netManager.RegisterNetMessage<MsgDoNotifyEntity>(nameof(MsgDoNotifyEntity), DoNotifyEntity);
 
             _initialized = true;
         }
 
-        private void DoNotifyMessage(MsgDoNotify message)
+        private void DoNotifyCursor(MsgDoNotifyCursor message)
         {
-            if (message.AtCursor)
-            {
-                PopupMessage(message.Message);
-            }
-            else
-            {
-                PopupMessage(_eyeManager.WorldToScreen(message.Coordinates), message.Message);
-            }
+            PopupMessage(message.Message);
         }
 
-        public override void PopupMessage(GridCoordinates coordinates, IEntity viewer, string message)
+        private void DoNotifyCoordinates(MsgDoNotifyCoordinates message)
+        {
+            PopupMessage(_eyeManager.CoordinatesToScreen(message.Coordinates), message.Message);
+        }
+
+        private void DoNotifyEntity(MsgDoNotifyEntity message)
+        {
+            if (!_entityManager.TryGetEntity(message.Entity, out var entity))
+            {
+                return;
+            }
+
+            PopupMessage(_eyeManager.CoordinatesToScreen(entity.Transform.Coordinates), message.Message);
+        }
+
+        public override void PopupMessage(IEntity source, IEntity viewer, string message)
+        {
+            if (viewer != _playerManager.LocalPlayer?.ControlledEntity)
+            {
+                return;
+            }
+
+            PopupMessage(_eyeManager.CoordinatesToScreen(source.Transform.Coordinates), message);
+        }
+
+        public override void PopupMessage(EntityCoordinates coordinates, IEntity viewer, string message)
         {
             if (viewer != _playerManager.LocalPlayer.ControlledEntity)
             {
                 return;
             }
 
-            PopupMessage(_eyeManager.WorldToScreen(coordinates), message);
+            PopupMessage(_eyeManager.CoordinatesToScreen(coordinates), message);
         }
 
         public override void PopupMessageCursor(IEntity viewer, string message)

@@ -1,53 +1,37 @@
-using Content.Shared.GameObjects.Components.Power;
+﻿using Content.Shared.GameObjects.Components.Power;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Power
 {
+    /// <summary>
+    ///     Batteries that have update an <see cref="AppearanceComponent"/> based on their charge percent.
+    /// </summary>
     [RegisterComponent]
-    [ComponentReference(typeof(PowerStorageComponent))]
-    public class PowerCellComponent : PowerStorageComponent
+    [ComponentReference(typeof(BatteryComponent))]
+    public class PowerCellComponent : BatteryComponent
     {
         public override string Name => "PowerCell";
-
-        private AppearanceComponent _appearance;
-
-        public override float Charge
-        {
-            get => base.Charge;
-            set
-            {
-                base.Charge = value;
-                _updateAppearance();
-            }
-        }
 
         public override void Initialize()
         {
             base.Initialize();
-
-            Owner.TryGetComponent(out _appearance);
+            CurrentCharge = MaxCharge;
+            UpdateVisuals();
         }
 
-        public override void DeductCharge(float toDeduct)
+        protected override void OnChargeChanged()
         {
-            base.DeductCharge(toDeduct);
-
-            _updateAppearance();
-            ChargeChanged();
+            base.OnChargeChanged();
+            UpdateVisuals();
         }
 
-        public override void AddCharge(float charge)
+        private void UpdateVisuals()
         {
-            base.AddCharge(charge);
-
-            _updateAppearance();
-            ChargeChanged();
-        }
-
-        private void _updateAppearance()
-        {
-            _appearance?.SetData(PowerCellVisuals.ChargeLevel, Charge / Capacity);
+            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            {
+                appearance.SetData(PowerCellVisuals.ChargeLevel, CurrentCharge / MaxCharge);
+            }
         }
     }
 }

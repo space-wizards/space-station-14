@@ -27,6 +27,8 @@ namespace Content.Client.GameObjects.Components.Cargo
         public string BankName { get; private set; }
         [ViewVariables]
         public int BankBalance { get; private set; }
+        [ViewVariables]
+        public (int CurrentCapacity, int MaxCapacity) ShuttleCapacity { get; private set; }
 
         private CargoProductPrototype _product;
 
@@ -67,7 +69,7 @@ namespace Content.Client.GameObjects.Components.Cargo
                 _orderMenu.Requester.Text = null;
                 _orderMenu.Reason.Text = null;
                 _orderMenu.Amount.Value = 1;
-                _orderMenu.OpenCenteredMinSize();
+                _orderMenu.OpenCentered();
             };
             _menu.OnOrderApproved += ApproveOrder;
             _menu.OnOrderCanceled += RemoveOrder;
@@ -85,16 +87,18 @@ namespace Content.Client.GameObjects.Components.Cargo
         {
             base.UpdateState(state);
 
-            if (!(state is CargoConsoleInterfaceState cstate))
+            if (!(state is CargoConsoleInterfaceState cState))
                 return;
-            if (RequestOnly != cstate.RequestOnly)
+            if (RequestOnly != cState.RequestOnly)
             {
-                RequestOnly = cstate.RequestOnly;
+                RequestOnly = cState.RequestOnly;
                 _menu.UpdateRequestOnly();
             }
-            BankId = cstate.BankId;
-            BankName = cstate.BankName;
-            BankBalance = cstate.BankBalance;
+            BankId = cState.BankId;
+            BankName = cState.BankName;
+            BankBalance = cState.BankBalance;
+            ShuttleCapacity = cState.ShuttleCapacity;
+            _menu.UpdateCargoCapacity();
             _menu.UpdateBankData();
         }
 
@@ -126,7 +130,10 @@ namespace Content.Client.GameObjects.Components.Cargo
         {
             if (!(args.Button.Parent.Parent is CargoOrderRow row))
                 return;
+            if (ShuttleCapacity.CurrentCapacity == ShuttleCapacity.MaxCapacity)
+                return;
             SendMessage(new SharedCargoConsoleComponent.CargoConsoleApproveOrderMessage(row.Order.OrderNumber));
+            _menu?.UpdateCargoCapacity();
         }
     }
 }

@@ -7,6 +7,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Maths;
+using static Robust.Client.UserInterface.StylesheetHelpers;
 
 namespace Content.Client.UserInterface.Stylesheets
 {
@@ -30,6 +31,11 @@ namespace Content.Client.UserInterface.Stylesheets
         public static readonly Color ButtonColorPressed = Color.FromHex("#3e6c45");
         public static readonly Color ButtonColorDisabled = Color.FromHex("#30313c");
 
+        public static readonly Color ButtonColorCautionDefault = Color.FromHex("#ab3232");
+        public static readonly Color ButtonColorCautionHovered = Color.FromHex("#cf2f2f");
+        public static readonly Color ButtonColorCautionPressed = Color.FromHex("#3e6c45");
+        public static readonly Color ButtonColorCautionDisabled = Color.FromHex("#602a2a");
+
         //Used by the APC and SMES menus
         public const string StyleClassPowerStateNone = "PowerStateNone";
         public const string StyleClassPowerStateLow = "PowerStateLow";
@@ -41,17 +47,17 @@ namespace Content.Client.UserInterface.Stylesheets
 
         public StyleNano(IResourceCache resCache) : base(resCache)
         {
-            var notoSans10 = resCache.GetFont("/Nano/NotoSans/NotoSans-Regular.ttf", 10);
-            var notoSansItalic10 = resCache.GetFont("/Nano/NotoSans/NotoSans-Italic.ttf", 10);
-            var notoSans12 = resCache.GetFont("/Nano/NotoSans/NotoSans-Regular.ttf", 12);
-            var notoSansItalic12 = resCache.GetFont("/Nano/NotoSans/NotoSans-Italic.ttf", 12);
-            var notoSansBold12 = resCache.GetFont("/Nano/NotoSans/NotoSans-Bold.ttf", 12);
+            var notoSans10 = resCache.GetFont("/Textures/Interface/Nano/NotoSans/NotoSans-Regular.ttf", 10);
+            var notoSansItalic10 = resCache.GetFont("/Textures/Interface/Nano/NotoSans/NotoSans-Italic.ttf", 10);
+            var notoSans12 = resCache.GetFont("/Textures/Interface/Nano/NotoSans/NotoSans-Regular.ttf", 12);
+            var notoSansItalic12 = resCache.GetFont("/Textures/Interface/Nano/NotoSans/NotoSans-Italic.ttf", 12);
+            var notoSansBold12 = resCache.GetFont("/Textures/Interface/Nano/NotoSans/NotoSans-Bold.ttf", 12);
             var notoSansDisplayBold14 = resCache.GetFont("/Fonts/NotoSansDisplay/NotoSansDisplay-Bold.ttf", 14);
-            var notoSans16 = resCache.GetFont("/Nano/NotoSans/NotoSans-Regular.ttf", 16);
-            var notoSansBold16 = resCache.GetFont("/Nano/NotoSans/NotoSans-Bold.ttf", 16);
-            var notoSansBold20 = resCache.GetFont("/Nano/NotoSans/NotoSans-Bold.ttf", 20);
-            var textureCloseButton = resCache.GetTexture("/Nano/cross.svg.png");
-            var windowHeaderTex = resCache.GetTexture("/Nano/window_header.png");
+            var notoSans16 = resCache.GetFont("/Textures/Interface/Nano/NotoSans/NotoSans-Regular.ttf", 16);
+            var notoSansBold16 = resCache.GetFont("/Textures/Interface/Nano/NotoSans/NotoSans-Bold.ttf", 16);
+            var notoSansBold20 = resCache.GetFont("/Textures/Interface/Nano/NotoSans/NotoSans-Bold.ttf", 20);
+            var textureCloseButton = resCache.GetTexture("/Textures/Interface/Nano/cross.svg.png");
+            var windowHeaderTex = resCache.GetTexture("/Textures/Interface/Nano/window_header.png");
             var windowHeader = new StyleBoxTexture
             {
                 Texture = windowHeaderTex,
@@ -59,7 +65,7 @@ namespace Content.Client.UserInterface.Stylesheets
                 ExpandMarginBottom = 3,
                 ContentMarginBottomOverride = 0
             };
-            var windowBackgroundTex = resCache.GetTexture("/Nano/window_background.png");
+            var windowBackgroundTex = resCache.GetTexture("/Textures/Interface/Nano/window_background.png");
             var windowBackground = new StyleBoxTexture
             {
                 Texture = windowBackgroundTex,
@@ -67,30 +73,9 @@ namespace Content.Client.UserInterface.Stylesheets
             windowBackground.SetPatchMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
             windowBackground.SetExpandMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
 
-            var textureInvertedTriangle = resCache.GetTexture("/Nano/inverted_triangle.svg.png");
+            var textureInvertedTriangle = resCache.GetTexture("/Textures/Interface/Nano/inverted_triangle.svg.png");
 
-            // Button styles.
-            var buttonNormal = new StyleBoxTexture(BaseButton)
-            {
-                Modulate = ButtonColorDefault
-            };
-
-            var buttonHover = new StyleBoxTexture(buttonNormal)
-            {
-                Modulate = ButtonColorHovered
-            };
-
-            var buttonPressed = new StyleBoxTexture(buttonNormal)
-            {
-                Modulate = ButtonColorPressed
-            };
-
-            var buttonDisabled = new StyleBoxTexture(buttonNormal)
-            {
-                Modulate = ButtonColorDisabled
-            };
-
-            var lineEditTex = resCache.GetTexture("/Nano/lineedit.png");
+            var lineEditTex = resCache.GetTexture("/Textures/Interface/Nano/lineedit.png");
             var lineEdit = new StyleBoxTexture
             {
                 Texture = lineEditTex,
@@ -98,7 +83,7 @@ namespace Content.Client.UserInterface.Stylesheets
             lineEdit.SetPatchMargin(StyleBox.Margin.All, 3);
             lineEdit.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
 
-            var tabContainerPanelTex = resCache.GetTexture("/Nano/tabcontainer_panel.png");
+            var tabContainerPanelTex = resCache.GetTexture("/Textures/Interface/Nano/tabcontainer_panel.png");
             var tabContainerPanel = new StyleBoxTexture
             {
                 Texture = tabContainerPanelTex,
@@ -152,11 +137,11 @@ namespace Content.Client.UserInterface.Stylesheets
             progressBarForeground.SetContentMarginOverride(StyleBox.Margin.Vertical, 5);
 
             // CheckBox
-            var checkBoxTextureChecked = resCache.GetTexture("/Nano/checkbox_checked.svg.96dpi.png");
-            var checkBoxTextureUnchecked = resCache.GetTexture("/Nano/checkbox_unchecked.svg.96dpi.png");
+            var checkBoxTextureChecked = resCache.GetTexture("/Textures/Interface/Nano/checkbox_checked.svg.96dpi.png");
+            var checkBoxTextureUnchecked = resCache.GetTexture("/Textures/Interface/Nano/checkbox_unchecked.svg.96dpi.png");
 
             // Tooltip box
-            var tooltipTexture = resCache.GetTexture("/Nano/tooltip.png");
+            var tooltipTexture = resCache.GetTexture("/Textures/Interface/Nano/tooltip.png");
             var tooltipBox = new StyleBoxTexture
             {
                 Texture = tooltipTexture,
@@ -165,7 +150,7 @@ namespace Content.Client.UserInterface.Stylesheets
             tooltipBox.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
 
             // Placeholder
-            var placeholderTexture = resCache.GetTexture("/Nano/placeholder.png");
+            var placeholderTexture = resCache.GetTexture("/Textures/Interface/Nano/placeholder.png");
             var placeholder = new StyleBoxTexture {Texture = placeholderTexture};
             placeholder.SetPatchMargin(StyleBox.Margin.All, 19);
             placeholder.SetExpandMargin(StyleBox.Margin.All, -5);
@@ -185,7 +170,7 @@ namespace Content.Client.UserInterface.Stylesheets
             itemListItemBackgroundTransparent.SetContentMarginOverride(StyleBox.Margin.Horizontal, 4);
 
             // NanoHeading
-            var nanoHeadingTex = resCache.GetTexture("/Nano/nanoheading.svg.96dpi.png");
+            var nanoHeadingTex = resCache.GetTexture("/Textures/Interface/Nano/nanoheading.svg.96dpi.png");
             var nanoHeadingBox = new StyleBoxTexture
             {
                 Texture = nanoHeadingTex,
@@ -199,7 +184,7 @@ namespace Content.Client.UserInterface.Stylesheets
             nanoHeadingBox.SetPatchMargin(StyleBox.Margin.Left | StyleBox.Margin.Bottom, 2);
 
             // Stripe background
-            var stripeBackTex = resCache.GetTexture("/Nano/stripeback.svg.96dpi.png");
+            var stripeBackTex = resCache.GetTexture("/Textures/Interface/Nano/stripeback.svg.96dpi.png");
             var stripeBack = new StyleBoxTexture
             {
                 Texture = stripeBackTex,
@@ -207,9 +192,9 @@ namespace Content.Client.UserInterface.Stylesheets
             };
 
             // Slider
-            var sliderOutlineTex = resCache.GetTexture("/Nano/slider_outline.svg.96dpi.png");
-            var sliderFillTex = resCache.GetTexture("/Nano/slider_fill.svg.96dpi.png");
-            var sliderGrabTex = resCache.GetTexture("/Nano/slider_grabber.svg.96dpi.png");
+            var sliderOutlineTex = resCache.GetTexture("/Textures/Interface/Nano/slider_outline.svg.96dpi.png");
+            var sliderFillTex = resCache.GetTexture("/Textures/Interface/Nano/slider_fill.svg.96dpi.png");
+            var sliderGrabTex = resCache.GetTexture("/Textures/Interface/Nano/slider_grabber.svg.96dpi.png");
 
             var sliderFillBox = new StyleBoxTexture
             {
@@ -293,28 +278,60 @@ namespace Content.Client.UserInterface.Stylesheets
                         new StyleProperty(Control.StylePropertyModulateSelf, Color.FromHex("#753131")),
                     }),
 
-                // Regular buttons!
-                new StyleRule(new SelectorElement(typeof(ContainerButton), new[] { ContainerButton.StyleClassButton }, null, new[] {ContainerButton.StylePseudoClassNormal}), new[]
-                {
-                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonNormal),
-                }),
-                new StyleRule(new SelectorElement(typeof(ContainerButton), new[] { ContainerButton.StyleClassButton }, null, new[] {ContainerButton.StylePseudoClassHover}), new[]
-                {
-                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonHover),
-                }),
-                new StyleRule(new SelectorElement(typeof(ContainerButton), new[] { ContainerButton.StyleClassButton }, null, new[] {ContainerButton.StylePseudoClassPressed}), new[]
-                {
-                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonPressed),
-                }),
-                new StyleRule(new SelectorElement(typeof(ContainerButton), new[] { ContainerButton.StyleClassButton }, null, new[] {ContainerButton.StylePseudoClassDisabled}), new[]
-                {
-                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonDisabled),
-                }),
+                // Shapes for the buttons.
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                    .Prop(ContainerButton.StylePropertyStyleBox, BaseButton),
+
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                    .Class(ButtonOpenRight)
+                    .Prop(ContainerButton.StylePropertyStyleBox, BaseButtonOpenRight),
+
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                    .Class(ButtonOpenLeft)
+                    .Prop(ContainerButton.StylePropertyStyleBox, BaseButtonOpenLeft),
+
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                    .Class(ButtonOpenBoth)
+                    .Prop(ContainerButton.StylePropertyStyleBox, BaseButtonOpenBoth),
 
                 new StyleRule(new SelectorElement(typeof(Label), new[] { Button.StyleClassButton }, null, null), new[]
                 {
                     new StyleProperty(Label.StylePropertyAlignMode, Label.AlignMode.Center),
                 }),
+
+                // Colors for the buttons.
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                    .Pseudo(ContainerButton.StylePseudoClassNormal)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorDefault),
+
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                    .Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorHovered),
+
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                    .Pseudo(ContainerButton.StylePseudoClassPressed)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorPressed),
+
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                    .Pseudo(ContainerButton.StylePseudoClassDisabled)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorDisabled),
+
+                // Colors for the caution buttons.
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonCaution)
+                    .Pseudo(ContainerButton.StylePseudoClassNormal)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionDefault),
+
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonCaution)
+                    .Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionHovered),
+
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonCaution)
+                    .Pseudo(ContainerButton.StylePseudoClassPressed)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionPressed),
+
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonCaution)
+                    .Pseudo(ContainerButton.StylePseudoClassDisabled)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorCautionDisabled),
 
                 new StyleRule(new SelectorChild(
                     new SelectorElement(typeof(Button), null, null, new[] {ContainerButton.StylePseudoClassDisabled}),
@@ -593,25 +610,28 @@ namespace Content.Client.UserInterface.Stylesheets
                 }),
 
                 // Those top menu buttons.
+                Element<GameHud.TopButton>()
+                    .Prop(Button.StylePropertyStyleBox, BaseButton),
+
                 new StyleRule(
                     new SelectorElement(typeof(GameHud.TopButton), null, null, new[] {Button.StylePseudoClassNormal}),
                     new[]
                     {
-                        new StyleProperty(Button.StylePropertyStyleBox, buttonNormal),
+                        new StyleProperty(Button.StylePropertyModulateSelf, ButtonColorDefault),
                     }),
 
                 new StyleRule(
                     new SelectorElement(typeof(GameHud.TopButton), null, null, new[] {Button.StylePseudoClassPressed}),
                     new[]
                     {
-                        new StyleProperty(Button.StylePropertyStyleBox, buttonPressed),
+                        new StyleProperty(Button.StylePropertyModulateSelf, ButtonColorPressed),
                     }),
 
                 new StyleRule(
                     new SelectorElement(typeof(GameHud.TopButton), null, null, new[] {Button.StylePseudoClassHover}),
                     new[]
                     {
-                        new StyleProperty(Button.StylePropertyStyleBox, buttonHover),
+                        new StyleProperty(Button.StylePropertyModulateSelf, ButtonColorHovered),
                     }),
 
                 new StyleRule(
@@ -702,21 +722,25 @@ namespace Content.Client.UserInterface.Stylesheets
                 }),
 
                 // OptionButton
+                new StyleRule(new SelectorElement(typeof(OptionButton), null, null, null), new[]
+                {
+                    new StyleProperty(ContainerButton.StylePropertyStyleBox, BaseButton),
+                }),
                 new StyleRule(new SelectorElement(typeof(OptionButton), null, null, new[] {ContainerButton.StylePseudoClassNormal}), new[]
                 {
-                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonNormal),
+                    new StyleProperty(Control.StylePropertyModulateSelf, ButtonColorDefault),
                 }),
                 new StyleRule(new SelectorElement(typeof(OptionButton), null, null, new[] {ContainerButton.StylePseudoClassHover}), new[]
                 {
-                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonHover),
+                    new StyleProperty(Control.StylePropertyModulateSelf, ButtonColorHovered),
                 }),
                 new StyleRule(new SelectorElement(typeof(OptionButton), null, null, new[] {ContainerButton.StylePseudoClassPressed}), new[]
                 {
-                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonPressed),
+                    new StyleProperty(Control.StylePropertyModulateSelf, ButtonColorPressed),
                 }),
                 new StyleRule(new SelectorElement(typeof(OptionButton), null, null, new[] {ContainerButton.StylePseudoClassDisabled}), new[]
                 {
-                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonDisabled),
+                    new StyleProperty(Control.StylePropertyModulateSelf, ButtonColorDisabled),
                 }),
 
                 new StyleRule(new SelectorElement(typeof(TextureRect), new[] {OptionButton.StyleClassOptionTriangle}, null, null), new[]

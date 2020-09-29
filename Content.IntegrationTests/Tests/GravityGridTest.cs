@@ -1,13 +1,12 @@
-using System.Threading.Tasks;
-using Content.Client.GameObjects.Components.Gravity;
+﻿using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Gravity;
-using Content.Server.GameObjects.Components.Power;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Shared.Utility;
 using NUnit.Framework;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -38,13 +37,13 @@ namespace Content.IntegrationTests.Tests
 
                 var entityMan = IoCManager.Resolve<IEntityManager>();
 
-                generator = entityMan.SpawnEntity("GravityGenerator", new GridCoordinates(new Vector2(0, 0), grid2.Index));
+                generator = entityMan.SpawnEntity("GravityGenerator", grid2.ToCoordinates());
                 Assert.That(generator.HasComponent<GravityGeneratorComponent>());
-                Assert.That(generator.HasComponent<PowerDeviceComponent>());
+                Assert.That(generator.HasComponent<PowerReceiverComponent>());
                 var generatorComponent = generator.GetComponent<GravityGeneratorComponent>();
-                var powerComponent = generator.GetComponent<PowerDeviceComponent>();
-                Assert.AreEqual(generatorComponent.Status, GravityGeneratorStatus.Unpowered);
-                powerComponent.ExternalPowered = true;
+                var powerComponent = generator.GetComponent<PowerReceiverComponent>();
+                Assert.That(generatorComponent.Status, Is.EqualTo(GravityGeneratorStatus.Unpowered));
+                powerComponent.NeedsPower = false;
             });
             server.RunTicks(1);
 
@@ -52,7 +51,7 @@ namespace Content.IntegrationTests.Tests
             {
                 var generatorComponent = generator.GetComponent<GravityGeneratorComponent>();
 
-                Assert.AreEqual(generatorComponent.Status, GravityGeneratorStatus.On);
+                Assert.That(generatorComponent.Status, Is.EqualTo(GravityGeneratorStatus.On));
 
                 Assert.That(!grid1.HasGravity);
                 Assert.That(grid2.HasGravity);

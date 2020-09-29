@@ -1,0 +1,19 @@
+- type: entity
+  name: pickaxe
+  parent: BaseItem
+  id: Pickaxe
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/pickaxe.rsi
+    state: pickaxe
+
+
+  - type: Pickaxe
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    damage: 25
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Melee/pickaxe.rsi
+    prefix: inhand
+  - type: LoopingSound

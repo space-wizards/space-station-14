@@ -1,11 +1,16 @@
+﻿#nullable enable
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces;
-using Content.Server.Interfaces.GameObjects;
+using System.Threading.Tasks;
+using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
 using Content.Shared.Access;
 using Content.Shared.GameObjects.Components.Access;
+using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.GameObjects.Verbs;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
@@ -15,23 +20,23 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Access
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class IdCardConsoleComponent : SharedIdCardConsoleComponent, IActivate
+    public class IdCardConsoleComponent : SharedIdCardConsoleComponent, IActivate, IInteractUsing
     {
-#pragma warning disable 649
-        [Dependency] private readonly IServerNotifyManager _notifyManager;
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-#pragma warning restore 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        private BoundUserInterface _userInterface;
-        private ContainerSlot _privilegedIdContainer;
-        private ContainerSlot _targetIdContainer;
-        private AccessReader _accessReader;
+        private ContainerSlot _privilegedIdContainer = default!;
+        private ContainerSlot _targetIdContainer = default!;
+
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(IdCardConsoleUiKey.Key);
+
+        private bool PrivilegedIDEmpty => _privilegedIdContainer.ContainedEntities.Count < 1;
+        private bool TargetIDEmpty => _targetIdContainer.ContainedEntities.Count < 1;
 
         public override void Initialize()
         {
@@ -40,16 +45,30 @@ namespace Content.Server.GameObjects.Components.Access
             _privilegedIdContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-privilegedId", Owner);
             _targetIdContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-targetId", Owner);
 
-            _accessReader = Owner.GetComponent<AccessReader>();
+            if (!Owner.EnsureComponent(out AccessReader _))
+            {
+                Logger.Warning($"Entity {Owner} at {Owner.Transform.MapPosition} didn't have a {nameof(AccessReader)}");
+            }
 
-            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
-                .GetBoundUserInterface(IdCardConsoleUiKey.Key);
-            _userInterface.OnReceiveMessage += OnUiReceiveMessage;
+            if (UserInterface == null)
+            {
+                Logger.Warning($"Entity {Owner} at {Owner.Transform.MapPosition} doesn't have a {nameof(ServerUserInterfaceComponent)}");
+            }
+            else
+            {
+                UserInterface.OnReceiveMessage += OnUiReceiveMessage;
+            }
+
             UpdateUserInterface();
         }
 
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
+            if (obj.Session.AttachedEntity == null)
+            {
+                return;
+            }
+
             switch (obj.Message)
             {
                 case IdButtonPressedMessage msg:
@@ -72,13 +91,19 @@ namespace Content.Server.GameObjects.Components.Access
         }
 
         /// <summary>
-        /// Returns true if there is an ID in <see cref="_privilegedIdContainer"/> and said ID satisfies the requirements of <see cref="_accessReader"/>.
+        /// Returns true if there is an ID in <see cref="_privilegedIdContainer"/> and said ID satisfies the requirements of <see cref="AccessReader"/>.
         /// </summary>
         private bool PrivilegedIdIsAuthorized()
         {
+            if (!Owner.TryGetComponent(out AccessReader? reader))
+            {
+                return true;
+            }
+
             var privilegedIdEntity = _privilegedIdContainer.ContainedEntity;
-            return privilegedIdEntity != null && _accessReader.IsAllowed(privilegedIdEntity);
+            return privilegedIdEntity != null && reader.IsAllowed(privilegedIdEntity);
         }
+
         /// <summary>
         /// Called when the "Submit" button in the UI gets pressed.
         /// Writes data passed from the UI into the ID stored in <see cref="_targetIdContainer"/>, if present.
@@ -98,7 +123,7 @@ namespace Content.Server.GameObjects.Components.Access
 
             if (!newAccessList.TrueForAll(x => _prototypeManager.HasIndex<AccessLevelPrototype>(x)))
             {
-                Logger.Warning($"Tried to write unknown access tag.");
+                Logger.Warning("Tried to write unknown access tag.");
                 return;
             }
             var targetIdAccess = targetIdEntity.GetComponent<AccessComponent>();
@@ -110,9 +135,9 @@ namespace Content.Server.GameObjects.Components.Access
         /// </summary>
         private void HandleId(IEntity user, ContainerSlot container)
         {
-            if (!user.TryGetComponent(out IHandsComponent hands))
+            if (!user.TryGetComponent(out IHandsComponent? hands))
             {
-                _notifyManager.PopupMessage(Owner.Transform.GridPosition, user, _localizationManager.GetString("You have no hands."));
+                Owner.PopupMessage(user, Loc.GetString("You have no hands."));
                 return;
             }
 
@@ -133,9 +158,15 @@ namespace Content.Server.GameObjects.Components.Access
             {
                 return;
             }
-            if(!hands.Drop(hands.ActiveIndex, container))
+
+            if (hands.ActiveHand == null)
             {
-                _notifyManager.PopupMessage(Owner.Transform.GridPosition, user, _localizationManager.GetString("You can't let go of the ID card!"));
+                return;
+            }
+
+            if (!hands.Drop(hands.ActiveHand, container))
+            {
+                Owner.PopupMessage(user, Loc.GetString("You can't let go of the ID card!"));
                 return;
             }
             UpdateUserInterface();
@@ -185,17 +216,97 @@ namespace Content.Server.GameObjects.Components.Access
                     _privilegedIdContainer.ContainedEntity?.Name ?? "",
                     _targetIdContainer.ContainedEntity?.Name ?? "");
             }
-            _userInterface.SetState(newState);
+            UserInterface?.SetState(newState);
         }
 
         public void Activate(ActivateEventArgs eventArgs)
         {
-            if(!eventArgs.User.TryGetComponent(out IActorComponent actor))
+            if(!eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
                 return;
             }
 
-            _userInterface.Open(actor.playerSession);
+            UserInterface?.Open(actor.playerSession);
         }
+
+        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        {
+            var item = eventArgs.Using;
+            var user = eventArgs.User;
+
+            if (!PrivilegedIDEmpty && !TargetIDEmpty)
+            {
+                return false;
+            }
+
+            if (!item.TryGetComponent<IdCardComponent>(out var idCardComponent) || !user.TryGetComponent(out IHandsComponent? hand))
+            {
+                return false;
+            }
+
+            if (PrivilegedIDEmpty)
+            {
+                InsertIdFromHand(user, _privilegedIdContainer, hand);
+            }
+
+            else if (TargetIDEmpty)
+            {
+                InsertIdFromHand(user, _targetIdContainer, hand);
+            }
+
+            UpdateUserInterface();
+            return true;
+        }
+
+        [Verb]
+        public sealed class EjectPrivilegedIDVerb : Verb<IdCardConsoleComponent>
+        {
+            protected override void GetData(IEntity user, IdCardConsoleComponent component, VerbData data)
+            {
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
+                data.Text = Loc.GetString("Eject Privileged ID");
+                data.Visibility = component.PrivilegedIDEmpty ? VerbVisibility.Invisible : VerbVisibility.Visible;
+            }
+
+            protected override void Activate(IEntity user, IdCardConsoleComponent component)
+            {
+                if (!user.TryGetComponent(out IHandsComponent? hand))
+                {
+                    return;
+                }
+                component.PutIdInHand(component._privilegedIdContainer, hand);
+            }
+        }
+
+        public sealed class EjectTargetIDVerb : Verb<IdCardConsoleComponent>
+        {
+            protected override void GetData(IEntity user, IdCardConsoleComponent component, VerbData data)
+            {
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
+                data.Text = Loc.GetString("Eject Target ID");
+                data.Visibility = component.TargetIDEmpty ? VerbVisibility.Invisible : VerbVisibility.Visible;
+            }
+
+            protected override void Activate(IEntity user, IdCardConsoleComponent component)
+            {
+                if (!user.TryGetComponent(out IHandsComponent? hand))
+                {
+                    return;
+                }
+                component.PutIdInHand(component._targetIdContainer, hand);
+            }
+        }
+
+
     }
 }

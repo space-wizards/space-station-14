@@ -1,0 +1,16 @@
+- type: entity
+  id: MarkerBase
+  abstract: true
+  components:
+  - type: Marker
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: Sprite
+    netsync: false
+    visible: false
+    sprite: Interface/Misc/markers.rsi
+    state: cross_blue
+
+
+

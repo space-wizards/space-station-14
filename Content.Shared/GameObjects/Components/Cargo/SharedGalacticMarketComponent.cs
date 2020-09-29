@@ -1,11 +1,11 @@
-﻿using Content.Shared.Prototypes.Cargo;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using Content.Shared.Prototypes.Cargo;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace Content.Shared.GameObjects.Components.Cargo
 {
@@ -65,23 +65,25 @@ namespace Content.Shared.GameObjects.Components.Cargo
         {
             base.ExposeData(serializer);
 
-            if (serializer.Reading)
-            {
-                var products = serializer.ReadDataField("products", new List<string>());
-                var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-                _products.Clear();
-                foreach (var id in products)
+            serializer.DataReadWriteFunction(
+                "products",
+                new List<string>(),
+                products =>
                 {
-                    if (!prototypeManager.TryIndex(id, out CargoProductPrototype product))
-                        continue;
-                    _products.Add(product);
-                }
-            }
-            else if (serializer.Writing)
-            {
-                var products = GetProductIdList();
-                serializer.DataField(ref products, "products", new List<string>());
-            }
+                    var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+
+                    _products.Clear();
+                    foreach (var id in products)
+                    {
+                        if (!prototypeManager.TryIndex(id, out CargoProductPrototype product))
+                        {
+                            continue;
+                        }
+
+                        _products.Add(product);
+                    }
+                },
+                GetProductIdList);
         }
     }
 

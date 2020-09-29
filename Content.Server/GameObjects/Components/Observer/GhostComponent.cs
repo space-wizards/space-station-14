@@ -1,4 +1,5 @@
-using Content.Server.GameObjects.EntitySystems;
+﻿using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.Mobs;
 using Content.Server.Players;
 using Content.Shared.GameObjects.Components.Observer;
 using Robust.Server.GameObjects;
@@ -9,13 +10,11 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
-using Timer = Robust.Shared.Timers.Timer;
-
 
 namespace Content.Server.GameObjects.Components.Observer
 {
     [RegisterComponent]
-    public class GhostComponent : SharedGhostComponent, IActionBlocker
+    public class GhostComponent : SharedGhostComponent
     {
         private bool _canReturnToBody = true;
 
@@ -34,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Observer
         {
             base.Initialize();
 
-            Owner.EnsureComponent<VisibilityComponent>().Layer = (int)VisibilityFlags.Ghost;
+            Owner.EnsureComponent<VisibilityComponent>().Layer = (int) VisibilityFlags.Ghost;
         }
 
         public override ComponentState GetComponentState() => new GhostComponentState(CanReturnToBody);
@@ -46,18 +45,19 @@ namespace Content.Server.GameObjects.Components.Observer
             switch (message)
             {
                 case PlayerAttachedMsg msg:
-                    msg.NewPlayer.VisibilityMask |= (int)VisibilityFlags.Ghost;
+                    msg.NewPlayer.VisibilityMask |= (int) VisibilityFlags.Ghost;
                     Dirty();
                     break;
                 case PlayerDetachedMsg msg:
-                    msg.OldPlayer.VisibilityMask &= ~(int)VisibilityFlags.Ghost;
+                    msg.OldPlayer.VisibilityMask &= ~(int) VisibilityFlags.Ghost;
                     break;
                 default:
                     break;
             }
         }
 
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession session = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel,
+            ICommonSession session = null)
         {
             base.HandleNetworkMessage(message, netChannel, session);
 
@@ -70,18 +70,29 @@ namespace Content.Server.GameObjects.Components.Observer
                         actor.playerSession.ContentData().Mind.UnVisit();
                         Owner.Delete();
                     }
+
+                    break;
+                case ReturnToCloneComponentMessage reenter:
+
+                    if (Owner.TryGetComponent(out VisitingMindComponent mind))
+                    {
+                        Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new GhostReturnMessage(mind.Mind));
+                    }
+
                     break;
                 default:
                     break;
             }
         }
 
-        public bool CanInteract() => false;
-        public bool CanUse() => false;
-        public bool CanThrow() => false;
-        public bool CanDrop() => false;
-        public bool CanPickup() => false;
-        public bool CanEmote() => false;
-        public bool CanAttack() => false;
+        public class GhostReturnMessage : EntitySystemMessage
+        {
+            public GhostReturnMessage(Mind sender)
+            {
+                Sender = sender;
+            }
+
+            public Mind Sender { get; }
+        }
     }
 }

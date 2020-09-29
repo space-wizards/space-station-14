@@ -1,10 +1,9 @@
+#nullable enable
 using System.Collections.Generic;
 using Content.Server.Interfaces;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-
-#nullable enable
 
 namespace Content.Server.GameObjects.Components.Access
 {

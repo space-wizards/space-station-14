@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Content.Client.Interfaces.Chat;
 using Content.Shared.Chat;
 using Robust.Client.Console;
@@ -10,8 +11,10 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -45,9 +48,15 @@ namespace Content.Client.Chat
         /// </summary>
         private const int SpeechBubbleCap = 4;
 
+        /// <summary>
+        ///     The max amount of characters an entity can send in one message
+        /// </summary>
+        private int _maxMessageLength = 1000;
+
         private const char ConCmdSlash = '/';
         private const char OOCAlias = '[';
         private const char MeAlias = '@';
+        private const char AdminChatAlias = ']';
 
         private readonly List<StoredChatMessage> filteredHistory = new List<StoredChatMessage>();
 
@@ -55,17 +64,17 @@ namespace Content.Client.Chat
         private bool _allState;
         private bool _localState;
         private bool _oocState;
+        private bool _adminState;
 
         // Flag Enums for holding filtered channels
         private ChatChannel _filteredChannels;
 
-#pragma warning disable 649
-        [Dependency] private readonly IClientNetManager _netManager;
-        [Dependency] private readonly IClientConsole _console;
-        [Dependency] private readonly IEntityManager _entityManager;
-        [Dependency] private readonly IEyeManager _eyeManager;
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
-#pragma warning restore 649
+        [Dependency] private readonly IClientNetManager _netManager = default!;
+        [Dependency] private readonly IClientConsole _console = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IEyeManager _eyeManager = default!;
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+        [Dependency] private readonly IClientConGroupController _groupController = default!;
 
         private ChatBox _currentChatBox;
         private Control _speechBubbleRoot;
@@ -86,11 +95,15 @@ namespace Content.Client.Chat
         public void Initialize()
         {
             _netManager.RegisterNetMessage<MsgChatMessage>(MsgChatMessage.NAME, _onChatMessage);
+            _netManager.RegisterNetMessage<ChatMaxMsgLengthMessage>(ChatMaxMsgLengthMessage.NAME, _onMaxLengthReceived);
 
             _speechBubbleRoot = new LayoutContainer();
             LayoutContainer.SetAnchorPreset(_speechBubbleRoot, LayoutContainer.LayoutPreset.Wide);
             _userInterfaceManager.StateRoot.AddChild(_speechBubbleRoot);
             _speechBubbleRoot.SetPositionFirst();
+
+            // When connexion is achieved, request the max chat message length
+            _netManager.Connected += new EventHandler<NetChannelArgs>(RequestMaxLength);
         }
 
         public void FrameUpdate(FrameEventArgs delta)
@@ -150,6 +163,8 @@ namespace Content.Client.Chat
             _currentChatBox.AllButton.Pressed = !_allState;
             _currentChatBox.LocalButton.Pressed = !_localState;
             _currentChatBox.OOCButton.Pressed = !_oocState;
+            if(chatBox.AdminButton != null)
+                _currentChatBox.AdminButton.Pressed = !_adminState;
         }
 
         public void RemoveSpeechBubble(EntityUid entityUid, SpeechBubble bubble)
@@ -193,6 +208,9 @@ namespace Content.Client.Chat
                 case ChatChannel.Dead:
                     color = Color.MediumPurple;
                     break;
+                case ChatChannel.AdminChat:
+                    color = Color.Red;
+                    break;
             }
 
             _currentChatBox?.AddLine(messageText, message.Channel, color);
@@ -204,6 +222,15 @@ namespace Content.Client.Chat
 
             if (string.IsNullOrWhiteSpace(text))
                 return;
+
+            // Check if message is longer than the character limit
+            if (text.Length > _maxMessageLength)
+            {
+                string locWarning = Loc.GetString("Your message exceeds {0} character limit", _maxMessageLength);
+                _currentChatBox?.AddLine(locWarning, ChatChannel.Server, Color.Orange);
+                _currentChatBox.ClearOnEnter = false;   // The text shouldn't be cleared if it hasn't been sent
+                return;
+            }
 
             switch (text[0])
             {
@@ -217,12 +244,30 @@ namespace Content.Client.Chat
                 case OOCAlias:
                 {
                     var conInput = text.Substring(1);
+                    if (string.IsNullOrWhiteSpace(conInput))
+                        return;
                     _console.ProcessCommand($"ooc \"{CommandParsing.Escape(conInput)}\"");
+                    break;
+                }
+                case AdminChatAlias:
+                {
+                    var conInput = text.Substring(1);
+                    if (string.IsNullOrWhiteSpace(conInput))
+                        return;
+                    if (_groupController.CanCommand("asay")){
+                        _console.ProcessCommand($"asay \"{CommandParsing.Escape(conInput)}\"");
+                    }
+                    else
+                    {
+                        _console.ProcessCommand($"ooc \"{CommandParsing.Escape(conInput)}\"");
+                    }
                     break;
                 }
                 case MeAlias:
                 {
                     var conInput = text.Substring(1);
+                    if (string.IsNullOrWhiteSpace(conInput))
+                        return;
                     _console.ProcessCommand($"me \"{CommandParsing.Escape(conInput)}\"");
                     break;
                 }
@@ -266,10 +311,24 @@ namespace Content.Client.Chat
                         _filteredChannels &= ~ChatChannel.OOC;
                         break;
                     }
+                case "Admin":
+                    _adminState = !_adminState;
+                    if (_adminState)
+                    {
+                        _filteredChannels |= ChatChannel.AdminChat;
+                        break;
+                    }
+                    else
+                    {
+                        _filteredChannels &= ~ChatChannel.AdminChat;
+                        break;
+                    }
 
                 case "ALL":
                     chatBox.LocalButton.Pressed ^= true;
                     chatBox.OOCButton.Pressed ^= true;
+                    if (chatBox.AdminButton != null)
+                        chatBox.AdminButton.Pressed ^= true;
                     _allState = !_allState;
                     break;
             }
@@ -289,8 +348,6 @@ namespace Content.Client.Chat
 
         private void _onChatMessage(MsgChatMessage msg)
         {
-            Logger.Debug($"{msg.Channel}: {msg.Message}");
-
             // Log all incoming chat to repopulate when filter is un-toggled
             var storedMessage = new StoredChatMessage(msg);
             filteredHistory.Add(storedMessage);
@@ -311,6 +368,17 @@ namespace Content.Client.Chat
                     AddSpeechBubble(msg, SpeechBubble.SpeechType.Emote);
                     break;
             }
+        }
+
+        private void _onMaxLengthReceived(ChatMaxMsgLengthMessage msg)
+        {
+            _maxMessageLength = msg.MaxMessageLength;
+        }
+
+        private void RequestMaxLength(object sender, NetChannelArgs args)
+        {
+            ChatMaxMsgLengthMessage msg = _netManager.CreateNetMessage<ChatMaxMsgLengthMessage>();
+            _netManager.ClientSendMessage(msg);
         }
 
         private void AddSpeechBubble(MsgChatMessage msg, SpeechBubble.SpeechType speechType)

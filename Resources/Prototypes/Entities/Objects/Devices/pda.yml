@@ -1,0 +1,342 @@
+- type: entity
+  name: PDA
+  parent: BaseItem
+  id: BasePDA
+  abstract: true
+  description: Personal Data Assistant
+  components:
+  - type: Appearance
+    visuals:
+    - type: PDAVisualizer
+  - type: Clothing
+    QuickEquip: false
+    Slots:
+    - idcard
+  - type: PointLight
+    enabled: false
+    radius: 3
+  - type: UserInterface
+    interfaces:
+    - key: enum.PDAUiKey.Key
+      type: PDABoundUserInterface
+  - type: LoopingSound
+
+- type: entity
+  name: Assistant PDA
+  parent: BasePDA
+  id: AssistantPDA
+  description: Why isn't it gray?
+  components:
+  - type: PDA
+    idCard: AssistantIDCard
+  - type: Sprite
+    sprite: Objects/Devices/pda.rsi
+    netsync: false
+    layers:
+    - state: pda
+      map: ["enum.PDAVisualLayers.Base"]
+    - state: light_overlay
+      shader: unshaded
+      map: ["enum.PDAVisualLayers.Flashlight"]
+
+- type: entity
+  name: Chef PDA
+  parent: BasePDA
+  id: ChefPDA
+  description: Why isn't it gray?
+  components:
+  - type: PDA
+    idCard: ChefIDCard
+  - type: Sprite
+    sprite: Objects/Devices/pda.rsi
+    netsync: false
+    layers:
+    - state: pda-cook
+      map: ["enum.PDAVisualLayers.Base"]
+    - state: light_overlay
+      shader: unshaded
+      map: ["enum.PDAVisualLayers.Flashlight"]
+
+- type: entity
+  name: Clown PDA
+  parent: BasePDA
+  id: ClownPDA
+  description: Looks can be deceiving.
+  components:
+  - type: PDA
+    idCard: ClownIDCard
+  - type: Sprite
+    sprite: Objects/Devices/pda.rsi
+    netsync: false
+    layers:
+    - state: pda-clown
+      map: ["enum.PDAVisualLayers.Base"]
+    - state: light_overlay
+      shader: unshaded
+      map: ["enum.PDAVisualLayers.Flashlight"]
+  - type: Slippery
+    paralyzeTime: 4
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.25,-0.25,0.25,0.25"
+      layer:
+      - MobImpassable
+
+- type: entity
+  name: Mime PDA
+  parent: BasePDA
+  id: MimePDA
+  description: Suprisingly not on mute.
+  components:
+  - type: PDA
+    idCard: MimeIDCard
+  - type: Sprite
+    sprite: Objects/Devices/pda.rsi
+    netsync: false
+    layers:
+    - state: pda-mime
+      map: ["enum.PDAVisualLayers.Base"]
+    - state: light_overlay
+      shader: unshaded
+      map: ["enum.PDAVisualLayers.Flashlight"]
+
+- type: entity
+  name: Cargo PDA
+  parent: BasePDA
+  id: CargoPDA
+  description: PDA for the guys that order the pizzas.
+  components:
+  - type: PDA
+    idCard: CargoIDCard
+
+  - type: Sprite
+    sprite: Objects/Devices/pda.rsi
+    netsync: false
+    layers:
+    - state: pda-cargo
+      map: ["enum.PDAVisualLayers.Base"]
+    - state: light_overlay
+      shader: unshaded
+      map: ["enum.PDAVisualLayers.Flashlight"]
+
+- type: entity
+  name: Bartender PDA
+  parent: BasePDA
+  id: BartenderPDA
+  description: Smells like beer.
+  components:
+  - type: PDA
+    idCard: BartenderIDCard
+
+  - type: Sprite
+    sprite: Objects/Devices/pda.rsi
+    netsync: false
+    layers:
+    - state: pda-bartender
+      map: ["enum.PDAVisualLayers.Base"]
+    - state: light_overlay
+      shader: unshaded
+      map: ["enum.PDAVisualLayers.Flashlight"]
+
+
+- type: entity
+  name: Janitor PDA
+  parent: BasePDA
+  id: JanitorPDA
+  description: Smells like bleach.
+  components:
+  - type: PDA
+    idCard: JanitorIDCard
+
+  - type: Sprite
+    sprite: Objects/Devices/pda.rsi
+    netsync: false
+    layers:
+    - state: pda-janitor
+      map: ["enum.PDAVisualLayers.Base"]
+    - state: light_overlay
+      shader: unshaded
+      map: ["enum.PDAVisualLayers.Flashlight"]
+
+- type: entity
+  name: Captain PDA
+  parent: BasePDA
+  id: CaptainPDA
+  description: Surprisingly no different than your PDA.
+  components:
+  - type: PDA
+    idCard: CaptainIDCard
+
+  - type: Sprite
+    sprite: Objects/Devices/pda.rsi
+    netsync: false
+    layers:
+    - state: pda-captain
+      map: ["enum.PDAVisualLayers.Base"]
+    - state: light_overlay
+      shader: unshaded
+      map: ["enum.PDAVisualLayers.Flashlight"]
+
+- type: entity
+  name: HoP PDA
+  parent: BasePDA
+  id: HoPPDA
+  components:
+  - type: PDA
+    idCard: HoPIDCard
+
+  - type: Sprite
+    sprite: Objects/Devices/pda.rsi
+    netsync: false
+    layers:
+    - state: pda-hop
+      map: ["enum.PDAVisualLayers.Base"]
+    - state: light_overlay
+      shader: unshaded
+      map: ["enum.PDAVisualLayers.Flashlight"]
+
+- type: entity
+  name: CE PDA
+  parent: BasePDA
+  id: CEPDA
+  components:
+  - type: PDA
+    idCard: CEIDCard
+
+  - type: Sprite
+    sprite: Objects/Devices/pda.rsi
+    netsync: false
+    layers:
+    - state: pda-ce
+      map: ["enum.PDAVisualLayers.Base"]
+    - state: light_overlay
+      shader: unshaded
+      map: ["enum.PDAVisualLayers.Flashlight"]
+
+
+- type: entity
+  name: Engineer PDA
+  parent: BasePDA
+  id: EngineerPDA
+  components:
+  - type: PDA
+    idCard: EngineeringIDCard
+
+  - type: Sprite
+    sprite: Objects/Devices/pda.rsi
+    netsync: false
+    layers:
+    - state: pda-engineer
+      map: ["enum.PDAVisualLayers.Base"]
+    - state: light_overlay
+      shader: unshaded
+      map: ["enum.PDAVisualLayers.Flashlight"]
+
+- type: entity
+  name: CMO PDA
+  parent: BasePDA
+  id: CMOPDA
+  components:
+  - type: PDA
+    idCard: CMOIDCard
+
+  - type: Sprite
+    sprite: Objects/Devices/pda.rsi
+    netsync: false
+    layers:
+    - state: pda-cmo
+      map: ["enum.PDAVisualLayers.Base"]
+    - state: light_overlay
+      shader: unshaded
+      map: ["enum.PDAVisualLayers.Flashlight"]
+
+- type: entity
+  name: Medical PDA
+  parent: BasePDA
+  id: MedicalPDA
+  components:
+  - type: PDA
+    idCard: MedicalIDCard
+
+  - type: Sprite
+    sprite: Objects/Devices/pda.rsi
+    netsync: false
+    layers:
+    - state: pda-medical
+      map: ["enum.PDAVisualLayers.Base"]
+    - state: light_overlay
+      shader: unshaded
+      map: ["enum.PDAVisualLayers.Flashlight"]
+
+- type: entity
+  name: RnD PDA
+  parent: BasePDA
+  id: RnDPDA
+  components:
+  - type: PDA
+    idCard: RDIDCard
+
+  - type: Sprite
+    sprite: Objects/Devices/pda.rsi
+    netsync: false
+    layers:
+    - state: pda-rd
+      map: ["enum.PDAVisualLayers.Base"]
+    - state: light_overlay
+      shader: unshaded
+      map: ["enum.PDAVisualLayers.Flashlight"]
+
+- type: entity
+  name: Science PDA
+  parent: BasePDA
+  id: SciencePDA
+  components:
+  - type: PDA
+    idCard: ResearchIDCard
+
+  - type: Sprite
+    sprite: Objects/Devices/pda.rsi
+    netsync: false
+    layers:
+    - state: pda-rd
+      map: ["enum.PDAVisualLayers.Base"]
+    - state: light_overlay
+      shader: unshaded
+      map: ["enum.PDAVisualLayers.Flashlight"]
+
+- type: entity
+  name: HoS PDA
+  parent: BasePDA
+  id: HoSPDA
+  components:
+  - type: PDA
+    idCard: HoSIDCard
+
+  - type: Sprite
+    sprite: Objects/Devices/pda.rsi
+    netsync: false
+    layers:
+    - state: pda-hos
+      map: ["enum.PDAVisualLayers.Base"]
+    - state: light_overlay
+      shader: unshaded
+      map: ["enum.PDAVisualLayers.Flashlight"]
+
+- type: entity
+  name: Security PDA
+  parent: BasePDA
+  id: SecurityPDA
+  components:
+  - type: PDA
+    idCard: SecurityIDCard
+
+  - type: Sprite
+    sprite: Objects/Devices/pda.rsi
+    netsync: false
+    layers:
+    - state: pda-security
+      map: ["enum.PDAVisualLayers.Base"]
+    - state: light_overlay
+      shader: unshaded
+      map: ["enum.PDAVisualLayers.Flashlight"]

@@ -1,5 +1,6 @@
 using System;
 using Content.Server.GameObjects.Components.Nutrition;
+using Content.Shared.GameObjects.Components.Nutrition;
 using JetBrains.Annotations;
 
 namespace Content.Server.AI.WorldState.States.Nutrition

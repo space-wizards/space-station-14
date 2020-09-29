@@ -29,17 +29,16 @@ namespace Content.Shared.Preferences
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
                 var serializer = IoCManager.Resolve<IRobustSerializer>();
-                var length = buffer.ReadInt32();
-                var bytes = buffer.ReadBytes(length);
-                using (var stream = new MemoryStream(bytes))
+                var length = buffer.ReadVariableInt32();
+                using (var stream = buffer.ReadAsStream(length))
                 {
-                    Preferences = serializer.Deserialize<PlayerPreferences>(stream);
+                    serializer.DeserializeDirect(stream, out Preferences);
                 }
-                length = buffer.ReadInt32();
-                bytes = buffer.ReadBytes(length);
-                using (var stream = new MemoryStream(bytes))
+
+                length = buffer.ReadVariableInt32();
+                using (var stream = buffer.ReadAsStream(length))
                 {
-                    Settings = serializer.Deserialize<GameSettings>(stream);
+                    serializer.DeserializeDirect(stream, out Settings);
                 }
             }
 
@@ -48,15 +47,17 @@ namespace Content.Shared.Preferences
                 var serializer = IoCManager.Resolve<IRobustSerializer>();
                 using (var stream = new MemoryStream())
                 {
-                    serializer.Serialize(stream, Preferences);
-                    buffer.Write((int)stream.Length);
-                    buffer.Write(stream.ToArray());
+                    serializer.SerializeDirect(stream, Preferences);
+                    buffer.WriteVariableInt32((int)stream.Length);
+                    stream.TryGetBuffer(out var segment);
+                    buffer.Write(segment);
                 }
                 using (var stream = new MemoryStream())
                 {
-                    serializer.Serialize(stream, Settings);
-                    buffer.Write((int)stream.Length);
-                    buffer.Write(stream.ToArray());
+                    serializer.SerializeDirect(stream, Settings);
+                    buffer.WriteVariableInt32((int)stream.Length);
+                    stream.TryGetBuffer(out var segment);
+                    buffer.Write(segment);
                 }
             }
         }
@@ -79,12 +80,12 @@ namespace Content.Shared.Preferences
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
-                SelectedCharacterIndex = buffer.ReadInt32();
+                SelectedCharacterIndex = buffer.ReadVariableInt32();
             }
 
             public override void WriteToBuffer(NetOutgoingMessage buffer)
             {
-                buffer.Write(SelectedCharacterIndex);
+                buffer.WriteVariableInt32(SelectedCharacterIndex);
             }
         }
 
@@ -109,12 +110,9 @@ namespace Content.Shared.Preferences
             {
                 Slot = buffer.ReadInt32();
                 var serializer = IoCManager.Resolve<IRobustSerializer>();
-                var length = buffer.ReadInt32();
-                var bytes = buffer.ReadBytes(length);
-                using (var stream = new MemoryStream(bytes))
-                {
-                    Profile = serializer.Deserialize<ICharacterProfile>(stream);
-                }
+                var length = buffer.ReadVariableInt32();
+                using var stream = buffer.ReadAsStream(length);
+                Profile = serializer.Deserialize<ICharacterProfile>(stream);
             }
 
             public override void WriteToBuffer(NetOutgoingMessage buffer)
@@ -124,8 +122,9 @@ namespace Content.Shared.Preferences
                 using (var stream = new MemoryStream())
                 {
                     serializer.Serialize(stream, Profile);
-                    buffer.Write((int)stream.Length);
-                    buffer.Write(stream.ToArray());
+                    buffer.WriteVariableInt32((int)stream.Length);
+                    stream.TryGetBuffer(out var segment);
+                    buffer.Write(segment);
                 }
             }
         }

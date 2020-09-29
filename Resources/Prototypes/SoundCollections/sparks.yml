@@ -1,7 +1,7 @@
 - type: soundCollection
   id: sparks
   files:
-  - /Audio/effects/sparks1.ogg
-  - /Audio/effects/sparks2.ogg
-  - /Audio/effects/sparks3.ogg
-  - /Audio/effects/sparks4.ogg
+  - /Audio/Effects/sparks1.ogg
+  - /Audio/Effects/sparks2.ogg
+  - /Audio/Effects/sparks3.ogg
+  - /Audio/Effects/sparks4.ogg

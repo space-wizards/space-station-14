@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.GameTicking;
+using Content.Shared.Roles;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
@@ -21,17 +23,20 @@ namespace Content.Server.Interfaces.GameTicking
         void Update(FrameEventArgs frameEventArgs);
 
         void RestartRound();
-        void StartRound();
-        void EndRound();
+        void StartRound(bool force = false);
+        void EndRound(string roundEndText = "");
 
         void Respawn(IPlayerSession targetPlayer);
         void MakeObserve(IPlayerSession player);
-        void MakeJoinGame(IPlayerSession player);
+        void MakeJoinGame(IPlayerSession player, string jobId);
         void ToggleReady(IPlayerSession player, bool ready);
+        void ToggleDisallowLateJoin(bool disallowLateJoin);
 
-        GridCoordinates GetLateJoinSpawnPoint();
-        GridCoordinates GetJobSpawnPoint(string jobId);
-        GridCoordinates GetObserverSpawnPoint();
+        EntityCoordinates GetLateJoinSpawnPoint();
+        EntityCoordinates GetJobSpawnPoint(string jobId);
+        EntityCoordinates GetObserverSpawnPoint();
+
+        void EquipStartingGear(IEntity entity, StartingGearPrototype startingGear);
 
         // GameRule system.
         T AddGameRule<T>() where T : GameRule, new();
@@ -39,7 +44,18 @@ namespace Content.Server.Interfaces.GameTicking
         void RemoveGameRule(GameRule rule);
         IEnumerable<GameRule> ActiveGameRules { get; }
 
-        void SetStartPreset(Type type);
-        void SetStartPreset(string type);
+        bool TryGetPreset(string name, out Type type);
+        void SetStartPreset(Type type, bool force = false);
+        void SetStartPreset(string name, bool force = false);
+
+        /// <returns>true if changed, false otherwise</returns>
+        bool PauseStart(bool pause = true);
+
+        /// <returns>true if paused, false otherwise</returns>
+        bool TogglePause();
+
+        bool DelayStart(TimeSpan time);
+
+        Dictionary<string, int> GetAvailablePositions();
     }
 }

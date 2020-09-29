@@ -1,0 +1,21 @@
+- type: entity
+  id: LockerCaptain
+  parent: LockerSecureBase
+  name: "captain's locker"
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: cap
+
+
+- type: entity
+  id: LockerHeadOfPersonnel
+  parent: LockerSecureBase
+  name: "head of personnel's locker"
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: hop
+

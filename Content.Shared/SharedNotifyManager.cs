@@ -1,5 +1,6 @@
 using Content.Shared.Interfaces;
 using Lidgren.Network;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Map;
@@ -9,49 +10,84 @@ namespace Content.Shared
 {
     public abstract class SharedNotifyManager : ISharedNotifyManager
     {
-        public void PopupMessage(IEntity source, IEntity viewer, string message)
-        {
-            // TODO: we might eventually want for this to pass the actual entity,
-            // so the notify could track the entity movement visually.
-            PopupMessage(source.Transform.GridPosition, viewer, message);
-        }
+        public abstract void PopupMessage(IEntity source, IEntity viewer, string message);
 
-        public abstract void PopupMessage(GridCoordinates coordinates, IEntity viewer, string message);
+        public abstract void PopupMessage(EntityCoordinates coordinates, IEntity viewer, string message);
+
         public abstract void PopupMessageCursor(IEntity viewer, string message);
 
-        protected class MsgDoNotify : NetMessage
+        protected class MsgDoNotifyCursor : NetMessage
         {
             #region REQUIRED
 
             public const MsgGroups GROUP = MsgGroups.Command;
-            public const string NAME = nameof(MsgDoNotify);
-            public MsgDoNotify(INetChannel channel) : base(NAME, GROUP) { }
+            public const string NAME = nameof(MsgDoNotifyCursor);
+            public MsgDoNotifyCursor(INetChannel channel) : base(NAME, GROUP) { }
 
             #endregion
 
             public string Message { get; set; }
-            public bool AtCursor { get; set; }
-            public GridCoordinates Coordinates { get; set; }
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
                 Message = buffer.ReadString();
-                AtCursor = buffer.ReadBoolean();
-                if (!AtCursor)
-                {
-                    Coordinates = buffer.ReadGridLocalCoordinates();
-                }
             }
 
             public override void WriteToBuffer(NetOutgoingMessage buffer)
             {
                 buffer.Write(Message);
-                buffer.Write(AtCursor);
+            }
+        }
 
-                if (!AtCursor)
-                {
-                    buffer.Write(Coordinates);
-                }
+        protected class MsgDoNotifyCoordinates : NetMessage
+        {
+            #region REQUIRED
+
+            public const MsgGroups GROUP = MsgGroups.Command;
+            public const string NAME = nameof(MsgDoNotifyCoordinates);
+            public MsgDoNotifyCoordinates(INetChannel channel) : base(NAME, GROUP) { }
+
+            #endregion
+
+            public string Message { get; set; }
+            public EntityCoordinates Coordinates;
+
+            public override void ReadFromBuffer(NetIncomingMessage buffer)
+            {
+                Message = buffer.ReadString();
+                Coordinates = buffer.ReadEntityCoordinates();
+            }
+
+            public override void WriteToBuffer(NetOutgoingMessage buffer)
+            {
+                buffer.Write(Message);
+                buffer.Write(Coordinates);
+            }
+        }
+
+        protected class MsgDoNotifyEntity : NetMessage
+        {
+            #region REQUIRED
+
+            public const MsgGroups GROUP = MsgGroups.Command;
+            public const string NAME = nameof(MsgDoNotifyEntity);
+            public MsgDoNotifyEntity(INetChannel channel) : base(NAME, GROUP) { }
+
+            #endregion
+
+            public string Message { get; set; }
+            public EntityUid Entity;
+
+            public override void ReadFromBuffer(NetIncomingMessage buffer)
+            {
+                Message = buffer.ReadString();
+                Entity = buffer.ReadEntityUid();
+            }
+
+            public override void WriteToBuffer(NetOutgoingMessage buffer)
+            {
+                buffer.Write(Message);
+                buffer.Write(Entity);
             }
         }
     }

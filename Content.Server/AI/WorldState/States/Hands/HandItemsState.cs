@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Content.Server.GameObjects;
+using Content.Server.GameObjects.Components.GUI;
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
 
@@ -19,7 +19,7 @@ namespace Content.Server.AI.WorldState.States.Hands
 
             foreach (var hand in handsComponent.ActivePriorityEnumerable())
             {
-                var item = handsComponent.GetHand(hand);
+                var item = handsComponent.GetItem(hand);
 
                 if (item != null)
                 {

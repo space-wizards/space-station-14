@@ -1,4 +1,7 @@
-﻿using Content.Client.GameObjects.Components.Cargo;
+﻿using System;
+using System.Collections.Generic;
+using Content.Client.GameObjects.Components.Cargo;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Prototypes.Cargo;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface.Controls;
@@ -7,18 +10,11 @@ using Robust.Client.Utility;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using System;
-using System.Collections.Generic;
-using Content.Client.UserInterface.Stylesheets;
 
 namespace Content.Client.UserInterface.Cargo
 {
     public class CargoConsoleMenu : SS14Window
     {
-#pragma warning disable 649
-        [Dependency] private readonly ILocalizationManager _loc;
-#pragma warning restore 649
-
         protected override Vector2? CustomSize => (400, 600);
 
         public CargoConsoleBoundUserInterface Owner { get; private set; }
@@ -32,6 +28,7 @@ namespace Content.Client.UserInterface.Cargo
         private Label _accountNameLabel { get; set; }
         private Label _pointsLabel { get; set; }
         private Label _shuttleStatusLabel { get; set; }
+        private Label _shuttleCapacityLabel { get; set; }
         private VBoxContainer _requests { get; set; }
         private VBoxContainer _orders { get; set; }
         private OptionButton _categories { get; set; }
@@ -49,15 +46,15 @@ namespace Content.Client.UserInterface.Cargo
             Owner = owner;
 
             if (Owner.RequestOnly)
-                Title = _loc.GetString("Cargo Request Console");
+                Title = Loc.GetString("Cargo Request Console");
             else
-                Title = _loc.GetString("Cargo Shuttle Console");
+                Title = Loc.GetString("Cargo Shuttle Console");
 
             var rows = new VBoxContainer();
 
             var accountName = new HBoxContainer();
             var accountNameLabel = new Label {
-                Text = _loc.GetString("Account Name: "),
+                Text = Loc.GetString("Account Name: "),
                 StyleClasses = { StyleNano.StyleClassLabelKeyText }
             };
             _accountNameLabel = new Label {
@@ -70,7 +67,7 @@ namespace Content.Client.UserInterface.Cargo
             var points = new HBoxContainer();
             var pointsLabel = new Label
             {
-                Text = _loc.GetString("Points: "),
+                Text = Loc.GetString("Points: "),
                 StyleClasses = { StyleNano.StyleClassLabelKeyText }
             };
             _pointsLabel = new Label
@@ -84,27 +81,41 @@ namespace Content.Client.UserInterface.Cargo
             var shuttleStatus = new HBoxContainer();
             var shuttleStatusLabel = new Label
             {
-                Text = _loc.GetString("Shuttle Status: "),
+                Text = Loc.GetString("Shuttle Status: "),
                 StyleClasses = { StyleNano.StyleClassLabelKeyText }
             };
             _shuttleStatusLabel = new Label
             {
-                Text = _loc.GetString("Away") // Shuttle.Status
+                Text = Loc.GetString("Away") // Shuttle.Status
             };
             shuttleStatus.AddChild(shuttleStatusLabel);
             shuttleStatus.AddChild(_shuttleStatusLabel);
             rows.AddChild(shuttleStatus);
 
+            var shuttleCapacity = new HBoxContainer();
+            var shuttleCapacityLabel = new Label
+            {
+                Text = Loc.GetString("Order Capacity: "),
+                StyleClasses = { StyleNano.StyleClassLabelKeyText }
+            };
+            _shuttleCapacityLabel = new Label
+            {
+                Text = "0/20"
+            };
+            shuttleCapacity.AddChild(shuttleCapacityLabel);
+            shuttleCapacity.AddChild(_shuttleCapacityLabel);
+            rows.AddChild(shuttleCapacity);
+
             var buttons = new HBoxContainer();
             CallShuttleButton = new Button()
             {
-                Text = _loc.GetString("Call Shuttle"),
+                Text = Loc.GetString("Call Shuttle"),
                 TextAlign = Label.AlignMode.Center,
                 SizeFlagsHorizontal = SizeFlags.FillExpand
             };
             PermissionsButton = new Button()
             {
-                Text = _loc.GetString("Permissions"),
+                Text = Loc.GetString("Permissions"),
                 TextAlign = Label.AlignMode.Center
             };
             buttons.AddChild(CallShuttleButton);
@@ -114,13 +125,13 @@ namespace Content.Client.UserInterface.Cargo
             var category = new HBoxContainer();
             _categories = new OptionButton
             {
-                Prefix = _loc.GetString("Categories: "),
+                Prefix = Loc.GetString("Categories: "),
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                 SizeFlagsStretchRatio = 1
             };
             _searchBar = new LineEdit
             {
-                PlaceHolder = _loc.GetString("Search"),
+                PlaceHolder = Loc.GetString("Search"),
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                 SizeFlagsStretchRatio = 1
             };
@@ -153,14 +164,14 @@ namespace Content.Client.UserInterface.Cargo
                 SizeFlagsVertical = SizeFlags.FillExpand
             };
             var rAndOVBox = new VBoxContainer();
-            var requestsLabel = new Label { Text = _loc.GetString("Requests") };
+            var requestsLabel = new Label { Text = Loc.GetString("Requests") };
             _requests = new VBoxContainer // replace with scroll box so that approval buttons can be added
             {
                 StyleClasses = { "transparentItemList" },
                 SizeFlagsVertical = SizeFlags.FillExpand,
                 SizeFlagsStretchRatio = 1,
             };
-            var ordersLabel = new Label { Text = _loc.GetString("Orders") };
+            var ordersLabel = new Label { Text = Loc.GetString("Orders") };
             _orders = new VBoxContainer
             {
                 StyleClasses = { "transparentItemList" },
@@ -249,14 +260,14 @@ namespace Content.Client.UserInterface.Cargo
             _categoryStrings.Clear();
             _categories.Clear();
 
-            _categoryStrings.Add(_loc.GetString("All"));
+            _categoryStrings.Add(Loc.GetString("All"));
 
             var search = _searchBar.Text.Trim().ToLowerInvariant();
             foreach (var prototype in Owner.Market.Products)
             {
                 if (!_categoryStrings.Contains(prototype.Category))
                 {
-                    _categoryStrings.Add(_loc.GetString(prototype.Category));
+                    _categoryStrings.Add(Loc.GetString(prototype.Category));
                 }
             }
             _categoryStrings.Sort();
@@ -273,7 +284,6 @@ namespace Content.Client.UserInterface.Cargo
         {
             _orders.RemoveAllChildren();
             _requests.RemoveAllChildren();
-
             foreach (var order in Owner.Orders.Orders)
             {
                 var row = new CargoOrderRow();
@@ -304,6 +314,11 @@ namespace Content.Client.UserInterface.Cargo
             PopulateProducts();
             PopulateCategories();
             PopulateOrders();
+        }
+
+        public void UpdateCargoCapacity()
+        {
+            _shuttleCapacityLabel.Text = $"{Owner.ShuttleCapacity.CurrentCapacity}/{Owner.ShuttleCapacity.MaxCapacity}";
         }
 
         public void UpdateBankData()

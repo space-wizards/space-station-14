@@ -1,52 +1,29 @@
-﻿// Only unused on .NET Core due to KeyValuePair.Deconstruct
-// ReSharper disable once RedundantUsingDirective
-
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using Content.Server.GameObjects.Components.Chemistry;
-using Content.Server.GameObjects.EntitySystems;
+using System.Threading.Tasks;
+using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.Audio;
-using Content.Shared.Chemistry;
-using Content.Shared.GameObjects;
-using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Interactable;
-using Content.Shared.Maps;
-using Robust.Server.GameObjects;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.EntitySystems;
-using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Random;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
-using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Interactable
 {
-    [RegisterComponent]
-    public class ToolComponent : SharedToolComponent
+    public interface IToolComponent
     {
-#pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly IRobustRandom _robustRandom;
-#pragma warning restore 649
+        ToolQuality Qualities { get; set; }
+    }
 
-        private AudioSystem _audioSystem;
-        private InteractionSystem _interactionSystem;
-        private SpriteComponent _spriteComponent;
-
-        protected ToolQuality _qualities = ToolQuality.Anchoring;
+    [RegisterComponent]
+    [ComponentReference(typeof(IToolComponent))]
+    public class ToolComponent : SharedToolComponent, IToolComponent
+    {
+        protected ToolQuality _qualities = ToolQuality.None;
 
         [ViewVariables]
         public override ToolQuality Qualities
@@ -86,36 +63,58 @@ namespace Content.Server.GameObjects.Components.Interactable
             return _qualities.HasFlag(quality);
         }
 
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            _audioSystem = EntitySystem.Get<AudioSystem>();
-            _interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
-            Owner.TryGetComponent(out _spriteComponent);
-        }
-
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
-            if (serializer.Reading)
-            {
-                var qualities = serializer.ReadDataField("qualities", new List<ToolQuality>());
-                foreach (var quality in qualities)
+            serializer.DataReadWriteFunction(
+                "qualities",
+                new List<ToolQuality>(),
+                qualities => qualities.ForEach(AddQuality),
+                () =>
                 {
-                    AddQuality(quality);
-                }
-            }
+                    var qualities = new List<ToolQuality>();
+
+                    foreach (ToolQuality quality in Enum.GetValues(typeof(ToolQuality)))
+                    {
+                        if ((_qualities & quality) != 0)
+                        {
+                            qualities.Add(quality);
+                        }
+                    }
+
+                    return qualities;
+                });
+
             serializer.DataField(this, mod => SpeedModifier, "speed", 1);
             serializer.DataField(this, use => UseSound, "useSound", string.Empty);
             serializer.DataField(this, collection => UseSoundCollection, "useSoundCollection", string.Empty);
         }
 
-        public virtual bool UseTool(IEntity user, IEntity target, ToolQuality toolQualityNeeded)
+        public virtual async Task<bool> UseTool(IEntity user, IEntity target, float doAfterDelay, ToolQuality toolQualityNeeded, Func<bool> doAfterCheck = null)
         {
             if (!HasQuality(toolQualityNeeded) || !ActionBlockerSystem.CanInteract(user))
                 return false;
+
+            if (doAfterDelay > 0f)
+            {
+                var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
+
+                var doAfterArgs = new DoAfterEventArgs(user, doAfterDelay / SpeedModifier, default, target)
+                {
+                    ExtraCheck = doAfterCheck,
+                    BreakOnDamage = false, // TODO: Change this to true once breathing is fixed.
+                    BreakOnStun = true,
+                    BreakOnTargetMove = true,
+                    BreakOnUserMove = true,
+                    NeedHand = true,
+                };
+
+                var result = await doAfterSystem.DoAfter(doAfterArgs);
+
+                if (result == DoAfterStatus.Cancelled)
+                    return false;
+            }
 
             PlayUseSound();
 
@@ -124,18 +123,25 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         protected void PlaySoundCollection(string name, float volume=-5f)
         {
-            var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(name);
-            var file = _robustRandom.Pick(soundCollection.PickFiles);
+            var file = AudioHelpers.GetRandomFileFromSoundCollection(name);
             EntitySystem.Get<AudioSystem>()
                 .PlayFromEntity(file, Owner, AudioHelpers.WithVariation(0.15f).WithVolume(volume));
         }
 
         public void PlayUseSound(float volume=-5f)
         {
-            if(string.IsNullOrEmpty(UseSoundCollection))
-                _audioSystem.PlayFromEntity(UseSound, Owner, AudioHelpers.WithVariation(0.15f).WithVolume(volume));
+            if (string.IsNullOrEmpty(UseSoundCollection))
+            {
+                if (!string.IsNullOrEmpty(UseSound))
+                {
+                    EntitySystem.Get<AudioSystem>()
+                        .PlayFromEntity(UseSound, Owner, AudioHelpers.WithVariation(0.15f).WithVolume(volume));
+                }
+            }
             else
+            {
                 PlaySoundCollection(UseSoundCollection, volume);
+            }
         }
     }
 }

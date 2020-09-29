@@ -4,25 +4,22 @@ using Content.Shared.Physics;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
-using Robust.Shared.Utility;
 
 namespace Content.Client.GameObjects.Components.Sound
 {
     [RegisterComponent]
     public class LoopingSoundComponent : SharedLoopingSoundComponent
     {
+        [Dependency] private readonly IRobustRandom _random = default!;
+
         private readonly Dictionary<ScheduledSound, IPlayingAudioStream> _audioStreams = new Dictionary<ScheduledSound, IPlayingAudioStream>();
         private AudioSystem _audioSystem;
-        #pragma warning disable 649
-        [Dependency] private readonly IRobustRandom _random;
-        #pragma warning restore 649
 
         public override void StopAllSounds()
         {
@@ -96,14 +93,11 @@ namespace Content.Client.GameObjects.Components.Sound
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            if (serializer.Writing) return;
-            serializer.TryReadDataField("schedules", out List<ScheduledSound> schedules);
-            if (schedules == null) return;
-            foreach (var schedule in schedules)
-            {
-                if (schedule == null) continue;
-                AddScheduledSound(schedule);
-            }
+
+            serializer.DataReadFunction(
+                "schedules",
+                new List<ScheduledSound>(),
+                schedules => schedules.ForEach(AddScheduledSound));
         }
     }
 }

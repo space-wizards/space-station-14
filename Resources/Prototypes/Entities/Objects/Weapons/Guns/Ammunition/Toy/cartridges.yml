@@ -1,0 +1,22 @@
+- type: entity
+  id: CartridgeCapBase
+  name: cartridge (cap)
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Ammo
+    caliber: Cap
+  - type: Sprite
+    netsync: false
+    directional: true
+    sprite: Objects/Consumable/Trash/ash.rsi
+    state: icon
+    drawdepth: FloorObjects
+
+- type: entity
+  id: CartridgeCap
+  name: cartridge (cap)
+  parent: CartridgeCapBase
+  components:
+  - type: Ammo
+    projectile: BulletCap

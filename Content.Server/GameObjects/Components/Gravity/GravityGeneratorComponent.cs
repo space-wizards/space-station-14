@@ -1,35 +1,28 @@
+﻿#nullable enable
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.Interactable;
-using Content.Server.GameObjects.Components.Power;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Gravity;
 using Content.Shared.GameObjects.Components.Interactable;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Gravity
 {
     [RegisterComponent]
-    public class GravityGeneratorComponent: SharedGravityGeneratorComponent, IInteractUsing, IBreakAct, IInteractHand
+    public class GravityGeneratorComponent : SharedGravityGeneratorComponent, IInteractUsing, IBreakAct, IInteractHand
     {
-        private BoundUserInterface _userInterface;
-
-        private PowerDeviceComponent _powerDevice;
-
-        private SpriteComponent _sprite;
 
         private bool _switchedOn;
 
@@ -37,7 +30,7 @@ namespace Content.Server.GameObjects.Components.Gravity
 
         private GravityGeneratorStatus _status;
 
-        public bool Powered => _powerDevice.Powered;
+        public bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
 
         public bool SwitchedOn => _switchedOn;
 
@@ -67,15 +60,17 @@ namespace Content.Server.GameObjects.Components.Gravity
 
         public override string Name => "GravityGenerator";
 
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(GravityGeneratorUiKey.Key);
+
         public override void Initialize()
         {
             base.Initialize();
 
-            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
-                .GetBoundUserInterface(GravityGeneratorUiKey.Key);
-            _userInterface.OnReceiveMessage += HandleUIMessage;
-            _powerDevice = Owner.GetComponent<PowerDeviceComponent>();
-            _sprite = Owner.GetComponent<SpriteComponent>();
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += HandleUIMessage;
+            }
+
             _switchedOn = true;
             _intact = true;
             _status = GravityGeneratorStatus.On;
@@ -102,24 +97,21 @@ namespace Content.Server.GameObjects.Components.Gravity
             return true;
         }
 
-        public bool InteractUsing(InteractUsingEventArgs eventArgs)
+        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.Using.TryGetComponent(out WelderComponent tool))
+            if (!eventArgs.Using.TryGetComponent(out WelderComponent? tool))
                 return false;
 
-            if (!tool.UseTool(eventArgs.User, Owner, ToolQuality.Welding, 5f))
+            if (!await tool.UseTool(eventArgs.User, Owner, 2f, ToolQuality.Welding, 5f))
                 return false;
 
             // Repair generator
-            var damageable = Owner.GetComponent<DamageableComponent>();
             var breakable = Owner.GetComponent<BreakableComponent>();
-            damageable.HealAllDamage();
-            breakable.broken = false;
+            breakable.FixAllDamage();
             _intact = true;
 
-            var notifyManager = IoCManager.Resolve<IServerNotifyManager>();
-
-            notifyManager.PopupMessage(Owner, eventArgs.User, Loc.GetString("You repair the gravity generator with the welder"));
+            Owner.PopupMessage(eventArgs.User,
+                Loc.GetString("You repair {0:theName} with {1:theName}", Owner, eventArgs.Using));
 
             return true;
         }
@@ -135,13 +127,16 @@ namespace Content.Server.GameObjects.Components.Gravity
             if (!Intact)
             {
                 MakeBroken();
-            } else if (!Powered)
+            }
+            else if (!Powered)
             {
                 MakeUnpowered();
-            } else if (!SwitchedOn)
+            }
+            else if (!SwitchedOn)
             {
                 MakeOff();
-            } else
+            }
+            else
             {
                 MakeOn();
             }
@@ -152,7 +147,7 @@ namespace Content.Server.GameObjects.Components.Gravity
             switch (message.Message)
             {
                 case GeneratorStatusRequestMessage _:
-                    _userInterface.SetState(new GeneratorState(Status == GravityGeneratorStatus.On));
+                    UserInterface?.SetState(new GeneratorState(Status == GravityGeneratorStatus.On));
                     break;
                 case SwitchGeneratorMessage msg:
                     _switchedOn = msg.On;
@@ -165,35 +160,51 @@ namespace Content.Server.GameObjects.Components.Gravity
 
         private void OpenUserInterface(IPlayerSession playerSession)
         {
-            _userInterface.Open(playerSession);
+            UserInterface?.Open(playerSession);
         }
 
         private void MakeBroken()
         {
             _status = GravityGeneratorStatus.Broken;
-            _sprite.LayerSetState(0, "broken");
-            _sprite.LayerSetVisible(1, false);
+
+            if (Owner.TryGetComponent(out SpriteComponent? sprite))
+            {
+                sprite.LayerSetState(0, "broken");
+                sprite.LayerSetVisible(1, false);
+            }
         }
 
         private void MakeUnpowered()
         {
             _status = GravityGeneratorStatus.Unpowered;
-            _sprite.LayerSetState(0, "off");
-            _sprite.LayerSetVisible(1, false);
+
+            if (Owner.TryGetComponent(out SpriteComponent? sprite))
+            {
+                sprite.LayerSetState(0, "off");
+                sprite.LayerSetVisible(1, false);
+            }
         }
 
         private void MakeOff()
         {
             _status = GravityGeneratorStatus.Off;
-            _sprite.LayerSetState(0, "off");
-            _sprite.LayerSetVisible(1, false);
+
+            if (Owner.TryGetComponent(out SpriteComponent? sprite))
+            {
+                sprite.LayerSetState(0, "off");
+                sprite.LayerSetVisible(1, false);
+            }
         }
 
         private void MakeOn()
         {
             _status = GravityGeneratorStatus.On;
-            _sprite.LayerSetState(0, "on");
-            _sprite.LayerSetVisible(1, true);
+
+            if (Owner.TryGetComponent(out SpriteComponent? sprite))
+            {
+                sprite.LayerSetState(0, "on");
+                sprite.LayerSetVisible(1, true);
+            }
         }
     }
 

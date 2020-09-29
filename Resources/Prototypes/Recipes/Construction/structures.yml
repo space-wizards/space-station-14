@@ -1,0 +1,97 @@
+﻿- type: construction
+  name: wall
+  id: wall
+  category: Structures
+  description: Keeps the air in and the greytide out.
+  icon:
+    sprite: Constructible/Structures/Walls/solid.rsi
+    state: full
+  objectType: Structure
+  result: solid_wall
+  placementMode: SnapgridCenter
+  steps:
+  - material: Metal
+    amount: 2
+    icon: Constructible/Structures/Walls/wall_girder.png
+    reverse:
+      tool: Anchoring
+  - material: Metal
+    amount: 2
+    reverse:
+      tool: Anchoring
+
+- type: construction
+  name: table
+  id: Table
+  category: Structures
+  icon:
+    sprite: Constructible/Structures/Tables/generic.rsi
+    state: plain_preview
+  result: Table
+  placementMode: SnapgridCenter
+  steps:
+  - material: Metal
+    amount: 2
+
+- type: construction
+  name: window
+  id: Window
+  category: Structures
+  description: Clear.
+  icon:
+    sprite: Constructible/Structures/Windows/window.rsi
+    state: full
+  objectType: Structure
+  result: Window
+  placementMode: SnapgridCenter
+  steps:
+  - material: Glass
+    amount: 2
+    reverse:
+      tool: Screwing
+
+- type: construction
+  name: low wall
+  id: LowWall
+  category: Structures
+  description: A low wall used for mounting windows.
+  icon:
+    sprite: Constructible/Structures/Walls/low_wall.rsi
+    state: metal
+  objectType: Structure
+  result: LowWall
+  placementMode: SnapgridCenter
+  steps:
+  - material: Metal
+    amount: 2
+    icon: Constructible/Structures/Walls/wall_girder.png
+    reverse:
+      tool: Anchoring
+
+  - material: Metal
+    amount: 2
+    reverse:
+      tool: Anchoring
+
+- type: construction
+  name: rein window
+  id: ReinforcedWindow
+  category: Structures
+  description: Clear but tough.
+  icon:
+    sprite: Constructible/Structures/Windows/reinforced_window.rsi
+    state: full
+  objectType: Structure
+  result: ReinforcedWindow
+  placementMode: SnapgridCenter
+  steps:
+  - material: Glass
+    amount: 2
+    reverse:
+      tool: Anchoring
+# Should be replaced with Metal Rods when someone puts them in.
+  - material: Metal
+    amount: 2
+    reverse:
+      # Should be replaced with Wirecutter when someone makes it work.
+      tool: Anchoring

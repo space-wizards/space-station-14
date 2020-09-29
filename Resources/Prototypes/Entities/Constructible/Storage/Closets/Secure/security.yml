@@ -1,0 +1,47 @@
+# HoS
+- type: entity
+  id: LockerHeadOfSecurity
+  parent: LockerSecureBase
+  name: "head of security's locker"
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: hos
+
+
+# Warden
+- type: entity
+  id: LockerWarden
+  parent: LockerSecureBase
+  name: "warden's locker"
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: warden
+
+
+# Security Officer
+- type: entity
+  id: LockerSecurity
+  parent: LockerSecureBase
+  name: "security officer's locker"
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: sec
+
+
+# Detective
+- type: entity
+  id: LockerDetective
+  parent: LockerSecureBase
+  name: "detective's cabinet"
+  components:
+    - type: Appearance
+      visuals:
+        - type: StorageVisualizer
+          state: cabinet
+

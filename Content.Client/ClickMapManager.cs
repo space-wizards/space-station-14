@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,8 +11,6 @@ using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
-
-#nullable enable
 
 namespace Content.Client
 {

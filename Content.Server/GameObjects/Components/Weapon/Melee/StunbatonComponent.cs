@@ -1,11 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Power;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces.GameObjects;
+using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.Audio;
-using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystems;
@@ -24,13 +28,9 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Weapon.Melee
 {
     [RegisterComponent]
-    public class StunbatonComponent : MeleeWeaponComponent, IUse, IExamine, IMapInit, IInteractUsing
+    public class StunbatonComponent : MeleeWeaponComponent, IUse, IExamine, IMapInit, IInteractUsing, IThrowCollide
     {
-#pragma warning disable 649
-        [Dependency] private IRobustRandom _robustRandom;
-        [Dependency] private readonly ISharedNotifyManager _notifyManager;
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-#pragma warning restore 649
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         public override string Name => "Stunbaton";
 
@@ -39,7 +39,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         [ViewVariables] private ContainerSlot _cellContainer;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private float _paralyzeChance = 0.25f;
+        private float _paralyzeChanceNoSlowdown = 0.35f;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        private float _paralyzeChanceWithSlowdown = 0.85f;
 
         [ViewVariables(VVAccess.ReadWrite)]
         private float _paralyzeTime = 10f;
@@ -47,19 +50,19 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         [ViewVariables(VVAccess.ReadWrite)]
         private float _slowdownTime = 5f;
 
-        [ViewVariables(VVAccess.ReadWrite)] public float EnergyPerUse { get; set; } = 1000;
+        [ViewVariables(VVAccess.ReadWrite)] public float EnergyPerUse { get; set; } = 50;
 
         [ViewVariables]
         public bool Activated => _activated;
 
         [ViewVariables]
-        private PowerCellComponent Cell
+        private BatteryComponent Cell
         {
             get
             {
                 if (_cellContainer.ContainedEntity == null) return null;
 
-                _cellContainer.ContainedEntity.TryGetComponent(out PowerCellComponent cell);
+                _cellContainer.ContainedEntity.TryGetComponent(out BatteryComponent cell);
                 return cell;
             }
         }
@@ -75,37 +78,44 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(ref _paralyzeChance, "paralyzeChance", 0.25f);
+            serializer.DataField(ref _paralyzeChanceNoSlowdown, "paralyzeChanceNoSlowdown", 0.35f);
+            serializer.DataField(ref _paralyzeChanceWithSlowdown, "paralyzeChanceWithSlowdown", 0.85f);
             serializer.DataField(ref _paralyzeTime, "paralyzeTime", 10f);
             serializer.DataField(ref _slowdownTime, "slowdownTime", 5f);
         }
 
-        public override bool OnHitEntities(IReadOnlyList<IEntity> entities)
+        protected override bool OnHitEntities(IReadOnlyList<IEntity> entities, AttackEventArgs eventArgs)
         {
-            var cell = Cell;
-            if (!Activated || entities.Count == 0 || cell == null || !cell.CanDeductCharge(EnergyPerUse))
-                return false;
+            if (!Activated || entities.Count == 0 || Cell == null)
+                return true;
 
-            EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/weapons/egloves.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
+            if (!Cell.TryUseCharge(EnergyPerUse))
+                return true;
+
+            EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Weapons/egloves.ogg", Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
 
             foreach (var entity in entities)
             {
                 if (!entity.TryGetComponent(out StunnableComponent stunnable)) continue;
 
-                if(_robustRandom.Prob(_paralyzeChance))
-                    stunnable.Paralyze(_paralyzeTime);
+                if(!stunnable.SlowedDown)
+                    if(_robustRandom.Prob(_paralyzeChanceNoSlowdown))
+                        stunnable.Paralyze(_paralyzeTime);
+                    else
+                        stunnable.Slowdown(_slowdownTime);
                 else
-                    stunnable.Slowdown(_slowdownTime);
+                    if(_robustRandom.Prob(_paralyzeChanceWithSlowdown))
+                        stunnable.Paralyze(_paralyzeTime);
+                    else
+                        stunnable.Slowdown(_slowdownTime);
             }
 
-            cell.DeductCharge(EnergyPerUse);
-            if(cell.Charge < EnergyPerUse)
-            {
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(AudioHelpers.GetRandomFileFromSoundCollection("sparks"), Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
-                TurnOff();
-            }
+            if (!(Cell.CurrentCharge < EnergyPerUse)) return true;
 
-            return false;
+            EntitySystem.Get<AudioSystem>().PlayAtCoords(AudioHelpers.GetRandomFileFromSoundCollection("sparks"), Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
+            TurnOff();
+
+            return true;
         }
 
         private bool ToggleStatus(IEntity user)
@@ -132,7 +142,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             var sprite = Owner.GetComponent<SpriteComponent>();
             var item = Owner.GetComponent<ItemComponent>();
 
-            EntitySystem.Get<AudioSystem>().PlayAtCoords(AudioHelpers.GetRandomFileFromSoundCollection("sparks"), Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
+            EntitySystem.Get<AudioSystem>().PlayAtCoords(AudioHelpers.GetRandomFileFromSoundCollection("sparks"), Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
 
             item.EquippedPrefix = "off";
             sprite.LayerSetState(0, "stunbaton_off");
@@ -152,20 +162,20 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
             if (cell == null)
             {
-                EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/machines/button.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
+                EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Machines/button.ogg", Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
 
-                _notifyManager.PopupMessage(Owner, user, _localizationManager.GetString("Cell missing..."));
+                Owner.PopupMessage(user, Loc.GetString("Cell missing..."));
                 return;
             }
 
-            if (cell.Charge < EnergyPerUse)
+            if (cell.CurrentCharge < EnergyPerUse)
             {
-                EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/machines/button.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
-                _notifyManager.PopupMessage(Owner, user, _localizationManager.GetString("Dead cell..."));
+                EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Machines/button.ogg", Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
+                Owner.PopupMessage(user, Loc.GetString("Dead cell..."));
                 return;
             }
 
-            EntitySystem.Get<AudioSystem>().PlayAtCoords(AudioHelpers.GetRandomFileFromSoundCollection("sparks"), Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
+            EntitySystem.Get<AudioSystem>().PlayAtCoords(AudioHelpers.GetRandomFileFromSoundCollection("sparks"), Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
 
             item.EquippedPrefix = "on";
             sprite.LayerSetState(0, "stunbaton_on");
@@ -179,9 +189,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             return true;
         }
 
-        public bool InteractUsing(InteractUsingEventArgs eventArgs)
+        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.Using.HasComponent<PowerCellComponent>()) return false;
+            if (!eventArgs.Using.HasComponent<BatteryComponent>()) return false;
 
             if (Cell != null) return false;
 
@@ -192,7 +202,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 return false;
             }
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/items/weapons/pistol_magin.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/pistol_magin.ogg", Owner);
 
             Dirty();
 
@@ -220,19 +230,17 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
             if (!hands.PutInHand(cell.Owner.GetComponent<ItemComponent>()))
             {
-                cell.Owner.Transform.GridPosition = user.Transform.GridPosition;
+                cell.Owner.Transform.Coordinates = user.Transform.Coordinates;
             }
 
-            EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/items/weapons/pistol_magout.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
+            EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Items/pistol_magout.ogg", Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
         }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            var loc = IoCManager.Resolve<ILocalizationManager>();
-
             if (Activated)
             {
-                message.AddMarkup(loc.GetString("The light is currently [color=darkgreen]on[/color]."));
+                message.AddMarkup(Loc.GetString("The light is currently [color=darkgreen]on[/color]."));
             }
         }
 
@@ -243,7 +251,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 return;
             }
 
-            var cell = Owner.EntityManager.SpawnEntity("PowerCellSmallHyper", Owner.Transform.GridPosition);
+            var cell = Owner.EntityManager.SpawnEntity("PowerCellSmallHyper", Owner.Transform.Coordinates);
             _cellContainer.Insert(cell);
         }
 
@@ -252,14 +260,20 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         {
             protected override void GetData(IEntity user, StunbatonComponent component, VerbData data)
             {
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
                 if (component.Cell == null)
                 {
-                    data.Text = "Eject cell (cell missing)";
+                    data.Text = Loc.GetString("Eject cell (cell missing)");
                     data.Visibility = VerbVisibility.Disabled;
                 }
                 else
                 {
-                    data.Text = "Eject cell";
+                    data.Text = Loc.GetString("Eject cell");
                 }
             }
 
@@ -267,6 +281,16 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             {
                 component.EjectCell(user);
             }
+        }
+
+        public void DoHit(ThrowCollideEventArgs eventArgs)
+        {
+            if (!Activated || Cell == null || !Cell.TryUseCharge(EnergyPerUse) || !eventArgs.Target.TryGetComponent(out StunnableComponent stunnable))
+                return;
+
+            EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Weapons/egloves.ogg", Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
+
+            stunnable.Paralyze(_paralyzeTime);
         }
     }
 }

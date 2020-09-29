@@ -1,45 +1,29 @@
-﻿using System;
-using Content.Server.GameObjects.Components;
-using Content.Server.GameObjects.Components.Destructible;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces.GameObjects;
+﻿using Content.Server.GameObjects.Components.GUI;
+using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Throw;
-using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
-using Content.Shared.Physics;
-using Robust.Server.GameObjects;
+using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Verbs;
+using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Physics;
-using Robust.Shared.Interfaces.Random;
-using Robust.Shared.Interfaces.Timing;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
-using Robust.Shared.Physics;
-using Robust.Shared.Random;
+using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
 
-namespace Content.Server.GameObjects
+namespace Content.Server.GameObjects.Components.Items.Storage
 {
     [RegisterComponent]
-    [ComponentReference(typeof(StoreableComponent))]
-    public class ItemComponent : StoreableComponent, IInteractHand, IExAct, IEquipped, IUnequipped
+    [ComponentReference(typeof(StorableComponent))]
+    [ComponentReference(typeof(IItemComponent))]
+    public class ItemComponent : StorableComponent, IInteractHand, IExAct, IEquipped, IUnequipped, IItemComponent
     {
         public override string Name => "Item";
         public override uint? NetID => ContentNetIDs.ITEM;
-
-        #pragma warning disable 649
-        [Dependency] private readonly IRobustRandom _robustRandom;
-        [Dependency] private readonly IMapManager _mapManager;
-        #pragma warning restore 649
 
         private string _equippedPrefix;
 
@@ -91,15 +75,23 @@ namespace Content.Server.GameObjects
 
         public bool CanPickup(IEntity user)
         {
-            if (!ActionBlockerSystem.CanPickup(user)) return false;
+            if (!ActionBlockerSystem.CanPickup(user))
+            {
+                return false;
+            }
 
             if (user.Transform.MapID != Owner.Transform.MapID)
+            {
                 return false;
+            }
 
-            var userPos = user.Transform.MapPosition;
-            var itemPos = Owner.Transform.MapPosition;
+            if (Owner.TryGetComponent(out ICollidableComponent physics) &&
+                physics.Anchored)
+            {
+                return false;
+            }
 
-            return InteractionChecks.InRangeUnobstructed(user, itemPos, ignoredEnt: Owner, insideBlockerValid:true);
+            return user.InRangeUnobstructed(Owner, ignoreInsideBlocker: true, popup: true);
         }
 
         public bool InteractHand(InteractHandEventArgs eventArgs)
@@ -107,7 +99,7 @@ namespace Content.Server.GameObjects
             if (!CanPickup(eventArgs.User)) return false;
 
             var hands = eventArgs.User.GetComponent<IHandsComponent>();
-            hands.PutInHand(this, hands.ActiveIndex, fallback: false);
+            hands.PutInHand(this, hands.ActiveHand, false);
             return true;
         }
 
@@ -116,13 +108,15 @@ namespace Content.Server.GameObjects
         {
             protected override void GetData(IEntity user, ItemComponent component, VerbData data)
             {
-                if (ContainerHelpers.IsInContainer(component.Owner) || !component.CanPickup(user))
+                if (!ActionBlockerSystem.CanInteract(user) ||
+                    ContainerHelpers.IsInContainer(component.Owner) ||
+                    !component.CanPickup(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
                 }
 
-                data.Text = "Pick Up";
+                data.Text = Loc.GetString("Pick Up");
             }
 
             protected override void Activate(IEntity user, ItemComponent component)
@@ -139,29 +133,11 @@ namespace Content.Server.GameObjects
             return new ItemComponentState(EquippedPrefix);
         }
 
-        public void Fumble()
-        {
-            if (Owner.TryGetComponent<PhysicsComponent>(out var physicsComponent))
-            {
-                physicsComponent.LinearVelocity += RandomOffset();
-            }
-        }
-
-        private Vector2 RandomOffset()
-        {
-            return new Vector2(RandomOffset(), RandomOffset());
-            float RandomOffset()
-            {
-                var size = 15.0F;
-                return (_robustRandom.NextFloat() * size) - size / 2;
-            }
-        }
-
         public void OnExplosion(ExplosionEventArgs eventArgs)
         {
             var sourceLocation = eventArgs.Source;
-            var targetLocation = eventArgs.Target.Transform.GridPosition;
-            var dirVec = (targetLocation.ToMapPos(_mapManager) - sourceLocation.ToMapPos(_mapManager)).Normalized;
+            var targetLocation = eventArgs.Target.Transform.Coordinates;
+            var dirVec = (targetLocation.ToMapPos(Owner.EntityManager) - sourceLocation.ToMapPos(Owner.EntityManager)).Normalized;
 
             var throwForce = 1.0f;
 

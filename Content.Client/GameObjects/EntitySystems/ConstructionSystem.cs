@@ -3,6 +3,7 @@ using Content.Client.Construction;
 using Content.Client.GameObjects.Components.Construction;
 using Content.Client.UserInterface;
 using Content.Shared.Construction;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -21,13 +22,11 @@ namespace Content.Client.GameObjects.EntitySystems
     /// The client-side implementation of the construction system, which is used for constructing entities in game.
     /// </summary>
     [UsedImplicitly]
-    public class ConstructionSystem : Shared.GameObjects.EntitySystems.ConstructionSystem
+    public class ConstructionSystem : SharedConstructionSystem
     {
-#pragma warning disable 649
-        [Dependency] private readonly IGameHud _gameHud;
-        [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private readonly IEntityManager _entityManager;
-#pragma warning restore 649
+        [Dependency] private readonly IGameHud _gameHud = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private int _nextId;
         private readonly Dictionary<int, ConstructionGhostComponent> _ghosts = new Dictionary<int, ConstructionGhostComponent>();
@@ -151,25 +150,48 @@ namespace Content.Client.GameObjects.EntitySystems
         /// <summary>
         /// Creates a construction ghost at the given location.
         /// </summary>
-        public void SpawnGhost(ConstructionPrototype prototype, GridCoordinates loc, Direction dir)
+        public void SpawnGhost(ConstructionPrototype prototype, EntityCoordinates loc, Direction dir)
         {
+            if (GhostPresent(loc))
+            {
+                return;
+            }
+
             var ghost = _entityManager.SpawnEntity("constructionghost", loc);
             var comp = ghost.GetComponent<ConstructionGhostComponent>();
             comp.Prototype = prototype;
             comp.GhostID = _nextId++;
             ghost.Transform.LocalRotation = dir.ToAngle();
-            var sprite = ghost.GetComponent<SpriteComponent>();
-            sprite.LayerSetSprite(0, prototype.Icon);
-            sprite.LayerSetVisible(0, true);
-
             _ghosts.Add(comp.GhostID, comp);
+            var sprite = ghost.GetComponent<SpriteComponent>();
+            sprite.Color = new Color(48, 255, 48, 128);
+            sprite.AddBlankLayer(0); // There is no way to actually check if this already exists, so we blindly insert a new one
+            sprite.LayerSetSprite(0, prototype.Icon);
+            sprite.LayerSetShader(0, "unshaded");
+            sprite.LayerSetVisible(0, true);
+        }
+
+        /// <summary>
+        /// Checks if any construction ghosts are present at the given position
+        /// </summary>
+        private bool GhostPresent(EntityCoordinates loc)
+        {
+            foreach (var ghost in _ghosts)
+            {
+                if (ghost.Value.Owner.Transform.Coordinates.Equals(loc))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private void TryStartConstruction(int ghostId)
         {
             var ghost = _ghosts[ghostId];
             var transform = ghost.Owner.Transform;
-            var msg = new TryStartStructureConstructionMessage(transform.GridPosition, ghost.Prototype.ID, transform.LocalRotation, ghostId);
+            var msg = new TryStartStructureConstructionMessage(transform.Coordinates, ghost.Prototype.ID, transform.LocalRotation, ghostId);
             RaiseNetworkEvent(msg);
         }
 

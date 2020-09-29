@@ -1,83 +1,88 @@
 - type: soundCollection
   id: footstep_carpet
   files:
-  - /Audio/effects/footsteps/carpet1.ogg
-  - /Audio/effects/footsteps/carpet2.ogg
-  - /Audio/effects/footsteps/carpet3.ogg
-  - /Audio/effects/footsteps/carpet4.ogg
-  - /Audio/effects/footsteps/carpet5.ogg
+  - /Audio/Effects/Footsteps/carpet1.ogg
+  - /Audio/Effects/Footsteps/carpet2.ogg
+  - /Audio/Effects/Footsteps/carpet3.ogg
+  - /Audio/Effects/Footsteps/carpet4.ogg
+  - /Audio/Effects/Footsteps/carpet5.ogg
 
 - type: soundCollection
   id: footstep_wood
   files:
-  - /Audio/effects/footsteps/wood1.ogg
-  - /Audio/effects/footsteps/wood2.ogg
-  - /Audio/effects/footsteps/wood3.ogg
-  - /Audio/effects/footsteps/wood4.ogg
-  - /Audio/effects/footsteps/wood5.ogg
+  - /Audio/Effects/Footsteps/wood1.ogg
+  - /Audio/Effects/Footsteps/wood2.ogg
+  - /Audio/Effects/Footsteps/wood3.ogg
+  - /Audio/Effects/Footsteps/wood4.ogg
+  - /Audio/Effects/Footsteps/wood5.ogg
 
 - type: soundCollection
   id: footstep_catwalk
   files:
-  - /Audio/effects/footsteps/catwalk1.ogg
-  - /Audio/effects/footsteps/catwalk2.ogg
-  - /Audio/effects/footsteps/catwalk3.ogg
-  - /Audio/effects/footsteps/catwalk4.ogg
-  - /Audio/effects/footsteps/catwalk5.ogg
+  - /Audio/Effects/Footsteps/catwalk1.ogg
+  - /Audio/Effects/Footsteps/catwalk2.ogg
+  - /Audio/Effects/Footsteps/catwalk3.ogg
+  - /Audio/Effects/Footsteps/catwalk4.ogg
+  - /Audio/Effects/Footsteps/catwalk5.ogg
 
 - type: soundCollection
   id: footstep_floor
   files:
-  - /Audio/effects/footsteps/floor1.ogg
-  - /Audio/effects/footsteps/floor2.ogg
-  - /Audio/effects/footsteps/floor3.ogg
-  - /Audio/effects/footsteps/floor4.ogg
-  - /Audio/effects/footsteps/floor5.ogg
+  - /Audio/Effects/Footsteps/floor1.ogg
+  - /Audio/Effects/Footsteps/floor2.ogg
+  - /Audio/Effects/Footsteps/floor3.ogg
+  - /Audio/Effects/Footsteps/floor4.ogg
+  - /Audio/Effects/Footsteps/floor5.ogg
 
 - type: soundCollection
   id: footstep_hull
   files:
-  - /Audio/effects/footsteps/hull1.ogg
-  - /Audio/effects/footsteps/hull2.ogg
-  - /Audio/effects/footsteps/hull3.ogg
-  - /Audio/effects/footsteps/hull4.ogg
-  - /Audio/effects/footsteps/hull5.ogg
+  - /Audio/Effects/Footsteps/hull1.ogg
+  - /Audio/Effects/Footsteps/hull2.ogg
+  - /Audio/Effects/Footsteps/hull3.ogg
+  - /Audio/Effects/Footsteps/hull4.ogg
+  - /Audio/Effects/Footsteps/hull5.ogg
 
 - type: soundCollection
   id: footstep_plating
   files:
-  - /Audio/effects/footsteps/plating1.ogg
-  - /Audio/effects/footsteps/plating2.ogg
-  - /Audio/effects/footsteps/plating3.ogg
-  - /Audio/effects/footsteps/plating4.ogg
-  - /Audio/effects/footsteps/plating5.ogg
+  - /Audio/Effects/Footsteps/plating1.ogg
+  - /Audio/Effects/Footsteps/plating2.ogg
+  - /Audio/Effects/Footsteps/plating3.ogg
+  - /Audio/Effects/Footsteps/plating4.ogg
+  - /Audio/Effects/Footsteps/plating5.ogg
 
 - type: soundCollection
   id: footstep_tile
   files:
-  - /Audio/effects/footsteps/tile1.ogg
-  - /Audio/effects/footsteps/tile2.ogg
-  - /Audio/effects/footsteps/tile3.ogg
-  - /Audio/effects/footsteps/tile4.ogg
-  - /Audio/effects/footsteps/tile5.ogg
+  - /Audio/Effects/Footsteps/tile1.ogg
+  - /Audio/Effects/Footsteps/tile2.ogg
+  - /Audio/Effects/Footsteps/tile3.ogg
+  - /Audio/Effects/Footsteps/tile4.ogg
+  - /Audio/Effects/Footsteps/tile5.ogg
 
 - type: soundCollection
   id: footstep_clown
   files:
-  - /Audio/effects/footsteps/clownstep1.ogg
-  - /Audio/effects/footsteps/clownstep2.ogg
+  - /Audio/Effects/Footsteps/clownstep1.ogg
+  - /Audio/Effects/Footsteps/clownstep2.ogg
 
 - type: soundCollection
   id: footstep_heavy
   files:
-  - /Audio/effects/footsteps/suitstep1.ogg
-  - /Audio/effects/footsteps/suitstep2.ogg
+  - /Audio/Effects/Footsteps/suitstep1.ogg
+  - /Audio/Effects/Footsteps/suitstep2.ogg
 
 - type: soundCollection
   id: footstep_asteroid
   files:
-  - /Audio/effects/footsteps/asteroid1.ogg
-  - /Audio/effects/footsteps/asteroid2.ogg
-  - /Audio/effects/footsteps/asteroid3.ogg
-  - /Audio/effects/footsteps/asteroid4.ogg
-  - /Audio/effects/footsteps/asteroid5.ogg
+  - /Audio/Effects/Footsteps/asteroid1.ogg
+  - /Audio/Effects/Footsteps/asteroid2.ogg
+  - /Audio/Effects/Footsteps/asteroid3.ogg
+  - /Audio/Effects/Footsteps/asteroid4.ogg
+  - /Audio/Effects/Footsteps/asteroid5.ogg
+
+- type: soundCollection
+  id: footstep_snow
+  files:
+  - /Audio/Effects/Footsteps/snowstep.ogg

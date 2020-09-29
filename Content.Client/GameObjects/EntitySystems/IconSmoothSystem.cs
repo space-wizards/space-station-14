@@ -19,9 +19,7 @@ namespace Content.Client.GameObjects.EntitySystems
     [UsedImplicitly]
     internal sealed class IconSmoothSystem : EntitySystem
     {
-#pragma warning disable 649
-        [Dependency] private readonly IMapManager _mapManager;
-#pragma warning restore 649
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         private readonly Queue<IEntity> _dirtyEntities = new Queue<IEntity>();
 
@@ -79,10 +77,9 @@ namespace Content.Client.GameObjects.EntitySystems
                 }
             }
 
-            if (ev.LastPosition.HasValue)
+            // Entity is no longer valid, update around the last position it was at.
+            if (ev.LastPosition.HasValue && _mapManager.TryGetGrid(ev.LastPosition.Value.grid, out var grid))
             {
-                // Entity is no longer valid, update around the last position it was at.
-                var grid = _mapManager.GetGrid(ev.LastPosition.Value.grid);
                 var pos = ev.LastPosition.Value.pos;
 
                 AddValidEntities(grid.GetSnapGridCell(pos + new MapIndices(1, 0), ev.Offset));

@@ -22,11 +22,9 @@ namespace Content.Client.Construction
 {
     public class ConstructionMenu : SS14Window
     {
-#pragma warning disable CS0649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly IResourceCache _resourceCache;
-        [Dependency] private readonly IEntitySystemManager _systemManager;
-#pragma warning restore
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private readonly IEntitySystemManager _systemManager = default!;
 
         private readonly Button BuildButton;
         private readonly Button EraseButton;
@@ -185,16 +183,16 @@ namespace Content.Client.Construction
                             switch (tool.ToolQuality)
                             {
                                 case ToolQuality.Anchoring:
-                                    icon = _resourceCache.GetResource<TextureResource>("/Textures/Objects/Tools/wrench.png");
+                                    icon = _resourceCache.GetResource<TextureResource>("/Textures/Objects/Tools/wrench.rsi/icon.png");
                                     text = "Wrench";
                                     break;
                                 case ToolQuality.Prying:
-                                    icon = _resourceCache.GetResource<TextureResource>("/Textures/Objects/Tools/crowbar.png");
+                                    icon = _resourceCache.GetResource<TextureResource>("/Textures/Objects/Tools/crowbar.rsi/icon.png");
                                     text = "Crowbar";
                                     break;
                                 case ToolQuality.Screwing:
                                     icon = _resourceCache.GetResource<TextureResource>(
-                                        "/Textures/Objects/Tools/screwdriver.png");
+                                        "/Textures/Objects/Tools/screwdriver.rsi/screwdriver-map.png");
                                     text = "Screwdriver";
                                     break;
                                 case ToolQuality.Welding:
@@ -204,7 +202,7 @@ namespace Content.Client.Construction
                                     break;
                                 case ToolQuality.Cutting:
                                     icon = _resourceCache.GetResource<TextureResource>(
-                                        "/Textures/Objects/Tools/wirecutter.png");
+                                        "/Textures/Objects/Tools/wirecutters.rsi/cutters-map.png");
                                     text = "Wirecutters";
                                     break;
                                 default:

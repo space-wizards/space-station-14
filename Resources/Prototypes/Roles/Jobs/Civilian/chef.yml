@@ -1,0 +1,19 @@
+- type: job
+  id: Chef
+  name: "chef"
+  positions: 1
+  startingGear: ChefGear
+  department:
+  - Civilian
+  icon: "Chef"
+  access:
+  - Service
+  - Maintenance
+
+- type: startingGear
+  id: ChefGear
+  equipment:
+    innerclothing: UniformChef
+    backpack: BackpackClothingFilled
+    shoes: ShoesBlack
+    idcard: ChefPDA

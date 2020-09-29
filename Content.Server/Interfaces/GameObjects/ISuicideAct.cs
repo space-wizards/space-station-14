@@ -1,8 +1,5 @@
 ﻿using Content.Server.Interfaces.Chat;
 using Robust.Shared.Interfaces.GameObjects;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Content.Server.Interfaces.GameObjects
 {
@@ -16,11 +13,15 @@ namespace Content.Server.Interfaces.GameObjects
         Special, //Doesn't damage the mob, used for "weird" suicides like gibbing
 
         //Damage type suicides
-        Brute,
+        Blunt,
+        Slash,
+        Piercing,
         Heat,
+        Shock,
         Cold,
-        Acid,
-        Toxic,
-        Electric
+        Poison,
+        Radiation,
+        Asphyxiation,
+        Bloodloss
     }
 }

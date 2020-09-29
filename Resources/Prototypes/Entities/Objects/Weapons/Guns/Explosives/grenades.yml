@@ -1,0 +1,106 @@
+- type: entity
+  name: explosive grenade
+  description: Grenade that creates small devastating explosion
+  parent: BaseItem
+  id: ExGrenade
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/grenade.rsi
+    layers:
+    - state: icon
+      map: ["enum.TriggerVisualLayers.Base"]
+
+  - type: Item
+    size: 5
+  - type: OnUseTimerTrigger
+    delay: 3.5
+  - type: Explosive
+    devastationRange: 0
+    heavyImpactRange: 2
+    lightImpactRange: 4
+    flashRange: 7
+  - type: Destructible
+    deadThreshold: 10
+  - type: Appearance
+    visuals:
+    - type: TimerTriggerVisualizer
+      countdown_sound: /Audio/Effects/countdown.ogg
+
+- type: entity
+  name: flashbang
+  description: Eeeeeeeeeeeeeeeeeeeeee
+  parent: BaseItem
+  id: GrenadeFlashBang
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/flashbang.rsi
+    layers:
+    - state: icon
+      map: ["enum.TriggerVisualLayers.Base"]
+
+  - type: Item
+    size: 5
+  - type: OnUseTimerTrigger
+    delay: 3.5
+  - type: FlashExplosive
+  - type: Destructible
+    deadThreshold: 10
+  - type: Appearance
+    visuals:
+    - type: TimerTriggerVisualizer
+      countdown_sound: /Audio/Effects/countdown.ogg
+
+- type: entity
+  name: Syndicate minibomb
+  description: A syndicate manufactured explosive used to sow destruction and chaos.
+  parent: BaseItem
+  id: SyndieMiniBomb
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/syndgrenade.rsi
+    layers:
+    - state: icon
+      map: ["enum.TriggerVisualLayers.Base"]
+
+  - type: Item
+    size: 5
+  - type: OnUseTimerTrigger
+    delay: 5
+  - type: Explosive
+    devastationRange: 3
+    heavyImpactRange: 5
+    lightImpactRange: 7
+    flashRange: 10
+  - type: Destructible
+    deadThreshold: 10
+  - type: Appearance
+    visuals:
+    - type: TimerTriggerVisualizer
+      countdown_sound: /Audio/Effects/countdown.ogg
+
+- type: entity
+  name: the nuclear option
+  description: Please don't throw it, think of the children.
+  parent: BaseItem
+  id: NuclearGrenade
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/nukenade.rsi
+    layers:
+    - state: icon
+      map: ["enum.TriggerVisualLayers.Base"]
+
+  - type: Item
+    size: 5
+  - type: OnUseTimerTrigger
+    delay: 5
+  - type: Explosive
+    devastationRange: 25
+    heavyImpactRange: 25
+    flashRange: 50
+  - type: Destructible
+    thresholdvalue: 50
+  - type: Appearance
+    visuals:
+    - type: TimerTriggerVisualizer
+      countdown_sound: /Audio/Effects/countdown.ogg
