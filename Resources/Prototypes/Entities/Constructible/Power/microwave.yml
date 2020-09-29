@@ -42,6 +42,4 @@
       shader: unshaded
       map: ["enum.MicrowaveVisualizerLayers.BaseUnlit"]
   - type: PowerReceiver
-  - type: Icon
-    sprite: Constructible/Power/microwave.rsi
-    state: mw0
+

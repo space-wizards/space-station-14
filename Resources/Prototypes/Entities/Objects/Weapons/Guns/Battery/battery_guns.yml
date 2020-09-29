@@ -13,9 +13,7 @@
       - state: mag-unshaded-4
         map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
         shader: unshaded
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
-    state: icon
+
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
@@ -55,9 +53,7 @@
       - state: mag-unshaded-4
         map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
         shader: unshaded
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
-    state: icon
+
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
@@ -97,9 +93,7 @@
       - state: mag-unshaded-0
         map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
         shader: unshaded
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Battery/xray.rsi
-    state: icon
+
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Battery/xray.rsi
@@ -140,9 +134,7 @@
       - state: mag-unshaded-0
         map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
         shader: unshaded
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Battery/taser.rsi
-    state: icon
+
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Battery/taser.rsi

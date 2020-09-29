@@ -76,8 +76,7 @@
     enabled: false
   - type: Sprite
     sprite: Constructible/Structures/Doors/airlock_glass.rsi
-  - type: Icon
-    sprite: Constructible/Structures/Doors/airlock_glass.rsi
+
 
 - type: entity
   parent: Airlock
@@ -86,5 +85,4 @@
   components:
   - type: Sprite
     sprite: Constructible/Structures/Doors/airlock_maint.rsi
-  - type: Icon
-    sprite: Constructible/Structures/Doors/airlock_maint.rsi
+

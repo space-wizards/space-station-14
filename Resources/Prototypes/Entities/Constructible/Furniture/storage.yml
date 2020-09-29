@@ -1,0 +1,49 @@
+- type: entity
+  id: Rack
+  name: "rack"
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    texture: Constructible/Misc/rack.png
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Destructible
+    deadThreshold: 30
+    destroySound: /Audio/Effects/metalbreak.ogg
+    spawnOnDestroy: MetalSheet1
+    resistances: metallicResistances
+
+- type: entity
+  id: Shelf
+  name: "shelf"
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    texture: Constructible/Misc/shelf.png
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Destructible
+    deadThreshold: 30
+    destroySound: /Audio/Effects/metalbreak.ogg
+    spawnOnDestroy: MetalSheet1
+    resistances: metallicResistances

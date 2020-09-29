@@ -20,9 +20,7 @@
     drawdepth: Mobs
     sprite: Constructible/Power/VendingMachines/cola.rsi
     state: normal
-  - type: Icon
-    sprite: Constructible/Power/VendingMachines/cola.rsi
-    state: off
+
   - type: Physics
     mass: 85
   - type: Collidable

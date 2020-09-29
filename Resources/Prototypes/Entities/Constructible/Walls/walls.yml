@@ -35,7 +35,6 @@
   - type: SnapGrid
     offset: Center
   - type: Airtight
-
   - type: IconSmooth
     key: walls
     base: solid

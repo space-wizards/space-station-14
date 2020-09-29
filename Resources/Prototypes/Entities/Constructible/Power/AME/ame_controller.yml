@@ -5,9 +5,8 @@
     mode: SnapgridCenter
   components:
   - type: Clickable
-  - type: Icon
-    sprite: Constructible/Power/ame_controller.rsi
-    state: control
+  - type: InteractionOutline
+
   - type: Sprite
     sprite: Constructible/Power/ame_controller.rsi
     state: control

@@ -24,9 +24,7 @@
     sprite: Constructible/Power/conveyor.rsi
     state: conveyor_started_cw
     drawdepth: FloorObjects
-  - type: Icon
-    sprite: Constructible/Power/conveyor.rsi
-    state: conveyor_started_cw
+
   - type: Conveyor
   - type: Appearance
     visuals:
@@ -48,9 +46,7 @@
     netsync: false
     sprite: Constructible/Power/conveyor.rsi
     state: switch-off
-  - type: Icon
-    sprite: Constructible/Power/conveyor.rsi
-    state: switch-off
+
   - type: ConveyorSwitch
   - type: Appearance
     visuals:

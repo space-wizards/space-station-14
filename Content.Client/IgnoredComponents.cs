@@ -170,6 +170,14 @@
             "Firelock",
             "AtmosPlaque",
             "Spillable",
+            "SpaceVillainArcade",
+            "Flammable",
+            "CreamPie",
+            "CreamPied",
+            "BlockGameArcade",
+            "KitchenSpike",
+            "Butcherable",
+            "Rehydratable"
         };
     }
 }

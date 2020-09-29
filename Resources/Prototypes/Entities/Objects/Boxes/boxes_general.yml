@@ -2,7 +2,7 @@
   name: lightbulb box
   parent: BoxBase
   id: BoxLightbulb
-  description:
+  description: This box is shaped on the inside so that only light tubes and bulbs fit.
   components:
   - type: StorageFill
     contents:
@@ -12,15 +12,13 @@
     layers:
       - state: box
       - state: light
-  - type: Icon
-    state: light
   - type: Item
 
 - type: entity
   name: lighttube box
   parent: BoxBase
   id: BoxLighttube
-  description:
+  description: This box is shaped on the inside so that only light tubes and bulbs fit.
   components:
   - type: StorageFill
     contents:
@@ -30,15 +28,13 @@
     layers:
       - state: box
       - state: lighttube
-  - type: Icon
-    state: lighttube
   - type: Item
 
 - type: entity
   name: mixed lights box
   parent: BoxBase
   id: BoxLightMixed
-  description:
+  description: This box is shaped on the inside so that only light tubes and bulbs fit.
   components:
   - type: StorageFill
     contents:
@@ -48,15 +44,13 @@
     layers:
       - state: box
       - state: lightmixed
-  - type: Icon
-    state: lightmixed
   - type: Item
 
 - type: entity
   name: pda box
   parent: BoxBase
   id: BoxPDA
-  description:
+  description: A box of spare PDA microcomputers.
   components:
   - type: StorageFill
     contents:
@@ -66,8 +60,6 @@
     layers:
       - state: box
       - state: pda
-  - type: Icon
-    state: pda
   - type: Item
   - type: Storage
     capacity: 3
@@ -76,7 +68,7 @@
   name: meson box
   parent: BoxBase
   id: BoxMesonScanners
-  description:
+  description: A box of spare meson goggles.
   components:
   - type: StorageFill
     contents:
@@ -86,8 +78,6 @@
     layers:
       - state: box
       - state: meson
-  - type: Icon
-    state: meson
   - type: Item
   - type: Storage
     capacity: 20
@@ -96,7 +86,7 @@
   name: survival box
   parent: BoxBase
   id: BoxSurvival
-  description:
+  description: It's box with basic internals inside.
   components:
   - type: StorageFill
     contents:
@@ -107,8 +97,6 @@
     layers:
       - state: box
       - state: writing
-  - type: Icon
-    state: box
   - type: Item
     size: 15
   - type: Storage

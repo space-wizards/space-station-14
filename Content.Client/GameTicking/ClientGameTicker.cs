@@ -28,7 +28,7 @@ namespace Content.Client.GameTicking
         [ViewVariables] public string ServerInfoBlob { get; private set; }
         [ViewVariables] public DateTime StartTime { get; private set; }
         [ViewVariables] public bool Paused { get; private set; }
-        [ViewVariables] public Dictionary<NetSessionId, PlayerStatus> Status { get; private set; }
+        [ViewVariables] public Dictionary<NetUserId, PlayerStatus> Status { get; private set; }
 
         public event Action InfoBlobUpdated;
         public event Action LobbyStatusUpdated;
@@ -52,7 +52,7 @@ namespace Content.Client.GameTicking
             });
             _netManager.RegisterNetMessage<MsgTickerLateJoinStatus>(nameof(MsgTickerLateJoinStatus), LateJoinStatus);
 
-            Status = new Dictionary<NetSessionId, PlayerStatus>();
+            Status = new Dictionary<NetUserId, PlayerStatus>();
             _initialized = true;
         }
 

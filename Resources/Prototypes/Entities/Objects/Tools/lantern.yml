@@ -12,9 +12,6 @@
         - state: lantern-on
           shader: unshaded
           visible: false
-    - type: Icon
-      sprite: Objects/Tools/lantern.rsi
-      state: lantern
     - type: Item
       sprite: Objects/Tools/lantern.rsi
       HeldPrefix: off

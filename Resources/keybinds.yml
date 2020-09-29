@@ -280,3 +280,24 @@ binds:
   type: State
   key: MouseMiddle
   mod1: Shift
+- function: ArcadeUp
+  type: State
+  key: Up
+- function: ArcadeDown
+  type: State
+  key: Down
+- function: ArcadeLeft
+  type: State
+  key: Left
+- function: ArcadeRight
+  type: State
+  key: Right
+- function: Arcade1
+  type: State
+  key: Space
+- function: Arcade2
+  type: State
+  key: C
+- function: Arcade3
+  type: State
+  key: Z

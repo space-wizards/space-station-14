@@ -11,9 +11,7 @@
     directional: false
     sprite: Objects/Weapons/Guns/Projectiles/bullet.rsi
     state: bullet
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Projectiles/bullet.rsi
-    state: bullet
+
   - type: Collidable
     hard: false
     shapes:
@@ -99,10 +97,6 @@
     layers:
     - state: spark
       shader: unshaded
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Projectiles/spark.rsi
-    state: spark
-    color: "#ffff33"
   - type: Collidable
     hard: false
     shapes:

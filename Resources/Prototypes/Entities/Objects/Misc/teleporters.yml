@@ -8,9 +8,6 @@
     netsync: false
     sprite: Objects/Misc/hand_tele.rsi
     state: ready
-  - type: Icon
-    sprite: Objects/Misc/hand_tele.rsi
-    state: ready
   - type: ItemTeleporter
     teleporter_type: Random
   - type: Item

@@ -6,8 +6,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/atmos_helm.rsi
-  - type: Icon
-    sprite: Clothing/Head/atmos_helm.rsi
+
   - type: Clothing
     sprite: Clothing/Head/atmos_helm.rsi
 
@@ -19,8 +18,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/cult_helmet.rsi
-  - type: Icon
-    sprite: Clothing/Head/cult_helmet.rsi
+
   - type: Clothing
     sprite: Clothing/Head/cult_helmet.rsi
 
@@ -32,8 +30,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/hardhat0_dblue.rsi
-  - type: Icon
-    sprite: Clothing/Head/hardhat0_dblue.rsi
+
   - type: Clothing
     sprite: Clothing/Head/hardhat0_dblue.rsi
 
@@ -45,8 +42,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/hardhat0_orange.rsi
-  - type: Icon
-    sprite: Clothing/Head/hardhat0_orange.rsi
+
   - type: Clothing
     sprite: Clothing/Head/hardhat0_orange.rsi
 
@@ -58,8 +54,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/hardhat0_pumpkin.rsi
-  - type: Icon
-    sprite: Clothing/Head/hardhat0_pumpkin.rsi
+
   - type: Clothing
     sprite: Clothing/Head/hardhat0_pumpkin.rsi
 
@@ -71,8 +66,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/hardhat0_red.rsi
-  - type: Icon
-    sprite: Clothing/Head/hardhat0_red.rsi
+
   - type: Clothing
     sprite: Clothing/Head/hardhat0_red.rsi
 
@@ -84,8 +78,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/hardhat0_white.rsi
-  - type: Icon
-    sprite: Clothing/Head/hardhat0_white.rsi
+
   - type: Clothing
     sprite: Clothing/Head/hardhat0_white.rsi
 
@@ -97,8 +90,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/hardhat0_yellow.rsi
-  - type: Icon
-    sprite: Clothing/Head/hardhat0_yellow.rsi
+
   - type: Clothing
     sprite: Clothing/Head/hardhat0_yellow.rsi
 
@@ -110,8 +102,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/hardhat1_pumpkin.rsi
-  - type: Icon
-    sprite: Clothing/Head/hardhat1_pumpkin.rsi
+
   - type: Clothing
     sprite: Clothing/Head/hardhat1_pumpkin.rsi
 
@@ -124,8 +115,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/light_riot.rsi
-  - type: Icon
-    sprite: Clothing/Head/light_riot.rsi
+
   - type: Clothing
     sprite: Clothing/Head/light_riot.rsi
 
@@ -137,8 +127,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/light_riot_on.rsi
-  - type: Icon
-    sprite: Clothing/Head/light_riot_on.rsi
+
   - type: Clothing
     sprite: Clothing/Head/light_riot_on.rsi
 
@@ -150,8 +139,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/scaf.rsi
-  - type: Icon
-    sprite: Clothing/Head/scaf.rsi
+
   - type: Clothing
     sprite: Clothing/Head/scaf.rsi
 
@@ -163,7 +151,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/security.rsi
-  - type: Icon
-    sprite: Clothing/Head/security.rsi
+
   - type: Clothing
     sprite: Clothing/Head/security.rsi
