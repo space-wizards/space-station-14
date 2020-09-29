@@ -64,8 +64,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         private AppearanceComponent _appearance;
 
-        private PipeVisualState PipeVisualState => new PipeVisualState(PipeDirection, ConduitLayer);
-
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -137,12 +135,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         private void UpdateAppearance()
         {
-            var pipeVisualStates = Owner.GetComponent<NodeContainerComponent>()
-                .Nodes
-                .OfType<PipeNode>()
-                .Select(pipeNode => pipeNode.PipeVisualState)
-                .ToArray();
-            _appearance?.SetData(PipeVisuals.VisualState, new PipeVisualStateSet(pipeVisualStates));
+            _appearance?.SetData(PipeVisuals.VisualState, new PipeVisualState(PipeDirection, ConduitLayer));
         }
 
         private void SetPipeDirection(PipeDirection pipeDirection)

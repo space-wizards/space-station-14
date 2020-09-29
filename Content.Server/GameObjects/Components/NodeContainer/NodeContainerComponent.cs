@@ -36,7 +36,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer
             }
 
             Owner.EntityManager.EventBus.SubscribeEvent<RotateEvent>(EventSource.Local, this, RotateEvent);
-            RotateEvent(new RotateEvent(Owner, Angle.Zero, Owner.Transform.LocalRotation));
         }
 
         protected override void Startup()

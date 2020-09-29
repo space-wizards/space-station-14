@@ -8,189 +8,67 @@
    "copyright":"Taken from https://github.com/tgstation/tgstation at commit 57cd1d59ca019dd0e7811ac451f295f818e573da",
    "states":[
       {
-         "name":"pipeEast2",
-         "directions":1,
-         "delays":[ [ 1.0 ] ]
+         "name":"pipeTJunction2",
+         "directions":4,
+         "delays":[
+            [
+               1.0
+            ],
+            [
+               1.0
+            ],
+            [
+               1.0
+            ],
+            [
+               1.0
+            ]
+         ]
       },
       {
-         "name":"pipeNorth2",
-         "directions":1,
-         "delays":[ [ 1.0 ] ]
-      },
-      {
-         "name":"pipeSouth2",
-         "directions":1,
-         "delays":[ [ 1.0 ] ]
-      },
-      {
-         "name":"pipeWest2",
-         "directions":1,
-         "delays":[ [ 1.0 ] ]
-      },
-      {
-         "name":"pipeFourway1",
-         "directions":1,
-         "delays":[ [ 1.0 ] ]
+         "name":"pipeBend2",
+         "directions":4,
+         "delays":[
+            [
+               1.0
+            ],
+            [
+               1.0
+            ],
+            [
+               1.0
+            ],
+            [
+               1.0
+            ]
+         ]
       },
       {
          "name":"pipeFourway2",
          "directions":1,
-         "delays":[ [ 1.0 ] ]
+         "delays":[
+            [
+               1.0
+            ]
+         ]
       },
       {
-         "name":"pipeFourway3",
-         "directions":1,
-         "delays":[ [ 1.0 ] ]
-      },
-      {
-         "name":"pipeLateral1",
-         "directions":1,
-         "delays":[ [ 1.0 ] ]
-      },
-      {
-         "name":"pipeLateral2",
-         "directions":1,
-         "delays":[ [ 1.0 ] ]
-      },
-      {
-         "name":"pipeLateral3",
-         "directions":1,
-         "delays":[ [ 1.0 ] ]
-      },
-	  {
-	     "name":"pipeLongitudinal1",
-         "directions":1,
-         "delays":[ [ 1.0 ] ]
-      },
-      {
-         "name":"pipeLongitudinal2",
-         "directions":1,
-         "delays":[ [ 1.0 ] ]
-      },
-      {
-         "name":"pipeLongitudinal3",
-         "directions":1,
-         "delays":[ [ 1.0 ] ]
-	  },
-      {
-         "name":"pipeNEBend1",
-         "directions":1,
-         "delays":[ [ 1.0 ] ]
-      },
-      {
-         "name":"pipeNEBend2",
-         "directions":1,
-         "delays":[ [ 1.0 ] ]
-      },
-      {
-         "name":"pipeNEBend3",
-         "directions":1,
-         "delays":[ [ 1.0 ] ]
-      },
-      {
-         "name":"pipeNWBend1",
-         "directions":1,
-         "delays":[ [ 1.0 ] ]
-      },
-      {
-         "name":"pipeNWBend2",
-         "directions":1,
-         "delays":[ [ 1.0 ] ]
-      },
-      {
-         "name":"pipeNWBend3",
-         "directions":1,
-         "delays":[ [ 1.0 ] ]
-      },
-      {
-         "name":"pipeSEBend1",
-         "directions":1,
-         "delays":[ [ 1.0 ] ]
-      },
-      {
-         "name":"pipeSEBend2",
-         "directions":1,
-         "delays":[ [ 1.0 ] ]
-      },
-      {
-         "name":"pipeSEBend3",
-         "directions":1,
-         "delays":[ [ 1.0 ] ]
-      },
-      {
-         "name":"pipeSWBend1",
-         "directions":1,
-         "delays":[ [ 1.0 ] ]
-      },
-      {
-         "name":"pipeSWBend2",
-         "directions":1,
-         "delays":[ [ 1.0 ] ]
-      },
-      {
-         "name":"pipeSWBend3",
-         "directions":1,
-         "delays":[ [ 1.0 ] ]
-      },
-      {
-         "name":"pipeTEast1",
-         "directions":1,
-         "delays":[ [ 1.0 ] ]
-      },
-      {
-         "name":"pipeTEast2",
-         "directions":1,
-         "delays":[ [ 1.0 ] ]
-      },
-      {
-         "name":"pipeTEast3",
-         "directions":1,
-         "delays":[ [ 1.0 ] ]
-      },
-      {
-         "name":"pipeTNorth1",
-         "directions":1,
-         "delays":[ [ 1.0 ] ]
-      },
-      {
-         "name":"pipeTNorth2",
-         "directions":1,
-         "delays":[ [ 1.0 ] ]
-      },
-      {
-         "name":"pipeTNorth3",
-         "directions":1,
-         "delays":[ [ 1.0 ] ]
-      },
-      {
-         "name":"pipeTSouth1",
-         "directions":1,
-         "delays":[ [ 1.0 ] ]
-      },
-      {
-         "name":"pipeTSouth2",
-         "directions":1,
-         "delays":[ [ 1.0 ] ]
-      },
-      {
-         "name":"pipeTSouth3",
-         "directions":1,
-         "delays":[ [ 1.0 ] ]
-      },
-      {
-         "name":"pipeTWest1",
-         "directions":1,
-         "delays":[ [ 1.0 ] ]
-      },
-      {
-         "name":"pipeTWest2",
-         "directions":1,
-         "delays":[ [ 1.0 ] ]
-      },
-      {
-         "name":"pipeTWest3",
-         "directions":1,
-         "delays":[ [ 1.0 ] ]
+         "name":"pipeStraight2",
+         "directions":4,
+         "delays":[
+            [
+               1.0
+            ],
+            [
+               1.0
+            ],
+            [
+               1.0
+            ],
+            [
+               1.0
+            ]
+         ]
       }
    ]
 }
