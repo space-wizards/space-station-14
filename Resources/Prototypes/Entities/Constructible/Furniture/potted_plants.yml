@@ -1,0 +1,54 @@
+﻿- type: entity
+  id: PottedPlantBase
+  abstract: true
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: Sprite
+    sprite: Constructible/Misc/potted_plants.rsi
+  - type: PottedPlantHide
+  - type: Pullable
+
+- type: entity
+  id: PottedPlantRandom
+  parent: PottedPlantBase
+  name: potted plant
+  description: A little bit of nature contained in a pot.
+  components:
+  - type: Sprite
+    state: random
+  - type: RandomPottedPlant
+
+- type: entity
+  id: PottedPlantRandomPlastic
+  parent: PottedPlantBase
+  name: plastic potted plant
+  description: A fake, cheap looking, plastic tree. Perfect for people who kill every plant they touch.
+  components:
+  - type: Sprite
+    state: plant-26
+  - type: RandomPottedPlant
+    plastic: true
+
+- type: entity
+  id: PottedPlantRD
+  parent: PottedPlantBase
+  name: "RD's potted plant"
+  description: "A gift from the botanical staff, presented after the RD's reassignment. There's a tag on it that says \"Y'all come back now, y'hear?\"\nIt doesn't look very healthy..."
+  components:
+  - type: Sprite
+    state: plant-25
+
+- type: entity
+  id: PottedPlantBioluminscent
+  parent: PottedPlantBase
+  name: "bioluminescent potted plant"
+  description: "It produces light!"
+  components:
+  - type: Sprite
+    state: plant-09
+  - type: PointLight
+    radius: 2
+    color: "#2cb2e8"
+    power: 0.25
