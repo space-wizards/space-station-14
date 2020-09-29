@@ -10,7 +10,9 @@ namespace Content.Server.Database
 {
     // Taken from https://github.com/npgsql/efcore.pg/issues/1158
     // To support inet -> (IPAddress, int) mapping.
+    #pragma warning disable EF1001
     public class CustomNpgsqlTypeMappingSource : NpgsqlTypeMappingSource
+    #pragma warning restore EF1001
     {
         public CustomNpgsqlTypeMappingSource(
             TypeMappingSourceDependencies dependencies,

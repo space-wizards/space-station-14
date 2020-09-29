@@ -53,9 +53,17 @@ namespace Content.Server.Database
 
         private ServerDbBase _db = default!;
         private LoggingProvider _msLogProvider = default!;
+        private ILoggerFactory _msLoggerFactory = default!;
+
 
         public void Init()
         {
+            _msLogProvider = new LoggingProvider(_logMgr);
+            _msLoggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddProvider(_msLogProvider);
+            });
+
             var engine = _cfg.GetCVar(CCVars.DatabaseEngine).ToLower();
             switch (engine)
             {
@@ -172,10 +180,7 @@ namespace Content.Server.Database
 
         private void SetupLogging(DbContextOptionsBuilder<ServerDbContext> builder)
         {
-            builder.UseLoggerFactory(LoggerFactory.Create(builder =>
-            {
-                builder.AddProvider(new LoggingProvider(_logMgr));
-            }));
+            builder.UseLoggerFactory(_msLoggerFactory);
         }
 
         private sealed class LoggingProvider : ILoggerProvider
@@ -193,7 +198,7 @@ namespace Content.Server.Database
 
             public ILogger CreateLogger(string categoryName)
             {
-                return new MSLogger(_logManager.GetSawmill("db"));
+                return new MSLogger(_logManager.GetSawmill("db.ef"));
             }
         }
 
@@ -213,7 +218,8 @@ namespace Content.Server.Database
                 {
                     MSLogLevel.Trace => LogLevel.Debug,
                     MSLogLevel.Debug => LogLevel.Debug,
-                    MSLogLevel.Information => LogLevel.Info,
+                    // EFCore feels the need to log individual DB commands as "Information" so I'm slapping debug on it.
+                    MSLogLevel.Information => LogLevel.Debug,
                     MSLogLevel.Warning => LogLevel.Warning,
                     MSLogLevel.Error => LogLevel.Error,
                     MSLogLevel.Critical => LogLevel.Fatal,
