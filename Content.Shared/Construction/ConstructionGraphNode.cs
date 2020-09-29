@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using Robust.Shared.ViewVariables;
 using YamlDotNet.RepresentationModel;
 using ObjectSerializer = Robust.Shared.Serialization.ObjectSerializer;
 
@@ -13,9 +14,16 @@ namespace Content.Shared.Construction
     {
         private List<ConstructionGraphEdge> _edges = new List<ConstructionGraphEdge>();
 
+        [ViewVariables]
         public string Name { get; private set; }
+
+        [ViewVariables]
         public IReadOnlyList<ConstructionGraphEdge> Edges => _edges;
+
+        [ViewVariables]
         public string Entity { get; private set; }
+
+        [ViewVariables]
         public string SpriteState { get; private set; }
 
         public void ExposeData(ObjectSerializer serializer)

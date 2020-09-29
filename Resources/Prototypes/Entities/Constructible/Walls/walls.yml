@@ -239,6 +239,9 @@
   - type: Icon
     sprite: Constructible/Structures/Walls/solid.rsi
     state: rgeneric
+  - type: Construction
+    graph: girder
+    node: reinforcedWall
   - type: Destructible
     deadThreshold: 600
     spawnOnDestroy: Girder

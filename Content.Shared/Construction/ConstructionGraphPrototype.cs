@@ -4,6 +4,7 @@ using System.Linq;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using Robust.Shared.ViewVariables;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.Construction
@@ -12,7 +13,11 @@ namespace Content.Shared.Construction
     public class ConstructionGraphPrototype : IPrototype, IIndexedPrototype
     {
         private Dictionary<string, ConstructionGraphNode> _nodes = new Dictionary<string, ConstructionGraphNode>();
+
+        [ViewVariables]
         public string ID { get; private set; }
+
+        [ViewVariables]
         public IReadOnlyDictionary<string, ConstructionGraphNode> Nodes => _nodes;
 
         public void LoadFrom(YamlMappingNode mapping)

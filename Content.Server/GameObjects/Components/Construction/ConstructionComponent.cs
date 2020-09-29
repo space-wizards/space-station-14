@@ -37,12 +37,21 @@ namespace Content.Server.GameObjects.Components.Construction
         private string _graphIdentifier = string.Empty;
         private string _startingNodeIdentifier = string.Empty;
 
+        [ViewVariables]
         private HashSet<string> _containers = new HashSet<string>();
+        [ViewVariables]
         private List<List<ConstructionGraphStep>>? _edgeNestedStepProgress = null;
 
+        [ViewVariables]
         public ConstructionGraphPrototype GraphPrototype { get; private set; } = null!;
+
+        [ViewVariables]
         public ConstructionGraphNode Node { get; private set; } = null!;
+
+        [ViewVariables]
         public ConstructionGraphEdge? Edge { get; private set; } = null;
+
+        [ViewVariables]
         public int EdgeStep { get; private set; } = 0;
 
         /// <inheritdoc />
@@ -77,7 +86,8 @@ namespace Content.Server.GameObjects.Components.Construction
                     case ComponentConstructionGraphStep _:
                         if (await HandleStep(eventArgs, edge, firstStep))
                         {
-                            Edge = edge;
+                            if(edge.Steps.Count > 1)
+                                Edge = edge;
                             return true;
                         }
                         break;
@@ -219,14 +229,14 @@ namespace Content.Server.GameObjects.Components.Construction
                 return false;
             }
 
+            Edge = null;
+            Node = GraphPrototype.Nodes[edge.Target];
+
             foreach (var completed in edge.Completed)
             {
                 await completed.Completed(Owner);
                 if (Owner.Deleted) return true;
             }
-
-            Edge = null;
-            Node = GraphPrototype.Nodes[edge.Target];
 
             await HandleEntityChange(Node);
 
@@ -235,14 +245,14 @@ namespace Content.Server.GameObjects.Components.Construction
 
         private async Task<bool> HandleEdge(InteractUsingEventArgs eventArgs)
         {
-            if (Edge == null) return false;
+            if (Edge == null || EdgeStep >= Edge.Steps.Count) return false;
 
             return await HandleStep(eventArgs, Edge, Edge.Steps[EdgeStep]);
         }
 
         private async Task<bool> HandleEntityChange(ConstructionGraphNode node)
         {
-            if (node.Entity == Owner.Prototype?.ID) return false;
+            if (node.Entity == Owner.Prototype?.ID || string.IsNullOrEmpty(node.Entity)) return false;
 
             var entity = _entityManager.SpawnEntity(node.Entity, Owner.Transform.Coordinates);
 

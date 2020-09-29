@@ -7,6 +7,7 @@ using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using Robust.Shared.ViewVariables;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.Construction
@@ -16,9 +17,16 @@ namespace Content.Shared.Construction
     {
         private List<ConstructionGraphStep> _steps = new List<ConstructionGraphStep>();
 
+        [ViewVariables]
         public string Target { get; private set; }
+
+        [ViewVariables]
         public List<IEdgeCondition> Conditions { get; private set; }
+
+        [ViewVariables]
         public List<IEdgeCompleted> Completed { get; private set; }
+
+        [ViewVariables]
         public IReadOnlyList<ConstructionGraphStep> Steps => _steps;
 
         public void ExposeData(ObjectSerializer serializer)

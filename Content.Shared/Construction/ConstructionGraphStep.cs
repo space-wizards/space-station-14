@@ -11,6 +11,7 @@ namespace Content.Shared.Construction
         public string Sound { get; private set; }
         public string SoundCollection { get; private set; }
         public string SpriteState { get; private set; }
+        public string Popup { get; private set; }
 
         public virtual void ExposeData(ObjectSerializer serializer)
         {

@@ -1,0 +1,116 @@
+﻿- type: constructionGraph
+  id: girder
+  graph:
+    - node: start
+      edges:
+        - to: girder
+          steps:
+            - material: Metal
+              amount: 2
+              doAfter: 1
+
+    - node: girder
+      entity: Girder
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SteelSheet1
+              amount: 2
+            - !type:DeleteEntity {}
+          conditions:
+            - !type:EntityAnchored
+              anchored: false
+          steps:
+            - tool: Screwing
+              doAfter: 2
+
+        - to: fakeWall
+          conditions:
+            - !type:EntityAnchored
+              anchored: false
+          steps:
+            - material: Metal
+              amount: 2
+              doAfter: 1
+
+        - to: fakeReinforcedWall
+          conditions:
+            - !type:EntityAnchored
+              anchored: false
+          steps:
+            - material: Plasteel
+              doAfter: 2
+
+        - to: wall
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Metal
+              amount: 2
+
+        - to: reinforcedGirder
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Plasteel
+              amount: 2
+
+    - node: fakeWall
+      entity: FakeWall
+      edges:
+        - to: girder
+          steps:
+            - tool: Welding
+              doAfter: 2
+
+    - node: fakeReinforcedWall
+      entity: FakeReinforcedWall
+      edges:
+        - to: girder
+          steps:
+            - tool: Welding
+              doAfter: 2
+
+    - node: wall
+      entity: solid_wall
+      edges:
+        - to: girder
+          completed:
+            - !type:SpawnPrototype
+              prototype: SteelSheet1
+              amount: 2
+          steps:
+            - tool: Welding
+              doAfter: 2
+
+    - node: reinforcedGirder
+      edges:
+        - to: reinforcedWall
+          steps:
+            - material: Plasteel
+              amount: 2
+
+    - node: reinforcedWall
+      entity: reinforced_wall
+      edges:
+        - to: girder
+          steps:
+            - tool: Cutting
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1
+            - tool: Welding
+              doAfter: 1
+            - tool: Prying
+              doAfter: 1
+            - tool: Anchoring
+              doAfter: 1
+            - tool: Welding
+              doAfter: 2
+            - tool: Prying
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1
+            - tool: Cutting
+              doAfter: 1

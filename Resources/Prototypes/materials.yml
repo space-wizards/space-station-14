@@ -35,3 +35,12 @@
   electricresistivity: 2.1e-1
   thermalconductivity: 80
   specificheat: 2000
+
+- type: material
+  id: plasteel
+  name: plasteel
+  icon: Objects/Materials/sheet_plasteel.png
+  density: 15400 # literally arbitrary values...
+  electricresistivity: 6.9e-7
+  thermalconductivity: 18
+  specificheat: 200
