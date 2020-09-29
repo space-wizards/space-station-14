@@ -293,6 +293,10 @@
     color: "#889192"
     sprite: Constructible/Structures/Walls/solid.rsi
 
+  - type: Construction
+    graph: girder
+    node: wall
+
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy: Girder

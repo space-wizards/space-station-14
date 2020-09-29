@@ -29,7 +29,7 @@ namespace Content.Server.GameObjects.Components.Recycling
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public override string Name => "Recycler";
-        
+
         private List<IEntity> _intersecting = new List<IEntity>();
 
         /// <summary>
@@ -73,11 +73,11 @@ namespace Content.Server.GameObjects.Components.Recycling
         {
             prototype = null;
 
-            var constructionSystem = EntitySystem.Get<ConstructionSystem>();
+            //var constructionSystem = EntitySystem.Get<ConstructionSystem>();
             var entityId = entity.MetaData.EntityPrototype?.ID;
 
-            if (entityId == null ||
-                !constructionSystem.CraftRecipes.TryGetValue(entityId, out prototype))
+            if (entityId == null/* ||
+                !constructionSystem.CraftRecipes.TryGetValue(entityId, out prototype)*/)
             {
                 return false;
             }
@@ -91,7 +91,7 @@ namespace Content.Server.GameObjects.Components.Recycling
             {
                 _intersecting.Add(entity);
             }
-            
+
             // TODO: Prevent collision with recycled items
             if (CanGib(entity))
             {
@@ -105,9 +105,9 @@ namespace Content.Server.GameObjects.Components.Recycling
                 return;
             }
 
-            var constructionSystem = EntitySystem.Get<ConstructionSystem>();
+            //var constructionSystem = EntitySystem.Get<ConstructionSystem>();
             var recyclerPosition = Owner.Transform.MapPosition;
-            foreach (var stage in prototype.Stages)
+            /*foreach (var stage in prototype.Stages)
             {
                 if (!(stage.Forward is ConstructionStepMaterial step))
                 {
@@ -115,7 +115,7 @@ namespace Content.Server.GameObjects.Components.Recycling
                 }
 
                 constructionSystem.SpawnIngredient(recyclerPosition, step);
-            }
+            }*/
 
             entity.Delete();
         }
@@ -180,7 +180,7 @@ namespace Content.Server.GameObjects.Components.Recycling
             for (var i = _intersecting.Count - 1; i >= 0; i--)
             {
                 var entity = _intersecting[i];
-                
+
                 if (!CanMove(entity) || !_entityManager.IsIntersecting(Owner, entity))
                 {
                     _intersecting.RemoveAt(i);

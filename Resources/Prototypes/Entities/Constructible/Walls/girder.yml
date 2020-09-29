@@ -5,6 +5,10 @@
   components:
   - type: Clickable
   - type: InteractionOutline
+  - type: Anchorable
+  - type: Construction
+    graph: girder
+    node: girder
   - type: Sprite
     texture: Constructible/Structures/Walls/wall_girder.png
 

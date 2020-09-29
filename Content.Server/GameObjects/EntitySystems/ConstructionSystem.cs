@@ -25,6 +25,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
+/*
 namespace Content.Server.GameObjects.EntitySystems
 {
     /// <summary>
@@ -578,3 +579,4 @@ namespace Content.Server.GameObjects.EntitySystems
         }
     }
 }
+*/

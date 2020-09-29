@@ -145,7 +145,7 @@ namespace Content.Client.Construction
 
                 StepList.Clear();
 
-                foreach (var forward in prototype.Stages.Select(a => a.Forward))
+                /*foreach (var forward in prototype.Stages.Select(a => a.Forward))
                 {
                     if (forward == null)
                     {
@@ -215,7 +215,7 @@ namespace Content.Client.Construction
                     }
 
                     StepList.AddItem(text, icon, false);
-                }
+                }*/
             }
         }
 

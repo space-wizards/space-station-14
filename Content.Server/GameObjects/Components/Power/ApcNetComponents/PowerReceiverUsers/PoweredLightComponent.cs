@@ -62,13 +62,13 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
             switch (message)
             {
-                case BeginDeconstructCompMsg msg:
+                /*case BeginDeconstructCompMsg msg:
                     if (!msg.BlockDeconstruct && !(_lightBulbContainer.ContainedEntity is null))
                     {
                         Owner.PopupMessage(msg.User, Loc.GetString("Remove the bulb."));
                         msg.BlockDeconstruct = true;
                     }
-                    break;
+                    break;*/
             }
         }
 
