@@ -438,8 +438,7 @@ namespace Content.Client.UserInterface.AdminMenu
                 var manager = IoCManager.Resolve<IAdminMenuManager>();
                 var window = new EntitySpawnWindow(IoCManager.Resolve<IPlacementManager>(),
                     IoCManager.Resolve<IPrototypeManager>(),
-                    IoCManager.Resolve<IResourceCache>(),
-                    IoCManager.Resolve<ILocalizationManager>());
+                    IoCManager.Resolve<IResourceCache>());
                 manager.OpenCommand(window);
             }
         }

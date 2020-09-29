@@ -460,30 +460,3 @@
     ClothingPrefix: maroon_skirt
     femaleMask: UniformTop
     HeldPrefix: maroon
-
-# Rainbow
-- type: entity
-  parent: UniformColorBase
-  id: UniformColorRainbow
-  name: rainbow jumpsuit
-  description: A multi-colored jumpsuit!
-  components:
-  - type: Sprite
-    state: rainbow
-
-  - type: Clothing
-    HeldPrefix: rainbow
-
-- type: entity
-  parent: UniformColorRainbow
-  id: UniformColorRainbowSkirt
-  name: rainbow jumpskirt
-  description: A multi-colored jumpskirt!
-  components:
-  - type: Sprite
-    state: rainbow_skirt
-
-  - type: Clothing
-    ClothingPrefix: rainbow_skirt
-    femaleMask: UniformTop
-    HeldPrefix: rainbow

@@ -77,8 +77,9 @@
         public const uint SLIP = 1071;
         public const uint SPACE_VILLAIN_ARCADE = 1072;
         public const uint PIPE_DISPENSER = 1073;
-        
-	// Net IDs for integration tests.
+        public const uint BLOCKGAME_ARCADE = 1074;
+
+        // Net IDs for integration tests.
         public const uint PREDICTION_TEST = 10001;
     }
 }

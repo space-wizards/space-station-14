@@ -26,6 +26,11 @@ namespace Content.Shared.Preferences
         /// </summary>
         public IEnumerable<ICharacterProfile> Characters => _characters.AsEnumerable();
 
+        public ICharacterProfile GetProfile(int index)
+        {
+            return _characters[index];
+        }
+
         /// <summary>
         ///     Index of the currently selected character.
         /// </summary>

@@ -80,7 +80,7 @@ namespace Content.Client.GameObjects.Components.PipeDispenser
                 {
                     var icon = SpriteComponent.GetPrototypeIcon(prototype, _resourceCache);
                     var name = prototype.Name;
-                    _menu.AddItem(entry.ID, name, icon);
+                    _menu.AddItem(entry.ID, name, icon.Default);
                 }
             }
         }
