@@ -15,7 +15,6 @@
   - type: GasCanister
 
 - type: entity
-  parent: GasCanister
-  id: Gas Canister
+  parent: GasCanisterBase
+  id: GasCanister
   name: Gas Canister
-  components:

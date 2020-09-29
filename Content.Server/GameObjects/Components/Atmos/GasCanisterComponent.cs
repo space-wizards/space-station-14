@@ -5,6 +5,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 using System;
 using System.Linq;
 
@@ -15,8 +16,10 @@ namespace Content.Server.GameObjects.Components.Atmos
     {
         public override string Name => "GasCanister";
 
-        public GasMixture Air { get; set; } = new GasMixture();
+        [ViewVariables]
+        public GasMixture Air { get; set; }
 
+        [ViewVariables]
         public float Volume
         {
             get => _volume;
@@ -28,13 +31,19 @@ namespace Content.Server.GameObjects.Components.Atmos
         }
         private float _volume;
 
-        private bool Anchored => !Owner.TryGetComponent<ICollidableComponent>(out var collidable) || collidable.Anchored;
+        [ViewVariables]
+        public bool Anchored => !Owner.TryGetComponent<ICollidableComponent>(out var collidable) || collidable.Anchored;
 
-        public GasCanisterPortComponent ConnectedGasCanisterPort { get; private set; }
+        [ViewVariables]
+        public GasCanisterPortComponent ConnectedPort { get; private set; }
+
+        [ViewVariables]
+        public bool ConnectedToPort => ConnectedPort != null;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
+            Air = new GasMixture();
             serializer.DataField(this, x => Volume, "volume", 10);
         }
 
@@ -57,22 +66,34 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
         }
 
+
+        public void TryConnectToPort()
+        {
+            if (!Owner.TryGetComponent<SnapGridComponent>(out var snapGrid)) return;
+            var port = snapGrid.GetLocal()
+                .Select(entity => entity.TryGetComponent<GasCanisterPortComponent>(out var port) ? port : null)
+                .Where(port => port != null)
+                .Where(port => !port.ConnectedToCanister)
+                .FirstOrDefault();
+            if (port == null) return;
+            ConnectedPort = port;
+            ConnectedPort.ConnectGasCanister(this);
+        }
+
+        public void DisconnectFromPort()
+        {
+            ConnectedPort?.DisconnectGasCanister();
+        }
+
         private void AnchorUpdate()
         {
             if (Anchored)
             {
-                if (!Owner.TryGetComponent<SnapGridComponent>(out var snapGrid)) return;
-                var port = snapGrid.GetLocal()
-                    .Select(entity => entity.TryGetComponent<GasCanisterPortComponent>(out var port) ? port : null)
-                    .Where(port => port != null)
-                    .FirstOrDefault();
-                if (port == null) return;
-                ConnectedGasCanisterPort = port;
-                ConnectedGasCanisterPort.ConnectGasCanister(this);
+                TryConnectToPort();
             }
             else
             {
-                ConnectedGasCanisterPort?.DisconnectGasCanister();
+                DisconnectFromPort();
             }
         }
     }
