@@ -1,0 +1,21 @@
+- type: entity
+  abstract: true
+  id: GasCanisterBase
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: SnapGrid
+    offset: Center
+  - type: Sprite
+  - type: Destructible
+    thresholdvalue: 100
+  - type: GasCanister
+
+- type: entity
+  parent: GasCanister
+  id: Gas Canister
+  name: Gas Canister
+  components:
