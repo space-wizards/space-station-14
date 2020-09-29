@@ -11,7 +11,6 @@
   - type: Collidable
   - type: SnapGrid
     offset: Center
-
   - type: Sprite
   - type: Destructible
     thresholdvalue: 100
@@ -19,6 +18,8 @@
     visuals:
     - type: PipeVisualizer
       pipeRSI: Constructible/Atmos/pipe.rsi
+  - type: Icon
+    sprite: Constructible/Atmos/pipe.rsi
 
 - type: entity
   parent: PipeBase
@@ -29,8 +30,10 @@
     nodes:
     - !type:PipeNode
       nodeGroupID: Pipe
-      pipeDirection: Longitudinal
-
+      pipeDirection: Lateral
+  - type: Icon
+    state: pipeLateral2
+    
 - type: entity
   parent: PipeBase
   id: PipeBend
@@ -41,6 +44,8 @@
     - !type:PipeNode
       nodeGroupID: Pipe
       pipeDirection: NWBend
+  - type: Icon
+    state: pipeNWBend2
 
 - type: entity
   parent: PipeBase
@@ -52,6 +57,8 @@
     - !type:PipeNode
       nodeGroupID: Pipe
       pipeDirection: TNorth
+  - type: Icon
+    state: pipeTNorth2
 
 - type: entity
   parent: PipeBase
