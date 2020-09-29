@@ -70,3 +70,5 @@
     - !type:PipeNode
       nodeGroupID: Pipe
       pipeDirection: Fourway
+  - type: Icon
+    state: pipeFourway2
