@@ -165,10 +165,10 @@ namespace Content.Server.Chat
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.OOC;
             msg.Message = message;
-            msg.MessageWrap = $"OOC: {player.SessionId}: {{0}}";
+            msg.MessageWrap = $"OOC: {player.Name}: {{0}}";
             _netManager.ServerSendToAll(msg);
 
-            _mommiLink.SendOOCMessage(player.SessionId.ToString(), message);
+            _mommiLink.SendOOCMessage(player.Name, message);
         }
 
         public void SendDeadChat(IPlayerSession player, string message)
@@ -210,7 +210,7 @@ namespace Content.Server.Chat
 
             msg.Channel = ChatChannel.AdminChat;
             msg.Message = message;
-            msg.MessageWrap = $"{Loc.GetString("ADMIN")}: {player.SessionId}: {{0}}";
+            msg.MessageWrap = $"{Loc.GetString("ADMIN")}: {player.Name}: {{0}}";
             _netManager.ServerSendToMany(msg, clients.ToList());
         }
 

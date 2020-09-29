@@ -22,6 +22,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -144,7 +145,7 @@ namespace Content.Server.GameObjects.Components.Medical
             UserInterface?.Open(actor.playerSession);
         }
 
-        private async void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
+        private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
             if (!(obj.Message is CloningPodUiButtonPressedMessage message)) return;
 
@@ -167,11 +168,10 @@ namespace Content.Server.GameObjects.Components.Medical
 
 
                     var mob = _entityManager.SpawnEntity("HumanMob_Content", Owner.Transform.MapPosition);
-                    var client = _playerManager
-                        .GetPlayersBy(x => x.SessionId == mind.SessionId).First();
-                    mob.GetComponent<HumanoidAppearanceComponent>()
-                        .UpdateFromProfile(GetPlayerProfileAsync(client.Name).Result);
-                    mob.Name = GetPlayerProfileAsync(client.Name).Result.Name;
+                    var client = _playerManager.GetSessionByUserId(mind.UserId!.Value);
+                    var profile = GetPlayerProfileAsync(client.UserId);
+                    mob.GetComponent<HumanoidAppearanceComponent>().UpdateFromProfile(profile);
+                    mob.Name = profile.Name;
 
                     _bodyContainer.Insert(mob);
                     _capturedMind = mind;
@@ -209,10 +209,9 @@ namespace Content.Server.GameObjects.Components.Medical
         }
 
 
-        private async Task<HumanoidCharacterProfile> GetPlayerProfileAsync(string username)
+        private HumanoidCharacterProfile GetPlayerProfileAsync(NetUserId userId)
         {
-            return (HumanoidCharacterProfile) (await _prefsManager.GetPreferencesAsync(username))
-                .SelectedCharacter;
+            return (HumanoidCharacterProfile) _prefsManager.GetPreferences(userId).SelectedCharacter;
         }
 
         private void HandleGhostReturn(GhostComponent.GhostReturnMessage message)

@@ -15,7 +15,6 @@
     netsync: false
     drawdepth: WallTops
     sprite: Constructible/Structures/Windows/window.rsi
-
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -26,7 +25,7 @@
       - VaultImpassable
       - SmallImpassable
   - type: Destructible
-    deadThreshold: 100
+    deadThreshold: 15
     resistances: metallicResistances
   - type: SnapGrid
     offset: Center
@@ -42,6 +41,22 @@
   - type: Sprite
     drawdepth: WallTops
     sprite: Constructible/Structures/Windows/reinforced_window.rsi
+  - type: Destructible
+    deadThreshold: 75
+    resistances: metallicResistances
   - type: Window
     base: rwindow
 
+- type: entity
+  id: PhoronWindow
+  name: phoronwindow
+  parent: Window
+  components:
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Structures/Windows/phoron_window.rsi
+  - type: Destructible
+    deadThreshold: 100
+    resistances: metallicResistances
+  - type: Window
+    base: pwindow
