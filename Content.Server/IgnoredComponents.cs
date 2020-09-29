@@ -19,6 +19,7 @@
             "Marker",
             "Clickable",
             "RadiatingLight",
+            "Icon",
         };
 
     }
