@@ -25,5 +25,6 @@
       nodeGroupID: Pipe
       pipeDirection: Fourway
   - type: Sprite
-    texture: Constructible/Power/storage.png
+    sprite: Constructible/Power/smes.rsi
+    state: smes
     

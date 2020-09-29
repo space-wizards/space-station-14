@@ -22,5 +22,6 @@
   name: Gas Canister
   components:
   - type: Sprite
-    texture: Constructible/Power/generator.png
+    sprite: "Constructible/Power/apc.rsi"
+    state: apc0
     
