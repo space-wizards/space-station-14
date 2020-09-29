@@ -78,15 +78,6 @@
       ]
     },
     {
-      "name": "blank",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
       "name": "chair",
       "directions": 4,
       "delays": [
