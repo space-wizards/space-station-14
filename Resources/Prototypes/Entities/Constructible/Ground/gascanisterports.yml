@@ -24,3 +24,6 @@
     - !type:PipeNode
       nodeGroupID: Pipe
       pipeDirection: Fourway
+  - type: Sprite
+    texture: Constructible/Power/storage.png
+    

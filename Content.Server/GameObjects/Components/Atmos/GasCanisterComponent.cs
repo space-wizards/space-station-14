@@ -64,6 +64,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             {
                 collidable.AnchoredChanged -= AnchorUpdate;
             }
+            DisconnectFromPort();
         }
 
 
@@ -83,6 +84,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         public void DisconnectFromPort()
         {
             ConnectedPort?.DisconnectGasCanister();
+            ConnectedPort = null;
         }
 
         private void AnchorUpdate()

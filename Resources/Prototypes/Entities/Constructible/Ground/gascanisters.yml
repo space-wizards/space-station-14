@@ -13,8 +13,14 @@
   - type: Destructible
     thresholdvalue: 100
   - type: GasCanister
+  - type: Anchorable
+  - type: Pullable
 
 - type: entity
   parent: GasCanisterBase
   id: GasCanister
   name: Gas Canister
+  components:
+  - type: Sprite
+    texture: Constructible/Power/generator.png
+    

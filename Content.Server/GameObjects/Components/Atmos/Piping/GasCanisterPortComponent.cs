@@ -53,6 +53,12 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
             }
         }
 
+        public override void OnRemove()
+        {
+            base.OnRemove();
+            ConnectedCanister?.DisconnectFromPort();
+        }
+
         public override void Update()
         {
             ConnectedCanister?.Air.Share(_gasPort.Air, 1);
