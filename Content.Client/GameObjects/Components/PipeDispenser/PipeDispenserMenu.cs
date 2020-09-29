@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -39,6 +40,18 @@ namespace Content.Client.GameObjects.Components.PipeDispenser
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
             };
 
+            var margin1 = new MarginContainer()
+            {
+                SizeFlagsVertical = SizeFlags.FillExpand,
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+            };
+
+            var margin2 = new MarginContainer()
+            {
+                SizeFlagsVertical = SizeFlags.FillExpand,
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+            };
+
             var vBox = new VBoxContainer()
             {
                 SizeFlagsVertical = SizeFlags.FillExpand,
@@ -56,6 +69,7 @@ namespace Content.Client.GameObjects.Components.PipeDispenser
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                 SizeFlagsVertical = SizeFlags.FillExpand,
                 SizeFlagsStretchRatio = 1,
+                Align = BoxContainer.AlignMode.Center,
             };
 
             var hBoxSelected = new HBoxContainer()
@@ -94,8 +108,8 @@ namespace Content.Client.GameObjects.Components.PipeDispenser
             {
                 Text = "1",
                 TextAlign = Label.AlignMode.Center,
-                SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
-                SizeFlagsStretchRatio = 1,
+                SizeFlagsHorizontal = SizeFlags.Fill,
+                SizeFlagsStretchRatio = 1
             };
 
             ejectOne.OnButtonUp += (_) => { Eject(1); };
@@ -104,8 +118,8 @@ namespace Content.Client.GameObjects.Components.PipeDispenser
             {
                 Text = "5",
                 TextAlign = Label.AlignMode.Center,
-                SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
-                SizeFlagsStretchRatio = 1,
+                SizeFlagsHorizontal = SizeFlags.Fill,
+                SizeFlagsStretchRatio = 1
             };
 
             ejectFive.OnButtonUp += (_) => { Eject(5); };
@@ -114,8 +128,8 @@ namespace Content.Client.GameObjects.Components.PipeDispenser
             {
                 Text = "10",
                 TextAlign = Label.AlignMode.Center,
-                SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
-                SizeFlagsStretchRatio = 1,
+                SizeFlagsHorizontal = SizeFlags.Fill,
+                SizeFlagsStretchRatio = 1
             };
 
             ejectTen.OnButtonUp += (_) => { Eject(10); };
@@ -134,13 +148,38 @@ namespace Content.Client.GameObjects.Components.PipeDispenser
                 Text = " - "
             };
 
+            var marginFixed1 = new MarginContainer()
+            {
+                SizeFlagsVertical = SizeFlags.FillExpand,
+                MarginLeftOverride = 10,
+                MarginRightOverride = 10
+            };
+
+            var marginFixed2 = new MarginContainer()
+            {
+                SizeFlagsVertical = SizeFlags.FillExpand,
+                MarginLeftOverride = 10,
+                MarginRightOverride = 10
+            };
+
+            var marginFixed3 = new MarginContainer()
+            {
+                SizeFlagsVertical = SizeFlags.FillExpand,
+                MarginRightOverride = 3
+            };
+
             hBoxSelected.AddChild(_selectedLabel);
 
+            hBoxButtons.AddChild(marginFixed1);
             hBoxButtons.AddChild(ejectOne);
+            hBoxButtons.AddChild(margin1);
             hBoxButtons.AddChild(ejectFive);
+            hBoxButtons.AddChild(margin2);
             hBoxButtons.AddChild(ejectTen);
+            hBoxButtons.AddChild(marginFixed2);
 
             hBoxFilter.AddChild(_searchBar);
+            hBoxFilter.AddChild(marginFixed3);
             hBoxFilter.AddChild(filterButton);
 
             vBox.AddChild(hBoxFilter);
@@ -167,7 +206,7 @@ namespace Content.Client.GameObjects.Components.PipeDispenser
             _itemList.Clear();
             foreach (var item in _shownItems)
             {
-                    _itemList.AddItem(item.Name, item.Icon.Frame0());
+                    _itemList.AddItem(item.Name, item.Icon);
             }
         }
 
@@ -202,7 +241,7 @@ namespace Content.Client.GameObjects.Components.PipeDispenser
         /// <summary>
         /// Adds a new Item to the list of items inside the dispenser menu 
         /// </summary>
-        public void AddItem(string id, string name, SpriteSpecifier icon)
+        public void AddItem(string id, string name, Texture icon)
         {
             _items.Add(new Item(id, name, icon));
             Populate();
@@ -223,8 +262,8 @@ namespace Content.Client.GameObjects.Components.PipeDispenser
         {
             public string ID;
             public string Name;
-            public SpriteSpecifier Icon;
-            public Item(string id, string name, SpriteSpecifier icon)
+            public Texture Icon;
+            public Item(string id, string name, Texture icon)
             {
                 ID = id;
                 Name = name;

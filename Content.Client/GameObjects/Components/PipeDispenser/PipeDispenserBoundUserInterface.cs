@@ -1,5 +1,7 @@
 ﻿using Content.Shared.GameObjects.Components;
+using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.Components.UserInterface;
+using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.IoC;
@@ -13,6 +15,8 @@ namespace Content.Client.GameObjects.Components.PipeDispenser
 {
     public class PipeDispenserBoundUserInterface : BoundUserInterface
     {
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
+
         [ViewVariables]
         private PipeDispenserMenu _menu;
 
@@ -63,15 +67,6 @@ namespace Content.Client.GameObjects.Components.PipeDispenser
             _menu?.Dispose();
         }
 
-        private SpriteSpecifier GetPrototypeIcon(EntityPrototype prototype)
-        {
-            if (prototype.Components.TryGetValue("Icon", out var iconNode))
-                return SpriteSpecifier.FromYaml(iconNode);
-
-
-            return SpriteSpecifier.Invalid;
-        }
-
         /// <summary>
         /// Gets the name and icon from all inventory entries and puts them into the menu
         /// </summary>
@@ -83,7 +78,7 @@ namespace Content.Client.GameObjects.Components.PipeDispenser
             {
                 if (prototypeManger.TryIndex(entry.ID, out EntityPrototype prototype))
                 {
-                    var icon = GetPrototypeIcon(prototype);
+                    var icon = SpriteComponent.GetPrototypeIcon(prototype, _resourceCache);
                     var name = prototype.Name;
                     _menu.AddItem(entry.ID, name, icon);
                 }

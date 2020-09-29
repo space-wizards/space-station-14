@@ -4,9 +4,6 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Icon
-    sprite: Constructible/Power/pipe_d.rsi
-    state: "off"
   - type: Sprite
     sprite: Constructible/Power/pipe_d.rsi
     layers:
@@ -29,6 +26,12 @@
     offset: Center
   - type: PipeDispenser
     inventory:
+      - LongitudinalPipe
+      - FourwayPipe
+      - NorthwardLongitudinalVolumePump
+      - NorthwardLongitudinalPressurePump
+      - FromSouthScrubber
+      - FromSouthVent
       - DisposalPipe
       - DisposalBend
       - DisposalYJunction
