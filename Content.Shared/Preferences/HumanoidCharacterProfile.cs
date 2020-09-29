@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Shared.Roles;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Preferences
@@ -12,6 +14,7 @@ namespace Content.Shared.Preferences
         private readonly List<string> _antagPreferences;
         public static int MinimumAge = 18;
         public static int MaximumAge = 120;
+        public static int MaxNameLength = 32;
 
         private HumanoidCharacterProfile(
             string name,
@@ -144,6 +147,69 @@ namespace Content.Shared.Preferences
                 }
             }
             return new HumanoidCharacterProfile(Name, Age, Sex, Appearance, _jobPriorities, PreferenceUnavailable, list);
+        }
+
+        /// <summary>
+        ///     Makes this profile valid so there's no bad data like negative ages.
+        /// </summary>
+        public static HumanoidCharacterProfile EnsureValid(
+            HumanoidCharacterProfile profile,
+            IPrototypeManager prototypeManager)
+        {
+            var age = Math.Clamp(profile.Age, MinimumAge, MaximumAge);
+            var sex = profile.Sex switch
+            {
+                Sex.Male => Sex.Male,
+                Sex.Female => Sex.Female,
+                _ => Sex.Male // Invalid enum values.
+            };
+
+            string name;
+            if (string.IsNullOrEmpty(profile.Name))
+            {
+                name = "John Doe";
+            }
+            else if (profile.Name.Length > MaxNameLength)
+            {
+                name = profile.Name[..MaxNameLength];
+            }
+            else
+            {
+                name = profile.Name;
+            }
+
+            // TODO: Avoid Z̨͇̙͉͎̭͔̼̿͋A͚̖̞̗̞͈̓̾̀ͩͩ̔L̟ͮ̈͝G̙O͍͎̗̺̺ͫ̀̽͊̓͝ͅ tier shenanigans.
+            // And other stuff like RTL overrides and such.
+            // Probably also emojis...
+
+            name = name.Trim();
+
+            var appearance = HumanoidCharacterAppearance.EnsureValid(profile.Appearance);
+
+            var prefsUnavailableMode = profile.PreferenceUnavailable switch
+            {
+                PreferenceUnavailableMode.StayInLobby => PreferenceUnavailableMode.StayInLobby,
+                PreferenceUnavailableMode.SpawnAsOverflow => PreferenceUnavailableMode.SpawnAsOverflow,
+                _ => PreferenceUnavailableMode.StayInLobby // Invalid enum values.
+            };
+
+            var priorities = profile.JobPriorities
+                .Where(p => prototypeManager.HasIndex<JobPrototype>(p.Key) && p.Value switch
+                {
+                    JobPriority.Never => false, // Drop never since that's assumed default.
+                    JobPriority.Low => true,
+                    JobPriority.Medium => true,
+                    JobPriority.High => true,
+                    _ => false
+                })
+                .ToDictionary(p => p.Key, p => p.Value);
+
+
+            var antags = profile.AntagPreferences
+                .Where(prototypeManager.HasIndex<AntagPrototype>)
+                .ToList();
+
+            return new HumanoidCharacterProfile(name, age, sex, appearance, priorities, prefsUnavailableMode, antags);
         }
 
         public string Summary =>
