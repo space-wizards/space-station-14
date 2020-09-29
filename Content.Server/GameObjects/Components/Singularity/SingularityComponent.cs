@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Content.Server.GameObjects.Components.Sound;
+using Content.Server.GameObjects.Components.StationEvents;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
@@ -24,6 +25,7 @@ using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Map;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
+using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
@@ -38,25 +40,88 @@ namespace Content.Server.GameObjects.Components.Singularity
     [RegisterComponent]
     public class SingularityComponent : Component, ICollideBehavior
     {
+        [Dependency] private IEntityManager _entityManager;
+        [Dependency] private IMapManager _mapManager;
+        [Dependency] private IRobustRandom _random;
+
+
         public override uint? NetID => ContentNetIDs.SINGULARITY;
 
         public override string Name => "Singularity";
 
-        public int Energy = 100;
-        public int Level = 1;
+        public int Energy
+        {
+            get => _energy;
+            set
+            {
+                if (value != _energy) return;
 
-        private Random rand = new Random();
+                _energy = value;
+                if (_energy <= 0)
+                {
+                    SendNetworkMessage(new SingularitySoundMessage(false));
+
+                    _singularityController.LinearVelocity = Vector2.Zero;
+                    dyingTransition = true;
+                    _spriteComponent.LayerSetVisible(0, false);
+
+                    Timer.Spawn(7500, () => Owner.Delete());
+                    return;
+                }
+
+                Level = _energy switch
+                {
+                    var n when n >= 1500 => 6,
+                    var n when n >= 1000 => 5,
+                    var n when n >= 600 => 4,
+                    var n when n >= 300 => 3,
+                    var n when n >= 200 => 2,
+                    var n when n <  200 => 1,
+                    _ => 1
+                };
+            }
+        }
+        private int _energy = 100;
+
+        public int Level
+        {
+            get => _level;
+            set
+            {
+                if (value == _level) return;
+                if (value < 0) value = 0;
+                if (value > 6) value = 6;
+
+
+                _level = value;
+                _radiationPulseComponent.RadsPerSecond = 10 * value;
+
+                _spriteComponent.LayerSetRSI(0, "Effects/Singularity/singularity_" + _level + ".rsi");
+                _spriteComponent.LayerSetState(0, "singularity_" + _level);
+
+                (_collidableComponent.PhysicsShapes[0] as PhysShapeCircle).Radius = _level - 0.5f;
+            }
+        }
+        private int _level;
+
+        public int EnergyDrain =>
+            Level switch
+            {
+                6 => 20,
+                5 => 15,
+                4 => 10,
+                3 => 5,
+                2 => 2,
+                1 => 1,
+                _ => 0
+            };
 
         private SingularityController _singularityController;
-        private IEntityManager _entityManager;
-
         private ICollidableComponent _collidableComponent;
-
-        private IMapManager _mapManager;
-
         private SpriteComponent _spriteComponent;
+        private RadiationPulseComponent _radiationPulseComponent;
 
-        private bool transition = true;
+        private bool dyingTransition;
 
         private bool repelled = false;
 
@@ -72,113 +137,38 @@ namespace Content.Server.GameObjects.Components.Singularity
             _singularityController = _collidableComponent.EnsureController<SingularityController>();
             _singularityController.ControlledComponent = _collidableComponent;
 
-            _entityManager = IoCManager.Resolve<IEntityManager>();
-            _mapManager = IoCManager.Resolve<IMapManager>();
+            _radiationPulseComponent = Owner.GetComponent<RadiationPulseComponent>();
+            Level = 1;
         }
 
         protected override void Startup()
         {
             SendNetworkMessage(new SingularitySoundMessage(true));
-            //Timer.Spawn(5421, () => transition = false);
-            transition = false;
         }
 
         public void Update()
         {
-            if (transition)
+            if (dyingTransition)
             {
                 return;
             }
 
-            switch (Level)
-            {
-                case 6:
-                    Energy -= 20;
-                    break;
-                case 5:
-                    Energy -= 15;
-                    break;
-                case 4:
-                    Energy -= 10;
-                    break;
-                case 3:
-                    Energy -= 5;
-                    break;
-                case 2:
-                    Energy -= 2;
-                    break;
-                case 1:
-                    Energy -= 1;
-                    break;
-            }
-
-            Energy--;
+            Energy -= EnergyDrain;
 
             if (!repelled)
             {
-                _singularityController.Push(new Vector2((rand.Next(-10, 10)), rand.Next(-10, 10)).Normalized, 5f);
+                _singularityController.Push(new Vector2((_random.Next(-10, 10)), _random.Next(-10, 10)).Normalized, 2);
             }
-
-            foreach (var entity in _entityManager.GetEntitiesInRange(Owner.Transform.GridPosition, 15))
-            {
-                if (entity.TryGetComponent<RadiationPanelComponent>(out var radPanel))
-                {
-                    radPanel.Radiation += Level * 100;
-                }
-            }
-
-            UpdateLevel();
         }
 
         public void TileUpdate()
         {
-            IMapGrid mapGrid = _mapManager.GetGrid(Owner.Transform.GridID);
-            foreach (TileRef tile in mapGrid.GetTilesIntersecting(_collidableComponent.WorldAABB))
+            var mapGrid = _mapManager.GetGrid(Owner.Transform.GridID);
+            foreach (var tile in mapGrid.GetTilesIntersecting(_collidableComponent.WorldAABB))
             {
                 mapGrid.SetTile(tile.GridIndices, Tile.Empty);
+                Energy++;
             }
-        }
-
-        public void UpdateLevel()
-        {
-            int prevLevel = Level;
-            float radius;
-
-            if (Energy <= 0)
-            {
-
-                SendNetworkMessage(new SingularitySoundMessage(false));
-
-                _singularityController.LinearVelocity = Vector2.Zero;
-                transition = true;
-                _spriteComponent.LayerSetVisible(0, false);
-
-                Timer.Spawn(7500, () => Owner.Delete());
-
-            }
-            else
-            {
-                Level = Energy switch
-                {
-                    var n when n >= 1500 => 6,
-                    var n when n >= 1000 => 5,
-                    var n when n >= 600 => 4,
-                    var n when n >= 300 => 3,
-                    var n when n >= 200 => 2,
-                    var n when n <  200 => 1
-                };
-            }
-
-            radius = Level - 0.5f;
-
-            if (Level != prevLevel)
-            {
-                _spriteComponent.LayerSetRSI(0, "Effects/Singularity/singularity_" + Level.ToString() + ".rsi");
-                _spriteComponent.LayerSetState(0, "singularity_" + Level.ToString());
-
-                (_collidableComponent.PhysicsShapes[0] as PhysShapeCircle).Radius = radius;
-            }
-
         }
 
         void ICollideBehavior.CollideWith(IEntity entity)
@@ -188,17 +178,13 @@ namespace Content.Server.GameObjects.Components.Singularity
                 return;
             }
 
-            if (entity.TryGetComponent<ContainmentFieldGeneratorComponent>(out var component) && component.Power >= 1)
+            if (entity.HasComponent<ContainmentFieldComponent>() || (entity.TryGetComponent<ContainmentFieldGeneratorComponent>(out var component) && component.Power >= 1))
             {
                 return;
-            }
+                //repelled = true;
+                //Timer.Spawn(50, () => repelled = false);
 
-            if (entity.HasComponent<ContainmentFieldComponent>())
-            {
-                repelled = true;
-                Timer.Spawn(50, () => repelled = false);
-
-                if (entity.Transform.WorldRotation.Degrees == -90f ||
+                /*if (entity.Transform.WorldRotation.Degrees == -90f ||
                     entity.Transform.WorldRotation.Degrees == 90f)
                 {
                     Vector2 normal = new Vector2(0.05f * Math.Sign(Owner.Transform.WorldPosition.X - entity.Transform.WorldPosition.X), 0);
@@ -232,16 +218,13 @@ namespace Content.Server.GameObjects.Components.Singularity
                     {
                         Owner.Transform.WorldPosition += normal;
                     }
-                }
-
-                return;
+                }*/
             }
 
-            if (!ContainerHelpers.IsInContainer(entity))
-            {
-                Energy++;
-                entity.Delete();
-            }
+            if (ContainerHelpers.IsInContainer(entity)) return;
+
+            entity.Delete();
+            Energy++;
         }
     }
 }

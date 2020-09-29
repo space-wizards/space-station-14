@@ -18,6 +18,11 @@
   - type: Physics
     mass: 5
   - type: Singularity
+  - type: RadiationPulse
+    range: 15
+    decay: false
+    #draw: false
+
   - type: Sprite
     sprite: Effects/Singularity/singularity_1.rsi
     state: singularity_1
