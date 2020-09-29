@@ -73,14 +73,7 @@ namespace Content.Server.GameObjects.Components.Recycling
         {
             prototype = null;
 
-            //var constructionSystem = EntitySystem.Get<ConstructionSystem>();
-            var entityId = entity.MetaData.EntityPrototype?.ID;
-
-            if (entityId == null/* ||
-                !constructionSystem.CraftRecipes.TryGetValue(entityId, out prototype)*/)
-            {
-                return false;
-            }
+            // TODO CONSTRUCTION fix this
 
             return Powered;
         }
@@ -105,17 +98,7 @@ namespace Content.Server.GameObjects.Components.Recycling
                 return;
             }
 
-            //var constructionSystem = EntitySystem.Get<ConstructionSystem>();
-            var recyclerPosition = Owner.Transform.MapPosition;
-            /*foreach (var stage in prototype.Stages)
-            {
-                if (!(stage.Forward is ConstructionStepMaterial step))
-                {
-                    continue;
-                }
-
-                constructionSystem.SpawnIngredient(recyclerPosition, step);
-            }*/
+            // TODO CONSTRUCTION fix this
 
             entity.Delete();
         }

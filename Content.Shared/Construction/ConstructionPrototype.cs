@@ -25,7 +25,20 @@ namespace Content.Shared.Construction
         /// </summary>
         public string Description { get; private set; }
 
+        /// <summary>
+        ///     The <see cref="ConstructionGraphPrototype"/> this construction will be using.
+        /// </summary>
         public string Graph { get; private set; }
+
+        /// <summary>
+        ///     The target <see cref="ConstructionGraphNode"/> this construction will guide the user to.
+        /// </summary>
+        public string TargetNode { get; private set; }
+
+        /// <summary>
+        ///     The starting <see cref="ConstructionGraphNode"/> this construction will start at.
+        /// </summary>
+        public string StartNode { get; private set; }
 
         /// <summary>
         ///     Texture path inside the construction GUI.
@@ -60,6 +73,8 @@ namespace Content.Shared.Construction
 
             ser.DataField(this, x => x.ID, "id", string.Empty);
             ser.DataField(this, x => x.Graph, "graph", string.Empty);
+            ser.DataField(this, x => x.TargetNode, "targetNode", string.Empty);
+            ser.DataField(this, x => x.StartNode, "startNode", string.Empty);
             ser.DataField(this, x => x.Description, "description", string.Empty);
             ser.DataField(this, x => x.Icon, "icon", SpriteSpecifier.Invalid);
             ser.DataField(this, x => x.Type, "objectType", ConstructionType.Structure);

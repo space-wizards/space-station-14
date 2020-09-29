@@ -9,6 +9,7 @@ using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Mono.Cecil;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -39,7 +40,7 @@ namespace Content.Server.GameObjects.Components.Construction
         private HashSet<string> _containers = new HashSet<string>();
         private List<List<ConstructionGraphStep>>? _edgeNestedStepProgress = null;
 
-        public ConstructionGraph Graph { get; private set; } = null!;
+        public ConstructionGraphPrototype GraphPrototype { get; private set; } = null!;
         public ConstructionGraphNode Node { get; private set; } = null!;
         public ConstructionGraphEdge? Edge { get; private set; } = null;
         public int EdgeStep { get; private set; } = 0;
@@ -82,14 +83,14 @@ namespace Content.Server.GameObjects.Components.Construction
                         break;
 
                     case NestedConstructionGraphStep nestedStep:
-                        throw new IndexOutOfRangeException($"Nested construction step not supported as the first step in an edge! Graph: {Graph.ID} Node: {Node.Name} Edge: {edge.Target}");
+                        throw new IndexOutOfRangeException($"Nested construction step not supported as the first step in an edge! Graph: {GraphPrototype.ID} Node: {Node.Name} Edge: {edge.Target}");
                 }
             }
 
             return false;
         }
 
-        private async Task<bool> HandleStep(InteractUsingEventArgs eventArgs, ConstructionGraphEdge? edge = null, ConstructionGraphStep? step = null)
+        private async Task<bool> HandleStep(InteractUsingEventArgs eventArgs, ConstructionGraphEdge? edge = null, ConstructionGraphStep? step = null, bool nested = false)
         {
             edge ??= Edge;
             step ??= edge?.Steps[EdgeStep];
@@ -108,7 +109,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
             var doAfterArgs = new DoAfterEventArgs(eventArgs.User, step.DoAfter, default, eventArgs.Target)
             {
-                BreakOnDamage = false, // TODO: Change this to true once breathing is fixed.
+                BreakOnDamage = false,
                 BreakOnStun = true,
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
@@ -176,10 +177,29 @@ namespace Content.Server.GameObjects.Components.Construction
                     break;
 
                 case NestedConstructionGraphStep nestedStep:
-                    // TODO CONSTRUCTION
+                    if(_edgeNestedStepProgress == null)
+                        _edgeNestedStepProgress = new List<List<ConstructionGraphStep>>(nestedStep.Steps);
+
+                    foreach (var list in _edgeNestedStepProgress.ToArray())
+                    {
+                        if (list.Count == 0)
+                            _edgeNestedStepProgress.Remove(list);
+
+                        if (!await HandleStep(eventArgs, edge, list[0], true)) continue;
+                        list.RemoveAt(0);
+
+                        // We check again...
+                        if (list.Count == 0)
+                            _edgeNestedStepProgress.Remove(list);
+                    }
+
+                    if (_edgeNestedStepProgress.Count == 0)
+                        handled = true;
+
                     break;
             }
 
+            if (nested && handled) return true;
             if (!handled) return false;
 
             EdgeStep++;
@@ -205,7 +225,8 @@ namespace Content.Server.GameObjects.Components.Construction
                 if (Owner.Deleted) return true;
             }
 
-            Node = Graph.Nodes[edge.Target];
+            Edge = null;
+            Node = GraphPrototype.Nodes[edge.Target];
 
             await HandleEntityChange(Node);
 
@@ -214,7 +235,9 @@ namespace Content.Server.GameObjects.Components.Construction
 
         private async Task<bool> HandleEdge(InteractUsingEventArgs eventArgs)
         {
-            return await Task.FromResult(false);
+            if (Edge == null) return false;
+
+            return await HandleStep(eventArgs, Edge, Edge.Steps[EdgeStep]);
         }
 
         private async Task<bool> HandleEntityChange(ConstructionGraphNode node)
@@ -227,8 +250,8 @@ namespace Content.Server.GameObjects.Components.Construction
 
             if (entity.TryGetComponent(out ConstructionComponent? construction))
             {
-                if(construction.Graph != Graph)
-                    throw new Exception($"New entity {node.Entity}'s graph {construction.Graph.ID} isn't the same as our graph {Graph.ID} on node {node.Name}!");
+                if(construction.GraphPrototype != GraphPrototype)
+                    throw new Exception($"New entity {node.Entity}'s graph {construction.GraphPrototype.ID} isn't the same as our graph {GraphPrototype.ID} on node {node.Name}!");
 
                 construction.Node = node;
             }
@@ -253,6 +276,11 @@ namespace Content.Server.GameObjects.Components.Construction
             return true;
         }
 
+        public bool AddContainer(string id)
+        {
+            return _containers.Add(id);
+        }
+
         public override void Initialize()
         {
             base.Initialize();
@@ -263,11 +291,11 @@ namespace Content.Server.GameObjects.Components.Construction
                 return;
             }
 
-            if (_prototypeManager.TryIndex(_graphIdentifier, out ConstructionGraph graph))
+            if (_prototypeManager.TryIndex(_graphIdentifier, out ConstructionGraphPrototype graph))
             {
-                Graph = graph;
+                GraphPrototype = graph;
 
-                if (Graph.Nodes.TryGetValue(_startingNodeIdentifier, out var node))
+                if (GraphPrototype.Nodes.TryGetValue(_startingNodeIdentifier, out var node))
                 {
                     Node = node;
                 }

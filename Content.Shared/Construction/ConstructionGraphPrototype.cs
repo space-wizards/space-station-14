@@ -9,7 +9,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Shared.Construction
 {
     [Prototype("constructionGraph")]
-    public class ConstructionGraph : IPrototype, IIndexedPrototype
+    public class ConstructionGraphPrototype : IPrototype, IIndexedPrototype
     {
         private Dictionary<string, ConstructionGraphNode> _nodes = new Dictionary<string, ConstructionGraphNode>();
         public string ID { get; private set; }
@@ -32,6 +32,21 @@ namespace Content.Shared.Construction
                 node.LoadFrom(childMapping);
                 _nodes[node.Name] = node;
             }
+        }
+
+        private class NodePathfinding
+        {
+            public ConstructionGraphNode Node { get; }
+
+            public NodePathfinding(ConstructionGraphNode node)
+            {
+                Node = node;
+            }
+        }
+
+        public void ShortestPath(string start, string finish)
+        {
+            // TODO pathfinding
         }
     }
 }

@@ -33,8 +33,17 @@
           - !type:EntityAnchored
             anchored: false
           steps:
-            - material: Metal
-              doAfter: 2
+            - tool: Prying
+              doAfter: 1
+            - steps:
+              - - material: Metal
+                  doAfter: 2
+                - tool: Screwing
+                  doAfter: 1
+              - - material: Glass
+                  doAfter: 2
+                - tool: Screwing
+                  doAfter: 1
 
         - to: fakeReinforcedWall
           conditions:
@@ -126,24 +135,16 @@
 - type: construction
   name: wall
   id: wall
+  graph: girder
+  startNode: start
+  targetNode: wall
   category: Structures
   description: Keeps the air in and the greytide out.
   icon:
     sprite: Constructible/Structures/Walls/solid.rsi
     state: full
   objectType: Structure
-  result: solid_wall
   placementMode: SnapgridCenter
-  steps:
-  - material: Metal
-    amount: 2
-    icon: Constructible/Structures/Walls/wall_girder.png
-    reverse:
-      tool: Anchoring
-  - material: Metal
-    amount: 2
-    reverse:
-      tool: Anchoring
 
 - type: construction
   name: table

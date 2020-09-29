@@ -13,6 +13,8 @@ namespace Content.Server.Construction.Completions
 
         public async Task Completed(IEntity entity)
         {
+            if (entity.Deleted) return;
+
             entity.Delete();
         }
     }

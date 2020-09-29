@@ -20,6 +20,8 @@ namespace Content.Server.Construction.Completions
 
         public async Task Completed(IEntity entity)
         {
+            if (entity.Deleted) return;
+
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var coordinates = entity.Transform.Coordinates;
 

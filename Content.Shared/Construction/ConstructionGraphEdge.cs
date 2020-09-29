@@ -41,37 +41,51 @@ namespace Content.Shared.Construction
             foreach (var yamlNode in stepsMapping)
             {
                 var stepMapping = (YamlMappingNode) yamlNode;
-                var stepSerializer = YamlObjectSerializer.NewReader(stepMapping);
-
-                if (stepMapping.TryGetNode("material", out var _))
-                {
-                    var material = new MaterialConstructionGraphStep();
-                    material.ExposeData(stepSerializer);
-                    _steps.Add(material);
-                }
-                else if (stepMapping.TryGetNode("tool", out var _))
-                {
-                    var tool = new ToolConstructionGraphStep();
-                    tool.ExposeData(stepSerializer);
-                    _steps.Add(tool);
-                }
-                else if (stepMapping.TryGetNode("prototype", out var _))
-                {
-                    var prototype = new PrototypeConstructionGraphStep();
-                    prototype.ExposeData(stepSerializer);
-                    _steps.Add(prototype);
-                }
-                else if (stepMapping.TryGetNode("component", out var _))
-                {
-                    var component = new ComponentConstructionGraphStep();
-                    component.ExposeData(stepSerializer);
-                    _steps.Add(component);
-                }
-                else
-                {
-                    // TODO CONSTRUCTION NESTED STEPS
-                }
+                _steps.Add(LoadStep(stepMapping));
             }
+        }
+
+        public static ConstructionGraphStep LoadStep(YamlMappingNode mapping)
+        {
+            var stepSerializer = YamlObjectSerializer.NewReader(mapping);
+
+            if (mapping.TryGetNode("material", out _))
+            {
+                var material = new MaterialConstructionGraphStep();
+                material.ExposeData(stepSerializer);
+                return material;
+            }
+
+            if (mapping.TryGetNode("tool", out _))
+            {
+                var tool = new ToolConstructionGraphStep();
+                tool.ExposeData(stepSerializer);
+                return tool;
+            }
+
+            if (mapping.TryGetNode("prototype", out _))
+            {
+                var prototype = new PrototypeConstructionGraphStep();
+                prototype.ExposeData(stepSerializer);
+                return prototype;
+            }
+
+            if (mapping.TryGetNode("component", out _))
+            {
+                var component = new ComponentConstructionGraphStep();
+                component.ExposeData(stepSerializer);
+                return component;
+            }
+
+            if(mapping.TryGetNode("steps", out _))
+            {
+                var nested = new NestedConstructionGraphStep();
+                nested.ExposeData(stepSerializer);
+                nested.LoadFrom(mapping);
+                return nested;
+            }
+
+            throw new ArgumentException("Tried to convert invalid YAML node mapping to ConstructionGraphStep!");
         }
     }
 }
