@@ -19,8 +19,8 @@
   - type: SnapGrid
     offset: Center
   - type: Sprite
-    texture: Constructible/Power/wiredmachine.png
-
+    sprite: Constructible/Power/power.rsi
+    state: wiredmachine
   - type: NodeContainer
     nodes:
     - !type:AdjacentNode
@@ -48,8 +48,8 @@
   - type: SnapGrid
     offset: Center
   - type: Sprite
-    texture: Constructible/Power/provider.png
-
+    sprite: Constructible/Power/power.rsi
+    state: provider
   - type: Battery
   - type: NodeContainer
     nodes:
@@ -75,8 +75,8 @@
   - type: SnapGrid
     offset: Center
   - type: Sprite
-    texture: Constructible/Power/provider.png
-
+    sprite: Constructible/Power/power.rsi
+    state: provider
   - type: Battery
   - type: NodeContainer
     nodes:
@@ -117,7 +117,7 @@
   - type: SnapGrid
     offset: Center
   - type: Sprite
-    texture: Constructible/Power/wirelessmachine.png
-
+    sprite: Constructible/Power/power.rsi
+    state: wirelessmachine
   - type: PowerReceiver
   - type: Anchorable

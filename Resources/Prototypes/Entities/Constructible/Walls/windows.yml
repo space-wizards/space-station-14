@@ -15,6 +15,9 @@
     netsync: false
     drawdepth: WallTops
     sprite: Constructible/Structures/Windows/window.rsi
+  - type: Icon
+    sprite: Constructible/Structures/Windows/window.rsi
+    state: full
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -41,6 +44,8 @@
   - type: Sprite
     drawdepth: WallTops
     sprite: Constructible/Structures/Windows/reinforced_window.rsi
+  - type: Icon
+    sprite: Constructible/Structures/Windows/reinforced_window.rsi
   - type: Destructible
     deadThreshold: 75
     resistances: metallicResistances
@@ -54,6 +59,8 @@
   components:
   - type: Sprite
     drawdepth: WallTops
+    sprite: Constructible/Structures/Windows/phoron_window.rsi
+  - type: Icon
     sprite: Constructible/Structures/Windows/phoron_window.rsi
   - type: Destructible
     deadThreshold: 100

@@ -4,8 +4,14 @@
   description: An industrial grade chemical manipulator with pill and bottle production included.
   components:
   - type: Sprite
-    texture: Constructible/Power/mixer.rsi/mixer_loaded.png
-
+    sprite: Constructible/Power/mixer.rsi
+    layers:
+    - state: mixer_empty
+    - state: mixer_screens
+      shader: unshaded
+  - type: Icon
+    sprite: Constructible/Power/mixer.rsi
+    state: mixer_loaded
   - type: ChemMaster
   - type: PowerReceiver
   - type: Clickable
@@ -26,6 +32,50 @@
     anchored: true
   - type: SnapGrid
     offset: Center
+  - type: Destructible
+    deadThreshold: 50
+    spawnOnDestroy: chem_master_broken
+  - type: UserInterface
+    interfaces:
+    - key: enum.ChemMasterUiKey.Key
+      type: ChemMasterBoundUserInterface
+  - type: Pullable
+
+- type: entity
+  id: chem_master_broken
+  name: ChemMaster 4000 [Broken]
+  description: A broken industrial grade chemical manipulator.
+  components:
+  - type: Sprite
+    sprite: Constructible/Power/mixer.rsi
+    layers:
+    - state: mixer_empty
+    - state: mixer_screen_broken
+      shader: unshaded
+  - type: Icon
+    sprite: Constructible/Power/mixer.rsi
+    state: mixer_broken
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Anchorable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.25,0.4,0.25"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+    IsScrapingFloor: true
+  - type: Physics
+    mass: 25
+    anchored: true
+  - type: SnapGrid
+    offset: Center
+  - type: Destructible
+    deadThreshold: 25
+    spawnOnDestroy: MetalSheet1
   - type: UserInterface
     interfaces:
     - key: enum.ChemMasterUiKey.Key

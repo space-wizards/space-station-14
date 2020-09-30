@@ -23,9 +23,6 @@
       map: ["enum.DoorVisualLayers.BaseBolted"]
     - state: panel_open
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Icon
-    sprite: Constructible/Structures/Doors/airlock_basic.rsi
-    state: closed
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -85,4 +82,3 @@
   components:
   - type: Sprite
     sprite: Constructible/Structures/Doors/airlock_maint.rsi
-
