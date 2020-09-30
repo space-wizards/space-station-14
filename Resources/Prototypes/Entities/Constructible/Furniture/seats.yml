@@ -1,6 +1,7 @@
 - type: entity
   name: chair
   id: SeatBase
+  abstract: true
   description: You sit in this. Either by will or force.
   components:
   - type: Clickable
