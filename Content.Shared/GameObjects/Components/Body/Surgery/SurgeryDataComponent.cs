@@ -94,7 +94,5 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
             step(container, surgeon, performer);
             return true;
         }
-
-        public virtual void ExposeData(ObjectSerializer serializer) { }
     }
 }

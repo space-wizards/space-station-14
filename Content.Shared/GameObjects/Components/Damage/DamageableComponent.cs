@@ -111,7 +111,6 @@ namespace Content.Shared.GameObjects.Components.Damage
         {
             base.ExposeData(serializer);
 
-            // TODO BODY Refactor to dictionary of states to values
             serializer.DataReadWriteFunction(
                 "criticalThreshold",
                 -1,
