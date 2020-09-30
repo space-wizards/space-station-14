@@ -10,6 +10,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 
+#nullable enable
 namespace Content.Client.GameObjects.Components.Observer
 {
     [RegisterComponent]
@@ -21,7 +22,7 @@ namespace Content.Client.GameObjects.Components.Observer
         public List<string> WarpName = new List<string>();
         public Dictionary<EntityUid,string> PlayerName = new Dictionary<EntityUid,string>();
 
-        private GhostGui _gui;
+        private GhostGui? _gui ;
 
         [ViewVariables(VVAccess.ReadOnly)] public bool CanReturnToBody { get; private set; } = true;
 
@@ -45,7 +46,7 @@ namespace Content.Client.GameObjects.Components.Observer
         {
             foreach (var ghost in _componentManager.GetAllComponents(typeof(GhostComponent)))
             {
-                if (ghost.Owner.TryGetComponent(out SpriteComponent component))
+                if (ghost.Owner.TryGetComponent(out SpriteComponent? component))
                     component.Visible = visibility;
             }
         }
@@ -54,9 +55,9 @@ namespace Content.Client.GameObjects.Components.Observer
         {
             base.Initialize();
 
-            if (Owner.TryGetComponent(out SpriteComponent component))
+            if (Owner.TryGetComponent(out SpriteComponent? component))
                 component.Visible =
-                    _playerManager.LocalPlayer.ControlledEntity?.HasComponent<GhostComponent>() ?? false;
+                    _playerManager.LocalPlayer?.ControlledEntity?.HasComponent<GhostComponent>() ?? false;
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent component)
@@ -82,7 +83,7 @@ namespace Content.Client.GameObjects.Components.Observer
                     break;
 
                 case PlayerDetachedMsg _:
-                    _gui.Parent?.RemoveChild(_gui);
+                    _gui!.Parent?.RemoveChild(_gui);
                     SetGhostVisibility(false);
                     _isAttached = false;
                     break;
@@ -91,7 +92,7 @@ namespace Content.Client.GameObjects.Components.Observer
 
         public void SendReturnToBodyMessage() => SendNetworkMessage(new ReturnToBodyComponentMessage());
 
-        public void SendGhostWarpRequestMessage(EntityUid target = default, string warpName = default) => SendNetworkMessage(new GhostWarpRequestMessage(target, warpName));
+        public void SendGhostWarpRequestMessage(EntityUid target = default, string warpName = default!) => SendNetworkMessage(new GhostWarpRequestMessage(target, warpName));
 
         public void GhostRequestWarpPoint() => SendNetworkMessage(new GhostRequestWarpPointData());
 
@@ -105,7 +106,7 @@ namespace Content.Client.GameObjects.Components.Observer
 
             CanReturnToBody = state.CanReturnToBody;
 
-            if (Owner == _playerManager.LocalPlayer.ControlledEntity)
+            if (Owner == _playerManager.LocalPlayer!.ControlledEntity)
             {
                 _gui?.Update();
             }

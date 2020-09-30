@@ -16,6 +16,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 
+#nullable enable
 namespace Content.Server.GameObjects.Components.Observer
 {
     [RegisterComponent]
@@ -62,24 +63,26 @@ namespace Content.Server.GameObjects.Components.Observer
         }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel,
-            ICommonSession session = null)
+            ICommonSession session = null!)
         {
             base.HandleNetworkMessage(message, netChannel, session);
 
             switch (message)
                 {
                     case ReturnToBodyComponentMessage reenter:
-                        if (!Owner.TryGetComponent(out IActorComponent actor) || !CanReturnToBody) break;
+                        if (!Owner.TryGetComponent(out IActorComponent? actor) || !CanReturnToBody) break;
                         if (netChannel == null || netChannel == actor.playerSession.ConnectedClient)
                         {
-                            actor.playerSession.ContentData().Mind.UnVisit();
+                            var o = actor.playerSession.ContentData()!.Mind;
+                            if (o != null)
+                                o.UnVisit();
                             Owner.Delete();
                         }
                         break;
 
                     case ReturnToCloneComponentMessage reenter:
 
-                        if (Owner.TryGetComponent(out VisitingMindComponent mind))
+                        if (Owner.TryGetComponent(out VisitingMindComponent? mind))
                         {
                             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new GhostReturnMessage(mind.Mind));
                         }
@@ -92,7 +95,7 @@ namespace Content.Server.GameObjects.Components.Observer
                             {
                                 if (player.AttachedEntity != null && warp.PlayerTarget == player.AttachedEntity.Uid)
                                 {
-                                    session.AttachedEntity.Transform.Coordinates =
+                                    session.AttachedEntity!.Transform.Coordinates =
                                         player.AttachedEntity.Transform.Coordinates;
                                 }
                             }
@@ -103,7 +106,7 @@ namespace Content.Server.GameObjects.Components.Observer
                             {
                                 if (warp.WarpName == warpPoint.Location)
                                 {
-                                    session.AttachedEntity.Transform.Coordinates = warpPoint.Owner.Transform.Coordinates ;
+                                    session.AttachedEntity!.Transform.Coordinates = warpPoint.Owner.Transform.Coordinates ;
                                 }
                             }
                         }
