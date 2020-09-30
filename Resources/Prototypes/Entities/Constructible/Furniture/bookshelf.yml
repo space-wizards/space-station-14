@@ -1,0 +1,71 @@
+- type: entity
+  id: BookshelfBase
+  name: "bookshelf"
+  description: Mostly filled with erotica.
+  abstract: true
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Constructible/Misc/bookshelf.rsi
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Destructible
+    deadThreshold: 30
+    destroySound: /Audio/Effects/woodhit.ogg
+    spawnOnDestroy: WoodPlank
+    resistances: metallicResistances
+  - type: Occluder
+    sizeX: 32
+    sizeY: 32
+
+- type: entity
+  id: Bookshelf0
+  parent: BookshelfBase
+  components:
+  - type: Sprite
+    state: book-0
+
+- type: entity
+  id: Bookshelf1
+  parent: BookshelfBase
+  components:
+  - type: Sprite
+    state: book-1
+
+- type: entity
+  id: Bookshelf2
+  parent: BookshelfBase
+  components:
+  - type: Sprite
+    state: book-2
+
+- type: entity
+  id: Bookshelf3
+  parent: BookshelfBase
+  components:
+  - type: Sprite
+    state: book-3
+
+- type: entity
+  id: Bookshelf4
+  parent: BookshelfBase
+  components:
+  - type: Sprite
+    state: book-4
+
+- type: entity
+  id: Bookshelf5
+  parent: BookshelfBase
+  components:
+  - type: Sprite
+    state: book-5

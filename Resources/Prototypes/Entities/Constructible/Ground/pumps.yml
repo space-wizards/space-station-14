@@ -9,8 +9,10 @@
   - type: Collidable
   - type: SnapGrid
     offset: Center
-
   - type: Sprite
+  - type: Icon
+    sprite: Constructible/Atmos/pressurepump.rsi
+    state: pumpEnabledSouth2North2
   - type: Appearance
     visuals:
     - type: PipeVisualizer

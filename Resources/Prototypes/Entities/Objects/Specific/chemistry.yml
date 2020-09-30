@@ -5,8 +5,8 @@
   id: Beaker
   components:
   - type: Sprite
-    texture: Objects/Specific/Chemistry/beakers.rsi/beaker.png
-
+    sprite: Objects/Specific/Chemistry/beakers.rsi
+    state: beaker
   - type: Item
     sprite: Objects/Specific/Chemistry/beakers.rsi
     HeldPrefix: beaker
@@ -25,8 +25,8 @@
   id: LargeBeaker
   components:
   - type: Sprite
-    texture: Objects/Specific/Chemistry/beakers.rsi/beakerlarge.png
-
+    sprite: Objects/Specific/Chemistry/beakers.rsi
+    state: beakerlarge
   - type: Item
     sprite: Objects/Specific/Chemistry/beakers.rsi
     HeldPrefix: beaker
@@ -45,8 +45,8 @@
   id: Dropper
   components:
   - type: Sprite
-    texture: Objects/Specific/Chemistry/dropper.rsi/dropper.png
-
+    sprite: Objects/Specific/Chemistry/dropper.rsi
+    state: dropper
   - type: SolutionContainer
     fillingState: dropper
     fillingSteps: 2
@@ -63,8 +63,8 @@
   id: Syringe
   components:
   - type: Sprite
-    texture: Objects/Specific/Chemistry/syringe.rsi/0.png
-
+    sprite: Objects/Specific/Chemistry/syringe.rsi
+    state: 0
   - type: SolutionContainer
     fillingState: syringe
     fillingSteps: 5
@@ -79,16 +79,16 @@
   parent: BaseItem
   id: bottle
   components:
-    - type: Drink
-    - type: SolutionContainer
-      maxVol: 30
-      caps: AddTo, RemoveFrom
-    - type: Pourable
-      transferAmount: 5
-    - type: Sprite
-      texture: Objects/Specific/Chemistry/bottle.rsi/bottle.png
-
-    - type: Spillable
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/bottle.rsi
+    state: bottle
+  - type: Drink
+  - type: SolutionContainer
+    maxVol: 30
+    caps: AddTo, RemoveFrom
+  - type: Pourable
+    transferAmount: 5
+  - type: Spillable
 
 - type: entity
   name: pill
@@ -96,10 +96,10 @@
   id: pill
   description: It's not a suppository.
   components:
-    - type: Pill
-    - type: SolutionContainer
-      maxVol: 50
-      caps: RemoveFrom
-    - type: Sprite
-      texture: Objects/Specific/Chemistry/pills.rsi/pill.png
-
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/pills.rsi
+    state: pill
+  - type: Pill
+  - type: SolutionContainer
+    maxVol: 50
+    caps: RemoveFrom

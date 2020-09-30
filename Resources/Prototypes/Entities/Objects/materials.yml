@@ -61,77 +61,6 @@
     count: 1
 
 - type: entity
-  abstract: true
-  parent: BaseItem
-  id: CableStack1
-  name: cable stack 1
-  suffix: Full
-  components:
-  - type: Stack
-    stacktype: enum.StackType.Cable
-  - type: Sprite
-    texture: Objects/Tools/cable_coil.png
-  - type: WirePlacer
-  - type: Clickable
-
-- type: entity
-  parent: CableStack1
-  id: HVWireStack
-  name: HV Wire Coil
-  components:
-  - type: Sprite
-    color: Orange
-  - type: WirePlacer
-    wirePrototypeID: HVWire
-    blockingWireType: HighVoltage
-
-- type: entity
-  parent: CableStack1
-  id: MVWireStack
-  name: MV Wire Coil
-  components:
-  - type: Sprite
-    color: Yellow
-  - type: WirePlacer
-    wirePrototypeID: MVWire
-    blockingWireType: MediumVoltage
-
-- type: entity
-  parent: CableStack1
-  id: ApcExtensionCableStack
-  name: Apc Extension Cable Coil
-  components:
-  - type: Sprite
-    color: Green
-  - type: WirePlacer
-    wirePrototypeID: ApcExtensionCable
-    blockingWireType: Apc
-
-- type: entity
-  parent: HVWireStack
-  id: HVWireStack1
-  suffix: 1
-  components:
-  - type: Stack
-    count: 1
-
-- type: entity
-  parent: MVWireStack
-  id: MVWireStack1
-  suffix: 1
-  components:
-  - type: Stack
-    count: 1
-
-- type: entity
-  parent: ApcExtensionCableStack
-  id: ApcExtensionCableStack1
-  suffix: 1
-  components:
-  - type: Stack
-    count: 1
-
-- type: entity
   name: gold bar
   id: GoldStack
   parent: MaterialStack
@@ -143,13 +72,17 @@
   - type: Stack
     stacktype: enum.StackType.Gold
   - type: Sprite
-    texture: Objects/Materials/goldbar_single.png
+    sprite: Objects/Materials/materials.rsi
+    state: goldbar_30
 
 - type: entity
   id: GoldStack1
   name: gold bar 1
   parent: GoldStack
   components:
+  - type: Sprite
+    sprite: Objects/Materials/materials.rsi
+    state: goldbar_10
   - type: Stack
     count: 1
 
@@ -159,7 +92,8 @@
   parent: BaseItem
   components:
   - type: Sprite
-    texture: Objects/Materials/phoron_ore.png
+    sprite: Objects/Materials/materials.rsi
+    state: phoron_ore
 
 - type: entity
   name: phoron sheet
@@ -193,4 +127,5 @@
   parent: BaseItem
   components:
   - type: Sprite
-    texture: Objects/Materials/wood.png
+    sprite: Objects/Materials/materials.rsi
+    state: wood_plank

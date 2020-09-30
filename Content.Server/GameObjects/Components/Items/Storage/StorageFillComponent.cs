@@ -55,7 +55,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 }
 
                 storage.Insert(_entityManager.SpawnEntity(storageItem.PrototypeName, Owner.Transform.Coordinates));
-                if(string.IsNullOrEmpty(storageItem.GroupId)) alreadySpawnedGroups.Add(storageItem.GroupId);
+                if (!string.IsNullOrEmpty(storageItem.GroupId)) alreadySpawnedGroups.Add(storageItem.GroupId);
             }
         }
 
