@@ -42,7 +42,7 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
         ///     Determines a handful of things - mostly whether this
         ///     <see cref="IMechanism"/> can fit into a <see cref="IBodyPart"/>.
         /// </summary>
-        // TODO: OnSizeChanged
+        // TODO BODY OnSizeChanged
         int Size { get; set; }
 
         /// <summary>

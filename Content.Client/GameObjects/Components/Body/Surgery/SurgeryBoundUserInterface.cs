@@ -6,7 +6,7 @@ using Robust.Shared.GameObjects.Components.UserInterface;
 
 namespace Content.Client.GameObjects.Components.Body.Surgery
 {
-    // TODO : Make window close if target or surgery tool gets too far away from user.
+    // TODO BODY Make window close if target or surgery tool gets too far away from user.
 
     /// <summary>
     ///     Generic client-side UI list popup that allows users to choose from an option

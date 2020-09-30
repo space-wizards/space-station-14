@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.GameObjects.Components.Body.Part;
-using Content.Shared.GameObjects.Components.Body.Part.Property.Movement;
-using Content.Shared.GameObjects.Components.Body.Part.Property.Other;
+using Content.Shared.GameObjects.Components.Body.Part.Property;
 using Content.Shared.GameObjects.Components.Body.Preset;
 using Content.Shared.GameObjects.Components.Body.Template;
 using Content.Shared.GameObjects.Components.Damage;
@@ -35,7 +34,7 @@ namespace Content.Shared.GameObjects.Components.Body
         private readonly Dictionary<string, IBodyPart> _parts = new Dictionary<string, IBodyPart>();
 
         /// <summary>
-        ///     All <see cref="IBodyPart"></see> with <see cref="LegProperty"></see>
+        ///     All <see cref="IBodyPart"></see> with <see cref="LegComponent"></see>
         ///     that are currently affecting move speed, mapped to how big that leg
         ///     they're on is.
         /// </summary>
@@ -57,17 +56,6 @@ namespace Content.Shared.GameObjects.Components.Body
         /// </summary>
         [ViewVariables]
         public IReadOnlyDictionary<string, IBodyPart> Parts => _parts;
-
-        /// <summary>
-        ///     List of all occupied slots in this body, taken from the values of
-        ///     <see cref="Parts"/>.
-        /// </summary>
-        public IEnumerable<string> OccupiedSlots => Parts.Keys;
-
-        /// <summary>
-        ///     List of all slots in this body.
-        /// </summary>
-        public IEnumerable<string> AllSlots => Slots.Keys;
 
         public IReadOnlyDictionary<string, string> PartIds => _partIds;
 
@@ -107,7 +95,7 @@ namespace Content.Shared.GameObjects.Components.Body
                 component.BodyPartAdded(argsAdded);
             }
 
-            // TODO: Sort this duplicate out
+            // TODO BODY Sort this duplicate out
             OnBodyChanged();
 
             return true;
@@ -132,7 +120,7 @@ namespace Content.Shared.GameObjects.Components.Body
             RemovePart(slotName, drop);
         }
 
-        // TODO invert this behavior with the one above
+        // TODO BODY invert this behavior with the one above
         public bool RemovePart(string slot, bool drop)
         {
             DebugTools.AssertNotNull(slot);
@@ -236,7 +224,7 @@ namespace Content.Shared.GameObjects.Components.Body
             // Call disconnect on all limbs that were hanging off this limb.
             if (TryGetSlotConnections(slotName, out var connections))
             {
-                // This loop is an unoptimized travesty. TODO: optimize to be less shit
+                // TODO BODY optimize
                 foreach (var connectionName in connections)
                 {
                     if (TryGetPart(connectionName, out var result) &&
@@ -387,7 +375,7 @@ namespace Content.Shared.GameObjects.Components.Body
             float speedSum = 0;
             foreach (var part in _activeLegs.Keys)
             {
-                if (!part.HasProperty<LegProperty>())
+                if (!part.HasProperty<LegComponent>())
                 {
                     _activeLegs.Remove(part);
                 }
@@ -395,7 +383,7 @@ namespace Content.Shared.GameObjects.Components.Body
 
             foreach (var (key, value) in _activeLegs)
             {
-                if (key.TryGetProperty(out LegProperty? leg))
+                if (key.TryGetProperty(out LegComponent? leg))
                 {
                     // Speed of a leg = base speed * (1+log1024(leg length))
                     speedSum += leg.Speed * (1 + (float) Math.Log(value, 1024.0));
@@ -427,7 +415,7 @@ namespace Content.Shared.GameObjects.Components.Body
             if (Owner.HasComponent<MovementSpeedModifierComponent>())
             {
                 _activeLegs.Clear();
-                var legParts = Parts.Values.Where(x => x.HasProperty<LegProperty>());
+                var legParts = Parts.Values.Where(x => x.HasProperty<LegComponent>());
 
                 foreach (var part in legParts)
                 {
@@ -449,7 +437,7 @@ namespace Content.Shared.GameObjects.Components.Body
         ///     If you consider a <see cref="IBody"/> a node map, then it will
         ///     look for a foot node from the given node. It can only search
         ///     through <see cref="IBodyPart"/>s with an
-        ///     <see cref="ExtensionProperty"/>.
+        ///     <see cref="ExtensionComponent"/>.
         /// </summary>
         /// <returns>
         ///     The distance to the foot if found, <see cref="float.MinValue"/>
@@ -458,9 +446,9 @@ namespace Content.Shared.GameObjects.Components.Body
         public float DistanceToNearestFoot(IBodyPart source)
         {
             if (source.PartType == BodyPartType.Foot &&
-                source.TryGetProperty<ExtensionProperty>(out var extension))
+                source.TryGetProperty<ExtensionComponent>(out var extension))
             {
-                return extension.ReachDistance;
+                return extension.Distance;
             }
 
             return LookForFootRecursion(source, new List<IBodyPart>());
@@ -468,7 +456,7 @@ namespace Content.Shared.GameObjects.Components.Body
 
         private float LookForFootRecursion(IBodyPart current, ICollection<IBodyPart> searchedParts)
         {
-            if (!current.TryGetProperty<ExtensionProperty>(out var extProperty))
+            if (!current.TryGetProperty<ExtensionComponent>(out var extProperty))
             {
                 return float.MinValue;
             }
@@ -485,7 +473,7 @@ namespace Content.Shared.GameObjects.Components.Body
                 if (connection.PartType == BodyPartType.Foot &&
                     !searchedParts.Contains(connection))
                 {
-                    return extProperty.ReachDistance;
+                    return extProperty.Distance;
                 }
             }
 
@@ -511,7 +499,7 @@ namespace Content.Shared.GameObjects.Components.Body
             // and add this ones length.
             if (distances.Count > 0)
             {
-                return distances.Min<float>() + extProperty.ReachDistance;
+                return distances.Min<float>() + extProperty.Distance;
             }
 
             return float.MinValue;
@@ -592,7 +580,7 @@ namespace Content.Shared.GameObjects.Components.Body
                 },
                 () => Slots);
 
-            // TODO
+            // TODO BODY
             serializer.DataReadWriteFunction(
                 "centerSlot",
                 null,
@@ -649,6 +637,7 @@ namespace Content.Shared.GameObjects.Components.Body
             base.Startup();
 
             // Just in case something activates at default health.
+            // TODO BODY Move this sanity check to DamageableComponent startup
             ForceHealthChangedEvent();
         }
     }

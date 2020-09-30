@@ -1,6 +1,12 @@
 - type: entity
+  id: PartHuman
+  name: "human body part"
+  abstract: true
+
+- type: entity
   id: TorsoHuman
   name: "human torso"
+  parent: PartHuman
   components:
   - type: Sprite
     netsync: false
@@ -12,12 +18,8 @@
   - type: BodyPart
     plural: "human torsos"
     partType: Torso
-    durability: 100
-    destroyThreshold: -150
     size: 14
     compatibility: Biological
-    damageContainer: biologicalDamageContainer
-    resistances: defaultResistances
     mechanisms:
     - HeartHuman
     - LungsHuman
@@ -25,10 +27,17 @@
     - LiverHuman
     - KidneysHuman
   - type: BiologicalSurgeryData
+  - type: Damageable
+    # TODO BODY DettachableDamageableComponent?
+    damageContainer: biologicalDamageContainer
+    resistances: defaultResistances
+    criticalThreshold: 100
+    deadThreshold: 150
 
 - type: entity
   id: HeadHuman
   name: "human head"
+  parent: PartHuman
   components:
   - type: Sprite
     netsync: false
@@ -40,21 +49,23 @@
   - type: BodyPart
     plural: "human heads"
     partType: Head
-    durability: 50
-    destroyThreshold: -120
     size: 7
     compatibility: Biological
-    damageContainer: biologicalDamageContainer
-    resistances: defaultResistances
     isVital: true
     mechanisms:
     - BrainHuman
     - EyesHuman
   - type: BiologicalSurgeryData
+  - type: Damageable
+    damageContainer: biologicalDamageContainer
+    resistances: defaultResistances
+    criticalThreshold: 50
+    deadThreshold: 120
 
 - type: entity
   id: LeftArmHuman
   name: "left human arm"
+  parent: PartHuman
   components:
   - type: Sprite
     netsync: false
@@ -66,21 +77,21 @@
   - type: BodyPart
     plural: "left human arms"
     partType: Arm
-    durability: 40
-    destroyThreshold: -80
     size: 5
     compatibility: Biological
+  - type: BiologicalSurgeryData
+  - type: Damageable
     damageContainer: biologicalDamageContainer
     resistances: defaultResistances
-    properties:
-    - !type:ExtensionProperty
-      active: true
-      reachDistance: 2.4
-  - type: BiologicalSurgeryData
+    criticalThreshold: 40
+    deadThreshold: 80
+  - type: Extension
+    distance: 2.4
 
 - type: entity
   id: RightArmHuman
   name: "right human arm"
+  parent: PartHuman
   components:
   - type: Sprite
     netsync: false
@@ -92,21 +103,24 @@
   - type: BodyPart
     plural: "right human arms"
     partType: Arm
-    durability: 40
-    destroyThreshold: -80
     size: 5
     compatibility: Biological
-    damageContainer: biologicalDamageContainer
-    resistances: defaultResistances
     properties:
     - !type:ExtensionProperty
       active: true
-      reachDistance: 2.4
   - type: BiologicalSurgeryData
+  - type: Damageable
+    damageContainer: biologicalDamageContainer
+    resistances: defaultResistances
+    criticalThreshold: 40
+    deadThreshold: 80
+  - type: Extension
+    distance: 2.4
 
 - type: entity
   id: LeftHandHuman
   name: "left human hand"
+  parent: PartHuman
   components:
   - type: Sprite
     netsync: false
@@ -118,20 +132,20 @@
   - type: BodyPart
     plural: "left human hands"
     partType: Hand
-    durability: 30
-    destroyThreshold: -60
     size: 3
     compatibility: Biological
+  - type: BiologicalSurgeryData
+  - type: Damageable
     damageContainer: biologicalDamageContainer
     resistances: defaultResistances
-    properties:
-    - !type:GraspProperty
-      active: true
-  - type: BiologicalSurgeryData
+    criticalThreshold: 30
+    deadThreshold: 60
+  - type: Grasp
 
 - type: entity
   id: RightHandHuman
   name: "right human hand"
+  parent: PartHuman
   components:
   - type: Sprite
     netsync: false
@@ -147,16 +161,18 @@
     destroyThreshold: -60
     size: 3
     compatibility: Biological
+  - type: BiologicalSurgeryData
+  - type: Damageable
     damageContainer: biologicalDamageContainer
     resistances: defaultResistances
-    properties:
-    - !type:GraspProperty
-      active: true
-  - type: BiologicalSurgeryData
+    criticalThreshold: 30
+    deadThreshold: 60
+  - type: Grasp
 
 - type: entity
   id: LeftLegHuman
   name: "left human leg"
+  parent: PartHuman
   components:
   - type: Sprite
     netsync: false
@@ -168,24 +184,23 @@
   - type: BodyPart
     plural: "left human legs"
     partType: Leg
-    durability: 45
-    destroyThreshold: -90
     size: 6
     compatibility: Biological
+  - type: BiologicalSurgeryData
+  - type: Damageable
     damageContainer: biologicalDamageContainer
     resistances: defaultResistances
-    properties:
-    - !type:ExtensionProperty
-      active: true
-      reachDistance: 3.0
-    - !type:LegProperty
-      active: true
-      speed: 2.6
-  - type: BiologicalSurgeryData
+    criticalThreshold: 45
+    deadThreshold: 90
+  - type: Leg
+    speed: 2.6
+  - type: Extension
+    distance: 3.0
 
 - type: entity
   id: RightLegHuman
   name: "right human leg"
+  parent: PartHuman
   components:
   - type: Sprite
     netsync: false
@@ -201,20 +216,21 @@
     destroyThreshold: -90
     size: 6
     compatibility: Biological
+  - type: BiologicalSurgeryData
+  - type: Damageable
     damageContainer: biologicalDamageContainer
     resistances: defaultResistances
-    properties:
-    - !type:ExtensionProperty
-      active: true
-      reachDistance: 3.0
-    - !type:LegProperty
-      active: true
-      speed: 2.6
-  - type: BiologicalSurgeryData
+    criticalThreshold: 45
+    deadThreshold: 90
+  - type: Leg
+    speed: 2.6
+  - type: Extension
+    distance: 3.0
 
 - type: entity
   id: LeftFootHuman
   name: "left human foot"
+  parent: PartHuman
   components:
   - type: Sprite
     netsync: false
@@ -226,20 +242,19 @@
   - type: BodyPart
     plural: "left human feet"
     partType: Foot
-    durability: 30
-    destroyThreshold: -60
     size: 2
     compatibility: Biological
+  - type: BiologicalSurgeryData
+  - type: Damageable
     damageContainer: biologicalDamageContainer
     resistances: defaultResistances
-    properties:
-    - !type:FootProperty
-      active: true
-  - type: BiologicalSurgeryData
+    criticalThreshold: 30
+    deadThreshold: 60
 
 - type: entity
   id: RightFootHuman
   name: "right human foot"
+  parent: PartHuman
   components:
   - type: Sprite
     netsync: false
@@ -251,13 +266,11 @@
   - type: BodyPart
     plural: "right human feet"
     partType: Foot
-    durability: 30
-    destroyThreshold: -60
     size: 2
     compatibility: Biological
+  - type: BiologicalSurgeryData
+  - type: Damageable
     damageContainer: biologicalDamageContainer
     resistances: defaultResistances
-    properties:
-    - !type:FootProperty
-      active: true
-  - type: BiologicalSurgeryData
+    criticalThreshold: 30
+    deadThreshold: 60

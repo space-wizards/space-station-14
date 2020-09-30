@@ -13,14 +13,14 @@ namespace Content.Shared.GameObjects.Components.Body.Part
 
     public class BodyPartAddedEventArgs : EventArgs
     {
-        public BodyPartAddedEventArgs(IBodyPart part, string slotName)
+        public BodyPartAddedEventArgs(IBodyPart part, string slot)
         {
             Part = part;
-            SlotName = slotName;
+            Slot = slot;
         }
 
         public IBodyPart Part { get; }
 
-        public string SlotName { get; }
+        public string Slot { get; }
     }
 }

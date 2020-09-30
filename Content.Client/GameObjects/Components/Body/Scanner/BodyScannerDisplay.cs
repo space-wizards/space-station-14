@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Body.Part;
+using Content.Shared.GameObjects.Components.Damage;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Interfaces.GameObjects;
@@ -18,7 +19,7 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
         private IEntity? _currentEntity;
         private IBodyPart? _currentBodyPart;
 
-        private IBody? CurrentBody => _currentEntity?.GetBodyShared();
+        private IBody? CurrentBody => _currentEntity?.GetBody();
 
         public BodyScannerDisplay(BodyScannerBoundUserInterface owner)
         {
@@ -142,7 +143,13 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
         private void UpdateBodyPartBox(IBodyPart part, string slotName)
         {
             BodyPartLabel.Text = $"{Loc.GetString(slotName)}: {Loc.GetString(part.Owner.Name)}";
-            BodyPartHealth.Text = $"{part.CurrentDurability}/{part.MaxDurability}";
+
+            // TODO BODY Make dead not be the destroy threshold for a body part
+            if (part.Owner.TryGetComponent(out IDamageableComponent? damageable) &&
+                damageable.TryHealth(DamageState.Critical, out var health))
+            {
+                BodyPartHealth.Text = $"{health.current} / {health.max}";
+            }
 
             MechanismList.Clear();
 

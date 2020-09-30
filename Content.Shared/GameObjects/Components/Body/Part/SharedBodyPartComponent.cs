@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Content.Shared.Damage.DamageContainer;
 using Content.Shared.Damage.ResistanceSet;
@@ -23,21 +24,20 @@ namespace Content.Shared.GameObjects.Components.Body.Part
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        // TODO define these in yaml?
-        public const string DefaultDamageContainer = "biologicalDamageContainer";
-        public const string DefaultResistanceSet = "defaultResistances";
-
         public override string Name => "BodyPart";
+
+        public override uint? NetID => ContentNetIDs.BODY_PART;
 
         private IBody? _body;
 
-        // TODO Remove
+        // TODO BODY Remove
         private List<string> _mechanismIds = new List<string>();
         public IReadOnlyList<string> MechanismIds => _mechanismIds;
 
         private DamageContainerPrototype _damagePrototype = default!;
         private ResistanceSetPrototype _resistancePrototype = default!;
 
+        [ViewVariables]
         private HashSet<IMechanism> _mechanisms = new HashSet<IMechanism>();
 
         [ViewVariables]
@@ -79,21 +79,9 @@ namespace Content.Shared.GameObjects.Components.Body.Part
 
         [ViewVariables] public int SizeUsed { get; private set; }
 
-        [ViewVariables] public int MaxDurability { get; private set; }
-
-        // TODO MaxDurability - Damage.TotalDamage;
-        // TODO Individual body part damage
-        [ViewVariables] public int CurrentDurability { get; private set; }
-
-        // TODO size used
-        // TODO surgerydata
-        // TODO properties
-
-        /// <summary>
-        ///     At what HP this <see cref="IBodyPart"/> destroyed.
-        /// </summary>
-        [ViewVariables]
-        public int DestroyThreshold { get; private set; }
+        // TODO BODY size used
+        // TODO BODY surgerydata
+        // TODO BODY properties
 
         /// <summary>
         ///     What types of BodyParts this <see cref="IBodyPart"/> can easily attach to.
@@ -110,7 +98,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         [ViewVariables]
         public IReadOnlyCollection<IMechanism> Mechanisms => _mechanisms;
 
-        // TODO Replace with a simulation of organs
+        // TODO BODY Replace with a simulation of organs
         /// <summary>
         ///     Represents if body part is vital for creature.
         ///     If the last vital body part is removed creature dies
@@ -118,21 +106,21 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         [ViewVariables]
         public bool IsVital { get; private set; }
 
-        // TODO
+        // TODO BODY
         /// <summary>
         ///     Current damage dealt to this <see cref="IBodyPart"/>.
         /// </summary>
         [ViewVariables]
         public DamageContainer Damage { get; private set; } = default!;
 
-        // TODO
+        // TODO BODY
         /// <summary>
         ///     Armor of this <see cref="IBodyPart"/> against damage.
         /// </summary>
         [ViewVariables]
         public ResistanceSet Resistances { get; private set; } = default!;
 
-        // TODO
+        // TODO BODY
         [ViewVariables]
         public SurgeryDataComponent? SurgeryDataComponent => Owner.GetComponentOrNull<SurgeryDataComponent>();
 
@@ -141,26 +129,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part
             base.ExposeData(serializer);
 
             // TODO BODY Separate damage from the rest of body system
-            // TODO serialize any changed properties?
-            serializer.DataReadWriteFunction(
-                "damagePrototype",
-                DefaultDamageContainer,
-                prototype =>
-                {
-                    _damagePrototype = _prototypeManager.Index<DamageContainerPrototype>(prototype);
-                    Damage = new DamageContainer(OnHealthChanged, _damagePrototype);
-                },
-                () => _damagePrototype.ID);
-
-            serializer.DataReadWriteFunction(
-                "resistancePrototype",
-                DefaultResistanceSet,
-                prototype =>
-                {
-                    _resistancePrototype = _prototypeManager.Index<ResistanceSetPrototype>(prototype);
-                    Resistances = new ResistanceSet(_resistancePrototype);
-                },
-                () => _resistancePrototype.ID);
+            // TODO BODY serialize any changed properties?
 
             serializer.DataField(this, b => b.PartType, "partType", BodyPartType.Other);
 
@@ -168,9 +137,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part
 
             serializer.DataField(this, b => b.Size, "size", 1);
 
-            serializer.DataField(this, b => b.MaxDurability, "maxDurability", 10);
-
-            serializer.DataField(this, b => b.CurrentDurability, "currentDurability", MaxDurability);
+            serializer.DataField(this, b => b.Compatibility, "compatibility", BodyPartCompatibility.Universal);
 
             serializer.DataField(this, m => m.IsVital, "vital", false);
 
@@ -305,7 +272,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part
 
         private void OnHealthChanged(List<HealthChangeData> changes)
         {
-            // TODO
+            // TODO BODY
         }
 
         public bool ShowContextMenu(IEntity examiner)
@@ -317,5 +284,85 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         {
             return Body == null;
         }
+    }
+
+    [Serializable, NetSerializable]
+    public class BodyPartComponentState : ComponentState
+    {
+        private List<IBodyPart>? _parts;
+
+        public readonly EntityUid[] PartIds;
+
+        public BodyPartComponentState(EntityUid[] partIds) : base(ContentNetIDs.BODY_PART)
+        {
+            PartIds = partIds;
+        }
+
+        public List<IBodyPart> Parts(IEntityManager? entityManager = null)
+        {
+            if (_parts != null)
+            {
+                return _parts;
+            }
+
+            entityManager ??= IoCManager.Resolve<IEntityManager>();
+
+            var parts = new List<IBodyPart>(PartIds.Length);
+
+            foreach (var id in PartIds)
+            {
+                if (!entityManager.TryGetEntity(id, out var entity))
+                {
+                    continue;
+                }
+
+                if (!entity.TryGetComponent(out IBodyPart? part))
+                {
+                    continue;
+                }
+
+                parts.Add(part);
+            }
+
+            return _parts = parts;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public abstract class BodyPartMessage : ComponentMessage
+    {
+        private IBodyPart? _part;
+        private IBody? _body;
+
+        public readonly string Slot;
+        public readonly EntityUid PartUid;
+        public readonly EntityUid BodyUid;
+
+        public IBodyPart? Part => _part ??= IoCManager.Resolve<IEntityManager>().TryGetEntity(PartUid, out var entity)
+            ? entity.GetComponentOrNull<IBodyPart>()
+            : null;
+
+        public IBody? Body => _body ??= IoCManager.Resolve<IEntityManager>().TryGetEntity(BodyUid, out var entity)
+            ? entity.GetBody()
+            : null;
+
+        protected BodyPartMessage(string slot, EntityUid partUid, EntityUid bodyUid)
+        {
+            Slot = slot;
+            PartUid = partUid;
+            BodyUid = bodyUid;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class BodyPartAddedMessage : BodyPartMessage
+    {
+        public BodyPartAddedMessage(string slot, EntityUid partUid, EntityUid bodyUid) : base(slot, partUid, bodyUid) { }
+    }
+
+    [Serializable, NetSerializable]
+    public class BodyPartRemovedMessage : BodyPartMessage
+    {
+        public BodyPartRemovedMessage(string slot, EntityUid partUid, EntityUid bodyUid) : base(slot, partUid, bodyUid) { }
     }
 }

@@ -5,6 +5,7 @@ using Content.Client.GameObjects.Components.Items;
 using Content.Server.GameObjects.Components.ActionBlocking;
 using Content.Server.GameObjects.Components.Body;
 using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Shared.GameObjects.Components.Body;
 using NUnit.Framework;
 using Robust.Server.Interfaces.Console;
 using Robust.Shared.Interfaces.GameObjects;
@@ -32,7 +33,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
             HandcuffComponent handcuff;
             CuffableComponent cuffed;
             IHandsComponent hands;
-            BodyComponent body;
+            IBody body;
 
             server.Assert(() =>
             {
@@ -52,7 +53,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
                 // Test for components existing
                 Assert.True(human.TryGetComponent(out cuffed!), $"Human has no {nameof(CuffableComponent)}");
                 Assert.True(human.TryGetComponent(out hands!), $"Human has no {nameof(HandsComponent)}");
-                Assert.True(human.TryGetComponent(out body!), $"Human has no {nameof(BodyComponent)}");
+                Assert.True(human.TryGetBody(out body!), $"Human has no {nameof(IBody)}");
                 Assert.True(cuffs.TryGetComponent(out handcuff!), $"Handcuff has no {nameof(HandcuffComponent)}");
                 Assert.True(cables.TryGetComponent(out cableHandcuff!), $"Cablecuff has no {nameof(HandcuffComponent)}");
 

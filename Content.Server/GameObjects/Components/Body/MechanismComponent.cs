@@ -45,11 +45,11 @@ namespace Content.Server.GameObjects.Components.Body
             CloseAllSurgeryUIs();
             OptionsCache.Clear();
             PerformerCache = null;
-            BodyManagerComponentCache = null;
+            BodyCache = null;
 
-            if (eventArgs.Target.TryGetComponent<BodyComponent>(out var bodyManager))
+            if (eventArgs.Target.TryGetBody(out var body))
             {
-                SendBodyPartListToUser(eventArgs, bodyManager);
+                SendBodyPartListToUser(eventArgs, body);
             }
             else if (eventArgs.Target.TryGetComponent<IBodyPart>(out var part))
             {
@@ -62,7 +62,7 @@ namespace Content.Server.GameObjects.Components.Body
             }
         }
 
-        private void SendBodyPartListToUser(AfterInteractEventArgs eventArgs, BodyComponent body)
+        private void SendBodyPartListToUser(AfterInteractEventArgs eventArgs, IBody body)
         {
             // Create dictionary to send to client (text to be shown : data sent back if selected)
             var toSend = new Dictionary<string, int>();
@@ -83,7 +83,7 @@ namespace Content.Server.GameObjects.Components.Body
                 OpenSurgeryUI(actor.playerSession);
                 UpdateSurgeryUIBodyPartRequest(actor.playerSession, toSend);
                 PerformerCache = eventArgs.User;
-                BodyManagerComponentCache = body;
+                BodyCache = body;
             }
             else // If surgery cannot be performed, show message saying so.
             {
@@ -105,7 +105,7 @@ namespace Content.Server.GameObjects.Components.Body
 
             CloseSurgeryUI(actor.playerSession);
 
-            if (BodyManagerComponentCache == null)
+            if (BodyCache == null)
             {
                 return;
             }
@@ -113,7 +113,7 @@ namespace Content.Server.GameObjects.Components.Body
             // TODO: sanity checks to see whether user is in range, user is still able-bodied, target is still the same, etc etc
             if (!OptionsCache.TryGetValue(key, out var targetObject))
             {
-                BodyManagerComponentCache.Owner.PopupMessage(PerformerCache,
+                BodyCache.Owner.PopupMessage(PerformerCache,
                     Loc.GetString("You see no useful way to use the {0} anymore.", Owner.Name));
                 return;
             }
@@ -123,7 +123,7 @@ namespace Content.Server.GameObjects.Components.Body
                 ? Loc.GetString("You jam {0:theName} inside {1:them}.", Owner, PerformerCache)
                 : Loc.GetString("You can't fit it in!");
 
-            BodyManagerComponentCache.Owner.PopupMessage(PerformerCache, message);
+            BodyCache.Owner.PopupMessage(PerformerCache, message);
 
             // TODO: {1:theName}
         }

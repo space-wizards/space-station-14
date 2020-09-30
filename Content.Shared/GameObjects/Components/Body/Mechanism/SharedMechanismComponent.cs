@@ -18,7 +18,7 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
 
         protected readonly Dictionary<int, object> OptionsCache = new Dictionary<int, object>();
 
-        protected IBody? BodyManagerComponentCache;
+        protected IBody? BodyCache;
 
         protected int IdHash;
 
@@ -60,10 +60,10 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
 
         public int DestroyThreshold { get; set; }
 
-        // TODO
+        // TODO BODY
         public int Resistance { get; set; }
 
-        // TODO: OnSizeChanged
+        // TODO BODY OnSizeChanged
         public int Size { get; set; }
 
         public BodyPartCompatibility Compatibility { get; set; }

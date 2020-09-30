@@ -6,14 +6,11 @@ using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Movement;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Log;
 using Robust.Shared.Players;
 
 namespace Content.Server.GameObjects.Components.Body
 {
-    /// <summary>
-    ///     Component representing a collection of <see cref="IBodyPart"></see>
-    ///     attached to each other.
-    /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(SharedBodyComponent))]
     [ComponentReference(typeof(DamageableComponent))]
@@ -32,10 +29,15 @@ namespace Content.Server.GameObjects.Components.Body
             {
                 // Using MapPosition instead of Coordinates here prevents
                 // a crash within the character preview menu in the lobby
-                var part = Owner.EntityManager.SpawnEntity(partId, Owner.Transform.MapPosition);
-                var partComponent = part.GetComponent<IBodyPart>();
+                var entity = Owner.EntityManager.SpawnEntity(partId, Owner.Transform.MapPosition);
 
-                TryAddPart(slot, partComponent, true);
+                if (!entity.TryGetComponent(out IBodyPart? part))
+                {
+                    Logger.Error($"Entity {partId} does not have a {nameof(IBodyPart)} component.");
+                    continue;
+                }
+
+                TryAddPart(slot, part, true);
             }
         }
 

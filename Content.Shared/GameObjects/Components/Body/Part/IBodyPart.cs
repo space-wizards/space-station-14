@@ -30,17 +30,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         /// </summary>
         int Size { get; }
 
-        /// <summary>
-        ///     Max HP of this <see cref="IBodyPart"/>.
-        /// </summary>
-        int MaxDurability { get; }
-
-        /// <summary>
-        ///     Current HP of this <see cref="IBodyPart"/> based on sum of all damage types.
-        /// </summary>
-        int CurrentDurability { get; }
-
-        // TODO: Mechanisms occupying different parts at the body level
+        // TODO BODY Mechanisms occupying different parts at the body level
         /// <summary>
         ///     Collection of all <see cref="IMechanism"/>s currently inside this
         ///     <see cref="IBodyPart"/>.

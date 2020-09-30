@@ -3,14 +3,14 @@ using Content.Shared.GameObjects.Components.Damage;
 
 namespace Content.Server.GameObjects.Components.Body
 {
-    public interface IBodyManagerHealthChangeParams
+    public interface IBodyHealthChangeParams
     {
         BodyPartType Part { get; }
     }
 
-    public class BodyManagerHealthChangeParams : HealthChangeParams, IBodyManagerHealthChangeParams
+    public class BodyHealthChangeParams : HealthChangeParams, IBodyHealthChangeParams
     {
-        public BodyManagerHealthChangeParams(BodyPartType part)
+        public BodyHealthChangeParams(BodyPartType part)
         {
             Part = part;
         }

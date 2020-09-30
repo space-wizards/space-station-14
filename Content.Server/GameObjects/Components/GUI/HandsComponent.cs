@@ -732,7 +732,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 return;
             }
 
-            AddHand(eventArgs.SlotName);
+            AddHand(eventArgs.Slot);
         }
 
         void IBodyPartRemoved.BodyPartRemoved(BodyPartRemovedEventArgs eventArgs)

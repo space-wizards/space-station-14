@@ -1,10 +1,10 @@
 ﻿using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Body.Part.Property.Movement
+namespace Content.Shared.GameObjects.Components.Body.Part.Property
 {
     [RegisterComponent]
-    public class LegProperty : BodyPartPropertyComponent
+    public class LegComponent : BodyPartPropertyComponent
     {
         public override string Name => "Leg";
 
@@ -17,7 +17,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part.Property.Movement
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(this, l => l.Speed, "speed", 1f);
+            serializer.DataField(this, l => l.Speed, "speed", 2.6f);
         }
     }
 }

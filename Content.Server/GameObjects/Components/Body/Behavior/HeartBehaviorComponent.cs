@@ -12,7 +12,7 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
 
         public override void Update(float frameTime)
         {
-            // TODO do between pre and metabolism
+            // TODO BODY do between pre and metabolism
             if (Mechanism?.Body == null ||
                 !Mechanism.Body.Owner.HasComponent<SharedBloodstreamComponent>())
             {

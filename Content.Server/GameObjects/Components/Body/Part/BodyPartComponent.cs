@@ -15,6 +15,7 @@ using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Body.Part
@@ -48,16 +49,21 @@ namespace Content.Server.GameObjects.Components.Body.Part
             // identical on it
             foreach (var mechanismId in MechanismIds)
             {
-                var mechanism = Owner.EntityManager.SpawnEntity(mechanismId, Owner.Transform.MapPosition);
-                var mechanismComponent = mechanism.GetComponent<IMechanism>();
+                var entity = Owner.EntityManager.SpawnEntity(mechanismId, Owner.Transform.MapPosition);
 
-                TryInstallMechanism(mechanismComponent, true);
+                if (!entity.TryGetComponent(out IMechanism? mechanism))
+                {
+                    Logger.Error($"Entity {mechanismId} does not have a {nameof(IMechanism)} component.");
+                    continue;
+                }
+
+                TryInstallMechanism(mechanism, true);
             }
         }
 
         public void AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            // TODO
+            // TODO BODY
             if (eventArgs.Target == null)
             {
                 return;
@@ -68,20 +74,20 @@ namespace Content.Server.GameObjects.Components.Body.Part
             _surgeonCache = null;
             _owningBodyCache = null;
 
-            if (eventArgs.Target.TryGetComponent(out BodyComponent? bodyManager))
+            if (eventArgs.Target.TryGetBody(out var body))
             {
-                SendSlots(eventArgs, bodyManager);
+                SendSlots(eventArgs, body);
             }
         }
 
-        private void SendSlots(AfterInteractEventArgs eventArgs, BodyComponent body)
+        private void SendSlots(AfterInteractEventArgs eventArgs, IBody body)
         {
             // Create dictionary to send to client (text to be shown : data sent back if selected)
             var toSend = new Dictionary<string, int>();
 
             // Here we are trying to grab a list of all empty BodySlots adjacent to an existing BodyPart that can be
             // attached to. i.e. an empty left hand slot, connected to an occupied left arm slot would be valid.
-            var unoccupiedSlots = body.AllSlots.ToList().Except(body.OccupiedSlots.ToList()).ToList();
+            var unoccupiedSlots = body.Slots.Keys.ToList().Except(body.Parts.Keys.ToList()).ToList();
             foreach (var slot in unoccupiedSlots)
             {
                 if (!body.TryGetSlotType(slot, out var typeResult) ||
@@ -144,9 +150,7 @@ namespace Content.Server.GameObjects.Components.Body.Part
             }
 
             var target = (string) targetObject!;
-            string message;
-
-            message = _owningBodyCache.TryAddPart(target, this)
+            var message = _owningBodyCache.TryAddPart(target, this)
                 ? Loc.GetString("You attach {0:theName}.", Owner)
                 : Loc.GetString("You can't attach {0:theName}!", Owner);
 

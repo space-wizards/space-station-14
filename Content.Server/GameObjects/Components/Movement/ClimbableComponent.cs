@@ -95,16 +95,15 @@ namespace Content.Server.GameObjects.Components.Movement
                 return false;
             }
 
-            if (!user.HasComponent<ClimbingComponent>())
+            if (!user.HasComponent<ClimbingComponent>() ||
+                !user.TryGetComponent(out IBody body))
             {
                 reason = Loc.GetString("You are incapable of climbing!");
                 return false;
             }
 
-            var bodyManager = user.GetComponent<BodyComponent>();
-
-            if (bodyManager.GetPartsOfType(BodyPartType.Leg).Count == 0 ||
-                bodyManager.GetPartsOfType(BodyPartType.Foot).Count == 0)
+            if (body.GetPartsOfType(BodyPartType.Leg).Count == 0 ||
+                body.GetPartsOfType(BodyPartType.Foot).Count == 0)
             {
                 reason = Loc.GetString("You are unable to climb!");
                 return false;

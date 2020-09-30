@@ -9,7 +9,7 @@ namespace Content.Shared.GameObjects.Components.Body.Behavior
 
         public override void Update(float frameTime)
         {
-            // TODO
+            // TODO BODY
         }
     }
 }

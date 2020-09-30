@@ -41,26 +41,27 @@ namespace Content.Server.GameObjects.Components.Mobs.State
             {
                 case RuinableComponent ruinable:
                 {
-                    if (ruinable.DeadThreshold == null)
+                    if (!ruinable.Thresholds.TryGetValue(DamageState.Dead, out var threshold))
                     {
-                        break;
+                        return;
                     }
 
-                    var modifier = (int) (ruinable.TotalDamage / (ruinable.DeadThreshold / 7f));
+                    var modifier = (int) (ruinable.TotalDamage / (threshold / 7f));
 
                     status.ChangeStatusEffectIcon(StatusEffect.Health,
                         "/Textures/Interface/StatusEffects/Human/human" + modifier + ".png");
 
                     break;
                 }
+                // TODO BODY Remove direct BodyComponent reference
                 case BodyComponent body:
                 {
-                    if (body.CriticalThreshold == null)
+                    if (!body.Thresholds.TryGetValue(DamageState.Critical, out var threshold))
                     {
                         return;
                     }
 
-                    var modifier = (int) (body.TotalDamage / (body.CriticalThreshold / 7f));
+                    var modifier = (int) (body.TotalDamage / (threshold / 7f));
 
                     status.ChangeStatusEffectIcon(StatusEffect.Health,
                         "/Textures/Interface/StatusEffects/Human/human" + modifier + ".png");

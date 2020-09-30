@@ -6,6 +6,10 @@ using Content.Shared.GameObjects.Components.Damage;
 
 namespace Content.Shared.GameObjects.Components.Body
 {
+    /// <summary>
+    ///     Component representing a collection of <see cref="IBodyPart"/>s
+    ///     attached to each other.
+    /// </summary>
     public interface IBody : IDamageableComponent, IBodyPartContainer
     {
         public string? TemplateName { get; }

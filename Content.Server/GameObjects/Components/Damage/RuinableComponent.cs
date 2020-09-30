@@ -5,6 +5,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Damage
 {
@@ -20,6 +21,7 @@ namespace Content.Server.GameObjects.Components.Damage
         /// <summary>
         ///     Sound played upon destruction.
         /// </summary>
+        [ViewVariables]
         protected string DestroySound { get; private set; }
 
         public override List<DamageState> SupportedDamageStates =>
@@ -34,8 +36,16 @@ namespace Content.Server.GameObjects.Components.Damage
             serializer.DataReadWriteFunction(
                 "deadThreshold",
                 100,
-                t => DeadThreshold = t ,
-                () => DeadThreshold ?? -1);
+                t =>
+                {
+                    if (t == null)
+                    {
+                        return;
+                    }
+
+                    Thresholds[DamageState.Dead] = t.Value;
+                },
+                () => Thresholds.TryGetValue(DamageState.Dead, out var value) ? value : (int?) null);
 
             serializer.DataField(this, ruinable => ruinable.DestroySound, "destroySound", string.Empty);
         }

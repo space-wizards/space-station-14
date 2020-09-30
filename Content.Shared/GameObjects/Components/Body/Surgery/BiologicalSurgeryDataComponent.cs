@@ -139,7 +139,7 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
         public override bool CanAttachBodyPart(IBodyPart part)
         {
             return Parent != null;
-            // TODO: if a bodypart is disconnected, you should have to do some surgery to allow another bodypart to be attached.
+            // TODO BODY if a part is disconnected, you should have to do some surgery to allow another bodypart to be attached.
         }
 
         private void OpenSkinSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
@@ -148,7 +148,7 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
 
                 performer.PopupMessage(Loc.GetString("Cut open the skin..."));
 
-            // TODO do_after: Delay
+            // TODO BODY do_after: Delay
             _skinOpened = true;
         }
 
@@ -158,7 +158,7 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
 
             performer.PopupMessage(Loc.GetString("Clamp the vessels..."));
 
-            // TODO do_after: Delay
+            // TODO BODY do_after: Delay
             _vesselsClamped = true;
         }
 
@@ -168,7 +168,7 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
 
             performer.PopupMessage(Loc.GetString("Retract the skin..."));
 
-            // TODO do_after: Delay
+            // TODO BODY do_after: Delay
             _skinRetracted = true;
         }
 
@@ -178,7 +178,7 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
 
             performer.PopupMessage(Loc.GetString("Cauterize the incision..."));
 
-            // TODO do_after: Delay
+            // TODO BODY do_after: Delay
             _skinOpened = false;
             _vesselsClamped = false;
             _skinRetracted = false;
@@ -214,7 +214,7 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
 
             performer.PopupMessage(Loc.GetString("Loosen the organ..."));
 
-            // TODO do_after: Delay
+            // TODO BODY do_after: Delay
             _disconnectedOrgans.Add(target);
         }
 
@@ -247,7 +247,7 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
 
             performer.PopupMessage(Loc.GetString("Remove the organ..."));
 
-            // TODO do_after: Delay
+            // TODO BODY do_after: Delay
             Parent.RemoveMechanism(target, performer.Transform.Coordinates);
             _disconnectedOrgans.Remove(target);
         }
@@ -259,7 +259,7 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
 
             performer.PopupMessage(Loc.GetString("Saw off the limb!"));
 
-            // TODO do_after: Delay
+            // TODO BODY do_after: Delay
             body.RemovePart(Parent, true);
         }
     }
