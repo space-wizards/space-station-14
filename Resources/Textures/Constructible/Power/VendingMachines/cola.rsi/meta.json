@@ -17,6 +17,15 @@
             ]
         },
         {
+            "name": "normal",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
             "name": "eject-unshaded",
             "directions": 1,
             "delays": [
