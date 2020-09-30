@@ -222,7 +222,7 @@ namespace Content.Server.GameObjects.Components.Movement
         public void Teleport(IEntity user, Vector2 vector)
         {
             // Messy maybe?
-            var targetGrid = user.ToCoordinates(vector);
+            var targetGrid = user.Transform.Coordinates.WithPosition(vector);
             var soundPlayer = EntitySystem.Get<AudioSystem>();
 
             // If portals use those, otherwise just move em over
