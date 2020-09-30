@@ -5,7 +5,7 @@
   description: A storage tank containing welding fuel.
   components:
   - type: Sprite
-    texture: Constructible/Misc/tanks.rsi
+    sprite: Constructible/Misc/tanks.rsi
     state: fueltank
   - type: Explosive
     devastationRange: 0
