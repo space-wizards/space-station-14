@@ -181,7 +181,7 @@
             "Headset",
             "ComputerBoard",
             "BreakableConstruction",
-            "RadiationPanel",
+            "RadiationCollector",
             "ContainmentFieldGenerator",
             "ContainmentField",
             "Emitter"

@@ -92,7 +92,6 @@ namespace Content.Server.GameObjects.Components.Singularity
                 if (value < 0) value = 0;
                 if (value > 6) value = 6;
 
-
                 _level = value;
                 _radiationPulseComponent.RadsPerSecond = 10 * value;
 
