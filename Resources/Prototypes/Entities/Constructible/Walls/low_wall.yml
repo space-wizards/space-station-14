@@ -15,6 +15,9 @@
     color: "#889192"
     drawdepth: Walls
     sprite: Constructible/Structures/Walls/low_wall.rsi
+  - type: Icon
+    sprite: Constructible/Structures/Walls/low_wall.rsi
+    state: metal
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb

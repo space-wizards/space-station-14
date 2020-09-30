@@ -3,15 +3,18 @@
   name: arcade
   parent: ComputerBase
   components:
-
   - type: PowerReceiver
   - type: Sprite
+    sprite: Constructible/Power/computers.rsi
     layers:
     - state: arcade
       map: ["enum.ComputerVisualizer+Layers.Body"]
     - state: invaders
       shader: unshaded
       map: ["enum.ComputerVisualizer+Layers.Screen"]
+  - type: Icon
+    sprite: Constructible/Power/computers.rsi
+    state: arcade
   - type: Appearance
     visuals:
     - type: ComputerVisualizer
@@ -33,19 +36,21 @@
 
 - type: entity
   id: BlockGameArcade
-  name: blockGameArcade
+  name: NT block game
   parent: ComputerBase
   components:
-    - type: Icon
-      state: arcade
     - type: PowerReceiver
     - type: Sprite
+      sprite: Constructible/Power/computers.rsi
       layers:
         - state: arcade
           map: ["enum.ComputerVisualizer+Layers.Body"]
         - state: invaders
           shader: unshaded
           map: ["enum.ComputerVisualizer+Layers.Screen"]
+    - type: Icon
+      sprite: Constructible/Power/computers.rsi
+      state: arcade
     - type: Appearance
       visuals:
         - type: ComputerVisualizer

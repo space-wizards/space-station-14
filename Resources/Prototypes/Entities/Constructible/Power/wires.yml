@@ -10,7 +10,6 @@
   - type: Collidable
   - type: SnapGrid
     offset: Center
-
   - type: Sprite
     drawdepth: BelowFloor
   - type: IconSmooth
@@ -28,6 +27,9 @@
   - type: Sprite
     sprite: Constructible/Power/hv_cable.rsi
     state: hvcable_0
+  - type: Icon
+    sprite: Constructible/Power/hv_cable.rsi
+    state: hvcable_4
   - type: IconSmooth
     base: hvcable_
     key: hv_cables
@@ -51,6 +53,10 @@
     color: Yellow
     sprite: Constructible/Power/mv_cable.rsi
     state: mvcable_0
+  - type: Icon
+    color: Yellow
+    sprite: Constructible/Power/mv_cable.rsi
+    state: mvcable_4
   - type: IconSmooth
     base: mvcable_
     key: mv_cables
@@ -74,6 +80,10 @@
     color: Green
     sprite: Constructible/Power/lv_cable.rsi
     state: lvcable_0
+  - type: Icon
+    color: Green
+    sprite: Constructible/Power/lv_cable.rsi
+    state: lvcable_4
   - type: IconSmooth
     base: lvcable_
     key: lv_cables

@@ -418,6 +418,24 @@
           1
         ]
       ]
+    },
+    {
+      "name": "shelf",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "rack",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
     }
   ]
 }
