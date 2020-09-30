@@ -162,7 +162,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Shoes/magboots0.rsi
-
+    state: icon
   - type: Clothing
     sprite: Clothing/Shoes/magboots.rsi
 
