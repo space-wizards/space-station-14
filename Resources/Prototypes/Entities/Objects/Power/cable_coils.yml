@@ -1,0 +1,98 @@
+
+# If you're looking at the rsi for this file, you'll probably be confused why
+# I didn't just use an alpha for most of this stuff. Well icons don't have the
+# ability to have applied colors yet in GUIs. -Swept
+
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: CableStack1
+  name: cable stack 1
+  suffix: Full
+  components:
+  - type: Stack
+    stacktype: enum.StackType.Cable
+  - type: Sprite
+    sprite: Objects/Tools/cables.rsi
+  - type: Item
+    sprite: Objects/Tools/cables.rsi
+  - type: WirePlacer
+  - type: Clickable
+
+- type: entity
+  parent: CableStack1
+  id: HVWireStack
+  name: HV Wire Coil
+  components:
+  - type: Sprite
+    state: coilhv-30
+  - type: Item
+    size: 10
+    HeldPrefix: coilhv
+  - type: WirePlacer
+    wirePrototypeID: HVWire
+    blockingWireType: HighVoltage
+
+- type: entity
+  parent: CableStack1
+  id: MVWireStack
+  name: MV Wire Coil
+  components:
+  - type: Sprite
+    state: coilmv-30
+  - type: Item
+    size: 10
+    HeldPrefix: coilmv
+  - type: WirePlacer
+    wirePrototypeID: MVWire
+    blockingWireType: MediumVoltage
+
+- type: entity
+  parent: CableStack1
+  id: ApcExtensionCableStack
+  name: Apc Extension Cable Coil
+  components:
+  - type: Sprite
+    state: coillv-30
+  - type: Item
+    size: 10
+    HeldPrefix: coillv
+  - type: WirePlacer
+    wirePrototypeID: ApcExtensionCable
+    blockingWireType: Apc
+
+- type: entity
+  parent: HVWireStack
+  id: HVWireStack1
+  suffix: 1
+  components:
+  - type: Sprite
+    state: coilhv-10
+  - type: Item
+    size: 3
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: MVWireStack
+  id: MVWireStack1
+  suffix: 1
+  components:
+  - type: Sprite
+    state: coilmv-10
+  - type: Item
+    size: 3
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: ApcExtensionCableStack
+  id: ApcExtensionCableStack1
+  suffix: 1
+  components:
+  - type: Sprite
+    state: coillv-10
+  - type: Item
+    size: 3
+  - type: Stack
+    count: 1

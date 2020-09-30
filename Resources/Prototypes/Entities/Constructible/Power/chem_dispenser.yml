@@ -5,8 +5,11 @@
   description: An industrial grade chemical dispenser with a sizeable chemical supply.
   components:
   - type: Sprite
-    texture: Constructible/Power/industrial_dispenser.rsi/industrial_dispenser.png
-
+    sprite: Constructible/Power/industrial_dispenser.rsi
+    state: industrial_dispenser
+  - type: Icon
+    sprite: Constructible/Power/industrial_dispenser.rsi
+    state: industrial_dispenser
   - type: ReagentDispenser
     pack: ChemDispenserStandardInventory
   - type: PowerReceiver

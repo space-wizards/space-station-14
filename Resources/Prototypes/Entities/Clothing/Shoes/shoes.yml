@@ -161,8 +161,8 @@
   description: Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle.
   components:
   - type: Sprite
-    sprite: Clothing/Shoes/magboots0.rsi
-
+    sprite: Clothing/Shoes/magboots.rsi
+    state: icon
   - type: Clothing
     sprite: Clothing/Shoes/magboots.rsi
 

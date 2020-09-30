@@ -93,6 +93,9 @@
     netsync: false
     sprite: Constructible/Power/cell_recharger.rsi
     drawdepth: Items
+  - type: Icon
+    sprite: Constructible/Power/cell_recharger.rsi
+    state: empty
   - type: PowerCellCharger
     transfer_efficiency: 0.85
   - type: PowerReceiver
@@ -120,6 +123,9 @@
     netsync: false
     sprite: Constructible/Power/recharger.rsi
     drawdepth: Items
+  - type: Icon
+    sprite: Constructible/Power/recharger.rsi
+    state: empty
   - type: WeaponCapacitorCharger
     transfer_efficiency: 0.85
   - type: PowerReceiver
@@ -147,6 +153,9 @@
     netsync: false
     sprite: Constructible/Power/wall_recharger.rsi
     drawdepth: Items
+  - type: Icon
+    sprite: Constructible/Power/wall_recharger.rsi
+    state: empty
   - type: WeaponCapacitorCharger
     transfer_efficiency: 0.95
   - type: PowerReceiver
