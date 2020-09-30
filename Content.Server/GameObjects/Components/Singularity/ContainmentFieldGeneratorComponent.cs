@@ -20,13 +20,13 @@ namespace Content.Server.GameObjects.Components.Singularity
     {
         public override string Name => "ContainmentFieldGenerator";
 
-        private int _power;
+        private int _power = 6;
 
         [ViewVariables]
         public int Power
         {
             get => _power;
-            set => _power = Math.Clamp(value, 0, 6);
+            set => _power = 6; //Math.Clamp(value, 0, 6);
         }
 
         public Dictionary<IEntity, IEntity> OwnedFields = new Dictionary<IEntity, IEntity>();
@@ -43,7 +43,7 @@ namespace Content.Server.GameObjects.Components.Singularity
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            var localPos = Owner.Transform.GridPosition;
+            var localPos = Owner.Transform.Coordinates;
             if (localPos.X % 0.5f != 0 || localPos.Y % 0.5f != 0)
             {
                 message.AddMarkup(Loc.GetString("It appears to be [color=darkred]improperly aligned with the tile.[/color]"));
@@ -52,7 +52,7 @@ namespace Content.Server.GameObjects.Components.Singularity
 
         public void Update()
         {
-            var _pos = Owner.Transform.GridPosition;
+            var _pos = Owner.Transform.Coordinates;
 
             //Remove owned fields when powered off
             if (Power == 0)
@@ -110,7 +110,7 @@ namespace Content.Server.GameObjects.Components.Singularity
 
             if (_pos.X % 0.5f != 0 || _pos.Y % 0.5f != 0) return;
 
-            foreach (var ent in _entityManager.GetEntitiesInRange(Owner, 4.5f))
+            foreach (var ent in _entityManager.GetEntitiesInRange(Owner, 15))
             {
                 if (ent.TryGetComponent<ContainmentFieldGeneratorComponent>(out var component) &&
                     component.Owner != Owner &&
@@ -118,8 +118,8 @@ namespace Content.Server.GameObjects.Components.Singularity
                     !ConnectedGenerators.Contains(component.Owner) &&
                     !component.ConnectedGenerators.Contains(Owner))
                 {
-                    var localPos = Owner.Transform.GridPosition;
-                    var toPos = component.Owner.Transform.GridPosition;
+                    var localPos = Owner.Transform.Coordinates;
+                    var toPos = component.Owner.Transform.Coordinates;
 
                     bool generated = false;
 

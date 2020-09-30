@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using Content.Shared.GameObjects.Components;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
@@ -9,25 +10,26 @@ using Timer = Robust.Shared.Timers.Timer;
 namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 {
     [RegisterComponent]
-    public class RadiationPanelComponent : PowerSupplierComponent, IInteractHand
+    public class RadiationPanelComponent : PowerSupplierComponent, IInteractHand, IRadiationAct
     {
         public override string Name => "RadiationPanel";
+        public void RadiationAct(float frameTime, SharedRadiationPulseComponent radiation)
+        {
+            throw new NotImplementedException();
+        }
 
         private int _radiation;
-        private bool enabled;
+        private bool _enabled;
 
-        private CancellationTokenSource tokenSource;
+        private CancellationTokenSource _tokenSource;
 
         public int Radiation
         {
-            get
-            {
-                return _radiation;
-            }
+            get => _radiation;
             set
             {
                 _radiation = Math.Clamp(value, 0, 2000);
-                if (_radiation >= 100 && enabled)
+                if (_radiation >= 100 && _enabled)
                 {
                     SupplyRate = _radiation;
                 }
@@ -38,25 +40,17 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
             }
         }
 
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            tokenSource = new CancellationTokenSource();
-
-        }
-
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
-            if (!enabled)
+            if (!_enabled)
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("The panel turns on."));
-                enabled = true;
+                EnableCollection();
             }
             else
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("The panel turns off."));
-                enabled = false;
+                DisableCollection();
             }
 
             return true;
@@ -64,19 +58,20 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 
         void EnableCollection()
         {
-            enabled = true;
+            _enabled = true;
             SupplyRate = _radiation;
+            _tokenSource = new CancellationTokenSource();
             Timer.SpawnRepeating(1000, () =>
             {
                 Radiation -= Math.Clamp(Radiation / 2, 100, int.MaxValue);
-            }, tokenSource.Token);
+            }, _tokenSource.Token);
         }
 
         void DisableCollection()
         {
-            enabled = false;
+            _enabled = false;
             Radiation = 0;
-            tokenSource.Cancel();
+            _tokenSource.Cancel();
         }
     }
 }
