@@ -152,6 +152,10 @@ namespace Content.Server.GameObjects.EntitySystems
                         // Yes, this should throw if it's missing the component.
                         var construction = entity.GetComponent<ConstructionComponent>();
 
+                        // We attempt to set the pathfinding target.
+                        if (!string.IsNullOrEmpty(constructionPrototype.TargetNode))
+                            construction.Target = constructionGraph.Nodes[constructionPrototype.TargetNode];
+
                         if(string.IsNullOrEmpty(insertStep.Store))
                             holding.Delete();
                         else

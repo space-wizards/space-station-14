@@ -1,6 +1,7 @@
 ﻿using System;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Construction
 {
@@ -20,5 +21,7 @@ namespace Content.Shared.Construction
             serializer.DataField(this, x => x.SoundCollection, "soundCollection", string.Empty);
             serializer.DataField(this, x => x.SpriteState, "spriteState", string.Empty);
         }
+
+        public abstract void DoExamine(FormattedMessage message, bool inDetailsRange);
     }
 }

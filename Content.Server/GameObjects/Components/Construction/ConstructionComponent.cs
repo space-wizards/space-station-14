@@ -17,6 +17,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -42,6 +43,8 @@ namespace Content.Server.GameObjects.Components.Construction
         [ViewVariables]
         private List<List<ConstructionGraphStep>>? _edgeNestedStepProgress = null;
 
+        private ConstructionGraphNode? _target = null;
+
         [ViewVariables]
         public ConstructionGraphPrototype GraphPrototype { get; private set; } = null!;
 
@@ -50,6 +53,24 @@ namespace Content.Server.GameObjects.Components.Construction
 
         [ViewVariables]
         public ConstructionGraphEdge? Edge { get; private set; } = null;
+
+        [ViewVariables]
+        public ConstructionGraphNode? Target
+        {
+            get => _target;
+            set
+            {
+                ClearTarget();
+                _target = value;
+                UpdateTarget();
+            }
+        }
+
+        [ViewVariables]
+        public ConstructionGraphEdge? TargetNextEdge { get; private set; } = null;
+
+        [ViewVariables]
+        public Queue<ConstructionGraphNode>? TargetPathfinding { get; private set; } = null;
 
         [ViewVariables]
         public int EdgeStep { get; private set; } = 0;
@@ -61,6 +82,56 @@ namespace Content.Server.GameObjects.Components.Construction
 
             serializer.DataField(ref _graphIdentifier, "graph", string.Empty);
             serializer.DataField(ref _startingNodeIdentifier, "node", string.Empty);
+        }
+
+        public void ClearTarget()
+        {
+            _target = null;
+            TargetNextEdge = null;
+            TargetPathfinding = null;
+        }
+
+        public void UpdateTarget()
+        {
+            // Can't pathfind without a target.
+            if (Target == null) return;
+
+            // If we're at our target, stop pathfinding.
+            if (Target == Node)
+            {
+                ClearTarget();
+                return;
+            }
+
+            // If we don't have the path, set it!
+            if (TargetPathfinding == null)
+            {
+                var path = GraphPrototype.Path(Node.Name, Target.Name);
+
+                if (path == null)
+                {
+                    ClearTarget();
+                    return;
+                }
+
+                TargetPathfinding = new Queue<ConstructionGraphNode>(path);
+            }
+
+            // If we went the wrong way, we stop pathfinding.
+            if (Edge != null && TargetNextEdge != Edge)
+            {
+                ClearTarget();
+                return;
+            }
+
+            // Dequeue the pathfinding queue if the next is the node we're at.
+            if (TargetPathfinding.Peek() == Node)
+                TargetPathfinding.Dequeue();
+
+
+            // Let's set the next target edge.
+            if (Edge == null && TargetNextEdge == null)
+                TargetNextEdge = Node.GetEdge(TargetPathfinding.Peek().Name);
         }
 
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
@@ -219,6 +290,8 @@ namespace Content.Server.GameObjects.Components.Construction
                 await HandleCompletion(edge);
             }
 
+            UpdateTarget();
+
             return true;
         }
 
@@ -229,8 +302,15 @@ namespace Content.Server.GameObjects.Components.Construction
                 return false;
             }
 
+            Edge = edge;
+
+            UpdateTarget();
+
             Edge = null;
             Node = GraphPrototype.Nodes[edge.Target];
+
+            if (Target == Node)
+                ClearTarget();
 
             foreach (var completed in edge.Completed)
             {
@@ -264,6 +344,7 @@ namespace Content.Server.GameObjects.Components.Construction
                     throw new Exception($"New entity {node.Entity}'s graph {construction.GraphPrototype.ID} isn't the same as our graph {GraphPrototype.ID} on node {node.Name}!");
 
                 construction.Node = node;
+                construction.Target = Target;
             }
 
             if (Owner.TryGetComponent(out ContainerManagerComponent? containerComp))
@@ -322,7 +403,28 @@ namespace Content.Server.GameObjects.Components.Construction
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
-            // EntitySystem.Get<SharedConstructionSystem>().DoExamine(message, Prototype, Stage, inDetailsRange);
+            if(Target != null)
+                message.AddMarkup(Loc.GetString("To create {0}...\n", Target.Name));
+
+            if (Edge == null)
+            {
+                TargetNextEdge?.Steps[0].DoExamine(message, inDetailsRange);
+                return;
+            }
+
+            if (_edgeNestedStepProgress == null)
+            {
+                if(EdgeStep < Edge.Steps.Count)
+                    Edge.Steps[EdgeStep].DoExamine(message, inDetailsRange);
+                return;
+            }
+
+            foreach (var list in _edgeNestedStepProgress)
+            {
+                if(list.Count == 0) continue;
+
+                list[0].DoExamine(message, inDetailsRange);
+            }
         }
     }
 }

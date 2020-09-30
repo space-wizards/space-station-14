@@ -76,9 +76,5 @@ namespace Content.Shared.GameObjects.EntitySystems
                 GhostId = ghostId;
             }
         }
-
-        public void DoExamine(FormattedMessage message, ConstructionPrototype prototype, int stage, bool inDetailRange)
-        {
-        }
     }
 }

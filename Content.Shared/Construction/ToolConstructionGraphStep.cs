@@ -1,5 +1,7 @@
 ﻿using Content.Shared.GameObjects.Components.Interactable;
+using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Construction
 {
@@ -12,6 +14,11 @@ namespace Content.Shared.Construction
             base.ExposeData(serializer);
 
             serializer.DataField(this, x => x.Tool, "tool", ToolQuality.None);
+        }
+
+        public override void DoExamine(FormattedMessage message, bool inDetailsRange)
+        {
+            message.AddMarkup(Loc.GetString("Next, use {0:a} {0} tool.", Tool));
         }
     }
 }

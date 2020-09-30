@@ -1,9 +1,12 @@
 ﻿- type: constructionGraph
   id: girder
+  start: start
   graph:
     - node: start
       edges:
         - to: girder
+          completed:
+            - !type:SnapToGrid { }
           steps:
             - material: Metal
               amount: 2
@@ -26,6 +29,8 @@
               doAfter: 2
 
         - to: fakeWall
+          completed:
+            - !type:SnapToGrid {}
           conditions:
             - !type:EntityAnchored
               anchored: false
@@ -35,6 +40,8 @@
               doAfter: 1
 
         - to: fakeReinforcedWall
+          completed:
+            - !type:SnapToGrid {}
           conditions:
             - !type:EntityAnchored
               anchored: false
@@ -43,6 +50,8 @@
               doAfter: 2
 
         - to: wall
+          completed:
+            - !type:SnapToGrid {}
           conditions:
             - !type:EntityAnchored {}
           steps:
@@ -50,6 +59,8 @@
               amount: 2
 
         - to: reinforcedGirder
+          completed:
+            - !type:SnapToGrid { }
           conditions:
             - !type:EntityAnchored {}
           steps:

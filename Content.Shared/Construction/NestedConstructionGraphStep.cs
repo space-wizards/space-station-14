@@ -33,5 +33,9 @@ namespace Content.Shared.Construction
                 Steps.Add(list);
             }
         }
+
+        public override void DoExamine(FormattedMessage message, bool inDetailsRange)
+        {
+        }
     }
 }

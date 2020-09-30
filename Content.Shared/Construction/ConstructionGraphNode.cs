@@ -48,5 +48,16 @@ namespace Content.Shared.Construction
                 _edges.Add(edge);
             }
         }
+
+        public ConstructionGraphEdge GetEdge(string target)
+        {
+            foreach (var edge in _edges)
+            {
+                if (edge.Target == target)
+                    return edge;
+            }
+
+            return null;
+        }
     }
 }
