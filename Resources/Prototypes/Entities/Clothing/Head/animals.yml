@@ -6,8 +6,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/monkey.rsi
-  - type: Icon
-    sprite: Clothing/Head/monkey.rsi
+
   - type: Clothing
     sprite: Clothing/Head/monkey.rsi
 
@@ -19,8 +18,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/mouse_brown.rsi
-  - type: Icon
-    sprite: Clothing/Head/mouse_brown.rsi
+
   - type: Clothing
     sprite: Clothing/Head/mouse_brown.rsi
 
@@ -32,8 +30,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/mouse_gray.rsi
-  - type: Icon
-    sprite: Clothing/Head/mouse_gray.rsi
+
   - type: Clothing
     sprite: Clothing/Head/mouse_gray.rsi
 
@@ -45,8 +42,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/mouse_white.rsi
-  - type: Icon
-    sprite: Clothing/Head/mouse_white.rsi
+
   - type: Clothing
     sprite: Clothing/Head/mouse_white.rsi
 
@@ -58,8 +54,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/nymph.rsi
-  - type: Icon
-    sprite: Clothing/Head/nymph.rsi
+
   - type: Clothing
     sprite: Clothing/Head/nymph.rsi
 
@@ -71,8 +66,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/pai-cat.rsi
-  - type: Icon
-    sprite: Clothing/Head/pai-cat.rsi
+
   - type: Clothing
     sprite: Clothing/Head/pai-cat.rsi
 
@@ -84,8 +78,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/pai-monkey.rsi
-  - type: Icon
-    sprite: Clothing/Head/pai-monkey.rsi
+
   - type: Clothing
     sprite: Clothing/Head/pai-monkey.rsi
 
@@ -97,8 +90,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/pai-mouse.rsi
-  - type: Icon
-    sprite: Clothing/Head/pai-mouse.rsi
+
   - type: Clothing
     sprite: Clothing/Head/pai-mouse.rsi
 
@@ -110,8 +102,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/cat.rsi
-  - type: Icon
-    sprite: Clothing/Head/cat.rsi
+
   - type: Clothing
     sprite: Clothing/Head/cat.rsi
 
@@ -123,8 +114,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/cat2.rsi
-  - type: Icon
-    sprite: Clothing/Head/cat2.rsi
+
   - type: Clothing
     sprite: Clothing/Head/cat2.rsi
 
@@ -136,7 +126,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/cat3.rsi
-  - type: Icon
-    sprite: Clothing/Head/cat3.rsi
+
   - type: Clothing
     sprite: Clothing/Head/cat3.rsi

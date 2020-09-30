@@ -9,9 +9,7 @@
   - type: Collidable
   - type: SnapGrid
     offset: Center
-  - type: Icon
-    sprite: Constructible/Atmos/pipeitems.rsi
-    state: scrubber
+
   - type: Sprite
     sprite: Constructible/Atmos/pipeitems.rsi
     state: scrubber
@@ -23,6 +21,7 @@
       siphonRSI: Constructible/Atmos/scrubber.rsi
   - type: Destructible
     thresholdvalue: 100
+    resistances: metallicResistances
 
 - type: entity
   parent: ScrubberBase
@@ -34,5 +33,5 @@
     - !type:PipeNode
       nodeGroID: Pipe
       pipeDirection: South
-  - type: DebugSiphon
+  - type: PressureSiphon
     scrubberOutletDirection: South

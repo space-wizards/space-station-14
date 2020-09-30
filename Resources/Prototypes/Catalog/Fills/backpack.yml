@@ -5,7 +5,7 @@
   components:
   - type: StorageFill
     contents:
-      - BoxSurvival
+      - name: BoxSurvival
 
 - type: entity
   abstract: true
@@ -14,7 +14,7 @@
   components:
   - type: StorageFill
     contents:
-      - BoxSurvival
+      - name: BoxSurvival
 
 - type: entity
   abstract: true
@@ -23,9 +23,9 @@
   components:
   - type: StorageFill
     contents:
-      - BoxSurvival
-      - Stunbaton
-      - Flash
+      - name: BoxSurvival
+      - name: Stunbaton
+      - name: Flash
 
 - type: entity
   abstract: true
@@ -34,7 +34,7 @@
   components:
   - type: StorageFill
     contents:
-      - BoxSurvival
+      - name: BoxSurvival
 
 - type: entity
   abstract: true
@@ -43,9 +43,9 @@
   components:
   - type: StorageFill
     contents:
-      - BoxSurvival
-      #- StationCharter
-      #- TelescopicBaton
+      - name: BoxSurvival
+      #- name: StationCharter
+      #- name: TelescopicBaton
 
 - type: entity
   abstract: true
@@ -54,4 +54,4 @@
   components:
   - type: StorageFill
     contents:
-      - BoxSurvival
+      - name: BoxSurvival

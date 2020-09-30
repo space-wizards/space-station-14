@@ -9,10 +9,10 @@
   - type: Collidable
   - type: SnapGrid
     offset: Center
+  - type: Sprite
   - type: Icon
     sprite: Constructible/Atmos/pressurepump.rsi
-    state: pumpEnabledWest2East2
-  - type: Sprite
+    state: pumpEnabledSouth2North2
   - type: Appearance
     visuals:
     - type: PipeVisualizer
@@ -21,6 +21,7 @@
       pumpRSI: Constructible/Atmos/pressurepump.rsi
   - type: Destructible
     thresholdvalue: 100
+    resistances: metallicResistances
 
 - type: entity
   abstract: true

@@ -23,9 +23,6 @@
   - type: Sprite
     sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: scalpel
-  - type: Icon
-    sprite: Objects/Specific/Medical/surgery_tools.rsi
-    state: scalpel
   - type: ItemCooldown
   - type: MeleeWeapon
 
@@ -39,9 +36,6 @@
     surgeryType: Retraction
     baseOperateTime: 3
   - type: Sprite
-    sprite: Objects/Specific/Medical/surgery_tools.rsi
-    state: retractor
-  - type: Icon
     sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: retractor
   - type: ItemCooldown
@@ -59,9 +53,6 @@
   - type: Sprite
     sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: cautery
-  - type: Icon
-    sprite: Objects/Specific/Medical/surgery_tools.rsi
-    state: cautery
   - type: ItemCooldown
   - type: MeleeWeapon
 
@@ -75,9 +66,6 @@
     surgeryType: Drilling
     baseOperateTime: 3
   - type: Sprite
-    sprite: Objects/Specific/Medical/surgery_tools.rsi
-    state: drill
-  - type: Icon
     sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: drill
   - type: ItemCooldown
@@ -95,9 +83,6 @@
   - type: Sprite
     sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: bone_saw
-  - type: Icon
-    sprite: Objects/Specific/Medical/surgery_tools.rsi
-    state: bone_saw
   - type: ItemCooldown
   - type: MeleeWeapon
 
@@ -111,9 +96,6 @@
     surgeryType: VesselCompression
     baseOperateTime: 3
   - type: Sprite
-    sprite: Objects/Specific/Medical/surgery_tools.rsi
-    state: hemostat
-  - type: Icon
     sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: hemostat
   - type: ItemCooldown

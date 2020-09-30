@@ -91,7 +91,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             serializer.DataField(this, x => MaxVolume, "maxVol", ReagentUnit.New(0));
             serializer.DataField(this, x => Solution, "contents", new Solution());
-            serializer.DataField(this, x => Capabilities, "caps", SolutionContainerCaps.AddTo | SolutionContainerCaps.RemoveFrom); 
+            serializer.DataField(this, x => Capabilities, "caps", SolutionContainerCaps.AddTo | SolutionContainerCaps.RemoveFrom);
             serializer.DataField(ref _fillInitState, "fillingState", string.Empty);
             serializer.DataField(ref _fillInitSteps, "fillingSteps", 7);
         }
@@ -147,7 +147,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             {
                 return false;
             }
-                
+
             Solution.RemoveSolution(quantity);
             OnSolutionChanged(false);
             return true;
@@ -179,7 +179,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 {
                     continue;
                 }
-                    
+
                 if (mixColor == default)
                 {
                     mixColor = proto.SubstanceColor;
@@ -229,13 +229,13 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 {
                     return;
                 }
-                    
+
                 if (!hands.GetActiveHand.Owner.TryGetComponent<SolutionContainerComponent>(out var handSolutionComp) ||
                     !handSolutionComp.CanRemoveSolutions ||
                     !component.CanAddSolutions)
                 {
                     return;
-                }          
+                }
 
                 var transferQuantity = ReagentUnit.Min(component.MaxVolume - component.CurrentVolume, handSolutionComp.CurrentVolume, ReagentUnit.New(10));
 
@@ -243,7 +243,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 {
                     return;
                 }
-                 
+
                 var transferSolution = handSolutionComp.SplitSolution(transferQuantity);
                 component.TryAddSolution(transferSolution);
             }
@@ -266,10 +266,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
                 if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype proto))
                 {
-                    var colorStr = $" [color={proto.GetSubstanceTextColor().ToHexNoAlpha()}]";
-                    message.AddText(Loc.GetString("It contains a"));
-                    message.AddMarkup(colorStr + Loc.GetString(proto.PhysicalDescription) + "[/color] ");
-                    message.AddText(Loc.GetString("substance."));
+                    message.AddMarkup(
+                        Loc.GetString("It contains a [color={0}]{1}[/color] substance.",
+                            proto.GetSubstanceTextColor().ToHexNoAlpha(),
+                            Loc.GetString(proto.PhysicalDescription)));
                 }
             }
             else
@@ -278,10 +278,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
                 if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype proto))
                 {
-                    var colorStr = $" [color={SubstanceColor.ToHexNoAlpha()}]";
-                    message.AddText(Loc.GetString("It contains a"));
-                    message.AddMarkup(colorStr + Loc.GetString(proto.PhysicalDescription) + "[/color] ");
-                    message.AddText(Loc.GetString("mixture of substances."));
+                    message.AddMarkup(
+                        Loc.GetString("It contains a [color={0}]{1}[/color] mixture of substances.",
+                            SubstanceColor.ToHexNoAlpha(),
+                            Loc.GetString(proto.PhysicalDescription)));
                 }
             }
         }
@@ -393,9 +393,14 @@ namespace Content.Server.GameObjects.Components.Chemistry
             return true;
         }
 
+        public bool CanAddSolution(Solution solution)
+        {
+            return solution.TotalVolume <= (MaxVolume - Solution.TotalVolume);
+        }
+
         public bool TryAddSolution(Solution solution, bool skipReactionCheck = false, bool skipColor = false)
         {
-            if (solution.TotalVolume > (MaxVolume - Solution.TotalVolume))
+            if (!CanAddSolution(solution))
                 return false;
 
             Solution.AddSolution(solution);

@@ -8,9 +8,7 @@
       visible: false
       sprite: Interface/Misc/markers.rsi
       state: cross_blue
-    - type: Icon
-      sprite: Interface/Misc/markers.rsi
-      state: cross_blue
+
     - type: Marker
     - type: Clickable
     - type: InteractionOutline
@@ -29,9 +27,7 @@
       visible: false
       sprite: Interface/Misc/markers.rsi
       state: spawner_rifle
-    - type: Icon
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_rifle
+
     - type: ConditionalSpawner
       prototypes:
         - RifleAk
@@ -56,9 +52,7 @@
       visible: false
       sprite: Interface/Misc/markers.rsi
       state: spawner_pistol
-    - type: Icon
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_pistol
+
     - type: ConditionalSpawner
       prototypes:
         - PistolClarissa
@@ -86,9 +80,7 @@
       visible: false
       sprite: Interface/Misc/markers.rsi
       state: spawner_melee
-    - type: Icon
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_melee
+
     - type: ConditionalSpawner
       prototypes:
         - ButchCleaver
@@ -111,9 +103,7 @@
       visible: false
       sprite: Interface/Misc/markers.rsi
       state: spawner_revolver
-    - type: Icon
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_revolver
+
     - type: ConditionalSpawner
       prototypes:
         - RevolverDeckard
@@ -133,9 +123,7 @@
       visible: false
       sprite: Interface/Misc/markers.rsi
       state: spawner_shotgun
-    - type: Icon
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_shotgun
+
     - type: ConditionalSpawner
       prototypes:
         - ShotgunBojevic
@@ -159,9 +147,7 @@
       visible: false
       sprite: Interface/Misc/markers.rsi
       state: spawner_smg
-    - type: Icon
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_smg
+
     - type: ConditionalSpawner
       prototypes:
         - SmgAtreides
@@ -183,9 +169,7 @@
       visible: false
       sprite: Interface/Misc/markers.rsi
       state: spawner_sniper
-    - type: Icon
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_sniper
+
     - type: ConditionalSpawner
       prototypes:
         - SniperBoltGun
@@ -205,9 +189,7 @@
       visible: false
       sprite: Interface/Misc/markers.rsi
       state: spawner_hitscan
-    - type: Icon
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_hitscan
+
     - type: ConditionalSpawner
       prototypes:
         - RedLaser
@@ -231,9 +213,7 @@
       visible: false
       sprite: Interface/Misc/markers.rsi
       state: spawner_launcher
-    - type: Icon
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_launcher
+
     - type: ConditionalSpawner
       prototypes:
         - LauncherChinaLake
@@ -252,9 +232,7 @@
       visible: false
       sprite: Interface/Misc/markers.rsi
       state: spawner_grenade
-    - type: Icon
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_grenade
+
     - type: ConditionalSpawner
       prototypes:
         - ExGrenade
@@ -279,9 +257,7 @@
       visible: false
       sprite: Interface/Misc/markers.rsi
       state: spawner_rifle_ammo
-    - type: Icon
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_rifle_ammo
+
     - type: ConditionalSpawner
       prototypes:
         - MagazineSRifle
@@ -304,9 +280,7 @@
       visible: false
       sprite: Interface/Misc/markers.rsi
       state: spawner_shotgun_ammo
-    - type: Icon
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_shotgun_ammo
+
     - type: ConditionalSpawner
       prototypes:
         - MagazineShotgun
@@ -324,9 +298,7 @@
       visible: false
       sprite: Interface/Misc/markers.rsi
       state: spawner_pistol_ammo
-    - type: Icon
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_pistol_ammo
+
     - type: ConditionalSpawner
       prototypes:
         - MagazinePistol
@@ -345,9 +317,7 @@
       visible: false
       sprite: Interface/Misc/markers.rsi
       state: spawner_magnum_ammo
-    - type: Icon
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_magnum_ammo
+
     - type: ConditionalSpawner
       prototypes:
         - MagazineMagnum
@@ -366,9 +336,7 @@
       visible: false
       sprite: Interface/Misc/markers.rsi
       state: spawner_launcher_ammo
-    - type: Icon
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_launcher_ammo
+
     - type: ConditionalSpawner
       prototypes:
         - RocketAmmo

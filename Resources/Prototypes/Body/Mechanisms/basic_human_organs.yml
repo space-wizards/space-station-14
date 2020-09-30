@@ -7,9 +7,6 @@
     netsync: false
     sprite: Mobs/Species/Human/organs.rsi
     state: brain
-  - type: Icon
-    sprite: Mobs/Species/Human/organs.rsi
-    state: brain
   - type: Mechanism
     durability: 10
     size: 1
@@ -25,9 +22,6 @@
     netsync: false
     sprite: Mobs/Species/Human/organs.rsi
     state: eyeballs
-  - type: Icon
-    sprite: Mobs/Species/Human/organs.rsi
-    state: eyeballs
   - type: Mechanism
     durability: 10
     size: 1
@@ -40,9 +34,6 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Mobs/Species/Human/organs.rsi
-    state: heart-on
-  - type: Icon
     sprite: Mobs/Species/Human/organs.rsi
     state: heart-on
   - type: Mechanism
@@ -60,9 +51,6 @@
     netsync: false
     sprite: Mobs/Species/Human/organs.rsi
     state: lungs
-  - type: Icon
-    sprite: Mobs/Species/Human/organs.rsi
-    state: lungs
   - type: Mechanism
     durability: 13
     size: 1
@@ -76,9 +64,6 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Mobs/Species/Human/organs.rsi
-    state: stomach
-  - type: Icon
     sprite: Mobs/Species/Human/organs.rsi
     state: stomach
   - type: Mechanism
@@ -96,9 +81,6 @@
     netsync: false
     sprite: Mobs/Species/Human/organs.rsi
     state: liver
-  - type: Icon
-    sprite: Mobs/Species/Human/organs.rsi
-    state: liver
   - type: Mechanism
     durability: 15
     size: 1
@@ -111,9 +93,6 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Mobs/Species/Human/organs.rsi
-    state: kidneys
-  - type: Icon
     sprite: Mobs/Species/Human/organs.rsi
     state: kidneys
   - type: Mechanism

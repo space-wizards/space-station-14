@@ -21,4 +21,9 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\Postgres" />
+    <Folder Include="Migrations\Sqlite" />
+  </ItemGroup>
+
 </Project>

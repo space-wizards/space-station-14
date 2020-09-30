@@ -4,21 +4,73 @@
   name: "custodial closet"
   description: "It's a storage unit for janitorial clothes and gear."
   components:
-  - type: CustodialClosetFill
+  - type: StorageFill
+    contents:
+      - name: MopItem
+      - name: MopBucket
+      - name: WetFloorSign
+        amount: 3
+      - name: TrashBag
+        amount: 2
 
 - type: entity
   id: LockerToolFilled
   parent: LockerTool
   suffix: Filled
   components:
-  - type: ToolLockerFill
+  - type: StorageFill
+    contents:
+      - name: OuterclothingHazard
+        prob: 0.4
+      - name: FlashlightLantern
+        prob: 0.7
+      - name: Screwdriver
+        prob: 0.7
+      - name: Wrench
+        prob: 0.7
+      - name: Welder
+        prob: 0.7
+      - name: Crowbar
+        prob: 0.7
+      - name: Wirecutter
+        prob: 0.7
+      - name: Multitool
+        prob: 0.2
+      - name: UtilityBeltClothing
+        prob: 0.2
+      - name: GlovesYellow
+        prob: 0.05
+      - name: HatHardhatRed
+        prob: 0.4
+      - name: ApcExtensionCableStack
+        prob: 0.3
+      - name: ApcExtensionCableStack
+        prob: 0.3
+      - name: ApcExtensionCableStack
+        prob: 0.3
 
 - type: entity
   id: LockerEmergencyFilledRandom
   parent: LockerEmergency
   suffix: Filled, Random
   components:
-  - type: EmergencyClosetFill
+  - type: StorageFill
+    contents:
+      - name: ToolboxEmergencyFilled
+        prob: 0.4
+      - name: BreathMaskClothing
+        prob: 0.4
+      - name: BreathMaskClothing
+        prob: 0.25
+      # TODO: uncomment when we actually have these items.
+      #- name: TankOxygenSmallFilled
+      #  prob: 0.4s
+      #- name: TankOxygenSmallFilled
+      #  prob: 0.25
+      #- name: MedkitOxygenFilled
+      #  prob: 0.25
+      #- name: TankOxygenFilled
+      #  prob: 0.2
 
 - type: entity
   id: LockerBoozeFilled

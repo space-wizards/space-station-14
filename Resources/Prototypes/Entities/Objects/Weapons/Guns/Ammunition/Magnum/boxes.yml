@@ -7,8 +7,6 @@
   - type: AmmoBox
     caliber: Magnum
     capacity: 30
-  - type: Icon
-    state: icon
   - type: Sprite
     netsync: false
     layers:
@@ -32,8 +30,6 @@
   - type: AmmoBox
     capacity: 60
     fillPrototype: CartridgeMagnum
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Magnum/magnum_box.rsi
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/Magnum/magnum_box.rsi
 
@@ -45,8 +41,6 @@
   - type: AmmoBox
     capacity: 60
     fillPrototype: CartridgeMagnumFlash
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Magnum/magnum_box_flash.rsi
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/Magnum/magnum_box_flash.rsi
 
@@ -58,8 +52,6 @@
   - type: AmmoBox
     capacity: 60
     fillPrototype: CartridgeMagnumHV
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Magnum/magnum_box_hv.rsi
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/Magnum/magnum_box_hv.rsi
 
@@ -71,8 +63,6 @@
   - type: AmmoBox
     capacity: 60
     fillPrototype: CartridgeMagnumPractice
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Magnum/magnum_box_practice.rsi
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/Magnum/magnum_box_practice.rsi
 
@@ -84,7 +74,5 @@
   - type: AmmoBox
     capacity: 60
     fillPrototype: CartridgeMagnumRubber
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Magnum/magnum_box_rubber.rsi
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/Magnum/magnum_box_rubber.rsi

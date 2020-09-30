@@ -20,9 +20,6 @@ namespace Content.Server.GameObjects.Components.Atmos
     [RegisterComponent]
     public class AirtightComponent : Component, IMapInit
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-
         private (GridId, MapIndices) _lastPosition;
         private AtmosphereSystem _atmosphereSystem = default!;
 
@@ -86,7 +83,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             // will not be airtight. A warning is much easier to track down than the object magically
             // not being airtight, so log one if the SnapGrid component is missing.
             if (!Owner.EnsureComponent(out SnapGridComponent _))
-                Logger.Warning($"Entity {Owner} at {Owner.Transform.MapPosition.ToString()} didn't have a {nameof(SnapGridComponent)}");
+                Logger.Warning($"Entity {Owner} at {Owner.Transform.MapPosition} didn't have a {nameof(SnapGridComponent)}");
 
             Owner.EntityManager.EventBus.SubscribeEvent<RotateEvent>(EventSource.Local, this, RotateEvent);
 
@@ -106,7 +103,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             var newAirBlockedDirs = AtmosDirection.Invalid;
 
             // TODO ATMOS MULTIZ When we make multiZ atmos, special case this.
-            for (int i = 0; i < Atmospherics.Directions; i++)
+            for (var i = 0; i < Atmospherics.Directions; i++)
             {
                 var direction = (AtmosDirection) (1 << i);
                 if (!AirBlockedDirection.HasFlag(direction)) continue;

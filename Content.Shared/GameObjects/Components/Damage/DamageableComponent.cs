@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Content.Shared.Damage;
 using Content.Shared.Damage.DamageContainer;
 using Content.Shared.Damage.ResistanceSet;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -20,7 +21,7 @@ namespace Content.Shared.GameObjects.Components.Damage
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IDamageableComponent))]
-    public class DamageableComponent : Component, IDamageableComponent
+    public class DamageableComponent : Component, IDamageableComponent, IRadiationAct
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -410,6 +411,13 @@ namespace Content.Shared.GameObjects.Components.Damage
             HealthChangedEvent?.Invoke(e);
 
             Dirty();
+        }
+
+        public void RadiationAct(float frameTime, SharedRadiationPulseComponent radiation)
+        {
+            var totalDamage = Math.Max((int)(frameTime * radiation.RadsPerSecond), 1);
+
+            ChangeDamage(DamageType.Radiation, totalDamage, false, radiation.Owner);
         }
 
         public void OnExplosion(ExplosionEventArgs eventArgs)

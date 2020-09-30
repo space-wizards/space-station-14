@@ -32,6 +32,9 @@
   - type: Inventory
   - type: Clickable
   - type: InteractionOutline
+  - type: Icon
+    sprite: Mobs/Species/Human/parts.rsi
+    state: full
   - type: Sprite
     netsync: false
     drawdepth: Mobs
@@ -68,9 +71,15 @@
       sprite: Mobs/Customization/human_hair.rsi
     - map: ["enum.Slots.MASK"]
     - map: ["enum.Slots.HEAD"]
-  - type: Icon
-    sprite: Mobs/Species/Human/parts.rsi
-    state: full
+    - map: ["enum.CreamPiedVisualLayers.Pie"]
+      sprite: Effects/creampie.rsi
+      state: creampie_human
+      visible: false
+    - map: ["enum.FireVisualLayers.Fire"]
+      sprite: Mobs/Effects/onfire.rsi
+      state: Generic_mob_burning
+      visible: false
+
   - type: Physics
     mass: 85
   - type: Collidable
@@ -85,6 +94,9 @@
       - Opaque
       - MobImpassable
   - type: AtmosExposed
+  - type: Flammable
+    fireSpread: true
+    canResistFire: true
   - type: Temperature
     heatDamageThreshold: 360
     coldDamageThreshold: 260
@@ -115,6 +127,11 @@
     visuals:
     - type: RotationVisualizer
     - type: BuckleVisualizer
+    - type: FireVisualizer
+      normalState: Generic_mob_burning
+      alternateState: Standing
+      fireStackAlternateState: 3
+    - type: CreamPiedVisualizer
   - type: CombatMode
   - type: Climbing
   - type: Cuffable
@@ -132,6 +149,7 @@
     proper: true
   - type: Pullable
   - type: DoAfter
+  - type: CreamPied
   - type: Strippable
   - type: UserInterface
     interfaces:
@@ -149,6 +167,9 @@
   components:
     - type: Hands
     - type: Inventory
+    - type: Icon
+      sprite: Mobs/Species/Human/parts.rsi
+      state: full
     - type: Sprite
       netsync: false
       drawdepth: Mobs
@@ -222,9 +243,7 @@
       - map: ["enum.Slots.HEAD"]
       - map: ["hand-left"]
       - map: ["hand-right"]
-    - type: Icon
-      sprite: Mobs/Species/Human/parts.rsi
-      state: full
+
     - type: Physics
       mass: 85
     - type: Collidable

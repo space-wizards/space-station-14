@@ -7,8 +7,7 @@
   components:
   - type: Sprite
     netsync: false
-  - type: Icon
-    state: icon
+
   - type: Item
     size: 24
     state: icon
@@ -49,8 +48,7 @@
       map: ["enum.RangedBarrelVisualLayers.Bolt"]
     - state: mag-0
       map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/SMGs/atreides.rsi
+
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/SMGs/atreides.rsi
@@ -90,8 +88,7 @@
       map: ["enum.RangedBarrelVisualLayers.Bolt"]
     - state: mag-0
       map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
+
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
@@ -133,8 +130,7 @@
         map: ["enum.RangedBarrelVisualLayers.Bolt"]
       - state: mag-0
         map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
+
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
@@ -179,8 +175,7 @@
     - state: mag-unshaded-0
       map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
       shader: unshaded
-  - type: Icon
-    sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
+
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
@@ -216,8 +211,7 @@
       map: ["enum.RangedBarrelVisualLayers.Bolt"]
     - state: mag-0
       map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/SMGs/zoric.rsi
+
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/SMGs/zoric.rsi

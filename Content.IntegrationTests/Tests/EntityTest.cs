@@ -92,30 +92,6 @@ namespace Content.IntegrationTests.Tests
         }
 
         [Test]
-        public async Task NotAbstractIconTest()
-        {
-            var client = StartClient();
-            await client.WaitIdleAsync();
-            var prototypeMan = client.ResolveDependency<IPrototypeManager>();
-
-            client.Assert(() =>
-            {
-                foreach (var prototype in prototypeMan.EnumeratePrototypes<EntityPrototype>())
-                {
-                    if (prototype.Abstract)
-                    {
-                        continue;
-                    }
-
-                    Assert.That(prototype.Components.ContainsKey("Icon"),
-                        $"Entity {prototype.ID} does not have an Icon component, but is not abstract");
-                }
-            });
-
-            await client.WaitIdleAsync();
-        }
-
-        [Test]
         public async Task AllComponentsOneToOneDeleteTest()
         {
             var skipComponents = new[]
