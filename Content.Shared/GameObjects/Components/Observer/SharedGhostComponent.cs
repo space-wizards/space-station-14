@@ -86,7 +86,7 @@ namespace Content.Shared.GameObjects.Components.Observer
     [Serializable, NetSerializable]
     public class GhostReplyPlayerNameData : ComponentMessage
     {
-        public Dictionary<EntityUid,string> PlayerNames = new Dictionary<EntityUid, string>();
+        public Dictionary<EntityUid,string> PlayerNames;
 
         public GhostReplyPlayerNameData(Dictionary<EntityUid, string> playerNameDict)
         {
