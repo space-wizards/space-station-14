@@ -54,7 +54,7 @@ namespace Content.Server.GameObjects.Components.Singularity
             get => _energy;
             set
             {
-                if (value != _energy) return;
+                if (value == _energy) return;
 
                 _energy = value;
                 if (_energy <= 0)
@@ -62,10 +62,9 @@ namespace Content.Server.GameObjects.Components.Singularity
                     SendNetworkMessage(new SingularitySoundMessage(false));
 
                     _singularityController.LinearVelocity = Vector2.Zero;
-                    dyingTransition = true;
                     _spriteComponent.LayerSetVisible(0, false);
 
-                    Timer.Spawn(7500, () => Owner.Delete());
+                    Owner.Delete();
                     return;
                 }
 
@@ -120,10 +119,6 @@ namespace Content.Server.GameObjects.Components.Singularity
         private SpriteComponent _spriteComponent;
         private RadiationPulseComponent _radiationPulseComponent;
 
-        private bool dyingTransition;
-
-        private bool repelled = false;
-
         public override void Initialize()
         {
             base.Initialize();
@@ -147,17 +142,15 @@ namespace Content.Server.GameObjects.Components.Singularity
 
         public void Update()
         {
-            if (dyingTransition)
-            {
-                return;
-            }
-
             Energy -= EnergyDrain;
 
-            if (!repelled)
+            var pushVector = new Vector2((_random.Next(-10, 10)), _random.Next(-10, 10));
+            while (pushVector.X == 0 && pushVector.Y == 0)
             {
-                _singularityController.Push(new Vector2((_random.Next(-10, 10)), _random.Next(-10, 10)).Normalized, 2);
+                pushVector = new Vector2((_random.Next(-10, 10)), _random.Next(-10, 10));
             }
+
+            _singularityController.Push(pushVector.Normalized, 2);
         }
 
         public void TileUpdate()
@@ -172,58 +165,16 @@ namespace Content.Server.GameObjects.Components.Singularity
 
         void ICollideBehavior.CollideWith(IEntity entity)
         {
-            if (repelled)
-            {
-                return;
-            }
-
             if (entity.HasComponent<ContainmentFieldComponent>() || (entity.TryGetComponent<ContainmentFieldGeneratorComponent>(out var component) && component.Power >= 1))
             {
                 return;
-                //repelled = true;
-                //Timer.Spawn(50, () => repelled = false);
-
-                /*if (entity.Transform.WorldRotation.Degrees == -90f ||
-                    entity.Transform.WorldRotation.Degrees == 90f)
-                {
-                    Vector2 normal = new Vector2(0.05f * Math.Sign(Owner.Transform.WorldPosition.X - entity.Transform.WorldPosition.X), 0);
-
-                    if (normal == Vector2.Zero)
-                    {
-                        normal = new Vector2(0.05f, 0);
-                    }
-
-                    _singularityController.LinearVelocity = new Vector2(_singularityController.LinearVelocity.X * -1, _singularityController.LinearVelocity.Y);
-
-                    while (_entityManager.GetEntitiesIntersecting(Owner).Contains(entity))
-                    {
-                        Owner.Transform.WorldPosition += normal;
-                    }
-
-                }
-
-                else
-                {
-                    Vector2 normal = new Vector2(0, 0.05f * Math.Sign(Owner.Transform.WorldPosition.Y - entity.Transform.WorldPosition.Y));
-
-                    if (normal == Vector2.Zero)
-                    {
-                        normal = new Vector2(0, 0.05f);
-                    }
-
-                    _singularityController.LinearVelocity = new Vector2(_singularityController.LinearVelocity.X, _singularityController.LinearVelocity.Y * -1);
-
-                    while (_entityManager.GetEntitiesIntersecting(Owner).Contains(entity))
-                    {
-                        Owner.Transform.WorldPosition += normal;
-                    }
-                }*/
             }
 
             if (ContainerHelpers.IsInContainer(entity)) return;
 
             entity.Delete();
-            Energy++;
+            if(Owner.Transform.Coordinates.X == float.NaN) Console.Write("");
+            Energy+=3;
         }
     }
 }
