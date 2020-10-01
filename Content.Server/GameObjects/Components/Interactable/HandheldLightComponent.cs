@@ -237,6 +237,10 @@ namespace Content.Server.GameObjects.Components.Interactable
                 cell.Owner.Transform.Coordinates = user.Transform.Coordinates;
             }
 
+            // Assuming the battery has just been taken out of the flashlight, make sure it's getting disabled
+            SetState(false);
+            Activated = false;
+
             EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/pistol_magout.ogg", Owner);
         }
 
