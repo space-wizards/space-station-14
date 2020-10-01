@@ -1,6 +1,8 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Construction;
 using Content.Server.GameObjects.Components.GUI;
@@ -23,12 +25,14 @@ using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timers;
 
 
 namespace Content.Server.GameObjects.EntitySystems
@@ -42,6 +46,7 @@ namespace Content.Server.GameObjects.EntitySystems
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IComponentFactory _componentFactory = default!;
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         public override void Initialize()
         {
@@ -51,9 +56,272 @@ namespace Content.Server.GameObjects.EntitySystems
             SubscribeNetworkEvent<TryStartItemConstructionMessage>(HandleStartItemConstruction);
         }
 
-        private void HandleStartItemConstruction(TryStartItemConstructionMessage ev, EntitySessionEventArgs args)
+        private async void HandleStartItemConstruction(TryStartItemConstructionMessage ev, EntitySessionEventArgs args)
         {
-            // TODO CONSTRUCTION
+            var constructionPrototype = _prototypeManager.Index<ConstructionPrototype>(ev.PrototypeName);
+            var constructionGraph = _prototypeManager.Index<ConstructionGraphPrototype>(constructionPrototype.Graph);
+            var startNode = constructionGraph.Nodes[constructionPrototype.StartNode];
+            var targetNode = constructionGraph.Nodes[constructionPrototype.TargetNode];
+            var pathFind = constructionGraph.Path(startNode.Name, targetNode.Name);
+
+            var user = args.SenderSession.AttachedEntity;
+
+            if (user == null || !ActionBlockerSystem.CanInteract(user)) return;
+
+            if (!user.TryGetComponent(out HandsComponent? hands)) return;
+
+            if(pathFind == null)
+                throw new InvalidDataException($"Can't find path from starting node to target node in construction! Recipe: {ev.PrototypeName}");
+
+            var edge = startNode.GetEdge(pathFind[0].Name);
+            var edgeTarget = pathFind[0];
+
+            if(edge == null)
+                throw new InvalidDataException($"Can't find edge from starting node to the next node in pathfinding! Recipe: {ev.PrototypeName}");
+
+            foreach (var step in edge.Steps)
+            {
+                switch (step)
+                {
+                    case ToolConstructionGraphStep _:
+                    case NestedConstructionGraphStep _:
+                        throw new InvalidDataException("Invalid first step for item recipe!");
+                }
+            }
+
+            // We need a place to hold our construction items!
+            var container = ContainerManagerComponent.Ensure<Container>("item_construction", user);
+
+            // If somehow there were items there already...
+            foreach (var entity in container.ContainedEntities)
+            {
+                container.ForceRemove(entity);
+            }
+
+            var containers = new Dictionary<string, Container>();
+
+            var doAfterTime = 0f;
+
+            // HOLY SHIT THIS IS SOME HACKY CODE.
+            // But I'd rather do this shit than risk having collisions with other containers.
+            Container GetContainer(string name)
+            {
+                if (containers!.ContainsKey(name))
+                    return containers[name];
+
+                while (true)
+                {
+                    var random = _robustRandom.Next();
+                    var c = ContainerManagerComponent.Ensure<Container>(random.ToString(), user!, out var existed);
+
+                    if (existed) continue;
+
+                    containers[name] = c;
+                    return c;
+                }
+            }
+
+            void FailCleanup()
+            {
+                foreach (var entity in container!.ContainedEntities.ToArray())
+                {
+                    container.Remove(entity);
+                }
+
+                foreach (var cont in containers!.Values)
+                {
+                    foreach (var entity in cont.ContainedEntities.ToArray())
+                    {
+                        cont.Remove(entity);
+                    }
+                }
+
+                // If we don't do this, items are invisible for some fucking reason. Nice.
+                Timer.Spawn(1, ShutdownContainers);
+            }
+
+            void ShutdownContainers()
+            {
+                container!.Shutdown();
+                foreach (var c in containers!.Values.ToArray())
+                {
+                    c.Shutdown();
+                }
+            }
+
+            // Maybe make this have a limit to prevent lagging?
+            IEnumerable<IEntity> Enumerate()
+            {
+                foreach (var itemComponent in hands?.GetAllHeldItems()!)
+                {
+                    if (itemComponent.Owner.TryGetComponent(out ServerStorageComponent? storage))
+                    {
+                        foreach (var storedEntity in storage.StoredEntities!)
+                        {
+                            yield return storedEntity;
+                        }
+                    }
+
+                    yield return itemComponent.Owner;
+                }
+
+                if (user!.TryGetComponent(out InventoryComponent? inventory))
+                {
+                    foreach (var held in inventory.GetAllHeldItems())
+                    {
+                        if (held.TryGetComponent(out ServerStorageComponent? storage))
+                        {
+                            foreach (var storedEntity in storage.StoredEntities!)
+                            {
+                                yield return storedEntity;
+                            }
+                        }
+
+                        yield return held;
+                    }
+                }
+
+                foreach (var near in _entityManager.GetEntitiesInRange(user!, 2f, true))
+                {
+                    yield return near;
+                }
+            }
+
+            var failed = false;
+
+            foreach (var step in edge.Steps)
+            {
+                doAfterTime += step.DoAfter;
+
+                var handled = false;
+
+                switch (step)
+                {
+                    case MaterialConstructionGraphStep materialStep:
+                        foreach (var entity in Enumerate())
+                        {
+                            if (!entity.TryGetComponent(out StackComponent? stack) || stack.StackType.Equals(materialStep.Material))
+                                continue;
+
+                            if (!stack.Split(materialStep.Amount, user.ToCoordinates(), out var newStack))
+                                continue;
+
+                            if (string.IsNullOrEmpty(materialStep.Store))
+                            {
+                                if (!container.Insert(newStack))
+                                    continue;
+                            }
+                            else if (!GetContainer(materialStep.Store).Insert(newStack))
+                                    continue;
+
+                            handled = true;
+                            break;
+                        }
+
+                        break;
+
+                    case ComponentConstructionGraphStep componentStep:
+                        foreach (var entity in Enumerate())
+                        {
+                            if (!entity.HasComponent(_componentFactory.GetRegistration(componentStep.Component).Type))
+                                continue;
+
+                            if (string.IsNullOrEmpty(componentStep.Store))
+                            {
+                                if (!container.Insert(entity))
+                                    continue;
+                            }
+                            else if (!GetContainer(componentStep.Store).Insert(entity))
+                                continue;
+
+                            handled = true;
+                            break;
+                        }
+
+                        break;
+
+                    case PrototypeConstructionGraphStep prototypeStep:
+                        foreach (var entity in Enumerate())
+                        {
+                            if (entity.Prototype?.ID != prototypeStep.Prototype)
+                                continue;
+
+                            if (string.IsNullOrEmpty(prototypeStep.Store))
+                            {
+                                if (!container.Insert(entity))
+                                    continue;
+                            }
+                            else if (!GetContainer(prototypeStep.Store).Insert(entity))
+                                continue;
+
+                            handled = true;
+                            break;
+                        }
+
+                        break;
+                }
+
+                if (handled == false)
+                {
+                    failed = true;
+                    break;
+                }
+            }
+
+            if (failed)
+            {
+                FailCleanup();
+                return;
+            }
+
+            var doAfterSystem = Get<DoAfterSystem>();
+
+            var doAfterArgs = new DoAfterEventArgs(user, doAfterTime)
+            {
+                BreakOnDamage = true,
+                BreakOnStun = true,
+                BreakOnTargetMove = false,
+                BreakOnUserMove = true,
+                NeedHand = true,
+            };
+
+            if (await doAfterSystem.DoAfter(doAfterArgs) == DoAfterStatus.Cancelled)
+            {
+                FailCleanup();
+                return;
+            }
+
+            var item = _entityManager.SpawnEntity(edgeTarget.Entity, user.Transform.Coordinates);
+
+            // Yes, this should throw if it's missing the component.
+            var construction = item.GetComponent<ConstructionComponent>();
+
+            // We attempt to set the pathfinding target.
+            construction.Target = targetNode;
+
+            // We preserve the containers...
+            foreach (var (name, cont) in containers)
+            {
+                var newCont = ContainerManagerComponent.Ensure<Container>(name, item);
+
+                foreach (var entity in cont.ContainedEntities.ToArray())
+                {
+                    cont.ForceRemove(entity);
+                    newCont.Insert(entity);
+                }
+            }
+
+            // We now get rid of all them.
+            ShutdownContainers();
+
+            // We do have completed effects!
+            foreach (var completed in edge.Completed)
+            {
+                await completed.Completed(item);
+            }
+
+            if(item.TryGetComponent(out ItemComponent? itemComp))
+                hands.PutInHandOrDrop(itemComp);
         }
 
         private async void HandleStartStructureConstruction(TryStartStructureConstructionMessage ev, EntitySessionEventArgs args)
@@ -61,7 +329,6 @@ namespace Content.Server.GameObjects.EntitySystems
             var constructionPrototype = _prototypeManager.Index<ConstructionPrototype>(ev.PrototypeName);
             var constructionGraph = _prototypeManager.Index<ConstructionGraphPrototype>(constructionPrototype.Graph);
             var startNode = constructionGraph.Nodes[constructionPrototype.StartNode];
-            var targetNode = constructionGraph.Nodes[constructionPrototype.TargetNode];
 
             var user = args.SenderSession.AttachedEntity;
 
