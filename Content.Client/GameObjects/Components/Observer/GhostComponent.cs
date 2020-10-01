@@ -47,7 +47,9 @@ namespace Content.Client.GameObjects.Components.Observer
             foreach (var ghost in _componentManager.GetAllComponents(typeof(GhostComponent)))
             {
                 if (ghost.Owner.TryGetComponent(out SpriteComponent? component))
+                {
                     component.Visible = visibility;
+                }
             }
         }
 
@@ -56,11 +58,13 @@ namespace Content.Client.GameObjects.Components.Observer
             base.Initialize();
 
             if (Owner.TryGetComponent(out SpriteComponent? component))
+            {
                 component.Visible =
                     _playerManager.LocalPlayer?.ControlledEntity?.HasComponent<GhostComponent>() ?? false;
+            }
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent component)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
 
@@ -98,7 +102,7 @@ namespace Content.Client.GameObjects.Components.Observer
 
         public void GhostRequestPlayerNames() => SendNetworkMessage(new GhostRequestPlayerNameData());
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
 

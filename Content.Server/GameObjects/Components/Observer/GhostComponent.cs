@@ -44,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Observer
 
         public override ComponentState GetComponentState() => new GhostComponentState(CanReturnToBody);
 
-        public override void HandleMessage(ComponentMessage message, IComponent component)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
 
@@ -63,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Observer
         }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel,
-            ICommonSession session = null!)
+            ICommonSession? session = null!)
         {
             base.HandleNetworkMessage(message, netChannel, session);
 
@@ -95,7 +95,7 @@ namespace Content.Server.GameObjects.Components.Observer
                             {
                                 if (player.AttachedEntity != null && warp.PlayerTarget == player.AttachedEntity.Uid)
                                 {
-                                    session.AttachedEntity!.Transform.Coordinates =
+                                    session?.AttachedEntity!.Transform.Coordinates =
                                         player.AttachedEntity.Transform.Coordinates;
                                 }
                             }
@@ -106,7 +106,7 @@ namespace Content.Server.GameObjects.Components.Observer
                             {
                                 if (warp.WarpName == warpPoint.Location)
                                 {
-                                    session.AttachedEntity!.Transform.Coordinates = warpPoint.Owner.Transform.Coordinates ;
+                                    session?.AttachedEntity!.Transform.Coordinates = warpPoint.Owner.Transform.Coordinates ;
                                 }
                             }
                         }
