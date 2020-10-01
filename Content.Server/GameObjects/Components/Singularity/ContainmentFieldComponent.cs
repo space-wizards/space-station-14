@@ -17,22 +17,32 @@ namespace Content.Server.GameObjects.Components.Singularity
         {
             if (!collidedWith.TryGetComponent<ICollidableComponent>(out var collidableComponent)) return;
 
-            var pushForce = 1f;
-            FrictionController frictionController;
-            if (!collidableComponent.TryGetController<FrictionController>(out frictionController))
-            {
-                frictionController = collidableComponent.EnsureController<FrictionController>();
-                pushForce = 1.2f;
-            }
+            var speed = 5;
+            var containmentFieldRepellController = collidableComponent.EnsureController<ContainmentFieldRepellController>();
+            //if(collidedWith.TryGetComponent<SingularityComponent>())
 
             if (Math.Abs(Owner.Transform.WorldRotation.Degrees + 90f) < 0.1f ||
                 Math.Abs(Owner.Transform.WorldRotation.Degrees - 90f) < 0.1f)
             {
-                frictionController.LinearVelocity = new Vector2(collidableComponent.LinearVelocity.X * -pushForce, collidableComponent.LinearVelocity.Y * pushForce);
+                if (Owner.Transform.WorldPosition.X.CompareTo(collidedWith.Transform.WorldPosition.X) > 0)
+                {
+                    containmentFieldRepellController.Repell(Direction.West, speed);
+                }
+                else
+                {
+                    containmentFieldRepellController.Repell(Direction.East, speed);
+                }
             }
             else
             {
-                frictionController.LinearVelocity = new Vector2(collidableComponent.LinearVelocity.X * pushForce, collidableComponent.LinearVelocity.Y * -pushForce);
+                if (Owner.Transform.WorldPosition.Y.CompareTo(collidedWith.Transform.WorldPosition.Y) > 0)
+                {
+                    containmentFieldRepellController.Repell(Direction.South, speed);
+                }
+                else
+                {
+                    containmentFieldRepellController.Repell(Direction.North, speed);
+                }
             }
         }
     }

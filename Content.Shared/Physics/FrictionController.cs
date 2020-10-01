@@ -5,7 +5,7 @@ using Robust.Shared.Physics;
 
 namespace Content.Shared.Physics
 {
-    public class FrictionController : VirtualController
+    public abstract class FrictionController : VirtualController
     {
         [Dependency] private IPhysicsManager _physicsManager = default!;
 
