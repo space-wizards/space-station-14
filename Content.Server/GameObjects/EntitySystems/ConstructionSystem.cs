@@ -15,6 +15,7 @@ using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
@@ -27,9 +28,11 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
@@ -47,6 +50,8 @@ namespace Content.Server.GameObjects.EntitySystems
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IComponentFactory _componentFactory = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
+
+        private Dictionary<ICommonSession, HashSet<int>> _beingBuilt = new Dictionary<ICommonSession, HashSet<int>>();
 
         public override void Initialize()
         {
@@ -79,6 +84,8 @@ namespace Content.Server.GameObjects.EntitySystems
             if(edge == null)
                 throw new InvalidDataException($"Can't find edge from starting node to the next node in pathfinding! Recipe: {ev.PrototypeName}");
 
+            // No support for conditions here!
+
             foreach (var step in edge.Steps)
             {
                 switch (step)
@@ -90,12 +97,12 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             // We need a place to hold our construction items!
-            var container = ContainerManagerComponent.Ensure<Container>("item_construction", user);
+            var container = ContainerManagerComponent.Ensure<Container>("item_construction", user, out bool existed);
 
-            // If somehow there were items there already...
-            foreach (var entity in container.ContainedEntities)
+            if (existed)
             {
-                container.ForceRemove(entity);
+                user.PopupMessageCursor(Loc.GetString("You can't start another construction now!"));
+                return;
             }
 
             var containers = new Dictionary<string, Container>();
@@ -270,6 +277,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             if (failed)
             {
+                user.PopupMessageCursor(Loc.GetString("You don't have the materials to build that!"));
                 FailCleanup();
                 return;
             }
@@ -332,13 +340,35 @@ namespace Content.Server.GameObjects.EntitySystems
 
             var user = args.SenderSession.AttachedEntity;
 
-            if (user == null || !ActionBlockerSystem.CanInteract(user)) return;
+            if (_beingBuilt.TryGetValue(args.SenderSession, out var set))
+            {
+                if (set.Contains(ev.Ack))
+                {
+                    user.PopupMessageCursor(Loc.GetString("You are already building that!"));
+                    return;
+                }
+            }
+            else
+            {
+                var newSet = new HashSet<int> {ev.Ack};
+                _beingBuilt[args.SenderSession] = newSet;
+            }
 
-            if (!user.TryGetComponent(out HandsComponent? hands)) return;
+            void Cleanup()
+            {
+                _beingBuilt[args.SenderSession].Remove(ev.Ack);
+            }
 
-            if (hands.GetActiveHand == null) return;
+            if (user == null
+                || !ActionBlockerSystem.CanInteract(user)
+                || !user.TryGetComponent(out HandsComponent? hands) || hands.GetActiveHand == null
+                || !user.InRangeUnobstructed(ev.Location, ignoreInsideBlocker:constructionPrototype.CanBuildInImpassable))
+            {
+                Cleanup();
+                return;
+            }
 
-            IEntity? holding = hands.GetActiveHand.Owner;
+            var holding = hands.GetActiveHand.Owner;
 
             var doAfterSystem = Get<DoAfterSystem>();
 
@@ -440,9 +470,12 @@ namespace Content.Server.GameObjects.EntitySystems
 
                         RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));
 
+                        Cleanup();
                         return;
                 }
             }
+
+            Cleanup();
         }
     }
 }

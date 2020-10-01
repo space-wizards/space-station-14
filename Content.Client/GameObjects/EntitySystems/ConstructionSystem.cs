@@ -5,6 +5,8 @@ using Content.Client.UserInterface;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
+using Content.Shared.Maps;
+using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.EntitySystems;
@@ -152,7 +154,10 @@ namespace Content.Client.GameObjects.EntitySystems
         /// </summary>
         public void SpawnGhost(ConstructionPrototype prototype, EntityCoordinates loc, Direction dir)
         {
-            if (GhostPresent(loc))
+            var user = _playerManager.LocalPlayer?.ControlledEntity;
+
+            // This InRangeUnobstructed should probably be replaced with "is there something blocking us in that tile?"
+            if (user == null || GhostPresent(loc) || !user.InRangeUnobstructed(loc, 20f, ignoreInsideBlocker:prototype.CanBuildInImpassable))
             {
                 return;
             }
