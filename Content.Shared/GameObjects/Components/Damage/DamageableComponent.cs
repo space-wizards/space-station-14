@@ -111,6 +111,7 @@ namespace Content.Shared.GameObjects.Components.Damage
         {
             base.ExposeData(serializer);
 
+            // TODO DAMAGE Serialize as a dictionary of damage states to thresholds
             serializer.DataReadWriteFunction(
                 "criticalThreshold",
                 -1,
@@ -168,7 +169,7 @@ namespace Content.Shared.GameObjects.Components.Damage
                     return writeFlags;
                 });
 
-            // TODO Serialize damage done and resistance changes
+            // TODO DAMAGE Serialize damage done and resistance changes
             serializer.DataReadWriteFunction(
                 "damagePrototype",
                 DefaultDamageContainer,
