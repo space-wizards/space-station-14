@@ -1,4 +1,5 @@
 ﻿using System;
+using Content.Shared.Audio;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -23,5 +24,10 @@ namespace Content.Shared.Construction
         }
 
         public abstract void DoExamine(FormattedMessage message, bool inDetailsRange);
+
+        public string GetSound()
+        {
+            return !string.IsNullOrEmpty(SoundCollection) ? AudioHelpers.GetRandomFileFromSoundCollection(SoundCollection) : Sound;
+        }
     }
 }

@@ -10,6 +10,7 @@ using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
+using Content.Shared.Audio;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Interactable;
@@ -445,6 +446,11 @@ namespace Content.Server.GameObjects.EntitySystems
 
                         var entity = _entityManager.SpawnEntity(edgeTarget.Entity, ev.Location);
                         entity.Transform.LocalRotation = ev.Angle;
+
+                        // Play the sound!
+                        var sound = firstStep.GetSound();
+                        if(!string.IsNullOrEmpty(sound))
+                            Get<AudioSystem>().PlayFromEntity(sound, entity, AudioHelpers.WithVariation(0.125f));
 
                         // Yes, this should throw if it's missing the component.
                         var construction = entity.GetComponent<ConstructionComponent>();

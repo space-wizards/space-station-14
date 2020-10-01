@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
+using Content.Shared.Audio;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Mono.Cecil;
 using Robust.Server.GameObjects.Components.Container;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
@@ -197,6 +199,8 @@ namespace Content.Server.GameObjects.Components.Construction
                 NeedHand = true,
             };
 
+            var audioSystem = EntitySystem.Get<AudioSystem>();
+
             switch (step)
             {
                 case ToolConstructionGraphStep toolStep:
@@ -267,6 +271,11 @@ namespace Content.Server.GameObjects.Components.Construction
                             _edgeNestedStepProgress.Remove(list);
 
                         if (!await HandleStep(eventArgs, edge, list[0], true)) continue;
+
+                        var sound = list[0].GetSound();
+                        if(!string.IsNullOrEmpty(sound))
+                            audioSystem.PlayFromEntity(sound, Owner, AudioHelpers.WithVariation(0.125f));
+
                         list.RemoveAt(0);
 
                         // We check again...
@@ -278,6 +287,13 @@ namespace Content.Server.GameObjects.Components.Construction
                         handled = true;
 
                     break;
+            }
+
+            if (handled)
+            {
+                var sound = step.GetSound();
+                if(!string.IsNullOrEmpty(sound))
+                    audioSystem.PlayFromEntity(sound, Owner, AudioHelpers.WithVariation(0.125f));
             }
 
             if (nested && handled) return true;
