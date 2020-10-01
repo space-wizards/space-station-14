@@ -209,7 +209,7 @@ namespace Content.Client.GameObjects.EntitySystems
         }
 
         /// <summary>
-        /// Removes a construction ghost entity with the given ID.
+        ///     Removes a construction ghost entity with the given ID.
         /// </summary>
         public void ClearGhost(int ghostId)
         {
@@ -218,6 +218,19 @@ namespace Content.Client.GameObjects.EntitySystems
                 ghost.Owner.Delete();
                 _ghosts.Remove(ghostId);
             }
+        }
+
+        /// <summary>
+        ///     Removes all construction ghosts.
+        /// </summary>
+        public void ClearAllGhosts()
+        {
+            foreach (var (_, ghost) in _ghosts)
+            {
+                ghost.Owner.Delete();
+            }
+
+            _ghosts.Clear();
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Content.Shared.Construction
     public class ConstructionPrototype : IPrototype, IIndexedPrototype
     {
         private List<string> _keywords;
-        private List<string> _categorySegments;
+        // private List<string> _categorySegments;
 
         /// <summary>
         ///     Friendly name displayed in the construction GUI.
@@ -58,7 +58,9 @@ namespace Content.Shared.Construction
         /// <summary>
         ///     The split up segments of the category.
         /// </summary>
-        public IReadOnlyList<string> CategorySegments => _categorySegments;
+        // public IReadOnlyList<string> CategorySegments => _categorySegments;
+
+        public string Category { get; private set; }
 
         public ConstructionType Type { get; private set; }
 
@@ -80,13 +82,16 @@ namespace Content.Shared.Construction
             ser.DataField(this, x => x.Type, "objectType", ConstructionType.Structure);
             ser.DataField(this, x => x.PlacementMode, "placementMode", "PlaceFree");
             ser.DataField(this, x => x.CanBuildInImpassable, "canBuildInImpassable", false);
+            ser.DataField(this, x => x.Category, "category", string.Empty);
 
             _keywords = ser.ReadDataField("keywords", new List<string>());
-            {
+
+            // Uncomment if we ever go back to a tree view for construction.
+            /*{
                 var cat = ser.ReadDataField<string>("category");
                 var split = cat.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
                 _categorySegments = split.ToList();
-            }
+            }*/
         }
     }
 

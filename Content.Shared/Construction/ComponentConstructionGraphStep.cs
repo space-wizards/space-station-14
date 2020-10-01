@@ -8,6 +8,7 @@ namespace Content.Shared.Construction
     {
         public string Component { get; private set; }
         public string Name { get; private set; }
+        public SpriteSpecifier Icon { get; private set; }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -15,6 +16,7 @@ namespace Content.Shared.Construction
 
             serializer.DataField(this, x => x.Component, "component", string.Empty);
             serializer.DataField(this, x => x.Name, "name", string.Empty);
+            serializer.DataField(this, x => x.Icon, "icon", null);
         }
 
         public override void DoExamine(FormattedMessage message, bool inDetailsRange)

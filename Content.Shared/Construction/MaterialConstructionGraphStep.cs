@@ -9,6 +9,8 @@ namespace Content.Shared.Construction
 {
     public class MaterialConstructionGraphStep : EntityInsertConstructionGraphStep
     {
+        // TODO: Make this use the material system.
+        // TODO TODO: Make the material system not shit.
         public StackType Material { get; private set; }
         public int Amount { get; private set; }
 
