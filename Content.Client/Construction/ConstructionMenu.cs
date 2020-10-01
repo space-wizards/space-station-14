@@ -14,6 +14,7 @@ using Robust.Client.Interfaces.Placement;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Placement;
 using Robust.Client.ResourceManagement;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Utility;
@@ -34,7 +35,7 @@ namespace Content.Client.Construction
         [Dependency] private readonly IEntitySystemManager _systemManager = default!;
         [Dependency] private readonly IPlacementManager _placementManager = default!;
 
-        protected override Vector2? CustomSize => (400, 575);
+        protected override Vector2? CustomSize => (685, 288);
 
         private ConstructionPrototype? _selected;
         private string[] _categories = Array.Empty<string>();
@@ -57,9 +58,9 @@ namespace Content.Client.Construction
 
             Title = "Construction";
 
-            var vbox = new VBoxContainer() {SizeFlagsVertical = SizeFlags.FillExpand};
+            var hbox = new HBoxContainer() {SizeFlagsHorizontal = SizeFlags.FillExpand};
 
-            var recipeContainer = new VBoxContainer() {SizeFlagsVertical = SizeFlags.FillExpand, SizeFlagsStretchRatio = 0.4f};
+            var recipeContainer = new VBoxContainer() {SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 0.45f};
 
             var searchContainer = new HBoxContainer() {SizeFlagsVertical = SizeFlags.FillExpand, SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 0.1f};
             _searchBar = new LineEdit() {PlaceHolder = "Search", SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 0.6f};
@@ -67,7 +68,9 @@ namespace Content.Client.Construction
 
             _recipes = new ItemList() {SelectMode = ItemList.ItemListSelectMode.Single, SizeFlagsVertical = SizeFlags.FillExpand, SizeFlagsStretchRatio = 0.9f};
 
-            var stepsContainer = new VBoxContainer() {SizeFlagsVertical = SizeFlags.FillExpand, SizeFlagsStretchRatio = 0.4f};
+            var spacer = new Control() {SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 0.05f};
+
+            var stepsContainer = new VBoxContainer() {SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 0.45f};
             var targetContainer = new HBoxContainer() {Align = BoxContainer.AlignMode.Center, SizeFlagsVertical = SizeFlags.FillExpand, SizeFlagsStretchRatio = 0.25f};
             _targetTexture = new TextureRect() {SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 0.15f, Stretch = TextureRect.StretchMode.KeepCentered};
             var targetInfoContainer = new VBoxContainer() {SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 0.85f};
@@ -104,10 +107,12 @@ namespace Content.Client.Construction
             buttonContainer.AddChild(_buildButton);
             buttonContainer.AddChild(eraseContainer);
 
-            vbox.AddChild(recipeContainer);
-            vbox.AddChild(stepsContainer);
-            vbox.AddChild(buttonContainer);
-            Contents.AddChild(vbox);
+            stepsContainer.AddChild(buttonContainer);
+
+            hbox.AddChild(recipeContainer);
+            hbox.AddChild(spacer);
+            hbox.AddChild(stepsContainer);
+            Contents.AddChild(hbox);
 
             _recipes.OnItemSelected += RecipeSelected;
             _recipes.OnItemDeselected += RecipeDeselected;
