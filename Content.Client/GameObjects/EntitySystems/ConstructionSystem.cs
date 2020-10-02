@@ -162,6 +162,12 @@ namespace Content.Client.GameObjects.EntitySystems
                 return;
             }
 
+            foreach (var condition in prototype.Conditions)
+            {
+                if (!condition.Condition(user, loc, dir))
+                    return;
+            }
+
             var ghost = _entityManager.SpawnEntity("constructionghost", loc);
             var comp = ghost.GetComponent<ConstructionGhostComponent>();
             comp.Prototype = prototype;

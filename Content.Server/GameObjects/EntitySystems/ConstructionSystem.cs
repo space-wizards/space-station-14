@@ -355,6 +355,12 @@ namespace Content.Server.GameObjects.EntitySystems
                 _beingBuilt[args.SenderSession] = newSet;
             }
 
+            foreach (var condition in constructionPrototype.Conditions)
+            {
+                if (!condition.Condition(user, ev.Location, ev.Angle.GetCardinalDir()))
+                    return;
+            }
+
             void Cleanup()
             {
                 _beingBuilt[args.SenderSession].Remove(ev.Ack);

@@ -30,6 +30,8 @@
   id: Window
   category: Structures
   description: Clear.
+  conditions:
+    - !type:LowWallInTile
   icon:
     sprite: Constructible/Structures/Windows/window.rsi
     state: full
@@ -70,6 +72,8 @@
   id: ReinforcedWindow
   category: Structures
   description: Clear but tough.
+  conditions:
+    - !type:LowWallInTile
   icon:
     sprite: Constructible/Structures/Windows/reinforced_window.rsi
     state: full

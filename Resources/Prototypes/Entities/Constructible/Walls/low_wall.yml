@@ -9,6 +9,7 @@
   components:
   - type: Clickable
   - type: RCDDeconstructWhitelist
+  - type: CanBuildWindowOnTop
   - type: InteractionOutline
   - type: Sprite
     netsync: false

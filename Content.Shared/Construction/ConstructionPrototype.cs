@@ -12,6 +12,7 @@ namespace Content.Shared.Construction
     [Prototype("construction")]
     public class ConstructionPrototype : IPrototype, IIndexedPrototype
     {
+        private List<IConstructionCondition> _conditions;
         private List<string> _keywords;
         // private List<string> _categorySegments;
 
@@ -68,6 +69,8 @@ namespace Content.Shared.Construction
 
         public string PlacementMode { get; private set; }
 
+        public IReadOnlyList<IConstructionCondition> Conditions => _conditions;
+
         public void LoadFrom(YamlMappingNode mapping)
         {
             var ser = YamlObjectSerializer.NewReader(mapping);
@@ -83,6 +86,7 @@ namespace Content.Shared.Construction
             ser.DataField(this, x => x.PlacementMode, "placementMode", "PlaceFree");
             ser.DataField(this, x => x.CanBuildInImpassable, "canBuildInImpassable", false);
             ser.DataField(this, x => x.Category, "category", string.Empty);
+            ser.DataField(ref _conditions, "conditions", new List<IConstructionCondition>());
 
             _keywords = ser.ReadDataField("keywords", new List<string>());
 
