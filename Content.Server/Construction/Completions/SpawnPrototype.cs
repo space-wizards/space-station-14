@@ -7,7 +7,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Server.Construction.Completions
 {
-    public class SpawnPrototype : IEdgeCompleted
+    public class SpawnPrototype : IEdgeCompleted, IStepCompleted
     {
         public string Prototype { get; private set; }
         public int Amount { get; private set; }
@@ -16,6 +16,11 @@ namespace Content.Server.Construction.Completions
         {
             serializer.DataField(this, x => x.Prototype, "prototype", string.Empty);
             serializer.DataField(this, x => x.Amount, "amount", 1);
+        }
+
+        public async Task StepCompleted(IEntity entity)
+        {
+            await Completed(entity);
         }
 
         public async Task Completed(IEntity entity)

@@ -37,6 +37,8 @@ namespace Content.Server.GameObjects.Components.Construction
 
         public override string Name => "Construction";
 
+        private bool _handling = false;
+
         private string _graphIdentifier = string.Empty;
         private string _startingNodeIdentifier = string.Empty;
 
@@ -138,10 +140,20 @@ namespace Content.Server.GameObjects.Components.Construction
 
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (Edge == null)
-                return await HandleNode(eventArgs);
+            if (_handling)
+                return true;
 
-            return await HandleEdge(eventArgs);
+            _handling = true;
+            var result = false;
+
+            if (Edge == null)
+                result = await HandleNode(eventArgs);
+            else
+                result = await HandleEdge(eventArgs);
+
+            _handling = false;
+
+            return result;
         }
 
         private async Task<bool> HandleNode(InteractUsingEventArgs eventArgs)
@@ -291,6 +303,14 @@ namespace Content.Server.GameObjects.Components.Construction
 
             if (handled)
             {
+                foreach (var completed in step.Completed)
+                {
+                    await completed.StepCompleted(Owner);
+
+                    if (Owner.Deleted)
+                        return false;
+                }
+
                 var sound = step.GetSound();
                 if(!string.IsNullOrEmpty(sound))
                     audioSystem.PlayFromEntity(sound, Owner, AudioHelpers.WithVariation(0.125f));

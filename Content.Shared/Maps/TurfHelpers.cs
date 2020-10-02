@@ -194,7 +194,7 @@ namespace Content.Shared.Maps
         {
             var map = IoCManager.Resolve<IMapManager>();
             var tileGrid = map.GetGrid(turf.GridIndex);
-            var tileBox = Box2.UnitCentered.Scale(tileGrid.TileSize);
+            var tileBox = Box2.UnitCentered.Scale(tileGrid.TileSize).Scale(0.9f);
             return tileBox.Translated(tileGrid.GridTileToWorldPos(turf.GridIndices));
         }
 

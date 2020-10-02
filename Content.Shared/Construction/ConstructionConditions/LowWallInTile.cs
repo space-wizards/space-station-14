@@ -15,13 +15,19 @@ namespace Content.Shared.Construction.ConstructionConditions
 
         public bool Condition(IEntity user, EntityCoordinates location, Direction direction)
         {
-            foreach (var entity in location.GetEntitiesInTile())
+            var lowWall = false;
+
+            foreach (var entity in location.GetEntitiesInTile(true))
             {
                 if (entity.HasComponent<SharedCanBuildWindowOnTopComponent>())
-                    return true;
+                    lowWall = true;
+
+                // Already has a window.
+                if (entity.HasComponent<SharedWindowComponent>())
+                    return false;
             }
 
-            return false;
+            return lowWall;
         }
     }
 }

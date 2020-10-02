@@ -250,6 +250,9 @@
     key: walls
     base: solid
     reinforcedBase: reinf_over
+  - type: Appearance
+    visuals:
+      - type: ReinforcedWallVisualizer
 
 # Riveting
 - type: entity

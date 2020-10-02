@@ -453,6 +453,15 @@ namespace Content.Server.GameObjects.EntitySystems
                         var entity = _entityManager.SpawnEntity(edgeTarget.Entity, ev.Location);
                         entity.Transform.LocalRotation = ev.Angle;
 
+                        // We have step completions!
+                        foreach (var completed in firstStep.Completed)
+                        {
+                            await completed.StepCompleted(entity);
+
+                            if (entity.Deleted)
+                                return;
+                        }
+
                         // Play the sound!
                         var sound = firstStep.GetSound();
                         if(!string.IsNullOrEmpty(sound))

@@ -9,13 +9,18 @@ using Robust.Shared.Serialization;
 
 namespace Content.Server.Construction.Completions
 {
-    public class EmptyContainer : IEdgeCompleted
+    public class EmptyContainer : IEdgeCompleted, IStepCompleted
     {
         public string Container { get; private set; } = string.Empty;
 
         public void ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.Container, "container", string.Empty);
+        }
+
+        public async Task StepCompleted(IEntity entity)
+        {
+            await Completed(entity);
         }
 
         public async Task Completed(IEntity entity)

@@ -16,15 +16,17 @@ namespace Content.Shared.Construction
     public class ConstructionGraphEdge : IExposeData
     {
         private List<ConstructionGraphStep> _steps = new List<ConstructionGraphStep>();
+        private List<IEdgeCondition> _conditions;
+        private List<IEdgeCompleted> _completed;
 
         [ViewVariables]
         public string Target { get; private set; }
 
         [ViewVariables]
-        public List<IEdgeCondition> Conditions { get; private set; }
+        public IReadOnlyList<IEdgeCondition> Conditions => _conditions;
 
         [ViewVariables]
-        public List<IEdgeCompleted> Completed { get; private set; }
+        public IReadOnlyList<IEdgeCompleted> Completed => _completed;
 
         [ViewVariables]
         public IReadOnlyList<ConstructionGraphStep> Steps => _steps;
@@ -35,8 +37,8 @@ namespace Content.Shared.Construction
 
             serializer.DataField(this, x => x.Target, "to", string.Empty);
             if (!moduleManager.IsServerModule) return;
-            serializer.DataField(this, x => x.Conditions, "conditions", new List<IEdgeCondition>());
-            serializer.DataField(this, x => x.Completed, "completed", new List<IEdgeCompleted>());
+            serializer.DataField(ref _conditions, "conditions", new List<IEdgeCondition>());
+            serializer.DataField(ref _completed, "completed", new List<IEdgeCompleted>());
         }
 
         public void LoadFrom(YamlMappingNode mapping)

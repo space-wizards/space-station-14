@@ -31,7 +31,7 @@
   category: Structures
   description: Clear.
   conditions:
-    - !type:LowWallInTile
+    - !type:LowWallInTile {}
   icon:
     sprite: Constructible/Structures/Windows/window.rsi
     state: full
@@ -73,7 +73,7 @@
   category: Structures
   description: Clear but tough.
   conditions:
-    - !type:LowWallInTile
+    - !type:LowWallInTile {}
   icon:
     sprite: Constructible/Structures/Windows/reinforced_window.rsi
     state: full
