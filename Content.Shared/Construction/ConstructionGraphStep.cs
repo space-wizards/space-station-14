@@ -16,7 +16,6 @@ namespace Content.Shared.Construction
         public float DoAfter { get; private set; }
         public string Sound { get; private set; }
         public string SoundCollection { get; private set; }
-        public string SpriteState { get; private set; }
         public string Popup { get; private set; }
         public IReadOnlyList<IStepCompleted> Completed => _completed;
 
@@ -27,7 +26,6 @@ namespace Content.Shared.Construction
             serializer.DataField(this, x => x.DoAfter, "doAfter", 0f);
             serializer.DataField(this, x => x.Sound, "sound", string.Empty);
             serializer.DataField(this, x => x.SoundCollection, "soundCollection", string.Empty);
-            serializer.DataField(this, x => x.SpriteState, "spriteState", string.Empty);
             if (!moduleManager.IsServerModule) return;
             serializer.DataField(ref _completed, "completed", new List<IStepCompleted>());
         }

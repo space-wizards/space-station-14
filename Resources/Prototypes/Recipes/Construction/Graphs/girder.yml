@@ -61,6 +61,8 @@
         - to: reinforcedGirder
           completed:
             - !type:SnapToGrid { }
+            - !type:SpriteChange
+              specifier: "/Textures/Constructible/Structures/Walls/reinforced_wall_girder.png"
           conditions:
             - !type:EntityAnchored {}
           steps:

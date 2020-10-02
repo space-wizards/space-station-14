@@ -4,19 +4,15 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Construction
 {
-    public class PrototypeConstructionGraphStep : EntityInsertConstructionGraphStep
+    public class PrototypeConstructionGraphStep : ArbitraryInsertConstructionGraphStep
     {
         public string Prototype { get; private set; }
-        public string Name { get; private set; }
-        public SpriteSpecifier Icon { get; private set; }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
             serializer.DataField(this, x => x.Prototype, "prototype", string.Empty);
-            serializer.DataField(this, x => x.Name, "name", string.Empty);
-            serializer.DataField(this, x => x.Icon, "icon", null);
         }
 
         public override void DoExamine(FormattedMessage message, bool inDetailsRange)

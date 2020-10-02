@@ -343,7 +343,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             if (_beingBuilt.TryGetValue(args.SenderSession, out var set))
             {
-                if (set.Contains(ev.Ack))
+                if (!set.Add(ev.Ack))
                 {
                     user.PopupMessageCursor(Loc.GetString("You are already building that!"));
                     return;
