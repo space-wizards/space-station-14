@@ -18,12 +18,12 @@ namespace Content.Server.Construction.Completions
             serializer.DataField(this, x => x.Container, "container", string.Empty);
         }
 
-        public async Task StepCompleted(IEntity entity)
+        public async Task StepCompleted(IEntity entity, IEntity user)
         {
-            await Completed(entity);
+            await Completed(entity, user);
         }
 
-        public async Task Completed(IEntity entity)
+        public async Task Completed(IEntity entity, IEntity user)
         {
             if (entity.Deleted) return;
 

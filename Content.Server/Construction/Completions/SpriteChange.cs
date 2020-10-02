@@ -19,12 +19,12 @@ namespace Content.Server.Construction.Completions
         public int Layer { get; private set; } = 0;
         public SpriteSpecifier SpriteSpecifier { get; private set; } = SpriteSpecifier.Invalid;
 
-        public async Task StepCompleted(IEntity entity)
+        public async Task StepCompleted(IEntity entity, IEntity user)
         {
-            await Completed(entity);
+            await Completed(entity, user);
         }
 
-        public async Task Completed(IEntity entity)
+        public async Task Completed(IEntity entity, IEntity user)
         {
             if (entity.Deleted) return;
 

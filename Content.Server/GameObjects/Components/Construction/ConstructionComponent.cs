@@ -284,9 +284,14 @@ namespace Content.Server.GameObjects.Components.Construction
 
                         if (!await HandleStep(eventArgs, edge, list[0], true)) continue;
 
-                        var sound = list[0].GetSound();
-                        if(!string.IsNullOrEmpty(sound))
-                            audioSystem.PlayFromEntity(sound, Owner, AudioHelpers.WithVariation(0.125f));
+                        // We do have completed effects for this!
+                        foreach (var completed in list[0].Completed)
+                        {
+                            await completed.StepCompleted(Owner, eventArgs.User);
+
+                            if (Owner.Deleted)
+                                return false;
+                        }
 
                         list.RemoveAt(0);
 
@@ -305,15 +310,11 @@ namespace Content.Server.GameObjects.Components.Construction
             {
                 foreach (var completed in step.Completed)
                 {
-                    await completed.StepCompleted(Owner);
+                    await completed.StepCompleted(Owner, eventArgs.User);
 
                     if (Owner.Deleted)
                         return false;
                 }
-
-                var sound = step.GetSound();
-                if(!string.IsNullOrEmpty(sound))
-                    audioSystem.PlayFromEntity(sound, Owner, AudioHelpers.WithVariation(0.125f));
             }
 
             if (nested && handled) return true;
@@ -323,7 +324,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
             if (edge.Steps.Count == EdgeStep)
             {
-                await HandleCompletion(edge);
+                await HandleCompletion(edge, eventArgs.User);
             }
 
             UpdateTarget();
@@ -331,7 +332,7 @@ namespace Content.Server.GameObjects.Components.Construction
             return true;
         }
 
-        private async Task<bool> HandleCompletion(ConstructionGraphEdge edge)
+        private async Task<bool> HandleCompletion(ConstructionGraphEdge edge, IEntity user)
         {
             if (edge.Steps.Count != EdgeStep)
             {
@@ -350,7 +351,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
             foreach (var completed in edge.Completed)
             {
-                await completed.Completed(Owner);
+                await completed.Completed(Owner, user);
                 if (Owner.Deleted) return true;
             }
 

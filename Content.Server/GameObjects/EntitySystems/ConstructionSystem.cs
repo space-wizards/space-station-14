@@ -326,7 +326,7 @@ namespace Content.Server.GameObjects.EntitySystems
             // We do have completed effects!
             foreach (var completed in edge.Completed)
             {
-                await completed.Completed(item);
+                await completed.Completed(item, user);
             }
 
             if(item.TryGetComponent(out ItemComponent? itemComp))
@@ -456,16 +456,11 @@ namespace Content.Server.GameObjects.EntitySystems
                         // We have step completions!
                         foreach (var completed in firstStep.Completed)
                         {
-                            await completed.StepCompleted(entity);
+                            await completed.StepCompleted(entity, user);
 
                             if (entity.Deleted)
                                 return;
                         }
-
-                        // Play the sound!
-                        var sound = firstStep.GetSound();
-                        if(!string.IsNullOrEmpty(sound))
-                            Get<AudioSystem>().PlayFromEntity(sound, entity, AudioHelpers.WithVariation(0.125f));
 
                         // Yes, this should throw if it's missing the component.
                         var construction = entity.GetComponent<ConstructionComponent>();
@@ -486,7 +481,7 @@ namespace Content.Server.GameObjects.EntitySystems
                         // We do have completed effects!
                         foreach (var completed in edge.Completed)
                         {
-                            await completed.Completed(entity);
+                            await completed.Completed(entity, user);
                         }
 
                         RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));

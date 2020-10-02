@@ -29,12 +29,12 @@ namespace Content.Server.Construction.Completions
         public string Key { get; private set; }
         public int Data { get; private set; }
 
-        public async Task StepCompleted(IEntity entity)
+        public async Task StepCompleted(IEntity entity, IEntity user)
         {
-            await Completed(entity);
+            await Completed(entity, user);
         }
 
-        public async Task Completed(IEntity entity)
+        public async Task Completed(IEntity entity, IEntity user)
         {
             if (entity.TryGetComponent(out AppearanceComponent appearance))
             {

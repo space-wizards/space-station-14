@@ -7,6 +7,6 @@ namespace Content.Shared.Construction
 {
     public interface IEdgeCompleted : IExposeData
     {
-        Task Completed(IEntity entity);
+        Task Completed(IEntity entity, IEntity user);
     }
 }

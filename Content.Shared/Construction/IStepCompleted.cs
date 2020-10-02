@@ -6,6 +6,6 @@ namespace Content.Shared.Construction
 {
     public interface IStepCompleted : IExposeData
     {
-        Task StepCompleted(IEntity entity);
+        Task StepCompleted(IEntity entity, IEntity user);
     }
 }
