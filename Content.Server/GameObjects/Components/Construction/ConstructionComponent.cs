@@ -441,17 +441,30 @@ namespace Content.Server.GameObjects.Components.Construction
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
             if(Target != null)
-                message.AddMarkup(Loc.GetString("To create {0}...\n", Target.Name));
+                message.AddMarkup(Loc.GetString("To create {0:a} {0}...\n", Target.Name));
 
-            if (Edge == null)
+            if (Edge == null && TargetNextEdge != null)
             {
-                TargetNextEdge?.Steps[0].DoExamine(message, inDetailsRange);
+                foreach (var condition in TargetNextEdge.Conditions)
+                {
+                    condition.DoExamine(Owner, message, inDetailsRange);
+                }
+
+                TargetNextEdge.Steps[0].DoExamine(message, inDetailsRange);
                 return;
+            }
+
+            if (Edge != null)
+            {
+                foreach (var condition in Edge.Conditions)
+                {
+                    condition.DoExamine(Owner, message, inDetailsRange);
+                }
             }
 
             if (_edgeNestedStepProgress == null)
             {
-                if(EdgeStep < Edge.Steps.Count)
+                if(EdgeStep < Edge?.Steps.Count)
                     Edge.Steps[EdgeStep].DoExamine(message, inDetailsRange);
                 return;
             }

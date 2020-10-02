@@ -4,6 +4,7 @@ using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Construction.Conditions
 {
@@ -22,6 +23,17 @@ namespace Content.Server.Construction.Conditions
             if (!entity.TryGetComponent(out WiresComponent wires)) return false;
 
             return wires.IsPanelOpen == Open;
+        }
+
+        public void DoExamine(IEntity entity, FormattedMessage message, bool inDetailsRange)
+        {
+            if (!entity.TryGetComponent(out WiresComponent wires)) return;
+
+            if(Open && !wires.IsPanelOpen)
+                message.AddMarkup("First, open the maintenance panel.\n");
+
+            if(!Open && wires.IsPanelOpen)
+                message.AddMarkup("First, close the maintenance panel.\n");
         }
     }
 }

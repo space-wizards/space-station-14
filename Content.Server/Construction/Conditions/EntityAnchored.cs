@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Construction.Conditions
 {
@@ -22,6 +23,17 @@ namespace Content.Server.Construction.Conditions
             if (!entity.TryGetComponent(out ICollidableComponent collidable)) return false;
 
             return collidable.Anchored == Anchored;
+        }
+
+        public void DoExamine(IEntity entity, FormattedMessage message, bool inDetailsRange)
+        {
+            if (!entity.TryGetComponent(out ICollidableComponent collidable)) return;
+
+            if(Anchored && !collidable.Anchored)
+                message.AddMarkup("First, anchor it.\n");
+
+            if(!Anchored && collidable.Anchored)
+                message.AddMarkup("First, unanchor it.\n");
         }
     }
 }
