@@ -39,6 +39,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
         private bool _handling = false;
 
+        private TaskCompletionSource<object>? _handlingTask = null;
         private string _graphIdentifier = string.Empty;
         private string _startingNodeIdentifier = string.Empty;
 
@@ -143,6 +144,7 @@ namespace Content.Server.GameObjects.Components.Construction
             if (_handling)
                 return true;
 
+            _handlingTask = new TaskCompletionSource<object>();
             _handling = true;
             var result = false;
 
@@ -152,6 +154,7 @@ namespace Content.Server.GameObjects.Components.Construction
                 result = await HandleEdge(eventArgs);
 
             _handling = false;
+            _handlingTask.SetResult(null!);
 
             return result;
         }
@@ -436,6 +439,18 @@ namespace Content.Server.GameObjects.Components.Construction
             {
                 Logger.Error($"Couldn't find prototype {_graphIdentifier} in construction component!");
             }
+        }
+
+        public async Task ChangeNode(string node)
+        {
+            var graphNode = GraphPrototype.Nodes[node];
+
+            if (_handling && _handlingTask?.Task != null)
+                await _handlingTask.Task;
+
+            Edge = null;
+            Node = graphNode;
+            await HandleEntityChange(graphNode);
         }
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)

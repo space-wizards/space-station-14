@@ -40,7 +40,7 @@
     wireType: HighVoltage
   - type: Destructible
     resistances: metallicResistances
-    spawnondestroy: HVWireStack1
+    spawnOnDestroy: HVWireStack1
 
 - type: entity
   parent: WireBase
@@ -63,7 +63,7 @@
     wireType: MediumVoltage
   - type: Destructible
     resistances: metallicResistances
-    spawnondestroy: MVWireStack1
+    spawnOnDestroy: MVWireStack1
 
 - type: entity
   parent: WireBase
@@ -88,4 +88,4 @@
     wireType: Apc
   - type: Destructible
     resistances: metallicResistances
-    spawnondestroy: ApcExtensionCableStack1
+    spawnOnDestroy: ApcExtensionCableStack1

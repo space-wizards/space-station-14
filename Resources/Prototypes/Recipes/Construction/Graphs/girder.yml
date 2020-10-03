@@ -28,27 +28,6 @@
             - tool: Screwing
               doAfter: 2
 
-        - to: fakeWall
-          completed:
-            - !type:SnapToGrid {}
-          conditions:
-            - !type:EntityAnchored
-              anchored: false
-          steps:
-            - material: Metal
-              amount: 2
-              doAfter: 1
-
-        - to: fakeReinforcedWall
-          completed:
-            - !type:SnapToGrid {}
-          conditions:
-            - !type:EntityAnchored
-              anchored: false
-          steps:
-            - material: Plasteel
-              doAfter: 2
-
         - to: wall
           completed:
             - !type:SnapToGrid {}
@@ -68,22 +47,6 @@
           steps:
             - material: Plasteel
               amount: 2
-
-    - node: fakeWall
-      entity: FakeWall
-      edges:
-        - to: girder
-          steps:
-            - tool: Welding
-              doAfter: 2
-
-    - node: fakeReinforcedWall
-      entity: FakeReinforcedWall
-      edges:
-        - to: girder
-          steps:
-            - tool: Welding
-              doAfter: 2
 
     - node: wall
       entity: solid_wall

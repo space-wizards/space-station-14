@@ -24,7 +24,7 @@
   - type: Destructible
     maxHP: 500
     resistances: metallicResistances
-    spawnondestroy: AMEPart
+    spawnOnDestroy: AMEPart
   - type: SnapGrid
     offset: Center
   - type: Airtight
