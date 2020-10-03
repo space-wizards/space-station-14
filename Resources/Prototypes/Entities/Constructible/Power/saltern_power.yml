@@ -34,7 +34,7 @@
 
 - type: entity
   id: SalternApc
-  description: A control terminal for the area electrical systems.
+  description: A control terminal for the area's electrical systems.
   parent: BaseApc
   name: Apc
   components:
