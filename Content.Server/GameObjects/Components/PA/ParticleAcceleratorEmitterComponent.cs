@@ -31,6 +31,44 @@ namespace Content.Server.GameObjects.Components.PA
             }
         }
 
+        protected override void RegisterAtParticleAccelerator()
+        {
+            switch (Type)
+            {
+                case ParticleAcceleratorEmitterType.Left:
+                    ParticleAccelerator.EmitterLeft = this;
+                    break;
+                case ParticleAcceleratorEmitterType.Center:
+                    ParticleAccelerator.EmitterCenter = this;
+                    break;
+                case ParticleAcceleratorEmitterType.Right:
+                    ParticleAccelerator.EmitterRight = this;
+                    break;
+                default:
+                    Logger.Error("Emittercomponent without Type somehow got initialized (Error at register)");
+                    break;
+            }
+        }
+
+        protected override void UnRegisterAtParticleAccelerator()
+        {
+            switch (Type)
+            {
+                case ParticleAcceleratorEmitterType.Left:
+                    ParticleAccelerator.EmitterLeft = null;
+                    break;
+                case ParticleAcceleratorEmitterType.Center:
+                    ParticleAccelerator.EmitterCenter = null;
+                    break;
+                case ParticleAcceleratorEmitterType.Right:
+                    ParticleAccelerator.EmitterRight = null;
+                    break;
+                default:
+                    Logger.Error("Emittercomponent without Type somehow got initialized (Error at unregister)");
+                    break;
+            }
+        }
+
         public override string ToString()
         {
             return base.ToString() + $" EmitterType:{Type}";

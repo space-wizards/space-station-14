@@ -7,10 +7,14 @@ namespace Content.Server.GameObjects.Components.PA
     {
         public override string Name => "ParticleAcceleratorFuelChamber";
 
-        public override void Initialize()
+        protected override void RegisterAtParticleAccelerator()
         {
-            base.Initialize();
             ParticleAccelerator.FuelChamber = this;
+        }
+
+        protected override void UnRegisterAtParticleAccelerator()
+        {
+            ParticleAccelerator.FuelChamber = null;
         }
     }
 }

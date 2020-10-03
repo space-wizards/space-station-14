@@ -10,11 +10,14 @@ namespace Content.Server.GameObjects.Components.PA
     {
         public override string Name => "ParticleAcceleratorControlBox";
 
-        public override void Initialize()
+        protected override void RegisterAtParticleAccelerator()
         {
-            base.Initialize();
-
             ParticleAccelerator.ControlBox = this;
+        }
+
+        protected override void UnRegisterAtParticleAccelerator()
+        {
+            ParticleAccelerator.ControlBox = null;
         }
 
         public bool InteractHand(InteractHandEventArgs eventArgs)

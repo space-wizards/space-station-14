@@ -7,10 +7,14 @@ namespace Content.Server.GameObjects.Components.PA
     {
         public override string Name => "ParticleAcceleratorPowerBox";
 
-        public override void Initialize()
+        protected override void RegisterAtParticleAccelerator()
         {
-            base.Initialize();
             ParticleAccelerator.PowerBox = this;
+        }
+
+        protected override void UnRegisterAtParticleAccelerator()
+        {
+            ParticleAccelerator.PowerBox = null;
         }
     }
 }

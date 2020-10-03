@@ -7,10 +7,14 @@ namespace Content.Server.GameObjects.Components.PA
     {
         public override string Name => "ParticleAcceleratorEndCap";
 
-        public override void Initialize()
+        protected override void RegisterAtParticleAccelerator()
         {
-            base.Initialize();
             ParticleAccelerator.EndCap = this;
+        }
+
+        protected override void UnRegisterAtParticleAccelerator()
+        {
+            ParticleAccelerator.EndCap = null;
         }
     }
 }

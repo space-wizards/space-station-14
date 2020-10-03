@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components;
+using Content.Shared.GameObjects.Components.Atmos;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems.TileLookup;
 using Robust.Shared.GameObjects;
@@ -42,7 +43,7 @@ namespace Content.Server.GameObjects.Components.PA
             if(!TryAddPart(ref _controlBox, value, out var gridId)) return;
 
             if (!skipFuelChamberCheck &&
-                TryGetPart<ParticleAcceleratorFuelChamberComponent>(gridId, Direction.South, value, out var fuelChamber))
+                TryGetPart<ParticleAcceleratorFuelChamberComponent>(gridId, PartOffset.Right, value, out var fuelChamber))
             {
                 SetFuelChamber(fuelChamber, skipControlBoxCheck: true);
             }
@@ -59,7 +60,7 @@ namespace Content.Server.GameObjects.Components.PA
             if(!TryAddPart(ref _endCap, value, out var gridId)) return;
 
             if (!skipFuelChamberCheck &&
-                TryGetPart<ParticleAcceleratorFuelChamberComponent>(gridId, Direction.West, value, out var fuelChamber))
+                TryGetPart<ParticleAcceleratorFuelChamberComponent>(gridId, PartOffset.Down, value, out var fuelChamber))
             {
                 SetFuelChamber(fuelChamber, skipEndCapCheck: true);
             }
@@ -76,19 +77,19 @@ namespace Content.Server.GameObjects.Components.PA
             if(!TryAddPart(ref _fuelChamber, value, out var gridId)) return;
 
             if (!skipControlBoxCheck &&
-                TryGetPart<ParticleAcceleratorControlBoxComponent>(gridId, Direction.North, value, out var controlBox))
+                TryGetPart<ParticleAcceleratorControlBoxComponent>(gridId, PartOffset.Left, value, out var controlBox))
             {
                 SetControlBox(controlBox, skipFuelChamberCheck: true);
             }
 
             if (!skipEndCapCheck &&
-                TryGetPart<ParticleAcceleratorEndCapComponent>(gridId, Direction.East, value, out var endCap))
+                TryGetPart<ParticleAcceleratorEndCapComponent>(gridId, PartOffset.Up, value, out var endCap))
             {
                 SetEndCap(endCap, skipFuelChamberCheck: true);
             }
 
             if (!skipPowerBoxCheck &&
-                TryGetPart<ParticleAcceleratorPowerBoxComponent>(gridId, Direction.West, value, out var powerBox))
+                TryGetPart<ParticleAcceleratorPowerBoxComponent>(gridId, PartOffset.Down, value, out var powerBox))
             {
                 SetPowerBox(powerBox, skipFuelChamberCheck: true);
             }
@@ -106,12 +107,12 @@ namespace Content.Server.GameObjects.Components.PA
             if(!TryAddPart(ref _powerBox, value, out var gridId)) return;
 
             if (!skipFuelChamberCheck &&
-                TryGetPart<ParticleAcceleratorFuelChamberComponent>(gridId, Direction.East, value, out var fuelChamber))
+                TryGetPart<ParticleAcceleratorFuelChamberComponent>(gridId, PartOffset.Up, value, out var fuelChamber))
             {
                 SetFuelChamber(fuelChamber, skipPowerBoxCheck: true);
             }
 
-            if (!skipEmitterCenterCheck && TryGetPart(gridId, Direction.West, value,
+            if (!skipEmitterCenterCheck && TryGetPart(gridId, PartOffset.Down, value,
                 ParticleAcceleratorEmitterType.Center, out var emitterComponent))
             {
                 SetEmitterCenter(emitterComponent, skipPowerBoxCheck: true);
@@ -134,7 +135,7 @@ namespace Content.Server.GameObjects.Components.PA
 
             if(!TryAddPart(ref _emitterLeft, value, out var gridId)) return;
 
-            if (!skipEmitterCenterCheck && TryGetPart(gridId, Direction.South, value,
+            if (!skipEmitterCenterCheck && TryGetPart(gridId, PartOffset.Right, value,
                 ParticleAcceleratorEmitterType.Center, out var emitterComponent))
             {
                 SetEmitterCenter(emitterComponent, skipEmitterLeftCheck: true);
@@ -158,13 +159,13 @@ namespace Content.Server.GameObjects.Components.PA
 
             if(!TryAddPart(ref _emitterCenter, value, out var gridId)) return;
 
-            if (!skipEmitterLeftCheck && TryGetPart(gridId, Direction.North, value, ParticleAcceleratorEmitterType.Left,
+            if (!skipEmitterLeftCheck && TryGetPart(gridId, PartOffset.Left, value, ParticleAcceleratorEmitterType.Left,
                 out var emitterLeft))
             {
                 SetEmitterLeft(emitterLeft, skipEmitterCenterCheck: true);
             }
 
-            if (!skipEmitterRightCheck && TryGetPart(gridId, Direction.South, value,
+            if (!skipEmitterRightCheck && TryGetPart(gridId, PartOffset.Right, value,
                 ParticleAcceleratorEmitterType.Right,
                 out var emitterRight))
             {
@@ -172,7 +173,7 @@ namespace Content.Server.GameObjects.Components.PA
             }
 
             if (!skipPowerBoxCheck &&
-                TryGetPart<ParticleAcceleratorPowerBoxComponent>(gridId, Direction.East, value, out var powerBox))
+                TryGetPart<ParticleAcceleratorPowerBoxComponent>(gridId, PartOffset.Up, value, out var powerBox))
             {
                 SetPowerBox(powerBox, skipEmitterCenterCheck: true);
             }
@@ -194,7 +195,7 @@ namespace Content.Server.GameObjects.Components.PA
 
             if(!TryAddPart(ref _emitterRight, value, out var gridId)) return;
 
-            if (!skipEmitterCenterCheck && TryGetPart(gridId, Direction.North, value,
+            if (!skipEmitterCenterCheck && TryGetPart(gridId, PartOffset.Left, value,
                 ParticleAcceleratorEmitterType.Center, out var emitterComponent))
             {
                 SetEmitterCenter(emitterComponent, skipEmitterRightCheck: true);
@@ -267,14 +268,7 @@ namespace Content.Server.GameObjects.Components.PA
 
         private bool TryAddPart<T>(ref T partVar, T value, out GridId gridId) where T : ParticleAcceleratorPartComponent
         {
-            var rawGridId = value?.Owner.Transform.Coordinates.GetGridId(_entityManager);
-            if (rawGridId == GridId.Invalid || !rawGridId.HasValue)
-            {
-                Logger.Error($"Something tried adding a {value} that isn't in a Grid to a ParticleAccelerator");
-                gridId = GridId.Invalid;
-                return false;
-            }
-            gridId = rawGridId.Value;
+            gridId = GridId.Invalid;
 
             if (partVar == value) return false;
 
@@ -297,6 +291,13 @@ namespace Content.Server.GameObjects.Components.PA
                 return false;
             }
 
+            gridId = value.Owner.Transform.Coordinates.GetGridId(_entityManager);
+            if (gridId == GridId.Invalid)
+            {
+                Logger.Error($"Something tried adding a {value} that isn't in a Grid to a ParticleAccelerator");
+                return false;
+            }
+
             partVar = value;
 
             if (value.ParticleAccelerator != this)
@@ -308,19 +309,19 @@ namespace Content.Server.GameObjects.Components.PA
             return true;
         }
 
-        private bool TryGetPart<TP>(GridId gridId, Direction directionOffset, ParticleAcceleratorPartComponent value, out TP part)
+        private bool TryGetPart<TP>(GridId gridId, PartOffset directionOffset, ParticleAcceleratorPartComponent value, out TP part)
             where TP : ParticleAcceleratorPartComponent
         {
-            var partMapIndices = GetMapIndicesInDir(value, directionOffset);
+            var partMapIndices = GetMapIndicesInDir(value, (Direction)directionOffset);
 
             var entity = partMapIndices.GetEntitiesInTileFast(gridId).FirstOrDefault(obj => obj.TryGetComponent<TP>(out var part));
             part = entity?.GetComponent<TP>();
             return entity != null && part != null;
         }
 
-        private bool TryGetPart(GridId gridId, Direction directionOffset, ParticleAcceleratorPartComponent value, ParticleAcceleratorEmitterType type, out ParticleAcceleratorEmitterComponent part)
+        private bool TryGetPart(GridId gridId, PartOffset directionOffset, ParticleAcceleratorPartComponent value, ParticleAcceleratorEmitterType type, out ParticleAcceleratorEmitterComponent part)
         {
-            var partMapIndices = GetMapIndicesInDir(value, directionOffset);
+            var partMapIndices = GetMapIndicesInDir(value, (Direction)directionOffset);
 
             var entity = partMapIndices.GetEntitiesInTileFast(gridId).FirstOrDefault(obj => obj.TryGetComponent<ParticleAcceleratorEmitterComponent>(out var p) && p.Type == type);
             part = entity?.GetComponent<ParticleAcceleratorEmitterComponent>();
@@ -341,6 +342,14 @@ namespace Content.Server.GameObjects.Components.PA
             Level1 = ParticleAcceleratorVisualState.Level1,
             Level2 = ParticleAcceleratorVisualState.Level2,
             Level3 = ParticleAcceleratorVisualState.Level3
+        }
+
+        private enum PartOffset
+        {
+            Up = Direction.East,
+            Down = Direction.West,
+            Left = Direction.North,
+            Right = Direction.South
         }
     }
 }
