@@ -1,11 +1,9 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Shared.Damage.DamageContainer;
-using Content.Shared.Damage.ResistanceSet;
+using System.Linq;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Body.Surgery;
-using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Utility;
@@ -13,7 +11,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -22,8 +19,6 @@ namespace Content.Shared.GameObjects.Components.Body.Part
 {
     public abstract class SharedBodyPartComponent : Component, IBodyPart, ICanExamine, IShowContextMenu
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
         public override string Name => "BodyPart";
 
         public override uint? NetID => ContentNetIDs.BODY_PART;
@@ -33,9 +28,6 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         // TODO BODY Remove
         private List<string> _mechanismIds = new List<string>();
         public IReadOnlyList<string> MechanismIds => _mechanismIds;
-
-        private DamageContainerPrototype _damagePrototype = default!;
-        private ResistanceSetPrototype _resistancePrototype = default!;
 
         [ViewVariables]
         private HashSet<IMechanism> _mechanisms = new HashSet<IMechanism>();
@@ -107,28 +99,38 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         public bool IsVital { get; private set; }
 
         // TODO BODY
-        /// <summary>
-        ///     Current damage dealt to this <see cref="IBodyPart"/>.
-        /// </summary>
-        [ViewVariables]
-        public DamageContainer Damage { get; private set; } = default!;
-
-        // TODO BODY
-        /// <summary>
-        ///     Armor of this <see cref="IBodyPart"/> against damage.
-        /// </summary>
-        [ViewVariables]
-        public ResistanceSet Resistances { get; private set; } = default!;
-
-        // TODO BODY
         [ViewVariables]
         public SurgeryDataComponent? SurgeryDataComponent => Owner.GetComponentOrNull<SurgeryDataComponent>();
+
+
+        protected virtual void OnAddMechanism(IMechanism mechanism)
+        {
+            var prototypeId = mechanism.Owner.Prototype!.ID;
+
+            if (!_mechanismIds.Contains(prototypeId))
+            {
+                _mechanismIds.Add(prototypeId);
+            }
+
+            mechanism.Part = this;
+            SizeUsed += mechanism.Size;
+
+            Dirty();
+        }
+
+        protected virtual void OnRemoveMechanism(IMechanism mechanism)
+        {
+            _mechanismIds.Remove(mechanism.Owner.Prototype!.ID);
+            mechanism.Part = null;
+            SizeUsed -= mechanism.Size;
+
+            Dirty();
+        }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
-            // TODO BODY Separate damage from the rest of body system
             // TODO BODY serialize any changed properties?
 
             serializer.DataField(this, b => b.PartType, "partType", BodyPartType.Other);
@@ -142,6 +144,48 @@ namespace Content.Shared.GameObjects.Components.Body.Part
             serializer.DataField(this, m => m.IsVital, "vital", false);
 
             serializer.DataField(ref _mechanismIds, "mechanisms", new List<string>());
+        }
+
+        public override ComponentState GetComponentState()
+        {
+            var mechanismIds = new EntityUid[_mechanisms.Count];
+
+            var i = 0;
+            foreach (var mechanism in _mechanisms)
+            {
+                mechanismIds[i] = mechanism.Owner.Uid;
+                i++;
+            }
+
+            return new BodyPartComponentState(mechanismIds);
+        }
+
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+        {
+            base.HandleComponentState(curState, nextState);
+
+            if (!(curState is BodyPartComponentState state))
+            {
+                return;
+            }
+
+            var newMechanisms = state.Mechanisms();
+
+            foreach (var mechanism in _mechanisms.ToArray())
+            {
+                if (!newMechanisms.Contains(mechanism))
+                {
+                    RemoveMechanism(mechanism);
+                }
+            }
+
+            foreach (var mechanism in newMechanisms)
+            {
+                if (!_mechanisms.Contains(mechanism))
+                {
+                    TryAddMechanism(mechanism, true);
+                }
+            }
         }
 
         public bool Drop()
@@ -178,33 +222,33 @@ namespace Content.Shared.GameObjects.Components.Body.Part
             return SurgeryDataComponent?.CanAttachBodyPart(part) ?? false;
         }
 
-        public bool CanInstallMechanism(IMechanism mechanism)
+        public bool CanAddMechanism(IMechanism mechanism)
         {
             DebugTools.AssertNotNull(mechanism);
 
             return SurgeryDataComponent != null &&
                    SizeUsed + mechanism.Size <= Size &&
-                   SurgeryDataComponent.CanInstallMechanism(mechanism);
+                   SurgeryDataComponent.CanAddMechanism(mechanism);
         }
 
         /// <summary>
-        ///     Tries to install a mechanism onto this body part.
+        ///     Tries to add a mechanism onto this body part.
         /// </summary>
-        /// <param name="mechanism">The mechanism to try to install.</param>
+        /// <param name="mechanism">The mechanism to try to add.</param>
         /// <param name="force">
-        ///     Whether or not to check if the mechanism can be installed.
+        ///     Whether or not to check if the mechanism can be added.
         /// </param>
         /// <returns>
         ///     True if successful, false if there was an error
         ///     (e.g. not enough room in <see cref="IBodyPart"/>).
         ///     Will return false even when forced if the mechanism is already
-        ///     installed in this <see cref="IBodyPart"/>.
+        ///     added in this <see cref="IBodyPart"/>.
         /// </returns>
-        public bool TryInstallMechanism(IMechanism mechanism, bool force = false)
+        public bool TryAddMechanism(IMechanism mechanism, bool force = false)
         {
             DebugTools.AssertNotNull(mechanism);
 
-            if (!force && !CanInstallMechanism(mechanism))
+            if (!force && !CanAddMechanism(mechanism))
             {
                 return false;
             }
@@ -214,20 +258,9 @@ namespace Content.Shared.GameObjects.Components.Body.Part
                 return false;
             }
 
-            OnMechanismAdded(mechanism);
+            OnAddMechanism(mechanism);
+
             return true;
-        }
-
-        private void OnMechanismAdded(IMechanism mechanism)
-        {
-            var prototypeId = mechanism.Owner.Prototype!.ID;
-            if (!_mechanismIds.Contains(prototypeId))
-            {
-                _mechanismIds.Add(prototypeId);
-            }
-
-            mechanism.Part = this;
-            SizeUsed += mechanism.Size;
         }
 
         public bool RemoveMechanism(IMechanism mechanism)
@@ -238,10 +271,6 @@ namespace Content.Shared.GameObjects.Components.Body.Part
             {
                 return false;
             }
-
-            _mechanismIds.Remove(mechanism.Owner.Prototype!.ID);
-            mechanism.Part = null;
-            SizeUsed -= mechanism.Size;
 
             return true;
         }
@@ -270,11 +299,6 @@ namespace Content.Shared.GameObjects.Components.Body.Part
             return true;
         }
 
-        private void OnHealthChanged(List<HealthChangeData> changes)
-        {
-            // TODO BODY
-        }
-
         public bool ShowContextMenu(IEntity examiner)
         {
             return Body == null;
@@ -289,80 +313,42 @@ namespace Content.Shared.GameObjects.Components.Body.Part
     [Serializable, NetSerializable]
     public class BodyPartComponentState : ComponentState
     {
-        private List<IBodyPart>? _parts;
+        private List<IMechanism>? _mechanisms;
 
-        public readonly EntityUid[] PartIds;
+        public readonly EntityUid[] MechanismIds;
 
-        public BodyPartComponentState(EntityUid[] partIds) : base(ContentNetIDs.BODY_PART)
+        public BodyPartComponentState(EntityUid[] mechanismIds) : base(ContentNetIDs.BODY_PART)
         {
-            PartIds = partIds;
+            MechanismIds = mechanismIds;
         }
 
-        public List<IBodyPart> Parts(IEntityManager? entityManager = null)
+        public List<IMechanism> Mechanisms(IEntityManager? entityManager = null)
         {
-            if (_parts != null)
+            if (_mechanisms != null)
             {
-                return _parts;
+                return _mechanisms;
             }
 
             entityManager ??= IoCManager.Resolve<IEntityManager>();
 
-            var parts = new List<IBodyPart>(PartIds.Length);
+            var mechanisms = new List<IMechanism>(MechanismIds.Length);
 
-            foreach (var id in PartIds)
+            foreach (var id in MechanismIds)
             {
                 if (!entityManager.TryGetEntity(id, out var entity))
                 {
                     continue;
                 }
 
-                if (!entity.TryGetComponent(out IBodyPart? part))
+                if (!entity.TryGetComponent(out IMechanism? mechanism))
                 {
                     continue;
                 }
 
-                parts.Add(part);
+                mechanisms.Add(mechanism);
             }
 
-            return _parts = parts;
+            return _mechanisms = mechanisms;
         }
-    }
-
-    [Serializable, NetSerializable]
-    public abstract class BodyPartMessage : ComponentMessage
-    {
-        private IBodyPart? _part;
-        private IBody? _body;
-
-        public readonly string Slot;
-        public readonly EntityUid PartUid;
-        public readonly EntityUid BodyUid;
-
-        public IBodyPart? Part => _part ??= IoCManager.Resolve<IEntityManager>().TryGetEntity(PartUid, out var entity)
-            ? entity.GetComponentOrNull<IBodyPart>()
-            : null;
-
-        public IBody? Body => _body ??= IoCManager.Resolve<IEntityManager>().TryGetEntity(BodyUid, out var entity)
-            ? entity.GetBody()
-            : null;
-
-        protected BodyPartMessage(string slot, EntityUid partUid, EntityUid bodyUid)
-        {
-            Slot = slot;
-            PartUid = partUid;
-            BodyUid = bodyUid;
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public class BodyPartAddedMessage : BodyPartMessage
-    {
-        public BodyPartAddedMessage(string slot, EntityUid partUid, EntityUid bodyUid) : base(slot, partUid, bodyUid) { }
-    }
-
-    [Serializable, NetSerializable]
-    public class BodyPartRemovedMessage : BodyPartMessage
-    {
-        public BodyPartRemovedMessage(string slot, EntityUid partUid, EntityUid bodyUid) : base(slot, partUid, bodyUid) { }
     }
 }

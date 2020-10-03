@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.GameObjects.Components.Body.Part;
-using Content.Shared.GameObjects.Components.Damage;
+using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Shared.GameObjects.Components.Body
 {
@@ -10,7 +10,7 @@ namespace Content.Shared.GameObjects.Components.Body
     ///     Component representing a collection of <see cref="IBodyPart"/>s
     ///     attached to each other.
     /// </summary>
-    public interface IBody : IDamageableComponent, IBodyPartContainer
+    public interface IBody : IComponent, IBodyPartContainer
     {
         public string? TemplateName { get; }
 
@@ -47,7 +47,7 @@ namespace Content.Shared.GameObjects.Components.Body
         public IReadOnlyDictionary<string, string> PartIds { get; }
 
         /// <summary>
-        ///     Installs the given <see cref="IBodyPart"/> into the given slot.
+        ///     Adds the given <see cref="IBodyPart"/> into the given slot.
         /// </summary>
         /// <returns>True if successful, false otherwise.</returns>
         bool TryAddPart(string slot, IBodyPart part, bool force = false);

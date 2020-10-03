@@ -9,32 +9,39 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
 {
     public static class MechanismExtensions
     {
-        public static bool HasMechanismBehavior<T>(this IEntity entity)
+        public static bool HasMechanismBehavior<T>(this IEntity entity) where T : IMechanismBehavior
         {
             // TODO BODY optimize
             return entity.TryGetBody(out var body) &&
                    body.Parts.Values.Any(p => p.Mechanisms.Any(m => m.Owner.HasComponent<T>()));
         }
 
-        public static bool TryGetMechanismBehaviors<T>(this IEntity entity, [NotNullWhen(true)] out List<T>? behaviors)
-            where T : class, IMechanismBehavior
+        public static IEnumerable<T> GetMechanismBehaviors<T>(this IEntity entity) where T : class, IMechanismBehavior
         {
             if (!entity.TryGetBody(out var body))
             {
-                behaviors = null;
-                return false;
+                yield break;
             }
 
-            behaviors = new List<T>();
-
-            // TODO BODY optimize
             foreach (var part in body.Parts.Values)
             foreach (var mechanism in part.Mechanisms)
             {
                 if (mechanism.Owner.TryGetComponent(out T? behavior))
                 {
-                    behaviors.Add(behavior);
+                    yield return behavior;
                 }
+            }
+        }
+
+        public static bool TryGetMechanismBehaviors<T>(this IEntity entity, [NotNullWhen(true)] out List<T>? behaviors)
+            where T : class, IMechanismBehavior
+        {
+            behaviors = entity.GetMechanismBehaviors<T>().ToList();
+
+            if (behaviors.Count == 0)
+            {
+                behaviors = null;
+                return false;
             }
 
             return true;

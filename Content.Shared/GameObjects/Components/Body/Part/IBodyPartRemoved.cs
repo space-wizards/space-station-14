@@ -8,19 +8,19 @@ namespace Content.Shared.GameObjects.Components.Body.Part
     /// </summary>
     public interface IBodyPartRemoved
     {
-        void BodyPartRemoved(BodyPartRemovedEventArgs eventArgs);
+        void BodyPartRemoved(BodyPartRemovedEventArgs args);
     }
 
     public class BodyPartRemovedEventArgs : EventArgs
     {
-        public BodyPartRemovedEventArgs(IBodyPart part, string slotName)
+        public BodyPartRemovedEventArgs(IBodyPart part, string slot)
         {
             Part = part;
-            SlotName = slotName;
+            Slot = slot;
         }
 
         public IBodyPart Part { get; }
 
-        public string SlotName { get; }
+        public string Slot { get; }
     }
 }

@@ -69,13 +69,13 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         bool CanAttachPart(IBodyPart part);
 
         /// <summary>
-        ///     Checks if a <see cref="IMechanism"/> can be installed on this
+        ///     Checks if a <see cref="IMechanism"/> can be added on this
         ///     <see cref="IBodyPart"/>.
         /// </summary>
-        /// <returns>True if it can be installed, false otherwise.</returns>
-        bool CanInstallMechanism(IMechanism mechanism);
+        /// <returns>True if it can be added, false otherwise.</returns>
+        bool CanAddMechanism(IMechanism mechanism);
 
-        bool TryInstallMechanism(IMechanism mechanism, bool force = false);
+        bool TryAddMechanism(IMechanism mechanism, bool force = false);
 
         /// <summary>
         ///     Tries to remove the given <see cref="mechanism"/> from this

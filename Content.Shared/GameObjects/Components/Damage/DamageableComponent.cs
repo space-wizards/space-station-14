@@ -201,6 +201,13 @@ namespace Content.Shared.GameObjects.Components.Damage
             }
         }
 
+        protected override void Startup()
+        {
+            base.Startup();
+
+            ForceHealthChangedEvent();
+        }
+
         public bool TryGetDamage(DamageType type, out int damage)
         {
             return Damage.TryGetDamageValue(type, out damage);

@@ -128,7 +128,7 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
             return toReturn;
         }
 
-        public override bool CanInstallMechanism(IMechanism mechanism)
+        public override bool CanAddMechanism(IMechanism mechanism)
         {
             return Parent != null &&
                    _skinOpened &&

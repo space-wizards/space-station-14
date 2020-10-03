@@ -1,5 +1,6 @@
 ﻿using Content.Server.GameObjects.Components.Body;
 using Content.Server.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs.State;
@@ -53,25 +54,17 @@ namespace Content.Server.GameObjects.Components.Mobs.State
 
                     break;
                 }
-                // TODO BODY Remove direct BodyComponent reference
-                case BodyComponent body:
+                default:
                 {
-                    if (!body.Thresholds.TryGetValue(DamageState.Critical, out var threshold))
+                    if (!damageable.Thresholds.TryGetValue(DamageState.Critical, out var threshold))
                     {
                         return;
                     }
 
-                    var modifier = (int) (body.TotalDamage / (threshold / 7f));
+                    var modifier = (int) (damageable.TotalDamage / (threshold / 7f));
 
                     status.ChangeStatusEffectIcon(StatusEffect.Health,
                         "/Textures/Interface/StatusEffects/Human/human" + modifier + ".png");
-
-                    break;
-                }
-                default:
-                {
-                    status.ChangeStatusEffectIcon(StatusEffect.Health,
-                        "/Textures/Interface/StatusEffects/Human/human0.png");
                     break;
                 }
             }

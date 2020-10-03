@@ -55,7 +55,7 @@ namespace Content.Server.GameObjects.Components.Body
             {
                 DebugTools.AssertNotNull(part);
 
-                if (!part.TryInstallMechanism(this))
+                if (!part.TryAddMechanism(this))
                 {
                     eventArgs.Target.PopupMessage(eventArgs.User, Loc.GetString("You can't fit it in!"));
                 }
@@ -70,7 +70,7 @@ namespace Content.Server.GameObjects.Components.Body
             foreach (var (key, value) in body.Parts)
             {
                 // For each limb in the target, add it to our cache if it is a valid option.
-                if (value.CanInstallMechanism(this))
+                if (value.CanAddMechanism(this))
                 {
                     OptionsCache.Add(IdHash, value);
                     toSend.Add(key + ": " + value.Name, IdHash++);
@@ -119,7 +119,7 @@ namespace Content.Server.GameObjects.Components.Body
             }
 
             var target = (IBodyPart) targetObject;
-            var message = target.TryInstallMechanism(this)
+            var message = target.TryAddMechanism(this)
                 ? Loc.GetString("You jam {0:theName} inside {1:them}.", Owner, PerformerCache)
                 : Loc.GetString("You can't fit it in!");
 

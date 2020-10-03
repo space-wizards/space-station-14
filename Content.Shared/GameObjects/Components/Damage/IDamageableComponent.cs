@@ -30,7 +30,7 @@ namespace Content.Shared.GameObjects.Components.Damage
         /// <summary>
         ///     The <see cref="DamageState"/> currently representing this component.
         /// </summary>
-        DamageState CurrentDamageState { get; }
+        DamageState CurrentDamageState { get; set; }
 
         /// <summary>
         ///     Sum of all damages taken.

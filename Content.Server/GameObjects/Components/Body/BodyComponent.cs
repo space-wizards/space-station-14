@@ -13,8 +13,6 @@ namespace Content.Server.GameObjects.Components.Body
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedBodyComponent))]
-    [ComponentReference(typeof(DamageableComponent))]
-    [ComponentReference(typeof(IDamageableComponent))]
     [ComponentReference(typeof(IBody))]
     public class BodyComponent : SharedBodyComponent, IRelayMoveInput
     {
@@ -43,7 +41,8 @@ namespace Content.Server.GameObjects.Components.Body
 
         void IRelayMoveInput.MoveInputPressed(ICommonSession session)
         {
-            if (CurrentDamageState == DamageState.Dead)
+            if (Owner.TryGetComponent(out IDamageableComponent? damageable) &&
+                damageable.CurrentDamageState == DamageState.Dead)
             {
                 new Ghost().Execute(null, (IPlayerSession) session, null);
             }

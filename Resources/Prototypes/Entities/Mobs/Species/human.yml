@@ -103,6 +103,7 @@
     currentTemperature: 310.15
     specificHeat: 42
     tempDamageCoefficient: 0.1
+  - type: HumanoidAppearance
   - type: Body
     criticalThreshold: 100
     deadThreshold: 200
@@ -138,7 +139,6 @@
   - type: Teleportable
   - type: CharacterInfo
   - type: FootstepSound
-  - type: HumanoidAppearance
   - type: AnimationPlayer
   - type: Buckle
   - type: UnarmedCombat
@@ -257,6 +257,7 @@
         - SmallImpassable
         layer:
         - MobImpassable
+    - type: HumanoidAppearance
     - type: Body
       criticalThreshold: 100
       deadThreshold: 200
@@ -266,6 +267,5 @@
     - type: Appearance
       visuals:
       - type: RotationVisualizer
-    - type: HumanoidAppearance
     - type: Grammar
       proper: true

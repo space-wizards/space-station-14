@@ -35,6 +35,26 @@ namespace Content.Server.GameObjects.Components.Body.Part
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(SurgeryUIKey.Key);
 
+        protected override void OnAddMechanism(IMechanism mechanism)
+        {
+            base.OnAddMechanism(mechanism);
+
+            if (mechanism.Owner.TryGetComponent(out SpriteComponent? sprite))
+            {
+                sprite.Visible = false;
+            }
+        }
+
+        protected override void OnRemoveMechanism(IMechanism mechanism)
+        {
+            base.OnRemoveMechanism(mechanism);
+
+            if (mechanism.Owner.TryGetComponent(out SpriteComponent? sprite))
+            {
+                sprite.Visible = true;
+            }
+        }
+
         protected override void Startup()
         {
             base.Startup();
@@ -57,7 +77,7 @@ namespace Content.Server.GameObjects.Components.Body.Part
                     continue;
                 }
 
-                TryInstallMechanism(mechanism, true);
+                TryAddMechanism(mechanism, true);
             }
         }
 

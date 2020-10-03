@@ -1,15 +1,13 @@
-﻿using Content.Client.GameObjects.Components.ActionBlocking;
+﻿using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Preferences;
-using Content.Shared.Preferences.Appearance;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 
 namespace Content.Client.GameObjects.Components.Mobs
 {
-    // TODO BODY Remove
     [RegisterComponent]
-    public sealed class HumanoidAppearanceComponent : SharedHumanoidAppearanceComponent
+    public sealed class HumanoidAppearanceComponent : SharedHumanoidAppearanceComponent, IBodyPartAdded
     {
         public override HumanoidCharacterAppearance Appearance
         {
@@ -71,6 +69,14 @@ namespace Content.Client.GameObjects.Components.Mobs
             //     facialHairStyle = HairStyles.DefaultFacialHairStyle;
             // sprite.LayerSetState(HumanoidVisualLayers.FacialHair,
             //     HairStyles.FacialHairStylesMap[facialHairStyle]);
+        }
+
+        public void BodyPartAdded(BodyPartAddedEventArgs args)
+        {
+            if (args.Part.Owner.TryGetComponent(out SpriteComponent sprite))
+            {
+                sprite.Color = Appearance.SkinColor;
+            }
         }
     }
 }

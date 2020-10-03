@@ -35,10 +35,11 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
         public abstract string GetDescription(IEntity target);
 
         /// <summary>
-        ///     Returns whether a <see cref="IMechanism"/> can be installed into the
-        ///     <see cref="IBodyPart"/> this <see cref="SurgeryDataComponent"/> represents.
+        ///     Returns whether a <see cref="IMechanism"/> can be added into the
+        ///     <see cref="IBodyPart"/> this <see cref="SurgeryDataComponent"/>
+        ///     represents.
         /// </summary>
-        public abstract bool CanInstallMechanism(IMechanism mechanism);
+        public abstract bool CanAddMechanism(IMechanism mechanism);
 
         /// <summary>
         ///     Returns whether the given <see cref="IBodyPart"/> can be connected

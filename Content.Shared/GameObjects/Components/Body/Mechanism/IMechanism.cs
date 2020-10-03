@@ -13,7 +13,8 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
         string Description { get; set; }
 
         /// <summary>
-        ///     The message to display upon examining a mob with this Mechanism installed.
+        ///     The message to display upon examining a mob with this
+        ///     <see cref="IMechanism"/> added.
         ///     If the string is empty (""), no message will be displayed.
         /// </summary>
         string ExamineMessage { get; set; }

@@ -725,24 +725,24 @@ namespace Content.Server.GameObjects.Components.GUI
             }
         }
 
-        void IBodyPartAdded.BodyPartAdded(BodyPartAddedEventArgs eventArgs)
+        void IBodyPartAdded.BodyPartAdded(BodyPartAddedEventArgs args)
         {
-            if (eventArgs.Part.PartType != BodyPartType.Hand)
+            if (args.Part.PartType != BodyPartType.Hand)
             {
                 return;
             }
 
-            AddHand(eventArgs.Slot);
+            AddHand(args.Slot);
         }
 
-        void IBodyPartRemoved.BodyPartRemoved(BodyPartRemovedEventArgs eventArgs)
+        void IBodyPartRemoved.BodyPartRemoved(BodyPartRemovedEventArgs args)
         {
-            if (eventArgs.Part.PartType != BodyPartType.Hand)
+            if (args.Part.PartType != BodyPartType.Hand)
             {
                 return;
             }
 
-            RemoveHand(eventArgs.SlotName);
+            RemoveHand(args.Slot);
         }
     }
 

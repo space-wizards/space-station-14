@@ -60,7 +60,7 @@ namespace Content.Server.GameObjects.Components.Body.Circulatory
         /// </summary>
         /// <param name="solution">Solution to be transferred</param>
         /// <returns>Whether or not transfer was a success</returns>
-        public bool TryTransferSolution(Solution solution)
+        public override bool TryTransferSolution(Solution solution)
         {
             // For now doesn't support partial transfers
             if (solution.TotalVolume + _internalSolution.CurrentVolume > _internalSolution.MaxVolume)

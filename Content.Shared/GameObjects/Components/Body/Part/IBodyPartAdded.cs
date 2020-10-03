@@ -8,7 +8,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part
     /// </summary>
     public interface IBodyPartAdded
     {
-        void BodyPartAdded(BodyPartAddedEventArgs eventArgs);
+        void BodyPartAdded(BodyPartAddedEventArgs args);
     }
 
     public class BodyPartAddedEventArgs : EventArgs

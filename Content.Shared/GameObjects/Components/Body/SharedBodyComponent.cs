@@ -10,7 +10,9 @@ using Content.Shared.GameObjects.Components.Body.Template;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -19,7 +21,8 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Body
 {
-    public abstract class SharedBodyComponent : DamageableComponent, IBody
+    // TODO BODY Damage methods for collections of IDamageableComponents
+    public abstract class SharedBodyComponent : Component, IBody
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -61,30 +64,8 @@ namespace Content.Shared.GameObjects.Components.Body
 
         [ViewVariables] public IReadOnlyDictionary<string, string> PartIDs => _partIds;
 
-        public bool TryAddPart(string slot, IBodyPart part, bool force = false)
+        protected virtual void OnAddPart(string slot, IBodyPart part)
         {
-            DebugTools.AssertNotNull(part);
-            DebugTools.AssertNotNull(slot);
-
-            // Make sure the given slot exists
-            if (force)
-            {
-                if (!HasSlot(slot))
-                {
-                    Slots[slot] = part.PartType;
-                }
-
-                _parts[slot] = part;
-            }
-            else
-            {
-                // And that nothing is in it
-                if (!_parts.TryAdd(slot, part))
-                {
-                    return false;
-                }
-            }
-
             part.Owner.Transform.AttachParent(Owner);
             part.Body = this;
 
@@ -97,12 +78,75 @@ namespace Content.Shared.GameObjects.Components.Body
 
             // TODO BODY Sort this duplicate out
             OnBodyChanged();
+        }
+
+        protected virtual void OnRemovePart(string slot, IBodyPart part)
+        {
+            // TODO BODY Move to Body part
+            if (!part.Owner.Transform.Deleted)
+            {
+                part.Owner.Transform.AttachParent(Owner);
+            }
+
+            part.Body = null;
+
+            var args = new BodyPartRemovedEventArgs(part, slot);
+
+            foreach (var component in Owner.GetAllComponents<IBodyPartRemoved>())
+            {
+                component.BodyPartRemoved(args);
+            }
+
+            // creadth: fall down if no legs
+            if (part.PartType == BodyPartType.Leg && Parts.Count(x => x.Value.PartType == BodyPartType.Leg) == 0)
+            {
+                EntitySystem.Get<SharedStandingStateSystem>().Down(Owner);
+            }
+
+            // creadth: immediately kill entity if last vital part removed
+            if (Owner.TryGetComponent(out IDamageableComponent? damageable))
+            {
+                if (part.IsVital && Parts.Count(x => x.Value.PartType == part.PartType) == 0)
+                {
+                    damageable.CurrentDamageState = DamageState.Dead;
+                    damageable.ForceHealthChangedEvent();
+                }
+            }
+
+            OnBodyChanged();
+        }
+
+        public bool TryAddPart(string slot, IBodyPart part, bool force = false)
+        {
+            DebugTools.AssertNotNull(part);
+            DebugTools.AssertNotNull(slot);
+
+            if (force)
+            {
+                if (!HasSlot(slot))
+                {
+                    Slots[slot] = part.PartType;
+                }
+
+                _parts[slot] = part;
+            }
+            else
+            {
+                if (!_parts.TryAdd(slot, part))
+                {
+                    return false;
+                }
+            }
+
+            OnAddPart(slot, part);
 
             return true;
         }
 
         public bool HasPart(string slot)
         {
+            DebugTools.AssertNotNull(slot);
+
             return _parts.ContainsKey(slot);
         }
 
@@ -135,35 +179,7 @@ namespace Content.Shared.GameObjects.Components.Body
                 part.Drop();
             }
 
-            // TODO BODY Move to Body part
-            if (!part.Owner.Transform.Deleted)
-            {
-                part.Owner.Transform.AttachParent(Owner);
-            }
-
-            part.Body = null;
-
-            var args = new BodyPartRemovedEventArgs(part, slot);
-
-            foreach (var component in Owner.GetAllComponents<IBodyPartRemoved>())
-            {
-                component.BodyPartRemoved(args);
-            }
-
-            if (CurrentDamageState == DamageState.Dead) return true;
-
-            // creadth: fall down if no legs
-            if (part.PartType == BodyPartType.Leg && Parts.Count(x => x.Value.PartType == BodyPartType.Leg) == 0)
-            {
-                EntitySystem.Get<SharedStandingStateSystem>().Down(Owner);
-            }
-
-            // creadth: immediately kill entity if last vital part removed
-            if (part.IsVital && Parts.Count(x => x.Value.PartType == part.PartType) == 0)
-            {
-                CurrentDamageState = DamageState.Dead;
-                ForceHealthChangedEvent();
-            }
+            OnRemovePart(slot, part);
 
             if (TryGetSlotConnections(slot, out var connections))
             {
@@ -176,7 +192,6 @@ namespace Content.Shared.GameObjects.Components.Body
                 }
             }
 
-            OnBodyChanged();
             return true;
         }
 
@@ -429,6 +444,8 @@ namespace Content.Shared.GameObjects.Components.Body
 
                 CalculateSpeed();
             }
+
+            Dirty();
         }
 
         /// <summary>
@@ -632,13 +649,90 @@ namespace Content.Shared.GameObjects.Components.Body
             Connections = cleanedConnections;
         }
 
-        protected override void Startup()
+        public override ComponentState GetComponentState()
         {
-            base.Startup();
+            var parts = new (string slot, EntityUid partId)[_parts.Count];
 
-            // Just in case something activates at default health.
-            // TODO BODY Move this sanity check to DamageableComponent startup
-            ForceHealthChangedEvent();
+            var i = 0;
+            foreach (var (slot, part) in _parts)
+            {
+                parts[i] = (slot, part.Owner.Uid);
+                i++;
+            }
+
+            return new BodyComponentState(parts);
+        }
+
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+        {
+            base.HandleComponentState(curState, nextState);
+
+            if (!(curState is BodyComponentState state))
+            {
+                return;
+            }
+
+            var newParts = state.Parts();
+
+            foreach (var (slot, oldPart) in _parts)
+            {
+                if (!newParts.TryGetValue(slot, out var newPart) ||
+                    newPart != oldPart)
+                {
+                    RemovePart(oldPart, false);
+                }
+            }
+
+            foreach (var (slot, newPart) in newParts)
+            {
+                if (!_parts.TryGetValue(slot, out var oldPart) ||
+                    oldPart != newPart)
+                {
+                    TryAddPart(slot, newPart, true);
+                }
+            }
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class BodyComponentState : ComponentState
+    {
+        private Dictionary<string, IBodyPart>? _parts;
+
+        public readonly (string slot, EntityUid partId)[] PartIds;
+
+        public BodyComponentState((string slot, EntityUid partId)[] partIds) : base(ContentNetIDs.BODY)
+        {
+            PartIds = partIds;
+        }
+
+        public Dictionary<string, IBodyPart> Parts(IEntityManager? entityManager = null)
+        {
+            if (_parts != null)
+            {
+                return _parts;
+            }
+
+            entityManager ??= IoCManager.Resolve<IEntityManager>();
+
+            var parts = new Dictionary<string, IBodyPart>(PartIds.Length);
+
+            foreach (var (slot, partId) in PartIds)
+            {
+                if (!entityManager.TryGetEntity(partId, out var entity))
+                {
+                    continue;
+                }
+
+                if (!entity.TryGetComponent(out IBodyPart? part))
+                {
+                    continue;
+                }
+
+                parts[slot] = part;
+            }
+
+            return _parts = parts;
         }
     }
 }
