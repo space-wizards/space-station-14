@@ -1,4 +1,5 @@
 using System;
+using Content.Shared.Preferences.Appearance;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 
@@ -70,6 +71,47 @@ namespace Content.Shared.Preferences
                 Color.Black,
                 Color.Black
             );
+        }
+
+        public static HumanoidCharacterAppearance EnsureValid(HumanoidCharacterAppearance appearance)
+        {
+            string hairStyleName;
+            if (!HairStyles.HairStylesMap.ContainsKey(appearance.HairStyleName))
+            {
+                hairStyleName = HairStyles.DefaultHairStyle;
+            }
+            else
+            {
+                hairStyleName = appearance.HairStyleName;
+            }
+
+            string facialHairStyleName;
+            if (!HairStyles.FacialHairStylesMap.ContainsKey(appearance.FacialHairStyleName))
+            {
+                facialHairStyleName = HairStyles.DefaultFacialHairStyle;
+            }
+            else
+            {
+                facialHairStyleName = appearance.FacialHairStyleName;
+            }
+
+            var hairColor = ClampColor(appearance.HairColor);
+            var facialHairColor = ClampColor(appearance.FacialHairColor);
+            var eyeColor = ClampColor(appearance.EyeColor);
+            var skinColor = ClampColor(appearance.SkinColor);
+
+            return new HumanoidCharacterAppearance(
+                hairStyleName,
+                hairColor,
+                facialHairStyleName,
+                facialHairColor,
+                eyeColor,
+                skinColor);
+
+            static Color ClampColor(Color color)
+            {
+                return new Color(color.RByte, color.GByte, color.BByte);
+            }
         }
 
         public bool MemberwiseEquals(ICharacterAppearance maybeOther)
