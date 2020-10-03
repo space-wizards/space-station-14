@@ -124,7 +124,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             return true;
         }
 
-        private void TurnOff()
+        private void TurnOff(bool makenoise = true)
         {
             if (!Activated)
             {
@@ -134,7 +134,10 @@ namespace Content.Server.GameObjects.Components.Interactable
             SetState(false);
             Activated = false;
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/flashlight_toggle.ogg", Owner);
+            if (makenoise)
+            {
+                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/flashlight_toggle.ogg", Owner);
+            }
         }
 
         private void TurnOn(IEntity user)
@@ -238,8 +241,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             }
 
             // Assuming the battery has just been taken out of the flashlight, make sure it's getting disabled
-            SetState(false);
-            Activated = false;
+            TurnOff(false);
 
             EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/pistol_magout.ogg", Owner);
         }
