@@ -124,7 +124,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             return true;
         }
 
-        private void TurnOff(bool makenoise = true)
+        private void TurnOff(bool makeNoise = true)
         {
             if (!Activated)
             {
@@ -134,7 +134,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             SetState(false);
             Activated = false;
 
-            if (makenoise)
+            if (makeNoise)
             {
                 EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/flashlight_toggle.ogg", Owner);
             }
