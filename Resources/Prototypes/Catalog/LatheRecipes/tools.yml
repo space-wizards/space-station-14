@@ -39,7 +39,7 @@
 - type: latheRecipe
   id: CableStack
   name: cable coil
-  icon: Objects/Tools/cable_coil.png
+  icon: /Textures/Objects/Tools/cables.rsi/coil-30.png
   result: CableStack1
   completetime: 500
   materials:

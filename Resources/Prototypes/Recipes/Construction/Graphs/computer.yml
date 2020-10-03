@@ -38,6 +38,9 @@
               prototype: MetalSheet1
               amount: 5
             - !type:DeleteEntity {}
+          steps:
+            - tool: Welding
+              doAfter: 2
 
     - node: boardUnsecured
       actions:

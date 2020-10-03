@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Interactable;
@@ -165,6 +166,9 @@ namespace Content.Server.GameObjects.Components.Construction
 
             foreach (var edge in Node.Edges)
             {
+                if(edge.Steps.Count == 0)
+                    throw new InvalidDataException($"Edge to \"{edge.Target}\" in node \"{Node.Name}\" of graph \"{GraphPrototype.ID}\" doesn't have any steps!");
+
                 var firstStep = edge.Steps[0];
                 switch (firstStep)
                 {

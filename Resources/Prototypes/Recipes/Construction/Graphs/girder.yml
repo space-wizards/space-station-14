@@ -14,6 +14,11 @@
 
     - node: girder
       entity: Girder
+      actions:
+        - !type:SpriteChange
+          specifier:
+            sprite: /Textures/Constructible/Structures/Walls/solid.rsi
+            state: wall_girder
       edges:
         - to: start
           completed:
@@ -40,8 +45,6 @@
         - to: reinforcedGirder
           completed:
             - !type:SnapToGrid { }
-            - !type:SpriteChange
-              specifier: "/Textures/Constructible/Structures/Walls/reinforced_wall_girder.png"
           conditions:
             - !type:EntityAnchored {}
           steps:
@@ -61,11 +64,30 @@
               doAfter: 2
 
     - node: reinforcedGirder
+      actions:
+        - !type:SpriteChange
+          specifier:
+            sprite: /Textures/Constructible/Structures/Walls/solid.rsi
+            state: reinforced_wall_girder
       edges:
         - to: reinforcedWall
+          completed:
+            - !type:SnapToGrid { }
+          conditions:
+            - !type:EntityAnchored { }
           steps:
             - material: Plasteel
               amount: 2
+              doAfter: 1
+
+        - to: girder
+          completed:
+            - !type:SnapToGrid { }
+          conditions:
+            - !type:EntityAnchored { }
+          steps:
+            - tool: Welding
+              doAfter: 2
 
     - node: reinforcedWall
       entity: reinforced_wall

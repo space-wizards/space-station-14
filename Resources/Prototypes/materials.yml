@@ -2,7 +2,7 @@
   id: steel
   name: steel
   color: gray
-  icon: Objects/Materials/sheet_metal.png
+  icon: Objects/Materials/sheets.rsi/metal.png
   density: 7700
   electricresistivity: 6.9e-7
   thermalconductivity: 18
@@ -12,7 +12,7 @@
   id: glass
   name: glass
   color: '#e8f0ff33'
-  icon: Objects/Materials/sheet_glass.png
+  icon: Objects/Materials/sheets.rsi/glass.png
   density: 2500
   electricresistivity: 1.0e+13
   thermalconductivity: 0.9

@@ -33,6 +33,7 @@ namespace Content.Server.Construction.Completions
             container.Remove(board);
 
             var computer = entityManager.SpawnEntity(boardComponent.Prototype, entity.Transform.Coordinates);
+            computer.Transform.LocalRotation = entity.Transform.LocalRotation;
 
             var computerContainer = ContainerManagerComponent.Ensure<Container>(Container, computer);
             computerContainer.Insert(board);

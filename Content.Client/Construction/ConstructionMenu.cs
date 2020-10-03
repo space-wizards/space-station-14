@@ -235,19 +235,19 @@ namespace Content.Client.Construction
                         switch (materialStep.Material)
                         {
                             case StackType.Metal:
-                                return _resourceCache.GetTexture("/Textures/Objects/Materials/sheet_metal.png");
+                                return _resourceCache.GetTexture("/Textures/Objects/Materials/sheets.rsi/metal.png");
 
                             case StackType.Glass:
-                                return _resourceCache.GetTexture("/Textures/Objects/Materials/sheet_glass.png");
+                                return _resourceCache.GetTexture("/Textures/Objects/Materials/sheets.rsi/glass.png");
 
                             case StackType.Plasteel:
-                                return _resourceCache.GetTexture("/Textures/Objects/Materials/sheet_plasteel.png");
+                                return _resourceCache.GetTexture("/Textures/Objects/Materials/sheets.rsi/plasteel.png");
 
                             case StackType.Phoron:
-                                return _resourceCache.GetTexture("/Textures/Objects/Materials/sheet_phoron.png");
+                                return _resourceCache.GetTexture("/Textures/Objects/Materials/sheets.rsi/phoron.png");
 
                             case StackType.Cable:
-                                return _resourceCache.GetTexture("/Textures/Objects/Tools/cable_coil.png");
+                                return _resourceCache.GetTexture("/Textures/Objects/Tools/cables.rsi/coil-30.png");
 
                         }
                         break;

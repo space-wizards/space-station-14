@@ -11,6 +11,7 @@
 
 - type: entity
   id: SupplyComputerCircuitboard
+  parent: BaseComputerCircuitboard
   name: supply computer circuit board
   components:
     - type: ComputerBoard
@@ -18,6 +19,7 @@
 
 - type: entity
   id: SupplyRequestComputerCircuitboard
+  parent: BaseComputerCircuitboard
   name: supply request computer circuit board
   components:
     - type: ComputerBoard
@@ -25,6 +27,7 @@
 
 - type: entity
   id: ResearchComputerCircuitboard
+  parent: BaseComputerCircuitboard
   name: R&D computer circuit board
   components:
     - type: ComputerBoard
@@ -32,6 +35,7 @@
 
 - type: entity
   id: IDComputerCircuitboard
+  parent: BaseComputerCircuitboard
   name: ID card terminal circuit board
   components:
     - type: ComputerBoard
@@ -39,6 +43,7 @@
 
 - type: entity
   id: BodyScannerComputerCircuitboard
+  parent: BaseComputerCircuitboard
   name: body scanner computer circuit board
   components:
     - type: ComputerBoard
@@ -46,6 +51,7 @@
 
 - type: entity
   id: CommsComputerCircuitboard
+  parent: BaseComputerCircuitboard
   name: communications computer circuit board
   components:
     - type: ComputerBoard
@@ -53,6 +59,7 @@
 
 - type: entity
   id: SolarControlComputerCircuitboard
+  parent: BaseComputerCircuitboard
   name: solar control computer circuit board
   components:
     - type: ComputerBoard

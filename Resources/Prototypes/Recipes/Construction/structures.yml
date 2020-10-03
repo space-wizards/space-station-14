@@ -34,7 +34,9 @@
   targetNode: girder
   category: Structures
   description: A large structural assembly made out of metal.
-  icon: /Textures/Constructible/Structures/Walls/wall_girder.png
+  icon:
+    sprite: /Textures/Constructible/Structures/Walls/solid.rsi
+    state: wall_girder
   objectType: Structure
   placementMode: SnapgridCenter
 
