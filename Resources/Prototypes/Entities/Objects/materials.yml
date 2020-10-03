@@ -179,7 +179,8 @@
   - type: Stack
     stacktype: enum.StackType.Gold
   - type: Sprite
-    texture: Objects/Materials/goldbar_single.png
+    sprite: Objects/Materials/materials.rsi
+    state: goldbar_30
 
 - type: entity
   id: GoldStack1
@@ -187,6 +188,9 @@
   parent: GoldStack
   suffix: 1
   components:
+  - type: Sprite
+    sprite: Objects/Materials/materials.rsi
+    state: goldbar_10
   - type: Stack
     count: 1
 
@@ -196,7 +200,8 @@
   parent: BaseItem
   components:
   - type: Sprite
-    texture: Objects/Materials/phoron_ore.png
+    sprite: Objects/Materials/materials.rsi
+    state: phoron_ore
 
 - type: entity
   name: phoron sheet
@@ -232,4 +237,5 @@
   parent: BaseItem
   components:
   - type: Sprite
-    texture: Objects/Materials/wood.png
+    sprite: Objects/Materials/materials.rsi
+    state: wood_plank
