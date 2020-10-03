@@ -27,29 +27,7 @@ namespace Content.Shared.Construction
                 return;
             }
 
-            switch (Tool)
-            {
-                case ToolQuality.Anchoring:
-                    message.AddMarkup(Loc.GetString("Next, use a [color=cyan]wrench[/color]."));
-                    break;
-                case ToolQuality.Prying:
-                    message.AddMarkup(Loc.GetString("Next, use a [color=cyan]crowbar[/color]."));
-                    break;
-                case ToolQuality.Screwing:
-                    message.AddMarkup(Loc.GetString("Next, use a [color=cyan]screwdriver[/color]."));
-                    break;
-                case ToolQuality.Cutting:
-                    message.AddMarkup(Loc.GetString("Next, use some [color=cyan]wirecutters[/color]."));
-                    break;
-                case ToolQuality.Welding:
-                    message.AddMarkup(Loc.GetString("Next, use a [color=cyan]welding tool[/color]."));
-                    break;
-                case ToolQuality.Multitool:
-                    message.AddMarkup(Loc.GetString("Next, use a [color=cyan]multitool[/color]."));
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            message.AddMarkup(Loc.GetString($"Next, use a [color=cyan]{Tool.GetToolName()}[/color]."));
         }
     }
 }

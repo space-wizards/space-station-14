@@ -24,7 +24,7 @@ namespace Content.Shared.Construction
 
         public override void DoExamine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddMarkup(Loc.GetString("Next, insert [color=yellow]{0}[/color] sheets of [color=cyan]{1}[/color].", Amount, Material));
+            message.AddMarkup(Loc.GetString("Next, add [color=yellow]{0}x[/color] [color=cyan]{1}[/color].", Amount, Material));
         }
     }
 }

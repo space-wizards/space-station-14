@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Threading.Tasks;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
@@ -11,7 +12,7 @@ using Robust.Shared.Serialization;
 namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
-    public class VisualizerDataInt : IEdgeCompleted, IStepCompleted
+    public class VisualizerDataInt : IGraphAction
     {
         [Dependency] private readonly IReflectionManager _reflectionManager = default!;
 
@@ -26,17 +27,12 @@ namespace Content.Server.Construction.Completions
             serializer.DataField(this, x => x.Data, "data", 0);
         }
 
-        public string Key { get; private set; }
-        public int Data { get; private set; }
+        public string Key { get; private set; } = string.Empty;
+        public int Data { get; private set; } = 0;
 
-        public async Task StepCompleted(IEntity entity, IEntity user)
+        public async Task PerformAction(IEntity entity, IEntity? user)
         {
-            await Completed(entity, user);
-        }
-
-        public async Task Completed(IEntity entity, IEntity user)
-        {
-            if (entity.TryGetComponent(out AppearanceComponent appearance))
+            if (entity.TryGetComponent(out AppearanceComponent? appearance))
             {
                 if(_reflectionManager.TryParseEnumReference(Key, out var @enum))
                 {

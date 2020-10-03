@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Shared.Construction;
+using JetBrains.Annotations;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
@@ -9,7 +10,8 @@ using Robust.Shared.Serialization;
 
 namespace Content.Server.Construction.Completions
 {
-    public class EmptyContainer : IEdgeCompleted, IStepCompleted
+    [UsedImplicitly]
+    public class EmptyContainer : IGraphAction
     {
         public string Container { get; private set; } = string.Empty;
 
@@ -18,12 +20,7 @@ namespace Content.Server.Construction.Completions
             serializer.DataField(this, x => x.Container, "container", string.Empty);
         }
 
-        public async Task StepCompleted(IEntity entity, IEntity user)
-        {
-            await Completed(entity, user);
-        }
-
-        public async Task Completed(IEntity entity, IEntity user)
+        public async Task PerformAction(IEntity entity, IEntity? user)
         {
             if (entity.Deleted) return;
 

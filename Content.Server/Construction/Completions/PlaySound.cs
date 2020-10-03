@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿#nullable enable
+using System.Threading.Tasks;
 using Content.Shared.Audio;
 using Content.Shared.Construction;
+using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
@@ -8,7 +10,8 @@ using Robust.Shared.Serialization;
 
 namespace Content.Server.Construction.Completions
 {
-    public class PlaySound : IEdgeCompleted, IStepCompleted
+    [UsedImplicitly]
+    public class PlaySound : IGraphAction
     {
         public void ExposeData(ObjectSerializer serializer)
         {
@@ -16,15 +19,10 @@ namespace Content.Server.Construction.Completions
             serializer.DataField(this, x => x.SoundCollection, "soundCollection", string.Empty);
         }
 
-        public string SoundCollection { get; private set; }
-        public string Sound { get; private set; }
+        public string SoundCollection { get; private set; } = string.Empty;
+        public string Sound { get; private set; } = string.Empty;
 
-        public async Task StepCompleted(IEntity entity, IEntity user)
-        {
-            await Completed(entity, user);
-        }
-
-        public async Task Completed(IEntity entity, IEntity user)
+        public async Task PerformAction(IEntity entity, IEntity? user)
         {
             var sound = GetSound();
 

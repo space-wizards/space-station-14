@@ -290,7 +290,7 @@ namespace Content.Server.GameObjects.Components.Construction
                         // We do have completed effects for this!
                         foreach (var completed in list[0].Completed)
                         {
-                            await completed.StepCompleted(Owner, eventArgs.User);
+                            await completed.PerformAction(Owner, eventArgs.User);
 
                             if (Owner.Deleted)
                                 return false;
@@ -313,7 +313,7 @@ namespace Content.Server.GameObjects.Components.Construction
             {
                 foreach (var completed in step.Completed)
                 {
-                    await completed.StepCompleted(Owner, eventArgs.User);
+                    await completed.PerformAction(Owner, eventArgs.User);
 
                     if (Owner.Deleted)
                         return false;
@@ -349,16 +349,25 @@ namespace Content.Server.GameObjects.Components.Construction
             Edge = null;
             Node = GraphPrototype.Nodes[edge.Target];
 
+            // Perform node actions!
+            foreach (var action in Node.Actions)
+            {
+                await action.PerformAction(Owner, user);
+
+                if (Owner.Deleted)
+                    return false;
+            }
+
             if (Target == Node)
                 ClearTarget();
 
             foreach (var completed in edge.Completed)
             {
-                await completed.Completed(Owner, user);
+                await completed.PerformAction(Owner, user);
                 if (Owner.Deleted) return true;
             }
 
-            await HandleEntityChange(Node);
+            await HandleEntityChange(Node, user);
 
             return true;
         }
@@ -370,7 +379,7 @@ namespace Content.Server.GameObjects.Components.Construction
             return await HandleStep(eventArgs, Edge, Edge.Steps[EdgeStep]);
         }
 
-        private async Task<bool> HandleEntityChange(ConstructionGraphNode node)
+        private async Task<bool> HandleEntityChange(ConstructionGraphNode node, IEntity? user = null)
         {
             if (node.Entity == Owner.Prototype?.ID || string.IsNullOrEmpty(node.Entity)) return false;
 
@@ -404,6 +413,14 @@ namespace Content.Server.GameObjects.Components.Construction
 
             Owner.Delete();
 
+            foreach (var action in node.Actions)
+            {
+                await action.PerformAction(entity, user);
+
+                if (entity.Deleted)
+                    return false;
+            }
+
             return true;
         }
 
@@ -429,6 +446,14 @@ namespace Content.Server.GameObjects.Components.Construction
                 if (GraphPrototype.Nodes.TryGetValue(_startingNodeIdentifier, out var node))
                 {
                     Node = node;
+
+                    foreach (var action in Node.Actions)
+                    {
+                        action.PerformAction(Owner, null);
+
+                        if (Owner.Deleted)
+                            return;
+                    }
                 }
                 else
                 {
@@ -450,6 +475,14 @@ namespace Content.Server.GameObjects.Components.Construction
 
             Edge = null;
             Node = graphNode;
+
+            foreach (var action in Node.Actions)
+            {
+                await action.PerformAction(Owner, null);
+                if (Owner.Deleted)
+                    return;
+            }
+
             await HandleEntityChange(graphNode);
         }
 

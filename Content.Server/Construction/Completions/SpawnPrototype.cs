@@ -1,16 +1,19 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Threading.Tasks;
 using Content.Shared.Construction;
+using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Construction.Completions
 {
-    public class SpawnPrototype : IEdgeCompleted, IStepCompleted
+    [UsedImplicitly]
+    public class SpawnPrototype : IGraphAction
     {
-        public string Prototype { get; private set; }
-        public int Amount { get; private set; }
+        public string Prototype { get; private set; } = string.Empty;
+        public int Amount { get; private set; } = 1;
 
         public void ExposeData(ObjectSerializer serializer)
         {
@@ -18,14 +21,9 @@ namespace Content.Server.Construction.Completions
             serializer.DataField(this, x => x.Amount, "amount", 1);
         }
 
-        public async Task StepCompleted(IEntity entity, IEntity user)
+        public async Task PerformAction(IEntity entity, IEntity? user)
         {
-            await Completed(entity, user);
-        }
-
-        public async Task Completed(IEntity entity, IEntity user)
-        {
-            if (entity.Deleted) return;
+            if (entity.Deleted || string.IsNullOrEmpty(Prototype)) return;
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var coordinates = entity.Transform.Coordinates;

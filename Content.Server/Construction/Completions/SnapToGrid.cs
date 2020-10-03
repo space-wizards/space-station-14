@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿#nullable enable
+using System.Threading.Tasks;
 using Content.Server.Utility;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
@@ -9,21 +10,16 @@ using Robust.Shared.Serialization;
 namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
-    public class SnapToGrid : IEdgeCompleted, IStepCompleted
+    public class SnapToGrid : IGraphAction
     {
-        public SnapGridOffset Offset { get; private set; }
+        public SnapGridOffset Offset { get; private set; } = SnapGridOffset.Center;
 
         public void ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.Offset, "offset", SnapGridOffset.Center);
         }
 
-        public async Task StepCompleted(IEntity entity, IEntity user)
-        {
-            await Completed(entity, user);
-        }
-
-        public async Task Completed(IEntity entity, IEntity user)
+        public async Task PerformAction(IEntity entity, IEntity? user)
         {
             if (entity.Deleted) return;
 

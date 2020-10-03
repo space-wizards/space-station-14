@@ -1,12 +1,15 @@
-﻿using System.Threading.Tasks;
+﻿#nullable enable
+using System.Threading.Tasks;
 using Content.Shared.Construction;
 using Content.Shared.Interfaces;
+using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Construction.Completions
 {
-    public class PopupUser : IEdgeCompleted, IStepCompleted
+    [UsedImplicitly]
+    public class PopupUser : IGraphAction
     {
         public void ExposeData(ObjectSerializer serializer)
         {
@@ -14,16 +17,13 @@ namespace Content.Server.Construction.Completions
             serializer.DataField(this, x => x.Cursor, "cursor", false);
         }
 
-        public bool Cursor { get; private set; }
-        public string Text { get; private set; }
+        public bool Cursor { get; private set; } = false;
+        public string Text { get; private set; } = string.Empty;
 
-        public async Task StepCompleted(IEntity entity, IEntity user)
+        public async Task PerformAction(IEntity entity, IEntity? user)
         {
-            await Completed(entity, user);
-        }
+            if (user == null) return;
 
-        public async Task Completed(IEntity entity, IEntity user)
-        {
             if(Cursor)
                 user.PopupMessageCursor(Text);
             else

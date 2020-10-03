@@ -326,7 +326,7 @@ namespace Content.Server.GameObjects.EntitySystems
             // We do have completed effects!
             foreach (var completed in edge.Completed)
             {
-                await completed.Completed(item, user);
+                await completed.PerformAction(item, user);
             }
 
             if(item.TryGetComponent(out ItemComponent? itemComp))
@@ -456,7 +456,7 @@ namespace Content.Server.GameObjects.EntitySystems
                         // We have step completions!
                         foreach (var completed in firstStep.Completed)
                         {
-                            await completed.StepCompleted(entity, user);
+                            await completed.PerformAction(entity, user);
 
                             if (entity.Deleted)
                                 return;
@@ -481,7 +481,7 @@ namespace Content.Server.GameObjects.EntitySystems
                         // We do have completed effects!
                         foreach (var completed in edge.Completed)
                         {
-                            await completed.Completed(entity, user);
+                            await completed.PerformAction(entity, user);
                         }
 
                         RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));

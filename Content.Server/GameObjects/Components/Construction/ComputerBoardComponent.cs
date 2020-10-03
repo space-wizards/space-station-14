@@ -13,10 +13,10 @@ namespace Content.Server.GameObjects.Components.Construction
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(this, x => x.ComputerPrototype, "computerPrototype", string.Empty);
+            serializer.DataField(this, x => x.Prototype, "prototype", string.Empty);
         }
 
         [ViewVariables]
-        public string ComputerPrototype { get; private set; }
+        public string Prototype { get; private set; }
     }
 }

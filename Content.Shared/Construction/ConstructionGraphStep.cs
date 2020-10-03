@@ -12,9 +12,9 @@ namespace Content.Shared.Construction
     [Serializable, NetSerializable]
     public abstract class ConstructionGraphStep : IExposeData
     {
-        private List<IStepCompleted> _completed;
+        private List<IGraphAction> _completed;
         public float DoAfter { get; private set; }
-        public IReadOnlyList<IStepCompleted> Completed => _completed;
+        public IReadOnlyList<IGraphAction> Completed => _completed;
 
         public virtual void ExposeData(ObjectSerializer serializer)
         {
@@ -22,7 +22,7 @@ namespace Content.Shared.Construction
 
             serializer.DataField(this, x => x.DoAfter, "doAfter", 0f);
             if (!moduleManager.IsServerModule) return;
-            serializer.DataField(ref _completed, "completed", new List<IStepCompleted>());
+            serializer.DataField(ref _completed, "completed", new List<IGraphAction>());
         }
 
         public abstract void DoExamine(FormattedMessage message, bool inDetailsRange);

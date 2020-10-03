@@ -17,7 +17,7 @@ namespace Content.Shared.Construction
     {
         private List<ConstructionGraphStep> _steps = new List<ConstructionGraphStep>();
         private List<IEdgeCondition> _conditions;
-        private List<IEdgeCompleted> _completed;
+        private List<IGraphAction> _completed;
 
         [ViewVariables]
         public string Target { get; private set; }
@@ -26,7 +26,7 @@ namespace Content.Shared.Construction
         public IReadOnlyList<IEdgeCondition> Conditions => _conditions;
 
         [ViewVariables]
-        public IReadOnlyList<IEdgeCompleted> Completed => _completed;
+        public IReadOnlyList<IGraphAction> Completed => _completed;
 
         [ViewVariables]
         public IReadOnlyList<ConstructionGraphStep> Steps => _steps;
@@ -38,7 +38,7 @@ namespace Content.Shared.Construction
             serializer.DataField(this, x => x.Target, "to", string.Empty);
             if (!moduleManager.IsServerModule) return;
             serializer.DataField(ref _conditions, "conditions", new List<IEdgeCondition>());
-            serializer.DataField(ref _completed, "completed", new List<IEdgeCompleted>());
+            serializer.DataField(ref _completed, "completed", new List<IGraphAction>());
         }
 
         public void LoadFrom(YamlMappingNode mapping)

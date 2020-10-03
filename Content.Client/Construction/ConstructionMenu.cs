@@ -301,24 +301,22 @@ namespace Content.Client.Construction
                     {
                         case MaterialConstructionGraphStep materialStep:
                             if(!isItem || current != startNode)
-                                _stepList.AddItem(Loc.GetString($"{stepNumber++}. Add {materialStep.Amount} sheets of {materialStep.Material}"), icon);
+                                _stepList.AddItem(Loc.GetString($"{stepNumber++}. Add {materialStep.Amount}x {materialStep.Material}."), icon);
                             else
-                            {
                                 _stepList.AddItem(Loc.GetString($"{materialStep.Amount}x {materialStep.Material}"), icon);
-                            }
+
                             break;
 
                         case ToolConstructionGraphStep toolStep:
-                            _stepList.AddItem(Loc.GetString($"{stepNumber++}. Use {0:a} {toolStep.Tool} tool.", toolStep.Tool), icon);
+                            _stepList.AddItem(Loc.GetString($"{stepNumber++}. Use a {toolStep.Tool.GetToolName()}.", toolStep.Tool), icon);
                             break;
 
                         case PrototypeConstructionGraphStep prototypeStep:
-                            _stepList.AddItem(Loc.GetString($"{stepNumber++}. Add {0:a} {prototypeStep.Name}.", prototypeStep.Name), icon);
+                            _stepList.AddItem(Loc.GetString($"{stepNumber++}. Add {prototypeStep.Name}."), icon);
                             break;
 
                         case ComponentConstructionGraphStep componentStep:
-                            _stepList.AddItem(Loc.GetString($"{stepNumber++}. Add {0:a} {componentStep.Name}.",
-                                componentStep.Name), icon);
+                            _stepList.AddItem(Loc.GetString($"{stepNumber++}. Add {componentStep.Name}."), icon);
                             break;
 
                         case NestedConstructionGraphStep nestedStep:
@@ -337,19 +335,19 @@ namespace Content.Client.Construction
                                     {
                                         case MaterialConstructionGraphStep materialStep:
                                             if (!isItem)
-                                                _stepList.AddItem(Loc.GetString($"    {stepNumber}.{parallelNumber}.{subStepNumber++}. Add {materialStep.Amount} sheets of {materialStep.Material}"), icon);
+                                                _stepList.AddItem(Loc.GetString($"    {stepNumber}.{parallelNumber}.{subStepNumber++}. Add {materialStep.Amount} sheets of {materialStep.Material}."), icon);
                                             break;
 
                                         case ToolConstructionGraphStep toolStep:
-                                            _stepList.AddItem(Loc.GetString($"    {stepNumber}.{parallelNumber}.{subStepNumber++}. Use {0:a} {toolStep.Tool} tool.", toolStep.Tool), icon);
+                                            _stepList.AddItem(Loc.GetString($"    {stepNumber}.{parallelNumber}.{subStepNumber++}. Use a {toolStep.Tool.GetToolName()}.", toolStep.Tool), icon);
                                             break;
 
                                         case PrototypeConstructionGraphStep prototypeStep:
-                                            _stepList.AddItem(Loc.GetString($"    {stepNumber}.{parallelNumber}.{subStepNumber++}. Add {0:a} {prototypeStep.Name}.", prototypeStep.Name), icon);
+                                            _stepList.AddItem(Loc.GetString($"    {stepNumber}.{parallelNumber}.{subStepNumber++}. Add {prototypeStep.Name}."), icon);
                                             break;
 
                                         case ComponentConstructionGraphStep componentStep:
-                                            _stepList.AddItem(Loc.GetString($"    {stepNumber}.{parallelNumber}.{subStepNumber++}. Add {0:a} {componentStep.Name}.", componentStep.Name), icon);
+                                            _stepList.AddItem(Loc.GetString($"    {stepNumber}.{parallelNumber}.{subStepNumber++}. Add {componentStep.Name}."), icon);
                                             break;
                                     }
                                 }

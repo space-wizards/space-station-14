@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Content.Shared.Interfaces;
 using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -12,6 +14,7 @@ namespace Content.Shared.Construction
     [Serializable, NetSerializable]
     public class ConstructionGraphNode
     {
+        private List<IGraphAction> _actions = new List<IGraphAction>();
         private List<ConstructionGraphEdge> _edges = new List<ConstructionGraphEdge>();
 
         [ViewVariables]
@@ -21,16 +24,19 @@ namespace Content.Shared.Construction
         public IReadOnlyList<ConstructionGraphEdge> Edges => _edges;
 
         [ViewVariables]
-        public string Entity { get; private set; }
+        public IReadOnlyList<IGraphAction> Actions => _actions;
 
         [ViewVariables]
-        public string SpriteState { get; private set; }
+        public string Entity { get; private set; }
 
         public void ExposeData(ObjectSerializer serializer)
         {
+            var moduleManager = IoCManager.Resolve<IModuleManager>();
+
             serializer.DataField(this, x => x.Name, "node", string.Empty);
             serializer.DataField(this, x => x.Entity, "entity",string.Empty);
-            serializer.DataField(this, x => x.SpriteState, "spriteState", string.Empty);
+            if (!moduleManager.IsServerModule) return;
+            serializer.DataField(ref _actions, "actions", new List<IGraphAction>());
         }
 
         public void LoadFrom(YamlMappingNode mapping)
