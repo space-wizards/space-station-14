@@ -50,7 +50,7 @@
   - type: SnapGrid
     offset: Center
   - type: Sprite
-    sprite: Constructible/Power/radiation_panel.rsi
+    sprite: Constructible/Power/radiation_collector.rsi
     layers:
       - state: ca_on
         map: ["enum.RadiationCollectorVisualLayers.Main"]

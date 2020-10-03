@@ -1,0 +1,242 @@
+﻿- type: entity
+  id: ParticleAcceleratorBase
+  abstract: true
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: InteractionOutline
+    - type: Anchorable
+    - type: Collidable
+      shapes:
+        - !type:PhysShapeAabb
+          bounds: "-0.4,-0.25,0.4,0.25" #todo?
+          layer:
+            - Opaque
+            - Impassable
+            - MobImpassable
+            - VaultImpassable
+      IsScrapingFloor: true
+    - type: Physics
+      mass: 25
+      anchored: true
+    - type: SnapGrid
+      offset: Center
+    - type: Pullable
+    - type: Clickable
+
+# Working PA
+
+- type: entity
+  parent: ParticleAcceleratorBase
+  id: ParticleAcceleratorControlBox
+  name: Particle Accelerator Control Box
+  # todo desc
+  components:
+    - type: Sprite
+      sprite: Constructible/Power/PA/control_box.rsi
+      state: control_boxc
+    - type: Appearance
+      visuals:
+        - type: ParticleAcceleratorPartVisualizer
+          baseState: control_box
+    - type: PowerReceiver
+    - type: ParticleAcceleratorControlBox
+    # todo add ui
+
+- type: entity
+  parent: ParticleAcceleratorBase
+  id: ParticleAcceleratorEmitterLeft
+  name: Particle Accelerator Emitter (left)
+  # todo desc
+  components:
+    - type: Sprite
+      sprite: Constructible/Power/PA/emitter_left.rsi
+      state: emitter_leftc
+    - type: Appearance
+      visuals:
+        - type: ParticleAcceleratorPartVisualizer
+          baseState: emitter_left
+    - type: ParticleAcceleratorEmitter
+
+
+- type: entity
+  parent: ParticleAcceleratorBase
+  id: ParticleAcceleratorEmitterCenter
+  name: Particle Accelerator Emitter (center)
+  # todo desc
+  components:
+    - type: Sprite
+      sprite: Constructible/Power/PA/emitter_center.rsi
+      state: emitter_centerc
+    - type: Appearance
+      visuals:
+        - type: ParticleAcceleratorPartVisualizer
+          baseState: emitter_center
+    - type: ParticleAcceleratorEmitter
+
+- type: entity
+  parent: ParticleAcceleratorBase
+  id: ParticleAcceleratorEmitterRight
+  name: Particle Accelerator Emitter (right)
+  # todo desc
+  components:
+    - type: Sprite
+      sprite: Constructible/Power/PA/emitter_right.rsi
+      state: emitter_rightc
+    - type: Appearance
+      visuals:
+        - type: ParticleAcceleratorPartVisualizer
+          baseState: emitter_right
+    - type: ParticleAcceleratorEmitter
+
+- type: entity
+  parent: ParticleAcceleratorBase
+  id: ParticleAcceleratorEndCap
+  name: Particle Accelerator End Cap
+  # todo desc
+  components:
+    - type: Sprite
+      sprite: Constructible/Power/PA/end_cap.rsi
+      state: end_capc
+    - type: Appearance
+      visuals:
+        - type: ParticleAcceleratorPartVisualizer
+          baseState: end_cap
+    - type: ParticleAcceleratorEndCap
+
+- type: entity
+  parent: ParticleAcceleratorBase
+  id: ParticleAcceleratorFuelChamber
+  name: Particle Accelerator Fuel Chamber
+  # todo desc
+  components:
+    - type: Sprite
+      sprite: Constructible/Power/PA/fuel_chamber.rsi
+      state: fuel_chamberc
+    - type: Appearance
+      visuals:
+        - type: ParticleAcceleratorPartVisualizer
+          baseState: fuel_chamber
+    - type: ParticleAcceleratorFuelChamber
+
+- type: entity
+  parent: ParticleAcceleratorBase
+  id: ParticleAcceleratorPowerBox
+  name: Particle Accelerator Power Box
+  # todo desc
+  components:
+    - type: Sprite
+      sprite: Constructible/Power/PA/power_box.rsi
+      state: power_boxc
+    - type: Appearance
+      visuals:
+        - type: ParticleAcceleratorPartVisualizer
+          baseState: power_box
+    - type: ParticleAcceleratorPowerBox
+
+# Unfinished PA
+
+- type: entity
+  parent: ParticleAcceleratorBase
+  id: ParticleAcceleratorControlBoxUnfinished
+  name: Particle Accelerator Control Box
+  suffix: Unfinished
+  # todo desc
+  components:
+    - type: Sprite
+      sprite: Constructible/Power/PA/control_box.rsi
+      state: control_box
+    - type: Appearance
+      visuals:
+        - type: ParticleAcceleratorPartVisualizer
+          baseState: control_box
+
+- type: entity
+  parent: ParticleAcceleratorBase
+  id: ParticleAcceleratorEmitterLeftUnfinished
+  name: Particle Accelerator Emitter (left)
+  suffix: Unfinished
+  # todo desc
+  components:
+    - type: Sprite
+      sprite: Constructible/Power/PA/emitter_left.rsi
+      state: emitter_left
+    - type: Appearance
+      visuals:
+        - type: ParticleAcceleratorPartVisualizer
+          baseState: emitter_left
+
+- type: entity
+  parent: ParticleAcceleratorBase
+  id: ParticleAcceleratorEmitterCenterUnfinished
+  name: Particle Accelerator Emitter (center)
+  suffix: Unfinished
+  # todo desc
+  components:
+    - type: Sprite
+      sprite: Constructible/Power/PA/emitter_center.rsi
+      state: emitter_center
+    - type: Appearance
+      visuals:
+        - type: ParticleAcceleratorPartVisualizer
+          baseState: emitter_center
+
+- type: entity
+  parent: ParticleAcceleratorBase
+  id: ParticleAcceleratorEmitterRightUnfinished
+  name: Particle Accelerator Emitter (right)
+  suffix: Unfinished
+  # todo desc
+  components:
+    - type: Sprite
+      sprite: Constructible/Power/PA/emitter_right.rsi
+      state: emitter_right
+    - type: Appearance
+      visuals:
+        - type: ParticleAcceleratorPartVisualizer
+          baseState: emitter_right
+
+- type: entity
+  parent: ParticleAcceleratorBase
+  id: ParticleAcceleratorEndCapUnfinished
+  name: Particle Accelerator End Cap
+  suffix: Unfinished
+  # todo desc
+  components:
+    - type: Sprite
+      sprite: Constructible/Power/PA/end_cap.rsi
+      state: end_cap
+    - type: Appearance
+      visuals:
+        - type: ParticleAcceleratorPartVisualizer
+          baseState: end_cap
+
+- type: entity
+  parent: ParticleAcceleratorBase
+  id: ParticleAcceleratorFuelChamberUnfinished
+  name: Particle Accelerator Fuel Chamber
+  suffix: Unfinished
+  # todo desc
+  components:
+    - type: Sprite
+      sprite: Constructible/Power/PA/fuel_chamber.rsi
+      state: fuel_chamber
+    - type: Appearance
+      visuals:
+        - type: ParticleAcceleratorPartVisualizer
+          baseState: fuel_chamber
+
+- type: entity
+  parent: ParticleAcceleratorBase
+  id: ParticleAcceleratorPowerBoxUnfinished
+  name: Particle Accelerator Power Box
+  suffix: Unfinished
+  # todo desc
+  components:
+    - type: Sprite
+      sprite: Constructible/Power/PA/power_box.rsi
+      state: power_box
+    - type: Appearance
+      visuals:
+        - type: ParticleAcceleratorPartVisualizer
+          baseState: power_box
