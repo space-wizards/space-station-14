@@ -32,6 +32,7 @@ namespace Content.Server.GameObjects.Components.PA
 
         private EntityUid? _EntityId;
 
+        [ViewVariables]
         private ParticleAcceleratorControlBoxComponent _controlBox;
         public ParticleAcceleratorControlBoxComponent ControlBox
         {
@@ -47,8 +48,11 @@ namespace Content.Server.GameObjects.Components.PA
             {
                 SetFuelChamber(fuelChamber, skipControlBoxCheck: true);
             }
+
+            Power = _power;
         }
 
+        [ViewVariables]
         private ParticleAcceleratorEndCapComponent _endCap;
         public ParticleAcceleratorEndCapComponent EndCap
         {
@@ -64,8 +68,11 @@ namespace Content.Server.GameObjects.Components.PA
             {
                 SetFuelChamber(fuelChamber, skipEndCapCheck: true);
             }
+
+            Power = _power;
         }
 
+        [ViewVariables]
         private ParticleAcceleratorFuelChamberComponent _fuelChamber;
         public ParticleAcceleratorFuelChamberComponent FuelChamber
         {
@@ -93,8 +100,11 @@ namespace Content.Server.GameObjects.Components.PA
             {
                 SetPowerBox(powerBox, skipFuelChamberCheck: true);
             }
+
+            Power = _power;
         }
 
+        [ViewVariables]
         private ParticleAcceleratorPowerBoxComponent _powerBox;
         public ParticleAcceleratorPowerBoxComponent PowerBox
         {
@@ -117,8 +127,11 @@ namespace Content.Server.GameObjects.Components.PA
             {
                 SetEmitterCenter(emitterComponent, skipPowerBoxCheck: true);
             }
+
+            Power = _power;
         }
 
+        [ViewVariables]
         private ParticleAcceleratorEmitterComponent _emitterLeft;
         public ParticleAcceleratorEmitterComponent EmitterLeft
         {
@@ -140,8 +153,11 @@ namespace Content.Server.GameObjects.Components.PA
             {
                 SetEmitterCenter(emitterComponent, skipEmitterLeftCheck: true);
             }
+
+            Power = _power;
         }
 
+        [ViewVariables]
         private ParticleAcceleratorEmitterComponent _emitterCenter;
         public ParticleAcceleratorEmitterComponent EmitterCenter
         {
@@ -177,8 +193,11 @@ namespace Content.Server.GameObjects.Components.PA
             {
                 SetPowerBox(powerBox, skipEmitterCenterCheck: true);
             }
+
+            Power = _power;
         }
 
+        [ViewVariables]
         private ParticleAcceleratorEmitterComponent _emitterRight;
         public ParticleAcceleratorEmitterComponent EmitterRight
         {
@@ -200,6 +219,8 @@ namespace Content.Server.GameObjects.Components.PA
             {
                 SetEmitterCenter(emitterComponent, skipEmitterRightCheck: true);
             }
+
+            Power = _power;
         }
 
         private ParticleAcceleratorPowerState _power = ParticleAcceleratorPowerState.Off;
@@ -244,18 +265,25 @@ namespace Content.Server.GameObjects.Components.PA
                 Logger.Error($"ParticleAccelerator tried updating state of {component} but failed due to a missing AppearanceComponent");
                 return;
             }
-            appearanceComponent.SetData(ParticleAcceleratorVisuals.VisualState, _power);
+            appearanceComponent.SetData(ParticleAcceleratorVisuals.VisualState, (ParticleAcceleratorVisualState)_power);
         }
 
         private void Absorb(ParticleAccelerator particleAccelerator)
         {
             _controlBox ??= particleAccelerator._controlBox;
+            if (_controlBox != null) _controlBox.ParticleAccelerator = this;
             _endCap ??= particleAccelerator._endCap;
+            if (_endCap != null) _endCap.ParticleAccelerator = this;
             _fuelChamber ??= particleAccelerator._fuelChamber;
+            if (_fuelChamber != null) _fuelChamber.ParticleAccelerator = this;
             _powerBox ??= particleAccelerator._powerBox;
+            if (_powerBox != null) _powerBox.ParticleAccelerator = this;
             _emitterLeft ??= particleAccelerator._emitterLeft;
+            if (_emitterLeft != null) _emitterLeft.ParticleAccelerator = this;
             _emitterCenter ??= particleAccelerator._emitterCenter;
+            if (_emitterCenter != null) _emitterCenter.ParticleAccelerator = this;
             _emitterRight ??= particleAccelerator._emitterRight;
+            if (_emitterRight != null) _emitterRight.ParticleAccelerator = this;
 
             particleAccelerator._controlBox = null;
             particleAccelerator._endCap = null;
@@ -271,6 +299,12 @@ namespace Content.Server.GameObjects.Components.PA
             gridId = GridId.Invalid;
 
             if (partVar == value) return false;
+
+            if (value == null)
+            {
+                partVar = null;
+                return false;
+            }
 
             if (partVar != null)
             {
@@ -312,7 +346,7 @@ namespace Content.Server.GameObjects.Components.PA
         private bool TryGetPart<TP>(GridId gridId, PartOffset directionOffset, ParticleAcceleratorPartComponent value, out TP part)
             where TP : ParticleAcceleratorPartComponent
         {
-            var partMapIndices = GetMapIndicesInDir(value, (Direction)directionOffset);
+            var partMapIndices = GetMapIndicesInDir(value, directionOffset);
 
             var entity = partMapIndices.GetEntitiesInTileFast(gridId).FirstOrDefault(obj => obj.TryGetComponent<TP>(out var part));
             part = entity?.GetComponent<TP>();
@@ -321,16 +355,30 @@ namespace Content.Server.GameObjects.Components.PA
 
         private bool TryGetPart(GridId gridId, PartOffset directionOffset, ParticleAcceleratorPartComponent value, ParticleAcceleratorEmitterType type, out ParticleAcceleratorEmitterComponent part)
         {
-            var partMapIndices = GetMapIndicesInDir(value, (Direction)directionOffset);
+            var partMapIndices = GetMapIndicesInDir(value, directionOffset);
 
             var entity = partMapIndices.GetEntitiesInTileFast(gridId).FirstOrDefault(obj => obj.TryGetComponent<ParticleAcceleratorEmitterComponent>(out var p) && p.Type == type);
             part = entity?.GetComponent<ParticleAcceleratorEmitterComponent>();
             return entity != null && part != null;
         }
 
-        private MapIndices GetMapIndicesInDir(Component comp, Direction offset)
+        private MapIndices GetMapIndicesInDir(Component comp, PartOffset offset)
         {
-            var partDir = new Angle(comp.Owner.Transform.LocalRotation + offset.ToAngle()).GetCardinalDir();
+            var offsetAngle = Angle.FromDegrees(180);
+            switch (offset)
+            {
+                case PartOffset.Down:
+                    offsetAngle = Angle.FromDegrees(0);
+                    break;
+                case PartOffset.Left:
+                    offsetAngle = Angle.FromDegrees(-90);
+                    break;
+                case PartOffset.Right:
+                    offsetAngle = Angle.FromDegrees(90);
+                    break;
+            }
+
+            var partDir = new Angle(comp.Owner.Transform.LocalRotation + offsetAngle).GetCardinalDir();
             return comp.Owner.Transform.Coordinates.ToMapIndices(_entityManager, _mapManager).Offset(partDir);
         }
 
@@ -346,10 +394,10 @@ namespace Content.Server.GameObjects.Components.PA
 
         private enum PartOffset
         {
-            Up = Direction.East,
-            Down = Direction.West,
-            Left = Direction.North,
-            Right = Direction.South
+            Up,
+            Down,
+            Left,
+            Right
         }
     }
 }

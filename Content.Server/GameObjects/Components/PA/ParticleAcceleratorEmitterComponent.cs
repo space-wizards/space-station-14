@@ -2,6 +2,8 @@
 using Newtonsoft.Json.Serialization;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.PA
 {
@@ -10,6 +12,29 @@ namespace Content.Server.GameObjects.Components.PA
     {
         public override string Name => "ParticleAcceleratorEmitter";
         public ParticleAcceleratorEmitterType Type;
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+
+            var emitterType = "center";
+            serializer.DataField(ref emitterType, "emitterType", "center");
+
+            switch (emitterType)
+            {
+                case "left":
+                    Type = ParticleAcceleratorEmitterType.Left;
+                    break;
+                case "center":
+                    Type = ParticleAcceleratorEmitterType.Center;
+                    break;
+                case "right":
+                    Type = ParticleAcceleratorEmitterType.Right;
+                    break;
+                default:
+                    throw new PrototypeLoadException($"Invalid emittertype ({emitterType}) in ParticleAcceleratorEmitterComponent");
+            }
+        }
 
         public override void Initialize()
         {

@@ -33,10 +33,10 @@ namespace Content.Client.GameObjects.Components
             _states.Add(ParticleAcceleratorVisualState.Wired, baseState+"w");
             _states.Add(ParticleAcceleratorVisualState.Closed, baseState+"c");
             _states.Add(ParticleAcceleratorVisualState.Powered, baseState+"p");
-            _states.Add(ParticleAcceleratorVisualState.Level0, baseState+"0");
-            _states.Add(ParticleAcceleratorVisualState.Level1, baseState+"1");
-            _states.Add(ParticleAcceleratorVisualState.Level2, baseState+"2");
-            _states.Add(ParticleAcceleratorVisualState.Level3, baseState+"3");
+            _states.Add(ParticleAcceleratorVisualState.Level0, baseState+"p0");
+            _states.Add(ParticleAcceleratorVisualState.Level1, baseState+"p1");
+            _states.Add(ParticleAcceleratorVisualState.Level2, baseState+"p2");
+            _states.Add(ParticleAcceleratorVisualState.Level3, baseState+"p3");
         }
 
         public override void InitializeEntity(IEntity entity)

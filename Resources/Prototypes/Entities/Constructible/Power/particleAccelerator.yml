@@ -57,6 +57,7 @@
         - type: ParticleAcceleratorPartVisualizer
           baseState: emitter_left
     - type: ParticleAcceleratorEmitter
+      emitterType: left
 
 
 - type: entity
@@ -73,6 +74,7 @@
         - type: ParticleAcceleratorPartVisualizer
           baseState: emitter_center
     - type: ParticleAcceleratorEmitter
+      emitterType: center
 
 - type: entity
   parent: ParticleAcceleratorBase
@@ -88,6 +90,7 @@
         - type: ParticleAcceleratorPartVisualizer
           baseState: emitter_right
     - type: ParticleAcceleratorEmitter
+      emitterType: right
 
 - type: entity
   parent: ParticleAcceleratorBase

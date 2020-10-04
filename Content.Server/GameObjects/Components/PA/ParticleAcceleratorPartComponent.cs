@@ -8,7 +8,7 @@ namespace Content.Server.GameObjects.Components.PA
 {
     public abstract class ParticleAcceleratorPartComponent : Component
     {
-        [ViewVariables] public ParticleAccelerator ParticleAccelerator = new ParticleAccelerator();
+        [ViewVariables] public ParticleAccelerator ParticleAccelerator;
 
         public override void Initialize()
         {
@@ -31,11 +31,18 @@ namespace Content.Server.GameObjects.Components.PA
 
         private void ReCalculateParticleAccelerator()
         {
-            if (!Owner.TryGetComponent<CollidableComponent>(out var collidableComponent) ||
-                !collidableComponent.Anchored) return;
+            if (!Owner.TryGetComponent<CollidableComponent>(out var collidableComponent)) return;
 
-            UnRegisterAtParticleAccelerator();
-            RegisterAtParticleAccelerator();
+            if (collidableComponent.Anchored)
+            {
+                UnRegisterAtParticleAccelerator();
+                ParticleAccelerator = new ParticleAccelerator();
+            }
+            else
+            {
+                ParticleAccelerator = new ParticleAccelerator();
+                RegisterAtParticleAccelerator();
+            }
         }
 
         protected abstract void RegisterAtParticleAccelerator();
