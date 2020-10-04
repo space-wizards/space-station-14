@@ -8,7 +8,7 @@ namespace Content.Shared
     public sealed class CCVars : CVars
     {
         public static readonly CVarDef<bool>
-            GameLobbyEnabled = CVarDef.Create("game.lobbyenabled", true, CVar.ARCHIVE);
+            GameLobbyEnabled = CVarDef.Create("game.lobbyenabled", false, CVar.ARCHIVE);
 
         public static readonly CVarDef<int>
             GameLobbyDuration = CVarDef.Create("game.lobbyduration", 20, CVar.ARCHIVE);
