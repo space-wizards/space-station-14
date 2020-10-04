@@ -177,7 +177,9 @@
             "BlockGameArcade",
             "KitchenSpike",
             "Butcherable",
-            "Rehydratable"
+            "Rehydratable",
+            "GasCanister",
+            "GasCanisterPort",
         };
     }
 }
