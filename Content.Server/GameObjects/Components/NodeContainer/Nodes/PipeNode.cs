@@ -57,29 +57,22 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         ///     Only for usage by <see cref="IPipeNet"/>s.
         /// </summary>
         [ViewVariables]
-        public GasMixture LocalAir { get; set; } = new GasMixture();
+        public GasMixture LocalAir { get; set; }
 
         [ViewVariables]
-        public float Volume
-        {
-            get => _volume;
-            set
-            {
-                _volume = Math.Max(value, 0);
-                LocalAir.Volume = _volume;
-            }
-        }
-        private float _volume;
+        public float Volume => LocalAir.Volume;
 
         private AppearanceComponent _appearance;
 
         private PipeVisualState PipeVisualState => new PipeVisualState(PipeDirection, ConduitLayer);
 
+        private const float DefaultVolume = 1;
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _pipeDirection, "pipeDirection", PipeDirection.None);
-            serializer.DataField(this, x => Volume, "volume", 10);
+            serializer.DataField(this, x => LocalAir, "gasMixture", new GasMixture(DefaultVolume));
             serializer.DataField(ref _conduitLayer, "conduitLayer", ConduitLayer.Two);
         }
 

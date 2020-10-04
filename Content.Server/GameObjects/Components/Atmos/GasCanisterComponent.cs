@@ -20,18 +20,6 @@ namespace Content.Server.GameObjects.Components.Atmos
         public GasMixture Air { get; set; }
 
         [ViewVariables]
-        public float Volume
-        {
-            get => _volume;
-            set
-            {
-                _volume = Math.Max(value, 0);
-                Air.Volume = _volume;
-            }
-        }
-        private float _volume;
-
-        [ViewVariables]
         public bool Anchored => !Owner.TryGetComponent<ICollidableComponent>(out var collidable) || collidable.Anchored;
 
         [ViewVariables]
@@ -40,11 +28,12 @@ namespace Content.Server.GameObjects.Components.Atmos
         [ViewVariables]
         public bool ConnectedToPort => ConnectedPort != null;
 
+        private const float DefaultVolume = 10;
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            Air = new GasMixture();
-            serializer.DataField(this, x => Volume, "volume", 10);
+            serializer.DataField(this, x => Air, "gasMixture", new GasMixture(DefaultVolume));
         }
 
         public override void Initialize()
