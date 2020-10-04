@@ -30,9 +30,6 @@ namespace Content.Server.GameObjects.Components.Singularity
             base.Initialize();
 
             _entityManager = IoCManager.Resolve<IEntityManager>();
-
-            tokenSource = new CancellationTokenSource();
-
         }
 
         public void PowerOn()
@@ -44,12 +41,9 @@ namespace Content.Server.GameObjects.Components.Singularity
             tokenSource = new CancellationTokenSource();
             var token = tokenSource.Token;
 
-            bool didFire;
-
             Timer.SpawnRepeating(1000,  () =>
             {
-                didFire = Fire();
-                if (!didFire)
+                if (!Fire())
                 {
                     PowerOff();
                 }

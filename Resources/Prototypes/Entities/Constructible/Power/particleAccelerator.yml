@@ -24,6 +24,21 @@
     - type: Pullable
     - type: Clickable
 
+- type: entity
+  name: Particles
+  description: "Accelerated particles."
+  id: ParticlesProjectile
+  parent: BulletBase
+  components:
+    - type: Sprite
+      sprite: Constructible/Power/PA/particle.rsi
+      state: particle0
+    #todo appearancecomp
+    - type: Projectile
+      soundHit: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
+      damages:
+        Heat: 20
+
 # Working PA
 
 - type: entity

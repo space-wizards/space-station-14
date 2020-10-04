@@ -33,9 +33,9 @@ namespace Content.Server.GameObjects.Components.PA
         {
             if (!Owner.TryGetComponent<CollidableComponent>(out var collidableComponent)) return;
 
-            if (collidableComponent.Anchored)
+            if (!collidableComponent.Anchored)
             {
-                UnRegisterAtParticleAccelerator();
+                if (ParticleAccelerator != null) UnRegisterAtParticleAccelerator();
                 ParticleAccelerator = new ParticleAccelerator();
             }
             else

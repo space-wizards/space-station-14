@@ -1,13 +1,10 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
+using System.Threading;
 using Content.Server.Atmos;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components;
-using Content.Shared.GameObjects.Components.Atmos;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems.TileLookup;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
@@ -15,10 +12,12 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
-using SQLitePCL;
+using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameObjects.Components.PA
 {
+    //todo remove components when they get deleted
+
     public class ParticleAccelerator
     {
         private IEntityManager _entityManager;
@@ -233,11 +232,20 @@ namespace Content.Server.GameObjects.Components.PA
                 if (!IsFunctional())
                 {
                     _power = ParticleAcceleratorPowerState.Off;
+                    StopFiring();
                     return;
                 }
 
+                if(_power == value) return;
+
                 _power = value;
                 UpdatePartVisualStates();
+
+                StopFiring();
+                if (_power != ParticleAcceleratorPowerState.Powered)
+                {
+                    StartFiring();
+                }
             }
         }
 
@@ -292,6 +300,25 @@ namespace Content.Server.GameObjects.Components.PA
             particleAccelerator._emitterLeft = null;
             particleAccelerator._emitterCenter = null;
             particleAccelerator._emitterRight = null;
+        }
+
+        private CancellationTokenSource _cancellationTokenSource;
+        private void StartFiring()
+        {
+            _cancellationTokenSource = new CancellationTokenSource();
+            var cancelToken = _cancellationTokenSource.Token;
+            Timer.SpawnRepeating(1000,  () => //todo make speed depend on level?
+            {
+                EmitterCenter?.Fire();
+                EmitterLeft?.Fire();
+                _emitterRight?.Fire();
+            }, cancelToken);
+        }
+
+        private void StopFiring()
+        {
+            _cancellationTokenSource?.Cancel();
+            _cancellationTokenSource = null;
         }
 
         private bool TryAddPart<T>(ref T partVar, T value, out GridId gridId) where T : ParticleAcceleratorPartComponent
