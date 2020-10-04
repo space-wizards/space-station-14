@@ -9,6 +9,7 @@ namespace Content.Shared.Construction
     public class ToolConstructionGraphStep : ConstructionGraphStep
     {
         public ToolQuality Tool { get; private set; }
+        public float Fuel { get; private set; }
         public string ExamineOverride { get; private set; }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -16,6 +17,7 @@ namespace Content.Shared.Construction
             base.ExposeData(serializer);
 
             serializer.DataField(this, x => x.Tool, "tool", ToolQuality.None);
+            serializer.DataField(this, x => x.Fuel, "fuel", 10f); // Default fuel cost.
             serializer.DataField(this, x => x.ExamineOverride, "examine", string.Empty);
         }
 

@@ -75,7 +75,7 @@
     offset: Center
   - type: Destructible
     deadThreshold: 25
-    spawnOnDestroy: MetalSheet1
+    spawnOnDestroy: SteelSheet1
   - type: UserInterface
     interfaces:
     - key: enum.ChemMasterUiKey.Key

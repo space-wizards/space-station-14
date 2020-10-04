@@ -9,6 +9,7 @@ using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.Audio;
 using Content.Shared.Construction;
+using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Mono.Cecil;
@@ -224,6 +225,17 @@ namespace Content.Server.GameObjects.Components.Construction
             switch (step)
             {
                 case ToolConstructionGraphStep toolStep:
+                    // Gotta take welder fuel into consideration.
+                    if (toolStep.Tool == ToolQuality.Welding)
+                    {
+                        if (eventArgs.Using.TryGetComponent(out WelderComponent? welder) &&
+                            await welder.UseTool(eventArgs.User, Owner, step.DoAfter, toolStep.Tool, toolStep.Fuel))
+                        {
+                            handled = true;
+                        }
+                        break;
+                    }
+
                     if (eventArgs.Using.TryGetComponent(out ToolComponent? tool) &&
                         await tool.UseTool(eventArgs.User, Owner, step.DoAfter, toolStep.Tool))
                     {

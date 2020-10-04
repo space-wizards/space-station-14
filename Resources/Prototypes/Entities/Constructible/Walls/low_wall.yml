@@ -25,7 +25,8 @@
       layer:
       - VaultImpassable
       - SmallImpassable
-  - type: Destructible
+  - type: BreakableConstruction
+    node: start
     deadThreshold: 100
     resistances: metallicResistances
   - type: SnapGrid
@@ -34,6 +35,9 @@
   - type: LowWall
     key: walls
     base: metal_
+  - type: Construction
+    graph: lowWall
+    node: lowWall
 
 - type: entity
   id: LowWallOverlay
