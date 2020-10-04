@@ -1,15 +1,4 @@
 ﻿- type: construction
-  name: wall light
-  id: WallLight
-  category: Machines
-  description: A simple wall-mounted light fixture.
-  placementMode: SnapgridBorder
-  canBuildInImpassable: true
-  icon:
-    sprite: Constructible/Lighting/lighting.rsi
-    state: on
-
-- type: construction
   name: computer
   id: Computer
   graph: computer

@@ -1,4 +1,18 @@
 ﻿- type: construction
+  name: girder
+  id: girder
+  graph: girder
+  startNode: start
+  targetNode: girder
+  category: Structures
+  description: A large structural assembly made out of metal.
+  icon:
+    sprite: /Textures/Constructible/Structures/Walls/solid.rsi
+    state: wall_girder
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
   name: wall
   id: wall
   graph: girder
@@ -25,33 +39,6 @@
     state: rgeneric
   objectType: Structure
   placementMode: SnapgridCenter
-
-- type: construction
-  name: girder
-  id: girder
-  graph: girder
-  startNode: start
-  targetNode: girder
-  category: Structures
-  description: A large structural assembly made out of metal.
-  icon:
-    sprite: /Textures/Constructible/Structures/Walls/solid.rsi
-    state: wall_girder
-  objectType: Structure
-  placementMode: SnapgridCenter
-
-- type: construction
-  name: table
-  id: Table
-  category: Structures
-  icon:
-    sprite: Constructible/Structures/Tables/generic.rsi
-    state: plain_preview
-  result: Table
-  placementMode: SnapgridCenter
-  steps:
-  - material: Metal
-    amount: 2
 
 - type: construction
   name: low wall
