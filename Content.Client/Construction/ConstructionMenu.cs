@@ -287,10 +287,13 @@ namespace Content.Client.Construction
             foreach (var node in path)
             {
                 var edge = current.GetEdge(node.Name);
+                var firstNode = current == startNode;
 
-                if (isItem && current == startNode)
+                if (firstNode)
                 {
-                    _stepList.AddItem(Loc.GetString($"{stepNumber++}. To craft this item, you need:"));
+                    _stepList.AddItem(isItem
+                        ? Loc.GetString($"{stepNumber++}. To craft this item, you need:")
+                        : Loc.GetString($"{stepNumber++}. To build this, first you need:"));
                 }
 
                 foreach (var step in edge.Steps)
@@ -300,10 +303,11 @@ namespace Content.Client.Construction
                     switch (step)
                     {
                         case MaterialConstructionGraphStep materialStep:
-                            if(!isItem || current != startNode)
-                                _stepList.AddItem(Loc.GetString($"{stepNumber++}. Add {materialStep.Amount}x {materialStep.Material}."), icon);
-                            else
-                                _stepList.AddItem(Loc.GetString($"{materialStep.Amount}x {materialStep.Material}"), icon);
+                            _stepList.AddItem(
+                                !firstNode
+                                    ? Loc.GetString(
+                                        $"{stepNumber++}. Add {materialStep.Amount}x {materialStep.Material}.")
+                                    : Loc.GetString($"      {materialStep.Amount}x {materialStep.Material}"), icon);
 
                             break;
 
