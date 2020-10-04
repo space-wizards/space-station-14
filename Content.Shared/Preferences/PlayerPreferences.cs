@@ -26,6 +26,12 @@ namespace Content.Shared.Preferences
         /// </summary>
         public IEnumerable<ICharacterProfile> Characters => _characters.AsEnumerable();
 
+        public int AddProfile(ICharacterProfile profile)
+        {
+            _characters.Add(profile);
+            return _characters.Count - 1;
+        }
+
         public ICharacterProfile GetProfile(int index)
         {
             return _characters[index];
@@ -45,6 +51,11 @@ namespace Content.Shared.Preferences
 
         public int IndexOfCharacter(ICharacterProfile profile)
         {
+            if (profile == null)
+            {
+                return _characters.Count;
+            }
+
             return _characters.FindIndex(x => x == profile);
         }
     }

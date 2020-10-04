@@ -54,7 +54,8 @@ namespace Content.Client
 
         public void CreateCharacter(ICharacterProfile profile)
         {
-            UpdateCharacter(profile, Preferences.FirstEmptySlot);
+            var slot = Preferences.AddProfile(profile);
+            UpdateCharacter(profile, slot);
         }
 
         public void DeleteCharacter(ICharacterProfile profile)
