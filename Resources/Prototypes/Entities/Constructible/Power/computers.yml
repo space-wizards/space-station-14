@@ -29,6 +29,38 @@
       state: "0"
 
 - type: entity
+  id: ComputerBroken
+  name: broken computer
+  description: This computer has seen better days.
+  abstract: true # We don't want this to show up in the entity spawner menu.
+  components:
+    - type: Collidable
+      mass: 25
+      anchored: true
+      IsScrapingFloor: true
+      shapes:
+        - !type:PhysShapeAabb
+          bounds: "-0.5,-0.25,0.5,0.25"
+          layer:
+            - Impassable
+            - MobImpassable
+            - VaultImpassable
+            - Opaque
+          mask:
+            - Impassable
+            - MobImpassable
+            - VaultImpassable
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Anchorable
+    - type: Construction
+      graph: computer
+      node: monitorBroken
+    - type: Sprite
+      sprite: "Constructible/Power/computers.rsi"
+      state: "broken"
+
+- type: entity
   id: ComputerBase
   name: computer
   abstract: true
@@ -57,6 +89,8 @@
   - type: Computer
   - type: PowerReceiver
   - type: Anchorable
+  - type: BreakableConstruction
+    node: monitorBroken
 
   - type: Sprite
     sprite: Constructible/Power/computers.rsi

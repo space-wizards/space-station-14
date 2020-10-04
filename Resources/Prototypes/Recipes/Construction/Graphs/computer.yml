@@ -83,7 +83,9 @@
             - tool: Screwing
 
     - node: monitorMissing
+      entity: ComputerFrame
       actions:
+        - !type:SetAnchor { }
         - !type:SpriteStateChange
           state: "3"
       edges:
@@ -130,3 +132,17 @@
         - to: monitorUnsecured
           steps:
             - tool: Screwing
+
+    - node: monitorBroken
+      entity: ComputerBroken
+      edges:
+        - to: monitorMissing
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:SpawnPrototype
+              prototype: GlassSheet1 # TODO: Replace with glass shard.
+              amount: 1
+          steps:
+            - tool: Prying
+              doAfter: 2

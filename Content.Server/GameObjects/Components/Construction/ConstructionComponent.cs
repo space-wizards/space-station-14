@@ -60,6 +60,8 @@ namespace Content.Server.GameObjects.Components.Construction
         [ViewVariables]
         public ConstructionGraphEdge? Edge { get; private set; } = null;
 
+        public IReadOnlyCollection<string> Containers => _containers;
+
         [ViewVariables]
         public ConstructionGraphNode? Target
         {
@@ -123,17 +125,16 @@ namespace Content.Server.GameObjects.Components.Construction
                 TargetPathfinding = new Queue<ConstructionGraphNode>(path);
             }
 
+            // Dequeue the pathfinding queue if the next is the node we're at.
+            if (TargetPathfinding.Peek() == Node)
+                TargetPathfinding.Dequeue();
+
             // If we went the wrong way, we stop pathfinding.
             if (Edge != null && TargetNextEdge != Edge)
             {
                 ClearTarget();
                 return;
             }
-
-            // Dequeue the pathfinding queue if the next is the node we're at.
-            if (TargetPathfinding.Peek() == Node)
-                TargetPathfinding.Dequeue();
-
 
             // Let's set the next target edge.
             if (Edge == null && TargetNextEdge == null)
@@ -350,6 +351,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
             UpdateTarget();
 
+            TargetNextEdge = null;
             Edge = null;
             Node = GraphPrototype.Nodes[edge.Target];
 
@@ -398,6 +400,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
                 construction.Node = node;
                 construction.Target = Target;
+                construction._containers = new HashSet<string>(_containers);
             }
 
             if (Owner.TryGetComponent(out ContainerManagerComponent? containerComp))
@@ -493,7 +496,7 @@ namespace Content.Server.GameObjects.Components.Construction
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
             if(Target != null)
-                message.AddMarkup(Loc.GetString("To create {0:a} {0}...\n", Target.Name));
+                message.AddMarkup(Loc.GetString("To create {0}...\n", Target.Name));
 
             if (Edge == null && TargetNextEdge != null)
             {
