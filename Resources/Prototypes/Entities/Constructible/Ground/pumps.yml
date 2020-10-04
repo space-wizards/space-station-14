@@ -9,24 +9,21 @@
   - type: Collidable
   - type: SnapGrid
     offset: Center
-  - type: Sprite
-  - type: Icon
-    sprite: Constructible/Atmos/pressurepump.rsi
-    state: pumpEnabledSouth2North2
-  - type: Appearance
-    visuals:
-    - type: PipeVisualizer
-      pipeRSI: Constructible/Atmos/pipe.rsi
-    - type: PumpVisualizer
-      pumpRSI: Constructible/Atmos/pressurepump.rsi
   - type: Destructible
     thresholdvalue: 100
     resistances: metallicResistances
+  - type: Sprite
+    sprite: Constructible/Atmos/pump.rsi
+  - type: Icon
+    sprite: Constructible/Atmos/pump.rsi
+  - type: Appearance
+    visuals:
+    - type: PumpVisualizer
 
 - type: entity
-  abstract: true
   parent: PumpBase
-  id: NorthwardLongitudinalPump
+  id: DebugPressurePump
+  name: Debug Pressure Pump
   components:
   - type: NodeContainer
     nodes:
@@ -36,21 +33,8 @@
     - !type:PipeNode
       nodeGroupID: Pipe
       pipeDirection: North
-
-- type: entity
-  parent: NorthwardLongitudinalPump
-  id: NorthwardLongitudinalVolumePump
-  name: Northward Longitudinal Volume Pump
-  components:
-  - type: VolumePump
-    inletDirection: South
-    outletDirection: North
-
-- type: entity
-  parent: NorthwardLongitudinalPump
-  id: NorthwardLongitudinalPressurePump
-  name: Northward Longitudinal Pressure Pump
-  components:
   - type: PressurePump
-    inletDirection: South
-    outletDirection: North
+  - type: Sprite
+    state: pumpPressure2
+  - type: Icon
+    state: pumpPressure2
