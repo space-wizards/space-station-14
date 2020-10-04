@@ -35,6 +35,9 @@
   name: steel sheet 1
   parent: MetalStack
   components:
+  - type: Sprite
+    sprite: Objects/Materials/sheets.rsi
+    state: metal
   - type: Stack
     count: 1
 
