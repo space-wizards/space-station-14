@@ -19,6 +19,10 @@
       mat: steel
   - type: Stack
     stacktype: enum.StackType.Metal
+    spritestates:
+    - metal
+    - metal_2
+    - metal_3
   - type: Sprite
     sprite: Objects/Materials/sheets.rsi
     state: metal
@@ -71,6 +75,10 @@
       mat: gold
   - type: Stack
     stacktype: enum.StackType.Gold
+    spritestates:
+    - goldbar_10
+    - goldbar_20
+    - goldbar_30
   - type: Sprite
     sprite: Objects/Materials/materials.rsi
     state: goldbar_30
