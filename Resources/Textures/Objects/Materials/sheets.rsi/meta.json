@@ -6,39 +6,10 @@
     },
     "states": [
         {
-            "name": "metal-inhand-left",
-            "directions": 4,
+            "name": "glass",
+            "directions": 1,
             "delays": [
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ]
-            ]
-        },
-        {
-            "name": "metal-inhand-right",
-            "directions": 4,
-            "delays": [
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ]
+                []
             ]
         },
         {
@@ -78,8 +49,72 @@
             ]
         },
         {
-            "name": "glass",
-            "directions": 1
+            "name": "metal",
+            "directions": 1,
+            "delays": [
+                []
+            ]
+        },
+        {
+            "name": "metal-inhand-left",
+            "directions": 4,
+            "delays": [
+                [
+                    1
+                ],
+                [
+                    1
+                ],
+                [
+                    1
+                ],
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "metal-inhand-right",
+            "directions": 4,
+            "delays": [
+                [
+                    1
+                ],
+                [
+                    1
+                ],
+                [
+                    1
+                ],
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "metal_2",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "metal_3",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "phoron",
+            "directions": 1,
+            "delays": [
+                []
+            ]
         },
         {
             "name": "phoron-inhand-left",
@@ -116,14 +151,6 @@
                     1
                 ]
             ]
-        },
-        {
-            "name": "phoron",
-            "directions": 1
-        },
-        {
-            "name": "metal",
-            "directions": 1
         }
     ]
 }
