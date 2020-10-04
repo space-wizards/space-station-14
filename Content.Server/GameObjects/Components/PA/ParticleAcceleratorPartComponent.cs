@@ -45,6 +45,12 @@ namespace Content.Server.GameObjects.Components.PA
             }
         }
 
+        public override void OnRemove()
+        {
+            base.OnRemove();
+            if (ParticleAccelerator != null) UnRegisterAtParticleAccelerator();
+        }
+
         protected abstract void RegisterAtParticleAccelerator();
 
         protected abstract void UnRegisterAtParticleAccelerator();

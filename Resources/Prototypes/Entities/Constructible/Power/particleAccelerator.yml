@@ -56,7 +56,10 @@
           baseState: control_box
     - type: PowerReceiver
     - type: ParticleAcceleratorControlBox
-    # todo add ui
+    - type: UserInterface
+      interfaces:
+        - key: enum.ParticleAcceleratorControlBoxUiKey.Key
+          type: ParticleAcceleratorBoundUserInterface
 
 - type: entity
   parent: ParticleAcceleratorBase

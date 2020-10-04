@@ -1,6 +1,13 @@
 ﻿using System;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.Utility;
+using Content.Shared.Arcade;
+using Content.Shared.GameObjects.Components;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Robust.Server.GameObjects.Components.UserInterface;
+using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 
@@ -10,6 +17,43 @@ namespace Content.Server.GameObjects.Components.PA
     public class ParticleAcceleratorControlBoxComponent : ParticleAcceleratorPartComponent, IInteractHand
     {
         public override string Name => "ParticleAcceleratorControlBox";
+
+        private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ParticleAcceleratorControlBoxUiKey.Key);
+
+        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
+            }
+        }
+
+        private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage obj)
+        {
+            if (ParticleAccelerator.Power == ParticleAcceleratorPowerState.Off) return;
+
+            switch (obj.Message)
+            {
+                case ParticleAcceleratorTogglePowerMessage _:
+                    ParticleAccelerator.Power = ParticleAccelerator.Power == ParticleAcceleratorPowerState.Powered
+                        ? ParticleAcceleratorPowerState.Level0
+                        : ParticleAcceleratorPowerState.Powered;
+                    break;
+                case ParticleAcceleratorIncreasePowerMessage _:
+                    if (ParticleAccelerator.Power == ParticleAcceleratorPowerState.Level3) break;
+
+                    ParticleAccelerator.Power++;
+                    break;
+                case ParticleAcceleratorDecreasePowerMessage _:
+                    if (ParticleAccelerator.Power == ParticleAcceleratorPowerState.Powered) break;
+
+                    ParticleAccelerator.Power--;
+                    break;
+            }
+        }
 
         protected override void RegisterAtParticleAccelerator()
         {
@@ -21,35 +65,29 @@ namespace Content.Server.GameObjects.Components.PA
             ParticleAccelerator.ControlBox = null;
         }
 
-        public void SetPowerLevel(ParticleAccelerator.ParticleAcceleratorPowerState level)
+        public void PowerLevelUpdated()
         {
-            ParticleAccelerator.Power = level;
+            //adjust power drain
+            //todo
+            //update ui
+            UserInterface?.SendMessage(new ParticleAcceleratorDataUpdateMessage(ParticleAccelerator.IsFunctional(), ParticleAccelerator.Power));
         }
 
         public bool InteractHand(InteractHandEventArgs eventArgs)
         {
-            switch (ParticleAccelerator.Power)
+            if(!eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
-                case ParticleAccelerator.ParticleAcceleratorPowerState.Off:
-                    SetPowerLevel(ParticleAccelerator.ParticleAcceleratorPowerState.Powered);
-                    break;
-                case ParticleAccelerator.ParticleAcceleratorPowerState.Powered:
-                    SetPowerLevel(ParticleAccelerator.ParticleAcceleratorPowerState.Level0);
-                    break;
-                case ParticleAccelerator.ParticleAcceleratorPowerState.Level0:
-                    SetPowerLevel(ParticleAccelerator.ParticleAcceleratorPowerState.Level1);
-                    break;
-                case ParticleAccelerator.ParticleAcceleratorPowerState.Level1:
-                    SetPowerLevel(ParticleAccelerator.ParticleAcceleratorPowerState.Level2);
-                    break;
-                case ParticleAccelerator.ParticleAcceleratorPowerState.Level2:
-                    SetPowerLevel(ParticleAccelerator.ParticleAcceleratorPowerState.Level3);
-                    break;
-                case ParticleAccelerator.ParticleAcceleratorPowerState.Level3:
-                    SetPowerLevel(ParticleAccelerator.ParticleAcceleratorPowerState.Powered);
-                    break;
+                return false;
             }
-            Owner.PopupMessage(eventArgs.User, Loc.GetString($"Set Power to {ParticleAccelerator.Power}"));
+            if (!Powered)
+            {
+                return false;
+            }
+            if(!ActionBlockerSystem.CanInteract(Owner)) return false;
+
+            UserInterface?.Toggle(actor.playerSession);
+            UserInterface?.SendMessage(new ParticleAcceleratorDataUpdateMessage(ParticleAccelerator.IsFunctional(), ParticleAccelerator.Power), actor.playerSession);
+
             return true;
         }
     }

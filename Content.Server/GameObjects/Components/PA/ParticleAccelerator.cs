@@ -229,20 +229,20 @@ namespace Content.Server.GameObjects.Components.PA
             get => _power;
             set
             {
+                var corrected_value = value;
                 if (!IsFunctional())
                 {
-                    _power = ParticleAcceleratorPowerState.Off;
-                    StopFiring();
-                    return;
+                    corrected_value = ParticleAcceleratorPowerState.Off;
                 }
 
-                if(_power == value) return;
+                if(_power == corrected_value) return;
 
-                _power = value;
-                UpdatePartVisualStates();
-
+                _power = corrected_value;
                 StopFiring();
-                if (_power != ParticleAcceleratorPowerState.Powered)
+                UpdatePartVisualStates();
+                _controlBox?.PowerLevelUpdated();
+
+                if (_power > ParticleAcceleratorPowerState.Powered)
                 {
                     StartFiring();
                 }
@@ -330,6 +330,7 @@ namespace Content.Server.GameObjects.Components.PA
             if (value == null)
             {
                 partVar = null;
+                ValidatePowerState();
                 return false;
             }
 
@@ -367,7 +368,17 @@ namespace Content.Server.GameObjects.Components.PA
                 value.ParticleAccelerator = this;
             }
 
+            ValidatePowerState();
+
             return true;
+        }
+
+        private void ValidatePowerState()
+        {
+            if (IsFunctional() && Power == ParticleAcceleratorPowerState.Off)
+            {
+                Power = ParticleAcceleratorPowerState.Powered;
+            }
         }
 
         private bool TryGetPart<TP>(GridId gridId, PartOffset directionOffset, ParticleAcceleratorPartComponent value, out TP part)
@@ -407,16 +418,6 @@ namespace Content.Server.GameObjects.Components.PA
 
             var partDir = new Angle(comp.Owner.Transform.LocalRotation + offsetAngle).GetCardinalDir();
             return comp.Owner.Transform.Coordinates.ToMapIndices(_entityManager, _mapManager).Offset(partDir);
-        }
-
-        public enum ParticleAcceleratorPowerState
-        {
-            Off = ParticleAcceleratorVisualState.Closed,
-            Powered = ParticleAcceleratorVisualState.Powered,
-            Level0 = ParticleAcceleratorVisualState.Level0,
-            Level1 = ParticleAcceleratorVisualState.Level1,
-            Level2 = ParticleAcceleratorVisualState.Level2,
-            Level3 = ParticleAcceleratorVisualState.Level3
         }
 
         private enum PartOffset
