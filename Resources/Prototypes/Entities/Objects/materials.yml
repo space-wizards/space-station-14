@@ -25,7 +25,7 @@
     - metal_3
   - type: Sprite
     sprite: Objects/Materials/sheets.rsi
-    state: metal
+    state: metal_3
   - type: Item
     sprite: Objects/Materials/sheets.rsi
     HeldPrefix: metal
