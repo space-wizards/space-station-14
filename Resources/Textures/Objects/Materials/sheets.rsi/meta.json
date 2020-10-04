@@ -151,6 +151,24 @@
                     1
                 ]
             ]
+        },
+        {
+            "name": "glass_2",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "glass_3",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
         }
     ]
 }

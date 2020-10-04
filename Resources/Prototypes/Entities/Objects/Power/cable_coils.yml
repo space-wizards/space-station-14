@@ -1,4 +1,4 @@
-
+﻿
 # If you're looking at the rsi for this file, you'll probably be confused why
 # I didn't just use an alpha for most of this stuff. Well icons don't have the
 # ability to have applied colors yet in GUIs. -Swept
@@ -24,6 +24,12 @@
   id: HVWireStack
   name: HV Wire Coil
   components:
+  - type: Stack
+    stacktype: enum.StackType.Cable
+    spritestates:
+    - coilhv-10
+    - coilhv-20
+    - coilhv-30
   - type: Sprite
     state: coilhv-30
   - type: Item
@@ -38,6 +44,12 @@
   id: MVWireStack
   name: MV Wire Coil
   components:
+  - type: Stack
+    stacktype: enum.StackType.Cable
+    spritestates:
+    - coilmv-10
+    - coilmv-20
+    - coilmv-30
   - type: Sprite
     state: coilmv-30
   - type: Item
@@ -52,6 +64,12 @@
   id: ApcExtensionCableStack
   name: Apc Extension Cable Coil
   components:
+  - type: Stack
+    stacktype: enum.StackType.Cable
+    spritestates:
+    - coillv-10
+    - coillv-20
+    - coillv-30
   - type: Sprite
     state: coillv-30
   - type: Item
