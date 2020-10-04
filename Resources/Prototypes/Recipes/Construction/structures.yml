@@ -54,25 +54,6 @@
     amount: 2
 
 - type: construction
-  name: window
-  id: Window
-  category: Structures
-  description: Clear.
-  conditions:
-    - !type:LowWallInTile {}
-  icon:
-    sprite: Constructible/Structures/Windows/window.rsi
-    state: full
-  objectType: Structure
-  result: Window
-  placementMode: SnapgridCenter
-  steps:
-  - material: Glass
-    amount: 2
-    reverse:
-      tool: Screwing
-
-- type: construction
   name: low wall
   id: LowWall
   graph: lowWall
@@ -89,26 +70,49 @@
   placementMode: SnapgridCenter
 
 - type: construction
-  name: rein window
-  id: ReinforcedWindow
+  name: window
+  id: Window
+  graph: window
+  startNode: start
+  targetNode: window
   category: Structures
-  description: Clear but tough.
+  description: Clear. Must be built on top of a low wall.
+  conditions:
+    - !type:LowWallInTile {}
+  icon:
+    sprite: Constructible/Structures/Windows/window.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
+  name: reinforced window
+  id: ReinforcedWindow
+  graph: window
+  startNode: start
+  targetNode: reinforcedWindow
+  category: Structures
+  description: Clear but tough. Must be built on top of a low wall.
   conditions:
     - !type:LowWallInTile {}
   icon:
     sprite: Constructible/Structures/Windows/reinforced_window.rsi
     state: full
   objectType: Structure
-  result: ReinforcedWindow
   placementMode: SnapgridCenter
-  steps:
-  - material: Glass
-    amount: 2
-    reverse:
-      tool: Anchoring
-# Should be replaced with Metal Rods when someone puts them in.
-  - material: Metal
-    amount: 2
-    reverse:
-      # Should be replaced with Wirecutter when someone makes it work.
-      tool: Anchoring
+
+- type: construction
+  name: phoron window
+  id: PhoronWindow
+  graph: window
+  startNode: start
+  targetNode: phoronWindow
+  category: Structures
+  description: Clear and even tougher, with an orange tint. Must be built on top of a low wall.
+  conditions:
+    - !type:LowWallInTile {}
+  icon:
+    sprite: Constructible/Structures/Windows/phoron_window.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
