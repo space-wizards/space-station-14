@@ -4,6 +4,7 @@ using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
@@ -23,9 +24,34 @@ namespace Content.Server.GameObjects.Components.Stack
         public override int Count
         {
             get => base.Count;
-            set => base.Count = value;
+            set
+            {
+                base.Count = value;
+                
+                if (base.Count != 0 && Owner.TryGetComponent<SpriteComponent>(out var spriteComponent))
+                {
+                    if(Count == MaxCount)
+                    {
+                        spriteComponent.LayerSetState(0, SpriteStates[2]);
+                    }
+                    else if (Count == 1)
+                    {
+                        spriteComponent.LayerSetState(0, SpriteStates[0]);
+                    }
+                    else
+                    {
+                        spriteComponent.LayerSetState(0, SpriteStates[1]);
+                    }
+                }
+            }
         }
 
+        public override string[] SpriteStates
+        {
+            get => base.SpriteStates;
+            set => base.SpriteStates = value;
+        }
+ 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool ThrowIndividually
         {

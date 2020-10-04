@@ -17,6 +17,7 @@ namespace Content.Shared.GameObjects.Components
 
         private int _count;
         private int _maxCount;
+        private string[] _spritestates;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public virtual int Count
@@ -49,6 +50,13 @@ namespace Content.Shared.GameObjects.Components
             }
         }
 
+        [ViewVariables]
+        public virtual string[] SpriteStates
+        {
+            get => _spritestates;
+            set => _spritestates = value;
+        }
+
         [ViewVariables] public int AvailableSpace => MaxCount - Count;
 
         [ViewVariables] public object StackType { get; private set; }
@@ -57,6 +65,7 @@ namespace Content.Shared.GameObjects.Components
         {
             serializer.DataFieldCached(ref _maxCount, "max", 50);
             serializer.DataFieldCached(ref _count, "count", MaxCount);
+            serializer.DataFieldCached(ref _spritestates, "spritestates", SpriteStates);
 
             if (serializer.Writing)
             {
