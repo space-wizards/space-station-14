@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Stack
             {
                 base.Count = value;
                 
-                if (base.Count != 0 && Owner.TryGetComponent<SpriteComponent>(out var spriteComponent))
+                if (base.Count != 0 && SpriteStates != null && Owner.TryGetComponent<SpriteComponent>(out var spriteComponent))
                 {
                     if(Count == MaxCount)
                     {
