@@ -193,23 +193,23 @@ namespace Content.Shared
             /// <summary>
             /// The Status of the Player in the lobby (ready, observer, ...)
             /// </summary>
-            public Dictionary<NetSessionId, PlayerStatus> PlayerStatus { get; set; }
+            public Dictionary<NetUserId, PlayerStatus> PlayerStatus { get; set; }
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
-                PlayerStatus = new Dictionary<NetSessionId, PlayerStatus>();
+                PlayerStatus = new Dictionary<NetUserId, PlayerStatus>();
                 var length = buffer.ReadInt32();
                 for (int i = 0; i < length; i++)
                 {
                     var serializer = IoCManager.Resolve<IRobustSerializer>();
                     var byteLength = buffer.ReadVariableInt32();
-                    NetSessionId sessionID;
+                    NetUserId userId;
                     using (var stream = buffer.ReadAsStream(byteLength))
                     {
-                        serializer.DeserializeDirect(stream, out sessionID);
+                        serializer.DeserializeDirect(stream, out userId);
                     }
                     var status = (PlayerStatus)buffer.ReadByte();
-                    PlayerStatus.Add(sessionID, status);
+                    PlayerStatus.Add(userId, status);
                 }
             }
 

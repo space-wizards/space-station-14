@@ -51,7 +51,7 @@ namespace Content.Client.Sandbox
             SpawnTilesButton = new Button { Text = Loc.GetString("Spawn Tiles") };
             vBox.AddChild(SpawnTilesButton);
 
-            GiveFullAccessButton = new Button { Text = Loc.GetString("Give AA Id") };
+            GiveFullAccessButton = new Button { Text = Loc.GetString("Grant Full Access") };
             vBox.AddChild(GiveFullAccessButton);
 
             GiveAghostButton = new Button { Text = Loc.GetString("Ghost") };

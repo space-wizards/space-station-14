@@ -1,9 +1,14 @@
+using System.Linq;
+using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.Components.PDA;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
+using Content.Shared.Access;
 using Content.Shared.Sandbox;
 using Robust.Server.Console;
+using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Placement;
 using Robust.Server.Interfaces.Player;
@@ -12,7 +17,9 @@ using Robust.Shared.Enums;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.ViewVariables;
+using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.Server.Sandbox
 {
@@ -103,18 +110,67 @@ namespace Content.Server.Sandbox
 
         private void SandboxGiveAccessReceived(MsgSandboxGiveAccess message)
         {
-            if(!IsSandboxEnabled)
+            if (!IsSandboxEnabled)
             {
                 return;
             }
 
             var player = _playerManager.GetSessionByChannel(message.MsgChannel);
-            if(player.AttachedEntity.TryGetComponent<HandsComponent>(out var hands))
+            if (player.AttachedEntity == null)
             {
-                ;
-                hands.PutInHandOrDrop(
-                    _entityManager.SpawnEntity("CaptainIDCard",
-                    player.AttachedEntity.Transform.Coordinates).GetComponent<ItemComponent>());
+                return;
+            }
+
+            var allAccess = IoCManager.Resolve<IPrototypeManager>()
+                .EnumeratePrototypes<AccessLevelPrototype>()
+                .Select(p => p.ID).ToArray();
+
+            if (player.AttachedEntity.TryGetComponent(out InventoryComponent inv)
+                && inv.TryGetSlotItem(Slots.IDCARD, out ItemComponent wornItem))
+            {
+                if (wornItem.Owner.HasComponent<AccessComponent>())
+                {
+                    UpgradeId(wornItem.Owner);
+                }
+                else if (wornItem.Owner.TryGetComponent(out PDAComponent pda))
+                {
+                    if (pda.ContainedID == null)
+                    {
+                        pda.InsertIdCard(CreateFreshId().GetComponent<IdCardComponent>());
+                    }
+                    else
+                    {
+                        UpgradeId(pda.ContainedID.Owner);
+                    }
+                }
+            }
+            else if (player.AttachedEntity.TryGetComponent<HandsComponent>(out var hands))
+            {
+                var card = CreateFreshId();
+                if (!player.AttachedEntity.TryGetComponent(out inv) || !inv.Equip(Slots.IDCARD, card))
+                {
+                    hands.PutInHandOrDrop(card.GetComponent<ItemComponent>());
+                }
+            }
+
+            void UpgradeId(IEntity id)
+            {
+                var access = id.GetComponent<AccessComponent>();
+                access.SetTags(allAccess);
+
+                if (id.TryGetComponent(out SpriteComponent sprite))
+                {
+                    sprite.LayerSetState(0, "gold");
+                }
+            }
+
+            IEntity CreateFreshId()
+            {
+                var card = _entityManager.SpawnEntity("CaptainIDCard", player.AttachedEntity.Transform.Coordinates);
+                UpgradeId(card);
+
+                card.GetComponent<IdCardComponent>().FullName = player.AttachedEntity.Name;
+                return card;
             }
         }
 
