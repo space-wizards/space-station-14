@@ -161,5 +161,8 @@
   - type: Icon
     sprite: Constructible/Power/emitter.rsi
     state: emitter_projectile
-  - type: Projectile
   - type: EmitterBoltComponent
+  - type: Projectile
+    soundHit: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
+    damages:
+      Heat: 20
