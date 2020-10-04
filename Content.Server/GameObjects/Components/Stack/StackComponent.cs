@@ -20,6 +20,7 @@ namespace Content.Server.GameObjects.Components.Stack
 
     // TODO: Naming and presentation and such could use some improvement.
     [RegisterComponent]
+    [ComponentReference(typeof(SharedStackComponent))]
     public class StackComponent : SharedStackComponent, IInteractUsing, IExamine
     {
         [Dependency] private IEntityManager _entityManager = default!;

@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Serialization;
+﻿using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Construction
 {
@@ -12,5 +13,7 @@ namespace Content.Shared.Construction
 
             serializer.DataField(this, x => x.Store, "store", string.Empty);
         }
+
+        public abstract bool EntityValid(IEntity entity);
     }
 }

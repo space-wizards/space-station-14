@@ -62,48 +62,55 @@ namespace Content.Server.GameObjects.EntitySystems
             SubscribeNetworkEvent<TryStartItemConstructionMessage>(HandleStartItemConstruction);
         }
 
-        private async void HandleStartItemConstruction(TryStartItemConstructionMessage ev, EntitySessionEventArgs args)
+        private IEnumerable<IEntity> EnumerateNearby(IEntity user)
         {
-            var constructionPrototype = _prototypeManager.Index<ConstructionPrototype>(ev.PrototypeName);
-            var constructionGraph = _prototypeManager.Index<ConstructionGraphPrototype>(constructionPrototype.Graph);
-            var startNode = constructionGraph.Nodes[constructionPrototype.StartNode];
-            var targetNode = constructionGraph.Nodes[constructionPrototype.TargetNode];
-            var pathFind = constructionGraph.Path(startNode.Name, targetNode.Name);
-
-            var user = args.SenderSession.AttachedEntity;
-
-            if (user == null || !ActionBlockerSystem.CanInteract(user)) return;
-
-            if (!user.TryGetComponent(out HandsComponent? hands)) return;
-
-            if(pathFind == null)
-                throw new InvalidDataException($"Can't find path from starting node to target node in construction! Recipe: {ev.PrototypeName}");
-
-            var edge = startNode.GetEdge(pathFind[0].Name);
-            var edgeTarget = pathFind[0];
-
-            if(edge == null)
-                throw new InvalidDataException($"Can't find edge from starting node to the next node in pathfinding! Recipe: {ev.PrototypeName}");
-
-            // No support for conditions here!
-
-            foreach (var step in edge.Steps)
+            if (user.TryGetComponent(out HandsComponent? hands))
             {
-                switch (step)
+                foreach (var itemComponent in hands?.GetAllHeldItems()!)
                 {
-                    case ToolConstructionGraphStep _:
-                    case NestedConstructionGraphStep _:
-                        throw new InvalidDataException("Invalid first step for item recipe!");
+                    if (itemComponent.Owner.TryGetComponent(out ServerStorageComponent? storage))
+                    {
+                        foreach (var storedEntity in storage.StoredEntities!)
+                        {
+                            yield return storedEntity;
+                        }
+                    }
+
+                    yield return itemComponent.Owner;
                 }
             }
 
+            if (user!.TryGetComponent(out InventoryComponent? inventory))
+            {
+                foreach (var held in inventory.GetAllHeldItems())
+                {
+                    if (held.TryGetComponent(out ServerStorageComponent? storage))
+                    {
+                        foreach (var storedEntity in storage.StoredEntities!)
+                        {
+                            yield return storedEntity;
+                        }
+                    }
+
+                    yield return held;
+                }
+            }
+
+            foreach (var near in _entityManager.GetEntitiesInRange(user!, 2f, true))
+            {
+                yield return near;
+            }
+        }
+
+        private async Task<IEntity?> Construct(IEntity user, string materialContainer, ConstructionGraphPrototype graph, ConstructionGraphEdge edge, ConstructionGraphNode targetNode)
+        {
             // We need a place to hold our construction items!
-            var container = ContainerManagerComponent.Ensure<Container>("item_construction", user, out bool existed);
+            var container = ContainerManagerComponent.Ensure<Container>(materialContainer, user, out var existed);
 
             if (existed)
             {
                 user.PopupMessageCursor(Loc.GetString("You can't start another construction now!"));
-                return;
+                return null;
             }
 
             var containers = new Dictionary<string, Container>();
@@ -157,45 +164,9 @@ namespace Content.Server.GameObjects.EntitySystems
                 }
             }
 
-            // Maybe make this have a limit to prevent lagging?
-            IEnumerable<IEntity> Enumerate()
-            {
-                foreach (var itemComponent in hands?.GetAllHeldItems()!)
-                {
-                    if (itemComponent.Owner.TryGetComponent(out ServerStorageComponent? storage))
-                    {
-                        foreach (var storedEntity in storage.StoredEntities!)
-                        {
-                            yield return storedEntity;
-                        }
-                    }
-
-                    yield return itemComponent.Owner;
-                }
-
-                if (user!.TryGetComponent(out InventoryComponent? inventory))
-                {
-                    foreach (var held in inventory.GetAllHeldItems())
-                    {
-                        if (held.TryGetComponent(out ServerStorageComponent? storage))
-                        {
-                            foreach (var storedEntity in storage.StoredEntities!)
-                            {
-                                yield return storedEntity;
-                            }
-                        }
-
-                        yield return held;
-                    }
-                }
-
-                foreach (var near in _entityManager.GetEntitiesInRange(user!, 2f, true))
-                {
-                    yield return near;
-                }
-            }
-
             var failed = false;
+
+            var steps = new List<ConstructionGraphStep>();
 
             foreach (var step in edge.Steps)
             {
@@ -206,9 +177,9 @@ namespace Content.Server.GameObjects.EntitySystems
                 switch (step)
                 {
                     case MaterialConstructionGraphStep materialStep:
-                        foreach (var entity in Enumerate())
+                        foreach (var entity in EnumerateNearby(user))
                         {
-                            if (!entity.TryGetComponent(out StackComponent? stack) || stack.StackType.Equals(materialStep.Material))
+                            if (!entity.TryGetComponent(out StackComponent? stack) || !stack.StackType.Equals(materialStep.Material))
                                 continue;
 
                             if (!stack.Split(materialStep.Amount, user.ToCoordinates(), out var newStack))
@@ -229,7 +200,7 @@ namespace Content.Server.GameObjects.EntitySystems
                         break;
 
                     case ComponentConstructionGraphStep componentStep:
-                        foreach (var entity in Enumerate())
+                        foreach (var entity in EnumerateNearby(user))
                         {
                             if (!entity.HasComponent(_componentFactory.GetRegistration(componentStep.Component).Type))
                                 continue;
@@ -249,7 +220,7 @@ namespace Content.Server.GameObjects.EntitySystems
                         break;
 
                     case PrototypeConstructionGraphStep prototypeStep:
-                        foreach (var entity in Enumerate())
+                        foreach (var entity in EnumerateNearby(user))
                         {
                             if (entity.Prototype?.ID != prototypeStep.Prototype)
                                 continue;
@@ -274,13 +245,15 @@ namespace Content.Server.GameObjects.EntitySystems
                     failed = true;
                     break;
                 }
+
+                steps.Add(step);
             }
 
             if (failed)
             {
                 user.PopupMessageCursor(Loc.GetString("You don't have the materials to build that!"));
                 FailCleanup();
-                return;
+                return null;
             }
 
             var doAfterSystem = Get<DoAfterSystem>();
@@ -297,13 +270,13 @@ namespace Content.Server.GameObjects.EntitySystems
             if (await doAfterSystem.DoAfter(doAfterArgs) == DoAfterStatus.Cancelled)
             {
                 FailCleanup();
-                return;
+                return null;
             }
 
-            var item = _entityManager.SpawnEntity(edgeTarget.Entity, user.Transform.Coordinates);
+            var newEntity = _entityManager.SpawnEntity(graph.Nodes[edge.Target].Entity, user.Transform.Coordinates);
 
             // Yes, this should throw if it's missing the component.
-            var construction = item.GetComponent<ConstructionComponent>();
+            var construction = newEntity.GetComponent<ConstructionComponent>();
 
             // We attempt to set the pathfinding target.
             construction.Target = targetNode;
@@ -311,7 +284,7 @@ namespace Content.Server.GameObjects.EntitySystems
             // We preserve the containers...
             foreach (var (name, cont) in containers)
             {
-                var newCont = ContainerManagerComponent.Ensure<Container>(name, item);
+                var newCont = ContainerManagerComponent.Ensure<Container>(name, newEntity);
 
                 foreach (var entity in cont.ContainedEntities.ToArray())
                 {
@@ -323,13 +296,67 @@ namespace Content.Server.GameObjects.EntitySystems
             // We now get rid of all them.
             ShutdownContainers();
 
-            // We do have completed effects!
-            foreach (var completed in edge.Completed)
+            // We have step completed steps!
+            foreach (var step in steps)
             {
-                await completed.PerformAction(item, user);
+                foreach (var completed in step.Completed)
+                {
+                    await completed.PerformAction(newEntity, user);
+                }
             }
 
-            if(item.TryGetComponent(out ItemComponent? itemComp))
+            // And we also have edge completed effects!
+            foreach (var completed in edge.Completed)
+            {
+                await completed.PerformAction(newEntity, user);
+            }
+
+            return newEntity;
+        }
+
+        private async void HandleStartItemConstruction(TryStartItemConstructionMessage ev, EntitySessionEventArgs args)
+        {
+            var constructionPrototype = _prototypeManager.Index<ConstructionPrototype>(ev.PrototypeName);
+            var constructionGraph = _prototypeManager.Index<ConstructionGraphPrototype>(constructionPrototype.Graph);
+            var startNode = constructionGraph.Nodes[constructionPrototype.StartNode];
+            var targetNode = constructionGraph.Nodes[constructionPrototype.TargetNode];
+            var pathFind = constructionGraph.Path(startNode.Name, targetNode.Name);
+
+            var user = args.SenderSession.AttachedEntity;
+
+            if (user == null || !ActionBlockerSystem.CanInteract(user)) return;
+
+            if (!user.TryGetComponent(out HandsComponent? hands)) return;
+
+            foreach (var condition in constructionPrototype.Conditions)
+            {
+                if (!condition.Condition(user, user.ToCoordinates(), Direction.South))
+                    return;
+            }
+
+            if(pathFind == null)
+                throw new InvalidDataException($"Can't find path from starting node to target node in construction! Recipe: {ev.PrototypeName}");
+
+            var edge = startNode.GetEdge(pathFind[0].Name);
+
+            if(edge == null)
+                throw new InvalidDataException($"Can't find edge from starting node to the next node in pathfinding! Recipe: {ev.PrototypeName}");
+
+            // No support for conditions here!
+
+            foreach (var step in edge.Steps)
+            {
+                switch (step)
+                {
+                    case ToolConstructionGraphStep _:
+                    case NestedConstructionGraphStep _:
+                        throw new InvalidDataException("Invalid first step for construction recipe!");
+                }
+            }
+
+            var item = await Construct(user, "item_construction", constructionGraph, edge, targetNode);
+
+            if(item != null && item.TryGetComponent(out ItemComponent? itemComp))
                 hands.PutInHandOrDrop(itemComp);
         }
 
@@ -338,6 +365,8 @@ namespace Content.Server.GameObjects.EntitySystems
             var constructionPrototype = _prototypeManager.Index<ConstructionPrototype>(ev.PrototypeName);
             var constructionGraph = _prototypeManager.Index<ConstructionGraphPrototype>(constructionPrototype.Graph);
             var startNode = constructionGraph.Nodes[constructionPrototype.StartNode];
+            var targetNode = constructionGraph.Nodes[constructionPrototype.TargetNode];
+            var pathFind = constructionGraph.Path(startNode.Name, targetNode.Name);
 
             var user = args.SenderSession.AttachedEntity;
 
@@ -358,7 +387,10 @@ namespace Content.Server.GameObjects.EntitySystems
             foreach (var condition in constructionPrototype.Conditions)
             {
                 if (!condition.Condition(user, ev.Location, ev.Angle.GetCardinalDir()))
+                {
+                    Cleanup();
                     return;
+                }
             }
 
             void Cleanup()
@@ -375,121 +407,60 @@ namespace Content.Server.GameObjects.EntitySystems
                 return;
             }
 
-            var holding = hands.GetActiveHand.Owner;
+            if(pathFind == null)
+                throw new InvalidDataException($"Can't find path from starting node to target node in construction! Recipe: {ev.PrototypeName}");
 
-            var doAfterSystem = Get<DoAfterSystem>();
+            var edge = startNode.GetEdge(pathFind[0].Name);
 
-            foreach (var edge in startNode.Edges)
+            if(edge == null)
+                throw new InvalidDataException($"Can't find edge from starting node to the next node in pathfinding! Recipe: {ev.PrototypeName}");
+
+            var valid = false;
+            var holding = hands.GetActiveHand?.Owner;
+
+            if (holding == null)
             {
-                // We don't allow edges with conditions as starting edges.
-                if (edge.Conditions.Count != 0) continue;
-
-                // We definitely don't allow edges without exactly one step.
-                if (edge.Steps.Count != 1) continue;
-
-                var edgeTarget = constructionGraph.Nodes[edge.Target];
-
-                // And we also don't allow edges whose target doesn't have an entity specified.
-                if (string.IsNullOrEmpty(edgeTarget.Entity)) continue;
-
-                    var firstStep = edge.Steps[0];
-
-                switch (firstStep)
-                {
-                    // We don't allow nested construction steps as the first step.
-                    case NestedConstructionGraphStep nestedStep:
-                        continue;
-
-                    // We don't allow tool construction steps as the first step either.
-                    case ToolConstructionGraphStep toolStep:
-                        continue;
-
-                    case EntityInsertConstructionGraphStep insertStep:
-                        var valid = false;
-
-                        var doAfterArgs = new DoAfterEventArgs(user, insertStep.DoAfter)
-                        {
-                            BreakOnDamage = true,
-                            BreakOnStun = true,
-                            BreakOnTargetMove = false,
-                            BreakOnUserMove = true,
-                            NeedHand = true,
-                        };
-
-                        switch (insertStep)
-                        {
-                            case PrototypeConstructionGraphStep prototypeStep:
-                                if (holding!.Prototype?.ID == prototypeStep.Prototype
-                                    && (await doAfterSystem.DoAfter(doAfterArgs)) == DoAfterStatus.Finished)
-                                {
-                                    valid = true;
-                                }
-
-                                break;
-
-                            case ComponentConstructionGraphStep componentStep:
-                                if (holding!.HasComponent(
-                                        _componentFactory.GetRegistration(componentStep.Component).Type)
-                                    && (await doAfterSystem.DoAfter(doAfterArgs)) == DoAfterStatus.Finished)
-                                {
-                                    valid = true;
-                                }
-
-                                break;
-
-                            case MaterialConstructionGraphStep materialStep:
-                                if (holding!.TryGetComponent(out StackComponent? stack) &&
-                                    stack.StackType.Equals(materialStep.Material)
-                                    && (await doAfterSystem.DoAfter(doAfterArgs)) == DoAfterStatus.Finished)
-                                {
-                                    valid = stack.Split(materialStep.Amount, user.Transform.Coordinates, out holding);
-                                }
-
-                                break;
-                        }
-
-                        if (!valid || holding == null) break;
-
-                        var entity = _entityManager.SpawnEntity(edgeTarget.Entity, ev.Location);
-                        entity.Transform.LocalRotation = ev.Angle;
-
-                        // We have step completions!
-                        foreach (var completed in firstStep.Completed)
-                        {
-                            await completed.PerformAction(entity, user);
-
-                            if (entity.Deleted)
-                                return;
-                        }
-
-                        // Yes, this should throw if it's missing the component.
-                        var construction = entity.GetComponent<ConstructionComponent>();
-
-                        // We attempt to set the pathfinding target.
-                        if (!string.IsNullOrEmpty(constructionPrototype.TargetNode))
-                            construction.Target = constructionGraph.Nodes[constructionPrototype.TargetNode];
-
-                        if(string.IsNullOrEmpty(insertStep.Store))
-                            holding.Delete();
-                        else
-                        {
-                            construction.AddContainer(insertStep.Store);
-                            var container = ContainerManagerComponent.Ensure<Container>(insertStep.Store, entity);
-                            container.Insert(holding);
-                        }
-
-                        // We do have completed effects!
-                        foreach (var completed in edge.Completed)
-                        {
-                            await completed.PerformAction(entity, user);
-                        }
-
-                        RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));
-
-                        Cleanup();
-                        return;
-                }
+                Cleanup();
+                return;
             }
+
+            // No support for conditions here!
+
+            foreach (var step in edge.Steps)
+            {
+                switch (step)
+                {
+                    case EntityInsertConstructionGraphStep entityInsert:
+                        if (entityInsert.EntityValid(holding))
+                            valid = true;
+                        break;
+                    case ToolConstructionGraphStep _:
+                    case NestedConstructionGraphStep _:
+                        throw new InvalidDataException("Invalid first step for item recipe!");
+                }
+
+                if (valid)
+                    break;
+            }
+
+            if (!valid)
+            {
+                Cleanup();
+                return;
+            }
+
+            var structure = await Construct(user, (ev.Ack + constructionPrototype.GetHashCode()).ToString(), constructionGraph, edge, targetNode);
+
+            if (structure == null)
+            {
+                Cleanup();
+                return;
+            }
+
+            structure.Transform.Coordinates = ev.Location;
+            structure.Transform.LocalRotation = ev.Angle;
+
+            RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));
 
             Cleanup();
         }
