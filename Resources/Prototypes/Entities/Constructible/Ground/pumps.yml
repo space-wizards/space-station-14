@@ -16,9 +16,6 @@
     sprite: Constructible/Atmos/pump.rsi
   - type: Icon
     sprite: Constructible/Atmos/pump.rsi
-  - type: Appearance
-    visuals:
-    - type: PumpVisualizer
 
 - type: entity
   parent: PumpBase
@@ -34,7 +31,13 @@
       nodeGroupID: Pipe
       pipeDirection: North
   - type: PressurePump
+    inletDirection: North
+    outletDirection: South
   - type: Sprite
     state: pumpPressure2
   - type: Icon
     state: pumpPressure2
+  - type: Appearance
+    visuals:
+    - type: PumpVisualizer
+      pumpEnabledState: pumpPressure2On

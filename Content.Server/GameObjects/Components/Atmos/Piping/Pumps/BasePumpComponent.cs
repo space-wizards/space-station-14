@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
                 UpdateAppearance();
             }
         }
-        private bool _pumpEnabled = true;
+        private bool _pumpEnabled;
 
         /// <summary>
         ///     Needs to be same <see cref="PipeDirection"/> as that of a <see cref="Pipe"/> on this entity.
@@ -55,6 +55,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
             base.ExposeData(serializer);
             serializer.DataField(ref _inletDirection, "inletDirection", PipeDirection.None);
             serializer.DataField(ref _outletDirection, "outletDirection", PipeDirection.None);
+            serializer.DataField(ref _pumpEnabled, "pumpEnabled", false);
         }
 
         public override void Initialize()

@@ -3,12 +3,22 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Utility;
+using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Atmos
 {
     [UsedImplicitly]
     public class PumpVisualizer : AppearanceVisualizer
     {
+        private string _pumpEnabledState;
+
+        public override void LoadData(YamlMappingNode node)
+        {
+            base.LoadData(node);
+            _pumpEnabledState = node.GetNode("pumpEnabledState").ToString();
+        }
+
         public override void InitializeEntity(IEntity entity)
         {
             base.InitializeEntity(entity);
@@ -16,6 +26,8 @@ namespace Content.Client.GameObjects.Components.Atmos
             if (!entity.TryGetComponent(out ISpriteComponent sprite)) return;
 
             sprite.LayerMapReserveBlank(Layer.PumpEnabled);
+            var pumpEnabledLayer = sprite.LayerMapGet(Layer.PumpEnabled);
+            sprite.LayerSetState(pumpEnabledLayer, _pumpEnabledState);
         }
 
         public override void OnChangeData(AppearanceComponent component)
