@@ -138,7 +138,7 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Battery/taser.rsi
-    prefix: icon
+    HeldPrefix: taser4
   - type: RangedWeapon
   - type: BatteryBarrel
     currentSelector: Single
