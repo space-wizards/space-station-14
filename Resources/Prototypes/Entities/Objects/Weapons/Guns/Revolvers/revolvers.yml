@@ -30,13 +30,13 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
-  - type: RangedWeapon
   - type: BoltActionBarrel
     currentSelector: Single
     allSelectors:
     - Single
     fillPrototype: CartridgeMagnum
     caliber: Magnum
+    fireRate: 2
     capacity: 5
     autoCycle: true
     soundGunshot: /Audio/Weapons/Guns/Gunshots/revolver.ogg
@@ -62,15 +62,14 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
-  - type: RangedWeapon
   - type: RevolverBarrel
     currentSelector: Single
     allSelectors:
     - Single
+    fireRate: 2
     fillPrototype: CartridgeMagnum
     caliber: Magnum
     capacity: 7
-    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
     soundGunshot: /Audio/Weapons/Guns/Gunshots/revolver.ogg
     soundEject: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
     soundInsert: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
@@ -87,15 +86,14 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
-  - type: RangedWeapon
   - type: RevolverBarrel
     currentSelector: Single
     allSelectors:
     - Single
+    fireRate: 2
     fillPrototype: CartridgeMagnum
     caliber: Magnum
     capacity: 7
-    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
     soundGunshot: /Audio/Weapons/Guns/Gunshots/revolver.ogg
     soundEject: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
     soundInsert: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg

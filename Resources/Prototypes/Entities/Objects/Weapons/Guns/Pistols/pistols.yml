@@ -58,7 +58,6 @@
   - type: Item
     size: 12
     sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
-  - type: RangedWeapon
   - type: MagazineBarrel
     caliber: Pistol
     magazineTypes:
@@ -87,7 +86,6 @@
   - type: Item
     size: 12
     sprite: Objects/Weapons/Guns/Pistols/colt.rsi
-  - type: RangedWeapon
   - type: MagazineBarrel
     caliber: Pistol
     magazineTypes:
@@ -113,7 +111,6 @@
   - type: Item
     size: 12
     sprite: Objects/Weapons/Guns/Pistols/giskard.rsi
-  - type: RangedWeapon
   - type: MagazineBarrel
     caliber: Pistol
     magazineTypes:
@@ -142,7 +139,6 @@
   - type: Item
     size: 12
     sprite: Objects/Weapons/Guns/Pistols/hm_pistol.rsi
-  - type: RangedWeapon
   - type: MagazineBarrel
     caliber: Pistol
     currentSelector: Single
@@ -185,7 +181,6 @@
   - type: Item
     size: 12
     sprite: Objects/Weapons/Guns/Pistols/gyro_pistol.rsi
-  - type: RangedWeapon
   - type: MagazineBarrel
     caliber: Magnum
     magazineTypes:
@@ -228,7 +223,6 @@
   - type: Item
     size: 12
     sprite: Objects/Weapons/Guns/Pistols/mandella.rsi
-  - type: RangedWeapon
   - type: MagazineBarrel
     caliber: ClRifle
     magazineTypes:
@@ -259,7 +253,6 @@
   - type: Item
     size: 12
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
-  - type: RangedWeapon
   - type: MagazineBarrel
     caliber: Pistol
     magazineTypes:
@@ -290,7 +283,6 @@
   - type: Item
     size: 12
     sprite: Objects/Weapons/Guns/Pistols/mk58_wood.rsi
-  - type: RangedWeapon
   - type: MagazineBarrel
     caliber: Pistol
     magazineTypes:
@@ -316,7 +308,6 @@
   - type: Item
     size: 12
     sprite: Objects/Weapons/Guns/Pistols/molly.rsi
-  - type: RangedWeapon
   - type: MagazineBarrel
     caliber: Pistol
     currentSelector: Automatic
@@ -350,7 +341,6 @@
   - type: Item
     size: 12
     sprite: Objects/Weapons/Guns/Pistols/olivaw_civil.rsi
-  - type: RangedWeapon
   - type: MagazineBarrel
     caliber: Pistol
     magazineTypes:
@@ -377,7 +367,6 @@
   - type: Item
     size: 12
     sprite: Objects/Weapons/Guns/Pistols/paco.rsi
-  - type: RangedWeapon
   - type: MagazineBarrel
     caliber: Pistol
     magazineTypes:

@@ -52,7 +52,6 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/LMGs/l6.rsi
-  - type: RangedWeapon
   - type: MagazineBarrel
     magFillPrototype: MagazineLRifleBox
     fireRate: 5
@@ -87,7 +86,6 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/LMGs/pk.rsi
-  - type: RangedWeapon
   - type: MagazineBarrel
     magFillPrototype: MagazineLRiflePkBox
     fireRate: 5

@@ -28,7 +28,6 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
-  - type: RangedWeapon
   - type: BoltActionBarrel
     caliber: Grenade
     currentSelector: Single
@@ -61,7 +60,6 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
-  - type: RangedWeapon
   - type: RevolverBarrel
     caliber: Rocket
     currentSelector: Single

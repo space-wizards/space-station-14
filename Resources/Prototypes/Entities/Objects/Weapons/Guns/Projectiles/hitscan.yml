@@ -1,35 +1,23 @@
-- type: entity
-  name: red laser
+- type: hitscan
   id: RedLaser
-  abstract: true
-  components:
-  - type: Hitscan
-    spriteName: Objects/Weapons/Guns/Projectiles/laser.png
-    muzzleFlash: Objects/Weapons/Guns/Projectiles/laser_muzzle.png
-    impactFlash: Objects/Weapons/Guns/Projectiles/laser_impact.png
-    damageType: Heat
-    damage: 10
+  muzzleEffect: Objects/Weapons/Guns/Projectiles/laser_muzzle.png
+  travelEffect: Objects/Weapons/Guns/Projectiles/laser.png
+  impactEffect: Objects/Weapons/Guns/Projectiles/laser_impact.png
+  damageType: Heat
+  damage: 10
 
-- type: entity
-  name: red heavy laser
+- type: hitscan
   id: RedHeavyLaser
-  abstract: true
-  components:
-  - type: Hitscan
-    spriteName: Objects/Weapons/Guns/Projectiles/heavy_laser.png
-    muzzleFlash: Objects/Weapons/Guns/Projectiles/heavy_laser_muzzle.png
-    impactFlash: Objects/Weapons/Guns/Projectiles/heavy_laser_impact.png
-    damageType: Heat
-    damage: 30
+  muzzleEffect: Objects/Weapons/Guns/Projectiles/heavy_laser_muzzle.png
+  travelEffect: Objects/Weapons/Guns/Projectiles/heavy_laser.png
+  impactEffect: Objects/Weapons/Guns/Projectiles/heavy_laser_impact.png
+  damageType: Heat
+  damage: 30
 
-- type: entity
-  name: x-ray laser
+- type: hitscan
   id: XrayLaser
-  abstract: true
-  components:
-  - type: Hitscan
-    spriteName: Objects/Weapons/Guns/Projectiles/xray.png
-    muzzleFlash: Objects/Weapons/Guns/Projectiles/xray_muzzle.png
-    impactFlash: Objects/Weapons/Guns/Projectiles/xray_impact.png
-    damageType: Heat
-    damage: 60
+  muzzleEffect: Objects/Weapons/Guns/Projectiles/xray_muzzle.png
+  travelEffect: Objects/Weapons/Guns/Projectiles/xray.png
+  impactEffect: Objects/Weapons/Guns/Projectiles/xray_impact.png
+  damageType: Heat
+  damage: 60

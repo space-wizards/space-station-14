@@ -41,6 +41,8 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels.Visualize
                 sprite.LayerSetState(RangedBarrelVisualLayers.MagUnshaded, $"{_magState}-unshaded-{_magSteps-1}");
                 sprite.LayerSetVisible(RangedBarrelVisualLayers.MagUnshaded, false);
             }
+
+            entity.GetComponent<AppearanceComponent>().SetData(MagazineBarrelVisuals.MagLoaded, true);
         }
 
         public override void OnChangeData(AppearanceComponent component)

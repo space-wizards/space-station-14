@@ -44,7 +44,6 @@
       map: ["enum.RangedBarrelVisualLayers.Mag"]
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/bojevic.rsi
-  - type: RangedWeapon
   - type: MagazineBarrel
     currentSelector: Automatic
     allSelectors:
@@ -86,7 +85,6 @@
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
     state: icon
-  - type: RangedWeapon
   - type: BoltActionBarrel
     caliber: Shotgun
     currentSelector: Single
@@ -125,7 +123,6 @@
         shader: unshaded
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/bull.rsi
-  - type: RangedWeapon
   - type: PumpBarrel
     fireRate: 4.0
     minAngle: 10
@@ -147,7 +144,6 @@
     sprite: Objects/Weapons/Guns/Shotguns/gladstone.rsi
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/gladstone.rsi
-  - type: RangedWeapon
   - type: PumpBarrel
     capacity: 9
     ammoSpreadRatio: 0.5
@@ -162,7 +158,6 @@
     sprite: Objects/Weapons/Guns/Shotguns/regulator.rsi
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/regulator.rsi
-  - type: RangedWeapon
   - type: PumpBarrel
     capacity: 7
     ammoSpreadRatio: 0.7
@@ -177,7 +172,6 @@
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
-  - type: RangedWeapon
   - type: PumpBarrel
     capacity: 4
     ammoSpreadRatio: 0.7
@@ -199,7 +193,6 @@
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
     state: icon
-  - type: RangedWeapon
   - type: BoltActionBarrel
     caliber: Shotgun
     currentSelector: Single

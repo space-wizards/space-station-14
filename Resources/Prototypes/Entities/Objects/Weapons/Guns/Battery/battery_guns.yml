@@ -17,7 +17,6 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
-  - type: RangedWeapon
   - type: BatteryBarrel
     minAngle: 10
     maxAngle: 45
@@ -57,7 +56,6 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
-  - type: RangedWeapon
   - type: BatteryBarrel
     currentSelector: Single
     allSelectors:
@@ -97,7 +95,6 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Battery/xray.rsi
-  - type: RangedWeapon
   - type: BatteryBarrel
     currentSelector: Single
     allSelectors:
@@ -109,7 +106,7 @@
     angleDecay: 45
     powerCellPrototype: PowerCellSmallSuper
     powerCellRemovable: true
-    base_fire_cost: 600
+    baseFireCost: 600
     ammoPrototype: XrayLaser
     soundGunshot: /Audio/Weapons/Guns/Gunshots/laser3.ogg
   - type: Appearance
@@ -139,7 +136,6 @@
     size: 24
     sprite: Objects/Weapons/Guns/Battery/taser.rsi
     prefix: icon
-  - type: RangedWeapon
   - type: BatteryBarrel
     currentSelector: Single
     allSelectors:

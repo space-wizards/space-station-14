@@ -3,7 +3,7 @@
   name: "ammunition box (.60 anti-material)"
   parent: BaseItem
   components:
-  - type: AmmoBox
+  - type: RangedMagazine
     caliber: AntiMaterial
     capacity: 30
     fillPrototype: CartridgeAntiMaterial

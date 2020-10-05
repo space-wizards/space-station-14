@@ -4,7 +4,7 @@
   parent: BaseItem
   abstract: true
   components:
-  - type: AmmoBox
+  - type: RangedMagazine
     caliber: Magnum
     capacity: 30
   - type: Sprite
@@ -27,7 +27,7 @@
   name: "ammunition box (.40 magnum)"
   parent: BoxMagnumBase
   components:
-  - type: AmmoBox
+  - type: RangedMagazine
     capacity: 60
     fillPrototype: CartridgeMagnum
   - type: Sprite
@@ -38,7 +38,7 @@
   name: "ammunition box (.40 magnum flash)"
   parent: BoxMagnumBase
   components:
-  - type: AmmoBox
+  - type: RangedMagazine
     capacity: 60
     fillPrototype: CartridgeMagnumFlash
   - type: Sprite
@@ -49,7 +49,7 @@
   name: "ammunition box (.40 magnum high-velocity)"
   parent: BoxMagnumBase
   components:
-  - type: AmmoBox
+  - type: RangedMagazine
     capacity: 60
     fillPrototype: CartridgeMagnumHV
   - type: Sprite
@@ -60,7 +60,7 @@
   name: "ammunition box (.40 magnum practice)"
   parent: BoxMagnumBase
   components:
-  - type: AmmoBox
+  - type: RangedMagazine
     capacity: 60
     fillPrototype: CartridgeMagnumPractice
   - type: Sprite
@@ -71,7 +71,7 @@
   name: "ammunition box (.40 magnum rubber)"
   parent: BoxMagnumBase
   components:
-  - type: AmmoBox
+  - type: RangedMagazine
     capacity: 60
     fillPrototype: CartridgeMagnumRubber
   - type: Sprite

@@ -1,49 +1,122 @@
-﻿using System;
+﻿#nullable enable
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
-using Content.Shared.GameObjects;
-using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
-using Robust.Shared.ViewVariables;
+using System;
+using System.Collections.Generic;
+using Content.Client.GameObjects.Components.Mobs;
+using Content.Shared.Audio;
+using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
+using Content.Shared.GameObjects.EntitySystems;
+using Robust.Client.GameObjects;
+using Robust.Client.GameObjects.EntitySystems;
+using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Localization;
+using Robust.Shared.Utility;
 
 namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
 {
     [RegisterComponent]
-    public class ClientPumpBarrelComponent : Component, IItemStatus
+    [ComponentReference(typeof(SharedRangedWeaponComponent))]
+    public class ClientPumpBarrelComponent : SharedPumpBarrelComponent, IItemStatus, IExamine
     {
-        public override string Name => "PumpBarrel";
-        public override uint? NetID => ContentNetIDs.PUMP_BARREL;
+        private StatusControl? _statusControl;
 
-        private StatusControl _statusControl;
+        private bool? _chamber;
 
-        /// <summary>
-        ///     chambered is true when a bullet is chambered
-        ///     spent is true when the chambered bullet is spent
-        /// </summary>
-        [ViewVariables]
-        public (bool chambered, bool spent) Chamber { get; private set; }
+        private Stack<bool> _ammoContainer = new Stack<bool>();
 
-        /// <summary>
-        ///     Count of bullets in the magazine.
-        /// </summary>
-        /// <remarks>
-        ///     Null if no magazine is inserted.
-        /// </remarks>
-        [ViewVariables]
-        public (int count, int max)? MagazineCount { get; private set; }
+        protected override int ShotsLeft => _ammoContainer.Count + UnspawnedCount;
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void Initialize()
+        {
+            base.Initialize();
+            UnspawnedCount = 0;
+            UpdateAppearance();
+        }
+        
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             if (!(curState is PumpBarrelComponentState cast))
                 return;
-
-            Chamber = cast.Chamber;
-            MagazineCount = cast.Magazine;
+            
+            _chamber = cast.Chamber;
+            _ammoContainer = cast.Ammo;
+            Capacity = cast.Capacity;
             _statusControl?.Update();
+            UpdateAppearance();
+        }
+
+        private void UpdateAppearance()
+        {
+            if (!Owner.TryGetComponent(out AppearanceComponent? appearanceComponent))
+                return;
+
+            appearanceComponent?.SetData(AmmoVisuals.AmmoCount, ShotsLeft);
+            appearanceComponent?.SetData(AmmoVisuals.AmmoMax, Capacity);
+        }
+
+        protected override bool TryShoot(Angle angle)
+        {
+            if (!base.TryShoot(angle))
+                return false;
+
+            var chamber = _chamber;
+
+            if (chamber == null)
+                return true;
+            
+            var shooter = Shooter();
+            CameraRecoilComponent? cameraRecoilComponent = null;
+            shooter?.TryGetComponent(out cameraRecoilComponent);
+            
+            string? sound;
+            float variation;
+            float volume;
+
+            if (chamber.Value)
+            {
+                sound = SoundGunshot;
+                variation = GunshotVariation;
+                volume = GunshotVolume;
+                cameraRecoilComponent?.Kick(-angle.ToVec().Normalized * RecoilMultiplier);
+                EntitySystem.Get<SharedRangedWeaponSystem>().MuzzleFlash(shooter, this, angle);
+                _chamber = false;
+
+            }
+            else
+            {
+                sound = SoundEmpty;
+                variation = EmptyVariation;
+                volume = EmptyVolume;
+            }
+
+            if (sound != null)
+                EntitySystem.Get<AudioSystem>().Play(sound, Owner, AudioHelpers.WithVariation(variation).WithVolume(volume));
+
+            UpdateAppearance();
+            _statusControl?.Update();
+            return true;
+        }
+
+        protected override void Cycle(bool manual = false)
+        {
+            // TODO
+            return;
+        }
+
+        // TODO: Need interaction prediction AHHHHHHHHHHHHHHHHHHHH
+        
+        // I know I know no deadcode but I need interaction predictions
+        public override bool TryInsertBullet(IEntity user, IEntity ammo)
+        {
+            // TODO
+            return true;
         }
 
         public Control MakeControl()
@@ -119,21 +192,21 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
             public void Update()
             {
                 _chamberedBullet.ModulateSelfOverride =
-                    _parent.Chamber.chambered ?
-                    _parent.Chamber.spent ? Color.Red : Color.FromHex("#d7df60")
+                    _parent._chamber != null ?
+                    !_parent._chamber.Value ? Color.Red : Color.FromHex("#d7df60")
                     : Color.Black;
 
                 _bulletsListTop.RemoveAllChildren();
                 _bulletsListBottom.RemoveAllChildren();
+                var capacity = _parent.Capacity;
 
-                if (_parent.MagazineCount == null)
+                if (_parent.Capacity == 1)
                 {
                     _noMagazineLabel.Visible = true;
                     return;
                 }
-
-                var (count, capacity) = _parent.MagazineCount.Value;
-
+                
+                var count = _parent.ShotsLeft;
                 _noMagazineLabel.Visible = false;
 
                 string texturePath;
@@ -201,6 +274,11 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
             {
                 return Vector2.ComponentMax((0, 15), base.CalculateMinimumSize());
             }
+        }
+
+        public void Examine(FormattedMessage message, bool inDetailsRange)
+        {
+            message.AddMarkup(Loc.GetString("\nIt uses [color=white]{0}[/color] ammo.", Caliber));
         }
     }
 }

@@ -24,4 +24,19 @@
     <ProjectReference Include="..\RobustToolbox\Robust.Server\Robust.Server.csproj" />
     <ProjectReference Include="..\Content.Shared\Content.Shared.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="GameObjects\Components\Weapon\Ranged\Barrels\ServerRangedBarrelComponent.cs" />
+    <Compile Remove="GameObjects\Components\Weapon\Ranged\Barrels\ServerMagazineBarrelComponent.cs" />
+    <Compile Remove="GameObjects\Components\Weapon\Ranged\Barrels\RevolverBarrelComponent.cs" />
+    <Compile Remove="GameObjects\Components\Weapon\Ranged\Barrels\PumpBarrelComponent.cs" />
+    <Compile Remove="GameObjects\Components\Weapon\Ranged\Barrels\BoltActionBarrelComponent.cs" />
+    <Compile Remove="GameObjects\Components\Weapon\Ranged\Ammunition\RangedMagazineComponent.cs" />
+    <Compile Remove="GameObjects\Components\Weapon\Ranged\Ammunition\AmmoBoxComponent.cs" />
+    <Compile Remove="GameObjects\Components\Weapon\Ranged\Ammunition\SpeedLoaderComponent.cs" />
+    <Compile Remove="GameObjects\Components\Weapon\Ranged\ServerRangedWeaponComponent.cs" />
+    <Compile Remove="GameObjects\Components\Weapon\Ranged\ServerWeapon.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="GameObjects\Components\Weapon\Ranged\Barrels" />
+  </ItemGroup>
 </Project>

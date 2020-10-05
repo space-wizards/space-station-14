@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
+﻿using Content.Server.GameObjects.Components.Weapon.Ranged;
+using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -6,7 +7,7 @@ using Robust.Shared.Interfaces.GameObjects;
 namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers
 {
     /// <summary>
-    /// Recharges the battery in a <see cref="ServerBatteryBarrelComponent"/>.
+    ///     Recharges the battery in a <see cref="ServerBatteryBarrelComponent"/>.
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
@@ -17,7 +18,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
         protected override bool IsEntityCompatible(IEntity entity)
         {
-            return entity.HasComponent<ServerBatteryBarrelComponent>();
+            return entity.HasComponent<SharedBatteryBarrelComponent>();
         }
 
         protected override BatteryComponent GetBatteryFrom(IEntity entity)

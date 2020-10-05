@@ -46,7 +46,6 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Rifles/ak.rsi
-  - type: RangedWeapon
   - type: MagazineBarrel
     caliber: LRifle
     magazineTypes:
@@ -84,7 +83,6 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Rifles/black_ak.rsi
-  - type: RangedWeapon
   - type: MagazineBarrel
     caliber: LRifle
     magazineTypes:
@@ -124,7 +122,6 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
-  - type: RangedWeapon
   - type: MagazineBarrel
     caliber: SRifle
     magazineTypes:
@@ -164,7 +161,6 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Rifles/dallas.rsi
-  - type: RangedWeapon
   - type: MagazineBarrel
     caliber: ClRifle
     magazineTypes:
@@ -205,7 +201,6 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Rifles/sts.rsi
-  - type: RangedWeapon
   - type: MagazineBarrel
     caliber: LRifle
     magazineTypes:
@@ -246,7 +241,6 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Rifles/vintorez.rsi
-  - type: RangedWeapon
   - type: MagazineBarrel
     caliber: SRifle
     magazineTypes:
@@ -284,7 +278,6 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Rifles/wintermute.rsi
-  - type: RangedWeapon
   - type: MagazineBarrel
     caliber: SRifle
     magazineTypes:
@@ -325,7 +318,6 @@
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Rifles/calico.rsi
-  - type: RangedWeapon
   - type: MagazineBarrel
     magFillPrototype: MagazinePistolCalicoTopMounted
     caliber: Pistol

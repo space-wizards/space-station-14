@@ -4,7 +4,7 @@
   parent: BaseItem
   abstract: true
   components:
-  - type: AmmoBox
+  - type: RangedMagazine
     caliber: ClRifle
     capacity: 30
 
@@ -28,7 +28,7 @@
   name: "ammunition box (.25 caseless)"
   parent: BoxClRifleBase
   components:
-  - type: AmmoBox
+  - type: RangedMagazine
     capacity: 200
     fillPrototype: CartridgeClRifle
 
@@ -40,7 +40,7 @@
   name: "ammunition box (.25 caseless)"
   parent: BoxClRifleBase
   components:
-  - type: AmmoBox
+  - type: RangedMagazine
     capacity: 200
     fillPrototype: CartridgeClRifle
 
@@ -52,7 +52,7 @@
   name: "ammunition box (.25 caseless rubber)"
   parent: BoxClRifleBase
   components:
-  - type: AmmoBox
+  - type: RangedMagazine
     capacity: 200
     fillPrototype: CartridgeClRifleRubber
 
@@ -64,7 +64,7 @@
   name: "ammunition box (.25 caseless)"
   parent: BoxClRifleBase
   components:
-  - type: AmmoBox
+  - type: RangedMagazine
     capacity: 60
     fillPrototype: CartridgeClRifle
 
@@ -76,7 +76,7 @@
   name: "ammunition box (.25 caseless flash)"
   parent: BoxClRifleBase
   components:
-  - type: AmmoBox
+  - type: RangedMagazine
     capacity: 60
     fillPrototype: CartridgeClRifleFlash
 
@@ -88,7 +88,7 @@
   name: "ammunition box (.25 caseless high-velocity)"
   parent: BoxClRifleBase
   components:
-  - type: AmmoBox
+  - type: RangedMagazine
     capacity: 60
     fillPrototype: CartridgeClRifleHV
 
@@ -100,7 +100,7 @@
   name: "ammunition box (.25 caseless practice)"
   parent: BoxClRifleBase
   components:
-  - type: AmmoBox
+  - type: RangedMagazine
     capacity: 60
     fillPrototype: CartridgeClRiflePractice
 
@@ -112,7 +112,7 @@
   name: "ammunition box (.25 caseless rubber)"
   parent: BoxClRifleBase
   components:
-  - type: AmmoBox
+  - type: RangedMagazine
     capacity: 60
     fillPrototype: CartridgeClRifleRubber
 

@@ -4,7 +4,7 @@
   parent: BaseItem
   abstract: true
   components:
-  - type: AmmoBox
+  - type: RangedMagazine
     caliber: Rocket
     capacity: 30
   - type: Sprite
@@ -16,10 +16,11 @@
   name: "foamdart box"
   parent: BoxDonkSoftBase
   components:
-  - type: AmmoBox
+  - type: RangedMagazine
     capacity: 40
     fillPrototype: BulletDonkSoft
 
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: foambox
+    netsync: false

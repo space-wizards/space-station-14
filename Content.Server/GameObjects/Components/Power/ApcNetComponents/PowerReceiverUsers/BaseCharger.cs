@@ -1,10 +1,9 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
 using Content.Shared.GameObjects.Components.Power;
+using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
@@ -13,6 +12,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -24,13 +24,18 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
     public abstract class BaseCharger : Component, IActivate, IInteractUsing
     {
         [ViewVariables]
-        private BatteryComponent? _heldBattery;
+        private BatteryComponent _heldBattery;
 
         [ViewVariables]
-        private ContainerSlot _container = default!;
+        private ContainerSlot _container;
+
+        [ViewVariables]
+        private PowerReceiverComponent _powerReceiver;
 
         [ViewVariables]
         private CellChargerStatus _status;
+
+        private AppearanceComponent _appearanceComponent;
 
         [ViewVariables]
         private int _chargeRate;
@@ -48,25 +53,16 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         public override void Initialize()
         {
             base.Initialize();
-
-            Owner.EnsureComponent<PowerReceiverComponent>();
+            _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
             _container = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-powerCellContainer", Owner);
+            _appearanceComponent = Owner.GetComponent<AppearanceComponent>();
             // Default state in the visualizer is OFF, so when this gets powered on during initialization it will generally show empty
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
-            {
-                receiver.OnPowerStateChanged += PowerUpdate;
-            }
+            _powerReceiver.OnPowerStateChanged += PowerUpdate;
         }
 
         public override void OnRemove()
         {
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
-            {
-                receiver.OnPowerStateChanged -= PowerUpdate;
-            }
-
-            _heldBattery = null;
-
+            _powerReceiver.OnPowerStateChanged -= PowerUpdate;
             base.OnRemove();
         }
 
@@ -75,7 +71,8 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             var result = TryInsertItem(eventArgs.Using);
             if (!result)
             {
-                eventArgs.User.PopupMessage(Owner, Loc.GetString("Unable to insert capacitor"));
+                var localizationManager = IoCManager.Resolve<ILocalizationManager>();
+                eventArgs.User.PopupMessage(Owner, localizationManager.GetString("Unable to insert capacitor"));
             }
 
             return result;
@@ -100,20 +97,18 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
             _container.Remove(heldItem);
             _heldBattery = null;
-            if (user.TryGetComponent(out HandsComponent? handsComponent))
+            if (user.TryGetComponent(out HandsComponent handsComponent))
             {
                 handsComponent.PutInHandOrDrop(heldItem.GetComponent<ItemComponent>());
             }
 
-            if (heldItem.TryGetComponent(out ServerBatteryBarrelComponent? batteryBarrelComponent))
-            {
+            if (heldItem.TryGetComponent(out SharedBatteryBarrelComponent batteryBarrelComponent))
                 batteryBarrelComponent.UpdateAppearance();
-            }
 
             UpdateStatus();
         }
 
-        private void PowerUpdate(object? sender, PowerStateEventArgs eventArgs)
+        private void PowerUpdate(object sender, PowerStateEventArgs eventArgs)
         {
             UpdateStatus();
         }
@@ -128,7 +123,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                     data.Visibility = VerbVisibility.Invisible;
                     return;
                 }
-                if (!user.TryGetComponent(out HandsComponent? handsComponent))
+                if (!user.TryGetComponent(out HandsComponent handsComponent))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
@@ -137,18 +132,16 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                 if (component._container.ContainedEntity != null || handsComponent.GetActiveHand == null)
                 {
                     data.Visibility = VerbVisibility.Disabled;
-                    data.Text = Loc.GetString("Insert");
+                    data.Text = "Insert";
                     return;
                 }
 
-                var heldItemName = Loc.GetString(handsComponent.GetActiveHand.Owner.Name);
-
-                data.Text = Loc.GetString("Insert {0}", heldItemName);
+                data.Text = $"Insert {handsComponent.GetActiveHand.Owner.Name}";
             }
 
             protected override void Activate(IEntity user, BaseCharger component)
             {
-                if (!user.TryGetComponent(out HandsComponent? handsComponent))
+                if (!user.TryGetComponent(out HandsComponent handsComponent))
                 {
                     return;
                 }
@@ -175,14 +168,12 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                 }
                 if (component._container.ContainedEntity == null)
                 {
-                    data.Text = Loc.GetString("Eject");
+                    data.Text = "Eject";
                     data.Visibility = VerbVisibility.Disabled;
                     return;
                 }
 
-                var containerItemName = Loc.GetString(component._container.ContainedEntity.Name);
-
-                data.Text = Loc.GetString("Eject {0}", containerItemName);
+                data.Text = $"Eject {component._container.ContainedEntity.Name}";
             }
 
             protected override void Activate(IEntity user, BaseCharger component)
@@ -193,8 +184,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
         private CellChargerStatus GetStatus()
         {
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver) &&
-                !receiver.Powered)
+            if (!_powerReceiver.Powered)
             {
                 return CellChargerStatus.Off;
             }
@@ -235,39 +225,34 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         {
             // Not called UpdateAppearance just because it messes with the load
             var status = GetStatus();
-            if (_status == status ||
-                !Owner.TryGetComponent(out PowerReceiverComponent? receiver))
+            if (_status == status)
             {
                 return;
             }
-
             _status = status;
-            Owner.TryGetComponent(out AppearanceComponent? appearance);
-
             switch (_status)
             {
                 // Update load just in case
                 case CellChargerStatus.Off:
-                    receiver.Load = 0;
-                    appearance?.SetData(CellVisual.Light, CellChargerStatus.Off);
+                    _powerReceiver.Load = 0;
+                    _appearanceComponent?.SetData(CellVisual.Light, CellChargerStatus.Off);
                     break;
                 case CellChargerStatus.Empty:
-                    receiver.Load = 0;
-                    appearance?.SetData(CellVisual.Light, CellChargerStatus.Empty);
+                    _powerReceiver.Load = 0;
+                    _appearanceComponent?.SetData(CellVisual.Light, CellChargerStatus.Empty); ;
                     break;
                 case CellChargerStatus.Charging:
-                    receiver.Load = (int) (_chargeRate / _transferEfficiency);
-                    appearance?.SetData(CellVisual.Light, CellChargerStatus.Charging);
+                    _powerReceiver.Load = (int) (_chargeRate / _transferEfficiency);
+                    _appearanceComponent?.SetData(CellVisual.Light, CellChargerStatus.Charging);
                     break;
                 case CellChargerStatus.Charged:
-                    receiver.Load = 0;
-                    appearance?.SetData(CellVisual.Light, CellChargerStatus.Charged);
+                    _powerReceiver.Load = 0;
+                    _appearanceComponent?.SetData(CellVisual.Light, CellChargerStatus.Charged);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
-            appearance?.SetData(CellVisual.Occupied, _container.ContainedEntity != null);
+            _appearanceComponent?.SetData(CellVisual.Occupied, _container.ContainedEntity != null);
         }
 
         public void OnUpdate(float frameTime) //todo: make single system for this
@@ -281,17 +266,10 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
         private void TransferPower(float frameTime)
         {
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver) &&
-                !receiver.Powered)
+            if (!_powerReceiver.Powered)
             {
                 return;
             }
-
-            if (_heldBattery == null)
-            {
-                return;
-            }
-
             _heldBattery.CurrentCharge += _chargeRate * frameTime;
             // Just so the sprite won't be set to 99.99999% visibility
             if (_heldBattery.MaxCharge - _heldBattery.CurrentCharge < 0.01)

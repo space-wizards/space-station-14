@@ -1,6 +1,5 @@
-﻿using System;
+﻿#nullable enable
 using Content.Client.UserInterface.Stylesheets;
-using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
@@ -8,33 +7,106 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
+using System;
+using System.Threading.Tasks;
+using Content.Client.GameObjects.Components.Mobs;
+using Content.Shared.Audio;
+using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces.GameObjects.Components;
+using Robust.Client.GameObjects;
+using Robust.Client.GameObjects.EntitySystems;
+using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
 {
     [RegisterComponent]
-    public class ClientBatteryBarrelComponent : Component, IItemStatus
+    [ComponentReference(typeof(SharedRangedWeaponComponent))]
+    public class ClientBatteryBarrelComponent : SharedBatteryBarrelComponent, IItemStatus
     {
-        public override string Name => "BatteryBarrel";
-        public override uint? NetID => ContentNetIDs.BATTERY_BARREL;
-
-        private StatusControl _statusControl;
+        private StatusControl? _statusControl;
 
         /// <summary>
         ///     Count of bullets in the magazine.
         /// </summary>
         /// <remarks>
         ///     Null if no magazine is inserted.
+        ///     Didn't call it Capacity because that's the battery capacity rather than shots left capacity like the other guns.
         /// </remarks>
         [ViewVariables]
-        public (int count, int max)? MagazineCount { get; private set; }
+        public (float CurrentCharge, float MaxCharge)? PowerCell { get; private set; }
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             if (!(curState is BatteryBarrelComponentState cast))
                 return;
 
-            MagazineCount = cast.Magazine;
+            PowerCell = cast.PowerCell;
             _statusControl?.Update();
+            UpdateAppearance();
+        }
+        
+        public override void UpdateAppearance()
+        {
+            if (!Owner.TryGetComponent(out AppearanceComponent? appearanceComponent))
+                return;
+
+            var count = (int) MathF.Ceiling(PowerCell?.CurrentCharge / BaseFireCost ?? 0);
+            var max = (int) MathF.Ceiling(PowerCell?.MaxCharge / BaseFireCost ?? 0);
+            
+            appearanceComponent.SetData(MagazineBarrelVisuals.MagLoaded, PowerCell != null);
+            appearanceComponent.SetData(AmmoVisuals.AmmoCount, count);
+            appearanceComponent.SetData(AmmoVisuals.AmmoMax, max);
+        }
+
+        protected override bool TryShoot(Angle angle)
+        {
+            if (!base.TryShoot(angle))
+                return false;
+            
+            if (PowerCell == null)
+                return false;
+
+            var (currentCharge, maxCharge) = PowerCell.Value;
+            if (currentCharge < LowerChargeLimit)
+            {
+                if (SoundEmpty != null)
+                    EntitySystem.Get<AudioSystem>().Play(SoundEmpty, Owner, AudioHelpers.WithVariation(EmptyVariation).WithVolume(EmptyVolume));
+                
+                return false;
+            }
+            
+            var chargeChange = Math.Min(currentCharge, BaseFireCost);
+            PowerCell = (currentCharge - chargeChange, maxCharge);
+            
+            var shooter = Shooter();
+            CameraRecoilComponent? cameraRecoilComponent = null;
+            shooter?.TryGetComponent(out cameraRecoilComponent);
+
+            cameraRecoilComponent?.Kick(-angle.ToVec().Normalized * RecoilMultiplier * chargeChange / BaseFireCost);
+            
+            if (!AmmoIsHitscan)
+                EntitySystem.Get<SharedRangedWeaponSystem>().MuzzleFlash(shooter, this, angle);
+
+            if (SoundGunshot != null)
+                EntitySystem.Get<AudioSystem>().Play(SoundGunshot, Owner, AudioHelpers.WithVariation(GunshotVariation).WithVolume(GunshotVolume));
+            
+            // TODO: Show effect here once we can get the full hitscan predicted
+            
+            UpdateAppearance();
+            _statusControl?.Update();
+            return true;
+        }
+
+        public override async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        {
+            // TODO
+            return true;
+        }
+
+        public override bool UseEntity(UseEntityEventArgs eventArgs)
+        {
+            // TODO
+            return true;
         }
 
         public Control MakeControl()
@@ -101,21 +173,22 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
             {
                 _bulletsList.RemoveAllChildren();
 
-                if (_parent.MagazineCount == null)
+                if (_parent.PowerCell == null)
                 {
                     _noBatteryLabel.Visible = true;
                     _ammoCount.Visible = false;
                     return;
                 }
 
-                var (count, capacity) = _parent.MagazineCount.Value;
+                var count = (int) MathF.Ceiling(_parent.PowerCell.Value.CurrentCharge / _parent.BaseFireCost);
+                var max = (int) MathF.Ceiling(_parent.PowerCell.Value.MaxCharge / _parent.BaseFireCost);
 
                 _noBatteryLabel.Visible = false;
                 _ammoCount.Visible = true;
 
                 _ammoCount.Text = $"x{count:00}";
-                capacity = Math.Min(capacity, 8);
-                FillBulletRow(_bulletsList, count, capacity);
+                max = Math.Min(max, 8);
+                FillBulletRow(_bulletsList, count, max);
             }
 
             private static void FillBulletRow(Control container, int count, int capacity)

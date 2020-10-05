@@ -4,7 +4,7 @@
   parent: BaseItem
   abstract: true
   components:
-  - type: AmmoBox
+  - type: RangedMagazine
     caliber: SRifle
     capacity: 30
 
@@ -28,7 +28,7 @@
   name: "ammunition box (.20 rifle)"
   parent: BoxSRifleBase
   components:
-  - type: AmmoBox
+  - type: RangedMagazine
     capacity: 200
     fillPrototype: CartridgeSRifle
 
@@ -40,7 +40,7 @@
   name: "ammunition box (.20 rifle rubber)"
   parent: BoxSRifleBase
   components:
-  - type: AmmoBox
+  - type: RangedMagazine
     capacity: 200
     fillPrototype: CartridgeSRifleRubber
 
@@ -52,7 +52,7 @@
   name: "ammunition box (.20 rifle)"
   parent: BoxSRifleBase
   components:
-  - type: AmmoBox
+  - type: RangedMagazine
     capacity: 60
     fillPrototype: CartridgeSRifle
 
@@ -64,7 +64,7 @@
   name: "ammunition box (.20 rifle flash)"
   parent: BoxSRifleBase
   components:
-  - type: AmmoBox
+  - type: RangedMagazine
     capacity: 60
     fillPrototype: CartridgeSRifleFlash
 
@@ -76,7 +76,7 @@
   name: "ammunition box (.20 rifle high-velocity)"
   parent: BoxSRifleBase
   components:
-  - type: AmmoBox
+  - type: RangedMagazine
     capacity: 60
     fillPrototype: CartridgeSRifleHV
 
@@ -88,7 +88,7 @@
   name: "ammunition box (.20 rifle practice)"
   parent: BoxSRifleBase
   components:
-  - type: AmmoBox
+  - type: RangedMagazine
     capacity: 60
     fillPrototype: CartridgeSRiflePractice
 
@@ -100,7 +100,7 @@
   name: "ammunition box (.20 rifle rubber)"
   parent: BoxSRifleBase
   components:
-  - type: AmmoBox
+  - type: RangedMagazine
     capacity: 60
     fillPrototype: CartridgeSRifleRubber
 

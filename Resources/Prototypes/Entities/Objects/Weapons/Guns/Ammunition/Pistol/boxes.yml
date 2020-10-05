@@ -4,7 +4,7 @@
   parent: BaseItem
   abstract: true
   components:
-  - type: AmmoBox
+  - type: RangedMagazine
     caliber: Pistol
     capacity: 30
 
@@ -28,7 +28,7 @@
   name: "ammunition box (.35 auto)"
   parent: BoxPistolBase
   components:
-  - type: AmmoBox
+  - type: RangedMagazine
     capacity: 60
     fillPrototype: CartridgePistol
 
@@ -40,7 +40,7 @@
   name: "ammunition box (.35 auto flash)"
   parent: BoxPistolBase
   components:
-  - type: AmmoBox
+  - type: RangedMagazine
     capacity: 60
     fillPrototype: CartridgePistolFlash
 
@@ -52,7 +52,7 @@
   name: "ammunition box (.35 auto high-velocity)"
   parent: BoxPistolBase
   components:
-  - type: AmmoBox
+  - type: RangedMagazine
     capacity: 60
     fillPrototype: CartridgePistolHV
 
@@ -64,7 +64,7 @@
   name: "ammunition box (.35 auto practice)"
   parent: BoxPistolBase
   components:
-  - type: AmmoBox
+  - type: RangedMagazine
     capacity: 60
     fillPrototype: CartridgePistolPractice
 
@@ -76,7 +76,7 @@
   name: "ammunition box (.35 auto rubber)"
   parent: BoxPistolBase
   components:
-  - type: AmmoBox
+  - type: RangedMagazine
     capacity: 60
     fillPrototype: CartridgePistolRubber
 
