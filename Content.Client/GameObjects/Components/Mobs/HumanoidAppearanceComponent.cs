@@ -1,5 +1,5 @@
 ﻿using Content.Client.GameObjects.Components.ActionBlocking;
-using Content.Shared.GameObjects.Components.Body.Part;
+using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Preferences;
 using Content.Shared.Preferences.Appearance;
@@ -9,7 +9,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Client.GameObjects.Components.Mobs
 {
     [RegisterComponent]
-    public sealed class HumanoidAppearanceComponent : SharedHumanoidAppearanceComponent, IBodyPartAdded
+    public sealed class HumanoidAppearanceComponent : SharedHumanoidAppearanceComponent
     {
         public override HumanoidCharacterAppearance Appearance
         {
@@ -46,6 +46,19 @@ namespace Content.Client.GameObjects.Components.Mobs
                 return;
             }
 
+            if (Owner.TryGetBody(out var body))
+            {
+                foreach (var part in body.Parts.Values)
+                {
+                    if (!part.Owner.TryGetComponent(out SpriteComponent partSprite))
+                    {
+                        continue;
+                    }
+
+                    partSprite.Color = Appearance.SkinColor;
+                }
+            }
+
             sprite.LayerSetColor(HumanoidVisualLayers.Hair, Appearance.HairColor);
             sprite.LayerSetColor(HumanoidVisualLayers.FacialHair, Appearance.FacialHairColor);
 
@@ -74,14 +87,6 @@ namespace Content.Client.GameObjects.Components.Mobs
                 facialHairStyle = HairStyles.DefaultFacialHairStyle;
             sprite.LayerSetState(HumanoidVisualLayers.FacialHair,
                 HairStyles.FacialHairStylesMap[facialHairStyle]);
-        }
-
-        public void BodyPartAdded(BodyPartAddedEventArgs args)
-        {
-            if (args.Part.Owner.TryGetComponent(out SpriteComponent sprite))
-            {
-                sprite.Color = Appearance.SkinColor;
-            }
         }
     }
 }

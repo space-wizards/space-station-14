@@ -1,5 +1,4 @@
 using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Preferences;
 using Robust.Server.GameObjects;
@@ -8,7 +7,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.GameObjects.Components.Mobs
 {
     [RegisterComponent]
-    public sealed class HumanoidAppearanceComponent : SharedHumanoidAppearanceComponent, IBodyPartAdded
+    public sealed class HumanoidAppearanceComponent : SharedHumanoidAppearanceComponent
     {
         public override HumanoidCharacterAppearance Appearance
         {
@@ -32,12 +31,21 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
         }
 
-        public void BodyPartAdded(BodyPartAddedEventArgs args)
+        protected override void Startup()
         {
-            if (Appearance != null &&
-                args.Part.Owner.TryGetComponent(out SpriteComponent sprite))
+            base.Startup();
+
+            if (Owner.TryGetBody(out var body))
             {
-                sprite.Color = Appearance.SkinColor;
+                foreach (var part in body.Parts.Values)
+                {
+                    if (!part.Owner.TryGetComponent(out SpriteComponent sprite))
+                    {
+                        continue;
+                    }
+
+                    sprite.Color = Appearance.SkinColor;
+                }
             }
         }
     }
