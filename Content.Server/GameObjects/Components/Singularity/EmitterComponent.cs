@@ -99,6 +99,8 @@ namespace Content.Server.GameObjects.Components.Singularity
 
             projectile.Transform.LocalRotation = Owner.Transform.WorldRotation;
 
+            Timer.Spawn(3000, () => projectile.Delete());
+
             return true;
         }
     }

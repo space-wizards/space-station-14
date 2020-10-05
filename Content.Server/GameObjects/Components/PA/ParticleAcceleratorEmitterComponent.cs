@@ -1,12 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Projectiles;
+using Content.Shared.GameObjects.Components;
 using Content.Shared.Physics;
 using Newtonsoft.Json.Serialization;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
@@ -85,18 +89,24 @@ namespace Content.Server.GameObjects.Components.PA
         {
             var projectile = _entityManager.SpawnEntity("ParticlesProjectile", Owner.Transform.Coordinates);
 
-            var physicsComponent = projectile.GetComponent<ICollidableComponent>();
-            physicsComponent.Status = BodyStatus.InAir;
+            projectile.GetComponent<ParticleProjectileComponent>().Fire(ParticleAccelerator.Power, Owner.Transform.WorldRotation, Owner);
+        }
 
-            var projectileComponent = projectile.GetComponent<ProjectileComponent>();
-            projectileComponent.IgnoreEntity(Owner);
-
-            projectile
-                .GetComponent<ICollidableComponent>()
-                .EnsureController<BulletController>()
-                .LinearVelocity = Owner.Transform.WorldRotation.ToVec() * 20f;
-
-            projectile.Transform.LocalRotation = Owner.Transform.WorldRotation;
+        public override ParticleAcceleratorPartComponent[] GetNeighbours()
+        {
+            switch (Type)
+            {
+                case ParticleAcceleratorEmitterType.Left:
+                    return new ParticleAcceleratorPartComponent[] {ParticleAccelerator.EmitterCenter};
+                case ParticleAcceleratorEmitterType.Center:
+                    return new ParticleAcceleratorPartComponent[] {ParticleAccelerator.EmitterLeft, ParticleAccelerator.EmitterRight, ParticleAccelerator.PowerBox};
+                case ParticleAcceleratorEmitterType.Right:
+                    return new ParticleAcceleratorPartComponent[] {ParticleAccelerator.EmitterCenter};
+                default:
+                    Logger.Error("Emittercomponent without Type somehow got initialized (Error at getNeighbours)");
+                    break;
+            }
+            return new ParticleAcceleratorPartComponent[0];
         }
 
         public override string ToString()
@@ -111,5 +121,4 @@ namespace Content.Server.GameObjects.Components.PA
         Center,
         Right
     }
-
 }

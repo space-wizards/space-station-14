@@ -1,4 +1,5 @@
-﻿using Robust.Shared.GameObjects;
+﻿using System.Collections.Generic;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Log;
@@ -19,17 +20,17 @@ namespace Content.Server.GameObjects.Components.PA
                 Logger.Error("ParticleAcceleratorPartComponent created with no CollidableComponent");
                 return;
             }
-            collidableComponent.AnchoredChanged += ReCalculateParticleAccelerator;
+            collidableComponent.AnchoredChanged += RebuildParticleAccelerator;
         }
 
         private void RotateEvent(RotateEvent ev)
         {
             if (ev.Sender != Owner) return;
 
-            ReCalculateParticleAccelerator();
+            RebuildParticleAccelerator();
         }
 
-        private void ReCalculateParticleAccelerator()
+        public void RebuildParticleAccelerator()
         {
             if (!Owner.TryGetComponent<CollidableComponent>(out var collidableComponent)) return;
 
@@ -50,6 +51,8 @@ namespace Content.Server.GameObjects.Components.PA
             base.OnRemove();
             if (ParticleAccelerator != null) UnRegisterAtParticleAccelerator();
         }
+
+        public abstract ParticleAcceleratorPartComponent[] GetNeighbours();
 
         protected abstract void RegisterAtParticleAccelerator();
 

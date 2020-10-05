@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.Utility;
 using Content.Shared.Arcade;
@@ -33,26 +34,27 @@ namespace Content.Server.GameObjects.Components.PA
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
-            if (ParticleAccelerator.Power == ParticleAcceleratorPowerState.Off) return;
-
             switch (obj.Message)
             {
-                case ParticleAcceleratorTogglePowerMessage _:
-                    ParticleAccelerator.Power = ParticleAccelerator.Power == ParticleAcceleratorPowerState.Powered
-                        ? ParticleAcceleratorPowerState.Level0
-                        : ParticleAcceleratorPowerState.Powered;
-                    break;
-                case ParticleAcceleratorIncreasePowerMessage _:
-                    if (ParticleAccelerator.Power == ParticleAcceleratorPowerState.Level3) break;
+                case ParticleAcceleratorSetEnableMessage enableMessage:
+                    if(ParticleAccelerator.Enabled == enableMessage.Enabled) break;
 
-                    ParticleAccelerator.Power++;
+                    ParticleAccelerator.Enabled = enableMessage.Enabled;
                     break;
-                case ParticleAcceleratorDecreasePowerMessage _:
-                    if (ParticleAccelerator.Power == ParticleAcceleratorPowerState.Powered) break;
+                case ParticleAcceleratorSetPowerStateMessage stateMessage:
+                    if (ParticleAccelerator.Power == stateMessage.State) break;
 
-                    ParticleAccelerator.Power--;
+                    ParticleAccelerator.Power = stateMessage.State;
                     break;
             }
+        }
+
+        public override ParticleAcceleratorPartComponent[] GetNeighbours()
+        {
+            return new ParticleAcceleratorPartComponent[]
+            {
+                ParticleAccelerator.FuelChamber
+            };
         }
 
         protected override void RegisterAtParticleAccelerator()
@@ -65,12 +67,12 @@ namespace Content.Server.GameObjects.Components.PA
             ParticleAccelerator.ControlBox = null;
         }
 
-        public void PowerLevelUpdated()
+        public void OnParticleAcceleratorValuesChanged()
         {
             //adjust power drain
             //todo
             //update ui
-            UserInterface?.SendMessage(new ParticleAcceleratorDataUpdateMessage(ParticleAccelerator.IsFunctional(), ParticleAccelerator.Power));
+            UserInterface?.SendMessage(ParticleAccelerator.DataMessage);
         }
 
         public bool InteractHand(InteractHandEventArgs eventArgs)
@@ -86,7 +88,7 @@ namespace Content.Server.GameObjects.Components.PA
             if(!ActionBlockerSystem.CanInteract(Owner)) return false;
 
             UserInterface?.Toggle(actor.playerSession);
-            UserInterface?.SendMessage(new ParticleAcceleratorDataUpdateMessage(ParticleAccelerator.IsFunctional(), ParticleAccelerator.Power), actor.playerSession);
+            UserInterface?.SendMessage(ParticleAccelerator.DataMessage, actor.playerSession); //runtimes sometimes with System.ArgumentException: Player session does not have this UI open.
 
             return true;
         }

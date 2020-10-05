@@ -1,4 +1,5 @@
-﻿using Robust.Shared.GameObjects;
+﻿using System.Collections.Generic;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components.PA
 {
@@ -6,6 +7,11 @@ namespace Content.Server.GameObjects.Components.PA
     public class ParticleAcceleratorPowerBoxComponent : ParticleAcceleratorPartComponent
     {
         public override string Name => "ParticleAcceleratorPowerBox";
+
+        public override ParticleAcceleratorPartComponent[] GetNeighbours()
+        {
+            return new ParticleAcceleratorPartComponent[] {ParticleAccelerator.EmitterCenter, ParticleAccelerator.FuelChamber};
+        }
 
         protected override void RegisterAtParticleAccelerator()
         {

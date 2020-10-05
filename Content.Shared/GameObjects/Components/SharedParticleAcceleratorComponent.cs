@@ -26,8 +26,7 @@ namespace Content.Shared.GameObjects.Components
     [NetSerializable, Serializable]
     public enum ParticleAcceleratorPowerState
     {
-        Off = ParticleAcceleratorVisualState.Closed,
-        Powered = ParticleAcceleratorVisualState.Powered,
+        Standby = ParticleAcceleratorVisualState.Powered,
         Level0 = ParticleAcceleratorVisualState.Level0,
         Level1 = ParticleAcceleratorVisualState.Level1,
         Level2 = ParticleAcceleratorVisualState.Level2,
@@ -38,23 +37,53 @@ namespace Content.Shared.GameObjects.Components
     public class ParticleAcceleratorDataUpdateMessage : BoundUserInterfaceMessage
     {
         public bool Assembled;
+        public bool Enabled;
         public ParticleAcceleratorPowerState State;
+        public int PowerDraw;
 
-        public ParticleAcceleratorDataUpdateMessage(bool assembled, ParticleAcceleratorPowerState state)
+        //dont need a bool for the controlbox because... this is sent to the controlbox :D
+        public bool EmitterLeftExists;
+        public bool EmitterCenterExists;
+        public bool EmitterRightExists;
+        public bool PowerBoxExists;
+        public bool FuelChamberExists;
+        public bool EndCapExists;
+
+        public ParticleAcceleratorDataUpdateMessage(bool assembled, bool enabled, ParticleAcceleratorPowerState state, int powerDraw, bool emitterLeftExists, bool emitterCenterExists, bool emitterRightExists, bool powerBoxExists, bool fuelChamberExists, bool endCapExists)
         {
             Assembled = assembled;
-            this.State = state;
+            Enabled = enabled;
+            State = state;
+            PowerDraw = powerDraw;
+            EmitterLeftExists = emitterLeftExists;
+            EmitterCenterExists = emitterCenterExists;
+            EmitterRightExists = emitterRightExists;
+            PowerBoxExists = powerBoxExists;
+            FuelChamberExists = fuelChamberExists;
+            EndCapExists = endCapExists;
         }
     }
 
     [NetSerializable, Serializable]
-    public class ParticleAcceleratorTogglePowerMessage : BoundUserInterfaceMessage{}
+    public class ParticleAcceleratorSetEnableMessage : BoundUserInterfaceMessage
+    {
+        public readonly bool Enabled;
+        public ParticleAcceleratorSetEnableMessage(bool enabled)
+        {
+            Enabled = enabled;
+        }
+    }
 
     [NetSerializable, Serializable]
-    public class ParticleAcceleratorIncreasePowerMessage : BoundUserInterfaceMessage{}
+    public class ParticleAcceleratorSetPowerStateMessage : BoundUserInterfaceMessage
+    {
+        public readonly ParticleAcceleratorPowerState State;
 
-    [NetSerializable, Serializable]
-    public class ParticleAcceleratorDecreasePowerMessage : BoundUserInterfaceMessage{}
+        public ParticleAcceleratorSetPowerStateMessage(ParticleAcceleratorPowerState state)
+        {
+            State = state;
+        }
+    }
 
     [NetSerializable, Serializable]
     public enum ParticleAcceleratorControlBoxUiKey

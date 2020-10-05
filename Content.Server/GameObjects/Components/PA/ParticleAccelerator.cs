@@ -222,30 +222,51 @@ namespace Content.Server.GameObjects.Components.PA
             Power = _power;
         }
 
-        private ParticleAcceleratorPowerState _power = ParticleAcceleratorPowerState.Off;
+        private ParticleAcceleratorPowerState _power = ParticleAcceleratorPowerState.Standby;
         [ViewVariables(VVAccess.ReadWrite)]
         public ParticleAcceleratorPowerState Power
         {
             get => _power;
             set
             {
-                var corrected_value = value;
                 if (!IsFunctional())
                 {
-                    corrected_value = ParticleAcceleratorPowerState.Off;
+                    Enabled = false;
                 }
 
-                if(_power == corrected_value) return;
+                if(_power == value) return;
 
-                _power = corrected_value;
-                StopFiring();
+                _power = value;
                 UpdatePartVisualStates();
-                _controlBox?.PowerLevelUpdated();
+                _controlBox?.OnParticleAcceleratorValuesChanged();
 
-                if (_power > ParticleAcceleratorPowerState.Powered)
-                {
-                    StartFiring();
-                }
+                UpdateFireLoop();
+            }
+        }
+
+        private bool _enabled;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool Enabled
+        {
+            get => _enabled;
+            set
+            {
+                if (_enabled == value) return;
+
+                _enabled = value;
+                UpdatePartVisualStates();
+                _controlBox?.OnParticleAcceleratorValuesChanged();
+
+                UpdateFireLoop();
+            }
+        }
+
+        private void UpdateFireLoop()
+        {
+            StopFiring();
+            if (_power > ParticleAcceleratorPowerState.Standby && _enabled)
+            {
+                StartFiring();
             }
         }
 
@@ -268,13 +289,22 @@ namespace Content.Server.GameObjects.Components.PA
 
         private void UpdatePartVisualState(ParticleAcceleratorPartComponent component)
         {
+            if (component?.Owner == null) return;
+
             if (!component.Owner.TryGetComponent<AppearanceComponent>(out var appearanceComponent))
             {
                 Logger.Error($"ParticleAccelerator tried updating state of {component} but failed due to a missing AppearanceComponent");
                 return;
             }
-            appearanceComponent.SetData(ParticleAcceleratorVisuals.VisualState, (ParticleAcceleratorVisualState)_power);
+            appearanceComponent.SetData(ParticleAcceleratorVisuals.VisualState, Enabled ? (ParticleAcceleratorVisualState)_power : ParticleAcceleratorVisualState.Closed);
         }
+
+        public ParticleAcceleratorDataUpdateMessage DataMessage =>
+            new ParticleAcceleratorDataUpdateMessage(IsFunctional(),
+                Enabled, Power, 0, EmitterLeft != null,
+                EmitterCenter != null, EmitterRight != null,
+                PowerBox != null, FuelChamber != null,
+                EndCap != null);
 
         private void Absorb(ParticleAccelerator particleAccelerator)
         {
@@ -329,8 +359,14 @@ namespace Content.Server.GameObjects.Components.PA
 
             if (value == null)
             {
+                foreach (var neighbour in partVar.GetNeighbours())
+                {
+                    if(neighbour==null)continue;
+
+                    neighbour.RebuildParticleAccelerator();
+                }
                 partVar = null;
-                ValidatePowerState();
+                Validate();
                 return false;
             }
 
@@ -368,17 +404,14 @@ namespace Content.Server.GameObjects.Components.PA
                 value.ParticleAccelerator = this;
             }
 
-            ValidatePowerState();
+            Validate();
 
             return true;
         }
 
-        private void ValidatePowerState()
+        private void Validate()
         {
-            if (IsFunctional() && Power == ParticleAcceleratorPowerState.Off)
-            {
-                Power = ParticleAcceleratorPowerState.Powered;
-            }
+            Enabled = IsFunctional();
         }
 
         private bool TryGetPart<TP>(GridId gridId, PartOffset directionOffset, ParticleAcceleratorPartComponent value, out TP part)

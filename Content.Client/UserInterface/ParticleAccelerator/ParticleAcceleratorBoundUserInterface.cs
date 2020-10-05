@@ -23,19 +23,14 @@ namespace Content.Client.ParticleAccelerator
             _menu.OpenCentered();
         }
 
-        public void SendDecreaseMessage()
+        public void SendEnableMessage(bool enable)
         {
-            SendMessage(new ParticleAcceleratorDecreasePowerMessage());
+            SendMessage(new ParticleAcceleratorSetEnableMessage(enable));
         }
 
-        public void SendIncreaseMessage()
+        public void SendPowerStateMessage(ParticleAcceleratorPowerState state)
         {
-            SendMessage(new ParticleAcceleratorIncreasePowerMessage());
-        }
-
-        public void SendToggleMessage()
-        {
-            SendMessage(new ParticleAcceleratorTogglePowerMessage());
+            SendMessage(new ParticleAcceleratorSetPowerStateMessage(state));
         }
 
         protected override void ReceiveMessage(BoundUserInterfaceMessage message)
