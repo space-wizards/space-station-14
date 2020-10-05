@@ -6,9 +6,7 @@
     netsync: false
     sprite: Interface/Misc/pointing.rsi
     state: pointing
-  - type: Icon
-    sprite: Interface/Misc/pointing.rsi
-    state: pointing
+
   - type: PointingArrow
     duration: 4
     step: 0.5

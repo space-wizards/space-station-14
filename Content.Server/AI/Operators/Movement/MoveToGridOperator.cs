@@ -11,10 +11,10 @@ namespace Content.Server.AI.Operators.Movement
     {
         private readonly IEntity _owner;
         private GridTargetSteeringRequest _request;
-        private readonly GridCoordinates _target;
+        private readonly EntityCoordinates _target;
         public float DesiredRange { get; set; }
 
-        public MoveToGridOperator(IEntity owner, GridCoordinates target, float desiredRange = 1.5f)
+        public MoveToGridOperator(IEntity owner, EntityCoordinates target, float desiredRange = 1.5f)
         {
             _owner = owner;
             _target = target;
@@ -33,7 +33,7 @@ namespace Content.Server.AI.Operators.Movement
             steering.Register(_owner, _request);
             return true;
         }
-        
+
         public override void Shutdown(Outcome outcome)
         {
             base.Shutdown(outcome);

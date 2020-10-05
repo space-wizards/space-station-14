@@ -24,10 +24,10 @@ namespace Content.Server.GameObjects.Components.Body.Digestive
         /// </summary>
         public ReagentUnit MaxVolume
         {
-            get => Owner.TryGetComponent(out SolutionComponent? solution) ? solution.MaxVolume : ReagentUnit.Zero;
+            get => Owner.TryGetComponent(out SolutionContainerComponent? solution) ? solution.MaxVolume : ReagentUnit.Zero;
             set
             {
-                if (Owner.TryGetComponent(out SolutionComponent? solution))
+                if (Owner.TryGetComponent(out SolutionContainerComponent? solution))
                 {
                     solution.MaxVolume = value;
                 }
@@ -50,6 +50,7 @@ namespace Content.Server.GameObjects.Components.Body.Digestive
         /// <summary>
         ///     Used to track how long each reagent has been in the stomach
         /// </summary>
+        [ViewVariables]
         private readonly List<ReagentDelta> _reagentDeltas = new List<ReagentDelta>();
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -63,26 +64,36 @@ namespace Content.Server.GameObjects.Components.Body.Digestive
         {
             base.Startup();
 
-            if (!Owner.EnsureComponent(out SolutionComponent solution))
+            if (!Owner.EnsureComponent(out SolutionContainerComponent solution))
             {
-                Logger.Warning($"Entity {Owner} at {Owner.Transform.MapPosition} didn't have a {nameof(SolutionComponent)}");
+                Logger.Warning($"Entity {Owner} at {Owner.Transform.MapPosition} didn't have a {nameof(SolutionContainerComponent)}");
             }
 
             solution.MaxVolume = _initialMaxVolume;
         }
 
-        public bool TryTransferSolution(Solution solution)
+        public bool CanTransferSolution(Solution solution)
         {
-            if (!Owner.TryGetComponent(out SolutionComponent? solutionComponent))
+            if (!Owner.TryGetComponent(out SolutionContainerComponent? solutionComponent))
             {
                 return false;
             }
 
             // TODO: For now no partial transfers. Potentially change by design
-            if (solution.TotalVolume + solutionComponent.CurrentVolume > solutionComponent.MaxVolume)
+            if (!solutionComponent.CanAddSolution(solution))
             {
                 return false;
             }
+
+            return true;
+        }
+
+        public bool TryTransferSolution(Solution solution)
+        {
+            if (!CanTransferSolution(solution))
+                return false;
+
+            var solutionComponent = Owner.GetComponent<SolutionContainerComponent>();
 
             // Add solution to _stomachContents
             solutionComponent.TryAddSolution(solution, false, true);
@@ -103,7 +114,7 @@ namespace Content.Server.GameObjects.Components.Body.Digestive
         /// <param name="frameTime">The time since the last update in seconds.</param>
         public void Update(float frameTime)
         {
-            if (!Owner.TryGetComponent(out SolutionComponent? solutionComponent) ||
+            if (!Owner.TryGetComponent(out SolutionContainerComponent? solutionComponent) ||
                 !Owner.TryGetComponent(out BloodstreamComponent? bloodstream))
             {
                 return;

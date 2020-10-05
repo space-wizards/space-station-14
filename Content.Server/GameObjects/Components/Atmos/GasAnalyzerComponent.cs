@@ -1,37 +1,39 @@
 ﻿#nullable enable
-using System.Collections.Generic;
 using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components;
+using Content.Shared.GameObjects.Components.Atmos;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Map;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.ViewVariables;
+using System.Collections.Generic;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
     [RegisterComponent]
     public class GasAnalyzerComponent : SharedGasAnalyzerComponent, IAfterInteract, IDropped, IUse
     {
-        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private GasAnalyzerDanger _pressureDanger;
         private float _timeSinceSync;
         private const float TimeBetweenSyncs = 2f;
         private bool _checkPlayer = false; // Check at the player pos or at some other tile?
-        private GridCoordinates? _position; // The tile that we scanned
+        private EntityCoordinates? _position; // The tile that we scanned
+        private AppearanceComponent? _appearance;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(GasAnalyzerUiKey.Key);
 
@@ -42,7 +44,10 @@ namespace Content.Server.GameObjects.Components.Atmos
             if (UserInterface != null)
             {
                 UserInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
+                UserInterface.OnClosed += UserInterfaceOnClose;
             }
+
+            Owner.TryGetComponent(out _appearance);
         }
 
         public override ComponentState GetComponentState()
@@ -61,6 +66,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             _position = null;
             UserInterface?.Open(session);
             UpdateUserInterface();
+            UpdateAppearance(true);
             Resync();
         }
 
@@ -70,20 +76,44 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// </summary>
         /// <param name="session">The session to open the ui for</param>
         /// <param name="pos">The position to analyze the gas</param>
-        public void OpenInterface(IPlayerSession session, GridCoordinates pos)
+        public void OpenInterface(IPlayerSession session, EntityCoordinates pos)
         {
             _checkPlayer = false;
             _position = pos;
             UserInterface?.Open(session);
             UpdateUserInterface();
+            UpdateAppearance(true);
             Resync();
+        }
+
+        public void ToggleInterface(IPlayerSession session)
+        {
+            if (UserInterface == null)
+                return;
+
+            if (UserInterface.SessionHasOpen(session))
+                CloseInterface(session);
+            else
+                OpenInterface(session);
         }
 
         public void CloseInterface(IPlayerSession session)
         {
             _position = null;
             UserInterface?.Close(session);
+            // Our OnClose will do the appearance stuff
             Resync();
+        }
+
+        private void UserInterfaceOnClose(IPlayerSession obj)
+        {
+            UpdateAppearance(false);
+        }
+
+        private void UpdateAppearance(bool open)
+        {
+            _appearance?.SetData(GasAnalyzerVisuals.VisualState,
+                open ? GasAnalyzerVisualState.Working : GasAnalyzerVisualState.Off);
         }
 
         public void Update(float frameTime)
@@ -101,7 +131,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             // Already get the pressure before Dirty(), because we can't get the EntitySystem in that thread or smth
             var pressure = 0f;
             var gam = EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(Owner.Transform.GridID);
-            var tile = gam?.GetTile(Owner.Transform.GridPosition).Air;
+            var tile = gam?.GetTile(Owner.Transform.Coordinates).Air;
             if (tile != null)
             {
                 pressure = tile.Pressure;
@@ -149,18 +179,18 @@ namespace Content.Server.GameObjects.Components.Atmos
                 }
             }
 
-            var pos = Owner.Transform.GridPosition;
+            var pos = Owner.Transform.Coordinates;
             if (!_checkPlayer && _position.HasValue)
             {
                 // Check if position is out of range => don't update
-                if (!_position.Value.InRange(_mapManager, pos, SharedInteractionSystem.InteractionRange))
+                if (!_position.Value.InRange(_entityManager, pos, SharedInteractionSystem.InteractionRange))
                     return;
 
                 pos = _position.Value;
             }
 
             var atmosSystem = EntitySystem.Get<AtmosphereSystem>();
-            var gam = atmosSystem.GetGridAtmosphere(pos.GridID);
+            var gam = atmosSystem.GetGridAtmosphere(pos.GetGridId(_entityManager));
             var tile = gam?.GetTile(pos).Air;
             if (tile == null)
             {
@@ -207,17 +237,14 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                     if (!player.TryGetComponent(out IHandsComponent? handsComponent))
                     {
-                        _notifyManager.PopupMessage(Owner.Transform.GridPosition, player,
-                            Loc.GetString("You have no hands."));
+                        Owner.PopupMessage(player, Loc.GetString("You have no hands."));
                         return;
                     }
 
                     var activeHandEntity = handsComponent.GetActiveHand?.Owner;
                     if (activeHandEntity == null || !activeHandEntity.TryGetComponent(out GasAnalyzerComponent? gasAnalyzer))
                     {
-                        _notifyManager.PopupMessage(serverMsg.Session.AttachedEntity,
-                            serverMsg.Session.AttachedEntity,
-                            Loc.GetString("You need a Gas Analyzer in your hand!"));
+                        serverMsg.Session.AttachedEntity.PopupMessage(Loc.GetString("You need a Gas Analyzer in your hand!"));
                         return;
                     }
 
@@ -231,14 +258,13 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             if (!eventArgs.CanReach)
             {
-                _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, Loc.GetString("You can't reach there!"));
+                eventArgs.User.PopupMessage(Loc.GetString("You can't reach there!"));
                 return;
             }
 
             if (eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
                 OpenInterface(actor.playerSession, eventArgs.ClickLocation);
-                //TODO: show other sprite when ui open?
             }
         }
 
@@ -249,7 +275,6 @@ namespace Content.Server.GameObjects.Components.Atmos
             if (eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
                 CloseInterface(actor.playerSession);
-                //TODO: if other sprite is shown, change again
             }
         }
 
@@ -257,8 +282,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             if (eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
-                OpenInterface(actor.playerSession);
-                //TODO: show other sprite when ui open?
+                ToggleInterface(actor.playerSession);
                 return true;
             }
             return false;

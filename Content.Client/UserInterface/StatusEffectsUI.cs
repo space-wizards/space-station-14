@@ -8,13 +8,12 @@ namespace Content.Client.UserInterface
     /// </summary>
     public sealed class StatusEffectsUI : Control
     {
-        public VBoxContainer VBox => _vBox;
-        private readonly VBoxContainer _vBox;
+        public VBoxContainer VBox { get; }
 
         public StatusEffectsUI()
         {
-            _vBox = new VBoxContainer();
-            AddChild(_vBox);
+            VBox = new VBoxContainer();
+            AddChild(VBox);
 
             LayoutContainer.SetGrowHorizontal(this, LayoutContainer.GrowDirection.Begin);
             LayoutContainer.SetAnchorAndMarginPreset(this, LayoutContainer.LayoutPreset.TopRight, margin: 10);

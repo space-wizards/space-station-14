@@ -169,8 +169,8 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
 
         public void SendEquipMessage(Slots slot)
         {
-            var equipmessage = new ClientInventoryMessage(slot, ClientInventoryUpdate.Equip);
-            SendNetworkMessage(equipmessage);
+            var equipMessage = new ClientInventoryMessage(slot, ClientInventoryUpdate.Equip);
+            SendNetworkMessage(equipMessage);
         }
 
         public void SendUseMessage(Slots slot)

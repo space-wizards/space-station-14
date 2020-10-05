@@ -3,18 +3,17 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.Interfaces;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Gravity;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -111,9 +110,8 @@ namespace Content.Server.GameObjects.Components.Gravity
             breakable.FixAllDamage();
             _intact = true;
 
-            var notifyManager = IoCManager.Resolve<IServerNotifyManager>();
-
-            notifyManager.PopupMessage(Owner, eventArgs.User, Loc.GetString("You repair {0:theName} with {1:theName}", Owner, eventArgs.Using));
+            Owner.PopupMessage(eventArgs.User,
+                Loc.GetString("You repair {0:theName} with {1:theName}", Owner, eventArgs.Using));
 
             return true;
         }

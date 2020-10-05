@@ -15,7 +15,7 @@ namespace Content.Shared.Physics
         public void Move(Vector2 velocityDirection, float speed)
         {
             if (ControlledComponent?.Owner.HasComponent<MovementIgnoreGravityComponent>() == false &&
-                IoCManager.Resolve<IPhysicsManager>().IsWeightless(ControlledComponent.Owner.Transform.GridPosition))
+                IoCManager.Resolve<IPhysicsManager>().IsWeightless(ControlledComponent.Owner.Transform.Coordinates))
             {
                 return;
             }

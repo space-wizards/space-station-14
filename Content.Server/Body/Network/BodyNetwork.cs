@@ -31,9 +31,16 @@ namespace Content.Server.Body.Network
         public virtual void OnRemove() { }
 
         /// <summary>
-        ///     Called every update by <see cref="BodyManagerComponent.Update"/>.
+        ///     Called every update by
+        ///     <see cref="BodyManagerComponent.PreMetabolism"/>.
         /// </summary>
-        public virtual void Update(float frameTime) { }
+        public virtual void PreMetabolism(float frameTime) { }
+
+        /// <summary>
+        ///     Called every update by
+        ///     <see cref="BodyManagerComponent.PostMetabolism"/>.
+        /// </summary>
+        public virtual void PostMetabolism(float frameTime) { }
     }
 
     public static class BodyNetworkExtensions

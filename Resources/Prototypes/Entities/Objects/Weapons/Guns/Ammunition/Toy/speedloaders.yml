@@ -7,8 +7,6 @@
   - type: SpeedLoader
     caliber: Cap
     capacity: 6
-  - type: Icon
-    state: icon
   - type: Sprite
     netsync: false
     layers:
@@ -30,7 +28,5 @@
   components:
   - type: SpeedLoader
     fillPrototype: CartridgeCap
-  - type: Icon
-    sprite: Objects/Fun/caps.rsi
   - type: Sprite
     sprite: Objects/Fun/caps.rsi

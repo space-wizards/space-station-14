@@ -43,9 +43,7 @@
     - state: autolathe_unlit
       shader: unshaded
       map: ["enum.AutolatheVisualLayers.BaseUnlit"]
-  - type: Icon
-    sprite: Constructible/Power/autolathe.rsi
-    state: autolathe
+
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -93,9 +91,7 @@
       map: ["enum.ProtolatheVisualLayers.BaseUnlit"]
     - state: protolathe
       map: ["enum.ProtolatheVisualLayers.AnimationLayer"]
-  - type: Icon
-    sprite: Constructible/Power/protolathe.rsi
-    state: protolathe
+
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb

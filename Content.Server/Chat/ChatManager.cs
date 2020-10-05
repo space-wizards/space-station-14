@@ -1,4 +1,6 @@
-﻿using Content.Server.GameObjects.Components.Observer;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
@@ -11,9 +13,6 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using static Content.Server.Interfaces.Chat.IChatManager;
 
 namespace Content.Server.Chat
@@ -37,11 +36,10 @@ namespace Content.Server.Chat
 
         //TODO: make prio based?
         private List<TransformChat> _chatTransformHandlers;
-        
+
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly ILocalizationManager _localizationManager = default!;
         [Dependency] private readonly IMoMMILink _mommiLink = default!;
         [Dependency] private readonly IConGroupController _conGroupController = default!;
 
@@ -112,7 +110,7 @@ namespace Content.Server.Chat
             // Ensure the first letter inside the message string is always a capital letter
             message = message[0].ToString().ToUpper() + message.Remove(0,1);
 
-            var pos = source.Transform.GridPosition;
+            var pos = source.Transform.Coordinates;
             var clients = _playerManager.GetPlayersInRange(pos, VoiceRange).Select(p => p.ConnectedClient);
 
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
@@ -144,7 +142,7 @@ namespace Content.Server.Chat
                     return;
                 }
 
-            var pos = source.Transform.GridPosition;
+            var pos = source.Transform.Coordinates;
             var clients = _playerManager.GetPlayersInRange(pos, VoiceRange).Select(p => p.ConnectedClient);
 
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
@@ -167,10 +165,10 @@ namespace Content.Server.Chat
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.OOC;
             msg.Message = message;
-            msg.MessageWrap = $"OOC: {player.SessionId}: {{0}}";
+            msg.MessageWrap = $"OOC: {player.Name}: {{0}}";
             _netManager.ServerSendToAll(msg);
 
-            _mommiLink.SendOOCMessage(player.SessionId.ToString(), message);
+            _mommiLink.SendOOCMessage(player.Name, message);
         }
 
         public void SendDeadChat(IPlayerSession player, string message)
@@ -187,7 +185,7 @@ namespace Content.Server.Chat
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Dead;
             msg.Message = message;
-            msg.MessageWrap = $"{_localizationManager.GetString("DEAD")}: {player.AttachedEntity.Name}: {{0}}";
+            msg.MessageWrap = $"{Loc.GetString("DEAD")}: {player.AttachedEntity.Name}: {{0}}";
             msg.SenderEntity = player.AttachedEntityUid.GetValueOrDefault();
             _netManager.ServerSendToMany(msg, clients.ToList());
         }
@@ -212,7 +210,7 @@ namespace Content.Server.Chat
 
             msg.Channel = ChatChannel.AdminChat;
             msg.Message = message;
-            msg.MessageWrap = $"{_localizationManager.GetString("ADMIN")}: {player.SessionId}: {{0}}";
+            msg.MessageWrap = $"{Loc.GetString("ADMIN")}: {player.Name}: {{0}}";
             _netManager.ServerSendToMany(msg, clients.ToList());
         }
 

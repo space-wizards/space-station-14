@@ -6,6 +6,7 @@ using Content.Client.GameObjects.EntitySystems;
 using Content.Client.StationEvents;
 using Content.Shared.Atmos;
 using Robust.Client.Console;
+using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.Placement;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Player;
@@ -17,6 +18,7 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BaseButton;
@@ -25,83 +27,142 @@ namespace Content.Client.UserInterface.AdminMenu
 {
     public class AdminMenuWindow : SS14Window
     {
-        public TabContainer MasterTabContainer;
-        public VBoxContainer PlayerList;
+        public readonly TabContainer MasterTabContainer;
+        public readonly VBoxContainer PlayerList;
+        public readonly Label PlayerCount;
 
-        private List<CommandButton> _adminButtons = new List<CommandButton>
+        protected override Vector2? CustomSize => (500, 250);
+
+        private readonly List<CommandButton> _adminButtons = new List<CommandButton>
         {
             new KickCommandButton(),
             new DirectCommandButton("Admin Ghost", "aghost"),
             //TODO: teleport
         };
-        private List<CommandButton> _adminbusButtons = new List<CommandButton>
+        private readonly List<CommandButton> _adminbusButtons = new List<CommandButton>
         {
             new SpawnEntitiesCommandButton(),
             new SpawnTilesCommandButton(),
             new StationEventsCommandButton(),
         };
-        private List<CommandButton> _debugButtons = new List<CommandButton>
+        private readonly List<CommandButton> _debugButtons = new List<CommandButton>
         {
             new AddAtmosCommandButton(),
             new FillGasCommandButton(),
         };
-        private List<CommandButton> _roundButtons = new List<CommandButton>
+        private readonly List<CommandButton> _roundButtons = new List<CommandButton>
         {
             new DirectCommandButton("Start Round", "startround"),
             new DirectCommandButton("End Round", "endround"),
             new DirectCommandButton("Restart Round", "restartround"),
         };
-        private List<CommandButton> _serverButtons = new List<CommandButton>
+        private readonly List<CommandButton> _serverButtons = new List<CommandButton>
         {
             new DirectCommandButton("Reboot", "restart"),
             new DirectCommandButton("Shutdown", "shutdown"),
         };
 
+        private static readonly Color SeparatorColor = Color.FromHex("#3D4059");
+        private class HSeparator : Control
+        {
+            public HSeparator()
+            {
+                AddChild(new PanelContainer {
+                    PanelOverride = new StyleBoxFlat
+                    {
+                        BackgroundColor = SeparatorColor,
+                        ContentMarginBottomOverride = 2, ContentMarginLeftOverride = 2
+                    }
+                });
+            }
+        }
+
+        private class VSeperator : PanelContainer
+        {
+            public VSeperator()
+            {
+                CustomMinimumSize = (2, 5);
+                AddChild(new PanelContainer {
+                    PanelOverride = new StyleBoxFlat {
+                        BackgroundColor = SeparatorColor
+                    }
+                });
+            }
+        }
+
         private void RefreshPlayerList(ButtonEventArgs args)
         {
             PlayerList.RemoveAllChildren();
-            var sessions = IoCManager.Resolve<IPlayerManager>().Sessions;
+            var playerManager = IoCManager.Resolve<IPlayerManager>();
+            var sessions = playerManager.Sessions;
+            PlayerCount.Text = $"Players: {playerManager.PlayerCount}";
+
+            Color altColor = Color.FromHex("#292B38");
+            Color defaultColor = Color.FromHex("#2F2F3B");
+
             var header = new HBoxContainer
             {
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
+                SeparationOverride = 4,
                 Children =
                     {
                         new Label { Text = "Name",
                             SizeFlagsStretchRatio = 2f,
                             SizeFlagsHorizontal = SizeFlags.FillExpand },
+                        new VSeperator(),
                         new Label { Text = "Player",
                             SizeFlagsStretchRatio = 2f,
                             SizeFlagsHorizontal = SizeFlags.FillExpand },
+                        new VSeperator(),
                         new Label { Text = "Status",
                             SizeFlagsStretchRatio = 1f,
                             SizeFlagsHorizontal = SizeFlags.FillExpand },
+                        new VSeperator(),
                         new Label { Text = "Ping",
                             SizeFlagsStretchRatio = 1f,
                             SizeFlagsHorizontal = SizeFlags.FillExpand,
                             Align = Label.AlignMode.Right },
                     }
             };
-            PlayerList.AddChild(header);
-            PlayerList.AddChild(new Controls.HighDivider());
+            PlayerList.AddChild(new PanelContainer
+            {
+                PanelOverride = new StyleBoxFlat
+                {
+                    BackgroundColor = altColor,
+                },
+                Children =
+                {
+                    header
+                }
+            });
+            PlayerList.AddChild(new HSeparator());
+
+            var useAltColor = false;
             foreach (var player in sessions)
             {
                 var hbox = new HBoxContainer
                 {
                     SizeFlagsHorizontal = SizeFlags.FillExpand,
+                    SeparationOverride = 4,
                     Children =
                     {
                         new Label {
                             Text = player.Name,
                             SizeFlagsStretchRatio = 2f,
-                            SizeFlagsHorizontal = SizeFlags.FillExpand },
+                            SizeFlagsHorizontal = SizeFlags.FillExpand,
+                            ClipText = true },
+                        new VSeperator(),
                         new Label {
                             Text = player.AttachedEntity?.Name,
                             SizeFlagsStretchRatio = 2f,
-                            SizeFlagsHorizontal = SizeFlags.FillExpand },
+                            SizeFlagsHorizontal = SizeFlags.FillExpand,
+                            ClipText = true },
+                        new VSeperator(),
                         new Label {
                             Text = player.Status.ToString(),
                             SizeFlagsStretchRatio = 1f,
                             SizeFlagsHorizontal = SizeFlags.FillExpand },
+                        new VSeperator(),
                         new Label {
                             Text = player.Ping.ToString(),
                             SizeFlagsStretchRatio = 1f,
@@ -109,7 +170,18 @@ namespace Content.Client.UserInterface.AdminMenu
                             Align = Label.AlignMode.Right },
                     }
                 };
-                PlayerList.AddChild(hbox);
+                PlayerList.AddChild(new PanelContainer
+                {
+                    PanelOverride = new StyleBoxFlat
+                    {
+                        BackgroundColor = useAltColor ? altColor : defaultColor,
+                    },
+                    Children =
+                    {
+                        hbox
+                    }
+                });
+                useAltColor ^= true;
             }
         }
 
@@ -133,7 +205,6 @@ namespace Content.Client.UserInterface.AdminMenu
 
         public AdminMenuWindow() //TODO: search for buttons?
         {
-            CustomMinimumSize = (415,0);
             Title = Loc.GetString("Admin Menu");
 
             #region PlayerList
@@ -146,22 +217,50 @@ namespace Content.Client.UserInterface.AdminMenu
                 MarginBottomOverride = 4,
                 CustomMinimumSize = (50, 50),
             };
-            PlayerList = new VBoxContainer();
+
+            PlayerCount = new Label
+            {
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                SizeFlagsStretchRatio = 0.7f,
+            };
             var refreshButton = new Button
             {
-                Text = "Refresh"
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                SizeFlagsStretchRatio = 0.3f,
+                Text = "Refresh",
             };
             refreshButton.OnPressed += RefreshPlayerList;
-            RefreshPlayerList(null!);
+
+            PlayerList = new VBoxContainer();
+
             var playerVBox = new VBoxContainer
             {
+                SizeFlagsVertical = SizeFlags.FillExpand,
                 Children =
                 {
-                    refreshButton,
-                    PlayerList
+                    new HBoxContainer
+                    {
+                        SizeFlagsHorizontal = SizeFlags.FillExpand,
+                        Children =
+                        {
+                            PlayerCount,
+                            refreshButton,
+                        }
+                    },
+                    new Control { CustomMinimumSize = (0, 5) },
+                    new ScrollContainer
+                    {
+                        SizeFlagsHorizontal = SizeFlags.FillExpand,
+                        SizeFlagsVertical = SizeFlags.FillExpand,
+                        Children =
+                        {
+                            PlayerList
+                        },
+                    },
                 }
             };
             playerTabContainer.AddChild(playerVBox);
+            RefreshPlayerList(null!);
             #endregion PlayerList
 
             #region Admin Tab
@@ -339,8 +438,7 @@ namespace Content.Client.UserInterface.AdminMenu
                 var manager = IoCManager.Resolve<IAdminMenuManager>();
                 var window = new EntitySpawnWindow(IoCManager.Resolve<IPlacementManager>(),
                     IoCManager.Resolve<IPrototypeManager>(),
-                    IoCManager.Resolve<IResourceCache>(),
-                    IoCManager.Resolve<ILocalizationManager>());
+                    IoCManager.Resolve<IResourceCache>());
                 manager.OpenCommand(window);
             }
         }
@@ -365,7 +463,7 @@ namespace Content.Client.UserInterface.AdminMenu
             public override string RequiredCommand => "events";
             public override string? SubmitText => "Run";
 
-            private CommandUIDropDown _eventsDropDown = new CommandUIDropDown
+            private readonly CommandUIDropDown _eventsDropDown = new CommandUIDropDown
             {
                 Name = "Event",
                 GetData = () =>
@@ -388,7 +486,7 @@ namespace Content.Client.UserInterface.AdminMenu
                     Name = "Pause",
                     Handler = () =>
                     {
-                        IoCManager.Resolve<IClientConsole>().ProcessCommand($"events pause");
+                        IoCManager.Resolve<IClientConsole>().ProcessCommand("events pause");
                     },
                 },
                 new CommandUIButton
@@ -396,7 +494,7 @@ namespace Content.Client.UserInterface.AdminMenu
                     Name = "Resume",
                     Handler = () =>
                     {
-                        IoCManager.Resolve<IClientConsole>().ProcessCommand($"events resume");
+                        IoCManager.Resolve<IClientConsole>().ProcessCommand("events resume");
                     },
                 },
             };
@@ -412,14 +510,14 @@ namespace Content.Client.UserInterface.AdminMenu
             public override string Name => "Kick";
             public override string RequiredCommand => "kick";
 
-            private CommandUIDropDown _playerDropDown = new CommandUIDropDown
+            private readonly CommandUIDropDown _playerDropDown = new CommandUIDropDown
             {
                 Name = "Player",
                 GetData = () => IoCManager.Resolve<IPlayerManager>().Sessions.ToList<object>(),
                 GetDisplayName = (obj) => $"{((IPlayerSession) obj).Name} ({((IPlayerSession) obj).AttachedEntity?.Name})",
                 GetValueFromData = (obj) => ((IPlayerSession) obj).Name,
             };
-            private CommandUILineEdit _reason = new CommandUILineEdit
+            private readonly CommandUILineEdit _reason = new CommandUILineEdit
             {
                 Name = "Reason"
             };
@@ -441,7 +539,7 @@ namespace Content.Client.UserInterface.AdminMenu
             public override string Name => "Add Atmos";
             public override string RequiredCommand => "addatmos";
 
-            private CommandUIDropDown _grid = new CommandUIDropDown
+            private readonly CommandUIDropDown _grid = new CommandUIDropDown
             {
                 Name = "Grid",
                 GetData = () => IoCManager.Resolve<IMapManager>().GetAllGrids().Where(g => (int) g.Index != 0).ToList<object>(),
@@ -465,7 +563,7 @@ namespace Content.Client.UserInterface.AdminMenu
             public override string Name => "Fill Gas";
             public override string RequiredCommand => "fillgas";
 
-            private CommandUIDropDown _grid = new CommandUIDropDown
+            private readonly CommandUIDropDown _grid = new CommandUIDropDown
             {
                 Name = "Grid",
                 GetData = () => IoCManager.Resolve<IMapManager>().GetAllGrids().Where(g => (int) g.Index != 0).ToList<object>(),
@@ -473,7 +571,7 @@ namespace Content.Client.UserInterface.AdminMenu
                 GetValueFromData = (obj) => ((IMapGrid) obj).Index.ToString(),
             };
 
-            private CommandUIDropDown _gas = new CommandUIDropDown
+            private readonly CommandUIDropDown _gas = new CommandUIDropDown
             {
                 Name = "Gas",
                 GetData = () =>

@@ -1,16 +1,18 @@
 ﻿using Content.Server.GameObjects.Components.Body.Digestive;
 using Content.Server.GameObjects.Components.Nutrition;
 using Content.Server.GameObjects.Components.Utensil;
-using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -21,6 +23,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
     public class PillComponent : FoodComponent, IUse, IAfterInteract
     {
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override string Name => "Pill";
 
@@ -29,7 +32,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         [ViewVariables]
         private string _trashPrototype;
         [ViewVariables]
-        private SolutionComponent _contents;
+        private SolutionContainerComponent _contents;
         [ViewVariables]
         private ReagentUnit _transferAmount;
 
@@ -45,9 +48,11 @@ namespace Content.Server.GameObjects.Components.Chemistry
         public override void Initialize()
         {
             base.Initialize();
-            _contents = Owner.GetComponent<SolutionComponent>();
-            _transferAmount = _contents.CurrentVolume;
 
+            if (!Owner.EnsureComponent(out _contents))
+            {
+                Logger.Error($"Prototype {Owner.Prototype?.ID} had a {nameof(PillComponent)} without a {nameof(SolutionContainerComponent)}!");
+            }
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
@@ -80,19 +85,30 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return false;
             }
 
-            if (!InteractionChecks.InRangeUnobstructed(user, trueTarget.Transform.MapPosition))
+            if (!user.InRangeUnobstructed(trueTarget, popup: true))
             {
                 return false;
             }
 
             var transferAmount = ReagentUnit.Min(_transferAmount, _contents.CurrentVolume);
             var split = _contents.SplitSolution(transferAmount);
-            if (!stomach.TryTransferSolution(split))
+
+            if (!stomach.CanTransferSolution(split))
             {
                 _contents.TryAddSolution(split);
                 trueTarget.PopupMessage(user, Loc.GetString("You can't eat any more!"));
                 return false;
             }
+
+            // TODO: Account for partial transfer.
+
+            foreach (var (reagentId, quantity) in split.Contents)
+            {
+                if (!_prototypeManager.TryIndex(reagentId, out ReagentPrototype reagent)) continue;
+                split.RemoveReagent(reagentId, reagent.ReactionEntity(trueTarget, ReactionMethod.Ingestion, quantity));
+            }
+
+            stomach.TryTransferSolution(split);
 
             if (_useSound != null)
             {

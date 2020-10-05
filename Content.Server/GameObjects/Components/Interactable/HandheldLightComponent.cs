@@ -17,7 +17,6 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -31,8 +30,6 @@ namespace Content.Server.GameObjects.Components.Interactable
     internal sealed class HandheldLightComponent : SharedHandheldLightComponent, IUse, IExamine, IInteractUsing,
         IMapInit
     {
-        [Dependency] private readonly ISharedNotifyManager _notifyManager = default!;
-
         [ViewVariables(VVAccess.ReadWrite)] public float Wattage { get; set; } = 10;
         [ViewVariables] private ContainerSlot _cellContainer = default!;
 
@@ -127,7 +124,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             return true;
         }
 
-        private void TurnOff()
+        private void TurnOff(bool makeNoise = true)
         {
             if (!Activated)
             {
@@ -137,7 +134,10 @@ namespace Content.Server.GameObjects.Components.Interactable
             SetState(false);
             Activated = false;
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/flashlight_toggle.ogg", Owner);
+            if (makeNoise)
+            {
+                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/flashlight_toggle.ogg", Owner);
+            }
         }
 
         private void TurnOn(IEntity user)
@@ -152,7 +152,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             {
                 EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/button.ogg", Owner);
 
-                _notifyManager.PopupMessage(Owner, user, Loc.GetString("Cell missing..."));
+                Owner.PopupMessage(user, Loc.GetString("Cell missing..."));
                 return;
             }
 
@@ -162,7 +162,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             if (Wattage > cell.CurrentCharge)
             {
                 EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/button.ogg", Owner);
-                _notifyManager.PopupMessage(Owner, user, Loc.GetString("Dead cell..."));
+                Owner.PopupMessage(user, Loc.GetString("Dead cell..."));
                 return;
             }
 
@@ -237,8 +237,11 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             if (!hands.PutInHand(cell.Owner.GetComponent<ItemComponent>()))
             {
-                cell.Owner.Transform.GridPosition = user.Transform.GridPosition;
+                cell.Owner.Transform.Coordinates = user.Transform.Coordinates;
             }
+
+            // Assuming the battery has just been taken out of the flashlight, make sure it's getting disabled
+            TurnOff(false);
 
             EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/pistol_magout.ogg", Owner);
         }
@@ -273,12 +276,12 @@ namespace Content.Server.GameObjects.Components.Interactable
 
                 if (component.Cell == null)
                 {
-                    data.Text = "Eject cell (cell missing)";
+                    data.Text = Loc.GetString("Eject cell (cell missing)");
                     data.Visibility = VerbVisibility.Disabled;
                 }
                 else
                 {
-                    data.Text = "Eject cell";
+                    data.Text = Loc.GetString("Eject cell");
                 }
             }
 
@@ -295,7 +298,7 @@ namespace Content.Server.GameObjects.Components.Interactable
                 return;
             }
 
-            var cell = Owner.EntityManager.SpawnEntity("PowerCellSmallStandard", Owner.Transform.GridPosition);
+            var cell = Owner.EntityManager.SpawnEntity("PowerCellSmallStandard", Owner.Transform.Coordinates);
             _cellContainer.Insert(cell);
         }
     }

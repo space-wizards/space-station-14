@@ -1,9 +1,9 @@
 ﻿#nullable enable
 using Content.Server.GameObjects.Components.Chemistry;
-using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
@@ -21,14 +21,14 @@ namespace Content.Server.GameObjects.Components.Fluids
     {
         public override string Name => "Mop";
 
-        public SolutionComponent? Contents => Owner.GetComponentOrNull<SolutionComponent>();
+        public SolutionContainerComponent? Contents => Owner.GetComponentOrNull<SolutionContainerComponent>();
 
         public ReagentUnit MaxVolume
         {
-            get => Owner.GetComponentOrNull<SolutionComponent>()?.MaxVolume ?? ReagentUnit.Zero;
+            get => Owner.GetComponentOrNull<SolutionContainerComponent>()?.MaxVolume ?? ReagentUnit.Zero;
             set
             {
-                if (Owner.TryGetComponent(out SolutionComponent? solution))
+                if (Owner.TryGetComponent(out SolutionContainerComponent? solution))
                 {
                     solution.MaxVolume = value;
                 }
@@ -36,7 +36,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         }
 
         public ReagentUnit CurrentVolume =>
-            Owner.GetComponentOrNull<SolutionComponent>()?.CurrentVolume ?? ReagentUnit.Zero;
+            Owner.GetComponentOrNull<SolutionContainerComponent>()?.CurrentVolume ?? ReagentUnit.Zero;
 
         // Currently there's a separate amount for pickup and dropoff so
         // Picking up a puddle requires multiple clicks
@@ -59,27 +59,26 @@ namespace Content.Server.GameObjects.Components.Fluids
         {
             base.Initialize();
 
-            if (!Owner.EnsureComponent(out SolutionComponent _))
+            if (!Owner.EnsureComponent(out SolutionContainerComponent _))
             {
-                Logger.Warning($"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(SolutionComponent)}");
+                Logger.Warning($"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(SolutionContainerComponent)}");
             }
         }
 
         void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (!Owner.TryGetComponent(out SolutionComponent? contents)) return;
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
+            if (!Owner.TryGetComponent(out SolutionContainerComponent? contents)) return;
+            if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true)) return;
 
             if (CurrentVolume <= 0)
             {
                 return;
             }
 
-            //Solution solution;
             if (eventArgs.Target == null)
             {
                 // Drop the liquid on the mop on to the ground
-                SpillHelper.SpillAt(eventArgs.ClickLocation, contents.SplitSolution(CurrentVolume), "PuddleSmear");
+                contents.SplitSolution(CurrentVolume).SpillAt(eventArgs.ClickLocation, "PuddleSmear");
 
                 return;
             }
@@ -97,7 +96,7 @@ namespace Content.Server.GameObjects.Components.Fluids
 
             if (transferAmount == 0)
             {
-                if(puddleComponent.EmptyHolder) //The puddle doesn't actually *have* reagents, for example vomit because there's no "vomit" reagent.
+                if (puddleComponent.EmptyHolder) //The puddle doesn't actually *have* reagents, for example vomit because there's no "vomit" reagent.
                 {
                     puddleComponent.Owner.Delete();
                     transferAmount = ReagentUnit.Min(ReagentUnit.New(5), CurrentVolume);
@@ -115,7 +114,7 @@ namespace Content.Server.GameObjects.Components.Fluids
 
             if (puddleCleaned) //After cleaning the puddle, make a new puddle with solution from the mop as a "wet floor". Then evaporate it slowly.
             {
-                SpillHelper.SpillAt(eventArgs.ClickLocation, contents.SplitSolution(transferAmount), "PuddleSmear");
+                contents.SplitSolution(transferAmount).SpillAt(eventArgs.ClickLocation, "PuddleSmear");
             }
             else
             {

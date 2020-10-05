@@ -1,5 +1,6 @@
 #nullable enable
 using Content.Client.GameObjects.Components.Disposal;
+using Content.Client.GameObjects.Components.MedicalScanner;
 using Content.Client.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Damage;
@@ -14,14 +15,20 @@ namespace Content.Client.GameObjects.Components.Body
 {
     [RegisterComponent]
     [ComponentReference(typeof(IDamageableComponent))]
-    [ComponentReference(typeof(IBodyManagerComponent))]
+    [ComponentReference(typeof(ISharedBodyManagerComponent))]
     public class BodyManagerComponent : SharedBodyManagerComponent, IClientDraggable
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public bool ClientCanDropOn(CanDropEventArgs eventArgs)
         {
-            return eventArgs.Target.HasComponent<DisposalUnitComponent>();
+            if (
+                eventArgs.Target.HasComponent<DisposalUnitComponent>()||
+                eventArgs.Target.HasComponent<MedicalScannerComponent>())
+            {
+                return true;
+            }
+            return false;
         }
 
         public bool ClientCanDrag(CanDragEventArgs eventArgs)

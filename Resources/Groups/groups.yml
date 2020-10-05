@@ -101,6 +101,12 @@
   - addaccent
   - readyall
   - factions
+  - signallink
+  - adddamageflag
+  - removedamageflag
+  - godmode
+  - deleteewi
+  - hurt
   CanViewVar: true
   CanAdminPlace: true
   CanAdminMenu: true
@@ -186,15 +192,22 @@
   - fillgas
   - listgases
   - removegas
-  - clearatmos
   - settemp
   - setatmostemp
+  - deletegas
+  - showatmos
   - tilewalls
   - events
   - destroymechanism
   - addaccent
   - readyall
   - factions
+  - signallink
+  - adddamageflag
+  - removedamageflag
+  - godmode
+  - deleteewi
+  - hurt
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true

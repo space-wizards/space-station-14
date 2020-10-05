@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Shared.Utility;
 using NUnit.Framework;
-using Robust.Server.Interfaces.Maps;
 using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using Logger = Robust.Shared.Log.Logger;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -26,11 +23,13 @@ namespace Content.IntegrationTests.Tests
         {
             var server = StartServerDummyTicker();
             await server.WaitIdleAsync();
-            var mapMan = server.ResolveDependency<IMapManager>();
+
+            var mapManager = server.ResolveDependency<IMapManager>();
             var entityMan = server.ResolveDependency<IEntityManager>();
             var prototypeMan = server.ResolveDependency<IPrototypeManager>();
-            var mapLoader = server.ResolveDependency<IMapLoader>();
-            var pauseMan = server.ResolveDependency<IPauseManager>();
+            var pauseManager = server.ResolveDependency<IPauseManager>();
+            var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
+
             var prototypes = new List<EntityPrototype>();
             IMapGrid grid = default;
             IEntity testEntity;
@@ -38,14 +37,30 @@ namespace Content.IntegrationTests.Tests
             //Build up test environment
             server.Post(() =>
             {
-                var mapId = mapMan.CreateMap();
-                pauseMan.AddUninitializedMap(mapId);
-                grid = mapLoader.LoadBlueprint(mapId, "Maps/stationstation.yml");
+                // Create a one tile grid to stave off the grid 0 monsters
+                var mapId = mapManager.CreateMap();
+
+                pauseManager.AddUninitializedMap(mapId);
+
+                var gridId = new GridId(1);
+
+                if (!mapManager.TryGetGrid(gridId, out grid))
+                {
+                    grid = mapManager.CreateGrid(mapId, gridId);
+                }
+
+                var tileDefinition = tileDefinitionManager["underplating"];
+                var tile = new Tile(tileDefinition.TileId);
+                var coordinates = grid.ToCoordinates();
+
+                grid.SetTile(coordinates, tile);
+
+                pauseManager.DoMapInitialize(mapId);
             });
 
             server.Assert(() =>
             {
-                var testLocation = new GridCoordinates(new Vector2(0, 0), grid);
+                var testLocation = grid.ToCoordinates();
 
                 //Generate list of non-abstract prototypes to test
                 foreach (var prototype in prototypeMan.EnumeratePrototypes<EntityPrototype>())
@@ -54,6 +69,7 @@ namespace Content.IntegrationTests.Tests
                     {
                         continue;
                     }
+
                     prototypes.Add(prototype);
                 }
 
@@ -76,29 +92,6 @@ namespace Content.IntegrationTests.Tests
         }
 
         [Test]
-        public async Task NotAbstractIconTest()
-        {
-            var client = StartClient();
-            await client.WaitIdleAsync();
-            var prototypeMan = client.ResolveDependency<IPrototypeManager>();
-
-            client.Assert(() =>
-            {
-                foreach (var prototype in prototypeMan.EnumeratePrototypes<EntityPrototype>())
-                {
-                    if (prototype.Abstract)
-                    {
-                        continue;
-                    }
-
-                    Assert.That(prototype.Components.ContainsKey("Icon"), $"Entity {prototype.ID} does not have an Icon component, but is not abstract");
-                }
-            });
-
-            await client.WaitIdleAsync();
-        }
-
-        [Test]
         public async Task AllComponentsOneToOneDeleteTest()
         {
             var skipComponents = new[]
@@ -115,34 +108,43 @@ namespace Content.IntegrationTests.Tests
 - type: entity
   id: AllComponentsOneToOneDeleteTestEntity";
 
-            var server = StartServerDummyTicker();
+            var server = StartServerDummyTicker(new ServerContentIntegrationOption {ExtraPrototypes = testEntity});
             await server.WaitIdleAsync();
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
-            var mapLoader = server.ResolveDependency<IMapLoader>();
             var pauseManager = server.ResolveDependency<IPauseManager>();
             var componentFactory = server.ResolveDependency<IComponentFactory>();
-            var prototypeManager = server.ResolveDependency<IPrototypeManager>();
+            var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
 
             IMapGrid grid = default;
 
             server.Post(() =>
             {
-                // Load test entity
-                using var reader = new StringReader(testEntity);
-                prototypeManager.LoadFromStream(reader);
-
-                // Load test map
+                // Create a one tile grid to stave off the grid 0 monsters
                 var mapId = mapManager.CreateMap();
+
                 pauseManager.AddUninitializedMap(mapId);
-                grid = mapLoader.LoadBlueprint(mapId, "Maps/stationstation.yml");
+
+                var gridId = new GridId(1);
+
+                if (!mapManager.TryGetGrid(gridId, out grid))
+                {
+                    grid = mapManager.CreateGrid(mapId, gridId);
+                }
+
+                var tileDefinition = tileDefinitionManager["underplating"];
+                var tile = new Tile(tileDefinition.TileId);
+                var coordinates = grid.ToCoordinates();
+
+                grid.SetTile(coordinates, tile);
+
                 pauseManager.DoMapInitialize(mapId);
             });
 
             server.Assert(() =>
             {
-                var testLocation = new GridCoordinates(new Vector2(0, 0), grid);
+                var testLocation = grid.ToCoordinates();
 
                 foreach (var type in componentFactory.AllRegisteredTypes)
                 {
@@ -201,28 +203,37 @@ namespace Content.IntegrationTests.Tests
 - type: entity
   id: AllComponentsOneEntityDeleteTestEntity";
 
-            var server = StartServerDummyTicker();
+            var server = StartServerDummyTicker(new ServerContentIntegrationOption {ExtraPrototypes = testEntity});
             await server.WaitIdleAsync();
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
-            var mapLoader = server.ResolveDependency<IMapLoader>();
             var pauseManager = server.ResolveDependency<IPauseManager>();
             var componentFactory = server.ResolveDependency<IComponentFactory>();
-            var prototypeManager = server.ResolveDependency<IPrototypeManager>();
+            var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
 
             IMapGrid grid = default;
 
             server.Post(() =>
             {
-                // Load test entity
-                using var reader = new StringReader(testEntity);
-                prototypeManager.LoadFromStream(reader);
-
-                // Load test map
+                // Create a one tile grid to stave off the grid 0 monsters
                 var mapId = mapManager.CreateMap();
+
                 pauseManager.AddUninitializedMap(mapId);
-                grid = mapLoader.LoadBlueprint(mapId, "Maps/stationstation.yml");
+
+                var gridId = new GridId(1);
+
+                if (!mapManager.TryGetGrid(gridId, out grid))
+                {
+                    grid = mapManager.CreateGrid(mapId, gridId);
+                }
+
+                var tileDefinition = tileDefinitionManager["underplating"];
+                var tile = new Tile(tileDefinition.TileId);
+                var coordinates = grid.ToCoordinates();
+
+                grid.SetTile(coordinates, tile);
+
                 pauseManager.DoMapInitialize(mapId);
             });
 
@@ -264,7 +275,7 @@ namespace Content.IntegrationTests.Tests
             {
                 foreach (var distinct in distinctComponents)
                 {
-                    var testLocation = new GridCoordinates(new Vector2(0, 0), grid);
+                    var testLocation = grid.ToCoordinates();
                     var entity = entityManager.SpawnEntity("AllComponentsOneEntityDeleteTestEntity", testLocation);
 
                     Assert.That(entity.Initialized);

@@ -528,6 +528,24 @@
                     1.0
                 ]
             ]
+        },
+        {
+            "name": "spawner_toy",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "spawner_figure",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
         }
     ]
 }

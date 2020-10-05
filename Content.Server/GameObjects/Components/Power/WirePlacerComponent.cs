@@ -1,6 +1,6 @@
 ﻿using Content.Server.GameObjects.Components.Stack;
-using Content.Server.Utility;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
@@ -36,8 +36,8 @@ namespace Content.Server.GameObjects.Components.Power
         /// <inheritdoc />
         public void AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
-            if(!_mapManager.TryGetGrid(eventArgs.ClickLocation.GridID, out var grid))
+            if (!eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true)) return;
+            if(!_mapManager.TryGetGrid(eventArgs.ClickLocation.GetGridId(_entityManager), out var grid))
                 return;
             var snapPos = grid.SnapGridCellFor(eventArgs.ClickLocation, SnapGridOffset.Center);
             var snapCell = grid.GetSnapGridCell(snapPos, SnapGridOffset.Center);

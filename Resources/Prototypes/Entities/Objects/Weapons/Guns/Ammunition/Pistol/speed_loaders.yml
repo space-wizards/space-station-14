@@ -7,8 +7,7 @@
   - type: SpeedLoader
     caliber: Pistol
     capacity: 6
-  - type: Icon
-    state: icon
+
   - type: Sprite
     netsync: false
     layers:
@@ -30,8 +29,7 @@
   components:
   - type: SpeedLoader
     fillPrototype: CartridgePistol
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_sl.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_sl.rsi
 
@@ -42,8 +40,7 @@
   components:
   - type: SpeedLoader
     fillPrototype: CartridgePistolFlash
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_sl_flash.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_sl_flash.rsi
 
@@ -54,8 +51,7 @@
   components:
   - type: SpeedLoader
     fillPrototype: CartridgePistolHV
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_sl_hv.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_sl_hv.rsi
 
@@ -66,8 +62,7 @@
   components:
   - type: SpeedLoader
     fillPrototype: CartridgePistolPractice
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_sl_practice.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_sl_practice.rsi
 
@@ -78,7 +73,6 @@
   components:
   - type: SpeedLoader
     fillPrototype: CartridgePistolRubber
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_sl_rubber.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_sl_rubber.rsi

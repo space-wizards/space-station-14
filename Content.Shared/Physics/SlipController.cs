@@ -22,7 +22,7 @@ namespace Content.Shared.Physics
                 return;
             }
 
-            if (_physicsManager.IsWeightless(ControlledComponent.Owner.Transform.GridPosition))
+            if (_physicsManager.IsWeightless(ControlledComponent.Owner.Transform.Coordinates))
             {
                 return;
             }

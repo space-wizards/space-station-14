@@ -10,6 +10,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameTicking.GameRules
@@ -32,7 +33,7 @@ namespace Content.Server.GameTicking.GameRules
 
         public override void Added()
         {
-            _chatManager.DispatchServerAnnouncement("The game is now a death match. Kill everybody else to win!");
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("The game is now a death match. Kill everybody else to win!"));
 
             _entityManager.EventBus.SubscribeEvent<HealthChangedEventArgs>(EventSource.Local, this, OnHealthChanged);
             _playerManager.PlayerStatusChanged += PlayerManagerOnPlayerStatusChanged;
@@ -81,19 +82,15 @@ namespace Content.Server.GameTicking.GameRules
                 winner = playerSession;
             }
 
-            if (winner == null)
-            {
-                _chatManager.DispatchServerAnnouncement("Everybody is dead, it's a stalemate!");
-            }
-            else
-            {
-                // We have a winner!
-                _chatManager.DispatchServerAnnouncement($"{winner} wins the death match!");
-            }
+            _chatManager.DispatchServerAnnouncement(winner == null
+                ? Loc.GetString("Everybody is dead, it's a stalemate!")
+                : Loc.GetString("{0} wins the death match!", winner));
 
-            _chatManager.DispatchServerAnnouncement($"Restarting in 10 seconds.");
+            var restartDelay = 10;
 
-            Timer.Spawn(TimeSpan.FromSeconds(10), () => _gameTicker.RestartRound());
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("Restarting in {0} seconds.", restartDelay));
+
+            Timer.Spawn(TimeSpan.FromSeconds(restartDelay), () => _gameTicker.RestartRound());
         }
 
         private void PlayerManagerOnPlayerStatusChanged(object sender, SessionStatusEventArgs e)

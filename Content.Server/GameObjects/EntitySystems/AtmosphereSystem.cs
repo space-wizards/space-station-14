@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Reactions;
-using Content.Server.Interfaces;
+using Content.Server.GameObjects.Components.Atmos;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects.EntitySystems.TileLookup;
 using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Map;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
@@ -28,6 +30,9 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private GasReactionPrototype[] _gasReactions = Array.Empty<GasReactionPrototype>();
 
+        private SpaceGridAtmosphereComponent _spaceAtmos = default!;
+        private GridTileLookupSystem? _gridTileLookup = null;
+
         /// <summary>
         ///     List of gas reactions ordered by priority.
         /// </summary>
@@ -38,6 +43,8 @@ namespace Content.Server.GameObjects.EntitySystems
         /// </summary>
         public IEventBus EventBus => _entityManager.EventBus;
 
+        public GridTileLookupSystem GridTileLookupSystem => _gridTileLookup ??= Get<GridTileLookupSystem>();
+
         public override void Initialize()
         {
             base.Initialize();
@@ -45,17 +52,25 @@ namespace Content.Server.GameObjects.EntitySystems
             _gasReactions = _protoMan.EnumeratePrototypes<GasReactionPrototype>().ToArray();
             Array.Sort(_gasReactions, (a, b) => b.Priority.CompareTo(a.Priority));
 
+            _spaceAtmos = new SpaceGridAtmosphereComponent();
+            _spaceAtmos.Initialize();
+            IoCManager.InjectDependencies(_spaceAtmos);
+
             _mapManager.TileChanged += OnTileChanged;
         }
 
         public IGridAtmosphereComponent? GetGridAtmosphere(GridId gridId)
         {
-            // TODO Return space grid atmosphere for invalid grids or grids with no atmos
+            if (!gridId.IsValid())
+            {
+                return _spaceAtmos;
+            }
+
             var grid = _mapManager.GetGrid(gridId);
 
-            if (!EntityManager.TryGetEntity(grid.GridEntityId, out var gridEnt)) return null;
+            if (!EntityManager.TryGetEntity(grid.GridEntityId, out var gridEnt)) return _spaceAtmos;
 
-            return gridEnt.TryGetComponent(out IGridAtmosphereComponent? atmos) ? atmos : null;
+            return gridEnt.TryGetComponent(out IGridAtmosphereComponent? atmos) ? atmos : _spaceAtmos;
         }
 
         public override void Update(float frameTime)
@@ -64,8 +79,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             foreach (var (mapGridComponent, gridAtmosphereComponent) in EntityManager.ComponentManager.EntityQuery<IMapGridComponent, IGridAtmosphereComponent>())
             {
-                if (_pauseManager.IsGridPaused(mapGridComponent.GridIndex))
-                    continue;
+                if (_pauseManager.IsGridPaused(mapGridComponent.GridIndex)) continue;
 
                 gridAtmosphereComponent.Update(frameTime);
             }

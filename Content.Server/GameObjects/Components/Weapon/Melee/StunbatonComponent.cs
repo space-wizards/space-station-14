@@ -28,10 +28,9 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Weapon.Melee
 {
     [RegisterComponent]
-    public class StunbatonComponent : MeleeWeaponComponent, IUse, IExamine, IMapInit, IInteractUsing
+    public class StunbatonComponent : MeleeWeaponComponent, IUse, IExamine, IMapInit, IInteractUsing, IThrowCollide
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
-        [Dependency] private readonly ISharedNotifyManager _notifyManager = default!;
 
         public override string Name => "Stunbaton";
 
@@ -93,7 +92,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             if (!Cell.TryUseCharge(EnergyPerUse))
                 return true;
 
-            EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Weapons/egloves.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
+            EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Weapons/egloves.ogg", Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
 
             foreach (var entity in entities)
             {
@@ -113,7 +112,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
             if (!(Cell.CurrentCharge < EnergyPerUse)) return true;
 
-            EntitySystem.Get<AudioSystem>().PlayAtCoords(AudioHelpers.GetRandomFileFromSoundCollection("sparks"), Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
+            EntitySystem.Get<AudioSystem>().PlayAtCoords(AudioHelpers.GetRandomFileFromSoundCollection("sparks"), Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
             TurnOff();
 
             return true;
@@ -143,7 +142,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             var sprite = Owner.GetComponent<SpriteComponent>();
             var item = Owner.GetComponent<ItemComponent>();
 
-            EntitySystem.Get<AudioSystem>().PlayAtCoords(AudioHelpers.GetRandomFileFromSoundCollection("sparks"), Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
+            EntitySystem.Get<AudioSystem>().PlayAtCoords(AudioHelpers.GetRandomFileFromSoundCollection("sparks"), Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
 
             item.EquippedPrefix = "off";
             sprite.LayerSetState(0, "stunbaton_off");
@@ -163,20 +162,20 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
             if (cell == null)
             {
-                EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Machines/button.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
+                EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Machines/button.ogg", Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
 
-                _notifyManager.PopupMessage(Owner, user, Loc.GetString("Cell missing..."));
+                Owner.PopupMessage(user, Loc.GetString("Cell missing..."));
                 return;
             }
 
             if (cell.CurrentCharge < EnergyPerUse)
             {
-                EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Machines/button.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
-                _notifyManager.PopupMessage(Owner, user, Loc.GetString("Dead cell..."));
+                EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Machines/button.ogg", Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
+                Owner.PopupMessage(user, Loc.GetString("Dead cell..."));
                 return;
             }
 
-            EntitySystem.Get<AudioSystem>().PlayAtCoords(AudioHelpers.GetRandomFileFromSoundCollection("sparks"), Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
+            EntitySystem.Get<AudioSystem>().PlayAtCoords(AudioHelpers.GetRandomFileFromSoundCollection("sparks"), Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
 
             item.EquippedPrefix = "on";
             sprite.LayerSetState(0, "stunbaton_on");
@@ -231,10 +230,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
             if (!hands.PutInHand(cell.Owner.GetComponent<ItemComponent>()))
             {
-                cell.Owner.Transform.GridPosition = user.Transform.GridPosition;
+                cell.Owner.Transform.Coordinates = user.Transform.Coordinates;
             }
 
-            EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Items/pistol_magout.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
+            EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Items/pistol_magout.ogg", Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
         }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
@@ -252,7 +251,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 return;
             }
 
-            var cell = Owner.EntityManager.SpawnEntity("PowerCellSmallHyper", Owner.Transform.GridPosition);
+            var cell = Owner.EntityManager.SpawnEntity("PowerCellSmallHyper", Owner.Transform.Coordinates);
             _cellContainer.Insert(cell);
         }
 
@@ -269,12 +268,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
                 if (component.Cell == null)
                 {
-                    data.Text = "Eject cell (cell missing)";
+                    data.Text = Loc.GetString("Eject cell (cell missing)");
                     data.Visibility = VerbVisibility.Disabled;
                 }
                 else
                 {
-                    data.Text = "Eject cell";
+                    data.Text = Loc.GetString("Eject cell");
                 }
             }
 
@@ -282,6 +281,16 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             {
                 component.EjectCell(user);
             }
+        }
+
+        public void DoHit(ThrowCollideEventArgs eventArgs)
+        {
+            if (!Activated || Cell == null || !Cell.TryUseCharge(EnergyPerUse) || !eventArgs.Target.TryGetComponent(out StunnableComponent stunnable))
+                return;
+
+            EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Weapons/egloves.ogg", Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
+
+            stunnable.Paralyze(_paralyzeTime);
         }
     }
 }

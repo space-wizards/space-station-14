@@ -1,20 +1,22 @@
-﻿using Robust.Shared.GameObjects;
+﻿using System.Collections.Generic;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
-using System.Collections.Generic;
 
 namespace Content.Server.GameObjects.Components.Mobs.Speech
 {
     [RegisterComponent]
     public class OwOAccentComponent : Component, IAccentComponent
     {
+        [Dependency] private readonly IRobustRandom _random;
+
         public override string Name => "OwOAccent";
 
         private static readonly IReadOnlyList<string> Faces = new List<string>{
             " (・`ω´・)", " ;;w;;", " owo", " UwU", " >w<", " ^w^"
         }.AsReadOnly();
-        private string RandomFace => IoCManager.Resolve<IRobustRandom>().Pick(Faces);
+        private string RandomFace => _random.Pick(Faces);
 
         private static readonly Dictionary<string, string> SpecialWords = new Dictionary<string, string>
         {
@@ -23,7 +25,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Speech
 
         public string Accentuate(string message)
         {
-            foreach ((var word,var repl) in SpecialWords)
+            foreach (var (word, repl) in SpecialWords)
             {
                 message = message.Replace(word, repl);
             }

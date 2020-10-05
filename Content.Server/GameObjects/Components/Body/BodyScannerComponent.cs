@@ -56,7 +56,7 @@ namespace Content.Server.GameObjects.Components.Body
         /// <summary>
         ///     Copy BodyTemplate and BodyPart data into a common data class that the client can read.
         /// </summary>
-        private BodyScannerInterfaceState InterfaceState(BodyTemplate template, IReadOnlyDictionary<string, BodyPart> bodyParts)
+        private BodyScannerInterfaceState InterfaceState(BodyTemplate template, IReadOnlyDictionary<string, IBodyPart> bodyParts)
         {
             var partsData = new Dictionary<string, BodyScannerBodyPartData>();
 
