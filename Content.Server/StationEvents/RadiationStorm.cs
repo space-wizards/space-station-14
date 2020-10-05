@@ -1,5 +1,6 @@
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.StationEvents;
+using Content.Server.Interfaces.GameTicking;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
@@ -106,15 +107,13 @@ namespace Content.Server.StationEvents
             if (_timeUntilPulse <= 0.0f)
             {
                 var pauseManager = IoCManager.Resolve<IPauseManager>();
+                var gameTicker = IoCManager.Resolve<IGameTicker>();
+                var defaultGrid = IoCManager.Resolve<IMapManager>().GetGrid(gameTicker.DefaultGridId);
+
+                if (pauseManager.IsGridPaused(defaultGrid))
+                    return;
                 
-                // TODO: Probably rate-limit this for small grids (e.g. no more than 25% covered)
-                foreach (var grid in _mapManager.GetAllGrids())
-                {
-                    if (grid.IsDefaultGrid || pauseManager.IsGridPaused(grid.Index)) 
-                        continue;
-                    
-                    SpawnPulse(grid);
-                }
+                SpawnPulse(defaultGrid);
             }
         }
 
