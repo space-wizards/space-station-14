@@ -10,6 +10,7 @@ namespace Content.Server.GameObjects.Components.PA
     public abstract class ParticleAcceleratorPartComponent : Component
     {
         [ViewVariables] public ParticleAccelerator ParticleAccelerator;
+        [ViewVariables] public bool dontAddToPa;
 
         public override void Initialize()
         {
@@ -49,6 +50,7 @@ namespace Content.Server.GameObjects.Components.PA
         public override void OnRemove()
         {
             base.OnRemove();
+            dontAddToPa = true;
             if (ParticleAccelerator != null) UnRegisterAtParticleAccelerator();
         }
 

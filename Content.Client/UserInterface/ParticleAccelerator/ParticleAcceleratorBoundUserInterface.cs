@@ -39,5 +39,12 @@ namespace Content.Client.ParticleAccelerator
 
             _menu.DataUpdate(dataUpdateMessage);
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            _menu.Close();
+        }
     }
 }

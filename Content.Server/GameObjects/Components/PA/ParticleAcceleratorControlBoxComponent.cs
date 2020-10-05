@@ -88,9 +88,18 @@ namespace Content.Server.GameObjects.Components.PA
             if(!ActionBlockerSystem.CanInteract(Owner)) return false;
 
             UserInterface?.Toggle(actor.playerSession);
-            UserInterface?.SendMessage(ParticleAccelerator.DataMessage, actor.playerSession); //runtimes sometimes with System.ArgumentException: Player session does not have this UI open.
+            if (UserInterface?.SessionHasOpen(actor.playerSession) == true)
+            {
+                UserInterface?.SendMessage(ParticleAccelerator.DataMessage, actor.playerSession);
+            }
 
             return true;
+        }
+
+        public override void OnRemove()
+        {
+            UserInterface?.CloseAll();
+            base.OnRemove();
         }
     }
 }

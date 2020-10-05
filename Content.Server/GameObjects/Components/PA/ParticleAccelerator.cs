@@ -22,6 +22,7 @@ namespace Content.Server.GameObjects.Components.PA
     {
         private IEntityManager _entityManager;
         private IMapManager _mapManager;
+        public bool SetForDeconstruct;
 
         public ParticleAccelerator()
         {
@@ -61,7 +62,6 @@ namespace Content.Server.GameObjects.Components.PA
         private void SetEndCap(ParticleAcceleratorEndCapComponent value, bool skipFuelChamberCheck = false)
         {
             if(!TryAddPart(ref _endCap, value, out var gridId)) return;
-
             if (!skipFuelChamberCheck &&
                 TryGetPart<ParticleAcceleratorFuelChamberComponent>(gridId, PartOffset.Down, value, out var fuelChamber))
             {
@@ -229,10 +229,7 @@ namespace Content.Server.GameObjects.Components.PA
             get => _power;
             set
             {
-                if (!IsFunctional())
-                {
-                    Enabled = false;
-                }
+                if (!_enabled) return;
 
                 if(_power == value) return;
 
@@ -253,7 +250,7 @@ namespace Content.Server.GameObjects.Components.PA
             {
                 if (_enabled == value) return;
 
-                _enabled = value;
+                _enabled = value && IsFunctional();
                 UpdatePartVisualStates();
                 _controlBox?.OnParticleAcceleratorValuesChanged();
 
@@ -308,6 +305,8 @@ namespace Content.Server.GameObjects.Components.PA
 
         private void Absorb(ParticleAccelerator particleAccelerator)
         {
+            if (particleAccelerator.SetForDeconstruct) return;
+
             _controlBox ??= particleAccelerator._controlBox;
             if (_controlBox != null) _controlBox.ParticleAccelerator = this;
             _endCap ??= particleAccelerator._endCap;
@@ -330,6 +329,15 @@ namespace Content.Server.GameObjects.Components.PA
             particleAccelerator._emitterLeft = null;
             particleAccelerator._emitterCenter = null;
             particleAccelerator._emitterRight = null;
+            if (particleAccelerator._controlBox != null) particleAccelerator._controlBox.ParticleAccelerator = null;
+            if (particleAccelerator._endCap != null) particleAccelerator._endCap.ParticleAccelerator = null;
+            if (particleAccelerator._fuelChamber != null) particleAccelerator._fuelChamber.ParticleAccelerator = null;
+            if (particleAccelerator._powerBox != null) particleAccelerator._powerBox.ParticleAccelerator = null;
+            if (particleAccelerator._emitterLeft != null) particleAccelerator._emitterLeft.ParticleAccelerator = null;
+            if (particleAccelerator._emitterCenter != null) particleAccelerator._emitterCenter.ParticleAccelerator = null;
+            if (particleAccelerator._emitterRight != null) particleAccelerator._emitterRight.ParticleAccelerator = null;
+
+            _controlBox?.OnParticleAcceleratorValuesChanged();
         }
 
         private CancellationTokenSource _cancellationTokenSource;
@@ -355,18 +363,18 @@ namespace Content.Server.GameObjects.Components.PA
         {
             gridId = GridId.Invalid;
 
+            if (value != null && value.dontAddToPa) return false;
+
             if (partVar == value) return false;
 
             if (value == null)
             {
+                SetForDeconstruct = true;
                 foreach (var neighbour in partVar.GetNeighbours())
                 {
-                    if(neighbour==null)continue;
-
-                    neighbour.RebuildParticleAccelerator();
+                    neighbour?.RebuildParticleAccelerator();
                 }
                 partVar = null;
-                Validate();
                 return false;
             }
 
@@ -405,6 +413,8 @@ namespace Content.Server.GameObjects.Components.PA
             }
 
             Validate();
+
+            _controlBox?.OnParticleAcceleratorValuesChanged();
 
             return true;
         }

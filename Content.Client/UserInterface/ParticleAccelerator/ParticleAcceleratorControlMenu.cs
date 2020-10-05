@@ -370,7 +370,8 @@ namespace Content.Client.ParticleAccelerator
 
         public void DataUpdate(ParticleAcceleratorDataUpdateMessage dataUpdateMessage)
         {
-            if (UpdatePowerState(dataUpdateMessage.State) | UpdateStatus(dataUpdateMessage.Assembled) | UpdateEnabled(dataUpdateMessage.Enabled))
+            //updatepowerstate NEEDS to be called after the status&enable update since they are used in the spinbox isvalid function
+            if (UpdateStatus(dataUpdateMessage.Assembled) | UpdateEnabled(dataUpdateMessage.Enabled) | UpdatePowerState(dataUpdateMessage.State))
             {
                 UpdatePreview(dataUpdateMessage);
             }
