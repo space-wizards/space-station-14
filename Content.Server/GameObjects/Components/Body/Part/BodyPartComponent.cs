@@ -55,14 +55,9 @@ namespace Content.Server.GameObjects.Components.Body.Part
             }
         }
 
-        protected override void Startup()
+        public override void Initialize()
         {
-            base.Startup();
-
-            if (UserInterface != null)
-            {
-                UserInterface.OnReceiveMessage += OnUIMessage;
-            }
+            base.Initialize();
 
             // This is ran in Startup as entities spawned in Initialize
             // are not synced to the client since they are assumed to be
@@ -78,6 +73,21 @@ namespace Content.Server.GameObjects.Components.Body.Part
                 }
 
                 TryAddMechanism(mechanism, true);
+            }
+        }
+
+        protected override void Startup()
+        {
+            base.Startup();
+
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += OnUIMessage;
+            }
+
+            foreach (var mechanism in Mechanisms)
+            {
+                mechanism.Dirty();
             }
         }
 
@@ -145,7 +155,8 @@ namespace Content.Server.GameObjects.Components.Body.Part
         }
 
         /// <summary>
-        ///     Called after the client chooses from a list of possible BodyPartSlots to install the limb on.
+        ///     Called after the client chooses from a list of possible
+        ///     BodyPartSlots to install the limb on.
         /// </summary>
         private void ReceiveBodyPartSlot(int key)
         {

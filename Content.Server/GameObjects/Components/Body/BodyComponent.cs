@@ -43,15 +43,7 @@ namespace Content.Server.GameObjects.Components.Body
             base.Initialize();
 
             _container = ContainerManagerComponent.Ensure<Container>($"{Name}-{nameof(BodyComponent)}", Owner);
-        }
 
-        protected override void Startup()
-        {
-            base.Startup();
-
-            // This is ran in Startup as entities spawned in Initialize
-            // are not synced to the client since they are assumed to be
-            // identical on it
             foreach (var (slot, partId) in PartIds)
             {
                 // Using MapPosition instead of Coordinates here prevents
@@ -65,6 +57,19 @@ namespace Content.Server.GameObjects.Components.Body
                 }
 
                 TryAddPart(slot, part, true);
+            }
+        }
+
+        protected override void Startup()
+        {
+            base.Startup();
+
+            // This is ran in Startup as entities spawned in Initialize
+            // are not synced to the client since they are assumed to be
+            // identical on it
+            foreach (var part in Parts.Values)
+            {
+                part.Dirty();
             }
         }
 

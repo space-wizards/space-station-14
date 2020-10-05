@@ -102,7 +102,6 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         [ViewVariables]
         public SurgeryDataComponent? SurgeryDataComponent => Owner.GetComponentOrNull<SurgeryDataComponent>();
 
-
         protected virtual void OnAddMechanism(IMechanism mechanism)
         {
             var prototypeId = mechanism.Owner.Prototype!.ID;

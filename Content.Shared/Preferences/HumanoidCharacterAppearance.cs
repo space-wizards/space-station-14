@@ -69,7 +69,7 @@ namespace Content.Shared.Preferences
                 "Shaved",
                 Color.Black,
                 Color.Black,
-                Color.Black
+                Color.FromHex("#C0967F")
             );
         }
 
