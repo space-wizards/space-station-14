@@ -54196,7 +54196,7 @@ entities:
   - startingCharge: 30000
     type: Battery
 - uid: 3938
-  type: CrateLightBulb
+  type: CrateMedical
   components:
   - parent: 857
     pos: 27.48989,-1.4

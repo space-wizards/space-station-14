@@ -5,12 +5,10 @@
   components:
   - type: StorageFill
     contents:
-      - OuterclothingHmarmorvest
-      - OuterclothingHmarmorvest
-      - OuterclothingHmarmorvest
-      - HatHelmet
-      - HatHelmet
-      - HatHelmet
+      - name: OuterclothingHmarmorvest
+        amount: 3
+      - name: HatHelmet
+        amount: 3
 
 - type: entity
   id: CrateNonlethalSecurity
@@ -19,23 +17,16 @@
   components:
   - type: StorageFill
     contents:
-      - TaserGun
-      - TaserGun
-      - TaserGun
-      - Stunbaton
-      - Stunbaton
-      - Stunbaton
-      - GrenadeFlashBang
-      - GrenadeFlashBang
-#      - Pepperspray
-#      - Pepperspray
+      - name: TaserGun
+        amount: 3
+      - name: StunBaton
+        amount: 3
+      - name: BoxFlashbang
+        amount: 1
+      - name: Flash
+        amount: 3
 #      - Pepperspray
 #      - GrenadeTeargas
-#      - GrenadeTeargas
-#      - GrenadeTeargas
-#      - Flash
-#      - Flash
-#      - Flash
 
 - type: entity
   id: CrateLethalSecurity
@@ -44,32 +35,18 @@
   components:
   - type: StorageFill
     contents:
-      - LaserGun
-      - LaserGun
-      - LaserGun
-      - SmgC20r
-      - SmgC20r
-      - MagazinePistolSmg
-      - MagazinePistolSmg
-      - MagazinePistolSmg
-      - MagazinePistolSmg
-      - MagazinePistolSmg
-      - MagazinePistolSmg
-      - ShotgunGladstone
-      - ShotgunGladstone
-# V This is probably an issue, will implement shotgun boxes and change this - Swept
-      - ShellShotgun
-      - ShellShotgun
-      - ShellShotgun
-      - ShellShotgun
-      - ShellShotgun
-      - ShellShotgun
-      - ShellShotgun
-      - ShellShotgun
-      - ShellShotgun
-      - ShellShotgun
-      - ShellShotgun
-      - ShellShotgun
+      - name: LaserGun
+        amount: 2
+      - name: SmgC20r
+        amount: 2
+      - name: MagazinePistolSmg
+        amount: 5
+      - name: ShotgunGladstone
+        amount: 2
+      - name: SmgC20r
+        amount: 2
+      - name: ShellShotgun
+        amount: 12
 
 - type: entity
   id: CrateRiotSecurity
@@ -78,28 +55,15 @@
   components:
   - type: StorageFill
     contents:
-      - OuterclothingRiot
-      - OuterclothingRiot
-      - HatLightRiot
-      - HatLightRiot
-      - ShotgunGladstone
-      - ShotgunGladstone
-# See 60
-      - ShellShotgunBeanbag
-      - ShellShotgunBeanbag
-      - ShellShotgunBeanbag
-      - ShellShotgunBeanbag
-      - ShellShotgunBeanbag
-      - ShellShotgunBeanbag
-      - ShellShotgunBeanbag
-      - ShellShotgunBeanbag
-      - ShellShotgunBeanbag
-      - ShellShotgunBeanbag
-      - ShellShotgunBeanbag
-      - ShellShotgunBeanbag
+      - name: OuterclothingRiot
+        amount: 2
+      - name: HatLightRiot
+        amount: 2
+      - name: ShotgunGladstone
+        amount: 2
+      - name: ShellShotgunBeanbag
+        amount: 12
 #      - ShieldRiot
-#      - ShieldRiot
-#      - SecGasmask
 #      - SecGasmask
 
 - type: entity
@@ -109,17 +73,11 @@
   components:
   - type: StorageFill
     contents:
-      - Handcuffs
-      - Handcuffs
-      - Handcuffs
-      - SecGlasses
-      - SecGlasses
-      - SecGlasses
+      - name: BoxHandcuff
+        amount: 1
+      - name: BoxSechud
+        amount: 1
 #      - SecBelt
-#      - SecBelt
-#      - SecBelt
-#      - SecGasmask
-#      - SecGasmask
 #      - SecGasmask
 #      - SpacelawBook
 
