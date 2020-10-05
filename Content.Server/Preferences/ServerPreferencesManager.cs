@@ -42,6 +42,8 @@ namespace Content.Server.Preferences
                 HandleSelectCharacterMessage);
             _netManager.RegisterNetMessage<MsgUpdateCharacter>(nameof(MsgUpdateCharacter),
                 HandleUpdateCharacterMessage);
+            _netManager.RegisterNetMessage<MsgDeleteCharacter>(nameof(MsgDeleteCharacter),
+                HandleDeleteCharacterMessage);
         }
 
 
@@ -77,6 +79,13 @@ namespace Content.Server.Preferences
             var profile = message.Profile;
             var userId = message.MsgChannel.UserId;
 
+            if (profile == null)
+            {
+                Logger.WarningS("prefs",
+                    $"User {userId} sent a {nameof(MsgUpdateCharacter)} with a null profile in slot {slot}.");
+                return;
+            }
+
             if (!_cachedPlayerPrefs.TryGetValue(userId, out var prefsData) || !prefsData.PrefsLoaded.IsCompleted)
             {
                 Logger.WarningS("prefs", $"User {userId} tried to modify preferences before they loaded.");
@@ -100,6 +109,35 @@ namespace Content.Server.Preferences
             if (ShouldStorePrefs(message.MsgChannel.AuthType))
             {
                 await _db.SaveCharacterSlotAsync(message.MsgChannel.UserId, message.Profile, message.Slot);
+            }
+        }
+
+        private async void HandleDeleteCharacterMessage(MsgDeleteCharacter message)
+        {
+            var slot = message.Slot;
+            var userId = message.MsgChannel.UserId;
+
+            if (!_cachedPlayerPrefs.TryGetValue(userId, out var prefsData) || !prefsData.PrefsLoaded.IsCompleted)
+            {
+                Logger.WarningS("prefs", $"User {userId} tried to modify preferences before they loaded.");
+                return;
+            }
+
+            if (slot < 0 || slot >= MaxCharacterSlots)
+            {
+                return;
+            }
+
+            var curPrefs = prefsData.Prefs!;
+
+            var arr = new ICharacterProfile[MaxCharacterSlots];
+            curPrefs.Characters.Where((profile, index) => index != slot).ToArray().CopyTo(arr, 0);
+
+            prefsData.Prefs = new PlayerPreferences(arr, slot);
+
+            if (ShouldStorePrefs(message.MsgChannel.AuthType))
+            {
+                await _db.SaveCharacterSlotAsync(message.MsgChannel.UserId, null, message.Slot);
             }
         }
 
