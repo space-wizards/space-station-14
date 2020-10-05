@@ -1,39 +1,19 @@
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using Content.Server.GameObjects.Components.Power.PowerNetComponents;
-using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.Components.StationEvents;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces;
-using Content.Server.Interfaces.Chat;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects;
-using Content.Shared.GameObjects.Components.Sound;
 using Content.Shared.GameObjects.EntitySystemMessages;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Maps;
 using Content.Shared.Physics;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Components.Map;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
-using Robust.Shared.ViewVariables;
-using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameObjects.Components.Singularity
 {
@@ -173,7 +153,6 @@ namespace Content.Server.GameObjects.Components.Singularity
             if (ContainerHelpers.IsInContainer(entity)) return;
 
             entity.Delete();
-            if(Owner.Transform.Coordinates.X == float.NaN) Console.Write("");
             Energy+=3;
         }
     }

@@ -39,7 +39,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 }
             }
 
-            if (tick == 4)
+            if (tick == 4) //todo replace this someday with collisionlogic
             {
                 tick = 0;
                 foreach (var singulo in ComponentManager.EntityQuery<SingularityComponent>())

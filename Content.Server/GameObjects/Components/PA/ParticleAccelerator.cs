@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading;
 using Content.Server.Atmos;
 using Content.Server.Utility;
@@ -18,7 +19,7 @@ namespace Content.Server.GameObjects.Components.PA
 {
     //todo remove components when they get deleted
 
-    public class ParticleAccelerator
+    public class ParticleAccelerator : IDisposable
     {
         private IEntityManager _entityManager;
         private IMapManager _mapManager;
@@ -322,21 +323,12 @@ namespace Content.Server.GameObjects.Components.PA
             _emitterRight ??= particleAccelerator._emitterRight;
             if (_emitterRight != null) _emitterRight.ParticleAccelerator = this;
 
-            particleAccelerator._controlBox = null;
-            particleAccelerator._endCap = null;
-            particleAccelerator._fuelChamber = null;
-            particleAccelerator._powerBox = null;
-            particleAccelerator._emitterLeft = null;
-            particleAccelerator._emitterCenter = null;
-            particleAccelerator._emitterRight = null;
-            if (particleAccelerator._controlBox != null) particleAccelerator._controlBox.ParticleAccelerator = null;
-            if (particleAccelerator._endCap != null) particleAccelerator._endCap.ParticleAccelerator = null;
-            if (particleAccelerator._fuelChamber != null) particleAccelerator._fuelChamber.ParticleAccelerator = null;
-            if (particleAccelerator._powerBox != null) particleAccelerator._powerBox.ParticleAccelerator = null;
-            if (particleAccelerator._emitterLeft != null) particleAccelerator._emitterLeft.ParticleAccelerator = null;
-            if (particleAccelerator._emitterCenter != null) particleAccelerator._emitterCenter.ParticleAccelerator = null;
-            if (particleAccelerator._emitterRight != null) particleAccelerator._emitterRight.ParticleAccelerator = null;
+            particleAccelerator.Dispose();
 
+            _power = particleAccelerator._power;
+
+            UpdatePartVisualStates();
+            Validate();
             _controlBox?.OnParticleAcceleratorValuesChanged();
         }
 
@@ -374,7 +366,7 @@ namespace Content.Server.GameObjects.Components.PA
                 {
                     neighbour?.RebuildParticleAccelerator();
                 }
-                partVar = null;
+                Dispose();
                 return false;
             }
 
@@ -413,6 +405,7 @@ namespace Content.Server.GameObjects.Components.PA
             }
 
             Validate();
+            UpdatePartVisualStates();
 
             _controlBox?.OnParticleAcceleratorValuesChanged();
 
@@ -422,6 +415,7 @@ namespace Content.Server.GameObjects.Components.PA
         private void Validate()
         {
             Enabled = IsFunctional();
+
         }
 
         private bool TryGetPart<TP>(GridId gridId, PartOffset directionOffset, ParticleAcceleratorPartComponent value, out TP part)
@@ -469,6 +463,26 @@ namespace Content.Server.GameObjects.Components.PA
             Down,
             Left,
             Right
+        }
+
+        public void Dispose()
+        {
+            _controlBox = null;
+            _endCap = null;
+            _fuelChamber = null;
+            _powerBox = null;
+            _emitterLeft = null;
+            _emitterCenter = null;
+            _emitterRight = null;
+            if (_controlBox != null) _controlBox.ParticleAccelerator = null;
+            if (_endCap != null) _endCap.ParticleAccelerator = null;
+            if (_fuelChamber != null) _fuelChamber.ParticleAccelerator = null;
+            if (_powerBox != null) _powerBox.ParticleAccelerator = null;
+            if (_emitterLeft != null) _emitterLeft.ParticleAccelerator = null;
+            if (_emitterCenter != null) _emitterCenter.ParticleAccelerator = null;
+            if (_emitterRight != null) _emitterRight.ParticleAccelerator = null;
+            StopFiring();
+            _cancellationTokenSource?.Dispose();
         }
     }
 }

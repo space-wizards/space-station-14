@@ -136,6 +136,7 @@ namespace Content.Client.ParticleAccelerator
                 Text = "Refer to p.132 of service manual"
             };
             _drawLabel = new Label();
+            var imgSize = new Vector2(32,32);
             AddChild(new VBoxContainer
             {
                 Children =
@@ -256,18 +257,18 @@ namespace Content.Client.ParticleAccelerator
                                                 HSeparationOverride = 0,
                                                 Children =
                                                 {
-                                                    new Control(),
-                                                    (_endCapTexture = new TextureRect()),
-                                                    new Control(),
-                                                    (_controlBoxTexture = new TextureRect()),
-                                                    (_fuelChamberTexture = new TextureRect()),
-                                                    new Control(),
-                                                    new Control(),
-                                                    (_powerBoxTexture = new TextureRect()),
-                                                    new Control(),
-                                                    (_emitterLeftTexture = new TextureRect()),
-                                                    (_emitterCenterTexture = new TextureRect()),
-                                                    (_emitterRightTexture = new TextureRect()),
+                                                    new Control{CustomMinimumSize = imgSize},
+                                                    (_endCapTexture = new TextureRect{CustomMinimumSize = imgSize}),
+                                                    new Control{CustomMinimumSize = imgSize},
+                                                    (_controlBoxTexture = new TextureRect{CustomMinimumSize = imgSize}),
+                                                    (_fuelChamberTexture = new TextureRect{CustomMinimumSize = imgSize}),
+                                                    new Control{CustomMinimumSize = imgSize},
+                                                    new Control{CustomMinimumSize = imgSize},
+                                                    (_powerBoxTexture = new TextureRect{CustomMinimumSize = imgSize}),
+                                                    new Control{CustomMinimumSize = imgSize},
+                                                    (_emitterLeftTexture = new TextureRect{CustomMinimumSize = imgSize}),
+                                                    (_emitterCenterTexture = new TextureRect{CustomMinimumSize = imgSize}),
+                                                    (_emitterRightTexture = new TextureRect{CustomMinimumSize = imgSize}),
                                                 }
                                             }
                                         }
@@ -370,12 +371,11 @@ namespace Content.Client.ParticleAccelerator
 
         public void DataUpdate(ParticleAcceleratorDataUpdateMessage dataUpdateMessage)
         {
+            UpdateStatus(dataUpdateMessage.Assembled);
+            UpdateEnabled(dataUpdateMessage.Enabled);
             //updatepowerstate NEEDS to be called after the status&enable update since they are used in the spinbox isvalid function
-            if (UpdateStatus(dataUpdateMessage.Assembled) | UpdateEnabled(dataUpdateMessage.Enabled) | UpdatePowerState(dataUpdateMessage.State))
-            {
-                UpdatePreview(dataUpdateMessage);
-            }
-
+            UpdatePowerState(dataUpdateMessage.State);
+            UpdatePreview(dataUpdateMessage);
             UpdatePowerDraw(dataUpdateMessage.PowerDraw);
         }
 
