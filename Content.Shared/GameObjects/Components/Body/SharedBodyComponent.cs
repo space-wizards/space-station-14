@@ -64,6 +64,16 @@ namespace Content.Shared.GameObjects.Components.Body
 
         [ViewVariables] public IReadOnlyDictionary<string, string> PartIDs => _partIds;
 
+        protected virtual bool CanAddPart(string slot, IBodyPart part)
+        {
+            if (!HasSlot(slot) || !_parts.TryAdd(slot, part))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         protected virtual void OnAddPart(string slot, IBodyPart part)
         {
             part.Owner.Transform.AttachParent(Owner);
@@ -132,7 +142,7 @@ namespace Content.Shared.GameObjects.Components.Body
             }
             else
             {
-                if (!_parts.TryAdd(slot, part))
+                if (!CanAddPart(slot, part))
                 {
                     return false;
                 }

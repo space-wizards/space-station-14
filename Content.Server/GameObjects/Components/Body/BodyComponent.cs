@@ -4,6 +4,7 @@ using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Movement;
+using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
@@ -16,6 +17,34 @@ namespace Content.Server.GameObjects.Components.Body
     [ComponentReference(typeof(IBody))]
     public class BodyComponent : SharedBodyComponent, IRelayMoveInput
     {
+        private Container _container = default!;
+
+        protected override bool CanAddPart(string slot, IBodyPart part)
+        {
+            return base.CanAddPart(slot, part) && _container.CanInsert(part.Owner);
+        }
+
+        protected override void OnAddPart(string slot, IBodyPart part)
+        {
+            base.OnAddPart(slot, part);
+
+            _container.ForceRemove(part.Owner);
+        }
+
+        protected override void OnRemovePart(string slot, IBodyPart part)
+        {
+            base.OnRemovePart(slot, part);
+
+            _container.Insert(part.Owner);
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            _container = ContainerManagerComponent.Ensure<Container>($"{Name}-{nameof(BodyComponent)}", Owner);
+        }
+
         protected override void Startup()
         {
             base.Startup();
