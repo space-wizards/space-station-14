@@ -7,338 +7,318 @@
         "y": 32
     },
     "states": [
-        {
-            "name": "apc-b",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "apc-spark",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1
-                ]
-            ]
-        },
-        {
-            "name": "apc0",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "apc1",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "apc1-b-nocover",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "apc1-nocover",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "apc2",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "apc2-b-nocover",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "apc2-nocover",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "apcemag",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    0.5,
-                    0.5
-                ]
-            ]
-        },
-        {
-            "name": "apcewires",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "apcmaint",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "apco0-0",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "apco0-1",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "apco0-2",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "apco0-3",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "apco1-0",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "apco1-1",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "apco1-2",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "apco1-3",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "apco2-0",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "apco2-1",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "apco2-2",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "apco2-3",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "apco3-0",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0,
-                    2.0
-                ]
-            ]
-        },
-        {
-            "name": "apco3-1",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.2
-                ]
-            ]
-        },
-        {
-            "name": "apco3-2",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0,
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "apcox-0",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "apcox-1",
-            "select": [],
-            "flags": {},
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        }
+      {
+        "name": "apc-b",
+        "directions": 1,
+        "delays": [
+          [
+            1
+          ]
+        ]
+      },
+      {
+        "name": "apc-spark",
+        "directions": 1,
+        "delays": [
+          [
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1
+          ]
+        ]
+      },
+      {
+        "name": "apc0",
+        "directions": 1,
+        "delays": [
+          [
+            1
+          ]
+        ]
+      },
+      {
+        "name": "apc1",
+        "directions": 1,
+        "delays": [
+          [
+            1
+          ]
+        ]
+      },
+      {
+        "name": "apc1-b-nocover",
+        "directions": 1,
+        "delays": [
+          [
+            1
+          ]
+        ]
+      },
+      {
+        "name": "apc1-nocover",
+        "directions": 1,
+        "delays": [
+          [
+            1
+          ]
+        ]
+      },
+      {
+        "name": "apc2",
+        "directions": 1,
+        "delays": [
+          [
+            1
+          ]
+        ]
+      },
+      {
+        "name": "apc2-b-nocover",
+        "directions": 1,
+        "delays": [
+          [
+            1
+          ]
+        ]
+      },
+      {
+        "name": "apc2-nocover",
+        "directions": 1,
+        "delays": [
+          [
+            1
+          ]
+        ]
+      },
+      {
+        "name": "apcemag",
+        "directions": 1,
+        "delays": [
+          [
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        ]
+      },
+      {
+        "name": "apcewires",
+        "directions": 1,
+        "delays": [
+          [
+            1
+          ]
+        ]
+      },
+      {
+        "name": "apcmaint",
+        "directions": 1,
+        "delays": [
+          [
+            1
+          ]
+        ]
+      },
+      {
+        "name": "apco0-0",
+        "directions": 1,
+        "delays": [
+          [
+            1
+          ]
+        ]
+      },
+      {
+        "name": "apco0-1",
+        "directions": 1,
+        "delays": [
+          [
+            1
+          ]
+        ]
+      },
+      {
+        "name": "apco0-2",
+        "directions": 1,
+        "delays": [
+          [
+            1
+          ]
+        ]
+      },
+      {
+        "name": "apco0-3",
+        "directions": 1,
+        "delays": [
+          [
+            1
+          ]
+        ]
+      },
+      {
+        "name": "apco1-0",
+        "directions": 1,
+        "delays": [
+          [
+            1
+          ]
+        ]
+      },
+      {
+        "name": "apco1-1",
+        "directions": 1,
+        "delays": [
+          [
+            1
+          ]
+        ]
+      },
+      {
+        "name": "apco1-2",
+        "directions": 1,
+        "delays": [
+          [
+            1
+          ]
+        ]
+      },
+      {
+        "name": "apco1-3",
+        "directions": 1,
+        "delays": [
+          [
+            1
+          ]
+        ]
+      },
+      {
+        "name": "apco2-0",
+        "directions": 1,
+        "delays": [
+          [
+            1
+          ]
+        ]
+      },
+      {
+        "name": "apco2-1",
+        "directions": 1,
+        "delays": [
+          [
+            1
+          ]
+        ]
+      },
+      {
+        "name": "apco2-2",
+        "directions": 1,
+        "delays": [
+          [
+            1
+          ]
+        ]
+      },
+      {
+        "name": "apco2-3",
+        "directions": 1,
+        "delays": [
+          [
+            1
+          ]
+        ]
+      },
+      {
+        "name": "apco3-0",
+        "directions": 1,
+        "delays": [
+          [
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            2
+          ]
+        ]
+      },
+      {
+        "name": "apco3-00zIMPLEMENTzTHIS",
+        "directions": 1,
+        "delays": [
+          [
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            2
+          ]
+        ]
+      },
+      {
+        "name": "apco3-1",
+        "directions": 1,
+        "delays": [
+          [
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1
+          ]
+        ]
+      },
+      {
+        "name": "apco3-2",
+        "directions": 1,
+        "delays": [
+          [
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      {
+        "name": "apcox-0",
+        "directions": 1,
+        "delays": [
+          [
+            1
+          ]
+        ]
+      },
+      {
+        "name": "apcox-1",
+        "directions": 1,
+        "delays": [
+          [
+            1
+          ]
+        ]
+      }
     ]
 }
