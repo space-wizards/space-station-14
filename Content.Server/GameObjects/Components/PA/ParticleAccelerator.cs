@@ -240,8 +240,9 @@ namespace Content.Server.GameObjects.Components.PA
                 if (value > WireFlagMaxPower) value = WireFlagMaxPower;
 
                 _power = value;
+                _controlBox?.AdjustPowerDrain(PowerNeeded);
                 UpdatePartVisualStates();
-                _controlBox?.OnParticleAcceleratorValuesChanged();
+                _controlBox?.UpdateUI();
 
                 UpdateFireLoop();
             }
@@ -258,12 +259,25 @@ namespace Content.Server.GameObjects.Components.PA
                 if (_enabled == actualValue) return;
 
                 _enabled = actualValue;
+                _controlBox?.AdjustPowerDrain(PowerNeeded);
                 UpdatePartVisualStates();
-                _controlBox?.OnParticleAcceleratorValuesChanged();
+                _controlBox?.UpdateUI();
 
                 UpdateFireLoop();
             }
         }
+
+        public int PowerNeeded => Enabled
+            ? Power switch
+            {
+                ParticleAcceleratorPowerState.Standby => 0,
+                ParticleAcceleratorPowerState.Level0 => 1,
+                ParticleAcceleratorPowerState.Level1 => 3,
+                ParticleAcceleratorPowerState.Level2 => 4,
+                ParticleAcceleratorPowerState.Level3 => 5,
+                _ => 0
+            } * 1500 + 250
+            : 0;
 
         #region WireFlags
         private bool _wireFlagPowerBlock = false;
@@ -289,7 +303,7 @@ namespace Content.Server.GameObjects.Components.PA
                 if(_wireFlagInterfaceBlock == value) return;
                 _wireFlagInterfaceBlock = value;
 
-                _controlBox?.OnParticleAcceleratorValuesChanged();
+                _controlBox?.UpdateUI();
             }
         }
 
@@ -305,7 +319,7 @@ namespace Content.Server.GameObjects.Components.PA
                 _wireFlagMaxPower = value;
                 if (Power > value) Power = value;
 
-                _controlBox?.OnParticleAcceleratorValuesChanged();
+                _controlBox?.UpdateUI();
             }
         }
 
@@ -342,7 +356,7 @@ namespace Content.Server.GameObjects.Components.PA
 
         public ParticleAcceleratorDataUpdateMessage DataMessage =>
             new ParticleAcceleratorDataUpdateMessage(IsFunctional(),
-                Enabled, Power, 0, EmitterLeft != null,
+                Enabled, Power, PowerNeeded, EmitterLeft != null,
                 EmitterCenter != null, EmitterRight != null,
                 PowerBox != null, FuelChamber != null,
                 EndCap != null, WireFlagInterfaceBlock, WireFlagMaxPower, WireFlagPowerBlock);
@@ -461,8 +475,8 @@ namespace Content.Server.GameObjects.Components.PA
 
             Validate();
             UpdatePartVisualStates();
-
-            _controlBox?.OnParticleAcceleratorValuesChanged();
+            _controlBox?.AdjustPowerDrain(PowerNeeded);
+            _controlBox?.UpdateUI();
 
             return true;
         }

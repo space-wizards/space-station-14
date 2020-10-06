@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Content.Server.GameObjects.Components.VendingMachines;
 using Content.Server.Utility;
 using Content.Shared.Arcade;
@@ -23,8 +24,7 @@ namespace Content.Server.GameObjects.Components.PA
         public override string Name => "ParticleAcceleratorControlBox";
 
         private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ParticleAcceleratorControlBoxUiKey.Key);
-
-        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+        private PowerReceiverComponent? _powerReceiverComponent;
 
         public override void Initialize()
         {
@@ -33,6 +33,24 @@ namespace Content.Server.GameObjects.Components.PA
             {
                 UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
             }
+
+            if (!Owner.TryGetComponent(out _powerReceiverComponent))
+            {
+                Logger.Error("ParticleAcceleratorControlBox was created without PowerReceiverComponent");
+                return;
+            }
+            _powerReceiverComponent.OnPowerStateChanged += OnPowerStateChanged;
+        }
+
+        private void OnPowerStateChanged(object? sender, EventArgs e)
+        {
+            if (ParticleAccelerator == null)
+            {
+                Logger.Error($"PowerConsumerComponentOnReceivedPowerChanged got called on {this} without a Particleaccelerator attached");
+                return;
+            }
+
+            ParticleAccelerator.Enabled = _powerReceiverComponent?.Powered == true;
         }
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage obj)
@@ -77,17 +95,24 @@ namespace Content.Server.GameObjects.Components.PA
             if (ParticleAccelerator != null) ParticleAccelerator.ControlBox = null;
         }
 
-        public void OnParticleAcceleratorValuesChanged()
+        public void UpdateUI()
         {
             if (ParticleAccelerator == null)
             {
                 Logger.Error($"OnParticleAcceleratorValuesChanged got called on {this} without a Particleaccelerator attached");
                 return;
             }
-            //adjust power drain
-            //todo
-            //update ui
             UserInterface?.SendMessage(ParticleAccelerator.DataMessage);
+        }
+
+        public void AdjustPowerDrain(int powerNeeded)
+        {
+            if (_powerReceiverComponent == null)
+            {
+                Logger.Error($"AdjustPowerDrain got called on {this} without a Powercomponent attached");
+                return;
+            }
+            _powerReceiverComponent.Load = powerNeeded;
         }
 
         public bool InteractHand(InteractHandEventArgs eventArgs)
@@ -96,7 +121,7 @@ namespace Content.Server.GameObjects.Components.PA
             {
                 return false;
             }
-            if (!Powered)
+            if (_powerReceiverComponent?.Powered != true)
             {
                 return false;
             }
