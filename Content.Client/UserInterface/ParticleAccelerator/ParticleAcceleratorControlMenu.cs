@@ -117,6 +117,7 @@ namespace Content.Client.ParticleAccelerator
             _stateSpinBox.IsValid = (n) => (n >= 0 && n <= 4 && _previousAssembled==true && _previousEnabled==true);
             _stateSpinBox.InitDefaultButtons();
             _stateSpinBox.ValueChanged += PowerStateChanged;
+            _stateSpinBox.SetLineEditDisabled(true);
 
             _offButton = new Button
             {
@@ -406,7 +407,7 @@ namespace Content.Client.ParticleAccelerator
             shouldAnimate = false;
             _alarmControl.StopAnimation("warningAnim");
             _alarmControl.Visible = false;
-            if (state == ParticleAcceleratorPowerState.Level3)
+            if (state == ParticleAcceleratorPowerState.Level3 && _previousEnabled==true && _previousAssembled==true)
             {
                 shouldAnimate = true;
 
@@ -433,6 +434,9 @@ namespace Content.Client.ParticleAccelerator
             if (_previousAssembled == assembled) return false;
 
             _previousAssembled = assembled;
+            _onButton.Disabled = !assembled;
+            _offButton.Disabled = !assembled;
+            _stateSpinBox.SetButtonDisabled(!assembled);
             _statusLabel.Text = $"Status: {(assembled ? "Operational" : "Incomplete")}";
             return true;
         }
@@ -471,6 +475,7 @@ namespace Content.Client.ParticleAccelerator
 
             rect.Texture = rsi[baseState + suffix].Frame0;
             rect.ShaderOverride = exists ? null : _greyScaleShader;
+            rect.ModulateSelfOverride = exists ? (Color?)null : new Color(127, 127, 127);
         }
 
         private float _time;
