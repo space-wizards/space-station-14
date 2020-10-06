@@ -89,7 +89,12 @@ namespace Content.Server.GameObjects.Components.PA
         {
             var projectile = _entityManager.SpawnEntity("ParticlesProjectile", Owner.Transform.Coordinates);
 
-            projectile.GetComponent<ParticleProjectileComponent>().Fire(ParticleAccelerator.Power, Owner.Transform.WorldRotation, Owner);
+            if (!projectile.TryGetComponent<ParticleProjectileComponent>(out var particleProjectileComponent))
+            {
+                Logger.Error("ParticleAcceleratorEmitter tried firing particles, but they was spawned without a ParticleProjectileComponent");
+                return;
+            }
+            particleProjectileComponent.Fire(ParticleAccelerator.Power, Owner.Transform.WorldRotation, Owner);
         }
 
         public override ParticleAcceleratorPartComponent[] GetNeighbours()

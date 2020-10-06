@@ -7,6 +7,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Timers;
 
@@ -38,10 +39,19 @@ namespace Content.Server.GameObjects.Components.PA
         public void Fire(ParticleAcceleratorPowerState state, Angle angle, IEntity firer)
         {
             State = state;
-            var physicsComponent = Owner.GetComponent<ICollidableComponent>();
+
+            if (!Owner.TryGetComponent<CollidableComponent>(out var physicsComponent))
+            {
+                Logger.Error("ParticleProjectile tried firing, but it was spawned without a CollidableComponent");
+                return;
+            }
             physicsComponent.Status = BodyStatus.InAir;
 
-            var projectileComponent = Owner.GetComponent<ProjectileComponent>();
+            if (!Owner.TryGetComponent<ProjectileComponent>(out var projectileComponent))
+            {
+                Logger.Error("ParticleProjectile tried firing, but it was spawned without a ProjectileComponent");
+                return;
+            }
             projectileComponent.IgnoreEntity(firer);
 
             var suffix = state switch
@@ -53,17 +63,20 @@ namespace Content.Server.GameObjects.Components.PA
                 ParticleAcceleratorPowerState.Level3 => "3",
                 _ => "0"
             };
-            var spriteComponent = Owner.GetComponent<SpriteComponent>();
+
+            if (!Owner.TryGetComponent<SpriteComponent>(out var spriteComponent))
+            {
+                Logger.Error("ParticleProjectile tried firing, but it was spawned without a SpriteComponent");
+                return;
+            }
             spriteComponent.LayerSetState(0, "particle"+suffix);
 
-            Owner
-                .GetComponent<ICollidableComponent>()
+            physicsComponent
                 .EnsureController<BulletController>()
                 .LinearVelocity = angle.ToVec() * 20f;
 
             Owner.Transform.LocalRotation = new Angle(angle + Angle.FromDegrees(180));
             Timer.Spawn(3000, () => Owner.Delete());
-
         }
     }
 }

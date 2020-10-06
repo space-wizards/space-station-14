@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using Content.Server.GameObjects.Components.StationEvents;
 using Content.Shared.GameObjects;
@@ -12,6 +13,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -21,9 +23,9 @@ namespace Content.Server.GameObjects.Components.Singularity
     [RegisterComponent]
     public class SingularityComponent : Component, ICollideBehavior
     {
-        [Dependency] private IEntityManager _entityManager;
-        [Dependency] private IMapManager _mapManager;
-        [Dependency] private IRobustRandom _random;
+        [Dependency] private IEntityManager _entityManager = null!;
+        [Dependency] private IMapManager _mapManager = null!;
+        [Dependency] private IRobustRandom _random = null!;
 
 
         public override uint? NetID => ContentNetIDs.SINGULARITY;
@@ -42,8 +44,8 @@ namespace Content.Server.GameObjects.Components.Singularity
                 {
                     SendNetworkMessage(new SingularitySoundMessage(false));
 
-                    _singularityController.LinearVelocity = Vector2.Zero;
-                    _spriteComponent.LayerSetVisible(0, false);
+                    if(_singularityController != null) _singularityController.LinearVelocity = Vector2.Zero;
+                    _spriteComponent?.LayerSetVisible(0, false);
 
                     Owner.Delete();
                     return;
@@ -73,12 +75,16 @@ namespace Content.Server.GameObjects.Components.Singularity
                 if (value > 6) value = 6;
 
                 _level = value;
-                _radiationPulseComponent.RadsPerSecond = 10 * value;
 
-                _spriteComponent.LayerSetRSI(0, "Effects/Singularity/singularity_" + _level + ".rsi");
-                _spriteComponent.LayerSetState(0, "singularity_" + _level);
+                if(_radiationPulseComponent != null) _radiationPulseComponent.RadsPerSecond = 10 * value;
 
-                (_collidableComponent.PhysicsShapes[0] as PhysShapeCircle).Radius = _level - 0.5f;
+                _spriteComponent?.LayerSetRSI(0, "Effects/Singularity/singularity_" + _level + ".rsi");
+                _spriteComponent?.LayerSetState(0, "singularity_" + _level);
+
+                if(_collidableComponent != null && _collidableComponent.PhysicsShapes[0] is PhysShapeCircle circle)
+                {
+                    circle.Radius = _level - 0.5f;
+                }
             }
         }
         private int _level;
@@ -95,24 +101,39 @@ namespace Content.Server.GameObjects.Components.Singularity
                 _ => 0
             };
 
-        private SingularityController _singularityController;
-        private ICollidableComponent _collidableComponent;
-        private SpriteComponent _spriteComponent;
-        private RadiationPulseComponent _radiationPulseComponent;
+        private SingularityController? _singularityController;
+        private CollidableComponent? _collidableComponent;
+        private SpriteComponent? _spriteComponent;
+        private RadiationPulseComponent? _radiationPulseComponent;
+
+
 
         public override void Initialize()
         {
             base.Initialize();
 
-            _collidableComponent = Owner.GetComponent<ICollidableComponent>();
-            _collidableComponent.Hard = false;
+            if (!Owner.TryGetComponent<CollidableComponent>(out var _collidableComponent))
+            {
+                Logger.Error("SingularityComponent was spawned without CollidableComponent");
+            }
+            else
+            {
+                _collidableComponent.Hard = false;
+            }
 
-            _spriteComponent = Owner.GetComponent<SpriteComponent>();
+            if (!Owner.TryGetComponent<SpriteComponent>(out var _spriteComponent))
+            {
+                Logger.Error("SingularityComponent was spawned without SpriteComponent");
+            }
 
-            _singularityController = _collidableComponent.EnsureController<SingularityController>();
-            _singularityController.ControlledComponent = _collidableComponent;
+            _singularityController = _collidableComponent?.EnsureController<SingularityController>();
+            if(_singularityController!=null)_singularityController.ControlledComponent = _collidableComponent;
 
-            _radiationPulseComponent = Owner.GetComponent<RadiationPulseComponent>();
+            if (!Owner.TryGetComponent<RadiationPulseComponent>(out var _radiationPulseComponent))
+            {
+                Logger.Error("SingularityComponent was spawned without RadiationPulseComponent");
+            }
+
             Level = 1;
         }
 
@@ -131,14 +152,16 @@ namespace Content.Server.GameObjects.Components.Singularity
                 pushVector = new Vector2((_random.Next(-10, 10)), _random.Next(-10, 10));
             }
 
-            _singularityController.Push(pushVector.Normalized, 2);
+            _singularityController?.Push(pushVector.Normalized, 2);
         }
 
         void ICollideBehavior.CollideWith(IEntity entity)
         {
+            if (_collidableComponent == null) return; //how did it even collide then? :D
+
             if (entity.TryGetComponent<IMapGridComponent>(out var mapGridComponent))
             {
-                foreach (var tile in mapGridComponent.Grid.GetTilesIntersecting(_collidableComponent.WorldAABB))
+                foreach (var tile in mapGridComponent.Grid.GetTilesIntersecting(((IPhysBody) _collidableComponent).WorldAABB))
                 {
                     mapGridComponent.Grid.SetTile(tile.GridIndices, Tile.Empty);
                     Energy++;

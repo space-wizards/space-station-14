@@ -1,5 +1,7 @@
+using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Log;
 
 namespace Content.Client.GameObjects.Components.Singularity
 {
@@ -7,15 +9,20 @@ namespace Content.Client.GameObjects.Components.Singularity
     {
         public override string Name => "Containment Field";
 
-        private ISpriteComponent _spriteComponent;
+        private SpriteComponent _spriteComponent;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            _spriteComponent = Owner.GetComponent<ISpriteComponent>();
-
-            _spriteComponent.Directional = false;
+            if (!Owner.TryGetComponent(out _spriteComponent))
+            {
+                Logger.Error("Containmentfieldcomponent created without spritecomponent");
+            }
+            else
+            {
+                _spriteComponent.Directional = false;
+            }
         }
     }
 }

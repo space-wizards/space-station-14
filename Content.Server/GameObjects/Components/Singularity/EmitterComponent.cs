@@ -100,14 +100,21 @@ namespace Content.Server.GameObjects.Components.Singularity
 
             var projectile = _entityManager.SpawnEntity("EmitterBolt", Owner.Transform.Coordinates);
 
-            var physicsComponent = projectile.GetComponent<ICollidableComponent>();
+            if (!projectile.TryGetComponent<CollidableComponent>(out var physicsComponent))
+            {
+                Logger.Error("Emitter tried firing a bolt, but it was spawned without a CollidableComponent");
+                return false;
+            }
             physicsComponent.Status = BodyStatus.InAir;
 
-            var projectileComponent = projectile.GetComponent<ProjectileComponent>();
+            if (!projectile.TryGetComponent<ProjectileComponent>(out var projectileComponent))
+            {
+                Logger.Error("Emitter tried firing a bolt, but it was spawned without a ProjectileComponent");
+                return false;
+            }
             projectileComponent.IgnoreEntity(Owner);
 
-            projectile
-                .GetComponent<ICollidableComponent>()
+            physicsComponent
                 .EnsureController<BulletController>()
                 .LinearVelocity = Owner.Transform.WorldRotation.ToVec() * 20f;
 
