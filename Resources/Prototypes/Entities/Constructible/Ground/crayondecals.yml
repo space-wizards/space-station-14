@@ -10,6 +10,7 @@
   - type: Sprite
     sprite: Constructible/Misc/crayondecals.rsi
     state: corgi
+  - type: Cleanable
   - type: Appearance
     visuals:
     - type: CrayonDecalVisualizer
