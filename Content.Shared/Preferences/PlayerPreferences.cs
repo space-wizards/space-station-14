@@ -41,11 +41,20 @@ namespace Content.Shared.Preferences
         /// </summary>
         public ICharacterProfile SelectedCharacter => Characters.ElementAtOrDefault(SelectedCharacterIndex);
 
-        public int FirstEmptySlot => IndexOfCharacter(null);
+        public int FirstEmptySlot()
+        {
+            var firstEmpty = IndexOfCharacter(null);
+            return firstEmpty == -1 ? _characters.Count : firstEmpty;
+        }
 
         public int IndexOfCharacter(ICharacterProfile profile)
         {
             return _characters.FindIndex(x => x == profile);
+        }
+
+        public bool TryIndexOfCharacter(ICharacterProfile profile, out int index)
+        {
+            return (index = IndexOfCharacter(profile)) != -1;
         }
     }
 }

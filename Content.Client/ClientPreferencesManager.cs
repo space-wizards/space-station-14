@@ -26,6 +26,7 @@ namespace Content.Client
                 HandlePreferencesAndSettings);
             _netManager.RegisterNetMessage<MsgUpdateCharacter>(nameof(MsgUpdateCharacter));
             _netManager.RegisterNetMessage<MsgSelectCharacter>(nameof(MsgSelectCharacter));
+            _netManager.RegisterNetMessage<MsgDeleteCharacter>(nameof(MsgDeleteCharacter));
         }
 
         public void SelectCharacter(ICharacterProfile profile)
@@ -54,7 +55,12 @@ namespace Content.Client
 
         public void CreateCharacter(ICharacterProfile profile)
         {
-            UpdateCharacter(profile, Preferences.FirstEmptySlot);
+            var characters = Preferences.Characters.ToList();
+
+            characters.Add(profile);
+            Preferences = new PlayerPreferences(characters, Preferences.SelectedCharacterIndex);
+
+            UpdateCharacter(profile, characters.Count - 1);
         }
 
         public void DeleteCharacter(ICharacterProfile profile)
@@ -64,7 +70,11 @@ namespace Content.Client
 
         public void DeleteCharacter(int slot)
         {
-            UpdateCharacter(null, slot);
+            var characters = Preferences.Characters.Where((profile, index) => index != slot).ToArray();
+            Preferences = new PlayerPreferences(characters, Preferences.SelectedCharacterIndex);
+            var msg = _netManager.CreateNetMessage<MsgDeleteCharacter>();
+            msg.Slot = slot;
+            _netManager.ClientSendMessage(msg);
         }
 
         private void HandlePreferencesAndSettings(MsgPreferencesAndSettings message)
