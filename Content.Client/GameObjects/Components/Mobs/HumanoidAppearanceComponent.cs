@@ -1,5 +1,6 @@
 ﻿using Content.Client.GameObjects.Components.ActionBlocking;
 using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Preferences;
 using Content.Shared.Preferences.Appearance;
@@ -9,7 +10,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Client.GameObjects.Components.Mobs
 {
     [RegisterComponent]
-    public sealed class HumanoidAppearanceComponent : SharedHumanoidAppearanceComponent
+    public sealed class HumanoidAppearanceComponent : SharedHumanoidAppearanceComponent, IBodyPartAdded, IBodyPartRemoved
     {
         public override HumanoidCharacterAppearance Appearance
         {
@@ -87,6 +88,52 @@ namespace Content.Client.GameObjects.Components.Mobs
                 facialHairStyle = HairStyles.DefaultFacialHairStyle;
             sprite.LayerSetState(HumanoidVisualLayers.FacialHair,
                 HairStyles.FacialHairStylesMap[facialHairStyle]);
+        }
+
+        public void BodyPartAdded(BodyPartAddedEventArgs args)
+        {
+            if (!Owner.TryGetComponent(out SpriteComponent sprite))
+            {
+                return;
+            }
+
+            if (!args.Part.Owner.TryGetComponent(out SpriteComponent partSprite))
+            {
+                return;
+            }
+
+            var layer = args.Part.ToHumanoidLayer();
+
+            if (layer == null)
+            {
+                return;
+            }
+
+            // TODO BODY Layer color, sprite and state
+            sprite.LayerSetVisible(layer, true);
+        }
+
+        public void BodyPartRemoved(BodyPartRemovedEventArgs args)
+        {
+            if (!Owner.TryGetComponent(out SpriteComponent sprite))
+            {
+                return;
+            }
+
+            if (!args.Part.Owner.TryGetComponent(out SpriteComponent partSprite))
+            {
+                return;
+            }
+
+            var layer = args.Part.ToHumanoidLayer();
+
+            if (layer == null)
+            {
+                return;
+            }
+
+            // TODO BODY Layer color, sprite and state
+            sprite.LayerSetVisible(layer, false);
         }
     }
 }

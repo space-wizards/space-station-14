@@ -79,6 +79,7 @@
     partType: Arm
     size: 5
     compatibility: Biological
+    symmetry: Left
   - type: BiologicalSurgeryData
   - type: Damageable
     damageContainer: biologicalDamageContainer
@@ -105,9 +106,7 @@
     partType: Arm
     size: 5
     compatibility: Biological
-    properties:
-    - !type:ExtensionProperty
-      active: true
+    symmetry: Right
   - type: BiologicalSurgeryData
   - type: Damageable
     damageContainer: biologicalDamageContainer
@@ -134,6 +133,7 @@
     partType: Hand
     size: 3
     compatibility: Biological
+    symmetry: Left
   - type: BiologicalSurgeryData
   - type: Damageable
     damageContainer: biologicalDamageContainer
@@ -161,6 +161,7 @@
     destroyThreshold: -60
     size: 3
     compatibility: Biological
+    symmetry: Right
   - type: BiologicalSurgeryData
   - type: Damageable
     damageContainer: biologicalDamageContainer
@@ -186,6 +187,7 @@
     partType: Leg
     size: 6
     compatibility: Biological
+    symmetry: Left
   - type: BiologicalSurgeryData
   - type: Damageable
     damageContainer: biologicalDamageContainer
@@ -216,6 +218,7 @@
     destroyThreshold: -90
     size: 6
     compatibility: Biological
+    symmetry: Right
   - type: BiologicalSurgeryData
   - type: Damageable
     damageContainer: biologicalDamageContainer
@@ -244,6 +247,7 @@
     partType: Foot
     size: 2
     compatibility: Biological
+    symmetry: Left
   - type: BiologicalSurgeryData
   - type: Damageable
     damageContainer: biologicalDamageContainer
@@ -268,6 +272,7 @@
     partType: Foot
     size: 2
     compatibility: Biological
+    symmetry: Right
   - type: BiologicalSurgeryData
   - type: Damageable
     damageContainer: biologicalDamageContainer

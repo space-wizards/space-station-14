@@ -28,14 +28,14 @@ namespace Content.Server.GameObjects.Components.Body
         {
             base.OnAddPart(slot, part);
 
-            _container.ForceRemove(part.Owner);
+            _container.Insert(part.Owner);
         }
 
         protected override void OnRemovePart(string slot, IBodyPart part)
         {
             base.OnRemovePart(slot, part);
 
-            _container.Insert(part.Owner);
+            _container.ForceRemove(part.Owner);
         }
 
         public override void Initialize()

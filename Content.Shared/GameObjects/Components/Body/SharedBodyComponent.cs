@@ -95,7 +95,7 @@ namespace Content.Shared.GameObjects.Components.Body
             // TODO BODY Move to Body part
             if (!part.Owner.Transform.Deleted)
             {
-                part.Owner.Transform.AttachParent(Owner);
+                part.Owner.Transform.AttachToGridOrMap();
             }
 
             part.Body = null;
@@ -607,7 +607,7 @@ namespace Content.Shared.GameObjects.Components.Body
                 },
                 () => Slots);
 
-            // TODO BODY
+            // TODO BODY Move to template or somewhere else
             serializer.DataReadWriteFunction(
                 "centerSlot",
                 null,

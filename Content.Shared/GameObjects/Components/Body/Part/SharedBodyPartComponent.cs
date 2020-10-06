@@ -73,7 +73,6 @@ namespace Content.Shared.GameObjects.Components.Body.Part
 
         // TODO BODY size used
         // TODO BODY surgerydata
-        // TODO BODY properties
 
         /// <summary>
         ///     What types of BodyParts this <see cref="IBodyPart"/> can easily attach to.
@@ -97,6 +96,9 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         /// </summary>
         [ViewVariables]
         public bool IsVital { get; private set; }
+
+        [ViewVariables]
+        public BodyPartSymmetry Symmetry { get; private set; }
 
         // TODO BODY
         [ViewVariables]
@@ -140,7 +142,9 @@ namespace Content.Shared.GameObjects.Components.Body.Part
 
             serializer.DataField(this, b => b.Compatibility, "compatibility", BodyPartCompatibility.Universal);
 
-            serializer.DataField(this, m => m.IsVital, "vital", false);
+            serializer.DataField(this, b => b.IsVital, "vital", false);
+
+            serializer.DataField(this, b => b.Symmetry, "symmetry", BodyPartSymmetry.None);
 
             serializer.DataField(ref _mechanismIds, "mechanisms", new List<string>());
         }
@@ -270,6 +274,8 @@ namespace Content.Shared.GameObjects.Components.Body.Part
             {
                 return false;
             }
+
+            OnRemoveMechanism(mechanism);
 
             return true;
         }

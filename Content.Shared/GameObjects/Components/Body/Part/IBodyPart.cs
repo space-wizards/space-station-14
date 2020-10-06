@@ -44,6 +44,8 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         /// </summary>
         public bool IsVital { get; }
 
+        public BodyPartSymmetry Symmetry { get; }
+
         bool Drop();
 
         /// <summary>

@@ -145,6 +145,7 @@
     deadThreshold: 200
     template: HumanoidTemplate
     preset: HumanPreset
+    centerSlot: torso
   - type: Metabolism
     metabolismHeat: 5000
     radiatedHeat: 400
@@ -299,6 +300,7 @@
       deadThreshold: 200
       template: HumanoidTemplate
       preset: HumanPreset
+      centerSlot: torso
     - type: MobStateManager
     - type: Appearance
       visuals:
