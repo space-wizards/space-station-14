@@ -5,7 +5,6 @@
     - type: Collidable
       mass: 25
       anchored: false
-      IsScrapingFloor: true
       shapes:
         - !type:PhysShapeAabb
           bounds: "-0.5,-0.25,0.5,0.25"
@@ -37,7 +36,6 @@
     - type: Collidable
       mass: 25
       anchored: true
-      IsScrapingFloor: true
       shapes:
         - !type:PhysShapeAabb
           bounds: "-0.5,-0.25,0.5,0.25"
@@ -73,7 +71,6 @@
   - type: Collidable
     mass: 25
     anchored: true
-    IsScrapingFloor: true
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.5,-0.25,0.5,0.25"
