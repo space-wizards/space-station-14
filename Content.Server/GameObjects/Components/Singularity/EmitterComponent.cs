@@ -93,7 +93,7 @@ namespace Content.Server.GameObjects.Components.Singularity
 
         public bool Fire()
         {
-            if (DrawRate != ReceivedPower)
+            if (DrawRate > ReceivedPower)
             {
                 return false;
             }
