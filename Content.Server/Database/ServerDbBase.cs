@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -24,18 +25,14 @@ namespace Content.Server.Database
 
             if (prefs is null) return null;
 
-            var maxSlot = prefs.Profiles.Max(p => p.Slot)+1;
-            var profiles = new ICharacterProfile[maxSlot];
+            var maxSlot = prefs.Profiles.Max(p => p.Slot) + 1;
+            var profiles = new Dictionary<int, ICharacterProfile>(maxSlot);
             foreach (var profile in prefs.Profiles)
             {
                 profiles[profile.Slot] = ConvertProfiles(profile);
             }
 
-            return new PlayerPreferences
-            (
-                profiles,
-                prefs.SelectedCharacterSlot
-            );
+            return new PlayerPreferences(profiles, prefs.SelectedCharacterSlot);
         }
 
         public async Task SaveSelectedCharacterIndexAsync(NetUserId userId, int index)
@@ -113,7 +110,7 @@ namespace Content.Server.Database
 
             await db.DbContext.SaveChangesAsync();
 
-            return new PlayerPreferences(new []{defaultProfile}, 0);
+            return new PlayerPreferences(new[] {new KeyValuePair<int, ICharacterProfile>(0, defaultProfile)}, 0);
         }
 
         private static HumanoidCharacterProfile ConvertProfiles(Profile profile)
@@ -216,6 +213,5 @@ namespace Content.Server.Database
 
             public abstract ValueTask DisposeAsync();
         }
-
     }
 }

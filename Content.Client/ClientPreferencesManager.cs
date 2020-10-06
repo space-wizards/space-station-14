@@ -1,9 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Client.Interfaces;
+using Content.Shared.Network.NetMessages;
 using Content.Shared.Preferences;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
+using Robust.Shared.Utility;
 
 namespace Content.Client
 {
@@ -12,7 +15,7 @@ namespace Content.Client
     ///     connection.
     ///     Stores preferences on the server through <see cref="SelectCharacter" /> and <see cref="UpdateCharacter" />.
     /// </summary>
-    public class ClientPreferencesManager : SharedPreferencesManager, IClientPreferencesManager
+    public class ClientPreferencesManager : IClientPreferencesManager
     {
         [Dependency] private readonly IClientNetManager _netManager = default!;
 
@@ -44,8 +47,7 @@ namespace Content.Client
 
         public void UpdateCharacter(ICharacterProfile profile, int slot)
         {
-            var characters = Preferences.Characters.ToArray();
-            characters[slot] = profile;
+            var characters = new Dictionary<int, ICharacterProfile>(Preferences.Characters) {[slot] = profile};
             Preferences = new PlayerPreferences(characters, Preferences.SelectedCharacterIndex);
             var msg = _netManager.CreateNetMessage<MsgUpdateCharacter>();
             msg.Profile = profile;
@@ -55,12 +57,21 @@ namespace Content.Client
 
         public void CreateCharacter(ICharacterProfile profile)
         {
-            var characters = Preferences.Characters.ToList();
+            var characters = new Dictionary<int, ICharacterProfile>(Preferences.Characters);
+            var lowest = Enumerable.Range(0, Settings.MaxCharacterSlots)
+                .Except(characters.Keys)
+                .FirstOrNull();
 
-            characters.Add(profile);
+            if (lowest == null)
+            {
+                throw new InvalidOperationException("Out of character slots!");
+            }
+
+            var l = lowest.Value;
+            characters.Add(l, profile);
             Preferences = new PlayerPreferences(characters, Preferences.SelectedCharacterIndex);
 
-            UpdateCharacter(profile, characters.Count - 1);
+            UpdateCharacter(profile, l);
         }
 
         public void DeleteCharacter(ICharacterProfile profile)
@@ -70,7 +81,7 @@ namespace Content.Client
 
         public void DeleteCharacter(int slot)
         {
-            var characters = Preferences.Characters.Where((profile, index) => index != slot).ToArray();
+            var characters = Preferences.Characters.Where(p => p.Key != slot);
             Preferences = new PlayerPreferences(characters, Preferences.SelectedCharacterIndex);
             var msg = _netManager.CreateNetMessage<MsgDeleteCharacter>();
             msg.Slot = slot;

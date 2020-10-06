@@ -193,7 +193,7 @@ namespace Content.Shared.Preferences
                 _ => PreferenceUnavailableMode.StayInLobby // Invalid enum values.
             };
 
-            var priorities = profile.JobPriorities
+            var priorities = new Dictionary<string, JobPriority>(profile.JobPriorities
                 .Where(p => prototypeManager.HasIndex<JobPrototype>(p.Key) && p.Value switch
                 {
                     JobPriority.Never => false, // Drop never since that's assumed default.
@@ -201,9 +201,7 @@ namespace Content.Shared.Preferences
                     JobPriority.Medium => true,
                     JobPriority.High => true,
                     _ => false
-                })
-                .ToDictionary(p => p.Key, p => p.Value);
-
+                }));
 
             var antags = profile.AntagPreferences
                 .Where(prototypeManager.HasIndex<AntagPrototype>)
