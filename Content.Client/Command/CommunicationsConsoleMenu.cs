@@ -1,4 +1,4 @@
-using System.Threading;
+﻿using System.Threading;
 using Content.Client.GameObjects.Components.Command;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -68,7 +68,9 @@ namespace Content.Client.Command
 
         protected override void Dispose(bool disposing)
         {
-            if(disposing)
+            base.Dispose(disposing);
+
+            if (disposing)
                 _timerCancelTokenSource.Cancel();
         }
     }

@@ -47,15 +47,15 @@ namespace Content.Client.UserInterface.Stylesheets
 
         public StyleNano(IResourceCache resCache) : base(resCache)
         {
-            var notoSans10 = resCache.GetFont("/Textures/Interface/Nano/NotoSans/NotoSans-Regular.ttf", 10);
-            var notoSansItalic10 = resCache.GetFont("/Textures/Interface/Nano/NotoSans/NotoSans-Italic.ttf", 10);
-            var notoSans12 = resCache.GetFont("/Textures/Interface/Nano/NotoSans/NotoSans-Regular.ttf", 12);
-            var notoSansItalic12 = resCache.GetFont("/Textures/Interface/Nano/NotoSans/NotoSans-Italic.ttf", 12);
-            var notoSansBold12 = resCache.GetFont("/Textures/Interface/Nano/NotoSans/NotoSans-Bold.ttf", 12);
+            var notoSans10 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 10);
+            var notoSansItalic10 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Italic.ttf", 10);
+            var notoSans12 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 12);
+            var notoSansItalic12 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Italic.ttf", 12);
+            var notoSansBold12 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Bold.ttf", 12);
             var notoSansDisplayBold14 = resCache.GetFont("/Fonts/NotoSansDisplay/NotoSansDisplay-Bold.ttf", 14);
-            var notoSans16 = resCache.GetFont("/Textures/Interface/Nano/NotoSans/NotoSans-Regular.ttf", 16);
-            var notoSansBold16 = resCache.GetFont("/Textures/Interface/Nano/NotoSans/NotoSans-Bold.ttf", 16);
-            var notoSansBold20 = resCache.GetFont("/Textures/Interface/Nano/NotoSans/NotoSans-Bold.ttf", 20);
+            var notoSans16 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 16);
+            var notoSansBold16 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Bold.ttf", 16);
+            var notoSansBold20 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Bold.ttf", 20);
             var textureCloseButton = resCache.GetTexture("/Textures/Interface/Nano/cross.svg.png");
             var windowHeaderTex = resCache.GetTexture("/Textures/Interface/Nano/window_header.png");
             var windowHeader = new StyleBoxTexture
