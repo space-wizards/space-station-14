@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Content.Server.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
@@ -12,16 +13,18 @@ namespace Content.Server.GameObjects.Components.PA
         [ViewVariables] public ParticleAccelerator ParticleAccelerator;
         [ViewVariables] public bool dontAddToPa;
 
+        private CollidableComponent _collidableComponent;
+
         public override void Initialize()
         {
             base.Initialize();
             Owner.EntityManager.EventBus.SubscribeEvent<RotateEvent>(EventSource.Local, this, RotateEvent);
-            if (!Owner.TryGetComponent<CollidableComponent>(out var collidableComponent))
+            if (!Owner.TryGetComponent(out _collidableComponent))
             {
                 Logger.Error("ParticleAcceleratorPartComponent created with no CollidableComponent");
                 return;
             }
-            collidableComponent.AnchoredChanged += RebuildParticleAccelerator;
+            _collidableComponent.AnchoredChanged += OnAnchorChanged;
         }
 
         private void RotateEvent(RotateEvent ev)
@@ -31,11 +34,15 @@ namespace Content.Server.GameObjects.Components.PA
             RebuildParticleAccelerator();
         }
 
+        public void OnAnchorChanged()
+        {
+            if(_collidableComponent.Anchored) Owner.SnapToGrid();
+            RebuildParticleAccelerator();
+        }
+
         public void RebuildParticleAccelerator()
         {
-            if (!Owner.TryGetComponent<CollidableComponent>(out var collidableComponent)) return;
-
-            if (!collidableComponent.Anchored)
+            if (!_collidableComponent.Anchored)
             {
                 if (ParticleAccelerator != null) UnRegisterAtParticleAccelerator();
                 ParticleAccelerator = new ParticleAccelerator();

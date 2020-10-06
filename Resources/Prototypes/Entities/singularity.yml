@@ -14,7 +14,7 @@
       - Clickable
       mask:
       - MobMask
-      - Clickable
+      - MapGrid
   - type: Physics
     mass: 5
   - type: Singularity
@@ -63,6 +63,7 @@
       nodeGroupID: HVPower
   - type: RadiationCollector
   - type: Anchorable
+  - type: Pullable
 
 - type: entity
   name: Containment Field Generator
@@ -90,6 +91,7 @@
     state: Field_Gen
   - type: ContainmentFieldGenerator
   - type: Anchorable
+  - type: Pullable
 
 - type: entity
   name: Containment Field
@@ -147,7 +149,8 @@
     nodes:
     - !type:AdjacentNode
       nodeGroupID: MVPower
-
+  - type: Anchorable
+  - type: Pullable
 
 - type: entity
   name: Emitter Bolt

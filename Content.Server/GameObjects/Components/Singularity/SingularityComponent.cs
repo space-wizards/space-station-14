@@ -7,6 +7,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects.Components.Map;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
@@ -133,27 +134,28 @@ namespace Content.Server.GameObjects.Components.Singularity
             _singularityController.Push(pushVector.Normalized, 2);
         }
 
-        public void TileUpdate()
-        {
-            var mapGrid = _mapManager.GetGrid(Owner.Transform.GridID);
-            foreach (var tile in mapGrid.GetTilesIntersecting(_collidableComponent.WorldAABB))
-            {
-                mapGrid.SetTile(tile.GridIndices, Tile.Empty);
-                Energy++;
-            }
-        }
-
         void ICollideBehavior.CollideWith(IEntity entity)
         {
+            if (entity.TryGetComponent<IMapGridComponent>(out var mapGridComponent))
+            {
+                foreach (var tile in mapGridComponent.Grid.GetTilesIntersecting(_collidableComponent.WorldAABB))
+                {
+                    mapGridComponent.Grid.SetTile(tile.GridIndices, Tile.Empty);
+                    Energy++;
+                }
+                return;
+            }
+
             if (entity.HasComponent<ContainmentFieldComponent>() || (entity.TryGetComponent<ContainmentFieldGeneratorComponent>(out var component) && component.Power >= 1))
             {
+                //todo check if we overlap them, then eat
                 return;
             }
 
             if (ContainerHelpers.IsInContainer(entity)) return;
 
             entity.Delete();
-            Energy+=3;
+            Energy++;
         }
     }
 }

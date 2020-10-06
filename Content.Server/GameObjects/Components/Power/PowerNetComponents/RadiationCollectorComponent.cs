@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Doors;
 using Content.Shared.GameObjects.Components.Singularity;
@@ -7,9 +8,11 @@ using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
@@ -22,6 +25,24 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         public override string Name => "RadiationCollector";
         private bool _enabled;
         private TimeSpan _coolDownEnd;
+
+        private CollidableComponent _collidableComponent;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            if (!Owner.TryGetComponent(out _collidableComponent))
+            {
+                Logger.Error("RadiationCollectorComponent created with no CollidableComponent");
+                return;
+            }
+            _collidableComponent.AnchoredChanged += OnAnchoredChanged;
+        }
+
+        private void OnAnchoredChanged()
+        {
+            if(_collidableComponent.Anchored) Owner.SnapToGrid();
+        }
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {

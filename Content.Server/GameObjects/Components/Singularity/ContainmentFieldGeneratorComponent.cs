@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Projectiles;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
@@ -10,6 +11,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
@@ -19,7 +21,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Singularity
 {
     [RegisterComponent]
-    public class ContainmentFieldGeneratorComponent : Component, IExamine, ICollideBehavior
+    public class ContainmentFieldGeneratorComponent : Component, ICollideBehavior
     {
         [Dependency] private IPhysicsManager _physicsManager;
         [Dependency] private IEntityManager _entityManager;
@@ -38,15 +40,32 @@ namespace Content.Server.GameObjects.Components.Singularity
             }
         }
 
+        private CollidableComponent _collidableComponent;
+
         public Dictionary<IEntity, ContainmentFieldGeneratorComponent> OwnedFields = new Dictionary<IEntity, ContainmentFieldGeneratorComponent>();
 
-        public HashSet<ContainmentFieldGeneratorComponent> ConnectedGenerators = new HashSet<ContainmentFieldGeneratorComponent>();
-        public void Examine(FormattedMessage message, bool inDetailsRange)
+        public Dictionary<ContainmentFieldGeneratorComponent, Direction> ConnectedGenerators = new Dictionary<ContainmentFieldGeneratorComponent, Direction>();
+
+        public override void Initialize()
         {
-            var localPos = Owner.Transform.Coordinates;
-            if (localPos.X % 0.5f != 0 || localPos.Y % 0.5f != 0)  //todo center on anchor
+            base.Initialize();
+            if (!Owner.TryGetComponent(out _collidableComponent))
             {
-                message.AddMarkup(Loc.GetString("It appears to be [color=darkred]improperly aligned with the tile.[/color]"));
+                Logger.Error("ContainmentFieldGeneratorComponent created with no CollidableComponent");
+                return;
+            }
+            _collidableComponent.AnchoredChanged += OnAnchoredChanged;
+        }
+
+        private void OnAnchoredChanged()
+        {
+            if(_collidableComponent.Anchored)
+            {
+                Owner.SnapToGrid();
+            }
+            else
+            {
+                RemoveFields();
             }
         }
 
@@ -63,27 +82,27 @@ namespace Content.Server.GameObjects.Components.Singularity
 
         private void RemoveFields()
         {
-            foreach (var ent in ConnectedGenerators)
+            foreach (var (comp, _) in ConnectedGenerators)
             {
-                ent.ConnectedGenerators.Remove(this);
-                ent.ValidateOwnedFields();
+                comp.ConnectedGenerators.Remove(this);
+                comp.ValidateOwnedFields();
             }
             ConnectedGenerators.Clear();
 
             ValidateOwnedFields();
             OwnedFields.Clear();
-
         }
 
         private void GenerateFields()
         {
+            if(!_collidableComponent.Anchored) return;
+
             var pos = Owner.Transform.Coordinates;
 
-            if (pos.X % 0.5f != 0 || pos.Y % 0.5f != 0) return; //todo center on anchor
-
-            foreach (var direction in new []{Direction.North, Direction.East, Direction.South, Direction.West}) //todo skip dirs if we already have something in that direction
+            foreach (var direction in new []{Direction.North, Direction.East, Direction.South, Direction.West})
             {
                 if(ConnectedGenerators.Count() > 1) return;
+                if(ConnectedGenerators.ContainsValue(direction)) continue;
                 var dirVec = direction.ToVec();
                 var ray = new CollisionRay(Owner.Transform.WorldPosition, dirVec, (int) CollisionGroup.MobMask);
                 var rawRayCastResults = _physicsManager.IntersectRay(Owner.Transform.MapID, ray, 4.5f, Owner, false);
@@ -105,8 +124,10 @@ namespace Content.Server.GameObjects.Components.Singularity
                 if (!ent.TryGetComponent<ContainmentFieldGeneratorComponent>(
                         out var fieldGeneratorComponent) || fieldGeneratorComponent.Owner == Owner ||
                     fieldGeneratorComponent.Power == 0 ||
-                    ConnectedGenerators.Contains(fieldGeneratorComponent) ||
-                    fieldGeneratorComponent.ConnectedGenerators.Contains(this))
+                    ConnectedGenerators.ContainsKey(fieldGeneratorComponent) ||
+                    fieldGeneratorComponent.ConnectedGenerators.ContainsKey(this) ||
+                    !ent.TryGetComponent<CollidableComponent>(out var collidableComponent) ||
+                    !collidableComponent.Anchored)
                 {
                     continue;
                 }
@@ -123,20 +144,18 @@ namespace Content.Server.GameObjects.Components.Singularity
                     currentOffset += dirVec;
                 }
 
-                ConnectedGenerators.Add(fieldGeneratorComponent);
-                fieldGeneratorComponent.ConnectedGenerators.Add(this);
+                ConnectedGenerators.Add(fieldGeneratorComponent, direction);
+                fieldGeneratorComponent.ConnectedGenerators.Add(this, direction.GetOpposite());
             }
         }
 
-        public void ValidateOwnedFields()
+        private void ValidateOwnedFields()
         {
-            HashSet<IEntity> toRemove = new HashSet<IEntity>();
-            foreach (var ownedFieldPair in OwnedFields)
+            var toRemove = new HashSet<IEntity>();
+            foreach (var (entity, comp) in OwnedFields.Where(ownedFieldPair => !ConnectedGenerators.ContainsKey(ownedFieldPair.Value)))
             {
-                if(ConnectedGenerators.Contains(ownedFieldPair.Value)) continue;
-
-                ownedFieldPair.Key.Delete();
-                toRemove.Add(ownedFieldPair.Key);
+                entity.Delete();
+                toRemove.Add(entity);
             }
 
             foreach (var entity in toRemove)

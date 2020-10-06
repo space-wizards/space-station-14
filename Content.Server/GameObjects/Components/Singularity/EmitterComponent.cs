@@ -1,6 +1,7 @@
 using System.Threading;
 using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Content.Server.GameObjects.Components.Projectiles;
+using Content.Server.Utility;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
@@ -10,6 +11,7 @@ using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameObjects.Components.Singularity
@@ -17,19 +19,31 @@ namespace Content.Server.GameObjects.Components.Singularity
     [RegisterComponent]
     public class EmitterComponent : PowerConsumerComponent, IInteractHand
     {
-        public override string Name => "Emitter";
+        [Dependency] private IEntityManager _entityManager;
 
-        private IEntityManager _entityManager;
+        public override string Name => "Emitter";
 
         private CancellationTokenSource tokenSource;
 
         public bool IsPowered = false;
 
+        private CollidableComponent _collidableComponent;
+
         public override void Initialize()
         {
             base.Initialize();
 
-            _entityManager = IoCManager.Resolve<IEntityManager>();
+            if (!Owner.TryGetComponent(out _collidableComponent))
+            {
+                Logger.Error("EmitterComponent created with no CollidableComponent");
+                return;
+            }
+            _collidableComponent.AnchoredChanged += OnAnchoredChanged;
+        }
+
+        private void OnAnchoredChanged()
+        {
+            if(_collidableComponent.Anchored) Owner.SnapToGrid();
         }
 
         public void PowerOn()

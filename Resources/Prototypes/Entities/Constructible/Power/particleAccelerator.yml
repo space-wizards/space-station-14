@@ -9,7 +9,7 @@
     - type: Collidable
       shapes:
         - !type:PhysShapeAabb
-          bounds: "-0.4,-0.25,0.4,0.25" #todo?
+          bounds: "-0.49,-0.49,0.49,0.49"
           layer:
             - Opaque
             - Impassable
