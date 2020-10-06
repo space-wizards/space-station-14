@@ -117,12 +117,13 @@ namespace Content.Server.GameObjects.Components.Singularity
             _audioSystem = EntitySystem.Get<AudioSystem>();
             var audioParams = AudioParams.Default;
             audioParams.Loop = true;
-            //audioParams.MaxDistance
+            audioParams.MaxDistance = 20f;
+            audioParams.Volume = 5;
             _audioSystem.PlayFromEntity("/Audio/Effects/singularity_form.ogg", Owner);
             Timer.Spawn(5200,() => _playingSound = _audioSystem.PlayFromEntity("/Audio/Effects/singularity.ogg", Owner, audioParams));
 
 
-            if (!Owner.TryGetComponent<CollidableComponent>(out _collidableComponent))
+            if (!Owner.TryGetComponent(out _collidableComponent))
             {
                 Logger.Error("SingularityComponent was spawned without CollidableComponent");
             }
@@ -131,7 +132,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                 _collidableComponent.Hard = false;
             }
 
-            if (!Owner.TryGetComponent<SpriteComponent>(out _spriteComponent))
+            if (!Owner.TryGetComponent(out _spriteComponent))
             {
                 Logger.Error("SingularityComponent was spawned without SpriteComponent");
             }
@@ -139,7 +140,7 @@ namespace Content.Server.GameObjects.Components.Singularity
             _singularityController = _collidableComponent?.EnsureController<SingularityController>();
             if(_singularityController!=null)_singularityController.ControlledComponent = _collidableComponent;
 
-            if (!Owner.TryGetComponent<RadiationPulseComponent>(out _radiationPulseComponent))
+            if (!Owner.TryGetComponent(out _radiationPulseComponent))
             {
                 Logger.Error("SingularityComponent was spawned without RadiationPulseComponent");
             }

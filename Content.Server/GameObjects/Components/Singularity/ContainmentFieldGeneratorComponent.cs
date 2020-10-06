@@ -179,7 +179,7 @@ namespace Content.Server.GameObjects.Components.Singularity
         {
             if(collidedWith.TryGetComponent<EmitterBoltComponent>(out var _))
             {
-                Power += 1;
+                Power++;
             }
         }
     }
