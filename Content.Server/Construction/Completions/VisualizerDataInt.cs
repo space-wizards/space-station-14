@@ -23,15 +23,17 @@ namespace Content.Server.Construction.Completions
 
         public void ExposeData(ObjectSerializer serializer)
         {
-            serializer.DataField(this, x => x.Key, "key", null);
+            serializer.DataField(this, x => x.Key, "key", string.Empty);
             serializer.DataField(this, x => x.Data, "data", 0);
         }
 
-        public string Key { get; private set; } = string.Empty;
+        public string? Key { get; private set; } = string.Empty;
         public int Data { get; private set; } = 0;
 
         public async Task PerformAction(IEntity entity, IEntity? user)
         {
+            if (string.IsNullOrEmpty(Key)) return;
+
             if (entity.TryGetComponent(out AppearanceComponent? appearance))
             {
                 if(_reflectionManager.TryParseEnumReference(Key, out var @enum))
