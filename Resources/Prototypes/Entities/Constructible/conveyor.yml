@@ -12,6 +12,7 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.49,-0.49,0.49,0.49"
+      layer: [Passable]
       mask:
       - Impassable
       - MobImpassable

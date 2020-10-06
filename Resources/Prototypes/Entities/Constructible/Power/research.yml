@@ -10,6 +10,10 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.4, -0.45, 0.45, 0.45"
+        layer: [ Passable ]
   - type: SnapGrid
     offset: Center
   - type: ResearchServer
