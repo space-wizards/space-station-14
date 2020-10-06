@@ -41,6 +41,7 @@ namespace Content.Server.GameObjects.Components.PA
                 Logger.Error($"UserInterfaceOnOnReceiveMessage got called on {this} without a Particleaccelerator attached");
                 return;
             }
+            if(obj.Session.AttachedEntity == null || !ActionBlockerSystem.CanInteract(obj.Session.AttachedEntity)) return;
             if(ParticleAccelerator.WireFlagInterfaceBlock) return;
             switch (obj.Message)
             {
@@ -98,7 +99,7 @@ namespace Content.Server.GameObjects.Components.PA
             {
                 return false;
             }
-            if(!ActionBlockerSystem.CanInteract(Owner)) return false;
+            if(!ActionBlockerSystem.CanInteract(eventArgs.User)) return false;
 
 
             var wires = Owner.GetComponent<WiresComponent>();
