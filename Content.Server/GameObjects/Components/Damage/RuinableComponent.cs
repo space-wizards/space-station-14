@@ -16,8 +16,6 @@ namespace Content.Server.GameObjects.Components.Damage
     [ComponentReference(typeof(IDamageableComponent))]
     public abstract class RuinableComponent : DamageableComponent
     {
-        private DamageState _currentDamageState;
-
         /// <summary>
         ///     Sound played upon destruction.
         /// </summary>
@@ -26,8 +24,6 @@ namespace Content.Server.GameObjects.Components.Damage
 
         public override List<DamageState> SupportedDamageStates =>
             new List<DamageState> {DamageState.Alive, DamageState.Dead};
-
-        public override DamageState CurrentDamageState => _currentDamageState;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -62,12 +58,12 @@ namespace Content.Server.GameObjects.Components.Damage
 
         /// <summary>
         ///     Destroys the Owner <see cref="IEntity"/>, setting
-        ///     <see cref="IDamageableComponent.CurrentDamageState"/> to
-        ///     <see cref="DamageState.Dead"/>
+        ///     <see cref="IDamageableComponent.DamageState"/> to
+        ///     <see cref="Shared.GameObjects.Components.Damage.DamageState.Dead"/>
         /// </summary>
         protected void PerformDestruction()
         {
-            _currentDamageState = DamageState.Dead;
+            DamageState = DamageState.Dead;
 
             if (!Owner.Deleted && DestroySound != string.Empty)
             {

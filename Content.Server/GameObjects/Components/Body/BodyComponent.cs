@@ -76,7 +76,7 @@ namespace Content.Server.GameObjects.Components.Body
         void IRelayMoveInput.MoveInputPressed(ICommonSession session)
         {
             if (Owner.TryGetComponent(out IDamageableComponent? damageable) &&
-                damageable.CurrentDamageState == DamageState.Dead)
+                damageable.DamageState == DamageState.Dead)
             {
                 new Ghost().Execute(null, (IPlayerSession) session, null);
             }

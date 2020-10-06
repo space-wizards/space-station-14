@@ -31,7 +31,7 @@ namespace Content.Shared.GameObjects.Components.Damage
 
         public override string Name => "Damageable";
 
-        private DamageState _currentDamageState;
+        private DamageState _damageState;
         private DamageFlag _flags;
 
         public event Action<HealthChangedEventArgs>? HealthChangedEvent;
@@ -54,13 +54,13 @@ namespace Content.Shared.GameObjects.Components.Damage
             }
         }
 
-        public virtual DamageState CurrentDamageState
+        public virtual DamageState DamageState
         {
-            get => _currentDamageState;
+            get => _damageState;
             set
             {
-                var old = _currentDamageState;
-                _currentDamageState = value;
+                var old = _damageState;
+                _damageState = value;
 
                 if (old != value)
                 {
@@ -114,7 +114,7 @@ namespace Content.Shared.GameObjects.Components.Damage
             // TODO DAMAGE Serialize as a dictionary of damage states to thresholds
             serializer.DataReadWriteFunction(
                 "criticalThreshold",
-                -1,
+                null,
                 t =>
                 {
                     if (t == null)
@@ -128,7 +128,7 @@ namespace Content.Shared.GameObjects.Components.Damage
 
             serializer.DataReadWriteFunction(
                 "deadThreshold",
-                -1,
+                null,
                 t =>
                 {
                     if (t == null)
@@ -139,6 +139,8 @@ namespace Content.Shared.GameObjects.Components.Damage
                     Thresholds[DamageState.Dead] = t.Value;
                 },
                 () => Thresholds.TryGetValue(DamageState.Dead, out var value) ? value : (int?) null);
+
+            serializer.DataField(ref _damageState, "damageState", DamageState.Alive);
 
             serializer.DataReadWriteFunction(
                 "flags",
@@ -396,21 +398,21 @@ namespace Content.Shared.GameObjects.Components.Damage
 
         protected virtual void OnHealthChanged(HealthChangedEventArgs e)
         {
-            if (CurrentDamageState != DamageState.Dead)
+            if (DamageState != DamageState.Dead)
             {
                 if (Thresholds.TryGetValue(DamageState.Dead, out var deadThreshold) &&
                     TotalDamage > deadThreshold)
                 {
-                    CurrentDamageState = DamageState.Dead;
+                    DamageState = DamageState.Dead;
                 }
                 else if (Thresholds.TryGetValue(DamageState.Critical, out var critThreshold) &&
                          TotalDamage > critThreshold)
                 {
-                    CurrentDamageState = DamageState.Critical;
+                    DamageState = DamageState.Critical;
                 }
                 else
                 {
-                    CurrentDamageState = DamageState.Alive;
+                    DamageState = DamageState.Alive;
                 }
             }
 

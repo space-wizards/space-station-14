@@ -22,15 +22,15 @@ namespace Content.Shared.GameObjects.Components.Damage
         Dictionary<DamageState, int> Thresholds { get; }
 
         /// <summary>
-        ///     List of all <see cref="DamageState">DamageStates</see> that
-        ///     <see cref="CurrentDamageState"/> can be.
+        ///     List of all <see cref="Damage.DamageState">DamageStates</see> that
+        ///     <see cref="DamageState"/> can be.
         /// </summary>
         List<DamageState> SupportedDamageStates { get; }
 
         /// <summary>
-        ///     The <see cref="DamageState"/> currently representing this component.
+        ///     The <see cref="Damage.DamageState"/> currently representing this component.
         /// </summary>
-        DamageState CurrentDamageState { get; set; }
+        DamageState DamageState { get; set; }
 
         /// <summary>
         ///     Sum of all damages taken.

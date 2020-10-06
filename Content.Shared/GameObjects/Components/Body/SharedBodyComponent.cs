@@ -118,7 +118,7 @@ namespace Content.Shared.GameObjects.Components.Body
             {
                 if (part.IsVital && Parts.Count(x => x.Value.PartType == part.PartType) == 0)
                 {
-                    damageable.CurrentDamageState = DamageState.Dead;
+                    damageable.DamageState = DamageState.Dead;
                     damageable.ForceHealthChangedEvent();
                 }
             }

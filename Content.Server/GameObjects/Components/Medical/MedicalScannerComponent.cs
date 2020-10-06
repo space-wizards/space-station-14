@@ -129,7 +129,7 @@ namespace Content.Server.GameObjects.Components.Medical
                 var body = _bodyContainer.ContainedEntity;
                 return body == null
                     ? MedicalScannerStatus.Open
-                    : GetStatusFromDamageState(body.GetComponent<IDamageableComponent>().CurrentDamageState);
+                    : GetStatusFromDamageState(body.GetComponent<IDamageableComponent>().DamageState);
             }
 
             return MedicalScannerStatus.Off;

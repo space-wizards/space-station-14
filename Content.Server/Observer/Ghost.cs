@@ -50,7 +50,7 @@ namespace Content.Server.Observer
 
             if (canReturn && player.AttachedEntity.TryGetComponent(out IDamageableComponent damageable))
             {
-                switch (damageable.CurrentDamageState)
+                switch (damageable.DamageState)
                 {
                     case DamageState.Dead:
                         canReturn = true;
