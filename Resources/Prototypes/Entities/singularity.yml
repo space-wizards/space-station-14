@@ -22,7 +22,6 @@
   - type: Sprite
     sprite: Effects/Singularity/singularity_1.rsi
     state: singularity_1
-    shader: unshaded
   - type: Icon
     sprite: Effects/Singularity/singularity_1.rsi
     state: singularity_1
