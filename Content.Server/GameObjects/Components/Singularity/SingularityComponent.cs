@@ -5,10 +5,13 @@ using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.EntitySystems;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Map;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
@@ -17,6 +20,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Timers;
 
 namespace Content.Server.GameObjects.Components.Singularity
 {
@@ -42,8 +46,6 @@ namespace Content.Server.GameObjects.Components.Singularity
                 _energy = value;
                 if (_energy <= 0)
                 {
-                    SendNetworkMessage(new SingularitySoundMessage(false));
-
                     if(_singularityController != null) _singularityController.LinearVelocity = Vector2.Zero;
                     _spriteComponent?.LayerSetVisible(0, false);
 
@@ -105,14 +107,22 @@ namespace Content.Server.GameObjects.Components.Singularity
         private CollidableComponent? _collidableComponent;
         private SpriteComponent? _spriteComponent;
         private RadiationPulseComponent? _radiationPulseComponent;
-
-
+        private AudioSystem _audioSystem = null!;
+        private AudioSystem.AudioSourceServer? _playingSound;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            if (!Owner.TryGetComponent<CollidableComponent>(out var _collidableComponent))
+            _audioSystem = EntitySystem.Get<AudioSystem>();
+            var audioParams = AudioParams.Default;
+            audioParams.Loop = true;
+            //audioParams.MaxDistance
+            _audioSystem.PlayFromEntity("/Audio/Effects/singularity_form.ogg", Owner);
+            Timer.Spawn(5200,() => _playingSound = _audioSystem.PlayFromEntity("/Audio/Effects/singularity.ogg", Owner, audioParams));
+
+
+            if (!Owner.TryGetComponent<CollidableComponent>(out _collidableComponent))
             {
                 Logger.Error("SingularityComponent was spawned without CollidableComponent");
             }
@@ -121,7 +131,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                 _collidableComponent.Hard = false;
             }
 
-            if (!Owner.TryGetComponent<SpriteComponent>(out var _spriteComponent))
+            if (!Owner.TryGetComponent<SpriteComponent>(out _spriteComponent))
             {
                 Logger.Error("SingularityComponent was spawned without SpriteComponent");
             }
@@ -129,17 +139,12 @@ namespace Content.Server.GameObjects.Components.Singularity
             _singularityController = _collidableComponent?.EnsureController<SingularityController>();
             if(_singularityController!=null)_singularityController.ControlledComponent = _collidableComponent;
 
-            if (!Owner.TryGetComponent<RadiationPulseComponent>(out var _radiationPulseComponent))
+            if (!Owner.TryGetComponent<RadiationPulseComponent>(out _radiationPulseComponent))
             {
                 Logger.Error("SingularityComponent was spawned without RadiationPulseComponent");
             }
 
             Level = 1;
-        }
-
-        protected override void Startup()
-        {
-            SendNetworkMessage(new SingularitySoundMessage(true));
         }
 
         public void Update()
@@ -179,6 +184,13 @@ namespace Content.Server.GameObjects.Components.Singularity
 
             entity.Delete();
             Energy++;
+        }
+
+        public override void OnRemove()
+        {
+            _playingSound?.Stop();
+            _audioSystem.PlayAtCoords("/Audio/Effects/singularity_collapse.ogg", Owner.Transform.Coordinates);
+            base.OnRemove();
         }
     }
 }

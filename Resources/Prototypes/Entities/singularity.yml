@@ -10,11 +10,8 @@
     shapes:
     - !type:PhysShapeCircle
       radius: 0.5
-      layer:
-      - Clickable
       mask:
-      - MobMask
-      - MapGrid
+      - AllMask
   - type: Physics
     mass: 5
   - type: Singularity
