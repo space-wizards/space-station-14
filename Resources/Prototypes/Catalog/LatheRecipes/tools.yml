@@ -40,7 +40,7 @@
   id: CableStack
   name: cable coil
   icon: /Textures/Objects/Tools/cables.rsi/coil-30.png
-  result: CableStack1
+  result: ApcExtensionCableStack1
   completetime: 500
   materials:
     steel: 50

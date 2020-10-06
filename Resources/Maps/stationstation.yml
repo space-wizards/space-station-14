@@ -141,7 +141,7 @@ entities:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - uid: 4
-  type: CableStack1
+  type: ApcExtensionCableStack1
   components:
   - parent: 216
     pos: 10.577456,21.424059
@@ -4185,7 +4185,7 @@ entities:
     - None
     type: Breakable
 - uid: 398
-  type: CableStack1
+  type: ApcExtensionCableStack1
   components:
   - parent: 216
     pos: 10.561831,21.767809
@@ -6356,7 +6356,7 @@ entities:
   - anchored: False
     type: Collidable
 - uid: 601
-  type: CableStack1
+  type: ApcExtensionCableStack1
   components:
   - parent: 216
     pos: -15.5,-0.5
@@ -6365,7 +6365,7 @@ entities:
   - anchored: False
     type: Collidable
 - uid: 602
-  type: CableStack1
+  type: ApcExtensionCableStack1
   components:
   - parent: 216
     pos: -15.5,-0.5
@@ -6621,7 +6621,7 @@ entities:
     - None
     type: Destructible
 - uid: 628
-  type: CableStack1
+  type: ApcExtensionCableStack1
   components:
   - parent: 216
     pos: -15.5,0.5
@@ -6630,7 +6630,7 @@ entities:
   - anchored: False
     type: Collidable
 - uid: 629
-  type: CableStack1
+  type: ApcExtensionCableStack1
   components:
   - parent: 216
     pos: -15.5,0.5
