@@ -7,6 +7,7 @@ using Content.Shared.GameObjects.Components;
 using Robust.Client.Animations;
 using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
+using Robust.Client.Graphics.Shaders;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -16,12 +17,15 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Noise;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Client.ParticleAccelerator
 {
     public sealed class ParticleAcceleratorControlMenu : BaseWindow
     {
+        private ShaderInstance _greyScaleShader;
+
         private readonly ParticleAcceleratorBoundUserInterface Owner;
 
         private readonly Label _drawLabel;
@@ -52,6 +56,8 @@ namespace Content.Client.ParticleAccelerator
 
         public ParticleAcceleratorControlMenu(ParticleAcceleratorBoundUserInterface owner)
         {
+            _greyScaleShader = IoCManager.Resolve<IPrototypeManager>().Index<ShaderPrototype>("Greyscale").Instance();
+
             Owner = owner;
             _drawNoiseGenerator = new NoiseGenerator(NoiseGenerator.NoiseType.Fbm);
             _drawNoiseGenerator.SetFrequency(0.5f);
@@ -450,7 +456,7 @@ namespace Content.Client.ParticleAccelerator
         private void SetTexture(ref TextureRect rect, string baseState, bool exists, ParticleAcceleratorPowerState state, bool enabled, RSI rsi)
         {
             var suffix = "c";
-            if(enabled)
+            if(enabled && exists)
             {
                 suffix = state switch
                 {
@@ -463,7 +469,8 @@ namespace Content.Client.ParticleAccelerator
                 };
             }
 
-            rect.Texture = exists ? rsi[baseState + suffix].Frame0 : null;
+            rect.Texture = rsi[baseState + suffix].Frame0;
+            rect.ShaderOverride = exists ? null : _greyScaleShader;
         }
 
         private float _time;
