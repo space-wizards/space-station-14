@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.VendingMachines;
@@ -62,7 +63,7 @@ namespace Content.Server.GameObjects.Components.PA
         {
             return new ParticleAcceleratorPartComponent[]
             {
-                ParticleAccelerator?.FuelChamber
+                ParticleAccelerator?.FuelChamber!
             };
         }
 
