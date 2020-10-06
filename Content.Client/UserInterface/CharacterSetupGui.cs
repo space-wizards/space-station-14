@@ -174,12 +174,10 @@ namespace Content.Client.UserInterface
             _createNewCharacterButton.ToolTip =
                 $"A maximum of {_preferencesManager.Settings.MaxCharacterSlots} characters are allowed.";
 
-            var characterIndex = 0;
-            foreach (var character in _preferencesManager.Preferences.Characters)
+            foreach (var (slot, character) in _preferencesManager.Preferences.Characters)
             {
                 if (character is null)
                 {
-                    characterIndex++;
                     continue;
                 }
 
@@ -190,7 +188,7 @@ namespace Content.Client.UserInterface
                     character);
                 _charactersVBox.AddChild(characterPickerButton);
 
-                var characterIndexCopy = characterIndex;
+                var characterIndexCopy = slot;
                 characterPickerButton.OnPressed += args =>
                 {
                     _humanoidProfileEditor.Profile = (HumanoidCharacterProfile) character;
@@ -200,7 +198,6 @@ namespace Content.Client.UserInterface
                     UpdateUI();
                     args.Event.Handle();
                 };
-                characterIndex++;
             }
 
             _createNewCharacterButton.Disabled =

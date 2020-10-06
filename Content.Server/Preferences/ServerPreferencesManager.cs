@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Server.Interfaces;
 using Content.Shared;
+using Content.Shared.Network.NetMessages;
 using Content.Shared.Preferences;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.Configuration;
@@ -19,10 +20,10 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Preferences
 {
     /// <summary>
-    /// Sends <see cref="SharedPreferencesManager.MsgPreferencesAndSettings"/> before the client joins the lobby.
-    /// Receives <see cref="SharedPreferencesManager.MsgSelectCharacter"/> and <see cref="SharedPreferencesManager.MsgUpdateCharacter"/> at any time.
+    /// Sends <see cref="MsgPreferencesAndSettings"/> before the client joins the lobby.
+    /// Receives <see cref="MsgSelectCharacter"/> and <see cref="MsgUpdateCharacter"/> at any time.
     /// </summary>
-    public class ServerPreferencesManager : SharedPreferencesManager, IServerPreferencesManager
+    public class ServerPreferencesManager : IServerPreferencesManager
     {
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
@@ -42,6 +43,8 @@ namespace Content.Server.Preferences
                 HandleSelectCharacterMessage);
             _netManager.RegisterNetMessage<MsgUpdateCharacter>(nameof(MsgUpdateCharacter),
                 HandleUpdateCharacterMessage);
+            _netManager.RegisterNetMessage<MsgDeleteCharacter>(nameof(MsgDeleteCharacter),
+                HandleDeleteCharacterMessage);
         }
 
 
@@ -77,6 +80,13 @@ namespace Content.Server.Preferences
             var profile = message.Profile;
             var userId = message.MsgChannel.UserId;
 
+            if (profile == null)
+            {
+                Logger.WarningS("prefs",
+                    $"User {userId} sent a {nameof(MsgUpdateCharacter)} with a null profile in slot {slot}.");
+                return;
+            }
+
             if (!_cachedPlayerPrefs.TryGetValue(userId, out var prefsData) || !prefsData.PrefsLoaded.IsCompleted)
             {
                 Logger.WarningS("prefs", $"User {userId} tried to modify preferences before they loaded.");
@@ -90,16 +100,45 @@ namespace Content.Server.Preferences
 
             var curPrefs = prefsData.Prefs!;
 
-            var arr = new ICharacterProfile[MaxCharacterSlots];
-            curPrefs.Characters.ToList().CopyTo(arr, 0);
+            var profiles = new Dictionary<int, ICharacterProfile>(curPrefs.Characters)
+            {
+                [slot] = HumanoidCharacterProfile.EnsureValid((HumanoidCharacterProfile) profile, _protos)
+            };
 
-            arr[slot] = HumanoidCharacterProfile.EnsureValid((HumanoidCharacterProfile) profile, _protos);
+            prefsData.Prefs = new PlayerPreferences(profiles, slot);
+
+            if (ShouldStorePrefs(message.MsgChannel.AuthType))
+            {
+                await _db.SaveCharacterSlotAsync(message.MsgChannel.UserId, message.Profile, message.Slot);
+            }
+        }
+
+        private async void HandleDeleteCharacterMessage(MsgDeleteCharacter message)
+        {
+            var slot = message.Slot;
+            var userId = message.MsgChannel.UserId;
+
+            if (!_cachedPlayerPrefs.TryGetValue(userId, out var prefsData) || !prefsData.PrefsLoaded.IsCompleted)
+            {
+                Logger.WarningS("prefs", $"User {userId} tried to modify preferences before they loaded.");
+                return;
+            }
+
+            if (slot < 0 || slot >= MaxCharacterSlots)
+            {
+                return;
+            }
+
+            var curPrefs = prefsData.Prefs!;
+
+            var arr = new Dictionary<int, ICharacterProfile>(curPrefs.Characters);
+            arr.Remove(slot);
 
             prefsData.Prefs = new PlayerPreferences(arr, slot);
 
             if (ShouldStorePrefs(message.MsgChannel.AuthType))
             {
-                await _db.SaveCharacterSlotAsync(message.MsgChannel.UserId, message.Profile, message.Slot);
+                await _db.SaveCharacterSlotAsync(message.MsgChannel.UserId, null, message.Slot);
             }
         }
 
@@ -112,7 +151,7 @@ namespace Content.Server.Preferences
                 {
                     PrefsLoaded = Task.CompletedTask,
                     Prefs = new PlayerPreferences(
-                        new ICharacterProfile[] {HumanoidCharacterProfile.Default()},
+                        new[] {new KeyValuePair<int, ICharacterProfile>(0, HumanoidCharacterProfile.Default())},
                         0)
                 };
 
