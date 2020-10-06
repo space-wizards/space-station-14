@@ -17,12 +17,12 @@ namespace Content.Server.GameObjects.Components.PA
     public class ParticleProjectileComponent : Component, ICollideBehavior
     {
         public override string Name => "ParticleProjectile";
-        private ParticleAcceleratorPowerState State;
+        private ParticleAcceleratorPowerState _state;
         public void CollideWith(IEntity collidedWith)
         {
             if (collidedWith.TryGetComponent<SingularityComponent>(out var singularityComponent))
             {
-                var multiplier = State switch
+                var multiplier = _state switch
                 {
                     ParticleAcceleratorPowerState.Standby => 0,
                     ParticleAcceleratorPowerState.Level0 => 1,
@@ -38,7 +38,7 @@ namespace Content.Server.GameObjects.Components.PA
 
         public void Fire(ParticleAcceleratorPowerState state, Angle angle, IEntity firer)
         {
-            State = state;
+            _state = state;
 
             if (!Owner.TryGetComponent<CollidableComponent>(out var physicsComponent))
             {

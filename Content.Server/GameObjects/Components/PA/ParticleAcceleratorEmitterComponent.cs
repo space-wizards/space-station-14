@@ -19,7 +19,7 @@ namespace Content.Server.GameObjects.Components.PA
     [RegisterComponent]
     public class ParticleAcceleratorEmitterComponent : ParticleAcceleratorPartComponent
     {
-        [Dependency] private IEntityManager _entityManager;
+        [Dependency] private IEntityManager _entityManager = null!;
 
         public override string Name => "ParticleAcceleratorEmitter";
         public ParticleAcceleratorEmitterType Type;
@@ -49,6 +49,12 @@ namespace Content.Server.GameObjects.Components.PA
 
         protected override void RegisterAtParticleAccelerator()
         {
+            if(ParticleAccelerator == null)
+            {
+                Logger.Error($"RegisterAtParticleAccelerator called for {this} without connected ParticleAccelerator");
+                return;
+            }
+
             switch (Type)
             {
                 case ParticleAcceleratorEmitterType.Left:
@@ -68,6 +74,11 @@ namespace Content.Server.GameObjects.Components.PA
 
         protected override void UnRegisterAtParticleAccelerator()
         {
+            if(ParticleAccelerator == null)
+            {
+                Logger.Error($"UnRegisterAtParticleAccelerator called for {this} without connected ParticleAccelerator");
+                return;
+            }
             switch (Type)
             {
                 case ParticleAcceleratorEmitterType.Left:
@@ -87,6 +98,12 @@ namespace Content.Server.GameObjects.Components.PA
 
         public void Fire()
         {
+            if (ParticleAccelerator == null)
+            {
+                Logger.Error($"{this} -> Fire was called without it having a connected ParticleAccelerator");
+                return;
+            }
+
             var projectile = _entityManager.SpawnEntity("ParticlesProjectile", Owner.Transform.Coordinates);
 
             if (!projectile.TryGetComponent<ParticleProjectileComponent>(out var particleProjectileComponent))
@@ -102,11 +119,11 @@ namespace Content.Server.GameObjects.Components.PA
             switch (Type)
             {
                 case ParticleAcceleratorEmitterType.Left:
-                    return new ParticleAcceleratorPartComponent[] {ParticleAccelerator.EmitterCenter};
+                    return new ParticleAcceleratorPartComponent[] {ParticleAccelerator?.EmitterCenter};
                 case ParticleAcceleratorEmitterType.Center:
-                    return new ParticleAcceleratorPartComponent[] {ParticleAccelerator.EmitterLeft, ParticleAccelerator.EmitterRight, ParticleAccelerator.PowerBox};
+                    return new ParticleAcceleratorPartComponent[] {ParticleAccelerator?.EmitterLeft, ParticleAccelerator?.EmitterRight, ParticleAccelerator?.PowerBox};
                 case ParticleAcceleratorEmitterType.Right:
-                    return new ParticleAcceleratorPartComponent[] {ParticleAccelerator.EmitterCenter};
+                    return new ParticleAcceleratorPartComponent[] {ParticleAccelerator?.EmitterCenter};
                 default:
                     Logger.Error("Emittercomponent without Type somehow got initialized (Error at getNeighbours)");
                     break;

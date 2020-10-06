@@ -21,17 +21,20 @@ namespace Content.Server.GameObjects.Components.PA
 
     public class ParticleAccelerator : IDisposable
     {
-        private IEntityManager _entityManager;
-        private IMapManager _mapManager;
+        [Dependency] private IEntityManager _entityManager;
+        [Dependency] private IMapManager _mapManager;
         public bool SetForDeconstruct;
 
         public ParticleAccelerator()
         {
-            _entityManager = IoCManager.Resolve<IEntityManager>();
-            _mapManager = IoCManager.Resolve<IMapManager>();
+            IoCManager.InjectDependencies(this);
         }
 
-        private EntityUid? _EntityId;
+        private EntityUid? _entityId;
+
+        #region Parts
+
+
 
         [ViewVariables]
         private ParticleAcceleratorControlBoxComponent _controlBox;
@@ -222,6 +225,7 @@ namespace Content.Server.GameObjects.Components.PA
 
             Power = _power;
         }
+        #endregion
 
         private ParticleAcceleratorPowerState _power = ParticleAcceleratorPowerState.Standby;
         [ViewVariables(VVAccess.ReadWrite)]
@@ -230,9 +234,10 @@ namespace Content.Server.GameObjects.Components.PA
             get => _power;
             set
             {
-                if (!_enabled) return;
+                if (!_enabled || !IsFunctional() || WireFlagPowerBlock) return;
 
                 if(_power == value) return;
+                if (value > WireFlagMaxPower) value = WireFlagMaxPower;
 
                 _power = value;
                 UpdatePartVisualStates();
@@ -249,9 +254,10 @@ namespace Content.Server.GameObjects.Components.PA
             get => _enabled;
             set
             {
-                if (_enabled == value) return;
+                var actualValue = value && IsFunctional() && !WireFlagPowerBlock;
+                if (_enabled == actualValue) return;
 
-                _enabled = value && IsFunctional();
+                _enabled = actualValue;
                 UpdatePartVisualStates();
                 _controlBox?.OnParticleAcceleratorValuesChanged();
 
@@ -259,14 +265,51 @@ namespace Content.Server.GameObjects.Components.PA
             }
         }
 
-        private void UpdateFireLoop()
+        #region WireFlags
+        private bool _wireFlagPowerBlock = false;
+
+        public bool WireFlagPowerBlock
         {
-            StopFiring();
-            if (_power > ParticleAcceleratorPowerState.Standby && _enabled)
+            get => _wireFlagPowerBlock;
+            set
             {
-                StartFiring();
+                if(_wireFlagPowerBlock == value) return;
+
+                _wireFlagPowerBlock = value;
+                Validate();
             }
         }
+
+        private bool _wireFlagInterfaceBlock;
+        public bool WireFlagInterfaceBlock
+        {
+            get => _wireFlagInterfaceBlock;
+            set
+            {
+                if(_wireFlagInterfaceBlock == value) return;
+                _wireFlagInterfaceBlock = value;
+
+                _controlBox?.OnParticleAcceleratorValuesChanged();
+            }
+        }
+
+        private ParticleAcceleratorPowerState _wireFlagMaxPower = ParticleAcceleratorPowerState.Level2;
+
+        public ParticleAcceleratorPowerState WireFlagMaxPower
+        {
+            get => _wireFlagMaxPower;
+            set
+            {
+                if(_wireFlagMaxPower == value) return;
+
+                _wireFlagMaxPower = value;
+                if (Power > value) Power = value;
+
+                _controlBox?.OnParticleAcceleratorValuesChanged();
+            }
+        }
+
+        #endregion
 
         public bool IsFunctional()
         {
@@ -302,11 +345,11 @@ namespace Content.Server.GameObjects.Components.PA
                 Enabled, Power, 0, EmitterLeft != null,
                 EmitterCenter != null, EmitterRight != null,
                 PowerBox != null, FuelChamber != null,
-                EndCap != null);
+                EndCap != null, WireFlagInterfaceBlock, WireFlagMaxPower, WireFlagPowerBlock);
 
         private void Absorb(ParticleAccelerator particleAccelerator)
         {
-            if (particleAccelerator.SetForDeconstruct) return;
+            if (particleAccelerator == null || particleAccelerator.SetForDeconstruct) return;
 
             _controlBox ??= particleAccelerator._controlBox;
             if (_controlBox != null) _controlBox.ParticleAccelerator = this;
@@ -323,13 +366,25 @@ namespace Content.Server.GameObjects.Components.PA
             _emitterRight ??= particleAccelerator._emitterRight;
             if (_emitterRight != null) _emitterRight.ParticleAccelerator = this;
 
-            particleAccelerator.Dispose();
-
-            _power = particleAccelerator._power;
-
-            UpdatePartVisualStates();
             Validate();
-            _controlBox?.OnParticleAcceleratorValuesChanged();
+            Power = particleAccelerator.Power;
+            WireFlagInterfaceBlock = particleAccelerator.WireFlagInterfaceBlock;
+            WireFlagMaxPower = particleAccelerator.WireFlagMaxPower;
+            WireFlagPowerBlock = particleAccelerator.WireFlagPowerBlock;
+
+            particleAccelerator.Dispose();
+        }
+
+
+        private void UpdateFireLoop()
+        {
+            if (_power > ParticleAcceleratorPowerState.Standby && _enabled)
+            {
+                if(_cancellationTokenSource == null) StartFiring();
+            }else if (_cancellationTokenSource != null)
+            {
+                StopFiring();
+            }
         }
 
         private CancellationTokenSource _cancellationTokenSource;
@@ -337,7 +392,7 @@ namespace Content.Server.GameObjects.Components.PA
         {
             _cancellationTokenSource = new CancellationTokenSource();
             var cancelToken = _cancellationTokenSource.Token;
-            Timer.SpawnRepeating(1000,  () => //todo make speed depend on level?
+            Timer.SpawnRepeating(1000,  () =>
             {
                 EmitterCenter?.Fire();
                 EmitterLeft?.Fire();
@@ -355,7 +410,7 @@ namespace Content.Server.GameObjects.Components.PA
         {
             gridId = GridId.Invalid;
 
-            if (value != null && value.dontAddToPa) return false;
+            if (value?.SetToDestroy == true) return false;
 
             if (partVar == value) return false;
 
@@ -382,8 +437,8 @@ namespace Content.Server.GameObjects.Components.PA
                 return false;
             }
 
-            _EntityId ??= value.Owner.Transform.Coordinates.EntityId;
-            if (_EntityId != value.Owner.Transform.Coordinates.EntityId)
+            _entityId ??= value.Owner.Transform.Coordinates.EntityId;
+            if (_entityId != value.Owner.Transform.Coordinates.EntityId)
             {
                 Logger.Error($"Something tried adding a {value} from a different EntityID to a ParticleAccelerator");
                 return false;
@@ -414,8 +469,7 @@ namespace Content.Server.GameObjects.Components.PA
 
         private void Validate()
         {
-            Enabled = IsFunctional();
-
+            Enabled = true; //the actual calculations are inside the set-accessor of Enabled, this just triggers it
         }
 
         private bool TryGetPart<TP>(GridId gridId, PartOffset directionOffset, ParticleAcceleratorPartComponent value, out TP part)
@@ -437,32 +491,28 @@ namespace Content.Server.GameObjects.Components.PA
             return entity != null && part != null;
         }
 
-        private MapIndices GetMapIndicesInDir(Component comp, PartOffset offset)
-        {
-            var offsetAngle = Angle.FromDegrees(180);
-            switch (offset)
-            {
-                case PartOffset.Down:
-                    offsetAngle = Angle.FromDegrees(0);
-                    break;
-                case PartOffset.Left:
-                    offsetAngle = Angle.FromDegrees(-90);
-                    break;
-                case PartOffset.Right:
-                    offsetAngle = Angle.FromDegrees(90);
-                    break;
-            }
-
-            var partDir = new Angle(comp.Owner.Transform.LocalRotation + offsetAngle).GetCardinalDir();
-            return comp.Owner.Transform.Coordinates.ToMapIndices(_entityManager, _mapManager).Offset(partDir);
-        }
-
         private enum PartOffset
         {
             Up,
             Down,
             Left,
             Right
+        }
+
+        private readonly Angle[] _directionLookupTable =
+        {
+            Angle.FromDegrees(180),
+            Angle.FromDegrees(0),
+            Angle.FromDegrees(-90),
+            Angle.FromDegrees(90)
+        };
+
+        private MapIndices GetMapIndicesInDir(Component comp, PartOffset offset)
+        {
+            var offsetAngle = _directionLookupTable[(int) offset];
+
+            var partDir = new Angle(comp.Owner.Transform.LocalRotation + offsetAngle).GetCardinalDir();
+            return comp.Owner.Transform.Coordinates.ToMapIndices(_entityManager, _mapManager).Offset(partDir);
         }
 
         public void Dispose()
@@ -474,13 +524,6 @@ namespace Content.Server.GameObjects.Components.PA
             _emitterLeft = null;
             _emitterCenter = null;
             _emitterRight = null;
-            if (_controlBox != null) _controlBox.ParticleAccelerator = null;
-            if (_endCap != null) _endCap.ParticleAccelerator = null;
-            if (_fuelChamber != null) _fuelChamber.ParticleAccelerator = null;
-            if (_powerBox != null) _powerBox.ParticleAccelerator = null;
-            if (_emitterLeft != null) _emitterLeft.ParticleAccelerator = null;
-            if (_emitterCenter != null) _emitterCenter.ParticleAccelerator = null;
-            if (_emitterRight != null) _emitterRight.ParticleAccelerator = null;
             StopFiring();
             _cancellationTokenSource?.Dispose();
         }

@@ -114,14 +114,14 @@ namespace Content.Client.ParticleAccelerator
             {
                 Value = 0,
             };
-            _stateSpinBox.IsValid = (n) => (n >= 0 && n <= 4 && _previousAssembled==true && _previousEnabled==true);
+            _stateSpinBox.IsValid = (n) => (n >= 0 && n <= 4 && !_blockSpinBox);
             _stateSpinBox.InitDefaultButtons();
             _stateSpinBox.ValueChanged += PowerStateChanged;
             _stateSpinBox.SetLineEditDisabled(true);
 
             _offButton = new Button
             {
-                ToggleMode = true,
+                ToggleMode = false,
                 Text = "Off",
                 StyleClasses = {StyleBase.ButtonOpenRight},
             };
@@ -129,8 +129,7 @@ namespace Content.Client.ParticleAccelerator
 
             _onButton = new Button
             {
-                ToggleMode = true,
-                Pressed = true,
+                ToggleMode = false,
                 Text = "On",
                 StyleClasses = {StyleBase.ButtonOpenLeft},
             };
@@ -227,7 +226,7 @@ namespace Content.Client.ParticleAccelerator
                                                 {
                                                     new Label
                                                     {
-                                                        Text = "PARTICLE STRENGTH\nOVERLOAD",
+                                                        Text = "PARTICLE STRENGTH\nLIMITER FAILURE",
                                                         FontColorOverride = Color.Red,
                                                         Align = Label.AlignMode.Center
                                                     },
@@ -328,7 +327,7 @@ namespace Content.Client.ParticleAccelerator
 
             _alarmControl.AnimationCompleted += s =>
             {
-                if(shouldAnimate)
+                if(_shouldContinueAnimating)
                 {
                     _alarmControl.PlayAnimation(_alarmControlAnimation, "warningAnim");
                 }
@@ -378,22 +377,16 @@ namespace Content.Client.ParticleAccelerator
 
         public void DataUpdate(ParticleAcceleratorDataUpdateMessage dataUpdateMessage)
         {
-            UpdateStatus(dataUpdateMessage.Assembled);
-            UpdateEnabled(dataUpdateMessage.Enabled);
-            //updatepowerstate NEEDS to be called after the status&enable update since they are used in the spinbox isvalid function
-            UpdatePowerState(dataUpdateMessage.State);
+            UpdateUI(dataUpdateMessage.Assembled, dataUpdateMessage.InterfaceBlock, dataUpdateMessage.Enabled, dataUpdateMessage.WirePowerBlock);
+            _statusLabel.Text = $"Status: {(dataUpdateMessage.Assembled ? "Operational" : "Incomplete")}";
+            UpdatePowerState(dataUpdateMessage.State, dataUpdateMessage.Enabled, dataUpdateMessage.Assembled, dataUpdateMessage.MaxLevel);
             UpdatePreview(dataUpdateMessage);
             UpdatePowerDraw(dataUpdateMessage.PowerDraw);
         }
 
-        private ParticleAcceleratorPowerState? _previousPowerstate;
-        private bool shouldAnimate;
-        private bool UpdatePowerState(ParticleAcceleratorPowerState state)
+        private bool _shouldContinueAnimating;
+        private void UpdatePowerState(ParticleAcceleratorPowerState state, bool enabled, bool assembled, ParticleAcceleratorPowerState maxState)
         {
-            if (_previousPowerstate == state) return false;
-
-            _previousPowerstate = state;
-
             _stateSpinBox.OverrideValue(state switch
             {
                 ParticleAcceleratorPowerState.Standby => 0,
@@ -404,41 +397,30 @@ namespace Content.Client.ParticleAccelerator
                 _ => 0
             });
 
-            shouldAnimate = false;
+
+            _shouldContinueAnimating = false;
             _alarmControl.StopAnimation("warningAnim");
             _alarmControl.Visible = false;
-            if (state == ParticleAcceleratorPowerState.Level3 && _previousEnabled==true && _previousAssembled==true)
+            if (maxState == ParticleAcceleratorPowerState.Level3 && enabled==true && assembled==true)
             {
-                shouldAnimate = true;
-
+                _shouldContinueAnimating = true;
                 _alarmControl.PlayAnimation(_alarmControlAnimation, "warningAnim");
             }
-
-            return true;
         }
 
-        private bool? _previousEnabled;
-        private bool UpdateEnabled(bool enabled)
+        private bool _blockSpinBox;
+        private void UpdateUI(bool assembled, bool blocked, bool enabled, bool powerBlock)
         {
-            if (_previousEnabled == enabled) return false;
-
-            _previousEnabled = enabled;
             _onButton.Pressed = enabled;
             _offButton.Pressed = !enabled;
-            return true;
-        }
 
-        private bool? _previousAssembled;
-        private bool UpdateStatus(bool assembled)
-        {
-            if (_previousAssembled == assembled) return false;
+            var cantUse = !assembled || blocked || powerBlock;
+            _onButton.Disabled = cantUse;
+            _offButton.Disabled = cantUse;
 
-            _previousAssembled = assembled;
-            _onButton.Disabled = !assembled;
-            _offButton.Disabled = !assembled;
-            _stateSpinBox.SetButtonDisabled(!assembled);
-            _statusLabel.Text = $"Status: {(assembled ? "Operational" : "Incomplete")}";
-            return true;
+            var cantChangeLevel = cantUse || !enabled;
+            _stateSpinBox.SetButtonDisabled(cantChangeLevel);
+            _blockSpinBox = cantChangeLevel;
         }
 
         private void UpdatePowerDraw(int powerDraw)

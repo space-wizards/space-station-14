@@ -49,7 +49,11 @@ namespace Content.Shared.GameObjects.Components
         public bool FuelChamberExists;
         public bool EndCapExists;
 
-        public ParticleAcceleratorDataUpdateMessage(bool assembled, bool enabled, ParticleAcceleratorPowerState state, int powerDraw, bool emitterLeftExists, bool emitterCenterExists, bool emitterRightExists, bool powerBoxExists, bool fuelChamberExists, bool endCapExists)
+        public bool InterfaceBlock;
+        public ParticleAcceleratorPowerState MaxLevel;
+        public bool WirePowerBlock;
+
+        public ParticleAcceleratorDataUpdateMessage(bool assembled, bool enabled, ParticleAcceleratorPowerState state, int powerDraw, bool emitterLeftExists, bool emitterCenterExists, bool emitterRightExists, bool powerBoxExists, bool fuelChamberExists, bool endCapExists, bool interfaceBlock, ParticleAcceleratorPowerState maxLevel, bool wirePowerBlock)
         {
             Assembled = assembled;
             Enabled = enabled;
@@ -61,6 +65,9 @@ namespace Content.Shared.GameObjects.Components
             PowerBoxExists = powerBoxExists;
             FuelChamberExists = fuelChamberExists;
             EndCapExists = endCapExists;
+            InterfaceBlock = interfaceBlock;
+            MaxLevel = maxLevel;
+            WirePowerBlock = wirePowerBlock;
         }
     }
 

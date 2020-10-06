@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using Content.Server.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
@@ -10,10 +11,10 @@ namespace Content.Server.GameObjects.Components.PA
 {
     public abstract class ParticleAcceleratorPartComponent : Component
     {
-        [ViewVariables] public ParticleAccelerator ParticleAccelerator;
-        [ViewVariables] public bool dontAddToPa;
+        [ViewVariables] public ParticleAccelerator? ParticleAccelerator;
+        [ViewVariables] public bool SetToDestroy;
 
-        private CollidableComponent _collidableComponent;
+        private CollidableComponent? _collidableComponent;
 
         public override void Initialize()
         {
@@ -22,9 +23,11 @@ namespace Content.Server.GameObjects.Components.PA
             if (!Owner.TryGetComponent(out _collidableComponent))
             {
                 Logger.Error("ParticleAcceleratorPartComponent created with no CollidableComponent");
-                return;
             }
-            _collidableComponent.AnchoredChanged += OnAnchorChanged;
+            else
+            {
+                _collidableComponent.AnchoredChanged += OnAnchorChanged;
+            }
         }
 
         private void RotateEvent(RotateEvent ev)
@@ -36,13 +39,13 @@ namespace Content.Server.GameObjects.Components.PA
 
         public void OnAnchorChanged()
         {
-            if(_collidableComponent.Anchored) Owner.SnapToGrid();
+            if(_collidableComponent?.Anchored == true) Owner.SnapToGrid();
             RebuildParticleAccelerator();
         }
 
         public void RebuildParticleAccelerator()
         {
-            if (!_collidableComponent.Anchored)
+            if (!_collidableComponent?.Anchored == true)
             {
                 if (ParticleAccelerator != null) UnRegisterAtParticleAccelerator();
                 ParticleAccelerator = new ParticleAccelerator();
@@ -57,7 +60,7 @@ namespace Content.Server.GameObjects.Components.PA
         public override void OnRemove()
         {
             base.OnRemove();
-            dontAddToPa = true;
+            SetToDestroy = true;
             if (ParticleAccelerator != null) UnRegisterAtParticleAccelerator();
         }
 
