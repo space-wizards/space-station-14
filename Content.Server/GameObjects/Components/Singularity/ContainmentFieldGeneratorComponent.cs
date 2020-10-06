@@ -28,14 +28,14 @@ namespace Content.Server.GameObjects.Components.Singularity
 
         public override string Name => "ContainmentFieldGenerator";
 
-        private int _power = 6; //todo 0
+        private int _power;
 
         [ViewVariables]
         public int Power
         {
             get => _power;
             set {
-                _power = 6; //todo Math.Clamp(value, 0, 6);
+                _power = Math.Clamp(value, 0, 6);
                 OnPowerChange();
             }
         }

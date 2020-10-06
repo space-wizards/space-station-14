@@ -135,6 +135,13 @@ namespace Content.Client.ParticleAccelerator
             };
             _onButton.OnPressed += args => owner.SendEnableMessage(true);
 
+            var closeButton = new TextureButton
+            {
+                StyleClasses = {"windowCloseButton"},
+                SizeFlagsHorizontal = SizeFlags.ShrinkEnd
+            };
+            closeButton.OnPressed += args => Close();
+
             var serviceManual = new Label
             {
                 SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
@@ -158,6 +165,14 @@ namespace Content.Client.ParticleAccelerator
                                 Text = "Mark 2 Particle Accelerator",
                                 FontOverride = font,
                                 FontColorOverride = StyleNano.NanoGold,
+                            },
+                            new MarginContainer
+                            {
+                                MarginRightOverride = 8,
+                                Children =
+                                {
+                                    closeButton
+                                }
                             }
                         }
                     },
