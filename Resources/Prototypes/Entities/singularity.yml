@@ -10,7 +10,7 @@
     shapes:
     - !type:PhysShapeCircle
       radius: 0.5
-      layer: Impassable
+      layer: [Impassable]
       mask:
       - AllMask
   - type: Physics

@@ -1,10 +1,13 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Physics;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
@@ -23,28 +26,57 @@ namespace Content.Server.GameObjects.Components.Singularity
     [RegisterComponent]
     public class ContainmentFieldGeneratorComponent : Component, ICollideBehavior
     {
-        [Dependency] private IPhysicsManager _physicsManager;
-        [Dependency] private IEntityManager _entityManager;
+        [Dependency] private IPhysicsManager _physicsManager = null!;
+        [Dependency] private IEntityManager _entityManager = null!;
 
         public override string Name => "ContainmentFieldGenerator";
 
-        private int _power;
+        private int _powerBuffer;
 
         [ViewVariables]
-        public int Power
+        public int PowerBuffer
         {
-            get => _power;
-            set {
-                _power = Math.Clamp(value, 0, 6);
-                OnPowerChange();
+            get => _powerBuffer;
+            set => _powerBuffer = Math.Clamp(value, 0, 6);
+        }
+
+        public void ReceivePower(int power)
+        {
+            var totalPower = power + PowerBuffer;
+            var powerPerConnection = totalPower  / 2;
+            var newBuffer = totalPower % 2;
+            TryPowerConnection(ref _connection1, ref newBuffer, powerPerConnection);
+            TryPowerConnection(ref _connection2, ref newBuffer, powerPerConnection);
+
+            PowerBuffer = newBuffer;
+        }
+
+        private void TryPowerConnection(ref Tuple<Direction, ContainmentFieldConnection>? connectionProperty, ref int powerBuffer, int powerPerConnection)
+        {
+            if (connectionProperty != null)
+            {
+                connectionProperty.Item2.SharedEnergyPool += powerPerConnection;
+            }
+            else
+            {
+                if (TryGenerateFieldConnection(ref connectionProperty))
+                {
+                    connectionProperty.Item2.SharedEnergyPool += powerPerConnection;
+                }
+                else
+                {
+                    powerBuffer += powerPerConnection;
+                }
             }
         }
 
-        private CollidableComponent _collidableComponent;
+        private CollidableComponent? _collidableComponent;
 
-        public Dictionary<IEntity, ContainmentFieldGeneratorComponent> OwnedFields = new Dictionary<IEntity, ContainmentFieldGeneratorComponent>();
+        private Tuple<Direction, ContainmentFieldConnection>? _connection1;
+        private Tuple<Direction, ContainmentFieldConnection>? _connection2;
 
-        public Dictionary<ContainmentFieldGeneratorComponent, Direction> ConnectedGenerators = new Dictionary<ContainmentFieldGeneratorComponent, Direction>();
+        public bool CanRepell(IEntity toRepell) => _connection1?.Item2?.CanRepell(toRepell) == true ||
+                                                   _connection2?.Item2?.CanRepell(toRepell) == true;
 
         public override void Initialize()
         {
@@ -57,52 +89,41 @@ namespace Content.Server.GameObjects.Components.Singularity
             _collidableComponent.AnchoredChanged += OnAnchoredChanged;
         }
 
+
         private void OnAnchoredChanged()
         {
-            if(_collidableComponent.Anchored)
+            if(_collidableComponent?.Anchored == true)
             {
                 Owner.SnapToGrid();
             }
             else
             {
-                RemoveFields();
+                _connection1?.Item2.Dispose();
+                _connection2?.Item2.Dispose();
             }
         }
 
-        private void OnPowerChange()
+        private bool IsConnectedWith(ContainmentFieldGeneratorComponent comp)
         {
-            if (Power == 0)
-            {
-                RemoveFields();
-            }else if (Power >= 2)
-            {
-                GenerateFields();
-            }
+
+            return comp == this || _connection1?.Item2.Generator1 == comp || _connection1?.Item2.Generator2 == comp ||
+                   _connection2?.Item2.Generator1 == comp || _connection2?.Item2.Generator2 == comp;
         }
 
-        private void RemoveFields()
+        public bool HasFreeConnections()
         {
-            foreach (var (comp, _) in ConnectedGenerators)
-            {
-                comp.ConnectedGenerators.Remove(this);
-                comp.ValidateOwnedFields();
-            }
-            ConnectedGenerators.Clear();
-
-            ValidateOwnedFields();
-            OwnedFields.Clear();
+            return _connection1 == null || _connection2 == null;
         }
 
-        private void GenerateFields()
+        private bool TryGenerateFieldConnection([NotNullWhen(true)] ref Tuple<Direction, ContainmentFieldConnection>? propertyFieldTuple)
         {
-            if(!_collidableComponent.Anchored) return;
+            if (propertyFieldTuple != null) return false;
+            if(_collidableComponent?.Anchored == false) return false;
 
-            var pos = Owner.Transform.Coordinates;
-
-            foreach (var direction in new []{Direction.North, Direction.East, Direction.South, Direction.West})
+            foreach (var direction in new[] {Direction.North, Direction.East, Direction.South, Direction.West})
             {
-                if(ConnectedGenerators.Count() > 1) return;
-                if(ConnectedGenerators.ContainsValue(direction)) continue;
+                if (_connection1?.Item1 == direction || _connection2?.Item1 == direction) continue;
+
                 var dirVec = direction.ToVec();
                 var ray = new CollisionRay(Owner.Transform.WorldPosition, dirVec, (int) CollisionGroup.MobMask);
                 var rawRayCastResults = _physicsManager.IntersectRay(Owner.Transform.MapID, ray, 4.5f, Owner, false);
@@ -121,66 +142,65 @@ namespace Content.Server.GameObjects.Components.Singularity
                 }
                 if(closestResult == null) continue;
                 var ent = closestResult.Value.HitEntity;
-                if (!ent.TryGetComponent<ContainmentFieldGeneratorComponent>(
-                        out var fieldGeneratorComponent) || fieldGeneratorComponent.Owner == Owner ||
-                    fieldGeneratorComponent.Power == 0 ||
-                    ConnectedGenerators.ContainsKey(fieldGeneratorComponent) ||
-                    fieldGeneratorComponent.ConnectedGenerators.ContainsKey(this) ||
+                if (!ent.TryGetComponent<ContainmentFieldGeneratorComponent>(out var fieldGeneratorComponent) ||
+                    fieldGeneratorComponent.Owner == Owner ||
+                    !fieldGeneratorComponent.HasFreeConnections() ||
+                    IsConnectedWith(fieldGeneratorComponent) ||
                     !ent.TryGetComponent<CollidableComponent>(out var collidableComponent) ||
                     !collidableComponent.Anchored)
                 {
                     continue;
                 }
 
-                var stopDist = (dirVec * closestResult.Value.Distance).Length;
-                var currentOffset = dirVec;
-                while (currentOffset.Length < stopDist)
+                var connection = new ContainmentFieldConnection(this, fieldGeneratorComponent);
+                propertyFieldTuple = new Tuple<Direction, ContainmentFieldConnection>(direction, connection);
+                if (fieldGeneratorComponent._connection1 == null)
                 {
-                    var currentCoords = pos.Offset(currentOffset);
-                    var newEnt = _entityManager.SpawnEntity("ContainmentField", currentCoords);
-                    newEnt.Transform.WorldRotation = dirVec.ToAngle();
-                    OwnedFields.Add(newEnt, fieldGeneratorComponent);
-
-                    currentOffset += dirVec;
+                    fieldGeneratorComponent._connection1 = new Tuple<Direction, ContainmentFieldConnection>(direction.GetOpposite(), connection);
+                }
+                else if (fieldGeneratorComponent._connection2 == null)
+                {
+                    fieldGeneratorComponent._connection2 = new Tuple<Direction, ContainmentFieldConnection>(direction.GetOpposite(), connection);
+                }
+                else
+                {
+                    Logger.Error("When trying to connect two Containmentfieldgenerators, the second one already had two connection but the check didn't catch it");
                 }
 
-                ConnectedGenerators.Add(fieldGeneratorComponent, direction);
-                fieldGeneratorComponent.ConnectedGenerators.Add(this, direction.GetOpposite());
+                return true;
             }
+
+            return false;
         }
 
-        private void ValidateOwnedFields()
+        public void RemoveConnection(ContainmentFieldConnection? connection)
         {
-            var toRemove = new HashSet<IEntity>();
-            foreach (var (entity, comp) in OwnedFields.Where(ownedFieldPair => !ConnectedGenerators.ContainsKey(ownedFieldPair.Value)))
+            if (_connection1?.Item2 == connection)
             {
-                entity.Delete();
-                toRemove.Add(entity);
-            }
-
-            foreach (var entity in toRemove)
+                _connection1 = null;
+            }else if (_connection2?.Item2 == connection)
             {
-                OwnedFields.Remove(entity);
+                _connection2 = null;
             }
-        }
-
-        public void Update()
-        {
-            Power--;
-        }
-
-        public override void OnRemove()
-        {
-            RemoveFields();
-            base.OnRemove();
+            else if(connection != null)
+            {
+                Logger.Error("RemoveConnection called on Containmentfieldgenerator with a connection that can't be found in its connections.");
+            }
         }
 
         public void CollideWith(IEntity collidedWith)
         {
-            if(collidedWith.TryGetComponent<EmitterBoltComponent>(out var _))
+            if(collidedWith.HasComponent<EmitterBoltComponent>())
             {
-                Power++;
+                ReceivePower(4);
             }
+        }
+
+        public override void OnRemove()
+        {
+            _connection1?.Item2.Dispose();
+            _connection2?.Item2.Dispose();
+            base.OnRemove();
         }
     }
 }

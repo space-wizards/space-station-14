@@ -1,41 +1,39 @@
-using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Singularity;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Log;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
     public class SingularitySystem : EntitySystem
     {
-        private int tick;
-        float curTimeSingulo;
-        float curTimeGen;
+        private float curTimeSingulo;
+        private float curTimePull;
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
 
             curTimeSingulo += frameTime;
-            curTimeGen += frameTime;
+            curTimePull += frameTime;
 
-            tick++;
-
+            var shouldUpdate = curTimeSingulo >= 1f;
+            var shouldPull = curTimePull >= 0.2f;
+            if (!shouldUpdate && !shouldPull) return;
+            var singulos = ComponentManager.EntityQuery<SingularityComponent>();
 
             if (curTimeSingulo >= 1f)
             {
                 curTimeSingulo -= 1f;
-                foreach (var singulo in ComponentManager.EntityQuery<SingularityComponent>())
+                foreach (var singulo in singulos)
                 {
                     singulo.Update();
                 }
             }
 
-            if (curTimeGen >= 3f)
+            if (curTimePull >= 0.5f)
             {
-                curTimeGen -= 3f;
-                foreach (var containment in ComponentManager.EntityQuery<ContainmentFieldGeneratorComponent>())
+                curTimePull -= 0.5f;
+                foreach (var singulo in singulos)
                 {
-                    containment.Update();
+                    singulo.PullUpdate();
                 }
             }
         }

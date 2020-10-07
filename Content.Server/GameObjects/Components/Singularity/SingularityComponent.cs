@@ -1,5 +1,6 @@
 #nullable enable
 using System;
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.StationEvents;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.EntitySystemMessages;
@@ -65,7 +66,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                 };
             }
         }
-        private int _energy = 100;
+        private int _energy = 180;
 
         public int Level
         {
@@ -152,13 +153,42 @@ namespace Content.Server.GameObjects.Components.Singularity
         {
             Energy -= EnergyDrain;
 
+            if(Level == 1) return;
+            //pushing
             var pushVector = new Vector2((_random.Next(-10, 10)), _random.Next(-10, 10));
             while (pushVector.X == 0 && pushVector.Y == 0)
             {
                 pushVector = new Vector2((_random.Next(-10, 10)), _random.Next(-10, 10));
             }
-
             _singularityController?.Push(pushVector.Normalized, 2);
+        }
+
+        List<IEntity> _previousPulledEntites = new List<IEntity>();
+        public void PullUpdate()
+        {
+            foreach (var previousPulledEntity in _previousPulledEntites)
+            {
+                if(previousPulledEntity.Deleted) continue;
+                if (!previousPulledEntity.TryGetComponent<CollidableComponent>(out var collidableComponent)) continue;
+                var controller = collidableComponent.EnsureController<SingularityPullController>();
+                controller.StopPull();
+            }
+            _previousPulledEntites.Clear();
+
+            var entitiesToPull = _entityManager.GetEntitiesInRange(Owner.Transform.Coordinates, Level * 10);
+            foreach (var entity in entitiesToPull)
+            {
+                if (!entity.TryGetComponent<CollidableComponent>(out var collidableComponent)) continue;
+                var controller = collidableComponent.EnsureController<SingularityPullController>();
+                if(Owner.Transform.Coordinates.EntityId != entity.Transform.Coordinates.EntityId) continue;
+                var vec = (Owner.Transform.Coordinates - entity.Transform.Coordinates).Position;
+                if (vec == Vector2.Zero) continue;
+
+                var speed = 10 / vec.Length * Level;
+
+                controller.Pull(vec.Normalized, speed);
+                _previousPulledEntites.Add(entity);
+            }
         }
 
         void ICollideBehavior.CollideWith(IEntity entity)
@@ -175,9 +205,8 @@ namespace Content.Server.GameObjects.Components.Singularity
                 return;
             }
 
-            if (entity.HasComponent<ContainmentFieldComponent>() || (entity.TryGetComponent<ContainmentFieldGeneratorComponent>(out var component) && component.Power >= 1))
+            if (entity.HasComponent<ContainmentFieldComponent>() || (entity.TryGetComponent<ContainmentFieldGeneratorComponent>(out var component) && component.CanRepell(Owner)))
             {
-                //todo check if we overlap them, then eat
                 return;
             }
 
