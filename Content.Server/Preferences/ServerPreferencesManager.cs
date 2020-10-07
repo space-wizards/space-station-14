@@ -131,14 +131,36 @@ namespace Content.Server.Preferences
 
             var curPrefs = prefsData.Prefs!;
 
+            // If they try to delete the slot they have selected then we switch to another one.
+            // Of course, that's only if they HAVE another slot.
+            int? nextSlot = null;
+            if (curPrefs.SelectedCharacterIndex == slot)
+            {
+                var (ns, profile) = curPrefs.Characters.FirstOrDefault(p => p.Key != message.Slot);
+                if (profile == null)
+                {
+                    // Only slot left, can't delete.
+                    return;
+                }
+
+                nextSlot = ns;
+            }
+
             var arr = new Dictionary<int, ICharacterProfile>(curPrefs.Characters);
             arr.Remove(slot);
 
-            prefsData.Prefs = new PlayerPreferences(arr, slot);
+            prefsData.Prefs = new PlayerPreferences(arr, nextSlot ?? curPrefs.SelectedCharacterIndex);
 
             if (ShouldStorePrefs(message.MsgChannel.AuthType))
             {
-                await _db.SaveCharacterSlotAsync(message.MsgChannel.UserId, null, message.Slot);
+                if (nextSlot != null)
+                {
+                    await _db.DeleteSlotAndSetSelectedIndex(userId, slot, nextSlot.Value);
+                }
+                else
+                {
+                    await _db.SaveCharacterSlotAsync(userId, null, slot);
+                }
             }
         }
 
