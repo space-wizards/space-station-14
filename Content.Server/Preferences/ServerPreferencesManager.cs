@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Server.Interfaces;
 using Content.Shared;
+using Content.Shared.Network.NetMessages;
 using Content.Shared.Preferences;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.Configuration;
@@ -19,10 +20,10 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Preferences
 {
     /// <summary>
-    /// Sends <see cref="SharedPreferencesManager.MsgPreferencesAndSettings"/> before the client joins the lobby.
-    /// Receives <see cref="SharedPreferencesManager.MsgSelectCharacter"/> and <see cref="SharedPreferencesManager.MsgUpdateCharacter"/> at any time.
+    /// Sends <see cref="MsgPreferencesAndSettings"/> before the client joins the lobby.
+    /// Receives <see cref="MsgSelectCharacter"/> and <see cref="MsgUpdateCharacter"/> at any time.
     /// </summary>
-    public class ServerPreferencesManager : SharedPreferencesManager, IServerPreferencesManager
+    public class ServerPreferencesManager : IServerPreferencesManager
     {
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
@@ -65,6 +66,12 @@ namespace Content.Server.Preferences
 
             var curPrefs = prefsData.Prefs!;
 
+            if (!curPrefs.Characters.ContainsKey(index))
+            {
+                // Non-existent slot.
+                return;
+            }
+
             prefsData.Prefs = new PlayerPreferences(curPrefs.Characters, index);
 
             if (ShouldStorePrefs(message.MsgChannel.AuthType))
@@ -99,12 +106,12 @@ namespace Content.Server.Preferences
 
             var curPrefs = prefsData.Prefs!;
 
-            var arr = new ICharacterProfile[MaxCharacterSlots];
-            curPrefs.Characters.ToList().CopyTo(arr, 0);
+            var profiles = new Dictionary<int, ICharacterProfile>(curPrefs.Characters)
+            {
+                [slot] = HumanoidCharacterProfile.EnsureValid((HumanoidCharacterProfile) profile, _protos)
+            };
 
-            arr[slot] = HumanoidCharacterProfile.EnsureValid((HumanoidCharacterProfile) profile, _protos);
-
-            prefsData.Prefs = new PlayerPreferences(arr, slot);
+            prefsData.Prefs = new PlayerPreferences(profiles, slot);
 
             if (ShouldStorePrefs(message.MsgChannel.AuthType))
             {
@@ -130,14 +137,36 @@ namespace Content.Server.Preferences
 
             var curPrefs = prefsData.Prefs!;
 
-            var arr = new ICharacterProfile[MaxCharacterSlots];
-            curPrefs.Characters.Where((profile, index) => index != slot).ToArray().CopyTo(arr, 0);
+            // If they try to delete the slot they have selected then we switch to another one.
+            // Of course, that's only if they HAVE another slot.
+            int? nextSlot = null;
+            if (curPrefs.SelectedCharacterIndex == slot)
+            {
+                var (ns, profile) = curPrefs.Characters.FirstOrDefault(p => p.Key != message.Slot);
+                if (profile == null)
+                {
+                    // Only slot left, can't delete.
+                    return;
+                }
 
-            prefsData.Prefs = new PlayerPreferences(arr, slot);
+                nextSlot = ns;
+            }
+
+            var arr = new Dictionary<int, ICharacterProfile>(curPrefs.Characters);
+            arr.Remove(slot);
+
+            prefsData.Prefs = new PlayerPreferences(arr, nextSlot ?? curPrefs.SelectedCharacterIndex);
 
             if (ShouldStorePrefs(message.MsgChannel.AuthType))
             {
-                await _db.SaveCharacterSlotAsync(message.MsgChannel.UserId, null, message.Slot);
+                if (nextSlot != null)
+                {
+                    await _db.DeleteSlotAndSetSelectedIndex(userId, slot, nextSlot.Value);
+                }
+                else
+                {
+                    await _db.SaveCharacterSlotAsync(userId, null, slot);
+                }
             }
         }
 
@@ -150,7 +179,7 @@ namespace Content.Server.Preferences
                 {
                     PrefsLoaded = Task.CompletedTask,
                     Prefs = new PlayerPreferences(
-                        new ICharacterProfile[] {HumanoidCharacterProfile.Default()},
+                        new[] {new KeyValuePair<int, ICharacterProfile>(0, HumanoidCharacterProfile.Default())},
                         0)
                 };
 

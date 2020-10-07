@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Preferences
 {
@@ -13,18 +13,18 @@ namespace Content.Shared.Preferences
     [NetSerializable]
     public sealed class PlayerPreferences
     {
-        private List<ICharacterProfile> _characters;
+        private Dictionary<int, ICharacterProfile> _characters;
 
-        public PlayerPreferences(IEnumerable<ICharacterProfile> characters, int selectedCharacterIndex)
+        public PlayerPreferences(IEnumerable<KeyValuePair<int, ICharacterProfile>> characters, int selectedCharacterIndex)
         {
-            _characters = characters.ToList();
+            _characters = new Dictionary<int, ICharacterProfile>(characters);
             SelectedCharacterIndex = selectedCharacterIndex;
         }
 
         /// <summary>
         ///     All player characters.
         /// </summary>
-        public IEnumerable<ICharacterProfile> Characters => _characters.AsEnumerable();
+        public IReadOnlyDictionary<int, ICharacterProfile> Characters => _characters;
 
         public ICharacterProfile GetProfile(int index)
         {
@@ -39,7 +39,7 @@ namespace Content.Shared.Preferences
         /// <summary>
         ///     The currently selected character.
         /// </summary>
-        public ICharacterProfile SelectedCharacter => Characters.ElementAtOrDefault(SelectedCharacterIndex);
+        public ICharacterProfile SelectedCharacter => Characters[SelectedCharacterIndex];
 
         public int FirstEmptySlot()
         {
@@ -49,7 +49,7 @@ namespace Content.Shared.Preferences
 
         public int IndexOfCharacter(ICharacterProfile profile)
         {
-            return _characters.FindIndex(x => x == profile);
+            return _characters.FirstOrNull(p => p.Value == profile)?.Key ?? -1;
         }
 
         public bool TryIndexOfCharacter(ICharacterProfile profile, out int index)

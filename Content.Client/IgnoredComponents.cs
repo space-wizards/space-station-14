@@ -177,7 +177,8 @@
             "BlockGameArcade",
             "KitchenSpike",
             "Butcherable",
-            "Rehydratable"
+            "Rehydratable",
+            "Headset",
         };
     }
 }

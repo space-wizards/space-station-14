@@ -163,8 +163,8 @@ namespace Content.Server.GameObjects.Components.Recycling
             for (var i = _intersecting.Count - 1; i >= 0; i--)
             {
                 var entity = _intersecting[i];
-
-                if (!CanMove(entity) || !_entityManager.IsIntersecting(Owner, entity))
+                
+                if (entity.Deleted || !CanMove(entity) || !_entityManager.IsIntersecting(Owner, entity))
                 {
                     _intersecting.RemoveAt(i);
                     continue;
