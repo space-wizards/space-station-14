@@ -2,6 +2,7 @@
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
@@ -10,14 +11,15 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components
+namespace Content.Server.GameObjects.Components.Radio
 {
     [RegisterComponent]
     [ComponentReference(typeof(IRadio))]
     [ComponentReference(typeof(IListen))]
-    public class HandheldRadioComponent : Component, IUse, IListen, IRadio, IActivate
+    public class HandheldRadioComponent : Component, IUse, IListen, IRadio, IActivate, IExamine
     {
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -30,7 +32,7 @@ namespace Content.Server.GameObjects.Components
         private List<int> _channels = new List<int>();
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private int _broadcastChannel;
+        private int BroadcastFrequency { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
         public int ListenRange { get; private set; }
@@ -54,7 +56,7 @@ namespace Content.Server.GameObjects.Components
 
             serializer.DataField(this, h => h.ListenRange, "listenRange", 7);
             serializer.DataField(ref _channels, "channels", new List<int> {1459});
-            serializer.DataField(ref _broadcastChannel, "broadcastChannel", 1459);
+            serializer.DataField(this, h => h.BroadcastFrequency, "broadcastChannel", 1459);
         }
 
         public override void Initialize()
@@ -103,12 +105,17 @@ namespace Content.Server.GameObjects.Components
 
         public void Broadcast(string message, IEntity speaker)
         {
-            _radioSystem.SpreadMessage(this, speaker, message, _broadcastChannel);
+            _radioSystem.SpreadMessage(this, speaker, message, BroadcastFrequency);
         }
 
         public void Activate(ActivateEventArgs eventArgs)
         {
             Use(eventArgs.User);
+        }
+
+        public void Examine(FormattedMessage message, bool inDetailsRange)
+        {
+            message.AddText(Loc.GetString("It is set to broadcast over the {0} frequency.", BroadcastFrequency));
         }
     }
 }
