@@ -1,26 +1,22 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.GameObjects.Components.Portal;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Movement
+namespace Content.Server.GameObjects.Components.Portal
 {
     [RegisterComponent]
-    public class ServerPortalComponent : SharedPortalComponent
+    public class PortalComponent : SharedPortalComponent, ICollideBehavior
     {
-        [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
-
         // Potential improvements: Different sounds,
         // Add Gateways
         // More efficient form of GetEntitiesIntersecting,
@@ -42,10 +38,13 @@ namespace Content.Server.GameObjects.Components.Movement
             base.ExposeData(serializer);
             // How long will the portal stay up: 0 is infinite
             serializer.DataField(ref _aliveTime, "alive_time", 10.0f);
+
             // How long before a specific person can go back into it
             serializer.DataField(ref _individualPortalCooldown, "individual_cooldown", 2.1f);
+
             // How long before anyone can go in it
             serializer.DataField(ref _overallPortalCooldown, "overall_cooldown", 2.0f);
+
             serializer.DataField(ref _departureSound, "departure_sound", "/Audio/Effects/teleport_departure.ogg");
             serializer.DataField(ref _arrivalSound, "arrival_sound", "/Audio/Effects/teleport_arrival.ogg");
         }
@@ -54,12 +53,9 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             // This will blow up an entity it's attached to
             base.OnAdd();
-            if (Owner.TryGetComponent<ICollidableComponent>(out var collide))
-            {
-                //collide.IsHardCollidable = false;
-            }
 
             _state = PortalState.Pending;
+
             if (_aliveTime > 0)
             {
                 Timer.Spawn(TimeSpan.FromSeconds(_aliveTime), () => Owner.Delete());
@@ -68,16 +64,12 @@ namespace Content.Server.GameObjects.Components.Movement
 
         public bool CanBeConnected()
         {
-            if (_connectingTeleporter == null)
-            {
-                return true;
-            }
-            return false;
+            return _connectingTeleporter == null;
         }
 
         public void TryConnectPortal(IEntity otherPortal)
         {
-            if (otherPortal.TryGetComponent<ServerPortalComponent>(out var connectedPortal) && connectedPortal.CanBeConnected())
+            if (otherPortal.TryGetComponent<PortalComponent>(out var connectedPortal) && connectedPortal.CanBeConnected())
             {
                 _connectingTeleporter = otherPortal;
                 connectedPortal._connectingTeleporter = Owner;
@@ -87,7 +79,7 @@ namespace Content.Server.GameObjects.Components.Movement
 
         public void TryChangeState(PortalState targetState)
         {
-            if (Owner == null || Deleted)
+            if (Deleted)
             {
                 return;
             }
@@ -102,8 +94,10 @@ namespace Content.Server.GameObjects.Components.Movement
 
         private void ReleaseCooldown(IEntity entity)
         {
-            if (Owner == null || Deleted)
+            if (Deleted)
+            {
                 return;
+            }
 
             if (ImmuneEntities.Contains(entity))
             {
@@ -111,77 +105,52 @@ namespace Content.Server.GameObjects.Components.Movement
             }
 
             if (_connectingTeleporter != null &&
-                _connectingTeleporter.TryGetComponent<ServerPortalComponent>(out var otherPortal))
+                _connectingTeleporter.TryGetComponent<PortalComponent>(out var otherPortal))
             {
                 otherPortal.ImmuneEntities.Remove(entity);
-            }
-        }
-
-        public IEnumerable<IEntity> GetPortableEntities()
-        {
-            foreach (var entity in _serverEntityManager.GetEntitiesIntersecting(Owner))
-            {
-                if (IsEntityPortable(entity))
-                {
-                    yield return entity;
-                }
             }
         }
 
         private bool IsEntityPortable(IEntity entity)
         {
             // TODO: Check if it's slotted etc. Otherwise the slot item itself gets ported.
-            if (!ImmuneEntities.Contains(entity) && entity.HasComponent<TeleportableComponent>())
-            {
-                return true;
-            }
-            return false;
-        }
-
-        // TODO: Fix portal updates for performance
-        public void OnUpdate()
-        {
-            if (_onCooldown == false)
-            {
-                foreach (var entity in GetPortableEntities())
-                {
-                    TryPortalEntity(entity);
-                    break;
-                }
-            }
+            return !ImmuneEntities.Contains(entity) &&
+                   entity.HasComponent<TeleportableComponent>();
         }
 
         public void StartCooldown()
         {
-            if (_overallPortalCooldown > 0 && _onCooldown == false)
-            {
-                _onCooldown = true;
-                TryChangeState(PortalState.RecentlyTeleported);
-                if (_connectingTeleporter != null)
-                {
-                    _connectingTeleporter.TryGetComponent<ServerPortalComponent>(out var otherPortal);
-                    if (otherPortal != null)
-                    {
-                        otherPortal.TryChangeState(PortalState.RecentlyTeleported);
-                        Timer.Spawn(TimeSpan.FromSeconds(_overallPortalCooldown), () =>
-                        {
-                            _onCooldown = false;
-                            TryChangeState(PortalState.Pending);
-                            otherPortal.TryChangeState(PortalState.Pending);
-                        });
-                    }
-                }
-            }
-            else
+            if (_overallPortalCooldown <= 0 || _onCooldown)
             {
                 // Just in case?
                 _onCooldown = false;
+                return;
             }
+
+            _onCooldown = true;
+            TryChangeState(PortalState.RecentlyTeleported);
+
+            if (_connectingTeleporter == null ||
+                !_connectingTeleporter.TryGetComponent<PortalComponent>(out var otherPortal))
+            {
+                return;
+            }
+
+            otherPortal.TryChangeState(PortalState.RecentlyTeleported);
+
+            Timer.Spawn(TimeSpan.FromSeconds(_overallPortalCooldown), () =>
+            {
+                _onCooldown = false;
+                TryChangeState(PortalState.Pending);
+                otherPortal.TryChangeState(PortalState.Pending);
+            });
         }
 
         public void TryPortalEntity(IEntity entity)
         {
-            if (ImmuneEntities.Contains(entity) || _connectingTeleporter == null)
+            if (ImmuneEntities.Contains(entity) ||
+                _connectingTeleporter == null ||
+                !IsEntityPortable(entity))
             {
                 return;
             }
@@ -195,11 +164,20 @@ namespace Content.Server.GameObjects.Components.Movement
             entity.Transform.Coordinates = position;
             soundPlayer.PlayAtCoords(_arrivalSound, entity.Transform.Coordinates);
             TryChangeState(PortalState.RecentlyTeleported);
+
             // To stop spam teleporting. Could potentially look at adding a timer to flush this from the portal
             ImmuneEntities.Add(entity);
-            _connectingTeleporter.GetComponent<ServerPortalComponent>().ImmuneEntities.Add(entity);
+            _connectingTeleporter.GetComponent<PortalComponent>().ImmuneEntities.Add(entity);
             Timer.Spawn(TimeSpan.FromSeconds(_individualPortalCooldown), () => ReleaseCooldown(entity));
             StartCooldown();
+        }
+
+        public void CollideWith(IEntity collidedWith)
+        {
+            if (_onCooldown == false)
+            {
+                TryPortalEntity(collidedWith);
+            }
         }
     }
 }
