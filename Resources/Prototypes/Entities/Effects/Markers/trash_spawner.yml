@@ -7,9 +7,7 @@
       visible: false
       sprite: Interface/Misc/markers.rsi
       state: spawner_trash
-    - type: Icon
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_trash
+
     - type: Marker
     - type: Clickable
     - type: InteractionOutline

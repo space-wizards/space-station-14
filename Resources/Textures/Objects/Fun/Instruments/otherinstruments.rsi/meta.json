@@ -26,6 +26,15 @@
       ]
     },
     {
+      "name": "trumpet",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
       "name": "drum_bongo",
       "directions": 1,
       "delays": [

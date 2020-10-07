@@ -6,8 +6,6 @@ namespace Content.Client.GameObjects.Components
 {
     public class ExtinguisherCabinetVisualizer : AppearanceVisualizer
     {
-        private string _prefix;
-
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);

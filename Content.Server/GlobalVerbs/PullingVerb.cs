@@ -1,9 +1,8 @@
-using Content.Server.GameObjects.Components.GUI;
+﻿using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects.Components;
@@ -39,7 +38,8 @@ namespace Content.Server.GlobalVerbs
 
             if (!user.HasComponent<ISharedHandsComponent>() ||
                 !user.TryGetComponent(out ICollidableComponent userCollidable) ||
-                !target.TryGetComponent(out ICollidableComponent targetCollidable))
+                !target.TryGetComponent(out ICollidableComponent targetCollidable) ||
+                targetCollidable.Anchored)
             {
                 return;
             }

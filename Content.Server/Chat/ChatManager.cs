@@ -45,7 +45,6 @@ namespace Content.Server.Chat
 
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly ILocalizationManager _localizationManager = default!;
         [Dependency] private readonly IMoMMILink _mommiLink = default!;
         [Dependency] private readonly IConGroupController _conGroupController = default!;
 
@@ -197,10 +196,10 @@ namespace Content.Server.Chat
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.OOC;
             msg.Message = message;
-            msg.MessageWrap = $"OOC: {player.SessionId}: {{0}}";
+            msg.MessageWrap = $"OOC: {player.Name}: {{0}}";
             _netManager.ServerSendToAll(msg);
 
-            _mommiLink.SendOOCMessage(player.SessionId.ToString(), message);
+            _mommiLink.SendOOCMessage(player.Name, message);
         }
 
         public void SendDeadChat(IPlayerSession player, string message)
@@ -217,7 +216,7 @@ namespace Content.Server.Chat
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Dead;
             msg.Message = message;
-            msg.MessageWrap = $"{_localizationManager.GetString("DEAD")}: {player.AttachedEntity.Name}: {{0}}";
+            msg.MessageWrap = $"{Loc.GetString("DEAD")}: {player.AttachedEntity.Name}: {{0}}";
             msg.SenderEntity = player.AttachedEntityUid.GetValueOrDefault();
             _netManager.ServerSendToMany(msg, clients.ToList());
         }
@@ -242,7 +241,7 @@ namespace Content.Server.Chat
 
             msg.Channel = ChatChannel.AdminChat;
             msg.Message = message;
-            msg.MessageWrap = $"{_localizationManager.GetString("ADMIN")}: {player.SessionId}: {{0}}";
+            msg.MessageWrap = $"{Loc.GetString("ADMIN")}: {player.Name}: {{0}}";
             _netManager.ServerSendToMany(msg, clients.ToList());
         }
 

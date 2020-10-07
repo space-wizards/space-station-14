@@ -7,9 +7,6 @@
   - type: Sprite
     sprite: Objects/Specific/Janitorial/mop.rsi
     state: mop
-  - type: Icon
-    sprite: Objects/Specific/Janitorial/mop.rsi
-    state: mop
   - type: Item
     size: 10
     sprite: Objects/Specific/Janitorial/mop.rsi
@@ -26,10 +23,11 @@
   components:
   - type: Clickable
   - type: Sprite
-    texture: Objects/Specific/Janitorial/mopbucket.png
+    sprite: Objects/Specific/Janitorial/janitorial.rsi
+    layers:
+    - state: mopbucket
+    - state: mopbucket_water
     drawdepth: Objects
-  - type: Icon
-    texture: Objects/Specific/Janitorial/mopbucket.png
   - type: InteractionOutline
   - type: Bucket
   - type: LoopingSound
@@ -60,10 +58,11 @@
   components:
   - type: Clickable
   - type: Sprite
-    texture: Objects/Specific/Janitorial/bucket.png
+    sprite: Objects/Specific/Janitorial/janitorial.rsi
+    layers:
+    - state: bucket
+    - state: bucket_water
     drawdepth: Objects
-  - type: Icon
-    texture: Objects/Specific/Janitorial/bucket.png
   - type: Bucket
   - type: LoopingSound
   - type: SolutionContainer
@@ -90,9 +89,6 @@
   - type: Sprite
     sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
     state: caution
-  - type: Icon
-    sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
-    state: caution
   - type: Item
     sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
 
@@ -103,9 +99,6 @@
   description: A cheap bar of soap. Doesn't smell.
   components:
   - type: Sprite
-    sprite: Objects/Specific/Janitorial/soap.rsi
-    state: soap
-  - type: Icon
     sprite: Objects/Specific/Janitorial/soap.rsi
     state: soap
   - type: Item
@@ -127,8 +120,6 @@
   components:
     - type: Sprite
       state: soapnt
-    - type: Icon
-      state: soapnt
 
 - type: entity
   name: soap
@@ -138,8 +129,6 @@
   components:
     - type: Sprite
       state: soapdeluxe
-    - type: Icon
-      state: soapdeluxe
 
 - type: entity
   name: soap
@@ -148,8 +137,6 @@
   description: An untrustworthy bar of soap. Smells of fear.
   components:
     - type: Sprite
-      state: soapsyndie
-    - type: Icon
       state: soapsyndie
     - type: Slippery
       paralyzeTime: 5
@@ -162,8 +149,6 @@
   components:
     - type: Sprite
       state: soapgibs
-    - type: Icon
-      state: soapgibs
     - type: Slippery
       paralyzeTime: 2
 
@@ -175,28 +160,86 @@
   components:
     - type: Sprite
       state: soapomega
-    - type: Icon
-      state: soapomega
     - type: Slippery
       paralyzeTime: 7
+
+- type: entity
+  id: Vapor
+  name: "vapor"
+  abstract: true
+  components:
+    - type: SnapGrid
+      offset: Center
+    - type: SolutionContainer
+      maxVol: 50
+    - type: Vapor
+    - type: AnimationPlayer
+    - type: Sprite
+      sprite: Effects/chempuff.rsi
+      layers:
+        - state: chempuff
+          map: [ "enum.VaporVisualLayers.Base" ]
+    - type: Physics
+    - type: Collidable
+      hard: false
+      shapes:
+        - !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+          mask:
+            - Impassable
+            - MobImpassable
+            - SmallImpassable
+    - type: Appearance
+      visuals:
+        - type: VaporVisualizer
 
 - type: entity
   name: spray bottle
   id: SprayBottle
   parent: BaseItem
+  suffix: Empty
   description: A spray bottle with an unscrewable top.
   components:
   - type: Sprite
-    texture: Objects/Specific/Janitorial/cleaner.png
-  - type: Icon
-    texture: Objects/Specific/Janitorial/cleaner.png
+    sprite: Objects/Specific/Janitorial/janitorial.rsi
+    state: cleaner
   - type: SolutionContainer
     maxVol: 100
     caps: AddTo, RemoveFrom
   - type: Pourable
     transferAmount: 5.0
   - type: Spillable
+  - type: ItemCooldown
   - type: Spray
     transferAmount: 10
-    sprayVelocity: 5
-    spraySound: /Audio/Effects/spray.ogg
+    sprayVelocity: 2
+    spraySound: /Audio/Effects/spray2.ogg
+
+- type: entity
+  name: spray bottle
+  id: SprayBottleWater
+  suffix: Filled
+  parent: SprayBottle
+  components:
+    - type: SolutionContainer
+      maxVol: 100
+      caps: AddTo, RemoveFrom
+      contents:
+        reagents:
+          - ReagentId: chem.H2O
+            Quantity: 100
+
+- type: entity
+  name: space cleaner
+  description: BLAM!-brand non-foaming space cleaner!
+  id: SprayBottleSpaceCleaner
+  parent: SprayBottle
+  suffix: ""
+  components:
+    - type: SolutionContainer
+      maxVol: 100
+      caps: AddTo, RemoveFrom
+      contents:
+        reagents:
+          - ReagentId: chem.SpaceCleaner
+            Quantity: 100

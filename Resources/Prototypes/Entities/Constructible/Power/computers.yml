@@ -22,9 +22,7 @@
       - Impassable
       - MobImpassable
       - VaultImpassable
-  - type: Icon
-    sprite: Constructible/Power/computers.rsi
-    state: computer
+
   - type: Computer
   - type: PowerReceiver
   - type: Anchorable

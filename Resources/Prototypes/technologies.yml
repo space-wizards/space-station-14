@@ -47,7 +47,7 @@
   name: material sheet printing
   id: Sheets
   description: Print those sheets!
-  icon: Objects/Materials/sheet_metal.png
+  icon: Objects/Materials/materials.rsi/sheet_metal.png
   requiredPoints: 250
   requiredTechnologies:
     - IndustrialEngineering
@@ -72,7 +72,7 @@
   name: "basic bluespace theory"
   id: BluespaceTheory
   description: An experimental course on the mysterious technology known as bluespace.
-  icon: Objects/Misc/hand_tele.png
+  icon: Objects/Misc/skub.rsi/icon.png
   requiredPoints: 1000
   requiredTechnologies:
     - BasicResearch

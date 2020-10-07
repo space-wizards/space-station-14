@@ -6,7 +6,6 @@ using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Utensil;
-using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Utensil;
 using Content.Shared.Interfaces;
@@ -18,6 +17,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -28,6 +28,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
     public class FoodComponent : Component, IUse, IAfterInteract
     {
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override string Name => "Food";
 
@@ -170,12 +171,21 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             var transferAmount = ReagentUnit.Min(_transferAmount, solution.CurrentVolume);
             var split = solution.SplitSolution(transferAmount);
-            if (!stomach.TryTransferSolution(split))
+            if (!stomach.CanTransferSolution(split))
             {
-                solution.TryAddSolution(split);
                 trueTarget.PopupMessage(user, Loc.GetString("You can't eat any more!"));
                 return false;
             }
+
+            // TODO: Account for partial transfer.
+
+            foreach (var (reagentId, quantity) in split.Contents)
+            {
+                if (!_prototypeManager.TryIndex(reagentId, out ReagentPrototype reagent)) continue;
+                split.RemoveReagent(reagentId, reagent.ReactionEntity(target, ReactionMethod.Ingestion, quantity));
+            }
+
+            stomach.TryTransferSolution(split);
 
             _entitySystem.GetEntitySystem<AudioSystem>()
                 .PlayFromEntity(_useSound, trueTarget, AudioParams.Default.WithVolume(-1f));

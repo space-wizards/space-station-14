@@ -13,14 +13,15 @@ namespace Content.Server.GameObjects.EntitySystems
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
-        private const float UpdateDelay = 3f;
+        private const float UpdateDelay = 1f;
         private float _lastUpdate;
+
         public override void Update(float frameTime)
         {
             _lastUpdate += frameTime;
             if (_lastUpdate < UpdateDelay) return;
-            var atmoSystem = EntitySystemManager.GetEntitySystem<AtmosphereSystem>();
-            // creadth: everything exposable by atmo should be updated as well
+
+            // creadth: everything exposable by atmos should be updated as well
             foreach (var atmosExposedComponent in EntityManager.ComponentManager.EntityQuery<AtmosExposedComponent>())
             {
                 var tile = atmosExposedComponent.Owner.Transform.Coordinates.GetTileAtmosphere(_entityManager);

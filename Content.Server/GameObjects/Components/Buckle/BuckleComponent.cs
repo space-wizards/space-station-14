@@ -38,7 +38,6 @@ namespace Content.Server.GameObjects.Components.Buckle
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
 
         private int _size;
 

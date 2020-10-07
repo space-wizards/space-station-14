@@ -11,10 +11,8 @@ namespace Content.IntegrationTests.Tests
     [TestFixture]
     public class PostMapInitTest : ContentIntegrationTest
     {
-        public readonly string[] SkippedMaps =
-        {
-            "/Maps/Pathfinding/simple.yml"
-        };
+        public const bool SkipTestMaps = true;
+        public const string TestMapsPath = "/Maps/Test/";
 
         [Test]
         public async Task NoSavedPostMapInitTest()
@@ -34,7 +32,8 @@ namespace Content.IntegrationTests.Tests
             {
                 var rootedPath = map.ToRootedPath();
 
-                if (SkippedMaps.Contains(rootedPath.ToString()))
+                // ReSharper disable once RedundantLogicalConditionalExpressionOperand
+                if (SkipTestMaps && rootedPath.ToString().StartsWith(TestMapsPath))
                 {
                     continue;
                 }
@@ -53,7 +52,7 @@ namespace Content.IntegrationTests.Tests
                 var meta = root["meta"];
                 var postMapInit = meta["postmapinit"].AsBool();
 
-                Assert.False(postMapInit);
+                Assert.False(postMapInit, $"Map {map.Filename} was saved postmapinit");
             }
         }
     }

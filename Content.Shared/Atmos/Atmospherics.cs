@@ -217,6 +217,17 @@
         ///     See <see cref="AtmosDirection"/> on the server.
         /// </summary>
         public const int Directions = 4;
+
+        /// <summary>
+        ///     The normal body temperature in degrees Celsius.
+        /// </summary>
+        public const float NormalBodyTemperature = 37f;
+
+        public const float HumanNeededOxygen = MolesCellStandard * BreathPercentage * 0.16f;
+
+        public const float HumanProducedOxygen = HumanNeededOxygen * 0.75f;
+
+        public const float HumanProducedCarbonDioxide = HumanNeededOxygen * 0.25f;
     }
 
     /// <summary>

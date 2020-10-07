@@ -1,0 +1,159 @@
+- type: entity
+  name: lantern
+  parent: BaseItem
+  id: BaseLamp
+  description:
+  abstract: true
+  components:
+    - type: HandheldLight
+    - type: Sprite
+      sprite: Objects/Misc/lights.rsi
+    - type: Item
+      sprite: Objects/Misc/lights.rsi
+      HeldPrefix: off
+
+- type: entity
+  name: lamp
+  id: Lamp
+  parent: BaseLamp
+  description:
+  components:
+    - type: Sprite
+      layers:
+        - state: lamp
+        - state: lamp_on
+          shader: unshaded
+          visible: false
+    - type: PointLight
+      enabled: false
+      radius: 3
+      energy: 2
+    - type: Appearance
+      visuals:
+        - type: FlashLightVisualizer
+
+- type: entity
+  name: banana lamp
+  id: LampBanana
+  parent: BaseLamp
+  description:
+  components:
+    - type: Sprite
+      layers:
+        - state: bananalamp
+        - state: bananalamp_on
+          shader: unshaded
+          visible: false
+    - type: PointLight
+      enabled: false
+      radius: 3
+      energy: 2
+    - type: Appearance
+      visuals:
+        - type: FlashLightVisualizer
+
+- type: entity
+  name: desk lamp
+  id: LampGold
+  parent: BaseLamp
+  description:
+  components:
+    - type: Sprite
+      layers:
+        - state: lampgreen
+        - state: lampgreen_on
+          shader: unshaded
+          visible: false
+    - type: PointLight
+      enabled: false
+      radius: 3
+      energy: 2
+    - type: Appearance
+      visuals:
+        - type: FlashLightVisualizer
+
+- type: entity
+  name: torch
+  id: Torch
+  parent: BaseLamp
+  description:
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/torch.rsi
+      layers:
+        - state: torch
+        - state: torch_on
+          shader: unshaded
+          visible: false
+    - type: Item
+      sprite: Objects/Misc/torch.rsi
+      HeldPrefix: off
+    - type: PointLight
+      enabled: false
+      radius: 1
+      energy: 4
+      color: "#FFC458"
+    - type: LoopingSound
+    - type: Appearance
+      visuals:
+        - type: LanternVisualizer
+
+- type: entity
+  name: floodlight
+  id: Floodlight
+  parent: BaseLamp
+  description:
+  components:
+    - type: Sprite
+      layers:
+        - state: floodlight
+        - state: floodlight_on
+          shader: unshaded
+          visible: false
+    - type: Collidable
+      shapes:
+      - !type:PhysShapeAabb
+        layer:
+        - Opaque
+        - Impassable
+        - MobImpassable
+        - VaultImpassable
+        - SmallImpassable
+    - type: PointLight
+      enabled: false
+      radius: 8
+      energy: 5
+    - type: Anchorable
+    - type: Destructible
+      deadThreshold: 10
+      spawnOnDestroy: FloodlightBroken
+      destroySound: /Audio/Effects/glassbreak1.ogg
+      resistances: metallicResistances
+    - type: Appearance
+      visuals:
+        - type: FlashLightVisualizer
+
+- type: entity
+  name: broken floodlight
+  id: FloodlightBroken
+  parent: BaseItem
+  description:
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/lights.rsi
+      state: floodlight_broken
+    - type: Anchorable
+    - type: Destructible
+      deadThreshold: 20
+      spawnOnDestroy: SteelSheet1
+      destroySound: /Audio/Effects/metalbreak.ogg
+      resistances: metallicResistances
+    - type: Collidable
+      shapes:
+      - !type:PhysShapeAabb
+        layer:
+        - Opaque
+        - Impassable
+        - MobImpassable
+        - VaultImpassable
+        - SmallImpassable

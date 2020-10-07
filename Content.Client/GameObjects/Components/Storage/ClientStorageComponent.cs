@@ -66,12 +66,12 @@ namespace Content.Client.GameObjects.Components.Storage
         /// <summary>
         /// Copies received values from server about contents of storage container
         /// </summary>
-        /// <param name="storagestate"></param>
-        private void HandleStorageMessage(StorageHeldItemsMessage storagestate)
+        /// <param name="storageState"></param>
+        private void HandleStorageMessage(StorageHeldItemsMessage storageState)
         {
-            StoredEntities = new Dictionary<EntityUid, int>(storagestate.StoredEntities);
-            StorageSizeUsed = storagestate.StorageSizeUsed;
-            StorageCapacityMax = storagestate.StorageSizeMax;
+            StoredEntities = new Dictionary<EntityUid, int>(storageState.StoredEntities);
+            StorageSizeUsed = storageState.StorageSizeUsed;
+            StorageCapacityMax = storageState.StorageSizeMax;
             Window.BuildEntityList();
         }
 
@@ -94,10 +94,10 @@ namespace Content.Client.GameObjects.Components.Storage
         /// <summary>
         /// Function for clicking one of the stored entity buttons in the UI, tells server to remove that entity
         /// </summary>
-        /// <param name="entityuid"></param>
-        private void Interact(EntityUid entityuid)
+        /// <param name="entityUid"></param>
+        private void Interact(EntityUid entityUid)
         {
-            SendNetworkMessage(new RemoveEntityMessage(entityuid));
+            SendNetworkMessage(new RemoveEntityMessage(entityUid));
         }
 
         /// <summary>
@@ -198,21 +198,21 @@ namespace Content.Client.GameObjects.Components.Storage
             {
                 EntityList.DisposeAllChildren();
 
-                var storagelist = StorageEntity.StoredEntities;
+                var storageList = StorageEntity.StoredEntities;
 
-                foreach (var entityuid in storagelist)
+                foreach (var entityUid in storageList)
                 {
-                    var entity = IoCManager.Resolve<IEntityManager>().GetEntity(entityuid.Key);
+                    var entity = IoCManager.Resolve<IEntityManager>().GetEntity(entityUid.Key);
 
                     var button = new EntityButton()
                     {
-                        EntityuID = entityuid.Key,
+                        EntityUid = entityUid.Key,
                         MouseFilter = MouseFilterMode.Stop,
                     };
                     button.ActualButton.OnToggled += OnItemButtonToggled;
                     //Name and Size labels set
                     button.EntityName.Text = entity.Name;
-                    button.EntitySize.Text = string.Format("{0}", entityuid.Value);
+                    button.EntitySize.Text = string.Format("{0}", entityUid.Value);
 
                     //Gets entity sprite and assigns it to button texture
                     if (entity.TryGetComponent(out ISpriteComponent sprite))
@@ -226,12 +226,12 @@ namespace Content.Client.GameObjects.Components.Storage
                 //Sets information about entire storage container current capacity
                 if (StorageEntity.StorageCapacityMax != 0)
                 {
-                    Information.Text = String.Format("Items: {0}, Stored: {1}/{2}", storagelist.Count,
+                    Information.Text = String.Format("Items: {0}, Stored: {1}/{2}", storageList.Count,
                         StorageEntity.StorageSizeUsed, StorageEntity.StorageCapacityMax);
                 }
                 else
                 {
-                    Information.Text = String.Format("Items: {0}", storagelist.Count);
+                    Information.Text = String.Format("Items: {0}", storageList.Count);
                 }
             }
 
@@ -243,7 +243,7 @@ namespace Content.Client.GameObjects.Components.Storage
             {
                 var control = (EntityButton) args.Button.Parent;
                 args.Button.Pressed = false;
-                StorageEntity.Interact(control.EntityuID);
+                StorageEntity.Interact(control.EntityUid);
             }
 
             /// <summary>
@@ -265,7 +265,7 @@ namespace Content.Client.GameObjects.Components.Storage
         /// </summary>
         private class EntityButton : PanelContainer
         {
-            public EntityUid EntityuID { get; set; }
+            public EntityUid EntityUid { get; set; }
             public Button ActualButton { get; }
             public SpriteView EntitySpriteView { get; }
             public Control EntityControl { get; }

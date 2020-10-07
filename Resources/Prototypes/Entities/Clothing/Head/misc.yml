@@ -6,7 +6,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/skubhead.rsi
-  - type: Icon
-    sprite: Clothing/Head/skubhead.rsi
+
   - type: Clothing
     sprite: Clothing/Head/skubhead.rsi

@@ -1,4 +1,5 @@
-﻿using Content.Client.UserInterface.Stylesheets;
+﻿using System;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
 using Robust.Client.Graphics.Drawing;
@@ -7,7 +8,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
-using System;
 
 namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
 {

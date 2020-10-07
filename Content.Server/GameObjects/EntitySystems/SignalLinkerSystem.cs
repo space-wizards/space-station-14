@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.MachineLinking;
+﻿using System.Collections.Generic;
+using Content.Server.GameObjects.Components.MachineLinking;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
@@ -10,22 +11,21 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
-using System.Collections.Generic;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
     public class SignalLinkerSystem : EntitySystem
     {
-        private Dictionary<NetSessionId, SignalTransmitterComponent> _transmitters;
+        private Dictionary<NetUserId, SignalTransmitterComponent> _transmitters;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            _transmitters = new Dictionary<NetSessionId, SignalTransmitterComponent>();
+            _transmitters = new Dictionary<NetUserId, SignalTransmitterComponent>();
         }
 
-        public void SignalLinkerKeybind(NetSessionId id, bool? enable)
+        public void SignalLinkerKeybind(NetUserId id, bool? enable)
         {
             if (enable == null)
             {
@@ -66,7 +66,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private bool HandleUse(ICommonSession session, EntityCoordinates coords, EntityUid uid)
         {
-            if (!_transmitters.TryGetValue(session.SessionId, out var signalTransmitter))
+            if (!_transmitters.TryGetValue(session.UserId, out var signalTransmitter))
             {
                 return false;
             }
@@ -86,7 +86,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             if (entity.TryGetComponent<SignalTransmitterComponent>(out var transmitter))
             {
-                _transmitters[session.SessionId] = transmitter.GetSignal(session.AttachedEntity);
+                _transmitters[session.UserId] = transmitter.GetSignal(session.AttachedEntity);
 
                 return true;
             }
@@ -129,7 +129,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 return;
             }
 
-            system.SignalLinkerKeybind(player.SessionId, enable);
+            system.SignalLinkerKeybind(player.UserId, enable);
         }
     }
 }

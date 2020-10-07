@@ -294,7 +294,7 @@ namespace Content.Server.GameObjects.Components.Instruments
 
         private void OpenUserInterface(IPlayerSession session)
         {
-            UserInterface?.Open(session);
+            UserInterface?.Toggle(session);
         }
 
         public override void Update(float delta)

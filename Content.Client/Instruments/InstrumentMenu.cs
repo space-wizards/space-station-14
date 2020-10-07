@@ -1,7 +1,6 @@
 using Content.Client.GameObjects.Components.Instruments;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
-using Content.Shared.Utility;
 using Robust.Client.Audio.Midi;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.UserInterface;

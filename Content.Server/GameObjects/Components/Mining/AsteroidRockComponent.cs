@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Weapon.Melee;
-using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.Damage;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;

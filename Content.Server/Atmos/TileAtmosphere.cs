@@ -6,10 +6,10 @@ using Content.Server.Atmos.Reactions;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.EntitySystems.Atmos;
 using Content.Server.Interfaces;
+using Content.Server.Utility;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
 using Content.Shared.Maps;
-using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.EntitySystems.TileLookup;
@@ -66,7 +66,7 @@ namespace Content.Server.Atmos
         public float HeatCapacity { get; set; } = 1f;
 
         [ViewVariables]
-        public float ThermalConductivity => Tile?.Tile.GetContentTileDefinition().ThermalConductivity ?? 0.05f;
+        public float ThermalConductivity { get; set; } = 0.05f;
 
         [ViewVariables]
         public bool Excited { get; set; }
@@ -93,6 +93,9 @@ namespace Content.Server.Atmos
 
         private AtmosDirection _pressureDirection;
 
+        // I'm assuming there's a good reason the original variable was made private, but this information is also important.
+        public AtmosDirection PressureDirectionForDebugOverlay => _pressureDirection;
+
         [ViewVariables, UsedImplicitly]
         private int PressureDirectionInt => (int)_pressureDirection;
 
@@ -111,8 +114,13 @@ namespace Content.Server.Atmos
         [ViewVariables]
         public GasMixture Air { get; set; }
 
+        [ViewVariables, UsedImplicitly]
+        private int _blockedAirflow => (int)BlockedAirflow;
+
+        public AtmosDirection BlockedAirflow { get; set; } = AtmosDirection.Invalid;
+
         [ViewVariables]
-        public bool BlocksAir => _gridAtmosphereComponent.IsAirBlocked(GridIndices);
+        public bool BlocksAllAir => BlockedAirflow == AtmosDirection.All;
 
         public TileAtmosphere(GridAtmosphereComponent atmosphereComponent, GridId gridIndex, MapIndices gridIndices, GasMixture mixture = null, bool immutable = false)
         {
@@ -813,8 +821,14 @@ namespace Content.Server.Atmos
 
             if (tileRef == null) return;
 
-            _gridAtmosphereComponent.Owner.EntityManager.
-                EventBus.QueueEvent(EventSource.Local, new FireActEvent(Hotspot.Temperature, Hotspot.Volume));
+            foreach (var entity in tileRef?.GetEntitiesInTileFast(_gridTileLookupSystem))
+            {
+                foreach (var fireAct in entity.GetAllComponents<IFireAct>())
+                {
+
+                    fireAct.FireAct(Hotspot.Temperature, Hotspot.Volume);
+                }
+            }
         }
 
         private bool ConsiderSuperconductivity()
@@ -867,12 +881,12 @@ namespace Content.Server.Atmos
         private void FinishSuperconduction()
         {
             // Conduct with air on my tile if I have it
-            if (!BlocksAir)
+            if (!BlocksAllAir)
             {
                 Temperature = Air.TemperatureShare(ThermalConductivity, Temperature, HeatCapacity);
             }
 
-            FinishSuperconduction(BlocksAir ? Temperature : Air.Temperature);
+            FinishSuperconduction(BlocksAllAir ? Temperature : Air.Temperature);
         }
 
         private void FinishSuperconduction(float temperature)
@@ -886,9 +900,9 @@ namespace Content.Server.Atmos
 
         private void NeighborConductWithSource(TileAtmosphere other)
         {
-            if (BlocksAir)
+            if (BlocksAllAir)
             {
-                if (!other.BlocksAir)
+                if (!other.BlocksAllAir)
                 {
                     other.TemperatureShareOpenToSolid(this);
                 }
@@ -901,7 +915,7 @@ namespace Content.Server.Atmos
                 return;
             }
 
-            if (!other.BlocksAir)
+            if (!other.BlocksAllAir)
             {
                 other.Air.TemperatureShare(Air, Atmospherics.WindowHeatTransferCoefficient);
             }
@@ -952,7 +966,7 @@ namespace Content.Server.Atmos
 
         public AtmosDirection ConductivityDirections()
         {
-            if(BlocksAir)
+            if(BlocksAllAir)
             {
                 if(_archivedCycle < _gridAtmosphereComponent.UpdateCounter)
                     Archive(_gridAtmosphereComponent.UpdateCounter);
@@ -1087,7 +1101,25 @@ namespace Content.Server.Atmos
 
         private void ConsiderFirelocks(TileAtmosphere other)
         {
-            // TODO ATMOS firelocks!
+            var reconsiderAdjacent = false;
+
+            foreach (var entity in GridIndices.GetEntitiesInTileFast(GridIndex, _gridAtmosphereComponent.GridTileLookupSystem))
+            {
+                if (!entity.TryGetComponent(out FirelockComponent firelock)) continue;
+                reconsiderAdjacent |= firelock.EmergencyPressureStop();
+            }
+
+            foreach (var entity in other.GridIndices.GetEntitiesInTileFast(other.GridIndex, _gridAtmosphereComponent.GridTileLookupSystem))
+            {
+                if (!entity.TryGetComponent(out FirelockComponent firelock)) continue;
+                reconsiderAdjacent |= firelock.EmergencyPressureStop();
+            }
+
+            if (reconsiderAdjacent)
+            {
+                UpdateAdjacent();
+                other.UpdateAdjacent();
+            }
         }
 
         private void React()
@@ -1130,7 +1162,7 @@ namespace Content.Server.Atmos
                 _adjacentTiles[direction.ToIndex()] = adjacent;
                 adjacent?.UpdateAdjacent(direction.GetOpposite());
 
-                if (adjacent != null && !_gridAtmosphereComponent.IsAirBlocked(adjacent.GridIndices))
+                if (adjacent != null && !BlockedAirflow.HasFlag(direction) && !_gridAtmosphereComponent.IsAirBlocked(adjacent.GridIndices, direction.GetOpposite()))
                 {
                     _adjacentBits |= direction;
                 }
@@ -1139,9 +1171,15 @@ namespace Content.Server.Atmos
 
         public void UpdateAdjacent(AtmosDirection direction)
         {
-            if (!_gridAtmosphereComponent.IsAirBlocked(GridIndices.Offset(direction.ToDirection())))
+            _adjacentTiles[direction.ToIndex()] = _gridAtmosphereComponent.GetTile(GridIndices.Offset(direction.ToDirection()));
+
+            if (!BlockedAirflow.HasFlag(direction) && !_gridAtmosphereComponent.IsAirBlocked(GridIndices.Offset(direction.ToDirection()), direction.GetOpposite()))
             {
-                _adjacentTiles[direction.ToIndex()] = _gridAtmosphereComponent.GetTile(GridIndices.Offset(direction.ToDirection()));
+                _adjacentBits |= direction;
+            }
+            else
+            {
+                _adjacentBits &= ~direction;
             }
         }
 

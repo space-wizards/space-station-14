@@ -6,8 +6,8 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
-using Robust.Shared.ViewVariables;
 using Robust.Shared.Localization;
+using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.Client.GameObjects.Components.HUD.Inventory
@@ -40,10 +40,10 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-            if (!disposing) return;
-            _strippingMenu.Dispose();
+            if (!disposing)
+                return;
 
-            _strippingMenu.Close();
+            _strippingMenu.Dispose();
         }
 
         private void UpdateMenu()
@@ -56,7 +56,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             {
                 foreach (var (slot, name) in Inventory)
                 {
-                    _strippingMenu.AddButton(EquipmentSlotDefines.SlotNames[slot], name, (ev) =>
+                    _strippingMenu.AddButton(SlotNames[slot], name, (ev) =>
                     {
                         SendMessage(new StrippingInventoryButtonPressed(slot));
                     });

@@ -8,8 +8,6 @@
     caliber: Shotgun
     magazineType: Rifle
     capacity: 8
-  - type: Icon
-    state: icon
   - type: Sprite
     netsync: false
     layers:
@@ -31,8 +29,6 @@
   components:
   - type: RangedMagazine
     fillPrototype: ShellShotgun
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12_pellets.rsi
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12_pellets.rsi
 
@@ -43,8 +39,6 @@
   components:
   - type: RangedMagazine
     fillPrototype: ShellShotgunBeanbag
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12_beanbag.rsi
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12_beanbag.rsi
 
@@ -55,7 +49,5 @@
   components:
   - type: RangedMagazine
     fillPrototype: ShellShotgunSlug
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12_slug.rsi
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12_slug.rsi

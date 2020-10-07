@@ -13,7 +13,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         public float PressureResistance { get; set; } = 1f;
         [ViewVariables(VVAccess.ReadWrite)]
         public float MoveResist { get; set; } = 100f;
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         public int LastHighPressureMovementAirCycle { get; set; } = 0;
 
         public override void ExposeData(ObjectSerializer serializer)

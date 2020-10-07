@@ -46,7 +46,7 @@ namespace Content.Client.UserInterface
             //Get section header font
             var cache = IoCManager.Resolve<IResourceCache>();
             var inputManager = IoCManager.Resolve<IInputManager>();
-            Font headerFont = new VectorFont(cache.GetResource<FontResource>("/Textures/Interface/Nano/NotoSans/NotoSans-Regular.ttf"), _headerFontSize);
+            Font headerFont = new VectorFont(cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), _headerFontSize);
 
             var scrollContainer = new ScrollContainer();
             scrollContainer.AddChild(VBox = new VBoxContainer());
@@ -83,6 +83,7 @@ Use targeted entity: [color=#a4885c]{11}[/color]
 Throw held item: [color=#a4885c]{12}[/color]
 Pull entity: [color=#a4885c]{30}[/color]
 Move pulled entity: [color=#a4885c]{29}[/color]
+Stop pulling: [color=#a4885c]{32}[/color]
 Examine entity: [color=#a4885c]{13}[/color]
 Point somewhere: [color=#a4885c]{28}[/color]
 Open entity context menu: [color=#a4885c]{14}[/color]
@@ -122,7 +123,8 @@ Toggle admin menu [color=#a4885c]{31}[/color]",
                 Key(Point),
                 Key(TryPullObject),
                 Key(MovePulledObject),
-                Key(OpenAdminMenu)));
+                Key(OpenAdminMenu),
+                Key(ReleasePulledObject)));
 
             //Gameplay
             VBox.AddChild(new Label { FontOverride = headerFont, Text = "\nGameplay" });

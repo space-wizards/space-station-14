@@ -26,7 +26,6 @@ namespace Content.Server.GameObjects.Components.Movement
     [RegisterComponent]
     public class ServerTeleporterComponent : Component, IAfterInteract
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
         [Dependency] private readonly IRobustRandom _spreadRandom = default!;
 
@@ -96,7 +95,7 @@ namespace Content.Server.GameObjects.Components.Movement
         public void TryDirectedTeleport(IEntity user, MapCoordinates mapCoords)
         {
             // Checks
-            if ((user.Transform.WorldPosition - mapCoords.Position).LengthSquared > (_range * _range))
+            if ((user.Transform.WorldPosition - mapCoords.Position).LengthSquared > _range * _range)
             {
                 return;
             }
@@ -223,7 +222,7 @@ namespace Content.Server.GameObjects.Components.Movement
         public void Teleport(IEntity user, Vector2 vector)
         {
             // Messy maybe?
-            var targetGrid = user.ToCoordinates(vector);
+            var targetGrid = user.Transform.Coordinates.WithPosition(vector);
             var soundPlayer = EntitySystem.Get<AudioSystem>();
 
             // If portals use those, otherwise just move em over
