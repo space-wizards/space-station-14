@@ -1,7 +1,9 @@
 #nullable enable
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.GameObjects.Components.Body.Part;
+using Content.Shared.GameObjects.Components.Body.Part.Property;
 using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Shared.GameObjects.Components.Body
@@ -179,9 +181,24 @@ namespace Content.Shared.GameObjects.Components.Body
         bool TryGetPartConnections(IBodyPart part, [NotNullWhen(true)] out List<IBodyPart>? connections);
 
         /// <summary>
-        ///     Grabs all <see cref="IBodyPart"/> of the given type in this body.
+        ///     Finds all <see cref="IBodyPart"/>s of the given type in this body.
         /// </summary>
+        /// <returns>A list of parts of that type.</returns>
         List<IBodyPart> GetPartsOfType(BodyPartType type);
+
+        /// <summary>
+        ///     Finds all <see cref="IBodyPart"/>s with the given property in this body.
+        /// </summary>
+        /// <type name="type">The property type to look for.</type>
+        /// <returns>A list of parts with that property.</returns>
+        List<(IBodyPart part, IBodyPartProperty property)> GetPartsWithProperty(Type type);
+
+        /// <summary>
+        ///     Finds all <see cref="IBodyPart"/>s with the given property in this body.
+        /// </summary>
+        /// <typeparam name="T">The property type to look for.</typeparam>
+        /// <returns>A list of parts with that property.</returns>
+        List<(IBodyPart part, T property)> GetPartsWithProperty<T>() where T : class, IBodyPartProperty;
 
         // TODO BODY Make a slot object that makes sense to the human mind, and make it serializable. Imagine the possibilities!
         KeyValuePair<string, BodyPartType> SlotAt(int index);

@@ -1,6 +1,5 @@
 ﻿#nullable enable
 using System.Diagnostics.CodeAnalysis;
-using Content.Shared.GameObjects.Components.Body.Part;
 using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Shared.GameObjects.Components.Body

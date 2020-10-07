@@ -36,14 +36,6 @@ namespace Content.Shared.GameObjects.Components.Body
 
         private readonly Dictionary<string, IBodyPart> _parts = new Dictionary<string, IBodyPart>();
 
-        /// <summary>
-        ///     All <see cref="IBodyPart"></see> with <see cref="LegComponent"></see>
-        ///     that are currently affecting move speed, mapped to how big that leg
-        ///     they're on is.
-        /// </summary>
-        [ViewVariables]
-        private readonly Dictionary<IBodyPart, float> _activeLegs = new Dictionary<IBodyPart, float>();
-
         [ViewVariables] public string? TemplateName { get; private set; }
 
         [ViewVariables] public string? PresetName { get; private set; }
@@ -377,17 +369,47 @@ namespace Content.Shared.GameObjects.Components.Body
 
         public List<IBodyPart> GetPartsOfType(BodyPartType type)
         {
-            var toReturn = new List<IBodyPart>();
+            var parts = new List<IBodyPart>();
 
             foreach (var part in Parts.Values)
             {
                 if (part.PartType == type)
                 {
-                    toReturn.Add(part);
+                    parts.Add(part);
                 }
             }
 
-            return toReturn;
+            return parts;
+        }
+
+        public List<(IBodyPart part, IBodyPartProperty property)> GetPartsWithProperty(Type type)
+        {
+            var parts = new List<(IBodyPart, IBodyPartProperty)>();
+
+            foreach (var part in Parts.Values)
+            {
+                if (part.TryGetProperty(type, out var property))
+                {
+                    parts.Add((part, property));
+                }
+            }
+
+            return parts;
+        }
+
+        public List<(IBodyPart part, T property)> GetPartsWithProperty<T>() where T : class, IBodyPartProperty
+        {
+            var parts = new List<(IBodyPart, T)>();
+
+            foreach (var part in Parts.Values)
+            {
+                if (part.TryGetProperty<T>(out var property))
+                {
+                    parts.Add((part, property));
+                }
+            }
+
+            return parts;
         }
 
         private void CalculateSpeed()
@@ -397,25 +419,22 @@ namespace Content.Shared.GameObjects.Components.Body
                 return;
             }
 
+            var legs = GetPartsWithProperty<LegComponent>();
             float speedSum = 0;
-            foreach (var part in _activeLegs.Keys)
+
+            foreach (var leg in GetPartsWithProperty<LegComponent>())
             {
-                if (!part.HasProperty<LegComponent>())
+                var footDistance = DistanceToNearestFoot(leg.part);
+
+                if (Math.Abs(footDistance - float.MinValue) <= 0.001f)
                 {
-                    _activeLegs.Remove(part);
+                    continue;
                 }
+
+                speedSum += leg.property.Speed * (1 + (float) Math.Log(footDistance, 1024.0));
             }
 
-            foreach (var (key, value) in _activeLegs)
-            {
-                if (key.TryGetProperty(out LegComponent? leg))
-                {
-                    // Speed of a leg = base speed * (1+log1024(leg length))
-                    speedSum += leg.Speed * (1 + (float) Math.Log(value, 1024.0));
-                }
-            }
-
-            if (speedSum <= 0.001f || _activeLegs.Count <= 0)
+            if (speedSum <= 0.001f)
             {
                 playerMover.BaseWalkSpeed = 0.8f;
                 playerMover.BaseSprintSpeed = 2.0f;
@@ -423,9 +442,8 @@ namespace Content.Shared.GameObjects.Components.Body
             else
             {
                 // Extra legs stack diminishingly.
-                // Final speed = speed sum/(leg count-log4(leg count))
                 playerMover.BaseWalkSpeed =
-                    speedSum / (_activeLegs.Count - (float) Math.Log(_activeLegs.Count, 4.0));
+                    speedSum / (legs.Count - (float) Math.Log(legs.Count, 4.0));
 
                 playerMover.BaseSprintSpeed = playerMover.BaseWalkSpeed * 1.75f;
             }
@@ -439,19 +457,6 @@ namespace Content.Shared.GameObjects.Components.Body
             // Calculate move speed based on this body.
             if (Owner.HasComponent<MovementSpeedModifierComponent>())
             {
-                _activeLegs.Clear();
-                var legParts = Parts.Values.Where(x => x.HasProperty<LegComponent>());
-
-                foreach (var part in legParts)
-                {
-                    var footDistance = DistanceToNearestFoot(part);
-
-                    if (Math.Abs(footDistance - float.MinValue) > 0.001f)
-                    {
-                        _activeLegs.Add(part, footDistance);
-                    }
-                }
-
                 CalculateSpeed();
             }
 
