@@ -13,9 +13,9 @@ namespace Content.Server.GameObjects.EntitySystems
             foreach (var listener in ComponentManager.EntityQuery<IListen>())
             {
                 // TODO: Map Position distance
-                if (listener.CanHear(message, source))
+                if (listener.CanListen(message, source))
                 {
-                    listener.Broadcast(message, source);
+                    listener.Listen(message, source);
                 }
             }
         }

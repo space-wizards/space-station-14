@@ -88,7 +88,7 @@ namespace Content.Server.GameObjects.Components.Radio
             return Use(eventArgs.User);
         }
 
-        public bool CanHear(string message, IEntity source)
+        public bool CanListen(string message, IEntity source)
         {
             return RadioOn &&
                    Owner.Transform.Coordinates.TryDistance(_entityManager, source.Transform.Coordinates, out var distance) &&
@@ -101,6 +101,11 @@ namespace Content.Server.GameObjects.Components.Radio
             {
                 Speak(message);
             }
+        }
+
+        public void Listen(string message, IEntity speaker)
+        {
+            Broadcast(message, speaker);
         }
 
         public void Broadcast(string message, IEntity speaker)

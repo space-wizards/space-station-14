@@ -58,7 +58,7 @@ namespace Content.Server.GameObjects.Components.Headset
             _radioSystem = EntitySystem.Get<RadioSystem>();
         }
 
-        public bool CanHear(string message, IEntity source)
+        public bool CanListen(string message, IEntity source)
         {
             return RadioRequested;
         }
@@ -79,6 +79,11 @@ namespace Content.Server.GameObjects.Components.Headset
                 msg.MessageWrap = Loc.GetString("[{0}] {1} says, \"{{0}}\"", channel, source.Name);
                 _netManager.ServerSendMessage(msg, playerChannel);
             }
+        }
+
+        public void Listen(string message, IEntity speaker)
+        {
+            Broadcast(message, speaker);
         }
 
         public void Broadcast(string message, IEntity speaker)
