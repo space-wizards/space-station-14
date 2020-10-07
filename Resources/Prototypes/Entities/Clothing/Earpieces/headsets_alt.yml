@@ -1,0 +1,88 @@
+﻿- type: entity
+  parent: Clothing
+  id: HeadsetBaseAlt
+  name: headset
+  abstract: true
+  description: An updated, modular intercom that fits over the head. Takes encryption keys.
+  components:
+  - type: Headset
+
+
+- type: entity
+  parent: HeadsetBaseAlt
+  id: HeadsetCargoAlt
+  name: cargo overear-headset
+  components:
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/cargo.rsi
+    state: icon_alt
+  - type: Clothing
+    Slots:
+    - ears
+    sprite: Clothing/Ears/Headsets/cargo.rsi
+
+- type: entity
+  parent: HeadsetBaseAlt
+  id: HeadsetCommandAlt
+  name: command overear-headset
+  components:
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/command.rsi
+    state: icon_alt
+  - type: Clothing
+    Slots:
+    - ears
+    sprite: Clothing/Ears/Headsets/command.rsi
+
+- type: entity
+  parent: HeadsetBaseAlt
+  id: HeadsetEngineeringAlt
+  name: engineering overear-headset
+  components:
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/engineering.rsi
+    state: icon_alt
+  - type: Clothing
+    Slots:
+    - ears
+    sprite: Clothing/Ears/Headsets/engineering.rsi
+
+- type: entity
+  parent: HeadsetBaseAlt
+  id: HeadsetMedicalAlt
+  name: medical overear-headset
+  components:
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/medical.rsi
+    state: icon_alt
+  - type: Clothing
+    Slots:
+    - ears
+    sprite: Clothing/Ears/Headsets/medical.rsi
+
+- type: entity
+  parent: HeadsetBaseAlt
+  id: HeadsetSecurityAlt
+  name: security overear-headset
+  components:
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/security.rsi
+    state: icon_alt
+  - type: Clothing
+    Slots:
+    - ears
+    sprite: Clothing/Ears/Headsets/security.rsi
+
+- type: entity
+  parent: HeadsetBaseAlt
+  id: HeadsetSyndicateAlt
+  name: syndicate overear-headset
+  description: A syndicate headset that can be used to hear all radio frequencies. Protects ears from flashbangs.
+  components:
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/syndicate.rsi
+    state: icon_alt
+  - type: Clothing
+    Slots:
+    - ears
+    sprite: Clothing/Ears/Headsets/syndicate.rsi
