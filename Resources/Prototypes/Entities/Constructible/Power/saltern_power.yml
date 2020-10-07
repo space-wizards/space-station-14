@@ -8,6 +8,7 @@
 
 - type: entity
   id: SalternSmes
+  description: A high-capacity superconducting magnetic energy storage (SMES) unit.
   parent: BaseSmes
   name: Smes
   components:
