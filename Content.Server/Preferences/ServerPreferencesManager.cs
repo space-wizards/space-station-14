@@ -66,6 +66,12 @@ namespace Content.Server.Preferences
 
             var curPrefs = prefsData.Prefs!;
 
+            if (!curPrefs.Characters.ContainsKey(index))
+            {
+                // Non-existent slot.
+                return;
+            }
+
             prefsData.Prefs = new PlayerPreferences(curPrefs.Characters, index);
 
             if (ShouldStorePrefs(message.MsgChannel.AuthType))
