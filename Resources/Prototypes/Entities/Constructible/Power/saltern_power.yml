@@ -8,6 +8,7 @@
 
 - type: entity
   id: SalternSmes
+  description: Huge cell/battery for power distributing purposes.
   parent: BaseSmes
   name: Smes
   components:
