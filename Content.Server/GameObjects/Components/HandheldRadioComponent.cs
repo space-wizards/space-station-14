@@ -17,7 +17,7 @@ namespace Content.Server.GameObjects.Components
     [RegisterComponent]
     [ComponentReference(typeof(IRadio))]
     [ComponentReference(typeof(IListen))]
-    public class HandheldRadioComponent : Component, IUse, IListen, IRadio
+    public class HandheldRadioComponent : Component, IUse, IListen, IRadio, IActivate
     {
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -71,14 +71,19 @@ namespace Content.Server.GameObjects.Components
             _chatManager.EntitySay(Owner, message);
         }
 
-        public bool UseEntity(UseEntityEventArgs eventArgs)
+        public bool Use(IEntity user)
         {
             RadioOn = !RadioOn;
 
             var message = Loc.GetString($"The radio is now {(RadioOn ? "on" : "off")}.");
-            Owner.PopupMessage(eventArgs.User, message);
+            Owner.PopupMessage(user, message);
 
             return true;
+        }
+
+        public bool UseEntity(UseEntityEventArgs eventArgs)
+        {
+            return Use(eventArgs.User);
         }
 
         public bool CanHear(string message, IEntity source)
@@ -99,6 +104,11 @@ namespace Content.Server.GameObjects.Components
         public void Broadcast(string message, IEntity speaker)
         {
             _radioSystem.SpreadMessage(this, speaker, message, _broadcastChannel);
+        }
+
+        public void Activate(ActivateEventArgs eventArgs)
+        {
+            Use(eventArgs.User);
         }
     }
 }
