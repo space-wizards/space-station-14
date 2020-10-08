@@ -31,7 +31,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
 
         private List<StationEvent> _stationEvents = new List<StationEvent>();
 
-        private const float MinimumTimeUntilFirstEvent = 600;
+        private const float MinimumTimeUntilFirstEvent = 300;
 
         /// <summary>
         /// How long until the next check for an event runs

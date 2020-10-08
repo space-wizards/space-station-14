@@ -25,10 +25,6 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
-  - type: Destructible
-    deadThreshold: 500
-    spawnOnDestroy: Girder
-    resistances: metallicResistances
   - type: Occluder
     sizeX: 32
     sizeY: 32
@@ -239,14 +235,20 @@
   - type: Icon
     sprite: Constructible/Structures/Walls/solid.rsi
     state: rgeneric
-  - type: Destructible
+  - type: Construction
+    graph: girder
+    node: reinforcedWall
+  - type: BreakableConstruction
     deadThreshold: 600
-    spawnOnDestroy: Girder
+    node: girder
     resistances: metallicResistances
   - type: ReinforcedWall
     key: walls
     base: solid
     reinforcedBase: reinf_over
+  - type: Appearance
+    visuals:
+      - type: ReinforcedWallVisualizer
 
 # Riveting
 - type: entity
@@ -308,11 +310,14 @@
   - type: Sprite
     color: "#889192"
     sprite: Constructible/Structures/Walls/solid.rsi
+  - type: Construction
+    graph: girder
+    node: wall
   - type: Icon
     sprite: Constructible/Structures/Walls/solid.rsi
-  - type: Destructible
+  - type: BreakableConstruction
     deadThreshold: 300
-    spawnOnDestroy: Girder
+    node: girder
     destroySound: /Audio/Effects/metalbreak.ogg
     resistances: metallicResistances
   - type: IconSmooth

@@ -5,6 +5,10 @@
   components:
   - type: Clickable
   - type: InteractionOutline
+  - type: Anchorable
+  - type: Construction
+    graph: girder
+    node: girder
   - type: Sprite
     sprite: Constructible/Structures/Walls/solid.rsi
     state: wall_girder

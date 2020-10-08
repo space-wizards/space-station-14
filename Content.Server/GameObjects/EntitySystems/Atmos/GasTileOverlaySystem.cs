@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Shared.Atmos;
@@ -286,7 +287,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
                     gridAtmosComponents[gridId] = gam;
                 }
 
-                foreach (var invalid in indices)
+                foreach (var invalid in indices.ToArray())
                 {
                     var chunk = GetOrCreateChunk(gridId, invalid);
 

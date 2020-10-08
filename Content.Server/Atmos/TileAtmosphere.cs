@@ -819,9 +819,7 @@ namespace Content.Server.Atmos
 
             var tileRef = GridIndices.GetTileRef(GridIndex);
 
-            if (tileRef == null) return;
-
-            foreach (var entity in tileRef?.GetEntitiesInTileFast(_gridTileLookupSystem))
+            foreach (var entity in tileRef.GetEntitiesInTileFast(_gridTileLookupSystem))
             {
                 foreach (var fireAct in entity.GetAllComponents<IFireAct>())
                 {
