@@ -1,0 +1,138 @@
+﻿- type: constructionGraph
+  id: girder
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: girder
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: Metal
+              amount: 2
+              doAfter: 1
+
+    - node: girder
+      entity: Girder
+      actions:
+        - !type:SpriteChange
+          specifier:
+            sprite: /Textures/Constructible/Structures/Walls/solid.rsi
+            state: wall_girder
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SteelSheet1
+              amount: 2
+            - !type:DeleteEntity {}
+          conditions:
+            - !type:EntityAnchored
+              anchored: false
+          steps:
+            - tool: Screwing
+              doAfter: 2
+
+        - to: wall
+          completed:
+            - !type:SnapToGrid {}
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Metal
+              amount: 2
+
+        - to: reinforcedGirder
+          completed:
+            - !type:SnapToGrid { }
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Plasteel
+              amount: 2
+
+    - node: wall
+      entity: solid_wall
+      edges:
+        - to: girder
+          completed:
+            - !type:SpawnPrototype
+              prototype: SteelSheet1
+              amount: 2
+          steps:
+            - tool: Welding
+              doAfter: 2
+
+    - node: reinforcedGirder
+      actions:
+        - !type:SpriteChange
+          specifier:
+            sprite: /Textures/Constructible/Structures/Walls/solid.rsi
+            state: reinforced_wall_girder
+      edges:
+        - to: reinforcedWall
+          completed:
+            - !type:SnapToGrid { }
+          conditions:
+            - !type:EntityAnchored { }
+          steps:
+            - material: Plasteel
+              amount: 2
+              doAfter: 1
+
+        - to: girder
+          completed:
+            - !type:SnapToGrid { }
+          conditions:
+            - !type:EntityAnchored { }
+          steps:
+            - tool: Welding
+              doAfter: 2
+
+    - node: reinforcedWall
+      entity: reinforced_wall
+      edges:
+        - to: girder
+          steps:
+            - tool: Cutting
+              doAfter: 1
+              completed:
+                - !type:VisualizerDataInt
+                  key: "enum.ReinforcedWallVisuals.DeconstructionStage"
+                  data: 5
+            - tool: Screwing
+              doAfter: 1
+            - tool: Welding
+              doAfter: 1
+              completed:
+                - !type:VisualizerDataInt
+                  key: "enum.ReinforcedWallVisuals.DeconstructionStage"
+                  data: 4
+            - tool: Prying
+              doAfter: 1
+            - tool: Anchoring
+              doAfter: 1
+              completed:
+                - !type:VisualizerDataInt
+                  key: "enum.ReinforcedWallVisuals.DeconstructionStage"
+                  data: 3
+            - tool: Welding
+              doAfter: 2
+              completed:
+                - !type:VisualizerDataInt
+                  key: "enum.ReinforcedWallVisuals.DeconstructionStage"
+                  data: 2
+            - tool: Prying
+              doAfter: 1
+              completed:
+                - !type:VisualizerDataInt
+                  key: "enum.ReinforcedWallVisuals.DeconstructionStage"
+                  data: 1
+            - tool: Screwing
+              doAfter: 1
+              completed:
+                - !type:VisualizerDataInt
+                  key: "enum.ReinforcedWallVisuals.DeconstructionStage"
+                  data: 0
+            - tool: Cutting
+              doAfter: 1
