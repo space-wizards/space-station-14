@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using Content.Server.Utility;
 using Content.Shared.Construction;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
@@ -19,12 +18,15 @@ namespace Content.Server.Construction.Conditions
         [Dependency] private readonly IComponentFactory _componentFactory = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
 
+        public ComponentInTile()
+        {
+            IoCManager.InjectDependencies(this);
+        }
+
         public void ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.Component, "component", string.Empty);
             serializer.DataField(this, x => x.Value, "hasEntity", true);
-
-            IoCManager.InjectDependencies(this);
         }
 
         public bool Value { get; private set; }
@@ -37,13 +39,16 @@ namespace Content.Server.Construction.Conditions
 
             var type = _componentFactory.GetRegistration(Component).Type;
 
-            foreach (var ent in entity.Transform.Coordinates.ToMapIndices(entity.EntityManager, _mapManager).GetEntitiesInTile(entity.Transform.GridID, true, entity.EntityManager))
+            var indices = entity.Transform.Coordinates.ToMapIndices(entity.EntityManager, _mapManager);
+            var entities = indices.GetEntitiesInTile(entity.Transform.GridID, true, entity.EntityManager);
+
+            foreach (var ent in entities)
             {
                 if (ent.HasComponent(type))
                     return Value;
             }
 
-            return true;
+            return !Value;
         }
     }
 }

@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Construction;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
-using Microsoft.Extensions.Logging;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Log;
