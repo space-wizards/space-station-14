@@ -57,7 +57,7 @@ namespace Content.Server.GameObjects.Components.Doors
         private bool _boltsDown;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private bool BoltsDown
+        public bool BoltsDown
         {
             get => _boltsDown;
             set
