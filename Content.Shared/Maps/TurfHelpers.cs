@@ -194,6 +194,8 @@ namespace Content.Shared.Maps
         {
             var map = IoCManager.Resolve<IMapManager>();
             var tileGrid = map.GetGrid(turf.GridIndex);
+
+            // This is scaled to 90 % so it doesn't encompass walls on other tiles.
             var tileBox = Box2.UnitCentered.Scale(tileGrid.TileSize).Scale(0.9f);
             return tileBox.Translated(tileGrid.GridTileToWorldPos(turf.GridIndices));
         }
