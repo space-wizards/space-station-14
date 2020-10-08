@@ -15,5 +15,7 @@ namespace Content.Server.Interfaces
         /// <returns></returns>
         public DeviceNetworkConnection Register(int netId, int frequency, OnReceiveNetMessage messageHandler, bool receiveAll = false);
         public DeviceNetworkConnection Register(int netId, OnReceiveNetMessage messageHandler, bool receiveAll = false);
+
+        public void Update();
     }
 }

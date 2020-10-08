@@ -5,7 +5,7 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
 {
     public class DeviceNetworkConnection
     {
-        private readonly DeviceNetworkSystem _network;
+        private readonly DeviceNetwork _network;
         [ViewVariables]
         private readonly int _netId;
 
@@ -23,7 +23,7 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
             set => _network.SetDeviceReceiveAll(_netId, Frequency, Address, value);
         }
 
-        public DeviceNetworkConnection(DeviceNetworkSystem network, int netId, string address, int frequency)
+        public DeviceNetworkConnection(DeviceNetwork network, int netId, string address, int frequency)
         {
             _network = network;
             _netId = netId;
@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
 
         public bool Send(int frequency, string address, IReadOnlyDictionary<string, string> payload)
         {
-            return _network.EnqueuePackage(_netId, frequency, address, payload);
+            return _network.EnqueuePackage(_netId, frequency, address, payload, Address);
         }
 
         public bool Send(string address, IReadOnlyDictionary<string, string> payload)
@@ -44,7 +44,7 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
 
         public bool Broadcast(int frequency, IReadOnlyDictionary<string, string> payload)
         {
-            return _network.EnqueuePackage(_netId, frequency, "", payload, true);
+            return _network.EnqueuePackage(_netId, frequency, "", payload, Address, true);
         }
 
         public bool Broadcast(IReadOnlyDictionary<string, string> payload)
