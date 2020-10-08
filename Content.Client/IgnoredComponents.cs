@@ -179,6 +179,8 @@
             "Butcherable",
             "Rehydratable",
             "Headset",
+            "ComputerBoard",
+            "BreakableConstruction",
         };
     }
 }

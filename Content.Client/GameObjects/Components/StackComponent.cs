@@ -11,6 +11,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.GameObjects.Components
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedStackComponent))]
     public class StackComponent : SharedStackComponent, IItemStatus
     {
         [ViewVariables(VVAccess.ReadWrite)] private bool _uiUpdateNeeded;

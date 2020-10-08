@@ -113,7 +113,6 @@
       bounds: "-0.25,-0.25,0.25,0.25"
       mask: [Impassable]
       layer: [Clickable]
-    IsScrapingFloor: true
 
 - type: entity
   name: recharger
@@ -143,7 +142,6 @@
       bounds: "-0.25,-0.25,0.25,0.25"
       mask: [Impassable]
       layer: [Clickable]
-    IsScrapingFloor: true
 
 - type: entity
   name: wall recharger
@@ -172,4 +170,3 @@
       bounds: "-0.25,-0.25,0.25,0.25"
       mask: [Impassable]
       layer: [Clickable]
-    IsScrapingFloor: true

@@ -5,7 +5,6 @@ using System.Runtime.CompilerServices;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Physics;
 using Content.Shared.Utility;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Physics;
@@ -29,18 +28,18 @@ namespace Content.Shared.Maps
         /// <summary>
         ///     Attempts to get the turf at map indices with grid id or null if no such turf is found.
         /// </summary>
-        public static TileRef? GetTileRef(this MapIndices mapIndices, GridId gridId, IMapManager? mapManager = null)
+        public static TileRef GetTileRef(this MapIndices mapIndices, GridId gridId, IMapManager? mapManager = null)
         {
             if (!gridId.IsValid())
-                return null;
+                return default;
 
             mapManager ??= IoCManager.Resolve<IMapManager>();
 
             if (!mapManager.TryGetGrid(gridId, out var grid))
-                return null;
+                return default;
 
             if (!grid.TryGetTileRef(mapIndices, out var tile))
-                return null;
+                return default;
 
             return tile;
         }
@@ -149,12 +148,7 @@ namespace Content.Shared.Maps
         /// </summary>
         public static IEnumerable<IEntity> GetEntitiesInTile(this MapIndices indices, GridId gridId, bool approximate = false, IEntityManager? entityManager = null)
         {
-            var turf = indices.GetTileRef(gridId);
-
-            if (turf == null)
-                return Enumerable.Empty<IEntity>();
-
-            return GetEntitiesInTile(turf.Value, approximate, entityManager);
+            return GetEntitiesInTile(indices.GetTileRef(gridId), approximate, entityManager);
         }
 
         /// <summary>
@@ -194,7 +188,9 @@ namespace Content.Shared.Maps
         {
             var map = IoCManager.Resolve<IMapManager>();
             var tileGrid = map.GetGrid(turf.GridIndex);
-            var tileBox = Box2.UnitCentered.Scale(tileGrid.TileSize);
+
+            // This is scaled to 90 % so it doesn't encompass walls on other tiles.
+            var tileBox = Box2.UnitCentered.Scale(tileGrid.TileSize).Scale(0.9f);
             return tileBox.Translated(tileGrid.GridTileToWorldPos(turf.GridIndices));
         }
 
