@@ -12,15 +12,15 @@ namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
     public class PlaySound : IGraphAction
-    {
+    {        
+        public string SoundCollection { get; private set; } = string.Empty;
+        public string Sound { get; private set; } = string.Empty;
+
         public void ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.Sound, "sound", string.Empty);
             serializer.DataField(this, x => x.SoundCollection, "soundCollection", string.Empty);
         }
-
-        public string SoundCollection { get; private set; } = string.Empty;
-        public string Sound { get; private set; } = string.Empty;
 
         public async Task PerformAction(IEntity entity, IEntity? user)
         {
