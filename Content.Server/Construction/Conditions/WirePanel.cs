@@ -3,6 +3,7 @@ using Content.Server.GameObjects.Components;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -30,10 +31,10 @@ namespace Content.Server.Construction.Conditions
             if (!entity.TryGetComponent(out WiresComponent wires)) return;
 
             if(Open && !wires.IsPanelOpen)
-                message.AddMarkup("First, open the maintenance panel.\n");
+                message.AddMarkup(Loc.GetString("First, open the maintenance panel.\n"));
 
             if(!Open && wires.IsPanelOpen)
-                message.AddMarkup("First, close the maintenance panel.\n");
+                message.AddMarkup(Loc.GetString("First, close the maintenance panel.\n"));
         }
     }
 }
