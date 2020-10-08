@@ -16,7 +16,7 @@ namespace Content.Server.Construction.Completions
             serializer.DataField(this, x => x.Value, "value", true);
         }
 
-        public bool Value { get; private set; } = false;
+        public bool Value { get; private set; } = true;
 
         public async Task PerformAction(IEntity entity, IEntity? user)
         {

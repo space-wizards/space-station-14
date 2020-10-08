@@ -12,7 +12,7 @@ namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
     public class PlaySound : IGraphAction
-    {        
+    {
         public string SoundCollection { get; private set; } = string.Empty;
         public string Sound { get; private set; } = string.Empty;
 
