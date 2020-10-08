@@ -31,15 +31,15 @@ namespace Content.Shared.Maps
         public static TileRef? GetTileRef(this MapIndices mapIndices, GridId gridId)
         {
             if (!gridId.IsValid())
-                return null;
+                return default;
 
             var mapManager = IoCManager.Resolve<IMapManager>();
 
             if (!mapManager.TryGetGrid(gridId, out var grid))
-                return null;
+                return default;
 
             if (!grid.TryGetTileRef(mapIndices, out var tile))
-                return null;
+                return default;
 
             return tile;
         }
