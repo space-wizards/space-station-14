@@ -246,7 +246,7 @@ namespace Content.Server.GameObjects.Components.Construction
                     switch (insertStep)
                     {
                         case PrototypeConstructionGraphStep prototypeStep:
-                            if (eventArgs.Using.Prototype?.ID == prototypeStep.Prototype
+                            if (prototypeStep.EntityValid(eventArgs.Using)
                                 && await doAfterSystem.DoAfter(doAfterArgs) == DoAfterStatus.Finished)
                             {
                                 valid = true;
@@ -255,7 +255,7 @@ namespace Content.Server.GameObjects.Components.Construction
                             break;
 
                         case ComponentConstructionGraphStep componentStep:
-                            if (eventArgs.Using.HasComponent(_componentFactory.GetRegistration(componentStep.Component).Type)
+                            if (componentStep.EntityValid(eventArgs.Using)
                                 && await doAfterSystem.DoAfter(doAfterArgs) == DoAfterStatus.Finished)
                             {
                                 valid = true;
@@ -264,9 +264,10 @@ namespace Content.Server.GameObjects.Components.Construction
                             break;
 
                         case MaterialConstructionGraphStep materialStep:
-                            if (eventArgs.Using.TryGetComponent(out StackComponent? stack) && stack.StackType.Equals(materialStep.Material)
+                            if (materialStep.EntityValid(eventArgs.Using, out var sharedStack)
                                 && await doAfterSystem.DoAfter(doAfterArgs) == DoAfterStatus.Finished)
                             {
+                                var stack = (StackComponent) sharedStack;
                                 valid = stack.Split(materialStep.Amount, eventArgs.User.Transform.Coordinates, out entityUsing);
                             }
 
