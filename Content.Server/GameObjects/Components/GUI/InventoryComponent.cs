@@ -126,6 +126,17 @@ namespace Content.Server.GameObjects.Components.GUI
             base.OnRemove();
         }
 
+        public IEnumerable<IEntity> GetAllHeldItems()
+        {
+            foreach (var (_, container) in _slotContainers)
+            {
+                foreach (var entity in container.ContainedEntities)
+                {
+                    yield return entity;
+                }
+            }
+        }
+
         /// <summary>
         /// Helper to get container name for specified slot on this component
         /// </summary>

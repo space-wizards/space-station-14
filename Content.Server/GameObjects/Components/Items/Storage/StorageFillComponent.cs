@@ -54,7 +54,10 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                     continue;
                 }
 
-                storage.Insert(_entityManager.SpawnEntity(storageItem.PrototypeName, Owner.Transform.Coordinates));
+                for (var i = 0; i < storageItem.Amount; i++)
+                {
+                    storage.Insert(_entityManager.SpawnEntity(storageItem.PrototypeName, Owner.Transform.Coordinates));
+                }
                 if (!string.IsNullOrEmpty(storageItem.GroupId)) alreadySpawnedGroups.Add(storageItem.GroupId);
             }
         }

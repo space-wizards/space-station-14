@@ -26,7 +26,6 @@
       - Impassable
       - MobImpassable
       - VaultImpassable
-    IsScrapingFloor: true
   - type: Physics
     mass: 25
     anchored: true
@@ -67,7 +66,6 @@
       - Impassable
       - MobImpassable
       - VaultImpassable
-    IsScrapingFloor: true
   - type: Physics
     mass: 25
     anchored: true
@@ -75,7 +73,7 @@
     offset: Center
   - type: Destructible
     deadThreshold: 25
-    spawnOnDestroy: MetalSheet1
+    spawnOnDestroy: SteelSheet1
   - type: UserInterface
     interfaces:
     - key: enum.ChemMasterUiKey.Key

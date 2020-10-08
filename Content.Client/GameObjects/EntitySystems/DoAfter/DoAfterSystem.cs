@@ -131,7 +131,12 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
 
                 if (doAfter.BreakOnTargetMove)
                 {
-                    var targetEntity = _entityManager.GetEntity(doAfter.TargetUid);
+                    if (!_entityManager.TryGetEntity(doAfter.TargetUid, out var targetEntity))
+                    {
+                        // Cancel if the target entity doesn't exist.
+                        doAfterComponent.Cancel(id, currentTime);
+                        continue;
+                    }
 
                     if (targetEntity.Transform.Coordinates != doAfter.TargetGrid)
                     {

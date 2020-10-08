@@ -125,6 +125,7 @@ namespace Content.Shared.GameObjects.Components
     {
         Metal,
         Glass,
+        Plasteel,
         Cable,
         Gold,
         Phoron,

@@ -5,6 +5,7 @@ using Content.Client.UserInterface;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
+using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.EntitySystems;
@@ -152,9 +153,18 @@ namespace Content.Client.GameObjects.EntitySystems
         /// </summary>
         public void SpawnGhost(ConstructionPrototype prototype, EntityCoordinates loc, Direction dir)
         {
-            if (GhostPresent(loc))
+            var user = _playerManager.LocalPlayer?.ControlledEntity;
+
+            // This InRangeUnobstructed should probably be replaced with "is there something blocking us in that tile?"
+            if (user == null || GhostPresent(loc) || !user.InRangeUnobstructed(loc, 20f, ignoreInsideBlocker:prototype.CanBuildInImpassable))
             {
                 return;
+            }
+
+            foreach (var condition in prototype.Conditions)
+            {
+                if (!condition.Condition(user, loc, dir))
+                    return;
             }
 
             var ghost = _entityManager.SpawnEntity("constructionghost", loc);
@@ -204,7 +214,7 @@ namespace Content.Client.GameObjects.EntitySystems
         }
 
         /// <summary>
-        /// Removes a construction ghost entity with the given ID.
+        ///     Removes a construction ghost entity with the given ID.
         /// </summary>
         public void ClearGhost(int ghostId)
         {
@@ -213,6 +223,19 @@ namespace Content.Client.GameObjects.EntitySystems
                 ghost.Owner.Delete();
                 _ghosts.Remove(ghostId);
             }
+        }
+
+        /// <summary>
+        ///     Removes all construction ghosts.
+        /// </summary>
+        public void ClearAllGhosts()
+        {
+            foreach (var (_, ghost) in _ghosts)
+            {
+                ghost.Owner.Delete();
+            }
+
+            _ghosts.Clear();
         }
     }
 }
