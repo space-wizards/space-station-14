@@ -39,11 +39,8 @@ namespace Content.Server.Construction.Conditions
 
             foreach (var ent in entity.Transform.Coordinates.ToMapIndices(entity.EntityManager, _mapManager).GetEntitiesInTile(entity.Transform.GridID, true, entity.EntityManager))
             {
-                if (ent.HasComponent(type) && Value)
-                    return true;
-
-                if (ent.HasComponent(type) && !Value)
-                    return false;
+                if (ent.HasComponent(type))
+                    return Value;
             }
 
             return true;
