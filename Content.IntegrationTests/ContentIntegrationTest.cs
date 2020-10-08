@@ -141,9 +141,9 @@ namespace Content.IntegrationTests
                 ticksAwaited += tickStep;
             }
 
-            Assert.That(passed);
-
             await instance.WaitIdleAsync();
+
+            Assert.That(passed);
         }
 
         private static async Task StartConnectedPairShared(ClientIntegrationInstance client, ServerIntegrationInstance server)
