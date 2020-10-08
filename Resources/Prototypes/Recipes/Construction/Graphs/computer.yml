@@ -32,7 +32,7 @@
         - to: start
           conditions:
             - !type:EntityAnchored
-              value: false
+              anchored: false
           completed:
             - !type:SpawnPrototype
               prototype: SteelSheet1
