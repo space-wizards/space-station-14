@@ -217,8 +217,6 @@ namespace Content.Server.GameObjects.Components.Construction
                 NeedHand = true,
             };
 
-            var audioSystem = EntitySystem.Get<AudioSystem>();
-
             switch (step)
             {
                 case ToolConstructionGraphStep toolStep:
