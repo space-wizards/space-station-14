@@ -146,7 +146,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
             _handlingTask = new TaskCompletionSource<object>();
             _handling = true;
-            var result = false;
+            bool result;
 
             if (Edge == null)
                 result = await HandleNode(eventArgs);
@@ -249,7 +249,7 @@ namespace Content.Server.GameObjects.Components.Construction
                     {
                         case PrototypeConstructionGraphStep prototypeStep:
                             if (eventArgs.Using.Prototype?.ID == prototypeStep.Prototype
-                                && (await doAfterSystem.DoAfter(doAfterArgs)) == DoAfterStatus.Finished)
+                                && await doAfterSystem.DoAfter(doAfterArgs) == DoAfterStatus.Finished)
                             {
                                 valid = true;
                             }
@@ -258,7 +258,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
                         case ComponentConstructionGraphStep componentStep:
                             if (eventArgs.Using.HasComponent(_componentFactory.GetRegistration(componentStep.Component).Type)
-                                && (await doAfterSystem.DoAfter(doAfterArgs)) == DoAfterStatus.Finished)
+                                && await doAfterSystem.DoAfter(doAfterArgs) == DoAfterStatus.Finished)
                             {
                                 valid = true;
                             }
@@ -267,7 +267,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
                         case MaterialConstructionGraphStep materialStep:
                             if (eventArgs.Using.TryGetComponent(out StackComponent? stack) && stack.StackType.Equals(materialStep.Material)
-                                && (await doAfterSystem.DoAfter(doAfterArgs)) == DoAfterStatus.Finished)
+                                && await doAfterSystem.DoAfter(doAfterArgs) == DoAfterStatus.Finished)
                             {
                                 valid = stack.Split(materialStep.Amount, eventArgs.User.Transform.Coordinates, out entityUsing);
                             }
