@@ -181,7 +181,6 @@
             "Headset",
             "ComputerBoard",
             "BreakableConstruction",
-            "Rehydratable",
             "GasCanister",
             "GasCanisterPort",
         };
