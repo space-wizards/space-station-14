@@ -9,7 +9,6 @@
             - material: Metal
               amount: 2
               doAfter: 2
-
             - material: Glass
               amount: 2
               doAfter: 2
