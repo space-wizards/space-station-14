@@ -56,7 +56,8 @@ namespace Content.Client.GameObjects.Components.Disposal
         private void TargetSelected(ItemList.ItemListSelectedEventArgs item)
         {
             SendMessage(new UiTargetUpdateMessage(_window?.TargetList[item.ItemIndex]));
-            _window.Engage.Disabled = false;
+            //(ノ°Д°）ノ︵ ┻━┻
+            if (_window != null) _window.Engage.Disabled = false;
         }
 
         protected override void Dispose(bool disposing)
