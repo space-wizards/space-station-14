@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 using Content.Client.GameObjects.Components.Disposal;
 using Content.Client.GameObjects.Components.MedicalScanner;
 using Content.Client.Interfaces.GameObjects.Components.Interaction;
@@ -24,7 +24,8 @@ namespace Content.Client.GameObjects.Components.Body
         {
             if (
                 eventArgs.Target.HasComponent<DisposalUnitComponent>()||
-                eventArgs.Target.HasComponent<MedicalScannerComponent>())
+                eventArgs.Target.HasComponent<MedicalScannerComponent>() ||
+                eventArgs.Target.HasComponent<DisposalMailingUnitComponent>())
             {
                 return true;
             }
