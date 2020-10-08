@@ -19,6 +19,8 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         void AddReceiver(PowerReceiverComponent receiver);
 
         void RemoveReceiver(PowerReceiverComponent receiver);
+
+        IApcNet GetApcNet();
     }
 
     [RegisterComponent]
@@ -57,6 +59,11 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         {
             _linkedReceivers.Remove(receiver);
             Net.UpdatePowerProviderReceivers(this);
+        }
+
+        public IApcNet GetApcNet()
+        {
+            return base.Net;
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -127,6 +134,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         private class NullPowerProvider : IPowerProvider
         {
             public void AddReceiver(PowerReceiverComponent receiver) { }
+            public IApcNet GetApcNet() { return new ApcNetNodeGroup(); }
             public void RemoveReceiver(PowerReceiverComponent receiver) { }
         }
     }

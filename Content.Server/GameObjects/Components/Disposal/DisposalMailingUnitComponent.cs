@@ -6,7 +6,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Content.Server.GameObjects.EntitySystems.DeviceNetwork;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Interfaces;
@@ -94,7 +96,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         private Container _container = default!;
 
         [ViewVariables]
-        private DeviceNetworkConnection? _connection;
+        private WiredNetworkConnection? _connection;
 
         [ViewVariables] public IReadOnlyList<IEntity> ContainedEntities => _container.ContainedEntities;
 
@@ -336,6 +338,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             var holderComponent = holder.GetComponent<DisposalHolderComponent>();
 
             holderComponent.Tags.Add(tag);
+            holderComponent.Tags.Add("mail");
 
             foreach (var entity in entities)
             {
@@ -609,7 +612,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
 
             var network = IoCManager.Resolve<IDeviceNetwork>();
-            _connection = network.Register((int)BaseNetworks.WIRELESS, 1481, OnReceiveNetMessage);
+            _connection = new WiredNetworkConnection(OnReceiveNetMessage, false, Owner);
 
             if (Owner.TryGetComponent<ConfigurationComponent>(out var configuration))
                 configuration.OnConfigUpdate += OnConfigUpdate;
@@ -690,9 +693,9 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
         }
 
-        private void OnReceiveNetMessage(int frequency, string sender, IReadOnlyDictionary<string, string> payload, bool broadcast)
+        private void OnReceiveNetMessage(int frequency, string sender, IReadOnlyDictionary<string, string> payload, object _, bool broadcast)
         {
-            if (payload.TryGetValue("command", out var command))
+            if (payload.TryGetValue("command", out var command) && Powered)
             {
                 if (command == "mailer_tag" && payload.TryGetValue("tag", out var tag))
                 {
@@ -715,8 +718,8 @@ namespace Content.Server.GameObjects.Components.Disposal
                 }
             }
         }
-    
-        bool IsValidInteraction(ITargetedInteractEventArgs eventArgs)
+
+        private bool IsValidInteraction(ITargetedInteractEventArgs eventArgs)
         {
             if (!ActionBlockerSystem.CanInteract(eventArgs.User))
             {
@@ -747,8 +750,9 @@ namespace Content.Server.GameObjects.Components.Disposal
             {
                 return false;
             }
+
             // Duplicated code here, not sure how else to get actor inside to make UserInterface happy. 
-          
+
             if (IsValidInteraction(eventArgs))
             {
                 UpdateTargetList();

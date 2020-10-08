@@ -32,9 +32,14 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
             Frequency = frequency;
         }
 
+        public bool Send(int frequency, string address, IReadOnlyDictionary<string, string> payload, Metadata metadata)
+        {
+            return Open && _network.EnqueuePackage(_netId, frequency, address, payload, Address, metadata);
+        }
+
         public bool Send(int frequency, string address, IReadOnlyDictionary<string, string> payload)
         {
-            return _network.EnqueuePackage(_netId, frequency, address, payload, Address);
+            return Send(frequency, address, payload);
         }
 
         public bool Send(string address, IReadOnlyDictionary<string, string> payload)
@@ -42,9 +47,14 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
             return Send(0, address, payload);
         }
 
+        public bool Broadcast(int frequency, IReadOnlyDictionary<string, string> payload, Metadata metadata)
+        {
+            return Open && _network.EnqueuePackage(_netId, frequency, "", payload, Address, metadata, true);
+        }
+
         public bool Broadcast(int frequency, IReadOnlyDictionary<string, string> payload)
         {
-            return _network.EnqueuePackage(_netId, frequency, "", payload, Address, true);
+            return Broadcast(frequency, payload);
         }
 
         public bool Broadcast(IReadOnlyDictionary<string, string> payload)

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Robust.Shared.ViewVariables;
@@ -20,6 +21,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         void UpdatePowerProviderReceivers(PowerProviderComponent provider);
 
         void Update(float frameTime);
+
+        IReadOnlyList<Nodes.Node> GetNodes();
     }
 
     [NodeGroup(NodeGroupID.Apc)]
@@ -42,6 +45,11 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         protected override void SetNetConnectorNet(BaseApcNetComponent netConnectorComponent)
         {
             netConnectorComponent.Net = this;
+        }
+
+        public IReadOnlyList<Nodes.Node> GetNodes()
+        {
+            return Nodes;
         }
 
         public void AddApc(ApcComponent apc)
@@ -129,6 +137,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             public void RemovePowerProvider(PowerProviderComponent provider) { }
             public void UpdatePowerProviderReceivers(PowerProviderComponent provider) { }
             public void Update(float frameTime) { }
+
+            public IReadOnlyList<Node> GetNodes(){ return new List<Node>(); }
         }
     }
 }

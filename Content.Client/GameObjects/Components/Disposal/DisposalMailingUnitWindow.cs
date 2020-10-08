@@ -197,6 +197,10 @@ namespace Content.Client.GameObjects.Components.Disposal
                                                                     {
                                                                         Text = Loc.GetString("This unit:")
                                                                     },
+                                                                    new Control
+                                                                    {
+                                                                        CustomMinimumSize = new Vector2(4, 0)
+                                                                    },
                                                                     (_tagLabel = new Label
                                                                     {
                                                                         Text = "-",

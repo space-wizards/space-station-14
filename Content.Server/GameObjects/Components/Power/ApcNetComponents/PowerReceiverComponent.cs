@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
-using Robust.Shared.Interfaces.Map;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
@@ -149,6 +152,38 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
             _provider = PowerProviderComponent.NullProvider;
             NeedsProvider = true;
             HasApcPower = false;
+        }
+
+        public bool TryGetHVNodeGroup([NotNullWhen(true)] out IPowerNet net)
+        {
+            var nodes = Provider.GetApcNet().GetNodes();
+
+            if (TryFindEntityInNodeList("Apc", nodes, out var apc)
+                && apc.TryGetComponent<PowerConsumerComponent>(out var mwConsumer)
+                //&& mwConsumer.ReceivedPower > 0
+                && TryFindEntityInNodeList("Substation", mwConsumer.Net.GetNodes(), out var substation)
+                && substation.TryGetComponent<PowerConsumerComponent>(out var hvConsumer))
+            {
+                net = hvConsumer.Net;
+                return true;
+            }
+
+            net = default;
+            return false;
+        }
+
+        private bool TryFindEntityInNodeList(string type, IReadOnlyList<NodeContainer.Nodes.Node> nodes, [NotNullWhen(true)] out IEntity entity)
+        {
+            for (var index = 0; index < nodes.Count; index++)
+            {
+                if (nodes[index].Owner.Name == type)
+                {
+                    entity = nodes[index].Owner;
+                    return true;
+                }
+            }
+            entity = default;
+            return false;
         }
 
         private void SetProvider(IPowerProvider newProvider)

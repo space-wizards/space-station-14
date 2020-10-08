@@ -24,6 +24,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         void UpdateConsumerPriority(PowerConsumerComponent consumer, Priority oldPriority, Priority newPriority);
 
         void UpdateConsumerReceivedPower();
+        IReadOnlyList<Nodes.Node> GetNodes();
     }
 
     [NodeGroup(NodeGroupID.HVPower, NodeGroupID.MVPower)]
@@ -52,6 +53,11 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
                 _consumersByPriority.Add(priority, new List<PowerConsumerComponent>());
                 _drawByPriority.Add(priority, 0);
             }
+        }
+
+        public IReadOnlyList<Nodes.Node> GetNodes()
+        {
+            return Nodes;
         }
 
         protected override void SetNetConnectorNet(BasePowerNetComponent netConnectorComponent)
@@ -156,6 +162,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             public void UpdateConsumerDraw(PowerConsumerComponent consumer, int oldDrawRate, int newDrawRate) { }
             public void UpdateConsumerPriority(PowerConsumerComponent consumer, Priority oldPriority, Priority newPriority) { }
             public void UpdateConsumerReceivedPower() { }
+            public IReadOnlyList<Nodes.Node> GetNodes() { return new List<Nodes.Node>(); }
         }
     }
 }
