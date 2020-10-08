@@ -297,18 +297,12 @@ namespace Content.Server.GameObjects.Components.Construction
                     foreach (var list in _edgeNestedStepProgress.ToArray())
                     {
                         if (list.Count == 0)
+                        {
                             _edgeNestedStepProgress.Remove(list);
+                            continue;
+                        }
 
                         if (!await HandleStep(eventArgs, edge, list[0], true)) continue;
-
-                        // We do have completed effects for this!
-                        foreach (var completed in list[0].Completed)
-                        {
-                            await completed.PerformAction(Owner, eventArgs.User);
-
-                            if (Owner.Deleted)
-                                return false;
-                        }
 
                         list.RemoveAt(0);
 

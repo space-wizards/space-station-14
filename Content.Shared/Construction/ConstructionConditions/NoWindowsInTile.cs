@@ -9,7 +9,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Construction.ConstructionConditions
 {
-    [Serializable, NetSerializable, UsedImplicitly]
+    [UsedImplicitly]
     public class NoWindowsInTile : IConstructionCondition
     {
         public void ExposeData(ObjectSerializer serializer) { }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Content.Shared.GameObjects.Components.Interactable;
+﻿using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -13,8 +10,6 @@ namespace Content.Shared.Construction
     public class ConstructionPrototype : IPrototype, IIndexedPrototype
     {
         private List<IConstructionCondition> _conditions;
-        private List<string> _keywords;
-        // private List<string> _categorySegments;
 
         /// <summary>
         ///     Friendly name displayed in the construction GUI.
@@ -51,16 +46,6 @@ namespace Content.Shared.Construction
         /// </summary>
         public bool CanBuildInImpassable { get; private set; }
 
-        /// <summary>
-        ///     A list of keywords that are used for searching.
-        /// </summary>
-        public IReadOnlyList<string> Keywords => _keywords;
-
-        /// <summary>
-        ///     The split up segments of the category.
-        /// </summary>
-        // public IReadOnlyList<string> CategorySegments => _categorySegments;
-
         public string Category { get; private set; }
 
         public ConstructionType Type { get; private set; }
@@ -87,15 +72,6 @@ namespace Content.Shared.Construction
             ser.DataField(this, x => x.CanBuildInImpassable, "canBuildInImpassable", false);
             ser.DataField(this, x => x.Category, "category", string.Empty);
             ser.DataField(ref _conditions, "conditions", new List<IConstructionCondition>());
-
-            _keywords = ser.ReadDataField("keywords", new List<string>());
-
-            // Uncomment if we ever go back to a tree view for construction.
-            /*{
-                var cat = ser.ReadDataField<string>("category");
-                var split = cat.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
-                _categorySegments = split.ToList();
-            }*/
         }
     }
 

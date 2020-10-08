@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Shared.Audio;
 using Content.Shared.Interfaces;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
@@ -9,7 +8,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Construction
 {
-    [Serializable, NetSerializable]
+    [Serializable]
     public abstract class ConstructionGraphStep : IExposeData
     {
         private List<IGraphAction> _completed;

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Shared.Interfaces;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -11,7 +10,7 @@ using ObjectSerializer = Robust.Shared.Serialization.ObjectSerializer;
 
 namespace Content.Shared.Construction
 {
-    [Serializable, NetSerializable]
+    [Serializable]
     public class ConstructionGraphNode
     {
         private List<IGraphAction> _actions = new List<IGraphAction>();

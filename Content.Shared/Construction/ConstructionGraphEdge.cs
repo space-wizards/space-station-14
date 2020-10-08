@@ -12,7 +12,7 @@ using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.Construction
 {
-    [Serializable, NetSerializable]
+    [Serializable]
     public class ConstructionGraphEdge : IExposeData
     {
         private List<ConstructionGraphStep> _steps = new List<ConstructionGraphStep>();
