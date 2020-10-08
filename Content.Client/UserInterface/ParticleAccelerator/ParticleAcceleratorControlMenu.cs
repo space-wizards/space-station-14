@@ -117,7 +117,7 @@ namespace Content.Client.ParticleAccelerator
             _stateSpinBox.IsValid = (n) => (n >= 0 && n <= 4 && !_blockSpinBox);
             _stateSpinBox.InitDefaultButtons();
             _stateSpinBox.ValueChanged += PowerStateChanged;
-            _stateSpinBox.SetLineEditDisabled(true);
+            _stateSpinBox.LineEditDisabled = true;
 
             _offButton = new Button
             {
