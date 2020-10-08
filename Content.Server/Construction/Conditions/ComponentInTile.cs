@@ -26,11 +26,18 @@ namespace Content.Server.Construction.Conditions
         public void ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.Component, "component", string.Empty);
-            serializer.DataField(this, x => x.Value, "hasEntity", true);
+            serializer.DataField(this, x => x.HasEntity, "hasEntity", true);
         }
 
-        public bool Value { get; private set; }
+        /// <summary>
+        ///     If true, any entity on the tile must have the component.
+        ///     If false, no entity on the tile must have the component.
+        /// </summary>
+        public bool HasEntity { get; private set; }
 
+        /// <summary>
+        ///     The component name in question.
+        /// </summary>
         public string Component { get; private set; }
 
         public async Task<bool> Condition(IEntity entity)
@@ -45,10 +52,10 @@ namespace Content.Server.Construction.Conditions
             foreach (var ent in entities)
             {
                 if (ent.HasComponent(type))
-                    return Value;
+                    return HasEntity;
             }
 
-            return !Value;
+            return !HasEntity;
         }
     }
 }
