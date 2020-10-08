@@ -1,4 +1,6 @@
-﻿using Content.Shared.GameObjects.Components;
+﻿#nullable enable
+using System.Diagnostics.CodeAnalysis;
+using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Materials;
 using Content.Shared.Materials;
 using Robust.Shared.Interfaces.GameObjects;
@@ -30,7 +32,17 @@ namespace Content.Shared.Construction
 
         public override bool EntityValid(IEntity entity)
         {
-            return entity.TryGetComponent(out SharedStackComponent stack) && stack.StackType.Equals(Material);
+            return entity.TryGetComponent(out SharedStackComponent? stack) && stack.StackType.Equals(Material);
+        }
+
+        public bool EntityValid(IEntity entity, [NotNullWhen(true)] out SharedStackComponent? stack)
+        {
+            if(entity.TryGetComponent(out SharedStackComponent? otherStack) && otherStack.StackType.Equals(Material))
+                stack = otherStack;
+            else
+                stack = null;
+
+            return stack != null;
         }
     }
 }

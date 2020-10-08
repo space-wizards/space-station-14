@@ -9,6 +9,7 @@ using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.Construction;
+using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Utility;
@@ -35,7 +36,6 @@ namespace Content.Server.GameObjects.EntitySystems
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IComponentFactory _componentFactory = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         private readonly Dictionary<ICommonSession, HashSet<int>> _beingBuilt = new Dictionary<ICommonSession, HashSet<int>>();
@@ -165,8 +165,10 @@ namespace Content.Server.GameObjects.EntitySystems
                     case MaterialConstructionGraphStep materialStep:
                         foreach (var entity in EnumerateNearby(user))
                         {
-                            if (!entity.TryGetComponent(out StackComponent? stack) || !stack.StackType.Equals(materialStep.Material))
+                            if (!materialStep.EntityValid(entity, out var sharedStack))
                                 continue;
+
+                            var stack = (StackComponent) sharedStack;
 
                             if (!stack.Split(materialStep.Amount, user.ToCoordinates(), out var newStack))
                                 continue;
@@ -188,7 +190,7 @@ namespace Content.Server.GameObjects.EntitySystems
                     case ComponentConstructionGraphStep componentStep:
                         foreach (var entity in EnumerateNearby(user))
                         {
-                            if (!entity.HasComponent(_componentFactory.GetRegistration(componentStep.Component).Type))
+                            if (!componentStep.EntityValid(entity))
                                 continue;
 
                             if (string.IsNullOrEmpty(componentStep.Store))
@@ -208,7 +210,7 @@ namespace Content.Server.GameObjects.EntitySystems
                     case PrototypeConstructionGraphStep prototypeStep:
                         foreach (var entity in EnumerateNearby(user))
                         {
-                            if (entity.Prototype?.ID != prototypeStep.Prototype)
+                            if (!prototypeStep.EntityValid(entity))
                                 continue;
 
                             if (string.IsNullOrEmpty(prototypeStep.Store))
