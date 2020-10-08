@@ -23,7 +23,8 @@ namespace Content.Server.GameObjects.Components.PA
     {
         [Dependency] private IEntityManager _entityManager;
         [Dependency] private IMapManager _mapManager;
-        public bool SetForDeconstruct;
+
+        private bool SetForDeconstruct;
 
         public ParticleAccelerator()
         {
@@ -52,8 +53,6 @@ namespace Content.Server.GameObjects.Components.PA
             {
                 SetFuelChamber(fuelChamber, skipControlBoxCheck: true);
             }
-
-            Power = _power;
         }
 
         [ViewVariables]
@@ -71,8 +70,6 @@ namespace Content.Server.GameObjects.Components.PA
             {
                 SetFuelChamber(fuelChamber, skipEndCapCheck: true);
             }
-
-            Power = _power;
         }
 
         [ViewVariables]
@@ -103,8 +100,6 @@ namespace Content.Server.GameObjects.Components.PA
             {
                 SetPowerBox(powerBox, skipFuelChamberCheck: true);
             }
-
-            Power = _power;
         }
 
         [ViewVariables]
@@ -130,8 +125,6 @@ namespace Content.Server.GameObjects.Components.PA
             {
                 SetEmitterCenter(emitterComponent, skipPowerBoxCheck: true);
             }
-
-            Power = _power;
         }
 
         [ViewVariables]
@@ -156,8 +149,6 @@ namespace Content.Server.GameObjects.Components.PA
             {
                 SetEmitterCenter(emitterComponent, skipEmitterLeftCheck: true);
             }
-
-            Power = _power;
         }
 
         [ViewVariables]
@@ -196,8 +187,6 @@ namespace Content.Server.GameObjects.Components.PA
             {
                 SetPowerBox(powerBox, skipEmitterCenterCheck: true);
             }
-
-            Power = _power;
         }
 
         [ViewVariables]
@@ -222,8 +211,6 @@ namespace Content.Server.GameObjects.Components.PA
             {
                 SetEmitterCenter(emitterComponent, skipEmitterRightCheck: true);
             }
-
-            Power = _power;
         }
         #endregion
 
