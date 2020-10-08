@@ -34,6 +34,9 @@
   - type: Airtight
   - type: Window
     base: window
+  - type: Construction
+    graph: window
+    node: window
 
 - type: entity
   id: ReinforcedWindow
@@ -50,6 +53,9 @@
     resistances: metallicResistances
   - type: Window
     base: rwindow
+  - type: Construction
+    graph: window
+    node: reinforcedWindow
 
 - type: entity
   id: PhoronWindow
@@ -66,3 +72,6 @@
     resistances: metallicResistances
   - type: Window
     base: pwindow
+  - type: Construction
+    graph: window
+    node: phoronWindow

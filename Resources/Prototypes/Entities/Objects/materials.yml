@@ -12,6 +12,7 @@
   name: steel sheet
   id: MetalStack
   parent: MaterialStack
+  suffix: Full
   components:
   - type: Material
     materials:
@@ -28,16 +29,19 @@
 
 - type: entity
   id: SteelSheet1
-  name: steel sheet 1
+  name: steel sheet
   parent: MetalStack
+  suffix: 1
   components:
   - type: Stack
+    stacktype: enum.StackType.Metal
     count: 1
 
 - type: entity
   name: glass sheet
   id: GlassStack
   parent: MaterialStack
+  suffix: Full
   components:
   - type: Material
     materials:
@@ -54,16 +58,48 @@
 
 - type: entity
   id: GlassSheet1
-  name: glass sheet 1
+  name: glass sheet
   parent: GlassStack
+  suffix: 1
   components:
   - type: Stack
+    stacktype: enum.StackType.Glass
     count: 1
+
+- type: entity
+  name: plasteel sheet
+  id: PlasteelStack
+  parent: MaterialStack
+  suffix: Full
+  components:
+    - type: Material
+      materials:
+        - key: enum.MaterialKeys.Stack
+          mat: plasteel
+    - type: Stack
+      stacktype: enum.StackType.Plasteel
+    - type: Sprite
+      sprite: Objects/Materials/sheets.rsi
+      state: plasteel
+    - type: Item
+      sprite: Objects/Materials/sheets.rsi
+      HeldPrefix: plasteel
+
+- type: entity
+  id: PlasteelSheet1
+  name: plasteel sheet
+  parent: PlasteelStack
+  suffix: 1
+  components:
+    - type: Stack
+      stacktype: enum.StackType.Plasteel
+      count: 1
 
 - type: entity
   name: gold bar
   id: GoldStack
   parent: MaterialStack
+  suffix: Full
   components:
   - type: Material
     materials:
@@ -79,6 +115,7 @@
   id: GoldStack1
   name: gold bar 1
   parent: GoldStack
+  suffix: 1
   components:
   - type: Sprite
     sprite: Objects/Materials/materials.rsi
@@ -99,6 +136,7 @@
   name: phoron sheet
   id: PhoronStack
   parent: MaterialStack
+  suffix: Full
   components:
   - type: Material
     materials:
@@ -115,8 +153,9 @@
 
 - type: entity
   id: PhoronStack1
-  name: phoron sheet 1
+  name: phoron sheet
   parent: PhoronStack
+  suffix: 1
   components:
   - type: Stack
     count: 1

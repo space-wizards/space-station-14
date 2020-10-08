@@ -30,7 +30,6 @@
       - Impassable
       - MobImpassable
       - VaultImpassable
-    IsScrapingFloor: true
   - type: Sprite
     netsync: false
     sprite: Constructible/Power/microwave.rsi
