@@ -231,7 +231,9 @@ namespace Content.Server.GameObjects.EntitySystems
                                     continue;
                             }
                             else if (!GetContainer(prototypeStep.Store).Insert(entity))
+                            {
                                 continue;
+                            }
 
                             handled = true;
                             break;
@@ -466,4 +468,3 @@ namespace Content.Server.GameObjects.EntitySystems
         }
     }
 }
-
