@@ -80,11 +80,11 @@ namespace Content.Client.Construction
             _stepList = new ItemList() {SizeFlagsVertical = SizeFlags.FillExpand, SizeFlagsStretchRatio = 0.75f, SelectMode = ItemList.ItemListSelectMode.None};
 
             var buttonContainer = new VBoxContainer() {SizeFlagsVertical = SizeFlags.FillExpand, SizeFlagsStretchRatio = 0.1f};
-            _buildButton = new Button() {Disabled = true, ToggleMode = true, Text = "Place construction ghost", SizeFlagsVertical = SizeFlags.FillExpand, SizeFlagsStretchRatio = 0.5f};
+            _buildButton = new Button() {Disabled = true, ToggleMode = true, Text = Loc.GetString("Place construction ghost"), SizeFlagsVertical = SizeFlags.FillExpand, SizeFlagsStretchRatio = 0.5f};
 
             var eraseContainer = new HBoxContainer() {SizeFlagsVertical = SizeFlags.FillExpand, SizeFlagsStretchRatio = 0.5f};
-            _eraseButton = new Button() {Text = "Eraser Mode", ToggleMode = true, SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 0.7f};
-            var clearButton = new Button() {Text = "Clear All", SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 0.3f};
+            _eraseButton = new Button() {Text = Loc.GetString("Eraser Mode"), ToggleMode = true, SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 0.7f};
+            var clearButton = new Button() {Text = Loc.GetString("Clear All"), SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsStretchRatio = 0.3f};
 
             recipeContainer.AddChild(searchContainer);
             recipeContainer.AddChild(_recipes);
@@ -166,7 +166,7 @@ namespace Content.Client.Construction
                         continue;
                 }
 
-                if (!string.IsNullOrEmpty(category) && category != "All")
+                if (!string.IsNullOrEmpty(category) && category != Loc.GetString("All"))
                 {
                     if (recipe.Category != category)
                         continue;
@@ -181,12 +181,14 @@ namespace Content.Client.Construction
             var uniqueCategories = new HashSet<string>();
 
             // hard-coded to show all recipes
-            uniqueCategories.Add("All");
+            uniqueCategories.Add(Loc.GetString("All"));
 
             foreach (var prototype in _prototypeManager.EnumeratePrototypes<ConstructionPrototype>())
             {
-                if (!string.IsNullOrEmpty(prototype.Category))
-                    uniqueCategories.Add(prototype.Category);
+                var category = Loc.GetString(prototype.Category);
+
+                if (!string.IsNullOrEmpty(category))
+                    uniqueCategories.Add(category);
             }
 
             _category.Clear();
