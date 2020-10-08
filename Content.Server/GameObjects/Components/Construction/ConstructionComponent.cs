@@ -276,7 +276,9 @@ namespace Content.Server.GameObjects.Components.Construction
                     if (!valid || entityUsing == null) break;
 
                     if(string.IsNullOrEmpty(insertStep.Store))
+                    {
                         entityUsing.Delete();
+                    }
                     else
                     {
                         _containers.Add(insertStep.Store);
