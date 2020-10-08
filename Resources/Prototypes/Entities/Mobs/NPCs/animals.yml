@@ -449,7 +449,7 @@
     visuals:
     - type: DamageStateVisualizer
       normal: tarantula
-      dead: dead
+      dead: tarantula_dead
 
 - type: entity
   save: false

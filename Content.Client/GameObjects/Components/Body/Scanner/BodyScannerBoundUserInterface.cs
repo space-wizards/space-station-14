@@ -50,7 +50,7 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
 
             if (disposing)
             {
-                _display.Dispose();
+                _display?.Dispose();
                 _template = null;
                 _parts.Clear();
             }

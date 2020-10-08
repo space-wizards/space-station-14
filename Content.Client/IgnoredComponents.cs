@@ -178,6 +178,8 @@
             "KitchenSpike",
             "Butcherable",
             "Rehydratable",
+            "Headset",
+            "Rehydratable",
             "GasCanister",
             "GasCanisterPort",
         };
