@@ -31,8 +31,13 @@ namespace Content.Server.Construction.Completions
 
             if (!containerManager.TryGetContainer(Container, out var container))
             {
-                Logger.Warning($"Computer entity {entity} did not have the specified \"{Container}\" container! Aborting build computer action.");
+                Logger.Warning($"Computer entity {entity} did not have the specified '{Container}' container! Aborting build computer action.");
                 return;
+            }
+
+            if (container.ContainedEntities.Count != 1)
+            {
+                Logger.Warning($"Computer entity {entity} did not have exactly one item in the specified '{Container}' container! Aborting build computer action.");
             }
 
             var board = container.ContainedEntities[0];
