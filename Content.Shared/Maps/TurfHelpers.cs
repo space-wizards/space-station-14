@@ -29,7 +29,7 @@ namespace Content.Shared.Maps
         /// <summary>
         ///     Attempts to get the turf at map indices with grid id or null if no such turf is found.
         /// </summary>
-        public static TileRef? GetTileRef(this MapIndices mapIndices, GridId gridId, IMapManager mapManager = null)
+        public static TileRef? GetTileRef(this MapIndices mapIndices, GridId gridId, IMapManager? mapManager = null)
         {
             if (!gridId.IsValid())
                 return null;
