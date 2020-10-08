@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
+using System.Threading;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameObjects.Components.Singularity
 {
@@ -17,10 +17,18 @@ namespace Content.Server.GameObjects.Components.Singularity
         public readonly ContainmentFieldGeneratorComponent Generator2;
         private List<IEntity> _fields = new List<IEntity>();
         private int _sharedEnergyPool;
+        private CancellationTokenSource _powerDecreaseCancellationTokenSource = new CancellationTokenSource();
         public int SharedEnergyPool
         {
             get => _sharedEnergyPool;
-            set => _sharedEnergyPool = Math.Clamp(value, 0, 10);
+            set
+            {
+                _sharedEnergyPool = Math.Clamp(value, 0, 10);
+                if (_sharedEnergyPool == 0)
+                {
+                    Dispose();
+                }
+            }
         }
 
         public ContainmentFieldConnection(ContainmentFieldGeneratorComponent generator1, ContainmentFieldGeneratorComponent generator2)
@@ -33,6 +41,7 @@ namespace Content.Server.GameObjects.Components.Singularity
             var pos2 = generator2.Owner.Transform.Coordinates;
             if (pos1 == pos2)
             {
+                Dispose();
                 return;
             }
 
@@ -59,6 +68,9 @@ namespace Content.Server.GameObjects.Components.Singularity
                 _fields.Add(newEnt);
                 currentOffset += dirVec;
             }
+
+
+            Timer.SpawnRepeating(1000, () => { SharedEnergyPool--;}, _powerDecreaseCancellationTokenSource.Token);
         }
 
         public bool CanRepell(IEntity toRepell)
@@ -119,6 +131,7 @@ namespace Content.Server.GameObjects.Components.Singularity
 
         public void Dispose()
         {
+            _powerDecreaseCancellationTokenSource.Cancel();
             foreach (var field in _fields)
             {
                 field.Delete();
