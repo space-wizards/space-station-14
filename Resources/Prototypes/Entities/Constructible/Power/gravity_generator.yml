@@ -10,9 +10,7 @@
       - sprite: Constructible/Power/gravity_generator_core.rsi
         state: activated
         shader: unshaded
-  - type: Icon
-    sprite: Constructible/Power/gravity_generator.rsi
-    state: on
+
   - type: SnapGrid
     offset: Center
   - type: PowerReceiver
@@ -28,9 +26,9 @@
         - VaultImpassable
   - type: Clickable
   - type: InteractionOutline
-  - type: Damageable
   - type: Breakable
-    threshold: 150
+    deadThreshold: 150
+    resistances: metallicResistances
   - type: GravityGenerator
   - type: UserInterface
     interfaces:

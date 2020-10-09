@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Timers;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
@@ -9,12 +9,12 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
-using Logger = Robust.Shared.Log.Logger;
-using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
 {
@@ -23,8 +23,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
     /// Generally used for bullets but can be used for other things like bananas
     /// </summary>
     [RegisterComponent]
-    public class AmmoComponent : Component
+    public class AmmoComponent : Component, IExamine
     {
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+
         public override string Name => "Ammo";
         public BallisticCaliber Caliber => _caliber;
         private BallisticCaliber _caliber;
@@ -104,7 +107,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             }
         }
 
-        public IEntity TakeBullet(GridCoordinates spawnAtGrid, MapCoordinates spawnAtMap)
+        public IEntity TakeBullet(EntityCoordinates spawnAtGrid, MapCoordinates spawnAtMap)
         {
             if (_ammoIsProjectile)
             {
@@ -122,20 +125,22 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
                 appearanceComponent.SetData(AmmoVisuals.Spent, true);
             }
 
-            var entity = spawnAtGrid.GridID != GridId.Invalid ? Owner.EntityManager.SpawnEntity(_projectileId, spawnAtGrid) : Owner.EntityManager.SpawnEntity(_projectileId, spawnAtMap);
+            var entity = spawnAtGrid.GetGridId(_entityManager) != GridId.Invalid
+                ? Owner.EntityManager.SpawnEntity(_projectileId, spawnAtGrid)
+                : Owner.EntityManager.SpawnEntity(_projectileId, spawnAtMap);
 
             DebugTools.AssertNotNull(entity);
             return entity;
         }
 
-        public void MuzzleFlash(GridCoordinates grid, Angle angle)
+        public void MuzzleFlash(IEntity entity, Angle angle)
         {
             if (_muzzleFlashSprite == null)
             {
                 return;
             }
 
-            var time = IoCManager.Resolve<IGameTiming>().CurTime;
+            var time = _gameTiming.CurTime;
             var deathTime = time + TimeSpan.FromMilliseconds(200);
             // Offset the sprite so it actually looks like it's coming from the gun
             var offset = angle.ToVec().Normalized / 2;
@@ -145,7 +150,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
                 EffectSprite = _muzzleFlashSprite,
                 Born = time,
                 DeathTime = deathTime,
-                Coordinates = grid.Translated(offset),
+                AttachedEntityUid = entity.Uid,
+                AttachedOffset = offset,
                 //Rotated from east facing
                 Rotation = (float) angle.Theta,
                 Color = Vector4.Multiply(new Vector4(255, 255, 255, 255), 1.0f),
@@ -153,6 +159,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
                 Shaded = false
             };
             EntitySystem.Get<EffectSystem>().CreateParticle(message);
+        }
+
+        public void Examine(FormattedMessage message, bool inDetailsRange)
+        {
+            var text = Loc.GetString("It's [color=white]{0}[/color] ammo.", Caliber);
+            message.AddMarkup(text);
         }
     }
 

@@ -49,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             var mapManager = IoCManager.Resolve<IMapManager>();
             var playerGrid = player.AttachedEntity.Transform.GridID;
             var mapGrid = mapManager.GetGrid(playerGrid);
-            var playerPosition = player.AttachedEntity.Transform.GridPosition;
+            var playerPosition = player.AttachedEntity.Transform.Coordinates;
             var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
 
             for (var i = -radius; i <= radius; i++)
@@ -106,9 +106,9 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             foreach (var entity in entities)
             {
-                if (entity.TryGetComponent(out AnchorableComponent anchorable))
+                if (entity.TryGetComponent(out AnchorableComponent? anchorable))
                 {
-                    anchorable.TryAnchor(player.AttachedEntity, force: true);
+                    _ = anchorable.TryAnchor(player.AttachedEntity, force: true);
                 }
             }
         }
@@ -151,9 +151,9 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             foreach (var entity in entities)
             {
-                if (entity.TryGetComponent(out AnchorableComponent anchorable))
+                if (entity.TryGetComponent(out AnchorableComponent? anchorable))
                 {
-                    anchorable.TryUnAnchor(player.AttachedEntity, force: true);
+                    _ = anchorable.TryUnAnchor(player.AttachedEntity, force: true);
                 }
             }
         }

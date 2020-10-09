@@ -1,14 +1,12 @@
 ﻿using System.Threading.Tasks;
-using Content.Client.GameObjects.Components.Gravity;
 using Content.Server.GameObjects.Components.Gravity;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.Components.Power;
+using Content.Shared.Utility;
 using NUnit.Framework;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -39,7 +37,7 @@ namespace Content.IntegrationTests.Tests
 
                 var entityMan = IoCManager.Resolve<IEntityManager>();
 
-                generator = entityMan.SpawnEntity("GravityGenerator", new GridCoordinates(new Vector2(0, 0), grid2.Index));
+                generator = entityMan.SpawnEntity("GravityGenerator", grid2.ToCoordinates());
                 Assert.That(generator.HasComponent<GravityGeneratorComponent>());
                 Assert.That(generator.HasComponent<PowerReceiverComponent>());
                 var generatorComponent = generator.GetComponent<GravityGeneratorComponent>();

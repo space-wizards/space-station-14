@@ -1,8 +1,6 @@
 ﻿using Robust.Server.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 
 namespace Content.Server.Placement
 {
@@ -15,7 +13,7 @@ namespace Content.Server.Placement
         ///     Spawns a spotlight ground turret that will track any living entities in range.
         /// </summary>
         /// <param name="position"></param>
-        public static void SpawnLightTurret(GridCoordinates position)
+        public static void SpawnLightTurret(EntityCoordinates position)
         {
             var entMan = IoCManager.Resolve<IServerEntityManager>();
             var tBase = entMan.SpawnEntity("TurretBase", position);

@@ -3,13 +3,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.Interfaces;
+using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Interfaces.PDA;
-using Content.Shared.GameObjects;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.PDA;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Verbs;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -35,20 +40,18 @@ namespace Content.Server.GameObjects.Components.PDA
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
         [ViewVariables] private Container _idSlot = default!;
-        [ViewVariables] private PointLightComponent _pdaLight = default!;
         [ViewVariables] private bool _lightOn;
-        [ViewVariables] private BoundUserInterface _interface = default!;
         [ViewVariables] private string _startingIdCard = default!;
         [ViewVariables] public bool IdSlotEmpty => _idSlot.ContainedEntities.Count < 1;
         [ViewVariables] public string? OwnerName { get; private set; }
 
         [ViewVariables] public IdCardComponent? ContainedID { get; private set; }
 
-        [ViewVariables] private AppearanceComponent _appearance = default!;
-
         [ViewVariables] private UplinkAccount? _syndicateUplinkAccount;
 
         [ViewVariables] private readonly PdaAccessSet _accessSet;
+
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(PDAUiKey.Key);
 
         public PDAComponent()
         {
@@ -65,12 +68,13 @@ namespace Content.Server.GameObjects.Components.PDA
         {
             base.Initialize();
             _idSlot = ContainerManagerComponent.Ensure<Container>("pda_entity_container", Owner, out var existed);
-            _pdaLight = Owner.GetComponent<PointLightComponent>();
-            _appearance = Owner.GetComponent<AppearanceComponent>();
-            _interface = Owner.GetComponent<ServerUserInterfaceComponent>()
-                .GetBoundUserInterface(PDAUiKey.Key);
-            _interface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
-            var idCard = _entityManager.SpawnEntity(_startingIdCard, Owner.Transform.GridPosition);
+
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
+            }
+
+            var idCard = _entityManager.SpawnEntity(_startingIdCard, Owner.Transform.Coordinates);
             var idCardComponent = idCard.GetComponent<IdCardComponent>();
             _idSlot.Insert(idCardComponent.Owner);
             ContainedID = idCardComponent;
@@ -100,7 +104,7 @@ namespace Content.Server.GameObjects.Components.PDA
 
                 case PDAUplinkBuyListingMessage buyMsg:
                 {
-                    if (!_uplinkManager.TryPurchaseItem(_syndicateUplinkAccount, buyMsg.ListingToBuy))
+                    if (!_uplinkManager.TryPurchaseItem(_syndicateUplinkAccount, buyMsg.ItemId))
                     {
                         SendNetworkMessage(new PDAUplinkInsufficientFundsMessage(), message.Session.ConnectedClient);
                         break;
@@ -126,12 +130,12 @@ namespace Content.Server.GameObjects.Components.PDA
             {
                 var accData = new UplinkAccountData(_syndicateUplinkAccount.AccountHolder,
                     _syndicateUplinkAccount.Balance);
-                var listings = _uplinkManager.FetchListings.ToArray();
-                _interface.SetState(new PDAUpdateState(_lightOn, ownerInfo, accData, listings));
+                var listings = _uplinkManager.FetchListings.Values.ToArray();
+                UserInterface?.SetState(new PDAUpdateState(_lightOn, ownerInfo, accData, listings));
             }
             else
             {
-                _interface.SetState(new PDAUpdateState(_lightOn, ownerInfo));
+                UserInterface?.SetState(new PDAUpdateState(_lightOn, ownerInfo));
             }
 
             UpdatePDAAppearance();
@@ -139,46 +143,69 @@ namespace Content.Server.GameObjects.Components.PDA
 
         private void UpdatePDAAppearance()
         {
-            _appearance?.SetData(PDAVisuals.ScreenLit, _lightOn);
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            {
+                appearance.SetData(PDAVisuals.FlashlightLit, _lightOn);
+            }
         }
 
-        public bool InteractUsing(InteractUsingEventArgs eventArgs)
+        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             var item = eventArgs.Using;
-            if (!IdSlotEmpty)
-            {
-                return false;
-            }
 
             if (!item.TryGetComponent<IdCardComponent>(out var idCardComponent) || _idSlot.Contains(item))
             {
                 return false;
             }
 
+            if (!eventArgs.User.TryGetComponent(out IHandsComponent? hands))
+            {
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("You have no hands!"));
+                return true;
+            }
+
+            IEntity? swap = null;
+            if (!IdSlotEmpty)
+            {
+                // Swap
+                swap = _idSlot.ContainedEntities[0];
+            }
+
+            if (!hands.Drop(item))
+            {
+                return true;
+            }
+
             InsertIdCard(idCardComponent);
+
+            if (swap != null)
+            {
+                eventArgs.User.GetComponent<HandsComponent>().PutInHand(swap.GetComponent<ItemComponent>());
+            }
+
             UpdatePDAUserInterface();
             return true;
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
+            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
                 return;
             }
 
-            _interface.Open(actor.playerSession);
+            UserInterface?.Toggle(actor.playerSession);
             UpdatePDAAppearance();
         }
 
         public bool UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
+            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
                 return false;
             }
 
-            _interface.Open(actor.playerSession);
+            UserInterface?.Toggle(actor.playerSession);
             UpdatePDAAppearance();
             return true;
         }
@@ -189,7 +216,7 @@ namespace Content.Server.GameObjects.Components.PDA
             UpdatePDAUserInterface();
         }
 
-        private void InsertIdCard(IdCardComponent card)
+        public void InsertIdCard(IdCardComponent card)
         {
             _idSlot.Insert(card.Owner);
             ContainedID = card;
@@ -215,8 +242,13 @@ namespace Content.Server.GameObjects.Components.PDA
 
         private void ToggleLight()
         {
+            if (!Owner.TryGetComponent(out PointLightComponent? light))
+            {
+                return;
+            }
+
             _lightOn = !_lightOn;
-            _pdaLight.Enabled = _lightOn;
+            light.Enabled = _lightOn;
             EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/flashlight_toggle.ogg", Owner);
             UpdatePDAUserInterface();
         }

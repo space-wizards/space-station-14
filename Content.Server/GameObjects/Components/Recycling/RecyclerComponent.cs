@@ -1,8 +1,11 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameObjects.Components.Conveyor;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Construction;
+using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Recycling;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
@@ -23,11 +26,11 @@ namespace Content.Server.GameObjects.Components.Recycling
     [RegisterComponent]
     public class RecyclerComponent : Component, ICollideBehavior
     {
-#pragma warning disable 649
         [Dependency] private readonly IEntityManager _entityManager = default!;
-#pragma warning restore 649
 
         public override string Name => "Recycler";
+
+        private List<IEntity> _intersecting = new List<IEntity>();
 
         /// <summary>
         ///     Whether or not sentient beings will be recycled
@@ -63,29 +66,25 @@ namespace Content.Server.GameObjects.Components.Recycling
 
         private bool CanGib(IEntity entity)
         {
-            return entity.HasComponent<SpeciesComponent>() &&
-                   !_safe &&
-                   Powered;
+            return entity.HasComponent<ISharedBodyManagerComponent>() && !_safe && Powered;
         }
 
         private bool CanRecycle(IEntity entity, [MaybeNullWhen(false)] out ConstructionPrototype prototype)
         {
             prototype = null;
 
-            var constructionSystem = EntitySystem.Get<ConstructionSystem>();
-            var entityId = entity.MetaData.EntityPrototype?.ID;
-
-            if (entityId == null ||
-                !constructionSystem.CraftRecipes.TryGetValue(entityId, out prototype))
-            {
-                return false;
-            }
+            // TODO CONSTRUCTION fix this
 
             return Powered;
         }
 
         private void Recycle(IEntity entity)
         {
+            if (!_intersecting.Contains(entity))
+            {
+                _intersecting.Add(entity);
+            }
+
             // TODO: Prevent collision with recycled items
             if (CanGib(entity))
             {
@@ -99,17 +98,7 @@ namespace Content.Server.GameObjects.Components.Recycling
                 return;
             }
 
-            var constructionSystem = EntitySystem.Get<ConstructionSystem>();
-            var recyclerPosition = Owner.Transform.MapPosition;
-            foreach (var stage in prototype.Stages)
-            {
-                if (!(stage.Forward is ConstructionStepMaterial step))
-                {
-                    continue;
-                }
-
-                constructionSystem.SpawnIngredient(recyclerPosition, step);
-            }
+            // TODO CONSTRUCTION fix this
 
             entity.Delete();
         }
@@ -165,16 +154,19 @@ namespace Content.Server.GameObjects.Components.Recycling
         {
             if (!CanRun())
             {
+                _intersecting.Clear();
                 return;
             }
 
-            var intersecting = _entityManager.GetEntitiesIntersecting(Owner, true);
             var direction = Vector2.UnitX;
 
-            foreach (var entity in intersecting)
+            for (var i = _intersecting.Count - 1; i >= 0; i--)
             {
-                if (!CanMove(entity))
+                var entity = _intersecting[i];
+                
+                if (entity.Deleted || !CanMove(entity) || !_entityManager.IsIntersecting(Owner, entity))
                 {
+                    _intersecting.RemoveAt(i);
                     continue;
                 }
 

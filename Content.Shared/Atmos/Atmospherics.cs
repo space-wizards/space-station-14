@@ -1,32 +1,10 @@
-﻿using System.Collections.Generic;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
-
-namespace Content.Shared.Atmos
+﻿namespace Content.Shared.Atmos
 {
     /// <summary>
     ///     Class to store atmos constants.
     /// </summary>
-    public static class Atmospherics
+    public class Atmospherics
     {
-        static Atmospherics()
-        {
-            var protoMan = IoCManager.Resolve<IPrototypeManager>();
-
-            GasPrototypes = new GasPrototype[TotalNumberOfGases];
-
-            for (var i = 0; i < TotalNumberOfGases; i++)
-            {
-                GasPrototypes[i] = protoMan.Index<GasPrototype>(i.ToString());
-            }
-        }
-
-        private static readonly GasPrototype[] GasPrototypes;
-
-        public static GasPrototype GetGas(int gasId) => GasPrototypes[gasId];
-        public static GasPrototype GetGas(Gas gasId) => GasPrototypes[(int) gasId];
-        public static IEnumerable<GasPrototype> Gases => GasPrototypes;
-
         #region ATMOS
         /// <summary>
         ///     The universal gas constant, in kPa*L/(K*mol)
@@ -58,10 +36,21 @@ namespace Content.Shared.Atmos
         /// </summary>
         public const float CellVolume = 2500f;
 
+        // Liters in a normal breath
+        public const float BreathVolume = 0.5f;
+
+        // Amount of air to take from a tile
+        public const float BreathPercentage = BreathVolume / CellVolume;
+
         /// <summary>
         ///     Moles in a 2.5 m^3 cell at 101.325 kPa and 20ºC
         /// </summary>
         public const float MolesCellStandard = (OneAtmosphere * CellVolume / (T20C * R));
+
+        /// <summary>
+        ///     Compared against for superconduction.
+        /// </summary>
+        public const float MCellWithRatio = (MolesCellStandard * 0.005f);
 
         public const float OxygenStandard = 0.21f;
         public const float NitrogenStandard = 0.79f;
@@ -82,6 +71,11 @@ namespace Content.Shared.Atmos
         public const float GasMinMoles = 0.00000005f;
 
         public const float OpenHeatTransferCoefficient = 0.4f;
+
+        /// <summary>
+        ///     Hack to make vacuums cold, sacrificing realism for gameplay.
+        /// </summary>
+        public const float HeatCapacityVacuum = 7000f;
 
         /// <summary>
         ///     Ratio of air that must move to/from a tile to reset group processing
@@ -116,6 +110,7 @@ namespace Content.Shared.Atmos
         ///     Minimum temperature for starting superconduction.
         /// </summary>
         public const float MinimumTemperatureStartSuperConduction = (T20C + 200f);
+        public const float MinimumTemperatureForSuperconduction = (T20C + 10f);
 
         /// <summary>
         ///     Minimum heat capacity.
@@ -149,7 +144,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     Total number of gases. Increase this if you want to add more!
         /// </summary>
-        public const int TotalNumberOfGases = 6;
+        public const byte TotalNumberOfGases = 6;
 
         /// <summary>
         ///     Amount of heat released per mole of burnt hydrogen or tritium (hydrogen isotope)
@@ -214,6 +209,25 @@ namespace Content.Shared.Atmos
         ///     so it just applies this flat value).
         /// </summary>
         public const int LowPressureDamage = 4;
+
+        public const float WindowHeatTransferCoefficient = 0.1f;
+
+        /// <summary>
+        ///     Directions that atmos currently supports. Modify in case of multi-z.
+        ///     See <see cref="AtmosDirection"/> on the server.
+        /// </summary>
+        public const int Directions = 4;
+
+        /// <summary>
+        ///     The normal body temperature in degrees Celsius.
+        /// </summary>
+        public const float NormalBodyTemperature = 37f;
+
+        public const float HumanNeededOxygen = MolesCellStandard * BreathPercentage * 0.16f;
+
+        public const float HumanProducedOxygen = HumanNeededOxygen * 0.75f;
+
+        public const float HumanProducedCarbonDioxide = HumanNeededOxygen * 0.25f;
     }
 
     /// <summary>

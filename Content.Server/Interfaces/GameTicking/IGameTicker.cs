@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.GameTicking;
+using Content.Shared.Roles;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
@@ -13,6 +15,16 @@ namespace Content.Server.Interfaces.GameTicking
     public interface IGameTicker
     {
         GameRunLevel RunLevel { get; }
+        
+        /// <summary>
+        ///     The map loaded by the GameTicker on round start.
+        /// </summary>
+        MapId DefaultMap { get; }
+        
+        /// <summary>
+        ///     The GridId loaded by the GameTicker on round start.
+        /// </summary>
+        GridId DefaultGridId { get; }
 
         event Action<GameRunLevelChangedEventArgs> OnRunLevelChanged;
         event Action<GameRuleAddedEventArgs> OnRuleAdded;
@@ -22,16 +34,19 @@ namespace Content.Server.Interfaces.GameTicking
 
         void RestartRound();
         void StartRound(bool force = false);
-        void EndRound();
+        void EndRound(string roundEndText = "");
 
         void Respawn(IPlayerSession targetPlayer);
         void MakeObserve(IPlayerSession player);
         void MakeJoinGame(IPlayerSession player, string jobId);
         void ToggleReady(IPlayerSession player, bool ready);
+        void ToggleDisallowLateJoin(bool disallowLateJoin);
 
-        GridCoordinates GetLateJoinSpawnPoint();
-        GridCoordinates GetJobSpawnPoint(string jobId);
-        GridCoordinates GetObserverSpawnPoint();
+        EntityCoordinates GetLateJoinSpawnPoint();
+        EntityCoordinates GetJobSpawnPoint(string jobId);
+        EntityCoordinates GetObserverSpawnPoint();
+
+        void EquipStartingGear(IEntity entity, StartingGearPrototype startingGear);
 
         // GameRule system.
         T AddGameRule<T>() where T : GameRule, new();

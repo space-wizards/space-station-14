@@ -8,6 +8,8 @@
     - Wall
   components:
   - type: Clickable
+  - type: RCDDeconstructWhitelist
+  - type: CanBuildWindowOnTop
   - type: InteractionOutline
   - type: Sprite
     netsync: false
@@ -20,15 +22,22 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      layer: [SmallImpassable, MobImpassable]
-  - type: Damageable
-  - type: Destructible
-    thresholdvalue: 100
+      layer:
+      - VaultImpassable
+      - SmallImpassable
+  - type: BreakableConstruction
+    node: start
+    deadThreshold: 100
+    resistances: metallicResistances
   - type: SnapGrid
     offset: Center
+  - type: Climbable
   - type: LowWall
     key: walls
     base: metal_
+  - type: Construction
+    graph: lowWall
+    node: lowWall
 
 - type: entity
   id: LowWallOverlay

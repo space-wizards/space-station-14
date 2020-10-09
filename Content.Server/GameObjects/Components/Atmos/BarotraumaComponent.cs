@@ -1,13 +1,12 @@
-﻿using System.Runtime.CompilerServices;
-using CannyFastMath;
+﻿using System;
+using System.Runtime.CompilerServices;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.Atmos;
-using Content.Shared.GameObjects;
+using Content.Shared.Damage;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
@@ -20,16 +19,11 @@ namespace Content.Server.GameObjects.Components.Atmos
         public override string Name => "Barotrauma";
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Update(float frameTime)
+        public void Update(float airPressure)
         {
-            if (!Owner.TryGetComponent(out DamageableComponent damageable)) return;
+            if (!Owner.TryGetComponent(out IDamageableComponent damageable)) return;
             Owner.TryGetComponent(out ServerStatusEffectsComponent status);
 
-            var coordinates = Owner.Transform.GridPosition;
-            var gridAtmos = EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(coordinates.GridID);
-            var tile = gridAtmos?.GetTile(coordinates);
-
-            var pressure = 1f;
             var highPressureMultiplier = 1f;
             var lowPressureMultiplier = 1f;
 
@@ -39,8 +33,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 lowPressureMultiplier *= protection.LowPressureMultiplier;
             }
 
-            if (tile?.Air != null)
-                pressure = MathF.Max(tile.Air.Pressure, 1f);
+            var pressure = MathF.Max(airPressure, 1f);
 
             switch (pressure)
             {
@@ -51,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                     if(pressure > Atmospherics.WarningLowPressure)
                         goto default;
 
-                    damageable.TakeDamage(DamageType.Brute, Atmospherics.LowPressureDamage, Owner);
+                    damageable.ChangeDamage(DamageType.Blunt, Atmospherics.LowPressureDamage, false, Owner);
 
                     if (status == null) break;
 
@@ -73,7 +66,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                     var damage = (int) MathF.Min((pressure / Atmospherics.HazardHighPressure) * Atmospherics.PressureDamageCoefficient, Atmospherics.MaxHighPressureDamage);
 
-                    damageable.TakeDamage(DamageType.Brute, damage, Owner);
+                    damageable.ChangeDamage(DamageType.Blunt, damage, false, Owner);
 
                     if (status == null) break;
 

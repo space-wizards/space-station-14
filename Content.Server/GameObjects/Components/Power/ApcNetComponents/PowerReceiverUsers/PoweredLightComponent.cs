@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces;
-using Content.Shared.GameObjects;
+using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.Components.MachineLinking;
+using Content.Server.GameObjects.Components.Mobs;
+using Content.Shared.Damage;
+using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -15,26 +18,28 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Power
+namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers
 {
     /// <summary>
     ///     Component that represents a wall light. It has a light bulb that can be replaced when broken.
     /// </summary>
     [RegisterComponent]
-    public class PoweredLightComponent : Component, IInteractHand, IInteractUsing, IMapInit
+    public class PoweredLightComponent : Component, IInteractHand, IInteractUsing, IMapInit, ISignalReceiver
     {
+        [Dependency] private IGameTiming _gameTiming = default!;
+
         public override string Name => "PoweredLight";
 
         private static readonly TimeSpan _thunkDelay = TimeSpan.FromSeconds(2);
-
         private TimeSpan _lastThunk;
 
+        [ViewVariables] private bool _on;
 
         private LightBulbType BulbType = LightBulbType.Tube;
-
         [ViewVariables] private ContainerSlot _lightBulbContainer;
 
         [ViewVariables]
@@ -50,31 +55,33 @@ namespace Content.Server.GameObjects.Components.Power
             }
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent component)
-        {
-            base.HandleMessage(message, component);
+        // TODO CONSTRUCTION make this use a construction graph
 
-            switch (message)
-            {
-                case BeginDeconstructCompMsg msg:
-                    if (!msg.BlockDeconstruct && !(_lightBulbContainer.ContainedEntity is null))
-                    {
-                        var notifyManager = IoCManager.Resolve<IServerNotifyManager>();
-                        notifyManager.PopupMessage(Owner, msg.User, "Remove the bulb.");
-                        msg.BlockDeconstruct = true;
-                    }
-                    break;
-            }
-        }
-
-        public bool InteractUsing(InteractUsingEventArgs eventArgs)
+        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             return InsertBulb(eventArgs.Using);
         }
 
+        public void TriggerSignal(SignalState state)
+        {
+            switch (state)
+            {
+                case SignalState.On:
+                    _on = true;
+                    break;
+                case SignalState.Off:
+                    _on = false;
+                    break;
+                case SignalState.Toggle:
+                    _on = !_on;
+                    break;
+            }
+            UpdateLight();
+        }
+
         public bool InteractHand(InteractHandEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out DamageableComponent damageableComponent))
+            if (!eventArgs.User.TryGetComponent(out IDamageableComponent damageableComponent))
             {
                 Eject();
                 return false;
@@ -97,7 +104,8 @@ namespace Content.Server.GameObjects.Components.Power
 
             void Burn()
             {
-                damageableComponent.TakeDamage(DamageType.Heat, 20, Owner);
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("You burn your hand!"));
+                damageableComponent.ChangeDamage(DamageType.Heat, 20, false, Owner);
                 var audioSystem = EntitySystem.Get<AudioSystem>();
                 audioSystem.PlayFromEntity("/Audio/Effects/lightburn.ogg", Owner);
             }
@@ -145,12 +153,13 @@ namespace Content.Server.GameObjects.Components.Power
 
             if (!user.TryGetComponent(out HandsComponent hands)
                 || !hands.PutInHand(bulb.Owner.GetComponent<ItemComponent>()))
-                bulb.Owner.Transform.GridPosition = user.Transform.GridPosition;
+                bulb.Owner.Transform.Coordinates = user.Transform.Coordinates;
         }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(ref BulbType, "bulb", LightBulbType.Tube);
+            serializer.DataField(ref _on, "on", true);
         }
 
         /// <summary>
@@ -182,13 +191,13 @@ namespace Content.Server.GameObjects.Components.Power
             switch (LightBulb.State)
             {
                 case LightBulbState.Normal:
-                    powerReceiver.Load = LightBulb.PowerUse;
-                    if (powerReceiver.Powered)
+                    if (powerReceiver.Powered && _on)
                     {
+                        powerReceiver.Load = LightBulb.PowerUse;
                         sprite.LayerSetState(0, "on");
                         light.Enabled = true;
                         light.Color = LightBulb.Color;
-                        var time = IoCManager.Resolve<IGameTiming>().CurTime;
+                        var time = _gameTiming.CurTime;
                         if (time > _lastThunk + _thunkDelay)
                         {
                             _lastThunk = time;
@@ -202,12 +211,10 @@ namespace Content.Server.GameObjects.Components.Power
                     }
                     break;
                 case LightBulbState.Broken:
-                    powerReceiver.Load = 0;
                     sprite.LayerSetState(0, "broken");
                     light.Enabled = false;
                     break;
                 case LightBulbState.Burned:
-                    powerReceiver.Load = 0;
                     sprite.LayerSetState(0, "burned");
                     light.Enabled = false;
                     break;
@@ -218,14 +225,18 @@ namespace Content.Server.GameObjects.Components.Power
         {
             base.Initialize();
 
-            Owner.GetComponent<PowerReceiverComponent>().OnPowerStateChanged += UpdateLight;
+            Owner.EnsureComponent<PowerReceiverComponent>().OnPowerStateChanged += UpdateLight;
 
             _lightBulbContainer = ContainerManagerComponent.Ensure<ContainerSlot>("light_bulb", Owner);
         }
 
         public override void OnRemove()
         {
-            Owner.GetComponent<PowerReceiverComponent>().OnPowerStateChanged -= UpdateLight;
+            if (Owner.TryGetComponent(out PowerReceiverComponent receiver))
+            {
+                receiver.OnPowerStateChanged -= UpdateLight;
+            }
+
             base.OnRemove();
         }
 
@@ -238,7 +249,7 @@ namespace Content.Server.GameObjects.Components.Power
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-            var entity = Owner.EntityManager.SpawnEntity(prototype, Owner.Transform.GridPosition);
+            var entity = Owner.EntityManager.SpawnEntity(prototype, Owner.Transform.Coordinates);
             _lightBulbContainer.Insert(entity);
         }
     }

@@ -13,9 +13,7 @@
       - state: mag-unshaded-4
         map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
         shader: unshaded
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
-    state: icon
+
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
@@ -30,6 +28,7 @@
     - Single
     fireRate: 2
     powerCellPrototype: PowerCellSmallStandard
+    powerCellRemovable: true
     ammoPrototype: RedLaser
     soundGunshot: /Audio/Weapons/Guns/Gunshots/laser.ogg
   - type: Appearance
@@ -54,9 +53,7 @@
       - state: mag-unshaded-4
         map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
         shader: unshaded
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
-    state: icon
+
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
@@ -71,6 +68,7 @@
     angleIncrease: 15
     angleDecay: 45
     powerCellPrototype: PowerCellSmallSuper
+    powerCellRemovable: true
     ammoPrototype: RedHeavyLaser
     soundGunshot: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: Appearance
@@ -95,9 +93,7 @@
       - state: mag-unshaded-0
         map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
         shader: unshaded
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Battery/xray.rsi
-    state: icon
+
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Battery/xray.rsi
@@ -112,6 +108,7 @@
     angleIncrease: 15
     angleDecay: 45
     powerCellPrototype: PowerCellSmallSuper
+    powerCellRemovable: true
     base_fire_cost: 600
     ammoPrototype: XrayLaser
     soundGunshot: /Audio/Weapons/Guns/Gunshots/laser3.ogg
@@ -137,13 +134,11 @@
       - state: mag-unshaded-0
         map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
         shader: unshaded
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Battery/taser.rsi
-    state: icon
+
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Battery/taser.rsi
-    prefix: icon
+    HeldPrefix: taser4
   - type: RangedWeapon
   - type: BatteryBarrel
     currentSelector: Single
@@ -155,6 +150,7 @@
     angleIncrease: 20
     angleDecay: 15
     powerCellPrototype: PowerCellSmallStandard
+    powerCellRemovable: false
     ammoPrototype: BulletTaser
     soundGunshot: /Audio/Weapons/Guns/Gunshots/taser.ogg
   - type: Appearance

@@ -50,23 +50,24 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
             base.Shutdown();
             Gui?.Dispose();
             Gui = null;
+            _player = null;
         }
-        
+
         private void HandlePlayerAttached(IEntity? entity)
         {
             _player = entity;
             // Setup the GUI and pass the new data to it if applicable.
-            Gui?.Dispose();
-            
+            Gui?.Detached();
+
             if (entity == null)
             {
                 return;
             }
-            
+
             Gui ??= new DoAfterGui();
             Gui.AttachedEntity = entity;
 
-            if (entity.TryGetComponent(out DoAfterComponent doAfterComponent))
+            if (entity.TryGetComponent(out DoAfterComponent? doAfterComponent))
             {
                 foreach (var (_, doAfter) in doAfterComponent.DoAfters)
                 {
@@ -81,24 +82,29 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
 
             var currentTime = _gameTiming.CurTime;
 
-            if (_player == null || !_player.TryGetComponent(out DoAfterComponent doAfterComponent))
+            if (_player?.IsValid() != true)
             {
                 return;
             }
-            
+
+            if (!_player.TryGetComponent(out DoAfterComponent? doAfterComponent))
+            {
+                return;
+            }
+
             var doAfters = doAfterComponent.DoAfters.ToList();
             if (doAfters.Count == 0)
             {
                 return;
             }
-                
-            var userGrid = _player.Transform.GridPosition;
-                
+
+            var userGrid = _player.Transform.Coordinates;
+
             // Check cancellations / finishes
             foreach (var (id, doAfter) in doAfters)
             {
                 var elapsedTime = (currentTime - doAfter.StartTime).TotalSeconds;
-                    
+
                 // If we've passed the final time (after the excess to show completion graphic) then remove.
                 if (elapsedTime > doAfter.Delay + ExcessTime)
                 {
@@ -106,7 +112,7 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
                     doAfterComponent.Remove(doAfter);
                     continue;
                 }
-                    
+
                 // Don't predict cancellation if it's already finished.
                 if (elapsedTime > doAfter.Delay)
                 {
@@ -125,9 +131,14 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
 
                 if (doAfter.BreakOnTargetMove)
                 {
-                    var targetEntity = _entityManager.GetEntity(doAfter.TargetUid);
+                    if (!_entityManager.TryGetEntity(doAfter.TargetUid, out var targetEntity))
+                    {
+                        // Cancel if the target entity doesn't exist.
+                        doAfterComponent.Cancel(id, currentTime);
+                        continue;
+                    }
 
-                    if (targetEntity.Transform.GridPosition != doAfter.TargetGrid)
+                    if (targetEntity.Transform.Coordinates != doAfter.TargetGrid)
                     {
                         doAfterComponent.Cancel(id, currentTime);
                         continue;

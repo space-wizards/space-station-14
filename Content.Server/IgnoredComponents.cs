@@ -10,17 +10,15 @@
             "SubFloorHide",
             "LowWall",
             "ReinforcedWall",
-            "Window",
             "CharacterInfo",
             "InteractionOutline",
             "MeleeWeaponArcAnimation",
             "AnimationsTest",
             "ItemStatus",
             "Marker",
-            "EmergencyLight",
             "Clickable",
-            "CanSeeGases",
             "RadiatingLight",
+            "Icon",
         };
 
     }

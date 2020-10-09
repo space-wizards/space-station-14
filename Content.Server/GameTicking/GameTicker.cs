@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
-using Content.Server.GameObjects;
-using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Markers;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.Components.PDA;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible;
+using Content.Server.GameObjects.EntitySystems.Atmos;
+using Content.Server.GameObjects.EntitySystems.StationEvents;
 using Content.Server.GameTicking.GamePresets;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
@@ -23,16 +23,16 @@ using Content.Server.Mobs.Roles;
 using Content.Server.Players;
 using Content.Shared;
 using Content.Shared.Chat;
-using Content.Shared.GameObjects.Components.PDA;
-using Content.Shared.Jobs;
+using Content.Shared.Network.NetMessages;
 using Content.Shared.Preferences;
+using Content.Shared.Roles;
+using Content.Shared.Utility;
 using Prometheus;
 using Robust.Server.Interfaces;
 using Robust.Server.Interfaces.Maps;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
 using Robust.Server.ServerStatus;
-using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
@@ -46,7 +46,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -57,7 +57,7 @@ using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameTicking
 {
-    public partial class GameTicker : SharedGameTicker, IGameTicker
+    public partial class GameTicker : GameTickerBase, IGameTicker
     {
         private static readonly Counter RoundNumberMetric = Metrics.CreateCounter(
             "ss14_round_number",
@@ -77,9 +77,8 @@ namespace Content.Server.GameTicking
         [ViewVariables] private readonly List<GameRule> _gameRules = new List<GameRule>();
         [ViewVariables] private readonly List<ManifestEntry> _manifest = new List<ManifestEntry>();
 
-        // Value is whether they're ready.
         [ViewVariables]
-        private readonly Dictionary<IPlayerSession, bool> _playersInLobby = new Dictionary<IPlayerSession, bool>();
+        private readonly Dictionary<IPlayerSession, PlayerStatus> _playersInLobby = new Dictionary<IPlayerSession, PlayerStatus>();
 
         [ViewVariables] private bool _initialized;
 
@@ -89,7 +88,9 @@ namespace Content.Server.GameTicking
         [ViewVariables] private bool _roundStartCountdownHasNotStartedYetDueToNoPlayers;
         private DateTime _roundStartTimeUtc;
         [ViewVariables] private GameRunLevel _runLevel;
-        [ViewVariables(VVAccess.ReadWrite)] private GridCoordinates _spawnPoint;
+        [ViewVariables(VVAccess.ReadWrite)] private EntityCoordinates _spawnPoint;
+
+        [ViewVariables] private bool DisallowLateJoin { get; set; } = false;
 
         [ViewVariables] private bool LobbyEnabled => _configurationManager.GetCVar<bool>("game.lobbyenabled");
 
@@ -98,6 +99,10 @@ namespace Content.Server.GameTicking
 
 
         [ViewVariables] public bool Paused { get; private set; }
+        
+        [ViewVariables] public MapId DefaultMap { get; private set; }
+        
+        [ViewVariables] public GridId DefaultGridId { get; private set; }
 
         [ViewVariables]
         public GameRunLevel RunLevel
@@ -120,25 +125,25 @@ namespace Content.Server.GameTicking
         private TimeSpan LobbyDuration =>
             TimeSpan.FromSeconds(_configurationManager.GetCVar<int>("game.lobbyduration"));
 
-        public void Initialize()
+        public override void Initialize()
         {
+            base.Initialize();
+
             DebugTools.Assert(!_initialized);
 
-            _configurationManager.RegisterCVar("game.lobbyenabled", false, CVar.ARCHIVE);
-            _configurationManager.RegisterCVar("game.lobbyduration", 20, CVar.ARCHIVE);
-            _configurationManager.RegisterCVar("game.defaultpreset", "Suspicion", CVar.ARCHIVE);
-            _configurationManager.RegisterCVar("game.fallbackpreset", "Sandbox", CVar.ARCHIVE);
-
-            _playerManager.PlayerStatusChanged += _handlePlayerStatusChanged;
+            PresetSuspicion.RegisterCVars(_configurationManager);
 
             _netManager.RegisterNetMessage<MsgTickerJoinLobby>(nameof(MsgTickerJoinLobby));
             _netManager.RegisterNetMessage<MsgTickerJoinGame>(nameof(MsgTickerJoinGame));
             _netManager.RegisterNetMessage<MsgTickerLobbyStatus>(nameof(MsgTickerLobbyStatus));
             _netManager.RegisterNetMessage<MsgTickerLobbyInfo>(nameof(MsgTickerLobbyInfo));
             _netManager.RegisterNetMessage<MsgTickerLobbyCountdown>(nameof(MsgTickerLobbyCountdown));
+            _netManager.RegisterNetMessage<MsgTickerLobbyReady>(nameof(MsgTickerLobbyReady));
             _netManager.RegisterNetMessage<MsgRoundEndMessage>(nameof(MsgRoundEndMessage));
+            _netManager.RegisterNetMessage<MsgRequestWindowAttention>(nameof(MsgRequestWindowAttention));
+            _netManager.RegisterNetMessage<MsgTickerLateJoinStatus>(nameof(MsgTickerLateJoinStatus));
 
-            SetStartPreset(_configurationManager.GetCVar<string>("game.defaultpreset"));
+            SetStartPreset(_configurationManager.GetCVar(CCVars.GameLobbyDefaultPreset));
 
             RestartRound();
 
@@ -200,16 +205,26 @@ namespace Content.Server.GameTicking
             }
             else
             {
-                if (_playerManager.PlayerCount == 0)
+                if (PlayerManager.PlayerCount == 0)
                     _roundStartCountdownHasNotStartedYetDueToNoPlayers = true;
                 else
                     _roundStartTimeUtc = DateTime.UtcNow + LobbyDuration;
 
                 _sendStatusToAll();
+
+                ReqWindowAttentionAll();
             }
         }
 
-        public async void StartRound(bool force = false)
+        private void ReqWindowAttentionAll()
+        {
+            foreach (var player in PlayerManager.GetAllPlayers())
+            {
+                player.RequestWindowAttention();
+            }
+        }
+
+        public void StartRound(bool force = false)
         {
             DebugTools.Assert(RunLevel == GameRunLevel.PreRoundLobby);
             Logger.InfoS("ticker", "Starting round!");
@@ -219,7 +234,7 @@ namespace Content.Server.GameTicking
             List<IPlayerSession> readyPlayers;
             if (LobbyEnabled)
             {
-                readyPlayers = _playersInLobby.Where(p => p.Value).Select(p => p.Key).ToList();
+                readyPlayers = _playersInLobby.Where(p => p.Value == PlayerStatus.Ready).Select(p => p.Key).ToList();
             }
             else
             {
@@ -231,16 +246,16 @@ namespace Content.Server.GameTicking
             RoundLengthMetric.Set(0);
 
             // Get the profiles for each player for easier lookup.
-            var profiles = (await _prefsManager.GetSelectedProfilesForPlayersAsync(
+            var profiles = _prefsManager.GetSelectedProfilesForPlayers(
                 readyPlayers
-                    .Select(p => p.Name).ToList()))
+                    .Select(p => p.UserId).ToList())
                     .ToDictionary(p => p.Key, p => (HumanoidCharacterProfile) p.Value);
 
             foreach (var readyPlayer in readyPlayers)
             {
-                if (!profiles.ContainsKey(readyPlayer.Name))
+                if (!profiles.ContainsKey(readyPlayer.UserId))
                 {
-                    profiles.Add(readyPlayer.Name, HumanoidCharacterProfile.Default());
+                    profiles.Add(readyPlayer.UserId, HumanoidCharacterProfile.Default());
                 }
             }
 
@@ -254,7 +269,7 @@ namespace Content.Server.GameTicking
                     continue;
                 }
 
-                var profile = profiles[player.Name];
+                var profile = profiles[player.UserId];
                 if (profile.PreferenceUnavailable == PreferenceUnavailableMode.SpawnAsOverflow)
                 {
                     assignedJobs.Add(player, OverflowJob);
@@ -264,11 +279,13 @@ namespace Content.Server.GameTicking
             // Spawn everybody in!
             foreach (var (player, job) in assignedJobs)
             {
-                SpawnPlayer(player, job, false);
+                SpawnPlayer(player, profiles[player.UserId], job, false);
             }
 
             // Time to start the preset.
             var preset = MakeGamePreset(profiles);
+
+            DisallowLateJoin |= preset.DisallowLateJoin;
 
             if (!preset.Start(assignedJobs.Keys.ToList(), force))
             {
@@ -280,10 +297,21 @@ namespace Content.Server.GameTicking
                 {
                     throw new ApplicationException("Fallback preset failed to start!");
                 }
+
+                DisallowLateJoin = false;
+                DisallowLateJoin |= newPreset.DisallowLateJoin;
             }
 
             _roundStartTimeSpan = IoCManager.Resolve<IGameTiming>().RealTime;
             _sendStatusToAll();
+            ReqWindowAttentionAll();
+            UpdateLateJoinStatus();
+        }
+
+        private void UpdateLateJoinStatus()
+        {
+            var msg = new MsgTickerLateJoinStatus(null) {Disallowed = DisallowLateJoin};
+            _netManager.ServerSendToAll(msg);
         }
 
         private void SendServerMessage(string message)
@@ -294,11 +322,12 @@ namespace Content.Server.GameTicking
             IoCManager.Resolve<IServerNetManager>().ServerSendToAll(msg);
         }
 
-        private async Task<HumanoidCharacterProfile> GetPlayerProfileAsync(IPlayerSession p) =>
-            (HumanoidCharacterProfile) (await _prefsManager.GetPreferencesAsync(p.SessionId.Username))
-            .SelectedCharacter;
+        private HumanoidCharacterProfile GetPlayerProfile(IPlayerSession p)
+        {
+            return (HumanoidCharacterProfile) _prefsManager.GetPreferences(p.UserId).SelectedCharacter;
+        }
 
-        public void EndRound()
+        public void EndRound(string roundEndText = "")
         {
             DebugTools.Assert(RunLevel == GameRunLevel.InRound);
             Logger.InfoS("ticker", "Ending round!");
@@ -308,17 +337,19 @@ namespace Content.Server.GameTicking
             //Tell every client the round has ended.
             var roundEndMessage = _netManager.CreateNetMessage<MsgRoundEndMessage>();
             roundEndMessage.GamemodeTitle = MakeGamePreset(null).ModeTitle;
+            roundEndMessage.RoundEndText = roundEndText;
 
             //Get the timespan of the round.
             roundEndMessage.RoundDuration = IoCManager.Resolve<IGameTiming>().RealTime.Subtract(_roundStartTimeSpan);
 
             //Generate a list of basic player info to display in the end round summary.
             var listOfPlayerInfo = new List<RoundEndPlayerInfo>();
-            foreach (var ply in _playerManager.GetAllPlayers().OrderBy(p => p.Name))
+            foreach (var ply in PlayerManager.GetAllPlayers().OrderBy(p => p.Name))
             {
                 var mind = ply.ContentData().Mind;
                 if (mind != null)
                 {
+                    _playersInLobby.TryGetValue(ply, out var status);
                     var antag = mind.AllRoles.Any(role => role.Antagonist);
                     var playerEndRoundInfo = new RoundEndPlayerInfo()
                     {
@@ -327,7 +358,8 @@ namespace Content.Server.GameTicking
                         Role = antag
                             ? mind.AllRoles.First(role => role.Antagonist).Name
                             : mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("Unknown"),
-                        Antag = antag
+                        Antag = antag,
+                        Observer = status == PlayerStatus.Observer,
                     };
                     listOfPlayerInfo.Add(playerEndRoundInfo);
                 }
@@ -352,11 +384,18 @@ namespace Content.Server.GameTicking
             if (!_playersInLobby.ContainsKey(player)) return;
 
             _spawnObserver(player);
+            _playersInLobby[player] = PlayerStatus.Observer;
+            _netManager.ServerSendToAll(GetStatusSingle(player, PlayerStatus.Observer));
         }
 
         public void MakeJoinGame(IPlayerSession player, string jobId = null)
         {
             if (!_playersInLobby.ContainsKey(player)) return;
+
+            if (!_prefsManager.HavePreferencesLoaded(player))
+            {
+                return;
+            }
 
             SpawnPlayer(player, jobId);
         }
@@ -365,8 +404,21 @@ namespace Content.Server.GameTicking
         {
             if (!_playersInLobby.ContainsKey(player)) return;
 
-            _playersInLobby[player] = ready;
+            if (!_prefsManager.HavePreferencesLoaded(player))
+            {
+                return;
+            }
+
+            var status = ready ? PlayerStatus.Ready : PlayerStatus.NotReady;
+            _playersInLobby[player] = ready ? PlayerStatus.Ready : PlayerStatus.NotReady;
             _netManager.ServerSendMessage(_getStatusMsg(player), player.ConnectedClient);
+            _netManager.ServerSendToAll(GetStatusSingle(player, status));
+        }
+
+        public void ToggleDisallowLateJoin(bool disallowLateJoin)
+        {
+            DisallowLateJoin = disallowLateJoin;
+            UpdateLateJoinStatus();
         }
 
         public T AddGameRule<T>() where T : GameRule, new()
@@ -383,12 +435,12 @@ namespace Content.Server.GameTicking
 
         public bool HasGameRule(Type t)
         {
-            if (t == null || !t.IsAssignableFrom(typeof(GameRule)))
+            if (t == null || !typeof(GameRule).IsAssignableFrom(t))
                 return false;
 
             foreach (var rule in _gameRules)
             {
-                if (rule.GetType().Equals(t))
+                if (rule.GetType().IsAssignableFrom(t))
                     return true;
             }
 
@@ -499,16 +551,23 @@ namespace Content.Server.GameTicking
 
         private IEntity _spawnPlayerMob(Job job, bool lateJoin = true)
         {
-            GridCoordinates coordinates = lateJoin ? GetLateJoinSpawnPoint() : GetJobSpawnPoint(job.Prototype.ID);
+            EntityCoordinates coordinates = lateJoin ? GetLateJoinSpawnPoint() : GetJobSpawnPoint(job.Prototype.ID);
             var entity = _entityManager.SpawnEntity(PlayerPrototypeName, coordinates);
             var startingGear = _prototypeManager.Index<StartingGearPrototype>(job.StartingGear);
+            EquipStartingGear(entity, startingGear);
+
+            return entity;
+        }
+
+        public void EquipStartingGear(IEntity entity, StartingGearPrototype startingGear)
+        {
             if (entity.TryGetComponent(out InventoryComponent inventory))
             {
                 var gear = startingGear.Equipment;
 
                 foreach (var (slot, equipmentStr) in gear)
                 {
-                    var equipmentEntity = _entityManager.SpawnEntity(equipmentStr, entity.Transform.GridPosition);
+                    var equipmentEntity = _entityManager.SpawnEntity(equipmentStr, entity.Transform.Coordinates);
                     inventory.Equip(slot, equipmentEntity.GetComponent<ItemComponent>());
                 }
             }
@@ -518,12 +577,10 @@ namespace Content.Server.GameTicking
                 var inhand = startingGear.Inhand;
                 foreach (var (hand, prototype) in inhand)
                 {
-                    var inhandEntity = _entityManager.SpawnEntity(prototype, entity.Transform.GridPosition);
+                    var inhandEntity = _entityManager.SpawnEntity(prototype, entity.Transform.Coordinates);
                     handsComponent.PutInHand(inhandEntity.GetComponent<ItemComponent>(), hand);
                 }
             }
-
-            return entity;
         }
 
         private void ApplyCharacterProfile(IEntity entity, ICharacterProfile profile)
@@ -540,15 +597,15 @@ namespace Content.Server.GameTicking
             return _entityManager.SpawnEntity(ObserverPrototypeName, coordinates);
         }
 
-        public GridCoordinates GetLateJoinSpawnPoint()
+        public EntityCoordinates GetLateJoinSpawnPoint()
         {
             var location = _spawnPoint;
 
-            var possiblePoints = new List<GridCoordinates>();
+            var possiblePoints = new List<EntityCoordinates>();
             foreach (var entity in _entityManager.GetEntities(new TypeEntityQuery(typeof(SpawnPointComponent))))
             {
                 var point = entity.GetComponent<SpawnPointComponent>();
-                if (point.SpawnType == SpawnPointType.LateJoin) possiblePoints.Add(entity.Transform.GridPosition);
+                if (point.SpawnType == SpawnPointType.LateJoin) possiblePoints.Add(entity.Transform.Coordinates);
             }
 
             if (possiblePoints.Count != 0) location = _robustRandom.Pick(possiblePoints);
@@ -556,16 +613,16 @@ namespace Content.Server.GameTicking
             return location;
         }
 
-        public GridCoordinates GetJobSpawnPoint(string jobId)
+        public EntityCoordinates GetJobSpawnPoint(string jobId)
         {
             var location = _spawnPoint;
 
-            var possiblePoints = new List<GridCoordinates>();
+            var possiblePoints = new List<EntityCoordinates>();
             foreach (var entity in _entityManager.GetEntities(new TypeEntityQuery(typeof(SpawnPointComponent))))
             {
                 var point = entity.GetComponent<SpawnPointComponent>();
                 if (point.SpawnType == SpawnPointType.Job && point.Job.ID == jobId)
-                    possiblePoints.Add(entity.Transform.GridPosition);
+                    possiblePoints.Add(entity.Transform.Coordinates);
             }
 
             if (possiblePoints.Count != 0) location = _robustRandom.Pick(possiblePoints);
@@ -573,16 +630,16 @@ namespace Content.Server.GameTicking
             return location;
         }
 
-        public GridCoordinates GetObserverSpawnPoint()
+        public EntityCoordinates GetObserverSpawnPoint()
         {
             var location = _spawnPoint;
 
-            var possiblePoints = new List<GridCoordinates>();
+            var possiblePoints = new List<EntityCoordinates>();
             foreach (var entity in _entityManager.GetEntities(new TypeEntityQuery(typeof(SpawnPointComponent))))
             {
                 var point = entity.GetComponent<SpawnPointComponent>();
                 if (point.SpawnType == SpawnPointType.Observer)
-                    possiblePoints.Add(entity.Transform.GridPosition);
+                    possiblePoints.Add(entity.Transform.Coordinates);
             }
 
             if (possiblePoints.Count != 0) location = _robustRandom.Pick(possiblePoints);
@@ -606,7 +663,7 @@ namespace Content.Server.GameTicking
 
             // Delete the minds of everybody.
             // TODO: Maybe move this into a separate manager?
-            foreach (var unCastData in _playerManager.GetAllPlayerData()) unCastData.ContentData().WipeMind();
+            foreach (var unCastData in PlayerManager.GetAllPlayerData()) unCastData.ContentData().WipeMind();
 
             // Clear up any game rules.
             foreach (var rule in _gameRules) rule.Removed();
@@ -614,37 +671,41 @@ namespace Content.Server.GameTicking
             _gameRules.Clear();
 
             // Move everybody currently in the server to lobby.
-            foreach (var player in _playerManager.GetAllPlayers())
+            foreach (var player in PlayerManager.GetAllPlayers())
             {
                 if (_playersInLobby.ContainsKey(player)) continue;
 
                 _playerJoinLobby(player);
             }
 
-            // Reset pathing system
+            EntitySystem.Get<GasTileOverlaySystem>().ResettingCleanup();
             EntitySystem.Get<PathfindingSystem>().ResettingCleanup();
             EntitySystem.Get<AiReachableSystem>().ResettingCleanup();
+            EntitySystem.Get<WireHackingSystem>().ResetLayouts();
+            EntitySystem.Get<StationEventSystem>().ResettingCleanup();
 
             _spawnedPositions.Clear();
             _manifest.Clear();
-
-            EntitySystem.Get<WireHackingSystem>().ResetLayouts();
+            DisallowLateJoin = false;
         }
 
         private void _preRoundSetup()
         {
-            var newMapId = _mapManager.CreateMap();
+            DefaultMap = _mapManager.CreateMap();
             var startTime = _gameTiming.RealTime;
-            var grid = _mapLoader.LoadBlueprint(newMapId, MapFile);
-
-            _spawnPoint = new GridCoordinates(Vector2.Zero, grid);
+            var grid = _mapLoader.LoadBlueprint(DefaultMap, MapFile);
+            
+            DefaultGridId = grid.Index;
+            _spawnPoint = grid.ToCoordinates();
 
             var timeSpan = _gameTiming.RealTime - startTime;
             Logger.InfoS("ticker", $"Loaded map in {timeSpan.TotalMilliseconds:N2}ms.");
         }
 
-        private void _handlePlayerStatusChanged(object sender, SessionStatusEventArgs args)
+        protected override void PlayerStatusChanged(object sender, SessionStatusEventArgs args)
         {
+            base.PlayerStatusChanged(sender, args);
+
             var session = args.Session;
 
             switch (args.NewStatus)
@@ -656,14 +717,7 @@ namespace Content.Server.GameTicking
 
                 case SessionStatus.Connected:
                 {
-                    // Always make sure the client has player data. Mind gets assigned on spawn.
-                    if (session.Data.ContentDataUncast == null)
-                        session.Data.ContentDataUncast = new PlayerData(session.SessionId);
-
-                    // timer time must be > tick length
-                    Timer.Spawn(0, args.Session.JoinGame);
-
-                    _chatManager.DispatchServerAnnouncement($"Player {args.Session.SessionId} joined server!");
+                    _chatManager.DispatchServerAnnouncement($"Player {args.Session.Name} joined server!");
 
                     if (LobbyEnabled && _roundStartCountdownHasNotStartedYetDueToNoPlayers)
                     {
@@ -676,6 +730,8 @@ namespace Content.Server.GameTicking
 
                 case SessionStatus.InGame:
                 {
+                    _prefsManager.OnClientConnected(session);
+
                     var data = session.ContentData();
                     if (data.Mind == null)
                     {
@@ -685,13 +741,14 @@ namespace Content.Server.GameTicking
                             return;
                         }
 
-                        SpawnPlayer(session);
+
+                        SpawnWaitPrefs();
                     }
                     else
                     {
                         if (data.Mind.CurrentEntity == null)
                         {
-                            SpawnPlayer(session);
+                            SpawnWaitPrefs();
                         }
                         else
                         {
@@ -707,10 +764,17 @@ namespace Content.Server.GameTicking
                 {
                     if (_playersInLobby.ContainsKey(session)) _playersInLobby.Remove(session);
 
-                    _chatManager.DispatchServerAnnouncement($"Player {args.Session.SessionId} left server!");
+                    _chatManager.DispatchServerAnnouncement($"Player {args.Session} left server!");
                     ServerEmptyUpdateRestartCheck();
+                    _prefsManager.OnClientDisconnected(session);
                     break;
                 }
+            }
+
+            async void SpawnWaitPrefs()
+            {
+                await _prefsManager.WaitPreferencesLoaded(session);
+                SpawnPlayer(session);
             }
         }
 
@@ -723,7 +787,7 @@ namespace Content.Server.GameTicking
             // Can't simple check the current connected player count since that doesn't update
             // before PlayerStatusChanged gets fired.
             // So in the disconnect handler we'd still see a single player otherwise.
-            var playersOnline = _playerManager.GetAllPlayers().Any(p => p.Status != SessionStatus.Disconnected);
+            var playersOnline = PlayerManager.GetAllPlayers().Any(p => p.Status != SessionStatus.Disconnected);
             if (playersOnline || !_updateOnRoundEnd)
             {
                 // Still somebody online.
@@ -745,17 +809,29 @@ namespace Content.Server.GameTicking
             }, _updateShutdownCts.Token);
         }
 
-        private async void SpawnPlayer(IPlayerSession session, string jobId = null, bool lateJoin = true)
+        private void SpawnPlayer(IPlayerSession session, string jobId = null, bool lateJoin = true)
         {
-            _playerJoinGame(session);
+            var character = GetPlayerProfile(session);
 
-            var character = (HumanoidCharacterProfile) (await _prefsManager
-                    .GetPreferencesAsync(session.SessionId.Username))
-                .SelectedCharacter;
+            SpawnPlayer(session, character, jobId, lateJoin);
+        }
+
+        private void SpawnPlayer(IPlayerSession session,
+            HumanoidCharacterProfile character,
+            string jobId = null,
+            bool lateJoin = true)
+        {
+            if (lateJoin && DisallowLateJoin)
+            {
+                MakeObserve(session);
+                return;
+            }
+
+            _playerJoinGame(session);
 
             var data = session.ContentData();
             data.WipeMind();
-            data.Mind = new Mind(session.SessionId)
+            data.Mind = new Mind(session.UserId)
             {
                 CharacterName = character.Name
             };
@@ -805,17 +881,6 @@ namespace Content.Server.GameTicking
             var accessTags = access.Tags;
             accessTags.UnionWith(jobPrototype.Access);
             pdaComponent.SetPDAOwner(characterName);
-            var mindComponent = mob.GetComponent<MindComponent>();
-            if (mindComponent.HasMind) //Redundancy checks.
-            {
-                if (mindComponent.Mind.AllRoles.Any(role => role.Antagonist)) //Give antags a new uplinkaccount.
-                {
-                    var uplinkAccount =
-                        new UplinkAccount(mob.Uid,
-                            20); //TODO: make me into a variable based on server pop or something.
-                    pdaComponent.InitUplinkAccount(uplinkAccount);
-                }
-            }
         }
 
         private void AddManifestEntry(string characterName, string jobId)
@@ -823,17 +888,15 @@ namespace Content.Server.GameTicking
             _manifest.Add(new ManifestEntry(characterName, jobId));
         }
 
-        private async void _spawnObserver(IPlayerSession session)
+        private void _spawnObserver(IPlayerSession session)
         {
             _playerJoinGame(session);
 
-            var name = (await _prefsManager
-                    .GetPreferencesAsync(session.SessionId.Username))
-                .SelectedCharacter.Name;
+            var name = GetPlayerProfile(session).Name;
 
             var data = session.ContentData();
             data.WipeMind();
-            data.Mind = new Mind(session.SessionId);
+            data.Mind = new Mind(session.UserId);
 
             var mob = _spawnObserverMob();
             mob.Name = name;
@@ -843,12 +906,12 @@ namespace Content.Server.GameTicking
 
         private void _playerJoinLobby(IPlayerSession session)
         {
-            _playersInLobby.Add(session, false);
+            _playersInLobby.Add(session, PlayerStatus.NotReady);
 
-            _prefsManager.OnClientConnected(session);
             _netManager.ServerSendMessage(_netManager.CreateNetMessage<MsgTickerJoinLobby>(), session.ConnectedClient);
             _netManager.ServerSendMessage(_getStatusMsg(session), session.ConnectedClient);
             _netManager.ServerSendMessage(GetInfoMsg(), session.ConnectedClient);
+            _netManager.ServerSendMessage(GetPlayerStatus(), session.ConnectedClient);
         }
 
         private void _playerJoinGame(IPlayerSession session)
@@ -860,13 +923,35 @@ namespace Content.Server.GameTicking
             _netManager.ServerSendMessage(_netManager.CreateNetMessage<MsgTickerJoinGame>(), session.ConnectedClient);
         }
 
+        private MsgTickerLobbyReady GetPlayerStatus()
+        {
+            var msg = _netManager.CreateNetMessage<MsgTickerLobbyReady>();
+            msg.PlayerStatus = new Dictionary<NetUserId, PlayerStatus>();
+            foreach (var player in _playersInLobby.Keys)
+            {
+                _playersInLobby.TryGetValue(player, out var status);
+                msg.PlayerStatus.Add(player.UserId, status);
+            }
+            return msg;
+        }
+
+        private MsgTickerLobbyReady GetStatusSingle(IPlayerSession player, PlayerStatus status)
+        {
+            var msg = _netManager.CreateNetMessage<MsgTickerLobbyReady>();
+            msg.PlayerStatus = new Dictionary<NetUserId, PlayerStatus>
+            {
+                { player.UserId, status }
+            };
+            return msg;
+        }
+
         private MsgTickerLobbyStatus _getStatusMsg(IPlayerSession session)
         {
-            _playersInLobby.TryGetValue(session, out var ready);
+            _playersInLobby.TryGetValue(session, out var status);
             var msg = _netManager.CreateNetMessage<MsgTickerLobbyStatus>();
             msg.IsRoundStarted = RunLevel != GameRunLevel.PreRoundLobby;
             msg.StartTime = _roundStartTimeUtc;
-            msg.YouAreReady = ready;
+            msg.YouAreReady = status == PlayerStatus.Ready;
             msg.Paused = Paused;
             return msg;
         }
@@ -888,7 +973,7 @@ namespace Content.Server.GameTicking
         {
             var gmTitle = MakeGamePreset(null).ModeTitle;
             var desc = MakeGamePreset(null).Description;
-            return _localization.GetString(@"Hi and welcome to [color=white]Space Station 14![/color]
+            return Loc.GetString(@"Hi and welcome to [color=white]Space Station 14![/color]
 
 The current game mode is: [color=white]{0}[/color].
 [color=yellow]{1}[/color]", gmTitle, desc);
@@ -901,30 +986,26 @@ The current game mode is: [color=white]{0}[/color].
             _netManager.ServerSendToMany(infoMsg, _playersInLobby.Keys.Select(p => p.ConnectedClient).ToList());
         }
 
-        private GamePreset MakeGamePreset(Dictionary<string, HumanoidCharacterProfile> readyProfiles)
+        private GamePreset MakeGamePreset(Dictionary<NetUserId, HumanoidCharacterProfile> readyProfiles)
         {
             var preset = _dynamicTypeFactory.CreateInstance<GamePreset>(_presetType ?? typeof(PresetSandbox));
             preset.readyProfiles = readyProfiles;
             return preset;
         }
 
-#pragma warning disable 649
-        [Dependency] private IEntityManager _entityManager;
-        [Dependency] private IMapManager _mapManager;
-        [Dependency] private IMapLoader _mapLoader;
-        [Dependency] private IGameTiming _gameTiming;
-        [Dependency] private IConfigurationManager _configurationManager;
-        [Dependency] private IPlayerManager _playerManager;
-        [Dependency] private IChatManager _chatManager;
-        [Dependency] private IServerNetManager _netManager;
-        [Dependency] private IDynamicTypeFactory _dynamicTypeFactory;
-        [Dependency] private IPrototypeManager _prototypeManager;
-        [Dependency] private readonly ILocalizationManager _localization;
-        [Dependency] private readonly IRobustRandom _robustRandom;
-        [Dependency] private readonly IServerPreferencesManager _prefsManager;
-        [Dependency] private readonly IBaseServer _baseServer;
-        [Dependency] private readonly IWatchdogApi _watchdogApi;
-#pragma warning restore 649
+        [Dependency] private IEntityManager _entityManager = default!;
+        [Dependency] private IMapManager _mapManager = default!;
+        [Dependency] private IMapLoader _mapLoader = default!;
+        [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private IConfigurationManager _configurationManager = default!;
+        [Dependency] private IChatManager _chatManager = default!;
+        [Dependency] private IServerNetManager _netManager = default!;
+        [Dependency] private IDynamicTypeFactory _dynamicTypeFactory = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly IServerPreferencesManager _prefsManager = default!;
+        [Dependency] private readonly IBaseServer _baseServer = default!;
+        [Dependency] private readonly IWatchdogApi _watchdogApi = default!;
     }
 
     public enum GameRunLevel

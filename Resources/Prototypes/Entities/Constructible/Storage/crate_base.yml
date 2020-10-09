@@ -10,9 +10,7 @@
     - state: crate
     - state: crate_door
       map: ["enum.StorageVisualLayers.Door"]
-  - type: Icon
-    sprite: Constructible/Structures/Crates/generic.rsi
-    state: crate
+
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable
@@ -26,11 +24,8 @@
       - SmallImpassable
       layer:
       - Opaque
-      - Impassable
       - MobImpassable
-      - VaultImpassable
       - SmallImpassable
-    IsScrapingFloor: true
   - type: Physics
     mass: 25
     anchored: false
@@ -38,9 +33,10 @@
     capacity: 60
     CanWeldShut: false
   - type: PlaceableSurface
-  - type: Damageable
   - type: Destructible
-    thresholdvalue: 100
+    deadThreshold: 100
+    resistances: metallicResistances
+
   - type: Appearance
     visuals:
     - type: StorageVisualizer

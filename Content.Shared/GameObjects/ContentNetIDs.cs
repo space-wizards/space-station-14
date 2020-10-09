@@ -3,7 +3,7 @@
     // Starting from 1000 to avoid crossover with engine.
     public static class ContentNetIDs
     {
-        public const uint DAMAGEABLE = 1000;
+        // 1000
         public const uint DESTRUCTIBLE = 1001;
         public const uint MAGAZINE_BARREL = 1002;
         public const uint HANDS = 1003;
@@ -54,7 +54,6 @@
         public const uint STUNNABLE = 1048;
         public const uint HUNGER = 1049;
         public const uint THIRST = 1050;
-
         public const uint FLASHABLE = 1051;
         public const uint BUCKLE = 1052;
         public const uint PROJECTILE = 1053;
@@ -63,6 +62,21 @@
         public const uint DISPOSABLE = 1056;
         public const uint GAS_ANALYZER = 1057;
         public const uint DO_AFTER = 1058;
+        public const uint RADIATION_PULSE = 1059;
+        public const uint BODY_MANAGER = 1060;
+        public const uint CLIMBING = 1061;
+        public const uint BOLTACTION_BARREL = 1062;
+        public const uint PUMP_BARREL = 1063;
+        public const uint REVOLVER_BARREL = 1064;
+        public const uint CUFFED = 1065;
+        public const uint HANDCUFFS = 1066;
+        public const uint BATTERY_BARREL = 1067;
+        public const uint SUSPICION_ROLE = 1068;
+        public const uint ROTATION = 1069;
+        public const uint MOB_STATE_MANAGER = 1070;
+        public const uint SLIP = 1071;
+        public const uint SPACE_VILLAIN_ARCADE = 1072;
+        public const uint BLOCKGAME_ARCADE = 1073;
 
         // Net IDs for integration tests.
         public const uint PREDICTION_TEST = 10001;

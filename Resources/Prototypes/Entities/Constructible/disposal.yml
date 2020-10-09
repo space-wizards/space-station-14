@@ -8,17 +8,19 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Physics
+  - type: Collidable
     anchored: true
   - type: SnapGrid
     offset: Center
   - type: Anchorable
-  - type: Damageable
   - type: Breakable
+    resistances: metallicResistances
   - type: Rotatable
+  - type: Pullable
 
 - type: entity
   id: DisposalHolder
+  abstract: true
   name: disposal holder
   components:
   - type: DisposalHolder
@@ -33,9 +35,7 @@
     drawdepth: BelowFloor
     sprite: Constructible/Power/disposal.rsi
     state: conpipe-s
-  - type: Icon
-    sprite: Constructible/Power/disposal.rsi
-    state: conpipe-s
+
   - type: DisposalTransit
   - type: Appearance
     visuals:
@@ -43,6 +43,29 @@
       state_free: conpipe-s
       state_anchored: pipe-s
       state_broken: pipe-b
+
+- type: entity
+  id: DisposalTagger
+  parent: DisposalPipeBase
+  name: disposal pipe tagger
+  description: A pipe that tags entities for routing
+  components:
+  - type: Sprite
+    drawdepth: BelowFloor
+    sprite: Constructible/Power/disposal.rsi
+    state: conpipe-tagger
+
+  - type: DisposalTagger
+  - type: Appearance
+    visuals:
+    - type: DisposalVisualizer
+      state_free: conpipe-tagger
+      state_anchored: pipe-tagger
+      state_broken: pipe-b
+  - type: UserInterface
+    interfaces:
+    - key: enum.DisposalTaggerUiKey.Key
+      type: DisposalTaggerBoundUserInterface
 
 - type: entity
   id: DisposalTrunk
@@ -54,9 +77,7 @@
     drawdepth: BelowFloor
     sprite: Constructible/Power/disposal.rsi
     state: conpipe-t
-  - type: Icon
-    sprite: Constructible/Power/disposal.rsi
-    state: conpipe-t
+
   - type: DisposalEntry
   - type: Appearance
     visuals:
@@ -84,40 +105,40 @@
       map: ["enum.DisposalUnitVisualLayers.Handle"]
     - state: dispover-ready
       map: ["enum.DisposalUnitVisualLayers.Light"]
-  - type: Icon
-    sprite: Constructible/Power/disposal.rsi
-    state: disposal
+
   - type: PowerReceiver
   - type: DisposalUnit
     flushTime: 2
   - type: Clickable
   - type: InteractionOutline
-  - type: Physics
-    anchored: true
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.3,-0.3,0.3,0.3"
-      layer:
-      - Impassable
-      - MobImpassable
   - type: Collidable
     anchored: true
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.3,-0.3,0.3,0.3"
-      layer:
+      bounds: "-0.35,-0.3,0.35,0.3"
+      mask:
       - Impassable
       - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: SnapGrid
     offset: Center
   - type: Anchorable
   - type: Destructible
     thresholdvalue: 100
+    resistances: metallicResistances
   - type: Appearance
     visuals:
     - type: DisposalUnitVisualizer
       state_unanchored: condisposal
       state_anchored: disposal
+      state_charging: disposal-charging
       overlay_charging: dispover-charge
       overlay_ready: dispover-ready
       overlay_full: dispover-full
@@ -129,6 +150,60 @@
     interfaces:
     - key: enum.DisposalUnitUiKey.Key
       type: DisposalUnitBoundUserInterface
+  - type: Pullable
+
+- type: entity
+  id: DisposalRouter
+  parent: DisposalPipeBase
+  name: disposal router
+  description: A three-way router. Entities with matching tags get routed to the side
+  components:
+  - type: Sprite
+    drawdepth: BelowFloor
+    sprite: Constructible/Power/disposal.rsi
+    state: conpipe-j1s
+
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - -90
+    - 180
+  - type: Appearance
+    visuals:
+    - type: DisposalVisualizer
+      state_free: conpipe-j1s
+      state_anchored: pipe-j1s
+      state_broken: pipe-b
+  - type: Flippable
+    entity: DisposalRouterFlipped
+  - type: UserInterface
+    interfaces:
+    - key: enum.DisposalRouterUiKey.Key
+      type: DisposalRouterBoundUserInterface
+
+- type: entity
+  id: DisposalRouterFlipped
+  parent: DisposalRouter
+  name: flipped router junction
+  components:
+  - type: Sprite
+    drawdepth: BelowFloor
+    sprite: Constructible/Power/disposal.rsi
+    state: conpipe-j2s
+
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+  - type: Appearance
+    visuals:
+    - type: DisposalVisualizer
+      state_free: conpipe-j2s
+      state_anchored: pipe-j2s
+      state_broken: pipe-b
+  - type: Flippable
+    entity: DisposalRouter
 
 - type: entity
   id: DisposalJunction
@@ -140,9 +215,7 @@
     drawdepth: BelowFloor
     sprite: Constructible/Power/disposal.rsi
     state: conpipe-j1
-  - type: Icon
-    sprite: Constructible/Power/disposal.rsi
-    state: conpipe-j1
+
   - type: DisposalJunction
     degrees:
     - 0
@@ -166,9 +239,7 @@
     drawdepth: BelowFloor
     sprite: Constructible/Power/disposal.rsi
     state: conpipe-j2
-  - type: Icon
-    sprite: Constructible/Power/disposal.rsi
-    state: conpipe-j2
+
   - type: DisposalJunction
     degrees:
     - 0
@@ -193,9 +264,7 @@
     drawdepth: BelowFloor
     sprite: Constructible/Power/disposal.rsi
     state: conpipe-y
-  - type: Icon
-    sprite: Constructible/Power/disposal.rsi
-    state: conpipe-y
+
   - type: DisposalJunction
     degrees:
     - 0
@@ -218,9 +287,7 @@
     drawdepth: BelowFloor
     sprite: Constructible/Power/disposal.rsi
     state: conpipe-c
-  - type: Icon
-    sprite: Constructible/Power/disposal.rsi
-    state: conpipe-c
+
   - type: DisposalBend
   - type: Appearance
     visuals:

@@ -1,15 +1,12 @@
 using Content.Client.GameObjects.Components;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Client.Interfaces;
-using Content.Shared.GameObjects.Components.Markers;
-using Robust.Client.Console.Commands;
+using Content.Shared.GameObjects;
 using Robust.Client.Interfaces.Console;
 using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
-using DrawDepth = Content.Shared.GameObjects.DrawDepth;
 
 namespace Content.Client.Commands
 {
@@ -93,11 +90,11 @@ namespace Content.Client.Commands
     {
         public string Command => "mapping";
         public string Description => "Creates and teleports you to a new uninitialized map for mapping.";
-        public string Help => $"Usage: {Command} <id> <mapname>";
+        public string Help => $"Usage: {Command} <mapname> / {Command} <id> <mapname>";
 
         public bool Execute(IDebugConsole console, params string[] args)
         {
-            if (args.Length != 2)
+            if (args.Length == 0)
             {
                 console.AddLine(Help);
                 return false;

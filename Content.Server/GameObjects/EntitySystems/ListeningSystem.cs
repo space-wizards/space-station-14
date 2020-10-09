@@ -1,37 +1,22 @@
-﻿using Content.Server.GameObjects.Components;
-using Robust.Shared.GameObjects;
+﻿using Content.Server.Interfaces;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.IoC;
-using Robust.Shared.Map;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
-    class ListeningSystem : EntitySystem
+    [UsedImplicitly]
+    public class ListeningSystem : EntitySystem
     {
-#pragma warning disable 649
-        [Dependency] private readonly IMapManager _mapManager;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-#pragma warning restore 649
-
-        public override void Initialize()
+        public void PingListeners(IEntity source, string message)
         {
-            base.Initialize();
-            EntityQuery = new TypeEntityQuery(typeof(ListeningComponent));
-        }
-
-        public void PingListeners(IEntity source, GridCoordinates sourcePos, string message)
-        {
-            foreach (var listener in RelevantEntities)
+            foreach (var listener in ComponentManager.EntityQuery<IListen>())
             {
-                var dist = sourcePos.Distance(_mapManager, listener.Transform.GridPosition);
-
-                listener.GetComponent<ListeningComponent>()
-                        .PassSpeechData(message, source, dist);
+                // TODO: Map Position distance
+                if (listener.CanListen(message, source))
+                {
+                    listener.Listen(message, source);
+                }
             }
         }
     }

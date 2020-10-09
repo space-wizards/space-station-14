@@ -116,7 +116,7 @@
   name: "glass crate"
   id: cargo.glass
   description: "50 sheets of glass."
-  icon: Objects/Materials/sheet_glass.png
+  icon: Objects/Materials/sheets.rsi/glass.png
   product: CrateGlass
   cost: 50
   category: Engineering
@@ -126,7 +126,7 @@
   name: "cable crate"
   id: cargo.cable
   description: "50 coils of cable."
-  icon: Objects/Tools/cable_coil.png
+  icon: /Textures/Objects/Tools/cables.rsi/coil-30.png
   product: CrateCable
   cost: 50
   category: Engineering

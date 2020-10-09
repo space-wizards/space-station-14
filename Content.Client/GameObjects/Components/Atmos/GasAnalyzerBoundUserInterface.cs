@@ -1,8 +1,5 @@
 ﻿using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Shared.GameObjects.Components.UserInterface;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using static Content.Shared.GameObjects.Components.SharedGasAnalyzerComponent;
 
 namespace Content.Client.GameObjects.Components.Atmos
@@ -38,8 +35,10 @@ namespace Content.Client.GameObjects.Components.Atmos
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
+            if (!disposing)
+                return;
 
-            _menu.Close();
+            _menu?.Dispose();
         }
     }
 }

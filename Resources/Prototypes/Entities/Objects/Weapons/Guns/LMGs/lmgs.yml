@@ -7,8 +7,7 @@
   components:
   - type: Sprite
     netsync: false
-  - type: Icon
-    state: icon
+
   - type: Item
     size: 24
     state: icon
@@ -49,8 +48,7 @@
       map: ["enum.RangedBarrelVisualLayers.Bolt"]
     - state: mag-3
       map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/LMGs/l6.rsi
+
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/LMGs/l6.rsi
@@ -85,8 +83,7 @@
       map: ["enum.RangedBarrelVisualLayers.Bolt"]
     - state: mag-5
       map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/LMGs/pk.rsi
+
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/LMGs/pk.rsi

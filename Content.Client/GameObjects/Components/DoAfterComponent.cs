@@ -3,8 +3,10 @@ using System;
 using System.Collections.Generic;
 using Content.Client.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.GameObjects.Components;
+using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -34,6 +36,18 @@ namespace Content.Client.GameObjects.Components
                     break;
                 case CancelledDoAfterMessage msg:
                     Cancel(msg.ID);
+                    break;
+            }
+        }
+
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+            switch (message)
+            {
+                case PlayerDetachedMsg _:
+                    _doAfters.Clear();
+                    CancelledDoAfters.Clear();
                     break;
             }
         }

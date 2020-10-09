@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Interfaces;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics.Overlays;
 using Robust.Client.Interfaces.Graphics.Overlays;
-using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
@@ -15,7 +13,6 @@ using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Players;
-using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components.Mobs
@@ -27,6 +24,10 @@ namespace Content.Client.GameObjects.Components.Mobs
     [ComponentReference(typeof(SharedOverlayEffectsComponent))]
     public sealed class ClientOverlayEffectsComponent : SharedOverlayEffectsComponent//, ICharacterUI
     {
+        [Dependency] private readonly IOverlayManager _overlayManager = default!;
+        [Dependency] private readonly IReflectionManager _reflectionManager = default!;
+        [Dependency] private readonly IClientNetManager _netManager = default!;
+
         /// <summary>
         /// A list of overlay containers representing the current overlays applied
         /// </summary>
@@ -38,13 +39,6 @@ namespace Content.Client.GameObjects.Components.Mobs
             get => _currentEffects;
             set => SetEffects(value);
         }
-
-#pragma warning disable 649
-        // Required dependencies
-        [Dependency] private readonly IOverlayManager _overlayManager;
-        [Dependency] private readonly IReflectionManager _reflectionManager;
-        [Dependency] private readonly IClientNetManager _netManager;
-#pragma warning restore 649
 
         public override void Initialize()
         {

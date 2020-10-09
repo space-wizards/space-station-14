@@ -1,0 +1,74 @@
+﻿- type: entity
+  abstract: true
+  id: PipeBase
+  name: Pipe
+  description: Holds gas.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: SnapGrid
+    offset: Center
+  - type: Destructible
+    thresholdvalue: 100
+  - type: Sprite
+    sprite: Constructible/Atmos/pipe.rsi
+  - type: Appearance
+    visuals:
+    - type: PipeVisualizer
+  - type: Icon
+    sprite: Constructible/Atmos/pipe.rsi
+
+- type: entity
+  parent: PipeBase
+  id: PipeStraight
+  suffix: Straight
+  components:
+  - type: NodeContainer
+    nodes:
+    - !type:PipeNode
+      nodeGroupID: Pipe
+      pipeDirection: Lateral
+  - type: Icon
+    state: pipeStraight2
+    
+- type: entity
+  parent: PipeBase
+  id: PipeBend
+  suffix: Bend
+  components:
+  - type: NodeContainer
+    nodes:
+    - !type:PipeNode
+      nodeGroupID: Pipe
+      pipeDirection: SEBend
+  - type: Icon
+    state: pipeBend2
+
+- type: entity
+  parent: PipeBase
+  id: PipeTJunction
+  suffix: TJunction
+  components:
+  - type: NodeContainer
+    nodes:
+    - !type:PipeNode
+      nodeGroupID: Pipe
+      pipeDirection: TEast
+  - type: Icon
+    state: pipeTJunction2
+
+- type: entity
+  parent: PipeBase
+  id: PipeFourway
+  suffix: Fourway
+  components:
+  - type: NodeContainer
+    nodes:
+    - !type:PipeNode
+      nodeGroupID: Pipe
+      pipeDirection: Fourway
+  - type: Icon
+    state: pipeFourway2

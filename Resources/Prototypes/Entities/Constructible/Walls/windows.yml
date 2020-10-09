@@ -8,6 +8,7 @@
     - Window
   components:
   - type: Clickable
+  - type: RCDDeconstructWhitelist
   - type: InteractionOutline
   - type: Sprite
     color: "#DDDDDD"
@@ -20,20 +21,22 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.5, -0.5, 0.3, 0.5"
       layer:
       - Impassable
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
-  - type: Damageable
   - type: Destructible
-    thresholdvalue: 100
+    deadThreshold: 15
+    resistances: metallicResistances
   - type: SnapGrid
     offset: Center
   - type: Airtight
   - type: Window
     base: window
+  - type: Construction
+    graph: window
+    node: window
 
 - type: entity
   id: ReinforcedWindow
@@ -43,8 +46,32 @@
   - type: Sprite
     drawdepth: WallTops
     sprite: Constructible/Structures/Windows/reinforced_window.rsi
-  - type: Window
-    base: rwindow
   - type: Icon
     sprite: Constructible/Structures/Windows/reinforced_window.rsi
-    state: full
+  - type: Destructible
+    deadThreshold: 75
+    resistances: metallicResistances
+  - type: Window
+    base: rwindow
+  - type: Construction
+    graph: window
+    node: reinforcedWindow
+
+- type: entity
+  id: PhoronWindow
+  name: phoronwindow
+  parent: Window
+  components:
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Structures/Windows/phoron_window.rsi
+  - type: Icon
+    sprite: Constructible/Structures/Windows/phoron_window.rsi
+  - type: Destructible
+    deadThreshold: 100
+    resistances: metallicResistances
+  - type: Window
+    base: pwindow
+  - type: Construction
+    graph: window
+    node: phoronWindow

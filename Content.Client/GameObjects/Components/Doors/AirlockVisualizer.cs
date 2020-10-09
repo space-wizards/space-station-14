@@ -2,6 +2,7 @@
 using Content.Client.GameObjects.Components.Wires;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Doors;
+using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.Components.Animations;
@@ -12,6 +13,7 @@ using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Doors
 {
+    [UsedImplicitly]
     public class AirlockVisualizer : AppearanceVisualizer
     {
         private const string AnimationKey = "airlock_animation";
@@ -24,11 +26,17 @@ namespace Content.Client.GameObjects.Components.Doors
         {
             base.LoadData(node);
 
+            var delay = 0.8f;
+
             var openSound = node.GetNode("open_sound").AsString();
             var closeSound = node.GetNode("close_sound").AsString();
             var denySound = node.GetNode("deny_sound").AsString();
+            if (node.TryGetNode("animation_time", out var yamlNode))
+            {
+                delay = yamlNode.AsFloat();
+            }
 
-            CloseAnimation = new Animation {Length = TimeSpan.FromSeconds(0.8f)};
+            CloseAnimation = new Animation {Length = TimeSpan.FromSeconds(delay)};
             {
                 var flick = new AnimationTrackSpriteFlick();
                 CloseAnimation.AnimationTracks.Add(flick);
@@ -50,7 +58,7 @@ namespace Content.Client.GameObjects.Components.Doors
                 sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(closeSound, 0));
             }
 
-            OpenAnimation = new Animation {Length = TimeSpan.FromSeconds(0.8f)};
+            OpenAnimation = new Animation {Length = TimeSpan.FromSeconds(delay)};
             {
                 var flick = new AnimationTrackSpriteFlick();
                 OpenAnimation.AnimationTracks.Add(flick);
@@ -107,6 +115,7 @@ namespace Content.Client.GameObjects.Components.Doors
 
             var unlitVisible = true;
             var boltedVisible = false;
+            var weldedVisible = false;
             switch (state)
             {
                 case DoorVisualState.Closed:
@@ -137,6 +146,9 @@ namespace Content.Client.GameObjects.Components.Doors
                         animPlayer.Play(DenyAnimation, AnimationKey);
                     }
                     break;
+                case DoorVisualState.Welded:
+                    weldedVisible = true;
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -151,6 +163,7 @@ namespace Content.Client.GameObjects.Components.Doors
             }
 
             sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, unlitVisible);
+            sprite.LayerSetVisible(DoorVisualLayers.BaseWelded, weldedVisible);
             sprite.LayerSetVisible(DoorVisualLayers.BaseBolted, unlitVisible && boltedVisible);
         }
     }
@@ -159,6 +172,7 @@ namespace Content.Client.GameObjects.Components.Doors
     {
         Base,
         BaseUnlit,
-        BaseBolted
+        BaseWelded,
+        BaseBolted,
     }
 }

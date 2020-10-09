@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Content.Shared.GameObjects.Components.Chemistry;
+using Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects.Components.UserInterface;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using static Content.Shared.GameObjects.Components.Chemistry.SharedReagentDispenserComponent;
+using static Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser.SharedReagentDispenserComponent;
 
-namespace Content.Client.GameObjects.Components.Chemistry
+namespace Content.Client.GameObjects.Components.Chemistry.ReagentDispenser
 {
     /// <summary>
     /// Initializes a <see cref="ReagentDispenserWindow"/> and updates it when new server messages are received.
@@ -17,10 +16,6 @@ namespace Content.Client.GameObjects.Components.Chemistry
     [UsedImplicitly]
     public class ReagentDispenserBoundUserInterface : BoundUserInterface
     {
-#pragma warning disable 649
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-#pragma warning restore 649
-
         private ReagentDispenserWindow _window;
         private ReagentDispenserBoundUserInterfaceState _lastState;
 
@@ -41,7 +36,7 @@ namespace Content.Client.GameObjects.Components.Chemistry
             //Setup window layout/elements
             _window = new ReagentDispenserWindow
             {
-                Title = _localizationManager.GetString("Reagent dispenser"),
+                Title = Loc.GetString("Reagent dispenser"),
             };
 
             _window.OpenCentered();
@@ -116,7 +111,7 @@ namespace Content.Client.GameObjects.Components.Chemistry
 
             if (disposing)
             {
-                _window.Dispose();
+                _window?.Dispose();
             }
         }
     }

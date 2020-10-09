@@ -1,6 +1,6 @@
 ﻿#nullable enable
 using System;
-using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Body;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.Configuration;
@@ -54,7 +54,7 @@ namespace Content.Shared.GameObjects.Components.Movement
         {
             get
             {
-                if (Owner.TryGetComponent(out MovementSpeedModifierComponent component))
+                if (Owner.TryGetComponent(out MovementSpeedModifierComponent? component))
                 {
                     return component.CurrentWalkSpeed;
                 }
@@ -67,7 +67,7 @@ namespace Content.Shared.GameObjects.Components.Movement
         {
             get
             {
-                if (Owner.TryGetComponent(out MovementSpeedModifierComponent component))
+                if (Owner.TryGetComponent(out MovementSpeedModifierComponent? component))
                 {
                     return component.CurrentSprintSpeed;
                 }
@@ -76,7 +76,9 @@ namespace Content.Shared.GameObjects.Components.Movement
             }
         }
 
+        [ViewVariables(VVAccess.ReadWrite)]
         public float CurrentPushSpeed => 5;
+        [ViewVariables(VVAccess.ReadWrite)]
         public float GrabRange => 0.2f;
         public bool Sprinting => !HasFlag(_heldMoveButtons, MoveButtons.Walk);
 
@@ -130,7 +132,7 @@ namespace Content.Shared.GameObjects.Components.Movement
             }
         }
 
-        public abstract GridCoordinates LastPosition { get; set; }
+        public abstract EntityCoordinates LastPosition { get; set; }
         public abstract float StepSoundDistance { get; set; }
 
         /// <summary>
@@ -142,11 +144,11 @@ namespace Content.Shared.GameObjects.Components.Movement
         /// <inheritdoc />
         public override void OnAdd()
         {
-            // This component requires that the entity has a PhysicsComponent.
-            if (!Owner.HasComponent<IPhysicsComponent>())
+            // This component requires that the entity has a CollidableComponent.
+            if (!Owner.HasComponent<ICollidableComponent>())
                 Logger.Error(
                     $"[ECS] {Owner.Prototype?.Name} - {nameof(SharedPlayerInputMoverComponent)} requires" +
-                    $" {nameof(IPhysicsComponent)}. ");
+                    $" {nameof(ICollidableComponent)}. ");
 
             base.OnAdd();
         }
@@ -268,7 +270,7 @@ namespace Content.Shared.GameObjects.Components.Movement
         bool ICollideSpecial.PreventCollide(IPhysBody collidedWith)
         {
             // Don't collide with other mobs
-            return collidedWith.Entity.HasComponent<SharedSpeciesComponent>();
+            return collidedWith.Entity.HasComponent<ISharedBodyManagerComponent>();
         }
 
         [Serializable, NetSerializable]

@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders;
-using Content.Server.GameObjects.EntitySystems.Pathfinding;
 using Content.Shared.AI;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -38,11 +36,10 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
          * There's probably a better data structure to use though you'd need to benchmark multiple ones to compare,
          * at the very least on the memory side it could definitely be better.
          */
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
-#pragma warning disable 649
-        [Dependency] private IMapManager _mapmanager;
-        [Dependency] private IGameTiming _gameTiming;
-#pragma warning restore 649
         private PathfindingSystem _pathfindingSystem;
 
         /// <summary>
@@ -75,7 +72,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         // Plus this way we can check if everything is equal except for vision so an entity with a lower vision radius can use an entity with a higher vision radius' cached result
         private Dictionary<ReachableArgs, Dictionary<PathfindingRegion, (TimeSpan CacheTime, HashSet<PathfindingRegion> Regions)>> _cachedAccessible =
             new Dictionary<ReachableArgs, Dictionary<PathfindingRegion, (TimeSpan, HashSet<PathfindingRegion>)>>();
-        
+
         private readonly List<PathfindingRegion> _queuedCacheDeletions = new List<PathfindingRegion>();
 
 #if DEBUG
@@ -89,9 +86,9 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
 #if DEBUG
             SubscribeLocalEvent<PlayerAttachSystemMessage>(SendDebugMessage);
 #endif
-            _mapmanager.OnGridRemoved += GridRemoved;
+            _mapManager.OnGridRemoved += GridRemoved;
         }
-        
+
         private void GridRemoved(GridId gridId)
         {
             _regions.Remove(gridId);
@@ -134,6 +131,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
             _regions.Clear();
             _cachedAccessible.Clear();
             _queuedCacheDeletions.Clear();
+            _mapManager.OnGridRemoved -= GridRemoved;
         }
 
         public void ResettingCleanup()
@@ -163,7 +161,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         /// <returns></returns>
         public bool CanAccess(IEntity entity, IEntity target, float range = 0.0f)
         {
-            var targetTile = _mapmanager.GetGrid(target.Transform.GridID).GetTileRef(target.Transform.GridPosition);
+            var targetTile = _mapManager.GetGrid(target.Transform.GridID).GetTileRef(target.Transform.Coordinates);
             var targetNode = _pathfindingSystem.GetNode(targetTile);
 
             var collisionMask = 0;
@@ -201,7 +199,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
                 return false;
             }
 
-            var entityTile = _mapmanager.GetGrid(entity.Transform.GridID).GetTileRef(entity.Transform.GridPosition);
+            var entityTile = _mapManager.GetGrid(entity.Transform.GridID).GetTileRef(entity.Transform.Coordinates);
             var entityNode = _pathfindingSystem.GetNode(entityTile);
             var entityRegion = GetRegion(entityNode);
             var targetRegion = GetRegion(targetNode);
@@ -411,7 +409,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         /// <returns></returns>
         public PathfindingRegion GetRegion(IEntity entity)
         {
-            var entityTile = _mapmanager.GetGrid(entity.Transform.GridID).GetTileRef(entity.Transform.GridPosition);
+            var entityTile = _mapManager.GetGrid(entity.Transform.GridID).GetTileRef(entity.Transform.Coordinates);
             var entityNode = _pathfindingSystem.GetNode(entityTile);
             return GetRegion(entityNode);
         }
@@ -457,7 +455,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         /// <param name="y">This is already calculated in advance so may as well re-use it</param>
         /// <returns></returns>
         private PathfindingRegion CalculateNode(
-            PathfindingNode node, 
+            PathfindingNode node,
             Dictionary<PathfindingNode, PathfindingRegion> existingRegions,
             HashSet<PathfindingRegion> chunkRegions,
             int x, int y)
@@ -497,15 +495,15 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
                 !leftRegion.IsDoor)
             {
                 // We'll try and connect the left node's region to the bottom region if they're separate (yay merge)
-                if (bottomNeighbor != null && 
+                if (bottomNeighbor != null &&
                     existingRegions.TryGetValue(bottomNeighbor, out bottomRegion) &&
-                    bottomRegion != leftRegion && 
+                    bottomRegion != leftRegion &&
                     !bottomRegion.IsDoor)
                 {
                     bottomRegion.Add(node);
                     existingRegions.Add(node, bottomRegion);
                     MergeInto(leftRegion, bottomRegion, existingRegions);
-                    
+
                     // Cleanup leftRegion
                     // MergeInto will remove it from the overall region chunk cache while we need to remove it from
                     // our short-term ones (chunkRegions and existingRegions)
@@ -515,7 +513,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
                     {
                         existingRegions[leftNode] = bottomRegion;
                     }
-                    
+
                     return bottomRegion;
                 }
 
@@ -549,7 +547,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         /// </summary>
         /// <param name="source"></param>
         /// <param name="target"></param>
-        private void MergeInto(PathfindingRegion source, PathfindingRegion target, Dictionary<PathfindingNode, PathfindingRegion> existingRegions = null) 
+        private void MergeInto(PathfindingRegion source, PathfindingRegion target, Dictionary<PathfindingNode, PathfindingRegion> existingRegions = null)
         {
             DebugTools.AssertNotNull(source);
             DebugTools.AssertNotNull(target);
@@ -586,7 +584,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         private void ClearCache(PathfindingRegion region)
         {
             DebugTools.Assert(region.Deleted);
-            
+
             // Need to forcibly clear cache for ourself and anything that includes us
             foreach (var (_, cachedRegions) in _cachedAccessible)
             {
@@ -599,7 +597,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
                 // We could just have GetVisionAccessible remove us if it can tell we're deleted but that
                 // seems like it could be unreliable
                 var regionsToClear = new List<PathfindingRegion>();
-                        
+
                 foreach (var (otherRegion, cache) in cachedRegions)
                 {
                     if (cache.Regions.Contains(region))
@@ -613,9 +611,9 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
                     cachedRegions.Remove(otherRegion);
                 }
             }
-            
+
 #if DEBUG
-            if (_regions.TryGetValue(region.ParentChunk.GridId, out var chunks) && 
+            if (_regions.TryGetValue(region.ParentChunk.GridId, out var chunks) &&
                 chunks.TryGetValue(region.ParentChunk, out var regions))
             {
                 DebugTools.Assert(!regions.Contains(region));
@@ -630,6 +628,12 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         /// <param name="chunk"></param>
         private void GenerateRegions(PathfindingChunk chunk)
         {
+            // Grid deleted while update queued.
+            if (!_mapManager.TryGetGrid(chunk.GridId, out _))
+            {
+                return;
+            }
+
             if (!_regions.ContainsKey(chunk.GridId))
             {
                 _regions.Add(chunk.GridId, new Dictionary<PathfindingChunk, HashSet<PathfindingRegion>>());
@@ -642,7 +646,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
                     _queuedCacheDeletions.Add(region);
                     region.Shutdown();
                 }
-                
+
                 _regions[chunk.GridId].Remove(chunk);
             }
 
@@ -673,7 +677,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
             {
                 DebugTools.Assert(!region.Deleted);
             }
-            
+
             DebugTools.Assert(chunkRegions.Count < Math.Pow(PathfindingChunk.ChunkSize, 2));
             SendRegionsDebugMessage(chunk.GridId);
 #endif
@@ -688,7 +692,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
 
         private void SendRegionsDebugMessage(GridId gridId)
         {
-            var grid = _mapmanager.GetGrid(gridId);
+            var grid = _mapManager.GetGrid(gridId);
             // Chunk / Regions / Nodes
             var debugResult = new Dictionary<int, Dictionary<int, List<Vector2>>>();
             var chunkIdx = 0;
@@ -711,7 +715,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
 
                     foreach (var node in region.Nodes)
                     {
-                        var nodeVector = grid.GridTileToLocal(node.TileRef.GridIndices).ToMapPos(_mapmanager);
+                        var nodeVector = grid.GridTileToLocal(node.TileRef.GridIndices).ToMapPos(_entityManager);
                         debugRegionNodes.Add(nodeVector);
                     }
 
@@ -731,7 +735,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         /// <param name="cached"></param>
         private void SendRegionCacheMessage(GridId gridId, IEnumerable<PathfindingRegion> regions, bool cached)
         {
-            var grid = _mapmanager.GetGrid(gridId);
+            var grid = _mapManager.GetGrid(gridId);
             var debugResult = new Dictionary<int, List<Vector2>>();
 
             foreach (var region in regions)
@@ -740,7 +744,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
 
                 foreach (var node in region.Nodes)
                 {
-                    var nodeVector = grid.GridTileToLocal(node.TileRef.GridIndices).ToMapPos(_mapmanager);
+                    var nodeVector = grid.GridTileToLocal(node.TileRef.GridIndices).ToMapPos(_entityManager);
 
                     debugResult[_runningCacheIdx].Add(nodeVector);
                 }

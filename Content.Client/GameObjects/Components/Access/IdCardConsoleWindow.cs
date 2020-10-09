@@ -29,8 +29,6 @@ namespace Content.Client.GameObjects.Components.Access
 
         private readonly IdCardConsoleBoundUserInterface _owner;
 
-        private readonly ILocalizationManager _loc;
-
         private readonly Dictionary<string, Button> _accessButtons = new Dictionary<string, Button>();
 
         private string _lastFullName;
@@ -38,9 +36,8 @@ namespace Content.Client.GameObjects.Components.Access
 
         protected override Vector2? CustomSize => (650, 270);
 
-        public IdCardConsoleWindow(IdCardConsoleBoundUserInterface owner, ILocalizationManager loc, IPrototypeManager prototypeManager)
+        public IdCardConsoleWindow(IdCardConsoleBoundUserInterface owner, IPrototypeManager prototypeManager)
         {
-            _loc = loc;
             _owner = owner;
             var vBox = new VBoxContainer();
 
@@ -49,11 +46,11 @@ namespace Content.Client.GameObjects.Components.Access
                 Columns = 3,
                 Children =
                 {
-                    new Label {Text = loc.GetString("Privileged ID:")},
+                    new Label {Text = Loc.GetString("Privileged ID:")},
                     (_privilegedIdButton = new Button()),
                     (_privilegedIdLabel = new Label()),
 
-                    new Label {Text = loc.GetString("Target ID:")},
+                    new Label {Text = Loc.GetString("Target ID:")},
                     (_targetIdButton = new Button()),
                     (_targetIdLabel = new Label())
                 }
@@ -75,7 +72,7 @@ namespace Content.Client.GameObjects.Components.Access
                     // Name
                     (_fullNameLabel = new Label
                     {
-                        Text = loc.GetString("Full name:")
+                        Text = Loc.GetString("Full name:")
                     }),
                     (_fullNameLineEdit = new LineEdit
                     {
@@ -83,14 +80,14 @@ namespace Content.Client.GameObjects.Components.Access
                     }),
                     (_fullNameSaveButton = new Button
                     {
-                        Text = loc.GetString("Save"),
+                        Text = Loc.GetString("Save"),
                         Disabled = true
                     }),
 
                     // Title
                     (_jobTitleLabel = new Label
                     {
-                        Text = loc.GetString("Job title:")
+                        Text = Loc.GetString("Job title:")
                     }),
                     (_jobTitleLineEdit = new LineEdit
                     {
@@ -98,7 +95,7 @@ namespace Content.Client.GameObjects.Components.Access
                     }),
                     (_jobTitleSaveButton = new Button
                     {
-                        Text = loc.GetString("Save"),
+                        Text = Loc.GetString("Save"),
                         Disabled = true
                     }),
                 },
@@ -148,14 +145,14 @@ namespace Content.Client.GameObjects.Components.Access
         public void UpdateState(IdCardConsoleBoundUserInterfaceState state)
         {
             _privilegedIdButton.Text = state.IsPrivilegedIdPresent
-                ? _loc.GetString("Eject")
-                : _loc.GetString("Insert");
+                ? Loc.GetString("Eject")
+                : Loc.GetString("Insert");
 
             _privilegedIdLabel.Text = state.PrivilegedIdName;
 
             _targetIdButton.Text = state.IsTargetIdPresent
-                ? _loc.GetString("Eject")
-                : _loc.GetString("Insert");
+                ? Loc.GetString("Eject")
+                : Loc.GetString("Insert");
 
             _targetIdLabel.Text = state.TargetIdName;
 

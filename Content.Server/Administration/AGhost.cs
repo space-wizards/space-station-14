@@ -1,12 +1,9 @@
-﻿using System.Timers;
-using Content.Server.GameObjects.Components.Observer;
+﻿using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Players;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Map;
-using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.Administration
 {
@@ -25,6 +22,12 @@ namespace Content.Server.Administration
             }
 
             var mind = player.ContentData().Mind;
+            if (mind == null)
+            {
+                shell.SendText(player, "You can't ghost here!");
+                return;
+            }
+
             if (mind.VisitingEntity != null && mind.VisitingEntity.Prototype.ID == "AdminObserver")
             {
                 var visiting = mind.VisitingEntity;

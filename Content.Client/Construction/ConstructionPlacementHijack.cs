@@ -20,7 +20,7 @@ namespace Content.Client.Construction
         }
 
         /// <inheritdoc />
-        public override bool HijackPlacementRequest(GridCoordinates coordinates)
+        public override bool HijackPlacementRequest(EntityCoordinates coordinates)
         {
             if (_prototype != null)
             {

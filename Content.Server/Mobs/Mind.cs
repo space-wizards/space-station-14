@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.Mobs.Roles;
 using Content.Server.Players;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
@@ -29,10 +30,10 @@ namespace Content.Server.Mobs
         /// <summary>
         ///     Creates the new mind attached to a specific player session.
         /// </summary>
-        /// <param name="sessionId">The session ID of the owning player.</param>
-        public Mind(NetSessionId sessionId)
+        /// <param name="userId">The session ID of the owning player.</param>
+        public Mind(NetUserId userId)
         {
-            SessionId = sessionId;
+            UserId = userId;
         }
 
         // TODO: This session should be able to be changed, probably.
@@ -40,7 +41,7 @@ namespace Content.Server.Mobs
         ///     The session ID of the player owning this mind.
         /// </summary>
         [ViewVariables]
-        public NetSessionId? SessionId { get; private set; }
+        public NetUserId? UserId { get; private set; }
 
         [ViewVariables]
         public bool IsVisitingEntity => VisitingEntity != null;
@@ -82,12 +83,12 @@ namespace Content.Server.Mobs
         {
             get
             {
-                if (!SessionId.HasValue)
+                if (!UserId.HasValue)
                 {
                     return null;
                 }
                 var playerMgr = IoCManager.Resolve<IPlayerManager>();
-                playerMgr.TryGetSessionById(SessionId.Value, out var ret);
+                playerMgr.TryGetSessionById(UserId.Value, out var ret);
                 return ret;
             }
         }
@@ -95,7 +96,7 @@ namespace Content.Server.Mobs
         /// <summary>
         ///     Gives this mind a new role.
         /// </summary>
-        /// <param name="t">The type of the role to give.</param>
+        /// <param name="role">The type of the role to give.</param>
         /// <returns>The instance of the role.</returns>
         /// <exception cref="ArgumentException">
         ///     Thrown if we already have a role with this type.
@@ -109,13 +110,17 @@ namespace Content.Server.Mobs
 
             _roles.Add(role);
             role.Greet();
+
+            var message = new RoleAddedMessage(role);
+            OwnedEntity?.SendMessage(OwnedMob, message);
+
             return role;
         }
 
         /// <summary>
         ///     Removes a role from this mind.
         /// </summary>
-        /// <param name="t">The type of the role to remove.</param>
+        /// <param name="role">The type of the role to remove.</param>
         /// <exception cref="ArgumentException">
         ///     Thrown if we do not have this role.
         /// </exception>
@@ -126,9 +131,10 @@ namespace Content.Server.Mobs
                 throw new ArgumentException($"We do not have this role: {role}");
             }
 
-            // This can definitely get more complex removal hooks later,
-            // when we need it.
             _roles.Remove(role);
+
+            var message = new RoleRemovedMessage(role);
+            OwnedEntity?.SendMessage(OwnedMob, message);
         }
 
         public bool HasRole<T>() where T : Role
@@ -189,7 +195,7 @@ namespace Content.Server.Mobs
             VisitingEntity = null;
         }
 
-        public void ChangeOwningPlayer(NetSessionId? newOwner)
+        public void ChangeOwningPlayer(NetUserId? newOwner)
         {
             var playerMgr = IoCManager.Resolve<IPlayerManager>();
             PlayerData newOwnerData = null;
@@ -210,12 +216,12 @@ namespace Content.Server.Mobs
             var oldSession = Session;
             oldSession?.AttachToEntity(null);
 
-            if (SessionId.HasValue)
+            if (UserId.HasValue)
             {
-                playerMgr.GetPlayerData(SessionId.Value).ContentData().Mind = null;
+                playerMgr.GetPlayerData(UserId.Value).ContentData().Mind = null;
             }
 
-            SessionId = newOwner;
+            UserId = newOwner;
             if (!newOwner.HasValue)
             {
                 return;
@@ -231,6 +237,9 @@ namespace Content.Server.Mobs
         {
             Session?.AttachToEntity(entity);
             VisitingEntity = entity;
+
+            var comp = entity.AddComponent<VisitingMindComponent>();
+            comp.Mind = this;
         }
 
         public void UnVisit()
@@ -241,7 +250,14 @@ namespace Content.Server.Mobs
             }
 
             Session?.AttachToEntity(OwnedEntity);
+            var oldVisitingEnt = VisitingEntity;
+            // Null this before removing the component to avoid any infinite loops.
             VisitingEntity = null;
+
+            if (oldVisitingEnt.HasComponent<VisitingMindComponent>())
+            {
+                oldVisitingEnt.RemoveComponent<VisitingMindComponent>();
+            }
         }
     }
 }

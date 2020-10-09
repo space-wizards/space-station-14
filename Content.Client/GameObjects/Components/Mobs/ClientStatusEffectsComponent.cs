@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.UserInterface;
@@ -15,6 +15,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components.Mobs
 {
@@ -23,20 +24,21 @@ namespace Content.Client.GameObjects.Components.Mobs
     [ComponentReference(typeof(SharedStatusEffectsComponent))]
     public sealed class ClientStatusEffectsComponent : SharedStatusEffectsComponent
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private readonly IResourceCache _resourceCache;
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
-        [Dependency] private readonly IGameTiming _gameTiming;
-#pragma warning restore 649
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         private StatusEffectsUI _ui;
+        [ViewVariables]
         private Dictionary<StatusEffect, StatusEffectStatus> _status = new Dictionary<StatusEffect, StatusEffectStatus>();
+        [ViewVariables]
         private Dictionary<StatusEffect, CooldownGraphic> _cooldown = new Dictionary<StatusEffect, CooldownGraphic>();
 
         /// <summary>
         /// Allows calculating if we need to act due to this component being controlled by the current mob
         /// </summary>
+        [ViewVariables]
         private bool CurrentlyControlled => _playerManager.LocalPlayer != null && _playerManager.LocalPlayer.ControlledEntity == Owner;
 
         protected override void Shutdown()
@@ -102,7 +104,10 @@ namespace Content.Client.GameObjects.Components.Mobs
             foreach (var (key, effect) in _status.OrderBy(x => (int) x.Key))
             {
                 var texture = _resourceCache.GetTexture(effect.Icon);
-                var status = new StatusControl(key, texture);
+                var status = new StatusControl(key, texture)
+                {
+                    ToolTip = key.ToString()
+                };
 
                 if (effect.Cooldown.HasValue)
                 {
@@ -152,7 +157,7 @@ namespace Content.Client.GameObjects.Components.Mobs
                 var progress = (_gameTiming.CurTime - start).TotalSeconds / length;
                 var ratio = (progress <= 1 ? (1 - progress) : (_gameTiming.CurTime - end).TotalSeconds * -5);
 
-                cooldownGraphic.Progress = (float)ratio.Clamp(-1, 1);
+                cooldownGraphic.Progress = MathHelper.Clamp((float)ratio, -1, 1);
                 cooldownGraphic.Visible = ratio > -1f;
             }
         }

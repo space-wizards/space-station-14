@@ -1,24 +1,21 @@
 ﻿using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Throw;
-using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Random;
-using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 
-namespace Content.Server.GameObjects.Components
+namespace Content.Server.GameObjects.Components.Items.Storage
 {
     [RegisterComponent]
     [ComponentReference(typeof(StorableComponent))]
@@ -27,11 +24,6 @@ namespace Content.Server.GameObjects.Components
     {
         public override string Name => "Item";
         public override uint? NetID => ContentNetIDs.ITEM;
-
-        #pragma warning disable 649
-        [Dependency] private readonly IRobustRandom _robustRandom;
-        [Dependency] private readonly IMapManager _mapManager;
-        #pragma warning restore 649
 
         private string _equippedPrefix;
 
@@ -93,15 +85,13 @@ namespace Content.Server.GameObjects.Components
                 return false;
             }
 
-            if (Owner.TryGetComponent(out PhysicsComponent physics) &&
+            if (Owner.TryGetComponent(out ICollidableComponent physics) &&
                 physics.Anchored)
             {
                 return false;
             }
 
-            var itemPos = Owner.Transform.MapPosition;
-
-            return InteractionChecks.InRangeUnobstructed(user, itemPos, ignoredEnt: Owner, ignoreInsideBlocker:true);
+            return user.InRangeUnobstructed(Owner, ignoreInsideBlocker: true, popup: true);
         }
 
         public bool InteractHand(InteractHandEventArgs eventArgs)
@@ -126,7 +116,7 @@ namespace Content.Server.GameObjects.Components
                     return;
                 }
 
-                data.Text = "Pick Up";
+                data.Text = Loc.GetString("Pick Up");
             }
 
             protected override void Activate(IEntity user, ItemComponent component)
@@ -146,8 +136,8 @@ namespace Content.Server.GameObjects.Components
         public void OnExplosion(ExplosionEventArgs eventArgs)
         {
             var sourceLocation = eventArgs.Source;
-            var targetLocation = eventArgs.Target.Transform.GridPosition;
-            var dirVec = (targetLocation.ToMapPos(_mapManager) - sourceLocation.ToMapPos(_mapManager)).Normalized;
+            var targetLocation = eventArgs.Target.Transform.Coordinates;
+            var dirVec = (targetLocation.ToMapPos(Owner.EntityManager) - sourceLocation.ToMapPos(Owner.EntityManager)).Normalized;
 
             var throwForce = 1.0f;
 

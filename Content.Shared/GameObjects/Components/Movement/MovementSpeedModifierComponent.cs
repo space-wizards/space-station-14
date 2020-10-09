@@ -1,4 +1,4 @@
-using Robust.Shared.GameObjects;
+﻿using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -9,6 +9,7 @@ namespace Content.Shared.GameObjects.Components.Movement
     {
         public const float DefaultBaseWalkSpeed = 4.0f;
         public const float DefaultBaseSprintSpeed = 7.0f;
+
 
         public override string Name => "MovementSpeedModifier";
 

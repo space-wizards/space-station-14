@@ -1,13 +1,11 @@
-﻿using Content.Shared.Interfaces.Chemistry;
-using Robust.Shared.Interfaces.Serialization;
-using Robust.Shared.IoC;
-using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Chemistry
 {
@@ -248,7 +246,7 @@ namespace Content.Shared.Chemistry
         }
 
         [Serializable, NetSerializable]
-        public readonly struct ReagentQuantity
+        public readonly struct ReagentQuantity: IComparable<ReagentQuantity>
         {
             public readonly string ReagentId;
             public readonly ReagentUnit Quantity;
@@ -263,6 +261,14 @@ namespace Content.Shared.Chemistry
             public override string ToString()
             {
                 return $"{ReagentId}:{Quantity}";
+            }
+
+            public int CompareTo(ReagentQuantity other) { return Quantity.Float().CompareTo(other.Quantity.Float()); }
+
+            public void Deconstruct(out string reagentId, out ReagentUnit quantity)
+            {
+                reagentId = ReagentId;
+                quantity = Quantity;
             }
         }
 

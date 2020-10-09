@@ -13,7 +13,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Power
+namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers
 {
     public enum LightBulbState
     {
@@ -34,11 +34,8 @@ namespace Content.Server.GameObjects.Components.Power
     [RegisterComponent]
     public class LightBulbComponent : Component, ILand
     {
-
-#pragma warning disable 649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly IRobustRandom _random;
-#pragma warning restore 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         /// <summary>
         ///     Invoked whenever the state of the light bulb changes.
@@ -108,7 +105,11 @@ namespace Content.Server.GameObjects.Components.Power
 
         public void UpdateColor()
         {
-            var sprite = Owner.GetComponent<SpriteComponent>();
+            if (!Owner.TryGetComponent(out SpriteComponent sprite))
+            {
+                return;
+            }
+
             sprite.Color = Color;
         }
 

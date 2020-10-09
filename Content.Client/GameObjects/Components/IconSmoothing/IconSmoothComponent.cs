@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Content.Client.GameObjects.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Client.Interfaces.GameObjects.Components;

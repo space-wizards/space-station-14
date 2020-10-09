@@ -9,16 +9,14 @@
   - type: Sprite
     sprite: Constructible/Structures/Walls/asteroid_rock.rsi
     state: 0
-  - type: Icon
-    sprite: Constructible/Structures/Walls/asteroid_rock.rsi
-    state: 0
+
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
       layer: [MobMask]
-  - type: Damageable
   - type: Destructible
-    thresholdvalue: 100
+    deadThreshold: 100
+    resistances: metallicResistances
   - type: Occluder
     sizeX: 32
     sizeY: 32

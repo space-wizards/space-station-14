@@ -6,17 +6,13 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/backpack.rsi
-    state: backpack
-  - type: Icon
-    sprite: Clothing/Back/Backpacks/backpack.rsi
-    state: backpack
+    state: icon
   - type: Clothing
     size: 9999
     QuickEquip: false
     Slots:
     - back
     sprite: Clothing/Back/Backpacks/backpack.rsi
-    HeldPrefix: backpack
   - type: Storage
     capacity: 100
 
@@ -28,13 +24,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/clown.rsi
-    state: clown
-  - type: Icon
-    sprite: Clothing/Back/Backpacks/clown.rsi
-    state: clown
+    state: icon
   - type: Clothing
     sprite: Clothing/Back/Backpacks/clown.rsi
-    HeldPrefix: clown
 
 - type: entity
   parent: BackpackClothing
@@ -44,13 +36,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/security.rsi
-    state: security
-  - type: Icon
-    sprite: Clothing/Back/Backpacks/security.rsi
-    state: security
+    state: icon
   - type: Clothing
     sprite: Clothing/Back/Backpacks/security.rsi
-    HeldPrefix: security
 
 - type: entity
   parent: BackpackClothing
@@ -60,13 +48,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/engineering.rsi
-    state: engineering
-  - type: Icon
-    sprite: Clothing/Back/Backpacks/engineering.rsi
-    state: engineering
+    state: icon
   - type: Clothing
     sprite: Clothing/Back/Backpacks/engineering.rsi
-    HeldPrefix: engineering
 
 - type: entity
   parent: BackpackClothing
@@ -76,13 +60,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/medical.rsi
-    state: medical
-  - type: Icon
-    sprite: Clothing/Back/Backpacks/medical.rsi
-    state: medical
+    state: icon
   - type: Clothing
     sprite: Clothing/Back/Backpacks/medical.rsi
-    HeldPrefix: medical
 
 - type: entity
   parent: BackpackClothing
@@ -92,13 +72,47 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/captain.rsi
-    state: captain
-  - type: Icon
-    sprite: Clothing/Back/Backpacks/captain.rsi
-    state: captain
+    state: icon
   - type: Clothing
     sprite: Clothing/Back/Backpacks/captain.rsi
-    HeldPrefix: captain
+
+# Inhands/On mob aren't working until I refactor this file -Swept
+
+- type: entity
+  parent: BackpackClothing
+  id: BackpackMime
+  name: mime backpack
+  description: A silent backpack made for those silent workers. Silence Co.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/mime.rsi
+    state: icon
+  - type: Clothing
+    sprite: Clothing/Back/Backpacks/mime.rsi
+
+- type: entity
+  parent: BackpackClothing
+  id: BackpackChemistry
+  name: chemistry backpack
+  description: A backpack specially designed to repel stains and hazardous liquids.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/chemistry.rsi
+    state: icon
+  - type: Clothing
+    sprite: Clothing/Back/Backpacks/chemistry.rsi
+
+- type: entity
+  parent: BackpackClothing
+  id: BackpackBotany
+  name: botany backpack
+  description: It's a backpack made of all-natural fibers.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/botany.rsi
+    state: icon
+  - type: Clothing
+    sprite: Clothing/Back/Backpacks/botany.rsi
 
 - type: entity
   parent: BackpackClothing
@@ -113,9 +127,6 @@
     - state: holding
     - state: holding-unlit
       shader: unshaded
-  - type: Icon
-    sprite: Clothing/Back/Backpacks/holding.rsi
-    state: holding
   - type: Clothing
     sprite: Clothing/Back/Backpacks/holding.rsi
     HeldPrefix: holding

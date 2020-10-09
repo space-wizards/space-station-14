@@ -1,50 +1,23 @@
-﻿using Content.Client.Sandbox;
-using Robust.Client.Console;
-using Robust.Client.Interfaces.Placement;
-using Robust.Client.Interfaces.ResourceManagement;
+﻿using Robust.Client.Console;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.Interfaces.Configuration;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.UserInterface
 {
     internal sealed class EscapeMenu : SS14Window
     {
         private readonly IClientConsole _console;
-        private readonly ITileDefinitionManager __tileDefinitionManager;
-        private readonly IPlacementManager _placementManager;
-        private readonly IPrototypeManager _prototypeManager;
-        private readonly IResourceCache _resourceCache;
-        private readonly IConfigurationManager _configSystem;
-        private readonly ILocalizationManager _localizationManager;
-#pragma warning disable 649
-        [Dependency] private readonly ISandboxManager _sandboxManager;
-        [Dependency] private readonly IClientConGroupController _conGroupController;
-#pragma warning restore 649
 
         private BaseButton DisconnectButton;
         private BaseButton QuitButton;
         private BaseButton OptionsButton;
         private OptionsMenu optionsMenu;
 
-        public EscapeMenu(IClientConsole console,
-            ITileDefinitionManager tileDefinitionManager,
-            IPlacementManager placementManager,
-            IPrototypeManager prototypeManager,
-            IResourceCache resourceCache,
-            IConfigurationManager configSystem, ILocalizationManager localizationManager)
+        public EscapeMenu(IClientConsole console)
         {
-            _configSystem = configSystem;
-            _localizationManager = localizationManager;
             _console = console;
-            __tileDefinitionManager = tileDefinitionManager;
-            _placementManager = placementManager;
-            _prototypeManager = prototypeManager;
-            _resourceCache = resourceCache;
 
             IoCManager.InjectDependencies(this);
 
@@ -53,7 +26,7 @@ namespace Content.Client.UserInterface
 
         private void PerformLayout()
         {
-            optionsMenu = new OptionsMenu(_configSystem);
+            optionsMenu = new OptionsMenu();
 
             Resizable = false;
 
@@ -62,15 +35,15 @@ namespace Content.Client.UserInterface
             var vBox = new VBoxContainer {SeparationOverride = 4};
             Contents.AddChild(vBox);
 
-            OptionsButton = new Button {Text = _localizationManager.GetString("Options")};
+            OptionsButton = new Button {Text = Loc.GetString("Options")};
             OptionsButton.OnPressed += OnOptionsButtonClicked;
             vBox.AddChild(OptionsButton);
 
-            DisconnectButton = new Button {Text = _localizationManager.GetString("Disconnect")};
+            DisconnectButton = new Button {Text = Loc.GetString("Disconnect")};
             DisconnectButton.OnPressed += OnDisconnectButtonClicked;
             vBox.AddChild(DisconnectButton);
 
-            QuitButton = new Button {Text = _localizationManager.GetString("Quit Game")};
+            QuitButton = new Button {Text = Loc.GetString("Quit Game")};
             QuitButton.OnPressed += OnQuitButtonClicked;
             vBox.AddChild(QuitButton);
         }
@@ -99,11 +72,6 @@ namespace Content.Client.UserInterface
             {
                 optionsMenu.Dispose();
             }
-        }
-
-        public override void Close()
-        {
-            base.Close();
         }
     }
 }

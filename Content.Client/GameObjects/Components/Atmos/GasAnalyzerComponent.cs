@@ -1,6 +1,6 @@
-﻿using Content.Client.UserInterface.Stylesheets;
+﻿using System;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
-using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -8,14 +8,11 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Content.Client.GameObjects.Components.Atmos
 {
     [RegisterComponent]
-    class GasAnalyzerComponent : SharedGasAnalyzerComponent, IItemStatus
+    internal class GasAnalyzerComponent : SharedGasAnalyzerComponent, IItemStatus
     {
         [ViewVariables(VVAccess.ReadWrite)] private bool _uiUpdateNeeded;
         [ViewVariables] public GasAnalyzerDanger Danger { get; private set; }

@@ -1,6 +1,7 @@
 ﻿using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Weapon;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -43,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Explosion
 
             if (_sound != null)
             {
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(_sound, Owner.Transform.GridPosition);
+                EntitySystem.Get<AudioSystem>().PlayAtCoords(_sound, Owner.Transform.Coordinates);
             }
 
             if (_deleteOnFlash && !Owner.Deleted)

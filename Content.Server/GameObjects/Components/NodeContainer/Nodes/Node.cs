@@ -1,13 +1,13 @@
-﻿using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.ViewVariables;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 {
@@ -53,7 +53,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             serializer.DataField(this, x => NodeGroupID, "nodeGroupID", NodeGroupID.Default);
         }
 
-        public void Initialize(IEntity owner)
+        public virtual void Initialize(IEntity owner)
         {
             Owner = owner;
             _nodeGroupFactory = IoCManager.Resolve<INodeGroupFactory>();
@@ -106,6 +106,14 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             _needsGroup = true;
         }
 
+        protected void RefreshNodeGroup()
+        {
+            NodeGroup.RemoveNode(this);
+            ClearNodeGroup();
+            TryAssignGroupIfNeeded();
+            CombineGroupWithReachable();
+        }
+
         /// <summary>
         ///     How this node will attempt to find other reachable <see cref="Node"/>s to group with.
         ///     Returns a set of <see cref="Node"/>s to consider grouping with. Should not return this current <see cref="Node"/>.
@@ -143,7 +151,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         private INodeGroup MakeNewGroup()
         {
-            return _nodeGroupFactory.MakeNodeGroup(NodeGroupID);
+            return _nodeGroupFactory.MakeNodeGroup(this);
         }
 
         private void AnchorUpdate()

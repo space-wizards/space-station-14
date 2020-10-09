@@ -1,9 +1,9 @@
 ﻿#nullable enable
 using System;
 using System.Linq;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
-using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Disposal;
+using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
@@ -24,7 +24,6 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Disposal
 {
-    // TODO: Make unanchored pipes pullable
     public abstract class DisposalTubeComponent : Component, IDisposalTubeComponent, IBreakAct
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -44,7 +43,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         [ViewVariables]
         private bool Anchored =>
-            !Owner.TryGetComponent(out CollidableComponent collidable) ||
+            !Owner.TryGetComponent(out CollidableComponent? collidable) ||
             collidable.Anchored;
 
         /// <summary>
@@ -69,23 +68,29 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             var nextDirection = NextDirection(holder);
             var snapGrid = Owner.GetComponent<SnapGridComponent>();
-            var tube = snapGrid
-                .GetInDir(nextDirection)
-                .Select(x => x.TryGetComponent(out IDisposalTubeComponent c) ? c : null)
-                .FirstOrDefault(x => x != null && x != this);
-
-            if (tube == null)
-            {
-                return null;
-            }
-
             var oppositeDirection = new Angle(nextDirection.ToAngle().Theta + Math.PI).GetDir();
-            if (!tube.CanConnect(oppositeDirection, this))
+
+            foreach (var entity in snapGrid.GetInDir(nextDirection))
             {
-                return null;
+                if (!entity.TryGetComponent(out IDisposalTubeComponent? tube))
+                {
+                    continue;
+                }
+
+                if (!tube.CanConnect(oppositeDirection, this))
+                {
+                    continue;
+                }
+
+                if (!CanConnect(nextDirection, tube))
+                {
+                    continue;
+                }
+
+                return tube;
             }
 
-            return tube;
+            return null;
         }
 
         public bool Remove(DisposalHolderComponent holder)
@@ -153,7 +158,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             foreach (var entity in Contents.ContainedEntities.ToArray())
             {
-                if (!entity.TryGetComponent(out DisposalHolderComponent holder))
+                if (!entity.TryGetComponent(out DisposalHolderComponent? holder))
                 {
                     continue;
                 }
@@ -171,7 +176,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private void UpdateVisualState()
         {
-            if (!Owner.TryGetComponent(out AppearanceComponent appearance))
+            if (!Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 return;
             }
@@ -187,7 +192,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private void AnchoredChanged()
         {
-            if (!Owner.TryGetComponent(out CollidableComponent collidable))
+            if (!Owner.TryGetComponent(out CollidableComponent? collidable))
             {
                 return;
             }
@@ -217,7 +222,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _clangSound, "clangSound", "/Audio/effects/clang.ogg");
+            serializer.DataField(ref _clangSound, "clangSound", "/Audio/Effects/clang.ogg");
         }
 
         public override void Initialize()
@@ -268,7 +273,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                     }
 
                     _lastClang = _gameTiming.CurTime;
-                    EntitySystem.Get<AudioSystem>().PlayAtCoords(_clangSound, Owner.Transform.GridPosition);
+                    EntitySystem.Get<AudioSystem>().PlayAtCoords(_clangSound, Owner.Transform.Coordinates);
                     break;
             }
         }
@@ -285,7 +290,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             protected override void GetData(IEntity user, IDisposalTubeComponent component, VerbData data)
             {
-                data.Text = "Tube Directions";
+                data.Text = Loc.GetString("Tube Directions");
                 data.CategoryData = VerbCategories.Debug;
                 data.Visibility = VerbVisibility.Invisible;
 

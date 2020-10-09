@@ -1,19 +1,18 @@
 using System;
-using Content.Shared.GameObjects;
+using Content.Shared.Damage;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.EntitySystemMessages;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
-using Timer = Robust.Shared.Timers.Timer;
+using Robust.Shared.Timers;
 
 namespace Content.Server.GameObjects.Components.Projectiles
 {
@@ -23,10 +22,12 @@ namespace Content.Server.GameObjects.Components.Projectiles
     [RegisterComponent]
     public class HitscanComponent : Component
     {
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+
         public override string Name => "Hitscan";
         public CollisionGroup CollisionMask => (CollisionGroup) _collisionMask;
         private int _collisionMask;
-        
+
         public float Damage
         {
             get => _damage;
@@ -61,10 +62,10 @@ namespace Content.Server.GameObjects.Components.Projectiles
         public void FireEffects(IEntity user, float distance, Angle angle, IEntity hitEntity = null)
         {
             var effectSystem = EntitySystem.Get<EffectSystem>();
-            _startTime = IoCManager.Resolve<IGameTiming>().CurTime;
+            _startTime = _gameTiming.CurTime;
             _deathTime = _startTime + TimeSpan.FromSeconds(1);
 
-            var afterEffect = AfterEffects(user.Transform.GridPosition, angle, distance, 1.0f);
+            var afterEffect = AfterEffects(user.Transform.Coordinates, angle, distance, 1.0f);
             if (afterEffect != null)
             {
                 effectSystem.CreateParticle(afterEffect);
@@ -79,7 +80,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
                     effectSystem.CreateParticle(impactEffect);
                 }
 
-                var muzzleEffect = MuzzleFlash(user.Transform.GridPosition, angle);
+                var muzzleEffect = MuzzleFlash(user.Transform.Coordinates, angle);
                 if (muzzleEffect != null)
                 {
                     effectSystem.CreateParticle(muzzleEffect);
@@ -90,9 +91,9 @@ namespace Content.Server.GameObjects.Components.Projectiles
             {
                 // TODO: No wall component so ?
                 var offset = angle.ToVec().Normalized / 2;
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHitWall, user.Transform.GridPosition.Translated(offset));
+                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHitWall, user.Transform.Coordinates.Offset(offset));
             }
-            
+
             Timer.Spawn((int) _deathTime.TotalMilliseconds, () =>
             {
                 if (!Owner.Deleted)
@@ -101,33 +102,33 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 }
             });
         }
-        
-        private EffectSystemMessage MuzzleFlash(GridCoordinates grid, Angle angle)
+
+        private EffectSystemMessage MuzzleFlash(EntityCoordinates grid, Angle angle)
         {
             if (_muzzleFlash == null)
             {
                 return null;
             }
-            
+
             var offset = angle.ToVec().Normalized / 2;
-            
+
             var message = new EffectSystemMessage
             {
                 EffectSprite = _muzzleFlash,
                 Born = _startTime,
                 DeathTime = _deathTime,
-                Coordinates = grid.Translated(offset),
+                Coordinates = grid.Offset(offset),
                 //Rotated from east facing
                 Rotation = (float) angle.Theta,
                 Color = Vector4.Multiply(new Vector4(255, 255, 255, 750), ColorModifier),
                 ColorDelta = new Vector4(0, 0, 0, -1500f),
                 Shaded = false
             };
-            
+
             return message;
         }
 
-        private EffectSystemMessage AfterEffects(GridCoordinates origin, Angle angle, float distance, float offset = 0.0f)
+        private EffectSystemMessage AfterEffects(EntityCoordinates origin, Angle angle, float distance, float offset = 0.0f)
         {
             var midPointOffset = angle.ToVec() * distance / 2;
             var message = new EffectSystemMessage
@@ -136,7 +137,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 Born = _startTime,
                 DeathTime = _deathTime,
                 Size = new Vector2(distance - offset, 1f),
-                Coordinates = origin.Translated(midPointOffset),
+                Coordinates = origin.Offset(midPointOffset),
                 //Rotated from east facing
                 Rotation = (float) angle.Theta,
                 Color = Vector4.Multiply(new Vector4(255, 255, 255, 750), ColorModifier),
@@ -144,7 +145,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
 
                 Shaded = false
             };
-            
+
             return message;
         }
 
@@ -160,7 +161,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 EffectSprite = _impactFlash,
                 Born = _startTime,
                 DeathTime = _deathTime,
-                Coordinates = Owner.Transform.GridPosition.Translated(angle.ToVec() * distance),
+                Coordinates = Owner.Transform.Coordinates.Offset(angle.ToVec() * distance),
                 //Rotated from east facing
                 Rotation = (float) angle.FlipPositive(),
                 Color = Vector4.Multiply(new Vector4(255, 255, 255, 750), ColorModifier),

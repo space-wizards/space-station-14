@@ -1,19 +1,22 @@
 using System;
 using System.Threading;
+using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Timer = Robust.Shared.Timers.Timer;
 
-namespace Content.Server.Interfaces.GameObjects.Components.Interaction
+namespace Content.Server.GameObjects.EntitySystems
 {
     public class RoundEndSystem : EntitySystem
     {
-#pragma warning disable 649
-        [Dependency] private IGameTicker _gameTicker;
-        [Dependency] private IGameTiming _gameTiming;
-#pragma warning restore 649
+        [Dependency] private readonly IGameTicker _gameTicker = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IChatManager _chatManager = default!;
+
+        public const float RestartRoundTime = 20f;
 
         private CancellationTokenSource _roundEndCancellationTokenSource = new CancellationTokenSource();
         public bool IsRoundEndCountdownStarted { get; private set; }
@@ -60,6 +63,10 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
         {
             OnRoundEndCountdownFinished?.Invoke();
             _gameTicker.EndRound();
+
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("Restarting the round in {0} seconds...", RestartRoundTime));
+
+            Timer.Spawn(TimeSpan.FromSeconds(RestartRoundTime), () => _gameTicker.RestartRound(), CancellationToken.None);
         }
     }
 }

@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
+using Content.Server.GameObjects.Components.Body;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Interactable;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
-using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystems;
@@ -30,8 +30,10 @@ namespace Content.Server.GameObjects.Components.Items.Storage
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
-    public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing, IDestroyAct, IActionBlocker
+    public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing, IDestroyAct, IActionBlocker, IExAct
     {
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+
         public override string Name => "EntityStorage";
 
         private const float MaxSize = 1.0f; // maximum width or height of an entity allowed inside the storage.
@@ -49,8 +51,6 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         private bool _occludesLight;
         private bool _open;
         private bool _isWeldedShut;
-        private int _collisionMaskStorage;
-        private int _collisionLayerStorage;
 
         [ViewVariables]
         protected Container Contents;
@@ -170,7 +170,8 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                     continue;
 
                 // only items that can be stored in an inventory, or a mob, can be eaten by a locker
-                if (!entity.HasComponent<StorableComponent>() && !entity.HasComponent<SpeciesComponent>())
+                if (!entity.HasComponent<StorableComponent>() &&
+                    !entity.HasComponent<BodyManagerComponent>())
                     continue;
 
                 if (!AddToContents(entity))
@@ -201,18 +202,13 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         {
             if (!_isCollidableWhenOpen && Owner.TryGetComponent<ICollidableComponent>(out var collidableComponent))
             {
-                var physShape = collidableComponent.PhysicsShapes[0];
                 if (Open)
                 {
-                    _collisionMaskStorage = physShape.CollisionMask;
-                    physShape.CollisionMask = (int)CollisionGroup.Impassable;
-                    _collisionLayerStorage = physShape.CollisionLayer;
-                    physShape.CollisionLayer = (int)CollisionGroup.None;
+                    collidableComponent.Hard = false;
                 }
                 else
                 {
-                    physShape.CollisionMask = _collisionMaskStorage;
-                    physShape.CollisionLayer = _collisionLayerStorage;
+                    collidableComponent.Hard = true;
                 }
             }
 
@@ -304,14 +300,13 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 case RelayMovementEntityMessage msg:
                     if (msg.Entity.HasComponent<HandsComponent>())
                     {
-                        var timing = IoCManager.Resolve<IGameTiming>();
-                        if (timing.CurTime <
+                        if (_gameTiming.CurTime <
                             _lastInternalOpenAttempt + InternalOpenAttemptDelay)
                         {
                             break;
                         }
 
-                        _lastInternalOpenAttempt = timing.CurTime;
+                        _lastInternalOpenAttempt = _gameTiming.CurTime;
                         TryOpenStorage(msg.Entity);
                     }
                     break;
@@ -363,7 +358,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             return Contents.CanInsert(entity);
         }
 
-        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
 
             if (Open)
@@ -381,9 +376,8 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             if (!eventArgs.Using.TryGetComponent(out WelderComponent tool))
                 return false;
 
-            if (!tool.UseTool(eventArgs.User, Owner, ToolQuality.Welding, 1f))
+            if (!await tool.UseTool(eventArgs.User, Owner, 1f, ToolQuality.Welding, 1f))
                 return false;
-
 
             IsWeldedShut ^= true;
             return true;
@@ -432,7 +426,24 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 return;
             }
 
-            data.Text = component.Open ? "Close" : "Open";
+            data.Text = Loc.GetString(component.Open ? "Close" : "Open");
+        }
+
+        void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
+        {
+            if (eventArgs.Severity < ExplosionSeverity.Heavy)
+            {
+                return;
+            }
+
+            foreach (var entity in Contents.ContainedEntities)
+            {
+                var exActs = entity.GetAllComponents<IExAct>().ToArray();
+                foreach (var exAct in exActs)
+                {
+                    exAct.OnExplosion(eventArgs);
+                }
+            }
         }
     }
 }

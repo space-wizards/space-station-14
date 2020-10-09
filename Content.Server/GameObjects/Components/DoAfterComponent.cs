@@ -1,6 +1,6 @@
 #nullable enable
 using System.Collections.Generic;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.GameObjects;
@@ -38,20 +38,20 @@ namespace Content.Server.GameObjects.Components
             {
                 return;
             }
-            
+
             foreach (var (doAfter, id) in _doAfters)
             {
                 // THE ALMIGHTY PYRAMID
                 var message = new DoAfterMessage(
-                    id, 
+                    id,
                     doAfter.UserGrid,
                     doAfter.TargetGrid,
-                    doAfter.StartTime, 
-                    doAfter.EventArgs.Delay, 
-                    doAfter.EventArgs.BreakOnUserMove, 
+                    doAfter.StartTime,
+                    doAfter.EventArgs.Delay,
+                    doAfter.EventArgs.BreakOnUserMove,
                     doAfter.EventArgs.BreakOnTargetMove,
                     doAfter.EventArgs.Target?.Uid ?? EntityUid.Invalid);
-                
+
                 SendNetworkMessage(message, connectedClient);
             }
         }
@@ -59,8 +59,8 @@ namespace Content.Server.GameObjects.Components
         private bool TryGetConnectedClient(out INetChannel? connectedClient)
         {
             connectedClient = null;
-            
-            if (!Owner.TryGetComponent(out IActorComponent actorComponent))
+
+            if (!Owner.TryGetComponent(out IActorComponent? actorComponent))
             {
                 return false;
             }
@@ -81,15 +81,15 @@ namespace Content.Server.GameObjects.Components
             if (TryGetConnectedClient(out var connectedClient))
             {
                 var message = new DoAfterMessage(
-                    _runningIndex, 
+                    _runningIndex,
                     doAfter.UserGrid,
                     doAfter.TargetGrid,
-                    doAfter.StartTime, 
-                    doAfter.EventArgs.Delay, 
-                    doAfter.EventArgs.BreakOnUserMove, 
+                    doAfter.StartTime,
+                    doAfter.EventArgs.Delay,
+                    doAfter.EventArgs.BreakOnUserMove,
                     doAfter.EventArgs.BreakOnTargetMove,
                     doAfter.EventArgs.Target?.Uid ?? EntityUid.Invalid);
-                
+
                 SendNetworkMessage(message, connectedClient);
             }
 
@@ -108,7 +108,7 @@ namespace Content.Server.GameObjects.Components
                 var message = new CancelledDoAfterMessage(index);
                 SendNetworkMessage(message, connectedClient);
             }
-            
+
             _doAfters.Remove(doAfter);
         }
 

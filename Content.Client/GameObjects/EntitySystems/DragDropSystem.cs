@@ -16,7 +16,6 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
@@ -30,6 +29,12 @@ namespace Content.Client.GameObjects.EntitySystems
     [UsedImplicitly]
     public class DragDropSystem : EntitySystem
     {
+        [Dependency] private readonly IStateManager _stateManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly IEyeManager _eyeManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         // drag will be triggered when mouse leaves this deadzone around the click position.
         private const float DragDeadzone = 2f;
         // how often to recheck possible targets (prevents calling expensive
@@ -43,15 +48,6 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private const string ShaderDropTargetInRange = "SelectionOutlineInrange";
         private const string ShaderDropTargetOutOfRange = "SelectionOutline";
-
-#pragma warning disable 649
-        [Dependency] private readonly IStateManager _stateManager;
-        [Dependency] private readonly IEntityManager _entityManager;
-        [Dependency] private readonly IInputManager _inputManager;
-        [Dependency] private readonly IEyeManager _eyeManager;
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly IMapManager _mapManager;
-#pragma warning restore 649
 
         // entity performing the drag action
         private IEntity _dragger;
@@ -95,8 +91,8 @@ namespace Content.Client.GameObjects.EntitySystems
 
             _dropTargetInRangeShader = _prototypeManager.Index<ShaderPrototype>(ShaderDropTargetInRange).Instance();
             _dropTargetOutOfRangeShader = _prototypeManager.Index<ShaderPrototype>(ShaderDropTargetOutOfRange).Instance();
-            _interactionSystem = EntitySystem.Get<SharedInteractionSystem>();
-            _inputSystem = EntitySystem.Get<InputSystem>();
+            _interactionSystem = Get<SharedInteractionSystem>();
+            _inputSystem = Get<InputSystem>();
             // needs to fire on mouseup and mousedown so we can detect a drag / drop
             CommandBinds.Builder
                 .Bind(EngineKeyFunctions.Use, new PointerInputCmdHandler(OnUse, false))
@@ -144,8 +140,7 @@ namespace Content.Client.GameObjects.EntitySystems
             if (_entityManager.TryGetEntity(args.EntityUid, out var entity))
             {
                 // check if the entity is reachable
-                if (_interactionSystem.InRangeUnobstructed(dragger.Transform.MapPosition,
-                    entity.Transform.MapPosition, ignoredEnt: dragger) == false)
+                if (!_interactionSystem.InRangeUnobstructed(dragger, entity))
                 {
                     return false;
                 }
@@ -195,8 +190,8 @@ namespace Content.Client.GameObjects.EntitySystems
             // tell the server we are dropping if we are over a valid drop target in range.
             // We don't use args.EntityUid here because drag interactions generally should
             // work even if there's something "on top" of the drop target
-            if (_interactionSystem.InRangeUnobstructed(_dragger.Transform.MapPosition,
-                args.Coordinates.ToMap(_mapManager), ignoredEnt: _dragger, ignoreInsideBlocker: true) == false)
+            if (!_interactionSystem.InRangeUnobstructed(_dragger,
+                args.Coordinates, ignoreInsideBlocker: true))
             {
                 CancelDrag(false, null);
                 return false;
@@ -290,8 +285,7 @@ namespace Content.Client.GameObjects.EntitySystems
                     if (anyValidDraggable)
                     {
                         // highlight depending on whether its in or out of range
-                        var inRange = _interactionSystem.InRangeUnobstructed(_dragger.Transform.MapPosition,
-                            pvsEntity.Transform.MapPosition, ignoredEnt: _dragger);
+                        var inRange = _interactionSystem.InRangeUnobstructed(_dragger, pvsEntity);
                         inRangeSprite.PostShader = inRange ? _dropTargetInRangeShader : _dropTargetOutOfRangeShader;
                         inRangeSprite.RenderOrder = EntityManager.CurrentTick.Value;
                         highlightedSprites.Add(inRangeSprite);
@@ -379,8 +373,7 @@ namespace Content.Client.GameObjects.EntitySystems
                     return;
                 }
                 // still in range of the thing we are dragging?
-                if (_interactionSystem.InRangeUnobstructed(_dragger.Transform.MapPosition,
-                        _draggedEntity.Transform.MapPosition, ignoredEnt: _dragger) == false)
+                if (!_interactionSystem.InRangeUnobstructed(_dragger, _draggedEntity))
                 {
                     CancelDrag(false, null);
                     return;

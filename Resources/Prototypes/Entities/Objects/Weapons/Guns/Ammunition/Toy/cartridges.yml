@@ -12,9 +12,6 @@
     sprite: Objects/Consumable/Trash/ash.rsi
     state: icon
     drawdepth: FloorObjects
-  - type: Icon
-    sprite: Objects/Consumable/Trash/ash.rsi
-    state: icon
 
 - type: entity
   id: CartridgeCap

@@ -7,7 +7,6 @@ using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Log;
 
-
 namespace Content.Client.GameObjects.Components.Kitchen
 {
     public sealed class MicrowaveVisualizer : AppearanceVisualizer
@@ -36,11 +35,11 @@ namespace Content.Client.GameObjects.Components.Kitchen
                     sprite.LayerSetState(MicrowaveVisualizerLayers.BaseUnlit, "mw_running_unlit");
                     var audioParams = AudioParams.Default;
                     audioParams.Loop = true;
-                    var schedSound = new ScheduledSound();
-                    schedSound.Filename = "/Audio/Machines/microwave_loop.ogg";
-                    schedSound.AudioParams = audioParams;
+                    var scheduledSound = new ScheduledSound();
+                    scheduledSound.Filename = "/Audio/Machines/microwave_loop.ogg";
+                    scheduledSound.AudioParams = audioParams;
                     _loopingSoundComponent.StopAllSounds();
-                    _loopingSoundComponent.AddScheduledSound(schedSound);
+                    _loopingSoundComponent.AddScheduledSound(scheduledSound);
                     break;
 
                 default:

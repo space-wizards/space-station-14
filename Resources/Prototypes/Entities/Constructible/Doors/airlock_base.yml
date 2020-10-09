@@ -4,6 +4,7 @@
   description: It opens, it closes, and maybe crushes you.
   components:
   - type: Clickable
+  - type: RCDDeconstructWhitelist
   - type: InteractionOutline
   - type: Sprite
     netsync: false
@@ -15,14 +16,13 @@
     - state: closed_unlit
       shader: unshaded
       map: ["enum.DoorVisualLayers.BaseUnlit"]
+    - state: welded
+      map: ["enum.DoorVisualLayers.BaseWelded"]
     - state: bolted
       shader: unshaded
       map: ["enum.DoorVisualLayers.BaseBolted"]
     - state: panel_open
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Icon
-    sprite: Constructible/Structures/Doors/airlock_basic.rsi
-    state: closed
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -53,10 +53,12 @@
       type: WiresBoundUserInterface
   - type: Airtight
     fixVacuum: true
-    adjacentAtmosphere: true
   - type: Occluder
   - type: SnapGrid
     offset: Center
+  - type: Destructible
+    deadThreshold: 500
+    resistances: metallicResistances
   placement:
     mode: SnapgridCenter
 
@@ -71,8 +73,7 @@
     enabled: false
   - type: Sprite
     sprite: Constructible/Structures/Doors/airlock_glass.rsi
-  - type: Icon
-    sprite: Constructible/Structures/Doors/airlock_glass.rsi
+
 
 - type: entity
   parent: Airlock
@@ -80,6 +81,4 @@
   name: maintenance hatch
   components:
   - type: Sprite
-    sprite: Constructible/Structures/Doors/airlock_maint.rsi
-  - type: Icon
     sprite: Constructible/Structures/Doors/airlock_maint.rsi

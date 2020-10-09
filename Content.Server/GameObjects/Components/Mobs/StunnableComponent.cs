@@ -1,11 +1,15 @@
-﻿using Content.Server.Mobs;
+﻿using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.Interfaces.GameObjects.Components;
+using NFluidsynth;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
-using Robust.Shared.ViewVariables;
-using Timer = Robust.Shared.Timers.Timer;
-using Content.Shared.GameObjects.Components.Movement;
+using Robust.Shared.Timers;
+using Logger = Robust.Shared.Log.Logger;
 
 namespace Content.Server.GameObjects.Components.Mobs
 {
@@ -13,13 +17,11 @@ namespace Content.Server.GameObjects.Components.Mobs
     [ComponentReference(typeof(SharedStunnableComponent))]
     public class StunnableComponent : SharedStunnableComponent
     {
-#pragma warning disable 649
-        [Dependency] private IGameTiming _gameTiming;
-#pragma warning restore 649
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         protected override void OnKnockdown()
         {
-            StandingStateHelper.Down(Owner);
+            EntitySystem.Get<StandingStateSystem>().Down(Owner);
         }
 
         public void CancelAll()
@@ -36,7 +38,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
             if (KnockedDown)
             {
-                StandingStateHelper.Standing(Owner);
+                EntitySystem.Get<StandingStateSystem>().Standing(Owner);
             }
 
             KnockdownTimer = 0f;
@@ -61,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
                 if (KnockdownTimer <= 0f)
                 {
-                    StandingStateHelper.Standing(Owner);
+                    EntitySystem.Get<StandingStateSystem>().Standing(Owner);
 
                     KnockdownTimer = 0f;
                     Dirty();

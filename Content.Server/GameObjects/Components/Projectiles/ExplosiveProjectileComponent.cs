@@ -1,9 +1,7 @@
-using System;
 using Content.Server.GameObjects.Components.Explosion;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Log;
 
 namespace Content.Server.GameObjects.Components.Projectiles
 {
@@ -15,17 +13,16 @@ namespace Content.Server.GameObjects.Components.Projectiles
         public override void Initialize()
         {
             base.Initialize();
-            if (!Owner.HasComponent<ExplosiveComponent>())
-            {
-                Logger.Error("ExplosiveProjectiles need an ExplosiveComponent");
-                throw new InvalidOperationException();
-            }
+
+            Owner.EnsureComponent<ExplosiveComponent>();
         }
 
         void ICollideBehavior.CollideWith(IEntity entity)
         {
-            var explosiveComponent = Owner.GetComponent<ExplosiveComponent>();
-            explosiveComponent.Explosion();
+            if (Owner.TryGetComponent(out ExplosiveComponent explosive))
+            {
+                explosive.Explosion();
+            }
         }
 
         // Projectile should handle the deleting

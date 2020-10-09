@@ -6,7 +6,7 @@
   components:
   - type: Projectile
     damages:
-      Brute: 1
+      Blunt: 1
 
 - type: entity
   id: BulletDonkSoft
@@ -22,9 +22,6 @@
     netsync: false
     sprite: Objects/Fun/toys.rsi
     state: foamdart
-  - type: Icon
-    sprite: Objects/Fun/toys.rsi
-    state: foamdart
   - type: Projectile
     damages:
-      Brute: 1
+      Blunt: 1

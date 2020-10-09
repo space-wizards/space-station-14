@@ -7,9 +7,7 @@
     caliber: LRifle
     capacity: 5
     fillPrototype: CartridgeLRifle
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/LRifle/l_rifle_sl.rsi
-    state: icon
+
   - type: Sprite
     netsync: false
     sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/LRifle/l_rifle_sl.rsi

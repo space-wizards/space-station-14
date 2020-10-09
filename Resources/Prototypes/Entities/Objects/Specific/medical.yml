@@ -5,9 +5,8 @@
   id: Medkit
   components:
   - type: Sprite
-    texture: Objects/Specific/Medical/medkit_r.png
-  - type: Icon
-    texture: Objects/Specific/Medical/medkit_r.png
+    sprite: Objects/Specific/Medical/medical.rsi
+    state: medkit_r
   - type: Storage
     capacity: 60
   - type: Item
@@ -15,9 +14,16 @@
 
 - type: entity
   id: MedkitFilled
+  suffix: Filled
   parent: Medkit
   components:
-  - type: MedkitFill # 3 Ointment, 3 Roll of Gauze. TODO 1 Health Analyzer once it exists
+  - type: StorageFill
+    contents:
+      - name: Brutepack
+        amount: 3
+      - name: Ointment
+        amount: 3
+      # todo 1 Health Analyzer once it exists
 
 - type: entity
   name: medical stack
@@ -36,12 +42,11 @@
   id: Ointment
   components:
   - type: Sprite
-    texture: Objects/Specific/Medical/ointment.png
-  - type: Icon
-    texture: Objects/Specific/Medical/ointment.png
+    sprite: Objects/Specific/Medical/medical.rsi
+    state: ointment
   - type: Healing
-    heal: 10
-    damage: Heat
+    heal:
+      Heat: 10
   - type: Stack
     max: 5
     count: 5
@@ -54,12 +59,11 @@
   id: Brutepack
   components:
   - type: Sprite
-    texture: Objects/Specific/Medical/brutepack.png
-  - type: Icon
-    texture: Objects/Specific/Medical/brutepack.png
+    sprite: Objects/Specific/Medical/medical.rsi
+    state: medkit_r
   - type: Healing
-    heal: 10
-    damage: Brute
+    heal:
+      Blunt: 10
   - type: Stack
     max: 5
     count: 5

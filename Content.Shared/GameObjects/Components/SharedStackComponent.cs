@@ -1,4 +1,5 @@
 ﻿using System;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
@@ -26,6 +27,10 @@ namespace Content.Shared.GameObjects.Components
                 _count = value;
                 if (_count <= 0)
                 {
+                    if (ContainerHelpers.TryGetContainerMan(Owner, out var containerManager))
+                    {
+                        containerManager.Remove(Owner);
+                    }
                     Owner.Delete();
                 }
 
@@ -120,6 +125,7 @@ namespace Content.Shared.GameObjects.Components
     {
         Metal,
         Glass,
+        Plasteel,
         Cable,
         Gold,
         Phoron,

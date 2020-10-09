@@ -17,12 +17,11 @@ namespace Content.Client.GameObjects.Components.Items
     [ComponentReference(typeof(ISharedHandsComponent))]
     public class HandsComponent : SharedHandsComponent
     {
+        [Dependency] private readonly IGameHud _gameHud = default!;
+
         private HandsGui? _gui;
 
-#pragma warning disable 649
-        [Dependency] private readonly IGameHud _gameHud = default!;
-#pragma warning restore 649
-
+        /// <inheritdoc />
         private readonly List<Hand> _hands = new List<Hand>();
 
         [ViewVariables] public IReadOnlyList<Hand> Hands => _hands;
@@ -147,7 +146,7 @@ namespace Content.Client.GameObjects.Components.Items
                 return;
             }
 
-            if (!entity.TryGetComponent(out ItemComponent item)) return;
+            if (!entity.TryGetComponent(out ItemComponent? item)) return;
 
             var maybeInHands = item.GetInHandStateInfo(hand.Location);
 
@@ -157,7 +156,8 @@ namespace Content.Client.GameObjects.Components.Items
             }
             else
             {
-                var (rsi, state) = maybeInHands.Value;
+                var (rsi, state, color) = maybeInHands.Value;
+                _sprite.LayerSetColor($"hand-{name}", color);
                 _sprite.LayerSetVisible($"hand-{name}", true);
                 _sprite.LayerSetState($"hand-{name}", state, rsi);
             }

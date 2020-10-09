@@ -19,7 +19,8 @@
   id: CMOGear
   equipment:
     innerclothing: UniformCMO
-    backpack: BackpackMedical
+    backpack: BackpackMedicalFilled
     shoes: ShoesBrown
     outerclothing: OuterclothingLabcoatcmo
     idcard: CMOPDA
+    ears: HeadsetMedicalAlt

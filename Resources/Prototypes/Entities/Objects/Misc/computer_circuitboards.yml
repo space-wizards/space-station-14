@@ -1,0 +1,66 @@
+﻿- type: entity
+  id: BaseComputerCircuitboard
+  parent: BaseItem
+  name: circuit board
+  abstract: true
+  components:
+    - type: ComputerBoard
+    - type: Sprite
+      sprite: Constructible/Misc/module.rsi
+      state: id_mod
+
+- type: entity
+  id: SupplyComputerCircuitboard
+  parent: BaseComputerCircuitboard
+  name: supply computer circuit board
+  components:
+    - type: ComputerBoard
+      prototype: ComputerSupplyOrdering
+
+- type: entity
+  id: SupplyRequestComputerCircuitboard
+  parent: BaseComputerCircuitboard
+  name: supply request computer circuit board
+  components:
+    - type: ComputerBoard
+      prototype: ComputerSupplyRequest
+
+- type: entity
+  id: ResearchComputerCircuitboard
+  parent: BaseComputerCircuitboard
+  name: R&D computer circuit board
+  components:
+    - type: ComputerBoard
+      prototype: ComputerResearchAndDevelopment
+
+- type: entity
+  id: IDComputerCircuitboard
+  parent: BaseComputerCircuitboard
+  name: ID card terminal circuit board
+  components:
+    - type: ComputerBoard
+      prototype: ComputerId
+
+- type: entity
+  id: BodyScannerComputerCircuitboard
+  parent: BaseComputerCircuitboard
+  name: body scanner computer circuit board
+  components:
+    - type: ComputerBoard
+      prototype: computerBodyScanner
+
+- type: entity
+  id: CommsComputerCircuitboard
+  parent: BaseComputerCircuitboard
+  name: communications computer circuit board
+  components:
+    - type: ComputerBoard
+      prototype: ComputerComms
+
+- type: entity
+  id: SolarControlComputerCircuitboard
+  parent: BaseComputerCircuitboard
+  name: solar control computer circuit board
+  components:
+    - type: ComputerBoard
+      prototype: ComputerSolarControl
