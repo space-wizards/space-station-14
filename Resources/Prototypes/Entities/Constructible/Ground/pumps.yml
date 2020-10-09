@@ -26,13 +26,13 @@
     nodes:
     - !type:PipeNode
       nodeGroupID: Pipe
-      pipeDirection: South
+      pipeDirection: West
     - !type:PipeNode
       nodeGroupID: Pipe
-      pipeDirection: North
+      pipeDirection: East
   - type: PressurePump
-    inletDirection: North
-    outletDirection: South
+    inletDirection: West
+    outletDirection: East
   - type: Sprite
     state: pumpPressure2
   - type: Icon
