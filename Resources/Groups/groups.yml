@@ -70,6 +70,7 @@
   - respawn
   - rejuvenate
   - addcomp
+  - rmcomp
   - controlmob
   - kick
   - listplayers
