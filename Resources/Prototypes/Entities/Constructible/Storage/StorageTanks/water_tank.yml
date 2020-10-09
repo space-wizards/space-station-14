@@ -6,8 +6,8 @@
   description: "A water tank. It is used to store high amounts of water."
   components:
   - type: Sprite
-    texture: Constructible/Misc/watertank.png
-
+    sprite: Constructible/Misc/tanks.rsi
+    state: watertank
   - type: Anchorable
   - type: Pullable
 

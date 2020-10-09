@@ -106,6 +106,14 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             _needsGroup = true;
         }
 
+        protected void RefreshNodeGroup()
+        {
+            NodeGroup.RemoveNode(this);
+            ClearNodeGroup();
+            TryAssignGroupIfNeeded();
+            CombineGroupWithReachable();
+        }
+
         /// <summary>
         ///     How this node will attempt to find other reachable <see cref="Node"/>s to group with.
         ///     Returns a set of <see cref="Node"/>s to consider grouping with. Should not return this current <see cref="Node"/>.

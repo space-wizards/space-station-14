@@ -6,6 +6,7 @@ using Content.Shared.Maps;
 using Robust.Server.GameObjects.EntitySystems.TileLookup;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Map;
 
 namespace Content.Server.Utility
@@ -29,12 +30,8 @@ namespace Content.Server.Utility
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<IEntity> GetEntitiesInTileFast(this MapIndices indices, GridId gridId, GridTileLookupSystem? gridTileLookup = null)
         {
-            var turf = indices.GetTileRef(gridId);
-
-            if (turf == null)
-                return Enumerable.Empty<IEntity>();
-
-            return GetEntitiesInTileFast(turf.Value, gridTileLookup);
+            gridTileLookup ??= EntitySystem.Get<GridTileLookupSystem>();
+            return gridTileLookup.GetEntitiesIntersecting(gridId, indices);
         }
     }
 }

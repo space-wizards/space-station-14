@@ -161,8 +161,8 @@
   description: Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle.
   components:
   - type: Sprite
-    sprite: Clothing/Shoes/magboots0.rsi
-
+    sprite: Clothing/Shoes/magboots.rsi
+    state: icon
   - type: Clothing
     sprite: Clothing/Shoes/magboots.rsi
 
@@ -201,18 +201,6 @@
 
   - type: Clothing
     sprite: Clothing/Shoes/purple.rsi
-
-- type: entity
-  parent: ShoesBase
-  id: ShoesRainbow
-  name: rainbow shoes
-  description: A pair of rainbow shoes.
-  components:
-  - type: Sprite
-    sprite: Clothing/Shoes/rain_bow.rsi
-
-  - type: Clothing
-    sprite: Clothing/Shoes/rainbow.rsi
 
 - type: entity
   parent: ShoesBase

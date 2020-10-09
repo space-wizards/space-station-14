@@ -93,6 +93,9 @@
     netsync: false
     sprite: Constructible/Power/cell_recharger.rsi
     drawdepth: Items
+  - type: Icon
+    sprite: Constructible/Power/cell_recharger.rsi
+    state: empty
   - type: PowerCellCharger
     transfer_efficiency: 0.85
   - type: PowerReceiver
@@ -110,7 +113,6 @@
       bounds: "-0.25,-0.25,0.25,0.25"
       mask: [Impassable]
       layer: [Clickable]
-    IsScrapingFloor: true
 
 - type: entity
   name: recharger
@@ -120,6 +122,9 @@
     netsync: false
     sprite: Constructible/Power/recharger.rsi
     drawdepth: Items
+  - type: Icon
+    sprite: Constructible/Power/recharger.rsi
+    state: empty
   - type: WeaponCapacitorCharger
     transfer_efficiency: 0.85
   - type: PowerReceiver
@@ -137,7 +142,6 @@
       bounds: "-0.25,-0.25,0.25,0.25"
       mask: [Impassable]
       layer: [Clickable]
-    IsScrapingFloor: true
 
 - type: entity
   name: wall recharger
@@ -147,6 +151,9 @@
     netsync: false
     sprite: Constructible/Power/wall_recharger.rsi
     drawdepth: Items
+  - type: Icon
+    sprite: Constructible/Power/wall_recharger.rsi
+    state: empty
   - type: WeaponCapacitorCharger
     transfer_efficiency: 0.95
   - type: PowerReceiver
@@ -163,4 +170,3 @@
       bounds: "-0.25,-0.25,0.25,0.25"
       mask: [Impassable]
       layer: [Clickable]
-    IsScrapingFloor: true

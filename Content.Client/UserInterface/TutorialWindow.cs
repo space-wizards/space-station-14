@@ -46,7 +46,7 @@ namespace Content.Client.UserInterface
             //Get section header font
             var cache = IoCManager.Resolve<IResourceCache>();
             var inputManager = IoCManager.Resolve<IInputManager>();
-            Font headerFont = new VectorFont(cache.GetResource<FontResource>("/Textures/Interface/Nano/NotoSans/NotoSans-Regular.ttf"), _headerFontSize);
+            Font headerFont = new VectorFont(cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), _headerFontSize);
 
             var scrollContainer = new ScrollContainer();
             scrollContainer.AddChild(VBox = new VBoxContainer());

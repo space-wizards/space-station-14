@@ -2,7 +2,7 @@
   name: syringe box
   parent: BoxBase
   id: BoxSyringe
-  description:
+  description: A box full of syringes.
   components:
   - type: StorageFill
     contents:
@@ -21,7 +21,7 @@
   name: sterile box
   parent: BoxBase
   id: BoxSterile
-  description:
+  description: This box contains sterile medical masks.
   components:
   - type: StorageFill
     contents:
@@ -40,7 +40,7 @@
   name: latex box
   parent: BoxBase
   id: BoxLatex
-  description:
+  description: Contains sterile latex gloves.
   components:
   - type: StorageFill
     contents:

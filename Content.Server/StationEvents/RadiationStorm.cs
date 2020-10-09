@@ -35,7 +35,7 @@ namespace Content.Server.StationEvents
         /// <summary>
         /// How long until the radiation storm starts
         /// </summary>
-        private const float StartupTime = 10;
+        private const float StartupTime = 5;
 
         /// <summary>
         /// How long the radiation storm has been running for

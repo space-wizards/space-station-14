@@ -1,97 +1,105 @@
 ﻿- type: construction
+  name: girder
+  id: girder
+  graph: girder
+  startNode: start
+  targetNode: girder
+  category: Structures
+  description: A large structural assembly made out of metal.
+  icon:
+    sprite: /Textures/Constructible/Structures/Walls/solid.rsi
+    state: wall_girder
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
   name: wall
   id: wall
+  graph: girder
+  startNode: start
+  targetNode: wall
   category: Structures
   description: Keeps the air in and the greytide out.
   icon:
     sprite: Constructible/Structures/Walls/solid.rsi
     state: full
   objectType: Structure
-  result: solid_wall
   placementMode: SnapgridCenter
-  steps:
-  - material: Metal
-    amount: 2
-    icon: Constructible/Structures/Walls/wall_girder.png
-    reverse:
-      tool: Anchoring
-  - material: Metal
-    amount: 2
-    reverse:
-      tool: Anchoring
 
 - type: construction
-  name: table
-  id: Table
+  name: reinforced wall
+  id: reinforcedWall
+  graph: girder
+  startNode: start
+  targetNode: reinforcedWall
   category: Structures
+  description: Keeps the air in and the greytide out.
   icon:
-    sprite: Constructible/Structures/Tables/generic.rsi
-    state: plain_preview
-  result: Table
-  placementMode: SnapgridCenter
-  steps:
-  - material: Metal
-    amount: 2
-
-- type: construction
-  name: window
-  id: Window
-  category: Structures
-  description: Clear.
-  icon:
-    sprite: Constructible/Structures/Windows/window.rsi
-    state: full
+    sprite: Constructible/Structures/Walls/solid.rsi
+    state: rgeneric
   objectType: Structure
-  result: Window
   placementMode: SnapgridCenter
-  steps:
-  - material: Glass
-    amount: 2
-    reverse:
-      tool: Screwing
 
 - type: construction
   name: low wall
   id: LowWall
+  graph: lowWall
+  startNode: start
+  targetNode: lowWall
   category: Structures
   description: A low wall used for mounting windows.
+  conditions:
+    - !type:NoWindowsInTile { }
   icon:
     sprite: Constructible/Structures/Walls/low_wall.rsi
     state: metal
   objectType: Structure
-  result: LowWall
   placementMode: SnapgridCenter
-  steps:
-  - material: Metal
-    amount: 2
-    icon: Constructible/Structures/Walls/wall_girder.png
-    reverse:
-      tool: Anchoring
-
-  - material: Metal
-    amount: 2
-    reverse:
-      tool: Anchoring
 
 - type: construction
-  name: rein window
-  id: ReinforcedWindow
+  name: window
+  id: Window
+  graph: window
+  startNode: start
+  targetNode: window
   category: Structures
-  description: Clear but tough.
+  description: Clear. Must be built on top of a low wall.
+  conditions:
+    - !type:LowWallInTile {}
+  icon:
+    sprite: Constructible/Structures/Windows/window.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
+  name: reinforced window
+  id: ReinforcedWindow
+  graph: window
+  startNode: start
+  targetNode: reinforcedWindow
+  category: Structures
+  description: Clear but tough. Must be built on top of a low wall.
+  conditions:
+    - !type:LowWallInTile {}
   icon:
     sprite: Constructible/Structures/Windows/reinforced_window.rsi
     state: full
   objectType: Structure
-  result: ReinforcedWindow
   placementMode: SnapgridCenter
-  steps:
-  - material: Glass
-    amount: 2
-    reverse:
-      tool: Anchoring
-# Should be replaced with Metal Rods when someone puts them in.
-  - material: Metal
-    amount: 2
-    reverse:
-      # Should be replaced with Wirecutter when someone makes it work.
-      tool: Anchoring
+
+- type: construction
+  name: phoron window
+  id: PhoronWindow
+  graph: window
+  startNode: start
+  targetNode: phoronWindow
+  category: Structures
+  description: Clear and even tougher, with an orange tint. Must be built on top of a low wall.
+  conditions:
+    - !type:LowWallInTile {}
+  icon:
+    sprite: Constructible/Structures/Windows/phoron_window.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter

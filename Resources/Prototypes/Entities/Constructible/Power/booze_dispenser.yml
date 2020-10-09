@@ -5,8 +5,8 @@
   parent: ReagentDispenserBase
   components:
   - type: Sprite
-    texture: Constructible/Power/dispensers.rsi/booze_dispenser.png
-
+    sprite: Constructible/Power/dispensers.rsi
+    state: booze_dispenser
   - type: ReagentDispenser
     pack: BoozeDispenserInventory
   - type: Anchorable

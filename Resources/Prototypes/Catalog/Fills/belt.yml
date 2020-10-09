@@ -12,3 +12,14 @@
       - name: Welder
       - name: Multitool
       - name: ApcExtensionCableStack
+
+- type: entity
+  id: UtilityBeltClothingFilledEvent
+  parent: UtilityBeltClothing
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - name: Crowbar
+      - name: Screwdriver
+      - name: Multitool

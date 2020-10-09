@@ -5,9 +5,13 @@
   components:
   - type: Clickable
   - type: InteractionOutline
+  - type: Anchorable
+  - type: Construction
+    graph: girder
+    node: girder
   - type: Sprite
-    texture: Constructible/Structures/Walls/wall_girder.png
-
+    sprite: Constructible/Structures/Walls/solid.rsi
+    state: wall_girder
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -18,7 +22,6 @@
     spawnOnDestroy: SteelSheet1
   - type: SnapGrid
     offset: Edge
-
   placement:
     snap:
     - Wall

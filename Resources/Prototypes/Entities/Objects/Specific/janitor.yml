@@ -23,7 +23,10 @@
   components:
   - type: Clickable
   - type: Sprite
-    texture: Objects/Specific/Janitorial/mopbucket.png
+    sprite: Objects/Specific/Janitorial/janitorial.rsi
+    layers:
+    - state: mopbucket
+    - state: mopbucket_water
     drawdepth: Objects
   - type: InteractionOutline
   - type: Bucket
@@ -40,7 +43,6 @@
       - Opaque
       layer:
       - Opaque
-    IsScrapingFloor: true
   - type: Physics
     mass: 5
     anchored: false
@@ -55,7 +57,10 @@
   components:
   - type: Clickable
   - type: Sprite
-    texture: Objects/Specific/Janitorial/bucket.png
+    sprite: Objects/Specific/Janitorial/janitorial.rsi
+    layers:
+    - state: bucket
+    - state: bucket_water
     drawdepth: Objects
   - type: Bucket
   - type: LoopingSound
@@ -68,7 +73,6 @@
       bounds: "-0.25,-0.25,0.25,0.25"
       mask:
       - Impassable
-    IsScrapingFloor: true
   - type: Physics
     mass: 5
     anchored: false
@@ -195,7 +199,8 @@
   description: A spray bottle with an unscrewable top.
   components:
   - type: Sprite
-    texture: Objects/Specific/Janitorial/cleaner.png
+    sprite: Objects/Specific/Janitorial/janitorial.rsi
+    state: cleaner
   - type: SolutionContainer
     maxVol: 100
     caps: AddTo, RemoveFrom
