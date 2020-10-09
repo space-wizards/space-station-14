@@ -1,3 +1,4 @@
+#nullable enable
 using JetBrains.Annotations;
 using Content.Server.GameObjects.Components.Doors;
 using Content.Server.GameObjects.Components.GUI;
@@ -22,7 +23,7 @@ namespace Content.Server.StationEvents
         public override StationEventWeight Weight => StationEventWeight.Low;
         public override int? MaxOccurrences => 1;
         private float _elapsedTime;
-        private int _eventDuration;   
+        private int _eventDuration;
         protected override string StartAnnouncement => Loc.GetString(
             "The clover hat hackers turned the bolts of all the airlocks in the station down. We have dispatched high quality hacking equipment at every crewmember location so that this productive shift can continue");
         protected override string EndAnnouncement => Loc.GetString(
@@ -39,11 +40,10 @@ namespace Content.Server.StationEvents
             var playerManager = IoCManager.Resolve<IPlayerManager>();
             foreach (var player in playerManager.GetAllPlayers())
             {
-                var inventory = player.AttachedEntity.GetComponent<InventoryComponent>();
-                if (player.AttachedEntity == null) return; 
-                if (inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.BELT, out ItemComponent item) 
-                && item.Owner.Prototype.ID == "UtilityBeltClothingFilledEvent") return;
-                if (player.AttachedEntity.TryGetComponent<IDamageableComponent>(out var damageable) 
+                if (player.AttachedEntity == null || !player.AttachedEntity.TryGetComponent(out InventoryComponent? inventory)) return;
+                if (inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.BELT, out ItemComponent? item)
+                    && item?.Owner.Prototype?.ID == "UtilityBeltClothingFilledEvent") return;
+                if (player.AttachedEntity.TryGetComponent<IDamageableComponent>(out var damageable)
                 && damageable.CurrentDamageState == DamageState.Dead) return;
 
                 var entityManager = IoCManager.Resolve<IEntityManager>();
@@ -65,7 +65,7 @@ namespace Content.Server.StationEvents
             {
                 return;
             }
-            
+
             _elapsedTime += frameTime;
 
             if (_elapsedTime < _eventDuration)
