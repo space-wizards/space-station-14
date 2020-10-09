@@ -66,7 +66,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                 ignoreInsideBlocker: true);
         }
 
-        private static bool InRangeUnOccluded(MapCoordinates origin, MapCoordinates other, float range, Ignored predicate, bool ignoreInsideBlocker = true)
+        public static bool InRangeUnOccluded(MapCoordinates origin, MapCoordinates other, float range, Ignored predicate, bool ignoreInsideBlocker = true)
         {
             var occluderSystem = Get<OccluderSystem>();
             if (!origin.InRange(other, range)) return false;
