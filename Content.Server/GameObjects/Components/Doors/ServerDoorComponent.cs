@@ -43,7 +43,14 @@ namespace Content.Server.GameObjects.Components.Doors
         public virtual DoorState State
         {
             get => _state;
-            protected set => _state = value;
+            protected set
+            {
+                if (_state == value)
+                    return;
+
+                _state = value;
+                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new DoorStateMessage(this, State));
+            }
         }
 
         [ViewVariables]
@@ -162,15 +169,6 @@ namespace Content.Server.GameObjects.Components.Doors
             }
         }
 
-        private void SetState(DoorState state)
-        {
-            if (State == state)
-                return;
-            
-            State = state;
-            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new DoorStateMessage(this, State));
-        }
-
         public virtual bool CanOpen()
         {
             return !_isWeldedShut;
@@ -237,7 +235,7 @@ namespace Content.Server.GameObjects.Components.Doors
             }
 
             _canWeldShut = false;
-            SetState(DoorState.Opening);
+            State = DoorState.Opening;
             SetAppearance(DoorVisualState.Opening);
             if (_occludes && Owner.TryGetComponent(out OccluderComponent? occluder))
             {
@@ -258,7 +256,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
                 await Timer.Delay(OpenTimeTwo, _cancellationTokenSource.Token);
 
-                SetState(DoorState.Open);
+                State = DoorState.Open;
                 SetAppearance(DoorVisualState.Open);
             }, _cancellationTokenSource.Token);
 
@@ -295,38 +293,27 @@ namespace Content.Server.GameObjects.Components.Doors
         private void CheckCrush()
         {
             if (!Owner.TryGetComponent(out ICollidableComponent? body))
-            {
                 return;
-            }
 
-            // Check if collides with something
-            var collidesWith = body.GetCollidingEntities(Vector2.Zero, false);
-            if (collidesWith.Count() != 0)
+            // Crush
+            foreach (var e in body.GetCollidingEntities(Vector2.Zero, false))
             {
-                // Crush
-                bool hitSomeone = false;
-                foreach (var e in collidesWith)
-                {
-                    if (!e.TryGetComponent(out StunnableComponent? stun)
-                        || !e.TryGetComponent(out IDamageableComponent? damage)
-                        || !e.TryGetComponent(out ICollidableComponent? otherBody))
-                        continue;
+                if (!e.TryGetComponent(out StunnableComponent? stun)
+                    || !e.TryGetComponent(out IDamageableComponent? damage)
+                    || !e.TryGetComponent(out ICollidableComponent? otherBody))
+                    continue;
 
-                    var percentage = otherBody.WorldAABB.IntersectPercentage(body.WorldAABB);
+                var percentage = otherBody.WorldAABB.IntersectPercentage(body.WorldAABB);
 
-                    if (percentage < 0.1f)
-                        continue;
+                if (percentage < 0.1f)
+                    continue;
 
-                    damage.ChangeDamage(DamageType.Blunt, DoorCrushDamage, false, Owner);
-                    stun.Paralyze(DoorStunTime);
-                    hitSomeone = true;
-                }
-
+                damage.ChangeDamage(DamageType.Blunt, DoorCrushDamage, false, Owner);
+                stun.Paralyze(DoorStunTime);
+                
                 // If we hit someone, open up after stun (opens right when stun ends)
-                if (hitSomeone)
-                {
-                    Timer.Spawn(TimeSpan.FromSeconds(DoorStunTime) - OpenTimeOne - OpenTimeTwo, () => Open());
-                }
+                Timer.Spawn(TimeSpan.FromSeconds(DoorStunTime) - OpenTimeOne - OpenTimeTwo, Open);
+                break;
             }
         }
 
@@ -394,7 +381,7 @@ namespace Content.Server.GameObjects.Components.Doors
                 shouldCheckCrush = true;
             }
 
-            SetState(DoorState.Closing);
+            State = DoorState.Closing;
             OpenTimeCounter = 0;
             SetAppearance(DoorVisualState.Closing);
             if (_occludes && Owner.TryGetComponent(out OccluderComponent? occluder))
@@ -422,7 +409,7 @@ namespace Content.Server.GameObjects.Components.Doors
                 await Timer.Delay(CloseTimeTwo, _cancellationTokenSource.Token);
 
                 _canWeldShut = true;
-                SetState(DoorState.Closed);
+                State = DoorState.Closed;
                 SetAppearance(DoorVisualState.Closed);
             }, _cancellationTokenSource.Token);
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new AccessReaderChangeMessage(Owner, true));
@@ -432,9 +419,7 @@ namespace Content.Server.GameObjects.Components.Doors
         public virtual void Deny()
         {
             if (State == DoorState.Open || _isWeldedShut)
-            {
                 return;
-            }
 
             SetAppearance(DoorVisualState.Deny);
             Timer.Spawn(DenyTime, () =>
