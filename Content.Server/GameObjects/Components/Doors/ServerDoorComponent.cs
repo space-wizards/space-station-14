@@ -89,6 +89,11 @@ namespace Content.Server.GameObjects.Components.Doors
         private bool _isWeldedShut;
 
         private bool _canWeldShut = true;
+
+        /// <summary>
+        ///     Whether something is currently using a welder on this so DoAfter isn't spammed.
+        /// </summary>
+        private bool _beingWelded = false;
         
         [ViewVariables(VVAccess.ReadWrite)]
         private bool _canCrush = true;
@@ -467,14 +472,29 @@ namespace Content.Server.GameObjects.Components.Doors
         public virtual async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!_canWeldShut)
+            {
+                _beingWelded = false;
                 return false;
+            }
 
             if (!eventArgs.Using.TryGetComponent(out WelderComponent? tool))
+            {
+                _beingWelded = false;
                 return false;
+            }
+
+            if (_beingWelded)
+                return false;
+            
+            _beingWelded = true;
 
             if (!await tool.UseTool(eventArgs.User, Owner, 3f, ToolQuality.Welding, 3f, () => _canWeldShut))
+            {
+                _beingWelded = false;
                 return false;
-
+            }
+            
+            _beingWelded = false;
             IsWeldedShut ^= true;
             return true;
         }
