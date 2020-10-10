@@ -75,8 +75,8 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
                 {
                     if (comp.Gui != null)
                         comp.Gui.FirstDraw = true;
-                    
-                    return;
+
+                    continue;
                 }
 
                 var range = (comp.Owner.Transform.WorldPosition - _attachedEntity.Transform.WorldPosition).Length + 0.01f;
