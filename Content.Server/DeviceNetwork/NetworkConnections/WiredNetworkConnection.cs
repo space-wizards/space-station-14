@@ -9,7 +9,7 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
     {
         private readonly IEntity _owner;
 
-        public WiredNetworkConnection(OnReceiveNetMessage onReceive, bool receiveAll, IEntity owner) : base(1, 0, onReceive, receiveAll)
+        public WiredNetworkConnection(OnReceiveNetMessage onReceive, bool receiveAll, IEntity owner) : base(NetworkUtils.WIRED, 0, onReceive, receiveAll)
         {
             _owner = owner;
         }

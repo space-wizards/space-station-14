@@ -14,7 +14,7 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
         private float _range;
         public float Range { get => _range; set => _range = Math.Abs(value); }
 
-        public WirelessNetworkConnection(int frequency, OnReceiveNetMessage onReceive, bool receiveAll, IEntity owner, float range) : base(2, frequency, onReceive, receiveAll)
+        public WirelessNetworkConnection(int frequency, OnReceiveNetMessage onReceive, bool receiveAll, IEntity owner, float range) : base(NetworkUtils.WIRELESS, frequency, onReceive, receiveAll)
         {
             _owner = owner;
             Range = range;
@@ -28,7 +28,8 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
                 var distance = (ownPosition - position).Length;
                 return distance <= Range;
             }
-            return true;
+            //Only receive packages with the same frequency
+            return frequency == Frequency;
         }
 
         protected override Metadata GetMetadata()

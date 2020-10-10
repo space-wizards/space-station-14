@@ -195,14 +195,4 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
 
         }
     }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public enum BaseNetworks
-    {
-        PRIVATE,
-        WIRED,
-        WIRELESS
-    }
 }

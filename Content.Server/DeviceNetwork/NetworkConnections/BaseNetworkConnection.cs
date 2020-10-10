@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
 {
-    public abstract class BaseNetworkConnection
+    public abstract class BaseNetworkConnection : IDeviceNetworkConnection
     {
         protected readonly DeviceNetworkConnection Connection;
 
