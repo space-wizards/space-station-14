@@ -3,7 +3,6 @@
   description: "A mesmerizing swirl of darkness that sucks in everything.\nIf it's moving towards you, run."
   id: Singularity
   components:
-  - type: InteractionOutline
   - type: Clickable
   - type: Collidable
     anchored: false
@@ -19,7 +18,6 @@
   - type: RadiationPulse
     range: 15
     decay: false
-    #draw: false
   - type: Sprite
     sprite: Effects/Singularity/singularity_1.rsi
     state: singularity_1

@@ -73,7 +73,7 @@
         - key: enum.WiresUiKey.Key
           type: WiresBoundUserInterface
     - type: Wires
-      BoardName: "ParticleAcceleratorControlBox"
+      BoardName: "Mk2 Particle Accelerator"
 
 - type: entity
   parent: ParticleAcceleratorBase
