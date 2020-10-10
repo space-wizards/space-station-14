@@ -129,7 +129,7 @@ namespace Content.Shared.GameObjects.Components.Disposal
                 Engaged = engaged;
             }
 
-            public bool Equals(DisposalUnitBoundUserInterfaceState other)
+            public bool Equals(DisposalUnitBoundUserInterfaceState? other)
             {
                 if (ReferenceEquals(null, other)) return false;
                 if (ReferenceEquals(this, other)) return true;
