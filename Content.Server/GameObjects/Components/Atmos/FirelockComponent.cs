@@ -44,6 +44,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 collidableComponent.Hard = false;
             }
 
+            AutoClose = false;
             Safety = false;
 
             if (Occludes && Owner.TryGetComponent(out OccluderComponent occluder))
