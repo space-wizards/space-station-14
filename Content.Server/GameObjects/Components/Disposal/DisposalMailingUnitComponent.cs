@@ -2,13 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Content.Server.GameObjects.EntitySystems.DeviceNetwork;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Interfaces;
@@ -118,6 +117,8 @@ namespace Content.Server.GameObjects.Components.Disposal
         public bool Anchored =>
             !Owner.TryGetComponent(out CollidableComponent? collidable) ||
             collidable.Anchored;
+
+        public static readonly Regex TagRegex = new Regex("^[a-zA-Z0-9, ]*$", RegexOptions.Compiled);
 
         [ViewVariables]
         private PressureState State => _pressure >= 1 ? PressureState.Ready : PressureState.Pressurizing;
@@ -455,9 +456,8 @@ namespace Content.Server.GameObjects.Components.Disposal
                 }
             }
 
-            if (obj.Message is UiTargetUpdateMessage tagMessage)
+            if (obj.Message is UiTargetUpdateMessage tagMessage && TagRegex.IsMatch(tagMessage.Target))
             {
-                //TODO: Sanitize Tag
                 _target = tagMessage.Target;
             }
         }
