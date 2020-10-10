@@ -1,0 +1,30 @@
+- type: entity
+  abstract: true
+  id: GasCanisterPortBase
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: SnapGrid
+    offset: Center
+  - type: Sprite
+  - type: Destructible
+    thresholdvalue: 100
+  - type: GasCanisterPort
+
+- type: entity
+  parent: GasCanisterPortBase
+  id: FourwayGasCanisterPort
+  name: Fourway Gas Canister Port
+  components:
+  - type: NodeContainer
+    nodes:
+    - !type:PipeNode
+      nodeGroupID: Pipe
+      pipeDirection: Fourway
+  - type: Sprite
+    sprite: Constructible/Power/smes.rsi
+    state: smes
+    

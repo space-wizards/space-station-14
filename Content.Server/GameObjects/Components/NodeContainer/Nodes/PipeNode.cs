@@ -60,22 +60,23 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         public GasMixture LocalAir { get; set; }
 
         [ViewVariables]
-        public float Volume { get; private set; }
+        public float Volume => LocalAir.Volume;
 
         private AppearanceComponent _appearance;
+
+        private const float DefaultVolume = 1;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _pipeDirection, "pipeDirection", PipeDirection.None);
-            serializer.DataField(this, x => Volume, "volume", 10);
+            serializer.DataField(this, x => LocalAir, "gasMixture", new GasMixture(DefaultVolume));
             serializer.DataField(ref _conduitLayer, "conduitLayer", ConduitLayer.Two);
         }
 
         public override void Initialize(IEntity owner)
         {
             base.Initialize(owner);
-            LocalAir = new GasMixture(Volume);
             Owner.TryGetComponent(out _appearance);
             UpdateAppearance();
         }

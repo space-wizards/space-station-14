@@ -180,6 +180,8 @@
             "Headset",
             "ComputerBoard",
             "BreakableConstruction",
+            "GasCanister",
+            "GasCanisterPort",
         };
     }
 }
