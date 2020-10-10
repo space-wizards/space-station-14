@@ -40,7 +40,7 @@ namespace Content.Server.GameObjects.Components.Buckle
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        [ComponentDependency] private readonly AppearanceComponent? _appearanceComponent = null;
+        [ComponentDependency] public readonly AppearanceComponent? AppearanceComponent = null;
         [ComponentDependency] private readonly ServerStatusEffectsComponent? _serverStatusEffectsComponent = null;
         [ComponentDependency] private readonly StunnableComponent? _stunnableComponent = null;
         [ComponentDependency] private readonly MobStateManagerComponent? _mobStateManagerComponent = null;
@@ -290,7 +290,7 @@ namespace Content.Server.GameObjects.Components.Buckle
                 return false;
             }
 
-            _appearanceComponent?.SetData(BuckleVisuals.Buckled, true);
+            AppearanceComponent?.SetData(BuckleVisuals.Buckled, true);
 
             BuckledTo = strap;
 
@@ -352,7 +352,7 @@ namespace Content.Server.GameObjects.Components.Buckle
                 Owner.Transform.WorldRotation = oldBuckledTo.Owner.Transform.WorldRotation;
             }
 
-            _appearanceComponent?.SetData(BuckleVisuals.Buckled, false);
+            AppearanceComponent?.SetData(BuckleVisuals.Buckled, false);
 
             if (_stunnableComponent != null && _stunnableComponent.KnockedDown)
             {
