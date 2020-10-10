@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using Content.Server.Atmos;
+using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -112,7 +113,23 @@ namespace Content.Server.GameObjects.Components.PA
         private void SetPowerBox(ParticleAcceleratorPowerBoxComponent value, bool skipFuelChamberCheck = false,
             bool skipEmitterCenterCheck = false)
         {
-            if(!TryAddPart(ref _powerBox, value, out var gridId)) return;
+            if (!TryAddPart(ref _powerBox, value, out var gridId))
+            {
+                if (_powerBox?._powerConsumerComponent != null)
+                {
+                    _powerBox._powerConsumerComponent.OnReceivedPowerChanged -= OnReceivedPowerChanged;
+                }
+
+                Enabled = false;
+                return;
+            }
+
+            if (_powerBox._powerConsumerComponent != null)
+            {
+                _powerBox._powerConsumerComponent.OnReceivedPowerChanged += OnReceivedPowerChanged;
+                _powerBox._powerConsumerComponent.DrawRate = PowerNeeded;
+            }
+
 
             if (!skipFuelChamberCheck &&
                 TryGetPart<ParticleAcceleratorFuelChamberComponent>(gridId, PartOffset.Up, value, out var fuelChamber))
@@ -227,13 +244,20 @@ namespace Content.Server.GameObjects.Components.PA
                 if (value > WireFlagMaxPower) value = WireFlagMaxPower;
 
                 _power = value;
-                _controlBox?.AdjustPowerDrain(PowerNeeded);
+                if (_powerBox?._powerConsumerComponent != null)
+                {
+                    _powerBox._powerConsumerComponent.DrawRate = PowerNeeded;
+                }
                 UpdatePartVisualStates();
                 _controlBox?.UpdateUI();
 
                 UpdateFireLoop();
             }
         }
+
+        private bool IsPowered => _powerBox?._powerConsumerComponent != null &&
+                                  _powerBox?._powerConsumerComponent.DrawRate <=
+                                  _powerBox?._powerConsumerComponent.ReceivedPower;
 
         private bool _enabled;
         [ViewVariables(VVAccess.ReadWrite)]
@@ -242,11 +266,10 @@ namespace Content.Server.GameObjects.Components.PA
             get => _enabled;
             set
             {
-                var actualValue = value && IsFunctional() && !WireFlagPowerBlock;
+                var actualValue = value && IsFunctional() && !WireFlagPowerBlock && IsPowered;
                 if (_enabled == actualValue) return;
 
                 _enabled = actualValue;
-                _controlBox?.AdjustPowerDrain(PowerNeeded);
                 UpdatePartVisualStates();
                 _controlBox?.UpdateUI();
 
@@ -254,8 +277,17 @@ namespace Content.Server.GameObjects.Components.PA
             }
         }
 
-        public int PowerNeeded => Enabled
-            ? Power switch
+        private void OnReceivedPowerChanged(object sender, ReceivedPowerChangedEventArgs eventArgs)
+        {
+            if (eventArgs.DrawRate != PowerNeeded && _powerBox?._powerConsumerComponent != null)
+            {
+                _powerBox._powerConsumerComponent.DrawRate = PowerNeeded;
+            }
+
+            Enabled = eventArgs.DrawRate <= eventArgs.ReceiverPower;
+        }
+
+        private int PowerNeeded => Power switch
             {
                 ParticleAcceleratorPowerState.Standby => 0,
                 ParticleAcceleratorPowerState.Level0 => 1,
@@ -263,8 +295,7 @@ namespace Content.Server.GameObjects.Components.PA
                 ParticleAcceleratorPowerState.Level2 => 4,
                 ParticleAcceleratorPowerState.Level3 => 5,
                 _ => 0
-            } * 1500 + 250
-            : 0;
+            } * 1500 + 500;
 
         #region WireFlags
         private bool _wireFlagPowerBlock = false;
@@ -320,7 +351,7 @@ namespace Content.Server.GameObjects.Components.PA
 
         private void UpdatePartVisualStates()
         {
-            UpdatePartVisualState(ControlBox);
+            //UpdatePartVisualState(ControlBox);
             //UpdatePartVisualState(EndCap); not needed
             UpdatePartVisualState(FuelChamber);
             UpdatePartVisualState(PowerBox);
@@ -462,7 +493,6 @@ namespace Content.Server.GameObjects.Components.PA
 
             Validate();
             UpdatePartVisualStates();
-            _controlBox?.AdjustPowerDrain(PowerNeeded);
             _controlBox?.UpdateUI();
 
             return true;
@@ -521,6 +551,10 @@ namespace Content.Server.GameObjects.Components.PA
             _controlBox = null;
             _endCap = null;
             _fuelChamber = null;
+            if (_powerBox?._powerConsumerComponent != null)
+            {
+                _powerBox._powerConsumerComponent.OnReceivedPowerChanged -= OnReceivedPowerChanged;
+            }
             _powerBox = null;
             _emitterLeft = null;
             _emitterCenter = null;

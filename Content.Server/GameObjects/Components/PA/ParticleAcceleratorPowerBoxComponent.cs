@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 
@@ -8,6 +9,13 @@ namespace Content.Server.GameObjects.Components.PA
     public class ParticleAcceleratorPowerBoxComponent : ParticleAcceleratorPartComponent
     {
         public override string Name => "ParticleAcceleratorPowerBox";
+        public PowerConsumerComponent? _powerConsumerComponent;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            Owner.TryGetComponent(out _powerConsumerComponent);
+        }
 
         public override ParticleAcceleratorPartComponent[] GetNeighbours()
         {

@@ -10,6 +10,7 @@ using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
@@ -26,6 +27,8 @@ namespace Content.Server.GameObjects.Components.PA
         private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ParticleAcceleratorControlBoxUiKey.Key);
         private PowerReceiverComponent? _powerReceiverComponent;
 
+        private bool Powered => _powerReceiverComponent != null && _powerReceiverComponent.Powered;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -40,9 +43,10 @@ namespace Content.Server.GameObjects.Components.PA
                 return;
             }
             _powerReceiverComponent.OnPowerStateChanged += OnPowerStateChanged;
+            _powerReceiverComponent.Load = 250;
         }
 
-        private void OnPowerStateChanged(object? sender, EventArgs e)
+        private void OnPowerStateChanged(object? sender, PowerStateEventArgs e)
         {
             if (ParticleAccelerator == null)
             {
@@ -50,11 +54,28 @@ namespace Content.Server.GameObjects.Components.PA
                 return;
             }
 
-            ParticleAccelerator.Enabled = _powerReceiverComponent?.Powered == true;
+            if(Owner.TryGetComponent<AppearanceComponent>(out var appearanceComponent))
+            {
+                appearanceComponent.SetData(ParticleAcceleratorVisuals.VisualState,
+                    e.Powered && ParticleAccelerator != null ? (ParticleAcceleratorVisualState) ParticleAccelerator.Power : ParticleAcceleratorVisualState.Unpowered);
+            }
+
+            if (e.Powered) return;
+
+            UserInterface?.CloseAll();
+            if (Owner.TryGetComponent<WiresComponent>(out var wires))
+            {
+                wires.CloseAll();
+            }
         }
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
+            if (!Powered)
+            {
+                return;
+            }
+
             if (ParticleAccelerator == null)
             {
                 Logger.Error($"UserInterfaceOnOnReceiveMessage got called on {this} without a Particleaccelerator attached");
@@ -105,18 +126,9 @@ namespace Content.Server.GameObjects.Components.PA
             UserInterface?.SendMessage(ParticleAccelerator.DataMessage);
         }
 
-        public void AdjustPowerDrain(int powerNeeded)
-        {
-            if (_powerReceiverComponent == null)
-            {
-                Logger.Error($"AdjustPowerDrain got called on {this} without a Powercomponent attached");
-                return;
-            }
-            _powerReceiverComponent.Load = powerNeeded;
-        }
-
         public bool InteractHand(InteractHandEventArgs eventArgs)
         {
+            if (!Powered) return false;
             if(!eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
                 return false;
@@ -128,8 +140,7 @@ namespace Content.Server.GameObjects.Components.PA
             if(!ActionBlockerSystem.CanInteract(eventArgs.User)) return false;
 
 
-            var wires = Owner.GetComponent<WiresComponent>();
-            if (wires.IsPanelOpen)
+            if (Owner.TryGetComponent<WiresComponent>(out var wires) && wires.IsPanelOpen)
             {
                 wires.OpenInterface(actor.playerSession);
             } else

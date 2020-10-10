@@ -201,6 +201,13 @@
         - type: ParticleAcceleratorPartVisualizer
           baseState: power_box_unlit
     - type: ParticleAcceleratorPowerBox
+    - type: PowerConsumer
+      voltage: High
+    - type: NodeContainer
+      nodes:
+        - !type:AdjacentNode
+          nodeGroupID: HVPower
+
 
 # Unfinished PA
 
