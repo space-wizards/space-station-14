@@ -43,7 +43,14 @@ namespace Content.Server.GameObjects.Components.Doors
         public virtual DoorState State
         {
             get => _state;
-            protected set => _state = value;
+            protected set
+            {
+                if (_state == value)
+                    return;
+
+                _state = value;
+                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new DoorStateMessage(this, State));
+            }
         }
 
         [ViewVariables]
@@ -94,7 +101,7 @@ namespace Content.Server.GameObjects.Components.Doors
         ///     Whether something is currently using a welder on this so DoAfter isn't spammed.
         /// </summary>
         private bool _beingWelded = false;
-        
+
         [ViewVariables(VVAccess.ReadWrite)]
         private bool _canCrush = true;
 
@@ -140,7 +147,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
             // Disabled because it makes it suck hard to walk through double doors.
 
-            if (entity.HasComponent<ISharedBodyManagerComponent>())
+            if (entity.HasComponent<IBody>())
             {
                 if (!entity.TryGetComponent<IMoverComponent>(out var mover)) return;
 
@@ -291,38 +298,27 @@ namespace Content.Server.GameObjects.Components.Doors
         private void CheckCrush()
         {
             if (!Owner.TryGetComponent(out ICollidableComponent? body))
-            {
                 return;
-            }
 
-            // Check if collides with something
-            var collidesWith = body.GetCollidingEntities(Vector2.Zero, false);
-            if (collidesWith.Count() != 0)
+            // Crush
+            foreach (var e in body.GetCollidingEntities(Vector2.Zero, false))
             {
-                // Crush
-                bool hitSomeone = false;
-                foreach (var e in collidesWith)
-                {
-                    if (!e.TryGetComponent(out StunnableComponent? stun)
-                        || !e.TryGetComponent(out IDamageableComponent? damage)
-                        || !e.TryGetComponent(out ICollidableComponent? otherBody))
-                        continue;
+                if (!e.TryGetComponent(out StunnableComponent? stun)
+                    || !e.TryGetComponent(out IDamageableComponent? damage)
+                    || !e.TryGetComponent(out ICollidableComponent? otherBody))
+                    continue;
 
-                    var percentage = otherBody.WorldAABB.IntersectPercentage(body.WorldAABB);
+                var percentage = otherBody.WorldAABB.IntersectPercentage(body.WorldAABB);
 
-                    if (percentage < 0.1f)
-                        continue;
+                if (percentage < 0.1f)
+                    continue;
 
-                    damage.ChangeDamage(DamageType.Blunt, DoorCrushDamage, false, Owner);
-                    stun.Paralyze(DoorStunTime);
-                    hitSomeone = true;
-                }
+                damage.ChangeDamage(DamageType.Blunt, DoorCrushDamage, false, Owner);
+                stun.Paralyze(DoorStunTime);
 
                 // If we hit someone, open up after stun (opens right when stun ends)
-                if (hitSomeone)
-                {
-                    Timer.Spawn(TimeSpan.FromSeconds(DoorStunTime) - OpenTimeOne - OpenTimeTwo, () => Open());
-                }
+                Timer.Spawn(TimeSpan.FromSeconds(DoorStunTime) - OpenTimeOne - OpenTimeTwo, Open);
+                break;
             }
         }
 
@@ -428,9 +424,7 @@ namespace Content.Server.GameObjects.Components.Doors
         public virtual void Deny()
         {
             if (State == DoorState.Open || _isWeldedShut)
-            {
                 return;
-            }
 
             SetAppearance(DoorVisualState.Deny);
             Timer.Spawn(DenyTime, () =>
@@ -477,7 +471,7 @@ namespace Content.Server.GameObjects.Components.Doors
                 return false;
             }
 
-            if (!eventArgs.Using.TryGetComponent(out WelderComponent? tool))
+            if (!eventArgs.Using.TryGetComponent(out WelderComponent? tool) || !tool.WelderLit)
             {
                 _beingWelded = false;
                 return false;
@@ -485,7 +479,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
             if (_beingWelded)
                 return false;
-            
+
             _beingWelded = true;
 
             if (!await tool.UseTool(eventArgs.User, Owner, 3f, ToolQuality.Welding, 3f, () => _canWeldShut))
@@ -493,10 +487,22 @@ namespace Content.Server.GameObjects.Components.Doors
                 _beingWelded = false;
                 return false;
             }
-            
+
             _beingWelded = false;
             IsWeldedShut ^= true;
             return true;
+        }
+    }
+
+    public sealed class DoorStateMessage : EntitySystemMessage
+    {
+        public ServerDoorComponent Component { get; }
+        public ServerDoorComponent.DoorState State { get; }
+
+        public DoorStateMessage(ServerDoorComponent component, ServerDoorComponent.DoorState state)
+        {
+            Component = component;
+            State = state;
         }
     }
 }

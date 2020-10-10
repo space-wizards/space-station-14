@@ -21,6 +21,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         /// <param name="inDetailsRange">Whether the examiner is within the 'Details' range, allowing you to show information logically only availabe when close to the examined entity.</param>
         void Examine(FormattedMessage message, bool inDetailsRange);
     }
+
     public abstract class ExamineSystemShared : EntitySystem
     {
         public const float ExamineRange = 16f;

@@ -47322,8 +47322,6 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - airBlocked: False
-    airBlockedDirection:
-    - North
     type: Airtight
   - hard: False
     type: Collidable

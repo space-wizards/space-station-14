@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Body;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Interactable;
+using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.GameObjects.EntitySystems;
@@ -171,7 +172,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
                 // only items that can be stored in an inventory, or a mob, can be eaten by a locker
                 if (!entity.HasComponent<StorableComponent>() &&
-                    !entity.HasComponent<BodyManagerComponent>())
+                    !entity.HasComponent<IBody>())
                     continue;
 
                 if (!AddToContents(entity))
