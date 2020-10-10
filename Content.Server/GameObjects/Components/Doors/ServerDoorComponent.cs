@@ -471,7 +471,7 @@ namespace Content.Server.GameObjects.Components.Doors
                 return false;
             }
 
-            if (!eventArgs.Using.TryGetComponent(out WelderComponent? tool))
+            if (!eventArgs.Using.TryGetComponent(out WelderComponent? tool) || !tool.WelderLit)
             {
                 _beingWelded = false;
                 return false;
