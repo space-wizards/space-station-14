@@ -1,9 +1,11 @@
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.StationEvents;
+using Content.Server.Interfaces.GameTicking;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
@@ -104,12 +106,14 @@ namespace Content.Server.StationEvents
 
             if (_timeUntilPulse <= 0.0f)
             {
-                // TODO: Probably rate-limit this for small grids (e.g. no more than 25% covered)
-                foreach (var grid in _mapManager.GetAllGrids())
-                {
-                    if (grid.IsDefaultGrid) continue;
-                    SpawnPulse(grid);
-                }
+                var pauseManager = IoCManager.Resolve<IPauseManager>();
+                var gameTicker = IoCManager.Resolve<IGameTicker>();
+                var defaultGrid = IoCManager.Resolve<IMapManager>().GetGrid(gameTicker.DefaultGridId);
+
+                if (pauseManager.IsGridPaused(defaultGrid))
+                    return;
+                
+                SpawnPulse(defaultGrid);
             }
         }
 
