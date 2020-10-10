@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Disposal;
+using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
@@ -42,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Disposal
     [ComponentReference(typeof(SharedDisposalUnitComponent))]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IInteractUsing))]
-    public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IActivate, IInteractUsing, IDragDropOn
+    public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IActivate, IInteractUsing, IDragDropOn, ICollideBehavior
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -95,11 +97,6 @@ namespace Content.Server.GameObjects.Components.Disposal
         public bool Powered =>
             !Owner.TryGetComponent(out PowerReceiverComponent? receiver) ||
             receiver.Powered;
-
-        [ViewVariables]
-        public bool Anchored =>
-            !Owner.TryGetComponent(out CollidableComponent? collidable) ||
-            collidable.Anchored;
 
         [ViewVariables]
         private PressureState State => _pressure >= 1 ? PressureState.Ready : PressureState.Pressurizing;
@@ -411,8 +408,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             {
                 return;
             }
-
-
+            
             if (!Anchored)
             {
                 appearance.SetData(Visuals.VisualState, VisualState.UnAnchored);
@@ -684,6 +680,19 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             _ = TryInsert(eventArgs.Dropped, eventArgs.User);
             return true;
+        }
+        
+        void ICollideBehavior.CollideWith(IEntity collidedWith)
+        {
+            if (!collidedWith.HasComponent<IItemComponent>() ||
+                !collidedWith.HasComponent<ThrownItemComponent>() ||
+                !CanInsert(collidedWith) || 
+                !_container.Insert(collidedWith))
+            {
+                return;
+            }
+            
+            AfterInsert(collidedWith);
         }
 
         [Verb]
