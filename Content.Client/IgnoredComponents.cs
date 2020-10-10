@@ -21,7 +21,6 @@
             "HeatResistance",
             "Teleportable",
             "ItemTeleporter",
-            "Portal",
             "EntityStorage",
             "Wirecutter",
             "Screwdriver",

@@ -1,9 +1,8 @@
 ﻿#nullable enable
 using System;
 using System.Linq;
-using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.GameObjects.Components.Portal;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
@@ -11,7 +10,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -20,11 +18,10 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Movement
+namespace Content.Server.GameObjects.Components.Portal
 {
-
     [RegisterComponent]
-    public class ServerTeleporterComponent : Component, IAfterInteract
+    public class TeleporterComponent : Component, IAfterInteract
     {
         [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
         [Dependency] private readonly IRobustRandom _spreadRandom = default!;
@@ -110,7 +107,7 @@ namespace Content.Server.GameObjects.Components.Movement
                 {
                     // Added this component to avoid stacking portals and causing shenanigans
                     // TODO: Doesn't do a great job of stopping stacking portals for directed
-                    if (entity.HasComponent<ICollidableComponent>() || entity.HasComponent<ServerTeleporterComponent>())
+                    if (entity.HasComponent<ICollidableComponent>() || entity.HasComponent<TeleporterComponent>())
                     {
                         return;
                     }
@@ -154,7 +151,7 @@ namespace Content.Server.GameObjects.Components.Movement
             // TODO: Check the user's spot? Upside is no stacking TPs but downside is they can't unstuck themselves from walls.
             foreach (var entity in _serverEntityManager.GetEntitiesIntersecting(user.Transform.MapID, target))
             {
-                if (entity.HasComponent<ICollidableComponent>() || entity.HasComponent<ServerPortalComponent>())
+                if (entity.HasComponent<ICollidableComponent>() || entity.HasComponent<PortalComponent>())
                 {
                     return false;
                 }
@@ -231,13 +228,12 @@ namespace Content.Server.GameObjects.Components.Movement
                 // Call Delete here as the teleporter should have control over portal longevity
                 // Departure portal
                 var departurePortal = _serverEntityManager.SpawnEntity("Portal", user.Transform.Coordinates);
-                departurePortal.TryGetComponent<ServerPortalComponent>(out var departureComponent);
 
                 // Arrival portal
                 var arrivalPortal = _serverEntityManager.SpawnEntity("Portal", targetGrid);
-                if (arrivalPortal.TryGetComponent<ServerPortalComponent>(out var arrivalComponent))
+                if (arrivalPortal.TryGetComponent<PortalComponent>(out var arrivalComponent))
                 {
-                    // Connect. TODO: If the OnUpdate in ServerPortalComponent is changed this may need to change as well.
+                    // Connect.
                     arrivalComponent.TryConnectPortal(departurePortal);
                 }
             }
@@ -251,7 +247,6 @@ namespace Content.Server.GameObjects.Components.Movement
                 user.Transform.WorldPosition = vector;
                 soundPlayer.PlayAtCoords(_arrivalSound, user.Transform.Coordinates);
             }
-
         }
     }
 }
