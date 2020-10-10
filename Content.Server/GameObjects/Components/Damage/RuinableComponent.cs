@@ -58,12 +58,12 @@ namespace Content.Server.GameObjects.Components.Damage
 
         /// <summary>
         ///     Destroys the Owner <see cref="IEntity"/>, setting
-        ///     <see cref="IDamageableComponent.DamageState"/> to
+        ///     <see cref="IDamageableComponent.CurrentState"/> to
         ///     <see cref="Shared.GameObjects.Components.Damage.DamageState.Dead"/>
         /// </summary>
         protected void PerformDestruction()
         {
-            DamageState = DamageState.Dead;
+            CurrentState = DamageState.Dead;
 
             if (!Owner.Deleted && DestroySound != string.Empty)
             {

@@ -68,7 +68,7 @@ namespace Content.Server.GameTicking.GameRules
                     continue;
                 }
 
-                if (damageable.DamageState != DamageState.Alive)
+                if (damageable.CurrentState != DamageState.Alive)
                 {
                     continue;
                 }

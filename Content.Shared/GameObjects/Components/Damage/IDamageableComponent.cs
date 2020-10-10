@@ -23,14 +23,14 @@ namespace Content.Shared.GameObjects.Components.Damage
 
         /// <summary>
         ///     List of all <see cref="Damage.DamageState">DamageStates</see> that
-        ///     <see cref="DamageState"/> can be.
+        ///     <see cref="CurrentState"/> can be.
         /// </summary>
         List<DamageState> SupportedDamageStates { get; }
 
         /// <summary>
         ///     The <see cref="Damage.DamageState"/> currently representing this component.
         /// </summary>
-        DamageState DamageState { get; set; }
+        DamageState CurrentState { get; set; }
 
         /// <summary>
         ///     Sum of all damages taken.

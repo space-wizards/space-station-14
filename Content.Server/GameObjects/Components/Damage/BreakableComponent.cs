@@ -59,7 +59,7 @@ namespace Content.Server.GameObjects.Components.Damage
         public void FixAllDamage()
         {
             Heal();
-            DamageState = DamageState.Alive;
+            CurrentState = DamageState.Alive;
         }
 
         protected override void DestructionBehavior()

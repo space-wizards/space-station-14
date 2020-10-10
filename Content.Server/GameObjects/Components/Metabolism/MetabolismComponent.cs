@@ -346,7 +346,7 @@ namespace Content.Server.GameObjects.Components.Metabolism
         public void Update(float frameTime)
         {
             if (!Owner.TryGetComponent<IDamageableComponent>(out var damageable) ||
-                damageable.DamageState == DamageState.Dead)
+                damageable.CurrentState == DamageState.Dead)
             {
                 return;
             }

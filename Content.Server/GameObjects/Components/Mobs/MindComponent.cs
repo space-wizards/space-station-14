@@ -172,7 +172,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
             var dead =
                 Owner.TryGetComponent<IDamageableComponent>(out var damageable) &&
-                damageable.DamageState == DamageState.Dead;
+                damageable.CurrentState == DamageState.Dead;
 
             if (!HasMind)
             {

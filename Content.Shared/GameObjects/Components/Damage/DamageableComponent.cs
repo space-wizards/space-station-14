@@ -54,7 +54,7 @@ namespace Content.Shared.GameObjects.Components.Damage
             }
         }
 
-        public virtual DamageState DamageState
+        public virtual DamageState CurrentState
         {
             get => _damageState;
             set
@@ -401,21 +401,21 @@ namespace Content.Shared.GameObjects.Components.Damage
 
         protected virtual void OnHealthChanged(HealthChangedEventArgs e)
         {
-            if (DamageState != DamageState.Dead)
+            if (CurrentState != DamageState.Dead)
             {
                 if (Thresholds.TryGetValue(DamageState.Dead, out var deadThreshold) &&
                     TotalDamage > deadThreshold)
                 {
-                    DamageState = DamageState.Dead;
+                    CurrentState = DamageState.Dead;
                 }
                 else if (Thresholds.TryGetValue(DamageState.Critical, out var critThreshold) &&
                          TotalDamage > critThreshold)
                 {
-                    DamageState = DamageState.Critical;
+                    CurrentState = DamageState.Critical;
                 }
                 else
                 {
-                    DamageState = DamageState.Alive;
+                    CurrentState = DamageState.Alive;
                 }
             }
 
