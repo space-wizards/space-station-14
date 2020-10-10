@@ -1,5 +1,6 @@
 ﻿using Content.Server.GameObjects.Components.Body;
 using Content.Server.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs.State;
@@ -41,26 +42,12 @@ namespace Content.Server.GameObjects.Components.Mobs.State
             {
                 case RuinableComponent ruinable:
                 {
-                    if (ruinable.DeadThreshold == null)
-                    {
-                        break;
-                    }
-
-                    var modifier = (int) (ruinable.TotalDamage / (ruinable.DeadThreshold / 7f));
-
-                    status.ChangeStatusEffectIcon(StatusEffect.Health,
-                        "/Textures/Interface/StatusEffects/Human/human" + modifier + ".png");
-
-                    break;
-                }
-                case BodyManagerComponent body:
-                {
-                    if (body.CriticalThreshold == null)
+                    if (!ruinable.Thresholds.TryGetValue(DamageState.Dead, out var threshold))
                     {
                         return;
                     }
 
-                    var modifier = (int) (body.TotalDamage / (body.CriticalThreshold / 7f));
+                    var modifier = (int) (ruinable.TotalDamage / (threshold / 7f));
 
                     status.ChangeStatusEffectIcon(StatusEffect.Health,
                         "/Textures/Interface/StatusEffects/Human/human" + modifier + ".png");
@@ -69,8 +56,15 @@ namespace Content.Server.GameObjects.Components.Mobs.State
                 }
                 default:
                 {
+                    if (!damageable.Thresholds.TryGetValue(DamageState.Critical, out var threshold))
+                    {
+                        return;
+                    }
+
+                    var modifier = (int) (damageable.TotalDamage / (threshold / 7f));
+
                     status.ChangeStatusEffectIcon(StatusEffect.Health,
-                        "/Textures/Interface/StatusEffects/Human/human0.png");
+                        "/Textures/Interface/StatusEffects/Human/human" + modifier + ".png");
                     break;
                 }
             }

@@ -66,7 +66,7 @@ namespace Content.Server.GameObjects.Components.Recycling
 
         private bool CanGib(IEntity entity)
         {
-            return entity.HasComponent<ISharedBodyManagerComponent>() && !_safe && Powered;
+            return entity.HasComponent<IBody>() && !_safe && Powered;
         }
 
         private bool CanRecycle(IEntity entity, [MaybeNullWhen(false)] out ConstructionPrototype prototype)

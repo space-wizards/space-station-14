@@ -1,90 +1,101 @@
 - type: entity
-  parent: BaseDroppedMechanism
-  id: HeartMechanismDebug
-  name: "human heart (debug)"
+  id: BrainHuman
+  name: "human brain"
+  description: "The source of incredible, unending intelligence. Honk."
   components:
   - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Human/organs.rsi
+    state: brain
+  - type: Mechanism
+    durability: 10
+    size: 1
+    compatibility: Biological
+  - type: Brain
+
+- type: entity
+  id: EyesHuman
+  name: "human eyes"
+  description: "Ocular organ capable of turning light into a colorful visual."
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Human/organs.rsi
+    state: eyeballs
+  - type: Mechanism
+    durability: 10
+    size: 1
+    compatibility: Biological
+
+- type: entity
+  id: HeartHuman
+  name: "human heart"
+  description: "Pumps blood throughout a body. Essential for any entity with blood."
+  components:
+  - type: Sprite
+    netsync: false
     sprite: Mobs/Species/Human/organs.rsi
     state: heart-on
-  - type: DroppedMechanism
-    debugLoadMechanismData: mechanism.Heart.BasicHuman
-    behaviors:
-    - Content.Server.Body.Mechanisms.Behaviors.HeartBehavior
+  - type: Mechanism
+    durability: 10
+    size: 1
+    compatibility: Biological
+  - type: Heart
 
-- type: mechanism
-  id: mechanism.Brain.BasicHuman
-  name: "human brain"
-  rsiPath: Mobs/Species/Human/organs.rsi
-  rsiState: "brain_human"
-  description: "The source of incredible, unending intelligence. Honk."
-  durability: 10
-  size: 1
-  compatibility: Biological
-  behaviors:
-  - Content.Server.Body.Mechanisms.Behaviors.BrainBehavior
-
-- type: mechanism
-  id: mechanism.Eyes.BasicHuman
-  name: "human eyes"
-  rsiPath: Mobs/Species/Human/organs.rsi
-  rsiState: "eyeballs"
-  description: "Ocular organ capable of turning light into a colorful visual."
-  durability: 10
-  size: 1
-  compatibility: Biological
-
-- type: mechanism
-  id: mechanism.Heart.BasicHuman
-  name: "human heart"
-  rsiPath: Mobs/Species/Human/organs.rsi
-  rsiState: "heart-on"
-  description: "Pumps blood throughout a body. Essential for any entity with blood."
-  durability: 10
-  size: 1
-  compatibility: Biological
-  behaviors:
-  - Content.Server.Body.Mechanisms.Behaviors.HeartBehavior
-
-- type: mechanism
-  id: mechanism.Lungs.BasicHuman
+- type: entity
+  id: LungsHuman
   name: "human lungs"
-  rsiPath: Mobs/Species/Human/organs.rsi
-  rsiState: "lungs"
   description: "Filters oxygen from an atmosphere, which is then sent into the bloodstream to be used as an electron carrier."
-  durability: 13
-  size: 1
-  compatibility: Biological
-  behaviors:
-  - Content.Server.Body.Mechanisms.Behaviors.LungBehavior
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Human/organs.rsi
+    state: lungs
+  - type: Mechanism
+    durability: 13
+    size: 1
+    compatibility: Biological
+  - type: Lung
 
-- type: mechanism
-  id: mechanism.Stomach.BasicHuman
+- type: entity
+  id: StomachHuman
   name: "human stomach"
-  rsiPath: Mobs/Species/Human/organs.rsi
-  rsiState: "stomach"
   description: "Gross. This is hard to stomach."
-  durability: 13
-  size: 1
-  compatibility: Biological
-  behaviors:
-  - Content.Server.Body.Mechanisms.Behaviors.StomachBehavior
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Human/organs.rsi
+    state: stomach
+  - type: Mechanism
+    durability: 13
+    size: 1
+    compatibility: Biological
+  - type: Stomach
 
-- type: mechanism
-  id: mechanism.Liver.BasicHuman
+- type: entity
+  id: LiverHuman
   name: "human liver"
-  rsiPath: Mobs/Species/Human/organs.rsi
-  rsiState: "liver"
   description: "Filters impurities out of a bloodstream and provides other important functionality to a human."
-  durability: 15
-  size: 1
-  compatibility: Biological
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Human/organs.rsi
+    state: liver
+  - type: Mechanism
+    durability: 15
+    size: 1
+    compatibility: Biological
 
-- type: mechanism
-  id: mechanism.Kidneys.BasicHuman
+- type: entity
+  id: KidneysHuman
   name: "human kidneys"
-  rsiPath: Mobs/Species/Human/organs.rsi
-  rsiState: "kidneys"
   description: "Filters toxins out of a bloodstream."
-  durability: 20
-  size: 1
-  compatibility: Biological
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Human/organs.rsi
+    state: kidneys
+  - type: Mechanism
+    durability: 20
+    size: 1
+    compatibility: Biological

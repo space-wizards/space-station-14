@@ -101,7 +101,7 @@ namespace Content.Server.GameObjects.Components.Doors
         ///     Whether something is currently using a welder on this so DoAfter isn't spammed.
         /// </summary>
         private bool _beingWelded = false;
-        
+
         [ViewVariables(VVAccess.ReadWrite)]
         private bool _canCrush = true;
 
@@ -147,7 +147,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
             // Disabled because it makes it suck hard to walk through double doors.
 
-            if (entity.HasComponent<ISharedBodyManagerComponent>())
+            if (entity.HasComponent<IBody>())
             {
                 if (!entity.TryGetComponent<IMoverComponent>(out var mover)) return;
 
@@ -315,7 +315,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
                 damage.ChangeDamage(DamageType.Blunt, DoorCrushDamage, false, Owner);
                 stun.Paralyze(DoorStunTime);
-                
+
                 // If we hit someone, open up after stun (opens right when stun ends)
                 Timer.Spawn(TimeSpan.FromSeconds(DoorStunTime) - OpenTimeOne - OpenTimeTwo, Open);
                 break;
@@ -479,7 +479,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
             if (_beingWelded)
                 return false;
-            
+
             _beingWelded = true;
 
             if (!await tool.UseTool(eventArgs.User, Owner, 3f, ToolQuality.Welding, 3f, () => _canWeldShut))
@@ -487,7 +487,7 @@ namespace Content.Server.GameObjects.Components.Doors
                 _beingWelded = false;
                 return false;
             }
-            
+
             _beingWelded = false;
             IsWeldedShut ^= true;
             return true;
