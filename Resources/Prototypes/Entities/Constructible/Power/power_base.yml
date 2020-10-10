@@ -126,7 +126,6 @@
   - type: Sprite
     drawdepth: WallMountedItems
     netsync: false
-    texture: ""
     sprite: "Constructible/Power/apc.rsi"
     state: apc0
   - type: Appearance

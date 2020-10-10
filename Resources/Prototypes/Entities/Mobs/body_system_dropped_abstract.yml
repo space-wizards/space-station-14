@@ -20,7 +20,7 @@
   components:
   - type: DroppedMechanism
   - type: Sprite
-    texture: Mobs/Parts/Organs/eyeballs.png
+    texture: Mobs/Species/Human/parts.rsi/torso_m.png
   - type: UserInterface
     interfaces:
     - key: enum.GenericSurgeryUiKey.Key

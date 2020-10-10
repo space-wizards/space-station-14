@@ -10,9 +10,13 @@
     netsync: false
     directional: false
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
-    state: spent
+    layers:
+    - state: base
+      map: ["enum.AmmoVisualLayers.Base"]
     drawdepth: FloorObjects
-
+  - type: Appearance
+    visuals:
+    - type: SpentAmmoVisualizer
 
 - type: entity
   id: CartridgeMagnum
