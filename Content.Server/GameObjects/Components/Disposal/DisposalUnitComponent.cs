@@ -30,6 +30,7 @@ using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Random;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -44,7 +45,7 @@ namespace Content.Server.GameObjects.Components.Disposal
     [ComponentReference(typeof(SharedDisposalUnitComponent))]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IInteractUsing))]
-    public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IActivate, IInteractUsing, IDragDropOn, ICollideBehavior
+    public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IActivate, IInteractUsing, IDragDropOn, IThrowCollide
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -682,17 +683,16 @@ namespace Content.Server.GameObjects.Components.Disposal
             return true;
         }
         
-        void ICollideBehavior.CollideWith(IEntity collidedWith)
+        void IThrowCollide.HitBy(ThrowCollideEventArgs eventArgs)
         {
-            if (!collidedWith.HasComponent<IItemComponent>() ||
-                !collidedWith.HasComponent<ThrownItemComponent>() ||
-                !CanInsert(collidedWith) || 
-                !_container.Insert(collidedWith))
+            if (!CanInsert(eventArgs.Thrown) || 
+                IoCManager.Resolve<IRobustRandom>().NextDouble() > 0.75 || 
+                !_container.Insert(eventArgs.Thrown))
             {
                 return;
             }
-            
-            AfterInsert(collidedWith);
+
+            AfterInsert(eventArgs.Thrown);
         }
 
         [Verb]
