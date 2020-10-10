@@ -33,6 +33,18 @@ namespace Content.Server.GameObjects.Components.PA
                 };
                 singularityComponent.Energy += 10 * multiplier;
                 Owner.Delete();
+            }else if (collidedWith.TryGetComponent<SingularityGeneratorComponent>(out var singularityGeneratorComponent)
+            )
+            {
+                singularityGeneratorComponent.Power += _state switch
+                {
+                    ParticleAcceleratorPowerState.Standby => 0,
+                    ParticleAcceleratorPowerState.Level0 => 1,
+                    ParticleAcceleratorPowerState.Level1 => 2,
+                    ParticleAcceleratorPowerState.Level2 => 4,
+                    ParticleAcceleratorPowerState.Level3 => 8,
+                    _ => 0
+                };
             }
         }
 
@@ -69,7 +81,7 @@ namespace Content.Server.GameObjects.Components.PA
                 Logger.Error("ParticleProjectile tried firing, but it was spawned without a SpriteComponent");
                 return;
             }
-            spriteComponent.LayerSetState(0, "particle"+suffix);
+            spriteComponent.LayerSetState(0, $"particle{suffix}");
 
             physicsComponent
                 .EnsureController<BulletController>()

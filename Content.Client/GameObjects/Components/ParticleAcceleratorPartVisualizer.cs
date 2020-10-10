@@ -4,12 +4,16 @@ using System.Linq;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Singularity;
 using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -23,15 +27,12 @@ namespace Content.Client.GameObjects.Components
         {
             base.LoadData(node);
 
-            if (!node.TryGetNode("baseState", out var baseStateNode))
+            var serializer = YamlObjectSerializer.NewReader(node);
+            if (!serializer.TryReadDataField<string>("baseState", out var baseState))
             {
                 throw new PrototypeLoadException("No baseState property specified for ParticleAcceleratorPartVisualizer");
             }
 
-            var baseState = baseStateNode.AsString();
-            _states.Add(ParticleAcceleratorVisualState.Open, baseState);
-            _states.Add(ParticleAcceleratorVisualState.Wired, baseState+"w");
-            _states.Add(ParticleAcceleratorVisualState.Closed, baseState+"c");
             _states.Add(ParticleAcceleratorVisualState.Powered, baseState+"p");
             _states.Add(ParticleAcceleratorVisualState.Level0, baseState+"p0");
             _states.Add(ParticleAcceleratorVisualState.Level1, baseState+"p1");
@@ -49,7 +50,7 @@ namespace Content.Client.GameObjects.Components
 
             if (!sprite.AllLayers.Any())
             {
-                sprite.AddLayer(_states[ParticleAcceleratorVisualState.Closed]);
+                throw new EntityCreationException("No Layer set for entity that has ParticleAcceleratorPartVisualizer");
             }
         }
 
@@ -61,7 +62,7 @@ namespace Content.Client.GameObjects.Components
             if (!component.Owner.TryGetComponent<ISpriteComponent>(out var sprite)) return;
             if (!component.TryGetData(ParticleAcceleratorVisuals.VisualState, out ParticleAcceleratorVisualState state))
             {
-                state = ParticleAcceleratorVisualState.Closed;
+                state = ParticleAcceleratorVisualState.Unpowered;
             }
 
             if (!_states.ContainsKey(state))
@@ -70,7 +71,15 @@ namespace Content.Client.GameObjects.Components
                 return;
             }
 
-            sprite.LayerSetState(0, _states[state]);
+            if (state != ParticleAcceleratorVisualState.Unpowered)
+            {
+                sprite.LayerSetVisible(ParticleAcceleratorVisualLayers.Unlit, true);
+                sprite.LayerSetState(ParticleAcceleratorVisualLayers.Unlit, _states[state]);
+            }
+            else
+            {
+                sprite.LayerSetVisible(ParticleAcceleratorVisualLayers.Unlit, false);
+            }
         }
     }
 }

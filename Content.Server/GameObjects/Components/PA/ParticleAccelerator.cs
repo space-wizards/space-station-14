@@ -321,7 +321,7 @@ namespace Content.Server.GameObjects.Components.PA
         private void UpdatePartVisualStates()
         {
             UpdatePartVisualState(ControlBox);
-            UpdatePartVisualState(EndCap);
+            //UpdatePartVisualState(EndCap); not needed
             UpdatePartVisualState(FuelChamber);
             UpdatePartVisualState(PowerBox);
             UpdatePartVisualState(EmitterCenter);
@@ -338,7 +338,7 @@ namespace Content.Server.GameObjects.Components.PA
                 Logger.Error($"ParticleAccelerator tried updating state of {component} but failed due to a missing AppearanceComponent");
                 return;
             }
-            appearanceComponent.SetData(ParticleAcceleratorVisuals.VisualState, Enabled ? (ParticleAcceleratorVisualState)_power : ParticleAcceleratorVisualState.Closed);
+            appearanceComponent.SetData(ParticleAcceleratorVisuals.VisualState, Enabled ? (ParticleAcceleratorVisualState)_power : ParticleAcceleratorVisualState.Unpowered);
         }
 
         public ParticleAcceleratorDataUpdateMessage DataMessage =>

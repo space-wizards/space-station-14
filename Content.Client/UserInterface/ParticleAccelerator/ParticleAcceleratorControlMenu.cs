@@ -447,7 +447,7 @@ namespace Content.Client.ParticleAccelerator
         {
             SetTexture(ref _endCapTexture, "end_cap", updateMessage.EndCapExists, updateMessage.State, updateMessage.Enabled, _endCapRSI);
             SetTexture(ref _fuelChamberTexture, "fuel_chamber", updateMessage.FuelChamberExists, updateMessage.State, updateMessage.Enabled, _fuelChamberRSI);
-            SetTexture(ref _controlBoxTexture, "control_box", true, updateMessage.State, updateMessage.Enabled, _controlBoxRSI);
+            SetTexture(ref _controlBoxTexture, "control_box", true, updateMessage.State, updateMessage.Enabled, _controlBoxRSI); //always set to disable cause i have no idea how to show unlit layers
             SetTexture(ref _powerBoxTexture, "power_box", updateMessage.PowerBoxExists, updateMessage.State, updateMessage.Enabled, _powerBoxRSI);
             SetTexture(ref _emitterCenterTexture, "emitter_center", updateMessage.EmitterCenterExists, updateMessage.State, updateMessage.Enabled, _emitterCenterRSI);
             SetTexture(ref _emitterLeftTexture, "emitter_left", updateMessage.EmitterLeftExists, updateMessage.State, updateMessage.Enabled, _emitterLeftRSI);
@@ -457,6 +457,7 @@ namespace Content.Client.ParticleAccelerator
         private void SetTexture(ref TextureRect rect, string baseState, bool exists, ParticleAcceleratorPowerState state, bool enabled, RSI rsi)
         {
             var suffix = "c";
+            /*TODO somehow display the unlit layers here too
             if(enabled && exists)
             {
                 suffix = state switch
@@ -468,7 +469,7 @@ namespace Content.Client.ParticleAccelerator
                     ParticleAcceleratorPowerState.Level3 => "p3",
                     _ => "p"
                 };
-            }
+            }*/
 
             rect.Texture = rsi[baseState + suffix].Frame0;
             rect.ShaderOverride = exists ? null : _greyScaleShader;

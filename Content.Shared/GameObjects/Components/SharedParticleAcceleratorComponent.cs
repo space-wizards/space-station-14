@@ -13,9 +13,9 @@ namespace Content.Shared.GameObjects.Components
     [NetSerializable, Serializable]
     public enum ParticleAcceleratorVisualState
     {
-        Open, //no prefix
-        Wired, //w prefix
-        Closed, //c prefix
+        //Open, //no prefix
+        //Wired, //w prefix
+        Unpowered, //c prefix
         Powered, //p prefix
         Level0, //0 prefix
         Level1, //1 prefix
@@ -31,6 +31,12 @@ namespace Content.Shared.GameObjects.Components
         Level1 = ParticleAcceleratorVisualState.Level1,
         Level2 = ParticleAcceleratorVisualState.Level2,
         Level3 = ParticleAcceleratorVisualState.Level3
+    }
+
+    public enum ParticleAcceleratorVisualLayers
+    {
+        Base,
+        Unlit
     }
 
     [NetSerializable, Serializable]

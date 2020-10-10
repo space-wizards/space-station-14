@@ -164,3 +164,26 @@
     soundHit: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
     damages:
       Heat: 20
+
+- type: entity
+  name: Gravitational Singularity Generator
+  description: An Odd Device which produces a Gravitational Singularity when set up.
+  id: SinguloGenerator
+  components:
+    - type: Sprite
+      sprite: Effects/Singularity/singulo_gen.rsi
+      state: singulo_gen
+    - type: SinguloGenerator
+    - type: InteractionOutline
+    - type: Clickable
+    - type: Physics
+      anchored: true
+    - type: Collidable
+      shapes:
+        - !type:PhysShapeAabb
+          bounds: "-0.5, -0.5, 0.5, 0.5"
+          layer: [ MobMask, Opaque ]
+    - type: SnapGrid
+      offset: Center
+    - type: Anchorable
+    - type: Pullable
