@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Threading;
 using Content.Client.State;
@@ -126,11 +125,6 @@ namespace Content.Client.GameObjects.EntitySystems
             foreach (var entity in entities)
             {
                 if (!entity.TryGetComponent(out ISpriteComponent sprite) || !sprite.Visible)
-                {
-                    continue;
-                }
-
-                if (entity.GetAllComponents<IShowContextMenu>().Any(s => !s.ShowContextMenu(playerEntity)))
                 {
                     continue;
                 }

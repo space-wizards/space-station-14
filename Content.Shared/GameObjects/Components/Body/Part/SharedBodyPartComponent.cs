@@ -4,9 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Body.Surgery;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -17,7 +14,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Body.Part
 {
-    public abstract class SharedBodyPartComponent : Component, IBodyPart, ICanExamine, IShowContextMenu
+    public abstract class SharedBodyPartComponent : Component, IBodyPart
     {
         public override string Name => "BodyPart";
 
@@ -194,7 +191,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         public bool Drop()
         {
             Body = null;
-            Owner.AttachToGrandparent();
+            Owner.Transform.AttachToGridOrMap();
             return true;
         }
 
@@ -302,16 +299,6 @@ namespace Content.Shared.GameObjects.Components.Body.Part
 
             mechanism.Owner.Delete();
             return true;
-        }
-
-        public bool ShowContextMenu(IEntity examiner)
-        {
-            return Body == null;
-        }
-
-        public bool CanExamine(IEntity entity)
-        {
-            return Body == null;
         }
     }
 

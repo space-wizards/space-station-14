@@ -22,14 +22,6 @@ namespace Content.Shared.GameObjects.EntitySystems
         void Examine(FormattedMessage message, bool inDetailsRange);
     }
 
-    /// <summary>
-    ///     Prevents a component's entity from being able to be examined.
-    /// </summary>
-    public interface ICanExamine : IComponent
-    {
-        bool CanExamine(IEntity entity);
-    }
-
     public abstract class ExamineSystemShared : EntitySystem
     {
         public const float ExamineRange = 16f;
@@ -46,11 +38,6 @@ namespace Content.Shared.GameObjects.EntitySystems
         protected static bool CanExamine(IEntity examiner, IEntity examined)
         {
             if (!examiner.TryGetComponent(out ExaminerComponent examinerComponent))
-            {
-                return false;
-            }
-
-            if (examined.GetAllComponents<ICanExamine>().Any(e => !e.CanExamine(examiner)))
             {
                 return false;
             }

@@ -1,16 +1,13 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Body.Part;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.Verbs;
-using Content.Shared.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Body.Mechanism
 {
-    public abstract class SharedMechanismComponent : Component, IMechanism, ICanExamine, IShowContextMenu
+    public abstract class SharedMechanismComponent : Component, IMechanism
     {
         public override string Name => "Mechanism";
 
@@ -89,16 +86,6 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
             serializer.DataField(this, m => m.Compatibility, "compatibility", BodyPartCompatibility.Universal);
         }
 
-        public bool ShowContextMenu(IEntity examiner)
-        {
-            return Body == null;
-        }
-
-        public bool CanExamine(IEntity entity)
-        {
-            return Body == null;
-        }
-
         public virtual void OnBodyAdd(IBody? old, IBody current) { }
 
         public virtual void OnBodyRemove(IBody old) { }
@@ -110,7 +97,7 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
 
         protected virtual void OnPartRemove(IBodyPart old)
         {
-            Owner.AttachToGrandparent();
+            Owner.Transform.AttachToGridOrMap();
         }
     }
 }
