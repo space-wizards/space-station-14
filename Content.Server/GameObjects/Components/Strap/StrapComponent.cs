@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Buckle;
 using Content.Shared.GameObjects.Components.Strap;
 using Content.Shared.GameObjects.EntitySystems;
@@ -7,6 +8,7 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
@@ -17,6 +19,8 @@ namespace Content.Server.GameObjects.Components.Strap
     [RegisterComponent]
     public class StrapComponent : SharedStrapComponent, IInteractHand
     {
+        [ComponentDependency] public readonly SpriteComponent? SpriteComponent = null;
+
         private HashSet<IEntity> _buckledEntities;
         private StrapPosition _position;
         private string _buckleSound;
