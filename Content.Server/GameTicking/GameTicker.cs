@@ -99,6 +99,10 @@ namespace Content.Server.GameTicking
 
 
         [ViewVariables] public bool Paused { get; private set; }
+        
+        [ViewVariables] public MapId DefaultMap { get; private set; }
+        
+        [ViewVariables] public GridId DefaultGridId { get; private set; }
 
         [ViewVariables]
         public GameRunLevel RunLevel
@@ -687,10 +691,11 @@ namespace Content.Server.GameTicking
 
         private void _preRoundSetup()
         {
-            var newMapId = _mapManager.CreateMap();
+            DefaultMap = _mapManager.CreateMap();
             var startTime = _gameTiming.RealTime;
-            var grid = _mapLoader.LoadBlueprint(newMapId, MapFile);
-
+            var grid = _mapLoader.LoadBlueprint(DefaultMap, MapFile);
+            
+            DefaultGridId = grid.Index;
             _spawnPoint = grid.ToCoordinates();
 
             var timeSpan = _gameTiming.RealTime - startTime;

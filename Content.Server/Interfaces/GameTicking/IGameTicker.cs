@@ -15,6 +15,16 @@ namespace Content.Server.Interfaces.GameTicking
     public interface IGameTicker
     {
         GameRunLevel RunLevel { get; }
+        
+        /// <summary>
+        ///     The map loaded by the GameTicker on round start.
+        /// </summary>
+        MapId DefaultMap { get; }
+        
+        /// <summary>
+        ///     The GridId loaded by the GameTicker on round start.
+        /// </summary>
+        GridId DefaultGridId { get; }
 
         event Action<GameRunLevelChangedEventArgs> OnRunLevelChanged;
         event Action<GameRuleAddedEventArgs> OnRuleAdded;

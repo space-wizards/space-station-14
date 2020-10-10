@@ -8,7 +8,6 @@ using Content.Shared.Construction;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Materials;
-using Microsoft.CodeAnalysis.Options;
 using Robust.Client.Graphics;
 using Robust.Client.Interfaces.Placement;
 using Robust.Client.Interfaces.ResourceManagement;
