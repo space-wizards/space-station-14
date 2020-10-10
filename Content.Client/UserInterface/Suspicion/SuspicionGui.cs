@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using Content.Client.GameObjects.Components.Suspicion;
 using Content.Shared.Interfaces;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
@@ -15,9 +17,8 @@ namespace Content.Client.UserInterface.Suspicion
 {
     public class SuspicionGui : Control
     {
-#pragma warning disable 0649
-        [Dependency] private readonly IPlayerManager _playerManager;
-#pragma warning restore 0649
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private readonly VBoxContainer _container;
         private readonly Button _roleButton;
@@ -57,7 +58,8 @@ namespace Content.Client.UserInterface.Suspicion
                 return;
             }
 
-            var allies = string.Join(", ", role.Allies);
+            var allies = string.Join(", ",
+                role.Allies.Select(uid => _entityManager.GetEntity(uid).Name));
             var message = role.Allies.Count switch
             {
                 0 => Loc.GetString("You have no allies"),

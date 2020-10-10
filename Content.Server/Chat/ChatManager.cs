@@ -76,7 +76,7 @@ namespace Content.Server.Chat
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Radio;
             msg.Message = message;
-            msg.MessageWrap = "Station: {0}";
+            msg.MessageWrap = "Centcom Announcement:\n{0}";
             _netManager.ServerSendToAll(msg);
         }
 

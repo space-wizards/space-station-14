@@ -19,7 +19,7 @@ namespace Content.Server.StationEvents
 
         public override StationEventWeight Weight => StationEventWeight.Normal;
 
-        public override int? MaxOccurrences => 3;
+        public override int? MaxOccurrences => 2;
 
         protected override string StartAnnouncement => Loc.GetString(
             "Abnormal activity detected in the station's powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.");
@@ -47,7 +47,7 @@ namespace Content.Server.StationEvents
 
             _announced = false;
             _elapsedTime = 0.0f;
-            _failDuration = IoCManager.Resolve<IRobustRandom>().Next(30, 120);
+            _failDuration = IoCManager.Resolve<IRobustRandom>().Next(60, 120);
             var componentManager = IoCManager.Resolve<IComponentManager>();
             
             foreach (PowerReceiverComponent component in componentManager.EntityQuery<PowerReceiverComponent>())
