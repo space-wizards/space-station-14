@@ -45,6 +45,7 @@ namespace Content.Server.GameObjects.Components.PA
                     ParticleAcceleratorPowerState.Level3 => 8,
                     _ => 0
                 };
+                Owner.Delete();
             }
         }
 

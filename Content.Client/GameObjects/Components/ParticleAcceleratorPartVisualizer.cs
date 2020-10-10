@@ -65,12 +65,6 @@ namespace Content.Client.GameObjects.Components
                 state = ParticleAcceleratorVisualState.Unpowered;
             }
 
-            if (!_states.ContainsKey(state))
-            {
-                Logger.Error($"ParticleAcceleratorPartVisualizer.OnChangeData did not find provided state in buffered state list (invalid value: {state})");
-                return;
-            }
-
             if (state != ParticleAcceleratorVisualState.Unpowered)
             {
                 sprite.LayerSetVisible(ParticleAcceleratorVisualLayers.Unlit, true);

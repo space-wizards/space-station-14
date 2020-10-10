@@ -173,7 +173,7 @@
     - type: Sprite
       sprite: Effects/Singularity/singulo_gen.rsi
       state: singulo_gen
-    - type: SinguloGenerator
+    - type: SingularityGenerator
     - type: InteractionOutline
     - type: Clickable
     - type: Physics
@@ -182,7 +182,7 @@
       shapes:
         - !type:PhysShapeAabb
           bounds: "-0.5, -0.5, 0.5, 0.5"
-          layer: [ MobMask, Opaque ]
+          layer: [ MobMask ]
     - type: SnapGrid
       offset: Center
     - type: Anchorable
