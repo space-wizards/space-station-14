@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.Transform;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -31,6 +34,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer
             {
                 node.Initialize(Owner);
             }
+
+            Owner.EntityManager.EventBus.SubscribeEvent<RotateEvent>(EventSource.Local, this, RotateEvent);
         }
 
         protected override void Startup()
@@ -49,6 +54,17 @@ namespace Content.Server.GameObjects.Components.NodeContainer
                 node.OnContainerRemove();
             }
             base.OnRemove();
+        }
+
+        private void RotateEvent(RotateEvent ev)
+        {
+            if (ev.Sender != Owner || ev.NewRotation == ev.OldRotation)
+                return;
+
+            foreach (var rotatableNode in Nodes.OfType<IRotatableNode>())
+            {
+                rotatableNode.RotateEvent(ev);
+            }
         }
     }
 }

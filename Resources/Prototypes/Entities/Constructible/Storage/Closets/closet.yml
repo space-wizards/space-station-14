@@ -33,7 +33,6 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
-    IsScrapingFloor: true
   - type: Physics
     mass: 25
     anchored: false

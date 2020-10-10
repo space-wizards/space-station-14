@@ -160,6 +160,9 @@ namespace Content.Shared.GameObjects.Components.Damage
                 {
                     var writeFlags = new List<DamageFlag>();
 
+                    if (Flags == DamageFlag.None)
+                        return writeFlags;
+
                     foreach (var flag in (DamageFlag[]) Enum.GetValues(typeof(DamageFlag)))
                     {
                         if ((Flags & flag) == flag)

@@ -43,7 +43,6 @@
       - Opaque
       layer:
       - Opaque
-    IsScrapingFloor: true
   - type: Physics
     mass: 5
     anchored: false
@@ -74,7 +73,6 @@
       bounds: "-0.25,-0.25,0.25,0.25"
       mask:
       - Impassable
-    IsScrapingFloor: true
   - type: Physics
     mass: 5
     anchored: false

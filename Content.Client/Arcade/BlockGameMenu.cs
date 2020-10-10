@@ -555,7 +555,9 @@ namespace Content.Client.Arcade
 
         protected override void KeyBindDown(GUIBoundKeyEventArgs args)
         {
-            if(!_isPlayer) return;
+            base.KeyBindDown(args);
+
+            if(!_isPlayer || args.Handled) return;
 
             if (args.Function == ContentKeyFunctions.ArcadeLeft)
             {
@@ -589,7 +591,9 @@ namespace Content.Client.Arcade
 
         protected override void KeyBindUp(GUIBoundKeyEventArgs args)
         {
-            if(!_isPlayer) return;
+            base.KeyBindUp(args);
+
+            if(!_isPlayer || args.Handled) return;
 
             if (args.Function == ContentKeyFunctions.ArcadeLeft)
             {

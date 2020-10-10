@@ -10,7 +10,7 @@
     netsync: false
     directional: false
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
-    state: s-casing
+    state: spent
     drawdepth: FloorObjects
 
 

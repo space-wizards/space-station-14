@@ -3,10 +3,7 @@ using System;
 using System.Collections.Generic;
 using Content.Client.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.GameObjects.Components;
-using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -19,62 +16,112 @@ namespace Content.Client.GameObjects.Components
     {
         public override string Name => "DoAfter";
 
-        public IReadOnlyDictionary<byte, DoAfterMessage> DoAfters => _doAfters;
-        private readonly Dictionary<byte, DoAfterMessage> _doAfters = new Dictionary<byte, DoAfterMessage>();
+        public IReadOnlyDictionary<byte, ClientDoAfter> DoAfters => _doAfters;
+        private readonly Dictionary<byte, ClientDoAfter> _doAfters = new Dictionary<byte, ClientDoAfter>();
         
-        public readonly List<(TimeSpan CancelTime, DoAfterMessage Message)> CancelledDoAfters = 
-                     new List<(TimeSpan CancelTime, DoAfterMessage Message)>();
+        public readonly List<(TimeSpan CancelTime, ClientDoAfter Message)> CancelledDoAfters = 
+                     new List<(TimeSpan CancelTime, ClientDoAfter Message)>();
+
+        public DoAfterGui? Gui { get; set; }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, netChannel, session);
             switch (message)
             {
-                case DoAfterMessage msg:
-                    _doAfters.Add(msg.ID, msg);
-                    EntitySystem.Get<DoAfterSystem>().Gui?.AddDoAfter(msg);
-                    break;
                 case CancelledDoAfterMessage msg:
                     Cancel(msg.ID);
                     break;
             }
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        public override void OnAdd()
         {
-            base.HandleMessage(message, component);
-            switch (message)
+            base.OnAdd();
+            Enable();
+        }
+
+        public override void OnRemove()
+        {
+            base.OnRemove();
+            Disable();
+        }
+
+        /// <summary>
+        ///     For handling PVS so we dispose of controls if they go out of range
+        /// </summary>
+        public void Enable()
+        {
+            if (Gui != null && !Gui.Disposed)
+                return;
+            
+            Gui = new DoAfterGui {AttachedEntity = Owner};
+            
+            foreach (var (_, doAfter) in _doAfters)
             {
-                case PlayerDetachedMsg _:
-                    _doAfters.Clear();
-                    CancelledDoAfters.Clear();
-                    break;
+                Gui.AddDoAfter(doAfter);
+            }
+
+            foreach (var (_, cancelled) in CancelledDoAfters)
+            {
+                Gui.CancelDoAfter(cancelled.ID);
+            }
+        }
+
+        public void Disable()
+        {
+            Gui?.Dispose();
+        }
+
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+        {
+            base.HandleComponentState(curState, nextState);
+            if (!(curState is DoAfterComponentState state))
+                return;
+            
+            _doAfters.Clear();
+
+            foreach (var doAfter in state.DoAfters)
+            {
+                _doAfters.Add(doAfter.ID, doAfter);
+            }
+            
+            if (Gui == null || Gui.Disposed)
+                return;
+
+            foreach (var (_, doAfter) in _doAfters)
+            {
+                Gui.AddDoAfter(doAfter);
             }
         }
 
         /// <summary>
         ///     Remove a DoAfter without showing a cancellation graphic.
         /// </summary>
-        /// <param name="doAfter"></param>
-        public void Remove(DoAfterMessage doAfter)
+        /// <param name="clientDoAfter"></param>
+        public void Remove(ClientDoAfter clientDoAfter)
         {
-            if (_doAfters.ContainsKey(doAfter.ID))
-            {
-                _doAfters.Remove(doAfter.ID);
-            }
+            if (_doAfters.ContainsKey(clientDoAfter.ID))
+                _doAfters.Remove(clientDoAfter.ID);
 
+            var found = false;
+            
             for (var i = CancelledDoAfters.Count - 1; i >= 0; i--)
             {
                 var cancelled = CancelledDoAfters[i];
 
-                if (cancelled.Message == doAfter)
+                if (cancelled.Message == clientDoAfter)
                 {
                     CancelledDoAfters.RemoveAt(i);
+                    found = true;
                     break;
                 }
             }
-            
-            EntitySystem.Get<DoAfterSystem>().Gui?.RemoveDoAfter(doAfter.ID);
+
+            if (!found)
+                _doAfters.Remove(clientDoAfter.ID);
+
+            Gui?.RemoveDoAfter(clientDoAfter.ID);
         }
 
         /// <summary>
@@ -88,15 +135,16 @@ namespace Content.Client.GameObjects.Components
             foreach (var (_, cancelled) in CancelledDoAfters)
             {
                 if (cancelled.ID == id)
-                {
                     return;
-                }
             }
 
+            if (!_doAfters.ContainsKey(id))
+                return;
+            
             var doAfterMessage = _doAfters[id];
             currentTime ??= IoCManager.Resolve<IGameTiming>().CurTime;
             CancelledDoAfters.Add((currentTime.Value, doAfterMessage));
-            EntitySystem.Get<DoAfterSystem>().Gui?.CancelDoAfter(id);
+            Gui?.CancelDoAfter(id);
         }
     }
 }

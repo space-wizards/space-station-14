@@ -39,21 +39,22 @@ namespace Content.Server.Database
         {
             await using var db = await GetDb();
 
-            var prefs = await db.DbContext.Preference.SingleAsync(p => p.UserId == userId.UserId);
-            prefs.SelectedCharacterSlot = index;
+            await SetSelectedCharacterSlotAsync(userId, index, db.DbContext);
 
             await db.DbContext.SaveChangesAsync();
         }
 
         public async Task SaveCharacterSlotAsync(NetUserId userId, ICharacterProfile? profile, int slot)
         {
+            await using var db = await GetDb();
+
             if (profile is null)
             {
-                await DeleteCharacterSlotAsync(userId, slot);
+                DeleteCharacterSlot(db.DbContext, userId, slot);
+                await db.DbContext.SaveChangesAsync();
                 return;
             }
 
-            await using var db = await GetDb();
             if (!(profile is HumanoidCharacterProfile humanoid))
             {
                 // TODO: Handle other ICharacterProfile implementations properly
@@ -80,17 +81,12 @@ namespace Content.Server.Database
             await db.DbContext.SaveChangesAsync();
         }
 
-        private async Task DeleteCharacterSlotAsync(NetUserId userId, int slot)
+        private static void DeleteCharacterSlot(ServerDbContext db, NetUserId userId, int slot)
         {
-            await using var db = await GetDb();
-
-            db.DbContext
-                .Preference
+            db.Preference
                 .Single(p => p.UserId == userId.UserId)
                 .Profiles
                 .RemoveAll(h => h.Slot == slot);
-
-            await db.DbContext.SaveChangesAsync();
         }
 
         public async Task<PlayerPreferences> InitPrefsAsync(NetUserId userId, ICharacterProfile defaultProfile)
@@ -111,6 +107,22 @@ namespace Content.Server.Database
             await db.DbContext.SaveChangesAsync();
 
             return new PlayerPreferences(new[] {new KeyValuePair<int, ICharacterProfile>(0, defaultProfile)}, 0);
+        }
+
+        public async Task DeleteSlotAndSetSelectedIndex(NetUserId userId, int deleteSlot, int newSlot)
+        {
+            await using var db = await GetDb();
+
+            DeleteCharacterSlot(db.DbContext, userId, deleteSlot);
+            await SetSelectedCharacterSlotAsync(userId, newSlot, db.DbContext);
+
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        private static async Task SetSelectedCharacterSlotAsync(NetUserId userId, int newSlot, ServerDbContext db)
+        {
+            var prefs = await db.Preference.SingleAsync(p => p.UserId == userId.UserId);
+            prefs.SelectedCharacterSlot = newSlot;
         }
 
         private static HumanoidCharacterProfile ConvertProfiles(Profile profile)
@@ -187,6 +199,7 @@ namespace Content.Server.Database
 
             await db.DbContext.SaveChangesAsync();
         }
+
 
         /*
          * BAN STUFF
