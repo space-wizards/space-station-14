@@ -5,6 +5,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.DamageContainer;
 using Content.Shared.Damage.ResistanceSet;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Mono.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -156,6 +157,9 @@ namespace Content.Shared.GameObjects.Components.Damage
                 () =>
                 {
                     var writeFlags = new List<DamageFlag>();
+
+                    if (Flags == DamageFlag.None)
+                        return writeFlags;
 
                     foreach (var flag in (DamageFlag[]) Enum.GetValues(typeof(DamageFlag)))
                     {

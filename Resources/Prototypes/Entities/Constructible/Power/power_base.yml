@@ -1,5 +1,6 @@
 ﻿- type: entity
   id: BaseGenerator
+  description: A high efficiency thermoelectric generator.
   name: Base Generator
   abstract: true
   placement:
@@ -27,6 +28,7 @@
 
 - type: entity
   id: BaseSmes
+  description: A high-capacity superconducting magnetic energy storage (SMES) unit.
   name: Base Smes
   abstract: true
   placement:
@@ -69,6 +71,7 @@
 
 - type: entity
   id: BaseSubstation
+  description: Reduces the voltage of electricity put into it. 
   name: Base Substation
   abstract: true
   placement:
@@ -106,6 +109,7 @@
 
 - type: entity
   id: BaseApc
+  description: A control terminal for the area's electrical systems.
   name: Base Apc
   abstract: true
   placement:

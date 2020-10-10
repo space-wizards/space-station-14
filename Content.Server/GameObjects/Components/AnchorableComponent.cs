@@ -7,6 +7,7 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components
@@ -15,6 +16,15 @@ namespace Content.Server.GameObjects.Components
     public class AnchorableComponent : Component, IInteractUsing
     {
         public override string Name => "Anchorable";
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+            serializer.DataField(this, x => x.Tool, "tool", ToolQuality.Anchoring);
+        }
+
+        [ViewVariables]
+        public ToolQuality Tool { get; private set; } = ToolQuality.Anchoring;
 
         [ViewVariables]
         int IInteractUsing.Priority => 1;
@@ -37,7 +47,7 @@ namespace Content.Server.GameObjects.Components
             {
                 if (utilizing == null ||
                     !utilizing.TryGetComponent(out ToolComponent? tool) ||
-                    !(await tool.UseTool(user, Owner, 0.5f, ToolQuality.Anchoring)))
+                    !(await tool.UseTool(user, Owner, 0.5f, Tool)))
                 {
                     return false;
                 }
