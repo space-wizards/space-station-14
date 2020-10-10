@@ -167,7 +167,6 @@ namespace Content.Server.GameObjects.Components.Disposal
             {
                 return false;
             }
-
             return _container.CanInsert(entity);
         }
 
