@@ -10,19 +10,6 @@
 
 - type: entity
   parent: HeadsetBaseAlt
-  id: HeadsetCargoAlt
-  name: cargo overear-headset
-  components:
-  - type: Sprite
-    sprite: Clothing/Ears/Headsets/cargo.rsi
-    state: icon_alt
-  - type: Clothing
-    Slots:
-    - ears
-    sprite: Clothing/Ears/Headsets/cargo.rsi
-
-- type: entity
-  parent: HeadsetBaseAlt
   id: HeadsetCommandAlt
   name: command overear-headset
   components:
@@ -33,19 +20,6 @@
     Slots:
     - ears
     sprite: Clothing/Ears/Headsets/command.rsi
-
-- type: entity
-  parent: HeadsetBaseAlt
-  id: HeadsetEngineeringAlt
-  name: engineering overear-headset
-  components:
-  - type: Sprite
-    sprite: Clothing/Ears/Headsets/engineering.rsi
-    state: icon_alt
-  - type: Clothing
-    Slots:
-    - ears
-    sprite: Clothing/Ears/Headsets/engineering.rsi
 
 - type: entity
   parent: HeadsetBaseAlt
