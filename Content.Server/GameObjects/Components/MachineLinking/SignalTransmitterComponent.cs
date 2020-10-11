@@ -1,4 +1,6 @@
-﻿using Content.Server.GameObjects.Components.Interactable;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Content.Server.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -9,15 +11,12 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Content.Server.GameObjects.Components.MachineLinking
 {
     [RegisterComponent]
     public class SignalTransmitterComponent : Component, IInteractUsing
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public override string Name => "SignalTransmitter";

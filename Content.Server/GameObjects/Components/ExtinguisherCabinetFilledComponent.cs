@@ -1,6 +1,4 @@
-﻿using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.ViewVariables;
+﻿using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components
 {

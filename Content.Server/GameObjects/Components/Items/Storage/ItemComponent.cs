@@ -87,7 +87,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 return false;
             }
 
-            if (Owner.TryGetComponent(out ICollidableComponent physics) &&
+            if (Owner.TryGetComponent(out IPhysicsComponent physics) &&
                 physics.Anchored)
             {
                 return false;

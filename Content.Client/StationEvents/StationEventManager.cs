@@ -1,9 +1,9 @@
 ﻿#nullable enable
+using System;
+using System.Collections.Generic;
 using Content.Shared.StationEvents;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
-using System;
-using System.Collections.Generic;
 
 namespace Content.Client.StationEvents
 {

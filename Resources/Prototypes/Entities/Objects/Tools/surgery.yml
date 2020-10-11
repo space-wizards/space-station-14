@@ -8,8 +8,8 @@
     baseOperateTime: 5
   - type: UserInterface
     interfaces:
-    - key: enum.GenericSurgeryUiKey.Key
-      type: GenericSurgeryBoundUserInterface
+    - key: enum.SurgeryUIKey.Key
+      type: SurgeryBoundUserInterface
 
 - type: entity
   name: scalpel
@@ -21,9 +21,6 @@
     surgeryType: Incision
     baseOperateTime: 3
   - type: Sprite
-    sprite: Objects/Specific/Medical/surgery_tools.rsi
-    state: scalpel
-  - type: Icon
     sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: scalpel
   - type: ItemCooldown
@@ -41,9 +38,6 @@
   - type: Sprite
     sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: retractor
-  - type: Icon
-    sprite: Objects/Specific/Medical/surgery_tools.rsi
-    state: retractor
   - type: ItemCooldown
   - type: MeleeWeapon
 
@@ -57,9 +51,6 @@
     surgeryType: Cauterization
     baseOperateTime: 3
   - type: Sprite
-    sprite: Objects/Specific/Medical/surgery_tools.rsi
-    state: cautery
-  - type: Icon
     sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: cautery
   - type: ItemCooldown
@@ -77,9 +68,6 @@
   - type: Sprite
     sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: drill
-  - type: Icon
-    sprite: Objects/Specific/Medical/surgery_tools.rsi
-    state: drill
   - type: ItemCooldown
   - type: MeleeWeapon
 
@@ -95,9 +83,6 @@
   - type: Sprite
     sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: bone_saw
-  - type: Icon
-    sprite: Objects/Specific/Medical/surgery_tools.rsi
-    state: bone_saw
   - type: ItemCooldown
   - type: MeleeWeapon
 
@@ -111,9 +96,6 @@
     surgeryType: VesselCompression
     baseOperateTime: 3
   - type: Sprite
-    sprite: Objects/Specific/Medical/surgery_tools.rsi
-    state: hemostat
-  - type: Icon
     sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: hemostat
   - type: ItemCooldown

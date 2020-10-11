@@ -6,12 +6,14 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
 using Content.Shared.Audio;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
@@ -27,8 +29,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
-using Content.Shared.GameObjects.Components.Damage;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 {
@@ -389,15 +389,15 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                     projectileAngle = angle;
                 }
 
-                var collidableComponent = projectile.GetComponent<ICollidableComponent>();
-                collidableComponent.Status = BodyStatus.InAir;
+                var physics = projectile.GetComponent<IPhysicsComponent>();
+                physics.Status = BodyStatus.InAir;
                 projectile.Transform.WorldPosition = Owner.Transform.MapPosition.Position;
 
                 var projectileComponent = projectile.GetComponent<ProjectileComponent>();
                 projectileComponent.IgnoreEntity(shooter);
 
                 projectile
-                    .GetComponent<ICollidableComponent>()
+                    .GetComponent<IPhysicsComponent>()
                     .EnsureController<BulletController>()
                     .LinearVelocity = projectileAngle.ToVec() * velocity;
 

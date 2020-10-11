@@ -1,9 +1,9 @@
 ﻿#nullable enable
+using System;
+using System.Text.RegularExpressions;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Serialization;
-using System;
-using System.Text.RegularExpressions;
 
 namespace Content.Shared.GameObjects.Components.Disposal
 {

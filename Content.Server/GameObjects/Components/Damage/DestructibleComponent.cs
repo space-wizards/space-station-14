@@ -26,7 +26,7 @@ namespace Content.Server.GameObjects.Components.Damage
         /// <summary>
         ///     Entity spawned upon destruction.
         /// </summary>
-        public string SpawnOnDestroy { get; set; }
+        public string SpawnOnDestroy { get; private set; }
 
         void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
         {
@@ -39,7 +39,7 @@ namespace Content.Server.GameObjects.Components.Damage
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(this, d => d.SpawnOnDestroy, "spawnondestroy", string.Empty);
+            serializer.DataField(this, d => d.SpawnOnDestroy, "spawnOnDestroy", string.Empty);
         }
 
         public override void Initialize()

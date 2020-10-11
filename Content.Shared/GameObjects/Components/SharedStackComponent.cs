@@ -125,10 +125,12 @@ namespace Content.Shared.GameObjects.Components
     {
         Metal,
         Glass,
+        Plasteel,
         Cable,
         Gold,
         Phoron,
         Ointment,
+        Gauze,
         Brutepack,
         FloorTileSteel,
         FloorTileCarpet,

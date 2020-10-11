@@ -9,6 +9,7 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Players;
 using Content.Server.Utility;
 using Content.Shared.Damage;
+using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Medical;
 using Content.Shared.GameObjects.EntitySystems;
@@ -129,7 +130,7 @@ namespace Content.Server.GameObjects.Components.Medical
                 var body = _bodyContainer.ContainedEntity;
                 return body == null
                     ? MedicalScannerStatus.Open
-                    : GetStatusFromDamageState(body.GetComponent<IDamageableComponent>().CurrentDamageState);
+                    : GetStatusFromDamageState(body.GetComponent<IDamageableComponent>().CurrentState);
             }
 
             return MedicalScannerStatus.Off;
@@ -250,7 +251,7 @@ namespace Content.Server.GameObjects.Components.Medical
 
         public bool CanDragDropOn(DragDropEventArgs eventArgs)
         {
-            return eventArgs.Dragged.HasComponent<BodyManagerComponent>();
+            return eventArgs.Dragged.HasComponent<IBody>();
         }
 
         public bool DragDropOn(DragDropEventArgs eventArgs)

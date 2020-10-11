@@ -1,12 +1,10 @@
-﻿using Lidgren.Network;
+﻿using System.Collections.Generic;
+using System.IO;
+using Lidgren.Network;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 
 namespace Content.Shared.StationEvents
 {
@@ -26,7 +24,7 @@ namespace Content.Shared.StationEvents
             {
                 var serializer = IoCManager.Resolve<IRobustSerializer>();
                 var length = buffer.ReadVariableInt32();
-                using var stream = buffer.ReadAsStream(length);
+                using var stream = buffer.ReadAlignedMemory(length);
                 Events = serializer.Deserialize<List<string>>(stream);
             }
 

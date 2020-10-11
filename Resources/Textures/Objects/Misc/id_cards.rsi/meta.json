@@ -186,6 +186,159 @@
       ]
     },
     {
+      "name": "idassistant_icon",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "idcaptain_icon",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "idcargotechnician_icon",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "idcentcom_icon",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "idchiefengineer_icon",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "idchiefmedicalofficer_icon",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "idclown_icon",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "idheadofpersonnel_icon",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "idheadofsecurity_icon",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "idjanitor_icon",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "idmedicaldoctor_icon",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "idresearchdirector_icon",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "idscientist_icon",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "idsecurityofficer_icon",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "idcargotechnician_icon",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "idstationengineer_icon",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "idmime_icon",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
       "name": "silver",
       "directions": 1,
       "delays": [
@@ -313,6 +466,24 @@
     },
     {
       "name": "idcook",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "idbartender_icon",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "idcook_icon",
       "directions": 1,
       "delays": [
         [

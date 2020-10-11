@@ -1,8 +1,7 @@
-﻿using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
+﻿using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Physics;
-using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.GameObjects.EntitySystems;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Maths;
 
 namespace Content.Server.GameObjects.Components.Movement
 {
@@ -14,15 +13,15 @@ namespace Content.Server.GameObjects.Components.Movement
 
         public override bool IsClimbing
         {
-            get
-            {
-                return _isClimbing;
-            }
+            get => _isClimbing;
             set
             {
-                if (!value && Body != null)
+                if (_isClimbing == value)
+                    return;
+
+                if (!value)
                 {
-                    Body.TryRemoveController<ClimbController>();
+                    Body?.TryRemoveController<ClimbController>();
                 }
 
                 _isClimbing = value;
@@ -35,37 +34,33 @@ namespace Content.Server.GameObjects.Components.Movement
         /// </summary>
         public void TryMoveTo(Vector2 from, Vector2 to)
         {
-            if (Body != null)
-            {
-                _climbController = Body.EnsureController<ClimbController>();
-                _climbController.TryMoveTo(from, to);
-            }
+            if (Body == null)
+                return;
+
+            _climbController = Body.EnsureController<ClimbController>();
+            _climbController.TryMoveTo(from, to);
         }
 
-        public void Update(float frameTime)
+        public void Update()
         {
-            if (Body != null && IsClimbing)
+            if (!IsClimbing || Body == null)
+                return;
+
+            if (_climbController != null && (_climbController.IsBlocked || !_climbController.IsActive))
             {
-                if (_climbController != null && (_climbController.IsBlocked || !_climbController.IsActive))
+                if (Body.TryRemoveController<ClimbController>())
                 {
-                    if (Body.TryRemoveController<ClimbController>())
-                    {
-                        _climbController = null;
-                    }
+                    _climbController = null;
                 }
-
-                if (IsClimbing)
-                {
-                    Body.WakeBody();
-                }
-
-                if (!IsOnClimbableThisFrame && IsClimbing && _climbController == null)
-                {
-                    IsClimbing = false;
-                }
-
-                IsOnClimbableThisFrame = false;
             }
+
+            if (IsClimbing)
+                Body.WakeBody();
+
+            if (!IsOnClimbableThisFrame && IsClimbing && _climbController == null)
+                IsClimbing = false;
+
+            IsOnClimbableThisFrame = false;
         }
 
         public override ComponentState GetComponentState()

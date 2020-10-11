@@ -181,9 +181,9 @@ namespace Content.Client.State
                 }
                 */
 
-                var transx = x.clicked.Transform;
-                var transy = y.clicked.Transform;
-                val = transx.Coordinates.Y.CompareTo(transy.Coordinates.Y);
+                var transX = x.clicked.Transform;
+                var transY = y.clicked.Transform;
+                val = transX.Coordinates.Y.CompareTo(transY.Coordinates.Y);
                 if (val != 0)
                 {
                     return val;

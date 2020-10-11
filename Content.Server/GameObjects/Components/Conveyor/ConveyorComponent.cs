@@ -20,7 +20,6 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
-using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -30,7 +29,6 @@ namespace Content.Server.GameObjects.Components.Conveyor
     public class ConveyorComponent : Component, IInteractUsing
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
 
         public override string Name => "Conveyor";
 
@@ -113,8 +111,8 @@ namespace Content.Server.GameObjects.Components.Conveyor
                 return false;
             }
 
-            if (!entity.TryGetComponent(out ICollidableComponent? collidable) ||
-                collidable.Anchored)
+            if (!entity.TryGetComponent(out IPhysicsComponent? physics) ||
+                physics.Anchored)
             {
                 return false;
             }
@@ -154,9 +152,9 @@ namespace Content.Server.GameObjects.Components.Conveyor
                     continue;
                 }
 
-                if (entity.TryGetComponent(out ICollidableComponent? collidable))
+                if (entity.TryGetComponent(out IPhysicsComponent? physics))
                 {
-                    var controller = collidable.EnsureController<ConveyedController>();
+                    var controller = physics.EnsureController<ConveyedController>();
                     controller.Move(direction, _speed * frameTime);
                 }
             }

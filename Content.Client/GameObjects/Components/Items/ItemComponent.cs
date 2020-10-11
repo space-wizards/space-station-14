@@ -10,9 +10,9 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Renderable;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.IoC;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
-using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components.Items

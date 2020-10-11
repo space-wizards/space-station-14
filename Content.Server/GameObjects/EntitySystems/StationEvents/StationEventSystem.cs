@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Content.Server.StationEvents;
+using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
+using Content.Server.StationEvents;
 using JetBrains.Annotations;
 using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
@@ -30,7 +31,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
 
         private List<StationEvent> _stationEvents = new List<StationEvent>();
 
-        private const float MinimumTimeUntilFirstEvent = 600;
+        private const float MinimumTimeUntilFirstEvent = 300;
 
         /// <summary>
         /// How long until the next check for an event runs
@@ -196,7 +197,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
             }
 
             // Stop events from happening in lobby and force active event to end if the round ends
-            if (_gameTicker.RunLevel != GameTicking.GameRunLevel.InRound)
+            if (_gameTicker.RunLevel != GameRunLevel.InRound)
             {
                 if (CurrentEvent != null)
                 {

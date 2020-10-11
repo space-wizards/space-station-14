@@ -36,7 +36,6 @@ namespace Content.Server.GameObjects.Components.Items.Storage
     [ComponentReference(typeof(IStorageComponent))]
     public class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IUse, IActivate, IStorageComponent, IDestroyAct, IExAct
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private const string LoggerName = "Storage";
@@ -52,6 +51,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         [ViewVariables]
         public override IReadOnlyList<IEntity>? StoredEntities => _storage?.ContainedEntities;
 
+        [ViewVariables(VVAccess.ReadWrite)]
         public bool OccludesLight
         {
             get => _occludesLight;

@@ -23,20 +23,12 @@ namespace Content.Shared.Damage.DamageContainer
 
         public DamageContainer(HealthChangedDelegate onHealthChanged, DamageContainerPrototype data)
         {
+            ID = data.ID;
             OnHealthChanged = onHealthChanged;
             SupportedClasses = data.ActiveDamageClasses;
         }
 
-        public DamageContainer(HealthChangedDelegate onHealthChanged, List<DamageClass> supportedClasses)
-        {
-            OnHealthChanged = onHealthChanged;
-            SupportedClasses = supportedClasses;
-        }
-
-        public DamageContainer(HealthChangedDelegate onHealthChanged)
-        {
-            OnHealthChanged = onHealthChanged;
-        }
+        public string ID { get; }
 
         [ViewVariables] public virtual List<DamageClass> SupportedClasses { get; }
 

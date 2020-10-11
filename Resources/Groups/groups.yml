@@ -70,6 +70,7 @@
   - respawn
   - rejuvenate
   - addcomp
+  - rmcomp
   - controlmob
   - kick
   - listplayers
@@ -192,9 +193,10 @@
   - fillgas
   - listgases
   - removegas
-  - clearatmos
   - settemp
   - setatmostemp
+  - deletegas
+  - showatmos
   - tilewalls
   - events
   - destroymechanism

@@ -11,8 +11,7 @@
   components:
   - type: Sprite
     sprite: Objects/Misc/bedsheets.rsi
-  - type: Icon
-    sprite: Objects/Misc/bedsheets.rsi
+
   - type: Clothing
     size: 10
     QuickEquip: true
@@ -28,8 +27,7 @@
   components:
   - type: Sprite
     state: sheetblack
-  - type: Icon
-    state: sheetblack
+
   - type: Clothing
     size: 10
     QuickEquip: true
@@ -45,8 +43,7 @@
   components:
   - type: Sprite
     state: sheetblue
-  - type: Icon
-    state: sheetblue
+
   - type: Clothing
     size: 10
     QuickEquip: true
@@ -62,8 +59,7 @@
   components:
   - type: Sprite
     state: sheetbrown
-  - type: Icon
-    state: sheetbrown
+
   - type: Clothing
     size: 10
     QuickEquip: true
@@ -80,8 +76,7 @@
   components:
   - type: Sprite
     state: sheetcaptain
-  - type: Icon
-    state: sheetcaptain
+
   - type: Clothing
     size: 10
     QuickEquip: true
@@ -97,8 +92,7 @@
   components:
   - type: Sprite
     state: sheetce
-  - type: Icon
-    state: sheetce
+
   - type: Clothing
     size: 10
     QuickEquip: true
@@ -114,8 +108,7 @@
   components:
   - type: Sprite
     state: sheetcentcom
-  - type: Icon
-    state: sheetcentcom
+
   - type: Clothing
     size: 10
     QuickEquip: true
@@ -131,8 +124,7 @@
   components:
   - type: Sprite
     state: sheetclown
-  - type: Icon
-    state: sheetclown
+
   - type: Clothing
     size: 10
     QuickEquip: true
@@ -148,8 +140,7 @@
   components:
   - type: Sprite
     state: sheetcmo
-  - type: Icon
-    state: sheetcmo
+
   - type: Clothing
     size: 10
     QuickEquip: true
@@ -165,8 +156,7 @@
   components:
   - type: Sprite
     state: sheetcosmos
-  - type: Icon
-    state: sheetcosmos
+
   - type: Clothing
     size: 10
     QuickEquip: true
@@ -182,8 +172,7 @@
   components:
   - type: Sprite
     state: sheetcult
-  - type: Icon
-    state: sheetcult
+
   - type: Clothing
     size: 10
     QuickEquip: true
@@ -199,8 +188,7 @@
   components:
   - type: Sprite
     state: sheetgreen
-  - type: Icon
-    state: sheetgreen
+
   - type: Clothing
     size: 10
     QuickEquip: true
@@ -216,8 +204,7 @@
   components:
   - type: Sprite
     state: sheetgrey
-  - type: Icon
-    state: sheetgrey
+
   - type: Clothing
     size: 10
     QuickEquip: true
@@ -233,8 +220,7 @@
   components:
   - type: Sprite
     state: sheethop
-  - type: Icon
-    state: sheethop
+
   - type: Clothing
     size: 10
     QuickEquip: true
@@ -250,8 +236,7 @@
   components:
   - type: Sprite
     state: sheethos
-  - type: Icon
-    state: sheethos
+
   - type: Clothing
     size: 10
     QuickEquip: true
@@ -267,8 +252,7 @@
   components:
   - type: Sprite
     state: sheetian
-  - type: Icon
-    state: sheetian
+
   - type: Clothing
     size: 10
     QuickEquip: true
@@ -284,8 +268,7 @@
   components:
   - type: Sprite
     state: sheetmedical
-  - type: Icon
-    state: sheetmedical
+
   - type: Clothing
     size: 10
     QuickEquip: true
@@ -301,8 +284,7 @@
   components:
   - type: Sprite
     state: sheetmime
-  - type: Icon
-    state: sheetmime
+
   - type: Clothing
     size: 10
     QuickEquip: true
@@ -318,8 +300,7 @@
   components:
   - type: Sprite
     state: sheetNT
-  - type: Icon
-    state: sheetNT
+
   - type: Clothing
     size: 10
     QuickEquip: true
@@ -335,8 +316,7 @@
   components:
   - type: Sprite
     state: sheetorange
-  - type: Icon
-    state: sheetorange
+
   - type: Clothing
     size: 10
     QuickEquip: true
@@ -352,8 +332,7 @@
   components:
   - type: Sprite
     state: sheetpurple
-  - type: Icon
-    state: sheetpurple
+
   - type: Clothing
     size: 10
     QuickEquip: true
@@ -369,8 +348,7 @@
   components:
   - type: Sprite
     state: sheetqm
-  - type: Icon
-    state: sheetqm
+
   - type: Clothing
     size: 10
     QuickEquip: true
@@ -386,8 +364,7 @@
   components:
   - type: Sprite
     state: sheetrainbow
-  - type: Icon
-    state: sheetrainbow
+
   - type: Clothing
     size: 10
     QuickEquip: true
@@ -403,8 +380,7 @@
   components:
   - type: Sprite
     state: sheetrd
-  - type: Icon
-    state: sheetrd
+
   - type: Clothing
     size: 10
     QuickEquip: true
@@ -420,8 +396,7 @@
   components:
   - type: Sprite
     state: sheetred
-  - type: Icon
-    state: sheetred
+
   - type: Clothing
     size: 10
     QuickEquip: true
@@ -437,8 +412,7 @@
   components:
   - type: Sprite
     state: sheetsyndie
-  - type: Icon
-    state: sheetsyndie
+
   - type: Clothing
     size: 10
     QuickEquip: true
@@ -454,8 +428,7 @@
   components:
   - type: Sprite
     state: sheetUSA
-  - type: Icon
-    state: sheetUSA
+
   - type: Clothing
     size: 10
     QuickEquip: true
@@ -471,8 +444,7 @@
   components:
   - type: Sprite
     state: sheetwhite
-  - type: Icon
-    state: sheetwhite
+
   - type: Clothing
     size: 10
     QuickEquip: true
@@ -488,8 +460,7 @@
   components:
   - type: Sprite
     state: sheetwiz
-  - type: Icon
-    state: sheetwiz
+
   - type: Clothing
     size: 10
     QuickEquip: true
@@ -505,8 +476,7 @@
   components:
   - type: Sprite
     state: sheetyellow
-  - type: Icon
-    state: sheetyellow
+
   - type: Clothing
     size: 10
     QuickEquip: true
