@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Atmos;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {

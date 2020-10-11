@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 

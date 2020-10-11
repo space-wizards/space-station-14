@@ -6,6 +6,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Content.Shared.Atmos;
+using Robust.Shared.Maths;
 
 namespace Content.Shared.GameObjects.EntitySystems.Atmos
 {
