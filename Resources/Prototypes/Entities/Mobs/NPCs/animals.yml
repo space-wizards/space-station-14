@@ -26,7 +26,7 @@
       sprite: Mobs/Animals/monkey.rsi
 
   - type: Clickable
-  - type: Physics
+  - type: Collidable
     mass: 50
   - type: Collidable
     shapes:
@@ -79,7 +79,7 @@
       state: crawling
       sprite: Mobs/Animals/gorilla.rsi
 
-  - type: Physics
+  - type: Collidable
     mass: 90
   - type: Collidable
     shapes:
@@ -115,7 +115,7 @@
       state: chicken-0
       sprite: Mobs/Animals/chicken.rsi
 
-  - type: Physics
+  - type: Collidable
     mass: 20
   - type: Collidable
     shapes:
@@ -154,7 +154,7 @@
       state: butterfly
       sprite: Mobs/Animals/butterfly.rsi
 
-  - type: Physics
+  - type: Collidable
     mass: 5
   - type: Collidable
     shapes:
@@ -203,7 +203,7 @@
       state: bat
       sprite: Mobs/Animals/bat.rsi
 
-  - type: Physics
+  - type: Collidable
     mass: 5
   - type: Collidable
     shapes:
@@ -243,7 +243,7 @@
       state: 0
       sprite: Mobs/Animals/bee.rsi
 
-  - type: Physics
+  - type: Collidable
     mass: 5
   - type: Collidable
     shapes:
@@ -279,7 +279,7 @@
       state: goat
       sprite: Mobs/Animals/goat.rsi
 
-  - type: Physics
+  - type: Collidable
     mass: 20
   - type: Collidable
     shapes:
@@ -316,7 +316,7 @@
       state: goose
       sprite: Mobs/Animals/goose.rsi
 
-  - type: Physics
+  - type: Collidable
     mass: 20
   - type: Collidable
     shapes:
@@ -356,7 +356,7 @@
       state: parrot
       sprite: Mobs/Animals/parrot.rsi
 
-  - type: Physics
+  - type: Collidable
     mass: 20
   - type: Collidable
     shapes:
@@ -392,7 +392,7 @@
       state: snake
       sprite: Mobs/Animals/snake.rsi
 
-  - type: Physics
+  - type: Collidable
     mass: 10
   - type: Collidable
     shapes:
@@ -431,7 +431,7 @@
       state: tarantula
       sprite: Mobs/Animals/spider.rsi
 
-  - type: Physics
+  - type: Collidable
     mass: 10
   - type: Collidable
     shapes:
@@ -467,7 +467,7 @@
       state: crab
       sprite: Mobs/Animals/crab.rsi
 
-  - type: Physics
+  - type: Collidable
     mass: 10
   - type: Collidable
     shapes:
@@ -503,7 +503,7 @@
       state: penguin
       sprite: Mobs/Animals/penguin.rsi
 
-  - type: Physics
+  - type: Collidable
     mass: 10
   - type: Collidable
     shapes:

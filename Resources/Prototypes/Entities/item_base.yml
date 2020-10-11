@@ -15,7 +15,7 @@
       bounds: "-0.25,-0.25,0.25,0.25"
       layer:
       - Clickable
-  - type: Physics
+  - type: Collidable
     mass: 5
   - type: Sprite
     drawdepth: Items

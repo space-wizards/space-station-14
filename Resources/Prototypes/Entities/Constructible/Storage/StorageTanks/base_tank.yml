@@ -21,7 +21,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
-  - type: Physics
+  - type: Collidable
     mass: 15
     Anchored: false
   - type: Destructible

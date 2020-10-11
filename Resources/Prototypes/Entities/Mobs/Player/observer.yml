@@ -6,7 +6,7 @@
   description: Boo!
   components:
   - type: Mind
-  - type: Physics
+  - type: Collidable
     mass: 5
   - type: Collidable
     shapes:

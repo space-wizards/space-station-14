@@ -23,7 +23,7 @@
   - type: Icon
     sprite: Constructible/Power/VendingMachines/cola.rsi
     state: normal
-  - type: Physics
+  - type: Collidable
     mass: 85
   - type: Collidable
     shapes:

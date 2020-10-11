@@ -33,7 +33,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
-  - type: Physics
+  - type: Collidable
     mass: 25
     anchored: false
   - type: EntityStorage

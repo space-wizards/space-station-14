@@ -56,6 +56,6 @@
     - type: PowerDeviceVisualizer
   - type: PowerReceiver
   - type: Anchorable
-  - type: Physics
+  - type: Collidable
     mass: 25
     anchored: true

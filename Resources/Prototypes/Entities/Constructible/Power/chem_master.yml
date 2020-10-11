@@ -26,7 +26,7 @@
       - Impassable
       - MobImpassable
       - VaultImpassable
-  - type: Physics
+  - type: Collidable
     mass: 25
     anchored: true
   - type: SnapGrid
@@ -66,7 +66,7 @@
       - Impassable
       - MobImpassable
       - VaultImpassable
-  - type: Physics
+  - type: Collidable
     mass: 25
     anchored: true
   - type: SnapGrid
