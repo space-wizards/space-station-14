@@ -108,9 +108,12 @@ namespace Content.Server.StationEvents
                 var gameTicker = IoCManager.Resolve<IGameTicker>();
                 var defaultGrid = IoCManager.Resolve<IMapManager>().GetGrid(gameTicker.DefaultGridId);
 
+                if (defaultGrid.Index == GridId.Invalid)
+                    return;
+
                 if (pauseManager.IsGridPaused(defaultGrid))
                     return;
-                
+
                 SpawnPulse(defaultGrid);
             }
         }
