@@ -53,18 +53,35 @@
     stacktype: enum.StackType.Ointment
 
 - type: entity
+  name: bruise pack
+  description: A therapeutic gel pack and bandages designed to treat blunt-force trauma.
+  parent: MedicalStack
+  id: Brutepack
+  components:
+    - type: Sprite
+      sprite: Objects/Specific/Medical/medical.rsi
+      state: brutepack
+    - type: Healing
+      heal:
+        Blunt: 10
+    - type: Stack
+      max: 5
+      count: 5
+      stacktype: enum.StackType.Brutepack
+
+- type: entity
   name: roll of gauze
   description: Some sterile gauze to wrap around bloody stumps.
   parent: MedicalStack
-  id: Brutepack
+  id: Gauze
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/medical.rsi
     state: gauze
-  - type: Healing
-    heal:
-      Blunt: 10
+#  - type: Healing
+#    heal:
+#      Blunt: 10
   - type: Stack
     max: 5
     count: 5
-    stacktype: enum.StackType.Brutepack
+    stacktype: enum.StackType.Gauze
