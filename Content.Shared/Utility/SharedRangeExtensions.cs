@@ -1,4 +1,5 @@
-﻿using Content.Shared.GameObjects.EntitySystems;
+﻿#nullable enable
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects.Systems;
@@ -20,7 +21,7 @@ namespace Content.Shared.Utility
             IEntity other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
@@ -33,7 +34,7 @@ namespace Content.Shared.Utility
             IComponent other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
@@ -46,7 +47,7 @@ namespace Content.Shared.Utility
             IContainer other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
@@ -61,7 +62,7 @@ namespace Content.Shared.Utility
             EntityCoordinates other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
@@ -74,7 +75,7 @@ namespace Content.Shared.Utility
             MapCoordinates other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
@@ -89,7 +90,7 @@ namespace Content.Shared.Utility
             IEntity other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
@@ -104,7 +105,7 @@ namespace Content.Shared.Utility
             IComponent other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
@@ -119,7 +120,7 @@ namespace Content.Shared.Utility
             IContainer other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
@@ -135,7 +136,7 @@ namespace Content.Shared.Utility
             EntityCoordinates other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
@@ -150,7 +151,7 @@ namespace Content.Shared.Utility
             MapCoordinates other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
@@ -167,7 +168,7 @@ namespace Content.Shared.Utility
             IEntity other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false)
         {
             var originEntity = origin.Owner;
@@ -181,7 +182,7 @@ namespace Content.Shared.Utility
             IComponent other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
@@ -196,7 +197,7 @@ namespace Content.Shared.Utility
             IContainer other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
@@ -212,7 +213,7 @@ namespace Content.Shared.Utility
             EntityCoordinates other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
@@ -227,7 +228,7 @@ namespace Content.Shared.Utility
             MapCoordinates other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
@@ -244,11 +245,10 @@ namespace Content.Shared.Utility
             IEntity other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false)
         {
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            var originPosition = origin.ToMap(entityManager);
+            var originPosition = origin.ToMap(other.EntityManager);
             var otherPosition = other.Transform.MapPosition;
 
             return SharedInteractionSystem.InRangeUnobstructed(originPosition, otherPosition, range, collisionMask,
@@ -260,11 +260,10 @@ namespace Content.Shared.Utility
             IComponent other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false)
         {
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            var originPosition = origin.ToMap(entityManager);
+            var originPosition = origin.ToMap(other.Owner.EntityManager);
             var otherPosition = other.Owner.Transform.MapPosition;
 
             return SharedInteractionSystem.InRangeUnobstructed(originPosition, otherPosition, range, collisionMask,
@@ -276,11 +275,10 @@ namespace Content.Shared.Utility
             IContainer other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false)
         {
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            var originPosition = origin.ToMap(entityManager);
+            var originPosition = origin.ToMap(other.Owner.EntityManager);
             var otherPosition = other.Owner.Transform.MapPosition;
 
             return SharedInteractionSystem.InRangeUnobstructed(originPosition, otherPosition, range, collisionMask,
@@ -292,10 +290,12 @@ namespace Content.Shared.Utility
             EntityCoordinates other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
-            bool ignoreInsideBlocker = false)
+            Ignored? predicate = null,
+            bool ignoreInsideBlocker = false,
+            IEntityManager? entityManager = null)
         {
-            var entityManager = IoCManager.Resolve<IEntityManager>();
+            entityManager ??= IoCManager.Resolve<IEntityManager>();
+
             var originPosition = origin.ToMap(entityManager);
             var otherPosition = other.ToMap(entityManager);
 
@@ -308,10 +308,12 @@ namespace Content.Shared.Utility
             MapCoordinates other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
-            bool ignoreInsideBlocker = false)
+            Ignored? predicate = null,
+            bool ignoreInsideBlocker = false,
+            IEntityManager? entityManager = null)
         {
-            var entityManager = IoCManager.Resolve<IEntityManager>();
+            entityManager ??= IoCManager.Resolve<IEntityManager>();
+
             var originPosition = origin.ToMap(entityManager);
 
             return SharedInteractionSystem.InRangeUnobstructed(originPosition, other, range, collisionMask, predicate,
@@ -325,7 +327,7 @@ namespace Content.Shared.Utility
             IEntity other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false)
         {
             var otherPosition = other.Transform.MapPosition;
@@ -339,7 +341,7 @@ namespace Content.Shared.Utility
             IComponent other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false)
         {
             var otherPosition = other.Owner.Transform.MapPosition;
@@ -353,7 +355,7 @@ namespace Content.Shared.Utility
             IContainer other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false)
         {
             var otherPosition = other.Owner.Transform.MapPosition;
@@ -367,10 +369,12 @@ namespace Content.Shared.Utility
             EntityCoordinates other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
-            bool ignoreInsideBlocker = false)
+            Ignored? predicate = null,
+            bool ignoreInsideBlocker = false,
+            IEntityManager? entityManager = null)
         {
-            var entityManager = IoCManager.Resolve<IEntityManager>();
+            entityManager ??= IoCManager.Resolve<IEntityManager>();
+
             var otherPosition = other.ToMap(entityManager);
 
             return SharedInteractionSystem.InRangeUnobstructed(origin, otherPosition, range, collisionMask, predicate,
@@ -382,7 +386,7 @@ namespace Content.Shared.Utility
             MapCoordinates other,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false)
         {
             return SharedInteractionSystem.InRangeUnobstructed(origin, other, range, collisionMask, predicate,
@@ -395,7 +399,7 @@ namespace Content.Shared.Utility
             this ITargetedInteractEventArgs args,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
@@ -407,7 +411,7 @@ namespace Content.Shared.Utility
             this DragDropEventArgs args,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
@@ -419,7 +423,7 @@ namespace Content.Shared.Utility
             this AfterInteractEventArgs args,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored predicate = null,
+            Ignored? predicate = null,
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
