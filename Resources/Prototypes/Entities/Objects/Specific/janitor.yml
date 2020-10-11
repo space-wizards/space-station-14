@@ -43,7 +43,7 @@
       - Opaque
       layer:
       - Opaque
-  - type: Collidable
+  - type: Physics
     mass: 5
     anchored: false
   - type: Spillable
@@ -73,7 +73,7 @@
       bounds: "-0.25,-0.25,0.25,0.25"
       mask:
       - Impassable
-  - type: Collidable
+  - type: Physics
     mass: 5
     anchored: false
   - type: Spillable
@@ -177,7 +177,7 @@
       layers:
         - state: chempuff
           map: [ "enum.VaporVisualLayers.Base" ]
-    - type: Collidable
+    - type: Physics
     - type: Collidable
       hard: false
       shapes:

@@ -20,7 +20,7 @@
     baseSprintSpeed : 5
   - type: InteractionOutline
   - type: Clickable
-  - type: Collidable
+  - type: Physics
     mass: 50
   - type: Collidable
     shapes:
@@ -71,7 +71,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: corgi
 
-  - type: Collidable
+  - type: Physics
     mass: 10
   - type: Collidable
     shapes:
@@ -107,7 +107,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: ian
 
-  - type: Collidable
+  - type: Physics
     mass: 10
   - type: Collidable
     shapes:
@@ -143,7 +143,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: cat
 
-  - type: Collidable
+  - type: Physics
     mass: 10
   - type: Collidable
     shapes:
@@ -216,7 +216,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: sloth
 
-  - type: Collidable
+  - type: Physics
     mass: 10
   - type: Collidable
     shapes:

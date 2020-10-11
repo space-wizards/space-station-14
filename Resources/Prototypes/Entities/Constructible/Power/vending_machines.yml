@@ -3,7 +3,7 @@
   name: vending machine
   abstract: true
   components:
-  - type: Collidable
+  - type: Physics
     anchored: true
   - type: Clickable
   - type: InteractionOutline

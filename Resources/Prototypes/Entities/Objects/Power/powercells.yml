@@ -103,7 +103,7 @@
     visuals:
     - type: PowerChargerVisualizer
   - type: Anchorable
-  - type: Collidable
+  - type: Physics
     mass: 5
   - type: Clickable
   - type: InteractionOutline
@@ -132,7 +132,7 @@
     visuals:
     - type: PowerChargerVisualizer
   - type: Anchorable
-  - type: Collidable
+  - type: Physics
     mass: 5
   - type: Clickable
   - type: InteractionOutline
@@ -160,7 +160,7 @@
   - type: Appearance
     visuals:
     - type: PowerChargerVisualizer
-  - type: Collidable
+  - type: Physics
     mass: 5
   - type: Clickable
   - type: InteractionOutline

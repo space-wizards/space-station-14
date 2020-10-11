@@ -26,7 +26,7 @@
       - Opaque
       - MobImpassable
       - SmallImpassable
-  - type: Collidable
+  - type: Physics
     mass: 25
     anchored: false
   - type: EntityStorage

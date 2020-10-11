@@ -21,7 +21,7 @@
       mask:
       - Impassable
       - MobImpassable
-  - type: Collidable
+  - type: Physics
     edgeslide: false
   - type: Projectile
     soundHit: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
@@ -104,7 +104,7 @@
       bounds: "-0.2,-0.2,0.2,0.2"
       layer: 32
       mask: 30
-  - type: Collidable
+  - type: Physics
     edgeslide: false
 
 # Launcher projectiles (grenade / rocket)
