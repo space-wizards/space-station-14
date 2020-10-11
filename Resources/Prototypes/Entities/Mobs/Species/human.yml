@@ -116,6 +116,7 @@
     - map: [ "enum.Slots.MASK" ]
     - map: [ "enum.Slots.HEAD" ]
   - type: Collidable
+    anchored: false
     mass: 85
     shapes:
     - !type:PhysShapeAabb
@@ -279,6 +280,7 @@
       - map: ["hand-left"]
       - map: ["hand-right"]
     - type: Collidable
+      anchored: false
       mass: 85
       shapes:
       - !type:PhysShapeAabb

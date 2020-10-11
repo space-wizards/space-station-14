@@ -24,6 +24,7 @@
     sprite: Constructible/Power/VendingMachines/cola.rsi
     state: normal
   - type: Collidable
+    anchored: false
     mass: 85
     shapes:
     - !type:PhysShapeAabb

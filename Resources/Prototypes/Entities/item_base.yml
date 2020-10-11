@@ -10,6 +10,7 @@
   - type: MovedByPressure
   - type: DamageOnHighSpeedImpact
   - type: Collidable
+    anchored: false
     mass: 5
     shapes:
     - !type:PhysShapeAabb

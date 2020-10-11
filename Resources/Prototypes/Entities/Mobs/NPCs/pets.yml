@@ -21,6 +21,7 @@
   - type: InteractionOutline
   - type: Clickable
   - type: Collidable
+    anchored: false
     mass: 50
     shapes:
     - !type:PhysShapeAabb

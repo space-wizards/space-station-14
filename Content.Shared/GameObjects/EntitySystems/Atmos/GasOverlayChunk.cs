@@ -22,10 +22,10 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
 
         public GameTick LastUpdate { get; private set; }
 
-        public GasOverlayChunk(GridId gridIndices, Vector2i Vector2i)
+        public GasOverlayChunk(GridId gridIndices, Vector2i vector2i)
         {
             GridIndices = gridIndices;
-            Vector2i = Vector2i;
+            Vector2i = vector2i;
         }
 
         public void Dirty(GameTick currentTick)

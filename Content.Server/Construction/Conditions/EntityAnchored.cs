@@ -20,19 +20,19 @@ namespace Content.Server.Construction.Conditions
 
         public async Task<bool> Condition(IEntity entity)
         {
-            if (!entity.TryGetComponent(out ICollidableComponent collidable)) return false;
+            if (!entity.TryGetComponent(out IPhysicsComponent physics)) return false;
 
-            return collidable.Anchored == Anchored;
+            return physics.Anchored == Anchored;
         }
 
         public void DoExamine(IEntity entity, FormattedMessage message, bool inDetailsRange)
         {
-            if (!entity.TryGetComponent(out ICollidableComponent collidable)) return;
+            if (!entity.TryGetComponent(out IPhysicsComponent physics)) return;
 
-            if(Anchored && !collidable.Anchored)
+            if(Anchored && !physics.Anchored)
                 message.AddMarkup("First, anchor it.\n");
 
-            if(!Anchored && collidable.Anchored)
+            if(!Anchored && physics.Anchored)
                 message.AddMarkup("First, unanchor it.\n");
         }
     }

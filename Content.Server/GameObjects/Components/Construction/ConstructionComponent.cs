@@ -422,10 +422,10 @@ namespace Content.Server.GameObjects.Components.Construction
                 }
             }
 
-            if (Owner.TryGetComponent(out CollidableComponent? collidable) &&
-                entity.TryGetComponent(out CollidableComponent? otherCollidable))
+            if (Owner.TryGetComponent(out IPhysicsComponent? physics) &&
+                entity.TryGetComponent(out IPhysicsComponent? otherPhysics))
             {
-                otherCollidable.Anchored = collidable.Anchored;
+                otherPhysics.Anchored = physics.Anchored;
             }
 
             Owner.Delete();

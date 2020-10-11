@@ -4,6 +4,7 @@
   parent: BaseItem
   components:
   - type: Collidable
+    anchored: false
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.15,-0.3,0.2,0.3"

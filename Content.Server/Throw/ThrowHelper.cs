@@ -41,7 +41,7 @@ namespace Content.Server.Throw
         /// </param>
         public static void Throw(IEntity thrownEnt, float throwForce, EntityCoordinates targetLoc, EntityCoordinates sourceLoc, bool spread = false, IEntity throwSourceEnt = null)
         {
-            if (!thrownEnt.TryGetComponent(out ICollidableComponent colComp))
+            if (!thrownEnt.TryGetComponent(out IPhysicsComponent colComp))
                 return;
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
@@ -84,7 +84,7 @@ namespace Content.Server.Throw
             projComp.StartThrow(angle.ToVec(), spd);
 
             if (throwSourceEnt != null &&
-                throwSourceEnt.TryGetComponent<ICollidableComponent>(out var physics) &&
+                throwSourceEnt.TryGetComponent<IPhysicsComponent>(out var physics) &&
                 physics.TryGetController(out MoverController mover))
             {
                 var physicsMgr = IoCManager.Resolve<IPhysicsManager>();
@@ -139,9 +139,9 @@ namespace Content.Server.Throw
 
             var throwDuration = ThrownItemComponent.DefaultThrowTime;
             var mass = 1f;
-            if (thrownEnt.TryGetComponent(out ICollidableComponent collidable))
+            if (thrownEnt.TryGetComponent(out IPhysicsComponent physics))
             {
-                mass = collidable.Mass;
+                mass = physics.Mass;
             }
 
             var velocityNecessary = distance / throwDuration;

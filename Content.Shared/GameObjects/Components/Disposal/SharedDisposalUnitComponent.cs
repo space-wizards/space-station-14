@@ -20,8 +20,8 @@ namespace Content.Shared.GameObjects.Components.Disposal
 
         [ViewVariables]
         public bool Anchored =>
-            !Owner.TryGetComponent(out CollidableComponent? collidable) ||
-            collidable.Anchored;
+            !Owner.TryGetComponent(out IPhysicsComponent? physics) ||
+            physics.Anchored;
 
         [Serializable, NetSerializable]
         public enum Visuals
@@ -104,7 +104,7 @@ namespace Content.Shared.GameObjects.Components.Disposal
             for (var i = _intersecting.Count - 1; i >= 0; i--)
             {
                 var entity = _intersecting[i];
-                
+
                 if (!Owner.EntityManager.IsIntersecting(entity, Owner))
                     _intersecting.RemoveAt(i);
             }
@@ -133,10 +133,10 @@ namespace Content.Shared.GameObjects.Components.Disposal
             {
                 if (ReferenceEquals(null, other)) return false;
                 if (ReferenceEquals(this, other)) return true;
-                return UnitName == other.UnitName && 
-                       UnitState == other.UnitState && 
-                       Powered == other.Powered && 
-                       Engaged == other.Engaged && 
+                return UnitName == other.UnitName &&
+                       UnitState == other.UnitState &&
+                       Powered == other.Powered &&
+                       Engaged == other.Engaged &&
                        Pressure.Equals(other.Pressure);
             }
         }

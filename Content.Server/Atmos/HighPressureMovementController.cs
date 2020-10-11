@@ -17,7 +17,7 @@ namespace Content.Server.Atmos
     {
         [Dependency] private IRobustRandom _robustRandom = default!;
         [Dependency] private IPhysicsManager _physicsManager = default!;
-        public override ICollidableComponent? ControlledComponent { protected get; set; }
+        public override IPhysicsComponent? ControlledComponent { protected get; set; }
 
         private const float MoveForcePushRatio = 1f;
         private const float MoveForceForcePushRatio = 1f;
