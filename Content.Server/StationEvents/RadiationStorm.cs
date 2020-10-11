@@ -23,7 +23,6 @@ namespace Content.Server.StationEvents
         // Based on Goonstation style radiation storm with some TG elements (announcer, etc.)
 
         [Dependency] private IEntityManager _entityManager = default!;
-        [Dependency] private IMapManager _mapManager = default!;
         [Dependency] private IRobustRandom _robustRandom = default!;
 
         public override string Name => "RadiationStorm";
@@ -72,7 +71,6 @@ namespace Content.Server.StationEvents
 
             // IOC uninject?
             _entityManager = null;
-            _mapManager = null;
             _robustRandom = null;
 
             var componentManager = IoCManager.Resolve<IComponentManager>();

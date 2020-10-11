@@ -22,7 +22,6 @@ namespace Content.Client.GameObjects.EntitySystems
     internal sealed class AtmosDebugOverlaySystem : SharedAtmosDebugOverlaySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IResourceCache _resourceCache = default!;
 
         private Dictionary<GridId, AtmosDebugOverlayMessage> _tileData =
             new Dictionary<GridId, AtmosDebugOverlayMessage>();
