@@ -123,7 +123,7 @@ namespace Content.Server.StationEvents
 
         private void SpawnPulse(IMapGrid mapGrid)
         {
-            if (TryFindRandomGrid(mapGrid, out var coordinates))
+            if (!TryFindRandomGrid(mapGrid, out var coordinates))
                 return;
 
             var pulse = _entityManager.SpawnEntity("RadiationPulse", coordinates);
