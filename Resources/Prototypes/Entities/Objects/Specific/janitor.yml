@@ -176,6 +176,7 @@
         - state: chempuff
           map: [ "enum.VaporVisualLayers.Base" ]
     - type: Collidable
+      anchored: false
       hard: false
       shapes:
         - !type:PhysShapeAabb

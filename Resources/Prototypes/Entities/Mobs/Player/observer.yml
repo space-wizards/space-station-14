@@ -7,6 +7,7 @@
   components:
   - type: Mind
   - type: Collidable
+    anchored: false
     mass: 5
     shapes:
     - !type:PhysShapeAabb

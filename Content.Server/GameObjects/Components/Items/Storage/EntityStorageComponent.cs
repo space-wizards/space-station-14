@@ -201,15 +201,15 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
         private void ModifyComponents()
         {
-            if (!_isCollidableWhenOpen && Owner.TryGetComponent<ICollidableComponent>(out var collidableComponent))
+            if (!_isCollidableWhenOpen && Owner.TryGetComponent<IPhysicsComponent>(out var physics))
             {
                 if (Open)
                 {
-                    collidableComponent.Hard = false;
+                    physics.Hard = false;
                 }
                 else
                 {
-                    collidableComponent.Hard = true;
+                    physics.Hard = true;
                 }
             }
 
@@ -226,31 +226,30 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
         private bool AddToContents(IEntity entity)
         {
-            var collidableComponent = Owner.GetComponent<ICollidableComponent>();
-            ICollidableComponent entityCollidableComponent;
-            if (entity.TryGetComponent(out entityCollidableComponent))
+            var physics = Owner.GetComponent<IPhysicsComponent>();
+            if (entity.TryGetComponent(out IPhysicsComponent entityPhysicsComponent))
             {
-                if(MaxSize < entityCollidableComponent.WorldAABB.Size.X
-                    || MaxSize < entityCollidableComponent.WorldAABB.Size.Y)
+                if(MaxSize < entityPhysicsComponent.WorldAABB.Size.X
+                    || MaxSize < entityPhysicsComponent.WorldAABB.Size.Y)
                 {
                     return false;
                 }
 
-                if (collidableComponent.WorldAABB.Left > entityCollidableComponent.WorldAABB.Left)
+                if (physics.WorldAABB.Left > entityPhysicsComponent.WorldAABB.Left)
                 {
-                    entity.Transform.WorldPosition += new Vector2(collidableComponent.WorldAABB.Left - entityCollidableComponent.WorldAABB.Left, 0);
+                    entity.Transform.WorldPosition += new Vector2(physics.WorldAABB.Left - entityPhysicsComponent.WorldAABB.Left, 0);
                 }
-                else if (collidableComponent.WorldAABB.Right < entityCollidableComponent.WorldAABB.Right)
+                else if (physics.WorldAABB.Right < entityPhysicsComponent.WorldAABB.Right)
                 {
-                    entity.Transform.WorldPosition += new Vector2(collidableComponent.WorldAABB.Right - entityCollidableComponent.WorldAABB.Right, 0);
+                    entity.Transform.WorldPosition += new Vector2(physics.WorldAABB.Right - entityPhysicsComponent.WorldAABB.Right, 0);
                 }
-                if (collidableComponent.WorldAABB.Bottom > entityCollidableComponent.WorldAABB.Bottom)
+                if (physics.WorldAABB.Bottom > entityPhysicsComponent.WorldAABB.Bottom)
                 {
-                    entity.Transform.WorldPosition += new Vector2(0, collidableComponent.WorldAABB.Bottom - entityCollidableComponent.WorldAABB.Bottom);
+                    entity.Transform.WorldPosition += new Vector2(0, physics.WorldAABB.Bottom - entityPhysicsComponent.WorldAABB.Bottom);
                 }
-                else if (collidableComponent.WorldAABB.Top < entityCollidableComponent.WorldAABB.Top)
+                else if (physics.WorldAABB.Top < entityPhysicsComponent.WorldAABB.Top)
                 {
-                    entity.Transform.WorldPosition += new Vector2(0, collidableComponent.WorldAABB.Top - entityCollidableComponent.WorldAABB.Top);
+                    entity.Transform.WorldPosition += new Vector2(0, physics.WorldAABB.Top - entityPhysicsComponent.WorldAABB.Top);
                 }
             }
             if (Contents.CanInsert(entity))
@@ -268,9 +267,9 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 }
                 Contents.Insert(entity);
                 entity.Transform.WorldPosition = worldPos;
-                if (entityCollidableComponent != null)
+                if (entityPhysicsComponent != null)
                 {
-                    entityCollidableComponent.CanCollide = false;
+                    entityPhysicsComponent.CanCollide = false;
                 }
                 return true;
             }
@@ -283,9 +282,9 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             {
                 if(Contents.Remove(contained))
                 {
-                    if (contained.TryGetComponent<ICollidableComponent>(out var entityCollidableComponent))
+                    if (contained.TryGetComponent<IPhysicsComponent>(out var physics))
                     {
-                        entityCollidableComponent.CanCollide = true;
+                        physics.CanCollide = true;
                     }
                 }
             }

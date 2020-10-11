@@ -417,9 +417,9 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             var startTile = gridManager.GetTileRef(entity.Transform.Coordinates);
             var endTile = gridManager.GetTileRef(steeringRequest.TargetGrid);
             var collisionMask = 0;
-            if (entity.TryGetComponent(out ICollidableComponent collidableComponent))
+            if (entity.TryGetComponent(out IPhysicsComponent physics))
             {
-                collisionMask = collidableComponent.CollisionMask;
+                collisionMask = physics.CollisionMask;
             }
 
             var access = AccessReader.FindAccessTags(entity);
@@ -603,10 +603,10 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
                 return Vector2.Zero;
             }
 
-            if (target.TryGetComponent(out ICollidableComponent collidable))
+            if (target.TryGetComponent(out IPhysicsComponent physics))
             {
                 var targetDistance = (targetPos.Position - entityPos.Position);
-                targetPos = targetPos.Offset(collidable.LinearVelocity * targetDistance);
+                targetPos = targetPos.Offset(physics.LinearVelocity * targetDistance);
             }
 
             return (targetPos.Position - entityPos.Position).Normalized;
@@ -621,7 +621,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         /// <returns></returns>
         private Vector2 CollisionAvoidance(IEntity entity, Vector2 direction, ICollection<IEntity> ignoredTargets)
         {
-            if (direction == Vector2.Zero || !entity.TryGetComponent(out ICollidableComponent collidableComponent))
+            if (direction == Vector2.Zero || !entity.TryGetComponent(out IPhysicsComponent physics))
             {
                 return Vector2.Zero;
             }
@@ -629,7 +629,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             // We'll check tile-by-tile
             // Rewriting this frequently so not many comments as they'll go stale
             // I realise this is bad so please rewrite it ;-;
-            var entityCollisionMask = collidableComponent.CollisionMask;
+            var entityCollisionMask = physics.CollisionMask;
             var avoidanceVector = Vector2.Zero;
             var checkTiles = new HashSet<TileRef>();
             var avoidTiles = new HashSet<TileRef>();
@@ -662,8 +662,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
                     // if we're moving in the same direction then ignore
                     // So if 2 entities are moving towards each other and both detect a collision they'll both move in the same direction
                     // i.e. towards the right
-                    if (physicsEntity.TryGetComponent(out ICollidableComponent collidable) &&
-                        Vector2.Dot(collidable.LinearVelocity, direction) > 0)
+                    if (physicsEntity.TryGetComponent(out IPhysicsComponent otherPhysics) &&
+                        Vector2.Dot(otherPhysics.LinearVelocity, direction) > 0)
                     {
                         continue;
                     }

@@ -12,6 +12,7 @@
     sprite: Objects/Weapons/Guns/Projectiles/bullet.rsi
     state: bullet
   - type: Collidable
+    anchored: false
     edgeslide: false
     hard: false
     shapes:

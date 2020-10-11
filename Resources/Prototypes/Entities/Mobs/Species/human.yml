@@ -116,6 +116,7 @@
     - map: [ "enum.Slots.MASK" ]
     - map: [ "enum.Slots.HEAD" ]
   - type: Collidable
+    anchored: false
     mass: 85
     shapes:
     - !type:PhysShapeAabb
@@ -139,11 +140,13 @@
     tempDamageCoefficient: 0.1
   - type: HumanoidAppearance
   - type: Body
-    criticalThreshold: 100
-    deadThreshold: 200
     template: HumanoidTemplate
     preset: HumanPreset
     centerSlot: torso
+  - type: Damageable
+    damagePrototype: biologicalDamageContainer
+    criticalThreshold: 100
+    deadThreshold: 200
   - type: Metabolism
     metabolismHeat: 5000
     radiatedHeat: 400
@@ -279,6 +282,7 @@
       - map: ["hand-left"]
       - map: ["hand-right"]
     - type: Collidable
+      anchored: false
       mass: 85
       shapes:
       - !type:PhysShapeAabb
@@ -292,11 +296,13 @@
         - MobImpassable
     - type: HumanoidAppearance
     - type: Body
-      criticalThreshold: 100
-      deadThreshold: 200
       template: HumanoidTemplate
       preset: HumanPreset
       centerSlot: torso
+    - type: Damageable
+      damagePrototype: biologicalDamageContainer
+      criticalThreshold: 100
+      deadThreshold: 200
     - type: MobStateManager
     - type: Appearance
       visuals:

@@ -202,7 +202,7 @@ namespace Content.Server.Atmos
 
             foreach (var entity in _gridTileLookupSystem.GetEntitiesIntersecting(GridIndex, GridIndices))
             {
-                if (!entity.TryGetComponent(out ICollidableComponent physics)
+                if (!entity.TryGetComponent(out IPhysicsComponent physics)
                     ||  !entity.TryGetComponent(out MovedByPressureComponent pressure)
                     ||  ContainerHelpers.IsInContainer(entity))
                     continue;

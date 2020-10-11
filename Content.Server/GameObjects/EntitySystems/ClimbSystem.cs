@@ -11,7 +11,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             foreach (var comp in ComponentManager.EntityQuery<ClimbingComponent>())
             {
-                comp.Update(frameTime);
+                comp.Update();
             }
         }
     }

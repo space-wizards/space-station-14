@@ -20,6 +20,7 @@
       state: carp
       sprite: Mobs/Aliens/Carps/carp_space.rsi
   - type: Collidable
+    anchored: false
     mass: 50
     shapes:
     - !type:PhysShapeAabb

@@ -58,9 +58,9 @@ namespace Content.Server.GameObjects.Components.Chemistry
             _velocity = velocity;
             _aliveTime = aliveTime;
             // Set Move
-            if (Owner.TryGetComponent(out ICollidableComponent collidable))
+            if (Owner.TryGetComponent(out IPhysicsComponent physics))
             {
-                var controller = collidable.EnsureController<VaporController>();
+                var controller = physics.EnsureController<VaporController>();
                 controller.Move(_direction, _velocity);
             }
         }
@@ -82,7 +82,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             _timer += frameTime;
             _reactTimer += frameTime;
 
-            if (_reactTimer >= ReactTime && Owner.TryGetComponent(out ICollidableComponent collidable))
+            if (_reactTimer >= ReactTime && Owner.TryGetComponent(out IPhysicsComponent physics))
             {
                 _reactTimer = 0;
                 var mapGrid = _mapManager.GetGrid(Owner.Transform.GridID);
@@ -101,7 +101,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             {
                 _reached = true;
 
-                if (Owner.TryGetComponent(out ICollidableComponent coll))
+                if (Owner.TryGetComponent(out IPhysicsComponent coll))
                 {
                     var controller = coll.EnsureController<VaporController>();
                     controller.Stop();
@@ -150,11 +150,11 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
 
             // Check for collision with a impassable object (e.g. wall) and stop
-            if (collidedWith.TryGetComponent(out ICollidableComponent collidable))
+            if (collidedWith.TryGetComponent(out IPhysicsComponent physics))
             {
-                if ((collidable.CollisionLayer & (int) CollisionGroup.Impassable) != 0 && collidable.Hard)
+                if ((physics.CollisionLayer & (int) CollisionGroup.Impassable) != 0 && physics.Hard)
                 {
-                    if (Owner.TryGetComponent(out ICollidableComponent coll))
+                    if (Owner.TryGetComponent(out IPhysicsComponent coll))
                     {
                         var controller = coll.EnsureController<VaporController>();
                         controller.Stop();

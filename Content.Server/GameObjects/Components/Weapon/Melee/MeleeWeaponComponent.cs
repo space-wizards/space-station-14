@@ -29,8 +29,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         private TimeSpan _lastAttackTime;
         private TimeSpan _cooldownEnd;
 
-        private readonly string _hitSound;
-        private readonly string _missSound;
+        private readonly string _hitSound = default!;
+        private readonly string _missSound = default!;
         public float ArcCooldownTime { get; private set; } = 1f;
         public float CooldownTime { get; private set; } = 0.5f;
 
@@ -93,7 +93,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             var entities = ArcRayCast(eventArgs.User.Transform.WorldPosition, angle, eventArgs.User);
 
             var audioSystem = EntitySystem.Get<AudioSystem>();
-            if (entities.Count() != 0)
+            if (entities.Count != 0)
             {
                 audioSystem.PlayFromEntity( _hitSound, entities.First());
             }

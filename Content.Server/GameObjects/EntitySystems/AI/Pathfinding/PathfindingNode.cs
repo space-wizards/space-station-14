@@ -41,10 +41,10 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             GenerateMask();
         }
 
-        public static bool IsRelevant(IEntity entity, ICollidableComponent collidableComponent)
+        public static bool IsRelevant(IEntity entity, IPhysicsComponent physicsComponent)
         {
             if (entity.Transform.GridID == GridId.Invalid ||
-                (PathfindingSystem.TrackedCollisionLayers & collidableComponent.CollisionLayer) == 0)
+                (PathfindingSystem.TrackedCollisionLayers & physicsComponent.CollisionLayer) == 0)
             {
                 return false;
             }
@@ -257,7 +257,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         /// <param name="entity"></param>
         /// TODO: These 2 methods currently don't account for a bunch of changes (e.g. airlock unpowered, wrenching, etc.)
         /// TODO: Could probably optimise this slightly more.
-        public void AddEntity(IEntity entity, ICollidableComponent collidableComponent)
+        public void AddEntity(IEntity entity, IPhysicsComponent physicsComponent)
         {
             // If we're a door
             if (entity.HasComponent<AirlockComponent>() || entity.HasComponent<ServerDoorComponent>())
@@ -274,15 +274,15 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
                 return;
             }
 
-            DebugTools.Assert((PathfindingSystem.TrackedCollisionLayers & collidableComponent.CollisionLayer) != 0);
+            DebugTools.Assert((PathfindingSystem.TrackedCollisionLayers & physicsComponent.CollisionLayer) != 0);
 
-            if (!collidableComponent.Anchored)
+            if (!physicsComponent.Anchored)
             {
-                _physicsLayers.Add(entity, collidableComponent.CollisionLayer);
+                _physicsLayers.Add(entity, physicsComponent.CollisionLayer);
             }
             else
             {
-                _blockedCollidables.Add(entity, collidableComponent.CollisionLayer);
+                _blockedCollidables.Add(entity, physicsComponent.CollisionLayer);
                 GenerateMask();
                 ParentChunk.Dirty();
             }

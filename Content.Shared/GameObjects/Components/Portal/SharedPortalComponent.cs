@@ -13,9 +13,9 @@ namespace Content.Shared.GameObjects.Components.Portal
         {
             base.OnAdd();
 
-            if (Owner.TryGetComponent<ICollidableComponent>(out var collidable))
+            if (Owner.TryGetComponent<IPhysicsComponent>(out var physics))
             {
-                collidable.Hard = false;
+                physics.Hard = false;
             }
         }
     }

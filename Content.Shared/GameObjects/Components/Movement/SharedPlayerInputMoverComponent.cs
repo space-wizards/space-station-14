@@ -144,11 +144,11 @@ namespace Content.Shared.GameObjects.Components.Movement
         /// <inheritdoc />
         public override void OnAdd()
         {
-            // This component requires that the entity has a CollidableComponent.
-            if (!Owner.HasComponent<ICollidableComponent>())
+            // This component requires that the entity has a IPhysicsComponent.
+            if (!Owner.HasComponent<IPhysicsComponent>())
                 Logger.Error(
                     $"[ECS] {Owner.Prototype?.Name} - {nameof(SharedPlayerInputMoverComponent)} requires" +
-                    $" {nameof(ICollidableComponent)}. ");
+                    $" {nameof(IPhysicsComponent)}. ");
 
             base.OnAdd();
         }
