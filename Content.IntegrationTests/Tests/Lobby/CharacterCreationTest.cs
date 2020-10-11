@@ -51,29 +51,33 @@ namespace Content.IntegrationTests.Tests.Lobby
             Assert.NotNull(clientNetManager.ServerChannel);
 
             var clientNetId = clientNetManager.ServerChannel.UserId;
+            var profile = HumanoidCharacterProfile.Random();
 
             await client.WaitAssertion(() =>
             {
                 clientPrefManager.SelectCharacter(0);
 
-                var clientCharacters = clientPrefManager.Preferences.Characters.Count;
-                Assert.That(clientCharacters, Is.EqualTo(1));
+                var clientCharacters = clientPrefManager.Preferences.Characters;
+                Assert.That(clientCharacters.Count, Is.EqualTo(1));
 
                 Assert.That(clientStateManager.CurrentState, Is.TypeOf<LobbyState>());
 
-                clientPrefManager.CreateCharacter(HumanoidCharacterProfile.Default());
+                clientPrefManager.CreateCharacter(profile);
 
-                clientCharacters = clientPrefManager.Preferences.Characters.Count;
+                clientCharacters = clientPrefManager.Preferences.Characters;
 
-                Assert.That(clientCharacters, Is.EqualTo(2));
+                Assert.That(clientCharacters.Count, Is.EqualTo(2));
+                Assert.That(clientCharacters[1], Is.EqualTo(profile));
             });
 
             await WaitUntil(server, () => serverPrefManager.GetPreferences(clientNetId).Characters.Count == 2, maxTicks: 60);
 
             await server.WaitAssertion(() =>
             {
-                var serverCharacters = serverPrefManager.GetPreferences(clientNetId).Characters.Count;
-                Assert.That(serverCharacters, Is.EqualTo(2));
+                var serverCharacters = serverPrefManager.GetPreferences(clientNetId).Characters;
+
+                Assert.That(serverCharacters.Count, Is.EqualTo(2));
+                Assert.That(serverCharacters[1], Is.EqualTo(profile));
             });
 
             await client.WaitAssertion(() =>
@@ -96,18 +100,24 @@ namespace Content.IntegrationTests.Tests.Lobby
 
             await client.WaitAssertion(() =>
             {
-                clientPrefManager.CreateCharacter(HumanoidCharacterProfile.Default());
+                profile = HumanoidCharacterProfile.Random();
 
-                var clientCharacters = clientPrefManager.Preferences.Characters.Count;
-                Assert.That(clientCharacters, Is.EqualTo(2));
+                clientPrefManager.CreateCharacter(profile);
+
+                var clientCharacters = clientPrefManager.Preferences.Characters;
+
+                Assert.That(clientCharacters.Count, Is.EqualTo(2));
+                Assert.That(clientCharacters[1], Is.EqualTo(profile));
             });
 
             await WaitUntil(server, () => serverPrefManager.GetPreferences(clientNetId).Characters.Count == 2, maxTicks: 60);
 
             await server.WaitAssertion(() =>
             {
-                var serverCharacters = serverPrefManager.GetPreferences(clientNetId).Characters.Count;
-                Assert.That(serverCharacters, Is.EqualTo(2));
+                var serverCharacters = serverPrefManager.GetPreferences(clientNetId).Characters;
+
+                Assert.That(serverCharacters.Count, Is.EqualTo(2));
+                Assert.That(serverCharacters[1], Is.EqualTo(profile));
             });
         }
     }
