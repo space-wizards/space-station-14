@@ -3,14 +3,13 @@
   name: vending machine
   abstract: true
   components:
-  - type: Physics
-    anchored: true
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/empty.rsi
     netsync: false
   - type: Collidable
+    anchored: true
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.5,-0.25,0.5,0.25"

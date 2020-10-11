@@ -18,6 +18,8 @@
   - type: InteractionOutline
   - type: Anchorable
   - type: Collidable
+    mass: 25
+    anchored: true
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.25,0.4,0.25"
@@ -26,9 +28,6 @@
       - Impassable
       - MobImpassable
       - VaultImpassable
-  - type: Physics
-    mass: 25
-    anchored: true
   - type: SnapGrid
     offset: Center
   - type: Destructible
@@ -58,6 +57,8 @@
   - type: InteractionOutline
   - type: Anchorable
   - type: Collidable
+    mass: 25
+    anchored: true
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.25,0.4,0.25"
@@ -66,9 +67,6 @@
       - Impassable
       - MobImpassable
       - VaultImpassable
-  - type: Physics
-    mass: 25
-    anchored: true
   - type: SnapGrid
     offset: Center
   - type: Destructible

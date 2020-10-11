@@ -35,6 +35,8 @@
     maxVol: 500
     caps: AddTo, RemoveFrom
   - type: Collidable
+    mass: 5
+    anchored: false
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.40,-0.25,0.25,0.25"
@@ -43,9 +45,6 @@
       - Opaque
       layer:
       - Opaque
-  - type: Physics
-    mass: 5
-    anchored: false
   - type: Spillable
   - type: Pullable
 
@@ -68,14 +67,13 @@
     maxVol: 500
     caps: AddTo, RemoveFrom
   - type: Collidable
+    mass: 5
+    anchored: false
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.25,-0.25,0.25,0.25"
       mask:
       - Impassable
-  - type: Physics
-    mass: 5
-    anchored: false
   - type: Spillable
 
 - type: entity
@@ -177,7 +175,6 @@
       layers:
         - state: chempuff
           map: [ "enum.VaporVisualLayers.Base" ]
-    - type: Physics
     - type: Collidable
       hard: false
       shapes:

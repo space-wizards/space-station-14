@@ -20,9 +20,8 @@
     baseSprintSpeed : 5
   - type: InteractionOutline
   - type: Clickable
-  - type: Physics
-    mass: 50
   - type: Collidable
+    mass: 50
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.30,-0.35,0.45,0.35"
@@ -70,10 +69,8 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: corgi
-
-  - type: Physics
-    mass: 10
   - type: Collidable
+    mass: 10
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.50,-0.25,0.30,0.25"
@@ -106,10 +103,8 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: ian
-
-  - type: Physics
-    mass: 10
   - type: Collidable
+    mass: 10
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.50,-0.25,0.30,0.25"
@@ -142,10 +137,8 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: cat
-
-  - type: Physics
-    mass: 10
   - type: Collidable
+    mass: 10
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.45,-0.20,0.30,0.20"
@@ -215,10 +208,8 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: sloth
-
-  - type: Physics
-    mass: 10
   - type: Collidable
+    mass: 10
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.45,-0.35,0.15,0.35"
