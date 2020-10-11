@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
@@ -20,7 +21,20 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         public override string Name => "EmergencyLight";
 
         [ViewVariables]
-        private EmergencyLightState _lightState = EmergencyLightState.Charging;
+        private EmergencyLightState State
+        {
+            get => _state;
+            set
+            {
+                if (_state == value)
+                    return;
+
+                _state = value;
+                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new EmergencyLightMessage(this, _state));
+            }
+        }
+
+        private EmergencyLightState _state = EmergencyLightState.Charging;
 
         [ViewVariables(VVAccess.ReadWrite)]
         private float _wattage;
@@ -59,30 +73,27 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             {
                 receiver.Load = (int) Math.Abs(_wattage);
                 TurnOff();
-                _lightState = EmergencyLightState.Charging;
+                State = EmergencyLightState.Charging;
             }
             else
             {
                 TurnOn();
-                _lightState = EmergencyLightState.On;
+                State = EmergencyLightState.On;
             }
         }
 
         public void OnUpdate(float frameTime)
         {
-            if (_lightState == EmergencyLightState.Empty
-                || _lightState == EmergencyLightState.Full) return;
-
             if (!Owner.TryGetComponent(out BatteryComponent battery))
             {
                 return;
             }
 
-            if(_lightState == EmergencyLightState.On)
+            if(State == EmergencyLightState.On)
             {
                 if (!battery.TryUseCharge(_wattage * frameTime))
                 {
-                    _lightState = EmergencyLightState.Empty;
+                    State = EmergencyLightState.Empty;
                     TurnOff();
                 }
             }
@@ -96,7 +107,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                         receiver.Load = 1;
                     }
 
-                    _lightState = EmergencyLightState.Full;
+                    State = EmergencyLightState.Full;
                 }
             }
         }
@@ -137,6 +148,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             }
 
             receiver.OnPowerStateChanged += UpdateState;
+            State = EmergencyLightState.Charging;
         }
 
         public override void OnRemove()
@@ -151,7 +163,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddMarkup(Loc.GetString($"The battery indicator displays: {BatteryStateText[_lightState]}."));
+            message.AddMarkup(Loc.GetString($"The battery indicator displays: {BatteryStateText[State]}."));
         }
 
         public enum EmergencyLightState
@@ -169,5 +181,18 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             { EmergencyLightState.Charging, "[color=darkorange]Charging[/color]"},
             { EmergencyLightState.On, "[color=darkorange]Discharging[/color]"}
         };
+    }
+
+    public sealed class EmergencyLightMessage : EntitySystemMessage
+    {
+        public EmergencyLightComponent Component { get; }
+        
+        public EmergencyLightComponent.EmergencyLightState State { get; }
+
+        public EmergencyLightMessage(EmergencyLightComponent component, EmergencyLightComponent.EmergencyLightState state)
+        {
+            Component = component;
+            State = state;
+        }
     }
 }

@@ -1,6 +1,10 @@
 using System;
+using System.Linq;
 using Content.Shared.Preferences.Appearance;
+using Robust.Shared.Interfaces.Random;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Preferences
@@ -71,6 +75,31 @@ namespace Content.Shared.Preferences
                 Color.Black,
                 Color.FromHex("#C0967F")
             );
+        }
+
+        public static HumanoidCharacterAppearance Random(Sex sex)
+        {
+            var random = IoCManager.Resolve<IRobustRandom>();
+
+            var newHairStyle = random.Pick(HairStyles.HairStylesMap.Keys.ToList());
+
+            var newFacialHairStyle = sex == Sex.Female
+                ? HairStyles.DefaultFacialHairStyle
+                : random.Pick(HairStyles.FacialHairStylesMap.Keys.ToList());
+
+            var newHairColor = random.Pick(HairStyles.RealisticHairColors);
+            newHairColor = newHairColor
+                .WithRed(RandomizeColor(newHairColor.R))
+                .WithGreen(RandomizeColor(newHairColor.G))
+                .WithBlue(RandomizeColor(newHairColor.B));
+
+            // TODO: Add random eye and skin color
+            return new HumanoidCharacterAppearance(newHairStyle, newHairColor, newFacialHairStyle, newHairColor, Color.Black, Color.FromHex("#C0967F"));
+
+            float RandomizeColor(float channel)
+            {
+                return MathHelper.Clamp01(channel + random.Next(-25, 25) / 100f);
+            }
         }
 
         public static HumanoidCharacterAppearance EnsureValid(HumanoidCharacterAppearance appearance)
