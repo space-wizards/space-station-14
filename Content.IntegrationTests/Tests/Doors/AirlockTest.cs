@@ -47,7 +47,7 @@ namespace Content.IntegrationTests.Tests.Doors
 
             await server.WaitIdleAsync();
 
-            await WaitUntil(server, _ => airlockComponent.State == DoorState.Open);
+            await WaitUntil(server, () => airlockComponent.State == DoorState.Open);
 
             Assert.That(airlockComponent.State, Is.EqualTo(DoorState.Open));
 
@@ -57,7 +57,7 @@ namespace Content.IntegrationTests.Tests.Doors
                 Assert.That(airlockComponent.State, Is.EqualTo(DoorState.Closing));
             });
 
-            await WaitUntil(server, _ => airlockComponent.State == DoorState.Closed);
+            await WaitUntil(server, () => airlockComponent.State == DoorState.Closed);
 
             Assert.That(airlockComponent.State, Is.EqualTo(DoorState.Closed));
 
