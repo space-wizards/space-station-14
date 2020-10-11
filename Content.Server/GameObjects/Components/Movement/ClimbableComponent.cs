@@ -210,6 +210,9 @@ namespace Content.Server.GameObjects.Components.Movement
 
         private async void TryClimb(IEntity user)
         {
+            if (!user.TryGetComponent(out ClimbingComponent climbingComponent) || climbingComponent.IsClimbing)
+                return;
+
             var doAfterEventArgs = new DoAfterEventArgs(user, _climbDelay, default, Owner)
             {
                 BreakOnTargetMove = true,
