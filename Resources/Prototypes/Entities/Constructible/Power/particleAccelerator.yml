@@ -7,6 +7,8 @@
     - type: InteractionOutline
     - type: Anchorable
     - type: Collidable
+      mass: 25
+      anchored: true
       shapes:
         - !type:PhysShapeAabb
           bounds: "-0.49,-0.49,0.49,0.49"
@@ -16,9 +18,6 @@
             - MobImpassable
             - VaultImpassable
       IsScrapingFloor: true
-    - type: Physics
-      mass: 25
-      anchored: true
     - type: SnapGrid
       offset: Center
     - type: Pullable
@@ -73,6 +72,9 @@
           baseState: control_box_unlit
     - type: PowerReceiver
     - type: ParticleAcceleratorControlBox
+    - type: Construction
+      graph: particleAcceleratorControlBox
+      node: completed
     - type: UserInterface
       interfaces:
         - key: enum.ParticleAcceleratorControlBoxUiKey.Key
@@ -103,6 +105,9 @@
           baseState: emitter_left_unlit
     - type: ParticleAcceleratorEmitter
       emitterType: left
+    - type: Construction
+      graph: particleAcceleratorEmitterLeft
+      node: completed
 
 
 - type: entity
@@ -126,6 +131,9 @@
           baseState: emitter_center_unlit
     - type: ParticleAcceleratorEmitter
       emitterType: center
+    - type: Construction
+      graph: particleAcceleratorEmitterCenter
+      node: completed
 
 - type: entity
   parent: ParticleAcceleratorBase
@@ -148,6 +156,9 @@
           baseState: emitter_right_unlit
     - type: ParticleAcceleratorEmitter
       emitterType: right
+    - type: Construction
+      graph: particleAcceleratorEmitterRight
+      node: completed
 
 - type: entity
   parent: ParticleAcceleratorBase
@@ -159,6 +170,9 @@
       sprite: Constructible/Power/PA/end_cap.rsi
       state: end_capc
     - type: ParticleAcceleratorEndCap
+    - type: Construction
+      graph: particleAcceleratorEndCap
+      node: completed
 
 - type: entity
   parent: ParticleAcceleratorBase
@@ -180,6 +194,9 @@
         - type: ParticleAcceleratorPartVisualizer
           baseState: fuel_chamber_unlit
     - type: ParticleAcceleratorFuelChamber
+    - type: Construction
+      graph: particleAcceleratorFuelChamber
+      node: completed
 
 - type: entity
   parent: ParticleAcceleratorBase
@@ -207,6 +224,9 @@
       nodes:
         - !type:AdjacentNode
           nodeGroupID: HVPower
+    - type: Construction
+      graph: particleAcceleratorPowerBox
+      node: completed
 
 
 # Unfinished PA
@@ -218,9 +238,14 @@
   suffix: Unfinished
   description: This controls the density of the particles.
   components:
+    - type: Collidable
+      anchored: false
     - type: Sprite
       sprite: Constructible/Power/PA/control_box.rsi
       state: control_box
+    - type: Construction
+      graph: particleAcceleratorControlBox
+      node: start
 
 - type: entity
   parent: ParticleAcceleratorBase
@@ -229,9 +254,14 @@
   suffix: Unfinished
   description: This launchs the Alpha particles, might not want to stand near this end.
   components:
+    - type: Collidable
+      anchored: false
     - type: Sprite
       sprite: Constructible/Power/PA/emitter_left.rsi
       state: emitter_left
+    - type: Construction
+      graph: particleAcceleratorEmitterLeft
+      node: start
 
 - type: entity
   parent: ParticleAcceleratorBase
@@ -240,9 +270,14 @@
   suffix: Unfinished
   description: This launchs the Alpha particles, might not want to stand near this end.
   components:
+    - type: Collidable
+      anchored: false
     - type: Sprite
       sprite: Constructible/Power/PA/emitter_center.rsi
       state: emitter_center
+    - type: Construction
+      graph: particleAcceleratorEmitterCenter
+      node: start
 
 - type: entity
   parent: ParticleAcceleratorBase
@@ -251,9 +286,14 @@
   suffix: Unfinished
   description: This launchs the Alpha particles, might not want to stand near this end.
   components:
+    - type: Collidable
+      anchored: false
     - type: Sprite
       sprite: Constructible/Power/PA/emitter_right.rsi
       state: emitter_right
+    - type: Construction
+      graph: particleAcceleratorEmitterRight
+      node: start
 
 - type: entity
   parent: ParticleAcceleratorBase
@@ -262,9 +302,14 @@
   suffix: Unfinished
   description: This is where Alpha particles are generated from \[REDACTED\]. It looks unfinished.
   components:
+    - type: Collidable
+      anchored: false
     - type: Sprite
       sprite: Constructible/Power/PA/end_cap.rsi
       state: end_cap
+    - type: Construction
+      graph: particleAcceleratorEndCap
+      node: start
 
 - type: entity
   parent: ParticleAcceleratorBase
@@ -273,9 +318,14 @@
   suffix: Unfinished
   description: This is where the Alpha particles are accelerated to radical speeds.
   components:
+    - type: Collidable
+      anchored: false
     - type: Sprite
       sprite: Constructible/Power/PA/fuel_chamber.rsi
       state: fuel_chamber
+    - type: Construction
+      graph: particleAcceleratorFuelChamber
+      node: start
 
 - type: entity
   parent: ParticleAcceleratorBase
@@ -284,6 +334,11 @@
   suffix: Unfinished
   description: This uses electromagnetic waves to focus the Alpha-Particles.
   components:
+    - type: Collidable
+      anchored: false
     - type: Sprite
       sprite: Constructible/Power/PA/power_box.rsi
       state: power_box
+    - type: Construction
+      graph: particleAcceleratorPowerBox
+      node: start
