@@ -533,9 +533,9 @@ namespace Content.Server.GameObjects.Components.GUI
                 StopPull();
             }
 
-            PulledObject = pullable.Owner.GetComponent<ICollidableComponent>();
+            PulledObject = pullable.Owner.GetComponent<IPhysicsComponent>();
             var controller = PulledObject.EnsureController<PullController>();
-            controller.StartPull(Owner.GetComponent<ICollidableComponent>());
+            controller.StartPull(Owner.GetComponent<IPhysicsComponent>());
         }
 
         public void MovePulledObject(EntityCoordinates puller, EntityCoordinates to)
@@ -686,13 +686,13 @@ namespace Content.Server.GameObjects.Components.GUI
 
                 Dirty();
 
-                if (!message.Entity.TryGetComponent(out ICollidableComponent? collidable))
+                if (!message.Entity.TryGetComponent(out IPhysicsComponent? physics))
                 {
                     return;
                 }
 
                 // set velocity to zero
-                collidable.Stop();
+                physics.Stop();
                 return;
             }
         }

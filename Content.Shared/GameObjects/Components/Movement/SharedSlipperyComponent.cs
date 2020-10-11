@@ -62,8 +62,8 @@ namespace Content.Shared.GameObjects.Components.Movement
                 || ContainerHelpers.IsInContainer(Owner)
                 ||  _slipped.Contains(entity.Uid)
                 ||  !entity.TryGetComponent(out SharedStunnableComponent stun)
-                ||  !entity.TryGetComponent(out ICollidableComponent otherBody)
-                ||  !Owner.TryGetComponent(out ICollidableComponent body))
+                ||  !entity.TryGetComponent(out IPhysicsComponent otherBody)
+                ||  !Owner.TryGetComponent(out IPhysicsComponent body))
             {
                 return false;
             }
@@ -85,10 +85,10 @@ namespace Content.Shared.GameObjects.Components.Movement
                 return false;
             }
 
-            if (entity.TryGetComponent(out ICollidableComponent collidable))
+            if (entity.TryGetComponent(out IPhysicsComponent physics))
             {
-                var controller = collidable.EnsureController<SlipController>();
-                controller.LinearVelocity = collidable.LinearVelocity * LaunchForwardsMultiplier;
+                var controller = physics.EnsureController<SlipController>();
+                controller.LinearVelocity = physics.LinearVelocity * LaunchForwardsMultiplier;
             }
 
             stun.Paralyze(5);
@@ -117,10 +117,10 @@ namespace Content.Shared.GameObjects.Components.Movement
                 }
 
                 var entity = _entityManager.GetEntity(uid);
-                var collidable = Owner.GetComponent<ICollidableComponent>();
-                var otherCollidable = entity.GetComponent<ICollidableComponent>();
+                var physics = Owner.GetComponent<IPhysicsComponent>();
+                var otherPhysics = entity.GetComponent<IPhysicsComponent>();
 
-                if (!collidable.WorldAABB.Intersects(otherCollidable.WorldAABB))
+                if (!physics.WorldAABB.Intersects(otherPhysics.WorldAABB))
                 {
                     _slipped.Remove(uid);
                 }
@@ -131,11 +131,11 @@ namespace Content.Shared.GameObjects.Components.Movement
         {
             base.Initialize();
 
-            var collidable = Owner.EnsureComponent<CollidableComponent>();
+            var physics = Owner.EnsureComponent<PhysicsComponent>();
 
-            collidable.Hard = false;
+            physics.Hard = false;
 
-            var shape = collidable.PhysicsShapes.FirstOrDefault();
+            var shape = physics.PhysicsShapes.FirstOrDefault();
 
             if (shape != null)
             {

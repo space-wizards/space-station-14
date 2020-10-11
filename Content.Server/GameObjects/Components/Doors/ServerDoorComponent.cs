@@ -254,9 +254,9 @@ namespace Content.Server.GameObjects.Components.Doors
                     airtight.AirBlocked = false;
                 }
 
-                if (Owner.TryGetComponent(out ICollidableComponent? collidable))
+                if (Owner.TryGetComponent(out IPhysicsComponent? physics))
                 {
-                    collidable.Hard = false;
+                    physics.Hard = false;
                 }
 
                 await Timer.Delay(OpenTimeTwo, _cancellationTokenSource.Token);
@@ -297,7 +297,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
         private void CheckCrush()
         {
-            if (!Owner.TryGetComponent(out ICollidableComponent? body))
+            if (!Owner.TryGetComponent(out IPhysicsComponent? body))
                 return;
 
             // Crush
@@ -305,7 +305,7 @@ namespace Content.Server.GameObjects.Components.Doors
             {
                 if (!e.TryGetComponent(out StunnableComponent? stun)
                     || !e.TryGetComponent(out IDamageableComponent? damage)
-                    || !e.TryGetComponent(out ICollidableComponent? otherBody))
+                    || !e.TryGetComponent(out IPhysicsComponent? otherBody))
                     continue;
 
                 var percentage = otherBody.WorldAABB.IntersectPercentage(body.WorldAABB);
@@ -377,7 +377,8 @@ namespace Content.Server.GameObjects.Components.Doors
         {
             bool shouldCheckCrush = false;
 
-            if (_canCrush && Owner.TryGetComponent(out ICollidableComponent? collidable) && collidable.IsColliding(Vector2.Zero, false))
+            if (_canCrush && Owner.TryGetComponent(out IPhysicsComponent? physics) &&
+                physics.IsColliding(Vector2.Zero, false))
             {
                 if (Safety)
                     return false;
@@ -406,7 +407,7 @@ namespace Content.Server.GameObjects.Components.Doors
                     airtight.AirBlocked = true;
                 }
 
-                if (Owner.TryGetComponent(out ICollidableComponent? body))
+                if (Owner.TryGetComponent(out IPhysicsComponent? body))
                 {
                     body.Hard = true;
                 }

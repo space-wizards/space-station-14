@@ -56,8 +56,8 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
-            if (!entity.TryGetComponent(out ICollidableComponent? collidable) ||
-                !collidable.CanCollide)
+            if (!entity.TryGetComponent(out IPhysicsComponent? physics) ||
+                !physics.CanCollide)
             {
                 return false;
             }
@@ -73,9 +73,9 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
-            if (entity.TryGetComponent(out ICollidableComponent? collidable))
+            if (entity.TryGetComponent(out IPhysicsComponent? physics))
             {
-                collidable.CanCollide = false;
+                physics.CanCollide = false;
             }
 
             return true;
@@ -105,9 +105,9 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             foreach (var entity in _contents.ContainedEntities.ToArray())
             {
-                if (entity.TryGetComponent(out ICollidableComponent? collidable))
+                if (entity.TryGetComponent(out IPhysicsComponent? physics))
                 {
-                    collidable.CanCollide = true;
+                    physics.CanCollide = true;
                 }
 
                 _contents.ForceRemove(entity);

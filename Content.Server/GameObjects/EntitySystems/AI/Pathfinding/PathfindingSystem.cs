@@ -275,8 +275,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         {
             if (entity.Deleted ||
                 _lastKnownPositions.ContainsKey(entity) ||
-                !entity.TryGetComponent(out ICollidableComponent collidableComponent) ||
-                !PathfindingNode.IsRelevant(entity, collidableComponent))
+                !entity.TryGetComponent(out IPhysicsComponent physics) ||
+                !PathfindingNode.IsRelevant(entity, physics))
             {
                 return;
             }
@@ -286,7 +286,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 
             var chunk = GetChunk(tileRef);
             var node = chunk.GetNode(tileRef);
-            node.AddEntity(entity, collidableComponent);
+            node.AddEntity(entity, physics);
             _lastKnownPositions.Add(entity, node);
         }
 
@@ -314,8 +314,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         {
             // If we've moved to space or the likes then remove us.
             if (moveEvent.Sender.Deleted ||
-                !moveEvent.Sender.TryGetComponent(out ICollidableComponent collidableComponent) ||
-                !PathfindingNode.IsRelevant(moveEvent.Sender, collidableComponent))
+                !moveEvent.Sender.TryGetComponent(out IPhysicsComponent physics) ||
+                !PathfindingNode.IsRelevant(moveEvent.Sender, physics))
             {
                 HandleEntityRemove(moveEvent.Sender);
                 return;
@@ -350,7 +350,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             _lastKnownPositions[moveEvent.Sender] = newNode;
 
             oldNode.RemoveEntity(moveEvent.Sender);
-            newNode.AddEntity(moveEvent.Sender, collidableComponent);
+            newNode.AddEntity(moveEvent.Sender, physics);
         }
 
         private void QueueCollisionChangeMessage(CollisionChangeMessage collisionMessage)
@@ -371,8 +371,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 
         public bool CanTraverse(IEntity entity, PathfindingNode node)
         {
-            if (entity.TryGetComponent(out ICollidableComponent collidableComponent) &&
-                (collidableComponent.CollisionMask & node.BlockedCollisionMask) != 0)
+            if (entity.TryGetComponent(out IPhysicsComponent physics) &&
+                (physics.CollisionMask & node.BlockedCollisionMask) != 0)
             {
                 return false;
             }

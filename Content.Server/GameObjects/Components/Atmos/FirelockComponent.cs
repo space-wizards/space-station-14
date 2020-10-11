@@ -39,9 +39,9 @@ namespace Content.Server.GameObjects.Components.Atmos
                 airtightComponent.AirBlocked = false;
             }
 
-            if (Owner.TryGetComponent(out ICollidableComponent collidableComponent))
+            if (Owner.TryGetComponent(out IPhysicsComponent physics))
             {
-                collidableComponent.Hard = false;
+                physics.Hard = false;
             }
 
             AutoClose = false;
