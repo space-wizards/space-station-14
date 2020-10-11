@@ -168,6 +168,8 @@
     interfaces:
     - key: enum.CargoConsoleUiKey.Key
       type: CargoConsoleBoundUserInterface
+  - type: Computer
+    board: SupplyComputerCircuitboard
 
 - type: entity
   id: ComputerSupplyRequest
@@ -182,6 +184,8 @@
       screen: request
   - type: CargoConsole
     requestOnly: true
+  - type: Computer
+    board: SupplyRequestComputerCircuitboard
 
 - type: entity
   id: ComputerMedicalRecords
@@ -219,6 +223,8 @@
   - type: PowerReceiver
     load: 200
     priority: Low
+  - type: Computer
+    board: ResearchComputerCircuitboard
 
 - type: entity
   id: ComputerId
@@ -238,6 +244,8 @@
     - type: ComputerVisualizer
       key: id_key
       screen: id
+  - type: Computer
+    board: IDComputerCircuitboard
 
 - type: entity
   id: computerBodyScanner
@@ -255,6 +263,8 @@
     - type: ComputerVisualizer
       key: generic_key
       screen: generic
+  - type: Computer
+    board: BodyScannerComputerCircuitboard
 
 - type: entity
   id: ComputerComms
@@ -272,6 +282,8 @@
     interfaces:
     - key: enum.CommunicationsConsoleUiKey.Key
       type: CommunicationsConsoleBoundUserInterface
+  - type: Computer
+    board: CommsComputerCircuitboard
 
 - type: entity
   id: ComputerSolarControl
@@ -289,3 +301,5 @@
     interfaces:
     - key: enum.SolarControlConsoleUiKey.Key
       type: SolarControlConsoleBoundUserInterface
+  - type: Computer
+    board: SolarControlComputerCircuitboard

@@ -34,6 +34,8 @@
       type: SpaceVillainArcadeBoundUserInterface
     - key: enum.WiresUiKey.Key
       type: WiresBoundUserInterface
+  - type: Computer
+    board: SpaceVillainArcadeComputerCircuitboard
 
 - type: entity
   id: BlockGameArcade
@@ -69,3 +71,5 @@
           type: BlockGameBoundUserInterface
         - key: enum.WiresUiKey.Key
           type: WiresBoundUserInterface
+    - type: Computer
+      board: BlockGameArcadeComputerCircuitboard
