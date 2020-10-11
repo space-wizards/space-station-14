@@ -48,12 +48,18 @@ namespace Content.Server.StationEvents
         private const float MinPulseDelay = 0.2f;
         private const float MaxPulseDelay = 0.8f;
 
+        private void ResetTimeUntilPulse()
+        {
+            _timeUntilPulse = _robustRandom.NextFloat() * (MaxPulseDelay - MinPulseDelay) + MinPulseDelay;
+        }
+
         public override void Startup()
         {
             base.Startup();
             EntitySystem.Get<AudioSystem>().PlayGlobal("/Audio/Announcements/radiation.ogg");
             IoCManager.InjectDependencies(this);
 
+            ResetTimeUntilPulse();
             _timeElapsed = 0.0f;
             _pulsesRemaining = _robustRandom.Next(30, 100);
 
@@ -110,27 +116,43 @@ namespace Content.Server.StationEvents
 
                 if (pauseManager.IsGridPaused(defaultGrid))
                     return;
-                
+
                 SpawnPulse(defaultGrid);
             }
         }
 
         private void SpawnPulse(IMapGrid mapGrid)
         {
-            var pulse = _entityManager.SpawnEntity("RadiationPulse", FindRandomGrid(mapGrid));
+            if (!TryFindRandomGrid(mapGrid, out var coordinates))
+                return;
+
+            var pulse = _entityManager.SpawnEntity("RadiationPulse", coordinates);
             pulse.GetComponent<RadiationPulseComponent>().DoPulse();
-            _timeUntilPulse = _robustRandom.NextFloat() * (MaxPulseDelay - MinPulseDelay) + MinPulseDelay;
+            ResetTimeUntilPulse();
             _pulsesRemaining -= 1;
         }
 
-        private EntityCoordinates FindRandomGrid(IMapGrid mapGrid)
+        private bool TryFindRandomGrid(IMapGrid mapGrid, out EntityCoordinates coordinates)
         {
-            // TODO: Need to get valid tiles? (maybe just move right if the tile we chose is invalid?)
+            if (!mapGrid.Index.IsValid())
+            {
+                coordinates = default;
+                return false;
+            }
 
             var randomX = _robustRandom.Next((int) mapGrid.WorldBounds.Left, (int) mapGrid.WorldBounds.Right);
             var randomY = _robustRandom.Next((int) mapGrid.WorldBounds.Bottom, (int) mapGrid.WorldBounds.Top);
 
-            return mapGrid.ToCoordinates(randomX, randomY);
+            coordinates = mapGrid.ToCoordinates(randomX, randomY);
+
+            // TODO: Need to get valid tiles? (maybe just move right if the tile we chose is invalid?)
+            if (!coordinates.IsValid(_entityManager))
+            {
+                coordinates = default;
+                return false;
+            }
+
+            return true;
         }
     }
 }
