@@ -48,12 +48,18 @@ namespace Content.Server.StationEvents
         private const float MinPulseDelay = 0.2f;
         private const float MaxPulseDelay = 0.8f;
 
+        private void ResetTimeUntilPulse()
+        {
+            _timeUntilPulse = _robustRandom.NextFloat() * (MaxPulseDelay - MinPulseDelay) + MinPulseDelay;
+        }
+
         public override void Startup()
         {
             base.Startup();
             EntitySystem.Get<AudioSystem>().PlayGlobal("/Audio/Announcements/radiation.ogg");
             IoCManager.InjectDependencies(this);
 
+            ResetTimeUntilPulse();
             _timeElapsed = 0.0f;
             _pulsesRemaining = _robustRandom.Next(30, 100);
 
@@ -122,7 +128,7 @@ namespace Content.Server.StationEvents
 
             var pulse = _entityManager.SpawnEntity("RadiationPulse", coordinates);
             pulse.GetComponent<RadiationPulseComponent>().DoPulse();
-            _timeUntilPulse = _robustRandom.NextFloat() * (MaxPulseDelay - MinPulseDelay) + MinPulseDelay;
+            ResetTimeUntilPulse();
             _pulsesRemaining -= 1;
         }
 
