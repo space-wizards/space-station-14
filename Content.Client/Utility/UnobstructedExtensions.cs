@@ -10,7 +10,7 @@ using static Content.Shared.GameObjects.EntitySystems.SharedInteractionSystem;
 
 namespace Content.Client.Utility
 {
-    public static class RangeExtensions
+    public static class UnobstructedExtensions
     {
         private static SharedInteractionSystem SharedInteractionSystem => EntitySystem.Get<SharedInteractionSystem>();
 
