@@ -46,7 +46,7 @@ namespace Content.IntegrationTests.Tests.Lobby
 
             Assert.That(serverTicker.RunLevel, Is.EqualTo(GameRunLevel.PreRoundLobby));
 
-            await WaitUntil(client, _ => clientStateManager.CurrentState is LobbyState, maxTicks: 60);
+            await WaitUntil(client, () => clientStateManager.CurrentState is LobbyState, maxTicks: 60);
 
             Assert.NotNull(clientNetManager.ServerChannel);
 
@@ -68,7 +68,7 @@ namespace Content.IntegrationTests.Tests.Lobby
                 Assert.That(clientCharacters, Is.EqualTo(2));
             });
 
-            await WaitUntil(server, _ => serverPrefManager.GetPreferences(clientNetId).Characters.Count == 2, maxTicks: 60);
+            await WaitUntil(server, () => serverPrefManager.GetPreferences(clientNetId).Characters.Count == 2, maxTicks: 60);
 
             await server.WaitAssertion(() =>
             {
@@ -84,7 +84,7 @@ namespace Content.IntegrationTests.Tests.Lobby
                 Assert.That(clientCharacters, Is.EqualTo(1));
             });
 
-            await WaitUntil(server, _ => serverPrefManager.GetPreferences(clientNetId).Characters.Count == 1, maxTicks: 60);
+            await WaitUntil(server, () => serverPrefManager.GetPreferences(clientNetId).Characters.Count == 1, maxTicks: 60);
 
             await server.WaitAssertion(() =>
             {
@@ -102,7 +102,7 @@ namespace Content.IntegrationTests.Tests.Lobby
                 Assert.That(clientCharacters, Is.EqualTo(2));
             });
 
-            await WaitUntil(server, _ => serverPrefManager.GetPreferences(clientNetId).Characters.Count == 2, maxTicks: 60);
+            await WaitUntil(server, () => serverPrefManager.GetPreferences(clientNetId).Characters.Count == 2, maxTicks: 60);
 
             await server.WaitAssertion(() =>
             {
