@@ -60,7 +60,7 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/medical.rsi
-    state: medkit_r
+    state: gauze
   - type: Healing
     heal:
       Blunt: 10
