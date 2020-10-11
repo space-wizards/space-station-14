@@ -24,6 +24,8 @@
         - to: completed
           conditions:
             - !type:EntityAnchored {}
+          completed:
+            - !type:SnapToGrid {}
           steps:
             - tool: Screwing
               doAfter: 0.5
@@ -74,6 +76,8 @@
         - to: completed
           conditions:
             - !type:EntityAnchored {}
+          completed:
+            - !type:SnapToGrid {}
           steps:
             - tool: Screwing
               doAfter: 0.5
@@ -124,6 +128,8 @@
         - to: completed
           conditions:
             - !type:EntityAnchored {}
+          completed:
+            - !type:SnapToGrid {}
           steps:
             - tool: Screwing
               doAfter: 0.5
@@ -173,6 +179,8 @@
         - to: completed
           conditions:
             - !type:EntityAnchored {}
+          completed:
+            - !type:SnapToGrid {}
           steps:
             - tool: Screwing
               doAfter: 0.5
@@ -222,6 +230,8 @@
         - to: completed
           conditions:
             - !type:EntityAnchored {}
+          completed:
+            - !type:SnapToGrid {}
           steps:
             - tool: Screwing
               doAfter: 0.5
@@ -271,6 +281,8 @@
         - to: completed
           conditions:
             - !type:EntityAnchored {}
+          completed:
+            - !type:SnapToGrid {}
           steps:
             - tool: Screwing
               doAfter: 0.5
@@ -320,6 +332,8 @@
         - to: completed
           conditions:
             - !type:EntityAnchored {}
+          completed:
+            - !type:SnapToGrid {}
           steps:
             - tool: Screwing
               doAfter: 0.5
