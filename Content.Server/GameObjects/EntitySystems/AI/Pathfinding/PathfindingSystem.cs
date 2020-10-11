@@ -13,6 +13,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
@@ -32,8 +33,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
-        public IReadOnlyDictionary<GridId, Dictionary<MapIndices, PathfindingChunk>> Graph => _graph;
-        private readonly Dictionary<GridId, Dictionary<MapIndices, PathfindingChunk>> _graph = new Dictionary<GridId, Dictionary<MapIndices, PathfindingChunk>>();
+        public IReadOnlyDictionary<GridId, Dictionary<Vector2i, PathfindingChunk>> Graph => _graph;
+        private readonly Dictionary<GridId, Dictionary<Vector2i, PathfindingChunk>> _graph = new Dictionary<GridId, Dictionary<Vector2i, PathfindingChunk>>();
 
         private readonly PathfindingJobQueue _pathfindingQueue = new PathfindingJobQueue();
 
@@ -144,28 +145,28 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         {
             var chunkX = (int) (Math.Floor((float) tile.X / PathfindingChunk.ChunkSize) * PathfindingChunk.ChunkSize);
             var chunkY = (int) (Math.Floor((float) tile.Y / PathfindingChunk.ChunkSize) * PathfindingChunk.ChunkSize);
-            var mapIndices = new MapIndices(chunkX, chunkY);
+            var Vector2i = new Vector2i(chunkX, chunkY);
 
             if (_graph.TryGetValue(tile.GridIndex, out var chunks))
             {
-                if (!chunks.ContainsKey(mapIndices))
+                if (!chunks.ContainsKey(Vector2i))
                 {
-                    CreateChunk(tile.GridIndex, mapIndices);
+                    CreateChunk(tile.GridIndex, Vector2i);
                 }
 
-                return chunks[mapIndices];
+                return chunks[Vector2i];
             }
 
-            var newChunk = CreateChunk(tile.GridIndex, mapIndices);
+            var newChunk = CreateChunk(tile.GridIndex, Vector2i);
             return newChunk;
         }
 
-        private PathfindingChunk CreateChunk(GridId gridId, MapIndices indices)
+        private PathfindingChunk CreateChunk(GridId gridId, Vector2i indices)
         {
             var newChunk = new PathfindingChunk(gridId, indices);
             if (!_graph.ContainsKey(gridId))
             {
-                _graph.Add(gridId, new Dictionary<MapIndices, PathfindingChunk>());
+                _graph.Add(gridId, new Dictionary<Vector2i, PathfindingChunk>());
             }
 
             _graph[gridId].Add(indices, newChunk);

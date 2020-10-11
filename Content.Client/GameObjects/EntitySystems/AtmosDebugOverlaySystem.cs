@@ -69,7 +69,7 @@ namespace Content.Client.GameObjects.EntitySystems
             return _tileData.ContainsKey(gridId);
         }
 
-        public AtmosDebugOverlayData? GetData(GridId gridIndex, MapIndices indices)
+        public AtmosDebugOverlayData? GetData(GridId gridIndex, Vector2i indices)
         {
             if (!_tileData.TryGetValue(gridIndex, out var srcMsg))
                 return null;

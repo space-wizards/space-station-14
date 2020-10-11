@@ -46,7 +46,7 @@ namespace Content.Server.Construction.Conditions
 
             var type = _componentFactory.GetRegistration(Component).Type;
 
-            var indices = entity.Transform.Coordinates.ToMapIndices(entity.EntityManager, _mapManager);
+            var indices = entity.Transform.Coordinates.ToVector2i(entity.EntityManager, _mapManager);
             var entities = indices.GetEntitiesInTile(entity.Transform.GridID, true, entity.EntityManager);
 
             foreach (var ent in entities)

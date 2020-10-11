@@ -20,7 +20,7 @@ namespace Content.Server.GameObjects.Components.Atmos
     [RegisterComponent]
     public class AirtightComponent : Component, IMapInit
     {
-        private (GridId, MapIndices) _lastPosition;
+        private (GridId, Vector2i) _lastPosition;
         private AtmosphereSystem _atmosphereSystem = default!;
 
         public override string Name => "Airtight";
@@ -169,7 +169,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 UpdatePosition(Owner.Transform.GridID, snapGrid.Position);
         }
 
-        private void UpdatePosition(GridId gridId, MapIndices pos)
+        private void UpdatePosition(GridId gridId, Vector2i pos)
         {
             var gridAtmos = _atmosphereSystem.GetGridAtmosphere(gridId);
 

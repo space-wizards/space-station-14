@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -11,20 +12,20 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
         ///     Grid for this chunk
         /// </summary>
         public GridId GridIndices { get; }
-        
+
         /// <summary>
         ///     Origin of this chunk
         /// </summary>
-        public MapIndices MapIndices { get; }
-        
+        public Vector2i Vector2i { get; }
+
         public SharedGasTileOverlaySystem.GasOverlayData[,] TileData = new SharedGasTileOverlaySystem.GasOverlayData[SharedGasTileOverlaySystem.ChunkSize, SharedGasTileOverlaySystem.ChunkSize];
 
         public GameTick LastUpdate { get; private set; }
 
-        public GasOverlayChunk(GridId gridIndices, MapIndices mapIndices)
+        public GasOverlayChunk(GridId gridIndices, Vector2i Vector2i)
         {
             GridIndices = gridIndices;
-            MapIndices = mapIndices;
+            Vector2i = Vector2i;
         }
 
         public void Dirty(GameTick currentTick)
@@ -37,12 +38,12 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
         /// </summary>
         /// <param name="data"></param>
         /// <param name="indices"></param>
-        public void Update(SharedGasTileOverlaySystem.GasOverlayData data, MapIndices indices)
+        public void Update(SharedGasTileOverlaySystem.GasOverlayData data, Vector2i indices)
         {
             DebugTools.Assert(InBounds(indices));
-            var (offsetX, offsetY) = (indices.X - MapIndices.X,
-                indices.Y - MapIndices.Y);
-            
+            var (offsetX, offsetY) = (indices.X - Vector2i.X,
+                indices.Y - Vector2i.Y);
+
             TileData[offsetX, offsetY] = data;
         }
 
@@ -64,7 +65,7 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
             }
         }
 
-        public void GetData(List<(MapIndices, SharedGasTileOverlaySystem.GasOverlayData)> existingData, HashSet<MapIndices> indices)
+        public void GetData(List<(Vector2i, SharedGasTileOverlaySystem.GasOverlayData)> existingData, HashSet<Vector2i> indices)
         {
             foreach (var index in indices)
             {
@@ -72,27 +73,27 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
             }
         }
 
-        public IEnumerable<MapIndices> GetAllIndices()
+        public IEnumerable<Vector2i> GetAllIndices()
         {
             for (var x = 0; x < SharedGasTileOverlaySystem.ChunkSize; x++)
             {
                 for (var y = 0; y < SharedGasTileOverlaySystem.ChunkSize; y++)
                 {
-                    yield return new MapIndices(MapIndices.X + x, MapIndices.Y + y);
+                    yield return new Vector2i(Vector2i.X + x, Vector2i.Y + y);
                 }
             }
         }
 
-        public SharedGasTileOverlaySystem.GasOverlayData GetData(MapIndices indices)
+        public SharedGasTileOverlaySystem.GasOverlayData GetData(Vector2i indices)
         {
             DebugTools.Assert(InBounds(indices));
-            return TileData[indices.X - MapIndices.X, indices.Y - MapIndices.Y];
+            return TileData[indices.X - Vector2i.X, indices.Y - Vector2i.Y];
         }
 
-        private bool InBounds(MapIndices indices)
+        private bool InBounds(Vector2i indices)
         {
-            if (indices.X < MapIndices.X || indices.Y < MapIndices.Y) return false;
-            if (indices.X >= MapIndices.X + SharedGasTileOverlaySystem.ChunkSize || indices.Y >= MapIndices.Y + SharedGasTileOverlaySystem.ChunkSize) return false;
+            if (indices.X < Vector2i.X || indices.Y < Vector2i.Y) return false;
+            if (indices.X >= Vector2i.X + SharedGasTileOverlaySystem.ChunkSize || indices.Y >= Vector2i.Y + SharedGasTileOverlaySystem.ChunkSize) return false;
             return true;
         }
     }

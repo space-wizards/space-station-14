@@ -87,7 +87,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 _reactTimer = 0;
                 var mapGrid = _mapManager.GetGrid(Owner.Transform.GridID);
 
-                var tile = mapGrid.GetTileRef(Owner.Transform.Coordinates.ToMapIndices(Owner.EntityManager, _mapManager));
+                var tile = mapGrid.GetTileRef(Owner.Transform.Coordinates.ToVector2i(Owner.EntityManager, _mapManager));
                 foreach (var reagentQuantity in contents.ReagentList.ToArray())
                 {
                     if (reagentQuantity.Quantity == ReagentUnit.Zero) continue;
