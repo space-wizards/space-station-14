@@ -117,25 +117,36 @@ namespace Content.Server.StationEvents
 
         private void SpawnPulse(IMapGrid mapGrid)
         {
-            var grid = FindRandomGrid(mapGrid);
-
-            if (!grid.GetGridId(_entityManager).IsValid())
+            if (TryFindRandomGrid(mapGrid, out var coordinates))
                 return;
 
-            var pulse = _entityManager.SpawnEntity("RadiationPulse", grid);
+            var pulse = _entityManager.SpawnEntity("RadiationPulse", coordinates);
             pulse.GetComponent<RadiationPulseComponent>().DoPulse();
             _timeUntilPulse = _robustRandom.NextFloat() * (MaxPulseDelay - MinPulseDelay) + MinPulseDelay;
             _pulsesRemaining -= 1;
         }
 
-        private EntityCoordinates FindRandomGrid(IMapGrid mapGrid)
+        private bool TryFindRandomGrid(IMapGrid mapGrid, out EntityCoordinates coordinates)
         {
-            // TODO: Need to get valid tiles? (maybe just move right if the tile we chose is invalid?)
+            if (!mapGrid.Index.IsValid())
+            {
+                coordinates = default;
+                return false;
+            }
 
             var randomX = _robustRandom.Next((int) mapGrid.WorldBounds.Left, (int) mapGrid.WorldBounds.Right);
             var randomY = _robustRandom.Next((int) mapGrid.WorldBounds.Bottom, (int) mapGrid.WorldBounds.Top);
 
-            return mapGrid.ToCoordinates(randomX, randomY);
+            coordinates = mapGrid.ToCoordinates(randomX, randomY);
+
+            // TODO: Need to get valid tiles? (maybe just move right if the tile we chose is invalid?)
+            if (!coordinates.IsValid(_entityManager))
+            {
+                coordinates = default;
+                return false;
+            }
+
+            return true;
         }
     }
 }
