@@ -15,8 +15,6 @@ namespace Content.Server.GameObjects.Components.Items.Storage
     [RegisterComponent]
     internal sealed class StorageFillComponent : Component, IMapInit
     {
-        [Dependency] private readonly IEntityManager _entityManager;
-
         public override string Name => "StorageFill";
 
         private List<PrototypeItemData> _contents;
@@ -56,7 +54,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
                 for (var i = 0; i < storageItem.Amount; i++)
                 {
-                    storage.Insert(_entityManager.SpawnEntity(storageItem.PrototypeName, Owner.Transform.Coordinates));
+                    storage.Insert(Owner.EntityManager.SpawnEntity(storageItem.PrototypeName, Owner.Transform.Coordinates));
                 }
                 if (!string.IsNullOrEmpty(storageItem.GroupId)) alreadySpawnedGroups.Add(storageItem.GroupId);
             }

@@ -32,7 +32,6 @@ namespace Content.Server.GameObjects.Components.Construction
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IComponentFactory _componentFactory = default!;
 
         public override string Name => "Construction";
 
