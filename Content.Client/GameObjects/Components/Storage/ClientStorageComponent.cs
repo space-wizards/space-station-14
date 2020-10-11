@@ -230,22 +230,25 @@ namespace Content.Client.GameObjects.Components.Storage
 
                 var storageList = StorageEntity.StoredEntities;
 
-                foreach (var entity in storageList)
+                var storedGrouped = storageList.GroupBy(e => e).Select(e => new
                 {
+                    Entity = e.Key,
+                    Amount = e.Count()
+                });
+
+                foreach (var group in storedGrouped)
+                {
+                    var entity = group.Entity;
                     var button = new EntityButton()
                     {
-                        EntityuID = entity.Uid,
+                        EntityUid = entity.Uid,
                         MouseFilter = MouseFilterMode.Stop,
                     };
                     button.ActualButton.OnToggled += OnItemButtonToggled;
                     //Name and Size labels set
                     button.EntityName.Text = entity.Name;
 
-                    var size = entity.TryGetComponent(out StorableComponent storable)
-                        ? storable.Size.ToString()
-                        : "N/A";
-
-                    button.EntitySize.Text = string.Format("{0}", entity);
+                    button.EntitySize.Text = group.Amount.ToString();
 
                     //Gets entity sprite and assigns it to button texture
                     if (entity.TryGetComponent(out ISpriteComponent sprite))
