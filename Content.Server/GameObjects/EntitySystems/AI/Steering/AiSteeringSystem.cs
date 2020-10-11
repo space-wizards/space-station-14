@@ -662,8 +662,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
                     // if we're moving in the same direction then ignore
                     // So if 2 entities are moving towards each other and both detect a collision they'll both move in the same direction
                     // i.e. towards the right
-                    if (physicsEntity.TryGetComponent(out IPhysicsComponent physics) &&
-                        Vector2.Dot(physics.LinearVelocity, direction) > 0)
+                    if (physicsEntity.TryGetComponent(out IPhysicsComponent otherPhysics) &&
+                        Vector2.Dot(otherPhysics.LinearVelocity, direction) > 0)
                     {
                         continue;
                     }
