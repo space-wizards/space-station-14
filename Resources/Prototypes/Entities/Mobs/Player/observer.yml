@@ -6,9 +6,8 @@
   description: Boo!
   components:
   - type: Mind
-  - type: Physics
-    mass: 5
   - type: Collidable
+    mass: 5
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.35,-0.35,0.35,0.35"

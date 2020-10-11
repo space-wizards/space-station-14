@@ -115,10 +115,8 @@
       sprite: Mobs/Customization/human_hair.rsi
     - map: [ "enum.Slots.MASK" ]
     - map: [ "enum.Slots.HEAD" ]
-
-  - type: Physics
-    mass: 85
   - type: Collidable
+    mass: 85
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.50,-0.30,0.40,0.30"
@@ -280,10 +278,8 @@
       - map: ["enum.Slots.HEAD"]
       - map: ["hand-left"]
       - map: ["hand-right"]
-
-    - type: Physics
-      mass: 85
     - type: Collidable
+      mass: 85
       shapes:
       - !type:PhysShapeAabb
         bounds: "-0.35,-0.35,0.35,0.35"

@@ -10,13 +10,12 @@
   - type: MovedByPressure
   - type: DamageOnHighSpeedImpact
   - type: Collidable
+    mass: 5
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.25,-0.25,0.25,0.25"
       layer:
       - Clickable
-  - type: Physics
-    mass: 5
   - type: Sprite
     drawdepth: Items
   - type: Pullable

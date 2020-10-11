@@ -24,11 +24,9 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: monkey
       sprite: Mobs/Animals/monkey.rsi
-
   - type: Clickable
-  - type: Physics
-    mass: 50
   - type: Collidable
+    mass: 50
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.30,-0.25,0.40,0.25"
@@ -78,10 +76,8 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: crawling
       sprite: Mobs/Animals/gorilla.rsi
-
-  - type: Physics
-    mass: 90
   - type: Collidable
+    mass: 90
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.90,-0.50,0.05,0.50"
@@ -114,10 +110,8 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: chicken-0
       sprite: Mobs/Animals/chicken.rsi
-
-  - type: Physics
-    mass: 20
   - type: Collidable
+    mass: 20
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.45,-0.20,0.10,0.20"
@@ -153,10 +147,8 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: butterfly
       sprite: Mobs/Animals/butterfly.rsi
-
-  - type: Physics
-    mass: 5
   - type: Collidable
+    mass: 5
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.20,-0.20,0.20,0.20"
@@ -202,10 +194,8 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: bat
       sprite: Mobs/Animals/bat.rsi
-
-  - type: Physics
-    mass: 5
   - type: Collidable
+    mass: 5
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.20,-0.20,0.20,0.20"
@@ -242,10 +232,8 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: 0
       sprite: Mobs/Animals/bee.rsi
-
-  - type: Physics
-    mass: 5
   - type: Collidable
+    mass: 5
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.10,-0.10,0.10,0.10"
@@ -278,10 +266,8 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: goat
       sprite: Mobs/Animals/goat.rsi
-
-  - type: Physics
-    mass: 20
   - type: Collidable
+    mass: 20
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.60,-0.50,0.05,0.50"
@@ -315,10 +301,8 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: goose
       sprite: Mobs/Animals/goose.rsi
-
-  - type: Physics
-    mass: 20
   - type: Collidable
+    mass: 20
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.45,-0.35,0.45,0.35"
@@ -355,10 +339,8 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: parrot
       sprite: Mobs/Animals/parrot.rsi
-
-  - type: Physics
-    mass: 20
   - type: Collidable
+    mass: 20
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.30,-0.35,0.35,0.35"
@@ -391,10 +373,8 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: snake
       sprite: Mobs/Animals/snake.rsi
-
-  - type: Physics
-    mass: 10
   - type: Collidable
+    mass: 10
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.30,-0.30,0.25,0.30"
@@ -430,10 +410,8 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: tarantula
       sprite: Mobs/Animals/spider.rsi
-
-  - type: Physics
-    mass: 10
   - type: Collidable
+    mass: 10
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.30,-0.40,0.45,0.40"
@@ -466,10 +444,8 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: crab
       sprite: Mobs/Animals/crab.rsi
-
-  - type: Physics
-    mass: 10
   - type: Collidable
+    mass: 10
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.40,-0.35,0.20,0.35"
@@ -502,10 +478,8 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: penguin
       sprite: Mobs/Animals/penguin.rsi
-
-  - type: Physics
-    mass: 10
   - type: Collidable
+    mass: 10
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.50,-0.30,0.35,0.30"

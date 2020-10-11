@@ -23,9 +23,8 @@
   - type: Icon
     sprite: Constructible/Power/VendingMachines/cola.rsi
     state: normal
-  - type: Physics
-    mass: 85
   - type: Collidable
+    mass: 85
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.35,-0.35,0.35,0.35"

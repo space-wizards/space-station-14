@@ -103,11 +103,10 @@
     visuals:
     - type: PowerChargerVisualizer
   - type: Anchorable
-  - type: Physics
-    mass: 5
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable
+    mass: 5
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.25,-0.25,0.25,0.25"
@@ -132,11 +131,10 @@
     visuals:
     - type: PowerChargerVisualizer
   - type: Anchorable
-  - type: Physics
-    mass: 5
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable
+    mass: 5
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.25,-0.25,0.25,0.25"
@@ -160,11 +158,10 @@
   - type: Appearance
     visuals:
     - type: PowerChargerVisualizer
-  - type: Physics
-    mass: 5
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable
+    mass: 5
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.25,-0.25,0.25,0.25"
