@@ -152,7 +152,7 @@ namespace Content.Server.GameObjects.Components.Items.RCD
 
         }
 
-        private bool IsRCDStillValid(AfterInteractEventArgs eventArgs, IMapGrid mapGrid, TileRef tile, MapIndices snapPos, RcdMode startingMode)
+        private bool IsRCDStillValid(AfterInteractEventArgs eventArgs, IMapGrid mapGrid, TileRef tile, Vector2i snapPos, RcdMode startingMode)
         {
             //Less expensive checks first. Failing those ones, we need to check that the tile isn't obstructed.
             if (_ammo <= 0)

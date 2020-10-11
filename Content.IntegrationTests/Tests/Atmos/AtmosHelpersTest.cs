@@ -91,7 +91,7 @@ namespace Content.IntegrationTests.Tests.Atmos
         }
 
         [Test]
-        public async Task GetTileAtmosphereMapIndicesNotNullTest()
+        public async Task GetTileAtmosphereVector2iNotNullTest()
         {
             var server = StartServerDummyTicker();
 
@@ -99,7 +99,7 @@ namespace Content.IntegrationTests.Tests.Atmos
             {
                 Assert.DoesNotThrow(() =>
                 {
-                    var atmosphere = default(MapIndices).GetTileAtmosphere(default);
+                    var atmosphere = default(Vector2i).GetTileAtmosphere(default);
 
                     Assert.NotNull(atmosphere);
                 });
@@ -109,7 +109,7 @@ namespace Content.IntegrationTests.Tests.Atmos
         }
 
         [Test]
-        public async Task GetTileAirMapIndicesNotNullTest()
+        public async Task GetTileAirVector2iNotNullTest()
         {
             var server = StartServerDummyTicker();
 
@@ -117,7 +117,7 @@ namespace Content.IntegrationTests.Tests.Atmos
             {
                 Assert.DoesNotThrow(() =>
                 {
-                    var air = default(MapIndices).GetTileAir(default);
+                    var air = default(Vector2i).GetTileAir(default);
 
                     Assert.NotNull(air);
                 });
@@ -127,7 +127,7 @@ namespace Content.IntegrationTests.Tests.Atmos
         }
 
         [Test]
-        public async Task TryGetTileAtmosphereMapIndicesNotNullTest()
+        public async Task TryGetTileAtmosphereVector2iNotNullTest()
         {
             var server = StartServerDummyTicker();
 
@@ -135,7 +135,7 @@ namespace Content.IntegrationTests.Tests.Atmos
             {
                 Assert.DoesNotThrow(() =>
                 {
-                    var hasAtmosphere = default(MapIndices).TryGetTileAtmosphere(default, out var atmosphere);
+                    var hasAtmosphere = default(Vector2i).TryGetTileAtmosphere(default, out var atmosphere);
 
                     Assert.True(hasAtmosphere);
                     Assert.NotNull(atmosphere);
@@ -146,7 +146,7 @@ namespace Content.IntegrationTests.Tests.Atmos
         }
 
         [Test]
-        public async Task TryGetTileAirMapIndicesNotNullTest()
+        public async Task TryGetTileAirVector2iNotNullTest()
         {
             var server = StartServerDummyTicker();
 
@@ -154,7 +154,7 @@ namespace Content.IntegrationTests.Tests.Atmos
             {
                 Assert.DoesNotThrow(() =>
                 {
-                    var hasAir = default(MapIndices).TryGetTileAir(default, out var air);
+                    var hasAir = default(Vector2i).TryGetTileAir(default, out var air);
 
                     Assert.True(hasAir);
                     Assert.NotNull(air);

@@ -32,15 +32,15 @@ namespace Content.IntegrationTests.Tests
 
                 var tileDefinition = tileDefinitionManager["underplating"];
                 var underplating = new Tile(tileDefinition.TileId);
-                gridOne.SetTile(new MapIndices(0, 0), underplating);
-                gridOne.SetTile(new MapIndices(-1, -1), underplating);
+                gridOne.SetTile(new Vector2i(0, 0), underplating);
+                gridOne.SetTile(new Vector2i(-1, -1), underplating);
 
-                entities = tileLookup.GetEntitiesIntersecting(gridOne.Index, new MapIndices(0, 0)).ToList();
+                entities = tileLookup.GetEntitiesIntersecting(gridOne.Index, new Vector2i(0, 0)).ToList();
                 Assert.That(entities.Count, Is.EqualTo(0));
 
                 // Space entity, check that nothing intersects it and that also it doesn't throw.
                 entityManager.SpawnEntity("HumanMob_Content", new MapCoordinates(Vector2.One * 1000, mapOne));
-                entities = tileLookup.GetEntitiesIntersecting(gridOne.Index, new MapIndices(1000, 1000)).ToList();
+                entities = tileLookup.GetEntitiesIntersecting(gridOne.Index, new Vector2i(1000, 1000)).ToList();
                 Assert.That(entities.Count, Is.EqualTo(0));
 
                 var entityOne = entityManager.SpawnEntity("Food4NoRaisins", new EntityCoordinates(gridOne.GridEntityId, Vector2.Zero));
@@ -54,10 +54,10 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(entities.Count, Is.EqualTo(3));
 
                 // Both dummies should be in each corner of the 0,0 tile but only one dummy intersects -1,-1
-                entities = tileLookup.GetEntitiesIntersecting(gridOne.Index, new MapIndices(-1, -1)).ToList();
+                entities = tileLookup.GetEntitiesIntersecting(gridOne.Index, new Vector2i(-1, -1)).ToList();
                 Assert.That(entities.Count, Is.EqualTo(1));
 
-                entities = tileLookup.GetEntitiesIntersecting(gridOne.Index, new MapIndices(0, 0)).ToList();
+                entities = tileLookup.GetEntitiesIntersecting(gridOne.Index, new Vector2i(0, 0)).ToList();
                 Assert.That(entities.Count, Is.EqualTo(2));
             });
 

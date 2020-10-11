@@ -41,11 +41,11 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
         {
             public GridId GridId { get; }
 
-            public MapIndices BaseIdx { get; }
+            public Vector2i BaseIdx { get; }
             // LocalViewRange*LocalViewRange
             public AtmosDebugOverlayData[] OverlayData { get; }
 
-            public AtmosDebugOverlayMessage(GridId gridIndices, MapIndices baseIdx, AtmosDebugOverlayData[] overlayData)
+            public AtmosDebugOverlayMessage(GridId gridIndices, Vector2i baseIdx, AtmosDebugOverlayData[] overlayData)
             {
                 GridId = gridIndices;
                 BaseIdx = baseIdx;

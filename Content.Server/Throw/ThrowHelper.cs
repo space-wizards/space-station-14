@@ -139,9 +139,9 @@ namespace Content.Server.Throw
 
             var throwDuration = ThrownItemComponent.DefaultThrowTime;
             var mass = 1f;
-            if (thrownEnt.TryGetComponent(out ICollidableComponent physicsComponent))
+            if (thrownEnt.TryGetComponent(out ICollidableComponent collidable))
             {
-                mass = physicsComponent.Mass;
+                mass = collidable.Mass;
             }
 
             var velocityNecessary = distance / throwDuration;

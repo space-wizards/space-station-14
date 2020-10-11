@@ -28,7 +28,7 @@ namespace Content.Server.Utility
         ///     Helper that returns all entities in a turf.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerable<IEntity> GetEntitiesInTileFast(this MapIndices indices, GridId gridId, GridTileLookupSystem? gridTileLookup = null)
+        public static IEnumerable<IEntity> GetEntitiesInTileFast(this Vector2i indices, GridId gridId, GridTileLookupSystem? gridTileLookup = null)
         {
             gridTileLookup ??= EntitySystem.Get<GridTileLookupSystem>();
             return gridTileLookup.GetEntitiesIntersecting(gridId, indices);

@@ -106,7 +106,7 @@ namespace Content.Server.Atmos
         public TileRef? Tile => GridIndices.GetTileRef(GridIndex);
 
         [ViewVariables]
-        public MapIndices GridIndices { get; }
+        public Vector2i GridIndices { get; }
 
         [ViewVariables]
         public ExcitedGroup ExcitedGroup { get; set; }
@@ -122,7 +122,7 @@ namespace Content.Server.Atmos
         [ViewVariables]
         public bool BlocksAllAir => BlockedAirflow == AtmosDirection.All;
 
-        public TileAtmosphere(GridAtmosphereComponent atmosphereComponent, GridId gridIndex, MapIndices gridIndices, GasMixture mixture = null, bool immutable = false)
+        public TileAtmosphere(GridAtmosphereComponent atmosphereComponent, GridId gridIndex, Vector2i gridIndices, GasMixture mixture = null, bool immutable = false)
         {
             IoCManager.InjectDependencies(this);
             _gridAtmosphereComponent = atmosphereComponent;

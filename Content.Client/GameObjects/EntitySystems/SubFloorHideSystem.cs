@@ -80,7 +80,7 @@ namespace Content.Client.GameObjects.EntitySystems
             }
         }
 
-        private void UpdateTile(IMapGrid grid, MapIndices position)
+        private void UpdateTile(IMapGrid grid, Vector2i position)
         {
             var tile = grid.GetTileRef(position);
             var tileDef = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
