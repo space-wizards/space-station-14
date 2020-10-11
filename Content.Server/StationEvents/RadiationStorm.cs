@@ -108,9 +108,6 @@ namespace Content.Server.StationEvents
                 var gameTicker = IoCManager.Resolve<IGameTicker>();
                 var defaultGrid = IoCManager.Resolve<IMapManager>().GetGrid(gameTicker.DefaultGridId);
 
-                if (defaultGrid.Index == GridId.Invalid)
-                    return;
-
                 if (pauseManager.IsGridPaused(defaultGrid))
                     return;
 
@@ -120,7 +117,12 @@ namespace Content.Server.StationEvents
 
         private void SpawnPulse(IMapGrid mapGrid)
         {
-            var pulse = _entityManager.SpawnEntity("RadiationPulse", FindRandomGrid(mapGrid));
+            var grid = FindRandomGrid(mapGrid);
+
+            if (!grid.GetGridId(_entityManager).IsValid())
+                return;
+
+            var pulse = _entityManager.SpawnEntity("RadiationPulse", grid);
             pulse.GetComponent<RadiationPulseComponent>().DoPulse();
             _timeUntilPulse = _robustRandom.NextFloat() * (MaxPulseDelay - MinPulseDelay) + MinPulseDelay;
             _pulsesRemaining -= 1;
