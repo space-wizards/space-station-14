@@ -29,13 +29,13 @@ namespace Content.Shared.Network.NetMessages
         {
             var serializer = IoCManager.Resolve<IRobustSerializer>();
             var length = buffer.ReadVariableInt32();
-            using (var stream = buffer.ReadAsStream(length))
+            using (var stream = buffer.ReadAlignedMemory(length))
             {
                 serializer.DeserializeDirect(stream, out Preferences);
             }
 
             length = buffer.ReadVariableInt32();
-            using (var stream = buffer.ReadAsStream(length))
+            using (var stream = buffer.ReadAlignedMemory(length))
             {
                 serializer.DeserializeDirect(stream, out Settings);
             }

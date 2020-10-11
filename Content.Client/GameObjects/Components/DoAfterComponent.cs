@@ -78,11 +78,38 @@ namespace Content.Client.GameObjects.Components
             base.HandleComponentState(curState, nextState);
             if (!(curState is DoAfterComponentState state))
                 return;
+
+            var toRemove = new List<ClientDoAfter>();
             
-            _doAfters.Clear();
+            foreach (var (id, doAfter) in _doAfters)
+            {
+                var found = false;
+                
+                foreach (var clientdoAfter in state.DoAfters)
+                {
+                    if (clientdoAfter.ID == id)
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found)
+                {
+                    toRemove.Add(doAfter);
+                }
+            }
+
+            foreach (var doAfter in toRemove)
+            {
+                Remove(doAfter);
+            }
 
             foreach (var doAfter in state.DoAfters)
             {
+                if (_doAfters.ContainsKey(doAfter.ID))
+                    continue;
+                
                 _doAfters.Add(doAfter.ID, doAfter);
             }
             

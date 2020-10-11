@@ -20467,6 +20467,10 @@ entities:
         type: Content.Server.GameObjects.ContainerSlot
       IdCardConsole-targetId:
         type: Content.Server.GameObjects.ContainerSlot
+      board:
+        entities:
+        - 3957
+        type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 980
   type: ComputerId
@@ -20482,6 +20486,10 @@ entities:
         type: Content.Server.GameObjects.ContainerSlot
       IdCardConsole-targetId:
         type: Content.Server.GameObjects.ContainerSlot
+      board:
+        entities:
+        - 3958
+        type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 981
   type: Table
@@ -47368,4 +47376,3 @@ entities:
     pos: 11.5,-21.5
     rot: 1.5707963267948966 rad
     type: Transform
-...
