@@ -56,7 +56,7 @@
   name: roll of gauze
   description: Some sterile gauze to wrap around bloody stumps.
   parent: MedicalStack
-  id: Brutepack
+  id: Gauze
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/medical.rsi
@@ -67,4 +67,4 @@
   - type: Stack
     max: 5
     count: 5
-    stacktype: enum.StackType.Brutepack
+    stacktype: enum.StackType.Gauze
