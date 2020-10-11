@@ -4,7 +4,6 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.MachineLinking;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.Interfaces;
@@ -56,21 +55,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             }
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent component)
-        {
-            base.HandleMessage(message, component);
-
-            switch (message)
-            {
-                case BeginDeconstructCompMsg msg:
-                    if (!msg.BlockDeconstruct && !(_lightBulbContainer.ContainedEntity is null))
-                    {
-                        Owner.PopupMessage(msg.User, Loc.GetString("Remove the bulb."));
-                        msg.BlockDeconstruct = true;
-                    }
-                    break;
-            }
-        }
+        // TODO CONSTRUCTION make this use a construction graph
 
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {

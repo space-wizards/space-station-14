@@ -21,7 +21,6 @@
             "HeatResistance",
             "Teleportable",
             "ItemTeleporter",
-            "Portal",
             "EntityStorage",
             "Wirecutter",
             "Screwdriver",
@@ -177,7 +176,13 @@
             "BlockGameArcade",
             "KitchenSpike",
             "Butcherable",
-            "Rehydratable"
+            "Rehydratable",
+            "Headset",
+            "ComputerBoard",
+            "BreakableConstruction",
+            "GasCanister",
+            "GasCanisterPort",
+            "Lung",
         };
     }
 }

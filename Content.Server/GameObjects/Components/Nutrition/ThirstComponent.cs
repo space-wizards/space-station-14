@@ -186,7 +186,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             {
                 if (Owner.TryGetComponent(out IDamageableComponent damageable))
                 {
-                    if (damageable.CurrentDamageState != DamageState.Dead)
+                    if (damageable.CurrentState != DamageState.Dead)
                     {
                         damageable.ChangeDamage(DamageType.Blunt, 2, true, null);
                     }

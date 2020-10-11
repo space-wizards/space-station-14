@@ -43,8 +43,8 @@ namespace Content.IntegrationTests.Tests
                 entities = tileLookup.GetEntitiesIntersecting(gridOne.Index, new MapIndices(1000, 1000)).ToList();
                 Assert.That(entities.Count, Is.EqualTo(0));
 
-                var entityOne = entityManager.SpawnEntity("HumanMob_Content", new EntityCoordinates(gridOne.GridEntityId, Vector2.Zero));
-                entityManager.SpawnEntity("HumanMob_Content", new EntityCoordinates(gridOne.GridEntityId, Vector2.One));
+                var entityOne = entityManager.SpawnEntity("Food4NoRaisins", new EntityCoordinates(gridOne.GridEntityId, Vector2.Zero));
+                entityManager.SpawnEntity("Food4NoRaisins", new EntityCoordinates(gridOne.GridEntityId, Vector2.One));
 
                 var entityTiles = tileLookup.GetIndices(entityOne);
                 Assert.That(entityTiles.Count, Is.EqualTo(2));

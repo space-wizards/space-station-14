@@ -26,7 +26,9 @@ namespace Content.Server.GameObjects.Components.Atmos
         public override string Name => "Airtight";
 
         [ViewVariables]
-        private int _airBlockedDirection;
+        private int _initialAirBlockedDirection;
+        [ViewVariables]
+        private int _currentAirBlockedDirection;
         private bool _airBlocked = true;
         private bool _fixVacuum = false;
 
@@ -50,10 +52,11 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public AtmosDirection AirBlockedDirection
         {
-            get => (AtmosDirection)_airBlockedDirection;
+            get => (AtmosDirection)_currentAirBlockedDirection;
             set
             {
-                _airBlockedDirection = (int) value;
+                _currentAirBlockedDirection = (int) value;
+                _initialAirBlockedDirection = (int)Rotate(AirBlockedDirection, -Owner.Transform.LocalRotation);
 
                 UpdatePosition();
             }
@@ -68,7 +71,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             serializer.DataField(ref _airBlocked, "airBlocked", true);
             serializer.DataField(ref _fixVacuum, "fixVacuum", true);
-            serializer.DataField(ref _airBlockedDirection, "airBlockedDirection", (int)AtmosDirection.All, WithFormat.Flags<AtmosDirectionFlags>());
+            serializer.DataField(ref _initialAirBlockedDirection, "airBlockedDirection", (int)AtmosDirection.All, WithFormat.Flags<AtmosDirectionFlags>());
             serializer.DataField(ref _rotateAirBlocked, "rotateAirBlocked", true);
             serializer.DataField(ref _fixAirBlockedDirectionInitialize, "fixAirBlockedDirectionInitialize", true);
         }
@@ -88,31 +91,37 @@ namespace Content.Server.GameObjects.Components.Atmos
             Owner.EntityManager.EventBus.SubscribeEvent<RotateEvent>(EventSource.Local, this, RotateEvent);
 
             if(_fixAirBlockedDirectionInitialize)
-                RotateEvent(new RotateEvent(Owner, Angle.South, Owner.Transform.LocalRotation));
+                RotateEvent(new RotateEvent(Owner, Angle.Zero, Owner.Transform.LocalRotation));
 
             UpdatePosition();
         }
 
         private void RotateEvent(RotateEvent ev)
         {
-            if (!_rotateAirBlocked || ev.Sender != Owner || ev.NewRotation == ev.OldRotation || AirBlockedDirection == AtmosDirection.Invalid)
+            if (!_rotateAirBlocked || ev.Sender != Owner || _initialAirBlockedDirection == (int)AtmosDirection.Invalid)
                 return;
 
-            var diff = ev.NewRotation - ev.OldRotation;
+            _currentAirBlockedDirection = (int) Rotate((AtmosDirection)_initialAirBlockedDirection, ev.NewRotation);
+        }
 
+        private AtmosDirection Rotate(AtmosDirection myDirection, Angle myAngle)
+        {
             var newAirBlockedDirs = AtmosDirection.Invalid;
+
+            if (myAngle == Angle.Zero)
+                return myDirection;
 
             // TODO ATMOS MULTIZ When we make multiZ atmos, special case this.
             for (var i = 0; i < Atmospherics.Directions; i++)
             {
                 var direction = (AtmosDirection) (1 << i);
-                if (!AirBlockedDirection.HasFlag(direction)) continue;
+                if (!myDirection.HasFlag(direction)) continue;
                 var angle = direction.ToAngle();
-                angle += diff;
+                angle += myAngle;
                 newAirBlockedDirs |= angle.ToAtmosDirectionCardinal();
             }
 
-            AirBlockedDirection = newAirBlockedDirs;
+            return newAirBlockedDirs;
         }
 
         public void MapInit()
