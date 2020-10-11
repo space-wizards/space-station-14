@@ -20342,6 +20342,14 @@ entities:
     - cargo.glass
     - cargo.cable
     type: GalacticMarket
+  - deadThreshold: 100
+    type: BreakableConstruction
+  - containers:
+      board:
+        entities:
+        - 3956
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
 - uid: 966
   type: ChairOfficeDark
   components:
@@ -20358,6 +20366,8 @@ entities:
     pos: 0.5,32.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - deadThreshold: 100
+    type: BreakableConstruction
 - uid: 968
   type: ChairOfficeDark
   components:
@@ -20438,6 +20448,8 @@ entities:
     pos: 7.5,32.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - deadThreshold: 100
+    type: BreakableConstruction
 - uid: 978
   type: ComputerAlert
   components:
@@ -20445,6 +20457,8 @@ entities:
     pos: 6.5,32.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - deadThreshold: 100
+    type: BreakableConstruction
 - uid: 979
   type: ComputerId
   components:
@@ -20452,11 +20466,17 @@ entities:
     pos: 7.5,21.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - deadThreshold: 100
+    type: BreakableConstruction
   - containers:
       IdCardConsole-privilegedId:
         type: Content.Server.GameObjects.ContainerSlot
       IdCardConsole-targetId:
         type: Content.Server.GameObjects.ContainerSlot
+      board:
+        entities:
+        - 3957
+        type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 980
   type: ComputerId
@@ -20465,11 +20485,17 @@ entities:
     pos: 8.5,23.5
     rot: 1.5707963267948966 rad
     type: Transform
+  - deadThreshold: 100
+    type: BreakableConstruction
   - containers:
       IdCardConsole-privilegedId:
         type: Content.Server.GameObjects.ContainerSlot
       IdCardConsole-targetId:
         type: Content.Server.GameObjects.ContainerSlot
+      board:
+        entities:
+        - 3958
+        type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 981
   type: Table
@@ -20519,6 +20545,14 @@ entities:
     pos: 9.5,23.5
     rot: 1.5707963267948966 rad
     type: Transform
+  - deadThreshold: 100
+    type: BreakableConstruction
+  - containers:
+      board:
+        entities:
+        - 3959
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
 - uid: 987
   type: ChairOfficeDark
   components:
@@ -20615,6 +20649,14 @@ entities:
     pos: 3.5,32.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - deadThreshold: 100
+    type: BreakableConstruction
+  - containers:
+      board:
+        entities:
+        - 3960
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
 - uid: 999
   type: Table
   components:
@@ -20778,6 +20820,14 @@ entities:
   - parent: 857
     pos: -1.5,-4.5
     type: Transform
+  - deadThreshold: 100
+    type: BreakableConstruction
+  - containers:
+      board:
+        entities:
+        - 3961
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
 - uid: 1020
   type: Fork
   components:
@@ -21157,6 +21207,14 @@ entities:
   - parent: 857
     pos: -5.5,-15.5
     type: Transform
+  - deadThreshold: 100
+    type: BreakableConstruction
+  - containers:
+      board:
+        entities:
+        - 3962
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
 - uid: 1066
   type: LowWall
   components:
@@ -21565,6 +21623,8 @@ entities:
     pos: 24.5,-15.5
     rot: 1.5707963267948966 rad
     type: Transform
+  - deadThreshold: 100
+    type: BreakableConstruction
 - uid: 1109
   type: Beaker
   components:
@@ -22249,6 +22309,8 @@ entities:
     pos: 6.5,-5.5
     rot: 1.5707963267948966 rad
     type: Transform
+  - deadThreshold: 100
+    type: BreakableConstruction
 - uid: 1185
   type: ChairOfficeLight
   components:
@@ -22729,6 +22791,8 @@ entities:
   - parent: 857
     pos: 29.5,-1.5
     type: Transform
+  - deadThreshold: 100
+    type: BreakableConstruction
 - uid: 1232
   type: LockerToolFilled
   components:
@@ -25798,6 +25862,8 @@ entities:
   - parent: 857
     pos: 29.5,-2.5
     type: Transform
+  - deadThreshold: 100
+    type: BreakableConstruction
 - uid: 1556
   type: ReinforcedWindow
   components:
@@ -45643,4 +45709,53 @@ entities:
       light_bulb:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
+- uid: 3956
+  type: SupplyRequestComputerCircuitboard
+  components:
+  - parent: 965
+    type: Transform
+  - anchored: False
+    type: Collidable
+- uid: 3957
+  type: IDComputerCircuitboard
+  components:
+  - parent: 979
+    type: Transform
+  - anchored: False
+    type: Collidable
+- uid: 3958
+  type: IDComputerCircuitboard
+  components:
+  - parent: 980
+    type: Transform
+  - anchored: False
+    type: Collidable
+- uid: 3959
+  type: CommsComputerCircuitboard
+  components:
+  - parent: 986
+    type: Transform
+  - anchored: False
+    type: Collidable
+- uid: 3960
+  type: CommsComputerCircuitboard
+  components:
+  - parent: 998
+    type: Transform
+  - anchored: False
+    type: Collidable
+- uid: 3961
+  type: SpaceVillainArcadeComputerCircuitboard
+  components:
+  - parent: 1019
+    type: Transform
+  - anchored: False
+    type: Collidable
+- uid: 3962
+  type: ResearchComputerCircuitboard
+  components:
+  - parent: 1065
+    type: Transform
+  - anchored: False
+    type: Collidable
 ...

@@ -36,6 +36,11 @@ namespace Content.Server.GameObjects.Components
                     appearance.SetData(ComputerVisuals.Powered, powerReceiver.Powered);
                 }
             }
+        }
+
+        protected override void Startup()
+        {
+            base.Startup();
 
             CreateComputerBoard();
         }
