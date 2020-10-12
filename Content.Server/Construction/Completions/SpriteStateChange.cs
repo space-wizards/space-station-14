@@ -22,16 +22,14 @@ namespace Content.Server.Construction.Completions
         public int Layer { get; private set; } = 0;
         public string? State { get; private set; } = string.Empty;
 
-        public async Task StepCompleted(IEntity entity, IEntity user)
-        {
-            await PerformAction(entity, user);
-        }
-
         public async Task PerformAction(IEntity entity, IEntity? user)
         {
             if (entity.Deleted || string.IsNullOrEmpty(State)) return;
 
             if (!entity.TryGetComponent(out SpriteComponent? sprite)) return;
+
+            // That layer doesn't exist, we do nothing.
+            if (sprite.LayerCount <= Layer) return;
 
             sprite.LayerSetState(Layer, State);
         }
