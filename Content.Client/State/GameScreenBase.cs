@@ -209,11 +209,12 @@ namespace Content.Client.State
             var mousePosWorld = EyeManager.ScreenToMap(args.PointerLocation);
             var entityToClick = GetEntityUnderPosition(mousePosWorld);
 
-            if (!MapManager.TryFindGridAt(mousePosWorld, out var grid))
-                grid = MapManager.GetDefaultGrid(mousePosWorld.MapId);
+            IMapGrid grid;
+            if (!MapManager.TryFindGridAt(mousePosWorld, out grid))
+                grid = null;
 
             var message = new FullInputCmdMessage(Timing.CurTick, Timing.TickFraction, funcId, args.State,
-                grid.MapToGrid(mousePosWorld), args.PointerLocation,
+                grid?.MapToGrid(mousePosWorld) ?? EntityCoordinates.FromMap(EntityManager, MapManager, mousePosWorld), args.PointerLocation,
                 entityToClick?.Uid ?? EntityUid.Invalid);
 
             // client side command handlers will always be sent the local player session.
