@@ -274,12 +274,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return false;
             }
 
-            if (!pulledObject.TryGetComponent<PullableComponent>(out var pull))
-            {
-                return false;
-            }
-
-            if (!player.TryGetComponent<HandsComponent>(out var hands))
+            if (!pulledObject.TryGetComponent(out PullableComponent pull))
             {
                 return false;
             }
@@ -290,13 +285,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return false;
             }
 
-            if (!pull.Owner.TryGetComponent(out IPhysicsComponent physics) ||
-                physics.Anchored)
-            {
-                return false;
-            }
-
-            return hands.TogglePull(pull);
+            return pull.TogglePull(player);
         }
 
         private void UserInteraction(IEntity player, EntityCoordinates coordinates, EntityUid clickedUid)

@@ -46,8 +46,6 @@ namespace Content.Server.GameObjects.EntitySystems
                 .Bind(ContentKeyFunctions.ThrowItemInHand, new PointerInputCmdHandler(HandleThrowItem))
                 .Bind(ContentKeyFunctions.SmartEquipBackpack, InputCmdHandler.FromDelegate(HandleSmartEquipBackpack))
                 .Bind(ContentKeyFunctions.SmartEquipBelt, InputCmdHandler.FromDelegate(HandleSmartEquipBelt))
-                .Bind(ContentKeyFunctions.MovePulledObject, new PointerInputCmdHandler(HandleMovePulledObject))
-                .Bind(ContentKeyFunctions.ReleasePulledObject, InputCmdHandler.FromDelegate(HandleReleasePulledObject))
                 .Register<HandsSystem>();
         }
 
@@ -228,29 +226,5 @@ namespace Content.Server.GameObjects.EntitySystems
                 }
             }
         }
-
-        private bool HandleMovePulledObject(ICommonSession session, EntityCoordinates coords, EntityUid uid)
-        {
-            var playerEntity = session.AttachedEntity;
-
-            if (playerEntity == null ||
-                !playerEntity.TryGetComponent<HandsComponent>(out var hands))
-            {
-                return false;
-            }
-
-            hands.MovePulledObject(playerEntity.Transform.Coordinates, coords);
-
-            return false;
-        }
-
-        private static void HandleReleasePulledObject(ICommonSession session)
-        {
-            if (!TryGetAttachedComponent(session as IPlayerSession, out HandsComponent handsComp))
-                return;
-
-            handsComp.StopPull();
-        }
-
     }
 }

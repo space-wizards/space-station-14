@@ -1,9 +1,13 @@
 #nullable enable
 using System;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.Containers;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
@@ -55,6 +59,18 @@ namespace Content.Shared.Physics.Pull
             return (aabbSize.X > aabbSize.Y ? aabbSize.X : aabbSize.Y) + 0.2f;
         }
 
+        public bool StartPull(IEntity entity)
+        {
+            DebugTools.AssertNotNull(entity);
+
+            if (!entity.TryGetComponent(out IPhysicsComponent? physics))
+            {
+                return false;
+            }
+
+            return StartPull(physics);
+        }
+
         public bool StartPull(IPhysicsComponent puller)
         {
             DebugTools.AssertNotNull(puller);
@@ -64,18 +80,20 @@ namespace Content.Shared.Physics.Pull
                 return false;
             }
 
-            _puller = puller;
-
             if (ControlledComponent == null)
             {
                 return false;
             }
+
+            _puller = puller;
 
             ControlledComponent.WakeBody();
 
             var message = new PullStartedMessage(this, _puller, ControlledComponent);
 
             _puller.Owner.SendMessage(null, message);
+            _puller.Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
+
             ControlledComponent.Owner.SendMessage(null, message);
 
             return true;
@@ -102,6 +120,8 @@ namespace Content.Shared.Physics.Pull
             var message = new PullStoppedMessage(this, oldPuller, ControlledComponent);
 
             oldPuller.Owner.SendMessage(null, message);
+            oldPuller.Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
+
             ControlledComponent.Owner.SendMessage(null, message);
 
             ControlledComponent.TryRemoveController<PullController>();
@@ -109,41 +129,42 @@ namespace Content.Shared.Physics.Pull
             return true;
         }
 
-        public void TryMoveTo(EntityCoordinates from, EntityCoordinates to)
+        public bool TryMoveTo(EntityCoordinates from, EntityCoordinates to)
         {
             if (_puller == null || ControlledComponent == null)
             {
-                return;
+                return false;
             }
 
             if (!_puller.Owner.Transform.Coordinates.InRange(_entityManager, from, InteractionRange))
             {
-                return;
+                return false;
             }
 
             if (!_puller.Owner.Transform.Coordinates.InRange(_entityManager, to, InteractionRange))
             {
-                return;
+                return false;
             }
 
             if (!from.InRange(_entityManager, to, InteractionRange))
             {
-                return;
+                return false;
             }
 
             if (from.Position.EqualsApprox(to.Position))
             {
-                return;
+                return false;
             }
 
             if (!_puller.Owner.Transform.Coordinates.TryDistance(_entityManager, to, out var distance) ||
                 Math.Sqrt(distance) > DistBeforeStopPull ||
                 Math.Sqrt(distance) < StopMoveThreshold)
             {
-                return;
+                return false;
             }
 
             MovingTo = to;
+            return true;
         }
 
         public override void UpdateBeforeProcessing()
@@ -159,7 +180,6 @@ namespace Content.Shared.Physics.Pull
                 return;
             }
 
-            // Are we outside of pulling range?
             var distance = _puller.Owner.Transform.WorldPosition - ControlledComponent.Owner.Transform.WorldPosition;
 
             if (distance.Length > DistBeforeStopPull)
@@ -191,12 +211,8 @@ namespace Content.Shared.Physics.Pull
                 return;
             }
 
-            if (MovingTo == null)
-            {
-                return;
-            }
-
-            if (ControlledComponent.Owner.Transform.Coordinates.Position.EqualsApprox(MovingTo.Value.Position, 0.01))
+            if (MovingTo != null &&
+                ControlledComponent.Owner.Transform.Coordinates.Position.EqualsApprox(MovingTo.Value.Position, 0.01))
             {
                 MovingTo = null;
             }
