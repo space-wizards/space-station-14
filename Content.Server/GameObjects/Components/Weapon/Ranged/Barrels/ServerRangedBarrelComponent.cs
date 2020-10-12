@@ -389,15 +389,15 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                     projectileAngle = angle;
                 }
 
-                var collidableComponent = projectile.GetComponent<ICollidableComponent>();
-                collidableComponent.Status = BodyStatus.InAir;
+                var physics = projectile.GetComponent<IPhysicsComponent>();
+                physics.Status = BodyStatus.InAir;
                 projectile.Transform.WorldPosition = Owner.Transform.MapPosition.Position;
 
                 var projectileComponent = projectile.GetComponent<ProjectileComponent>();
                 projectileComponent.IgnoreEntity(shooter);
 
                 projectile
-                    .GetComponent<ICollidableComponent>()
+                    .GetComponent<IPhysicsComponent>()
                     .EnsureController<BulletController>()
                     .LinearVelocity = projectileAngle.ToVec() * velocity;
 

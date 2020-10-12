@@ -130,6 +130,7 @@ namespace Content.Shared.GameObjects.Components
         Gold,
         Phoron,
         Ointment,
+        Gauze,
         Brutepack,
         FloorTileSteel,
         FloorTileCarpet,

@@ -9,7 +9,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Speech
     [RegisterComponent]
     public class OwOAccentComponent : Component, IAccentComponent
     {
-        [Dependency] private readonly IRobustRandom _random;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         public override string Name => "OwOAccent";
 

@@ -64,3 +64,19 @@
   components:
     - type: ComputerBoard
       prototype: ComputerSolarControl
+
+- type: entity
+  id: SpaceVillainArcadeComputerCircuitboard
+  parent: BaseComputerCircuitboard
+  name: space villain arcade computer circuit board
+  components:
+    - type: ComputerBoard
+      prototype: Arcade
+
+- type: entity
+  id: BlockGameArcadeComputerCircuitboard
+  parent: BaseComputerCircuitboard
+  name: block game arcade computer circuit board
+  components:
+    - type: ComputerBoard
+      prototype: BlockGameArcade

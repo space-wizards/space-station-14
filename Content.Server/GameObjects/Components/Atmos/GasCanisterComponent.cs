@@ -20,7 +20,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         public GasMixture Air { get; set; }
 
         [ViewVariables]
-        public bool Anchored => !Owner.TryGetComponent<ICollidableComponent>(out var collidable) || collidable.Anchored;
+        public bool Anchored => !Owner.TryGetComponent<IPhysicsComponent>(out var physics) || physics.Anchored;
 
         [ViewVariables]
         public GasCanisterPortComponent ConnectedPort { get; private set; }
@@ -39,19 +39,19 @@ namespace Content.Server.GameObjects.Components.Atmos
         public override void Initialize()
         {
             base.Initialize();
-            if (Owner.TryGetComponent<ICollidableComponent>(out var collidable))
+            if (Owner.TryGetComponent<IPhysicsComponent>(out var physics))
             {
                 AnchorUpdate();
-                collidable.AnchoredChanged += AnchorUpdate;
+                physics.AnchoredChanged += AnchorUpdate;
             }
         }
 
         public override void OnRemove()
         {
             base.OnRemove();
-            if (Owner.TryGetComponent<ICollidableComponent>(out var collidable))
+            if (Owner.TryGetComponent<IPhysicsComponent>(out var physics))
             {
-                collidable.AnchoredChanged -= AnchorUpdate;
+                physics.AnchoredChanged -= AnchorUpdate;
             }
             DisconnectFromPort();
         }

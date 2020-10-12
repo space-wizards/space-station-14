@@ -12,7 +12,6 @@
   - type: Destructible
     deadThreshold: 100
     resistances: metallicResistances
-  - type: Physics
   - type: ShuttleController
   - type: Strap
     position: Stand

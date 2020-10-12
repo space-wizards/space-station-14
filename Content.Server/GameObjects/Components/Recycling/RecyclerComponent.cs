@@ -126,8 +126,8 @@ namespace Content.Server.GameObjects.Components.Recycling
                 return false;
             }
 
-            if (!entity.TryGetComponent(out ICollidableComponent collidable) ||
-                collidable.Anchored)
+            if (!entity.TryGetComponent(out IPhysicsComponent physics) ||
+                physics.Anchored)
             {
                 return false;
             }
@@ -163,16 +163,16 @@ namespace Content.Server.GameObjects.Components.Recycling
             for (var i = _intersecting.Count - 1; i >= 0; i--)
             {
                 var entity = _intersecting[i];
-                
+
                 if (entity.Deleted || !CanMove(entity) || !_entityManager.IsIntersecting(Owner, entity))
                 {
                     _intersecting.RemoveAt(i);
                     continue;
                 }
 
-                if (entity.TryGetComponent(out ICollidableComponent collidable))
+                if (entity.TryGetComponent(out IPhysicsComponent physics))
                 {
-                    var controller = collidable.EnsureController<ConveyedController>();
+                    var controller = physics.EnsureController<ConveyedController>();
                     controller.Move(direction, frameTime);
                 }
             }

@@ -84,7 +84,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
         public void OnUpdate(float frameTime)
         {
-            if (!Owner.TryGetComponent(out BatteryComponent battery))
+            if (Owner.Deleted || !Owner.TryGetComponent(out BatteryComponent battery))
             {
                 return;
             }
@@ -186,7 +186,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
     public sealed class EmergencyLightMessage : EntitySystemMessage
     {
         public EmergencyLightComponent Component { get; }
-        
+
         public EmergencyLightComponent.EmergencyLightState State { get; }
 
         public EmergencyLightMessage(EmergencyLightComponent component, EmergencyLightComponent.EmergencyLightState state)

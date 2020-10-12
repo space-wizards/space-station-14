@@ -288,13 +288,13 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return false;
             }
 
-            if (!pull.Owner.TryGetComponent(out ICollidableComponent collidable) ||
-                collidable.Anchored)
+            if (!pull.Owner.TryGetComponent(out IPhysicsComponent physics) ||
+                physics.Anchored)
             {
                 return false;
             }
 
-            var controller = collidable.EnsureController<PullController>();
+            var controller = physics.EnsureController<PullController>();
 
             if (controller.GettingPulled)
             {

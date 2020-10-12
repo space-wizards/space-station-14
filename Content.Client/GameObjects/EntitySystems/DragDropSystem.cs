@@ -241,6 +241,10 @@ namespace Content.Client.GameObjects.EntitySystems
                 dragSprite.Color = dragSprite.Color.WithAlpha(0.7f);
                 // keep it on top of everything
                 dragSprite.DrawDepth = (int) DrawDepth.Overlays;
+                if (dragSprite.Directional)
+                {
+                    _dragShadow.Transform.WorldRotation = _draggedEntity.Transform.WorldRotation;
+                }
 
                 HighlightTargets();
             }

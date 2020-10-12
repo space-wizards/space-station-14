@@ -115,10 +115,9 @@
       sprite: Mobs/Customization/human_hair.rsi
     - map: [ "enum.Slots.MASK" ]
     - map: [ "enum.Slots.HEAD" ]
-
-  - type: Physics
-    mass: 85
   - type: Collidable
+    anchored: false
+    mass: 85
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.50,-0.30,0.40,0.30"
@@ -141,11 +140,13 @@
     tempDamageCoefficient: 0.1
   - type: HumanoidAppearance
   - type: Body
-    criticalThreshold: 100
-    deadThreshold: 200
     template: HumanoidTemplate
     preset: HumanPreset
     centerSlot: torso
+  - type: Damageable
+    damagePrototype: biologicalDamageContainer
+    criticalThreshold: 100
+    deadThreshold: 200
   - type: Metabolism
     metabolismHeat: 5000
     radiatedHeat: 400
@@ -280,10 +281,9 @@
       - map: ["enum.Slots.HEAD"]
       - map: ["hand-left"]
       - map: ["hand-right"]
-
-    - type: Physics
-      mass: 85
     - type: Collidable
+      anchored: false
+      mass: 85
       shapes:
       - !type:PhysShapeAabb
         bounds: "-0.35,-0.35,0.35,0.35"
@@ -296,11 +296,13 @@
         - MobImpassable
     - type: HumanoidAppearance
     - type: Body
-      criticalThreshold: 100
-      deadThreshold: 200
       template: HumanoidTemplate
       preset: HumanPreset
       centerSlot: torso
+    - type: Damageable
+      damagePrototype: biologicalDamageContainer
+      criticalThreshold: 100
+      deadThreshold: 200
     - type: MobStateManager
     - type: Appearance
       visuals:
