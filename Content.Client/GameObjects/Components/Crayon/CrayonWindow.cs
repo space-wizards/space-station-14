@@ -24,7 +24,7 @@ namespace Content.Client.GameObjects.Components.Crayon
 
         public CrayonWindow(CrayonBoundUserInterface owner)
         {
-            Title = "Crayon";
+            Title = Loc.GetString("Crayon");
             Owner = owner;
 
             var vbox = new VBoxContainer();
