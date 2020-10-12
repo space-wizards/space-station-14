@@ -173,7 +173,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             if (ClickArc != null)
             {
                 var sys = EntitySystem.Get<MeleeWeaponSystem>();
-                sys.SendAnimation(ClickArc, angle, eventArgs.User, Owner, targets, ClickAttackEffect);
+                sys.SendAnimation(ClickArc, angle, eventArgs.User, Owner, targets, ClickAttackEffect, false);
             }
 
             _lastAttackTime = curTime;
