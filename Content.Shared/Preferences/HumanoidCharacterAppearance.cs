@@ -20,11 +20,11 @@ namespace Content.Shared.Preferences
             Color skinColor)
         {
             HairStyleName = hairStyleName;
-            HairColor = hairColor;
+            HairColor = ClampColor(hairColor);
             FacialHairStyleName = facialHairStyleName;
-            FacialHairColor = facialHairColor;
-            EyeColor = eyeColor;
-            SkinColor = skinColor;
+            FacialHairColor = ClampColor(facialHairColor);
+            EyeColor = ClampColor(eyeColor);
+            SkinColor = ClampColor(skinColor);
         }
 
         public string HairStyleName { get; }
@@ -102,6 +102,11 @@ namespace Content.Shared.Preferences
             }
         }
 
+        public static Color ClampColor(Color color)
+        {
+            return new Color(color.RByte, color.GByte, color.BByte);
+        }
+
         public static HumanoidCharacterAppearance EnsureValid(HumanoidCharacterAppearance appearance)
         {
             string hairStyleName;
@@ -136,22 +141,17 @@ namespace Content.Shared.Preferences
                 facialHairColor,
                 eyeColor,
                 skinColor);
-
-            static Color ClampColor(Color color)
-            {
-                return new Color(color.RByte, color.GByte, color.BByte);
-            }
         }
 
         public bool MemberwiseEquals(ICharacterAppearance maybeOther)
         {
             if (!(maybeOther is HumanoidCharacterAppearance other)) return false;
             if (HairStyleName != other.HairStyleName) return false;
-            if (HairColor != other.HairColor) return false;
+            if (!HairColor.Equals(other.HairColor)) return false;
             if (FacialHairStyleName != other.FacialHairStyleName) return false;
-            if (FacialHairColor != other.FacialHairColor) return false;
-            if (EyeColor != other.EyeColor) return false;
-            if (SkinColor != other.SkinColor) return false;
+            if (!FacialHairColor.Equals(other.FacialHairColor)) return false;
+            if (!EyeColor.Equals(other.EyeColor)) return false;
+            if (!SkinColor.Equals(other.SkinColor)) return false;
             return true;
         }
     }
