@@ -5,6 +5,7 @@ using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Utility;
+using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 using System.Collections.Generic;

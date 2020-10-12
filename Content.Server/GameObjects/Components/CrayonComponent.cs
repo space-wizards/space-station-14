@@ -115,12 +115,12 @@ namespace Content.Server.GameObjects.Components
 
             if (Charges <= 0)
             {
-                eventArgs.User.PopupMessage(Loc.GetString("It's empty."));
+                eventArgs.User.PopupMessage(Loc.GetString("Not enough left."));
                 return;
             }
 
             var entityManager = IoCManager.Resolve<IServerEntityManager>();
-            //TODO: rotation?
+            
             var entity = entityManager.SpawnEntity("CrayonDecal", eventArgs.ClickLocation);
             if (entity.TryGetComponent(out AppearanceComponent? appearance))
             {
