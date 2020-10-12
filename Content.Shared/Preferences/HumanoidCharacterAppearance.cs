@@ -20,11 +20,11 @@ namespace Content.Shared.Preferences
             Color skinColor)
         {
             HairStyleName = hairStyleName;
-            HairColor = hairColor;
+            HairColor = ClampColor(hairColor);
             FacialHairStyleName = facialHairStyleName;
-            FacialHairColor = facialHairColor;
-            EyeColor = eyeColor;
-            SkinColor = skinColor;
+            FacialHairColor = ClampColor(facialHairColor);
+            EyeColor = ClampColor(eyeColor);
+            SkinColor = ClampColor(skinColor);
         }
 
         public string HairStyleName { get; }
@@ -102,6 +102,11 @@ namespace Content.Shared.Preferences
             }
         }
 
+        public static Color ClampColor(Color color)
+        {
+            return new Color(color.RByte, color.GByte, color.BByte);
+        }
+
         public static HumanoidCharacterAppearance EnsureValid(HumanoidCharacterAppearance appearance)
         {
             string hairStyleName;
@@ -136,11 +141,6 @@ namespace Content.Shared.Preferences
                 facialHairColor,
                 eyeColor,
                 skinColor);
-
-            static Color ClampColor(Color color)
-            {
-                return new Color(color.RByte, color.GByte, color.BByte);
-            }
         }
 
         public bool MemberwiseEquals(ICharacterAppearance maybeOther)
