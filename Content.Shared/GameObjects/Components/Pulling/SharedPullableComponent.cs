@@ -25,31 +25,32 @@ namespace Content.Shared.GameObjects.Components.Pulling
                     return;
                 }
 
-                var dist = user.Transform.GridPosition.Position - component.Owner.Transform.GridPosition.Position;
-                if (dist.LengthSquared > SharedInteractionSystem.InteractionRangeSquared)
+                if (!user.Transform.Coordinates.TryDistance(user.EntityManager, component.Owner.Transform.Coordinates, out var distance) ||
+                    distance > SharedInteractionSystem.InteractionRange)
                 {
                     return;
                 }
 
                 if (!user.HasComponent<ISharedHandsComponent>() ||
-                    !user.TryGetComponent(out ICollidableComponent userCollidable) ||
-                    !component.Owner.TryGetComponent(out ICollidableComponent targetCollidable))
+                    !user.TryGetComponent(out IPhysicsComponent userPhysics) ||
+                    !component.Owner.TryGetComponent(out IPhysicsComponent targetPhysics) ||
+                    targetPhysics.Anchored)
                 {
                     return;
                 }
 
-                var controller = targetCollidable.EnsureController<PullController>();
+                var controller = targetPhysics.EnsureController<PullController>();
 
                 data.Visibility = VerbVisibility.Visible;
-                data.Text = controller.Puller == userCollidable
+                data.Text = controller.Puller == userPhysics
                     ? Loc.GetString("Stop pulling")
                     : Loc.GetString("Pull");
             }
 
             protected override void Activate(IEntity user, SharedPullableComponent component)
             {
-                if (!user.TryGetComponent(out ICollidableComponent userCollidable) ||
-                    !component.Owner.TryGetComponent(out ICollidableComponent targetCollidable) ||
+                if (!user.TryGetComponent(out IPhysicsComponent userCollidable) ||
+                    !component.Owner.TryGetComponent(out IPhysicsComponent targetCollidable) ||
                     targetCollidable.Anchored ||
                     !user.TryGetComponent(out ISharedHandsComponent hands))
                 {

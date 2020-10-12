@@ -39,9 +39,9 @@ namespace Content.Shared.GameObjects.Components.Items
                 StopPull();
             }
 
-            PulledObject = pullable.Owner.GetComponent<ICollidableComponent>();
+            PulledObject = pullable.Owner.GetComponent<IPhysicsComponent>();
             var controller = PulledObject.EnsureController<PullController>();
-            return controller.StartPull(Owner.GetComponent<ICollidableComponent>());
+            return controller.StartPull(Owner.GetComponent<IPhysicsComponent>());
         }
 
         public virtual bool StopPull()
@@ -60,7 +60,7 @@ namespace Content.Shared.GameObjects.Components.Items
             if (PulledObject == null)
             {
                 return StartPull(pullable);
-            } else if (pullable.Owner.TryGetComponent(out ICollidableComponent? collidable) &&
+            } else if (pullable.Owner.TryGetComponent(out IPhysicsComponent? collidable) &&
                        PulledObject == collidable)
             {
                 return StopPull();
