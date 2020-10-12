@@ -3547,18 +3547,18 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 327
-  type: DisposalPipe
+  type: Firelock
   components:
   - parent: 857
-    pos: 25.5,3.5
+    pos: -22.5,14.5
     rot: 3.141592653589793 rad
     type: Transform
-  - deadThreshold: 100
-    type: Breakable
-  - containers:
-      DisposalTransit:
-        type: Robust.Server.GameObjects.Components.Container.Container
-    type: ContainerContainer
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+  - enabled: False
+    type: Occluder
 - uid: 328
   type: DisposalPipe
   components:
@@ -20344,12 +20344,6 @@ entities:
     type: GalacticMarket
   - deadThreshold: 100
     type: BreakableConstruction
-  - containers:
-      board:
-        entities:
-        - 3956
-        type: Robust.Server.GameObjects.Components.Container.Container
-    type: ContainerContainer
 - uid: 966
   type: ChairOfficeDark
   components:
@@ -20547,12 +20541,6 @@ entities:
     type: Transform
   - deadThreshold: 100
     type: BreakableConstruction
-  - containers:
-      board:
-        entities:
-        - 3959
-        type: Robust.Server.GameObjects.Components.Container.Container
-    type: ContainerContainer
 - uid: 987
   type: ChairOfficeDark
   components:
@@ -20651,12 +20639,6 @@ entities:
     type: Transform
   - deadThreshold: 100
     type: BreakableConstruction
-  - containers:
-      board:
-        entities:
-        - 3960
-        type: Robust.Server.GameObjects.Components.Container.Container
-    type: ContainerContainer
 - uid: 999
   type: Table
   components:
@@ -20822,12 +20804,6 @@ entities:
     type: Transform
   - deadThreshold: 100
     type: BreakableConstruction
-  - containers:
-      board:
-        entities:
-        - 3961
-        type: Robust.Server.GameObjects.Components.Container.Container
-    type: ContainerContainer
 - uid: 1020
   type: Fork
   components:
@@ -21209,12 +21185,6 @@ entities:
     type: Transform
   - deadThreshold: 100
     type: BreakableConstruction
-  - containers:
-      board:
-        entities:
-        - 3962
-        type: Robust.Server.GameObjects.Components.Container.Container
-    type: ContainerContainer
 - uid: 1066
   type: LowWall
   components:
@@ -21766,19 +21736,23 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 1124
-  type: Catwalk
+  type: HVWire
   components:
   - parent: 857
-    pos: -0.5,-23.5
-    rot: -1.5707963267948966 rad
+    pos: -6.5,-26.5
+    rot: 3.141592653589793 rad
     type: Transform
+  - deadThreshold: 100
+    type: Destructible
 - uid: 1125
-  type: Catwalk
+  type: HVWire
   components:
   - parent: 857
-    pos: 0.5,-23.5
-    rot: -1.5707963267948966 rad
+    pos: -4.5,-26.5
+    rot: 3.141592653589793 rad
     type: Transform
+  - deadThreshold: 100
+    type: Destructible
 - uid: 1126
   type: Catwalk
   components:
@@ -22419,7 +22393,9 @@ entities:
     pos: -35.166924,-3.5
     rot: 3.141592653589793 rad
     type: Transform
-  - startingCharge: 29232.688
+  - powerLoad: 1
+    type: PowerReceiver
+  - startingCharge: 30000
     type: Battery
 - uid: 1199
   type: Poweredlight
@@ -24804,26 +24780,30 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 1406
-  type: Window
+  type: AirlockCommandGlassLocked
   components:
   - parent: 857
-    pos: 11.5,-21.5
-    rot: -1.5707963267948966 rad
+    pos: 4.5,27.5
+    rot: 1.5707963267948966 rad
     type: Transform
 - uid: 1407
-  type: Window
+  type: LowWall
   components:
   - parent: 857
-    pos: 10.5,-21.5
-    rot: -1.5707963267948966 rad
+    pos: 3.5,27.5
+    rot: 1.5707963267948966 rad
     type: Transform
 - uid: 1408
-  type: Window
+  type: FirelockGlass
   components:
   - parent: 857
-    pos: 9.5,-21.5
-    rot: -1.5707963267948966 rad
+    pos: 6.5,20.5
+    rot: 1.5707963267948966 rad
     type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
 - uid: 1409
   type: ReinforcedWindow
   components:
@@ -29732,12 +29712,14 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2099
-  type: solid_wall
+  type: ApcExtensionCable
   components:
   - parent: 857
-    pos: -25.5,7.5
-    rot: -1.5707963267948966 rad
+    pos: 1.5,6.5
+    rot: 3.141592653589793 rad
     type: Transform
+  - deadThreshold: 100
+    type: Destructible
 - uid: 2100
   type: solid_wall
   components:
@@ -35116,8 +35098,8 @@ entities:
   type: ApcExtensionCable
   components:
   - parent: 857
-    pos: -22.5,2.5
-    rot: -1.5707963267948966 rad
+    pos: -23.5,0.5
+    rot: 3.141592653589793 rad
     type: Transform
   - deadThreshold: 100
     type: Destructible
@@ -40698,7 +40680,16 @@ entities:
   - deadThreshold: 100
     type: Destructible
 - uid: 3405
-  type: HVWire
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: -0.5,-15.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3406
+  type: ApcExtensionCable
   components:
   - parent: 857
     pos: -4.5,-26.5
@@ -40706,21 +40697,12 @@ entities:
     type: Transform
   - deadThreshold: 100
     type: Destructible
-- uid: 3406
-  type: HVWire
-  components:
-  - parent: 857
-    pos: -5.5,-26.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-  - deadThreshold: 100
-    type: Destructible
 - uid: 3407
-  type: HVWire
+  type: ApcExtensionCable
   components:
   - parent: 857
-    pos: -6.5,-26.5
-    rot: -1.5707963267948966 rad
+    pos: -1.5,-15.5
+    rot: 3.141592653589793 rad
     type: Transform
   - deadThreshold: 100
     type: Destructible
@@ -45287,7 +45269,9 @@ entities:
   - parent: 857
     pos: -39.802197,11.207858
     type: Transform
-  - startingCharge: 28187.668
+  - powerLoad: 1
+    type: PowerReceiver
+  - startingCharge: 30000
     type: Battery
 - uid: 3913
   type: EmergencyLight
@@ -45710,52 +45694,1685 @@ entities:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - uid: 3956
-  type: SupplyRequestComputerCircuitboard
+  type: ApcExtensionCable
   components:
-  - parent: 965
+  - parent: 857
+    pos: 3.5,0.5
     type: Transform
-  - anchored: False
-    type: Collidable
+  - deadThreshold: 100
+    type: Destructible
 - uid: 3957
-  type: IDComputerCircuitboard
+  type: ApcExtensionCable
   components:
-  - parent: 979
+  - parent: 857
+    pos: 3.5,2.5
     type: Transform
-  - anchored: False
-    type: Collidable
+  - deadThreshold: 100
+    type: Destructible
 - uid: 3958
-  type: IDComputerCircuitboard
+  type: FirelockGlass
   components:
-  - parent: 980
+  - parent: 857
+    pos: -37.5,1.5
+    rot: -1.5707963267948966 rad
     type: Transform
-  - anchored: False
+  - hard: False
     type: Collidable
+  - airBlocked: False
+    type: Airtight
 - uid: 3959
-  type: CommsComputerCircuitboard
+  type: ApcExtensionCable
   components:
-  - parent: 986
+  - parent: 857
+    pos: 8.5,20.5
+    rot: 3.141592653589793 rad
     type: Transform
-  - anchored: False
-    type: Collidable
+  - deadThreshold: 100
+    type: Destructible
 - uid: 3960
-  type: CommsComputerCircuitboard
+  type: FirelockGlass
   components:
-  - parent: 998
+  - parent: 857
+    pos: -36.5,1.5
+    rot: -1.5707963267948966 rad
     type: Transform
-  - anchored: False
+  - hard: False
     type: Collidable
+  - airBlocked: False
+    type: Airtight
 - uid: 3961
-  type: SpaceVillainArcadeComputerCircuitboard
+  type: FirelockGlass
   components:
-  - parent: 1019
+  - parent: 857
+    pos: -35.5,1.5
+    rot: -1.5707963267948966 rad
     type: Transform
-  - anchored: False
+  - hard: False
     type: Collidable
+  - airBlocked: False
+    type: Airtight
 - uid: 3962
-  type: ResearchComputerCircuitboard
+  type: ApcExtensionCable
   components:
-  - parent: 1065
+  - parent: 857
+    pos: 3.5,1.5
     type: Transform
-  - anchored: False
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3963
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: 5.5,0.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
     type: Collidable
-...
+  - airBlocked: False
+    type: Airtight
+- uid: 3964
+  type: Firelock
+  components:
+  - parent: 857
+    pos: -4.5,-27.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+  - enabled: False
+    type: Occluder
+- uid: 3965
+  type: Firelock
+  components:
+  - parent: 857
+    pos: -4.5,-26.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+  - enabled: False
+    type: Occluder
+- uid: 3966
+  type: AirlockGlass
+  components:
+  - parent: 857
+    pos: 2.5,2.5
+    rot: 1.5707963267948966 rad
+    type: Transform
+- uid: 3967
+  type: AirlockGlass
+  components:
+  - parent: 857
+    pos: 2.5,6.5
+    rot: 1.5707963267948966 rad
+    type: Transform
+- uid: 3968
+  type: AirlockGlass
+  components:
+  - parent: 857
+    pos: 3.5,6.5
+    rot: 1.5707963267948966 rad
+    type: Transform
+- uid: 3969
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: 2.5,0.5
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3970
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: 1.5,0.5
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3971
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: 2.5,-12.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 3972
+  type: AirlockGlass
+  components:
+  - parent: 857
+    pos: 3.5,2.5
+    rot: 1.5707963267948966 rad
+    type: Transform
+- uid: 3973
+  type: AirlockGlass
+  components:
+  - parent: 857
+    pos: 4.5,2.5
+    rot: 1.5707963267948966 rad
+    type: Transform
+- uid: 3974
+  type: AirlockGlass
+  components:
+  - parent: 857
+    pos: 4.5,6.5
+    rot: 1.5707963267948966 rad
+    type: Transform
+- uid: 3975
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: -31.5,5.5
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3976
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: 7.5,20.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3977
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: -7.5,7.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 3978
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: -4.5,5.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 3979
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: -30.5,5.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3980
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: -23.5,5.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3981
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: 1.5,-2.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 3982
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: 1.5,-1.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 3983
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: 12.5,-8.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3984
+  type: DisposalPipe
+  components:
+  - parent: 857
+    pos: 25.5,3.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Breakable
+  - containers:
+      DisposalTransit:
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
+- uid: 3985
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: 15.5,-3.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 3986
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: 2.5,6.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3987
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: -26.5,7.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3988
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: -26.5,6.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3989
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: -21.5,13.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3990
+  type: Firelock
+  components:
+  - parent: 857
+    pos: -19.5,-11.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+  - enabled: False
+    type: Occluder
+- uid: 3991
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: -26.5,6.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3992
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: -26.5,5.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3993
+  type: solid_wall
+  components:
+  - parent: 857
+    pos: -25.5,7.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3994
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: 3.5,6.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3995
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: 4.5,6.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3996
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: 1.5,0.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 3997
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: 1.5,-0.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 3998
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: 12.5,-9.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3999
+  type: Firelock
+  components:
+  - parent: 857
+    pos: 22.5,-19.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+  - enabled: False
+    type: Occluder
+- uid: 4000
+  type: Firelock
+  components:
+  - parent: 857
+    pos: -6.5,-9.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+  - enabled: False
+    type: Occluder
+- uid: 4001
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: -2.5,2.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4002
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: -3.5,2.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4003
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: -32.5,-8.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4004
+  type: AirlockGlass
+  components:
+  - parent: 857
+    pos: -21.5,3.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4005
+  type: AirlockGlass
+  components:
+  - parent: 857
+    pos: -26.5,5.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4006
+  type: Firelock
+  components:
+  - parent: 857
+    pos: -32.5,-9.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+  - enabled: False
+    type: Occluder
+- uid: 4007
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: -24.5,7.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4008
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: -23.5,7.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4009
+  type: Firelock
+  components:
+  - parent: 857
+    pos: -6.5,-10.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+  - enabled: False
+    type: Occluder
+- uid: 4010
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: -1.5,2.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4011
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: -0.5,2.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4012
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: -23.5,1.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4013
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: -33.5,3.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4014
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: -33.5,4.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4015
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: -33.5,5.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4016
+  type: AirlockMedicalGlass
+  components:
+  - parent: 857
+    pos: 12.5,-8.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4017
+  type: Window
+  components:
+  - parent: 857
+    pos: 12.5,-11.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4018
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: -32.5,-7.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4019
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: 36.5,5.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4020
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: 36.5,4.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4021
+  type: Firelock
+  components:
+  - parent: 857
+    pos: 13.5,-19.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+  - enabled: False
+    type: Occluder
+- uid: 4022
+  type: AirlockGlass
+  components:
+  - parent: 857
+    pos: -26.5,4.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4023
+  type: AirlockGlass
+  components:
+  - parent: 857
+    pos: -26.5,3.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4024
+  type: Firelock
+  components:
+  - parent: 857
+    pos: 13.5,-20.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+  - enabled: False
+    type: Occluder
+- uid: 4025
+  type: LowWall
+  components:
+  - parent: 857
+    pos: 12.5,-12.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4026
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: -15.5,0.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4027
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: 5.5,-1.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4028
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: 5.5,-0.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4029
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: 5.5,-2.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4030
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: -4.5,4.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4031
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: -4.5,3.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4032
+  type: Firelock
+  components:
+  - parent: 857
+    pos: 37.5,-5.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+  - enabled: False
+    type: Occluder
+- uid: 4033
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: 0.5,-14.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4034
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: 13.5,0.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4035
+  type: AirlockGlass
+  components:
+  - parent: 857
+    pos: -21.5,5.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4036
+  type: Firelock
+  components:
+  - parent: 857
+    pos: -33.5,-9.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+  - enabled: False
+    type: Occluder
+- uid: 4037
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: -24.5,1.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4038
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: -26.5,5.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4039
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: 3.5,15.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4040
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: 4.5,15.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4041
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: 2.5,15.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4042
+  type: Firelock
+  components:
+  - parent: 857
+    pos: 25.5,-1.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+  - enabled: False
+    type: Occluder
+- uid: 4043
+  type: Firelock
+  components:
+  - parent: 857
+    pos: 25.5,-2.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+  - enabled: False
+    type: Occluder
+- uid: 4044
+  type: Firelock
+  components:
+  - parent: 857
+    pos: -10.5,-7.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+  - enabled: False
+    type: Occluder
+- uid: 4045
+  type: AirlockMedicalGlass
+  components:
+  - parent: 857
+    pos: 12.5,-10.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4046
+  type: AirlockGlass
+  components:
+  - parent: 857
+    pos: -21.5,4.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4047
+  type: AirlockMedicalGlass
+  components:
+  - parent: 857
+    pos: 12.5,-9.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4048
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: -10.5,1.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4049
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: -10.5,0.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4050
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: 15.5,8.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4051
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: 36.5,3.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4052
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: -10.5,11.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4053
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: -10.5,10.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4054
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: -10.5,-0.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4055
+  type: Firelock
+  components:
+  - parent: 857
+    pos: 38.5,-5.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+  - enabled: False
+    type: Occluder
+- uid: 4056
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: 0.5,-15.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4057
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: 4.5,-12.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4058
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: 3.5,-12.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4059
+  type: Firelock
+  components:
+  - parent: 857
+    pos: 11.5,14.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+  - enabled: False
+    type: Occluder
+- uid: 4060
+  type: Firelock
+  components:
+  - parent: 857
+    pos: -17.5,17.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+  - enabled: False
+    type: Occluder
+- uid: 4061
+  type: Firelock
+  components:
+  - parent: 857
+    pos: -10.5,-6.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+  - enabled: False
+    type: Occluder
+- uid: 4062
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: -18.5,13.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4063
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: -17.5,13.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4064
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: -17.5,14.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4065
+  type: HVWire
+  components:
+  - parent: 857
+    pos: -5.5,-26.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4066
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: 11.5,3.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4067
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: -5.5,-26.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4068
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: 11.5,5.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4069
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: -4.5,-26.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4070
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: 11.5,4.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4071
+  type: Window
+  components:
+  - parent: 857
+    pos: 12.5,-7.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4072
+  type: LowWall
+  components:
+  - parent: 857
+    pos: 12.5,-11.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4073
+  type: LowWall
+  components:
+  - parent: 857
+    pos: 12.5,-7.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4074
+  type: Window
+  components:
+  - parent: 857
+    pos: 12.5,-12.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4075
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: -8.5,6.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4076
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: -7.5,8.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4077
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: -20.5,13.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4078
+  type: Firelock
+  components:
+  - parent: 857
+    pos: 21.5,-19.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+  - enabled: False
+    type: Occluder
+- uid: 4079
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: -8.5,-7.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4080
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: -32.5,-6.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4081
+  type: Firelock
+  components:
+  - parent: 857
+    pos: -10.5,24.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+  - enabled: False
+    type: Occluder
+- uid: 4082
+  type: Firelock
+  components:
+  - parent: 857
+    pos: -10.5,25.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+  - enabled: False
+    type: Occluder
+- uid: 4083
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: -26.5,4.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4084
+  type: Firelock
+  components:
+  - parent: 857
+    pos: -18.5,17.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+  - enabled: False
+    type: Occluder
+- uid: 4085
+  type: Firelock
+  components:
+  - parent: 857
+    pos: 27.5,-11.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+  - enabled: False
+    type: Occluder
+- uid: 4086
+  type: Firelock
+  components:
+  - parent: 857
+    pos: 26.5,-11.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+  - enabled: False
+    type: Occluder
+- uid: 4087
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: -19.5,13.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4088
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: 0.5,6.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4089
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: -0.5,6.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4090
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: -1.5,6.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4091
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: -2.5,6.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4092
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: -3.5,6.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4093
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: -4.5,6.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4094
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: -4.5,5.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4095
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: -4.5,4.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4096
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: 1.5,1.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4097
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: 1.5,2.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4098
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: 0.5,2.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4099
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: 23.5,-18.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4100
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: 22.5,-18.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4101
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: 3.5,30.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4102
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: 3.5,29.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4103
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: 3.5,28.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4104
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: 27.5,6.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4105
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: 27.5,5.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4106
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: 27.5,4.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4107
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: 26.5,4.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4108
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: 25.5,4.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4109
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: 16.5,-1.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4110
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: 16.5,-2.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4111
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: 6.5,0.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4112
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: 6.5,-0.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4113
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: -2.5,-15.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4114
+  type: Catwalk
+  components:
+  - parent: 857
+    pos: -0.5,-23.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4115
+  type: Catwalk
+  components:
+  - parent: 857
+    pos: 0.5,-23.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4116
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: -7.5,-24.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4117
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: -7.5,-25.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4118
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: -7.5,-26.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4119
+  type: ApcExtensionCable
+  components:
+  - parent: 857
+    pos: -6.5,-26.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4120
+  type: ReinforcedWindow
+  components:
+  - parent: 857
+    pos: 3.5,27.5
+    rot: 1.5707963267948966 rad
+    type: Transform
+- uid: 4121
+  type: Firelock
+  components:
+  - parent: 857
+    pos: -22.5,13.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+  - enabled: False
+    type: Occluder
+- uid: 4122
+  type: FirelockGlass
+  components:
+  - parent: 857
+    pos: -9.5,6.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - hard: False
+    type: Collidable
+  - airBlocked: False
+    type: Airtight
+- uid: 4123
+  type: AirlockCommandGlassLocked
+  components:
+  - parent: 857
+    pos: 2.5,27.5
+    rot: 1.5707963267948966 rad
+    type: Transform
+- uid: 4124
+  type: ReinforcedWindow
+  components:
+  - parent: 857
+    pos: 9.5,-21.5
+    rot: 1.5707963267948966 rad
+    type: Transform
+- uid: 4125
+  type: ReinforcedWindow
+  components:
+  - parent: 857
+    pos: 10.5,-21.5
+    rot: 1.5707963267948966 rad
+    type: Transform
+- uid: 4126
+  type: ReinforcedWindow
+  components:
+  - parent: 857
+    pos: 11.5,-21.5
+    rot: 1.5707963267948966 rad
+    type: Transform
