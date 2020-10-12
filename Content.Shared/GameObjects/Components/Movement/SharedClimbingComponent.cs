@@ -13,7 +13,7 @@ namespace Content.Shared.GameObjects.Components.Movement
         public sealed override string Name => "Climbing";
         public sealed override uint? NetID => ContentNetIDs.CLIMBING;
 
-        protected ICollidableComponent Body;
+        protected IPhysicsComponent Body;
         protected bool IsOnClimbableThisFrame = false;
 
         protected bool OwnerIsTransitioning

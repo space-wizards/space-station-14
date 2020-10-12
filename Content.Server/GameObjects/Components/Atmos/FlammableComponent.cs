@@ -142,10 +142,10 @@ namespace Content.Server.GameObjects.Components.Atmos
                 }
 
                 var entity = _entityManager.GetEntity(uid);
-                var collidable = Owner.GetComponent<ICollidableComponent>();
-                var otherCollidable = entity.GetComponent<ICollidableComponent>();
+                var physics = Owner.GetComponent<IPhysicsComponent>();
+                var otherPhysics = entity.GetComponent<IPhysicsComponent>();
 
-                if (!collidable.WorldAABB.Intersects(otherCollidable.WorldAABB))
+                if (!physics.WorldAABB.Intersects(otherPhysics.WorldAABB))
                 {
                     _collided.Remove(uid);
                 }

@@ -191,8 +191,6 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             if (!Owner.InRangeUnobstructed(strap, _range, predicate: Ignored, popup: true))
             {
-                strap.Owner.PopupMessage(user, Loc.GetString("You can't reach there!"));
-
                 return false;
             }
 
@@ -203,8 +201,6 @@ namespace Content.Server.GameObjects.Components.Buckle
                 if (!ContainerHelpers.TryGetContainer(strap.Owner, out var strapContainer) ||
                     ownerContainer != strapContainer)
                 {
-                    strap.Owner.PopupMessage(user, Loc.GetString("You can't reach there!"));
-
                     return false;
                 }
             }

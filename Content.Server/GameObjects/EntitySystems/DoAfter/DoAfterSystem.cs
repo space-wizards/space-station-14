@@ -1,6 +1,7 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Damage;
@@ -27,7 +28,7 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
                 var cancelled = new List<DoAfter>(0);
                 var finished = new List<DoAfter>(0);
 
-                foreach (var doAfter in comp.DoAfters)
+                foreach (var doAfter in comp.DoAfters.ToArray())
                 {
                     doAfter.Run(frameTime);
 

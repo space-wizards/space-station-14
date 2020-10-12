@@ -64,7 +64,8 @@ namespace Content.Server.GameObjects.Components
                     "This plaque commemorates the fall of the Atmos LINDA division. For all the charred, dizzy, and brittle men who have died in its hands.",
                 PlaqueType.Zas =>
                     "This plaque commemorates the fall of the Atmos ZAS division. For all the charred, dizzy, and brittle men who have died in its hands.",
-                PlaqueType.Unset => "Uhm"
+                PlaqueType.Unset => "Uhm",
+                _ => "Uhm",
             };
 
             Owner.Name = _type switch
@@ -77,7 +78,8 @@ namespace Content.Server.GameObjects.Components
                     "LINDA Atmospherics Division plaque",
                 PlaqueType.Zas =>
                     "ZAS Atmospherics Division plaque",
-                PlaqueType.Unset => "Uhm"
+                PlaqueType.Unset => "Uhm",
+                _ => "Uhm",
             };
 
             if (Owner.TryGetComponent(out SpriteComponent sprite))

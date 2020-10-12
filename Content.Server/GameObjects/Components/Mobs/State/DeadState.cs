@@ -36,9 +36,9 @@ namespace Content.Server.GameObjects.Components.Mobs.State
 
             EntitySystem.Get<StandingStateSystem>().Down(entity);
 
-            if (entity.TryGetComponent(out CollidableComponent collidable))
+            if (entity.TryGetComponent(out IPhysicsComponent physics))
             {
-                collidable.CanCollide = false;
+                physics.CanCollide = false;
             }
         }
 
@@ -46,9 +46,9 @@ namespace Content.Server.GameObjects.Components.Mobs.State
         {
             EntitySystem.Get<StandingStateSystem>().Standing(entity);
 
-            if (entity.TryGetComponent(out CollidableComponent collidable))
+            if (entity.TryGetComponent(out IPhysicsComponent physics))
             {
-                collidable.CanCollide = true;
+                physics.CanCollide = true;
             }
 
             if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlay))

@@ -37,35 +37,35 @@ namespace Content.Server.GlobalVerbs
             }
 
             if (!user.HasComponent<ISharedHandsComponent>() ||
-                !user.TryGetComponent(out ICollidableComponent userCollidable) ||
-                !target.TryGetComponent(out ICollidableComponent targetCollidable) ||
-                targetCollidable.Anchored)
+                !user.TryGetComponent(out IPhysicsComponent userPhysics) ||
+                !target.TryGetComponent(out IPhysicsComponent targetPhysics) ||
+                targetPhysics.Anchored)
             {
                 return;
             }
 
-            var controller = targetCollidable.EnsureController<PullController>();
+            var controller = targetPhysics.EnsureController<PullController>();
 
             data.Visibility = VerbVisibility.Visible;
-            data.Text = controller.Puller == userCollidable
+            data.Text = controller.Puller == userPhysics
                 ? Loc.GetString("Stop pulling")
                 : Loc.GetString("Pull");
         }
 
         public override void Activate(IEntity user, IEntity target)
         {
-            if (!user.TryGetComponent(out ICollidableComponent userCollidable) ||
-                !target.TryGetComponent(out ICollidableComponent targetCollidable) ||
-                targetCollidable.Anchored ||
+            if (!user.TryGetComponent(out IPhysicsComponent userPhysics) ||
+                !target.TryGetComponent(out IPhysicsComponent targetPhysics) ||
+                targetPhysics.Anchored ||
                 !target.TryGetComponent(out PullableComponent pullable) ||
                 !user.TryGetComponent(out HandsComponent hands))
             {
                 return;
             }
 
-            var controller = targetCollidable.EnsureController<PullController>();
+            var controller = targetPhysics.EnsureController<PullController>();
 
-            if (controller.Puller == userCollidable)
+            if (controller.Puller == userPhysics)
             {
                 hands.StopPull();
             }

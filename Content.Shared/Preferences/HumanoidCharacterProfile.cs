@@ -2,7 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Roles;
+using Content.Shared.Text;
+using Robust.Shared.Interfaces.Random;
+using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Preferences
@@ -49,7 +53,22 @@ namespace Content.Shared.Preferences
 
         public static HumanoidCharacterProfile Default()
         {
-            return new HumanoidCharacterProfile("John Doe", 18, Sex.Male, HumanoidCharacterAppearance.Default(),
+            return Random();
+        }
+
+        public static HumanoidCharacterProfile Random()
+        {
+            var random = IoCManager.Resolve<IRobustRandom>();
+            var sex = random.Prob(0.5f) ? Sex.Male : Sex.Female;
+
+            var firstName = random.Pick(sex == Sex.Male
+                ? Names.MaleFirstNames
+                : Names.FemaleFirstNames);
+            var lastName = random.Pick(Names.LastNames);
+            var name = $"{firstName} {lastName}";
+            var age = random.Next(MinimumAge, MaximumAge);
+
+            return new HumanoidCharacterProfile(name, age, sex, HumanoidCharacterAppearance.Random(sex),
                 new Dictionary<string, JobPriority>
                 {
                     {SharedGameTicker.OverflowJob, JobPriority.High}
@@ -193,7 +212,7 @@ namespace Content.Shared.Preferences
                 _ => PreferenceUnavailableMode.StayInLobby // Invalid enum values.
             };
 
-            var priorities = profile.JobPriorities
+            var priorities = new Dictionary<string, JobPriority>(profile.JobPriorities
                 .Where(p => prototypeManager.HasIndex<JobPrototype>(p.Key) && p.Value switch
                 {
                     JobPriority.Never => false, // Drop never since that's assumed default.
@@ -201,9 +220,7 @@ namespace Content.Shared.Preferences
                     JobPriority.Medium => true,
                     JobPriority.High => true,
                     _ => false
-                })
-                .ToDictionary(p => p.Key, p => p.Value);
-
+                }));
 
             var antags = profile.AntagPreferences
                 .Where(prototypeManager.HasIndex<AntagPrototype>)

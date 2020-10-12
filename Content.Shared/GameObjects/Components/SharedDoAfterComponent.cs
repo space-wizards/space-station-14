@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
@@ -10,6 +11,17 @@ namespace Content.Shared.GameObjects.Components
         public override string Name => "DoAfter";
 
         public override uint? NetID => ContentNetIDs.DO_AFTER;
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class DoAfterComponentState : ComponentState
+    {
+        public List<ClientDoAfter> DoAfters { get; }
+
+        public DoAfterComponentState(List<ClientDoAfter> doAfters) : base(ContentNetIDs.DO_AFTER)
+        {
+            DoAfters = doAfters;
+        }
     }
 
     [Serializable, NetSerializable]
@@ -27,7 +39,7 @@ namespace Content.Shared.GameObjects.Components
     ///     We send a trimmed-down version of the DoAfter for the client for it to use.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed class DoAfterMessage : ComponentMessage
+    public sealed class ClientDoAfter
     {
         // To see what these do look at DoAfter and DoAfterEventArgs
         public byte ID { get; }
@@ -47,7 +59,7 @@ namespace Content.Shared.GameObjects.Components
 
         public bool BreakOnTargetMove { get; }
 
-        public DoAfterMessage(byte id, EntityCoordinates userGrid, EntityCoordinates targetGrid, TimeSpan startTime, float delay, bool breakOnUserMove, bool breakOnTargetMove, EntityUid targetUid = default)
+        public ClientDoAfter(byte id, EntityCoordinates userGrid, EntityCoordinates targetGrid, TimeSpan startTime, float delay, bool breakOnUserMove, bool breakOnTargetMove, EntityUid targetUid = default)
         {
             ID = id;
             UserGrid = userGrid;

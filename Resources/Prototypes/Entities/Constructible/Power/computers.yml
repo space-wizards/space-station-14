@@ -1,15 +1,76 @@
 ﻿- type: entity
+  id: ComputerFrame
+  name: computer frame
+  components:
+    - type: Collidable
+      mass: 25
+      anchored: false
+      shapes:
+        - !type:PhysShapeAabb
+          bounds: "-0.5,-0.25,0.5,0.25"
+          layer:
+            - Impassable
+            - MobImpassable
+            - VaultImpassable
+            - Opaque
+          mask:
+            - Impassable
+            - MobImpassable
+            - VaultImpassable
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Anchorable
+    - type: Construction
+      graph: computer
+      node: frameUnsecured
+    - type: Sprite
+      sprite: "Constructible/Misc/stock_parts.rsi"
+      state: "0"
+
+- type: entity
+  id: ComputerBroken
+  name: broken computer
+  description: This computer has seen better days.
+  abstract: true # We don't want this to show up in the entity spawner menu.
+  components:
+    - type: Collidable
+      mass: 25
+      anchored: true
+      shapes:
+        - !type:PhysShapeAabb
+          bounds: "-0.5,-0.25,0.5,0.25"
+          layer:
+            - Impassable
+            - MobImpassable
+            - VaultImpassable
+            - Opaque
+          mask:
+            - Impassable
+            - MobImpassable
+            - VaultImpassable
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Anchorable
+    - type: Construction
+      graph: computer
+      node: monitorBroken
+    - type: Sprite
+      sprite: "Constructible/Power/computers.rsi"
+      state: "broken"
+
+- type: entity
   id: ComputerBase
   name: computer
   abstract: true
   components:
-  - type: Physics
-    mass: 25
-    anchored: true
   - type: Clickable
   - type: InteractionOutline
+  - type: Construction
+    graph: computer
+    node: computer
   - type: Collidable
-    IsScrapingFloor: true
+    mass: 25
+    anchored: true
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.5,-0.25,0.5,0.25"
@@ -22,10 +83,11 @@
       - Impassable
       - MobImpassable
       - VaultImpassable
-
   - type: Computer
   - type: PowerReceiver
   - type: Anchorable
+  - type: BreakableConstruction
+    node: monitorBroken
 
   - type: Sprite
     sprite: Constructible/Power/computers.rsi
@@ -106,6 +168,8 @@
     interfaces:
     - key: enum.CargoConsoleUiKey.Key
       type: CargoConsoleBoundUserInterface
+  - type: Computer
+    board: SupplyComputerCircuitboard
 
 - type: entity
   id: ComputerSupplyRequest
@@ -120,6 +184,8 @@
       screen: request
   - type: CargoConsole
     requestOnly: true
+  - type: Computer
+    board: SupplyRequestComputerCircuitboard
 
 - type: entity
   id: ComputerMedicalRecords
@@ -157,6 +223,8 @@
   - type: PowerReceiver
     load: 200
     priority: Low
+  - type: Computer
+    board: ResearchComputerCircuitboard
 
 - type: entity
   id: ComputerId
@@ -176,6 +244,8 @@
     - type: ComputerVisualizer
       key: id_key
       screen: id
+  - type: Computer
+    board: IDComputerCircuitboard
 
 - type: entity
   id: computerBodyScanner
@@ -193,6 +263,8 @@
     - type: ComputerVisualizer
       key: generic_key
       screen: generic
+  - type: Computer
+    board: BodyScannerComputerCircuitboard
 
 - type: entity
   id: ComputerComms
@@ -210,6 +282,8 @@
     interfaces:
     - key: enum.CommunicationsConsoleUiKey.Key
       type: CommunicationsConsoleBoundUserInterface
+  - type: Computer
+    board: CommsComputerCircuitboard
 
 - type: entity
   id: ComputerSolarControl
@@ -227,3 +301,5 @@
     interfaces:
     - key: enum.SolarControlConsoleUiKey.Key
       type: SolarControlConsoleBoundUserInterface
+  - type: Computer
+    board: SolarControlComputerCircuitboard

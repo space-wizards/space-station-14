@@ -120,7 +120,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
                     if (!gridEnt.TryGetComponent<GridAtmosphereComponent>(out var gam)) continue;
 
                     var entityTile = grid.GetTileRef(entity.Transform.Coordinates).GridIndices;
-                    var baseTile = new MapIndices(entityTile.X - (LocalViewRange / 2), entityTile.Y - (LocalViewRange / 2));
+                    var baseTile = new Vector2i(entityTile.X - (LocalViewRange / 2), entityTile.Y - (LocalViewRange / 2));
                     var debugOverlayContent = new AtmosDebugOverlayData[LocalViewRange * LocalViewRange];
 
                     var index = 0;
@@ -128,8 +128,8 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
                     {
                         for (var x = 0; x < LocalViewRange; x++)
                         {
-                            var mapIndices = new MapIndices(baseTile.X + x, baseTile.Y + y);
-                            debugOverlayContent[index++] = ConvertTileToData(gam.GetTile(mapIndices));
+                            var Vector2i = new Vector2i(baseTile.X + x, baseTile.Y + y);
+                            debugOverlayContent[index++] = ConvertTileToData(gam.GetTile(Vector2i));
                         }
                     }
 

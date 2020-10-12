@@ -35,7 +35,7 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
 
         internal ISpriteComponent Sprite { get; private set; }
         internal SnapGridComponent SnapGrid { get; private set; }
-        private (GridId, MapIndices) _lastPosition;
+        private (GridId, Vector2i) _lastPosition;
 
         /// <summary>
         ///     We will smooth with other objects with the same key.
