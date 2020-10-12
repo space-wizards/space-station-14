@@ -163,12 +163,12 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
             if (freeHandCount < itemCount)
             {
-                foreach (ItemComponent item in _hands.GetAllHeldItems())
+                foreach (var item in _hands.GetAllHeldItems())
                 {
                     if (freeHandCount < itemCount)
                     {
                         freeHandCount++;
-                        _hands.Drop(item.Owner);
+                        _hands.Drop(item.Owner, false);
                     }
                     else
                     {
