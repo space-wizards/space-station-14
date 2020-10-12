@@ -56,6 +56,9 @@ namespace Content.Server.GameObjects.Components
                 }
 
                 _isPanelOpen = value;
+
+                if (!_isPanelOpen)
+                    UserInterface?.CloseAll();
                 UpdateAppearance();
             }
         }
