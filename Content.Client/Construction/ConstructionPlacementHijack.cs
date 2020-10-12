@@ -8,15 +8,18 @@ using Robust.Shared.Map;
 
 namespace Content.Client.Construction
 {
-    public class ConstructionPlacementHijack : PlacementHijack
+    public sealed class ConstructionPlacementHijack : PlacementHijack
     {
         private readonly ConstructionSystem _constructionSystem;
         private readonly ConstructionPrototype _prototype;
+
+        public override bool CanRotate { get; }
 
         public ConstructionPlacementHijack(ConstructionSystem constructionSystem, ConstructionPrototype prototype)
         {
             _constructionSystem = constructionSystem;
             _prototype = prototype;
+            CanRotate = prototype.CanRotate;
         }
 
         /// <inheritdoc />

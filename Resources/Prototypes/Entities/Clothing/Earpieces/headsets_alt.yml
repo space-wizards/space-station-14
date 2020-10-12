@@ -7,7 +7,6 @@
   components:
   - type: Headset
 
-
 - type: entity
   parent: HeadsetBaseAlt
   id: HeadsetCommandAlt

@@ -448,7 +448,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             structure.Transform.Coordinates = ev.Location;
-            structure.Transform.LocalRotation = ev.Angle;
+            structure.Transform.LocalRotation = constructionPrototype.CanRotate ? ev.Angle : Angle.South;
 
             RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));
 
