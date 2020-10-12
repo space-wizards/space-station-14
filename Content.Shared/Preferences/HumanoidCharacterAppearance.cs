@@ -147,11 +147,11 @@ namespace Content.Shared.Preferences
         {
             if (!(maybeOther is HumanoidCharacterAppearance other)) return false;
             if (HairStyleName != other.HairStyleName) return false;
-            if (HairColor != other.HairColor) return false;
+            if (!HairColor.Equals(other.HairColor)) return false;
             if (FacialHairStyleName != other.FacialHairStyleName) return false;
-            if (FacialHairColor != other.FacialHairColor) return false;
-            if (EyeColor != other.EyeColor) return false;
-            if (SkinColor != other.SkinColor) return false;
+            if (!FacialHairColor.Equals(other.FacialHairColor)) return false;
+            if (!EyeColor.Equals(other.EyeColor)) return false;
+            if (!SkinColor.Equals(other.SkinColor)) return false;
             return true;
         }
     }
