@@ -6,8 +6,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Shoes/clown.rsi
-  - type: Icon
-    sprite: Clothing/Shoes/clown.rsi
+
   - type: Clothing
     sprite: Clothing/Shoes/clown.rsi
   - type: LoopingSound

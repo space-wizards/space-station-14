@@ -94,7 +94,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         private ReagentUnit _overflowVolume;
         private ReagentUnit OverflowLeft => CurrentVolume - OverflowVolume;
 
-        private SolutionComponent _contents;
+        private SolutionContainerComponent _contents;
         public bool EmptyHolder => _contents.ReagentList.Count == 0;
         private int _spriteVariants;
         // Whether the underlying solution color should be used
@@ -118,13 +118,13 @@ namespace Content.Server.GameObjects.Components.Fluids
         {
             base.Initialize();
 
-            if (Owner.TryGetComponent(out SolutionComponent solutionComponent))
+            if (Owner.TryGetComponent(out SolutionContainerComponent solutionComponent))
             {
                 _contents = solutionComponent;
             }
             else
             {
-                _contents = Owner.AddComponent<SolutionComponent>();
+                _contents = Owner.AddComponent<SolutionContainerComponent>();
             }
 
             _snapGrid = Owner.EnsureComponent<SnapGridComponent>();
@@ -164,6 +164,16 @@ namespace Content.Server.GameObjects.Components.Fluids
             }
         }
 
+        /// <summary>
+        ///     Whether adding this solution to this puddle would overflow.
+        /// </summary>
+        /// <param name="solution"></param>
+        /// <returns></returns>
+        public bool WouldOverflow(Solution solution)
+        {
+            return (CurrentVolume + solution.TotalVolume > _overflowVolume);
+        }
+
         // Flow rate should probably be controlled globally so this is it for now
         internal bool TryAddSolution(Solution solution, bool sound = true, bool checkForEvaporate = true, bool checkForOverflow = true)
         {
@@ -195,7 +205,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 return true;
             }
 
-            EntitySystem.Get<AudioSystem>().PlayAtCoords(_spillSound, Owner.Transform.GridPosition);
+            EntitySystem.Get<AudioSystem>().PlayAtCoords(_spillSound, Owner.Transform.Coordinates);
             return true;
         }
 
@@ -354,7 +364,7 @@ namespace Content.Server.GameObjects.Components.Fluids
 
             var mapGrid = _mapManager.GetGrid(Owner.Transform.GridID);
 
-            if (!Owner.Transform.GridPosition.Offset(direction).TryGetTileRef(out var tile))
+            if (!Owner.Transform.Coordinates.Offset(direction).TryGetTileRef(out var tile))
             {
                 return false;
             }
@@ -367,8 +377,8 @@ namespace Content.Server.GameObjects.Components.Fluids
 
             foreach (var entity in _snapGrid.GetInDir(direction))
             {
-                if (entity.TryGetComponent(out ICollidableComponent collidable) &&
-                    (collidable.CollisionLayer & (int) CollisionGroup.Impassable) != 0)
+                if (entity.TryGetComponent(out IPhysicsComponent physics) &&
+                    (physics.CollisionLayer & (int) CollisionGroup.Impassable) != 0)
                 {
                     puddle = default;
                     return false;

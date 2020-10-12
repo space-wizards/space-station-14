@@ -13,6 +13,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
@@ -30,9 +31,10 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
     public class PathfindingSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
-        public IReadOnlyDictionary<GridId, Dictionary<MapIndices, PathfindingChunk>> Graph => _graph;
-        private readonly Dictionary<GridId, Dictionary<MapIndices, PathfindingChunk>> _graph = new Dictionary<GridId, Dictionary<MapIndices, PathfindingChunk>>();
+        public IReadOnlyDictionary<GridId, Dictionary<Vector2i, PathfindingChunk>> Graph => _graph;
+        private readonly Dictionary<GridId, Dictionary<Vector2i, PathfindingChunk>> _graph = new Dictionary<GridId, Dictionary<Vector2i, PathfindingChunk>>();
 
         private readonly PathfindingJobQueue _pathfindingQueue = new PathfindingJobQueue();
 
@@ -143,28 +145,28 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         {
             var chunkX = (int) (Math.Floor((float) tile.X / PathfindingChunk.ChunkSize) * PathfindingChunk.ChunkSize);
             var chunkY = (int) (Math.Floor((float) tile.Y / PathfindingChunk.ChunkSize) * PathfindingChunk.ChunkSize);
-            var mapIndices = new MapIndices(chunkX, chunkY);
+            var Vector2i = new Vector2i(chunkX, chunkY);
 
             if (_graph.TryGetValue(tile.GridIndex, out var chunks))
             {
-                if (!chunks.ContainsKey(mapIndices))
+                if (!chunks.ContainsKey(Vector2i))
                 {
-                    CreateChunk(tile.GridIndex, mapIndices);
+                    CreateChunk(tile.GridIndex, Vector2i);
                 }
 
-                return chunks[mapIndices];
+                return chunks[Vector2i];
             }
 
-            var newChunk = CreateChunk(tile.GridIndex, mapIndices);
+            var newChunk = CreateChunk(tile.GridIndex, Vector2i);
             return newChunk;
         }
 
-        private PathfindingChunk CreateChunk(GridId gridId, MapIndices indices)
+        private PathfindingChunk CreateChunk(GridId gridId, Vector2i indices)
         {
             var newChunk = new PathfindingChunk(gridId, indices);
             if (!_graph.ContainsKey(gridId))
             {
-                _graph.Add(gridId, new Dictionary<MapIndices, PathfindingChunk>());
+                _graph.Add(gridId, new Dictionary<Vector2i, PathfindingChunk>());
             }
 
             _graph[gridId].Add(indices, newChunk);
@@ -180,7 +182,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         /// <returns></returns>
         public PathfindingNode GetNode(IEntity entity)
         {
-            var tile = _mapManager.GetGrid(entity.Transform.GridID).GetTileRef(entity.Transform.GridPosition);
+            var tile = _mapManager.GetGrid(entity.Transform.GridID).GetTileRef(entity.Transform.Coordinates);
             return GetNode(tile);
         }
 
@@ -273,18 +275,18 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         {
             if (entity.Deleted ||
                 _lastKnownPositions.ContainsKey(entity) ||
-                !entity.TryGetComponent(out ICollidableComponent collidableComponent) ||
-                !PathfindingNode.IsRelevant(entity, collidableComponent))
+                !entity.TryGetComponent(out IPhysicsComponent physics) ||
+                !PathfindingNode.IsRelevant(entity, physics))
             {
                 return;
             }
 
             var grid = _mapManager.GetGrid(entity.Transform.GridID);
-            var tileRef = grid.GetTileRef(entity.Transform.GridPosition);
+            var tileRef = grid.GetTileRef(entity.Transform.Coordinates);
 
             var chunk = GetChunk(tileRef);
             var node = chunk.GetNode(tileRef);
-            node.AddEntity(entity, collidableComponent);
+            node.AddEntity(entity, physics);
             _lastKnownPositions.Add(entity, node);
         }
 
@@ -312,8 +314,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         {
             // If we've moved to space or the likes then remove us.
             if (moveEvent.Sender.Deleted ||
-                !moveEvent.Sender.TryGetComponent(out ICollidableComponent collidableComponent) ||
-                !PathfindingNode.IsRelevant(moveEvent.Sender, collidableComponent))
+                !moveEvent.Sender.TryGetComponent(out IPhysicsComponent physics) ||
+                !PathfindingNode.IsRelevant(moveEvent.Sender, physics))
             {
                 HandleEntityRemove(moveEvent.Sender);
                 return;
@@ -337,7 +339,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 
             // The pathfinding graph is tile-based so first we'll check if they're on a different tile and if we need to update.
             // If you get entities bigger than 1 tile wide you'll need some other system so god help you.
-            var newTile = _mapManager.GetGrid(moveEvent.NewPosition.GridID).GetTileRef(moveEvent.NewPosition);
+            var newTile = _mapManager.GetGrid(moveEvent.NewPosition.GetGridId(_entityManager)).GetTileRef(moveEvent.NewPosition);
 
             if (oldNode == null || oldNode.TileRef == newTile)
             {
@@ -348,7 +350,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             _lastKnownPositions[moveEvent.Sender] = newNode;
 
             oldNode.RemoveEntity(moveEvent.Sender);
-            newNode.AddEntity(moveEvent.Sender, collidableComponent);
+            newNode.AddEntity(moveEvent.Sender, physics);
         }
 
         private void QueueCollisionChangeMessage(CollisionChangeMessage collisionMessage)
@@ -359,17 +361,18 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         // TODO: Need to rethink the pathfinder utils (traversable etc.). Maybe just chuck them all in PathfindingSystem
         // Otherwise you get the steerer using this and the pathfinders using a different traversable.
         // Also look at increasing tile cost the more physics entities are on it
-        public bool CanTraverse(IEntity entity, GridCoordinates grid)
+        public bool CanTraverse(IEntity entity, EntityCoordinates coordinates)
         {
-            var tile = _mapManager.GetGrid(grid.GridID).GetTileRef(grid);
+            var gridId = coordinates.GetGridId(_entityManager);
+            var tile = _mapManager.GetGrid(gridId).GetTileRef(coordinates);
             var node = GetNode(tile);
             return CanTraverse(entity, node);
         }
 
         public bool CanTraverse(IEntity entity, PathfindingNode node)
         {
-            if (entity.TryGetComponent(out ICollidableComponent collidableComponent) &&
-                (collidableComponent.CollisionMask & node.BlockedCollisionMask) != 0)
+            if (entity.TryGetComponent(out IPhysicsComponent physics) &&
+                (physics.CollisionMask & node.BlockedCollisionMask) != 0)
             {
                 return false;
             }

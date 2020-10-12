@@ -1,4 +1,6 @@
-﻿using Content.Server.GameObjects.Components.Interactable;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Content.Server.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -7,16 +9,12 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Content.Server.GameObjects.Components.MachineLinking
 {
     [RegisterComponent]
     public class SignalReceiverComponent : Component, IInteractUsing
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
-
         public override string Name => "SignalReceiver";
 
         private List<SignalTransmitterComponent> _transmitters;
@@ -74,7 +72,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
                 return true;
             }
 
-            if (transmitter.Range > 0 && !Owner.Transform.GridPosition.InRange(_mapManager, transmitter.Owner.Transform.GridPosition, transmitter.Range))
+            if (transmitter.Range > 0 && !Owner.Transform.Coordinates.InRange(Owner.EntityManager, transmitter.Owner.Transform.Coordinates, transmitter.Range))
             {
                 Owner.PopupMessage(user, Loc.GetString("Out of range."));
                 return false;

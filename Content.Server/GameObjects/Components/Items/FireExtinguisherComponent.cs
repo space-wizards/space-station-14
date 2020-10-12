@@ -1,8 +1,4 @@
-﻿using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.Random;
-using Robust.Shared.Prototypes;
+﻿using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Items
 {

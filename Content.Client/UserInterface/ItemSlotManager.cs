@@ -78,7 +78,10 @@ namespace Content.Client.UserInterface
                     grid.MapToGrid(mousePosWorld), args.PointerLocation, item.Uid);
 
                 // client side command handlers will always be sent the local player session.
-                var session = _playerManager.LocalPlayer.Session;
+                var session = _playerManager.LocalPlayer?.Session;
+                if (session == null)
+                    return false;
+                
                 inputSys.HandleInputCommand(session, func, message);
             }
             else

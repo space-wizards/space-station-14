@@ -1,6 +1,4 @@
-﻿using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.ViewVariables;
+﻿using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components
 {
@@ -13,7 +11,7 @@ namespace Content.Server.GameObjects.Components
         {
             base.Initialize();
 
-            ItemContainer.Insert(Owner.EntityManager.SpawnEntity("FireExtinguisher", Owner.Transform.GridPosition));
+            ItemContainer.Insert(Owner.EntityManager.SpawnEntity("FireExtinguisher", Owner.Transform.Coordinates));
         }
     }
 }

@@ -2,6 +2,7 @@
   id: chem.Whiskey
   name: whiskey
   desc: An alcoholic beverage made from fermented grain mash
+  physicalDesc: strong-smelling
   color: "#664300"
   spritePath: whiskeyglass.rsi
 
@@ -9,13 +10,15 @@
   id: chem.Ale
   name: ale
   desc: A type of beer brewed using a warm fermentation method, resulting in a sweet, full-bodied and fruity taste.
-  color: "#664300"
+  physicalDesc: bubbly
+  color: "#663100"
   spritePath: aleglass.rsi
 
 - type: reagent
   id: chem.Wine
   name: wine
   desc: An alcoholic drink made from fermented grapes
+  physicalDesc: translucent
   color: "#7E4043"
   spritePath: wineglass.rsi
 
@@ -23,19 +26,36 @@
   id: chem.Beer
   name: beer
   desc: A cold pint of pale lager.
-  color: "#664300"
+  physicalDesc: bubbly
+  color: "#cfa85f"
   spritePath: beerglass.rsi
 
 - type: reagent
   id: chem.Vodka
   name: vodka
   desc: The glass contain wodka. Xynta.
-  color: "#664300"
+  physicalDesc: strong-smelling
+  color: "#d1d1d155"
+
+- type: reagent
+  id: chem.Moonshine
+  name: moonshine
+  desc: Artisanal homemade liquor. What could go wrong?
+  physicalDesc: strong-smelling
+  color: "#d1d7d155"
+
+- type: reagent
+  id: chem.Tequila
+  name: tequila
+  desc: This stuff will get you fucked up.
+  physicalDesc: strong-smelling
+  color: "#d7d1d155"
 
 - type: reagent
   id: chem.Kahlua
   name: kahlua
   desc: A widely known, Mexican coffee-flavoured liqueur. In production since 1936!
+  physicalDesc: cloudy
   color: "#664300"
   spritePath: kahluaglass.rsi
 
@@ -43,6 +63,7 @@
   id: chem.Cognac
   name: cognac
   desc: A sweet and strongly alcoholic drink, twice distilled and left to mature for several years. Classy as fornication.
+  physicalDesc: strong-smelling
   color: "#AB3C05"
   spritePath: cognacglass.rsi
 
@@ -50,6 +71,7 @@
   id: chem.ManlyDorf
   name: manly dorf
   desc: A dwarfy concoction made from ale and beer. Intended for stout dwarves only.
+  physicalDesc: bubbly
   color: "#664300"
   spritePath: manlydorfglass.rsi
 
@@ -57,6 +79,7 @@
   id: chem.CubaLibre
   name: cuba libre
   desc: A classic mix of rum and cola.
+  physicalDesc: bubbly
   color: "#3E1B00"
   spritePath: cubalibreglass.rsi
 
@@ -64,6 +87,7 @@
   id: chem.IrishCarBomb
   name: irish car bomb
   desc: A troubling mixture of irish cream and ale.
+  physicalDesc: bubbly
   color: "#2E6671"
   spritePath: irishcarbomb.rsi
 
@@ -71,6 +95,7 @@
   id: chem.IrishCoffee
   name: irish coffee
   desc: Coffee served with irish cream. Regular cream just isn't the same!
+  physicalDesc: cloudy
   color: "#664300"
   spritePath: irishcoffeeglass.rsi
 
@@ -78,6 +103,7 @@
   id: chem.IrishCream
   name: irish cream
   desc: Whiskey-imbued cream. What else could you expect from the Irish.
+  physicalDesc: creamy
   color: "#664300"
   spritePath: irishcreamglass.rsi
 
@@ -85,6 +111,7 @@
   id: chem.B52
   name: b-52
   desc: Coffee, irish cream, and cognac. You will get bombed.
+  physicalDesc: bubbly
   color: "#664300"
   spritePath: b52glass.rsi
 
@@ -92,6 +119,7 @@
   id: chem.AtomicBomb
   name: atomic bomb
   desc: Nuclear proliferation never tasted so good.
+  physicalDesc: cloudy
   color: "#666300"
   spritePath: atomicbombglass.rsi
 
@@ -99,6 +127,7 @@
   id: chem.WhiskeyCola
   name: whiskey cola
   desc: An innocent-looking mixture of cola and whiskey. Delicious.
+  physicalDesc: bubbly
   color: "#3E1B00"
   spritePath: whiskeycolaglass.rsi
 
@@ -106,22 +135,24 @@
   id: chem.SyndicateBomb
   name: syndicate bomb
   desc: Somebody set us up the bomb!
-  color: "#2E6671"
+  physicalDesc: opaque
+  color: "#2E6660"
   spritePath: syndicatebomb.rsi
 
 - type: reagent
   id: chem.Antifreeze
   name: antifreeze
   desc: The ultimate refreshment.
-  color: "#664300"
+  physicalDesc: translucent
+  color: "#ff7d63"
   spritePath: antifreeze.rsi
-
 
 - type: reagent
   id: chem.Cola
   name: cola
   desc: A sweet, carbonated soft drink. Caffeine free.
-  color: "#100800"
+  physicalDesc: fizzy
+  color: "#422912"
   metabolism:
     - !type:DefaultDrink
       rate: 1
@@ -130,6 +161,7 @@
   id: chem.Coffee
   name: coffee
   desc: A drink made from brewed coffee beans. Contains a moderate amount of caffeine.
+  physicalDesc: aromatic
   color: "#664300"
   metabolism:
     - !type:DefaultDrink
@@ -139,7 +171,8 @@
   id: chem.Tea
   name: tea
   desc: A made by boiling leaves of the tea tree, Camellia sinensis.
-  color: "#101000"
+  physicalDesc: aromatic
+  color: "#8a5a3a"
   metabolism:
     - !type:DefaultDrink
       rate: 1
@@ -148,6 +181,7 @@
   id: chem.Cream
   name: cream
   desc: The fatty, still liquid part of milk. Why don't you mix this with sum scotch, eh?
+  physicalDesc: creamy
   color: "#DFD7AF"
   metabolism:
     - !type:DefaultDrink
@@ -157,7 +191,28 @@
   id: chem.Milk
   name: milk
   desc: An opaque white liquid produced by the mammary glands of mammals.
+  physicalDesc: opaque
   color: "#DFDFDF"
+  metabolism:
+    - !type:DefaultDrink
+      rate: 1
+
+- type: reagent
+  id: chem.SpoiledMilk
+  name: spoiled milk
+  desc: This milk has gone rancid.
+  physicalDesc: putrid
+  color: "#faffba"
+  metabolism:
+    - !type:DefaultDrink
+      rate: 1
+
+- type: reagent
+  id: chem.CreamyDelight
+  name: creamy delight
+  desc: A combination of cream, wine and moonshine. Why would you do this?
+  physicalDesc: foul
+  color: "#a6969a"
   metabolism:
     - !type:DefaultDrink
       rate: 1
@@ -165,8 +220,19 @@
 - type: reagent
   id: chem.Lean
   name: lean
-  desc: Turn up for days
+  desc: Turn up for days.
+  physicalDesc: bubbly
   color: "#9400D3"
+  metabolism:
+    - !type:DefaultDrink
+      rate: 1
+
+- type: reagent
+  id: chem.LeanShine
+  name: leanshine
+  desc: Lean mixed with moonshine. Turn up for months.
+  physicalDesc: bubbly
+  color: "#9d5fb8"
   metabolism:
     - !type:DefaultDrink
       rate: 1

@@ -4,9 +4,12 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Strap;
 using Content.Shared.Damage;
+using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Buckle;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Utility;
 using NUnit.Framework;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
@@ -181,7 +184,7 @@ namespace Content.IntegrationTests.Tests
             BuckleComponent buckle = null;
             StrapComponent strap = null;
             HandsComponent hands = null;
-            IDamageableComponent humanDamageable = null;
+            IBody body = null;
 
             server.Assert(() =>
             {
@@ -193,7 +196,7 @@ namespace Content.IntegrationTests.Tests
                 var entityManager = IoCManager.Resolve<IEntityManager>();
                 var gridId = new GridId(1);
                 var grid = mapManager.CreateGrid(mapId, gridId);
-                var coordinates = new GridCoordinates((0, 0), gridId);
+                var coordinates = grid.GridEntityId.ToCoordinates();
                 var tileManager = IoCManager.Resolve<ITileDefinitionManager>();
                 var tileId = tileManager["underplating"].TileId;
                 var tile = new Tile(tileId);
@@ -207,7 +210,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.True(human.TryGetComponent(out buckle));
                 Assert.True(chair.TryGetComponent(out strap));
                 Assert.True(human.TryGetComponent(out hands));
-                Assert.True(human.TryGetComponent(out humanDamageable));
+                Assert.True(human.TryGetBody(out body));
 
                 // Buckle
                 Assert.True(buckle.TryBuckle(human, chair));
@@ -238,8 +241,13 @@ namespace Content.IntegrationTests.Tests
                     Assert.NotNull(hands.GetItem(slot));
                 }
 
-                // Banish our guy into the shadow realm
-                humanDamageable.ChangeDamage(DamageClass.Brute, 1000000, true);
+                var legs = body.GetPartsOfType(BodyPartType.Leg);
+
+                // Break our guy's kneecaps
+                foreach (var leg in legs)
+                {
+                    body.RemovePart(leg, false);
+                }
             });
 
             server.RunTicks(10);

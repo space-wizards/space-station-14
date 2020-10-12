@@ -7,9 +7,6 @@
     caliber: AntiMaterial
     capacity: 30
     fillPrototype: CartridgeAntiMaterial
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/AntiMaterial/anti_material.rsi
-    state: icon
   - type: Sprite
     netsync: false
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/AntiMaterial/anti_material.rsi

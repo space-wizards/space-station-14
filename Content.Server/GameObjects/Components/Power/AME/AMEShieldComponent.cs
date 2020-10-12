@@ -1,11 +1,9 @@
 ﻿#nullable enable
+using System;
 using Content.Shared.GameObjects.Components.Power.AME;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Content.Server.GameObjects.Components.Power.AME
 {

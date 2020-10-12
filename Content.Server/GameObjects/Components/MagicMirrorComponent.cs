@@ -101,7 +101,7 @@ namespace Content.Server.GameObjects.Components
                 return;
             }
 
-            UserInterface?.Open(actor.playerSession);
+            UserInterface?.Toggle(actor.playerSession);
 
             var msg = new MagicMirrorInitialDataMessage(looks.Appearance.HairColor, looks.Appearance.FacialHairColor, looks.Appearance.HairStyleName,
                 looks.Appearance.FacialHairStyleName);

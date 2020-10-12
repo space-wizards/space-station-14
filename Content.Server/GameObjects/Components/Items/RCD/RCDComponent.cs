@@ -16,6 +16,7 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -97,7 +98,7 @@ namespace Content.Server.GameObjects.Components.Items.RCD
             //No changing mode mid-RCD
             var startingMode = _mode;
 
-            var mapGrid = _mapManager.GetGrid(eventArgs.ClickLocation.GridID);
+            var mapGrid = _mapManager.GetGrid(eventArgs.ClickLocation.GetGridId(Owner.EntityManager));
             var tile = mapGrid.GetTileRef(eventArgs.ClickLocation);
             var snapPos = mapGrid.SnapGridCellFor(eventArgs.ClickLocation, SnapGridOffset.Center);
 
@@ -152,7 +153,7 @@ namespace Content.Server.GameObjects.Components.Items.RCD
 
         }
 
-        private bool IsRCDStillValid(AfterInteractEventArgs eventArgs, IMapGrid mapGrid, TileRef tile, MapIndices snapPos, RcdMode startingMode)
+        private bool IsRCDStillValid(AfterInteractEventArgs eventArgs, IMapGrid mapGrid, TileRef tile, Vector2i snapPos, RcdMode startingMode)
         {
             //Less expensive checks first. Failing those ones, we need to check that the tile isn't obstructed.
             if (_ammo <= 0)
@@ -166,8 +167,8 @@ namespace Content.Server.GameObjects.Components.Items.RCD
                 return false;
             }
 
-            var coordinates = mapGrid.GridTileToLocal(tile.GridIndices);
-            if (coordinates == GridCoordinates.InvalidGrid || !eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
+            var coordinates = mapGrid.ToCoordinates(tile.GridIndices);
+            if (coordinates == EntityCoordinates.Invalid || !eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
             {
                 return false;
             }

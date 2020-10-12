@@ -12,12 +12,12 @@ namespace Content.Shared.Physics
     {
         [Dependency] private readonly IPhysicsManager _physicsManager = default!;
 
-        public override ICollidableComponent? ControlledComponent { protected get; set; }
+        public override IPhysicsComponent? ControlledComponent { protected get; set; }
 
         public void Move(Vector2 velocityDirection, float speed)
         {
             if (ControlledComponent?.Owner.HasComponent<MovementIgnoreGravityComponent>() == false
-                && _physicsManager.IsWeightless(ControlledComponent.Owner.Transform.GridPosition))
+                && _physicsManager.IsWeightless(ControlledComponent.Owner.Transform.Coordinates))
             {
                 return;
             }

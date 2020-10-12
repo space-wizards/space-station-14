@@ -4,7 +4,7 @@ using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
+using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -12,7 +12,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Random;
-using Robust.Shared.Interfaces.Physics;
 
 namespace Content.Server.Throw
 {
@@ -40,12 +39,12 @@ namespace Content.Server.Throw
         /// <param name="throwSourceEnt">
         /// The entity that did the throwing. An opposite impulse will be applied to this entity if passed in.
         /// </param>
-        public static void Throw(IEntity thrownEnt, float throwForce, GridCoordinates targetLoc, GridCoordinates sourceLoc, bool spread = false, IEntity throwSourceEnt = null)
+        public static void Throw(IEntity thrownEnt, float throwForce, EntityCoordinates targetLoc, EntityCoordinates sourceLoc, bool spread = false, IEntity throwSourceEnt = null)
         {
-            if (!thrownEnt.TryGetComponent(out ICollidableComponent colComp))
+            if (!thrownEnt.TryGetComponent(out IPhysicsComponent colComp))
                 return;
 
-            var mapManager = IoCManager.Resolve<IMapManager>();
+            var entityManager = IoCManager.Resolve<IEntityManager>();
 
             colComp.CanCollide = true;
             // I can now collide with player, so that i can do damage.
@@ -60,7 +59,7 @@ namespace Content.Server.Throw
                 colComp.PhysicsShapes[0].CollisionMask |= (int) CollisionGroup.ThrownItem;
                 colComp.Status = BodyStatus.InAir;
             }
-            var angle = new Angle(targetLoc.ToMapPos(mapManager) - sourceLoc.ToMapPos(mapManager));
+            var angle = new Angle(targetLoc.ToMapPos(entityManager) - sourceLoc.ToMapPos(entityManager));
 
             if (spread)
             {
@@ -85,12 +84,12 @@ namespace Content.Server.Throw
             projComp.StartThrow(angle.ToVec(), spd);
 
             if (throwSourceEnt != null &&
-                throwSourceEnt.TryGetComponent<ICollidableComponent>(out var physics) &&
+                throwSourceEnt.TryGetComponent<IPhysicsComponent>(out var physics) &&
                 physics.TryGetController(out MoverController mover))
             {
                 var physicsMgr = IoCManager.Resolve<IPhysicsManager>();
 
-                if (physicsMgr.IsWeightless(throwSourceEnt.Transform.GridPosition))
+                if (physicsMgr.IsWeightless(throwSourceEnt.Transform.Coordinates))
                 {
                     // We don't check for surrounding entities,
                     // so you'll still get knocked around if you're hugging the station wall in zero g.
@@ -126,19 +125,23 @@ namespace Content.Server.Throw
         /// <param name="throwSourceEnt">
         /// The entity that did the throwing. An opposite impulse will be applied to this entity if passed in.
         /// </param>
-        public static void ThrowTo(IEntity thrownEnt, float throwForceMax, GridCoordinates targetLoc,
-            GridCoordinates sourceLoc, bool spread = false, IEntity throwSourceEnt = null)
+        public static void ThrowTo(IEntity thrownEnt, float throwForceMax, EntityCoordinates targetLoc,
+            EntityCoordinates sourceLoc, bool spread = false, IEntity throwSourceEnt = null)
         {
-            var mapManager = IoCManager.Resolve<IMapManager>();
+            var entityManager = IoCManager.Resolve<IEntityManager>();
             var timing = IoCManager.Resolve<IGameTiming>();
 
             // Calculate the force necessary to land a throw based on throw duration, mass and distance.
-            var distance = (targetLoc.ToMapPos(mapManager) - sourceLoc.ToMapPos(mapManager)).Length;
+            if (!targetLoc.TryDistance(entityManager, sourceLoc, out var distance))
+            {
+                return;
+            }
+
             var throwDuration = ThrownItemComponent.DefaultThrowTime;
             var mass = 1f;
-            if (thrownEnt.TryGetComponent(out ICollidableComponent physicsComponent))
+            if (thrownEnt.TryGetComponent(out IPhysicsComponent physics))
             {
-                mass = physicsComponent.Mass;
+                mass = physics.Mass;
             }
 
             var velocityNecessary = distance / throwDuration;

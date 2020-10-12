@@ -29,8 +29,6 @@ namespace Content.Shared.GameObjects.Components.Mobs
             : _gameTiming.CurTime +
               (TimeSpan.FromSeconds(Math.Max(StunnedTimer, Math.Max(KnockdownTimer, SlowdownTimer))));
 
-        private const int StunLevels = 8;
-
         private bool _canHelp = true;
         protected float _stunCap = 20f;
         protected float _knockdownCap = 20f;
@@ -260,6 +258,10 @@ namespace Content.Shared.GameObjects.Components.Mobs
 
         public bool CanUnequip() => (!Stunned);
         public bool CanChangeDirection() => true;
+
+        public bool CanShiver() => !Stunned;
+        public bool CanSweat() => true;
+
         #endregion
 
         [ViewVariables]

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Shared.Utility;
 using NUnit.Framework;
 using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects;
@@ -9,9 +10,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using Logger = Robust.Shared.Log.Logger;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -52,7 +51,7 @@ namespace Content.IntegrationTests.Tests
 
                 var tileDefinition = tileDefinitionManager["underplating"];
                 var tile = new Tile(tileDefinition.TileId);
-                var coordinates = new GridCoordinates(0, 0, gridId);
+                var coordinates = grid.ToCoordinates();
 
                 grid.SetTile(coordinates, tile);
 
@@ -61,7 +60,7 @@ namespace Content.IntegrationTests.Tests
 
             server.Assert(() =>
             {
-                var testLocation = new GridCoordinates(new Vector2(0, 0), grid);
+                var testLocation = grid.ToCoordinates();
 
                 //Generate list of non-abstract prototypes to test
                 foreach (var prototype in prototypeMan.EnumeratePrototypes<EntityPrototype>())
@@ -90,30 +89,6 @@ namespace Content.IntegrationTests.Tests
             });
 
             await server.WaitIdleAsync();
-        }
-
-        [Test]
-        public async Task NotAbstractIconTest()
-        {
-            var client = StartClient();
-            await client.WaitIdleAsync();
-            var prototypeMan = client.ResolveDependency<IPrototypeManager>();
-
-            client.Assert(() =>
-            {
-                foreach (var prototype in prototypeMan.EnumeratePrototypes<EntityPrototype>())
-                {
-                    if (prototype.Abstract)
-                    {
-                        continue;
-                    }
-
-                    Assert.That(prototype.Components.ContainsKey("Icon"),
-                        $"Entity {prototype.ID} does not have an Icon component, but is not abstract");
-                }
-            });
-
-            await client.WaitIdleAsync();
         }
 
         [Test]
@@ -160,7 +135,7 @@ namespace Content.IntegrationTests.Tests
 
                 var tileDefinition = tileDefinitionManager["underplating"];
                 var tile = new Tile(tileDefinition.TileId);
-                var coordinates = new GridCoordinates(0, 0, gridId);
+                var coordinates = grid.ToCoordinates();
 
                 grid.SetTile(coordinates, tile);
 
@@ -169,7 +144,7 @@ namespace Content.IntegrationTests.Tests
 
             server.Assert(() =>
             {
-                var testLocation = new GridCoordinates(new Vector2(0, 0), grid);
+                var testLocation = grid.ToCoordinates();
 
                 foreach (var type in componentFactory.AllRegisteredTypes)
                 {
@@ -255,7 +230,7 @@ namespace Content.IntegrationTests.Tests
 
                 var tileDefinition = tileDefinitionManager["underplating"];
                 var tile = new Tile(tileDefinition.TileId);
-                var coordinates = new GridCoordinates(0, 0, gridId);
+                var coordinates = grid.ToCoordinates();
 
                 grid.SetTile(coordinates, tile);
 
@@ -300,7 +275,7 @@ namespace Content.IntegrationTests.Tests
             {
                 foreach (var distinct in distinctComponents)
                 {
-                    var testLocation = new GridCoordinates(new Vector2(0, 0), grid);
+                    var testLocation = grid.ToCoordinates();
                     var entity = entityManager.SpawnEntity("AllComponentsOneEntityDeleteTestEntity", testLocation);
 
                     Assert.That(entity.Initialized);

@@ -1,25 +1,10 @@
 ﻿- type: construction
   name: crude spear
   id: spear
+  graph: spear
+  startNode: start
+  targetNode: spear
   category: Items/Weapons
-  keywords: [melee]
   description: A crude spear for when you need to put holes in somebody.
   icon: Objects/Weapons/Melee/spear.rsi/spear.png
-  result: Spear
   objectType: Item
-  steps:
-  - material: Metal
-    amount: 1
-    reverse:
-      tool: Screwing
-
-  - material: Cable
-    amount: 3
-    reverse:
-      tool: Screwing
-
-  # Should probably use a shard but y'know.
-  - material: Glass
-    amount: 1
-    reverse:
-      tool: Screwing

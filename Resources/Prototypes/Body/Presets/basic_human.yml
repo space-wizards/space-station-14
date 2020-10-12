@@ -1,14 +1,14 @@
 - type: bodyPreset
-  name: "basic human"
-  id: bodyPreset.BasicHuman
+  name: "human"
+  id: HumanPreset
   partIDs:
-    head: bodyPart.Head.BasicHuman
-    torso: bodyPart.Torso.BasicHuman
-    right arm: bodyPart.RArm.BasicHuman
-    left arm: bodyPart.LArm.BasicHuman
-    right hand: bodyPart.RHand.BasicHuman
-    left hand: bodyPart.LHand.BasicHuman
-    right leg: bodyPart.RLeg.BasicHuman
-    left leg: bodyPart.LLeg.BasicHuman
-    right foot: bodyPart.RFoot.BasicHuman
-    left foot: bodyPart.LFoot.BasicHuman
+    head: HeadHuman
+    torso: TorsoHuman
+    right arm: RightArmHuman
+    left arm: LeftArmHuman
+    right hand: RightHandHuman
+    left hand: LeftHandHuman
+    right leg: RightLegHuman
+    left leg: LeftLegHuman
+    right foot: RightFootHuman
+    left foot: LeftFootHuman

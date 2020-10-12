@@ -21,13 +21,10 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
       sprite: Mobs/Aliens/Xenos/xeno_hunter.rsi
-  - type: Icon
-    sprite: Mobs/Aliens/Xenos/xeno_hunter.rsi
-    state: standing
   - type: Clickable
-  - type: Physics
-    mass: 85
   - type: Collidable
+    anchored: false
+    mass: 85
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.35,-0.35,0.35,0.35"

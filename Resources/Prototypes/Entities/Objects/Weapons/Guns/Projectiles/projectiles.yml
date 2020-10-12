@@ -11,10 +11,9 @@
     directional: false
     sprite: Objects/Weapons/Guns/Projectiles/bullet.rsi
     state: bullet
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Projectiles/bullet.rsi
-    state: bullet
   - type: Collidable
+    anchored: false
+    edgeslide: false
     hard: false
     shapes:
     - !type:PhysShapeAabb
@@ -23,8 +22,6 @@
       mask:
       - Impassable
       - MobImpassable
-  - type: Physics
-    edgeslide: false
   - type: Projectile
     soundHit: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
     damages:
@@ -99,19 +96,14 @@
     layers:
     - state: spark
       shader: unshaded
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Projectiles/spark.rsi
-    state: spark
-    color: "#ffff33"
   - type: Collidable
+    edgeslide: false
     hard: false
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.2,-0.2,0.2,0.2"
       layer: 32
       mask: 30
-  - type: Physics
-    edgeslide: false
 
 # Launcher projectiles (grenade / rocket)
 - type: entity

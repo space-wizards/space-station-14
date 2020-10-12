@@ -1,15 +1,15 @@
-﻿using Robust.Shared.GameObjects;
+﻿using System.Collections.Generic;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
-using System.Collections.Generic;
 
 namespace Content.Server.GameObjects.Components.Mobs.Speech
 {
     [RegisterComponent]
     public class OwOAccentComponent : Component, IAccentComponent
     {
-        [Dependency] private readonly IRobustRandom _random;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         public override string Name => "OwOAccent";
 

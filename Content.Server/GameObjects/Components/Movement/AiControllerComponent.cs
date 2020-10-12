@@ -55,8 +55,8 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             base.Initialize();
 
-            // This component requires a collidable component.
-            Owner.EnsureComponent<CollidableComponent>();
+            // This component requires a physics component.
+            Owner.EnsureComponent<PhysicsComponent>();
 
             EntitySystem.Get<AiSystem>().ProcessorInitialize(this);
         }
@@ -151,7 +151,7 @@ namespace Content.Server.GameObjects.Components.Movement
         (Vector2 walking, Vector2 sprinting) IMoverComponent.VelocityDir =>
             Sprinting ? (Vector2.Zero, VelocityDir) : (VelocityDir, Vector2.Zero);
 
-        public GridCoordinates LastPosition { get; set; }
+        public EntityCoordinates LastPosition { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)] public float StepSoundDistance { get; set; }
 

@@ -126,6 +126,17 @@ namespace Content.Server.GameObjects.Components.GUI
             base.OnRemove();
         }
 
+        public IEnumerable<IEntity> GetAllHeldItems()
+        {
+            foreach (var (_, container) in _slotContainers)
+            {
+                foreach (var entity in container.ContainedEntities)
+                {
+                    yield return entity;
+                }
+            }
+        }
+
         /// <summary>
         /// Helper to get container name for specified slot on this component
         /// </summary>
@@ -445,8 +456,8 @@ namespace Content.Server.GameObjects.Components.GUI
                     {
                         if (activeHand != null)
                         {
-                            interactionSystem.Interaction(Owner, activeHand.Owner, itemContainedInSlot.Owner,
-                                new GridCoordinates());
+                                _ = interactionSystem.Interaction(Owner, activeHand.Owner, itemContainedInSlot.Owner,
+                                    new EntityCoordinates());
                         }
                         else if (Unequip(msg.Inventoryslot))
                         {

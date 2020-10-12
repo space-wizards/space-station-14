@@ -43,10 +43,6 @@ namespace Content.Shared.GameObjects.Components.Inventory
             IDCARD,
             POCKET1,
             POCKET2,
-            POCKET3,
-            POCKET4,
-            EXOSUITSLOT1,
-            EXOSUITSLOT2,
 
             /// <summary>
             ///     Not a real slot.
@@ -81,7 +77,6 @@ namespace Content.Shared.GameObjects.Components.Inventory
             LEGS = 1 << 13,
             SHOES = 1 << 14,
             FEET = 1 << 14,
-            EXOSUITSTORAGE = 1 << 15
         }
 
         public static readonly IReadOnlyDictionary<Slots, string> SlotNames = new Dictionary<Slots, string>()
@@ -100,10 +95,6 @@ namespace Content.Shared.GameObjects.Components.Inventory
             {Slots.IDCARD, "Id Card"},
             {Slots.POCKET1, "Left Pocket"},
             {Slots.POCKET2, "Right Pocket"},
-            {Slots.POCKET3, "Up Pocket"}, // What?
-            {Slots.POCKET4, "Down Pocket"}, // I, uh, what?
-            {Slots.EXOSUITSLOT1, "Suit Storage"},
-            {Slots.EXOSUITSLOT2, "Backup Storage"}
         };
 
         /// <summary>
@@ -128,10 +119,6 @@ namespace Content.Shared.GameObjects.Components.Inventory
             {Slots.IDCARD, SlotFlags.IDCARD},
             {Slots.POCKET1, SlotFlags.POCKET},
             {Slots.POCKET2, SlotFlags.POCKET},
-            {Slots.POCKET3, SlotFlags.POCKET},
-            {Slots.POCKET4, SlotFlags.POCKET},
-            {Slots.EXOSUITSLOT1, SlotFlags.EXOSUITSTORAGE},
-            {Slots.EXOSUITSLOT2, SlotFlags.EXOSUITSTORAGE}
         };
 
         // for shared string dict, since we don't define these anywhere in content
@@ -152,10 +139,6 @@ namespace Content.Shared.GameObjects.Components.Inventory
             "Inventory_IDCARD",
             "Inventory_POCKET1",
             "Inventory_POCKET2",
-            "Inventory_POCKET3",
-            "Inventory_POCKET4",
-            "Inventory_EXOSUITSLOT1",
-            "Inventory_EXOSUITSLOT2",
         };
 
         // for shared string dict, since we don't define these anywhere in content

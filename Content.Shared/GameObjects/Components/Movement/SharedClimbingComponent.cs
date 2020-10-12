@@ -1,10 +1,10 @@
-﻿using Content.Shared.GameObjects.EntitySystems;
+﻿using System;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
-using System;
 
 namespace Content.Shared.GameObjects.Components.Movement
 {
@@ -13,7 +13,7 @@ namespace Content.Shared.GameObjects.Components.Movement
         public sealed override string Name => "Climbing";
         public sealed override uint? NetID => ContentNetIDs.CLIMBING;
 
-        protected ICollidableComponent Body;
+        protected IPhysicsComponent Body;
         protected bool IsOnClimbableThisFrame = false;
 
         protected bool OwnerIsTransitioning

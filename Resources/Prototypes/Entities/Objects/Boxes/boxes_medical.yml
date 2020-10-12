@@ -2,22 +2,17 @@
   name: syringe box
   parent: BoxBase
   id: BoxSyringe
-  description:
+  description: A box full of syringes.
   components:
   - type: StorageFill
     contents:
-      - Syringe
-      - Syringe
-      - Syringe
-      - Syringe
-      - Syringe
-      - Syringe
+      - name: Syringe
+        amount: 6
   - type: Sprite
     layers:
       - state: box
       - state: syringe
-  - type: Icon
-    state: syringe
+
   - type: Item
   - type: Storage
     capacity: 30
@@ -26,20 +21,17 @@
   name: sterile box
   parent: BoxBase
   id: BoxSterile
-  description:
+  description: This box contains sterile medical masks.
   components:
   - type: StorageFill
     contents:
-      - MaskSterile
-      - MaskSterile
-      - MaskSterile
-      - MaskSterile
+      - name: MaskSterile
+        amount: 4
   - type: Sprite
     layers:
       - state: box
       - state: sterile
-  - type: Icon
-    state: sterile
+
   - type: Item
   - type: Storage
     capacity: 20
@@ -48,20 +40,17 @@
   name: latex box
   parent: BoxBase
   id: BoxLatex
-  description:
+  description: Contains sterile latex gloves.
   components:
   - type: StorageFill
     contents:
-      - GlovesLatex
-      - GlovesLatex
-      - GlovesLatex
-      - GlovesLatex
+      - name: GlovesLatex
+        amount: 4
   - type: Sprite
     layers:
       - state: box
       - state: latex
-  - type: Icon
-    state: latex
+
   - type: Item
   - type: Storage
     capacity: 20

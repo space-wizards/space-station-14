@@ -2,30 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Items;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using Content.Shared.Damage;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects.EntitySystemMessages;
 
 namespace Content.Server.GameObjects.Components.Weapon.Melee
 {
     [RegisterComponent]
     public class MeleeWeaponComponent : Component, IAttack
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPhysicsManager _physicsManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -33,8 +29,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         private TimeSpan _lastAttackTime;
         private TimeSpan _cooldownEnd;
 
-        private string _hitSound;
-        private string _missSound;
+        private readonly string _hitSound = default!;
+        private readonly string _missSound = default!;
         public float ArcCooldownTime { get; private set; } = 1f;
         public float CooldownTime { get; private set; } = 0.5f;
 
@@ -90,14 +86,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             if(curTime < _cooldownEnd)
                 return true;
 
-            var location = eventArgs.User.Transform.GridPosition;
-            var angle = new Angle(eventArgs.ClickLocation.ToMapPos(_mapManager) - location.ToMapPos(_mapManager));
+            var location = eventArgs.User.Transform.Coordinates;
+            var angle = new Angle(eventArgs.ClickLocation.ToMapPos(Owner.EntityManager) - location.ToMapPos(Owner.EntityManager));
 
             // This should really be improved. GetEntitiesInArc uses pos instead of bounding boxes.
             var entities = ArcRayCast(eventArgs.User.Transform.WorldPosition, angle, eventArgs.User);
 
             var audioSystem = EntitySystem.Get<AudioSystem>();
-            if (entities.Count() != 0)
+            if (entities.Count != 0)
             {
                 audioSystem.PlayFromEntity( _hitSound, entities.First());
             }
@@ -150,8 +146,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
             var target = eventArgs.TargetEntity;
 
-            var location = eventArgs.User.Transform.GridPosition;
-            var angle = new Angle(eventArgs.ClickLocation.ToMapPos(_mapManager) - location.ToMapPos(_mapManager));
+            var location = eventArgs.User.Transform.Coordinates;
+            var angle = new Angle(eventArgs.ClickLocation.ToMapPos(Owner.EntityManager) - location.ToMapPos(Owner.EntityManager));
 
             var audioSystem = EntitySystem.Get<AudioSystem>();
             if (target != null)
@@ -195,7 +191,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         private HashSet<IEntity> ArcRayCast(Vector2 position, Angle angle, IEntity ignore)
         {
             var widthRad = Angle.FromDegrees(ArcWidth);
-            var increments = 1 + (35 * (int) Math.Ceiling(widthRad / (2 * Math.PI)));
+            var increments = 1 + 35 * (int) Math.Ceiling(widthRad / (2 * Math.PI));
             var increment = widthRad / increments;
             var baseAngle = angle - widthRad / 2;
 

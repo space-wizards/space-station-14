@@ -17,6 +17,8 @@ namespace Content.Client.UserInterface.Stylesheets
         public const string ButtonOpenLeft = "OpenLeft";
         public const string ButtonOpenBoth = "OpenBoth";
 
+        public const string ButtonCaution = "Caution";
+
         public abstract Stylesheet Stylesheet { get; }
 
         protected StyleRule[] BaseRules { get; }
@@ -28,7 +30,7 @@ namespace Content.Client.UserInterface.Stylesheets
 
         protected StyleBase(IResourceCache resCache)
         {
-            var notoSans12 = resCache.GetFont("/Textures/Interface/Nano/NotoSans/NotoSans-Regular.ttf", 12);
+            var notoSans12 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 12);
 
             // Button styles.
             var buttonTex = resCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
