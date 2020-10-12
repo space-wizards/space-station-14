@@ -195,6 +195,7 @@
       type: StrippableBoundUserInterface
     - key: enum.AcceptCloningUiKey.Key
       type: AcceptCloningBoundUserInterface
+  - type: Puller
 
 - type: entity
   save: false

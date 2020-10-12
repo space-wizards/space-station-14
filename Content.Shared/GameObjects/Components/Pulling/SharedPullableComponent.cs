@@ -58,6 +58,11 @@ namespace Content.Shared.GameObjects.Components.Pulling
 
         public bool CanStartPull(IEntity puller)
         {
+            if (!puller.HasComponent<SharedPullerComponent>())
+            {
+                return false;
+            }
+
             if (!puller.TryGetComponent(out IPhysicsComponent? physics))
             {
                 return false;

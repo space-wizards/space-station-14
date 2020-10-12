@@ -53,7 +53,7 @@ namespace Content.Shared.Physics.Pull
 
             var aabbSize =  _puller.AABB.Size;
 
-            return (aabbSize.X > aabbSize.Y ? aabbSize.X : aabbSize.Y) + 0.2f;
+            return (aabbSize.X > aabbSize.Y ? aabbSize.X : aabbSize.Y) + 0.15f;
         }
 
         public bool StartPull(IEntity entity)
@@ -190,7 +190,7 @@ namespace Content.Shared.Physics.Pull
             }
             else if (distance.Length > DistanceBeforeStopPull())
             {
-                LinearVelocity = distance.Normalized * _puller.LinearVelocity.Length * 1.1f;
+                LinearVelocity = distance.Normalized * _puller.LinearVelocity.Length * 1.5f;
             }
             else
             {
