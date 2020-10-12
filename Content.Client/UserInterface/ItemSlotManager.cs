@@ -73,11 +73,11 @@ namespace Content.Client.UserInterface
 
                 var mousePosWorld = _eyeManager.ScreenToMap(args.PointerLocation);
 
-                if (!_mapManager.TryFindGridAt(mousePosWorld, out var grid))
-                    grid = null;
+                var coordinates = _mapManager.TryFindGridAt(mousePosWorld, out var grid) ? grid.MapToGrid(mousePosWorld) :
+                    EntityCoordinates.FromMap(_entityManager, _mapManager, mousePosWorld);
 
                 var message = new FullInputCmdMessage(_gameTiming.CurTick, _gameTiming.TickFraction, funcId, BoundKeyState.Down,
-                    grid?.MapToGrid(mousePosWorld) ?? EntityCoordinates.FromMap(_entityManager, _mapManager, mousePosWorld), args.PointerLocation, item.Uid);
+                    coordinates, args.PointerLocation, item.Uid);
 
                 // client side command handlers will always be sent the local player session.
                 var session = _playerManager.LocalPlayer?.Session;
