@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.GameObjects.Components.Buckle;
 using Content.Shared.GameObjects.Components.Strap;
 using Content.Shared.GameObjects.EntitySystems;
@@ -150,7 +151,7 @@ namespace Content.Server.GameObjects.Components.Strap
         {
             base.OnRemove();
 
-            foreach (var entity in _buckledEntities)
+            foreach (var entity in _buckledEntities.ToArray())
             {
                 if (entity.TryGetComponent<BuckleComponent>(out var buckle))
                 {
