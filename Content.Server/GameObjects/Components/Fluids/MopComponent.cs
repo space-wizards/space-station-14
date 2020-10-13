@@ -1,6 +1,5 @@
 ﻿#nullable enable
 using Content.Server.GameObjects.Components.Chemistry;
-using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;

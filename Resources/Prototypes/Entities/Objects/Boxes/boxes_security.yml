@@ -2,22 +2,17 @@
   name: handcuff box
   parent: BoxBase
   id: BoxHandcuff
-  description:
+  description: A box full of handcuffs.
   components:
   - type: StorageFill
     contents:
-      - Handcuffs
-      - Handcuffs
-      - Handcuffs
-      - Handcuffs
-      - Handcuffs
-      - Handcuffs
+      - name: Handcuffs
+        amount: 6
   - type: Sprite
     layers:
       - state: box_security
       - state: handcuff
-  - type: Icon
-    state: handcuff
+
   - type: Item
   - type: Storage
     capacity: 6
@@ -26,20 +21,17 @@
   name: flashbang box
   parent: BoxBase
   id: BoxFlashbang
-  description:
+  description: 'WARNING: These devices are extremely dangerous and can cause blindness or deafness in repeated use.'
   components:
   - type: StorageFill
     contents:
-      - GrenadeFlashBang
-      - GrenadeFlashBang
-      - GrenadeFlashBang
-      - GrenadeFlashBang
+      - name: GrenadeFlashBang
+        amount: 4
   - type: Sprite
     layers:
       - state: box_security
       - state: flashbang
-  - type: Icon
-    state: flashbang
+
   - type: Item
   - type: Storage
     capacity: 20
@@ -48,20 +40,17 @@
   name: sechud box
   parent: BoxBase
   id: BoxSechud
-  description:
+  description: A box of security glasses.
   components:
   - type: StorageFill
     contents:
-      - SecGlasses
-      - SecGlasses
-      - SecGlasses
-      - SecGlasses
+      - name: SecGlasses
+        amount: 4
   - type: Sprite
     layers:
       - state: box_security
       - state: sechud
-  - type: Icon
-    state: sechud
+
   - type: Item
   - type: Storage
     capacity: 20

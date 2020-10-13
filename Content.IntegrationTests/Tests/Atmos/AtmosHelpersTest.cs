@@ -3,6 +3,7 @@ using Content.Server.Atmos;
 using NUnit.Framework;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 
 namespace Content.IntegrationTests.Tests.Atmos
 {
@@ -11,7 +12,7 @@ namespace Content.IntegrationTests.Tests.Atmos
     public class AtmosHelpersTest : ContentIntegrationTest
     {
         [Test]
-        public async Task GetTileAtmosphereEntityCoordinatesNullTest()
+        public async Task GetTileAtmosphereEntityCoordinatesNotNullTest()
         {
             var server = StartServerDummyTicker();
 
@@ -26,8 +27,8 @@ namespace Content.IntegrationTests.Tests.Atmos
                     var atmosphere1 = default(EntityCoordinates).GetTileAtmosphere();
                     var atmosphere2 = default(EntityCoordinates).GetTileAtmosphere(entityManager);
 
-                    Assert.Null(atmosphere1);
-                    Assert.Null(atmosphere2);
+                    Assert.NotNull(atmosphere1);
+                    Assert.NotNull(atmosphere2);
                 });
             });
 
@@ -35,7 +36,7 @@ namespace Content.IntegrationTests.Tests.Atmos
         }
 
         [Test]
-        public async Task GetTileAirEntityCoordinatesNullTest()
+        public async Task GetTileAirEntityCoordinatesNotNullTest()
         {
             var server = StartServerDummyTicker();
 
@@ -45,7 +46,7 @@ namespace Content.IntegrationTests.Tests.Atmos
                 {
                     var air = default(EntityCoordinates).GetTileAir();
 
-                    Assert.Null(air);
+                    Assert.NotNull(air);
                 });
             });
 
@@ -53,7 +54,7 @@ namespace Content.IntegrationTests.Tests.Atmos
         }
 
         [Test]
-        public async Task TryGetTileAtmosphereEntityCoordinatesNullTest()
+        public async Task TryGetTileAtmosphereEntityCoordinatesNotNullTest()
         {
             var server = StartServerDummyTicker();
 
@@ -63,8 +64,8 @@ namespace Content.IntegrationTests.Tests.Atmos
                 {
                     var hasAtmosphere = default(EntityCoordinates).TryGetTileAtmosphere(out var atmosphere);
 
-                    Assert.False(hasAtmosphere);
-                    Assert.Null(atmosphere);
+                    Assert.True(hasAtmosphere);
+                    Assert.NotNull(atmosphere);
                 });
             });
 
@@ -72,7 +73,7 @@ namespace Content.IntegrationTests.Tests.Atmos
         }
 
         [Test]
-        public async Task TryGetTileTileAirEntityCoordinatesNullTest()
+        public async Task TryGetTileTileAirEntityCoordinatesNotNullTest()
         {
             var server = StartServerDummyTicker();
 
@@ -82,8 +83,8 @@ namespace Content.IntegrationTests.Tests.Atmos
                 {
                     var hasAir = default(EntityCoordinates).TryGetTileAir(out var air);
 
-                    Assert.False(hasAir);
-                    Assert.Null(air);
+                    Assert.True(hasAir);
+                    Assert.NotNull(air);
                 });
             });
 
@@ -91,7 +92,7 @@ namespace Content.IntegrationTests.Tests.Atmos
         }
 
         [Test]
-        public async Task GetTileAtmosphereMapIndicesNullTest()
+        public async Task GetTileAtmosphereVector2iNotNullTest()
         {
             var server = StartServerDummyTicker();
 
@@ -99,9 +100,9 @@ namespace Content.IntegrationTests.Tests.Atmos
             {
                 Assert.DoesNotThrow(() =>
                 {
-                    var atmosphere = default(MapIndices).GetTileAtmosphere(default);
+                    var atmosphere = default(Vector2i).GetTileAtmosphere(default);
 
-                    Assert.Null(atmosphere);
+                    Assert.NotNull(atmosphere);
                 });
             });
 
@@ -109,7 +110,7 @@ namespace Content.IntegrationTests.Tests.Atmos
         }
 
         [Test]
-        public async Task GetTileAirMapIndicesNullTest()
+        public async Task GetTileAirVector2iNotNullTest()
         {
             var server = StartServerDummyTicker();
 
@@ -117,9 +118,9 @@ namespace Content.IntegrationTests.Tests.Atmos
             {
                 Assert.DoesNotThrow(() =>
                 {
-                    var air = default(MapIndices).GetTileAir(default);
+                    var air = default(Vector2i).GetTileAir(default);
 
-                    Assert.Null(air);
+                    Assert.NotNull(air);
                 });
             });
 
@@ -127,7 +128,7 @@ namespace Content.IntegrationTests.Tests.Atmos
         }
 
         [Test]
-        public async Task TryGetTileAtmosphereMapIndicesNullTest()
+        public async Task TryGetTileAtmosphereVector2iNotNullTest()
         {
             var server = StartServerDummyTicker();
 
@@ -135,10 +136,10 @@ namespace Content.IntegrationTests.Tests.Atmos
             {
                 Assert.DoesNotThrow(() =>
                 {
-                    var hasAtmosphere = default(MapIndices).TryGetTileAtmosphere(default, out var atmosphere);
+                    var hasAtmosphere = default(Vector2i).TryGetTileAtmosphere(default, out var atmosphere);
 
-                    Assert.False(hasAtmosphere);
-                    Assert.Null(atmosphere);
+                    Assert.True(hasAtmosphere);
+                    Assert.NotNull(atmosphere);
                 });
             });
 
@@ -146,7 +147,7 @@ namespace Content.IntegrationTests.Tests.Atmos
         }
 
         [Test]
-        public async Task TryGetTileAirMapIndicesNullTest()
+        public async Task TryGetTileAirVector2iNotNullTest()
         {
             var server = StartServerDummyTicker();
 
@@ -154,10 +155,10 @@ namespace Content.IntegrationTests.Tests.Atmos
             {
                 Assert.DoesNotThrow(() =>
                 {
-                    var hasAir = default(MapIndices).TryGetTileAir(default, out var air);
+                    var hasAir = default(Vector2i).TryGetTileAir(default, out var air);
 
-                    Assert.False(hasAir);
-                    Assert.Null(air);
+                    Assert.True(hasAir);
+                    Assert.NotNull(air);
                 });
             });
 

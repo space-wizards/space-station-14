@@ -14,9 +14,7 @@
   - type: Sprite
     sprite: Objects/Misc/handcuffs.rsi
     state: handcuff
-  - type: Icon
-    sprite: Objects/Misc/handcuffs.rsi
-    state: handcuff
+
   - type: Clothing
     sprite: Objects/Misc/handcuffs.rsi
     Slots: [belt]
@@ -46,11 +44,6 @@
     startBreakoutSound: /Audio/Items/Handcuffs/rope_takeoff.ogg
 
   - type: Sprite
-    sprite: Objects/Misc/cablecuffs.rsi
-    state: cuff
-    color: red
-
-  - type: Icon
     sprite: Objects/Misc/cablecuffs.rsi
     state: cuff
     color: red

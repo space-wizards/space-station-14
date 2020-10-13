@@ -2,10 +2,7 @@
 using System.Linq;
 using Content.Server.GameObjects.Components.Medical;
 using Content.Server.Mobs;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Content.Shared.GameObjects.Components.Medical;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 namespace Content.Server.GameObjects.EntitySystems
 {

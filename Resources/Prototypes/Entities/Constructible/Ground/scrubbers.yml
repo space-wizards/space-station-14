@@ -9,9 +9,10 @@
   - type: Collidable
   - type: SnapGrid
     offset: Center
-  - type: Icon
-    texture: Constructible/Power/eightdirwire.png
+
   - type: Sprite
+    sprite: Constructible/Atmos/pipeitems.rsi
+    state: scrubber
   - type: Appearance
     visuals:
     - type: PipeVisualizer
@@ -20,6 +21,7 @@
       siphonRSI: Constructible/Atmos/scrubber.rsi
   - type: Destructible
     thresholdvalue: 100
+    resistances: metallicResistances
 
 - type: entity
   parent: ScrubberBase
@@ -31,5 +33,5 @@
     - !type:PipeNode
       nodeGroID: Pipe
       pipeDirection: South
-  - type: DebugSiphon
+  - type: PressureSiphon
     scrubberOutletDirection: South

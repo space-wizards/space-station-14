@@ -3,10 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Body;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.ViewVariables;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -16,6 +12,8 @@ using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;
+using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -27,12 +25,14 @@ using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Content.Shared.GameObjects.Components.Body;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Kitchen
 {
@@ -195,7 +195,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             }
 
             _uiDirty = true;
-            UserInterface?.Open(actor.playerSession);
+            UserInterface?.Toggle(actor.playerSession);
         }
 
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
@@ -477,27 +477,37 @@ namespace Content.Server.GameObjects.Components.Kitchen
         public SuicideKind Suicide(IEntity victim, IChatManager chat)
         {
             var headCount = 0;
-            if (victim.TryGetComponent<BodyManagerComponent>(out var bodyManagerComponent))
+
+            if (victim.TryGetComponent<IBody>(out var body))
             {
-                var heads = bodyManagerComponent.GetPartsOfType(BodyPartType.Head);
+                var heads = body.GetPartsOfType(BodyPartType.Head);
                 foreach (var head in heads)
                 {
-                    var droppedHead = bodyManagerComponent.DropPart(head);
-
-                    if (droppedHead == null)
+                    if (!body.TryDropPart(head, out var dropped))
                     {
                         continue;
                     }
 
-                    _storage.Insert(droppedHead);
-                    headCount++;
+                    var droppedHeads = dropped.Where(p => p.PartType == BodyPartType.Head);
+
+                    foreach (var droppedHead in droppedHeads)
+                    {
+                        _storage.Insert(droppedHead.Owner);
+                        headCount++;
+                    }
                 }
             }
 
-            var othersMessage = Loc.GetString("{0:theName} is trying to cook {0:their} head!", victim);
+            var othersMessage = headCount > 1
+                ? Loc.GetString("{0:theName} is trying to cook {0:their} heads!", victim)
+                : Loc.GetString("{0:theName} is trying to cook {0:their} head!", victim);
+
             victim.PopupMessageOtherClients(othersMessage);
 
-            var selfMessage = Loc.GetString("You cook your head!");
+            var selfMessage = headCount > 1
+                ? Loc.GetString("You cook your heads!")
+                : Loc.GetString("You cook your head!");
+
             victim.PopupMessage(selfMessage);
 
             _currentCookTimerTime = 10;

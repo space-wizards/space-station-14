@@ -15,7 +15,7 @@ namespace Content.Server.AI.Utility.Considerations.Combat
                 return 0.0f;
             }
 
-            if (damageableComponent.CurrentDamageState == DamageState.Dead)
+            if (damageableComponent.CurrentState == DamageState.Dead)
             {
                 return 1.0f;
             }

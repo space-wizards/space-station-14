@@ -4,6 +4,7 @@
   parent: BaseItem
   components:
   - type: Collidable
+    anchored: false
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.15,-0.3,0.2,0.3"
@@ -23,9 +24,6 @@
     sprite: Objects/Power/PowerCells/power_cell_small_st.rsi
     layers:
     - state: s_st
-  - type: Icon
-    sprite: Objects/Power/PowerCells/power_cell_small_st.rsi
-    state: s_st
   - type: PowerCell
     maxCharge: 15000
     startingCharge: 15000
@@ -44,9 +42,6 @@
     sprite: Objects/Power/PowerCells/power_cell_small_hi.rsi
     layers:
     - state: s_hi
-  - type: Icon
-    sprite: Objects/Power/PowerCells/power_cell_small_hi.rsi
-    state: s_hi
   - type: PowerCell
     maxCharge: 30000
     startingCharge: 30000
@@ -65,9 +60,6 @@
     sprite: Objects/Power/PowerCells/power_cell_small_sup.rsi
     layers:
     - state: s_sup
-  - type: Icon
-    sprite: Objects/Power/PowerCells/power_cell_small_sup.rsi
-    state: s_sup
   - type: PowerCell
     maxCharge: 60000
     startingCharge: 60000
@@ -86,9 +78,6 @@
     sprite: Objects/Power/PowerCells/power_cell_small_hy.rsi
     layers:
     - state: s_hy
-  - type: Icon
-    sprite: Objects/Power/PowerCells/power_cell_small_hy.rsi
-    state: s_hy
   - type: PowerCell
     maxCharge: 80000
     startingCharge: 80000
@@ -105,27 +94,25 @@
     netsync: false
     sprite: Constructible/Power/cell_recharger.rsi
     drawdepth: Items
-  - type: PowerCellCharger
-    transfer_efficiency: 0.85
-  - type: PowerReceiver
   - type: Icon
     sprite: Constructible/Power/cell_recharger.rsi
     state: empty
+  - type: PowerCellCharger
+    transfer_efficiency: 0.85
+  - type: PowerReceiver
   - type: Appearance
     visuals:
     - type: PowerChargerVisualizer
   - type: Anchorable
-  - type: Physics
-    mass: 5
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable
+    mass: 5
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.25,-0.25,0.25,0.25"
       mask: [Impassable]
       layer: [Clickable]
-    IsScrapingFloor: true
 
 - type: entity
   name: recharger
@@ -135,27 +122,25 @@
     netsync: false
     sprite: Constructible/Power/recharger.rsi
     drawdepth: Items
-  - type: WeaponCapacitorCharger
-    transfer_efficiency: 0.85
-  - type: PowerReceiver
   - type: Icon
     sprite: Constructible/Power/recharger.rsi
     state: empty
+  - type: WeaponCapacitorCharger
+    transfer_efficiency: 0.85
+  - type: PowerReceiver
   - type: Appearance
     visuals:
     - type: PowerChargerVisualizer
   - type: Anchorable
-  - type: Physics
-    mass: 5
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable
+    mass: 5
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.25,-0.25,0.25,0.25"
       mask: [Impassable]
       layer: [Clickable]
-    IsScrapingFloor: true
 
 - type: entity
   name: wall recharger
@@ -165,23 +150,21 @@
     netsync: false
     sprite: Constructible/Power/wall_recharger.rsi
     drawdepth: Items
-  - type: WeaponCapacitorCharger
-    transfer_efficiency: 0.95
-  - type: PowerReceiver
   - type: Icon
     sprite: Constructible/Power/wall_recharger.rsi
     state: empty
+  - type: WeaponCapacitorCharger
+    transfer_efficiency: 0.95
+  - type: PowerReceiver
   - type: Appearance
     visuals:
     - type: PowerChargerVisualizer
-  - type: Physics
-    mass: 5
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable
+    mass: 5
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.25,-0.25,0.25,0.25"
       mask: [Impassable]
       layer: [Clickable]
-    IsScrapingFloor: true

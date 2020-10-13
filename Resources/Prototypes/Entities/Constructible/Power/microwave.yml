@@ -30,7 +30,6 @@
       - Impassable
       - MobImpassable
       - VaultImpassable
-    IsScrapingFloor: true
   - type: Sprite
     netsync: false
     sprite: Constructible/Power/microwave.rsi
@@ -42,6 +41,4 @@
       shader: unshaded
       map: ["enum.MicrowaveVisualizerLayers.BaseUnlit"]
   - type: PowerReceiver
-  - type: Icon
-    sprite: Constructible/Power/microwave.rsi
-    state: mw0
+

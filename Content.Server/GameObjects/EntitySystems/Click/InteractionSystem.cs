@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.Components.Timing;
@@ -144,7 +145,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             // all activates should only fire when in range / unbostructed
-            var activateEventArgs = new ActivateEventArgs {User = user, Target = used};
+            var activateEventArgs = new ActivateEventArgs { User = user, Target = used };
             if (activateEventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
             {
                 activateComp.Activate(activateEventArgs);
@@ -198,7 +199,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
             if (entity.TryGetComponent(out CombatModeComponent combatMode) && combatMode.IsInCombatMode)
             {
-                DoAttack(entity, coords, false);
+                DoAttack(entity, coords, false, uid);
             }
             else
             {
@@ -229,7 +230,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return true;
             }
 
-            if(userEntity.TryGetComponent(out CombatModeComponent combat) && combat.IsInCombatMode)
+            if (userEntity.TryGetComponent(out CombatModeComponent combat) && combat.IsInCombatMode)
                 DoAttack(userEntity, coords, false, uid);
             else
                 UserInteraction(userEntity, coords, uid);
@@ -288,13 +289,13 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return false;
             }
 
-            if (!pull.Owner.TryGetComponent(out ICollidableComponent collidable) ||
-                collidable.Anchored)
+            if (!pull.Owner.TryGetComponent(out IPhysicsComponent physics) ||
+                physics.Anchored)
             {
                 return false;
             }
 
-            var controller = collidable.EnsureController<PullController>();
+            var controller = physics.EnsureController<PullController>();
 
             if (controller.GettingPulled)
             {
@@ -352,6 +353,13 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return;
             }
 
+            // If in a container
+            if (ContainerHelpers.IsInContainer(player))
+            {
+                return;
+            }
+
+
             // In a container where the attacked entity is not the container's owner
             if (ContainerHelpers.TryGetContainer(player, out var playerContainer) &&
                 attacked != playerContainer.Owner)
@@ -406,7 +414,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             // InteractUsing/AfterInteract: We will either use the item on the nearby object
             if (item != null)
             {
-                Interaction(player, item, attacked, coordinates);
+                _ = Interaction(player, item, attacked, coordinates);
             }
             // InteractHand/Activate: Since our hand is empty we will use InteractHand/Activate
             else
@@ -428,7 +436,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             var afterInteracts = weapon.GetAllComponents<IAfterInteract>().ToList();
-            var afterInteractEventArgs = new AfterInteractEventArgs {User = user, ClickLocation = clickLocation, CanReach = canReach};
+            var afterInteractEventArgs = new AfterInteractEventArgs { User = user, ClickLocation = clickLocation, CanReach = canReach };
 
             foreach (var afterInteract in afterInteracts)
             {
@@ -502,7 +510,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             var attackHands = attacked.GetAllComponents<IInteractHand>().ToList();
-            var attackHandEventArgs = new InteractHandEventArgs {User = user, Target = attacked};
+            var attackHandEventArgs = new InteractHandEventArgs { User = user, Target = attacked };
 
             // all attackHands should only fire when in range / unobstructed
             if (attackHandEventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
@@ -561,7 +569,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             // Try to use item on any components which have the interface
             foreach (var use in uses)
             {
-                if (use.UseEntity(new UseEntityEventArgs {User = user}))
+                if (use.UseEntity(new UseEntityEventArgs { User = user }))
                 {
                     // If a Use returns a status completion we finish our attack
                     return;
@@ -622,6 +630,32 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             foreach (var comp in comps)
             {
                 comp.Land(new LandEventArgs(user, landLocation));
+            }
+        }
+
+        /// <summary>
+        ///     Calls ThrowCollide on all components that implement the IThrowCollide interface
+        ///     on a thrown entity and the target entity it hit.
+        /// </summary>
+        public void ThrowCollideInteraction(IEntity user, IEntity thrown, IEntity target, EntityCoordinates location)
+        {
+            var collideMsg = new ThrowCollideMessage(user, thrown, target, location);
+            RaiseLocalEvent(collideMsg);
+            if (collideMsg.Handled)
+            {
+                return;
+            }
+
+            var eventArgs = new ThrowCollideEventArgs(user, thrown, target, location);
+
+            foreach (var comp in thrown.GetAllComponents<IThrowCollide>().ToArray())
+            {
+                comp.DoHit(eventArgs);
+            }
+
+            foreach (var comp in target.GetAllComponents<IThrowCollide>().ToArray())
+            {
+                comp.HitBy(eventArgs);
             }
         }
 
@@ -804,7 +838,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             if (!ActionBlockerSystem.CanAttack(player) ||
-                (!wideAttack && !player.InRangeUnobstructed(coordinates, ignoreInsideBlocker:true)))
+                (!wideAttack && !player.InRangeUnobstructed(coordinates, ignoreInsideBlocker: true)))
             {
                 return;
             }
@@ -820,8 +854,20 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 {
                     foreach (var attackComponent in item.GetAllComponents<IAttack>())
                     {
-                        if(wideAttack ? attackComponent.WideAttack(eventArgs) : attackComponent.ClickAttack(eventArgs))
+                        if (wideAttack ? attackComponent.WideAttack(eventArgs) : attackComponent.ClickAttack(eventArgs))
                             return;
+                    }
+                }
+                else
+                {
+                    // We pick up items if our hand is empty, even if we're in combat mode.
+                    if(EntityManager.TryGetEntity(target, out var targetEnt))
+                    {
+                        if (targetEnt.HasComponent<ItemComponent>())
+                        {
+                            Interaction(player, targetEnt);
+                            return;
+                        }
                     }
                 }
             }

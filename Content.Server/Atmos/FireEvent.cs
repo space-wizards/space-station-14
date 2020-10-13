@@ -2,15 +2,8 @@
 
 namespace Content.Server.Atmos
 {
-    public class FireActEvent : EntitySystemMessage
+    public interface IFireAct
     {
-        public float Temperature { get; }
-        public float Volume { get; }
-
-        public FireActEvent(float temperature, float volume)
-        {
-            Temperature = temperature;
-            Volume = volume;
-        }
+        void FireAct(float temperature, float volume);
     }
 }

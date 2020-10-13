@@ -8,9 +8,7 @@
     sprite: Objects/Fun/bikehorn.rsi
     state: icon
 
-  - type: Icon
-    sprite: Objects/Fun/bikehorn.rsi
-    state: icon
+
 
   - type: Item
     size: 5

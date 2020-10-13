@@ -1,4 +1,3 @@
-using System;
 using Content.Server.GameObjects.Components.Weapon;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;

@@ -15,9 +15,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_janitor.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_janitor.rsi
-    state: icon
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_janitor.rsi
 
@@ -29,8 +27,7 @@
   components:
   - type: Sprite
     state: jan_skirt
-  - type: Icon
-    state: jan_skirt
+
   - type: Clothing
     ClothingPrefix: jan_skirt
     femaleMask: UniformTop
@@ -44,9 +41,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_engineering.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_engineering.rsi
-    state: icon
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_engineering.rsi
 
@@ -58,8 +53,7 @@
   components:
   - type: Sprite
     state: engine_skirt
-  - type: Icon
-    state: engine_skirt
+
   - type: Clothing
     ClothingPrefix: engine_skirt
     femaleMask: UniformTop
@@ -73,9 +67,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_assistant.rsi
     state: assistant
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_assistant.rsi
-    state: assistant
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_assistant.rsi
 
@@ -88,9 +80,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_medical.rsi
     state: chemistry
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_medical.rsi
-    state: chemistry
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_medical.rsi
     ClothingPrefix: chemistry
@@ -103,8 +93,7 @@
   components:
   - type: Sprite
     state: chemistry_skirt
-  - type: Icon
-    state: chemistry_skirt
+
   - type: Clothing
     ClothingPrefix: chemistry_skirt
     femaleMask: UniformTop
@@ -118,9 +107,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_medical.rsi
     state: paramedic
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_medical.rsi
-    state: paramedic
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_medical.rsi
     ClothingPrefix: paramedic
@@ -133,8 +120,7 @@
   components:
   - type: Sprite
     state: paramedic_skirt
-  - type: Icon
-    state: paramedic_skirt
+
   - type: Clothing
     ClothingPrefix: paramedic_skirt
     femaleMask: UniformTop
@@ -148,9 +134,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_medical.rsi
     state: scrubspurple
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_medical.rsi
-    state: scrubspurple
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_medical.rsi
     ClothingPrefix: scrubspurple
@@ -164,9 +148,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_medical.rsi
     state: scrubsgreen
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_medical.rsi
-    state: scrubsgreen
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_medical.rsi
     ClothingPrefix: scrubsgreen
@@ -180,9 +162,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_medical.rsi
     state: scrubsblue
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_medical.rsi
-    state: scrubsblue
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_medical.rsi
     ClothingPrefix: scrubsblue
@@ -196,9 +176,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_clown.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_clown.rsi
-    state: icon
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_clown.rsi
     femaleMask: UniformTop
@@ -212,9 +190,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_sec.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_sec.rsi
-    state: icon
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_sec.rsi
 
@@ -226,8 +202,7 @@
   components:
   - type: Sprite
     state: sec_skirt
-  - type: Icon
-    state: sec_skirt
+
   - type: Clothing
     ClothingPrefix: sec_skirt
     femaleMask: UniformTop
@@ -240,8 +215,7 @@
   components:
     - type: Sprite
       state: blueshift
-    - type: Icon
-      state: blueshift
+
     - type: Clothing
       ClothingPrefix: blueshift
 
@@ -253,8 +227,7 @@
   components:
     - type: Sprite
       state: constable
-    - type: Icon
-      state: constable
+
     - type: Clothing
       ClothingPrefix: constable
 
@@ -266,8 +239,7 @@
   components:
     - type: Sprite
       state: officerblueclothes
-    - type: Icon
-      state: officerblueclothes
+
     - type: Clothing
       ClothingPrefix: officerblueclothes
 
@@ -279,8 +251,7 @@
   components:
     - type: Sprite
       state: officertanclothes
-    - type: Icon
-      state: officertanclothes
+
     - type: Clothing
       ClothingPrefix: officertanclothes
 
@@ -292,8 +263,7 @@
   components:
     - type: Sprite
       state: security_grey
-    - type: Icon
-      state: security_grey
+
     - type: Clothing
       ClothingPrefix: security_grey
       HeldPrefix: gy_suit
@@ -306,8 +276,7 @@
   components:
     - type: Sprite
       state: spacepol
-    - type: Icon
-      state: spacepol
+
     - type: Clothing
       ClothingPrefix: spacepol
 
@@ -319,8 +288,7 @@
   components:
     - type: Sprite
       state: spacepolice_families
-    - type: Icon
-      state: spacepolice_families
+
     - type: Clothing
       ClothingPrefix: spacepolice_families
 
@@ -333,9 +301,7 @@
     - type: Sprite
       sprite: Clothing/Uniforms/uniform_detective.rsi
       state: detective
-    - type: Icon
-      sprite: Clothing/Uniforms/uniform_detective.rsi
-      state: detective
+
     - type: Clothing
       sprite: Clothing/Uniforms/uniform_detective.rsi
       ClothingPrefix: detective
@@ -349,8 +315,7 @@
   components:
     - type: Sprite
       state: detective_skirt
-    - type: Icon
-      state: detective_skirt
+
     - type: Clothing
       ClothingPrefix: detective_skirt
       femaleMask: UniformTop
@@ -363,8 +328,7 @@
   components:
     - type: Sprite
       state: greydetective
-    - type: Icon
-      state: greydetective
+
     - type: Clothing
       ClothingPrefix: greydetective
 
@@ -376,8 +340,7 @@
   components:
     - type: Sprite
       state: greydetective_skirt
-    - type: Icon
-      state: greydetective_skirt
+
     - type: Clothing
       ClothingPrefix: greydetective_skirt
       femaleMask: UniformTop
@@ -391,9 +354,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_cargotech.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_cargotech.rsi
-    state: icon
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_cargotech.rsi
 
@@ -405,8 +366,7 @@
   components:
   - type: Sprite
     state: cargo_skirt
-  - type: Icon
-    state: cargo_skirt
+
   - type: Clothing
     ClothingPrefix: cargo_skirt
     femaleMask: UniformTop
@@ -420,9 +380,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_cargotech.rsi
     state: qm
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_cargotech.rsi
-    state: qm
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_cargotech.rsi
 
@@ -434,8 +392,7 @@
   components:
   - type: Sprite
     state: qm_skirt
-  - type: Icon
-    state: qm_skirt
+
   - type: Clothing
     ClothingPrefix: qm_skirt
     femaleMask: UniformTop
@@ -449,9 +406,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_chef.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_chef.rsi
-    state: icon
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_chef.rsi
 
@@ -463,8 +418,7 @@
   components:
   - type: Sprite
     state: chef_skirt
-  - type: Icon
-    state: chef_skirt
+
   - type: Clothing
     ClothingPrefix: chef_skirt
     femaleMask: UniformTop
@@ -478,9 +432,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_captain.rsi
     state: captain
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_captain.rsi
-    state: captain
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_captain.rsi
 
@@ -493,9 +445,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_ce.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_ce.rsi
-    state: icon
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_ce.rsi
 
@@ -507,8 +457,7 @@
   components:
   - type: Sprite
     state: chief_skirt
-  - type: Icon
-    state: chief_skirt
+
   - type: Clothing
     ClothingPrefix: chief_skirt
     femaleMask: UniformTop
@@ -522,9 +471,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_cmo.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_cmo.rsi
-    state: icon
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_cmo.rsi
 
@@ -536,8 +483,7 @@
   components:
   - type: Sprite
     state: cmo_skirt
-  - type: Icon
-    state: cmo_skirt
+
   - type: Clothing
     ClothingPrefix: cmo_skirt
     femaleMask: UniformTop
@@ -551,9 +497,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_medical.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_medical.rsi
-    state: icon
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_medical.rsi
 
@@ -565,8 +509,7 @@
   components:
   - type: Sprite
     state: medical_skirt
-  - type: Icon
-    state: medical_skirt
+
   - type: Clothing
     ClothingPrefix: medical_skirt
     femaleMask: UniformTop
@@ -580,9 +523,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_scientist.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_scientist.rsi
-    state: icon
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_scientist.rsi
 
@@ -594,8 +535,7 @@
   components:
   - type: Sprite
     state: sci_skirt
-  - type: Icon
-    state: sci_skirt
+
   - type: Clothing
     ClothingPrefix: sci_skirt
     femaleMask: UniformTop
@@ -609,9 +549,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_rnd.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_rnd.rsi
-    state: icon
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_rnd.rsi
 
@@ -623,8 +561,7 @@
   components:
   - type: Sprite
     state: rnd_skirt
-  - type: Icon
-    state: rnd_skirt
+
   - type: Clothing
     ClothingPrefix: rnd_skirt
     femaleMask: UniformTop
@@ -638,9 +575,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_mime.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_mime.rsi
-    state: icon
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_mime.rsi
 
@@ -652,8 +587,7 @@
   components:
   - type: Sprite
     state: mime_skirt
-  - type: Icon
-    state: mime_skirt
+
   - type: Clothing
     ClothingPrefix: mime_skirt
     femaleMask: UniformTop
@@ -667,9 +601,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_hos.rsi
     state: hosalt
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_hos.rsi
-    state: hosalt
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_hos.rsi
     HeldPrefix: hosalt
@@ -682,8 +614,7 @@
   components:
   - type: Sprite
     state: hosalt_skirt
-  - type: Icon
-    state: hosalt_skirt
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_hos.rsi
     ClothingPrefix: hosalt_skirt
@@ -699,9 +630,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_hos.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_hos.rsi
-    state: icon
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_hos.rsi
 
@@ -713,8 +642,7 @@
   components:
   - type: Sprite
     state: hos_skirt
-  - type: Icon
-    state: hos_skirt
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_hos.rsi
     ClothingPrefix: hos_skirt
@@ -728,8 +656,7 @@
   components:
     - type: Sprite
       state: hos_grey
-    - type: Icon
-      state: hos_grey
+
     - type: Clothing
       ClothingPrefix: hos_grey
       HeldPrefix: gy_suit
@@ -742,8 +669,7 @@
   components:
     - type: Sprite
       state: hos_parade_male
-    - type: Icon
-      state: hos_parade_male
+
     - type: Clothing
       ClothingPrefix: hos_parade_male
 
@@ -755,8 +681,7 @@
   components:
     - type: Sprite
       state: hos_parade_fem
-    - type: Icon
-      state: hos_parade_fem
+
     - type: Clothing
       ClothingPrefix: hos_parade_fem
       femaleMask: UniformTop
@@ -769,8 +694,7 @@
   components:
     - type: Sprite
       state: hosblueclothes
-    - type: Icon
-      state: hosblueclothes
+
     - type: Clothing
       ClothingPrefix: hosblueclothes
 
@@ -782,8 +706,7 @@
   components:
     - type: Sprite
       state: hostanclothes
-    - type: Icon
-      state: hostanclothes
+
     - type: Clothing
       ClothingPrefix: hostanclothes
 
@@ -796,9 +719,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_warden.rsi
     state: rwarden
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_warden.rsi
-    state: rwarden
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_warden.rsi
     ClothingPrefix: rwarden
@@ -812,8 +733,7 @@
   components:
     - type: Sprite
       state: rwarden_skirt
-    - type: Icon
-      state: rwarden
+
     - type: Clothing
       femaleMask: UniformTop
       ClothingPrefix: rwarden_skirt
@@ -826,8 +746,7 @@
   components:
     - type: Sprite
       state: warden
-    - type: Icon
-      state: warden
+
     - type: Clothing
       ClothingPrefix: warden
       HeldPrefix: gy_suit
@@ -840,8 +759,7 @@
   components:
     - type: Sprite
       state: wardenblueclothes
-    - type: Icon
-      state: wardenblueclothes
+
     - type: Clothing
       ClothingPrefix: wardenblueclothes
 
@@ -853,8 +771,7 @@
   components:
     - type: Sprite
       state: wardentanclothes
-    - type: Icon
-      state: wardentanclothes
+
     - type: Clothing
       ClothingPrefix: wardentanclothes
 
@@ -867,9 +784,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_prisoner.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_prisoner.rsi
-    state: icon
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_prisoner.rsi
 
@@ -881,8 +796,7 @@
   components:
   - type: Sprite
     state: prisoner_skirt
-  - type: Icon
-    state: prisoner_skirt
+
   - type: Clothing
     ClothingPrefix: prisoner_skirt
     femaleMask: UniformTop
@@ -896,9 +810,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_hop.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_hop.rsi
-    state: icon
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_hop.rsi
 
@@ -910,8 +822,7 @@
   components:
   - type: Sprite
     state: hop_skirt
-  - type: Icon
-    state: hop_skirt
+
   - type: Clothing
     ClothingPrefix: hop_skirt
     femaleMask: UniformTop
@@ -925,9 +836,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_hydro.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_hydro.rsi
-    state: icon
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_hydro.rsi
 
@@ -939,8 +848,7 @@
   components:
   - type: Sprite
     state: hydro_skirt
-  - type: Icon
-    state: hydro_skirt
+
   - type: Clothing
     ClothingPrefix: hydro_skirt
     femaleMask: UniformTop
@@ -954,9 +862,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/bartender.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Uniforms/bartender.rsi
-    state: icon
+
   - type: Clothing
     sprite: Clothing/Uniforms/bartender.rsi
 
@@ -968,8 +874,7 @@
   components:
   - type: Sprite
     state: skirt
-  - type: Icon
-    state: skirt
+
   - type: Clothing
     ClothingPrefix: skirt
     femaleMask: UniformTop
@@ -982,7 +887,6 @@
   components:
   - type: Sprite
     state: purple
-  - type: Icon
-    state: purple
+
   - type: Clothing
     ClothingPrefix: purple

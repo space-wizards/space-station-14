@@ -1,9 +1,11 @@
-﻿using Content.Server.GameObjects.Components.Body.Digestive;
+﻿using System.Linq;
+using Content.Server.GameObjects.Components.Body.Behavior;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Fluids;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Audio;
 using Content.Shared.Chemistry;
+using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Nutrition;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
@@ -145,35 +147,47 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 {
                     target.PopupMessage(Loc.GetString("{0:theName} is empty!", Owner));
                 }
-                
+
                 return false;
             }
 
-            if (!target.TryGetComponent(out StomachComponent stomachComponent))
+            if (!target.TryGetMechanismBehaviors<StomachBehaviorComponent>(out var stomachs))
             {
                 return false;
             }
 
             var transferAmount = ReagentUnit.Min(TransferAmount, _contents.CurrentVolume);
             var split = _contents.SplitSolution(transferAmount);
+            var firstStomach = stomachs.FirstOrDefault(stomach => stomach.CanTransferSolution(split));
 
-            if (stomachComponent.TryTransferSolution(split))
+
+            // All stomach are full or can't handle whatever solution we have.
+            if (firstStomach == null)
             {
-                if (_useSound == null)
-                {
-                    return false;
-                }
-
-                EntitySystem.Get<AudioSystem>().PlayFromEntity(_useSound, target, AudioParams.Default.WithVolume(-2f));
-                target.PopupMessage(Loc.GetString("Slurp"));
-                UpdateAppearance();
-                return true;
+                _contents.TryAddSolution(split);
+                target.PopupMessage(Loc.GetString("You've had enough {0:theName}!", Owner));
+                return false;
             }
 
-            // Stomach was full or can't handle whatever solution we have.
-            _contents.TryAddSolution(split);
-            target.PopupMessage(Loc.GetString("You've had enough {0:theName}!", Owner));
-            return false;
+            if (_useSound != null)
+            {
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(_useSound, target, AudioParams.Default.WithVolume(-2f));
+            }
+
+            target.PopupMessage(Loc.GetString("Slurp"));
+            UpdateAppearance();
+
+            // TODO: Account for partial transfer.
+
+            foreach (var (reagentId, quantity) in split.Contents)
+            {
+                if (!_prototypeManager.TryIndex(reagentId, out ReagentPrototype reagent)) continue;
+                split.RemoveReagent(reagentId, reagent.ReactionEntity(target, ReactionMethod.Ingestion, quantity));
+            }
+
+            firstStomach.TryTransferSolution(split);
+
+            return true;
         }
 
         void ILand.Land(LandEventArgs eventArgs)

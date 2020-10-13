@@ -4,6 +4,7 @@ using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -11,7 +12,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Random;
-using Robust.Shared.Interfaces.Physics;
 
 namespace Content.Server.Throw
 {
@@ -41,7 +41,7 @@ namespace Content.Server.Throw
         /// </param>
         public static void Throw(IEntity thrownEnt, float throwForce, EntityCoordinates targetLoc, EntityCoordinates sourceLoc, bool spread = false, IEntity throwSourceEnt = null)
         {
-            if (!thrownEnt.TryGetComponent(out ICollidableComponent colComp))
+            if (!thrownEnt.TryGetComponent(out IPhysicsComponent colComp))
                 return;
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
@@ -84,7 +84,7 @@ namespace Content.Server.Throw
             projComp.StartThrow(angle.ToVec(), spd);
 
             if (throwSourceEnt != null &&
-                throwSourceEnt.TryGetComponent<ICollidableComponent>(out var physics) &&
+                throwSourceEnt.TryGetComponent<IPhysicsComponent>(out var physics) &&
                 physics.TryGetController(out MoverController mover))
             {
                 var physicsMgr = IoCManager.Resolve<IPhysicsManager>();
@@ -139,9 +139,9 @@ namespace Content.Server.Throw
 
             var throwDuration = ThrownItemComponent.DefaultThrowTime;
             var mass = 1f;
-            if (thrownEnt.TryGetComponent(out ICollidableComponent physicsComponent))
+            if (thrownEnt.TryGetComponent(out IPhysicsComponent physics))
             {
-                mass = physicsComponent.Mass;
+                mass = physics.Mass;
             }
 
             var velocityNecessary = distance / throwDuration;

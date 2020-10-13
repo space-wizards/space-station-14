@@ -124,7 +124,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             return true;
         }
 
-        private void TurnOff()
+        private void TurnOff(bool makeNoise = true)
         {
             if (!Activated)
             {
@@ -134,7 +134,10 @@ namespace Content.Server.GameObjects.Components.Interactable
             SetState(false);
             Activated = false;
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/flashlight_toggle.ogg", Owner);
+            if (makeNoise)
+            {
+                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/flashlight_toggle.ogg", Owner);
+            }
         }
 
         private void TurnOn(IEntity user)
@@ -236,6 +239,9 @@ namespace Content.Server.GameObjects.Components.Interactable
             {
                 cell.Owner.Transform.Coordinates = user.Transform.Coordinates;
             }
+
+            // Assuming the battery has just been taken out of the flashlight, make sure it's getting disabled
+            TurnOff(false);
 
             EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/pistol_magout.ogg", Owner);
         }

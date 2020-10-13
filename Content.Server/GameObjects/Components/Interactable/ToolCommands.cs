@@ -108,7 +108,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             {
                 if (entity.TryGetComponent(out AnchorableComponent? anchorable))
                 {
-                    anchorable.TryAnchor(player.AttachedEntity, force: true);
+                    _ = anchorable.TryAnchor(player.AttachedEntity, force: true);
                 }
             }
         }
@@ -153,7 +153,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             {
                 if (entity.TryGetComponent(out AnchorableComponent? anchorable))
                 {
-                    anchorable.TryUnAnchor(player.AttachedEntity, force: true);
+                    _ = anchorable.TryUnAnchor(player.AttachedEntity, force: true);
                 }
             }
         }

@@ -1,6 +1,11 @@
 ﻿#nullable enable
+using System;
+using System.Collections.Generic;
+using System.Text;
 using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.GameObjects.EntitySystems;
@@ -13,10 +18,6 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
-using System;
-using System.Collections.Generic;
-using Content.Server.Utility;
-using Content.Shared.Interfaces;
 using static Content.Shared.GameObjects.Components.Disposal.SharedDisposalRouterComponent;
 
 namespace Content.Server.GameObjects.Components.Disposal
@@ -33,8 +34,8 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         [ViewVariables]
         public bool Anchored =>
-            !Owner.TryGetComponent(out ICollidableComponent? collidable) ||
-            collidable.Anchored;
+            !Owner.TryGetComponent(out IPhysicsComponent? physics) ||
+            physics.Anchored;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(DisposalRouterUiKey.Key);
 
@@ -121,7 +122,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return new DisposalRouterUserInterfaceState("");
             }
 
-            var taglist = new System.Text.StringBuilder();
+            var taglist = new StringBuilder();
 
             foreach (var tag in _tags)
             {

@@ -1,8 +1,5 @@
 ﻿using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Content.Server.GameObjects.Components.Power.AME
 {

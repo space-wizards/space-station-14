@@ -6,6 +6,7 @@ using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Localization;
+using Robust.Shared.Network;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -19,7 +20,7 @@ namespace Content.Server.GameTicking
         private readonly Dictionary<string, int> _spawnedPositions = new Dictionary<string, int>();
 
         private Dictionary<IPlayerSession, string> AssignJobs(List<IPlayerSession> available,
-            Dictionary<string, HumanoidCharacterProfile> profiles)
+            Dictionary<NetUserId, HumanoidCharacterProfile> profiles)
         {
             // Calculate positions available round-start for each job.
             var availablePositions = GetBasePositions(true);
@@ -38,7 +39,7 @@ namespace Content.Server.GameTicking
                     var candidates = available
                         .Select(player =>
                         {
-                            var profile = profiles[player.Name];
+                            var profile = profiles[player.UserId];
 
                             var availableJobs = profile.JobPriorities
                                 .Where(j =>

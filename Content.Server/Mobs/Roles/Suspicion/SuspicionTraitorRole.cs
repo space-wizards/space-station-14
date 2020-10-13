@@ -1,14 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Interfaces.Chat;
-using Content.Server.Mobs.Roles.Suspicion;
 using Content.Shared.Roles;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Shared.Audio;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Localization;
 
-namespace Content.Server.Mobs.Roles
+namespace Content.Server.Mobs.Roles.Suspicion
 {
     public sealed class SuspicionTraitorRole : SuspicionRole
     {

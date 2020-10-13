@@ -53,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Paper
 
             _mode = PaperAction.Read;
             UpdateUserInterface();
-            UserInterface?.Open(actor.playerSession);
+            UserInterface?.Toggle(actor.playerSession);
             return true;
         }
 
@@ -70,6 +70,7 @@ namespace Content.Server.GameObjects.Components.Paper
                 sprite.LayerSetState(1, "paper_words");
             }
 
+            Owner.Description = "";
             UpdateUserInterface();
         }
 

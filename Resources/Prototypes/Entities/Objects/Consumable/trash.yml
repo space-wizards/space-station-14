@@ -6,8 +6,7 @@
   components:
   - type: Sprite
     state: icon
-  - type: Icon
-    state: icon
+
 
 # Trash mountain
 - type: entity
@@ -17,8 +16,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Trash/4no_raisins.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Trash/4no_raisins.rsi
+
 
 - type: entity
   name: candy (trash)
@@ -27,8 +25,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Trash/candy.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Trash/candy.rsi
+
 
 - type: entity
   name: cheesie honkers (trash)
@@ -37,8 +34,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Trash/cheesie_honkers.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Trash/cheesie_honkers.rsi
+
 
 - type: entity
   name: chips (trash)
@@ -47,8 +43,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Trash/chips.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Trash/chips.rsi
+
 
 - type: entity
   name: corn cob (trash)
@@ -57,8 +52,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Trash/corncob.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Trash/corncob.rsi
+
 
 - type: entity
   name: liquid food (trash)
@@ -67,8 +61,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Trash/liquidfood.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Trash/liquidfood.rsi
+
 
 - type: entity
   name: pistachos pack (trash)
@@ -77,8 +70,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Trash/pistachios_pack.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Trash/pistachios_pack.rsi
+
 
 - type: entity
   name: messy pizza box (trash)
@@ -87,8 +79,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Trash/pizzabox_messy.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Trash/pizzabox_messy.rsi
+
 
 - type: entity
   name: plastic bag (trash)
@@ -97,8 +88,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Trash/plasticbag.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Trash/plasticbag.rsi
+
 
 - type: entity
   name: plate (trash)
@@ -107,8 +97,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Trash/plate.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Trash/plate.rsi
+
 
 - type: entity
   name: popcorn (trash)
@@ -117,8 +106,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Trash/popcorn.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Trash/popcorn.rsi
+
 
 - type: entity
   name: semki pack (trash)
@@ -127,8 +115,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Trash/semki_pack.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Trash/semki_pack.rsi
+
 
 - type: entity
   name: snack bowl (trash)
@@ -137,8 +124,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Trash/snack_bowl.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Trash/snack_bowl.rsi
+
 
 - type: entity
   name: SOS jerky (trash)
@@ -147,8 +133,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Trash/sosjerky.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Trash/sosjerky.rsi
+
 
 - type: entity
   name: syndi cakes (trash)
@@ -157,8 +142,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Trash/syndi_cakes.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Trash/syndi_cakes.rsi
+
 
 - type: entity
   name: tasty bread (trash)
@@ -167,8 +151,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Trash/tastybread.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Trash/tastybread.rsi
+
 
 - type: entity
   name: trash bag
@@ -177,8 +160,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Trash/trashbag.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Trash/trashbag.rsi
+
   - type: Storage
     capacity: 125
 
@@ -189,8 +171,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Trash/tray.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Trash/tray.rsi
+
 
 - type: entity
   name: waffles (trash)
@@ -199,8 +180,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Trash/waffles.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Trash/waffles.rsi
+
 
 - type: entity
   name: banana peel
@@ -210,9 +190,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/banana.rsi
     state: peel
-  - type: Icon
-    sprite: Objects/Consumable/Food/banana.rsi
-    state: peel
+
   - type: Slippery
     intersectPercentage: 0.2
   - type: Collidable

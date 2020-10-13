@@ -4,6 +4,7 @@ using Content.Shared.Chemistry;
 using Content.Shared.Kitchen;
 using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.Components.UserInterface;
+using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -77,15 +78,15 @@ namespace Content.Client.GameObjects.Components.Kitchen
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-            if (!(state is MicrowaveUpdateUserInterfaceState cstate))
+            if (!(state is MicrowaveUpdateUserInterfaceState cState))
             {
                 return;
             }
-            _menu.ToggleBusyDisableOverlayPanel(cstate.IsMicrowaveBusy);
-            RefreshContentsDisplay(cstate.ReagentQuantities, cstate.ContainedSolids);
-            var currentlySelectedTimeButton = (Button) _menu.CookTimeButtonVbox.GetChild(cstate.ActiveButtonIndex);
+            _menu.ToggleBusyDisableOverlayPanel(cState.IsMicrowaveBusy);
+            RefreshContentsDisplay(cState.ReagentQuantities, cState.ContainedSolids);
+            var currentlySelectedTimeButton = (Button) _menu.CookTimeButtonVbox.GetChild(cState.ActiveButtonIndex);
             currentlySelectedTimeButton.Pressed = true;
-            var label = cstate.ActiveButtonIndex <= 0 ? Loc.GetString("INSTANT") : cstate.CurrentCookTime.ToString();
+            var label = cState.ActiveButtonIndex <= 0 ? Loc.GetString("INSTANT") : cState.CurrentCookTime.ToString();
             _menu._cookTimeInfoLabel.Text = $"{Loc.GetString("COOK TIME")}: {label}";
         }
 
@@ -109,11 +110,21 @@ namespace Content.Client.GameObjects.Components.Kitchen
                 {
                     return;
                 }
-                if (entity.Deleted || !entity.TryGetComponent(out IconComponent icon))
+                if (entity.Deleted)
                 {
                     continue;
                 }
-                var solidItem = _menu.IngredientsList.AddItem(entity.Name, icon.Icon.Default);
+
+                Texture texture;
+                if (entity.TryGetComponent(out IconComponent iconComponent))
+                {
+                    texture = iconComponent.Icon?.Default;
+                }else if (entity.TryGetComponent(out SpriteComponent spriteComponent))
+                {
+                    texture = spriteComponent.Icon?.Default;
+                }else{continue;}
+
+                var solidItem = _menu.IngredientsList.AddItem(entity.Name, texture);
                 var solidIndex = _menu.IngredientsList.IndexOf(solidItem);
                 _solids.Add(solidIndex, containedSolids[j]);
 

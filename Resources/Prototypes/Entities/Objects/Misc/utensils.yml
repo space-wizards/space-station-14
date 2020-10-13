@@ -6,8 +6,7 @@
   - type: Sprite
     sprite: Objects/Misc/utensils.rsi
 
-  - type: Icon
-    sprite: Objects/Misc/utensils.rsi
+
 
 
 - type: entity
@@ -17,8 +16,7 @@
   components:
   - type: Sprite
     state: fork
-  - type: Icon
-    state: fork
+
   - type: Utensil
     types:
     - Fork
@@ -30,8 +28,7 @@
   components:
   - type: Sprite
     state: plastic_fork
-  - type: Icon
-    state: plastic_fork
+
   - type: Utensil
     types:
     - Fork
@@ -45,8 +42,7 @@
   components:
   - type: Sprite
     state: spoon
-  - type: Icon
-    state: spoon
+
   - type: Utensil
     types:
     - Spoon
@@ -59,8 +55,7 @@
   components:
   - type: Sprite
     state: plastic_spoon
-  - type: Icon
-    state: plastic_spoon
+
   - type: Utensil
     types:
     - Spoon
@@ -73,8 +68,7 @@
   components:
   - type: Sprite
     state: plastic_knife
-  - type: Icon
-    state: plastic_knife
+
   - type: Utensil
     types:
     - Knife

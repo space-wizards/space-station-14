@@ -11,7 +11,7 @@ namespace Content.Client.GameObjects.Components.Research
     [ComponentReference(typeof(SharedLatheDatabaseComponent))]
     public class ProtolatheDatabaseComponent : SharedProtolatheDatabaseComponent
     {
-        [Dependency] private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         /// <summary>
         ///     Invoked when the database gets updated.

@@ -130,7 +130,7 @@ namespace Content.Server.GameTicking
             var playerMgr = IoCManager.Resolve<IPlayerManager>();
             var ticker = IoCManager.Resolve<IGameTicker>();
 
-            NetSessionId sessionId;
+            NetUserId userId;
             if (args.Length == 0)
             {
                 if (player == null)
@@ -139,16 +139,17 @@ namespace Content.Server.GameTicking
                     return;
                 }
 
-                sessionId = player.SessionId;
+                userId = player.UserId;
             }
-            else
+            else if (!playerMgr.TryGetUserId(args[0], out userId))
             {
-                sessionId = new NetSessionId(args[0]);
+                shell.SendText(player, "Unknown player");
+                return;
             }
 
-            if (!playerMgr.TryGetSessionById(sessionId, out var targetPlayer))
+            if (!playerMgr.TryGetSessionById(userId, out var targetPlayer))
             {
-                if (!playerMgr.TryGetPlayerData(sessionId, out var data))
+                if (!playerMgr.TryGetPlayerData(userId, out var data))
                 {
                     shell.SendText(player, "Unknown player");
                     return;
@@ -365,7 +366,7 @@ namespace Content.Server.GameTicking
 
             shell.ExecuteCommand(player, $"addmap {mapId} false");
             shell.ExecuteCommand(player, $"loadbp {mapId} \"{CommandParsing.Escape(mapName)}\"");
-            shell.ExecuteCommand(player, $"aghost");
+            shell.ExecuteCommand(player, "aghost");
             shell.ExecuteCommand(player, $"tp 0 0 {mapId}");
 
             var newGridId = mapManager.GetAllGrids().Max(g => (int) g.Index);

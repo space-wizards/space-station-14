@@ -17,8 +17,7 @@
     job_id: Assistant
   - type: Sprite
     state: Assistant
-  - type: Icon
-    state: Assistant
+
 
 # Cargo tech
 - type: entity
@@ -30,8 +29,7 @@
     job_id: CargoTechnician
   - type: Sprite
     state: Cargo Technician
-  - type: Icon
-    state: Cargo Technician
+
 
 # Bartender
 - type: entity
@@ -43,8 +41,7 @@
     job_id: Bartender
   - type: Sprite
     state: Bartender
-  - type: Icon
-    state: Bartender
+
 
 # Bartender
 - type: entity
@@ -56,8 +53,7 @@
     job_id: Chef
   - type: Sprite
     state: Cook
-  - type: Icon
-    state: Cook
+
 
 # Clown
 - type: entity
@@ -69,8 +65,7 @@
     job_id: Clown
   - type: Sprite
     state: Clown
-  - type: Icon
-    state: Clown
+
 
 # Mime
 - type: entity
@@ -82,8 +77,7 @@
     job_id: Mime
   - type: Sprite
     state: Mime
-  - type: Icon
-    state: Mime
+
 
 # Janitor
 - type: entity
@@ -95,8 +89,7 @@
     job_id: Janitor
   - type: Sprite
     state: Janitor
-  - type: Icon
-    state: Janitor
+
 
 # Captain
 - type: entity
@@ -108,8 +101,7 @@
     job_id: Captain
   - type: Sprite
     state: Captain
-  - type: Icon
-    state: Captain
+
 
 # Head of Personnel
 - type: entity
@@ -121,8 +113,7 @@
     job_id: HeadOfPersonnel
   - type: Sprite
     state: Head of Personnel
-  - type: Icon
-    state: Head of Personnel
+
 
 # ChiefEngineer
 - type: entity
@@ -134,8 +125,7 @@
     job_id: ChiefEngineer
   - type: Sprite
     state: Chief Engineer
-  - type: Icon
-    state: Chief Engineer
+
 
 # StationEngineer
 - type: entity
@@ -147,8 +137,7 @@
     job_id: StationEngineer
   - type: Sprite
     state: Station Engineer
-  - type: Icon
-    state: Station Engineer
+
 
 # ChiefMedicalOfficer
 - type: entity
@@ -160,8 +149,7 @@
     job_id: ChiefMedicalOfficer
   - type: Sprite
     state: Chief Medical Officer
-  - type: Icon
-    state: Chief Medical Officer
+
 
 # MedicalDoctor
 - type: entity
@@ -173,8 +161,7 @@
     job_id: MedicalDoctor
   - type: Sprite
     state: Medical Doctor
-  - type: Icon
-    state: Medical Doctor
+
 
 # ResearchDirector
 - type: entity
@@ -186,8 +173,7 @@
     job_id: ResearchDirector
   - type: Sprite
     state: Research Director
-  - type: Icon
-    state: Research Director
+
 
 # Scientist
 - type: entity
@@ -199,8 +185,7 @@
     job_id: Scientist
   - type: Sprite
     state: Scientist
-  - type: Icon
-    state: Scientist
+
 
 # HeadOfSecurity
 - type: entity
@@ -212,8 +197,7 @@
     job_id: HeadOfSecurity
   - type: Sprite
     state: Head of Security
-  - type: Icon
-    state: Head of Security
+
 
 # SecurityOfficer
 - type: entity
@@ -225,5 +209,4 @@
     job_id: SecurityOfficer
   - type: Sprite
     state: Security Officer
-  - type: Icon
-    state: Security Officer
+
