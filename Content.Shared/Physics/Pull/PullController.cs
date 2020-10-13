@@ -84,14 +84,14 @@ namespace Content.Shared.Physics.Pull
 
             _puller = puller;
 
-            ControlledComponent.WakeBody();
-
             var message = new PullStartedMessage(this, _puller, ControlledComponent);
 
             _puller.Owner.SendMessage(null, message);
+            ControlledComponent.Owner.SendMessage(null, message);
+
             _puller.Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
 
-            ControlledComponent.Owner.SendMessage(null, message);
+            ControlledComponent.WakeBody();
 
             return true;
         }
@@ -112,15 +112,14 @@ namespace Content.Shared.Physics.Pull
                 return false;
             }
 
-            ControlledComponent.WakeBody();
-
-            var message = new PullStoppedMessage(this, oldPuller, ControlledComponent);
+            var message = new PullStoppedMessage(oldPuller, ControlledComponent);
 
             oldPuller.Owner.SendMessage(null, message);
-            oldPuller.Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
-
             ControlledComponent.Owner.SendMessage(null, message);
 
+            oldPuller.Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
+
+            ControlledComponent.WakeBody();
             ControlledComponent.TryRemoveController<PullController>();
 
             return true;

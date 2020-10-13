@@ -1,7 +1,6 @@
 ﻿#nullable enable
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Physics.Pull;
-using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Component = Robust.Shared.GameObjects.Component;
@@ -22,7 +21,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
         public IEntity? Pulling
         {
             get => _pulling;
-            set
+            private set
             {
                 if (_pulling == value)
                 {
@@ -36,6 +35,17 @@ namespace Content.Shared.GameObjects.Components.Pulling
                     speed.RefreshMovementSpeedModifiers();
                 }
             }
+        }
+
+        public override void OnRemove()
+        {
+            if (Pulling != null &&
+                Pulling.TryGetComponent(out SharedPullableComponent? pullable))
+            {
+                pullable.TryStopPull();
+            }
+
+            base.OnRemove();
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)

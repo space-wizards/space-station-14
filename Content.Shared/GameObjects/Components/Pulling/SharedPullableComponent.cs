@@ -241,6 +241,13 @@ namespace Content.Shared.GameObjects.Components.Pulling
                 ownerStatus.RemoveStatusEffect(StatusEffect.Pulling);
             }
         }
+
+        public override void OnRemove()
+        {
+            TryStopPull();
+
+            base.OnRemove();
+        }
     }
 
     [Serializable, NetSerializable]
