@@ -24,7 +24,6 @@ namespace Content.Client.GameObjects.Components.Disposal
 
         public readonly ItemList TargetListContainer;
         public List<string> TargetList;
-        //private readonly Label _targetLabel;
         private readonly Label _tagLabel;
 
         protected override Vector2? CustomSize => (460, 220);

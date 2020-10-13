@@ -160,7 +160,6 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
             if (TryFindEntityInNodeList("Apc", nodes, out var apc)
                 && apc.TryGetComponent<PowerConsumerComponent>(out var mwConsumer)
-                //&& mwConsumer.ReceivedPower > 0
                 && TryFindEntityInNodeList("Substation", mwConsumer.Net.GetNodes(), out var substation)
                 && substation.TryGetComponent<PowerConsumerComponent>(out var hvConsumer))
             {

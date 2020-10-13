@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,6 +63,8 @@ namespace Content.Server.GameObjects.Components.Disposal
         /// </summary>
         [ViewVariables]
         private TimeSpan _lastExitAttempt;
+
+        public static readonly Regex TagRegex = new Regex("^[a-zA-Z0-9, ]*$", RegexOptions.Compiled);
 
         /// <summary>
         ///     The current pressure of this disposal unit.
