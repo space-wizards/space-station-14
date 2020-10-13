@@ -96,16 +96,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         void IRotatableNode.RotateEvent(RotateEvent ev)
         {
             var diff = ev.NewRotation - ev.OldRotation;
-            var newPipeDir = PipeDirection.None;
-            for (var i = 0; i < PipeDirectionHelpers.PipeDirections; i++)
-            {
-                var pipeDirection = (PipeDirection) (1 << i);
-                if (!PipeDirection.HasFlag(pipeDirection)) continue;
-                var angle = pipeDirection.ToAngle();
-                angle += diff;
-                newPipeDir |= angle.GetCardinalDir().ToPipeDirection();
-            }
-            PipeDirection = newPipeDir;
+            PipeDirection = PipeDirection.RotatePipeDirection(diff);
         }
 
         protected override IEnumerable<Node> GetReachableNodes()
