@@ -19,7 +19,7 @@ namespace Content.Client.GameObjects.Components.ActionBlocking
 
         [ViewVariables] [ComponentDependency] private readonly SpriteComponent? _spriteComponent = null;
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             if (!(curState is CuffableComponentState cuffState))
             {
