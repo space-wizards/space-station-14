@@ -1,10 +1,12 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
@@ -23,9 +25,11 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
     {
         [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
 
+        [ViewVariables] [ComponentDependency] private readonly IPhysicsComponent? _collidableComponent = null;
+
         public override string Name => "PowerReceiver";
 
-        public event EventHandler<PowerStateEventArgs> OnPowerStateChanged;
+        public event EventHandler<PowerStateEventArgs>? OnPowerStateChanged;
 
         [ViewVariables]
         public bool Powered => (HasApcPower || !NeedsPower) && !PowerDisabled;
@@ -50,7 +54,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         /// </summary>
         public bool Connectable => Anchored;
 
-        private bool Anchored => !Owner.TryGetComponent<IPhysicsComponent>(out var physics) || physics.Anchored;
+        private bool Anchored => _collidableComponent == null || _collidableComponent.Anchored;
 
         [ViewVariables]
         public bool NeedsProvider { get; private set; } = true;
@@ -92,18 +96,18 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
             {
                 TryFindAndSetProvider();
             }
-            if (Owner.TryGetComponent<IPhysicsComponent>(out var physics))
+            if (_collidableComponent != null)
             {
                 AnchorUpdate();
-                physics.AnchoredChanged += AnchorUpdate;
+                _collidableComponent.AnchoredChanged += AnchorUpdate;
             }
         }
 
         public override void OnRemove()
         {
-            if (Owner.TryGetComponent<IPhysicsComponent>(out var physics))
+            if (_collidableComponent != null)
             {
-                physics.AnchoredChanged -= AnchorUpdate;
+                _collidableComponent.AnchoredChanged -= AnchorUpdate;
             }
             _provider.RemoveReceiver(this);
             base.OnRemove();
@@ -139,7 +143,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
                     }
                 }
             }
-            foundProvider = default;
+            foundProvider = default!;
             return false;
         }
 
@@ -204,7 +208,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         private void OnNewPowerState()
         {
             OnPowerStateChanged?.Invoke(this, new PowerStateEventArgs(Powered));
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            if (Owner.TryGetComponent<AppearanceComponent>(out var appearance))
             {
                 appearance.SetData(PowerDeviceVisuals.Powered, Powered);
             }

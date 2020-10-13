@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Buckle;
 using Content.Shared.GameObjects.Components.Strap;
 using Content.Shared.GameObjects.EntitySystems;
@@ -7,6 +8,7 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
@@ -17,11 +19,13 @@ namespace Content.Server.GameObjects.Components.Strap
     [RegisterComponent]
     public class StrapComponent : SharedStrapComponent, IInteractHand
     {
-        private HashSet<IEntity> _buckledEntities;
+        [ComponentDependency] public readonly SpriteComponent? SpriteComponent = null;
+
+        private HashSet<IEntity> _buckledEntities = null!;
         private StrapPosition _position;
-        private string _buckleSound;
-        private string _unbuckleSound;
-        private string _buckledIcon;
+        private string _buckleSound = null!;
+        private string _unbuckleSound = null!;
+        private string _buckledIcon = null!;
 
         /// <summary>
         /// The angle in degrees to rotate the player by when they get strapped
@@ -103,10 +107,7 @@ namespace Content.Server.GameObjects.Components.Strap
 
             _occupiedSize += buckle.Size;
 
-            if (buckle.Owner.TryGetComponent(out AppearanceComponent appearance))
-            {
-                appearance.SetData(StrapVisuals.RotationAngle, _rotation);
-            }
+            buckle.AppearanceComponent?.SetData(StrapVisuals.RotationAngle, _rotation);
 
             SendMessage(new StrapMessage(buckle.Owner, Owner));
 
@@ -151,7 +152,7 @@ namespace Content.Server.GameObjects.Components.Strap
 
             foreach (var entity in _buckledEntities)
             {
-                if (entity.TryGetComponent(out BuckleComponent buckle))
+                if (entity.TryGetComponent<BuckleComponent>(out var buckle))
                 {
                     buckle.TryUnbuckle(entity, true);
                 }
@@ -168,7 +169,7 @@ namespace Content.Server.GameObjects.Components.Strap
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out BuckleComponent buckle))
+            if (!eventArgs.User.TryGetComponent<BuckleComponent>(out var buckle))
             {
                 return false;
             }
@@ -184,7 +185,7 @@ namespace Content.Server.GameObjects.Components.Strap
                 data.Visibility = VerbVisibility.Invisible;
 
                 if (!ActionBlockerSystem.CanInteract(component.Owner) ||
-                    !user.TryGetComponent(out BuckleComponent buckle) ||
+                    !user.TryGetComponent<BuckleComponent>(out var buckle) ||
                     buckle.BuckledTo != null && buckle.BuckledTo != component ||
                     user == component.Owner)
                 {
@@ -215,7 +216,7 @@ namespace Content.Server.GameObjects.Components.Strap
 
             protected override void Activate(IEntity user, StrapComponent component)
             {
-                if (!user.TryGetComponent(out BuckleComponent buckle))
+                if (!user.TryGetComponent<BuckleComponent>(out var buckle))
                 {
                     return;
                 }
