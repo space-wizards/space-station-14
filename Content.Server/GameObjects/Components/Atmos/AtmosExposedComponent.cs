@@ -17,13 +17,13 @@ namespace Content.Server.GameObjects.Components.Atmos
         public override string Name => "AtmosExposed";
 
         [ViewVariables]
-        [ComponentDependency] private readonly TemperatureComponent? _temperatureComponent;
+        [ComponentDependency] private readonly TemperatureComponent? _temperatureComponent = null;
 
         [ViewVariables]
-        [ComponentDependency] private readonly BarotraumaComponent? _barotraumaComponent;
+        [ComponentDependency] private readonly BarotraumaComponent? _barotraumaComponent = null;
 
         [ViewVariables]
-        [ComponentDependency] private readonly FlammableComponent? _flammableComponent;
+        [ComponentDependency] private readonly FlammableComponent? _flammableComponent = null;
 
         public void Update(TileAtmosphere tile, float frameDelta)
         {

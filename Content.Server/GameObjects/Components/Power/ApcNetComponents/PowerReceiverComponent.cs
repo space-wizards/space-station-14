@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
     {
         [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
 
-        [ViewVariables] [ComponentDependency] private readonly ICollidableComponent? _collidableComponent;
+        [ViewVariables] [ComponentDependency] private readonly IPhysicsComponent? _collidableComponent = null;
 
         public override string Name => "PowerReceiver";
 
