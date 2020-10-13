@@ -1,0 +1,16 @@
+- type: entity
+  abstract: true
+  id: CrayonDecal
+  name: crayon drawing
+  description: "Graffiti. Damn kids."
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: Sprite
+    sprite: Constructible/Misc/crayondecals.rsi
+    state: corgi
+  - type: Cleanable
+  - type: Appearance
+    visuals:
+    - type: CrayonDecalVisualizer
