@@ -78,7 +78,8 @@
         public const uint SPACE_VILLAIN_ARCADE = 1072;
         public const uint BLOCKGAME_ARCADE = 1073;
         public const uint BODY_PART = 1074;
-        public const uint PULLABLE = 1075;
+        public const uint CRAYONS = 1075;
+        public const uint PULLABLE = 1076;
 
         // Net IDs for integration tests.
         public const uint PREDICTION_TEST = 10001;

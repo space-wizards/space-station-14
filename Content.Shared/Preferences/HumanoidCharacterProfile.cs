@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -242,6 +243,23 @@ namespace Content.Shared.Preferences
             if (!_jobPriorities.SequenceEqual(other._jobPriorities)) return false;
             if (!_antagPreferences.SequenceEqual(other._antagPreferences)) return false;
             return Appearance.MemberwiseEquals(other.Appearance);
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is HumanoidCharacterProfile other && MemberwiseEquals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(
+                Name,
+                Age,
+                Sex,
+                PreferenceUnavailable,
+                _jobPriorities,
+                _antagPreferences,
+                Appearance);
         }
     }
 }
