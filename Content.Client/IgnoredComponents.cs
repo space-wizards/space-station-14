@@ -183,6 +183,7 @@
             "GasCanister",
             "GasCanisterPort",
             "Lung",
+            "Cleanable"
         };
     }
 }
