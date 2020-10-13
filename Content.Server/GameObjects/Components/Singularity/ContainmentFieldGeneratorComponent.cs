@@ -70,7 +70,7 @@ namespace Content.Server.GameObjects.Components.Singularity
             }
         }
 
-        private CollidableComponent? _collidableComponent;
+        private PhysicsComponent? _collidableComponent;
 
         private Tuple<Direction, ContainmentFieldConnection>? _connection1;
         private Tuple<Direction, ContainmentFieldConnection>? _connection2;
@@ -146,7 +146,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                     fieldGeneratorComponent.Owner == Owner ||
                     !fieldGeneratorComponent.HasFreeConnections() ||
                     IsConnectedWith(fieldGeneratorComponent) ||
-                    !ent.TryGetComponent<CollidableComponent>(out var collidableComponent) ||
+                    !ent.TryGetComponent<PhysicsComponent>(out var collidableComponent) ||
                     !collidableComponent.Anchored)
                 {
                     continue;

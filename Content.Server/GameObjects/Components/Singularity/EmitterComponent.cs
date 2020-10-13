@@ -27,7 +27,7 @@ namespace Content.Server.GameObjects.Components.Singularity
 
         public bool IsPowered = false;
 
-        private CollidableComponent _collidableComponent;
+        private PhysicsComponent _collidableComponent;
 
         public override void Initialize()
         {
@@ -100,7 +100,7 @@ namespace Content.Server.GameObjects.Components.Singularity
 
             var projectile = _entityManager.SpawnEntity("EmitterBolt", Owner.Transform.Coordinates);
 
-            if (!projectile.TryGetComponent<CollidableComponent>(out var physicsComponent))
+            if (!projectile.TryGetComponent<PhysicsComponent>(out var physicsComponent))
             {
                 Logger.Error("Emitter tried firing a bolt, but it was spawned without a CollidableComponent");
                 return false;

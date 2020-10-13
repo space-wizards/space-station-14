@@ -105,7 +105,7 @@ namespace Content.Server.GameObjects.Components.Singularity
             };
 
         private SingularityController? _singularityController;
-        private CollidableComponent? _collidableComponent;
+        private PhysicsComponent? _collidableComponent;
         private SpriteComponent? _spriteComponent;
         private RadiationPulseComponent? _radiationPulseComponent;
         private AudioSystem _audioSystem = null!;
@@ -169,7 +169,7 @@ namespace Content.Server.GameObjects.Components.Singularity
             foreach (var previousPulledEntity in _previousPulledEntites)
             {
                 if(previousPulledEntity.Deleted) continue;
-                if (!previousPulledEntity.TryGetComponent<CollidableComponent>(out var collidableComponent)) continue;
+                if (!previousPulledEntity.TryGetComponent<PhysicsComponent>(out var collidableComponent)) continue;
                 var controller = collidableComponent.EnsureController<SingularityPullController>();
                 controller.StopPull();
             }
@@ -178,7 +178,7 @@ namespace Content.Server.GameObjects.Components.Singularity
             var entitiesToPull = _entityManager.GetEntitiesInRange(Owner.Transform.Coordinates, Level * 10);
             foreach (var entity in entitiesToPull)
             {
-                if (!entity.TryGetComponent<CollidableComponent>(out var collidableComponent)) continue;
+                if (!entity.TryGetComponent<PhysicsComponent>(out var collidableComponent)) continue;
                 var controller = collidableComponent.EnsureController<SingularityPullController>();
                 if(Owner.Transform.Coordinates.EntityId != entity.Transform.Coordinates.EntityId) continue;
                 var vec = (Owner.Transform.Coordinates - entity.Transform.Coordinates).Position;

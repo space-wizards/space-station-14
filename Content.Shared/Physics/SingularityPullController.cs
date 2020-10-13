@@ -1,4 +1,5 @@
-﻿using Robust.Shared.GameObjects.Components;
+﻿#nullable enable
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 
@@ -6,7 +7,7 @@ namespace Content.Server.GameObjects.Components.Singularity
 {
     public class SingularityPullController : VirtualController
     {
-        public override ICollidableComponent? ControlledComponent { protected get; set; }
+        public override IPhysicsComponent? ControlledComponent { protected get; set; }
 
         public void StopPull()
         {

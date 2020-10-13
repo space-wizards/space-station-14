@@ -26,7 +26,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         private bool _enabled;
         private TimeSpan _coolDownEnd;
 
-        private CollidableComponent _collidableComponent;
+        private PhysicsComponent _collidableComponent;
 
         public override void Initialize()
         {

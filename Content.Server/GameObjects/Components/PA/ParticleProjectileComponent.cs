@@ -53,7 +53,7 @@ namespace Content.Server.GameObjects.Components.PA
         {
             _state = state;
 
-            if (!Owner.TryGetComponent<CollidableComponent>(out var physicsComponent))
+            if (!Owner.TryGetComponent<PhysicsComponent>(out var physicsComponent))
             {
                 Logger.Error("ParticleProjectile tried firing, but it was spawned without a CollidableComponent");
                 return;

@@ -14,7 +14,7 @@ namespace Content.Server.GameObjects.Components.PA
         [ViewVariables] public ParticleAccelerator? ParticleAccelerator;
         [ViewVariables] public bool SetToDestroy;
 
-        private CollidableComponent? _collidableComponent;
+        private PhysicsComponent? _collidableComponent;
 
         public override void Initialize()
         {

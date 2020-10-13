@@ -419,25 +419,6 @@ namespace Content.Server.GameObjects.Components.PA
             }
         }
 
-        private CancellationTokenSource _cancellationTokenSource;
-        private void StartFiring()
-        {
-            _cancellationTokenSource = new CancellationTokenSource();
-            var cancelToken = _cancellationTokenSource.Token;
-            Timer.SpawnRepeating(1000,  () =>
-            {
-                EmitterCenter?.Fire();
-                EmitterLeft?.Fire();
-                _emitterRight?.Fire();
-            }, cancelToken);
-        }
-
-        private void StopFiring()
-        {
-            _cancellationTokenSource?.Cancel();
-            _cancellationTokenSource = null;
-        }
-
         private bool TryAddPart<T>(ref T partVar, T value, out GridId gridId) where T : ParticleAcceleratorPartComponent
         {
             gridId = GridId.Invalid;
@@ -503,6 +484,26 @@ namespace Content.Server.GameObjects.Components.PA
             Enabled = true; //the actual calculations are inside the set-accessor of Enabled, this just triggers it
         }
 
+        private CancellationTokenSource _cancellationTokenSource;
+        private void StartFiring()
+        {
+            _cancellationTokenSource?.Cancel();
+            _cancellationTokenSource = new CancellationTokenSource();
+            var cancelToken = _cancellationTokenSource.Token;
+            Timer.SpawnRepeating(1000,  () =>
+            {
+                EmitterCenter?.Fire();
+                EmitterLeft?.Fire();
+                _emitterRight?.Fire();
+            }, cancelToken);
+        }
+
+        private void StopFiring()
+        {
+            _cancellationTokenSource?.Cancel();
+            _cancellationTokenSource = null;
+        }
+
         private bool TryGetPart<TP>(GridId gridId, PartOffset directionOffset, ParticleAcceleratorPartComponent value, out TP part)
             where TP : ParticleAcceleratorPartComponent
         {
@@ -538,12 +539,12 @@ namespace Content.Server.GameObjects.Components.PA
             Angle.FromDegrees(90)
         };
 
-        private MapIndices GetMapIndicesInDir(Component comp, PartOffset offset)
+        private Vector2i GetMapIndicesInDir(Component comp, PartOffset offset)
         {
             var offsetAngle = _directionLookupTable[(int) offset];
 
             var partDir = new Angle(comp.Owner.Transform.LocalRotation + offsetAngle).GetCardinalDir();
-            return comp.Owner.Transform.Coordinates.ToMapIndices(_entityManager, _mapManager).Offset(partDir);
+            return comp.Owner.Transform.Coordinates.ToVector2i(_entityManager, _mapManager).Offset(partDir);
         }
 
         public void Dispose()
@@ -551,10 +552,6 @@ namespace Content.Server.GameObjects.Components.PA
             _controlBox = null;
             _endCap = null;
             _fuelChamber = null;
-            if (_powerBox?._powerConsumerComponent != null)
-            {
-                _powerBox._powerConsumerComponent.OnReceivedPowerChanged -= OnReceivedPowerChanged;
-            }
             _powerBox = null;
             _emitterLeft = null;
             _emitterCenter = null;
