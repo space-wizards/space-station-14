@@ -38,6 +38,8 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable
+    mass: 25
+    anchored: true
     shapes:
     - !type:PhysShapeAabb
       layer:
@@ -60,6 +62,3 @@
     - type: PowerDeviceVisualizer
   - type: PowerReceiver
   - type: Anchorable
-  - type: Physics
-    mass: 25
-    anchored: true

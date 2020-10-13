@@ -144,5 +144,19 @@ namespace Content.Shared.GameObjects.Components.Atmos
                 _ => throw new ArgumentOutOfRangeException(nameof(pipeDirection)),
             };
         }
+
+        public static PipeDirection RotatePipeDirection(this PipeDirection pipeDirection, double diff)
+        {
+            var newPipeDir = PipeDirection.None;
+            for (var i = 0; i < PipeDirections; i++)
+            {
+                var currentPipeDirection = (PipeDirection) (1 << i);
+                if (!pipeDirection.HasFlag(currentPipeDirection)) continue;
+                var angle = currentPipeDirection.ToAngle();
+                angle += diff;
+                newPipeDir |= angle.GetCardinalDir().ToPipeDirection();
+            }
+            return newPipeDir;
+        }
     }
 }

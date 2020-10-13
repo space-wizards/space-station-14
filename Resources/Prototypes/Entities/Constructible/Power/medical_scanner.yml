@@ -17,6 +17,8 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable
+    mass: 25
+    anchored: true
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.5,0,0.5,1"
@@ -25,9 +27,6 @@
       - Impassable
       - MobImpassable
       - VaultImpassable
-  - type: Physics
-    mass: 25
-    anchored: true
   - type: SnapGrid
     offset: Center
   - type: MedicalScanner

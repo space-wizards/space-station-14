@@ -1,5 +1,6 @@
 ﻿- type: entity
   id: Arcade
+  description: An arcade cabinet.
   name: arcade
   parent: ComputerBase
   components:
@@ -33,9 +34,12 @@
       type: SpaceVillainArcadeBoundUserInterface
     - key: enum.WiresUiKey.Key
       type: WiresBoundUserInterface
+  - type: Computer
+    board: SpaceVillainArcadeComputerCircuitboard
 
 - type: entity
   id: BlockGameArcade
+  description: An arcade cabinet with a strangely familiar game.
   name: NT block game
   parent: ComputerBase
   components:
@@ -67,3 +71,5 @@
           type: BlockGameBoundUserInterface
         - key: enum.WiresUiKey.Key
           type: WiresBoundUserInterface
+    - type: Computer
+      board: BlockGameArcadeComputerCircuitboard

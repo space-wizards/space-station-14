@@ -76,7 +76,6 @@
   id: FirelockEdge
   parent: Firelock
   name: firelock
-  prefix: south
   components:
     - type: Firelock
       occludes: false
@@ -85,11 +84,10 @@
       enabled: false
     - type: Sprite
       sprite: Constructible/Structures/Doors/edge_door_hazard.rsi
-
     - type: Airtight
       fixVacuum: true
       airBlockedDirection:
-        - South
+        - East
     - type: Collidable
       shapes:
         - !type:PhysShapeAabb

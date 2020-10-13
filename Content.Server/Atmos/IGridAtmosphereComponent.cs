@@ -25,31 +25,31 @@ namespace Content.Server.Atmos
         ///     Attemps to pry a tile.
         /// </summary>
         /// <param name="indices"></param>
-        void PryTile(MapIndices indices);
+        void PryTile(Vector2i indices);
 
         /// <summary>
         ///     Burns a tile.
         /// </summary>
         /// <param name="gridIndices"></param>
-        void BurnTile(MapIndices gridIndices);
+        void BurnTile(Vector2i gridIndices);
 
         /// <summary>
         ///     Invalidates a coordinate to be revalidated again.
         ///     Use this after changing a tile's gas contents, or when the tile becomes space, etc.
         /// </summary>
         /// <param name="indices"></param>
-        void Invalidate(MapIndices indices);
+        void Invalidate(Vector2i indices);
 
         /// <summary>
         ///     Attempts to fix a sudden vacuum by creating gas.
         /// </summary>
-        void FixVacuum(MapIndices indices);
+        void FixVacuum(Vector2i indices);
 
         /// <summary>
         ///     Revalidates indices immediately.
         /// </summary>
         /// <param name="indices"></param>
-        void UpdateAdjacentBits(MapIndices indices);
+        void UpdateAdjacentBits(Vector2i indices);
 
         /// <summary>
         ///     Adds an active tile so it becomes processed every update until it becomes inactive.
@@ -120,7 +120,7 @@ namespace Content.Server.Atmos
         /// <param name="indices"></param>
         /// <param name="createSpace"></param>
         /// <returns></returns>
-        TileAtmosphere GetTile(MapIndices indices, bool createSpace = true);
+        TileAtmosphere GetTile(Vector2i indices, bool createSpace = true);
 
         /// <summary>
         ///     Returns a tile.
@@ -138,14 +138,14 @@ namespace Content.Server.Atmos
         /// <param name="indices"></param>
         /// <param name="direction"></param>
         /// <returns></returns>
-        bool IsAirBlocked(MapIndices indices, AtmosDirection direction);
+        bool IsAirBlocked(Vector2i indices, AtmosDirection direction);
 
         /// <summary>
         ///     Returns if the tile in question is space.
         /// </summary>
         /// <param name="indices"></param>
         /// <returns></returns>
-        bool IsSpace(MapIndices indices);
+        bool IsSpace(Vector2i indices);
 
         /// <summary>
         ///     Returns the volume in liters for a number of cells/tiles.
@@ -157,7 +157,7 @@ namespace Content.Server.Atmos
         /// <summary>
         ///     Returns a dictionary of adjacent TileAtmospheres.
         /// </summary>
-        Dictionary<AtmosDirection, TileAtmosphere> GetAdjacentTiles(MapIndices indices, bool includeAirBlocked = false);
+        Dictionary<AtmosDirection, TileAtmosphere> GetAdjacentTiles(Vector2i indices, bool includeAirBlocked = false);
 
         void Update(float frameTime);
 

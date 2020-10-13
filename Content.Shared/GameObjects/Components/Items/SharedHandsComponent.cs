@@ -15,7 +15,7 @@ namespace Content.Shared.GameObjects.Components.Items
         public sealed override uint? NetID => ContentNetIDs.HANDS;
 
         [ViewVariables]
-        public ICollidableComponent? PulledObject { get; protected set; }
+        public IPhysicsComponent? PulledObject { get; protected set; }
 
         [ViewVariables]
         protected bool IsPulling => PulledObject != null;

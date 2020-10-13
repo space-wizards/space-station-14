@@ -39,7 +39,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         /// </summary>
         private bool Connectable => !_deleting && Anchored;
 
-        private bool Anchored => !Owner.TryGetComponent<ICollidableComponent>(out var collidable) || collidable.Anchored;
+        private bool Anchored => !Owner.TryGetComponent<IPhysicsComponent>(out var physics) || physics.Anchored;
 
         /// <summary>
         ///    Prevents a node from being used by other nodes while midway through removal.
@@ -63,19 +63,19 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         {
             TryAssignGroupIfNeeded();
             CombineGroupWithReachable();
-            if (Owner.TryGetComponent<ICollidableComponent>(out var collidable))
+            if (Owner.TryGetComponent<IPhysicsComponent>(out var physics))
             {
                 AnchorUpdate();
-                collidable.AnchoredChanged += AnchorUpdate;
+                physics.AnchoredChanged += AnchorUpdate;
             }
         }
 
         public void OnContainerRemove()
         {
             _deleting = true;
-            if (Owner.TryGetComponent<ICollidableComponent>(out var collidable))
+            if (Owner.TryGetComponent<IPhysicsComponent>(out var physics))
             {
-                collidable.AnchoredChanged -= AnchorUpdate;
+                physics.AnchoredChanged -= AnchorUpdate;
             }
             NodeGroup.RemoveNode(this);
         }

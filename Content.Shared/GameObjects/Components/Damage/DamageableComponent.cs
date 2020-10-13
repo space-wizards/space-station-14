@@ -5,7 +5,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.DamageContainer;
 using Content.Shared.Damage.ResistanceSet;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Mono.Collections.Generic;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -25,31 +25,22 @@ namespace Content.Shared.GameObjects.Components.Damage
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
+        // TODO define these in yaml?
+        public const string DefaultDamageContainer = "metallicDamageContainer";
+        public const string DefaultResistanceSet = "defaultResistances";
+
         public override string Name => "Damageable";
 
-        private DamageState _currentDamageState;
-
+        private DamageState _damageState;
         private DamageFlag _flags;
 
         public event Action<HealthChangedEventArgs>? HealthChangedEvent;
 
-        /// <summary>
-        ///     The threshold of damage, if any, above which the entity enters crit.
-        ///     -1 means that this entity cannot go into crit.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public int? CriticalThreshold { get; set; }
-
-        /// <summary>
-        ///     The threshold of damage, if any, above which the entity dies.
-        ///     -1 means that this entity cannot die.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public int? DeadThreshold { get; set; }
-
-        [ViewVariables] private ResistanceSet Resistance { get; set; } = default!;
+        [ViewVariables] private ResistanceSet Resistances { get; set; } = default!;
 
         [ViewVariables] private DamageContainer Damage { get; set; } = default!;
+
+        public Dictionary<DamageState, int> Thresholds { get; set; } = new Dictionary<DamageState, int>();
 
         public virtual List<DamageState> SupportedDamageStates
         {
@@ -57,27 +48,19 @@ namespace Content.Shared.GameObjects.Components.Damage
             {
                 var states = new List<DamageState> {DamageState.Alive};
 
-                if (CriticalThreshold != null)
-                {
-                    states.Add(DamageState.Critical);
-                }
-
-                if (DeadThreshold != null)
-                {
-                    states.Add(DamageState.Dead);
-                }
+                states.AddRange(Thresholds.Keys);
 
                 return states;
             }
         }
 
-        public virtual DamageState CurrentDamageState
+        public virtual DamageState CurrentState
         {
-            get => _currentDamageState;
+            get => _damageState;
             set
             {
-                var old = _currentDamageState;
-                _currentDamageState = value;
+                var old = _damageState;
+                _damageState = value;
 
                 if (old != value)
                 {
@@ -128,17 +111,36 @@ namespace Content.Shared.GameObjects.Components.Damage
         {
             base.ExposeData(serializer);
 
+            // TODO DAMAGE Serialize as a dictionary of damage states to thresholds
             serializer.DataReadWriteFunction(
                 "criticalThreshold",
-                -1,
-                t => CriticalThreshold = t == -1 ? (int?) null : t,
-                () => CriticalThreshold ?? -1);
+                null,
+                t =>
+                {
+                    if (t == null)
+                    {
+                        return;
+                    }
+
+                    Thresholds[DamageState.Critical] = t.Value;
+                },
+                () => Thresholds.TryGetValue(DamageState.Critical, out var value) ? value : (int?) null);
 
             serializer.DataReadWriteFunction(
                 "deadThreshold",
-                -1,
-                t => DeadThreshold = t == -1 ? (int?) null : t,
-                () => DeadThreshold ?? -1);
+                null,
+                t =>
+                {
+                    if (t == null)
+                    {
+                        return;
+                    }
+
+                    Thresholds[DamageState.Dead] = t.Value;
+                },
+                () => Thresholds.TryGetValue(DamageState.Dead, out var value) ? value : (int?) null);
+
+            serializer.DataField(ref _damageState, "damageState", DamageState.Alive);
 
             serializer.DataReadWriteFunction(
                 "flags",
@@ -172,32 +174,26 @@ namespace Content.Shared.GameObjects.Components.Damage
                     return writeFlags;
                 });
 
-            if (serializer.Reading)
-            {
-                // Doesn't write to file, TODO?
-                // Yes, TODO
-                var containerId = "biologicalDamageContainer";
-                var resistanceId = "defaultResistances";
-
-                serializer.DataField(ref containerId, "damageContainer", "biologicalDamageContainer");
-                serializer.DataField(ref resistanceId, "resistances", "defaultResistances");
-
-                if (!_prototypeManager.TryIndex(containerId!, out DamageContainerPrototype damage))
+            // TODO DAMAGE Serialize damage done and resistance changes
+            serializer.DataReadWriteFunction(
+                "damagePrototype",
+                DefaultDamageContainer,
+                prototype =>
                 {
-                    throw new InvalidOperationException(
-                        $"No {nameof(DamageContainerPrototype)} found with name {containerId}");
-                }
+                    var damagePrototype = _prototypeManager.Index<DamageContainerPrototype>(prototype);
+                    Damage = new DamageContainer(OnHealthChanged, damagePrototype);
+                },
+                () => Damage.ID);
 
-                Damage = new DamageContainer(OnHealthChanged, damage);
-
-                if (!_prototypeManager.TryIndex(resistanceId!, out ResistanceSetPrototype resistance))
+            serializer.DataReadWriteFunction(
+                "resistancePrototype",
+                DefaultResistanceSet,
+                prototype =>
                 {
-                    throw new InvalidOperationException(
-                        $"No {nameof(ResistanceSetPrototype)} found with name {resistanceId}");
-                }
-
-                Resistance = new ResistanceSet(resistance);
-            }
+                    var resistancePrototype = _prototypeManager.Index<ResistanceSetPrototype>(prototype);
+                    Resistances = new ResistanceSet(resistancePrototype);
+                },
+                () => Resistances.ID);
         }
 
         public override void Initialize()
@@ -208,6 +204,13 @@ namespace Content.Shared.GameObjects.Components.Damage
             {
                 HealthChangedEvent += behavior.OnHealthChanged;
             }
+        }
+
+        protected override void Startup()
+        {
+            base.Startup();
+
+            ForceHealthChangedEvent();
         }
 
         public bool TryGetDamage(DamageType type, out int damage)
@@ -229,7 +232,7 @@ namespace Content.Shared.GameObjects.Components.Damage
                 var finalDamage = amount;
                 if (!ignoreResistances)
                 {
-                    finalDamage = Resistance.CalculateDamage(type, amount);
+                    finalDamage = Resistances.CalculateDamage(type, amount);
                 }
 
                 Damage.ChangeDamageValue(type, finalDamage);
@@ -362,6 +365,32 @@ namespace Content.Shared.GameObjects.Components.Damage
             OnHealthChanged(data);
         }
 
+        public (int current, int max)? Health(DamageState threshold)
+        {
+            if (!SupportedDamageStates.Contains(threshold) ||
+                !Thresholds.TryGetValue(threshold, out var thresholdValue))
+            {
+                return null;
+            }
+
+            var current = thresholdValue - TotalDamage;
+            return (current, thresholdValue);
+        }
+
+        public bool TryHealth(DamageState threshold, out (int current, int max) health)
+        {
+            var temp = Health(threshold);
+
+            if (temp == null)
+            {
+                health = (default, default);
+                return false;
+            }
+
+            health = temp.Value;
+            return true;
+        }
+
         private void OnHealthChanged(List<HealthChangeData> changes)
         {
             var args = new HealthChangedEventArgs(this, changes);
@@ -372,19 +401,21 @@ namespace Content.Shared.GameObjects.Components.Damage
 
         protected virtual void OnHealthChanged(HealthChangedEventArgs e)
         {
-            if (CurrentDamageState != DamageState.Dead)
+            if (CurrentState != DamageState.Dead)
             {
-                if (DeadThreshold != -1 && TotalDamage > DeadThreshold)
+                if (Thresholds.TryGetValue(DamageState.Dead, out var deadThreshold) &&
+                    TotalDamage > deadThreshold)
                 {
-                    CurrentDamageState = DamageState.Dead;
+                    CurrentState = DamageState.Dead;
                 }
-                else if (CriticalThreshold != -1 && TotalDamage > CriticalThreshold)
+                else if (Thresholds.TryGetValue(DamageState.Critical, out var critThreshold) &&
+                         TotalDamage > critThreshold)
                 {
-                    CurrentDamageState = DamageState.Critical;
+                    CurrentState = DamageState.Critical;
                 }
                 else
                 {
-                    CurrentDamageState = DamageState.Alive;
+                    CurrentState = DamageState.Alive;
                 }
             }
 
@@ -399,6 +430,20 @@ namespace Content.Shared.GameObjects.Components.Damage
             var totalDamage = Math.Max((int)(frameTime * radiation.RadsPerSecond), 1);
 
             ChangeDamage(DamageType.Radiation, totalDamage, false, radiation.Owner);
+        }
+
+        public void OnExplosion(ExplosionEventArgs eventArgs)
+        {
+            var damage = eventArgs.Severity switch
+            {
+                ExplosionSeverity.Light => 20,
+                ExplosionSeverity.Heavy => 60,
+                ExplosionSeverity.Destruction => 250,
+                _ => throw new ArgumentOutOfRangeException()
+            };
+
+            ChangeDamage(DamageType.Piercing, damage, false);
+            ChangeDamage(DamageType.Heat, damage, false);
         }
     }
 }
