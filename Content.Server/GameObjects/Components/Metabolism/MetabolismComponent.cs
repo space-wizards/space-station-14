@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Atmos;
+using Content.Server.GameObjects.Components.Body.Behavior;
 using Content.Server.GameObjects.Components.Body.Circulatory;
-using Content.Server.GameObjects.Components.Body.Respiratory;
 using Content.Server.GameObjects.Components.Temperature;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry;
 using Content.Shared.Damage;
+using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
@@ -190,9 +191,13 @@ namespace Content.Server.GameObjects.Components.Metabolism
                 if (bloodstreamAmount < amountNeeded)
                 {
                     // Panic inhale
-                    if (Owner.TryGetComponent(out LungComponent lung))
+                    if (Owner.TryGetMechanismBehaviors(out List<LungBehaviorComponent> lungs))
                     {
-                        lung.Gasp();
+                        foreach (var lung in lungs)
+                        {
+                            lung.Gasp();
+                        }
+
                         bloodstreamAmount = bloodstream.Air.GetMoles(gas);
                     }
 
@@ -341,7 +346,7 @@ namespace Content.Server.GameObjects.Components.Metabolism
         public void Update(float frameTime)
         {
             if (!Owner.TryGetComponent<IDamageableComponent>(out var damageable) ||
-                damageable.CurrentDamageState == DamageState.Dead)
+                damageable.CurrentState == DamageState.Dead)
             {
                 return;
             }

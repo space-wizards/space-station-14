@@ -9,6 +9,9 @@
     state: soda_dispenser
   - type: ReagentDispenser
     pack: SodaDispenserInventory
+  - type: Anchorable
+  - type: Pullable
+
 - type: reagentDispenserInventory
   id: SodaDispenserInventory
   inventory:
@@ -18,5 +21,3 @@
   - chem.Ice
   - chem.H2O
   - chem.Cream
-  - type: Anchorable
-  - type: Pullable

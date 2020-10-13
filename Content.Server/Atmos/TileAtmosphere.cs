@@ -106,7 +106,7 @@ namespace Content.Server.Atmos
         public TileRef? Tile => GridIndices.GetTileRef(GridIndex);
 
         [ViewVariables]
-        public MapIndices GridIndices { get; }
+        public Vector2i GridIndices { get; }
 
         [ViewVariables]
         public ExcitedGroup ExcitedGroup { get; set; }
@@ -122,7 +122,7 @@ namespace Content.Server.Atmos
         [ViewVariables]
         public bool BlocksAllAir => BlockedAirflow == AtmosDirection.All;
 
-        public TileAtmosphere(GridAtmosphereComponent atmosphereComponent, GridId gridIndex, MapIndices gridIndices, GasMixture mixture = null, bool immutable = false)
+        public TileAtmosphere(GridAtmosphereComponent atmosphereComponent, GridId gridIndex, Vector2i gridIndices, GasMixture mixture = null, bool immutable = false)
         {
             IoCManager.InjectDependencies(this);
             _gridAtmosphereComponent = atmosphereComponent;
@@ -197,12 +197,12 @@ namespace Content.Server.Atmos
             {
                 if(_soundCooldown == 0)
                     EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Effects/space_wind.ogg",
-                        GridIndices.ToEntityCoordinates(_mapManager, GridIndex), AudioHelpers.WithVariation(0.125f).WithVolume(MathHelper.Clamp(PressureDifference / 10, 10, 100)));
+                        GridIndices.ToEntityCoordinates(GridIndex, _mapManager), AudioHelpers.WithVariation(0.125f).WithVolume(MathHelper.Clamp(PressureDifference / 10, 10, 100)));
             }
 
             foreach (var entity in _gridTileLookupSystem.GetEntitiesIntersecting(GridIndex, GridIndices))
             {
-                if (!entity.TryGetComponent(out ICollidableComponent physics)
+                if (!entity.TryGetComponent(out IPhysicsComponent physics)
                     ||  !entity.TryGetComponent(out MovedByPressureComponent pressure)
                     ||  ContainerHelpers.IsInContainer(entity))
                     continue;
@@ -212,7 +212,7 @@ namespace Content.Server.Atmos
                 var pressureMovements = physics.EnsureController<HighPressureMovementController>();
                 if (pressure.LastHighPressureMovementAirCycle < _gridAtmosphereComponent.UpdateCounter)
                 {
-                    pressureMovements.ExperiencePressureDifference(_gridAtmosphereComponent.UpdateCounter, PressureDifference, _pressureDirection, 0, PressureSpecificTarget?.GridIndices.ToEntityCoordinates(_mapManager, GridIndex) ?? EntityCoordinates.Invalid);
+                    pressureMovements.ExperiencePressureDifference(_gridAtmosphereComponent.UpdateCounter, PressureDifference, _pressureDirection, 0, PressureSpecificTarget?.GridIndices.ToEntityCoordinates(GridIndex, _mapManager) ?? EntityCoordinates.Invalid);
                 }
 
             }

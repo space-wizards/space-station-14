@@ -73,7 +73,7 @@ namespace Content.Client.GameObjects.Components.Suspicion
                     return;
                 }
 
-                if (!ally.TryGetComponent(out ICollidableComponent collidable))
+                if (!ally.TryGetComponent(out IPhysicsComponent physics))
                 {
                     return;
                 }
@@ -85,7 +85,7 @@ namespace Content.Client.GameObjects.Components.Suspicion
                 }
 
                 // all entities have a TransformComponent
-                var transform = collidable.Entity.Transform;
+                var transform = physics.Entity.Transform;
 
                 // if not on the same map, continue
                 if (transform.MapID != _eyeManager.CurrentMap || !transform.IsMapTransform)
@@ -93,7 +93,7 @@ namespace Content.Client.GameObjects.Components.Suspicion
                     continue;
                 }
 
-                var worldBox = collidable.WorldAABB;
+                var worldBox = physics.WorldAABB;
 
                 // if not on screen, or too small, continue
                 if (!worldBox.Intersects(in viewport) || worldBox.IsEmpty())
@@ -101,7 +101,7 @@ namespace Content.Client.GameObjects.Components.Suspicion
                     continue;
                 }
 
-                var screenCoordinates = _eyeManager.WorldToScreen(collidable.WorldAABB.TopLeft + (0, 0.5f));
+                var screenCoordinates = _eyeManager.WorldToScreen(physics.WorldAABB.TopLeft + (0, 0.5f));
                 DrawString(screen, _font, screenCoordinates, _traitorText, Color.OrangeRed);
             }
         }

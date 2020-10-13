@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Disposal;
+using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
@@ -28,6 +30,7 @@ using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Random;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -42,7 +45,7 @@ namespace Content.Server.GameObjects.Components.Disposal
     [ComponentReference(typeof(SharedDisposalUnitComponent))]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IInteractUsing))]
-    public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IActivate, IInteractUsing, IDragDropOn
+    public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IActivate, IInteractUsing, IDragDropOn, IThrowCollide
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -97,11 +100,6 @@ namespace Content.Server.GameObjects.Components.Disposal
             receiver.Powered;
 
         [ViewVariables]
-        public bool Anchored =>
-            !Owner.TryGetComponent(out CollidableComponent? collidable) ||
-            collidable.Anchored;
-
-        [ViewVariables]
         private PressureState State => _pressure >= 1 ? PressureState.Ready : PressureState.Pressurizing;
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -138,14 +136,14 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
-            if (!entity.TryGetComponent(out ICollidableComponent? collidable) ||
-                !collidable.CanCollide)
+            if (!entity.TryGetComponent(out IPhysicsComponent? physics) ||
+                !physics.CanCollide)
             {
                 return false;
             }
 
             if (!entity.HasComponent<ItemComponent>() &&
-                !entity.HasComponent<ISharedBodyManagerComponent>())
+                !entity.HasComponent<IBody>())
             {
                 return false;
             }
@@ -412,7 +410,6 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return;
             }
 
-
             if (!Anchored)
             {
                 appearance.SetData(Visuals.VisualState, VisualState.UnAnchored);
@@ -552,9 +549,9 @@ namespace Content.Server.GameObjects.Components.Disposal
                 Logger.WarningS("VitalComponentMissing", $"Disposal unit {Owner.Uid} is missing an anchorable component");
             }
 
-            if (Owner.TryGetComponent(out CollidableComponent? collidable))
+            if (Owner.TryGetComponent(out IPhysicsComponent? physics))
             {
-                collidable.AnchoredChanged += UpdateVisualState;
+                physics.AnchoredChanged += UpdateVisualState;
             }
 
             if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
@@ -567,9 +564,9 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public override void OnRemove()
         {
-            if (Owner.TryGetComponent(out ICollidableComponent? collidable))
+            if (Owner.TryGetComponent(out IPhysicsComponent? physics))
             {
-                collidable.AnchoredChanged -= UpdateVisualState;
+                physics.AnchoredChanged -= UpdateVisualState;
             }
 
             if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
@@ -611,7 +608,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                     break;
             }
         }
-    
+
         bool IsValidInteraction(ITargetedInteractEventArgs eventArgs)
         {
             if (!ActionBlockerSystem.CanInteract(eventArgs.User))
@@ -643,8 +640,8 @@ namespace Content.Server.GameObjects.Components.Disposal
             {
                 return false;
             }
-            // Duplicated code here, not sure how else to get actor inside to make UserInterface happy. 
-          
+            // Duplicated code here, not sure how else to get actor inside to make UserInterface happy.
+
             if (IsValidInteraction(eventArgs))
             {
                 UserInterface?.Open(actor.playerSession);
@@ -684,6 +681,18 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             _ = TryInsert(eventArgs.Dropped, eventArgs.User);
             return true;
+        }
+
+        void IThrowCollide.HitBy(ThrowCollideEventArgs eventArgs)
+        {
+            if (!CanInsert(eventArgs.Thrown) ||
+                IoCManager.Resolve<IRobustRandom>().NextDouble() > 0.75 ||
+                !_container.Insert(eventArgs.Thrown))
+            {
+                return;
+            }
+
+            AfterInsert(eventArgs.Thrown);
         }
 
         [Verb]

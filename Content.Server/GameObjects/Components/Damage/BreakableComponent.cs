@@ -27,12 +27,9 @@ namespace Content.Server.GameObjects.Components.Damage
         public override string Name => "Breakable";
 
         private ActSystem _actSystem;
-        private DamageState _currentDamageState;
 
         public override List<DamageState> SupportedDamageStates =>
             new List<DamageState> {DamageState.Alive, DamageState.Dead};
-
-        public override DamageState CurrentDamageState => _currentDamageState;
 
         void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
         {
@@ -62,7 +59,7 @@ namespace Content.Server.GameObjects.Components.Damage
         public void FixAllDamage()
         {
             Heal();
-            _currentDamageState = DamageState.Alive;
+            CurrentState = DamageState.Alive;
         }
 
         protected override void DestructionBehavior()

@@ -10,10 +10,11 @@
     - state: crate
     - state: crate_door
       map: ["enum.StorageVisualLayers.Door"]
-
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable
+    mass: 25
+    anchored: false
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4, -0.4, 0.4, 0.4"
@@ -26,9 +27,6 @@
       - Opaque
       - MobImpassable
       - SmallImpassable
-  - type: Physics
-    mass: 25
-    anchored: false
   - type: EntityStorage
     capacity: 60
     CanWeldShut: false

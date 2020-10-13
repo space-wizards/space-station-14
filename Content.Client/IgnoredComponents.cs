@@ -21,7 +21,6 @@
             "HeatResistance",
             "Teleportable",
             "ItemTeleporter",
-            "Portal",
             "EntityStorage",
             "Wirecutter",
             "Screwdriver",
@@ -181,6 +180,10 @@
             "Headset",
             "ComputerBoard",
             "BreakableConstruction",
+            "GasCanister",
+            "GasCanisterPort",
+            "Lung",
+            "Cleanable"
         };
     }
 }

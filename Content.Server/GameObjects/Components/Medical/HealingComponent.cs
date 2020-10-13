@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Shared.Damage;
-using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
@@ -31,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Medical
                 return;
             }
 
-            if (!eventArgs.Target.TryGetComponent(out ISharedBodyManagerComponent body))
+            if (!eventArgs.Target.TryGetComponent(out IDamageableComponent damageable))
             {
                 return;
             }
@@ -55,7 +55,7 @@ namespace Content.Server.GameObjects.Components.Medical
 
             foreach (var (type, amount) in Heal)
             {
-                body.ChangeDamage(type, -amount, true);
+                damageable.ChangeDamage(type, -amount, true);
             }
         }
     }

@@ -30,7 +30,7 @@ namespace Content.Shared.Network.NetMessages
             Slot = buffer.ReadInt32();
             var serializer = IoCManager.Resolve<IRobustSerializer>();
             var length = buffer.ReadVariableInt32();
-            using var stream = buffer.ReadAsStream(length);
+            using var stream = buffer.ReadAlignedMemory(length);
             Profile = serializer.Deserialize<ICharacterProfile>(stream);
         }
 

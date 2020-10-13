@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
-using Content.Shared.Body.Scanner;
+﻿using System;
+using Content.Shared.GameObjects.Components.Body.Scanner;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Shared.GameObjects.Components.UserInterface;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components.Body.Scanner
@@ -14,10 +15,7 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
         private BodyScannerDisplay _display;
 
         [ViewVariables]
-        private BodyScannerTemplateData _template;
-
-        [ViewVariables]
-        private Dictionary<string, BodyScannerBodyPartData> _parts;
+        private IEntity _entity;
 
         public BodyScannerBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey) { }
 
@@ -33,15 +31,17 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
         {
             base.UpdateState(state);
 
-            if (!(state is BodyScannerInterfaceState scannerState))
+            if (!(state is BodyScannerUIState scannerState))
             {
                 return;
             }
 
-            _template = scannerState.Template;
-            _parts = scannerState.Parts;
+            if (!Owner.Owner.EntityManager.TryGetEntity(scannerState.Uid, out _entity))
+            {
+                throw new ArgumentException($"Received an invalid entity with id {scannerState.Uid} for body scanner with id {Owner.Owner.Uid} at {Owner.Owner.Transform.MapPosition}");
+            }
 
-            _display.UpdateDisplay(_template, _parts);
+            _display.UpdateDisplay(_entity);
         }
 
         protected override void Dispose(bool disposing)
@@ -51,8 +51,6 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
             if (disposing)
             {
                 _display?.Dispose();
-                _template = null;
-                _parts.Clear();
             }
         }
     }

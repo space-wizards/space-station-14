@@ -18,15 +18,15 @@ namespace Content.Shared.Physics.Pull
 
         private const float DistBeforeStopPull = SharedInteractionSystem.InteractionRange;
 
-        private ICollidableComponent? _puller;
+        private IPhysicsComponent? _puller;
 
         public bool GettingPulled => _puller != null;
 
         private EntityCoordinates? _movingTo;
 
-        public ICollidableComponent? Puller => _puller;
+        public IPhysicsComponent? Puller => _puller;
 
-        public void StartPull(ICollidableComponent puller)
+        public void StartPull(IPhysicsComponent puller)
         {
             DebugTools.AssertNotNull(puller);
 

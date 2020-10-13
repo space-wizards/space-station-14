@@ -165,9 +165,9 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
             var targetNode = _pathfindingSystem.GetNode(targetTile);
 
             var collisionMask = 0;
-            if (entity.TryGetComponent(out ICollidableComponent collidableComponent))
+            if (entity.TryGetComponent(out IPhysicsComponent physics))
             {
-                collisionMask = collidableComponent.CollisionMask;
+                collisionMask = physics.CollisionMask;
             }
 
             var access = AccessReader.FindAccessTags(entity);

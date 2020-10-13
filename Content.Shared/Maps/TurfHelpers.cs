@@ -28,7 +28,7 @@ namespace Content.Shared.Maps
         /// <summary>
         ///     Attempts to get the turf at map indices with grid id or null if no such turf is found.
         /// </summary>
-        public static TileRef GetTileRef(this MapIndices mapIndices, GridId gridId, IMapManager? mapManager = null)
+        public static TileRef GetTileRef(this Vector2i Vector2i, GridId gridId, IMapManager? mapManager = null)
         {
             if (!gridId.IsValid())
                 return default;
@@ -38,7 +38,7 @@ namespace Content.Shared.Maps
             if (!mapManager.TryGetGrid(gridId, out var grid))
                 return default;
 
-            if (!grid.TryGetTileRef(mapIndices, out var tile))
+            if (!grid.TryGetTileRef(Vector2i, out var tile))
                 return default;
 
             return tile;
@@ -76,10 +76,10 @@ namespace Content.Shared.Maps
             entityManager ??= IoCManager.Resolve<IEntityManager>();
             mapManager ??= IoCManager.Resolve<IMapManager>();
 
-            return coordinates.ToMapIndices(entityManager, mapManager).PryTile(coordinates.GetGridId(entityManager));
+            return coordinates.ToVector2i(entityManager, mapManager).PryTile(coordinates.GetGridId(entityManager));
         }
 
-        public static bool PryTile(this MapIndices indices, GridId gridId,
+        public static bool PryTile(this Vector2i indices, GridId gridId,
             IMapManager? mapManager = null, ITileDefinitionManager? tileDefinitionManager = null, IEntityManager? entityManager = null)
         {
             mapManager ??= IoCManager.Resolve<IMapManager>();
@@ -114,7 +114,7 @@ namespace Content.Shared.Maps
              var half = mapGrid.TileSize / 2f;
 
             //Actually spawn the relevant tile item at the right position and give it some random offset.
-            var tileItem = entityManager.SpawnEntity(tileDef.ItemDropPrototypeName, indices.ToEntityCoordinates(mapManager, tileRef.GridIndex).Offset(new Vector2(half, half)));
+            var tileItem = entityManager.SpawnEntity(tileDef.ItemDropPrototypeName, indices.ToEntityCoordinates(tileRef.GridIndex, mapManager).Offset(new Vector2(half, half)));
             tileItem.RandomOffset(0.25f);
             return true;
         }
@@ -146,7 +146,7 @@ namespace Content.Shared.Maps
         /// <summary>
         ///     Helper that returns all entities in a turf.
         /// </summary>
-        public static IEnumerable<IEntity> GetEntitiesInTile(this MapIndices indices, GridId gridId, bool approximate = false, IEntityManager? entityManager = null)
+        public static IEnumerable<IEntity> GetEntitiesInTile(this Vector2i indices, GridId gridId, bool approximate = false, IEntityManager? entityManager = null)
         {
             return GetEntitiesInTile(indices.GetTileRef(gridId), approximate, entityManager);
         }
@@ -178,7 +178,7 @@ namespace Content.Shared.Maps
         {
             mapManager ??= IoCManager.Resolve<IMapManager>();
 
-            return turf.GridIndices.ToEntityCoordinates(mapManager, turf.GridIndex);
+            return turf.GridIndices.ToEntityCoordinates(turf.GridIndex, mapManager);
         }
 
         /// <summary>

@@ -43,8 +43,8 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         [ViewVariables]
         private bool Anchored =>
-            !Owner.TryGetComponent(out CollidableComponent? collidable) ||
-            collidable.Anchored;
+            !Owner.TryGetComponent(out PhysicsComponent? physics) ||
+            physics.Anchored;
 
         /// <summary>
         ///     The directions that this tube can connect to others from
@@ -192,12 +192,12 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private void AnchoredChanged()
         {
-            if (!Owner.TryGetComponent(out CollidableComponent? collidable))
+            if (!Owner.TryGetComponent(out PhysicsComponent? physics))
             {
                 return;
             }
 
-            if (collidable.Anchored)
+            if (physics.Anchored)
             {
                 OnAnchor();
             }
@@ -232,16 +232,16 @@ namespace Content.Server.GameObjects.Components.Disposal
             Contents = ContainerManagerComponent.Ensure<Container>(Name, Owner);
             Owner.EnsureComponent<AnchorableComponent>();
 
-            var collidable = Owner.EnsureComponent<CollidableComponent>();
+            var physics = Owner.EnsureComponent<PhysicsComponent>();
 
-            collidable.AnchoredChanged += AnchoredChanged;
+            physics.AnchoredChanged += AnchoredChanged;
         }
 
         protected override void Startup()
         {
             base.Startup();
 
-            if (!Owner.EnsureComponent<CollidableComponent>().Anchored)
+            if (!Owner.EnsureComponent<PhysicsComponent>().Anchored)
             {
                 return;
             }
@@ -254,8 +254,8 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             base.OnRemove();
 
-            var collidable = Owner.EnsureComponent<CollidableComponent>();
-            collidable.AnchoredChanged -= AnchoredChanged;
+            var physics = Owner.EnsureComponent<PhysicsComponent>();
+            physics.AnchoredChanged -= AnchoredChanged;
 
             Disconnect();
         }

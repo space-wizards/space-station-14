@@ -22,9 +22,11 @@
 - type: entity
   id: HVWireStack
   parent: CableStack
-  name: HV Wire Coil
+  name: HV cable coil
   suffix: Full
   components:
+  - type: Stack
+    stacktype: enum.StackType.HVCable
   - type: Sprite
     state: coilhv-30
   - type: Item
@@ -49,7 +51,8 @@
 - type: entity
   parent: CableStack
   id: ApcExtensionCableStack
-  name: Apc Extension Cable Coil
+  name: cable coil
+  description: Low-Voltage stack of wires for connecting APCs to machines and other purposes.
   suffix: Full
   components:
   - type: Sprite
@@ -76,9 +79,11 @@
 - type: entity
   parent: CableStack
   id: MVWireStack
-  name: MV Wire Coil
+  name: MV cable coil
   suffix: Full
   components:
+    - type: Stack
+      stacktype: enum.StackType.MVCable
     - type: Sprite
       state: coilmv-30
     - type: Item
