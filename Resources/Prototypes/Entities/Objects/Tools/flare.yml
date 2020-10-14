@@ -25,6 +25,9 @@
           shader: unshaded
         - state: flare_unlit
           color: "#FF0000"
+    - type: Icon
+      sprite: Objects/Misc/flare.rsi
+      state: icon
     - type: Item
       sprite: Objects/Misc/flare.rsi
       color: "#FF0000"
