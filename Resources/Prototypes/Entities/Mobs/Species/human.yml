@@ -115,7 +115,7 @@
       sprite: Mobs/Customization/human_hair.rsi
     - map: [ "enum.Slots.MASK" ]
     - map: [ "enum.Slots.HEAD" ]
-  - type: Collidable
+  - type: Physics
     anchored: false
     mass: 85
     shapes:
@@ -281,7 +281,7 @@
       - map: ["enum.Slots.HEAD"]
       - map: ["hand-left"]
       - map: ["hand-right"]
-    - type: Collidable
+    - type: Physics
       anchored: false
       mass: 85
       shapes:

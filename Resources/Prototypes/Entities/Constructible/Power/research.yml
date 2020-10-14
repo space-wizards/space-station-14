@@ -9,11 +9,11 @@
 
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
     shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.4, -0.45, 0.45, 0.45"
-        layer: [ Passable ]
+    - !type:PhysShapeAabb
+      bounds: "-0.4, -0.45, 0.45, 0.45"
+      layer: [ Passable ]
   - type: SnapGrid
     offset: Center
   - type: ResearchServer
@@ -37,7 +37,7 @@
 
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
     mass: 25
     anchored: true
     shapes:

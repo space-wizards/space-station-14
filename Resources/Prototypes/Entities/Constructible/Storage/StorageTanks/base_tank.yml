@@ -6,7 +6,7 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
     mass: 15
     anchored: false
     shapes:

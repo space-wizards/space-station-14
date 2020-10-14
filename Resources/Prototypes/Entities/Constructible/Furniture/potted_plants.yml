@@ -4,15 +4,15 @@
   components:
   - type: Clickable
   - type: InteractionOutline
+  - type: Physics
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5,-0.5,0.5,0.5"
+      layer: [ Passable ]
   - type: Sprite
     sprite: Constructible/Misc/potted_plants.rsi
   - type: PottedPlantHide
   - type: Pullable
-  - type: Collidable
-    shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.5,-0.5,0.5,0.5"
-        layer: [ Passable ]
 
 - type: entity
   id: PottedPlantRandom
@@ -43,7 +43,7 @@
   components:
   - type: Sprite
     state: plant-25
-  - type: Collidable
+  - type: Physics
     shapes:
       - !type:PhysShapeAabb
         bounds: "-0.47,-0.25,0.05,0.25"

@@ -19,7 +19,7 @@
   - type: Icon
     sprite: Constructible/Structures/Walls/low_wall.rsi
     state: metal
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       layer:

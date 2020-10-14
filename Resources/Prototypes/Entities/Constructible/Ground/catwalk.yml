@@ -5,11 +5,11 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
     shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.5,-0.5,0.5,0.5"
-        layer: [ Passable ]
+    - !type:PhysShapeAabb
+      bounds: "-0.5,-0.5,0.5,0.5"
+      layer: [ Passable ]
   - type: Sprite
     netsync: false
     sprite: Constructible/Tiles/catwalk.rsi

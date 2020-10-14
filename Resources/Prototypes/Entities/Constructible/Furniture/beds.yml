@@ -5,11 +5,11 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
     shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.45, -0.45, 0.05, 0.45"
-        layer: [ MobMask ]
+    - !type:PhysShapeAabb
+      bounds: "-0.45, -0.45, 0.05, 0.45"
+      layer: [ MobMask ]
   - type: Sprite
     sprite: Constructible/Misc/furniture.rsi
     state: bed

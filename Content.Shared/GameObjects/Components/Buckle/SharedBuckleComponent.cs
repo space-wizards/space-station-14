@@ -1,12 +1,14 @@
 ﻿using System;
+using Content.Shared.GameObjects.Components.Strap;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Buckle
 {
-    public abstract class SharedBuckleComponent : Component, IActionBlocker, IEffectBlocker
+    public abstract class SharedBuckleComponent : Component, IActionBlocker, IEffectBlocker, IDraggable
     {
         public sealed override string Name => "Buckle";
 
@@ -16,6 +18,8 @@ namespace Content.Shared.GameObjects.Components.Buckle
         ///     True if the entity is buckled, false otherwise.
         /// </summary>
         public abstract bool Buckled { get; }
+
+        public abstract bool TryBuckle(IEntity user, IEntity to);
 
         bool IActionBlocker.CanMove()
         {
@@ -30,6 +34,16 @@ namespace Content.Shared.GameObjects.Components.Buckle
         bool IEffectBlocker.CanFall()
         {
             return !Buckled;
+        }
+
+        bool IDraggable.CanDrop(CanDropEventArgs args)
+        {
+            return args.Target.HasComponent<SharedStrapComponent>();
+        }
+
+        public bool Drop(DragDropEventArgs args)
+        {
+            return TryBuckle(args.User, args.Dragged);
         }
     }
 

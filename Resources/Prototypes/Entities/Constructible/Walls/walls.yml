@@ -16,7 +16,7 @@
     drawdepth: Walls
   - type: Icon
     state: full
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       layer:

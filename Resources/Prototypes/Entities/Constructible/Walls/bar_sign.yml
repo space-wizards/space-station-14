@@ -4,11 +4,11 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
     shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.45, -0.95, 0.45, 1"
-        layer: [ Passable ]
+    - !type:PhysShapeAabb
+      bounds: "-0.45, -0.95, 0.45, 1"
+      layer: [ Passable ]
   - type: Sprite
     drawdepth: WallTops
     sprite: Constructible/Misc/barsign.rsi
@@ -23,7 +23,7 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
   - type: Sprite
     drawdepth: WallTops
     sprite: Constructible/Misc/sylphs.rsi
@@ -46,7 +46,7 @@
   components:
   - type: BarSign
     current: CyberSylph
-  - type: Collidable
+  - type: Physics
     shapes:
       - !type:PhysShapeAabb
         bounds: "-0.45, -0.95, 0.95, 1.5"

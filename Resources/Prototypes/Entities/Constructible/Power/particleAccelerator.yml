@@ -6,7 +6,7 @@
   components:
     - type: InteractionOutline
     - type: Anchorable
-    - type: Collidable
+    - type: Physics
       mass: 25
       anchored: true
       shapes:
@@ -38,7 +38,7 @@
       soundHit: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
       damages:
         Radiation: 10
-    - type: Collidable
+    - type: Physics
       hard: false
       shapes:
       - !type:PhysShapeAabb
@@ -238,7 +238,7 @@
   suffix: Unfinished
   description: This controls the density of the particles.
   components:
-    - type: Collidable
+    - type: Physics
       anchored: false
     - type: Sprite
       sprite: Constructible/Power/PA/control_box.rsi
@@ -254,7 +254,7 @@
   suffix: Unfinished
   description: This launchs the Alpha particles, might not want to stand near this end.
   components:
-    - type: Collidable
+    - type: Physics
       anchored: false
     - type: Sprite
       sprite: Constructible/Power/PA/emitter_left.rsi
@@ -270,7 +270,7 @@
   suffix: Unfinished
   description: This launchs the Alpha particles, might not want to stand near this end.
   components:
-    - type: Collidable
+    - type: Physics
       anchored: false
     - type: Sprite
       sprite: Constructible/Power/PA/emitter_center.rsi
@@ -286,7 +286,7 @@
   suffix: Unfinished
   description: This launchs the Alpha particles, might not want to stand near this end.
   components:
-    - type: Collidable
+    - type: Physics
       anchored: false
     - type: Sprite
       sprite: Constructible/Power/PA/emitter_right.rsi
@@ -302,7 +302,7 @@
   suffix: Unfinished
   description: This is where Alpha particles are generated from \[REDACTED\]. It looks unfinished.
   components:
-    - type: Collidable
+    - type: Physics
       anchored: false
     - type: Sprite
       sprite: Constructible/Power/PA/end_cap.rsi
@@ -318,7 +318,7 @@
   suffix: Unfinished
   description: This is where the Alpha particles are accelerated to radical speeds.
   components:
-    - type: Collidable
+    - type: Physics
       anchored: false
     - type: Sprite
       sprite: Constructible/Power/PA/fuel_chamber.rsi
@@ -334,7 +334,7 @@
   suffix: Unfinished
   description: This uses electromagnetic waves to focus the Alpha-Particles.
   components:
-    - type: Collidable
+    - type: Physics
       anchored: false
     - type: Sprite
       sprite: Constructible/Power/PA/power_box.rsi
