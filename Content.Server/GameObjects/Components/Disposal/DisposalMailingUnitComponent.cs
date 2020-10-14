@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,8 +48,6 @@ namespace Content.Server.GameObjects.Components.Disposal
     public class DisposalMailingUnitComponent : SharedDisposalMailingUnitComponent, IInteractHand, IActivate, IInteractUsing, IDragDropOn
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-
-        public override string Name => "DisposalMailingUnit";
 
         private const string HolderPrototypeId = "DisposalHolder";
 
@@ -119,8 +117,6 @@ namespace Content.Server.GameObjects.Components.Disposal
         public bool Anchored =>
             !Owner.TryGetComponent(out CollidableComponent? collidable) ||
             collidable.Anchored;
-
-        public static readonly Regex TagRegex = new Regex("^[a-zA-Z0-9, ]*$", RegexOptions.Compiled);
 
         [ViewVariables]
         private PressureState State => _pressure >= 1 ? PressureState.Ready : PressureState.Pressurizing;
@@ -323,9 +319,9 @@ namespace Content.Server.GameObjects.Components.Disposal
             {
                 var data = new Dictionary<string, string>
                 {
-                    { "command", "mail_sent" },
-                    { "src", _tag },
-                    { "target", _target }
+                    { NetworkUtils.COMMAND, NET_CMD_SENT },
+                    { NET_SRC, _tag },
+                    { NET_TARGET, _target }
                 };
 
                 _connection.Broadcast(_connection.Frequency, data);
@@ -340,7 +336,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             var holderComponent = holder.GetComponent<DisposalHolderComponent>();
 
             holderComponent.Tags.Add(tag);
-            holderComponent.Tags.Add("mail");
+            holderComponent.Tags.Add(TAGS_MAIL);
 
             foreach (var entity in entities)
             {
@@ -355,7 +351,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             _targetList.Clear();
             var payload = new Dictionary<string, string>
             {
-                { "command", "get_mailer_tag" }
+                { NetworkUtils.COMMAND, NET_CMD_REQUEST }
             };
 
             _connection?.Broadcast(_connection.Frequency, payload);
@@ -696,23 +692,23 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private void OnReceiveNetMessage(int frequency, string sender, IReadOnlyDictionary<string, string> payload, object _, bool broadcast)
         {
-            if (payload.TryGetValue("command", out var command) && Powered)
+            if (payload.TryGetValue(NetworkUtils.COMMAND, out var command) && Powered)
             {
-                if (command == "mailer_tag" && payload.TryGetValue("tag", out var tag))
+                if (command == NET_CMD_RESPONSE && payload.TryGetValue(NET_TAG, out var tag))
                 {
                     _targetList.Add(tag);
                     UpdateInterface(false);
                 }
 
-                if (command == "get_mailer_tag")
+                if (command == NET_CMD_REQUEST)
                 {
                     if (_tag == "" || !Powered)
                         return;
 
                     var data = new Dictionary<string, string>
                     {
-                        {"command", "mailer_tag"},
-                        {"tag", _tag}
+                        {NetworkUtils.COMMAND, NET_CMD_RESPONSE},
+                        {NET_TAG, _tag}
                     };
 
                     _connection?.Send(frequency, sender, data);

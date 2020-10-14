@@ -11,6 +11,15 @@ namespace Content.Shared.GameObjects.Components.Disposal
     {
         public override string Name => "DisposalMailingUnit";
 
+        public const string TAGS_MAIL = "mail";
+
+        public const string NET_TAG = "tag";
+        public const string NET_SRC = "src";
+        public const string NET_TARGET = "target";
+        public const string NET_CMD_SENT = "mail_sent";
+        public const string NET_CMD_REQUEST = "get_mailer_tag";
+        public const string NET_CMD_RESPONSE = "mailer_tag";
+
         [Serializable, NetSerializable]
         public new enum UiButton
         {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
@@ -20,7 +21,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         void RemoveReceiver(PowerReceiverComponent receiver);
 
-        IApcNet GetApcNet();
+        INodeGroup GetWireNet();
     }
 
     [RegisterComponent]
@@ -61,9 +62,19 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
             Net.UpdatePowerProviderReceivers(this);
         }
 
-        public IApcNet GetApcNet()
+        public INodeGroup GetWireNet()
         {
-            return base.Net;
+            if(Owner.TryGetComponent<NodeContainerComponent>(out var nodeContainer))
+            {
+                var nodes = nodeContainer.Nodes;
+                for (int index = 0; index < nodes.Count; index++)
+                {
+                    if (nodes[index].NodeGroupID == NodeGroupID.WireNet)
+                        return nodes[index].NodeGroup;
+                }
+
+            }
+            return default;
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -134,7 +145,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         private class NullPowerProvider : IPowerProvider
         {
             public void AddReceiver(PowerReceiverComponent receiver) { }
-            public IApcNet GetApcNet() { return new ApcNetNodeGroup(); }
+            public INodeGroup GetWireNet() { return new BaseNodeGroup(); }
             public void RemoveReceiver(PowerReceiverComponent receiver) { }
         }
     }

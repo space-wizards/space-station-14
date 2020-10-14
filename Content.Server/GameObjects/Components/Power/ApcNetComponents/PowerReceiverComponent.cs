@@ -154,35 +154,12 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
             HasApcPower = false;
         }
 
-        public bool TryGetHVNodeGroup([NotNullWhen(true)] out IPowerNet net)
+        public bool TryGetWireNet([NotNullWhen(true)] out INodeGroup nodeGroup)
         {
-            var nodes = Provider.GetApcNet().GetNodes();
+            var wireNet = Provider.GetWireNet();
 
-            if (TryFindEntityInNodeList("Apc", nodes, out var apc)
-                && apc.TryGetComponent<PowerConsumerComponent>(out var mwConsumer)
-                && TryFindEntityInNodeList("Substation", mwConsumer.Net.GetNodes(), out var substation)
-                && substation.TryGetComponent<PowerConsumerComponent>(out var hvConsumer))
-            {
-                net = hvConsumer.Net;
-                return true;
-            }
-
-            net = default;
-            return false;
-        }
-
-        private bool TryFindEntityInNodeList(string type, IReadOnlyList<NodeContainer.Nodes.Node> nodes, [NotNullWhen(true)] out IEntity entity)
-        {
-            for (var index = 0; index < nodes.Count; index++)
-            {
-                if (nodes[index].Owner.Name == type)
-                {
-                    entity = nodes[index].Owner;
-                    return true;
-                }
-            }
-            entity = default;
-            return false;
+            nodeGroup = wireNet;
+            return wireNet != default;
         }
 
         private void SetProvider(IPowerProvider newProvider)

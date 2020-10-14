@@ -7,6 +7,8 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
 {
     public class WiredNetworkConnection : BaseNetworkConnection
     {
+        public const string WIRENET = "powernet";
+
         private readonly IEntity _owner;
 
         public WiredNetworkConnection(OnReceiveNetMessage onReceive, bool receiveAll, IEntity owner) : base(NetworkUtils.WIRED, 0, onReceive, receiveAll)
@@ -18,8 +20,8 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
         {
 
             if (_owner.TryGetComponent<PowerReceiverComponent>(out var powerReceiver)
-                && powerReceiver.TryGetHVNodeGroup(out var ownNet)
-                && metadata.TryParseMetadata<IPowerNet>("powernet", out var senderNet))
+                && powerReceiver.TryGetWireNet(out var ownNet)
+                && metadata.TryParseMetadata<INodeGroup>(WIRENET, out var senderNet))
             {
                 return ownNet.Equals(senderNet);
             }
@@ -30,11 +32,11 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
         protected override Metadata GetMetadata()
         {
             if (_owner.TryGetComponent<PowerReceiverComponent>(out var powerReceiver)
-                && powerReceiver.TryGetHVNodeGroup(out var net))
+                && powerReceiver.TryGetWireNet(out var net))
             {
                 var metadata = new Metadata
                 {
-                    {"powernet", net }
+                    {WIRENET, net }
                 };
 
                 return metadata;

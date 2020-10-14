@@ -27,7 +27,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         IReadOnlyList<Nodes.Node> GetNodes();
     }
 
-    [NodeGroup(NodeGroupID.HVPower, NodeGroupID.MVPower)]
+    [NodeGroup(NodeGroupID.HVPower, NodeGroupID.MVPower, NodeGroupID.WireNet)]
     public class PowerNetNodeGroup : BaseNetConnectorNodeGroup<BasePowerNetComponent, IPowerNet>, IPowerNet
     {
         [Dependency] private readonly IPowerNetManager _powerNetManager = default!;

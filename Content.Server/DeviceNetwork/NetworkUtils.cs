@@ -14,17 +14,21 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
         public const int WIRED = 1;
         public const int WIRELESS = 2;
 
+        public const string COMMAND = "command";
+        public const string MESSAGE = "message";
+        public const string PING = "ping";
+
         /// <summary>
         /// Handles responding to pings.
         /// </summary>
         public static void PingResponse<T>(T connection, string sender, IReadOnlyDictionary<string, string> payload, string message = "") where T : IDeviceNetworkConnection
         {
-            if (payload.TryGetValue("command", out var command) && command == "ping")
+            if (payload.TryGetValue(COMMAND, out var command) && command == PING)
             {
                 var response = new Dictionary<string, string>
                 {
-                    {"command", "ping_response"},
-                    {"message", message}
+                    {COMMAND, "ping_response"},
+                    {MESSAGE, message}
                 };
 
                 connection.Send(connection.Frequency, sender, response);
