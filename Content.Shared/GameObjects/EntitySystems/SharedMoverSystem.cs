@@ -22,7 +22,7 @@ namespace Content.Shared.GameObjects.EntitySystems
     public abstract class SharedMoverSystem : EntitySystem
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IPhysicsManager _physicsManager = default!;
+        [Dependency] protected readonly IPhysicsManager PhysicsManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
         public override void Initialize()
