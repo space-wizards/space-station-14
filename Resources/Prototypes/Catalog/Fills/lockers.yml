@@ -346,12 +346,3 @@
   id: WardrobeMixedFilled
   suffix: Filled
   parent: WardrobeMixed
-
-- type: entity
-  id: LockerCursed
-  parent: LockerGeneric
-  name: "closet"
-  suffix: "cursed"
-  description: "A standard-issue Nanotrasen storage unit."
-  components:
-    - type: CursedEntityStorage
