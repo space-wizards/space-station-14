@@ -7,6 +7,7 @@ using Content.Server.Utility;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Body.Behavior;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -45,7 +46,7 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
 
         public override void Gasp()
         {
-            Owner.PopupMessageEveryone("Gasp");
+            Owner.PopupMessageEveryone(Loc.GetString("Gasp"));
             Inhale(CycleDelay);
         }
 
