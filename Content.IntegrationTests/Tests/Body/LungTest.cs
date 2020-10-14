@@ -142,9 +142,11 @@ namespace Content.IntegrationTests.Tests.Body
                 Assert.False(metabolism.Suffocating);
             });
 
-            for (var tick = 0; tick < 600; tick++)
+            var increment = 10;
+
+            for (var tick = 0; tick < 600; tick += increment)
             {
-                await server.WaitRunTicks(tick);
+                await server.WaitRunTicks(increment);
                 Assert.False(metabolism.Suffocating, $"Entity {human.Name} is suffocating on tick {tick}");
             }
 
