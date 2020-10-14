@@ -5,10 +5,11 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
+using Content.Shared.Interfaces.GameObjects.Components;
 
 namespace Content.Shared.GameObjects.Components.Movement
 {
-    public abstract class SharedClimbingComponent : Component, IActionBlocker, ICollideSpecial
+    public abstract class SharedClimbingComponent : Component, IActionBlocker, ICollideSpecial, IDraggable
     {
         public sealed override string Name => "Climbing";
         public sealed override uint? NetID => ContentNetIDs.CLIMBING;
@@ -42,6 +43,16 @@ namespace Content.Shared.GameObjects.Components.Movement
                 return IsClimbing;
             }
 
+            return false;
+        }
+
+        bool IDraggable.CanDrop(CanDropEventArgs args)
+        {
+            return args.Target.HasComponent<IClimbable>();
+        }
+
+        bool IDraggable.Drop(DragDropEventArgs args)
+        {
             return false;
         }
 

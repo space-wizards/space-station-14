@@ -1,5 +1,4 @@
 ﻿using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
@@ -7,7 +6,7 @@ using Robust.Shared.Maths;
 namespace Content.Server.GameObjects.Components.Movement
 {
     [RegisterComponent]
-    public class ClimbingComponent : SharedClimbingComponent, IActionBlocker
+    public class ClimbingComponent : SharedClimbingComponent
     {
         private bool _isClimbing = false;
         private ClimbController _climbController = default;

@@ -3,6 +3,7 @@ using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Throw;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
+using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -19,6 +20,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 {
     [RegisterComponent]
     [ComponentReference(typeof(StorableComponent))]
+    [ComponentReference(typeof(SharedStorableComponent))]
     [ComponentReference(typeof(IItemComponent))]
     public class ItemComponent : StorableComponent, IInteractHand, IExAct, IEquipped, IUnequipped, IItemComponent
     {
