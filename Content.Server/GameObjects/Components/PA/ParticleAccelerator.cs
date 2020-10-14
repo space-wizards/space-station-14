@@ -36,8 +36,6 @@ namespace Content.Server.GameObjects.Components.PA
 
         #region Parts
 
-
-
         [ViewVariables]
         private ParticleAcceleratorControlBoxComponent _controlBox;
         public ParticleAcceleratorControlBoxComponent ControlBox
@@ -113,23 +111,7 @@ namespace Content.Server.GameObjects.Components.PA
         private void SetPowerBox(ParticleAcceleratorPowerBoxComponent value, bool skipFuelChamberCheck = false,
             bool skipEmitterCenterCheck = false)
         {
-            if (!TryAddPart(ref _powerBox, value, out var gridId))
-            {
-                if (_powerBox?._powerConsumerComponent != null)
-                {
-                    _powerBox._powerConsumerComponent.OnReceivedPowerChanged -= OnReceivedPowerChanged;
-                }
-
-                Enabled = false;
-                return;
-            }
-
-            if (_powerBox._powerConsumerComponent != null)
-            {
-                _powerBox._powerConsumerComponent.OnReceivedPowerChanged += OnReceivedPowerChanged;
-                _powerBox._powerConsumerComponent.DrawRate = PowerNeeded;
-            }
-
+            if (!TryAddPart(ref _powerBox, value, out var gridId)) return;
 
             if (!skipFuelChamberCheck &&
                 TryGetPart<ParticleAcceleratorFuelChamberComponent>(gridId, PartOffset.Up, value, out var fuelChamber))
@@ -238,26 +220,19 @@ namespace Content.Server.GameObjects.Components.PA
             get => _power;
             set
             {
-                if (!_enabled || !IsFunctional() || WireFlagPowerBlock) return;
+                if (!_enabled || !IsAssembled() || WireFlagInterfaceBlock) return;
 
                 if(_power == value) return;
                 if (value > WireFlagMaxPower) value = WireFlagMaxPower;
 
                 _power = value;
-                if (_powerBox?._powerConsumerComponent != null)
-                {
-                    _powerBox._powerConsumerComponent.DrawRate = PowerNeeded;
-                }
+
                 UpdatePartVisualStates();
                 _controlBox?.UpdateUI();
-
                 UpdateFireLoop();
+                UpdatePowerDraw();
             }
         }
-
-        private bool IsPowered => _powerBox?._powerConsumerComponent != null &&
-                                  _powerBox?._powerConsumerComponent.DrawRate <=
-                                  _powerBox?._powerConsumerComponent.ReceivedPower;
 
         private bool _enabled;
         [ViewVariables(VVAccess.ReadWrite)]
@@ -266,25 +241,21 @@ namespace Content.Server.GameObjects.Components.PA
             get => _enabled;
             set
             {
-                var actualValue = value && IsFunctional() && !WireFlagPowerBlock && IsPowered;
+                var actualValue = value && IsAssembled() && !WireFlagPowerBlock;
                 if (_enabled == actualValue) return;
 
                 _enabled = actualValue;
+
                 UpdatePartVisualStates();
                 _controlBox?.UpdateUI();
-
                 UpdateFireLoop();
+                UpdatePowerDraw();
             }
         }
 
-        private void OnReceivedPowerChanged(object sender, ReceivedPowerChangedEventArgs eventArgs)
+        public void ValidateEnabled()
         {
-            if (eventArgs.DrawRate != PowerNeeded && _powerBox?._powerConsumerComponent != null)
-            {
-                _powerBox._powerConsumerComponent.DrawRate = PowerNeeded;
-            }
-
-            Enabled = eventArgs.DrawRate <= eventArgs.ReceiverPower;
+            Enabled = Enabled;
         }
 
         private int PowerNeeded => Power switch
@@ -297,7 +268,12 @@ namespace Content.Server.GameObjects.Components.PA
                 _ => 0
             } * 1500 + 500;
 
-        #region WireFlags
+        public void UpdatePowerDraw()
+        {
+
+        }
+
+        #region WireFlags (PowerBlock | InterfaceBlock | MaxPower)
         private bool _wireFlagPowerBlock = false;
 
         public bool WireFlagPowerBlock
@@ -308,7 +284,7 @@ namespace Content.Server.GameObjects.Components.PA
                 if(_wireFlagPowerBlock == value) return;
 
                 _wireFlagPowerBlock = value;
-                Validate();
+                ValidateEnabled();
             }
         }
 
@@ -343,7 +319,7 @@ namespace Content.Server.GameObjects.Components.PA
 
         #endregion
 
-        public bool IsFunctional()
+        public bool IsAssembled()
         {
             return ControlBox != null && EndCap != null && FuelChamber != null && PowerBox != null &&
                    EmitterCenter != null && EmitterLeft != null && EmitterRight != null;
@@ -351,13 +327,13 @@ namespace Content.Server.GameObjects.Components.PA
 
         private void UpdatePartVisualStates()
         {
-            //UpdatePartVisualState(ControlBox);
-            //UpdatePartVisualState(EndCap); not needed
+            UpdatePartVisualState(ControlBox);
             UpdatePartVisualState(FuelChamber);
             UpdatePartVisualState(PowerBox);
             UpdatePartVisualState(EmitterCenter);
             UpdatePartVisualState(EmitterLeft);
             UpdatePartVisualState(EmitterRight);
+            //no endcap because it has no powerlevel-sprites
         }
 
         private void UpdatePartVisualState(ParticleAcceleratorPartComponent component)
@@ -373,7 +349,7 @@ namespace Content.Server.GameObjects.Components.PA
         }
 
         public ParticleAcceleratorDataUpdateMessage DataMessage =>
-            new ParticleAcceleratorDataUpdateMessage(IsFunctional(),
+            new ParticleAcceleratorDataUpdateMessage(IsAssembled(),
                 Enabled, Power, PowerNeeded, EmitterLeft != null,
                 EmitterCenter != null, EmitterRight != null,
                 PowerBox != null, FuelChamber != null,
@@ -398,7 +374,6 @@ namespace Content.Server.GameObjects.Components.PA
             _emitterRight ??= particleAccelerator._emitterRight;
             if (_emitterRight != null) _emitterRight.ParticleAccelerator = this;
 
-            Validate();
             Power = particleAccelerator.Power;
             WireFlagInterfaceBlock = particleAccelerator.WireFlagInterfaceBlock;
             WireFlagMaxPower = particleAccelerator.WireFlagMaxPower;
@@ -472,16 +447,10 @@ namespace Content.Server.GameObjects.Components.PA
                 value.ParticleAccelerator = this;
             }
 
-            Validate();
-            UpdatePartVisualStates();
-            _controlBox?.UpdateUI();
+            ValidateEnabled();
+            _controlBox?.UpdateUI(); //because a part got added and we want to display it (incase its not already sent due to ValidateEnabled)
 
             return true;
-        }
-
-        private void Validate()
-        {
-            Enabled = true; //the actual calculations are inside the set-accessor of Enabled, this just triggers it
         }
 
         private CancellationTokenSource _cancellationTokenSource;
@@ -557,7 +526,6 @@ namespace Content.Server.GameObjects.Components.PA
             _emitterCenter = null;
             _emitterRight = null;
             StopFiring();
-            _cancellationTokenSource?.Dispose();
         }
     }
 }
