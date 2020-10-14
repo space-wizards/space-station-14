@@ -12,7 +12,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Initialize();
 
-            UpdatesBefore.Add(typeof(SharedMetabolismSystem));
+            UpdatesBefore.Add(typeof(MetabolismSystem));
         }
 
         public override void Update(float frameTime)
