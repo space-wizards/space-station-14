@@ -9,7 +9,6 @@
     netsync: false
     state: icon
 
-
 - type: entity
   name: Deckard
   parent: RevolverBase
@@ -26,7 +25,6 @@
     - state: mag-unshaded-3
       map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
       shader: unshaded
-
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
@@ -58,7 +56,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
-
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
@@ -83,7 +80,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
-
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
