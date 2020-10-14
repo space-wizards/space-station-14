@@ -6,6 +6,7 @@ using Content.Server.Players;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Interfaces;
+using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.Components;
 using Robust.Server.Interfaces.Player;
@@ -77,7 +78,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public bool InRange(EntityCoordinates from, EntityCoordinates to)
         {
-            return from.InRange(EntityManager, to, 15);
+            return from.InRangeUnOccluded(to, 15, entityManager: EntityManager);
         }
 
         public bool TryPoint(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
