@@ -193,7 +193,7 @@
 
   - type: Slippery
     intersectPercentage: 0.2
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.2,-0.2,0.2,0.2"

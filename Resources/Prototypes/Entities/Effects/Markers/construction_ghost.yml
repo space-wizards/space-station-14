@@ -6,7 +6,7 @@
   - type: Sprite
     color: '#3F38'
   - type: ConstructionGhost
-  - type: Collidable
+  - type: Physics
   - type: Clickable
   - type: InteractionOutline
 
@@ -17,6 +17,6 @@
   components:
   - type: Sprite
   - type: Construction
-  - type: Collidable
+  - type: Physics
   - type: Clickable
   - type: InteractionOutline
