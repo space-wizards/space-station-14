@@ -21,7 +21,6 @@
             "HeatResistance",
             "Teleportable",
             "ItemTeleporter",
-            "Portal",
             "EntityStorage",
             "Wirecutter",
             "Screwdriver",
@@ -29,7 +28,6 @@
             "Wrench",
             "Crowbar",
             "MeleeWeapon",
-            "Storable",
             "Dice",
             "Construction",
             "Door",
@@ -177,7 +175,14 @@
             "BlockGameArcade",
             "KitchenSpike",
             "Butcherable",
-            "Rehydratable"
+            "Rehydratable",
+            "Headset",
+            "ComputerBoard",
+            "BreakableConstruction",
+            "GasCanister",
+            "GasCanisterPort",
+            "Lung",
+            "Cleanable"
         };
     }
 }

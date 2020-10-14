@@ -12,7 +12,7 @@
     sprite: Constructible/Power/ame_shielding.rsi
     state: shield_0
 
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       layer:
@@ -24,7 +24,7 @@
   - type: Destructible
     maxHP: 500
     resistances: metallicResistances
-    spawnondestroy: AMEPart
+    spawnOnDestroy: AMEPart
   - type: SnapGrid
     offset: Center
   - type: Airtight

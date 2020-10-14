@@ -163,7 +163,7 @@ namespace Content.Server.GameObjects.Components.Medical
 
                     var dead =
                         mind.OwnedEntity.TryGetComponent<IDamageableComponent>(out var damageable) &&
-                        damageable.CurrentDamageState == DamageState.Dead;
+                        damageable.CurrentState == DamageState.Dead;
                     if (!dead) return;
 
 

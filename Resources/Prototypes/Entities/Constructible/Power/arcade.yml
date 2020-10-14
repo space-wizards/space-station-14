@@ -1,17 +1,21 @@
 ﻿- type: entity
   id: Arcade
+  description: An arcade cabinet.
   name: arcade
   parent: ComputerBase
   components:
-
   - type: PowerReceiver
   - type: Sprite
+    sprite: Constructible/Power/computers.rsi
     layers:
     - state: arcade
       map: ["enum.ComputerVisualizer+Layers.Body"]
     - state: invaders
       shader: unshaded
       map: ["enum.ComputerVisualizer+Layers.Screen"]
+  - type: Icon
+    sprite: Constructible/Power/computers.rsi
+    state: arcade
   - type: Appearance
     visuals:
     - type: ComputerVisualizer
@@ -30,22 +34,27 @@
       type: SpaceVillainArcadeBoundUserInterface
     - key: enum.WiresUiKey.Key
       type: WiresBoundUserInterface
+  - type: Computer
+    board: SpaceVillainArcadeComputerCircuitboard
 
 - type: entity
   id: BlockGameArcade
-  name: blockGameArcade
+  description: An arcade cabinet with a strangely familiar game.
+  name: NT block game
   parent: ComputerBase
   components:
-    - type: Icon
-      state: arcade
     - type: PowerReceiver
     - type: Sprite
+      sprite: Constructible/Power/computers.rsi
       layers:
         - state: arcade
           map: ["enum.ComputerVisualizer+Layers.Body"]
         - state: invaders
           shader: unshaded
           map: ["enum.ComputerVisualizer+Layers.Screen"]
+    - type: Icon
+      sprite: Constructible/Power/computers.rsi
+      state: arcade
     - type: Appearance
       visuals:
         - type: ComputerVisualizer
@@ -62,3 +71,5 @@
           type: BlockGameBoundUserInterface
         - key: enum.WiresUiKey.Key
           type: WiresBoundUserInterface
+    - type: Computer
+      board: BlockGameArcadeComputerCircuitboard

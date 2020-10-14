@@ -27,14 +27,14 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         public static ReachableArgs GetArgs(IEntity entity)
         {
             var collisionMask = 0;
-            if (entity.TryGetComponent(out ICollidableComponent collidableComponent))
+            if (entity.TryGetComponent(out IPhysicsComponent physics))
             {
-                collisionMask = collidableComponent.CollisionMask;
+                collisionMask = physics.CollisionMask;
             }
 
             var access = AccessReader.FindAccessTags(entity);
             var visionRadius = entity.GetComponent<AiControllerComponent>().VisionRadius;
-            
+
             return new ReachableArgs(visionRadius, access, collisionMask);
         }
     }

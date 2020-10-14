@@ -5,6 +5,7 @@ using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders;
 using Content.Server.GameObjects.EntitySystems.JobQueues;
 using Content.Server.GameObjects.EntitySystems.JobQueues.Queues;
+using Content.Shared.GameTicking;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
@@ -13,6 +14,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
@@ -27,13 +29,13 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
     /// This system handles pathfinding graph updates as well as dispatches to the pathfinder
     /// (90% of what it's doing is graph updates so not much point splitting the 2 roles)
     /// </summary>
-    public class PathfindingSystem : EntitySystem
+    public class PathfindingSystem : EntitySystem, IResettingEntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
-        public IReadOnlyDictionary<GridId, Dictionary<MapIndices, PathfindingChunk>> Graph => _graph;
-        private readonly Dictionary<GridId, Dictionary<MapIndices, PathfindingChunk>> _graph = new Dictionary<GridId, Dictionary<MapIndices, PathfindingChunk>>();
+        public IReadOnlyDictionary<GridId, Dictionary<Vector2i, PathfindingChunk>> Graph => _graph;
+        private readonly Dictionary<GridId, Dictionary<Vector2i, PathfindingChunk>> _graph = new Dictionary<GridId, Dictionary<Vector2i, PathfindingChunk>>();
 
         private readonly PathfindingJobQueue _pathfindingQueue = new PathfindingJobQueue();
 
@@ -144,28 +146,28 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         {
             var chunkX = (int) (Math.Floor((float) tile.X / PathfindingChunk.ChunkSize) * PathfindingChunk.ChunkSize);
             var chunkY = (int) (Math.Floor((float) tile.Y / PathfindingChunk.ChunkSize) * PathfindingChunk.ChunkSize);
-            var mapIndices = new MapIndices(chunkX, chunkY);
+            var Vector2i = new Vector2i(chunkX, chunkY);
 
             if (_graph.TryGetValue(tile.GridIndex, out var chunks))
             {
-                if (!chunks.ContainsKey(mapIndices))
+                if (!chunks.ContainsKey(Vector2i))
                 {
-                    CreateChunk(tile.GridIndex, mapIndices);
+                    CreateChunk(tile.GridIndex, Vector2i);
                 }
 
-                return chunks[mapIndices];
+                return chunks[Vector2i];
             }
 
-            var newChunk = CreateChunk(tile.GridIndex, mapIndices);
+            var newChunk = CreateChunk(tile.GridIndex, Vector2i);
             return newChunk;
         }
 
-        private PathfindingChunk CreateChunk(GridId gridId, MapIndices indices)
+        private PathfindingChunk CreateChunk(GridId gridId, Vector2i indices)
         {
             var newChunk = new PathfindingChunk(gridId, indices);
             if (!_graph.ContainsKey(gridId))
             {
-                _graph.Add(gridId, new Dictionary<MapIndices, PathfindingChunk>());
+                _graph.Add(gridId, new Dictionary<Vector2i, PathfindingChunk>());
             }
 
             _graph[gridId].Add(indices, newChunk);
@@ -229,16 +231,6 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             node.UpdateTile(tile);
         }
 
-        public void ResettingCleanup()
-        {
-            _graph.Clear();
-            _collidableUpdateQueue.Clear();
-            _moveUpdateQueue.Clear();
-            _accessReaderUpdateQueue.Clear();
-            _tileUpdateQueue.Clear();
-            _lastKnownPositions.Clear();
-        }
-
         private void HandleGridRemoval(GridId gridId)
         {
             if (_graph.ContainsKey(gridId))
@@ -274,8 +266,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         {
             if (entity.Deleted ||
                 _lastKnownPositions.ContainsKey(entity) ||
-                !entity.TryGetComponent(out ICollidableComponent collidableComponent) ||
-                !PathfindingNode.IsRelevant(entity, collidableComponent))
+                !entity.TryGetComponent(out IPhysicsComponent physics) ||
+                !PathfindingNode.IsRelevant(entity, physics))
             {
                 return;
             }
@@ -285,7 +277,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 
             var chunk = GetChunk(tileRef);
             var node = chunk.GetNode(tileRef);
-            node.AddEntity(entity, collidableComponent);
+            node.AddEntity(entity, physics);
             _lastKnownPositions.Add(entity, node);
         }
 
@@ -313,8 +305,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         {
             // If we've moved to space or the likes then remove us.
             if (moveEvent.Sender.Deleted ||
-                !moveEvent.Sender.TryGetComponent(out ICollidableComponent collidableComponent) ||
-                !PathfindingNode.IsRelevant(moveEvent.Sender, collidableComponent))
+                !moveEvent.Sender.TryGetComponent(out IPhysicsComponent physics) ||
+                !PathfindingNode.IsRelevant(moveEvent.Sender, physics))
             {
                 HandleEntityRemove(moveEvent.Sender);
                 return;
@@ -349,7 +341,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             _lastKnownPositions[moveEvent.Sender] = newNode;
 
             oldNode.RemoveEntity(moveEvent.Sender);
-            newNode.AddEntity(moveEvent.Sender, collidableComponent);
+            newNode.AddEntity(moveEvent.Sender, physics);
         }
 
         private void QueueCollisionChangeMessage(CollisionChangeMessage collisionMessage)
@@ -370,8 +362,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 
         public bool CanTraverse(IEntity entity, PathfindingNode node)
         {
-            if (entity.TryGetComponent(out ICollidableComponent collidableComponent) &&
-                (collidableComponent.CollisionMask & node.BlockedCollisionMask) != 0)
+            if (entity.TryGetComponent(out IPhysicsComponent physics) &&
+                (physics.CollisionMask & node.BlockedCollisionMask) != 0)
             {
                 return false;
             }
@@ -387,6 +379,16 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             }
 
             return true;
+        }
+
+        public void Reset()
+        {
+            _graph.Clear();
+            _collidableUpdateQueue.Clear();
+            _moveUpdateQueue.Clear();
+            _accessReaderUpdateQueue.Clear();
+            _tileUpdateQueue.Clear();
+            _lastKnownPositions.Clear();
         }
     }
 }

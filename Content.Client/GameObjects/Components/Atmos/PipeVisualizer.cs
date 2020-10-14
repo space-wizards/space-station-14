@@ -2,67 +2,44 @@
 using Content.Shared.GameObjects.Components.Atmos;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics;
 using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Client.Interfaces.ResourceManagement;
-using Robust.Client.ResourceManagement;
-using Robust.Shared.GameObjects.Components.Renderable;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
+using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Client.GameObjects.Components.Atmos
 {
     [UsedImplicitly]
     public class PipeVisualizer : AppearanceVisualizer
     {
-        private RSI _pipeRSI;
-
-        public override void LoadData(YamlMappingNode node)
+        public override void InitializeEntity(IEntity entity)
         {
-            base.LoadData(node);
-
-            var rsiString = node.GetNode("pipeRSI").ToString();
-            var rsiPath = SharedSpriteComponent.TextureRoot / rsiString;
-            try
-            {
-                var resourceCache = IoCManager.Resolve<IResourceCache>();
-                var resource = resourceCache.GetResource<RSIResource>(rsiPath);
-                _pipeRSI = resource.RSI;
-            }
-            catch (Exception e)
-            {
-                Logger.ErrorS("go.pipevisualizer", "Unable to load RSI '{0}'. Trace:\n{1}", rsiPath, e);
-            }
+            base.InitializeEntity(entity);
+            if (!entity.TryGetComponent(out ISpriteComponent sprite)) return;
+            sprite.LayerMapReserveBlank(Layer.PipeBase);
+            var pipeBaseLayer = sprite.LayerMapGet(Layer.PipeBase);
+            sprite.LayerSetVisible(pipeBaseLayer, true);
         }
 
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
+            if (!component.Owner.TryGetComponent(out ISpriteComponent sprite)) return;
+            if (!component.TryGetData(PipeVisuals.VisualState, out PipeVisualState pipeVisualState)) return;
+            var pipeBase = sprite.LayerMapGet(Layer.PipeBase);
+            var pipeBaseStateId = GetPipeBaseStateId(pipeVisualState);
+            sprite.LayerSetState(pipeBase, pipeBaseStateId);
+        }
 
-            if (!component.Owner.TryGetComponent(out ISpriteComponent sprite))
-            {
-                return;
-            }
-            if (!component.TryGetData(PipeVisuals.VisualState, out PipeVisualStateSet pipeVisualStateSet))
-            {
-                return;
-            }
-            for (var i = 0; i < pipeVisualStateSet.PipeVisualStates.Length; i++)
-            {
-                var pipeVisualState = pipeVisualStateSet.PipeVisualStates[i];
-                var rsiState = "pipe";
-                rsiState += pipeVisualState.PipeDirection.ToString();
-                rsiState += ((int) pipeVisualState.ConduitLayer).ToString();
+        private string GetPipeBaseStateId(PipeVisualState pipeVisualState)
+        {
+            var stateId = "pipe";
+            stateId += pipeVisualState.PipeDirection.PipeDirectionToPipeShape().ToString();
+            stateId += (int) pipeVisualState.ConduitLayer;
+            return stateId;
+        }
 
-                var pipeLayerKey = "pipeLayer" + i.ToString();
-                sprite.LayerMapReserveBlank(pipeLayerKey);
-                var currentPipeLayer = sprite.LayerMapGet(pipeLayerKey);
-                sprite.LayerSetRSI(currentPipeLayer, _pipeRSI);
-                sprite.LayerSetState(currentPipeLayer, rsiState);
-                sprite.LayerSetVisible(currentPipeLayer, true);
-            }
+        private enum Layer
+        {
+            PipeBase,
         }
     }
 }

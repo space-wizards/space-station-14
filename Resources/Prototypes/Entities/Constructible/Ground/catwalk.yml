@@ -5,7 +5,7 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
   - type: Sprite
     netsync: false
     sprite: Constructible/Tiles/catwalk.rsi

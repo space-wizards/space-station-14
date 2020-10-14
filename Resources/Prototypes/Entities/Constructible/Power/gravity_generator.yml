@@ -15,7 +15,7 @@
     offset: Center
   - type: PowerReceiver
     powerLoad: 500
-  - type: Collidable
+  - type: Physics
     shapes:
       - !type:PhysShapeAabb
         bounds: "-1.5,-1.5,1.5,1.5"

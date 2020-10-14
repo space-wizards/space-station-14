@@ -7,6 +7,7 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components
@@ -15,6 +16,15 @@ namespace Content.Server.GameObjects.Components
     public class AnchorableComponent : Component, IInteractUsing
     {
         public override string Name => "Anchorable";
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+            serializer.DataField(this, x => x.Tool, "tool", ToolQuality.Anchoring);
+        }
+
+        [ViewVariables]
+        public ToolQuality Tool { get; private set; } = ToolQuality.Anchoring;
 
         [ViewVariables]
         int IInteractUsing.Priority => 1;
@@ -28,7 +38,7 @@ namespace Content.Server.GameObjects.Components
         /// <returns>true if it is valid, false otherwise</returns>
         private async Task<bool> Valid(IEntity user, IEntity? utilizing, [MaybeNullWhen(false)] bool force = false)
         {
-            if (!Owner.HasComponent<ICollidableComponent>())
+            if (!Owner.HasComponent<IPhysicsComponent>())
             {
                 return false;
             }
@@ -37,7 +47,7 @@ namespace Content.Server.GameObjects.Components
             {
                 if (utilizing == null ||
                     !utilizing.TryGetComponent(out ToolComponent? tool) ||
-                    !(await tool.UseTool(user, Owner, 0.5f, ToolQuality.Anchoring)))
+                    !(await tool.UseTool(user, Owner, 0.5f, Tool)))
                 {
                     return false;
                 }
@@ -60,7 +70,7 @@ namespace Content.Server.GameObjects.Components
                 return false;
             }
 
-            var physics = Owner.GetComponent<ICollidableComponent>();
+            var physics = Owner.GetComponent<IPhysicsComponent>();
             physics.Anchored = true;
 
             return true;
@@ -80,7 +90,7 @@ namespace Content.Server.GameObjects.Components
                 return false;
             }
 
-            var physics = Owner.GetComponent<ICollidableComponent>();
+            var physics = Owner.GetComponent<IPhysicsComponent>();
             physics.Anchored = false;
 
             return true;
@@ -95,12 +105,12 @@ namespace Content.Server.GameObjects.Components
         /// <returns>true if toggled, false otherwise</returns>
         private async Task<bool> TryToggleAnchor(IEntity user, IEntity? utilizing = null, bool force = false)
         {
-            if (!Owner.TryGetComponent(out ICollidableComponent? collidable))
+            if (!Owner.TryGetComponent(out IPhysicsComponent? physics))
             {
                 return false;
             }
 
-            return collidable.Anchored ?
+            return physics.Anchored ?
                 await TryUnAnchor(user, utilizing, force) :
                 await TryAnchor(user, utilizing, force);
         }
@@ -108,7 +118,7 @@ namespace Content.Server.GameObjects.Components
         public override void Initialize()
         {
             base.Initialize();
-            Owner.EnsureComponent<CollidableComponent>();
+            Owner.EnsureComponent<PhysicsComponent>();
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)

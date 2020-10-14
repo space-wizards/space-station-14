@@ -7,8 +7,9 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
-    texture: Constructible/Misc/rack.png
-  - type: Collidable
+    sprite: Constructible/Misc/furniture.rsi
+    state: rack
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       layer:
@@ -20,7 +21,7 @@
   - type: Destructible
     deadThreshold: 30
     destroySound: /Audio/Effects/metalbreak.ogg
-    spawnOnDestroy: MetalSheet1
+    spawnOnDestroy: SteelSheet1
     resistances: metallicResistances
 
 - type: entity
@@ -32,8 +33,9 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
-    texture: Constructible/Misc/shelf.png
-  - type: Collidable
+    sprite: Constructible/Misc/furniture.rsi
+    state: shelf
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       layer:
@@ -45,5 +47,5 @@
   - type: Destructible
     deadThreshold: 30
     destroySound: /Audio/Effects/metalbreak.ogg
-    spawnOnDestroy: MetalSheet1
+    spawnOnDestroy: SteelSheet1
     resistances: metallicResistances

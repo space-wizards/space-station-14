@@ -16,7 +16,7 @@
   - type: IconSmooth
     key: state
     base: state_
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       layer:

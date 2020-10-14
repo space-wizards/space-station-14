@@ -5,6 +5,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Damage
 {
@@ -15,17 +16,14 @@ namespace Content.Server.GameObjects.Components.Damage
     [ComponentReference(typeof(IDamageableComponent))]
     public abstract class RuinableComponent : DamageableComponent
     {
-        private DamageState _currentDamageState;
-
         /// <summary>
         ///     Sound played upon destruction.
         /// </summary>
+        [ViewVariables]
         protected string DestroySound { get; private set; }
 
         public override List<DamageState> SupportedDamageStates =>
             new List<DamageState> {DamageState.Alive, DamageState.Dead};
-
-        public override DamageState CurrentDamageState => _currentDamageState;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -34,8 +32,16 @@ namespace Content.Server.GameObjects.Components.Damage
             serializer.DataReadWriteFunction(
                 "deadThreshold",
                 100,
-                t => DeadThreshold = t ,
-                () => DeadThreshold ?? -1);
+                t =>
+                {
+                    if (t == null)
+                    {
+                        return;
+                    }
+
+                    Thresholds[DamageState.Dead] = t.Value;
+                },
+                () => Thresholds.TryGetValue(DamageState.Dead, out var value) ? value : (int?) null);
 
             serializer.DataField(this, ruinable => ruinable.DestroySound, "destroySound", string.Empty);
         }
@@ -52,12 +58,12 @@ namespace Content.Server.GameObjects.Components.Damage
 
         /// <summary>
         ///     Destroys the Owner <see cref="IEntity"/>, setting
-        ///     <see cref="IDamageableComponent.CurrentDamageState"/> to
-        ///     <see cref="DamageState.Dead"/>
+        ///     <see cref="IDamageableComponent.CurrentState"/> to
+        ///     <see cref="Shared.GameObjects.Components.Damage.DamageState.Dead"/>
         /// </summary>
         protected void PerformDestruction()
         {
-            _currentDamageState = DamageState.Dead;
+            CurrentState = DamageState.Dead;
 
             if (!Owner.Deleted && DestroySound != string.Empty)
             {

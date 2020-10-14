@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
@@ -27,7 +27,9 @@ namespace Content.Server.Database
         // Preferences
         Task<PlayerPreferences> InitPrefsAsync(NetUserId userId, ICharacterProfile defaultProfile);
         Task SaveSelectedCharacterIndexAsync(NetUserId userId, int index);
-        Task SaveCharacterSlotAsync(NetUserId userId, ICharacterProfile profile, int slot);
+        Task SaveCharacterSlotAsync(NetUserId userId, ICharacterProfile? profile, int slot);
+        // Single method for two operations for transaction.
+        Task DeleteSlotAndSetSelectedIndex(NetUserId userId, int deleteSlot, int newSlot);
         Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId);
 
         // Username assignment (for guest accounts, so they persist GUID)
@@ -90,9 +92,14 @@ namespace Content.Server.Database
             return _db.SaveSelectedCharacterIndexAsync(userId, index);
         }
 
-        public Task SaveCharacterSlotAsync(NetUserId userId, ICharacterProfile profile, int slot)
+        public Task SaveCharacterSlotAsync(NetUserId userId, ICharacterProfile? profile, int slot)
         {
             return _db.SaveCharacterSlotAsync(userId, profile, slot);
+        }
+
+        public Task DeleteSlotAndSetSelectedIndex(NetUserId userId, int deleteSlot, int newSlot)
+        {
+            return _db.DeleteSlotAndSetSelectedIndex(userId, deleteSlot, newSlot);
         }
 
         public Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId)
