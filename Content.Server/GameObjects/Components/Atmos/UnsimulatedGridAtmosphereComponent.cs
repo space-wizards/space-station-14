@@ -7,6 +7,7 @@ using Content.Shared.Atmos;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Map;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
@@ -18,7 +19,7 @@ namespace Content.Server.GameObjects.Components.Atmos
     {
         public override string Name => "UnsimulatedGridAtmosphere";
 
-        public override void PryTile(MapIndices indices) { }
+        public override void PryTile(Vector2i indices) { }
 
         public override void RepopulateTiles()
         {
@@ -31,11 +32,11 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
         }
 
-        public override void Invalidate(MapIndices indices) { }
+        public override void Invalidate(Vector2i indices) { }
 
         protected override void Revalidate() { }
 
-        public override void FixVacuum(MapIndices indices) { }
+        public override void FixVacuum(Vector2i indices) { }
 
         public override void AddActiveTile(TileAtmosphere? tile) { }
 

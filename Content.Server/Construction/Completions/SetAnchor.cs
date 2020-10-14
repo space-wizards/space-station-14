@@ -20,9 +20,9 @@ namespace Content.Server.Construction.Completions
 
         public async Task PerformAction(IEntity entity, IEntity? user)
         {
-            if (!entity.TryGetComponent(out CollidableComponent? collidable)) return;
+            if (!entity.TryGetComponent(out IPhysicsComponent? physics)) return;
 
-            collidable.Anchored = Value;
+            physics.Anchored = Value;
         }
     }
 }

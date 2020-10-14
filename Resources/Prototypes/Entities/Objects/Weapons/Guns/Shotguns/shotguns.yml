@@ -8,6 +8,8 @@
   - type: Sprite
     netsync: false
     state: icon
+  - type: Icon
+    state: icon
   - type: Item
     size: 24
   - type: PumpBarrel
@@ -28,7 +30,7 @@
 
 - type: entity
   name: Bojevic
-  parent: BaseItem
+  parent: ShotgunBase
   id: ShotgunBojevic
   description: It's a magazine-fed shotgun designed for close quarters combat, nicknamed 'Striker' by boarding parties. A robust and reliable design allows you to swap magazines on the go and dump as many shells at your foes as you want... if you can manage the recoil, of course.
   components:
@@ -42,6 +44,8 @@
       map: ["enum.RangedBarrelVisualLayers.Bolt"]
     - state: mag-0
       map: ["enum.RangedBarrelVisualLayers.Mag"]
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Shotguns/bojevic.rsi
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/bojevic.rsi
   - type: RangedWeapon
@@ -71,7 +75,7 @@
 
 - type: entity
   name: double-barreled shotgun
-  parent: BaseItem
+  parent: ShotgunBase
   id: ShotgunDB
   description: An immortal classic.
   components:
@@ -83,6 +87,8 @@
         map: ["enum.RangedBarrelVisualLayers.Base"]
       - state: bolt-closed
         map: ["enum.RangedBarrelVisualLayers.Bolt"]
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
     state: icon
@@ -123,6 +129,8 @@
       - state: mag-unshaded-1
         map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
         shader: unshaded
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Shotguns/bull.rsi
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/bull.rsi
   - type: RangedWeapon
@@ -145,6 +153,8 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/gladstone.rsi
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Shotguns/gladstone.rsi
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/gladstone.rsi
   - type: RangedWeapon
@@ -159,6 +169,8 @@
   description: Designed for close quarters combat, the Regulator is widely regarded as a weapon of choice for repelling boarders. Some may say that it's too old, but it actually proved itself useful.
   components:
   - type: Sprite
+    sprite: Objects/Weapons/Guns/Shotguns/regulator.rsi
+  - type: Icon
     sprite: Objects/Weapons/Guns/Shotguns/regulator.rsi
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/regulator.rsi
@@ -175,6 +187,8 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
   - type: RangedWeapon
@@ -184,7 +198,7 @@
 
 - type: entity
   name: sawn-off shotgun
-  parent: BaseItem
+  parent: ShotgunBase
   id: ShotgunSawn
   description: Omar's coming!
   components:
@@ -196,6 +210,8 @@
         map: ["enum.RangedBarrelVisualLayers.Base"]
       - state: bolt-closed
         map: ["enum.RangedBarrelVisualLayers.Bolt"]
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
     state: icon

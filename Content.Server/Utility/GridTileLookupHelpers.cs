@@ -8,6 +8,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 
 namespace Content.Server.Utility
 {
@@ -28,7 +29,7 @@ namespace Content.Server.Utility
         ///     Helper that returns all entities in a turf.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerable<IEntity> GetEntitiesInTileFast(this MapIndices indices, GridId gridId, GridTileLookupSystem? gridTileLookup = null)
+        public static IEnumerable<IEntity> GetEntitiesInTileFast(this Vector2i indices, GridId gridId, GridTileLookupSystem? gridTileLookup = null)
         {
             gridTileLookup ??= EntitySystem.Get<GridTileLookupSystem>();
             return gridTileLookup.GetEntitiesIntersecting(gridId, indices);

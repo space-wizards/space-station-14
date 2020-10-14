@@ -204,7 +204,7 @@ namespace Content.Shared
                     var serializer = IoCManager.Resolve<IRobustSerializer>();
                     var byteLength = buffer.ReadVariableInt32();
                     NetUserId userId;
-                    using (var stream = buffer.ReadAsStream(byteLength))
+                    using (var stream = buffer.ReadAlignedMemory(byteLength))
                     {
                         serializer.DeserializeDirect(stream, out userId);
                     }

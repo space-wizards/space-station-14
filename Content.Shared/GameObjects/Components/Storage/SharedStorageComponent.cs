@@ -1,14 +1,71 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Storage
 {
-    public abstract class SharedStorageComponent : Component
+    public abstract class SharedStorageComponent : Component, IDraggable
     {
         public override string Name => "Storage";
         public override uint? NetID => ContentNetIDs.INVENTORY;
+
+        public abstract IReadOnlyList<IEntity>? StoredEntities { get; }
+
+        /// <summary>
+        ///     Removes from the storage container and updates the stored value
+        /// </summary>
+        /// <param name="entity">The entity to remove</param>
+        /// <returns>True if no longer in storage, false otherwise</returns>
+        public abstract bool Remove(IEntity entity);
+
+        public bool CanDrop(CanDropEventArgs args)
+        {
+            return args.Target.TryGetComponent(out SharedPlaceableSurfaceComponent? placeable) &&
+                   placeable.IsPlaceable;
+        }
+
+        public bool Drop(DragDropEventArgs eventArgs)
+        {
+            if (!ActionBlockerSystem.CanInteract(eventArgs.User))
+            {
+                return false;
+            }
+
+            var storedEntities = StoredEntities?.ToArray();
+
+            if (storedEntities == null)
+            {
+                return false;
+            }
+
+            // empty everything out
+            foreach (var storedEntity in storedEntities)
+            {
+                if (Remove(storedEntity))
+                {
+                    storedEntity.Transform.WorldPosition = eventArgs.DropLocation.Position;
+                }
+            }
+
+            return true;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class StorageComponentState : ComponentState
+    {
+        public readonly EntityUid[] StoredEntities;
+
+        public StorageComponentState(EntityUid[] storedEntities) : base(ContentNetIDs.INVENTORY)
+        {
+            StoredEntities = storedEntities;
+        }
     }
 
     /// <summary>
@@ -19,14 +76,14 @@ namespace Content.Shared.GameObjects.Components.Storage
     {
         public readonly int StorageSizeMax;
         public readonly int StorageSizeUsed;
-        public Dictionary<EntityUid, int> StoredEntities;
+        public readonly EntityUid[] StoredEntities;
 
-        public StorageHeldItemsMessage(Dictionary<EntityUid, int> storedentities, int storageused, int storagemaxsize)
+        public StorageHeldItemsMessage(EntityUid[] storedEntities, int storageUsed, int storageMaxSize)
         {
             Directed = true;
-            StorageSizeMax = storagemaxsize;
-            StorageSizeUsed = storageused;
-            StoredEntities = storedentities;
+            StorageSizeMax = storageMaxSize;
+            StorageSizeUsed = storageUsed;
+            StoredEntities = storedEntities;
         }
     }
 

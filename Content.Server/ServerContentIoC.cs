@@ -1,6 +1,5 @@
 ﻿using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.WorldState;
-using Content.Server.Body.Network;
 using Content.Server.Cargo;
 using Content.Server.Chat;
 using Content.Server.Database;
@@ -44,7 +43,6 @@ namespace Content.Server
             IoCManager.Register<IPowerNetManager, PowerNetManager>();
             IoCManager.Register<BlackboardManager, BlackboardManager>();
             IoCManager.Register<ConsiderationsManager, ConsiderationsManager>();
-            IoCManager.Register<IBodyNetworkFactory, BodyNetworkFactory>();
             IoCManager.Register<IAccentManager, AccentManager>();
             IoCManager.Register<IConnectionManager, ConnectionManager>();
             IoCManager.Register<IDeviceNetwork, DeviceNetwork>();

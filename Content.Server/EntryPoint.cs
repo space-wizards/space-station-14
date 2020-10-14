@@ -1,6 +1,5 @@
 ﻿using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.WorldState;
-using Content.Server.Body.Network;
 using Content.Server.Database;
 using Content.Server.GameObjects.Components.Mobs.Speech;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
@@ -48,8 +47,6 @@ namespace Content.Server
             }
 
             IoCManager.BuildGraph();
-
-            IoCManager.Resolve<IBodyNetworkFactory>().DoAutoRegistrations();
 
             _gameTicker = IoCManager.Resolve<IGameTicker>();
 

@@ -7,9 +7,9 @@ using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.EntitySystems.Click;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
@@ -533,9 +533,9 @@ namespace Content.Server.GameObjects.Components.GUI
                 StopPull();
             }
 
-            PulledObject = pullable.Owner.GetComponent<ICollidableComponent>();
+            PulledObject = pullable.Owner.GetComponent<IPhysicsComponent>();
             var controller = PulledObject.EnsureController<PullController>();
-            controller.StartPull(Owner.GetComponent<ICollidableComponent>());
+            controller.StartPull(Owner.GetComponent<IPhysicsComponent>());
         }
 
         public void MovePulledObject(EntityCoordinates puller, EntityCoordinates to)
@@ -686,13 +686,13 @@ namespace Content.Server.GameObjects.Components.GUI
 
                 Dirty();
 
-                if (!message.Entity.TryGetComponent(out ICollidableComponent? collidable))
+                if (!message.Entity.TryGetComponent(out IPhysicsComponent? physics))
                 {
                     return;
                 }
 
                 // set velocity to zero
-                collidable.Stop();
+                physics.Stop();
                 return;
             }
         }
@@ -725,24 +725,24 @@ namespace Content.Server.GameObjects.Components.GUI
             }
         }
 
-        void IBodyPartAdded.BodyPartAdded(BodyPartAddedEventArgs eventArgs)
+        void IBodyPartAdded.BodyPartAdded(BodyPartAddedEventArgs args)
         {
-            if (eventArgs.Part.PartType != BodyPartType.Hand)
+            if (args.Part.PartType != BodyPartType.Hand)
             {
                 return;
             }
 
-            AddHand(eventArgs.SlotName);
+            AddHand(args.Slot);
         }
 
-        void IBodyPartRemoved.BodyPartRemoved(BodyPartRemovedEventArgs eventArgs)
+        void IBodyPartRemoved.BodyPartRemoved(BodyPartRemovedEventArgs args)
         {
-            if (eventArgs.Part.PartType != BodyPartType.Hand)
+            if (args.Part.PartType != BodyPartType.Hand)
             {
                 return;
             }
 
-            RemoveHand(eventArgs.SlotName);
+            RemoveHand(args.Slot);
         }
     }
 

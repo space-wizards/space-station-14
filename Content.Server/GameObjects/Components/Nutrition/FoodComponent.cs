@@ -1,12 +1,14 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Body.Digestive;
+using System.Linq;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Utensil;
 using Content.Shared.Chemistry;
+using Content.Shared.GameObjects.Components.Body.Behavior;
+using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Utensil;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -129,7 +131,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             var trueTarget = target ?? user;
 
-            if (!trueTarget.TryGetComponent(out StomachComponent? stomach))
+            if (!trueTarget.TryGetMechanismBehaviors<SharedStomachBehaviorComponent>(out var stomachs))
             {
                 return false;
             }
@@ -171,7 +173,9 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             var transferAmount = ReagentUnit.Min(_transferAmount, solution.CurrentVolume);
             var split = solution.SplitSolution(transferAmount);
-            if (!stomach.CanTransferSolution(split))
+            var firstStomach = stomachs.FirstOrDefault(stomach => stomach.CanTransferSolution(split));
+
+            if (firstStomach == null)
             {
                 trueTarget.PopupMessage(user, Loc.GetString("You can't eat any more!"));
                 return false;
@@ -185,7 +189,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 split.RemoveReagent(reagentId, reagent.ReactionEntity(target, ReactionMethod.Ingestion, quantity));
             }
 
-            stomach.TryTransferSolution(split);
+            firstStomach.TryTransferSolution(split);
 
             _entitySystem.GetEntitySystem<AudioSystem>()
                 .PlayFromEntity(_useSound, trueTarget, AudioParams.Default.WithVolume(-1f));

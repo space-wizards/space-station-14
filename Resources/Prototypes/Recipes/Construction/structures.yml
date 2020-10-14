@@ -11,6 +11,7 @@
     state: wall_girder
   objectType: Structure
   placementMode: SnapgridCenter
+  canRotate: false
 
 - type: construction
   name: wall
@@ -25,6 +26,7 @@
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
+  canRotate: false
 
 - type: construction
   name: reinforced wall
@@ -39,6 +41,7 @@
     state: rgeneric
   objectType: Structure
   placementMode: SnapgridCenter
+  canRotate: false
 
 - type: construction
   name: low wall
@@ -55,6 +58,7 @@
     state: metal
   objectType: Structure
   placementMode: SnapgridCenter
+  canRotate: false
 
 - type: construction
   name: window
@@ -71,6 +75,7 @@
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
+  canRotate: false
 
 - type: construction
   name: reinforced window
@@ -87,6 +92,7 @@
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
+  canRotate: false
 
 - type: construction
   name: phoron window
@@ -103,3 +109,4 @@
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
+  canRotate: false

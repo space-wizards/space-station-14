@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.Components.Timing;
@@ -74,10 +75,10 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             if (!interactionArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true)) return;
 
             // trigger dragdrops on the dropped entity
-            foreach (var dragDrop in dropped.GetAllComponents<IDragDrop>())
+            foreach (var dragDrop in dropped.GetAllComponents<IDraggable>())
             {
-                if (dragDrop.CanDragDrop(interactionArgs) &&
-                    dragDrop.DragDrop(interactionArgs))
+                if (dragDrop.CanDrop(interactionArgs) &&
+                    dragDrop.Drop(interactionArgs))
                 {
                     return;
                 }
@@ -288,13 +289,13 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return false;
             }
 
-            if (!pull.Owner.TryGetComponent(out ICollidableComponent collidable) ||
-                collidable.Anchored)
+            if (!pull.Owner.TryGetComponent(out IPhysicsComponent physics) ||
+                physics.Anchored)
             {
                 return false;
             }
 
-            var controller = collidable.EnsureController<PullController>();
+            var controller = physics.EnsureController<PullController>();
 
             if (controller.GettingPulled)
             {
@@ -855,6 +856,18 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                     {
                         if (wideAttack ? attackComponent.WideAttack(eventArgs) : attackComponent.ClickAttack(eventArgs))
                             return;
+                    }
+                }
+                else
+                {
+                    // We pick up items if our hand is empty, even if we're in combat mode.
+                    if(EntityManager.TryGetEntity(target, out var targetEnt))
+                    {
+                        if (targetEnt.HasComponent<ItemComponent>())
+                        {
+                            Interaction(player, targetEnt);
+                            return;
+                        }
                     }
                 }
             }

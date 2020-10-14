@@ -69,15 +69,15 @@ namespace Content.Server.GameObjects.Components.Movement
                 _entityManager.TryGetEntity(grid.GridEntityId, out var gridEntity))
             {
                 //TODO: Switch to shuttle component
-                if (!gridEntity.TryGetComponent(out ICollidableComponent? collidable))
+                if (!gridEntity.TryGetComponent(out IPhysicsComponent? physics))
                 {
-                    collidable = gridEntity.AddComponent<CollidableComponent>();
-                    collidable.Mass = 1;
-                    collidable.CanCollide = true;
-                    collidable.PhysicsShapes.Add(new PhysShapeGrid(grid));
+                    physics = gridEntity.AddComponent<PhysicsComponent>();
+                    physics.Mass = 1;
+                    physics.CanCollide = true;
+                    physics.PhysicsShapes.Add(new PhysShapeGrid(grid));
                 }
 
-                var controller = collidable.EnsureController<ShuttleController>();
+                var controller = physics.EnsureController<ShuttleController>();
                 controller.Push(CalcNewVelocity(direction, enabled), CurrentWalkSpeed);
             }
         }
