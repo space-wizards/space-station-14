@@ -6,7 +6,7 @@
     mode: SnapgridCenter
   components:
   - type: Clickable
-  - type: Collidable
+  - type: Physics
     shapes:
       - !type:PhysShapeAabb
         bounds: "-0.5, -0.5, 0.5, 0.5"

@@ -211,7 +211,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 17
@@ -600,7 +600,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
   - containers:
       PowerCellCharger-powerCellContainer:
         type: Content.Server.GameObjects.ContainerSlot
@@ -3451,7 +3451,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -5804,7 +5804,7 @@ entities:
     pos: -8.5,8.5
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 580
   type: ChairOfficeDark
   components:
@@ -5813,7 +5813,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 581
   type: Table
   components:
@@ -8400,7 +8400,7 @@ entities:
   - shapes:
     - !type:PhysShapeGrid
       grid: 0
-    type: Collidable
+    type: Physics
   - uniqueMixes:
     - volume: 2500
       moles:
@@ -19647,7 +19647,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 903
   type: PianoInstrument
   components:
@@ -19656,7 +19656,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 904
   type: VendingMachineTheater
   components:
@@ -20063,7 +20063,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 961
   type: Chair
   components:
@@ -20071,7 +20071,7 @@ entities:
     pos: 8.5,17.5
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 962
   type: Table
   components:
@@ -20129,7 +20129,7 @@ entities:
     rot: 1.5707963267948966 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 967
   type: ComputerMedicalRecords
   components:
@@ -20147,7 +20147,7 @@ entities:
     rot: 1.5707963267948966 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 969
   type: ChairOfficeDark
   components:
@@ -20155,7 +20155,7 @@ entities:
     pos: -2.5,25.5
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 970
   type: ChairOfficeDark
   components:
@@ -20163,7 +20163,7 @@ entities:
     pos: -2.5,24.5
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 971
   type: ChairOfficeDark
   components:
@@ -20172,7 +20172,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 972
   type: ChairOfficeDark
   components:
@@ -20181,7 +20181,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 973
   type: TableWood
   components:
@@ -20295,7 +20295,7 @@ entities:
     pos: 7.5,25.5
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 985
   type: ChairOfficeDark
   components:
@@ -20304,7 +20304,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 986
   type: ComputerComms
   components:
@@ -20328,7 +20328,7 @@ entities:
     rot: 1.5707963267948966 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 988
   type: TableWood
   components:
@@ -20438,7 +20438,7 @@ entities:
     pos: -1.5,-3.5
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 1001
   type: Catwalk
   components:
@@ -20453,7 +20453,7 @@ entities:
     pos: 22.5,-14.5
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 1003
   type: VendingMachineSnack
   components:
@@ -20487,7 +20487,7 @@ entities:
     rot: 1.5707963267948966 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 1008
   type: ChairWood
   components:
@@ -20496,7 +20496,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 1009
   type: ChairWood
   components:
@@ -20505,7 +20505,7 @@ entities:
     rot: 1.5707963267948966 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 1010
   type: ChairWood
   components:
@@ -20514,7 +20514,7 @@ entities:
     rot: 1.5707963267948966 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 1011
   type: ChairWood
   components:
@@ -20523,7 +20523,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 1012
   type: ChairWood
   components:
@@ -20532,7 +20532,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 1013
   type: ChairWood
   components:
@@ -20541,7 +20541,7 @@ entities:
     rot: 1.5707963267948966 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 1014
   type: ChairWood
   components:
@@ -20550,7 +20550,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 1015
   type: TableWood
   components:
@@ -20607,7 +20607,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 1022
   type: StoolBar
   components:
@@ -20616,7 +20616,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 1023
   type: StoolBar
   components:
@@ -20625,7 +20625,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 1024
   type: StoolBar
   components:
@@ -20634,7 +20634,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 1025
   type: StoolBar
   components:
@@ -20643,7 +20643,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 1026
   type: StoolBar
   components:
@@ -20652,7 +20652,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 1027
   type: Catwalk
   components:
@@ -20870,7 +20870,7 @@ entities:
     rot: 1.5707963267948966 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 1053
   type: ChairOfficeLight
   components:
@@ -20878,7 +20878,7 @@ entities:
     pos: -9.5,-17.5
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 1054
   type: Table
   components:
@@ -20898,7 +20898,7 @@ entities:
     pos: -5.5,-23.5
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 1057
   type: ChairOfficeLight
   components:
@@ -20906,7 +20906,7 @@ entities:
     pos: -0.5,-14.5
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 1058
   type: BaseResearchAndDevelopmentPointSource
   components:
@@ -21357,7 +21357,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 1105
   type: Table
   components:
@@ -21956,7 +21956,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 1174
   type: Chair
   components:
@@ -21965,7 +21965,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 1175
   type: LockerHeadOfSecurityFilled
   components:
@@ -22060,7 +22060,7 @@ entities:
     rot: 1.5707963267948966 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 1186
   type: Table
   components:
@@ -22304,7 +22304,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 1213
   type: Poweredlight
   components:
@@ -22342,7 +22342,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 1217
   type: Chair
   components:
@@ -22350,7 +22350,7 @@ entities:
     pos: -13.5,8.5
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 1218
   type: Food4NoRaisins
   components:
@@ -22798,7 +22798,7 @@ entities:
     pos: -8.5,20.5
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 1260
   type: solid_wall
   components:
@@ -23868,7 +23868,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 1348
   type: ChairOfficeLight
   components:
@@ -23877,7 +23877,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 1349
   type: Poweredlight
   components:
@@ -24544,7 +24544,7 @@ entities:
     rot: 1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 1409
@@ -25507,7 +25507,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 1546
   type: Chair
   components:
@@ -25515,7 +25515,7 @@ entities:
     pos: 38.5,-0.5
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 1547
   type: Table
   components:
@@ -25772,7 +25772,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 1582
   type: Catwalk
   components:
@@ -31841,7 +31841,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - anchored: False
-    type: Collidable
+    type: Physics
 - uid: 2439
   type: solid_wall
   components:
@@ -45406,7 +45406,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 3959
@@ -45426,7 +45426,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 3961
@@ -45437,7 +45437,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 3962
@@ -45456,7 +45456,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 3964
@@ -45467,7 +45467,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -45480,7 +45480,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -45493,7 +45493,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 3967
@@ -45504,7 +45504,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 3968
@@ -45515,7 +45515,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 3969
@@ -45542,7 +45542,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 3972
@@ -45553,7 +45553,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 3973
@@ -45564,7 +45564,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 3974
@@ -45575,7 +45575,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 3975
@@ -45603,7 +45603,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 3978
@@ -45614,7 +45614,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 3979
@@ -45643,7 +45643,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 3982
@@ -45654,7 +45654,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 3983
@@ -45687,7 +45687,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 3986
@@ -45734,7 +45734,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -45790,7 +45790,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 3997
@@ -45801,7 +45801,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 3998
@@ -45821,7 +45821,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -45834,7 +45834,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -45847,7 +45847,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4002
@@ -45858,7 +45858,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4003
@@ -45883,7 +45883,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4006
@@ -45894,7 +45894,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -45907,7 +45907,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4008
@@ -45918,7 +45918,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4009
@@ -45929,7 +45929,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -45942,7 +45942,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4011
@@ -45953,7 +45953,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4012
@@ -45964,7 +45964,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4013
@@ -45975,7 +45975,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4014
@@ -45986,7 +45986,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4015
@@ -45997,7 +45997,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4016
@@ -46031,7 +46031,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4020
@@ -46042,7 +46042,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4021
@@ -46053,7 +46053,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -46071,7 +46071,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -46091,7 +46091,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4026
@@ -46102,7 +46102,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4027
@@ -46113,7 +46113,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4028
@@ -46124,7 +46124,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4029
@@ -46135,7 +46135,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4030
@@ -46146,7 +46146,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4031
@@ -46157,7 +46157,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -46170,7 +46170,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4033
@@ -46181,7 +46181,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4034
@@ -46197,7 +46197,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -46210,7 +46210,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4037
@@ -46226,7 +46226,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4039
@@ -46237,7 +46237,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4040
@@ -46248,7 +46248,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4041
@@ -46259,7 +46259,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -46272,7 +46272,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -46285,7 +46285,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -46317,7 +46317,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4048
@@ -46328,7 +46328,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4049
@@ -46339,7 +46339,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4050
@@ -46350,7 +46350,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4051
@@ -46361,7 +46361,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4052
@@ -46372,7 +46372,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4053
@@ -46383,7 +46383,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4054
@@ -46394,7 +46394,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -46407,7 +46407,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4056
@@ -46418,7 +46418,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4057
@@ -46429,7 +46429,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4058
@@ -46440,7 +46440,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -46453,7 +46453,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -46466,7 +46466,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -46515,7 +46515,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4066
@@ -46535,7 +46535,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4068
@@ -46555,7 +46555,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4070
@@ -46594,7 +46594,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4075
@@ -46605,7 +46605,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4076
@@ -46625,7 +46625,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -46656,7 +46656,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -46669,7 +46669,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -46691,7 +46691,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -46704,7 +46704,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -46717,7 +46717,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -47030,7 +47030,7 @@ entities:
     rot: 3.141592653589793 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -47043,7 +47043,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4122
@@ -47082,7 +47082,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4127
@@ -47093,7 +47093,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4128
@@ -47104,7 +47104,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4129
@@ -47115,7 +47115,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4130
@@ -47126,7 +47126,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - hard: False
-    type: Collidable
+    type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4131

@@ -5,7 +5,7 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
     shapes:
       - !type:PhysShapeAabb
         bounds: "-0.5,-0.5,0.5,0.5"

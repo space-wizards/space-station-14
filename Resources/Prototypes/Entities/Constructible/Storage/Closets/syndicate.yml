@@ -9,4 +9,5 @@
     visuals:
     - type: StorageVisualizer
       state: syndicate
-
+  - type: Icon
+    state: syndicate_icon
