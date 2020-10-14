@@ -1,5 +1,6 @@
 ﻿- type: entity
   id: SalternGenerator
+  description: A high efficiency thermoelectric generator.
   parent: BaseGenerator
   name: Generator
   components:
@@ -22,6 +23,7 @@
 
 - type: entity
   id: SalternSubstation
+  description: Reduces the voltage of electricity put into it. 
   parent: BaseSubstation
   name: Substation
   components:

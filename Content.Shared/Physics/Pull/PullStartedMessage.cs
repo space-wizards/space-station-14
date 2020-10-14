@@ -4,7 +4,7 @@ namespace Content.Shared.Physics.Pull
 {
     public class PullStartedMessage : PullMessage
     {
-        public PullStartedMessage(PullController controller, ICollidableComponent puller, ICollidableComponent pulled) :
+        public PullStartedMessage(PullController controller, IPhysicsComponent puller, IPhysicsComponent pulled) :
             base(controller, puller, pulled)
         {
         }

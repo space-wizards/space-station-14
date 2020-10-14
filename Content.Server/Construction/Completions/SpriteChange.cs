@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using System;
 using System.Threading.Tasks;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
@@ -26,6 +27,9 @@ namespace Content.Server.Construction.Completions
             if (entity.Deleted || SpriteSpecifier == null || SpriteSpecifier == SpriteSpecifier.Invalid) return;
 
             if (!entity.TryGetComponent(out SpriteComponent? sprite)) return;
+
+            // That layer doesn't exist, we do nothing.
+            if (sprite.LayerCount <= Layer) return;
 
             sprite.LayerSetSprite(Layer, SpriteSpecifier);
         }

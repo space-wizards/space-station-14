@@ -54,6 +54,11 @@ namespace Content.Shared.Construction
 
         public string PlacementMode { get; private set; }
 
+        /// <summary>
+        ///     Whether this construction can be constructed rotated or not.
+        /// </summary>
+        public bool CanRotate { get; private set; }
+
         public IReadOnlyList<IConstructionCondition> Conditions => _conditions;
 
         public void LoadFrom(YamlMappingNode mapping)
@@ -71,6 +76,7 @@ namespace Content.Shared.Construction
             ser.DataField(this, x => x.PlacementMode, "placementMode", "PlaceFree");
             ser.DataField(this, x => x.CanBuildInImpassable, "canBuildInImpassable", false);
             ser.DataField(this, x => x.Category, "category", string.Empty);
+            ser.DataField(this, x => x.CanRotate, "canRotate", true);
             ser.DataField(ref _conditions, "conditions", new List<IConstructionCondition>());
         }
     }

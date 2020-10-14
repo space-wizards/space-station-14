@@ -1,7 +1,12 @@
-﻿using System.Collections.Generic;
-using Content.Shared.Body.Scanner;
+﻿#nullable enable
+using System.Linq;
+using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Body.Mechanism;
+using Content.Shared.GameObjects.Components.Body.Part;
+using Content.Shared.GameObjects.Components.Damage;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
@@ -11,13 +16,10 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
 {
     public sealed class BodyScannerDisplay : SS14Window
     {
-        private BodyScannerTemplateData _template;
+        private IEntity? _currentEntity;
+        private IBodyPart? _currentBodyPart;
 
-        private Dictionary<string, BodyScannerBodyPartData> _parts;
-
-        private List<string> _slots;
-
-        private BodyScannerBodyPartData _currentBodyPart;
+        private IBody? CurrentBody => _currentEntity?.GetBody();
 
         public BodyScannerDisplay(BodyScannerBoundUserInterface owner)
         {
@@ -102,51 +104,70 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
 
         private RichTextLabel MechanismInfoLabel { get; }
 
-        public void UpdateDisplay(BodyScannerTemplateData template, Dictionary<string, BodyScannerBodyPartData> parts)
+        public void UpdateDisplay(IEntity entity)
         {
-            _template = template;
-            _parts = parts;
-            _slots = new List<string>();
+            _currentEntity = entity;
             BodyPartList.Clear();
 
-            foreach (var slotName in _parts.Keys)
-            {
-                // We have to do this since ItemLists only return the index of what item is
-                // selected and dictionaries don't allow you to explicitly grab things by index.
-                // So we put the contents of the dictionary into a list so
-                // that we can grab the list by index. I don't know either.
-                _slots.Add(slotName);
+            var body = CurrentBody;
 
+            if (body == null)
+            {
+                return;
+            }
+
+            foreach (var slotName in body.Parts.Keys)
+            {
                 BodyPartList.AddItem(Loc.GetString(slotName));
             }
         }
 
         public void BodyPartOnItemSelected(ItemListSelectedEventArgs args)
         {
-            if (_parts.TryGetValue(_slots[args.ItemIndex], out _currentBodyPart)) {
-                UpdateBodyPartBox(_currentBodyPart, _slots[args.ItemIndex]);
+            var body = CurrentBody;
+
+            if (body == null)
+            {
+                return;
+            }
+
+            var slot = body.SlotAt(args.ItemIndex).Key;
+            _currentBodyPart = body.PartAt(args.ItemIndex).Value;
+
+            if (body.Parts.TryGetValue(slot, out var part))
+            {
+                UpdateBodyPartBox(part, slot);
             }
         }
 
-        private void UpdateBodyPartBox(BodyScannerBodyPartData part, string slotName)
+        private void UpdateBodyPartBox(IBodyPart part, string slotName)
         {
-            BodyPartLabel.Text = $"{Loc.GetString(slotName)}: {Loc.GetString(part.Name)}";
-            BodyPartHealth.Text = $"{part.CurrentDurability}/{part.MaxDurability}";
+            BodyPartLabel.Text = $"{Loc.GetString(slotName)}: {Loc.GetString(part.Owner.Name)}";
+
+            // TODO BODY Make dead not be the destroy threshold for a body part
+            if (part.Owner.TryGetComponent(out IDamageableComponent? damageable) &&
+                damageable.TryHealth(DamageState.Critical, out var health))
+            {
+                BodyPartHealth.Text = $"{health.current} / {health.max}";
+            }
 
             MechanismList.Clear();
-            foreach (var mechanism in part.Mechanisms) {
+
+            foreach (var mechanism in part.Mechanisms)
+            {
                 MechanismList.AddItem(mechanism.Name);
             }
         }
 
+        // TODO BODY Guaranteed this is going to crash when a part's mechanisms change. This part is left as an exercise for the reader.
         public void MechanismOnItemSelected(ItemListSelectedEventArgs args)
         {
-            UpdateMechanismBox(_currentBodyPart.Mechanisms[args.ItemIndex]);
+            UpdateMechanismBox(_currentBodyPart?.Mechanisms.ElementAt(args.ItemIndex));
         }
 
-        private void UpdateMechanismBox(BodyScannerMechanismData mechanism)
+        private void UpdateMechanismBox(IMechanism? mechanism)
         {
-            // TODO: Improve UI
+            // TODO BODY Improve UI
             if (mechanism == null)
             {
                 MechanismInfoLabel.SetMessage("");
