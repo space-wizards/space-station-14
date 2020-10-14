@@ -25,7 +25,7 @@ namespace Content.Client.UserInterface
             MouseFilter = MouseFilterMode.Ignore;
 
             _ghostWarp.OnPressed += args => targetMenu.Populate();
-            _returnToBody.OnPressed += (args) => { owner.SendReturnToBodyMessage(); };
+            _returnToBody.OnPressed += args => owner.SendReturnToBodyMessage();
 
             AddChild(new HBoxContainer
             {
