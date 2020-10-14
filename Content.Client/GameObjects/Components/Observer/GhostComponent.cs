@@ -19,8 +19,8 @@ namespace Content.Client.GameObjects.Components.Observer
         [Dependency] private readonly IGameHud _gameHud = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IComponentManager _componentManager = default!;
-        public List<string> WarpName = new List<string>();
-        public Dictionary<EntityUid,string> PlayerName = new Dictionary<EntityUid,string>();
+        public List<string> WarpNames = new List<string>();
+        public Dictionary<EntityUid,string> PlayerNames = new Dictionary<EntityUid,string>();
 
         private GhostGui? _gui ;
 
@@ -123,17 +123,17 @@ namespace Content.Client.GameObjects.Components.Observer
             switch (message)
             {
                 case GhostReplyWarpPointData data:
-                    WarpName = new List<string>();
+                    WarpNames = new List<string>();
                     foreach (var names in data.WarpName)
                     {
-                        WarpName.Add(names);
+                        WarpNames.Add(names);
                     }
                     break;
                 case GhostReplyPlayerNameData data:
-                    PlayerName = new Dictionary<EntityUid, string>();
+                    PlayerNames = new Dictionary<EntityUid, string>();
                     foreach (var (key, value) in data.PlayerNames)
                     {
-                        PlayerName.Add(key,value);
+                        PlayerNames.Add(key,value);
                     }
                     break;
             }

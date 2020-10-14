@@ -11,7 +11,7 @@ namespace Content.Client.UserInterface
     public class GhostGui : Control
     {
         private readonly Button _returnToBody = new Button() {Text = Loc.GetString("Return to body")};
-        private readonly Button _ghostWarp = new Button(){Text = Loc.GetString("Ghost Warp")};
+        private readonly Button _ghostWarp = new Button() {Text = Loc.GetString("Ghost Warp")};
         private readonly GhostComponent _owner;
 
         public GhostGui(GhostComponent owner)
@@ -25,9 +25,7 @@ namespace Content.Client.UserInterface
             MouseFilter = MouseFilterMode.Ignore;
 
             _ghostWarp.OnPressed += args => targetMenu.Populate();
-
             _returnToBody.OnPressed += (args) => { owner.SendReturnToBodyMessage(); };
-
 
             AddChild(new HBoxContainer
             {
@@ -41,7 +39,6 @@ namespace Content.Client.UserInterface
             Update();
         }
 
-
         public void Update()
         {
             _returnToBody.Disabled = !_owner.CanReturnToBody;
@@ -50,7 +47,6 @@ namespace Content.Client.UserInterface
 
     internal class GhostTargetWindow : SS14Window
     {
-
         protected override Vector2? CustomSize => (300, 450);
         private readonly GhostComponent _owner;
         private readonly VBoxContainer _buttonContainer;
@@ -86,20 +82,19 @@ namespace Content.Client.UserInterface
             scrollBarContainer.AddChild(_buttonContainer);
 
             Contents.AddChild(margin);
-
         }
 
         public void Populate()
         {
-            AddButtonPlayer();
+            _buttonContainer.DisposeAllChildren();
+            AddButtonPlayers();
             AddButtonLocations();
             OpenCentered();
         }
 
-        private void AddButtonPlayer()
+        private void AddButtonPlayers()
         {
-
-            foreach (var (key, value) in _owner.PlayerName)
+            foreach (var (key, value) in _owner.PlayerNames)
             {
                 var currentButtonRef = new Button
                 {
@@ -111,16 +106,19 @@ namespace Content.Client.UserInterface
                     CustomMinimumSize = (230, 20),
                     ClipText = true,
                 };
+
                 currentButtonRef.OnPressed += (args) =>
                 {
                     _owner.SendGhostWarpRequestMessage(key);
                 };
+
                 _buttonContainer.AddChild(currentButtonRef);
             }
         }
+
         private void AddButtonLocations()
         {
-            foreach (var name in _owner.WarpName)
+            foreach (var name in _owner.WarpNames)
             {
                 var currentButtonRef = new Button
                 {
@@ -137,6 +135,7 @@ namespace Content.Client.UserInterface
                 {
                     _owner.SendGhostWarpRequestMessage(default,name);
                 };
+
                 _buttonContainer.AddChild(currentButtonRef);
             }
         }

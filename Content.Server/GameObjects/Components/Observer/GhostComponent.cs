@@ -57,86 +57,80 @@ namespace Content.Server.GameObjects.Components.Observer
                 case PlayerDetachedMsg msg:
                     msg.OldPlayer.VisibilityMask &= ~(int) VisibilityFlags.Ghost;
                     break;
-                default:
-                    break;
             }
         }
 
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel,
-            ICommonSession? session = null!)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null!)
         {
             base.HandleNetworkMessage(message, netChannel, session);
 
             switch (message)
-                {
-                    case ReturnToBodyComponentMessage reenter:
-                        if (!Owner.TryGetComponent(out IActorComponent? actor) || !CanReturnToBody) break;
-                        if (netChannel == null || netChannel == actor.playerSession.ConnectedClient)
-                        {
-                            var o = actor.playerSession.ContentData()!.Mind;
-                            if (o != null)
-                                o.UnVisit();
-                            Owner.Delete();
-                        }
+            {
+                case ReturnToBodyComponentMessage _:
+                    if (!Owner.TryGetComponent(out IActorComponent? actor) ||
+                        !CanReturnToBody)
+                    {
                         break;
+                    }
 
-                    case ReturnToCloneComponentMessage reenter:
+                    if (netChannel == actor.playerSession.ConnectedClient)
+                    {
+                        var o = actor.playerSession.ContentData()!.Mind;
+                        o?.UnVisit();
+                        Owner.Delete();
+                    }
+                    break;
+                case ReturnToCloneComponentMessage _:
 
-                        if (Owner.TryGetComponent(out VisitingMindComponent? mind))
+                    if (Owner.TryGetComponent(out VisitingMindComponent? mind))
+                    {
+                        Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new GhostReturnMessage(mind.Mind));
+                    }
+                    break;
+                case GhostWarpRequestMessage warp:
+                    if (warp.PlayerTarget != default)
+                    {
+                        foreach (var player in _playerManager.GetAllPlayers())
                         {
-                            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new GhostReturnMessage(mind.Mind));
-                        }
-                        break;
-
-                    case GhostWarpRequestMessage warp:
-                        if (warp.PlayerTarget != default)
-                        {
-                            foreach (var player in _playerManager.GetAllPlayers())
+                            if (player.AttachedEntity != null && warp.PlayerTarget == player.AttachedEntity.Uid)
                             {
-                                if (player.AttachedEntity != null && warp.PlayerTarget == player.AttachedEntity.Uid)
-                                {
-                                    session?.AttachedEntity!.Transform.Coordinates =
-                                        player.AttachedEntity.Transform.Coordinates;
-                                }
+                                session?.AttachedEntity!.Transform.Coordinates =
+                                    player.AttachedEntity.Transform.Coordinates;
                             }
                         }
-                        else
+                    }
+                    else
+                    {
+                        foreach (var warpPoint in FindWaypoints())
                         {
-                            foreach (var warpPoint in FindWaypoints())
+                            if (warp.WarpName == warpPoint.Location)
                             {
-                                if (warp.WarpName == warpPoint.Location)
-                                {
-                                    session?.AttachedEntity!.Transform.Coordinates = warpPoint.Owner.Transform.Coordinates ;
-                                }
+                                session?.AttachedEntity!.Transform.Coordinates = warpPoint.Owner.Transform.Coordinates ;
                             }
                         }
-                        break;
-
-                    case GhostRequestPlayerNameData data:
-                        var playerNames = new Dictionary<EntityUid, string>();
-                        foreach (var names in _playerManager.GetAllPlayers())
+                    }
+                    break;
+                case GhostRequestPlayerNameData _:
+                    var playerNames = new Dictionary<EntityUid, string>();
+                    foreach (var names in _playerManager.GetAllPlayers())
+                    {
+                        if (names.AttachedEntity != null && names.UserId != netChannel.UserId)
                         {
-                            if (names.AttachedEntity != null && names.UserId != netChannel.UserId)
-                            {
-                                playerNames.Add(names.AttachedEntity.Uid,names.AttachedEntity.Name);
-                            }
+                            playerNames.Add(names.AttachedEntity.Uid,names.AttachedEntity.Name);
                         }
-                        SendNetworkMessage(new GhostReplyPlayerNameData(playerNames));
-                        break;
-
-                    case GhostRequestWarpPointData data:
-
-                        var warpPoints = FindWaypoints();
-                        var warpName = new List<string>();
-                        foreach (var point in warpPoints)
-                        {
-                            warpName.Add(point.Location);
-                        }
-                        SendNetworkMessage(new GhostReplyWarpPointData(warpName));
-                        break;
-                    default:
-                        break;
-                }
+                    }
+                    SendNetworkMessage(new GhostReplyPlayerNameData(playerNames));
+                    break;
+                case GhostRequestWarpPointData _:
+                    var warpPoints = FindWaypoints();
+                    var warpName = new List<string>();
+                    foreach (var point in warpPoints)
+                    {
+                        warpName.Add(point.Location);
+                    }
+                    SendNetworkMessage(new GhostReplyWarpPointData(warpName));
+                    break;
+            }
         }
 
         private List<WarpPointComponent> FindWaypoints()
