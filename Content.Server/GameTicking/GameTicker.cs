@@ -92,16 +92,16 @@ namespace Content.Server.GameTicking
 
         [ViewVariables] private bool DisallowLateJoin { get; set; } = false;
 
-        [ViewVariables] private bool LobbyEnabled => _configurationManager.GetCVar<bool>("game.lobbyenabled");
+        [ViewVariables] private bool LobbyEnabled => _configurationManager.GetCVar(CCVars.GameLobbyEnabled);
 
         [ViewVariables] private bool _updateOnRoundEnd;
         private CancellationTokenSource _updateShutdownCts;
 
 
         [ViewVariables] public bool Paused { get; private set; }
-        
+
         [ViewVariables] public MapId DefaultMap { get; private set; }
-        
+
         [ViewVariables] public GridId DefaultGridId { get; private set; }
 
         [ViewVariables]
@@ -123,15 +123,13 @@ namespace Content.Server.GameTicking
         public event Action<GameRuleAddedEventArgs> OnRuleAdded;
 
         private TimeSpan LobbyDuration =>
-            TimeSpan.FromSeconds(_configurationManager.GetCVar<int>("game.lobbyduration"));
+            TimeSpan.FromSeconds(_configurationManager.GetCVar(CCVars.GameLobbyDuration));
 
         public override void Initialize()
         {
             base.Initialize();
 
             DebugTools.Assert(!_initialized);
-
-            PresetSuspicion.RegisterCVars(_configurationManager);
 
             _netManager.RegisterNetMessage<MsgTickerJoinLobby>(nameof(MsgTickerJoinLobby));
             _netManager.RegisterNetMessage<MsgTickerJoinGame>(nameof(MsgTickerJoinGame));
@@ -289,7 +287,7 @@ namespace Content.Server.GameTicking
 
             if (!preset.Start(assignedJobs.Keys.ToList(), force))
             {
-                SetStartPreset(_configurationManager.GetCVar<string>("game.fallbackpreset"));
+                SetStartPreset(_configurationManager.GetCVar(CCVars.GameLobbyFallbackPreset));
                 var newPreset = MakeGamePreset(profiles);
                 _chatManager.DispatchServerAnnouncement(
                     $"Failed to start {preset.ModeTitle} mode! Defaulting to {newPreset.ModeTitle}...");
@@ -694,7 +692,7 @@ namespace Content.Server.GameTicking
             DefaultMap = _mapManager.CreateMap();
             var startTime = _gameTiming.RealTime;
             var grid = _mapLoader.LoadBlueprint(DefaultMap, MapFile);
-            
+
             DefaultGridId = grid.Index;
             _spawnPoint = grid.ToCoordinates();
 
