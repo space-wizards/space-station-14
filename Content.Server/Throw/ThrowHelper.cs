@@ -39,7 +39,7 @@ namespace Content.Server.Throw
         /// <param name="throwSourceEnt">
         /// The entity that did the throwing. An opposite impulse will be applied to this entity if passed in.
         /// </param>
-        public static void Throw(IEntity thrownEnt, float throwForce, EntityCoordinates targetLoc, EntityCoordinates sourceLoc, bool spread = false, IEntity throwSourceEnt = null)
+        public static void Throw(this IEntity thrownEnt, float throwForce, EntityCoordinates targetLoc, EntityCoordinates sourceLoc, bool spread = false, IEntity throwSourceEnt = null)
         {
             if (!thrownEnt.TryGetComponent(out IPhysicsComponent colComp))
                 return;
@@ -125,7 +125,7 @@ namespace Content.Server.Throw
         /// <param name="throwSourceEnt">
         /// The entity that did the throwing. An opposite impulse will be applied to this entity if passed in.
         /// </param>
-        public static void ThrowTo(IEntity thrownEnt, float throwForceMax, EntityCoordinates targetLoc,
+        public static void ThrowTo(this IEntity thrownEnt, float throwForceMax, EntityCoordinates targetLoc,
             EntityCoordinates sourceLoc, bool spread = false, IEntity throwSourceEnt = null)
         {
             var entityManager = IoCManager.Resolve<IEntityManager>();
@@ -149,7 +149,7 @@ namespace Content.Server.Throw
             var forceNecessary = impulseNecessary * (1f / timing.TickRate);
 
             // Then clamp it to the max force allowed and call Throw().
-            Throw(thrownEnt, MathF.Min(forceNecessary, throwForceMax), targetLoc, sourceLoc, spread, throwSourceEnt);
+            thrownEnt.Throw(MathF.Min(forceNecessary, throwForceMax), targetLoc, sourceLoc, spread, throwSourceEnt);
         }
     }
 }
