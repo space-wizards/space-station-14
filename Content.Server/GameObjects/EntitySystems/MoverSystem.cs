@@ -84,16 +84,10 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             if (ev.Entity.TryGetComponent(out IPhysicsComponent? physics) &&
-                physics.TryGetController(out MoverController controller))
+                physics.TryGetController(out MoverController controller) &&
+                !ev.Entity.IsWeightless())
             {
-                var weightless =
-                    !ev.Entity.HasComponent<MovementIgnoreGravityComponent>() &&
-                    PhysicsManager.IsWeightless(ev.Entity.Transform.Coordinates);
-
-                if (!weightless)
-                {
-                    controller.StopMoving();
-                }
+                controller.StopMoving();
             }
         }
 
