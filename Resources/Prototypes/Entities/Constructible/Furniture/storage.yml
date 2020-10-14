@@ -9,7 +9,7 @@
   - type: Sprite
     sprite: Constructible/Misc/furniture.rsi
     state: rack
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       layer:
@@ -35,7 +35,7 @@
   - type: Sprite
     sprite: Constructible/Misc/furniture.rsi
     state: shelf
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       layer:
