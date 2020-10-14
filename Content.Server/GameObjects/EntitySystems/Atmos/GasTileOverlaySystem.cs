@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
+using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
@@ -21,7 +22,7 @@ using Robust.Shared.Timing;
 namespace Content.Server.GameObjects.EntitySystems.Atmos
 {
     [UsedImplicitly]
-    internal sealed class GasTileOverlaySystem : SharedGasTileOverlaySystem
+    internal sealed class GasTileOverlaySystem : SharedGasTileOverlaySystem, IResettingEntitySystem
     {
         [Robust.Shared.IoC.Dependency] private readonly IGameTiming _gameTiming = default!;
         [Robust.Shared.IoC.Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -110,17 +111,6 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
             if (_overlay.ContainsKey(gridId))
             {
                 _overlay.Remove(gridId);
-            }
-        }
-
-        public void ResettingCleanup()
-        {
-            _invalidTiles.Clear();
-            _overlay.Clear();
-
-            foreach (var (_, data) in _knownPlayerChunks)
-            {
-                data.Reset();
             }
         }
 
@@ -481,6 +471,17 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
                 }
 
                 return new GasOverlayMessage(chunk.GridIndices, tileData);
+            }
+        }
+
+        public void Reset()
+        {
+            _invalidTiles.Clear();
+            _overlay.Clear();
+
+            foreach (var (_, data) in _knownPlayerChunks)
+            {
+                data.Reset();
             }
         }
     }
