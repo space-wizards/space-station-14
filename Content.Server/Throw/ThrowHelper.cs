@@ -78,14 +78,14 @@ namespace Content.Server.Throw
                 }
             }
 
-            // scaling is handled elsewhere, this is just multiplying by 10 independent of timing as a fix until elsewhere values are updated
-            var spd = throwForce * 10;
+            // scaling is handled elsewhere, this is just multiplying by 60 independent of timing as a fix until elsewhere values are updated
+            var spd = throwForce * 60;
 
             projComp.StartThrow(angle.ToVec(), spd);
 
             if (throwSourceEnt != null &&
                 throwSourceEnt.TryGetComponent<IPhysicsComponent>(out var physics) &&
-                physics.TryGetController(out MoverController mover))
+                physics.TryGetController(out ThrownController mover))
             {
                 var physicsMgr = IoCManager.Resolve<IPhysicsManager>();
 
