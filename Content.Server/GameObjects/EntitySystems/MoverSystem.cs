@@ -76,7 +76,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        private static void PlayerDetached(PlayerDetachedSystemMessage ev)
+        private void PlayerDetached(PlayerDetachedSystemMessage ev)
         {
             if (ev.Entity.HasComponent<PlayerInputMoverComponent>())
             {
@@ -86,7 +86,14 @@ namespace Content.Server.GameObjects.EntitySystems
             if (ev.Entity.TryGetComponent(out IPhysicsComponent? physics) &&
                 physics.TryGetController(out MoverController controller))
             {
-                controller.StopMoving();
+                var weightless =
+                    !ev.Entity.HasComponent<MovementIgnoreGravityComponent>() &&
+                    PhysicsManager.IsWeightless(ev.Entity.Transform.Coordinates);
+
+                if (!weightless)
+                {
+                    controller.StopMoving();
+                }
             }
         }
 
