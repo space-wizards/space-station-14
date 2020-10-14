@@ -56,7 +56,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         {
             physics.EnsureController<MoverController>();
 
-            var weightless = !transform.Owner.IsWeightless();
+            var weightless = transform.Owner.IsWeightless();
 
             if (weightless)
             {
