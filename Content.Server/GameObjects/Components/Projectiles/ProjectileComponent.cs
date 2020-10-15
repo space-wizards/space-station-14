@@ -63,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             }
 
             // This is so entities that shouldn't get a collision are ignored.
-            if (entity.TryGetComponent(out ICollidableComponent? collidable) && !collidable.Hard)
+            if (entity.TryGetComponent(out IPhysicsComponent otherPhysics) && otherPhysics.Hard == false)
             {
                 DeleteOnCollide = false;
                 return;
@@ -94,10 +94,10 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 _damagedEntity = true;
             }
 
-            if (!entity.Deleted && entity.TryGetComponent(out CameraRecoilComponent? recoilComponent)
-                                && Owner.TryGetComponent(out ICollidableComponent? collidableComponent))
+            if (!entity.Deleted && entity.TryGetComponent(out CameraRecoilComponent recoilComponent)
+                                && Owner.TryGetComponent(out IPhysicsComponent ownPhysics))
             {
-                var direction = collidableComponent.LinearVelocity.Normalized;
+                var direction = ownPhysics.LinearVelocity.Normalized;
                 recoilComponent.Kick(direction);
             }
         }

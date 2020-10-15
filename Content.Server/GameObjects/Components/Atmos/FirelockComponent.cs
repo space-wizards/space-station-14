@@ -39,11 +39,12 @@ namespace Content.Server.GameObjects.Components.Atmos
                 airtightComponent.AirBlocked = false;
             }
 
-            if (Owner.TryGetComponent(out ICollidableComponent collidableComponent))
+            if (Owner.TryGetComponent(out IPhysicsComponent physics))
             {
-                collidableComponent.Hard = false;
+                physics.Hard = false;
             }
 
+            AutoClose = false;
             Safety = false;
 
             if (Occludes && Owner.TryGetComponent(out OccluderComponent occluder))
@@ -73,7 +74,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         public override bool CanClose(IEntity user) => true;
         public override bool CanOpen(IEntity user) => CanOpen();
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        public override async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!eventArgs.Using.TryGetComponent<ToolComponent>(out var tool))
                 return false;

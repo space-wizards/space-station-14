@@ -7,7 +7,8 @@
   components:
   - type: Sprite
     netsync: false
-
+  - type: Icon
+    state: icon
   - type: Item
     size: 24
     state: icon
@@ -42,7 +43,8 @@
         map: ["enum.RangedBarrelVisualLayers.Base"]
       - state: mag-0
         map: ["enum.RangedBarrelVisualLayers.Mag"]
-
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Rifles/ak.rsi
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Rifles/ak.rsi
@@ -79,7 +81,8 @@
         map: ["enum.RangedBarrelVisualLayers.Base"]
       - state: mag-0
         map: ["enum.RangedBarrelVisualLayers.Mag"]
-
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Rifles/black_ak.rsi
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Rifles/black_ak.rsi
@@ -118,7 +121,8 @@
         map: ["enum.RangedBarrelVisualLayers.Bolt"]
       - state: mag-0
         map: ["enum.RangedBarrelVisualLayers.Mag"]
-
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
@@ -157,7 +161,8 @@
         map: ["enum.RangedBarrelVisualLayers.Base"]
       - state: mag-0
         map: ["enum.RangedBarrelVisualLayers.Mag"]
-
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Rifles/dallas.rsi
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Rifles/dallas.rsi
@@ -197,7 +202,8 @@
         map: ["enum.RangedBarrelVisualLayers.Bolt"]
       - state: mag-0
         map: ["enum.RangedBarrelVisualLayers.Mag"]
-
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Rifles/sts.rsi
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Rifles/sts.rsi
@@ -237,7 +243,8 @@
         map: ["enum.RangedBarrelVisualLayers.Bolt"]
       - state: mag-0
         map: ["enum.RangedBarrelVisualLayers.Mag"]
-
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Rifles/vintorez.rsi
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Rifles/vintorez.rsi
@@ -274,7 +281,8 @@
         map: ["enum.RangedBarrelVisualLayers.Bolt"]
       - state: mag-0
         map: ["enum.RangedBarrelVisualLayers.Mag"]
-
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Rifles/wintermute.rsi
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Rifles/wintermute.rsi
@@ -314,7 +322,8 @@
         map: ["enum.RangedBarrelVisualLayers.Base"]
       - state: mag-0
         map: ["enum.RangedBarrelVisualLayers.Mag"]
-
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Rifles/calico.rsi
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Rifles/calico.rsi

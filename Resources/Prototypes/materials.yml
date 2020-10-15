@@ -2,36 +2,45 @@
   id: steel
   name: steel
   color: gray
-  icon: Objects/Materials/sheet_metal.png
+  icon: Objects/Materials/sheets.rsi/metal.png
   density: 7700
-  electricresistivity: 6.9e-7
-  thermalconductivity: 18
-  specificheat: 500
+  electricResistivity: 6.9e-7
+  thermalConductivity: 18
+  specificHeat: 500
 
 - type: material
   id: glass
   name: glass
   color: '#e8f0ff33'
-  icon: Objects/Materials/sheet_glass.png
+  icon: Objects/Materials/sheets.rsi/glass.png
   density: 2500
-  electricresistivity: 1.0e+13
-  thermalconductivity: 0.9
-  specificheat: 840
+  electricResistivity: 1.0e+13
+  thermalConductivity: 0.9
+  specificHeat: 840
 
 - type: material
   id: gold
   name: gold
   icon: Objects/Materials/goldbar_single.png
   density: 10000
-  electricresistivity: 8.0e-9
-  thermalconductivity: 30
-  specificheat: 1000
+  electricResistivity: 8.0e-9
+  thermalConductivity: 30
+  specificHeat: 1000
 
 - type: material
   id: phoron
   name: phoron
   icon: Objects/Materials/phoron_sheet.png
   density: 200
-  electricresistivity: 2.1e-1
-  thermalconductivity: 80
-  specificheat: 2000
+  electricResistivity: 2.1e-1
+  thermalConductivity: 80
+  specificHeat: 2000
+
+- type: material
+  id: plasteel
+  name: plasteel
+  icon: Objects/Materials/sheet_plasteel.png
+  density: 15400 # literally arbitrary values...
+  electricResistivity: 6.9e-7
+  thermalConductivity: 18
+  specificHeat: 200

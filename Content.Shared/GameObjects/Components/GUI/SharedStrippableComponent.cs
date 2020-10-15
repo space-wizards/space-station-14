@@ -1,15 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
+using Content.Shared.GameObjects.Components.Items;
+using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.Shared.GameObjects.Components.GUI
 {
-    public class SharedStrippableComponent : Component
+    public abstract class SharedStrippableComponent : Component, IDraggable
     {
         public override string Name => "Strippable";
+
+        public bool CanBeStripped(IEntity by)
+        {
+            return by != Owner
+                   && by.HasComponent<ISharedHandsComponent>()
+                   && ActionBlockerSystem.CanInteract(by);
+        }
+
+        bool IDraggable.CanDrop(CanDropEventArgs args)
+        {
+            return args.Target != args.Dragged
+                   && args.Target == args.User
+                   && CanBeStripped(args.User);
+        }
+
+        public abstract bool Drop(DragDropEventArgs args);
 
         [NetSerializable, Serializable]
         public enum StrippingUiKey

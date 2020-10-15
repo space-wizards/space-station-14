@@ -22,7 +22,7 @@ namespace Content.Shared.GameObjects.EntitySystems
     public abstract class SharedMoverSystem : EntitySystem
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IPhysicsManager _physicsManager = default!;
+        [Dependency] protected readonly IPhysicsManager PhysicsManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
         public override void Initialize()
@@ -52,17 +52,16 @@ namespace Content.Shared.GameObjects.EntitySystems
             base.Shutdown();
         }
 
-        protected void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, ICollidableComponent collidable)
+        protected void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, IPhysicsComponent physics)
         {
-            collidable.EnsureController<MoverController>();
+            physics.EnsureController<MoverController>();
 
-            var weightless = !transform.Owner.HasComponent<MovementIgnoreGravityComponent>() &&
-                             _physicsManager.IsWeightless(transform.Coordinates);
+            var weightless = transform.Owner.IsWeightless();
 
             if (weightless)
             {
                 // No gravity: is our entity touching anything?
-                var touching = IsAroundCollider(transform, mover, collidable);
+                var touching = IsAroundCollider(transform, mover, physics);
 
                 if (!touching)
                 {
@@ -75,7 +74,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             var combined = walkDir + sprintDir;
             if (combined.LengthSquared < 0.001 || !ActionBlockerSystem.CanMove(mover.Owner) && !weightless)
             {
-                if (collidable.TryGetController(out MoverController controller))
+                if (physics.TryGetController(out MoverController controller))
                 {
                     controller.StopMoving();
                 }
@@ -84,7 +83,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             {
                 if (weightless)
                 {
-                    if (collidable.TryGetController(out MoverController controller))
+                    if (physics.TryGetController(out MoverController controller))
                     {
                         controller.Push(combined, mover.CurrentPushSpeed);
                     }
@@ -96,7 +95,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                 var total = walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed;
 
                 {
-                    if (collidable.TryGetController(out MoverController controller))
+                    if (physics.TryGetController(out MoverController controller))
                     {
                         controller.Move(total, 1);
                     }
@@ -114,7 +113,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         }
 
         private bool IsAroundCollider(ITransformComponent transform, IMoverComponent mover,
-            ICollidableComponent collider)
+            IPhysicsComponent collider)
         {
             foreach (var entity in _entityManager.GetEntitiesInRange(transform.Owner, mover.GrabRange, true))
             {
@@ -123,7 +122,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                     continue; // Don't try to push off of yourself!
                 }
 
-                if (!entity.TryGetComponent<ICollidableComponent>(out var otherCollider))
+                if (!entity.TryGetComponent<IPhysicsComponent>(out var otherCollider))
                 {
                     continue;
                 }

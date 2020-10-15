@@ -17,9 +17,9 @@ namespace Content.Shared.GameObjects.EntitySystems
 
         private void CombatModeActiveHandler(CombatModeSystemMessages.SetCombatModeActiveMessage ev, EntitySessionEventArgs eventArgs)
         {
-            var entity = eventArgs.SenderSession.AttachedEntity;
+            var entity = eventArgs.SenderSession?.AttachedEntity;
 
-            if (!entity.TryGetComponent(out SharedCombatModeComponent combatModeComponent))
+            if (entity == null || !entity.TryGetComponent(out SharedCombatModeComponent combatModeComponent))
             {
                 return;
             }
