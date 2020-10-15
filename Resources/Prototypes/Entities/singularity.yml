@@ -4,7 +4,7 @@
   id: Singularity
   components:
   - type: Clickable
-  - type: Collidable
+  - type: Physics
     anchored: false
     shapes:
     - !type:PhysShapeCircle
@@ -12,7 +12,6 @@
       layer: [Impassable]
       mask:
       - AllMask
-  - type: Physics
     mass: 5
   - type: Singularity
   - type: RadiationPulse
@@ -37,7 +36,6 @@
   - type: InteractionOutline
   - type: Physics
     anchored: true
-  - type: Collidable
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.5, -0.5, 0.5, 0.5"
@@ -71,7 +69,6 @@
   - type: Clickable
   - type: Physics
     anchored: true
-  - type: Collidable
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.5, -0.5, 0.5, 0.5"
@@ -99,7 +96,6 @@
   - type: Clickable
   - type: Physics
     anchored: true
-  - type: Collidable
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.5, -0.5, 0.5, 0.5"
@@ -125,7 +121,6 @@
   - type: Clickable
   - type: Physics
     anchored: true
-  - type: Collidable
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.5, -0.5, 0.5, 0.5"
@@ -178,7 +173,6 @@
     - type: Clickable
     - type: Physics
       anchored: true
-    - type: Collidable
       shapes:
         - !type:PhysShapeAabb
           bounds: "-0.5, -0.5, 0.5, 0.5"

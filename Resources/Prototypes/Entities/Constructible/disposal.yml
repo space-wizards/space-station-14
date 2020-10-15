@@ -42,7 +42,7 @@
       state_free: conpipe-s
       state_anchored: pipe-s
       state_broken: pipe-b
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.5,-0.25,0.5,0.25"
@@ -69,7 +69,7 @@
     interfaces:
     - key: enum.DisposalTaggerUiKey.Key
       type: DisposalTaggerBoundUserInterface
-  - type: Collidable
+  - type: Physics
     shapes:
       - !type:PhysShapeAabb
         bounds: "-0.5,-0.25,0.5,0.25"
@@ -92,7 +92,7 @@
       state_free: conpipe-t
       state_anchored: pipe-t
       state_broken: pipe-b
-  - type: Collidable
+  - type: Physics
     shapes:
       - !type:PhysShapeAabb
         bounds: "-0.5,-0.25,0.4,0.25"
@@ -190,7 +190,7 @@
     interfaces:
     - key: enum.DisposalRouterUiKey.Key
       type: DisposalRouterBoundUserInterface
-  - type: Collidable
+  - type: Physics
     shapes:
       - !type:PhysShapeAabb
         bounds: "-0.5,-0.5,0.5,0.25"
@@ -218,7 +218,7 @@
       state_broken: pipe-b
   - type: Flippable
     entity: DisposalRouter
-  - type: Collidable
+  - type: Physics
     shapes:
       - !type:PhysShapeAabb
         bounds: "-0.5,-0.25,0.5,0.5"
@@ -247,7 +247,7 @@
       state_broken: pipe-b
   - type: Flippable
     entity: DisposalJunctionFlipped
-  - type: Collidable
+  - type: Physics
     shapes:
       - !type:PhysShapeAabb
         bounds: "-0.5,-0.5,0.5,0.25"
@@ -275,7 +275,7 @@
       state_broken: pipe-b
   - type: Flippable
     entity: DisposalJunction
-  - type: Collidable
+  - type: Physics
     shapes:
       - !type:PhysShapeAabb
         bounds: "-0.5,-0.25,0.5,0.5"
@@ -302,7 +302,7 @@
       state_free: conpipe-y
       state_anchored: pipe-y
       state_broken: pipe-b
-  - type: Collidable
+  - type: Physics
     shapes:
       - !type:PhysShapeAabb
         bounds: "-0.5,-0.5,0.25,0.5"
@@ -325,7 +325,7 @@
       state_free: conpipe-c
       state_anchored: pipe-c
       state_broken: pipe-b
-  - type: Collidable
+  - type: Physics
     shapes:
       - !type:PhysShapeAabb
         bounds: "-0.5,-0.5,0.25,0.25"

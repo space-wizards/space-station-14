@@ -10,7 +10,16 @@ namespace Content.Server.GameObjects.Components.PA
     public class ParticleAcceleratorPowerBoxComponent : ParticleAcceleratorPartComponent
     {
         public override string Name => "ParticleAcceleratorPowerBox";
-        public PowerConsumerComponent? _powerConsumerComponent;
+        public PowerConsumerComponent? PowerConsumerComponent;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            if (Owner.TryGetComponent(out PowerConsumerComponent)) return;
+
+            Logger.Error($"ParticleAcceleratorPowerBoxComponent Component initialized without PowerConsumerComponent. Deleting entity {Owner}.");
+            Owner.Delete();
+        }
 
         public override ParticleAcceleratorPartComponent?[] GetNeighbours()
         {
