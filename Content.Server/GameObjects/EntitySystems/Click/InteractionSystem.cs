@@ -75,10 +75,10 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             if (!interactionArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true)) return;
 
             // trigger dragdrops on the dropped entity
-            foreach (var dragDrop in dropped.GetAllComponents<IDragDrop>())
+            foreach (var dragDrop in dropped.GetAllComponents<IDraggable>())
             {
-                if (dragDrop.CanDragDrop(interactionArgs) &&
-                    dragDrop.DragDrop(interactionArgs))
+                if (dragDrop.CanDrop(interactionArgs) &&
+                    dragDrop.Drop(interactionArgs))
                 {
                     return;
                 }

@@ -28,7 +28,6 @@
             "Wrench",
             "Crowbar",
             "MeleeWeapon",
-            "Storable",
             "Dice",
             "Construction",
             "Door",
@@ -183,6 +182,7 @@
             "GasCanister",
             "GasCanisterPort",
             "Lung",
+            "Cleanable"
         };
     }
 }

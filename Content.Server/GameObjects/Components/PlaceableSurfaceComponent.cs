@@ -9,11 +9,27 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedPlaceableSurfaceComponent))]
     public class PlaceableSurfaceComponent : SharedPlaceableSurfaceComponent, IInteractUsing
     {
         private bool _isPlaceable;
+
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool IsPlaceable { get => _isPlaceable; set => _isPlaceable = value; }
+        public override bool IsPlaceable
+        {
+            get => _isPlaceable;
+            set
+            {
+                if (_isPlaceable == value)
+                {
+                    return;
+                }
+
+                _isPlaceable = value;
+
+                Dirty();
+            }
+        }
 
         [ViewVariables]
         int IInteractUsing.Priority => 1;
@@ -25,6 +41,10 @@ namespace Content.Server.GameObjects.Components
             serializer.DataField(ref _isPlaceable, "IsPlaceable", true);
         }
 
+        public override ComponentState GetComponentState()
+        {
+            return new PlaceableSurfaceComponentState(_isPlaceable);
+        }
 
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
