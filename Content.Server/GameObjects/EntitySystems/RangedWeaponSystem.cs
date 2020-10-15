@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.EntitySystems
         // It'd be cleaner to have this under corresponding Client / Server components buuuttt the issue with that is
         // you wouldn't be able to inherit from "SharedBlankWeapon" and would instead need to make
         // discrete server and client versions of each weapon that don't inherit from shared.
-        
+
         // e.g. SharedRangedWeapon -> ServerRevolver and SharedRangedWeapon -> ClientRevolver
         // (Handles syncing via component)
         // vs.
@@ -48,7 +48,7 @@ namespace Content.Server.GameObjects.EntitySystems
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         private EffectSystem _effectSystem = default!;
-        
+
         private List<SharedRangedWeaponComponent> _activeRangedWeapons = new List<SharedRangedWeaponComponent>();
 
         public override void Initialize()
@@ -57,7 +57,7 @@ namespace Content.Server.GameObjects.EntitySystems
             SubscribeNetworkEvent<StartFiringMessage>(HandleStartMessage);
             SubscribeNetworkEvent<StopFiringMessage>(HandleStopMessage);
             SubscribeNetworkEvent<RangedFireMessage>(HandleRangedFireMessage);
-            
+
             _effectSystem = Get<EffectSystem>();
         }
 
@@ -65,7 +65,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             var entity = _entityManager.GetEntity(message.Uid);
             var weapon = entity.GetComponent<SharedRangedWeaponComponent>();
-            
+
             if (entity.Deleted)
             {
                 _activeRangedWeapons.Remove(weapon);
@@ -93,7 +93,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             var entity = _entityManager.GetEntity(message.Uid);
             var weapon = entity.GetComponent<SharedRangedWeaponComponent>();
-            
+
             if (entity.Deleted)
             {
                 _activeRangedWeapons.Remove(weapon);
@@ -106,7 +106,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 // Cheater / lagger
                 return;
             }
-            
+
             weapon.Firing = false;
             weapon.ExpectedShots = message.ExpectedShots;
         }
@@ -115,7 +115,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             var entity = _entityManager.GetEntity(message.Uid);
             var weapon = entity.GetComponent<SharedRangedWeaponComponent>();
-            
+
             if (entity.Deleted)
             {
                 _activeRangedWeapons.Remove(weapon);
@@ -159,7 +159,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 {
                     Logger.Warning($"Shooting desync occurred: Fired {weaponComponent.ShotCounter} but expected {weaponComponent.ExpectedShots}");
                 }
-                
+
                 weaponComponent.ExpectedShots -= weaponComponent.AccumulatedShots;
                 return false;
             }
@@ -227,7 +227,7 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 var projectile =
                         EntityManager.SpawnEntity(ammoComponent.ProjectileId, ammoComponent.Owner.Transform.MapPosition);
-                
+
                 Angle projectileAngle;
 
                 if (sprayAngleChange != null)
@@ -252,13 +252,13 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public override void ShootProjectile(IEntity? user, SharedRangedWeaponComponent weapon, Angle angle, SharedProjectileComponent projectileComponent, float velocity)
         {
-            var collidableComponent = projectileComponent.Owner.GetComponent<ICollidableComponent>();
-            collidableComponent.Status = BodyStatus.InAir;
+            var physicsComponent = projectileComponent.Owner.GetComponent<IPhysicsComponent>();
+            physicsComponent.Status = BodyStatus.InAir;
 
             if (user != null)
                 projectileComponent.IgnoreEntity(user);
 
-            collidableComponent
+            physicsComponent
                 .EnsureController<BulletController>()
                 .LinearVelocity = angle.ToVec() * velocity;
 
@@ -297,10 +297,10 @@ namespace Content.Server.GameObjects.EntitySystems
                 ColorDelta = new Vector4(0, 0, 0, -1500f),
                 Shaded = false
             };
-            
+
             _effectSystem.CreateParticle(message, predicted ? user?.PlayerSession() : null);
         }
-        
+
         private void HitscanMuzzleFlash(IEntity? user, SharedRangedWeaponComponent weapon, string? texture, Angle angle, float distance, TimeSpan? currentTime = null, float alphaRatio = 1.0f)
         {
             if (texture == null || distance <= 1.0f)
@@ -308,7 +308,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             currentTime ??= _gameTiming.CurTime;
             var parent = user ?? weapon.Owner;
-            
+
             var message = new EffectSystemMessage
             {
                 EffectSprite = texture,
@@ -321,7 +321,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 ColorDelta = new Vector4(0, 0, 0, -1500f),
                 Shaded = false
             };
-            
+
             _effectSystem.CreateParticle(message);
         }
 
@@ -380,10 +380,10 @@ namespace Content.Server.GameObjects.EntitySystems
             ejectDirections ??= new[] {Direction.East, Direction.North, Direction.South, Direction.West};
 
             const float ejectOffset = 0.2f;
-            
+
             var ammo = casing.GetComponent<SharedAmmoComponent>();
             var offsetPos = (_robustRandom.NextFloat() * ejectOffset, _robustRandom.NextFloat() * ejectOffset);
-            
+
             // Need to deparent it if applicable
             if (user != null && casing.Transform.ParentUid == user.Uid && user.Transform.Parent != null)
             {
