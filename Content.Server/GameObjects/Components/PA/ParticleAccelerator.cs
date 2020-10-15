@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable enable
+using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using Content.Server.Atmos;
@@ -18,14 +20,12 @@ using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameObjects.Components.PA
 {
-    //todo remove components when they get deleted
-
     public class ParticleAccelerator : IDisposable
     {
-        [Dependency] private IEntityManager _entityManager;
-        [Dependency] private IMapManager _mapManager;
+        [Dependency] private IEntityManager _entityManager = null!;
+        [Dependency] private IMapManager _mapManager = null!;
 
-        private bool SetForDeconstruct;
+        private bool _setForDeconstruct;
 
         public ParticleAccelerator()
         {
@@ -36,108 +36,93 @@ namespace Content.Server.GameObjects.Components.PA
 
         #region Parts
 
-
-
         [ViewVariables]
-        private ParticleAcceleratorControlBoxComponent _controlBox;
-        public ParticleAcceleratorControlBoxComponent ControlBox
+        private ParticleAcceleratorControlBoxComponent? _controlBox;
+        public ParticleAcceleratorControlBoxComponent? ControlBox
         {
             get => _controlBox;
             set => SetControlBox(value);
         }
-        private void SetControlBox(ParticleAcceleratorControlBoxComponent value, bool skipFuelChamberCheck = false)
+        private void SetControlBox(ParticleAcceleratorControlBoxComponent? value, bool skipFuelChamberCheck = false)
         {
             if(!TryAddPart(ref _controlBox, value, out var gridId)) return;
 
             if (!skipFuelChamberCheck &&
-                TryGetPart<ParticleAcceleratorFuelChamberComponent>(gridId, PartOffset.Right, value, out var fuelChamber))
+                TryGetPart<ParticleAcceleratorFuelChamberComponent>(gridId, PartOffset.Right, _controlBox, out var fuelChamber))
             {
                 SetFuelChamber(fuelChamber, skipControlBoxCheck: true);
             }
         }
 
         [ViewVariables]
-        private ParticleAcceleratorEndCapComponent _endCap;
-        public ParticleAcceleratorEndCapComponent EndCap
+        private ParticleAcceleratorEndCapComponent? _endCap;
+        public ParticleAcceleratorEndCapComponent? EndCap
         {
             get => _endCap;
             set => SetEndCap(value);
         }
-        private void SetEndCap(ParticleAcceleratorEndCapComponent value, bool skipFuelChamberCheck = false)
+        private void SetEndCap(ParticleAcceleratorEndCapComponent? value, bool skipFuelChamberCheck = false)
         {
             if(!TryAddPart(ref _endCap, value, out var gridId)) return;
+
             if (!skipFuelChamberCheck &&
-                TryGetPart<ParticleAcceleratorFuelChamberComponent>(gridId, PartOffset.Down, value, out var fuelChamber))
+                TryGetPart<ParticleAcceleratorFuelChamberComponent>(gridId, PartOffset.Down, _endCap, out var fuelChamber))
             {
                 SetFuelChamber(fuelChamber, skipEndCapCheck: true);
             }
         }
 
         [ViewVariables]
-        private ParticleAcceleratorFuelChamberComponent _fuelChamber;
-        public ParticleAcceleratorFuelChamberComponent FuelChamber
+        private ParticleAcceleratorFuelChamberComponent? _fuelChamber;
+        public ParticleAcceleratorFuelChamberComponent? FuelChamber
         {
             get => _fuelChamber;
             set => SetFuelChamber(value);
         }
-        private void SetFuelChamber(ParticleAcceleratorFuelChamberComponent value, bool skipEndCapCheck = false, bool skipPowerBoxCheck = false, bool skipControlBoxCheck = false)
+        private void SetFuelChamber(ParticleAcceleratorFuelChamberComponent? value, bool skipEndCapCheck = false, bool skipPowerBoxCheck = false, bool skipControlBoxCheck = false)
         {
             if(!TryAddPart(ref _fuelChamber, value, out var gridId)) return;
 
             if (!skipControlBoxCheck &&
-                TryGetPart<ParticleAcceleratorControlBoxComponent>(gridId, PartOffset.Left, value, out var controlBox))
+                TryGetPart<ParticleAcceleratorControlBoxComponent>(gridId, PartOffset.Left, _fuelChamber, out var controlBox))
             {
                 SetControlBox(controlBox, skipFuelChamberCheck: true);
             }
 
             if (!skipEndCapCheck &&
-                TryGetPart<ParticleAcceleratorEndCapComponent>(gridId, PartOffset.Up, value, out var endCap))
+                TryGetPart<ParticleAcceleratorEndCapComponent>(gridId, PartOffset.Up, _fuelChamber, out var endCap))
             {
                 SetEndCap(endCap, skipFuelChamberCheck: true);
             }
 
             if (!skipPowerBoxCheck &&
-                TryGetPart<ParticleAcceleratorPowerBoxComponent>(gridId, PartOffset.Down, value, out var powerBox))
+                TryGetPart<ParticleAcceleratorPowerBoxComponent>(gridId, PartOffset.Down, _fuelChamber, out var powerBox))
             {
                 SetPowerBox(powerBox, skipFuelChamberCheck: true);
             }
         }
 
         [ViewVariables]
-        private ParticleAcceleratorPowerBoxComponent _powerBox;
-        public ParticleAcceleratorPowerBoxComponent PowerBox
+        private ParticleAcceleratorPowerBoxComponent? _powerBox;
+        public ParticleAcceleratorPowerBoxComponent? PowerBox
         {
             get => _powerBox;
             set => SetPowerBox(value);
         }
-        private void SetPowerBox(ParticleAcceleratorPowerBoxComponent value, bool skipFuelChamberCheck = false,
+        private void SetPowerBox(ParticleAcceleratorPowerBoxComponent? value, bool skipFuelChamberCheck = false,
             bool skipEmitterCenterCheck = false)
         {
-            if (!TryAddPart(ref _powerBox, value, out var gridId))
-            {
-                if (_powerBox?._powerConsumerComponent != null)
-                {
-                    _powerBox._powerConsumerComponent.OnReceivedPowerChanged -= OnReceivedPowerChanged;
-                }
+            if (!TryAddPart(ref _powerBox, value, out var gridId)) return;
 
-                Enabled = false;
-                return;
-            }
-
-            if (_powerBox._powerConsumerComponent != null)
-            {
-                _powerBox._powerConsumerComponent.OnReceivedPowerChanged += OnReceivedPowerChanged;
-                _powerBox._powerConsumerComponent.DrawRate = PowerNeeded;
-            }
-
+            _powerBox.PowerConsumerComponent!.OnReceivedPowerChanged += PowerConsumerComponentOnOnReceivedPowerChanged;
 
             if (!skipFuelChamberCheck &&
-                TryGetPart<ParticleAcceleratorFuelChamberComponent>(gridId, PartOffset.Up, value, out var fuelChamber))
+                TryGetPart<ParticleAcceleratorFuelChamberComponent>(gridId, PartOffset.Up, _powerBox, out var fuelChamber))
             {
                 SetFuelChamber(fuelChamber, skipPowerBoxCheck: true);
             }
 
-            if (!skipEmitterCenterCheck && TryGetPart(gridId, PartOffset.Down, value,
+            if (!skipEmitterCenterCheck && TryGetPart(gridId, PartOffset.Down, _powerBox,
                 ParticleAcceleratorEmitterType.Center, out var emitterComponent))
             {
                 SetEmitterCenter(emitterComponent, skipPowerBoxCheck: true);
@@ -145,13 +130,13 @@ namespace Content.Server.GameObjects.Components.PA
         }
 
         [ViewVariables]
-        private ParticleAcceleratorEmitterComponent _emitterLeft;
-        public ParticleAcceleratorEmitterComponent EmitterLeft
+        private ParticleAcceleratorEmitterComponent? _emitterLeft;
+        public ParticleAcceleratorEmitterComponent? EmitterLeft
         {
             get => _emitterLeft;
             set => SetEmitterLeft(value);
         }
-        private void SetEmitterLeft(ParticleAcceleratorEmitterComponent value, bool skipEmitterCenterCheck = false)
+        private void SetEmitterLeft(ParticleAcceleratorEmitterComponent? value, bool skipEmitterCenterCheck = false)
         {
             if (value != null && value.Type != ParticleAcceleratorEmitterType.Left)
             {
@@ -161,7 +146,7 @@ namespace Content.Server.GameObjects.Components.PA
 
             if(!TryAddPart(ref _emitterLeft, value, out var gridId)) return;
 
-            if (!skipEmitterCenterCheck && TryGetPart(gridId, PartOffset.Right, value,
+            if (!skipEmitterCenterCheck && TryGetPart(gridId, PartOffset.Right, _emitterLeft,
                 ParticleAcceleratorEmitterType.Center, out var emitterComponent))
             {
                 SetEmitterCenter(emitterComponent, skipEmitterLeftCheck: true);
@@ -169,13 +154,13 @@ namespace Content.Server.GameObjects.Components.PA
         }
 
         [ViewVariables]
-        private ParticleAcceleratorEmitterComponent _emitterCenter;
-        public ParticleAcceleratorEmitterComponent EmitterCenter
+        private ParticleAcceleratorEmitterComponent? _emitterCenter;
+        public ParticleAcceleratorEmitterComponent? EmitterCenter
         {
             get => _emitterCenter;
             set => SetEmitterCenter(value);
         }
-        private void SetEmitterCenter(ParticleAcceleratorEmitterComponent value, bool skipEmitterLeftCheck = false,
+        private void SetEmitterCenter(ParticleAcceleratorEmitterComponent? value, bool skipEmitterLeftCheck = false,
             bool skipEmitterRightCheck = false, bool skipPowerBoxCheck = false)
         {
             if (value != null && value.Type != ParticleAcceleratorEmitterType.Center)
@@ -186,13 +171,13 @@ namespace Content.Server.GameObjects.Components.PA
 
             if(!TryAddPart(ref _emitterCenter, value, out var gridId)) return;
 
-            if (!skipEmitterLeftCheck && TryGetPart(gridId, PartOffset.Left, value, ParticleAcceleratorEmitterType.Left,
+            if (!skipEmitterLeftCheck && TryGetPart(gridId, PartOffset.Left, _emitterCenter, ParticleAcceleratorEmitterType.Left,
                 out var emitterLeft))
             {
                 SetEmitterLeft(emitterLeft, skipEmitterCenterCheck: true);
             }
 
-            if (!skipEmitterRightCheck && TryGetPart(gridId, PartOffset.Right, value,
+            if (!skipEmitterRightCheck && TryGetPart(gridId, PartOffset.Right, _emitterCenter,
                 ParticleAcceleratorEmitterType.Right,
                 out var emitterRight))
             {
@@ -200,20 +185,20 @@ namespace Content.Server.GameObjects.Components.PA
             }
 
             if (!skipPowerBoxCheck &&
-                TryGetPart<ParticleAcceleratorPowerBoxComponent>(gridId, PartOffset.Up, value, out var powerBox))
+                TryGetPart<ParticleAcceleratorPowerBoxComponent>(gridId, PartOffset.Up, _emitterCenter, out var powerBox))
             {
                 SetPowerBox(powerBox, skipEmitterCenterCheck: true);
             }
         }
 
         [ViewVariables]
-        private ParticleAcceleratorEmitterComponent _emitterRight;
-        public ParticleAcceleratorEmitterComponent EmitterRight
+        private ParticleAcceleratorEmitterComponent? _emitterRight;
+        public ParticleAcceleratorEmitterComponent? EmitterRight
         {
             get => _emitterRight;
             set => SetEmitterRight(value);
         }
-        private void SetEmitterRight(ParticleAcceleratorEmitterComponent value, bool skipEmitterCenterCheck = false)
+        private void SetEmitterRight(ParticleAcceleratorEmitterComponent? value, bool skipEmitterCenterCheck = false)
         {
             if (value != null && value.Type != ParticleAcceleratorEmitterType.Right)
             {
@@ -223,7 +208,7 @@ namespace Content.Server.GameObjects.Components.PA
 
             if(!TryAddPart(ref _emitterRight, value, out var gridId)) return;
 
-            if (!skipEmitterCenterCheck && TryGetPart(gridId, PartOffset.Left, value,
+            if (!skipEmitterCenterCheck && TryGetPart(gridId, PartOffset.Left, _emitterRight,
                 ParticleAcceleratorEmitterType.Center, out var emitterComponent))
             {
                 SetEmitterCenter(emitterComponent, skipEmitterRightCheck: true);
@@ -238,26 +223,19 @@ namespace Content.Server.GameObjects.Components.PA
             get => _power;
             set
             {
-                if (!_enabled || !IsFunctional() || WireFlagPowerBlock) return;
+                if (!IsAssembled || WireFlagInterfaceBlock) return;
 
                 if(_power == value) return;
                 if (value > WireFlagMaxPower) value = WireFlagMaxPower;
 
                 _power = value;
-                if (_powerBox?._powerConsumerComponent != null)
-                {
-                    _powerBox._powerConsumerComponent.DrawRate = PowerNeeded;
-                }
+
                 UpdatePartVisualStates();
                 _controlBox?.UpdateUI();
-
                 UpdateFireLoop();
+                UpdatePowerDraw();
             }
         }
-
-        private bool IsPowered => _powerBox?._powerConsumerComponent != null &&
-                                  _powerBox?._powerConsumerComponent.DrawRate <=
-                                  _powerBox?._powerConsumerComponent.ReceivedPower;
 
         private bool _enabled;
         [ViewVariables(VVAccess.ReadWrite)]
@@ -266,25 +244,20 @@ namespace Content.Server.GameObjects.Components.PA
             get => _enabled;
             set
             {
-                var actualValue = value && IsFunctional() && !WireFlagPowerBlock && IsPowered;
+                var actualValue = value && IsAssembled && !WireFlagPowerBlock && IsPowered;
                 if (_enabled == actualValue) return;
 
+                if (_enabled)
+                {
+                    var s = 0;
+                }
+
                 _enabled = actualValue;
+
                 UpdatePartVisualStates();
                 _controlBox?.UpdateUI();
-
                 UpdateFireLoop();
             }
-        }
-
-        private void OnReceivedPowerChanged(object sender, ReceivedPowerChangedEventArgs eventArgs)
-        {
-            if (eventArgs.DrawRate != PowerNeeded && _powerBox?._powerConsumerComponent != null)
-            {
-                _powerBox._powerConsumerComponent.DrawRate = PowerNeeded;
-            }
-
-            Enabled = eventArgs.DrawRate <= eventArgs.ReceiverPower;
         }
 
         private int PowerNeeded => Power switch
@@ -297,7 +270,13 @@ namespace Content.Server.GameObjects.Components.PA
                 _ => 0
             } * 1500 + 500;
 
-        #region WireFlags
+        public void UpdatePowerDraw()
+        {
+            if(PowerBox?.PowerConsumerComponent == null) return;
+            PowerBox.PowerConsumerComponent.DrawRate = PowerNeeded;
+        }
+
+        #region WireFlags (PowerBlock | InterfaceBlock | MaxPower)
         private bool _wireFlagPowerBlock = false;
 
         public bool WireFlagPowerBlock
@@ -308,7 +287,7 @@ namespace Content.Server.GameObjects.Components.PA
                 if(_wireFlagPowerBlock == value) return;
 
                 _wireFlagPowerBlock = value;
-                Validate();
+                Enabled = _wireFlagPowerBlock;
             }
         }
 
@@ -343,24 +322,26 @@ namespace Content.Server.GameObjects.Components.PA
 
         #endregion
 
-        public bool IsFunctional()
-        {
-            return ControlBox != null && EndCap != null && FuelChamber != null && PowerBox != null &&
-                   EmitterCenter != null && EmitterLeft != null && EmitterRight != null;
-        }
+        public bool IsAssembled =>
+            ControlBox != null && EndCap != null && FuelChamber != null && PowerBox != null &&
+            EmitterCenter != null && EmitterLeft != null && EmitterRight != null;
+
+        public bool IsPowered => PowerBox?.PowerConsumerComponent != null && PowerBox.PowerConsumerComponent.DrawRate <=
+            PowerBox.PowerConsumerComponent.ReceivedPower;
+
 
         private void UpdatePartVisualStates()
         {
-            //UpdatePartVisualState(ControlBox);
-            //UpdatePartVisualState(EndCap); not needed
+            UpdatePartVisualState(ControlBox);
             UpdatePartVisualState(FuelChamber);
             UpdatePartVisualState(PowerBox);
             UpdatePartVisualState(EmitterCenter);
             UpdatePartVisualState(EmitterLeft);
             UpdatePartVisualState(EmitterRight);
+            //no endcap because it has no powerlevel-sprites
         }
 
-        private void UpdatePartVisualState(ParticleAcceleratorPartComponent component)
+        private void UpdatePartVisualState(ParticleAcceleratorPartComponent? component)
         {
             if (component?.Owner == null) return;
 
@@ -373,15 +354,15 @@ namespace Content.Server.GameObjects.Components.PA
         }
 
         public ParticleAcceleratorDataUpdateMessage DataMessage =>
-            new ParticleAcceleratorDataUpdateMessage(IsFunctional(),
+            new ParticleAcceleratorDataUpdateMessage(IsAssembled,
                 Enabled, Power, PowerNeeded, EmitterLeft != null,
                 EmitterCenter != null, EmitterRight != null,
                 PowerBox != null, FuelChamber != null,
                 EndCap != null, WireFlagInterfaceBlock, WireFlagMaxPower, WireFlagPowerBlock);
 
-        private void Absorb(ParticleAccelerator particleAccelerator)
+        private void Absorb(ParticleAccelerator? particleAccelerator)
         {
-            if (particleAccelerator == null || particleAccelerator.SetForDeconstruct) return;
+            if (particleAccelerator == null || particleAccelerator._setForDeconstruct) return;
 
             _controlBox ??= particleAccelerator._controlBox;
             if (_controlBox != null) _controlBox.ParticleAccelerator = this;
@@ -389,7 +370,18 @@ namespace Content.Server.GameObjects.Components.PA
             if (_endCap != null) _endCap.ParticleAccelerator = this;
             _fuelChamber ??= particleAccelerator._fuelChamber;
             if (_fuelChamber != null) _fuelChamber.ParticleAccelerator = this;
+
+            if (particleAccelerator._powerBox?.PowerConsumerComponent != null)
+            {
+                particleAccelerator._powerBox.PowerConsumerComponent.OnReceivedPowerChanged -=
+                    PowerConsumerComponentOnOnReceivedPowerChanged;
+            }
             _powerBox ??= particleAccelerator._powerBox;
+            if (_powerBox?.PowerConsumerComponent != null)
+            {
+                _powerBox.PowerConsumerComponent.OnReceivedPowerChanged +=
+                    PowerConsumerComponentOnOnReceivedPowerChanged;
+            }
             if (_powerBox != null) _powerBox.ParticleAccelerator = this;
             _emitterLeft ??= particleAccelerator._emitterLeft;
             if (_emitterLeft != null) _emitterLeft.ParticleAccelerator = this;
@@ -398,7 +390,6 @@ namespace Content.Server.GameObjects.Components.PA
             _emitterRight ??= particleAccelerator._emitterRight;
             if (_emitterRight != null) _emitterRight.ParticleAccelerator = this;
 
-            Validate();
             Power = particleAccelerator.Power;
             WireFlagInterfaceBlock = particleAccelerator.WireFlagInterfaceBlock;
             WireFlagMaxPower = particleAccelerator.WireFlagMaxPower;
@@ -407,6 +398,10 @@ namespace Content.Server.GameObjects.Components.PA
             particleAccelerator.Dispose();
         }
 
+        private void PowerConsumerComponentOnOnReceivedPowerChanged(object? sender, ReceivedPowerChangedEventArgs e)
+        {
+            Enabled = Enabled && e.DrawRate <= e.ReceivedPower;
+        }
 
         private void UpdateFireLoop()
         {
@@ -419,7 +414,7 @@ namespace Content.Server.GameObjects.Components.PA
             }
         }
 
-        private bool TryAddPart<T>(ref T partVar, T value, out GridId gridId) where T : ParticleAcceleratorPartComponent
+        private bool TryAddPart<T>([NotNullWhen(true)]ref T partVar, T value, out GridId gridId) where T : ParticleAcceleratorPartComponent?
         {
             gridId = GridId.Invalid;
 
@@ -429,8 +424,8 @@ namespace Content.Server.GameObjects.Components.PA
 
             if (value == null)
             {
-                SetForDeconstruct = true;
-                foreach (var neighbour in partVar.GetNeighbours())
+                _setForDeconstruct = true;
+                foreach (var neighbour in partVar!.GetNeighbours())
                 {
                     neighbour?.RebuildParticleAccelerator();
                 }
@@ -466,25 +461,19 @@ namespace Content.Server.GameObjects.Components.PA
 
             partVar = value;
 
-            if (value.ParticleAccelerator != this)
+            if (value.ParticleAccelerator != this && value.ParticleAccelerator != null)
             {
                 Absorb(value.ParticleAccelerator);
                 value.ParticleAccelerator = this;
             }
 
-            Validate();
-            UpdatePartVisualStates();
-            _controlBox?.UpdateUI();
+            UpdatePowerDraw();
+            _controlBox?.UpdateUI(); //because a part got added and we want to display it (incase its not already sent due to UpdatePowerDraw)
 
             return true;
         }
 
-        private void Validate()
-        {
-            Enabled = true; //the actual calculations are inside the set-accessor of Enabled, this just triggers it
-        }
-
-        private CancellationTokenSource _cancellationTokenSource;
+        private CancellationTokenSource? _cancellationTokenSource;
         private void StartFiring()
         {
             _cancellationTokenSource?.Cancel();
@@ -504,7 +493,7 @@ namespace Content.Server.GameObjects.Components.PA
             _cancellationTokenSource = null;
         }
 
-        private bool TryGetPart<TP>(GridId gridId, PartOffset directionOffset, ParticleAcceleratorPartComponent value, out TP part)
+        private bool TryGetPart<TP>(GridId gridId, PartOffset directionOffset, ParticleAcceleratorPartComponent value, [NotNullWhen(true)] out TP? part)
             where TP : ParticleAcceleratorPartComponent
         {
             var partMapIndices = GetMapIndicesInDir(value, directionOffset);
@@ -514,7 +503,7 @@ namespace Content.Server.GameObjects.Components.PA
             return entity != null && part != null;
         }
 
-        private bool TryGetPart(GridId gridId, PartOffset directionOffset, ParticleAcceleratorPartComponent value, ParticleAcceleratorEmitterType type, out ParticleAcceleratorEmitterComponent part)
+        private bool TryGetPart(GridId gridId, PartOffset directionOffset, ParticleAcceleratorPartComponent value, ParticleAcceleratorEmitterType type, [NotNullWhen(true)] out ParticleAcceleratorEmitterComponent? part)
         {
             var partMapIndices = GetMapIndicesInDir(value, directionOffset);
 
@@ -557,7 +546,6 @@ namespace Content.Server.GameObjects.Components.PA
             _emitterCenter = null;
             _emitterRight = null;
             StopFiring();
-            _cancellationTokenSource?.Dispose();
         }
     }
 }

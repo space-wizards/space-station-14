@@ -64,7 +64,7 @@ namespace Content.Server.GameObjects.Components.PA
             if (ParticleAccelerator != null) UnRegisterAtParticleAccelerator();
         }
 
-        public abstract ParticleAcceleratorPartComponent[] GetNeighbours();
+        public abstract ParticleAcceleratorPartComponent?[] GetNeighbours();
 
         protected abstract void RegisterAtParticleAccelerator();
 

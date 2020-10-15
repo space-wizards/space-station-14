@@ -84,12 +84,12 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
     public class ReceivedPowerChangedEventArgs : EventArgs
     {
         public readonly int DrawRate;
-        public readonly int ReceiverPower;
+        public readonly int ReceivedPower;
 
-        public ReceivedPowerChangedEventArgs(int drawRate, int receiverPower)
+        public ReceivedPowerChangedEventArgs(int drawRate, int receivedPower)
         {
             DrawRate = drawRate;
-            ReceiverPower = receiverPower;
+            ReceivedPower = receivedPower;
         }
     }
 }

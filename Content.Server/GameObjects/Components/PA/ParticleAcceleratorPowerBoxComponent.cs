@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
@@ -9,17 +10,20 @@ namespace Content.Server.GameObjects.Components.PA
     public class ParticleAcceleratorPowerBoxComponent : ParticleAcceleratorPartComponent
     {
         public override string Name => "ParticleAcceleratorPowerBox";
-        public PowerConsumerComponent? _powerConsumerComponent;
+        public PowerConsumerComponent? PowerConsumerComponent;
 
         public override void Initialize()
         {
             base.Initialize();
-            Owner.TryGetComponent(out _powerConsumerComponent);
+            if (Owner.TryGetComponent(out PowerConsumerComponent)) return;
+
+            Logger.Error($"ParticleAcceleratorPowerBoxComponent Component initialized without PowerConsumerComponent. Deleting entity {Owner}.");
+            Owner.Delete();
         }
 
-        public override ParticleAcceleratorPartComponent[] GetNeighbours()
+        public override ParticleAcceleratorPartComponent?[] GetNeighbours()
         {
-            return new ParticleAcceleratorPartComponent[] {ParticleAccelerator?.EmitterCenter, ParticleAccelerator?.FuelChamber};
+            return new ParticleAcceleratorPartComponent?[]{ParticleAccelerator?.EmitterCenter, ParticleAccelerator?.FuelChamber};
         }
 
         protected override void RegisterAtParticleAccelerator()
