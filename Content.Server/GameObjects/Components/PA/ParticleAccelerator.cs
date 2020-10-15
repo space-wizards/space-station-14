@@ -223,7 +223,7 @@ namespace Content.Server.GameObjects.Components.PA
             get => _power;
             set
             {
-                if (!_enabled || !IsAssembled() || WireFlagInterfaceBlock) return;
+                if (!IsAssembled || WireFlagInterfaceBlock) return;
 
                 if(_power == value) return;
                 if (value > WireFlagMaxPower) value = WireFlagMaxPower;
@@ -244,21 +244,20 @@ namespace Content.Server.GameObjects.Components.PA
             get => _enabled;
             set
             {
-                var actualValue = value && IsAssembled() && !WireFlagPowerBlock;
+                var actualValue = value && IsAssembled && !WireFlagPowerBlock && IsPowered;
                 if (_enabled == actualValue) return;
+
+                if (_enabled)
+                {
+                    var s = 0;
+                }
 
                 _enabled = actualValue;
 
                 UpdatePartVisualStates();
                 _controlBox?.UpdateUI();
                 UpdateFireLoop();
-                UpdatePowerDraw();
             }
-        }
-
-        public void ValidateEnabled()
-        {
-            Enabled = Enabled;
         }
 
         private int PowerNeeded => Power switch
@@ -288,7 +287,7 @@ namespace Content.Server.GameObjects.Components.PA
                 if(_wireFlagPowerBlock == value) return;
 
                 _wireFlagPowerBlock = value;
-                ValidateEnabled();
+                Enabled = _wireFlagPowerBlock;
             }
         }
 
@@ -323,11 +322,13 @@ namespace Content.Server.GameObjects.Components.PA
 
         #endregion
 
-        public bool IsAssembled()
-        {
-            return ControlBox != null && EndCap != null && FuelChamber != null && PowerBox != null &&
-                   EmitterCenter != null && EmitterLeft != null && EmitterRight != null;
-        }
+        public bool IsAssembled =>
+            ControlBox != null && EndCap != null && FuelChamber != null && PowerBox != null &&
+            EmitterCenter != null && EmitterLeft != null && EmitterRight != null;
+
+        public bool IsPowered => PowerBox?.PowerConsumerComponent != null && PowerBox.PowerConsumerComponent.DrawRate <=
+            PowerBox.PowerConsumerComponent.ReceivedPower;
+
 
         private void UpdatePartVisualStates()
         {
@@ -353,7 +354,7 @@ namespace Content.Server.GameObjects.Components.PA
         }
 
         public ParticleAcceleratorDataUpdateMessage DataMessage =>
-            new ParticleAcceleratorDataUpdateMessage(IsAssembled(),
+            new ParticleAcceleratorDataUpdateMessage(IsAssembled,
                 Enabled, Power, PowerNeeded, EmitterLeft != null,
                 EmitterCenter != null, EmitterRight != null,
                 PowerBox != null, FuelChamber != null,
@@ -399,7 +400,7 @@ namespace Content.Server.GameObjects.Components.PA
 
         private void PowerConsumerComponentOnOnReceivedPowerChanged(object? sender, ReceivedPowerChangedEventArgs e)
         {
-            Enabled = e.DrawRate <= e.ReceivedPower;
+            Enabled = Enabled && e.DrawRate <= e.ReceivedPower;
         }
 
         private void UpdateFireLoop()
@@ -466,8 +467,8 @@ namespace Content.Server.GameObjects.Components.PA
                 value.ParticleAccelerator = this;
             }
 
-            ValidateEnabled();
-            _controlBox?.UpdateUI(); //because a part got added and we want to display it (incase its not already sent due to ValidateEnabled)
+            UpdatePowerDraw();
+            _controlBox?.UpdateUI(); //because a part got added and we want to display it (incase its not already sent due to UpdatePowerDraw)
 
             return true;
         }

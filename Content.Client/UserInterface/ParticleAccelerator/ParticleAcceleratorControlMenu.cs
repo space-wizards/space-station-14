@@ -433,7 +433,7 @@ namespace Content.Client.ParticleAccelerator
             _onButton.Disabled = cantUse;
             _offButton.Disabled = cantUse;
 
-            var cantChangeLevel = cantUse || !enabled;
+            var cantChangeLevel = !assembled || blocked;
             _stateSpinBox.SetButtonDisabled(cantChangeLevel);
             _blockSpinBox = cantChangeLevel;
         }

@@ -48,17 +48,13 @@ namespace Content.Server.GameObjects.Components.PA
 
         private void OnPowerStateChanged(object? sender, PowerStateEventArgs e)
         {
-            if (ParticleAccelerator == null)
-            {
-                Logger.Error($"PowerConsumerComponentOnReceivedPowerChanged got called on {this} without a Particleaccelerator attached");
-                return;
-            }
-
             if(Owner.TryGetComponent<AppearanceComponent>(out var appearanceComponent))
             {
                 appearanceComponent.SetData(ParticleAcceleratorVisuals.VisualState,
                     e.Powered && ParticleAccelerator != null ? (ParticleAcceleratorVisualState) ParticleAccelerator.Power : ParticleAcceleratorVisualState.Unpowered);
             }
+
+            if (ParticleAccelerator != null) ParticleAccelerator.Enabled = e.Powered; //try to enable / disable pa
 
             if (e.Powered) return;
 
@@ -96,6 +92,7 @@ namespace Content.Server.GameObjects.Components.PA
                     ParticleAccelerator.Power = stateMessage.State;
                     break;
             }
+            UpdateUI();
         }
 
         public override ParticleAcceleratorPartComponent[] GetNeighbours()
