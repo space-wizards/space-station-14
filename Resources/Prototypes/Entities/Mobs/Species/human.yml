@@ -120,7 +120,7 @@
     mass: 85
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.50,-0.30,0.40,0.30"
+      bounds: "-0.35,-0.35,0.35,0.35"
       mask:
       - Impassable
       - MobImpassable
