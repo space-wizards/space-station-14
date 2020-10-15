@@ -210,8 +210,7 @@ entities:
     pos: 1.5,3.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 17
@@ -3450,8 +3449,7 @@ entities:
     pos: -22.5,14.5
     rot: 3.141592653589793 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -24543,8 +24541,7 @@ entities:
     pos: 6.5,20.5
     rot: 1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 1409
@@ -45405,8 +45402,7 @@ entities:
   - parent: 980
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 3959
@@ -45425,8 +45421,7 @@ entities:
     pos: -36.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 3961
@@ -45436,8 +45431,7 @@ entities:
     pos: -35.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 3962
@@ -45455,8 +45449,7 @@ entities:
     pos: 5.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 3964
@@ -45466,8 +45459,7 @@ entities:
     pos: -4.5,-27.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -45479,8 +45471,7 @@ entities:
     pos: -4.5,-26.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -45492,8 +45483,7 @@ entities:
     pos: -26.5,3.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 3967
@@ -45503,8 +45493,7 @@ entities:
     pos: -21.5,3.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 3968
@@ -45514,8 +45503,7 @@ entities:
     pos: -21.5,4.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 3969
@@ -45541,8 +45529,7 @@ entities:
     pos: 2.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 3972
@@ -45552,8 +45539,7 @@ entities:
     pos: -26.5,4.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 3973
@@ -45563,8 +45549,7 @@ entities:
     pos: -26.5,5.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 3974
@@ -45574,8 +45559,7 @@ entities:
     pos: -21.5,5.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 3975
@@ -45602,8 +45586,7 @@ entities:
     pos: -7.5,7.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 3978
@@ -45613,8 +45596,7 @@ entities:
     pos: -4.5,5.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 3979
@@ -45642,8 +45624,7 @@ entities:
     pos: 1.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 3982
@@ -45653,8 +45634,7 @@ entities:
     pos: 1.5,-1.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 3983
@@ -45686,8 +45666,7 @@ entities:
     pos: 15.5,-3.5
     rot: 3.141592653589793 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 3986
@@ -45733,8 +45712,7 @@ entities:
     pos: -19.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -45789,8 +45767,7 @@ entities:
     pos: 1.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 3997
@@ -45800,8 +45777,7 @@ entities:
     pos: 1.5,-0.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 3998
@@ -45820,8 +45796,7 @@ entities:
     pos: 22.5,-19.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -45833,8 +45808,7 @@ entities:
     pos: -6.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -45846,8 +45820,7 @@ entities:
     pos: -2.5,2.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4002
@@ -45857,8 +45830,7 @@ entities:
     pos: -3.5,2.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4003
@@ -45882,8 +45854,7 @@ entities:
     pos: -37.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4006
@@ -45893,8 +45864,7 @@ entities:
     pos: -32.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -45906,8 +45876,7 @@ entities:
     pos: -24.5,7.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4008
@@ -45917,8 +45886,7 @@ entities:
     pos: -23.5,7.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4009
@@ -45928,8 +45896,7 @@ entities:
     pos: -6.5,-10.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -45941,8 +45908,7 @@ entities:
     pos: -1.5,2.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4011
@@ -45952,8 +45918,7 @@ entities:
     pos: -0.5,2.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4012
@@ -45963,8 +45928,7 @@ entities:
     pos: -23.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4013
@@ -45974,8 +45938,7 @@ entities:
     pos: -33.5,3.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4014
@@ -45985,8 +45948,7 @@ entities:
     pos: -33.5,4.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4015
@@ -45996,8 +45958,7 @@ entities:
     pos: -33.5,5.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4016
@@ -46030,8 +45991,7 @@ entities:
     pos: 36.5,5.5
     rot: 3.141592653589793 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4020
@@ -46041,8 +46001,7 @@ entities:
     pos: 36.5,4.5
     rot: 3.141592653589793 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4021
@@ -46052,8 +46011,7 @@ entities:
     pos: 13.5,-19.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -46070,8 +46028,7 @@ entities:
     pos: 13.5,-20.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -46090,8 +46047,7 @@ entities:
     pos: -15.5,0.5
     rot: 3.141592653589793 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4026
@@ -46101,8 +46057,7 @@ entities:
     pos: 5.5,-1.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4027
@@ -46112,8 +46067,7 @@ entities:
     pos: 5.5,-0.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4028
@@ -46123,8 +46077,7 @@ entities:
     pos: 5.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4029
@@ -46134,8 +46087,7 @@ entities:
     pos: -4.5,4.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4030
@@ -46145,8 +46097,7 @@ entities:
     pos: -4.5,3.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4031
@@ -46156,8 +46107,7 @@ entities:
     pos: 37.5,-5.5
     rot: 3.141592653589793 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -46169,8 +46119,7 @@ entities:
     pos: 0.5,-14.5
     rot: 3.141592653589793 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4033
@@ -46180,8 +46129,7 @@ entities:
     pos: 13.5,0.5
     rot: 3.141592653589793 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4034
@@ -46196,8 +46144,7 @@ entities:
     pos: -33.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -46209,8 +46156,7 @@ entities:
     pos: -24.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4037
@@ -46225,8 +46171,7 @@ entities:
     pos: 3.5,15.5
     rot: 3.141592653589793 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4039
@@ -46236,8 +46181,7 @@ entities:
     pos: 4.5,15.5
     rot: 3.141592653589793 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4040
@@ -46247,8 +46191,7 @@ entities:
     pos: 2.5,15.5
     rot: 3.141592653589793 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4041
@@ -46258,8 +46201,7 @@ entities:
     pos: 25.5,-1.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -46271,8 +46213,7 @@ entities:
     pos: 25.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -46284,8 +46225,7 @@ entities:
     pos: -10.5,-7.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -46316,8 +46256,7 @@ entities:
     pos: -10.5,1.5
     rot: 3.141592653589793 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4048
@@ -46327,8 +46266,7 @@ entities:
     pos: -10.5,0.5
     rot: 3.141592653589793 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4049
@@ -46338,8 +46276,7 @@ entities:
     pos: 15.5,8.5
     rot: 3.141592653589793 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4050
@@ -46349,8 +46286,7 @@ entities:
     pos: 36.5,3.5
     rot: 3.141592653589793 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4051
@@ -46360,8 +46296,7 @@ entities:
     pos: -10.5,11.5
     rot: 3.141592653589793 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4052
@@ -46371,8 +46306,7 @@ entities:
     pos: -10.5,10.5
     rot: 3.141592653589793 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4053
@@ -46382,8 +46316,7 @@ entities:
     pos: -10.5,-0.5
     rot: 3.141592653589793 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4054
@@ -46393,8 +46326,7 @@ entities:
     pos: 38.5,-5.5
     rot: 3.141592653589793 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -46406,8 +46338,7 @@ entities:
     pos: 0.5,-15.5
     rot: 3.141592653589793 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4056
@@ -46417,8 +46348,7 @@ entities:
     pos: 4.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4057
@@ -46428,8 +46358,7 @@ entities:
     pos: 3.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4058
@@ -46439,8 +46368,7 @@ entities:
     pos: 11.5,14.5
     rot: 3.141592653589793 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -46452,8 +46380,7 @@ entities:
     pos: -17.5,17.5
     rot: 3.141592653589793 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -46465,8 +46392,7 @@ entities:
     pos: -10.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -46514,8 +46440,7 @@ entities:
     pos: 11.5,3.5
     rot: 3.141592653589793 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4066
@@ -46534,8 +46459,7 @@ entities:
     pos: 11.5,5.5
     rot: 3.141592653589793 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4068
@@ -46554,8 +46478,7 @@ entities:
     pos: 11.5,4.5
     rot: 3.141592653589793 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4070
@@ -46593,8 +46516,7 @@ entities:
     pos: -8.5,6.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4075
@@ -46604,8 +46526,7 @@ entities:
     pos: -7.5,8.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4076
@@ -46624,8 +46545,7 @@ entities:
     pos: 21.5,-19.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -46655,8 +46575,7 @@ entities:
     pos: -10.5,24.5
     rot: 3.141592653589793 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -46668,8 +46587,7 @@ entities:
     pos: -10.5,25.5
     rot: 3.141592653589793 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -46690,8 +46608,7 @@ entities:
     pos: -18.5,17.5
     rot: 3.141592653589793 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -46703,8 +46620,7 @@ entities:
     pos: 27.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -46716,8 +46632,7 @@ entities:
     pos: 26.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -47029,8 +46944,7 @@ entities:
     pos: -22.5,13.5
     rot: 3.141592653589793 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
   - enabled: False
@@ -47042,8 +46956,7 @@ entities:
     pos: -9.5,6.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4122
@@ -47081,8 +46994,7 @@ entities:
     pos: 5.5,5.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4127
@@ -47092,8 +47004,7 @@ entities:
     pos: 5.5,4.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4128
@@ -47103,8 +47014,7 @@ entities:
     pos: 5.5,3.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4129
@@ -47114,8 +47024,7 @@ entities:
     pos: 1.5,5.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4130
@@ -47125,8 +47034,7 @@ entities:
     pos: 1.5,4.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - hard: False
-    type: Physics
+  - type: Physics
   - airBlocked: False
     type: Airtight
 - uid: 4131
