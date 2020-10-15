@@ -23,6 +23,7 @@ using Content.Server.Mobs.Roles;
 using Content.Server.Players;
 using Content.Shared;
 using Content.Shared.Chat;
+using Content.Shared.GameTicking;
 using Content.Shared.Network.NetMessages;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
@@ -99,9 +100,9 @@ namespace Content.Server.GameTicking
 
 
         [ViewVariables] public bool Paused { get; private set; }
-        
+
         [ViewVariables] public MapId DefaultMap { get; private set; }
-        
+
         [ViewVariables] public GridId DefaultGridId { get; private set; }
 
         [ViewVariables]
@@ -678,11 +679,13 @@ namespace Content.Server.GameTicking
                 _playerJoinLobby(player);
             }
 
-            EntitySystem.Get<GasTileOverlaySystem>().ResettingCleanup();
-            EntitySystem.Get<PathfindingSystem>().ResettingCleanup();
-            EntitySystem.Get<AiReachableSystem>().ResettingCleanup();
-            EntitySystem.Get<WireHackingSystem>().ResetLayouts();
-            EntitySystem.Get<StationEventSystem>().ResettingCleanup();
+            foreach (var system in _entitySystemManager.AllSystems)
+            {
+                if (system is IResettingEntitySystem resetting)
+                {
+                    resetting.Reset();
+                }
+            }
 
             _spawnedPositions.Clear();
             _manifest.Clear();
@@ -694,7 +697,7 @@ namespace Content.Server.GameTicking
             DefaultMap = _mapManager.CreateMap();
             var startTime = _gameTiming.RealTime;
             var grid = _mapLoader.LoadBlueprint(DefaultMap, MapFile);
-            
+
             DefaultGridId = grid.Index;
             _spawnPoint = grid.ToCoordinates();
 
@@ -1006,6 +1009,7 @@ The current game mode is: [color=white]{0}[/color].
         [Dependency] private readonly IServerPreferencesManager _prefsManager = default!;
         [Dependency] private readonly IBaseServer _baseServer = default!;
         [Dependency] private readonly IWatchdogApi _watchdogApi = default!;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
     }
 
     public enum GameRunLevel

@@ -4,6 +4,7 @@ using Content.Client.Interfaces;
 using Content.Client.State;
 using Content.Client.UserInterface;
 using Content.Shared;
+using Content.Shared.GameTicking;
 using Content.Shared.Network.NetMessages;
 using Robust.Client.Interfaces.Graphics;
 using Robust.Client.Interfaces.State;

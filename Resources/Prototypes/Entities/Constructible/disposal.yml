@@ -8,7 +8,7 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
     anchored: true
   - type: SnapGrid
     offset: Center
@@ -111,7 +111,7 @@
     flushTime: 2
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
     anchored: true
     shapes:
     - !type:PhysShapeAabb

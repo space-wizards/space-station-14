@@ -8,7 +8,7 @@
    - type: Clickable
    - type: InteractionOutline
    - type: Anchorable
-   - type: Collidable
+   - type: Physics
      shapes:
        - !type:PhysShapeAabb
          mask:

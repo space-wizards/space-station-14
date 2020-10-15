@@ -5,7 +5,7 @@
   - type: Marker
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
   - type: Sprite
     netsync: false
     visible: false

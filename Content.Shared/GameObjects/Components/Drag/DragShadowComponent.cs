@@ -2,11 +2,12 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 
-namespace Content.Shared.GameObjects.Components.Pointing
+namespace Content.Shared.GameObjects.Components.Drag
 {
-    public class SharedPointingArrowComponent : Component, IShowContextMenu
+    [RegisterComponent]
+    public class DragShadowComponent : Component, IShowContextMenu
     {
-        public sealed override string Name => "PointingArrow";
+        public override string Name => "DragShadow";
 
         public bool ShowContextMenu(IEntity examiner)
         {
