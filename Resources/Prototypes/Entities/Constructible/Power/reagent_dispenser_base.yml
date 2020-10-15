@@ -5,7 +5,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Anchorable
-  - type: Collidable
+  - type: Physics
     mass: 25
     anchored: true
     shapes:

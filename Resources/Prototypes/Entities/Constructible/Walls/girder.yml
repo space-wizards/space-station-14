@@ -12,7 +12,7 @@
   - type: Sprite
     sprite: Constructible/Structures/Walls/solid.rsi
     state: wall_girder
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       layer: [MobMask, Opaque]

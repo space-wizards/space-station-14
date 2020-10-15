@@ -8,7 +8,7 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
   - type: SnapGrid
     offset: Center
   - type: Destructible
@@ -33,7 +33,7 @@
       pipeDirection: Lateral
   - type: Icon
     state: pipeStraight2
-    
+
 - type: entity
   parent: PipeBase
   id: PipeBend

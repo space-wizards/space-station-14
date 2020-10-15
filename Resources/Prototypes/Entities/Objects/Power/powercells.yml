@@ -3,7 +3,7 @@
   abstract: true
   parent: BaseItem
   components:
-  - type: Collidable
+  - type: Physics
     anchored: false
     shapes:
     - !type:PhysShapeAabb
@@ -106,7 +106,7 @@
   - type: Anchorable
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
     mass: 5
     shapes:
     - !type:PhysShapeAabb
@@ -134,7 +134,7 @@
   - type: Anchorable
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
     mass: 5
     shapes:
     - !type:PhysShapeAabb
@@ -161,7 +161,7 @@
     - type: PowerChargerVisualizer
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
     mass: 5
     shapes:
     - !type:PhysShapeAabb

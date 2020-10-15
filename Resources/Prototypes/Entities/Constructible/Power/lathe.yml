@@ -5,7 +5,7 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
     mass: 25
     anchored: true
     shapes:
@@ -42,7 +42,7 @@
       shader: unshaded
       map: ["enum.AutolatheVisualLayers.BaseUnlit"]
 
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       layer:
@@ -90,7 +90,7 @@
     - state: protolathe
       map: ["enum.ProtolatheVisualLayers.AnimationLayer"]
 
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       layer:

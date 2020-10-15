@@ -19,7 +19,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: carp
       sprite: Mobs/Aliens/Carps/carp_space.rsi
-  - type: Collidable
+  - type: Physics
     anchored: false
     mass: 50
     shapes:
@@ -68,7 +68,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: magicarp
       sprite: Mobs/Aliens/Carps/carp_magic.rsi
-  - type: Collidable
+  - type: Physics
     mass: 60
   - type: Appearance
     visuals:
@@ -91,7 +91,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: holocarp
       sprite: Mobs/Aliens/Carps/carp_holo.rsi
-  - type: Collidable
+  - type: Physics
     mass: 5
   - type: Appearance
     visuals:

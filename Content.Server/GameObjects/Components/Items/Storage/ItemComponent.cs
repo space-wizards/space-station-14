@@ -156,7 +156,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                     break;
             }
 
-            ThrowHelper.Throw(Owner, throwForce, targetLocation, sourceLocation, true);
+            Owner.Throw(throwForce, targetLocation, sourceLocation, true);
         }
     }
 }

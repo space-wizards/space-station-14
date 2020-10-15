@@ -7,7 +7,7 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
     hard: false
     shapes:
     - !type:PhysShapeAabb
