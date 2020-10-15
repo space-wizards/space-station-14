@@ -104,7 +104,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                 return;
             }
 
-            if (e.ReceiverPower < e.DrawRate)
+            if (e.ReceivedPower < e.DrawRate)
             {
                 PowerOff();
             }
