@@ -83,6 +83,7 @@
           type: WiresBoundUserInterface
     - type: Wires
       BoardName: "Mk2 Particle Accelerator"
+      LayoutId: ParticleAccelerator
 
 - type: entity
   parent: ParticleAcceleratorBase
