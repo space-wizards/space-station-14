@@ -4,6 +4,7 @@
   description: It's what keeps you to the floor.
   components:
   - type: Sprite
+    netsync: false
     sprite: Constructible/Power/gravity_generator.rsi
     layers:
       - state: on
