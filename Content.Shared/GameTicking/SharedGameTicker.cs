@@ -231,6 +231,42 @@ namespace Content.Shared.GameTicking
             }
         }
 
+        protected class MsgTickerJobsAvailable : NetMessage
+        {
+            #region REQUIRED
+
+            public const MsgGroups GROUP = MsgGroups.Command;
+            public const string NAME = nameof(MsgTickerJobsAvailable);
+            public MsgTickerJobsAvailable(INetChannel channel) : base(NAME, GROUP) { }
+
+            #endregion
+
+            /// <summary>
+            /// The Status of the Player in the lobby (ready, observer, ...)
+            /// </summary>
+            public string[] JobsAvailable { get; set; } = Array.Empty<string>();
+
+            public override void ReadFromBuffer(NetIncomingMessage buffer)
+            {
+                var amount = buffer.ReadInt32();
+                JobsAvailable = new string[amount];
+
+                for (var i = 0; i < amount; i++)
+                {
+                    JobsAvailable[i] = buffer.ReadString();
+                }
+            }
+
+            public override void WriteToBuffer(NetOutgoingMessage buffer)
+            {
+                buffer.Write(JobsAvailable.Length);
+
+                foreach (var job in JobsAvailable)
+                {
+                    buffer.Write(job);
+                }
+            }
+        }
 
         public struct RoundEndPlayerInfo
         {

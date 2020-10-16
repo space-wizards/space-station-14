@@ -143,6 +143,7 @@ namespace Content.Server.GameTicking
             _netManager.RegisterNetMessage<MsgRoundEndMessage>(nameof(MsgRoundEndMessage));
             _netManager.RegisterNetMessage<MsgRequestWindowAttention>(nameof(MsgRequestWindowAttention));
             _netManager.RegisterNetMessage<MsgTickerLateJoinStatus>(nameof(MsgTickerLateJoinStatus));
+            _netManager.RegisterNetMessage<MsgTickerJobsAvailable>(nameof(MsgTickerJobsAvailable));
 
             SetStartPreset(_configurationManager.GetCVar(CCVars.GameLobbyDefaultPreset));
 
@@ -307,6 +308,7 @@ namespace Content.Server.GameTicking
             _sendStatusToAll();
             ReqWindowAttentionAll();
             UpdateLateJoinStatus();
+            UpdateJobsAvailable();
         }
 
         private void UpdateLateJoinStatus()
@@ -420,6 +422,7 @@ namespace Content.Server.GameTicking
         {
             DisallowLateJoin = disallowLateJoin;
             UpdateLateJoinStatus();
+            UpdateJobsAvailable();
         }
 
         public T AddGameRule<T>() where T : GameRule, new()
@@ -817,6 +820,7 @@ namespace Content.Server.GameTicking
             var character = GetPlayerProfile(session);
 
             SpawnPlayer(session, character, jobId, lateJoin);
+            UpdateJobsAvailable();
         }
 
         private void SpawnPlayer(IPlayerSession session,
@@ -915,6 +919,7 @@ namespace Content.Server.GameTicking
             _netManager.ServerSendMessage(_getStatusMsg(session), session.ConnectedClient);
             _netManager.ServerSendMessage(GetInfoMsg(), session.ConnectedClient);
             _netManager.ServerSendMessage(GetPlayerStatus(), session.ConnectedClient);
+            _netManager.ServerSendMessage(GetJobsAvailable(), session.ConnectedClient);
         }
 
         private void _playerJoinGame(IPlayerSession session)
@@ -936,6 +941,22 @@ namespace Content.Server.GameTicking
                 msg.PlayerStatus.Add(player.UserId, status);
             }
             return msg;
+        }
+
+        private MsgTickerJobsAvailable GetJobsAvailable()
+        {
+            var message = _netManager.CreateNetMessage<MsgTickerJobsAvailable>();
+
+            // If late join is disallowed, return no available jobs.
+            if (DisallowLateJoin)
+                return message;
+
+            message.JobsAvailable = GetAvailablePositions()
+                .Where(e => e.Value > 0)
+                .Select(e => e.Key)
+                .ToArray();
+
+            return message;
         }
 
         private MsgTickerLobbyReady GetStatusSingle(IPlayerSession player, PlayerStatus status)
