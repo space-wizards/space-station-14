@@ -10,4 +10,4 @@
     - type: StorageVisualizer
       state: syndicate
   - type: Icon
-    state: syndicate_door
+    state: syndicate_icon

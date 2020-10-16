@@ -7,14 +7,20 @@ using System.Runtime.CompilerServices;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Atmos.Piping;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Maps;
+using Robust.Server.GameObjects.EntitySystems.TileLookup;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Map;
 using Robust.Shared.GameObjects.Components.Transform;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Map;
+using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
@@ -31,6 +37,9 @@ namespace Content.Server.GameObjects.Components.Atmos
         [Robust.Shared.IoC.Dependency] private IMapManager _mapManager = default!;
         [Robust.Shared.IoC.Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
         [Robust.Shared.IoC.Dependency] private IServerEntityManager _serverEntityManager = default!;
+
+        public GridTileLookupSystem GridTileLookupSystem { get; private set; } = default!;
+        public AtmosphereSystem AtmosphereSystem { get; private set; } = default!;
 
         /// <summary>
         ///     Check current execution time every n instances processed.
@@ -52,6 +61,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         private bool _paused = false;
         private float _timer = 0f;
         private Stopwatch _stopwatch = new Stopwatch();
+        private GridId _gridId;
 
         [ViewVariables]
         public int UpdateCounter { get; private set; } = 0;
@@ -69,7 +79,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         private double _excitedGroupLastProcess;
 
         [ViewVariables]
-        protected readonly Dictionary<MapIndices, TileAtmosphere> Tiles = new Dictionary<MapIndices, TileAtmosphere>(1000);
+        protected readonly Dictionary<Vector2i, TileAtmosphere> Tiles = new Dictionary<Vector2i, TileAtmosphere>(1000);
 
         [ViewVariables]
         private readonly HashSet<TileAtmosphere> _activeTiles = new HashSet<TileAtmosphere>(1000);
@@ -99,7 +109,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         private double _superconductivityLastProcess;
 
         [ViewVariables]
-        private readonly HashSet<MapIndices> _invalidatedCoords = new HashSet<MapIndices>(1000);
+        private readonly HashSet<Vector2i> _invalidatedCoords = new HashSet<Vector2i>(1000);
 
         [ViewVariables]
         private int InvalidatedCoordsCount => _invalidatedCoords.Count;
@@ -153,25 +163,28 @@ namespace Content.Server.GameObjects.Components.Atmos
         }
 
         /// <inheritdoc />
-        public virtual void PryTile(MapIndices indices)
+        public virtual void PryTile(Vector2i indices)
         {
-            if (!Owner.TryGetComponent(out IMapGridComponent? mapGridComponent)) return;
             if (IsSpace(indices) || IsAirBlocked(indices)) return;
 
-            var mapGrid = mapGridComponent.Grid;
-            indices.PryTile(mapGrid.Index, _mapManager, _tileDefinitionManager, _serverEntityManager);
+            indices.PryTile(_gridId, _mapManager, _tileDefinitionManager, _serverEntityManager);
         }
 
         public override void Initialize()
         {
             base.Initialize();
             RepopulateTiles();
+
+            GridTileLookupSystem = EntitySystem.Get<GridTileLookupSystem>();
+            AtmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
         }
 
         public override void OnAdd()
         {
             base.OnAdd();
-            RepopulateTiles();
+
+            if (Owner.TryGetComponent(out IMapGridComponent? mapGrid))
+                _gridId = mapGrid.GridIndex;
         }
 
         public virtual void RepopulateTiles()
@@ -181,7 +194,9 @@ namespace Content.Server.GameObjects.Components.Atmos
             foreach (var tile in mapGrid.Grid.GetAllTiles())
             {
                 if(!Tiles.ContainsKey(tile.GridIndices))
-                    Tiles.Add(tile.GridIndices, new TileAtmosphere(this, tile.GridIndex, tile.GridIndices, new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C}));
+                    Tiles.Add(tile.GridIndices, new TileAtmosphere(this, tile.GridIndex, tile.GridIndices, new GasMixture(GetVolumeForCells(1), AtmosphereSystem){Temperature = Atmospherics.T20C}));
+
+                Invalidate(tile.GridIndices);
             }
 
             foreach (var (_, tile) in Tiles.ToArray())
@@ -192,29 +207,26 @@ namespace Content.Server.GameObjects.Components.Atmos
         }
 
         /// <inheritdoc />
-        public virtual void Invalidate(MapIndices indices)
+        public virtual void Invalidate(Vector2i indices)
         {
             _invalidatedCoords.Add(indices);
         }
 
         protected virtual void Revalidate()
         {
-            if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return;
-
             foreach (var indices in _invalidatedCoords.ToArray())
             {
                 var tile = GetTile(indices);
-                AddActiveTile(tile);
 
                 if (tile == null)
                 {
-                    tile = new TileAtmosphere(this, mapGrid.Grid.Index, indices, new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C});
+                    tile = new TileAtmosphere(this, _gridId, indices, new GasMixture(GetVolumeForCells(1), AtmosphereSystem){Temperature = Atmospherics.T20C});
                     Tiles[indices] = tile;
                 }
 
                 if (IsSpace(indices))
                 {
-                    tile.Air = new GasMixture(GetVolumeForCells(1));
+                    tile.Air = new GasMixture(GetVolumeForCells(1), AtmosphereSystem);
                     tile.Air.MarkImmutable();
                     Tiles[indices] = tile;
 
@@ -224,19 +236,19 @@ namespace Content.Server.GameObjects.Components.Atmos
                 }
                 else
                 {
-                    var obs = GetObstructingComponent(indices);
-
-                    if (obs != null)
+                    if (tile.Air == null && NeedsVacuumFixing(indices))
                     {
-                        if (tile.Air == null && obs.FixVacuum)
-                        {
-                            FixVacuum(tile.GridIndices);
-                        }
+                        FixVacuum(tile.GridIndices);
                     }
 
-                    tile.Air ??= new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C};
+                    tile.Air ??= new GasMixture(GetVolumeForCells(1), AtmosphereSystem){Temperature = Atmospherics.T20C};
                 }
 
+                AddActiveTile(tile);
+                tile.BlockedAirflow = GetBlockedDirections(indices);
+
+                // TODO ATMOS: Query all the contents of this tile (like walls) and calculate the correct thermal conductivity
+                tile.ThermalConductivity = tile.Tile?.Tile.GetContentTileDefinition().ThermalConductivity ?? 0.5f;
                 tile.UpdateAdjacent();
                 tile.UpdateVisuals();
 
@@ -246,21 +258,25 @@ namespace Content.Server.GameObjects.Components.Atmos
                     var otherIndices = indices.Offset(direction.ToDirection());
                     var otherTile = GetTile(otherIndices);
                     AddActiveTile(otherTile);
-                    otherTile?.UpdateAdjacent(direction.GetOpposite());
                 }
             }
 
             _invalidatedCoords.Clear();
         }
 
-        /// <inheritdoc />
-        public virtual void FixVacuum(MapIndices indices)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void UpdateAdjacentBits(Vector2i indices)
         {
-            if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return;
+            GetTile(indices)?.UpdateAdjacent();
+        }
+
+        /// <inheritdoc />
+        public virtual void FixVacuum(Vector2i indices)
+        {
             var tile = GetTile(indices);
-            if (tile?.GridIndex != mapGrid.Grid.Index) return;
+            if (tile?.GridIndex != _gridId) return;
             var adjacent = GetAdjacentTiles(indices);
-            tile.Air = new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C};
+            tile.Air = new GasMixture(GetVolumeForCells(1), AtmosphereSystem){Temperature = Atmospherics.T20C};
             Tiles[indices] = tile;
 
             var ratio = 1f / adjacent.Count;
@@ -277,8 +293,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual void AddActiveTile(TileAtmosphere? tile)
         {
-            if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return;
-            if (tile?.GridIndex != mapGrid.Grid.Index) return;
+            if (tile?.GridIndex != _gridId) return;
             tile.Excited = true;
             _activeTiles.Add(tile);
         }
@@ -297,8 +312,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual void AddHotspotTile(TileAtmosphere? tile)
         {
-            if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return;
-            if (tile?.GridIndex != mapGrid.Grid.Index || tile?.Air == null) return;
+            if (tile?.GridIndex != _gridId || tile?.Air == null) return;
             _hotspotTiles.Add(tile);
         }
 
@@ -312,8 +326,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public virtual void AddSuperconductivityTile(TileAtmosphere? tile)
         {
-            if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return;
-            if (tile?.GridIndex != mapGrid.Grid.Index) return;
+            if (tile?.GridIndex != _gridId) return;
             _superconductivityTiles.Add(tile);
         }
 
@@ -327,8 +340,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual void AddHighPressureDelta(TileAtmosphere? tile)
         {
-            if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return;
-            if (tile?.GridIndex != mapGrid.Grid.Index) return;
+            if (tile?.GridIndex != _gridId) return;
             _highPressureDelta.Add(tile);
         }
 
@@ -353,57 +365,63 @@ namespace Content.Server.GameObjects.Components.Atmos
             _excitedGroups.Remove(excitedGroup);
         }
 
-        public void AddPipeNet(IPipeNet pipeNet)
+        public virtual void AddPipeNet(IPipeNet pipeNet)
         {
             _pipeNets.Add(pipeNet);
         }
 
-        public void RemovePipeNet(IPipeNet pipeNet)
+        public virtual void RemovePipeNet(IPipeNet pipeNet)
         {
             _pipeNets.Remove(pipeNet);
         }
 
-        public void AddPipeNetDevice(PipeNetDeviceComponent pipeNetDevice)
+        public virtual void AddPipeNetDevice(PipeNetDeviceComponent pipeNetDevice)
         {
             _pipeNetDevices.Add(pipeNetDevice);
         }
 
-        public void RemovePipeNetDevice(PipeNetDeviceComponent pipeNetDevice)
+        public virtual void RemovePipeNetDevice(PipeNetDeviceComponent pipeNetDevice)
         {
             _pipeNetDevices.Remove(pipeNetDevice);
         }
 
         /// <inheritdoc />
-        public TileAtmosphere? GetTile(EntityCoordinates coordinates, bool createSpace = true)
+        public virtual TileAtmosphere? GetTile(EntityCoordinates coordinates, bool createSpace = true)
         {
-            return GetTile(coordinates.ToMapIndices(_serverEntityManager, _mapManager), createSpace);
+            return GetTile(coordinates.ToVector2i(_serverEntityManager, _mapManager), createSpace);
         }
 
         /// <inheritdoc />
-        public TileAtmosphere? GetTile(MapIndices indices, bool createSpace = true)
+        public virtual TileAtmosphere? GetTile(Vector2i indices, bool createSpace = true)
         {
-            if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return null;
-
             if (Tiles.TryGetValue(indices, out var tile)) return tile;
 
             // We don't have that tile!
             if (IsSpace(indices) && createSpace)
             {
-                return new TileAtmosphere(this, mapGrid.Grid.Index, indices, new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.TCMB}, true);
+                return new TileAtmosphere(this, _gridId, indices, new GasMixture(GetVolumeForCells(1), AtmosphereSystem){Temperature = Atmospherics.TCMB}, true);
             }
 
             return null;
         }
 
         /// <inheritdoc />
-        public bool IsAirBlocked(MapIndices indices)
+        public bool IsAirBlocked(Vector2i indices, AtmosDirection direction = AtmosDirection.All)
         {
-            var ac = GetObstructingComponent(indices);
-            return ac != null && ac.AirBlocked;
+            foreach (var obstructingComponent in GetObstructingComponents(indices))
+            {
+                if (!obstructingComponent.AirBlocked)
+                    continue;
+
+                if (obstructingComponent.AirBlockedDirection.HasFlag(direction))
+                    return true;
+            }
+
+            return false;
         }
 
         /// <inheritdoc />
-        public bool IsSpace(MapIndices indices)
+        public virtual bool IsSpace(Vector2i indices)
         {
             // TODO ATMOS use ContentTileDefinition to define in YAML whether or not a tile is considered space
             if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return default;
@@ -411,7 +429,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             return mapGrid.Grid.GetTileRef(indices).Tile.IsEmpty;
         }
 
-        public Dictionary<AtmosDirection, TileAtmosphere> GetAdjacentTiles(MapIndices indices, bool includeAirBlocked = false)
+        public Dictionary<AtmosDirection, TileAtmosphere> GetAdjacentTiles(Vector2i indices, bool includeAirBlocked = false)
         {
             var sides = new Dictionary<AtmosDirection, TileAtmosphere>();
             for (var i = 0; i < Atmospherics.Directions; i++)
@@ -763,17 +781,43 @@ namespace Content.Server.GameObjects.Components.Atmos
             return true;
         }
 
-        private AirtightComponent? GetObstructingComponent(MapIndices indices)
+        protected virtual IEnumerable<AirtightComponent> GetObstructingComponents(Vector2i indices)
         {
-            if (!Owner.TryGetComponent(out IMapGridComponent? mapGrid)) return default;
+            var gridLookup = EntitySystem.Get<GridTileLookupSystem>();
 
-            foreach (var v in mapGrid.Grid.GetSnapGridCell(indices, SnapGridOffset.Center))
+            var list = new List<AirtightComponent>();
+
+            foreach (var v in gridLookup.GetEntitiesIntersecting(_gridId, indices))
             {
-                if (v.Owner.TryGetComponent<AirtightComponent>(out var ac))
-                    return ac;
+                if (v.TryGetComponent<AirtightComponent>(out var ac))
+                    list.Add(ac);
             }
 
-            return null;
+            return list;
+        }
+
+        private bool NeedsVacuumFixing(Vector2i indices)
+        {
+            var value = false;
+
+            foreach (var airtightComponent in GetObstructingComponents(indices))
+            {
+                value |= airtightComponent.FixVacuum;
+            }
+
+            return value;
+        }
+
+        private AtmosDirection GetBlockedDirections(Vector2i indices)
+        {
+            var value = AtmosDirection.Invalid;
+
+            foreach (var airtightComponent in GetObstructingComponents(indices))
+            {
+                value |= airtightComponent.AirBlockedDirection;
+            }
+
+            return value;
         }
 
         public void Dispose()
@@ -790,14 +834,23 @@ namespace Content.Server.GameObjects.Components.Atmos
                 var gridId = mapGrid.Grid.Index;
 
                 if (!serializer.TryReadDataField("uniqueMixes", out List<GasMixture>? uniqueMixes) ||
-                    !serializer.TryReadDataField("tiles", out Dictionary<MapIndices, int>? tiles))
+                    !serializer.TryReadDataField("tiles", out Dictionary<Vector2i, int>? tiles))
                     return;
 
                 Tiles.Clear();
 
                 foreach (var (indices, mix) in tiles!)
                 {
-                    Tiles.Add(indices, new TileAtmosphere(this, gridId, indices, (GasMixture)uniqueMixes![mix].Clone()));
+                    try
+                    {
+                        Tiles.Add(indices, new TileAtmosphere(this, gridId, indices, (GasMixture)uniqueMixes![mix].Clone()));
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        Logger.Error($"Error during atmos serialization! Tile at {indices} points to an unique mix ({mix}) out of range!");
+                        throw;
+                    }
+
                     Invalidate(indices);
                 }
             }
@@ -805,7 +858,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             {
                 var uniqueMixes = new List<GasMixture>();
                 var uniqueMixHash = new Dictionary<GasMixture, int>();
-                var tiles = new Dictionary<MapIndices, int>();
+                var tiles = new Dictionary<Vector2i, int>();
                 foreach (var (indices, tile) in Tiles)
                 {
                     if (tile.Air == null) continue;
@@ -823,7 +876,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 }
 
                 serializer.DataField(ref uniqueMixes, "uniqueMixes", new List<GasMixture>());
-                serializer.DataField(ref tiles, "tiles", new Dictionary<MapIndices, int>());
+                serializer.DataField(ref tiles, "tiles", new Dictionary<Vector2i, int>());
             }
         }
 
@@ -838,7 +891,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         }
 
         /// <inheritdoc />
-        public virtual void BurnTile(MapIndices gridIndices)
+        public virtual void BurnTile(Vector2i gridIndices)
         {
             // TODO ATMOS
         }

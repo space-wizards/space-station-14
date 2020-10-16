@@ -1,5 +1,5 @@
-﻿using Robust.Shared.GameObjects;
-using System;
+﻿using System;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Mobs.Speech
 {

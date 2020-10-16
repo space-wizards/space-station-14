@@ -1,7 +1,7 @@
-﻿using Robust.Shared.Network;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using static Content.Shared.SharedGameTicker;
+using Robust.Shared.Network;
+using static Content.Shared.GameTicking.SharedGameTicker;
 
 namespace Content.Client.Interfaces
 {
@@ -13,12 +13,14 @@ namespace Content.Client.Interfaces
         bool DisallowedLateJoin { get; }
         DateTime StartTime { get; }
         bool Paused { get; }
-        Dictionary<NetSessionId, PlayerStatus> Status { get; }
+        Dictionary<NetUserId, PlayerStatus> Status { get; }
+        IReadOnlyList<string> JobsAvailable { get; }
 
         void Initialize();
         event Action InfoBlobUpdated;
         event Action LobbyStatusUpdated;
         event Action LobbyReadyUpdated;
         event Action LobbyLateJoinStatusUpdated;
+        event Action<IReadOnlyList<string>> LobbyJobsAvailableUpdated;
     }
 }

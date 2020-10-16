@@ -7,9 +7,7 @@
       sprite: Objects/Weapons/Melee/stunbaton.rsi
       state: stunbaton_off
 
-    - type: Icon
-      sprite: Objects/Weapons/Melee/stunbaton.rsi
-      state: stunbaton_off
+
 
     - type: Stunbaton
       damage: 1
@@ -33,9 +31,7 @@
       sprite: Objects/Weapons/Melee/flash.rsi
       state: flash
 
-    - type: Icon
-      sprite: Objects/Weapons/Melee/flash.rsi
-      state: flash
+
 
     - type: Flash
       damage: 0

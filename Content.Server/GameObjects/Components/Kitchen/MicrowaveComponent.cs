@@ -3,10 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Body;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.ViewVariables;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -16,6 +12,8 @@ using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;
+using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -27,12 +25,14 @@ using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Content.Shared.GameObjects.Components.Body;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Kitchen
 {
@@ -63,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
         private uint _currentCookTimerTime = 1;
 
         private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
-        private bool _hasContents => Owner.TryGetComponent(out SolutionComponent? solution) && (solution.ReagentList.Count > 0 || _storage.ContainedEntities.Count > 0);
+        private bool _hasContents => Owner.TryGetComponent(out SolutionContainerComponent? solution) && (solution.ReagentList.Count > 0 || _storage.ContainedEntities.Count > 0);
         private bool _uiDirty = true;
         private bool _lostPower = false;
         private int _currentCookTimeButtonIndex = 0;
@@ -88,7 +88,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
         {
             base.Initialize();
 
-            Owner.EnsureComponent<SolutionComponent>();
+            Owner.EnsureComponent<SolutionContainerComponent>();
 
             _storage = ContainerManagerComponent.Ensure<Container>("microwave_entity_container", Owner, out var existed);
             _audioSystem = EntitySystem.Get<AudioSystem>();
@@ -165,7 +165,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 _uiDirty = true;
             }
 
-            if (_uiDirty && Owner.TryGetComponent(out SolutionComponent? solution))
+            if (_uiDirty && Owner.TryGetComponent(out SolutionContainerComponent? solution))
             {
                 UserInterface?.SetState(new MicrowaveUpdateUserInterfaceState
                 (
@@ -195,7 +195,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             }
 
             _uiDirty = true;
-            UserInterface?.Open(actor.playerSession);
+            UserInterface?.Toggle(actor.playerSession);
         }
 
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
@@ -216,13 +216,13 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
             if (itemEntity.TryGetComponent<PourableComponent>(out var attackPourable))
             {
-                if (!itemEntity.TryGetComponent<SolutionComponent>(out var attackSolution)
-                    || !attackSolution.CanPourOut)
+                if (!itemEntity.TryGetComponent<SolutionContainerComponent>(out var attackSolution)
+                    || !attackSolution.CanRemoveSolutions)
                 {
                     return false;
                 }
 
-                if (!Owner.TryGetComponent(out SolutionComponent? solution))
+                if (!Owner.TryGetComponent(out SolutionContainerComponent? solution))
                 {
                     return false;
                 }
@@ -355,7 +355,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         private void VaporizeReagents()
         {
-            if (Owner.TryGetComponent(out SolutionComponent? solution))
+            if (Owner.TryGetComponent(out SolutionContainerComponent? solution))
             {
                 solution.RemoveAllSolution();
             }
@@ -363,7 +363,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         private void VaporizeReagentQuantity(Solution.ReagentQuantity reagentQuantity)
         {
-            if (Owner.TryGetComponent(out SolutionComponent? solution))
+            if (Owner.TryGetComponent(out SolutionContainerComponent? solution))
             {
                 solution?.TryRemoveReagent(reagentQuantity.ReagentId, reagentQuantity.Quantity);
             }
@@ -399,7 +399,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         private void SubtractContents(FoodRecipePrototype recipe)
         {
-            if (!Owner.TryGetComponent(out SolutionComponent? solution))
+            if (!Owner.TryGetComponent(out SolutionContainerComponent? solution))
             {
                 return;
             }
@@ -434,7 +434,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         private MicrowaveSuccessState CanSatisfyRecipe(FoodRecipePrototype recipe, Dictionary<string,int> solids)
         {
-            if (!Owner.TryGetComponent(out SolutionComponent? solution))
+            if (!Owner.TryGetComponent(out SolutionContainerComponent? solution))
             {
                 return MicrowaveSuccessState.RecipeFail;
             }
@@ -477,27 +477,37 @@ namespace Content.Server.GameObjects.Components.Kitchen
         public SuicideKind Suicide(IEntity victim, IChatManager chat)
         {
             var headCount = 0;
-            if (victim.TryGetComponent<BodyManagerComponent>(out var bodyManagerComponent))
+
+            if (victim.TryGetComponent<IBody>(out var body))
             {
-                var heads = bodyManagerComponent.GetBodyPartsOfType(BodyPartType.Head);
+                var heads = body.GetPartsOfType(BodyPartType.Head);
                 foreach (var head in heads)
                 {
-                    var droppedHead = bodyManagerComponent.DropPart(head);
-
-                    if (droppedHead == null)
+                    if (!body.TryDropPart(head, out var dropped))
                     {
                         continue;
                     }
 
-                    _storage.Insert(droppedHead);
-                    headCount++;
+                    var droppedHeads = dropped.Where(p => p.PartType == BodyPartType.Head);
+
+                    foreach (var droppedHead in droppedHeads)
+                    {
+                        _storage.Insert(droppedHead.Owner);
+                        headCount++;
+                    }
                 }
             }
 
-            var othersMessage = Loc.GetString("{0:theName} is trying to cook {0:their} head!", victim);
+            var othersMessage = headCount > 1
+                ? Loc.GetString("{0:theName} is trying to cook {0:their} heads!", victim)
+                : Loc.GetString("{0:theName} is trying to cook {0:their} head!", victim);
+
             victim.PopupMessageOtherClients(othersMessage);
 
-            var selfMessage = Loc.GetString("You cook your head!");
+            var selfMessage = headCount > 1
+                ? Loc.GetString("You cook your heads!")
+                : Loc.GetString("You cook your head!");
+
             victim.PopupMessage(selfMessage);
 
             _currentCookTimerTime = 10;

@@ -4,23 +4,5 @@
   name: "reagent item"
   abstract: true
   components:
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 5
-
-- type: entity
-  id: Vapor
-  name: "vapor"
-  abstract: true
-  components:
-  - type: SnapGrid
-    offset: Center
-  - type: Solution
-    maxVol: 50
-  - type: Vapor
-  - type: Physics
-  - type: Collidable
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.25,-0.25,0.25,0.25"
-      mask:
-      - Impassable

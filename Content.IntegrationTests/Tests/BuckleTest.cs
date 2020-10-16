@@ -4,6 +4,8 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Strap;
 using Content.Shared.Damage;
+using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Buckle;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.EntitySystems;
@@ -182,7 +184,7 @@ namespace Content.IntegrationTests.Tests
             BuckleComponent buckle = null;
             StrapComponent strap = null;
             HandsComponent hands = null;
-            IDamageableComponent humanDamageable = null;
+            IBody body = null;
 
             server.Assert(() =>
             {
@@ -208,7 +210,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.True(human.TryGetComponent(out buckle));
                 Assert.True(chair.TryGetComponent(out strap));
                 Assert.True(human.TryGetComponent(out hands));
-                Assert.True(human.TryGetComponent(out humanDamageable));
+                Assert.True(human.TryGetBody(out body));
 
                 // Buckle
                 Assert.True(buckle.TryBuckle(human, chair));
@@ -239,8 +241,13 @@ namespace Content.IntegrationTests.Tests
                     Assert.NotNull(hands.GetItem(slot));
                 }
 
-                // Banish our guy into the shadow realm
-                humanDamageable.ChangeDamage(DamageClass.Brute, 1000000, true);
+                var legs = body.GetPartsOfType(BodyPartType.Leg);
+
+                // Break our guy's kneecaps
+                foreach (var leg in legs)
+                {
+                    body.RemovePart(leg, false);
+                }
             });
 
             server.RunTicks(10);

@@ -7,9 +7,6 @@
   - type: Sprite
     sprite: Clothing/Back/Backpacks/backpack.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Back/Backpacks/backpack.rsi
-    state: icon
   - type: Clothing
     size: 9999
     QuickEquip: false
@@ -28,9 +25,6 @@
   - type: Sprite
     sprite: Clothing/Back/Backpacks/clown.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Back/Backpacks/clown.rsi
-    state: icon
   - type: Clothing
     sprite: Clothing/Back/Backpacks/clown.rsi
 
@@ -41,9 +35,6 @@
   description: It's a very robust backpack.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Backpacks/security.rsi
-    state: icon
-  - type: Icon
     sprite: Clothing/Back/Backpacks/security.rsi
     state: icon
   - type: Clothing
@@ -58,9 +49,6 @@
   - type: Sprite
     sprite: Clothing/Back/Backpacks/engineering.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Back/Backpacks/engineering.rsi
-    state: icon
   - type: Clothing
     sprite: Clothing/Back/Backpacks/engineering.rsi
 
@@ -73,9 +61,6 @@
   - type: Sprite
     sprite: Clothing/Back/Backpacks/medical.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Back/Backpacks/medical.rsi
-    state: icon
   - type: Clothing
     sprite: Clothing/Back/Backpacks/medical.rsi
 
@@ -86,9 +71,6 @@
   description: It's a special backpack made exclusively for Nanotrasen officers.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Backpacks/captain.rsi
-    state: icon
-  - type: Icon
     sprite: Clothing/Back/Backpacks/captain.rsi
     state: icon
   - type: Clothing
@@ -105,9 +87,6 @@
   - type: Sprite
     sprite: Clothing/Back/Backpacks/mime.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Back/Backpacks/mime.rsi
-    state: icon
   - type: Clothing
     sprite: Clothing/Back/Backpacks/mime.rsi
 
@@ -120,9 +99,6 @@
   - type: Sprite
     sprite: Clothing/Back/Backpacks/chemistry.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Back/Backpacks/chemistry.rsi
-    state: icon
   - type: Clothing
     sprite: Clothing/Back/Backpacks/chemistry.rsi
 
@@ -133,9 +109,6 @@
   description: It's a backpack made of all-natural fibers.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Backpacks/botany.rsi
-    state: icon
-  - type: Icon
     sprite: Clothing/Back/Backpacks/botany.rsi
     state: icon
   - type: Clothing
@@ -154,9 +127,6 @@
     - state: holding
     - state: holding-unlit
       shader: unshaded
-  - type: Icon
-    sprite: Clothing/Back/Backpacks/holding.rsi
-    state: holding
   - type: Clothing
     sprite: Clothing/Back/Backpacks/holding.rsi
     HeldPrefix: holding

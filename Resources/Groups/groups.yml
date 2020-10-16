@@ -70,6 +70,7 @@
   - respawn
   - rejuvenate
   - addcomp
+  - rmcomp
   - controlmob
   - kick
   - listplayers
@@ -107,6 +108,7 @@
   - godmode
   - deleteewi
   - hurt
+  - toggledisallowlatejoin
   CanViewVar: true
   CanAdminPlace: true
   CanAdminMenu: true
@@ -192,9 +194,10 @@
   - fillgas
   - listgases
   - removegas
-  - clearatmos
   - settemp
   - setatmostemp
+  - deletegas
+  - showatmos
   - tilewalls
   - events
   - destroymechanism
@@ -207,6 +210,7 @@
   - godmode
   - deleteewi
   - hurt
+  - toggledisallowlatejoin
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true

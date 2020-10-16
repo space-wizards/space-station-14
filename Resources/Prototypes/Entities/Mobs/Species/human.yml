@@ -18,9 +18,9 @@
   - type: Hunger
   - type: Thirst
   # Organs
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 250
-    caps: 32
+    caps: AddTo, RemoveFrom, NoExamine
   - type: Bloodstream
     max_volume: 100
   - type: Stomach
@@ -32,35 +32,38 @@
   - type: Inventory
   - type: Clickable
   - type: InteractionOutline
+  - type: Icon
+    sprite: Mobs/Species/Human/parts.rsi
+    state: full
   - type: Sprite
     netsync: false
     drawdepth: Mobs
     layers:
-    - map: ["enum.HumanoidVisualLayers.Chest"]
+    - map: [ "enum.HumanoidVisualLayers.Chest" ]
       color: "#e8b59b"
       sprite: Mobs/Species/Human/parts.rsi
       state: torso_m
-    - map: ["enum.HumanoidVisualLayers.Head"]
+    - map: [ "enum.HumanoidVisualLayers.Head" ]
       color: "#e8b59b"
       sprite: Mobs/Species/Human/parts.rsi
       state: head_m
-    - map: ["enum.HumanoidVisualLayers.Eyes"]
+    - map: [ "enum.HumanoidVisualLayers.Eyes" ]
       color: "#008800"
       sprite: Mobs/Customization/eyes.rsi
       state: eyes
-    - map: ["enum.HumanoidVisualLayers.RArm"]
+    - map: [ "enum.HumanoidVisualLayers.RArm" ]
       color: "#e8b59b"
       sprite: Mobs/Species/Human/parts.rsi
       state: r_arm
-    - map: ["enum.HumanoidVisualLayers.LArm"]
+    - map: [ "enum.HumanoidVisualLayers.LArm" ]
       color: "#e8b59b"
       sprite: Mobs/Species/Human/parts.rsi
       state: l_arm
-    - map: ["enum.HumanoidVisualLayers.RLeg"]
+    - map: [ "enum.HumanoidVisualLayers.RLeg" ]
       color: "#e8b59b"
       sprite: Mobs/Species/Human/parts.rsi
       state: r_leg
-    - map: ["enum.HumanoidVisualLayers.LLeg"]
+    - map: [ "enum.HumanoidVisualLayers.LLeg" ]
       color: "#e8b59b"
       sprite: Mobs/Species/Human/parts.rsi
       state: l_leg
@@ -68,59 +71,56 @@
       sprite: Mobs/Species/Human/parts.rsi
       state: l_leg
     - shader: StencilMask
-      map: ["enum.HumanoidVisualLayers.StencilMask"]
+      map: [ "enum.HumanoidVisualLayers.StencilMask" ]
       sprite: Mobs/Customization/masking_helpers.rsi
       state: female_full
       visible: false
-    - map: ["enum.Slots.INNERCLOTHING"]
+    - map: [ "enum.Slots.INNERCLOTHING" ]
       shader: StencilDraw
-    - map: ["enum.HumanoidVisualLayers.LHand"]
+    - map: [ "enum.HumanoidVisualLayers.LHand" ]
       color: "#e8b59b"
       sprite: Mobs/Species/Human/parts.rsi
       state: l_hand
-    - map: ["enum.HumanoidVisualLayers.RHand"]
+    - map: [ "enum.HumanoidVisualLayers.RHand" ]
       color: "#e8b59b"
       sprite: Mobs/Species/Human/parts.rsi
       state: r_hand
-    - map: ["enum.HumanoidVisualLayers.LFoot"]
+    - map: [ "enum.HumanoidVisualLayers.LFoot" ]
       color: "#e8b59b"
       sprite: Mobs/Species/Human/parts.rsi
       state: l_foot
-    - map: ["enum.HumanoidVisualLayers.RFoot"]
+    - map: [ "enum.HumanoidVisualLayers.RFoot" ]
       color: "#e8b59b"
       sprite: Mobs/Species/Human/parts.rsi
       state: r_foot
-    - map: ["enum.HumanoidVisualLayers.Handcuffs"]
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
       color: "#ffffff"
       sprite: Objects/Misc/handcuffs.rsi
       state: body-overlay-2
       visible: false
-    - map: ["enum.Slots.IDCARD"]
-    - map: ["enum.Slots.GLOVES"]
-    - map: ["enum.Slots.SHOES"]
-    - map: ["enum.Slots.EARS"]
-    - map: ["enum.Slots.OUTERCLOTHING"]
-    - map: ["enum.Slots.EYES"]
-    - map: ["enum.Slots.BELT"]
-    - map: ["enum.Slots.NECK"]
-    - map: ["enum.Slots.BACKPACK"]
-    - map: ["enum.HumanoidVisualLayers.FacialHair"]
+    - map: [ "enum.Slots.IDCARD" ]
+    - map: [ "enum.Slots.GLOVES" ]
+    - map: [ "enum.Slots.SHOES" ]
+    - map: [ "enum.Slots.EARS" ]
+    - map: [ "enum.Slots.OUTERCLOTHING" ]
+    - map: [ "enum.Slots.EYES" ]
+    - map: [ "enum.Slots.BELT" ]
+    - map: [ "enum.Slots.NECK" ]
+    - map: [ "enum.Slots.BACKPACK" ]
+    - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
       state: shaved
       sprite: Mobs/Customization/human_facial_hair.rsi
-    - map: ["enum.HumanoidVisualLayers.Hair"]
+    - map: [ "enum.HumanoidVisualLayers.Hair" ]
       state: bald
       sprite: Mobs/Customization/human_hair.rsi
-    - map: ["enum.Slots.MASK"]
-    - map: ["enum.Slots.HEAD"]
-  - type: Icon
-    sprite: Mobs/Species/Human/parts.rsi
-    state: full
+    - map: [ "enum.Slots.MASK" ]
+    - map: [ "enum.Slots.HEAD" ]
   - type: Physics
+    anchored: false
     mass: 85
-  - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.50,-0.30,0.40,0.30"
+      bounds: "-0.35,-0.35,0.35,0.35"
       mask:
       - Impassable
       - MobImpassable
@@ -128,30 +128,55 @@
       layer:
       - Opaque
       - MobImpassable
-  - type: BodyManager
+  - type: AtmosExposed
+  - type: Flammable
+    fireSpread: true
+    canResistFire: true
+  - type: Temperature
+    heatDamageThreshold: 360
+    coldDamageThreshold: 260
+    currentTemperature: 310.15
+    specificHeat: 42
+    tempDamageCoefficient: 0.1
+  - type: HumanoidAppearance
+  - type: Body
+    template: HumanoidTemplate
+    preset: HumanPreset
+    centerSlot: torso
+  - type: Damageable
+    damagePrototype: biologicalDamageContainer
     criticalThreshold: 100
     deadThreshold: 200
-    baseTemplate: bodyTemplate.Humanoid
-    basePreset: bodyPreset.BasicHuman
   - type: Metabolism
+    metabolismHeat: 5000
+    radiatedHeat: 400
+    implicitHeatRegulation: 5000
+    sweatHeatRegulation: 5000
+    shiveringHeatRegulation: 5000
+    normalBodyTemperature: 310.15
+    thermalRegulationTemperatureThreshold: 25
     needsGases:
-      Oxygen: 0.006365740
+      Oxygen: 0.00332569564
     producesGases:
-      Oxygen: 0.004774305
-      CarbonDioxide: 0.001591435
+      Oxygen: 0.00249427173
+      CarbonDioxide: 0.00083142391
   - type: MobStateManager
   - type: HeatResistance
   - type: Appearance
     visuals:
     - type: RotationVisualizer
     - type: BuckleVisualizer
+    - type: FireVisualizer
+      normalState: Generic_mob_burning
+      alternateState: Standing
+      fireStackAlternateState: 3
+    - type: CreamPiedVisualizer
   - type: CombatMode
   - type: Climbing
   - type: Cuffable
   - type: Teleportable
   - type: CharacterInfo
   - type: FootstepSound
-  - type: HumanoidAppearance
   - type: AnimationPlayer
   - type: Buckle
   - type: UnarmedCombat
@@ -162,14 +187,14 @@
     proper: true
   - type: Pullable
   - type: DoAfter
+  - type: CreamPied
   - type: Strippable
   - type: UserInterface
     interfaces:
-      - key: enum.StrippingUiKey.Key
-        type: StrippableBoundUserInterface
-      - key: enum.AcceptCloningUiKey.Key
-        type: AcceptCloningBoundUserInterface
-
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
+    - key: enum.AcceptCloningUiKey.Key
+      type: AcceptCloningBoundUserInterface
 
 - type: entity
   save: false
@@ -180,9 +205,13 @@
   components:
     - type: Hands
     - type: Inventory
+    - type: Icon
+      sprite: Mobs/Species/Human/parts.rsi
+      state: full
     - type: Sprite
       netsync: false
       drawdepth: Mobs
+      # TODO BODY Turn these into individual body parts?
       layers:
       - map: ["enum.HumanoidVisualLayers.Chest"]
         color: "#e8b59b"
@@ -252,31 +281,31 @@
       - map: ["enum.Slots.HEAD"]
       - map: ["hand-left"]
       - map: ["hand-right"]
-    - type: Icon
-      sprite: Mobs/Species/Human/parts.rsi
-      state: full
     - type: Physics
+      anchored: false
       mass: 85
-    - type: Collidable
       shapes:
-        - !type:PhysShapeAabb
-          bounds: "-0.35,-0.35,0.35,0.35"
-          mask:
-          - Impassable
-          - MobImpassable
-          - VaultImpassable
-          - SmallImpassable
-          layer:
-          - MobImpassable
-    - type: BodyManager
+      - !type:PhysShapeAabb
+        bounds: "-0.35,-0.35,0.35,0.35"
+        mask:
+        - Impassable
+        - MobImpassable
+        - VaultImpassable
+        - SmallImpassable
+        layer:
+        - MobImpassable
+    - type: HumanoidAppearance
+    - type: Body
+      template: HumanoidTemplate
+      preset: HumanPreset
+      centerSlot: torso
+    - type: Damageable
+      damagePrototype: biologicalDamageContainer
       criticalThreshold: 100
       deadThreshold: 200
-      baseTemplate: bodyTemplate.Humanoid
-      basePreset: bodyPreset.BasicHuman
     - type: MobStateManager
     - type: Appearance
       visuals:
-        - type: RotationVisualizer
-    - type: HumanoidAppearance
+      - type: RotationVisualizer
     - type: Grammar
       proper: true

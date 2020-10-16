@@ -1,5 +1,4 @@
 using Content.Server.Interfaces.Chat;
-using Robust.Server.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.StationEvents
@@ -32,7 +31,7 @@ namespace Content.Server.StationEvents
         /// In minutes, when is the first time this event can start
         /// </summary>
         /// <returns></returns>
-        public virtual int EarliestStart { get; } = 20;
+        public virtual int EarliestStart { get; } = 5;
 
         /// <summary>
         /// How many players need to be present on station for the event to run

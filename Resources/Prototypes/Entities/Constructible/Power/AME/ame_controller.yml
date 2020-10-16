@@ -5,13 +5,12 @@
     mode: SnapgridCenter
   components:
   - type: Clickable
-  - type: Icon
-    sprite: Constructible/Power/ame_controller.rsi
-    state: control
+  - type: InteractionOutline
+
   - type: Sprite
     sprite: Constructible/Power/ame_controller.rsi
     state: control
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       layer:
@@ -22,6 +21,7 @@
       - SmallImpassable
   - type: Destructible
     maxHP: 500
+    resistances: metallicResistances
   - type: SnapGrid
     offset: Center
   - type: Anchorable

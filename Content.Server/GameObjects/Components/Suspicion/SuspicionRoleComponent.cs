@@ -61,7 +61,7 @@ namespace Content.Server.GameObjects.Components.Suspicion
         public bool IsDead()
         {
             return Owner.TryGetComponent(out IDamageableComponent? damageable) &&
-                   damageable.CurrentDamageState == DamageState.Dead;
+                   damageable.CurrentState == DamageState.Dead;
         }
 
         public bool IsInnocent()
@@ -187,9 +187,13 @@ namespace Content.Server.GameObjects.Components.Suspicion
                 return;
             }
 
-            var tooltip = IsTraitor()
-                ? Loc.GetString($"They were a [color=red]traitor[/color]!")
-                : Loc.GetString($"They were an [color=green]innocent[/color]!");
+            var traitor = IsTraitor();
+            var color = traitor ? "red" : "green";
+            var role = traitor ? "traitor" : "innocent";
+            var article = traitor ? "a" : "an";
+
+            var tooltip = Loc.GetString("They were {0} [color={1}]{2}[/color]!", Loc.GetString(article), color,
+                Loc.GetString(role));
 
             message.AddMarkup(tooltip);
         }

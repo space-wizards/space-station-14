@@ -1,4 +1,5 @@
 ﻿using Content.Client.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
@@ -9,10 +10,9 @@ using static Content.Client.GameObjects.Components.IconSmoothing.IconSmoothCompo
 namespace Content.Client.GameObjects.Components
 {
     [RegisterComponent]
-    public sealed class WindowComponent : Component
+    [ComponentReference(typeof(SharedWindowComponent))]
+    public sealed class WindowComponent : SharedWindowComponent
     {
-        public override string Name => "Window";
-
         private string _stateBase;
         private ISpriteComponent _sprite;
         private SnapGridComponent _snapGrid;

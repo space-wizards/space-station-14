@@ -2,22 +2,19 @@
   name: beaker box
   parent: BoxBase
   id: BoxBeaker
-  description:
+  description: A box full of beakers.
   components:
   - type: StorageFill
     contents:
-      - Beaker
-      - Beaker
-      - Beaker
-      - LargeBeaker
-      - LargeBeaker
-      - LargeBeaker
+      - name: Beaker
+        amount: 3
+      - name: LargeBeaker
+        amount: 3
   - type: Sprite
     layers:
       - state: box
       - state: beaker
-  - type: Icon
-    state: beaker
+
   - type: Item
   - type: Storage
     capacity: 30

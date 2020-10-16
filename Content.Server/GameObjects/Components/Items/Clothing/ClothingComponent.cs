@@ -4,11 +4,13 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
+using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.Server.GameObjects.Components.Items.Clothing
@@ -16,19 +18,23 @@ namespace Content.Server.GameObjects.Components.Items.Clothing
     [RegisterComponent]
     [ComponentReference(typeof(ItemComponent))]
     [ComponentReference(typeof(StorableComponent))]
+    [ComponentReference(typeof(SharedStorableComponent))]
     [ComponentReference(typeof(IItemComponent))]
     public class ClothingComponent : ItemComponent, IUse
     {
         public override string Name => "Clothing";
         public override uint? NetID => ContentNetIDs.CLOTHING;
 
+        [ViewVariables]
         public SlotFlags SlotFlags = SlotFlags.PREVENTEQUIP; //Different from None, NONE allows equips if no slot flags are required
 
         private bool _quickEquipEnabled = true;
         private int _heatResistance;
+        [ViewVariables(VVAccess.ReadWrite)]
         public int HeatResistance => _heatResistance;
 
         private string _clothingEquippedPrefix;
+        [ViewVariables(VVAccess.ReadWrite)]
         public string ClothingEquippedPrefix
         {
             get

@@ -7,13 +7,11 @@
       visible: false
       sprite: Interface/Misc/markers.rsi
       state: spawner_toy
-    - type: Icon
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_toy
+
     - type: Marker
     - type: Clickable
     - type: InteractionOutline
-    - type: Collidable
+    - type: Physics
     - type: TrashSpawner
       rarePrototypes:
         - CarvingHelpMe
@@ -46,13 +44,11 @@
       visible: false
       sprite: Interface/Misc/markers.rsi
       state: spawner_figure
-    - type: Icon
-      sprite: Interface/Misc/markers.rsi
-      state: spawner_figure
+
     - type: Marker
     - type: Clickable
     - type: InteractionOutline
-    - type: Collidable
+    - type: Physics
     - type: TrashSpawner
       prototypes:
         - ToyAi

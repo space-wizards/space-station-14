@@ -30,7 +30,7 @@
 
 - type: entity
   name: Bojevic
-  parent: BaseItem
+  parent: ShotgunBase
   id: ShotgunBojevic
   description: It's a magazine-fed shotgun designed for close quarters combat, nicknamed 'Striker' by boarding parties. A robust and reliable design allows you to swap magazines on the go and dump as many shells at your foes as you want... if you can manage the recoil, of course.
   components:
@@ -46,7 +46,6 @@
       map: ["enum.RangedBarrelVisualLayers.Mag"]
   - type: Icon
     sprite: Objects/Weapons/Guns/Shotguns/bojevic.rsi
-    state: icon
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/bojevic.rsi
   - type: RangedWeapon
@@ -76,7 +75,7 @@
 
 - type: entity
   name: double-barreled shotgun
-  parent: BaseItem
+  parent: ShotgunBase
   id: ShotgunDB
   description: An immortal classic.
   components:
@@ -90,7 +89,6 @@
         map: ["enum.RangedBarrelVisualLayers.Bolt"]
   - type: Icon
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
-    state: icon
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
     state: icon
@@ -200,7 +198,7 @@
 
 - type: entity
   name: sawn-off shotgun
-  parent: BaseItem
+  parent: ShotgunBase
   id: ShotgunSawn
   description: Omar's coming!
   components:
@@ -214,7 +212,6 @@
         map: ["enum.RangedBarrelVisualLayers.Bolt"]
   - type: Icon
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
-    state: icon
   - type: Item
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
     state: icon

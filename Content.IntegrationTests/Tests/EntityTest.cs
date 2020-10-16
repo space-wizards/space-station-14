@@ -10,9 +10,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using Logger = Robust.Shared.Log.Logger;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -91,30 +89,6 @@ namespace Content.IntegrationTests.Tests
             });
 
             await server.WaitIdleAsync();
-        }
-
-        [Test]
-        public async Task NotAbstractIconTest()
-        {
-            var client = StartClient();
-            await client.WaitIdleAsync();
-            var prototypeMan = client.ResolveDependency<IPrototypeManager>();
-
-            client.Assert(() =>
-            {
-                foreach (var prototype in prototypeMan.EnumeratePrototypes<EntityPrototype>())
-                {
-                    if (prototype.Abstract)
-                    {
-                        continue;
-                    }
-
-                    Assert.That(prototype.Components.ContainsKey("Icon"),
-                        $"Entity {prototype.ID} does not have an Icon component, but is not abstract");
-                }
-            });
-
-            await client.WaitIdleAsync();
         }
 
         [Test]

@@ -14,9 +14,9 @@ namespace Content.Server.Atmos
 {
     public class HighPressureMovementController : VirtualController
     {
-        [Dependency] private readonly IRobustRandom _robustRandom = default!;
-
-        public override ICollidableComponent? ControlledComponent { protected get; set; }
+        [Dependency] private IRobustRandom _robustRandom = default!;
+        [Dependency] private IPhysicsManager _physicsManager = default!;
+        public override IPhysicsComponent? ControlledComponent { protected get; set; }
 
         private const float MoveForcePushRatio = 1f;
         private const float MoveForceForcePushRatio = 1f;

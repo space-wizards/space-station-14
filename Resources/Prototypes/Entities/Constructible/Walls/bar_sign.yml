@@ -4,31 +4,28 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
   - type: Sprite
     drawdepth: WallTops
     sprite: Constructible/Misc/barsign.rsi
     state: empty
-  - type: Icon
-    sprite: Constructible/Misc/barsign.rsi
-    state: empty
+
   - type: PowerReceiver
   - type: BarSign
 
 - type: entity
   id: LargeBarSign
   name: large bar sign
+  abstract: true
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
   - type: Sprite
     drawdepth: WallTops
     sprite: Constructible/Misc/sylphs.rsi
     state: sylph
-  - type: Icon
-    sprite: Constructible/Misc/sylphs.rsi
-    state: sylph
+
   - type: PowerReceiver
   - type: BarSign
 

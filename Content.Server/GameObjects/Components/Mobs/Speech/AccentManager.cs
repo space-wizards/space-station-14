@@ -1,10 +1,7 @@
-﻿using Content.Server.Interfaces.Chat;
+﻿using System.Text.RegularExpressions;
+using Content.Server.Interfaces.Chat;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Content.Server.GameObjects.Components.Mobs.Speech
 {

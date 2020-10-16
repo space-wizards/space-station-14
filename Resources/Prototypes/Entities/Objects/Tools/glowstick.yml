@@ -24,12 +24,9 @@
           shader: unshaded
         - state: glowstick_unlit
           color: "#00FF00"
-    - type: Icon
-      sprite: Objects/Misc/glowstick.rsi
-      state: glowstick_unlit
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      color: "#00FF00" 
+      color: "#00FF00"
       HeldPrefix: off
     - type: Appearance
       visuals:
@@ -90,7 +87,7 @@
           color: "#FF0000"
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      color: "#FF0000" 
+      color: "#FF0000"
       HeldPrefix: off
     - type: PointLight
       enabled: false
@@ -125,7 +122,7 @@
           color: "#FF00FF"
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      color: "#FF00FF" 
+      color: "#FF00FF"
       HeldPrefix: off
     - type: PointLight
       enabled: false
@@ -160,7 +157,7 @@
           color: "#FFFF00"
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      color: "#FFFF00" 
+      color: "#FFFF00"
       HeldPrefix: off
     - type: PointLight
       enabled: false
@@ -195,7 +192,7 @@
           color: "#0000FF"
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      color: "#0000FF" 
+      color: "#0000FF"
       HeldPrefix: off
     - type: PointLight
       enabled: false
@@ -221,9 +218,6 @@
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
       HeldPrefix: off
-    - type: Icon
-      sprite: Objects/Misc/glowstick.rsi
-      state: glowstick_unlit
     - type: PointLight
       enabled: true
       color: "#FF0000"
@@ -254,9 +248,6 @@
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
       HeldPrefix: off
-    - type: Icon
-      sprite: Objects/Misc/glowstick.rsi
-      state: glowstick_unlit
     - type: PointLight
       enabled: true
       color: "#FF0000"
@@ -288,9 +279,6 @@
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
       HeldPrefix: off
-    - type: Icon
-      sprite: Objects/Misc/glowstick.rsi
-      state: glowstick_unlit
     - type: PointLight
       enabled: false
       color: "#FF0000"
@@ -330,9 +318,6 @@
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
       HeldPrefix: off
-    - type: Icon
-      sprite: Objects/Misc/glowstick.rsi
-      state: glowstick_unlit
     - type: PointLight
       enabled: false
       color: "#FF0000"
@@ -363,9 +348,6 @@
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
       HeldPrefix: off
-    - type: Icon
-      sprite: Objects/Misc/glowstick.rsi
-      state: glowstick_unlit
     - type: PointLight
       enabled: false
       color: "#FF0000"
@@ -397,9 +379,6 @@
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
       HeldPrefix: off
-    - type: Icon
-      sprite: Objects/Misc/glowstick.rsi
-      state: glowstick_unlit
     - type: PointLight
       enabled: false
       color: "#FF0000"

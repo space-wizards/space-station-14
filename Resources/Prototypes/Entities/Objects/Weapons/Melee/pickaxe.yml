@@ -7,9 +7,7 @@
     sprite: Objects/Weapons/Melee/pickaxe.rsi
     state: pickaxe
 
-  - type: Icon
-    sprite: Objects/Weapons/Melee/pickaxe.rsi
-    state: pickaxe
+
   - type: Pickaxe
   - type: ItemCooldown
   - type: MeleeWeapon

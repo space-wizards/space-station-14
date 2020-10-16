@@ -15,6 +15,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components.Mobs
 {
@@ -29,12 +30,15 @@ namespace Content.Client.GameObjects.Components.Mobs
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         private StatusEffectsUI _ui;
+        [ViewVariables]
         private Dictionary<StatusEffect, StatusEffectStatus> _status = new Dictionary<StatusEffect, StatusEffectStatus>();
+        [ViewVariables]
         private Dictionary<StatusEffect, CooldownGraphic> _cooldown = new Dictionary<StatusEffect, CooldownGraphic>();
 
         /// <summary>
         /// Allows calculating if we need to act due to this component being controlled by the current mob
         /// </summary>
+        [ViewVariables]
         private bool CurrentlyControlled => _playerManager.LocalPlayer != null && _playerManager.LocalPlayer.ControlledEntity == Owner;
 
         protected override void Shutdown()
