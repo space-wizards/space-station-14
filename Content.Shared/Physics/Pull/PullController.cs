@@ -1,9 +1,11 @@
 #nullable enable
 using System;
+using System.Linq;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -16,6 +18,7 @@ namespace Content.Shared.Physics.Pull
     public class PullController : VirtualController
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IPhysicsManager _physicsManager = default!;
 
         private const float DistBeforeStopPull = InteractionRange;
 
@@ -54,6 +57,35 @@ namespace Content.Shared.Physics.Pull
             var aabbSize =  _puller.AABB.Size;
 
             return (aabbSize.X > aabbSize.Y ? aabbSize.X : aabbSize.Y) + 0.15f;
+        }
+
+        private bool PullerMovingTowardsPulled()
+        {
+            if (_puller == null)
+            {
+                return false;
+            }
+
+            if (ControlledComponent == null)
+            {
+                return false;
+            }
+
+            if (_puller.LinearVelocity.EqualsApprox(Vector2.Zero))
+            {
+                return false;
+            }
+
+            var pullerTransform = _puller.Owner.Transform;
+            var origin = pullerTransform.Coordinates.Position;
+            var velocity = _puller.LinearVelocity.Normalized;
+            var mapId = pullerTransform.MapPosition.MapId;
+            var ray = new CollisionRay(origin, velocity, (int) CollisionGroup.AllMask);
+            bool Predicate(IEntity e) => e != ControlledComponent.Owner;
+            var rayResults =
+                _physicsManager.IntersectRayWithPredicate(mapId, ray, DistanceBeforeStopPull() * 2, Predicate);
+
+            return rayResults.Any();
         }
 
         public bool StartPull(IEntity entity)
@@ -187,7 +219,7 @@ namespace Content.Shared.Physics.Pull
                 var diff = MovingTo.Value.Position - ControlledComponent.Owner.Transform.Coordinates.Position;
                 LinearVelocity = diff.Normalized * 5;
             }
-            else if (distance.Length > DistanceBeforeStopPull())
+            else if (distance.Length > DistanceBeforeStopPull() && !PullerMovingTowardsPulled())
             {
                 LinearVelocity = distance.Normalized * _puller.LinearVelocity.Length * 1.5f;
             }
