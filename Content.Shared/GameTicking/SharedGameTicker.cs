@@ -7,7 +7,7 @@ using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 
-namespace Content.Shared
+namespace Content.Shared.GameTicking
 {
     public abstract class SharedGameTicker
     {

@@ -11,7 +11,7 @@
     directional: false
     sprite: Objects/Weapons/Guns/Projectiles/bullet.rsi
     state: bullet
-  - type: Collidable
+  - type: Physics
     anchored: false
     edgeslide: false
     hard: false
@@ -96,7 +96,7 @@
     layers:
     - state: spark
       shader: unshaded
-  - type: Collidable
+  - type: Physics
     edgeslide: false
     hard: false
     shapes:

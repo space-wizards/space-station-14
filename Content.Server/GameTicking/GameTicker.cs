@@ -23,6 +23,7 @@ using Content.Server.Mobs.Roles;
 using Content.Server.Players;
 using Content.Shared;
 using Content.Shared.Chat;
+using Content.Shared.GameTicking;
 using Content.Shared.Network.NetMessages;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
@@ -681,11 +682,13 @@ namespace Content.Server.GameTicking
                 _playerJoinLobby(player);
             }
 
-            EntitySystem.Get<GasTileOverlaySystem>().ResettingCleanup();
-            EntitySystem.Get<PathfindingSystem>().ResettingCleanup();
-            EntitySystem.Get<AiReachableSystem>().ResettingCleanup();
-            EntitySystem.Get<WireHackingSystem>().ResetLayouts();
-            EntitySystem.Get<StationEventSystem>().ResettingCleanup();
+            foreach (var system in _entitySystemManager.AllSystems)
+            {
+                if (system is IResettingEntitySystem resetting)
+                {
+                    resetting.Reset();
+                }
+            }
 
             _spawnedPositions.Clear();
             _manifest.Clear();
@@ -1027,6 +1030,7 @@ The current game mode is: [color=white]{0}[/color].
         [Dependency] private readonly IServerPreferencesManager _prefsManager = default!;
         [Dependency] private readonly IBaseServer _baseServer = default!;
         [Dependency] private readonly IWatchdogApi _watchdogApi = default!;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
     }
 
     public enum GameRunLevel

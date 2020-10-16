@@ -21,7 +21,7 @@
   - type: DamageOnHighSpeedImpact
     soundHit: /Audio/Effects/bang.ogg
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
     mass: 25
     anchored: false
     shapes:
