@@ -2,7 +2,7 @@
   id: ComputerFrame
   name: computer frame
   components:
-    - type: Collidable
+    - type: Physics
       mass: 25
       anchored: false
       shapes:
@@ -33,7 +33,7 @@
   description: This computer has seen better days.
   abstract: true # We don't want this to show up in the entity spawner menu.
   components:
-    - type: Collidable
+    - type: Physics
       mass: 25
       anchored: true
       shapes:
@@ -68,7 +68,7 @@
   - type: Construction
     graph: computer
     node: computer
-  - type: Collidable
+  - type: Physics
     mass: 25
     anchored: true
     shapes:

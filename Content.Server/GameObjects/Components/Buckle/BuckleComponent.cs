@@ -34,7 +34,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Buckle
 {
     [RegisterComponent]
-    public class BuckleComponent : SharedBuckleComponent, IInteractHand, IDragDrop
+    public class BuckleComponent : SharedBuckleComponent, IInteractHand
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
@@ -256,18 +256,7 @@ namespace Content.Server.GameObjects.Components.Buckle
             return true;
         }
 
-        /// <summary>
-        ///     Tries to make an entity buckle the owner of this component to another.
-        /// </summary>
-        /// <param name="user">
-        ///     The entity buckling the owner of this component, can be the owner itself.
-        /// </param>
-        /// <param name="to">The entity to buckle the owner of this component to.</param>
-        /// <returns>
-        ///     true if the owner was buckled, otherwise false even if the owner was
-        ///     previously already buckled.
-        /// </returns>
-        public bool TryBuckle(IEntity user, IEntity to)
+        public override bool TryBuckle(IEntity user, IEntity to)
         {
             if (!CanBuckle(user, to, out var strap))
             {
@@ -542,16 +531,6 @@ namespace Content.Server.GameObjects.Components.Buckle
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
             return TryUnbuckle(eventArgs.User);
-        }
-
-        bool IDragDrop.CanDragDrop(DragDropEventArgs eventArgs)
-        {
-            return eventArgs.Target.HasComponent<StrapComponent>();
-        }
-
-        bool IDragDrop.DragDrop(DragDropEventArgs eventArgs)
-        {
-            return TryBuckle(eventArgs.User, eventArgs.Target);
         }
 
         /// <summary>

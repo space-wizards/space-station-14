@@ -48,7 +48,7 @@
   abstract: true
   description: "Portal to another location"
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       mask: [Impassable, MobImpassable]

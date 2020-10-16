@@ -22,7 +22,7 @@ namespace Content.Shared.GameObjects.EntitySystems
     public abstract class SharedMoverSystem : EntitySystem
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IPhysicsManager _physicsManager = default!;
+        [Dependency] protected readonly IPhysicsManager PhysicsManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
         public override void Initialize()
@@ -54,8 +54,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         {
             physics.EnsureController<MoverController>();
 
-            var weightless = !transform.Owner.HasComponent<MovementIgnoreGravityComponent>() &&
-                             _physicsManager.IsWeightless(transform.Coordinates);
+            var weightless = transform.Owner.IsWeightless();
 
             if (weightless)
             {
@@ -64,6 +63,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
                 if (!touching)
                 {
+                    transform.LocalRotation = physics.LinearVelocity.GetDir().ToAngle();
                     return;
                 }
             }
@@ -87,7 +87,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                         controller.Push(combined, mover.CurrentPushSpeed);
                     }
 
-                    transform.LocalRotation = walkDir.GetDir().ToAngle();
+                    transform.LocalRotation = physics.LinearVelocity.GetDir().ToAngle();
                     return;
                 }
 
@@ -121,7 +121,9 @@ namespace Content.Shared.GameObjects.EntitySystems
                     continue; // Don't try to push off of yourself!
                 }
 
-                if (!entity.TryGetComponent<IPhysicsComponent>(out var otherCollider))
+                if (!entity.TryGetComponent<IPhysicsComponent>(out var otherCollider) ||
+                    !otherCollider.CanCollide ||
+                    (collider.CollisionMask & otherCollider.CollisionLayer) == 0)
                 {
                     continue;
                 }

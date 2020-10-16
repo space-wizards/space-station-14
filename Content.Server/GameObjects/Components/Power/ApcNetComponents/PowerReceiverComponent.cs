@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
     {
         [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
 
-        [ViewVariables] [ComponentDependency] private readonly IPhysicsComponent? _collidableComponent = null;
+        [ViewVariables] [ComponentDependency] private readonly IPhysicsComponent? _physicsComponent = null;
 
         public override string Name => "PowerReceiver";
 
@@ -54,7 +54,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         /// </summary>
         public bool Connectable => Anchored;
 
-        private bool Anchored => _collidableComponent == null || _collidableComponent.Anchored;
+        private bool Anchored => _physicsComponent == null || _physicsComponent.Anchored;
 
         [ViewVariables]
         public bool NeedsProvider { get; private set; } = true;
@@ -96,18 +96,18 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
             {
                 TryFindAndSetProvider();
             }
-            if (_collidableComponent != null)
+            if (_physicsComponent != null)
             {
                 AnchorUpdate();
-                _collidableComponent.AnchoredChanged += AnchorUpdate;
+                _physicsComponent.AnchoredChanged += AnchorUpdate;
             }
         }
 
         public override void OnRemove()
         {
-            if (_collidableComponent != null)
+            if (_physicsComponent != null)
             {
-                _collidableComponent.AnchoredChanged -= AnchorUpdate;
+                _physicsComponent.AnchoredChanged -= AnchorUpdate;
             }
             _provider.RemoveReceiver(this);
             base.OnRemove();

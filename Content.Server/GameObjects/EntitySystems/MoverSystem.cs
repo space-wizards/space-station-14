@@ -58,12 +58,9 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public override void Update(float frameTime)
         {
-            foreach (var (moverComponent, physics) in EntityManager.ComponentManager.EntityQuery<IMoverComponent, IPhysicsComponent>())
+            foreach (var (moverComponent, physics) in EntityManager.ComponentManager.EntityQuery<IMoverComponent, IPhysicsComponent>(false))
             {
                 var entity = moverComponent.Owner;
-                if (_pauseManager.IsEntityPaused(entity))
-                    continue;
-
                 UpdateKinematics(entity.Transform, moverComponent, physics);
             }
         }
@@ -76,7 +73,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        private static void PlayerDetached(PlayerDetachedSystemMessage ev)
+        private void PlayerDetached(PlayerDetachedSystemMessage ev)
         {
             if (ev.Entity.HasComponent<PlayerInputMoverComponent>())
             {
@@ -84,7 +81,8 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             if (ev.Entity.TryGetComponent(out IPhysicsComponent? physics) &&
-                physics.TryGetController(out MoverController controller))
+                physics.TryGetController(out MoverController controller) &&
+                !ev.Entity.IsWeightless())
             {
                 controller.StopMoving();
             }

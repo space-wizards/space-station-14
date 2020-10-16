@@ -108,6 +108,7 @@
   - godmode
   - deleteewi
   - hurt
+  - toggledisallowlatejoin
   CanViewVar: true
   CanAdminPlace: true
   CanAdminMenu: true
@@ -209,6 +210,7 @@
   - godmode
   - deleteewi
   - hurt
+  - toggledisallowlatejoin
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true

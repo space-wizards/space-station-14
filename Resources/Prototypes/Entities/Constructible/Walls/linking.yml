@@ -4,7 +4,7 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
   - type: Sprite
     sprite: Constructible/Linking/switch.rsi
     state: on
@@ -20,7 +20,7 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
   - type: Sprite
     sprite: Constructible/Linking/switch.rsi
     state: dead

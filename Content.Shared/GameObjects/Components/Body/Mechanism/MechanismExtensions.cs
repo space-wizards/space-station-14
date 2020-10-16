@@ -16,6 +16,35 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
                    body.Parts.Values.Any(p => p.Mechanisms.Any(m => m.Owner.HasComponent<T>()));
         }
 
+        public static IEnumerable<IMechanismBehavior> GetMechanismBehaviors(this IEntity entity)
+        {
+            if (!entity.TryGetBody(out var body))
+            {
+                yield break;
+            }
+
+            foreach (var part in body.Parts.Values)
+            foreach (var mechanism in part.Mechanisms)
+            foreach (var behavior in mechanism.Owner.GetAllComponents<IMechanismBehavior>())
+            {
+                yield return behavior;
+            }
+        }
+
+        public static bool TryGetMechanismBehaviors(this IEntity entity,
+            [NotNullWhen(true)] out List<IMechanismBehavior>? behaviors)
+        {
+            behaviors = entity.GetMechanismBehaviors().ToList();
+
+            if (behaviors.Count == 0)
+            {
+                behaviors = null;
+                return false;
+            }
+
+            return true;
+        }
+
         public static IEnumerable<T> GetMechanismBehaviors<T>(this IEntity entity) where T : class, IMechanismBehavior
         {
             if (!entity.TryGetBody(out var body))

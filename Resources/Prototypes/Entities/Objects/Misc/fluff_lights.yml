@@ -110,7 +110,7 @@
         - state: floodlight_on
           shader: unshaded
           visible: false
-    - type: Collidable
+    - type: Physics
       shapes:
       - !type:PhysShapeAabb
         layer:
@@ -148,7 +148,7 @@
       spawnOnDestroy: SteelSheet1
       destroySound: /Audio/Effects/metalbreak.ogg
       resistances: metallicResistances
-    - type: Collidable
+    - type: Physics
       shapes:
       - !type:PhysShapeAabb
         layer:

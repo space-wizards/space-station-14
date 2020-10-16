@@ -262,7 +262,15 @@ namespace Content.Server.GameTicking
 
             var ticker = IoCManager.Resolve<IGameTicker>();
 
-            ticker.ToggleDisallowLateJoin(bool.Parse(args[0]));
+            if (bool.TryParse(args[0], out var result))
+            {
+                ticker.ToggleDisallowLateJoin(bool.Parse(args[0]));
+                shell.SendText(player, result ? "Late joining has been disabled." : "Late joining has been enabled.");
+            }
+            else
+            {
+                shell.SendText(player, "Invalid argument.");
+            }
         }
     }
 

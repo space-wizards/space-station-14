@@ -5,6 +5,7 @@ using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders;
 using Content.Server.GameObjects.EntitySystems.JobQueues;
 using Content.Server.GameObjects.EntitySystems.JobQueues.Queues;
+using Content.Shared.GameTicking;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
@@ -28,7 +29,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
     /// This system handles pathfinding graph updates as well as dispatches to the pathfinder
     /// (90% of what it's doing is graph updates so not much point splitting the 2 roles)
     /// </summary>
-    public class PathfindingSystem : EntitySystem
+    public class PathfindingSystem : EntitySystem, IResettingEntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -230,16 +231,6 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             node.UpdateTile(tile);
         }
 
-        public void ResettingCleanup()
-        {
-            _graph.Clear();
-            _collidableUpdateQueue.Clear();
-            _moveUpdateQueue.Clear();
-            _accessReaderUpdateQueue.Clear();
-            _tileUpdateQueue.Clear();
-            _lastKnownPositions.Clear();
-        }
-
         private void HandleGridRemoval(GridId gridId)
         {
             if (_graph.ContainsKey(gridId))
@@ -388,6 +379,16 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             }
 
             return true;
+        }
+
+        public void Reset()
+        {
+            _graph.Clear();
+            _collidableUpdateQueue.Clear();
+            _moveUpdateQueue.Clear();
+            _accessReaderUpdateQueue.Clear();
+            _tileUpdateQueue.Clear();
+            _lastKnownPositions.Clear();
         }
     }
 }
