@@ -421,6 +421,7 @@ namespace Content.Server.GameTicking
         {
             DisallowLateJoin = disallowLateJoin;
             UpdateLateJoinStatus();
+            UpdateJobsAvailable();
         }
 
         public T AddGameRule<T>() where T : GameRule, new()
@@ -942,6 +943,10 @@ namespace Content.Server.GameTicking
         private MsgTickerJobsAvailable GetJobsAvailable()
         {
             var message = _netManager.CreateNetMessage<MsgTickerJobsAvailable>();
+
+            // If late join is disallowed, return no available jobs.
+            if (DisallowLateJoin)
+                return message;
 
             message.JobsAvailable = GetAvailablePositions()
                 .Where(e => e.Value > 0)

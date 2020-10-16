@@ -244,7 +244,7 @@ namespace Content.Shared
             /// <summary>
             /// The Status of the Player in the lobby (ready, observer, ...)
             /// </summary>
-            public string[] JobsAvailable { get; set; }
+            public string[] JobsAvailable { get; set; } = Array.Empty<string>();
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
