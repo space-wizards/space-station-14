@@ -58,12 +58,9 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public override void Update(float frameTime)
         {
-            foreach (var (moverComponent, physics) in EntityManager.ComponentManager.EntityQuery<IMoverComponent, IPhysicsComponent>())
+            foreach (var (moverComponent, physics) in EntityManager.ComponentManager.EntityQuery<IMoverComponent, IPhysicsComponent>(false))
             {
                 var entity = moverComponent.Owner;
-                if (_pauseManager.IsEntityPaused(entity))
-                    continue;
-
                 UpdateKinematics(entity.Transform, moverComponent, physics);
             }
         }
