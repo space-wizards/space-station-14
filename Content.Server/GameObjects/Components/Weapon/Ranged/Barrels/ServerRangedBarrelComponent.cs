@@ -375,7 +375,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 else
                 {
                     projectile =
-                        Owner.EntityManager.SpawnEntity(baseProjectile.Prototype.ID, Owner.Transform.MapPosition);
+                        Owner.EntityManager.SpawnEntity(baseProjectile.Prototype.ID, baseProjectile.Transform.Coordinates);
                 }
 
                 Angle projectileAngle;
@@ -391,7 +391,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
                 var physics = projectile.GetComponent<IPhysicsComponent>();
                 physics.Status = BodyStatus.InAir;
-                projectile.Transform.WorldPosition = Owner.Transform.MapPosition.Position;
 
                 var projectileComponent = projectile.GetComponent<ProjectileComponent>();
                 projectileComponent.IgnoreEntity(shooter);
