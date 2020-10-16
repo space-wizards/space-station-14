@@ -158,9 +158,9 @@ namespace Content.Server.GameObjects.Components.Body
             }
         }
 
-        protected override void OnAddedToPart(IBodyPart? old, IBodyPart current)
+        protected override void OnAddedToPart()
         {
-            base.OnAddedToPart(old, current);
+            base.OnAddedToPart();
 
             if (Owner.TryGetComponent(out SpriteComponent? sprite))
             {
