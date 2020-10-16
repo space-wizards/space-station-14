@@ -64,7 +64,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 if (_pauseManager.IsEntityPaused(entity))
                     continue;
 
-                UpdateKinematics(entity.Transform, moverComponent, physics);
+                UpdateKinematics(entity.Transform, moverComponent, physics, frameTime);
             }
         }
 

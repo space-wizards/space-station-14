@@ -52,7 +52,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             base.Shutdown();
         }
 
-        protected void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, IPhysicsComponent physics)
+        protected void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, IPhysicsComponent physics, float frameTime)
         {
             physics.EnsureController<MoverController>();
 
@@ -92,12 +92,12 @@ namespace Content.Shared.GameObjects.EntitySystems
                     return;
                 }
 
-                var total = walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed;
+                var total = walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed * 1/frameTime;
 
                 {
                     if (physics.TryGetController(out MoverController controller))
                     {
-                        controller.Move(total, 1);
+                        controller.Move(total, 1f);
                     }
                 }
 

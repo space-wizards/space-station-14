@@ -33,7 +33,7 @@ namespace Content.Client.GameObjects.EntitySystems
             var physics = playerEnt.GetComponent<IPhysicsComponent>();
             physics.Predict = true;
 
-            UpdateKinematics(playerEnt.Transform, mover, physics);
+            UpdateKinematics(playerEnt.Transform, mover, physics, frameTime);
         }
 
         public override void Update(float frameTime)
