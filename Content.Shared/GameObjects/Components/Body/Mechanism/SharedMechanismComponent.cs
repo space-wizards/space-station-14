@@ -4,6 +4,7 @@ using Content.Shared.GameObjects.Components.Body.Part;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.GameObjects.Components.Body.Mechanism
 {
@@ -36,13 +37,14 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
                 var old = _part;
                 _part = value;
 
+                if (old != null)
+                {
+                    OnRemovedFromPart(old);
+                }
+
                 if (value != null)
                 {
-                    OnPartAdd(old, value);
-                }
-                else if (old != null)
-                {
-                    OnPartRemove(old);
+                    OnAddedToPart();
                 }
             }
         }
@@ -86,18 +88,87 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
             serializer.DataField(this, m => m.Compatibility, "compatibility", BodyPartCompatibility.Universal);
         }
 
-        public virtual void OnBodyAdd(IBody? old, IBody current) { }
-
-        public virtual void OnBodyRemove(IBody old) { }
-
-        protected virtual void OnPartAdd(IBodyPart? old, IBodyPart current)
+        public void AddedToBody()
         {
-            Owner.Transform.AttachParent(current.Owner);
+            DebugTools.AssertNotNull(Body);
+
+            OnAddedToBody();
+
+            foreach (var behavior in Owner.GetMechanismBehaviors())
+            {
+                behavior.AddedToBody();
+            }
         }
 
-        protected virtual void OnPartRemove(IBodyPart old)
+        public void RemovedFromBody(IBody old)
+        {
+            OnRemovedFromBody(old);
+
+            foreach (var behavior in Owner.GetMechanismBehaviors())
+            {
+                behavior.RemovedFromBody(old);
+            }
+        }
+
+        public void AddedToPart()
+        {
+            DebugTools.AssertNotNull(Part);
+
+            Owner.Transform.AttachParent(Part!.Owner);
+            OnAddedToPart();
+
+            foreach (var behavior in Owner.GetMechanismBehaviors())
+            {
+                behavior.AddedToPart();
+            }
+        }
+
+        public void RemovedFromPart(IBodyPart old)
         {
             Owner.Transform.AttachToGridOrMap();
+            OnRemovedFromPart(old);
+
+            foreach (var behavior in Owner.GetMechanismBehaviors())
+            {
+                behavior.RemovedFromPart(old);
+            }
         }
+
+        public void AddedToPartInBody()
+        {
+            DebugTools.AssertNotNull(Body);
+            DebugTools.AssertNotNull(Part);
+
+            Owner.Transform.AttachParent(Part!.Owner);
+            OnAddedToPartInBody();
+
+            foreach (var behavior in Owner.GetMechanismBehaviors())
+            {
+                behavior.AddedToPartInBody();
+            }
+        }
+
+        public void RemovedFromPartInBody(IBody? oldBody, IBodyPart? oldPart)
+        {
+            Owner.Transform.AttachToGridOrMap();
+            OnRemovedFromPartInBody();
+
+            foreach (var behavior in Owner.GetMechanismBehaviors())
+            {
+                behavior.RemovedFromPartInBody(oldBody, oldPart);
+            }
+        }
+
+        protected virtual void OnAddedToBody() { }
+
+        protected virtual void OnRemovedFromBody(IBody old) { }
+
+        protected virtual void OnAddedToPart() { }
+
+        protected virtual void OnRemovedFromPart(IBodyPart old) { }
+
+        protected virtual void OnAddedToPartInBody() { }
+
+        protected virtual void OnRemovedFromPartInBody() { }
     }
 }

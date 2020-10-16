@@ -158,9 +158,9 @@ namespace Content.Server.GameObjects.Components.Body
             }
         }
 
-        protected override void OnPartAdd(IBodyPart? old, IBodyPart current)
+        protected override void OnAddedToPart(IBodyPart? old, IBodyPart current)
         {
-            base.OnPartAdd(old, current);
+            base.OnAddedToPart(old, current);
 
             if (Owner.TryGetComponent(out SpriteComponent? sprite))
             {
@@ -168,9 +168,9 @@ namespace Content.Server.GameObjects.Components.Body
             }
         }
 
-        protected override void OnPartRemove(IBodyPart old)
+        protected override void OnRemovedFromPart(IBodyPart old)
         {
-            base.OnPartRemove(old);
+            base.OnRemovedFromPart(old);
 
             if (Owner.TryGetComponent(out SpriteComponent? sprite))
             {
