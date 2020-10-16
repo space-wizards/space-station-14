@@ -1,7 +1,6 @@
 ﻿#nullable enable
 using Content.Shared.GameObjects.Components.Gravity;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -27,7 +26,7 @@ namespace Content.Client.GameObjects.Components.Gravity
 
             var sprite = component.Owner.GetComponent<SpriteComponent>();
 
-            if (component.TryGetData(GravityGeneratorVisuals.State, out string state))
+            if (component.TryGetData(GravityGeneratorVisuals.State, out string? state))
             {
                 sprite.LayerSetState(0, state);
             }
