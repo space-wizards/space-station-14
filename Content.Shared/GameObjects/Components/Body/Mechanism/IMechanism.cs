@@ -52,6 +52,7 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
         /// </summary>
         BodyPartCompatibility Compatibility { get; set; }
 
+        // TODO BODY Turn these into event listeners so they dont need to be exposed
         /// <summary>
         ///     Called when the containing <see cref="IBodyPart"/> is attached to a
         ///     <see cref="IBody"/>.
