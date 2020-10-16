@@ -83,7 +83,7 @@ namespace Content.Server.GameObjects.Components.Gravity
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(ref _switchedOn, "switched_on", true);
+            serializer.DataField(ref _switchedOn, "switchedOn", true);
             serializer.DataField(ref _intact, "intact", true);
         }
 
