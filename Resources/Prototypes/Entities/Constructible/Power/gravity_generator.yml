@@ -35,5 +35,9 @@
     interfaces:
       - key: enum.GravityGeneratorUiKey.Key
         type: GravityGeneratorBoundUserInterface
+  - type: Appearance
+    visuals:
+    - type: GravityGeneratorVisualizer
+      coreLayer: 1
   placement:
     mode: AlignTileAny

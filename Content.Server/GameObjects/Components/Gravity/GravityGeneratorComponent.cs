@@ -14,6 +14,7 @@ using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -23,6 +24,7 @@ namespace Content.Server.GameObjects.Components.Gravity
     [RegisterComponent]
     public class GravityGeneratorComponent : SharedGravityGeneratorComponent, IInteractUsing, IBreakAct, IInteractHand
     {
+        [ComponentDependency] private readonly AppearanceComponent? _appearance = default!;
 
         private bool _switchedOn;
 
@@ -167,44 +169,32 @@ namespace Content.Server.GameObjects.Components.Gravity
         {
             _status = GravityGeneratorStatus.Broken;
 
-            if (Owner.TryGetComponent(out SpriteComponent? sprite))
-            {
-                sprite.LayerSetState(0, "broken");
-                sprite.LayerSetVisible(1, false);
-            }
+            _appearance?.SetData(GravityGeneratorVisuals.State, "broken");
+            _appearance?.SetData(GravityGeneratorVisuals.CoreVisible, false);
         }
 
         private void MakeUnpowered()
         {
             _status = GravityGeneratorStatus.Unpowered;
 
-            if (Owner.TryGetComponent(out SpriteComponent? sprite))
-            {
-                sprite.LayerSetState(0, "off");
-                sprite.LayerSetVisible(1, false);
-            }
+            _appearance?.SetData(GravityGeneratorVisuals.State, "off");
+            _appearance?.SetData(GravityGeneratorVisuals.CoreVisible, false);
         }
 
         private void MakeOff()
         {
             _status = GravityGeneratorStatus.Off;
 
-            if (Owner.TryGetComponent(out SpriteComponent? sprite))
-            {
-                sprite.LayerSetState(0, "off");
-                sprite.LayerSetVisible(1, false);
-            }
+            _appearance?.SetData(GravityGeneratorVisuals.State, "off");
+            _appearance?.SetData(GravityGeneratorVisuals.CoreVisible, false);
         }
 
         private void MakeOn()
         {
             _status = GravityGeneratorStatus.On;
 
-            if (Owner.TryGetComponent(out SpriteComponent? sprite))
-            {
-                sprite.LayerSetState(0, "on");
-                sprite.LayerSetVisible(1, true);
-            }
+            _appearance?.SetData(GravityGeneratorVisuals.State, "on");
+            _appearance?.SetData(GravityGeneratorVisuals.CoreVisible, true);
         }
     }
 
