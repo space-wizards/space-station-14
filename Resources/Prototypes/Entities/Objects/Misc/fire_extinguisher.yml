@@ -47,7 +47,7 @@
       layers:
         - state: extinguish
           map: [ "enum.VaporVisualLayers.Base" ]
-    - type: Collidable
+    - type: Physics
       hard: false
       shapes:
         - !type:PhysShapeAabb

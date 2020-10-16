@@ -51,31 +51,6 @@ namespace Content.Server.GameObjects.Components.Doors
 
                 _state = value;
 
-                // Didn't do in Open and Close as some stuff spawns as open so this is just easier.
-                if (Owner.TryGetComponent(out IPhysicsComponent? physicsComponent))
-                {
-                    switch (_state)
-                    {
-                        case DoorState.Closed:
-                        case DoorState.Closing:
-                            // WE should probably track what we updated but I doubt doors will get more than 1 physics shape anyway... right?
-                            foreach (var shape in physicsComponent.PhysicsShapes)
-                            {
-                                shape.CollisionLayer |= (int) CollisionGroup.Opaque;
-                            }
-                            break;
-                        case DoorState.Open:
-                        case DoorState.Opening:
-                            foreach (var shape in physicsComponent.PhysicsShapes)
-                            {
-                                shape.CollisionLayer &= (int) ~CollisionGroup.Opaque;
-                            }
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
-                }
-
                 Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new DoorStateMessage(this, State));
             }
         }
@@ -283,7 +258,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
                 if (Owner.TryGetComponent(out IPhysicsComponent? physics))
                 {
-                    physics.Hard = false;
+                    physics.CanCollide = false;
                 }
 
                 await Timer.Delay(OpenTimeTwo, _cancellationTokenSource.Token);
@@ -436,7 +411,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
                 if (Owner.TryGetComponent(out IPhysicsComponent? body))
                 {
-                    body.Hard = true;
+                    body.CanCollide = true;
                 }
 
                 await Timer.Delay(CloseTimeTwo, _cancellationTokenSource.Token);

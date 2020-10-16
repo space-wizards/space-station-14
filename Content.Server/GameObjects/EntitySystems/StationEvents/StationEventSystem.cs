@@ -4,6 +4,7 @@ using System.Text;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.StationEvents;
+using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
@@ -20,7 +21,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
 {
     [UsedImplicitly]
     // Somewhat based off of TG's implementation of events
-    public sealed class StationEventSystem : EntitySystem
+    public sealed class StationEventSystem : EntitySystem, IResettingEntitySystem
     {
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -339,7 +340,13 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
             return true;
         }
 
-        public void ResettingCleanup()
+        public override void Shutdown()
+        {
+            base.Shutdown();
+            CurrentEvent?.Shutdown();
+        }
+
+        public void Reset()
         {
             if (CurrentEvent != null && CurrentEvent.Running)
             {
@@ -353,12 +360,6 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
             }
 
             _timeUntilNextEvent = MinimumTimeUntilFirstEvent;
-        }
-
-        public override void Shutdown()
-        {
-            base.Shutdown();
-            CurrentEvent?.Shutdown();
         }
     }
 }

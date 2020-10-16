@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Content.Client.Interfaces;
 using Content.Shared.Roles;
 using Robust.Client.Console;
 using Robust.Client.UserInterface.Controls;
@@ -18,10 +20,13 @@ namespace Content.Client.UserInterface
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IClientConsole _console = default!;
+        [Dependency] private readonly IClientGameTicker _gameTicker = default!;
 
         protected override Vector2? CustomSize => (360, 560);
 
         public event Action<string> SelectedId;
+
+        private Dictionary<string, JobButton> JobButtons = new Dictionary<string, JobButton>();
 
         public LateJoinGui()
         {
@@ -84,6 +89,13 @@ namespace Content.Client.UserInterface
                 {
                     SelectedId?.Invoke(jobButton.JobId);
                 };
+
+                if (!_gameTicker.JobsAvailable.Contains(job.ID))
+                {
+                    jobButton.Disabled = true;
+                }
+
+                JobButtons[job.ID] = jobButton;
             }
 
             SelectedId += jobId =>
@@ -93,7 +105,7 @@ namespace Content.Client.UserInterface
                 Close();
             };
 
-
+            _gameTicker.LobbyJobsAvailableUpdated += JobsAvailableUpdated;
         }
 
         public string ReturnId()
@@ -101,7 +113,26 @@ namespace Content.Client.UserInterface
             return SelectedId.ToString();
         }
 
+        private void JobsAvailableUpdated(IReadOnlyList<string> jobs)
+        {
+            foreach (var (id, button) in JobButtons)
+            {
+                button.Disabled = !jobs.Contains(id);
+            }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            if (disposing)
+            {
+                _gameTicker.LobbyJobsAvailableUpdated -= JobsAvailableUpdated;
+                JobButtons.Clear();
+            }
+        }
     }
+
     class JobButton : ContainerButton
     {
         public string JobId { get; set; }

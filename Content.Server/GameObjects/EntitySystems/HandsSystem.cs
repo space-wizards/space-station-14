@@ -171,7 +171,7 @@ namespace Content.Server.GameObjects.EntitySystems
                     newStackComp.Count = 1;
             }
 
-            ThrowHelper.ThrowTo(throwEnt, ThrowForce, coords, plyEnt.Transform.Coordinates, false, plyEnt);
+            throwEnt.ThrowTo(ThrowForce, coords, plyEnt.Transform.Coordinates, false, plyEnt);
 
             return true;
         }

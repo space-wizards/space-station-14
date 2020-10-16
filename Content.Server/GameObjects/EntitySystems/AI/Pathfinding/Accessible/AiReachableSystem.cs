@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders;
 using Content.Shared.AI;
+using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects.Components;
@@ -22,7 +23,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
     /// </summary>
     /// Long-term can be used to do hierarchical pathfinding
     [UsedImplicitly]
-    public sealed class AiReachableSystem : EntitySystem
+    public sealed class AiReachableSystem : EntitySystem, IResettingEntitySystem
     {
         /*
          * The purpose of this is to provide a higher-level / hierarchical abstraction of the actual pathfinding graph
@@ -132,14 +133,6 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
             _cachedAccessible.Clear();
             _queuedCacheDeletions.Clear();
             _mapManager.OnGridRemoved -= GridRemoved;
-        }
-
-        public void ResettingCleanup()
-        {
-            _queuedUpdates.Clear();
-            _regions.Clear();
-            _cachedAccessible.Clear();
-            _queuedCacheDeletions.Clear();
         }
 
         private void RecalculateNodeRegions(PathfindingChunkUpdateMessage message)
@@ -681,6 +674,14 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
             DebugTools.Assert(chunkRegions.Count < Math.Pow(PathfindingChunk.ChunkSize, 2));
             SendRegionsDebugMessage(chunk.GridId);
 #endif
+        }
+
+        public void Reset()
+        {
+            _queuedUpdates.Clear();
+            _regions.Clear();
+            _cachedAccessible.Clear();
+            _queuedCacheDeletions.Clear();
         }
 
 #if DEBUG

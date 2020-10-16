@@ -674,12 +674,12 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         bool IDragDropOn.CanDragDropOn(DragDropEventArgs eventArgs)
         {
-            return CanInsert(eventArgs.Dropped);
+            return CanInsert(eventArgs.Dragged);
         }
 
         bool IDragDropOn.DragDropOn(DragDropEventArgs eventArgs)
         {
-            _ = TryInsert(eventArgs.Dropped, eventArgs.User);
+            _ = TryInsert(eventArgs.Dragged, eventArgs.User);
             return true;
         }
 

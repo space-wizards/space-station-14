@@ -22,7 +22,7 @@
       state: running
       sprite: Mobs/Aliens/Xenos/xeno_hunter.rsi
   - type: Clickable
-  - type: Collidable
+  - type: Physics
     anchored: false
     mass: 85
     shapes:
