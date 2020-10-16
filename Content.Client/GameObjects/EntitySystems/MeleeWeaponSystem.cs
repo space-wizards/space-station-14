@@ -56,7 +56,7 @@ namespace Content.Client.GameObjects.EntitySystems
             entity.Transform.LocalRotation = msg.Angle;
 
             var weaponArcAnimation = entity.GetComponent<MeleeWeaponArcAnimationComponent>();
-            weaponArcAnimation.SetData(weaponArc, msg.Angle, attacker);
+            weaponArcAnimation.SetData(weaponArc, msg.Angle, attacker, msg.ArcFollowAttacker);
 
             // Due to ISpriteComponent limitations, weapons that don't use an RSI won't have this effect.
             if (EntityManager.TryGetEntity(msg.Source, out var source) && msg.TextureEffect && source.TryGetComponent(out ISpriteComponent sourceSprite)

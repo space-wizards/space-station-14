@@ -1,7 +1,9 @@
-﻿using Content.Server.GameObjects.Components.Body.Digestive;
+﻿using System.Linq;
+using Content.Server.GameObjects.Components.Body.Behavior;
 using Content.Server.GameObjects.Components.Nutrition;
 using Content.Server.GameObjects.Components.Utensil;
 using Content.Shared.Chemistry;
+using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
@@ -80,7 +82,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             var trueTarget = target ?? user;
 
-            if (!trueTarget.TryGetComponent(out StomachComponent stomach))
+            if (!trueTarget.TryGetMechanismBehaviors<StomachBehaviorComponent>(out var stomachs))
             {
                 return false;
             }
@@ -93,7 +95,9 @@ namespace Content.Server.GameObjects.Components.Chemistry
             var transferAmount = ReagentUnit.Min(_transferAmount, _contents.CurrentVolume);
             var split = _contents.SplitSolution(transferAmount);
 
-            if (!stomach.CanTransferSolution(split))
+            var firstStomach = stomachs.FirstOrDefault(stomach => stomach.CanTransferSolution(split));
+
+            if (firstStomach == null)
             {
                 _contents.TryAddSolution(split);
                 trueTarget.PopupMessage(user, Loc.GetString("You can't eat any more!"));
@@ -108,7 +112,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 split.RemoveReagent(reagentId, reagent.ReactionEntity(trueTarget, ReactionMethod.Ingestion, quantity));
             }
 
-            stomach.TryTransferSolution(split);
+            firstStomach.TryTransferSolution(split);
 
             if (_useSound != null)
             {

@@ -15,10 +15,12 @@
     netsync: false
     drawdepth: WallTops
     sprite: Constructible/Structures/Windows/window.rsi
-  - type: Collidable
+  - type: Icon
+    sprite: Constructible/Structures/Windows/window.rsi
+    state: full
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.5, -0.5, 0.3, 0.5"
       layer:
       - Impassable
       - MobImpassable
@@ -32,6 +34,9 @@
   - type: Airtight
   - type: Window
     base: window
+  - type: Construction
+    graph: window
+    node: window
 
 - type: entity
   id: ReinforcedWindow
@@ -41,11 +46,16 @@
   - type: Sprite
     drawdepth: WallTops
     sprite: Constructible/Structures/Windows/reinforced_window.rsi
+  - type: Icon
+    sprite: Constructible/Structures/Windows/reinforced_window.rsi
   - type: Destructible
     deadThreshold: 75
     resistances: metallicResistances
   - type: Window
     base: rwindow
+  - type: Construction
+    graph: window
+    node: reinforcedWindow
 
 - type: entity
   id: PhoronWindow
@@ -55,8 +65,13 @@
   - type: Sprite
     drawdepth: WallTops
     sprite: Constructible/Structures/Windows/phoron_window.rsi
+  - type: Icon
+    sprite: Constructible/Structures/Windows/phoron_window.rsi
   - type: Destructible
     deadThreshold: 100
     resistances: metallicResistances
   - type: Window
     base: pwindow
+  - type: Construction
+    graph: window
+    node: phoronWindow

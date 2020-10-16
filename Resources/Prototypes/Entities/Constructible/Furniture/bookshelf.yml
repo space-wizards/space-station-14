@@ -10,7 +10,7 @@
   - type: InteractionOutline
   - type: Sprite
     sprite: Constructible/Misc/bookshelf.rsi
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       layer:

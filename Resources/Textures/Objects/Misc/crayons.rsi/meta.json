@@ -1,0 +1,351 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "black",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "blue",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "clowncan",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "clowncan2",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "clowncan2_cap",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "clowncan_cap",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "crayonblack",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "crayonblue",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "crayonbox",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "crayongreen",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "crayonmime",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "crayonorange",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "crayonpurple",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "crayonrainbow",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "crayonred",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "crayonwhite",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "crayonyellow",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "deathcan",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "deathcan2",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "deathcan2_cap",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "deathcan_cap",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "green",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "mimecan",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "mimecan2",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "mimecan2_cap",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "mimecan_cap",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "orange",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "purple",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "rainbowcan",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "rainbowcan2",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "rainbowcan2_cap",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "rainbowcan_cap",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "red",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "spraycan",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "spraycan_cap",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "spraycan_cap_colors",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "spraycan_colors",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "yellow",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        }
+    ]
+}

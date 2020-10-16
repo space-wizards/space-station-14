@@ -30,10 +30,10 @@ namespace Content.Client.GameObjects.EntitySystems
                 return;
             }
 
-            var collidable = playerEnt.GetComponent<ICollidableComponent>();
-            collidable.Predict = true;
+            var physics = playerEnt.GetComponent<IPhysicsComponent>();
+            physics.Predict = true;
 
-            UpdateKinematics(playerEnt.Transform, mover, collidable);
+            UpdateKinematics(playerEnt.Transform, mover, physics);
         }
 
         public override void Update(float frameTime)
