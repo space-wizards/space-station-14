@@ -1,6 +1,8 @@
 ﻿#nullable enable
 using System;
+using Content.Shared.GameObjects.Components.Pulling;
 using Content.Shared.Physics.Pull;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
@@ -13,42 +15,6 @@ namespace Content.Shared.GameObjects.Components.Items
     {
         public sealed override string Name => "Hands";
         public sealed override uint? NetID => ContentNetIDs.HANDS;
-
-        [ViewVariables]
-        public IPhysicsComponent? PulledObject { get; protected set; }
-
-        [ViewVariables]
-        protected bool IsPulling => PulledObject != null;
-
-        public virtual void StopPull()
-        {
-            if (PulledObject != null &&
-                PulledObject.TryGetController(out PullController controller))
-            {
-                controller.StopPull();
-            }
-        }
-
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-
-            if (!(message is PullMessage pullMessage) ||
-                pullMessage.Puller.Owner != Owner)
-            {
-                return;
-            }
-
-            switch (message)
-            {
-                case PullStartedMessage msg:
-                    PulledObject = msg.Pulled;
-                    break;
-                case PullStoppedMessage _:
-                    PulledObject = null;
-                    break;
-            }
-        }
     }
 
     [Serializable, NetSerializable]

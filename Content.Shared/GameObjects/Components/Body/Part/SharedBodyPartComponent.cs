@@ -43,18 +43,19 @@ namespace Content.Shared.GameObjects.Components.Body.Part
                 var old = _body;
                 _body = value;
 
+                if (old != null)
+                {
+                    foreach (var mechanism in _mechanisms)
+                    {
+                        mechanism.RemovedFromBody(old);
+                    }
+                }
+
                 if (value != null)
                 {
                     foreach (var mechanism in _mechanisms)
                     {
-                        mechanism.OnBodyAdd(old, value);
-                    }
-                }
-                else if (old != null)
-                {
-                    foreach (var mechanism in _mechanisms)
-                    {
-                        mechanism.OnBodyRemove(old);
+                        mechanism.AddedToBody();
                     }
                 }
             }
@@ -305,7 +306,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part
     [Serializable, NetSerializable]
     public class BodyPartComponentState : ComponentState
     {
-        private List<IMechanism>? _mechanisms;
+        [NonSerialized] private List<IMechanism>? _mechanisms;
 
         public readonly EntityUid[] MechanismIds;
 

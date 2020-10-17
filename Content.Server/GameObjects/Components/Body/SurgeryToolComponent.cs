@@ -68,7 +68,7 @@ namespace Content.Server.GameObjects.Components.Body
             _callbackCache = null;
 
             // Attempt surgery on a body by sending a list of operable parts for the client to choose from
-            if (eventArgs.Target.TryGetBody(out var body))
+            if (eventArgs.Target.TryGetComponent(out IBody? body))
             {
                 // Create dictionary to send to client (text to be shown : data sent back if selected)
                 var toSend = new Dictionary<string, int>();

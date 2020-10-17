@@ -124,7 +124,6 @@
             "RCD",
             "RCDDeconstructWhitelist",
             "RCDAmmo",
-            "Pullable",
             "CursedEntityStorage",
             "Listening",
             "Radio",

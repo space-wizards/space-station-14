@@ -104,7 +104,7 @@ namespace Content.Server.GameObjects.Components.Body.Part
             _surgeonCache = null;
             _owningBodyCache = null;
 
-            if (eventArgs.Target.TryGetBody(out var body))
+            if (eventArgs.Target.TryGetComponent(out IBody? body))
             {
                 SendSlots(eventArgs, body);
             }

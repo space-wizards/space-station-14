@@ -3,10 +3,8 @@ using Content.Server.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Rotation;
-using Content.Shared.GameObjects.EntitySystems;
 using NUnit.Framework;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
@@ -36,7 +34,7 @@ namespace Content.IntegrationTests.Tests.Body
                 var entityManager = IoCManager.Resolve<IEntityManager>();
                 var human = entityManager.SpawnEntity("HumanMob_Content", MapCoordinates.Nullspace);
 
-                Assert.That(human.TryGetBody(out var body));
+                Assert.That(human.TryGetComponent(out IBody body));
                 Assert.That(human.TryGetComponent(out appearance));
 
                 Assert.That(!appearance.TryGetData(RotationVisuals.RotationState, out RotationState _));
