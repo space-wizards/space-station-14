@@ -56,7 +56,7 @@ namespace Content.Shared.GameObjects.Components.Body.Behavior
 
         public void AddedToPartInBody()
         {
-            OnAddedToPart();
+            OnAddedToPartInBody();
         }
 
         public void RemovedFromPartInBody(IBody? oldBody, IBodyPart? oldPart)

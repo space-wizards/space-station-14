@@ -148,7 +148,7 @@ namespace Content.IntegrationTests.Tests.Body
                 var mechanism = centerPart!.Mechanisms.First();
                 Assert.NotNull(mechanism);
 
-                var component = centerPart!.Owner.AddComponent<TestBehaviorComponent>();
+                var component = mechanism.Owner.AddComponent<TestBehaviorComponent>();
                 Assert.False(component.WasAddedToBody);
                 Assert.False(component.WasAddedToPart);
                 Assert.True(component.WasAddedToPartInBody);

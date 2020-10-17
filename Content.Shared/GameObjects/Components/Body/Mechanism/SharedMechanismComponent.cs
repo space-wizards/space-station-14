@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System.Collections.Generic;
+using Content.Shared.GameObjects.Components.Body.Behavior;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -94,7 +95,7 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
 
             OnAddedToBody();
 
-            foreach (var behavior in Owner.GetMechanismBehaviors())
+            foreach (var behavior in Owner.GetAllComponents<IMechanismBehavior>())
             {
                 behavior.AddedToBody();
             }
@@ -104,7 +105,7 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
         {
             OnRemovedFromBody(old);
 
-            foreach (var behavior in Owner.GetMechanismBehaviors())
+            foreach (var behavior in Owner.GetAllComponents<IMechanismBehavior>())
             {
                 behavior.RemovedFromBody(old);
             }
@@ -117,7 +118,7 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
             Owner.Transform.AttachParent(Part!.Owner);
             OnAddedToPart();
 
-            foreach (var behavior in Owner.GetMechanismBehaviors())
+            foreach (var behavior in Owner.GetAllComponents<IMechanismBehavior>())
             {
                 behavior.AddedToPart();
             }
@@ -131,7 +132,7 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
             Owner.Transform.AttachParent(Part!.Owner);
             OnAddedToPartInBody();
 
-            foreach (var behavior in Owner.GetMechanismBehaviors())
+            foreach (var behavior in Owner.GetAllComponents<IMechanismBehavior>())
             {
                 behavior.AddedToPartInBody();
             }
@@ -142,7 +143,7 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
             Owner.Transform.AttachToGridOrMap();
             OnRemovedFromPart(old);
 
-            foreach (var behavior in Owner.GetMechanismBehaviors())
+            foreach (var behavior in Owner.GetAllComponents<IMechanismBehavior>())
             {
                 behavior.RemovedFromPart(old);
             }
@@ -153,7 +154,7 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
             Owner.Transform.AttachToGridOrMap();
             OnRemovedFromPartInBody();
 
-            foreach (var behavior in Owner.GetMechanismBehaviors())
+            foreach (var behavior in Owner.GetAllComponents<IMechanismBehavior>())
             {
                 behavior.RemovedFromPartInBody(oldBody, oldPart);
             }
