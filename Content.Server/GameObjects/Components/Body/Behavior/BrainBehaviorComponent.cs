@@ -21,43 +21,28 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
         {
             base.OnAddedToBody();
 
-            if (Body == null)
-                return;
-
-            HandleMind(Body.Owner, Owner);
+            HandleMind(Body!.Owner, Owner);
         }
 
         protected override void OnAddedToPart()
         {
             base.OnAddedToPart();
 
-            if (Part == null)
-                return;
-
-            HandleMind(Part.Owner, Owner);
+            HandleMind(Part!.Owner, Owner);
         }
 
         protected override void OnAddedToPartInBody()
         {
             base.OnAddedToPartInBody();
 
-            if (Body == null || Part == null)
-                return;
-
-            HandleMind(Body.Owner, Owner);
+            HandleMind(Body!.Owner, Owner);
         }
 
         protected override void OnRemovedFromBody(IBody old)
         {
             base.OnRemovedFromBody(old);
 
-            if (Part != null)
-            {
-                HandleMind(Part.Owner, old.Owner);
-                return;
-            }
-
-            HandleMind(Owner, old.Owner);
+            HandleMind(Part!.Owner, old.Owner);
         }
 
         protected override void OnRemovedFromPart(IBodyPart old)
@@ -71,9 +56,7 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
         {
             base.OnRemovedFromPartInBody(oldBody, oldPart);
 
-            if (oldBody == null) return;
-
-            HandleMind(oldBody.Owner, Owner);
+            HandleMind(oldBody!.Owner, Owner);
         }
 
         private void HandleMind(IEntity newEntity, IEntity oldEntity)
