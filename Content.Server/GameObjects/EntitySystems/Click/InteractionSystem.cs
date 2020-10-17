@@ -5,6 +5,7 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
+using Content.Server.GameObjects.Components.Pulling;
 using Content.Server.GameObjects.Components.Timing;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Inventory;
@@ -273,12 +274,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return false;
             }
 
-            if (!pulledObject.TryGetComponent<PullableComponent>(out var pull))
-            {
-                return false;
-            }
-
-            if (!player.TryGetComponent<HandsComponent>(out var hands))
+            if (!pulledObject.TryGetComponent(out PullableComponent pull))
             {
                 return false;
             }
@@ -289,24 +285,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return false;
             }
 
-            if (!pull.Owner.TryGetComponent(out IPhysicsComponent physics) ||
-                physics.Anchored)
-            {
-                return false;
-            }
-
-            var controller = physics.EnsureController<PullController>();
-
-            if (controller.GettingPulled)
-            {
-                hands.StopPull();
-            }
-            else
-            {
-                hands.StartPull(pull);
-            }
-
-            return false;
+            return pull.TogglePull(player);
         }
 
         private void UserInteraction(IEntity player, EntityCoordinates coordinates, EntityUid clickedUid)
