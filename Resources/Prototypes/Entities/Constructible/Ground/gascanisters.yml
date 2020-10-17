@@ -22,5 +22,21 @@
   name: Gas Canister
   components:
   - type: Sprite
-    sprite: "Constructible/Power/apc.rsi"
-    state: apc0
+    sprite: Constructible/Atmos/canister.rsi
+    state: grey
+  - type: Physics
+    mass: 25
+    anchored: false
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.5,-0.25,0.5,0.25"
+        mask:
+          - Impassable
+          - MobImpassable
+          - VaultImpassable
+          - SmallImpassable
+        layer:
+          - Opaque
+          - MobImpassable
+          - VaultImpassable
+          - SmallImpassable
