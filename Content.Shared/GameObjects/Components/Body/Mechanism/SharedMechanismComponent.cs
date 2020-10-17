@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System.Collections.Generic;
+using System.Linq;
 using Content.Shared.GameObjects.Components.Body.Behavior;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Robust.Shared.GameObjects;
@@ -132,7 +133,7 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
             Owner.Transform.AttachParent(Part!.Owner);
             OnAddedToPart();
 
-            foreach (var behavior in Owner.GetAllComponents<IMechanismBehavior>())
+            foreach (var behavior in Owner.GetAllComponents<IMechanismBehavior>().ToArray())
             {
                 behavior.AddedToPart();
             }
