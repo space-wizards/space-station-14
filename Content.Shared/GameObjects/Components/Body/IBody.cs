@@ -61,18 +61,15 @@ namespace Content.Shared.GameObjects.Components.Body
         ///     dropping other <see cref="IBodyPart">BodyParts</see> if they
         ///     were hanging off of it.
         /// </summary>
-        void RemovePart(IBodyPart part, bool drop);
+        void RemovePart(IBodyPart part);
 
         /// <summary>
         ///     Removes the body part in slot <see cref="slot"/> from this body,
         ///     if one exists.
         /// </summary>
         /// <param name="slot">The slot to remove it from.</param>
-        /// <param name="drop">
-        ///     Whether or not to drop the removed <see cref="IBodyPart"/>.
-        /// </param>
         /// <returns>True if the part was removed, false otherwise.</returns>
-        bool RemovePart(string slot, bool drop);
+        bool RemovePart(string slot);
 
         /// <summary>
         ///     Removes the body part from this body, if one exists.

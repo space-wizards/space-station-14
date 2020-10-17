@@ -46,8 +46,6 @@ namespace Content.Shared.GameObjects.Components.Body.Part
 
         public BodyPartSymmetry Symmetry { get; }
 
-        bool Drop();
-
         /// <summary>
         ///     Checks if the given <see cref="SurgeryType"/> can be used on
         ///     the current state of this <see cref="IBodyPart"/>.

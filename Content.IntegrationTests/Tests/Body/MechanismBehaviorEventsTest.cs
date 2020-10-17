@@ -180,7 +180,7 @@ namespace Content.IntegrationTests.Tests.Body
 
                 component.ResetAll();
 
-                body.RemovePart(centerPart, true);
+                body.RemovePart(centerPart);
 
                 Assert.That(component.NoAdded);
                 Assert.That(component.WasRemovedFromBody);
