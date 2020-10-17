@@ -1,10 +1,13 @@
 ﻿#nullable enable
 using Content.Shared.GameObjects.Components.Body.Part;
+using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Shared.GameObjects.Components.Body.Mechanism
 {
-    public interface IMechanism : IHasBody
+    public interface IMechanism : IComponent
     {
+        IBody? Body { get; }
+
         IBodyPart? Part { get; set; }
 
         /// <summary>
@@ -71,6 +74,14 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
         void AddedToPart();
 
         /// <summary>
+        ///     Called when the parent <see cref="IMechanism"/> is added to a
+        ///     <see cref="IBodyPart"/> that is attached to a <see cref="IBody"/>.
+        ///     For instance, adding a brain to a head that is attached to a body.
+        ///     DO NOT CALL THIS DIRECTLY FROM OUTSIDE BODY SYSTEM CODE!
+        /// </summary>
+        void AddedToPartInBody();
+
+        /// <summary>
         ///     Called when the parent <see cref="IBodyPart"/> is removed from a
         ///     <see cref="IBody"/>.
         ///     For instance, removing a head with a brain inside from a body.
@@ -86,14 +97,6 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
         ///     DO NOT CALL THIS DIRECTLY FROM OUTSIDE BODY SYSTEM CODE!
         /// </summary>
         void RemovedFromPart(IBodyPart old);
-
-        /// <summary>
-        ///     Called when the parent <see cref="IMechanism"/> is added to a
-        ///     <see cref="IBodyPart"/> that is attached to a <see cref="IBody"/>.
-        ///     For instance, adding a brain to a head that is attached to a body.
-        ///     DO NOT CALL THIS DIRECTLY FROM OUTSIDE BODY SYSTEM CODE!
-        /// </summary>
-        void AddedToPartInBody();
 
         /// <summary>
         ///     Called when the parent <see cref="IMechanism"/> is removed from a

@@ -39,12 +39,12 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
 
                 if (old != null)
                 {
-                    OnRemovedFromPart(old);
+                    RemovedFromPart(old);
                 }
 
                 if (value != null)
                 {
-                    OnAddedToPart();
+                    AddedToPart();
                 }
             }
         }
@@ -123,17 +123,6 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
             }
         }
 
-        public void RemovedFromPart(IBodyPart old)
-        {
-            Owner.Transform.AttachToGridOrMap();
-            OnRemovedFromPart(old);
-
-            foreach (var behavior in Owner.GetMechanismBehaviors())
-            {
-                behavior.RemovedFromPart(old);
-            }
-        }
-
         public void AddedToPartInBody()
         {
             DebugTools.AssertNotNull(Body);
@@ -145,6 +134,17 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
             foreach (var behavior in Owner.GetMechanismBehaviors())
             {
                 behavior.AddedToPartInBody();
+            }
+        }
+
+        public void RemovedFromPart(IBodyPart old)
+        {
+            Owner.Transform.AttachToGridOrMap();
+            OnRemovedFromPart(old);
+
+            foreach (var behavior in Owner.GetMechanismBehaviors())
+            {
+                behavior.RemovedFromPart(old);
             }
         }
 

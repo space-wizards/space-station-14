@@ -7,7 +7,7 @@ using Robust.Shared.Map;
 
 namespace Content.Shared.GameObjects.Components.Body.Part
 {
-    public interface IBodyPart : IHasBody, IBodyPartContainer
+    public interface IBodyPart : IComponent, IBodyPartContainer
     {
         new IBody? Body { get; set; }
 
