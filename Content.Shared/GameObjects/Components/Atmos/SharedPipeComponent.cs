@@ -57,6 +57,7 @@ namespace Content.Shared.GameObjects.Components.Atmos
 
     public enum PipeShape
     {
+        Half,
         Straight,
         Bend,
         TJunction,
@@ -126,6 +127,11 @@ namespace Content.Shared.GameObjects.Components.Atmos
         {
             return pipeDirection switch
             {
+                PipeDirection.North         => PipeShape.Half,
+                PipeDirection.South         => PipeShape.Half,
+                PipeDirection.East          => PipeShape.Half,
+                PipeDirection.West          => PipeShape.Half,
+
                 PipeDirection.Lateral       => PipeShape.Straight,
                 PipeDirection.Longitudinal  => PipeShape.Straight,
 
