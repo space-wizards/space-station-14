@@ -61,4 +61,13 @@ namespace Content.Shared.GameObjects.Components.Gravity
         State,
         CoreVisible
     }
+
+    [Serializable, NetSerializable]
+    public enum GravityGeneratorStatus
+    {
+        Broken,
+        Unpowered,
+        Off,
+        On
+    }
 }

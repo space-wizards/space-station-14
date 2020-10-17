@@ -1,22 +1,40 @@
 ﻿#nullable enable
 using Content.Shared.GameObjects.Components.Gravity;
 using Robust.Client.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Utility;
+using System;
+using System.Collections.Generic;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Gravity
 {
     public class GravityGeneratorVisualizer : AppearanceVisualizer
     {
-        private int _coreLayer = 1;
+        private Dictionary<GravityGeneratorStatus, string> _spriteMap = new Dictionary<GravityGeneratorStatus, string>();
+
+        public override void InitializeEntity(IEntity entity)
+        {
+            base.InitializeEntity(entity);
+
+            if (!entity.TryGetComponent(out SpriteComponent? sprite))
+                return;
+
+            sprite.LayerMapReserveBlank(GravityGeneratorVisualLayers.Base);
+            sprite.LayerMapReserveBlank(GravityGeneratorVisualLayers.Core);
+        }
 
         public override void LoadData(YamlMappingNode node)
         {
             base.LoadData(node);
 
-            if (node.TryGetNode("coreLayer", out var coreLayer))
+            // Get Sprites for each status
+            foreach (var status in (GravityGeneratorStatus[]) Enum.GetValues(typeof(GravityGeneratorStatus)))
             {
-                _coreLayer = coreLayer.AsInt();
+                if (node.TryGetNode(status.ToString().ToLower(), out var sprite))
+                {
+                    _spriteMap[status] = sprite.AsString();
+                }
             }
         }
 
@@ -26,15 +44,26 @@ namespace Content.Client.GameObjects.Components.Gravity
 
             var sprite = component.Owner.GetComponent<SpriteComponent>();
 
-            if (component.TryGetData(GravityGeneratorVisuals.State, out string? state))
+            if (component.TryGetData(GravityGeneratorVisuals.State, out GravityGeneratorStatus state))
             {
-                sprite.LayerSetState(0, state);
+                if (_spriteMap.TryGetValue(state, out var spriteState))
+                {
+                    var layer = sprite.LayerMapGet(GravityGeneratorVisualLayers.Base);
+                    sprite.LayerSetState(layer, spriteState);
+                }
             }
 
             if (component.TryGetData(GravityGeneratorVisuals.CoreVisible, out bool visible))
             {
-                sprite.LayerSetVisible(_coreLayer, visible);
+                var layer = sprite.LayerMapGet(GravityGeneratorVisualLayers.Core);
+                sprite.LayerSetVisible(layer, visible);
             }
+        }
+
+        public enum GravityGeneratorVisualLayers
+        {
+            Base,
+            Core
         }
     }
 }

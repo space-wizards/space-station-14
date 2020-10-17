@@ -169,7 +169,7 @@ namespace Content.Server.GameObjects.Components.Gravity
         {
             _status = GravityGeneratorStatus.Broken;
 
-            _appearance?.SetData(GravityGeneratorVisuals.State, "broken");
+            _appearance?.SetData(GravityGeneratorVisuals.State, Status);
             _appearance?.SetData(GravityGeneratorVisuals.CoreVisible, false);
         }
 
@@ -177,7 +177,7 @@ namespace Content.Server.GameObjects.Components.Gravity
         {
             _status = GravityGeneratorStatus.Unpowered;
 
-            _appearance?.SetData(GravityGeneratorVisuals.State, "off");
+            _appearance?.SetData(GravityGeneratorVisuals.State, Status);
             _appearance?.SetData(GravityGeneratorVisuals.CoreVisible, false);
         }
 
@@ -185,7 +185,7 @@ namespace Content.Server.GameObjects.Components.Gravity
         {
             _status = GravityGeneratorStatus.Off;
 
-            _appearance?.SetData(GravityGeneratorVisuals.State, "off");
+            _appearance?.SetData(GravityGeneratorVisuals.State, Status);
             _appearance?.SetData(GravityGeneratorVisuals.CoreVisible, false);
         }
 
@@ -193,16 +193,8 @@ namespace Content.Server.GameObjects.Components.Gravity
         {
             _status = GravityGeneratorStatus.On;
 
-            _appearance?.SetData(GravityGeneratorVisuals.State, "on");
+            _appearance?.SetData(GravityGeneratorVisuals.State, Status);
             _appearance?.SetData(GravityGeneratorVisuals.CoreVisible, true);
         }
-    }
-
-    public enum GravityGeneratorStatus
-    {
-        Broken,
-        Unpowered,
-        Off,
-        On
     }
 }
