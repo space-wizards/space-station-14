@@ -191,7 +191,6 @@ namespace Content.Server.GameObjects.Components.Metabolism
 
                 if (bloodstreamAmount < amountNeeded)
                 {
-                    // Logger.Debug($"Missing {amountNeeded - bloodstreamAmount} of {gas}");
                     // Panic inhale
                     if (Owner.TryGetMechanismBehaviors(out List<LungBehaviorComponent> lungs))
                     {
@@ -221,7 +220,6 @@ namespace Content.Server.GameObjects.Components.Metabolism
 
                 DeficitGases[gas] = deficit;
 
-                // Logger.Debug($"{amountNeeded - deficit} units of {gas} used. Deficit: {deficit}");
 
                 used += (amountNeeded - deficit) / amountNeeded;
             }

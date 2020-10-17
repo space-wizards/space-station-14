@@ -159,7 +159,6 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
         {
             var ratio = Atmospherics.BreathPercentage * frameTime;
 
-            // Logger.Debug($"Inhaling {ratio * from.GetMoles(Gas.Oxygen)} moles of oxygen.");
 
             Transfer(from, Air, ratio);
             ToBloodstream(Air);
