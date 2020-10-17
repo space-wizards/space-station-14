@@ -1,7 +1,10 @@
-﻿using Content.Server.GameObjects.Components.Body.Digestive;
+﻿using System.Linq;
+using Content.Server.GameObjects.Components.Body.Behavior;
 using Content.Server.GameObjects.Components.Nutrition;
 using Content.Server.GameObjects.Components.Utensil;
 using Content.Shared.Chemistry;
+using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
@@ -11,6 +14,8 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -21,6 +26,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
     public class PillComponent : FoodComponent, IUse, IAfterInteract
     {
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override string Name => "Pill";
 
@@ -45,8 +51,11 @@ namespace Content.Server.GameObjects.Components.Chemistry
         public override void Initialize()
         {
             base.Initialize();
-            
-            _contents = Owner.GetComponent<SolutionContainerComponent>();
+
+            if (!Owner.EnsureComponent(out _contents))
+            {
+                Logger.Error($"Prototype {Owner.Prototype?.ID} had a {nameof(PillComponent)} without a {nameof(SolutionContainerComponent)}!");
+            }
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
@@ -74,7 +83,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             var trueTarget = target ?? user;
 
-            if (!trueTarget.TryGetComponent(out StomachComponent stomach))
+            if (!trueTarget.TryGetComponent(out IBody body) ||
+                !body.TryGetMechanismBehaviors<StomachBehaviorComponent>(out var stomachs))
             {
                 return false;
             }
@@ -86,12 +96,25 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             var transferAmount = ReagentUnit.Min(_transferAmount, _contents.CurrentVolume);
             var split = _contents.SplitSolution(transferAmount);
-            if (!stomach.TryTransferSolution(split))
+
+            var firstStomach = stomachs.FirstOrDefault(stomach => stomach.CanTransferSolution(split));
+
+            if (firstStomach == null)
             {
                 _contents.TryAddSolution(split);
                 trueTarget.PopupMessage(user, Loc.GetString("You can't eat any more!"));
                 return false;
             }
+
+            // TODO: Account for partial transfer.
+
+            foreach (var (reagentId, quantity) in split.Contents)
+            {
+                if (!_prototypeManager.TryIndex(reagentId, out ReagentPrototype reagent)) continue;
+                split.RemoveReagent(reagentId, reagent.ReactionEntity(trueTarget, ReactionMethod.Ingestion, quantity));
+            }
+
+            firstStomach.TryTransferSolution(split);
 
             if (_useSound != null)
             {

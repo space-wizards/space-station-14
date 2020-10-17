@@ -76,7 +76,7 @@
       map: ["enum.PDAVisualLayers.Flashlight"]
   - type: Slippery
     paralyzeTime: 4
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.25,-0.25,0.25,0.25"

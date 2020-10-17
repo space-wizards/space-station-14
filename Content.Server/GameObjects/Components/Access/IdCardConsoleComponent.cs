@@ -26,7 +26,7 @@ namespace Content.Server.GameObjects.Components.Access
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class IdCardConsoleComponent : SharedIdCardConsoleComponent, IActivate, IInteractUsing
+    public class IdCardConsoleComponent : SharedIdCardConsoleComponent, IActivate, IInteractUsing, IBreakAct
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -307,6 +307,15 @@ namespace Content.Server.GameObjects.Components.Access
             }
         }
 
+        public void OnBreak(BreakageEventArgs eventArgs)
+        {
+            var privileged = _privilegedIdContainer.ContainedEntity;
+            if (privileged != null)
+                _privilegedIdContainer.Remove(privileged);
 
+            var target = _targetIdContainer.ContainedEntity;
+            if (target != null)
+                _targetIdContainer.Remove(target);
+        }
     }
 }

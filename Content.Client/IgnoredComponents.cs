@@ -21,7 +21,6 @@
             "HeatResistance",
             "Teleportable",
             "ItemTeleporter",
-            "Portal",
             "EntityStorage",
             "Wirecutter",
             "Screwdriver",
@@ -29,7 +28,6 @@
             "Wrench",
             "Crowbar",
             "MeleeWeapon",
-            "Storable",
             "Dice",
             "Construction",
             "Door",
@@ -126,7 +124,6 @@
             "RCD",
             "RCDDeconstructWhitelist",
             "RCDAmmo",
-            "Pullable",
             "CursedEntityStorage",
             "Listening",
             "Radio",
@@ -174,6 +171,17 @@
             "Flammable",
             "CreamPie",
             "CreamPied",
+            "BlockGameArcade",
+            "KitchenSpike",
+            "Butcherable",
+            "Rehydratable",
+            "Headset",
+            "ComputerBoard",
+            "BreakableConstruction",
+            "GasCanister",
+            "GasCanisterPort",
+            "Lung",
+            "Cleanable"
         };
     }
 }

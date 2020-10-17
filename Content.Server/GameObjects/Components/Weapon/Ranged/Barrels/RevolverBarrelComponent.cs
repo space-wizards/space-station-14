@@ -203,14 +203,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public override IEntity TakeProjectile(EntityCoordinates spawnAtGrid, MapCoordinates spawnAtMap)
+        public override IEntity TakeProjectile(EntityCoordinates spawnAt)
         {
             var ammo = _ammoSlots[_currentSlot];
             IEntity bullet = null;
             if (ammo != null)
             {
                 var ammoComponent = ammo.GetComponent<AmmoComponent>();
-                bullet = ammoComponent.TakeBullet(spawnAtGrid, spawnAtMap);
+                bullet = ammoComponent.TakeBullet(spawnAt);
                 if (ammoComponent.Caseless)
                 {
                     _ammoSlots[_currentSlot] = null;

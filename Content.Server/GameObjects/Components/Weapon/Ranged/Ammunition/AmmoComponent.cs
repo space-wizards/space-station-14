@@ -107,7 +107,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             }
         }
 
-        public IEntity TakeBullet(EntityCoordinates spawnAtGrid, MapCoordinates spawnAtMap)
+        public IEntity TakeBullet(EntityCoordinates spawnAt)
         {
             if (_ammoIsProjectile)
             {
@@ -125,9 +125,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
                 appearanceComponent.SetData(AmmoVisuals.Spent, true);
             }
 
-            var entity = spawnAtGrid.GetGridId(_entityManager) != GridId.Invalid
-                ? Owner.EntityManager.SpawnEntity(_projectileId, spawnAtGrid)
-                : Owner.EntityManager.SpawnEntity(_projectileId, spawnAtMap);
+            var entity = Owner.EntityManager.SpawnEntity(_projectileId, spawnAt);
 
             DebugTools.AssertNotNull(entity);
             return entity;
