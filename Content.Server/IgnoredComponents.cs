@@ -10,7 +10,6 @@
             "SubFloorHide",
             "LowWall",
             "ReinforcedWall",
-            "Window",
             "CharacterInfo",
             "InteractionOutline",
             "MeleeWeaponArcAnimation",
@@ -19,6 +18,7 @@
             "Marker",
             "Clickable",
             "RadiatingLight",
+            "Icon",
         };
 
     }

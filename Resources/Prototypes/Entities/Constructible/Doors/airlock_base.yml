@@ -10,7 +10,6 @@
     netsync: false
     drawdepth: Mobs # They're on the same layer as mobs, perspective.
     sprite: Constructible/Structures/Doors/airlock_basic.rsi
-    preview_state: closed
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
@@ -24,8 +23,7 @@
       map: ["enum.DoorVisualLayers.BaseBolted"]
     - state: panel_open
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
-
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.49,-0.49,0.49,0.49" # don't want this colliding with walls or they won't close
@@ -84,4 +82,3 @@
   components:
   - type: Sprite
     sprite: Constructible/Structures/Doors/airlock_maint.rsi
-

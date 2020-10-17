@@ -26,8 +26,11 @@ namespace Content.Shared.Damage.ResistanceSet
 
         public ResistanceSet(ResistanceSetPrototype data)
         {
+            ID = data.ID;
             _resistances = data.Resistances;
         }
+
+        public string ID { get; }
 
         /// <summary>
         ///     Adjusts input damage with the resistance set values. Only applies reduction if the amount is damage (positive), not

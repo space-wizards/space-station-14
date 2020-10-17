@@ -2,7 +2,7 @@
   name: lightbulb box
   parent: BoxBase
   id: BoxLightbulb
-  description:
+  description: This box is shaped on the inside so that only light tubes and bulbs fit.
   components:
   - type: StorageFill
     contents:
@@ -18,7 +18,7 @@
   name: lighttube box
   parent: BoxBase
   id: BoxLighttube
-  description:
+  description: This box is shaped on the inside so that only light tubes and bulbs fit.
   components:
   - type: StorageFill
     contents:
@@ -34,7 +34,7 @@
   name: mixed lights box
   parent: BoxBase
   id: BoxLightMixed
-  description:
+  description: This box is shaped on the inside so that only light tubes and bulbs fit.
   components:
   - type: StorageFill
     contents:
@@ -50,7 +50,7 @@
   name: pda box
   parent: BoxBase
   id: BoxPDA
-  description:
+  description: A box of spare PDA microcomputers.
   components:
   - type: StorageFill
     contents:
@@ -68,7 +68,7 @@
   name: meson box
   parent: BoxBase
   id: BoxMesonScanners
-  description:
+  description: A box of spare meson goggles.
   components:
   - type: StorageFill
     contents:
@@ -86,7 +86,7 @@
   name: survival box
   parent: BoxBase
   id: BoxSurvival
-  description:
+  description: It's box with basic internals inside.
   components:
   - type: StorageFill
     contents:

@@ -5,11 +5,12 @@
     mode: SnapgridCenter
   components:
   - type: Clickable
+  - type: InteractionOutline
 
   - type: Sprite
     sprite: Constructible/Power/ame_controller.rsi
     state: control
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       layer:

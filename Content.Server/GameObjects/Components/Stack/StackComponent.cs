@@ -1,10 +1,14 @@
-﻿using System;
+﻿#nullable enable
+using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Timers;
@@ -16,8 +20,11 @@ namespace Content.Server.GameObjects.Components.Stack
 
     // TODO: Naming and presentation and such could use some improvement.
     [RegisterComponent]
+    [ComponentReference(typeof(SharedStackComponent))]
     public class StackComponent : SharedStackComponent, IInteractUsing, IExamine
     {
+        [Dependency] private IEntityManager _entityManager = default!;
+
         private bool _throwIndividually = false;
 
         public override int Count
@@ -54,6 +61,33 @@ namespace Content.Server.GameObjects.Components.Stack
                 Count -= amount;
                 return true;
             }
+            return false;
+        }
+
+        /// <summary>
+        ///     Attempts to split this stack in two.
+        /// </summary>
+        /// <param name="amount">amount the new stack will have</param>
+        /// <param name="spawnPosition">the position the new stack will spawn at</param>
+        /// <param name="stack">the new stack</param>
+        /// <returns></returns>
+        public bool Split(int amount, EntityCoordinates spawnPosition, [NotNullWhen(true)] out IEntity? stack)
+        {
+            if (Count >= amount)
+            {
+                Count -= amount;
+
+                stack = _entityManager.SpawnEntity(Owner.Prototype?.ID, spawnPosition);
+
+                if (stack.TryGetComponent(out StackComponent? stackComp))
+                {
+                    stackComp.Count = amount;
+                }
+
+                return true;
+            }
+
+            stack = null;
             return false;
         }
 

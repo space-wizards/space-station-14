@@ -1,8 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Content.Shared.Preferences;
 using Content.Shared.Preferences.Appearance;
 using Content.Shared.Text;
 using Robust.Shared.Interfaces.Random;
+using Robust.Shared.Maths;
 using Robust.Shared.Random;
 
 namespace Content.Client.UserInterface
@@ -13,22 +15,11 @@ namespace Content.Client.UserInterface
 
         private void RandomizeEverything()
         {
-            RandomizeSex();
-            RandomizeAge();
-            RandomizeName();
-            RandomizeAppearance();
-        }
-
-        private void RandomizeSex()
-        {
-            SetSex(_random.Prob(0.5f) ? Sex.Male : Sex.Female);
+            Profile = HumanoidCharacterProfile.Random();
             UpdateSexControls();
-        }
-
-        private void RandomizeAge()
-        {
-            SetAge(_random.Next(HumanoidCharacterProfile.MinimumAge, HumanoidCharacterProfile.MaximumAge));
             UpdateAgeEdit();
+            UpdateNameEdit();
+            UpdateHairPickers();
         }
 
         private void RandomizeName()
@@ -39,29 +30,6 @@ namespace Content.Client.UserInterface
             var lastName = _random.Pick(Names.LastNames);
             SetName($"{firstName} {lastName}");
             UpdateNameEdit();
-        }
-
-        private void RandomizeAppearance()
-        {
-            var newHairStyle = _random.Pick(HairStyles.HairStylesMap.Keys.ToList());
-
-            var newFacialHairStyle = Profile.Sex == Sex.Female
-                ? HairStyles.DefaultFacialHairStyle
-                : _random.Pick(HairStyles.FacialHairStylesMap.Keys.ToList());
-
-            var newHairColor = _random.Pick(HairStyles.RealisticHairColors);
-            newHairColor = newHairColor
-                .WithRed(newHairColor.R + _random.Next(-25, 25) / 100f)
-                .WithGreen(newHairColor.G + _random.Next(-25, 25) / 100f)
-                .WithBlue(newHairColor.B + _random.Next(-25, 25) / 100f);
-
-            Profile = Profile.WithCharacterAppearance(
-                Profile.Appearance
-                    .WithHairStyleName(newHairStyle)
-                    .WithFacialHairStyleName(newFacialHairStyle)
-                    .WithHairColor(newHairColor)
-                    .WithFacialHairColor(newHairColor));
-            UpdateHairPickers();
         }
     }
 }

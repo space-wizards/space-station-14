@@ -5,7 +5,7 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
   - type: Destructible
@@ -26,7 +26,7 @@
   name: monkey painting
   description: monky
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.1,-0.4,0.1,0.4"
@@ -49,7 +49,7 @@
   description: A direction sign, pointing out which way Security is.
   components:
   - type: Rotatable
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.1,-0.4,0.1,0.4"
@@ -70,7 +70,7 @@
   description: A direction sign, pointing out which way evac is.
   components:
   - type: Rotatable
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.1,-0.4,0.1,0.4"
@@ -92,7 +92,7 @@
   description: A direction sign, pointing out which way the Bridge is.
   components:
   - type: Rotatable
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.1,-0.4,0.1,0.4"
@@ -114,7 +114,7 @@
   description: A direction sign, pointing out which way the Medical department is.
   components:
   - type: Rotatable
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.1,-0.4,0.1,0.4"
@@ -136,7 +136,7 @@
   description: A direction sign, pointing out which way the Engineering department is.
   components:
   - type: Rotatable
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.1,-0.4,0.1,0.4"
@@ -157,7 +157,7 @@
   description: A direction sign, pointing out which way the Science department is.
   components:
   - type: Rotatable
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.1,-0.4,0.1,0.4"
@@ -178,7 +178,7 @@
   description: A direction sign, pointing to some supplies.
   components:
   - type: Rotatable
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.1,-0.4,0.1,0.4"
@@ -199,7 +199,7 @@
   id: SignArmory
   name: armory sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -219,7 +219,7 @@
   id: SignToolStorage
   name: tool storage sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -239,7 +239,7 @@
   id: SignAnomaly
   name: anomaly lab sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -259,7 +259,7 @@
   id: SignAtmos
   name: atmos sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -279,7 +279,7 @@
   id: SignBar
   name: bar sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -299,7 +299,7 @@
   id: SignLibrary
   name: library sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -319,7 +319,7 @@
   id: SignChapel
   name: chapel sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -339,7 +339,7 @@
   id: SignHead
   name: head sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -359,7 +359,7 @@
   id: SignConference
   name: conference room sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -379,7 +379,7 @@
   id: SignDrones
   name: drones sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -399,7 +399,7 @@
   id: SignEngine
   name: engine sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -419,7 +419,7 @@
   id: SignCloning
   name: cloning sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -439,7 +439,7 @@
   id: SignInterrogation
   name: interrogation sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -459,7 +459,7 @@
   id: SignSurgery
   name: surgery sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -479,7 +479,7 @@
   id: SignTelecomms
   name: telecomms sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -499,7 +499,7 @@
   id: SignCargo
   name: cargo sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -519,7 +519,7 @@
   id: SignCargoDock
   name: cargo dock sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -539,7 +539,7 @@
   id: SignChem
   name: chemistry sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -559,7 +559,7 @@
   id: SignShipDock
   name: docking sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -579,7 +579,7 @@
   id: SignEngineering
   name: engineering sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -599,7 +599,7 @@
   id: SignEVA
   name: EVA sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -619,7 +619,7 @@
   id: SignGravity
   name: gravity sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -639,7 +639,7 @@
   id: SignMedical
   name: medbay sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -659,7 +659,7 @@
   id: SignMorgue
   name: morgue sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -680,7 +680,7 @@
   name: prison sign
   description:
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -700,7 +700,7 @@
   id: SignRND
   name: research and development sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -720,7 +720,7 @@
   id: SignScience
   name: science sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -740,7 +740,7 @@
   id: SignToxins
   name: toxins sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -760,7 +760,7 @@
   id: SignBridge
   name: bridge sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -783,7 +783,7 @@
   name: air warning sign
   description: WARNING! Air flow tube. Ensure the flow is disengaged before working.
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.2,-0.3,0.2,0.3"
@@ -804,7 +804,7 @@
   name: CO2 warning sign
   description: WARNING! CO2 flow tube. Ensure the flow is disengaged before working.
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.2,-0.3,0.2,0.3"
@@ -825,7 +825,7 @@
   name: N2 warning sign
   description: WARNING! N2 flow tube. Ensure the flow is disengaged before working.
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.2,-0.3,0.2,0.3"
@@ -846,7 +846,7 @@
   name: N2O warning sign
   description: WARNING! N2O flow tube. Ensure the flow is disengaged before working.
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.2,-0.3,0.2,0.3"
@@ -867,7 +867,7 @@
   name: O2 warning sign
   description: WARNING! O2 flow tube. Ensure the flow is disengaged before working.
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.2,-0.3,0.2,0.3"
@@ -888,7 +888,7 @@
   name: phoron waste sign
   description: WARNING! Plasma flow tube. Ensure the flow is disengaged before working.
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.2,-0.3,0.2,0.3"
@@ -909,7 +909,7 @@
   name: atmos waste sign
   description: WARNING! Waste flow tube. Ensure the flow is disengaged before working.
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.2,-0.3,0.2,0.3"
@@ -930,7 +930,7 @@
   name: no smoking sign
   description: A warning sign which reads 'NO SMOKING'
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -951,7 +951,7 @@
   name: old sign
   description: Technical information of some sort, shame its too worn-out to read.
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -972,7 +972,7 @@
   name: old sign
   description: Looks like a planet crashing by some station above it. Its kinda scary.
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"

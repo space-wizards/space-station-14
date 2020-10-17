@@ -54,7 +54,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         public string? WeldSoundCollection { get; set; }
 
         [ViewVariables]
-        public float Fuel => _solutionComponent?.Solution.GetReagentQuantity("chem.WeldingFuel").Float() ?? 0f;
+        public float Fuel => _solutionComponent?.Solution?.GetReagentQuantity("chem.WeldingFuel").Float() ?? 0f;
 
         [ViewVariables]
         public float FuelCapacity => _solutionComponent?.MaxVolume.Float() ?? 0f;

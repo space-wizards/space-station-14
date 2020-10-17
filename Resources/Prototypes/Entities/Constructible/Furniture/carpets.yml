@@ -1,0 +1,112 @@
+- type: entity
+  id: CarpetBase
+  description:
+  abstract: true
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: Sprite
+    drawdepth: FloorTiles
+  - type: Icon
+    state: full
+  - type: SnapGrid
+    offset: Center
+  - type: IconSmooth
+    key: full
+    base: carpet_
+
+- type: entity
+  id: Carpet
+  parent: CarpetBase
+  name: "carpet"
+  description:
+  components:
+  - type: Sprite
+    sprite: Constructible/Carpets/red_carpet.rsi
+  - type: Icon
+    sprite: Constructible/Carpets/red_carpet.rsi
+
+- type: entity
+  id: CarpetBlack
+  parent: CarpetBase
+  name: "black carpet"
+  description:
+  components:
+  - type: Clickable
+  - type: Sprite
+    sprite: Constructible/Carpets/black_carpet.rsi
+  - type: Icon
+    sprite: Constructible/Carpets/black_carpet.rsi
+
+- type: entity
+  id: CarpetGay
+  parent: CarpetBase
+  name: "pink carpet"
+  description:
+  components:
+  - type: Clickable
+  - type: Sprite
+    sprite: Constructible/Carpets/gay_carpet.rsi
+  - type: Icon
+    sprite: Constructible/Carpets/gay_carpet.rsi
+
+- type: entity
+  id: CarpetBlue
+  parent: CarpetBase
+  name: "blue carpet"
+  description:
+  components:
+  - type: Clickable
+  - type: Sprite
+    sprite: Constructible/Carpets/blue_carpet.rsi
+  - type: Icon
+    sprite: Constructible/Carpets/blue_carpet.rsi
+
+- type: entity
+  id: CarpetGreen
+  parent: CarpetBase
+  name: "green carpet"
+  description:
+  components:
+  - type: Clickable
+  - type: Sprite
+    sprite: Constructible/Carpets/green_carpet.rsi
+  - type: Icon
+    sprite: Constructible/Carpets/green_carpet.rsi
+
+- type: entity
+  id: CarpetOrange
+  parent: CarpetBase
+  name: "orange carpet"
+  description:
+  components:
+  - type: Clickable
+  - type: Sprite
+    sprite: Constructible/Carpets/orange_carpet.rsi
+  - type: Icon
+    sprite: Constructible/Carpets/orange_carpet.rsi
+
+- type: entity
+  id: CarpetSBlue
+  parent: CarpetBase
+  name: "skyblue carpet"
+  description:
+  components:
+  - type: Clickable
+  - type: Sprite
+    sprite: Constructible/Carpets/skyblue_carpet.rsi
+  - type: Icon
+    sprite: Constructible/Carpets/skyblue_carpet.rsi
+
+- type: entity
+  id: CarpetPurple
+  parent: CarpetBase
+  name: "purple carpet"
+  description:
+  components:
+  - type: Clickable
+  - type: Sprite
+    sprite: Constructible/Carpets/purple_carpet.rsi
+  - type: Icon
+    sprite: Constructible/Carpets/purple_carpet.rsi

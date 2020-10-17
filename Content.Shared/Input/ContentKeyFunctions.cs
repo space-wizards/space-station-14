@@ -34,5 +34,12 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction TakeScreenshot = "TakeScreenshot";
         public static readonly BoundKeyFunction TakeScreenshotNoUI = "TakeScreenshotNoUI";
         public static readonly BoundKeyFunction Point = "Point";
+        public static readonly BoundKeyFunction ArcadeUp = "ArcadeUp";
+        public static readonly BoundKeyFunction ArcadeDown = "ArcadeDown";
+        public static readonly BoundKeyFunction ArcadeLeft = "ArcadeLeft";
+        public static readonly BoundKeyFunction ArcadeRight = "ArcadeRight";
+        public static readonly BoundKeyFunction Arcade1 = "Arcade1";
+        public static readonly BoundKeyFunction Arcade2 = "Arcade2";
+        public static readonly BoundKeyFunction Arcade3 = "Arcade3";
     }
 }

@@ -11,18 +11,18 @@ namespace Content.Shared.Atmos
     [FlagsFor(typeof(AtmosDirectionFlags))]
     public enum AtmosDirection
     {
-        Invalid = 0,
-        North   = 1 << 0,
-        South   = 1 << 1,
-        East    = 1 << 2,
-        West    = 1 << 3,
+        Invalid = 0,                        // 0
+        North   = 1 << 0,                   // 1
+        South   = 1 << 1,                   // 2
+        East    = 1 << 2,                   // 4
+        West    = 1 << 3,                   // 8
 
-        NorthEast = North | East,
-        NorthWest = North | West,
-        SouthEast = South | East,
-        SouthWest = South | West,
+        NorthEast = North | East,           // 5
+        SouthEast = South | East,           // 6
+        NorthWest = North | West,           // 9
+        SouthWest = South | West,           // 10
 
-        All = North | South | East | West,
+        All = North | South | East | West,  // 15
     }
 
     public static class AtmosDirectionHelpers

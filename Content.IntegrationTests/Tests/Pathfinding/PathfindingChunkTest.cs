@@ -18,7 +18,7 @@ namespace Content.IntegrationTests.Tests.Pathfinding
         public async Task Test()
         {
             var server = StartServerDummyTicker();
-            
+
             server.Assert(() =>
             {
                 var pathfindingSystem = EntitySystem.Get<PathfindingSystem>();
@@ -28,32 +28,32 @@ namespace Content.IntegrationTests.Tests.Pathfinding
                 var mapId = mapMan.CreateMap(new MapId(1));
                 var gridId = new GridId(2);
                 mapMan.CreateGrid(mapId, gridId);
-                var chunkTile = mapMan.GetGrid(gridId).GetTileRef(new MapIndices(0, 0));
+                var chunkTile = mapMan.GetGrid(gridId).GetTileRef(new Vector2i(0, 0));
                 var chunk = pathfindingSystem.GetChunk(chunkTile);
                 Assert.That(chunk.Nodes.Length == PathfindingChunk.ChunkSize * PathfindingChunk.ChunkSize);
-                
+
                 // Neighbors
                 var chunkNeighbors = chunk.GetNeighbors().ToList();
                 Assert.That(chunkNeighbors.Count == 0);
-                var neighborChunkTile = mapMan.GetGrid(gridId).GetTileRef(new MapIndices(PathfindingChunk.ChunkSize, PathfindingChunk.ChunkSize));
+                var neighborChunkTile = mapMan.GetGrid(gridId).GetTileRef(new Vector2i(PathfindingChunk.ChunkSize, PathfindingChunk.ChunkSize));
                 var neighborChunk = pathfindingSystem.GetChunk(neighborChunkTile);
                 chunkNeighbors = chunk.GetNeighbors().ToList();
                 Assert.That(chunkNeighbors.Count == 1);
-                
+
                 // Directions
                 Assert.That(PathfindingHelpers.RelativeDirection(neighborChunk, chunk) == Direction.NorthEast);
                 Assert.That(PathfindingHelpers.RelativeDirection(chunk.Nodes[0, 1], chunk.Nodes[0, 0]) == Direction.North);
-                
+
                 // Nodes
                 var node = chunk.Nodes[1, 1];
                 var nodeNeighbors = node.GetNeighbors().ToList();
                 Assert.That(nodeNeighbors.Count == 8);
-                
+
                 // Bottom-left corner with no chunk neighbor
                 node = chunk.Nodes[0, 0];
                 nodeNeighbors = node.GetNeighbors().ToList();
                 Assert.That(nodeNeighbors.Count == 3);
-                
+
                 // Given we have 1 NE neighbor then NE corner should have 4 neighbors due to the 1 extra from the neighbor chunk
                 node = chunk.Nodes[PathfindingChunk.ChunkSize - 1, PathfindingChunk.ChunkSize - 1];
                 nodeNeighbors = node.GetNeighbors().ToList();

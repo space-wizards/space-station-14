@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32,
+    "license":"CC-BY-SA-3.0",
+    "copyright":"Taken from cev-eris at commit https://github.com/discordia-space/CEV-Eris/commit/f777c8ddf7a529b002df17909566d5d93b8ad201",
+  },
+  "states": [
+    {
+      "name": "book-0",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "book-1",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "book-2",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "book-3",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "book-4",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "book-5",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    }
+  ]
+}

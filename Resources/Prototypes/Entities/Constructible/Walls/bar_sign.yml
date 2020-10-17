@@ -4,7 +4,7 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
   - type: Sprite
     drawdepth: WallTops
     sprite: Constructible/Misc/barsign.rsi
@@ -20,7 +20,7 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
   - type: Sprite
     drawdepth: WallTops
     sprite: Constructible/Misc/sylphs.rsi
