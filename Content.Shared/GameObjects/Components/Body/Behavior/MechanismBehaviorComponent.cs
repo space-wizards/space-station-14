@@ -13,6 +13,25 @@ namespace Content.Shared.GameObjects.Components.Body.Behavior
 
         public IMechanism? Mechanism => Owner.GetComponentOrNull<IMechanism>();
 
+        protected override void Startup()
+        {
+            base.Startup();
+
+            if (Part == null)
+            {
+                return;
+            }
+
+            if (Body == null)
+            {
+                AddedToPart();
+            }
+            else
+            {
+                AddedToPartInBody();
+            }
+        }
+
         public abstract void Update(float frameTime);
 
         public void AddedToBody()
@@ -37,7 +56,7 @@ namespace Content.Shared.GameObjects.Components.Body.Behavior
 
         public void AddedToPartInBody()
         {
-            OnAddedToPart();
+            OnAddedToPartInBody();
         }
 
         public void RemovedFromPartInBody(IBody? oldBody, IBodyPart? oldPart)

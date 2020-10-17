@@ -47,7 +47,7 @@ namespace Content.Server.GameObjects.Components.Body
             PerformerCache = null;
             BodyCache = null;
 
-            if (eventArgs.Target.TryGetBody(out var body))
+            if (eventArgs.Target.TryGetComponent(out IBody? body))
             {
                 SendBodyPartListToUser(eventArgs, body);
             }

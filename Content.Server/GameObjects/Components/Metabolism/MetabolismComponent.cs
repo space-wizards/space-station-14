@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Atmos;
@@ -8,12 +9,14 @@ using Content.Server.GameObjects.Components.Temperature;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry;
 using Content.Shared.Damage;
+using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.Chemistry;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -29,6 +32,8 @@ namespace Content.Server.GameObjects.Components.Metabolism
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
+        [ComponentDependency] private readonly IBody? _body = default!;
+
         public override string Name => "Metabolism";
 
         private float _accumulatedFrameTime;
@@ -38,11 +43,11 @@ namespace Content.Server.GameObjects.Components.Metabolism
 
         [ViewVariables(VVAccess.ReadWrite)] private int _suffocationDamage;
 
-        [ViewVariables] public Dictionary<Gas, float> NeedsGases { get; set; }
+        [ViewVariables] public Dictionary<Gas, float> NeedsGases { get; set; } = new Dictionary<Gas, float>();
 
-        [ViewVariables] public Dictionary<Gas, float> ProducesGases { get; set; }
+        [ViewVariables] public Dictionary<Gas, float> ProducesGases { get; set; } = new Dictionary<Gas, float>();
 
-        [ViewVariables] public Dictionary<Gas, float> DeficitGases { get; set; }
+        [ViewVariables] public Dictionary<Gas, float> DeficitGases { get; set; } = new Dictionary<Gas, float>();
 
         /// <summary>
         /// Heat generated due to metabolism. It's generated via metabolism
@@ -176,10 +181,17 @@ namespace Content.Server.GameObjects.Components.Metabolism
 
         private void ProcessGases(float frameTime)
         {
-            if (!Owner.TryGetComponent(out BloodstreamComponent bloodstream))
+            if (!Owner.TryGetComponent(out BloodstreamComponent? bloodstream))
             {
                 return;
             }
+
+            if (_body == null)
+            {
+                return;
+            }
+
+            var lungs = _body.GetMechanismBehaviors<LungBehaviorComponent>().ToArray();
 
             var needs = NeedsAndDeficit(frameTime);
             var used = 0f;
@@ -191,15 +203,12 @@ namespace Content.Server.GameObjects.Components.Metabolism
                 if (bloodstreamAmount < amountNeeded)
                 {
                     // Panic inhale
-                    if (Owner.TryGetMechanismBehaviors(out List<LungBehaviorComponent> lungs))
+                    foreach (var lung in lungs)
                     {
-                        foreach (var lung in lungs)
-                        {
-                            lung.Gasp();
-                        }
-
-                        bloodstreamAmount = bloodstream.Air.GetMoles(gas);
+                        lung.Gasp();
                     }
+
+                    bloodstreamAmount = bloodstream.Air.GetMoles(gas);
 
                     deficit = Math.Max(0, amountNeeded - bloodstreamAmount);
 
@@ -238,7 +247,7 @@ namespace Content.Server.GameObjects.Components.Metabolism
         /// <param name="frameTime"></param>
         private void ProcessThermalRegulation(float frameTime)
         {
-            if (!Owner.TryGetComponent(out TemperatureComponent temperatureComponent)) return;
+            if (!Owner.TryGetComponent(out TemperatureComponent? temperatureComponent)) return;
             temperatureComponent.ReceiveHeat(MetabolismHeat);
             temperatureComponent.RemoveHeat(RadiatedHeat);
 
@@ -308,7 +317,7 @@ namespace Content.Server.GameObjects.Components.Metabolism
         /// <param name="frameTime">The time since the last metabolism tick in seconds.</param>
         private void ProcessNutrients(float frameTime)
         {
-            if (!Owner.TryGetComponent(out BloodstreamComponent bloodstream))
+            if (!Owner.TryGetComponent(out BloodstreamComponent? bloodstream))
             {
                 return;
             }
@@ -377,7 +386,7 @@ namespace Content.Server.GameObjects.Components.Metabolism
         {
             Suffocating = true;
 
-            if (!Owner.TryGetComponent(out IDamageableComponent damageable))
+            if (!Owner.TryGetComponent(out IDamageableComponent? damageable))
             {
                 return;
             }
