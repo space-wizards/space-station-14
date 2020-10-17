@@ -17,6 +17,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -190,6 +191,7 @@ namespace Content.Server.GameObjects.Components.Metabolism
 
                 if (bloodstreamAmount < amountNeeded)
                 {
+                    // Logger.Debug($"Missing {amountNeeded - bloodstreamAmount} of {gas}");
                     // Panic inhale
                     if (Owner.TryGetMechanismBehaviors(out List<LungBehaviorComponent> lungs))
                     {
@@ -218,6 +220,8 @@ namespace Content.Server.GameObjects.Components.Metabolism
                 }
 
                 DeficitGases[gas] = deficit;
+
+                // Logger.Debug($"{amountNeeded - deficit} units of {gas} used. Deficit: {deficit}");
 
                 used += (amountNeeded - deficit) / amountNeeded;
             }
@@ -408,7 +412,7 @@ namespace Content.Server.GameObjects.Components.Metabolism
                 }
                 else
                 {
-                    var overflowThreshold = needed * 1.5f;
+                    var overflowThreshold = needed * 5f;
 
                     amount = molesInBlood > overflowThreshold
                         ? molesInBlood - overflowThreshold
