@@ -19,7 +19,7 @@ namespace Content.Server.GameObjects.Components.Strap
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedStrapComponent))]
-    public class StrapComponent : SharedStrapComponent, IInteractHand
+    public class StrapComponent : SharedStrapComponent, IInteractHand, IDragDropOn
     {
         [ComponentDependency] public readonly SpriteComponent? SpriteComponent = null;
 
@@ -225,6 +225,20 @@ namespace Content.Server.GameObjects.Components.Strap
 
                 buckle.ToggleBuckle(user, component.Owner);
             }
+        }
+
+        public bool CanDragDropOn(DragDropEventArgs eventArgs)
+        {
+            return eventArgs.User.TryGetComponent(out BuckleComponent? buckleComponent) &&
+                   HasSpace(buckleComponent);
+        }
+
+        public bool DragDropOn(DragDropEventArgs eventArgs)
+        {
+            if (!eventArgs.User.TryGetComponent(out BuckleComponent? buckleComponent))
+                return false;
+
+            return buckleComponent.TryBuckle(eventArgs.User, Owner);
         }
     }
 }
