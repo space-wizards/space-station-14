@@ -114,15 +114,6 @@ namespace Content.Shared.GameObjects.Components.Body.Part
             mechanism.Part = this;
             SizeUsed += mechanism.Size;
 
-            if (Body == null)
-            {
-                mechanism.AddedToPart();
-            }
-            else
-            {
-                mechanism.AddedToPartInBody();
-            }
-
             Dirty();
         }
 
@@ -131,15 +122,6 @@ namespace Content.Shared.GameObjects.Components.Body.Part
             _mechanismIds.Remove(mechanism.Owner.Prototype!.ID);
             mechanism.Part = null;
             SizeUsed -= mechanism.Size;
-
-            if (Body == null)
-            {
-                mechanism.RemovedFromPart(this);
-            }
-            else
-            {
-                mechanism.RemovedFromPartInBody(Body, this);
-            }
 
             Dirty();
         }

@@ -145,14 +145,74 @@ namespace Content.IntegrationTests.Tests.Body
                 var centerPart = body!.CenterPart();
                 Assert.NotNull(centerPart);
 
+                Assert.That(body.TryGetSlot(centerPart!, out var centerSlot));
+                Assert.NotNull(centerSlot);
+
                 var mechanism = centerPart!.Mechanisms.First();
                 Assert.NotNull(mechanism);
 
                 var component = mechanism.Owner.AddComponent<TestBehaviorComponent>();
                 Assert.False(component.WasAddedToBody);
                 Assert.False(component.WasAddedToPart);
-                Assert.True(component.WasAddedToPartInBody);
-                Assert.True(component.NoRemoved());
+                Assert.That(component.WasAddedToPartInBody);
+                Assert.That(component.NoRemoved);
+
+                component.ResetAll();
+
+                Assert.That(component.NoAdded);
+                Assert.That(component.NoRemoved);
+
+                centerPart.RemoveMechanism(mechanism);
+
+                Assert.That(component.NoAdded);
+                Assert.False(component.WasRemovedFromBody);
+                Assert.False(component.WasRemovedFromPart);
+                Assert.That(component.WasRemovedFromPartInBody);
+
+                component.ResetAll();
+
+                centerPart.TryAddMechanism(mechanism, true);
+
+                Assert.False(component.WasAddedToBody);
+                Assert.False(component.WasAddedToPart);
+                Assert.That(component.WasAddedToPartInBody);
+                Assert.That(component.NoRemoved());
+
+                component.ResetAll();
+
+                body.RemovePart(centerPart, true);
+
+                Assert.That(component.NoAdded);
+                Assert.That(component.WasRemovedFromBody);
+                Assert.False(component.WasRemovedFromPart);
+                Assert.False(component.WasRemovedFromPartInBody);
+
+                component.ResetAll();
+
+                centerPart.RemoveMechanism(mechanism);
+
+                Assert.That(component.NoAdded);
+                Assert.False(component.WasRemovedFromBody);
+                Assert.That(component.WasRemovedFromPart);
+                Assert.False(component.WasRemovedFromPartInBody);
+
+                component.ResetAll();
+
+                centerPart.TryAddMechanism(mechanism, true);
+
+                Assert.False(component.WasAddedToBody);
+                Assert.That(component.WasAddedToPart);
+                Assert.False(component.WasAddedToPartInBody);
+                Assert.That(component.NoRemoved);
+
+                component.ResetAll();
+
+                body.TryAddPart(centerSlot!, centerPart, true);
+
+                Assert.That(component.WasAddedToBody);
+                Assert.False(component.WasAddedToPart);
+                Assert.False(component.WasAddedToPartInBody);
+                Assert.That(component.NoRemoved);
             });
         }
     }

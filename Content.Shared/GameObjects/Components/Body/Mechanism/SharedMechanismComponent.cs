@@ -40,12 +40,26 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
 
                 if (old != null)
                 {
-                    RemovedFromPart(old);
+                    if (old.Body == null)
+                    {
+                        RemovedFromPart(old);
+                    }
+                    else
+                    {
+                        RemovedFromPartInBody(old.Body, old);
+                    }
                 }
 
                 if (value != null)
                 {
-                    AddedToPart();
+                    if (value.Body == null)
+                    {
+                        AddedToPart();
+                    }
+                    else
+                    {
+                        AddedToPartInBody();
+                    }
                 }
             }
         }
