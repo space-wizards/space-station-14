@@ -47,7 +47,7 @@ namespace Content.Server.GameObjects.Components.Body
             PerformerCache = null;
             BodyCache = null;
 
-            if (eventArgs.Target.TryGetBody(out var body))
+            if (eventArgs.Target.TryGetComponent(out IBody? body))
             {
                 SendBodyPartListToUser(eventArgs, body);
             }
@@ -158,9 +158,9 @@ namespace Content.Server.GameObjects.Components.Body
             }
         }
 
-        protected override void OnPartAdd(IBodyPart? old, IBodyPart current)
+        protected override void OnAddedToPart()
         {
-            base.OnPartAdd(old, current);
+            base.OnAddedToPart();
 
             if (Owner.TryGetComponent(out SpriteComponent? sprite))
             {
@@ -168,9 +168,9 @@ namespace Content.Server.GameObjects.Components.Body
             }
         }
 
-        protected override void OnPartRemove(IBodyPart old)
+        protected override void OnRemovedFromPart(IBodyPart old)
         {
-            base.OnPartRemove(old);
+            base.OnRemovedFromPart(old);
 
             if (Owner.TryGetComponent(out SpriteComponent? sprite))
             {

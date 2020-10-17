@@ -980,7 +980,7 @@ namespace Content.Server.Atmos
         {
             if (Air == null) return;
 
-            const int limit = Atmospherics.ZumosTileLimit;
+            const int limit = Atmospherics.ZumosHardTileLimit;
 
             var totalGasesRemoved = 0f;
             var queueCycle = ++_gridAtmosphereComponent.EqualizationQueueCycleControl;

@@ -11,9 +11,9 @@ namespace Content.Client.GameObjects.Components.Body.Mechanism
     [ComponentReference(typeof(IMechanism))]
     public class MechanismComponent : SharedMechanismComponent
     {
-        protected override void OnPartAdd(IBodyPart? old, IBodyPart current)
+        protected override void OnAddedToPart()
         {
-            base.OnPartAdd(old, current);
+            base.OnAddedToPart();
 
             if (Owner.TryGetComponent(out ISpriteComponent? sprite))
             {
@@ -21,9 +21,9 @@ namespace Content.Client.GameObjects.Components.Body.Mechanism
             }
         }
 
-        protected override void OnPartRemove(IBodyPart old)
+        protected override void OnRemovedFromPart(IBodyPart old)
         {
-            base.OnPartRemove(old);
+            base.OnRemovedFromPart(old);
 
             if (Owner.TryGetComponent(out ISpriteComponent? sprite))
             {

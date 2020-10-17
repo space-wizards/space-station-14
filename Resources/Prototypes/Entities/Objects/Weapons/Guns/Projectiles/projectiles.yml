@@ -97,6 +97,7 @@
     - state: spark
       shader: unshaded
   - type: Physics
+    anchored: false
     edgeslide: false
     hard: false
     shapes:

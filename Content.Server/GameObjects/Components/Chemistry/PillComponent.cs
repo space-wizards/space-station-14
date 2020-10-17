@@ -3,6 +3,7 @@ using Content.Server.GameObjects.Components.Body.Behavior;
 using Content.Server.GameObjects.Components.Nutrition;
 using Content.Server.GameObjects.Components.Utensil;
 using Content.Shared.Chemistry;
+using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -82,7 +83,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             var trueTarget = target ?? user;
 
-            if (!trueTarget.TryGetMechanismBehaviors<StomachBehaviorComponent>(out var stomachs))
+            if (!trueTarget.TryGetComponent(out IBody body) ||
+                !body.TryGetMechanismBehaviors<StomachBehaviorComponent>(out var stomachs))
             {
                 return false;
             }

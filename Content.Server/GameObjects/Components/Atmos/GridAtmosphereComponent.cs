@@ -814,7 +814,8 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             foreach (var airtightComponent in GetObstructingComponents(indices))
             {
-                value |= airtightComponent.AirBlockedDirection;
+                if(airtightComponent.AirBlocked)
+                    value |= airtightComponent.AirBlockedDirection;
             }
 
             return value;
