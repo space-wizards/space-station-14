@@ -20,6 +20,7 @@ using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -228,6 +229,7 @@ namespace Content.Server.GameObjects.Components.Metabolism
 
                 DeficitGases[gas] = deficit;
 
+
                 used += (amountNeeded - deficit) / amountNeeded;
             }
 
@@ -417,7 +419,7 @@ namespace Content.Server.GameObjects.Components.Metabolism
                 }
                 else
                 {
-                    var overflowThreshold = needed * 1.5f;
+                    var overflowThreshold = needed * 5f;
 
                     amount = molesInBlood > overflowThreshold
                         ? molesInBlood - overflowThreshold

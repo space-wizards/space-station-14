@@ -156,10 +156,10 @@
     normalBodyTemperature: 310.15
     thermalRegulationTemperatureThreshold: 25
     needsGases:
-      Oxygen: 0.00332569564
+      Oxygen: 0.00060763888
     producesGases:
-      Oxygen: 0.00249427173
-      CarbonDioxide: 0.00083142391
+      Oxygen: 0.00045572916
+      CarbonDioxide: 0.00015190972
   - type: MobStateManager
   - type: HeatResistance
   - type: Appearance
