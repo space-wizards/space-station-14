@@ -13,13 +13,25 @@
     offset: Center
   - type: Destructible
     thresholdvalue: 100
-  - type: Sprite
-    sprite: Constructible/Atmos/pipe.rsi
   - type: Appearance
     visuals:
     - type: PipeVisualizer
+      pipeRSI: Constructible/Atmos/pipe.rsi
   - type: Icon
     sprite: Constructible/Atmos/pipe.rsi
+
+- type: entity
+  parent: PipeBase
+  id: PipeHalf
+  suffix: Half
+  components:
+  - type: NodeContainer
+    nodes:
+    - !type:PipeNode
+      nodeGroupID: Pipe
+      pipeDirection: North
+  - type: Icon
+    state: pipeHalf2
 
 - type: entity
   parent: PipeBase
