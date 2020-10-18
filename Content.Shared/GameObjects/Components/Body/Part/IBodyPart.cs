@@ -9,7 +9,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part
 {
     public interface IBodyPart : IComponent, IBodyPartContainer
     {
-        new IBody? Body { get; set; }
+        IBody? Body { get; set; }
 
         /// <summary>
         ///     <see cref="BodyPartType"/> that this <see cref="IBodyPart"/> is considered

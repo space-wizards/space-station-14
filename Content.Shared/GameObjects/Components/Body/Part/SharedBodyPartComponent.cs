@@ -291,7 +291,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part
 
         private void AddedToBody()
         {
-            Owner.Transform.AttachParent(Owner);
+            Owner.Transform.AttachParent(Body!.Owner);
             OnAddedToBody();
 
             foreach (var mechanism in _mechanisms)
