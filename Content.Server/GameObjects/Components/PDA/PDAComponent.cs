@@ -303,7 +303,7 @@ namespace Content.Server.GameObjects.Components.PDA
                     return;
                 }
 
-                data.Text = Loc.GetString("Toggle Flashlight");
+                data.Text = Loc.GetString("Toggle flashlight");
                 data.Visibility = VerbVisibility.Visible;
             }
 
