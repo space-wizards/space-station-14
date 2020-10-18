@@ -19,11 +19,6 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         BodyPartType PartType { get; }
 
         /// <summary>
-        ///     Plural version of this <see cref="IBodyPart"/> name.
-        /// </summary>
-        public string Plural { get; }
-
-        /// <summary>
         ///     Determines many things: how many mechanisms can be fit inside this
         ///     <see cref="IBodyPart"/>, whether a body can fit through tiny crevices,
         ///     etc.
