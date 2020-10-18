@@ -9,7 +9,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part
 {
     public interface IBodyPart : IComponent, IBodyPartContainer
     {
-        new IBody? Body { get; set; }
+        IBody? Body { get; set; }
 
         /// <summary>
         ///     <see cref="BodyPartType"/> that this <see cref="IBodyPart"/> is considered
@@ -45,8 +45,6 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         public bool IsVital { get; }
 
         public BodyPartSymmetry Symmetry { get; }
-
-        bool Drop();
 
         /// <summary>
         ///     Checks if the given <see cref="SurgeryType"/> can be used on
