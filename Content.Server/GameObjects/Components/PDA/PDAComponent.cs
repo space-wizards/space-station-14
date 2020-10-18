@@ -304,7 +304,6 @@ namespace Content.Server.GameObjects.Components.PDA
                 }
 
                 data.Text = Loc.GetString("Toggle flashlight");
-                data.Visibility = VerbVisibility.Visible;
             }
 
             protected override void Activate(IEntity user, PDAComponent component)
