@@ -17,8 +17,6 @@ namespace Content.Shared.GameObjects.Components.Body.Behavior
         /// </summary>
         IMechanism? Mechanism { get; }
 
-        void Update(float frameTime);
-
         /// <summary>
         ///     Called when the containing <see cref="IBodyPart"/> is attached to a
         ///     <see cref="IBody"/>.
