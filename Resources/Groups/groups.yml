@@ -109,6 +109,10 @@
   - deleteewi
   - hurt
   - toggledisallowlatejoin
+  - showcontainedcontext
+  - hidecontainedcontext
+  - showmechanisms
+  - hidemechanisms
   CanViewVar: true
   CanAdminPlace: true
   CanAdminMenu: true
@@ -211,6 +215,10 @@
   - deleteewi
   - hurt
   - toggledisallowlatejoin
+  - showcontainedcontext
+  - hidecontainedcontext
+  - showmechanisms
+  - hidemechanisms
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true
