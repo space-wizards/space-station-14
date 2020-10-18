@@ -244,7 +244,7 @@ namespace Content.IntegrationTests.Tests
                 // Break our guy's kneecaps
                 foreach (var leg in legs)
                 {
-                    body.RemovePart(leg, false);
+                    body.RemovePart(leg);
                 }
             });
 

@@ -68,7 +68,6 @@ namespace Content.Shared.GameObjects.Components.Body
 
         protected virtual void OnAddPart(string slot, IBodyPart part)
         {
-            part.Owner.Transform.AttachParent(Owner);
             part.Body = this;
 
             var argsAdded = new BodyPartAddedEventArgs(part, slot);
@@ -84,12 +83,6 @@ namespace Content.Shared.GameObjects.Components.Body
 
         protected virtual void OnRemovePart(string slot, IBodyPart part)
         {
-            // TODO BODY Move to Body part
-            if (!part.Owner.Transform.Deleted)
-            {
-                part.Owner.Transform.AttachToGridOrMap();
-            }
-
             part.Body = null;
 
             var args = new BodyPartRemovedEventArgs(part, slot);
@@ -152,7 +145,7 @@ namespace Content.Shared.GameObjects.Components.Body
             return _parts.ContainsKey(slot);
         }
 
-        public void RemovePart(IBodyPart part, bool drop)
+        public void RemovePart(IBodyPart part)
         {
             DebugTools.AssertNotNull(part);
 
@@ -163,22 +156,17 @@ namespace Content.Shared.GameObjects.Components.Body
                 return;
             }
 
-            RemovePart(slotName, drop);
+            RemovePart(slotName);
         }
 
         // TODO BODY invert this behavior with the one above
-        public bool RemovePart(string slot, bool drop)
+        public bool RemovePart(string slot)
         {
             DebugTools.AssertNotNull(slot);
 
             if (!_parts.Remove(slot, out var part))
             {
                 return false;
-            }
-
-            if (drop)
-            {
-                part.Drop();
             }
 
             OnRemovePart(slot, part);
@@ -189,7 +177,7 @@ namespace Content.Shared.GameObjects.Components.Body
                 {
                     if (TryGetPart(connectionName, out var result) && !ConnectedToCenter(result))
                     {
-                        RemovePart(connectionName, drop);
+                        RemovePart(connectionName);
                     }
                 }
             }
@@ -209,7 +197,7 @@ namespace Content.Shared.GameObjects.Components.Body
                 return false;
             }
 
-            if (RemovePart(pair.Key, false))
+            if (RemovePart(pair.Key))
             {
                 slotName = pair.Key;
                 return true;
@@ -235,8 +223,6 @@ namespace Content.Shared.GameObjects.Components.Body
                 return false;
             }
 
-            part.Drop();
-
             dropped = new List<IBodyPart> {part};
             // Call disconnect on all limbs that were hanging off this limb.
             if (TryGetSlotConnections(slotName, out var connections))
@@ -246,7 +232,7 @@ namespace Content.Shared.GameObjects.Components.Body
                 {
                     if (TryGetPart(connectionName, out var result) &&
                         !ConnectedToCenter(result) &&
-                        RemovePart(connectionName, true))
+                        RemovePart(connectionName))
                     {
                         dropped.Add(result);
                     }
@@ -694,7 +680,7 @@ namespace Content.Shared.GameObjects.Components.Body
                 if (!newParts.TryGetValue(slot, out var newPart) ||
                     newPart != oldPart)
                 {
-                    RemovePart(oldPart, false);
+                    RemovePart(oldPart);
                 }
             }
 

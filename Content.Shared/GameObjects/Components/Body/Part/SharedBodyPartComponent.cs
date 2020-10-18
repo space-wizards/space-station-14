@@ -45,18 +45,12 @@ namespace Content.Shared.GameObjects.Components.Body.Part
 
                 if (old != null)
                 {
-                    foreach (var mechanism in _mechanisms)
-                    {
-                        mechanism.RemovedFromBody(old);
-                    }
+                    RemovedFromBody(old);
                 }
 
                 if (value != null)
                 {
-                    foreach (var mechanism in _mechanisms)
-                    {
-                        mechanism.AddedToBody();
-                    }
+                    AddedToBody();
                 }
             }
         }
@@ -189,13 +183,6 @@ namespace Content.Shared.GameObjects.Components.Body.Part
             }
         }
 
-        public bool Drop()
-        {
-            Body = null;
-            Owner.Transform.AttachToGridOrMap();
-            return true;
-        }
-
         public bool SurgeryCheck(SurgeryType surgery)
         {
             return SurgeryDataComponent?.CheckSurgery(surgery) ?? false;
@@ -301,6 +288,36 @@ namespace Content.Shared.GameObjects.Components.Body.Part
             mechanism.Owner.Delete();
             return true;
         }
+
+        private void AddedToBody()
+        {
+            Owner.Transform.AttachParent(Body!.Owner);
+            OnAddedToBody();
+
+            foreach (var mechanism in _mechanisms)
+            {
+                mechanism.AddedToBody();
+            }
+        }
+
+        private void RemovedFromBody(IBody old)
+        {
+            if (!Owner.Transform.Deleted)
+            {
+                Owner.Transform.AttachToGridOrMap();
+            }
+
+            OnRemovedFromBody(old);
+
+            foreach (var mechanism in _mechanisms)
+            {
+                mechanism.RemovedFromBody(old);
+            }
+        }
+
+        protected virtual void OnAddedToBody() { }
+
+        protected virtual void OnRemovedFromBody(IBody old) { }
     }
 
     [Serializable, NetSerializable]

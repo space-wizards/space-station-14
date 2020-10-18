@@ -185,7 +185,7 @@ namespace Content.Server.GameObjects.Components.Body
             }
             else
             {
-                body.RemovePart(hand.Value, true);
+                body.RemovePart(hand.Value);
             }
         }
     }
