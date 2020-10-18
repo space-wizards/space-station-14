@@ -210,7 +210,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part
             return SurgeryDataComponent?.CanAttachBodyPart(part) ?? false;
         }
 
-        public bool CanAddMechanism(IMechanism mechanism)
+        public virtual bool CanAddMechanism(IMechanism mechanism)
         {
             DebugTools.AssertNotNull(mechanism);
 
