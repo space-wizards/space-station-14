@@ -293,6 +293,25 @@ namespace Content.Server.GameObjects.Components.PDA
             }
         }
 
+        public sealed class ToggleFlashlightVerb : Verb<PDAComponent>
+        {
+            protected override void GetData(IEntity user, PDAComponent component, VerbData data)
+            {
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
+                data.Text = Loc.GetString("Toggle flashlight");
+            }
+
+            protected override void Activate(IEntity user, PDAComponent component)
+            {
+                component.ToggleLight();
+            }
+        }
+
         private ISet<string>? GetContainedAccess()
         {
             return ContainedID?.Owner?.GetComponent<AccessComponent>()?.Tags;
