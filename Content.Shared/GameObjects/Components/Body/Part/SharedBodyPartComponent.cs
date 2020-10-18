@@ -50,7 +50,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part
 
                 if (value != null)
                 {
-                    AddedToBody();
+                    AddedToBody(value);
                 }
             }
         }
@@ -289,14 +289,14 @@ namespace Content.Shared.GameObjects.Components.Body.Part
             return true;
         }
 
-        private void AddedToBody()
+        private void AddedToBody(IBody body)
         {
             Owner.Transform.AttachParent(Body!.Owner);
-            OnAddedToBody();
+            OnAddedToBody(body);
 
             foreach (var mechanism in _mechanisms)
             {
-                mechanism.AddedToBody();
+                mechanism.AddedToBody(body);
             }
         }
 
@@ -315,7 +315,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part
             }
         }
 
-        protected virtual void OnAddedToBody() { }
+        protected virtual void OnAddedToBody(IBody body) { }
 
         protected virtual void OnRemovedFromBody(IBody old) { }
     }

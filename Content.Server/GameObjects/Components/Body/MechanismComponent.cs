@@ -157,25 +157,5 @@ namespace Content.Server.GameObjects.Components.Body
                     break;
             }
         }
-
-        protected override void OnAddedToPart()
-        {
-            base.OnAddedToPart();
-
-            if (Owner.TryGetComponent(out SpriteComponent? sprite))
-            {
-                sprite.Visible = false;
-            }
-        }
-
-        protected override void OnRemovedFromPart(IBodyPart old)
-        {
-            base.OnRemovedFromPart(old);
-
-            if (Owner.TryGetComponent(out SpriteComponent? sprite))
-            {
-                sprite.Visible = true;
-            }
-        }
     }
 }

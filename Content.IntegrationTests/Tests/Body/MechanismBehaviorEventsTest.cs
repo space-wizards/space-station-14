@@ -35,16 +35,6 @@ namespace Content.IntegrationTests.Tests.Body
 
             public override void Update(float frameTime) { }
 
-            public bool AllAdded()
-            {
-                return WasAddedToBody && WasAddedToPart && WasAddedToPartInBody;
-            }
-
-            public bool AllRemoved()
-            {
-                return WasRemovedFromBody && WasRemovedFromPart && WasRemovedFromPartInBody;
-            }
-
             public bool NoAdded()
             {
                 return !WasAddedToBody && !WasAddedToPart && !WasAddedToPartInBody;
@@ -75,23 +65,23 @@ namespace Content.IntegrationTests.Tests.Body
                 ResetRemoved();
             }
 
-            protected override void OnAddedToBody()
+            protected override void OnAddedToBody(IBody body)
             {
-                base.OnAddedToBody();
+                base.OnAddedToBody(body);
 
                 WasAddedToBody = true;
             }
 
-            protected override void OnAddedToPart()
+            protected override void OnAddedToPart(IBodyPart part)
             {
-                base.OnAddedToPart();
+                base.OnAddedToPart(part);
 
                 WasAddedToPart = true;
             }
 
-            protected override void OnAddedToPartInBody()
+            protected override void OnAddedToPartInBody(IBody body, IBodyPart part)
             {
-                base.OnAddedToPartInBody();
+                base.OnAddedToPartInBody(body, part);
 
                 WasAddedToPartInBody = true;
             }
@@ -110,7 +100,7 @@ namespace Content.IntegrationTests.Tests.Body
                 WasRemovedFromPart = true;
             }
 
-            protected override void OnRemovedFromPartInBody(IBody? oldBody, IBodyPart? oldPart)
+            protected override void OnRemovedFromPartInBody(IBody oldBody, IBodyPart oldPart)
             {
                 base.OnRemovedFromPartInBody(oldBody, oldPart);
 
