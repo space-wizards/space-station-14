@@ -48,7 +48,7 @@ namespace Content.Server.GameObjects.Components.Arcade
             {
                 return;
             }
-            if(!ActionBlockerSystem.CanInteract(Owner)) return;
+            if(!ActionBlockerSystem.CanInteract(actor.playerSession.AttachedEntity)) return;
 
             UserInterface?.Toggle(actor.playerSession);
             RegisterPlayerSession(actor.playerSession);
