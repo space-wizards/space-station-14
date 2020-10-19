@@ -18,6 +18,7 @@ using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Arcade
 {
@@ -196,13 +197,12 @@ namespace Content.Server.GameObjects.Components.Arcade
 
             private Vector2i _currentPiecePosition;
             private BlockGamePieceRotation _currentRotation;
-            private float _softDropOverride = 0.1f;
+            private float _softDropModifier = 0.1f;
 
-            private float Speed => !_softDropPressed
-                ? -0.03f * Level + 1
-                : _softDropOverride;
+            private float Speed =>
+                -0.03f * Level + 1 * (!_softDropPressed ? 1 : _softDropModifier);
 
-            private float _pressCheckSpeed = 0.08f;
+            private const float _pressCheckSpeed = 0.08f;
 
             private bool _running;
             public bool Paused => !(_running && _started);
@@ -344,7 +344,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                 {
                     _accumulatedLeftPressTime += frameTime;
 
-                    if (_accumulatedLeftPressTime >= _pressCheckSpeed)
+                    while (_accumulatedLeftPressTime >= _pressCheckSpeed)
                     {
 
                         if (_currentPiece.Positions(_currentPiecePosition.AddToX(-1), _currentRotation)
@@ -362,7 +362,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                 {
                     _accumulatedRightPressTime += frameTime;
 
-                    if (_accumulatedRightPressTime >= _pressCheckSpeed)
+                    while (_accumulatedRightPressTime >= _pressCheckSpeed)
                     {
                         if (_currentPiece.Positions(_currentPiecePosition.AddToX(1), _currentRotation)
                             .All(MoveCheck))
@@ -385,13 +385,14 @@ namespace Content.Server.GameObjects.Components.Arcade
 
                 var checkTime = Speed;
 
-                if (_accumulatedFieldFrameTime < checkTime) return;
+                while (_accumulatedFieldFrameTime >= checkTime)
+                {
+                    if (_softDropPressed) AddPoints(1);
 
-                if(_softDropPressed) AddPoints(1);
+                    InternalFieldTick();
 
-                InternalFieldTick();
-
-                _accumulatedFieldFrameTime -= checkTime;
+                    _accumulatedFieldFrameTime -= checkTime;
+                }
             }
 
             private void InternalFieldTick()
@@ -539,6 +540,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                         break;
                     case BlockGamePlayerAction.SoftdropStart:
                         _softDropPressed = true;
+                        if (_accumulatedFieldFrameTime > Speed) _accumulatedFieldFrameTime = Speed; //to prevent jumps
                         break;
                     case BlockGamePlayerAction.SoftdropEnd:
                         _softDropPressed = false;
