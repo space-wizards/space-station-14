@@ -16,6 +16,7 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
+using Robust.Shared.Maths;
 
 namespace Content.Server.GameObjects.Components.PA
 {
@@ -164,6 +165,17 @@ namespace Content.Server.GameObjects.Components.PA
             builder.CreateWire(ParticleAcceleratorControlBoxWires.Interface);
             builder.CreateWire(ParticleAcceleratorControlBoxWires.Limiter);
             builder.CreateWire(ParticleAcceleratorControlBoxWires.Nothing);
+            UpdateWireIndicators();
+        }
+
+        private void UpdateWireIndicators()
+        {
+            if (!Owner.TryGetComponent(out WiresComponent? wires))
+            {
+                return;
+            }
+            wires.SetStatus(ParticleAcceleratorWireStatus.KeyboardIndicator, new SharedWiresComponent.StatusLightData(Color.Yellow, wires.IsWireCut(ParticleAcceleratorControlBoxWires.Interface) ? SharedWiresComponent.StatusLightState.BlinkingFast : SharedWiresComponent.StatusLightState.On, "KEYB"));
+            wires.SetStatus(ParticleAcceleratorWireStatus.LimiterIndicator, new SharedWiresComponent.StatusLightData(wires.IsWireCut(ParticleAcceleratorControlBoxWires.Limiter) ? Color.Purple : Color.Teal, SharedWiresComponent.StatusLightState.On, "LMT"));
         }
 
         public void WiresUpdate(WiresUpdateEventArgs args)
@@ -211,6 +223,7 @@ namespace Content.Server.GameObjects.Components.PA
                     }
                     break;
             }
+            UpdateWireIndicators();
         }
 
         public enum ParticleAcceleratorControlBoxWires

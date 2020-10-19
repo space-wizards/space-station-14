@@ -46,7 +46,7 @@
           conditions:
             - !type:EntityAnchored { }
           steps:
-            - tool: Screwing
+            - tool: Prying
               doAfter: 0.5
 
 
