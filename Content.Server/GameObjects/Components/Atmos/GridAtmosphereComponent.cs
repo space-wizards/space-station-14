@@ -300,12 +300,15 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void RemoveActiveTile(TileAtmosphere? tile)
+        public virtual void RemoveActiveTile(TileAtmosphere? tile, bool disposeGroup = true)
         {
             if (tile == null) return;
             _activeTiles.Remove(tile);
             tile.Excited = false;
-            tile.ExcitedGroup?.Dispose();
+            if(disposeGroup)
+                tile.ExcitedGroup?.Dispose();
+            else
+                tile.ExcitedGroup?.RemoveTile(tile);
         }
 
         /// <inheritdoc />

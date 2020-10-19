@@ -26,7 +26,6 @@ namespace Content.Server.GameObjects.EntitySystems
         [Dependency] private readonly IPrototypeManager _protoMan = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPauseManager _pauseManager = default!;
-        [Dependency] private IEntityManager _entityManager = default!;
 
         private GasReactionPrototype[] _gasReactions = Array.Empty<GasReactionPrototype>();
 
@@ -37,11 +36,6 @@ namespace Content.Server.GameObjects.EntitySystems
         ///     List of gas reactions ordered by priority.
         /// </summary>
         public IEnumerable<GasReactionPrototype> GasReactions => _gasReactions!;
-
-        /// <summary>
-        ///     EventBus reference for gas reactions.
-        /// </summary>
-        public IEventBus EventBus => _entityManager.EventBus;
 
         public GridTileLookupSystem GridTileLookupSystem => _gridTileLookup ??= Get<GridTileLookupSystem>();
 

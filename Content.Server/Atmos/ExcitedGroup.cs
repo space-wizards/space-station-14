@@ -30,6 +30,12 @@ namespace Content.Server.Atmos
             ResetCooldowns();
         }
 
+        public bool RemoveTile(TileAtmosphere tile)
+        {
+            tile.ExcitedGroup = null;
+            return _tile.Remove(tile);
+        }
+
         public void MergeGroups(ExcitedGroup other)
         {
             var ourSize = _tile.Count;
@@ -105,7 +111,6 @@ namespace Content.Server.Atmos
             {
                 if (tile?.Air == null) continue;
                 tile.Air.CopyFromMutable(combined);
-                tile.AtmosCooldown = 0;
                 tile.UpdateVisuals();
             }
 

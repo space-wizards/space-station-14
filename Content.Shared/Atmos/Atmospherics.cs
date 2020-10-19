@@ -109,8 +109,8 @@
         /// <summary>
         ///     Minimum temperature for starting superconduction.
         /// </summary>
-        public const float MinimumTemperatureStartSuperConduction = (T20C + 200f);
-        public const float MinimumTemperatureForSuperconduction = (T20C + 10f);
+        public const float MinimumTemperatureStartSuperConduction = (T20C + 400f);
+        public const float MinimumTemperatureForSuperconduction = (T20C + 80f);
 
         /// <summary>
         ///     Minimum heat capacity.
@@ -233,7 +233,7 @@
     /// <summary>
     ///     Gases to Ids. Keep these updated with the prototypes!
     /// </summary>
-    public enum Gas
+    public enum Gas : sbyte
     {
         Oxygen = 0,
         Nitrogen = 1,
