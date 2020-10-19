@@ -13,6 +13,7 @@
     offset: Center
   - type: Destructible
     thresholdvalue: 100
+  - type: Sprite
   - type: Appearance
     visuals:
     - type: PipeVisualizer
