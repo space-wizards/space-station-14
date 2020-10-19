@@ -20578,19 +20578,13 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 1019
-  type: Arcade
+  type: RandomArcade
   components:
   - parent: 857
     pos: -1.5,-4.5
     type: Transform
   - deadThreshold: 100
     type: BreakableConstruction
-  - containers:
-      board:
-        entities:
-        - 4034
-        type: Robust.Server.GameObjects.Components.Container.Container
-    type: ContainerContainer
 - uid: 1020
   type: Fork
   components:
@@ -46132,11 +46126,6 @@ entities:
   - type: Physics
   - airBlocked: False
     type: Airtight
-- uid: 4034
-  type: SpaceVillainArcadeComputerCircuitboard
-  components:
-  - parent: 1019
-    type: Transform
 - uid: 4035
   type: Firelock
   components:

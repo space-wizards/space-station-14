@@ -33,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Arcade
         private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
         private BoundUserInterface? UserInterface => Owner.GetUIOrNull(BlockGameUiKey.Key);
 
-        private BlockGame _game = null!;
+        private BlockGame? _game;
 
         private IPlayerSession? _player;
         private List<IPlayerSession> _spectators = new List<IPlayerSession>();
@@ -60,7 +60,7 @@ namespace Content.Server.GameObjects.Components.Arcade
             else _spectators.Add(session);
 
             UpdatePlayerStatus(session);
-            _game.UpdateNewPlayerUI(session);
+            _game?.UpdateNewPlayerUI(session);
         }
 
         private void DeactivePlayer(IPlayerSession session)
@@ -125,18 +125,18 @@ namespace Content.Server.GameObjects.Components.Arcade
             if (!(obj.Message is BlockGameMessages.BlockGamePlayerActionMessage message)) return;
             if (message.PlayerAction == BlockGamePlayerAction.NewGame)
             {
-                if(_game.Started) _game = new BlockGame(this);
-                _game.StartGame();
+                if(_game?.Started == true) _game = new BlockGame(this);
+                _game?.StartGame();
             }
             else
             {
-                _game.ProcessInput(message.PlayerAction);
+                _game?.ProcessInput(message.PlayerAction);
             }
         }
 
         public void DoGameTick(float frameTime)
         {
-            _game.GameTick(frameTime);
+            _game?.GameTick(frameTime);
         }
 
         private class BlockGame
