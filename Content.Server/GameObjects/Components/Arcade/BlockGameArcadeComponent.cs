@@ -278,7 +278,8 @@ namespace Content.Server.GameObjects.Components.Arcade
             public BlockGame(BlockGameArcadeComponent component)
             {
                 _component = component;
-                _internalNextPiece = BlockGamePiece.GetRandom(_component._random);
+                _allBlockGamePieces = (BlockGamePieceType[]) Enum.GetValues(typeof(BlockGamePieceType));
+                _internalNextPiece = GetRandomBlockGamePiece(_component._random);
             }
 
             private void SendHighscoreUpdate()
@@ -490,7 +491,7 @@ namespace Content.Server.GameObjects.Components.Arcade
             private void InitializeNewBlock()
             {
                 InitializeNewBlock(_nextPiece);
-                _nextPiece = BlockGamePiece.GetRandom(_component._random);
+                _nextPiece = GetRandomBlockGamePiece(_component._random);
                 _holdBlock = false;
 
                 _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameVisualUpdateMessage(_nextPiece.BlocksForPreview(), BlockGameMessages.BlockGameVisualType.NextBlock));
@@ -707,6 +708,22 @@ namespace Content.Server.GameObjects.Components.Arcade
                 };
             }
 
+            private readonly BlockGamePieceType[] _allBlockGamePieces;
+
+            private List<BlockGamePieceType> _blockGamePiecesBuffer = new List<BlockGamePieceType>();
+
+            private BlockGamePiece GetRandomBlockGamePiece(IRobustRandom random)
+            {
+                if (_blockGamePiecesBuffer.Count == 0)
+                {
+                    _blockGamePiecesBuffer = _allBlockGamePieces.ToList();
+                }
+
+                var chosenPiece = random.Pick(_blockGamePiecesBuffer);
+                _blockGamePiecesBuffer.Remove(chosenPiece);
+                return BlockGamePiece.GetPiece(chosenPiece);
+            }
+
             private struct BlockGamePiece
             {
                 public Vector2i[] Offsets;
@@ -768,13 +785,6 @@ namespace Content.Server.GameObjects.Components.Arcade
                     }
 
                     return Blocks(new Vector2i(-xOffset, -yOffset), BlockGamePieceRotation.North);
-                }
-
-                public static BlockGamePiece GetRandom(IRobustRandom random)
-                {
-                    var pieces = (BlockGamePieceType[])Enum.GetValues(typeof(BlockGamePieceType));
-                    var choice = random.Pick(pieces);
-                    return GetPiece(choice);
                 }
 
                 public static BlockGamePiece GetPiece(BlockGamePieceType type)
