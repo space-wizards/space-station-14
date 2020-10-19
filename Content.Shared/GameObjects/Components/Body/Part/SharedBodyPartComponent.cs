@@ -56,9 +56,6 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         }
 
         [ViewVariables] public BodyPartType PartType { get; private set; }
-
-        [ViewVariables] public string Plural { get; private set; } = string.Empty;
-
         [ViewVariables] public int Size { get; private set; }
 
         [ViewVariables] public int SizeUsed { get; private set; }
@@ -127,8 +124,6 @@ namespace Content.Shared.GameObjects.Components.Body.Part
             // TODO BODY serialize any changed properties?
 
             serializer.DataField(this, b => b.PartType, "partType", BodyPartType.Other);
-
-            serializer.DataField(this, b => b.Plural, "plural", string.Empty);
 
             serializer.DataField(this, b => b.Size, "size", 1);
 

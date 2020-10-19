@@ -16,7 +16,6 @@
     sprite: Mobs/Species/Human/parts.rsi
     state: "torso_m"
   - type: BodyPart
-    plural: "human torsos"
     partType: Torso
     size: 14
     compatibility: Biological
@@ -47,7 +46,6 @@
     sprite: Mobs/Species/Human/parts.rsi
     state: "head_m"
   - type: BodyPart
-    plural: "human heads"
     partType: Head
     size: 7
     compatibility: Biological
@@ -75,7 +73,6 @@
     sprite: Mobs/Species/Human/parts.rsi
     state: "l_arm"
   - type: BodyPart
-    plural: "left human arms"
     partType: Arm
     size: 5
     compatibility: Biological
@@ -102,7 +99,6 @@
     sprite: Mobs/Species/Human/parts.rsi
     state: "r_arm"
   - type: BodyPart
-    plural: "right human arms"
     partType: Arm
     size: 5
     compatibility: Biological
@@ -129,7 +125,6 @@
     sprite: Mobs/Species/Human/parts.rsi
     state: "l_hand"
   - type: BodyPart
-    plural: "left human hands"
     partType: Hand
     size: 3
     compatibility: Biological
@@ -155,7 +150,6 @@
     sprite: Mobs/Species/Human/parts.rsi
     state: "r_hand"
   - type: BodyPart
-    plural: "right human hands"
     partType: Hand
     durability: 30
     destroyThreshold: -60
@@ -183,7 +177,6 @@
     sprite: Mobs/Species/Human/parts.rsi
     state: "l_leg"
   - type: BodyPart
-    plural: "left human legs"
     partType: Leg
     size: 6
     compatibility: Biological
@@ -212,7 +205,6 @@
     sprite: Mobs/Species/Human/parts.rsi
     state: "r_leg"
   - type: BodyPart
-    plural: "right human legs"
     partType: Leg
     durability: 45
     destroyThreshold: -90
@@ -243,7 +235,6 @@
     sprite: Mobs/Species/Human/parts.rsi
     state: "l_foot"
   - type: BodyPart
-    plural: "left human feet"
     partType: Foot
     size: 2
     compatibility: Biological
@@ -268,7 +259,6 @@
     sprite: Mobs/Species/Human/parts.rsi
     state: "r_foot"
   - type: BodyPart
-    plural: "right human feet"
     partType: Foot
     size: 2
     compatibility: Biological
