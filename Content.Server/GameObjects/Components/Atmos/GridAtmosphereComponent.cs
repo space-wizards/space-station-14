@@ -241,6 +241,12 @@ namespace Content.Server.GameObjects.Components.Atmos
                         FixVacuum(tile.GridIndices);
                     }
 
+                    // Tile used to be space, but isn't anymore.
+                    if (tile.Air?.Immutable ?? false)
+                    {
+                        tile.Air = null;
+                    }
+
                     tile.Air ??= new GasMixture(GetVolumeForCells(1), AtmosphereSystem){Temperature = Atmospherics.T20C};
                 }
 
