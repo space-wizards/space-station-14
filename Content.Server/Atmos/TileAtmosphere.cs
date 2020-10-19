@@ -45,9 +45,6 @@ namespace Content.Server.Atmos
         private static GasTileOverlaySystem _gasTileOverlaySystem;
 
         [ViewVariables]
-        public int AtmosCooldown { get; set; } = 0;
-
-        [ViewVariables]
         public float Temperature {get; private set; } = Atmospherics.T20C;
 
         [ViewVariables]
@@ -647,7 +644,7 @@ namespace Content.Server.Atmos
             // Can't process a tile without air
             if (Air == null)
             {
-                _gridAtmosphereComponent.RemoveActiveTile(this);
+                Excited = false;
                 return;
             }
 
@@ -657,7 +654,6 @@ namespace Content.Server.Atmos
             _currentCycle = fireCount;
             var adjacentTileLength = 0;
 
-            AtmosCooldown++;
             for (var i = 0; i < Atmospherics.Directions; i++)
             {
                 var direction = (AtmosDirection) (1 << i);
@@ -738,7 +734,7 @@ namespace Content.Server.Atmos
                 if (ConsiderSuperconductivity(true))
                     remove = false;
 
-            if((ExcitedGroup == null && remove) || (AtmosCooldown > (Atmospherics.ExcitedGroupsDismantleCycles * 2)))
+            if(ExcitedGroup == null && remove)
                 _gridAtmosphereComponent.RemoveActiveTile(this);
         }
 
@@ -1187,11 +1183,9 @@ namespace Content.Server.Atmos
             if (lastShare > Atmospherics.MinimumAirToSuspend)
             {
                 ExcitedGroup.ResetCooldowns();
-                AtmosCooldown = 0;
             } else if (lastShare > Atmospherics.MinimumMolesDeltaToMove)
             {
                 ExcitedGroup.DismantleCooldown = 0;
-                AtmosCooldown = 0;
             }
         }
 
