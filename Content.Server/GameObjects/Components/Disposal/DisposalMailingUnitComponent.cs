@@ -114,11 +114,6 @@ namespace Content.Server.GameObjects.Components.Disposal
             receiver.Powered;
 
         [ViewVariables]
-        public bool Anchored =>
-            !Owner.TryGetComponent(out CollidableComponent? collidable) ||
-            collidable.Anchored;
-
-        [ViewVariables]
         private PressureState State => _pressure >= 1 ? PressureState.Ready : PressureState.Pressurizing;
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -155,14 +150,14 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
-            if (!entity.TryGetComponent(out ICollidableComponent? collidable) ||
-                !collidable.CanCollide)
+            if (!entity.TryGetComponent(out IPhysicsComponent? physics) ||
+                !physics.CanCollide)
             {
                 return false;
             }
 
             if (!entity.HasComponent<ItemComponent>() &&
-                !entity.HasComponent<ISharedBodyManagerComponent>())
+                !entity.HasComponent<IBody>())
             {
                 return false;
             }
@@ -626,9 +621,9 @@ namespace Content.Server.GameObjects.Components.Disposal
                 Logger.WarningS("VitalComponentMissing", $"Disposal unit {Owner.Uid} is missing an anchorable component");
             }
 
-            if (Owner.TryGetComponent(out CollidableComponent? collidable))
+            if (Owner.TryGetComponent(out IPhysicsComponent? physics))
             {
-                collidable.AnchoredChanged += UpdateVisualState;
+                physics.AnchoredChanged += UpdateVisualState;
             }
 
             if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
@@ -642,9 +637,9 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public override void OnRemove()
         {
-            if (Owner.TryGetComponent(out ICollidableComponent? collidable))
+            if (Owner.TryGetComponent(out IPhysicsComponent? physics))
             {
-                collidable.AnchoredChanged -= UpdateVisualState;
+                physics.AnchoredChanged -= UpdateVisualState;
             }
 
             if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
@@ -784,12 +779,12 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         bool IDragDropOn.CanDragDropOn(DragDropEventArgs eventArgs)
         {
-            return CanInsert(eventArgs.Dropped);
+            return CanInsert(eventArgs.Dragged);
         }
 
         bool IDragDropOn.DragDropOn(DragDropEventArgs eventArgs)
         {
-            _ = TryInsert(eventArgs.Dropped, eventArgs.User);
+            _ = TryInsert(eventArgs.Dragged, eventArgs.User);
             return true;
         }
 

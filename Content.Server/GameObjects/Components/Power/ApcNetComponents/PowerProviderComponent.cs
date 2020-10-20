@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -21,13 +17,15 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         void RemoveReceiver(PowerReceiverComponent receiver);
 
-        INodeGroup GetWireNet();
+        public Entity Owner { get; }
     }
 
     [RegisterComponent]
     public class PowerProviderComponent : BaseApcNetComponent, IPowerProvider
     {
         public override string Name => "PowerProvider";
+
+        public new Entity Owner => Owner;
 
         /// <summary>
         ///     The max distance this can transmit power to <see cref="PowerReceiverComponent"/>s from.
@@ -58,21 +56,6 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         {
             _linkedReceivers.Remove(receiver);
             Net.UpdatePowerProviderReceivers(this);
-        }
-
-        public INodeGroup GetWireNet()
-        {
-            if(Owner.TryGetComponent<NodeContainerComponent>(out var nodeContainer))
-            {
-                var nodes = nodeContainer.Nodes;
-                for (int index = 0; index < nodes.Count; index++)
-                {
-                    if (nodes[index].NodeGroupID == NodeGroupID.WireNet)
-                        return nodes[index].NodeGroup;
-                }
-
-            }
-            return default;
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -145,6 +128,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
             public void AddReceiver(PowerReceiverComponent receiver) { }
             public INodeGroup GetWireNet() { return new BaseNodeGroup(); }
             public void RemoveReceiver(PowerReceiverComponent receiver) { }
+            public Entity Owner => default;
         }
     }
 }

@@ -324,7 +324,7 @@
     flushTime: 2
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
     anchored: true
     shapes:
     - !type:PhysShapeAabb

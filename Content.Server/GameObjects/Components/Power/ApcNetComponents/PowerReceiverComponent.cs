@@ -1,12 +1,12 @@
 ﻿#nullable enable
 using System;
-using System.Diagnostics.CodeAnalysis;﻿
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -154,14 +154,6 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
             HasApcPower = false;
         }
 
-        public bool TryGetWireNet([NotNullWhen(true)] out INodeGroup nodeGroup)
-        {
-            var wireNet = Provider.GetWireNet();
-
-            nodeGroup = wireNet;
-            return wireNet != default;
-        }
-
         private void SetProvider(IPowerProvider newProvider)
         {
             _provider.RemoveReceiver(this);
@@ -241,7 +233,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddMarkup(Loc.GetString("It appears to be {0}.", this.Powered ? "[color=darkgreen]powered[/color]" : "[color=darkred]un-powered[/color]"));
+            message.AddMarkup(Loc.GetString("It appears to be {0}.", Powered ? "[color=darkgreen]powered[/color]" : "[color=darkred]un-powered[/color]"));
         }
     }
 

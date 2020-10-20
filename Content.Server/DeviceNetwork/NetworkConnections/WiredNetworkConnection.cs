@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+﻿using Content.Server.GameObjects.Components.NodeContainer;
+using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Robust.Shared.Interfaces.GameObjects;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
         {
 
             if (_owner.TryGetComponent<PowerReceiverComponent>(out var powerReceiver)
-                && powerReceiver.TryGetWireNet(out var ownNet)
+                && TryGetWireNet(powerReceiver, out var ownNet)
                 && metadata.TryParseMetadata<INodeGroup>(WIRENET, out var senderNet))
             {
                 return ownNet.Equals(senderNet);
@@ -32,7 +33,7 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
         protected override Metadata GetMetadata()
         {
             if (_owner.TryGetComponent<PowerReceiverComponent>(out var powerReceiver)
-                && powerReceiver.TryGetWireNet(out var net))
+                && TryGetWireNet(powerReceiver, out var net))
             {
                 var metadata = new Metadata
                 {
@@ -48,6 +49,25 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
         protected override Dictionary<string, string> ManipulatePayload(Dictionary<string, string> payload)
         {
             return payload;
+        }
+
+        private bool TryGetWireNet(PowerReceiverComponent powerReceiver, out INodeGroup net)
+        {
+            if (powerReceiver.Provider != default && powerReceiver.Provider.Owner.TryGetComponent<NodeContainerComponent>(out var nodeContainer))
+            {
+                var nodes = nodeContainer.Nodes;
+                for (var index = 0; index < nodes.Count; index++)
+                {
+                    if (nodes[index].NodeGroupID == NodeGroupID.WireNet)
+                    {
+                        net = nodes[index].NodeGroup;
+                        return true;
+                    }
+                }
+
+            }
+            net = default;
+            return false;
         }
     }
 }
