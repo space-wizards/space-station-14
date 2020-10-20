@@ -9,6 +9,7 @@ using Content.Shared.GameObjects.Components.Body.Surgery;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
@@ -26,38 +27,38 @@ namespace Content.Server.GameObjects.Components.Body.Part
     public class BodyPartComponent : SharedBodyPartComponent, IAfterInteract
     {
         private readonly Dictionary<int, object> _optionsCache = new Dictionary<int, object>();
-
         private IBody? _owningBodyCache;
-
         private int _idHash;
-
         private IEntity? _surgeonCache;
+        private Container _mechanismContainer = default!;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(SurgeryUIKey.Key);
+
+        public override bool CanAddMechanism(IMechanism mechanism)
+        {
+            return base.CanAddMechanism(mechanism) &&
+                   _mechanismContainer.CanInsert(mechanism.Owner);
+        }
 
         protected override void OnAddMechanism(IMechanism mechanism)
         {
             base.OnAddMechanism(mechanism);
 
-            if (mechanism.Owner.TryGetComponent(out SpriteComponent? sprite))
-            {
-                sprite.Visible = false;
-            }
+            _mechanismContainer.Insert(mechanism.Owner);
         }
 
         protected override void OnRemoveMechanism(IMechanism mechanism)
         {
             base.OnRemoveMechanism(mechanism);
 
-            if (mechanism.Owner.TryGetComponent(out SpriteComponent? sprite))
-            {
-                sprite.Visible = true;
-            }
+            _mechanismContainer.Remove(mechanism.Owner);
         }
 
         public override void Initialize()
         {
             base.Initialize();
+
+            _mechanismContainer = ContainerManagerComponent.Ensure<Container>($"{Name}-{nameof(BodyPartComponent)}", Owner);
 
             // This is ran in Startup as entities spawned in Initialize
             // are not synced to the client since they are assumed to be
