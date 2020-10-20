@@ -5,6 +5,7 @@ using Content.Server.GameObjects.Components.VendingMachines;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Arcade;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.GameObjects.EntitySystems;
@@ -78,11 +79,11 @@ namespace Content.Server.GameObjects.Components.Arcade
             {
                 return;
             }
+            if(!ActionBlockerSystem.CanInteract(actor.playerSession.AttachedEntity)) return;
 
-            var wires = Owner.GetComponent<WiresComponent>();
-            if (wires.IsPanelOpen)
+            if (_wiresComponent?.IsPanelOpen == true)
             {
-                wires.OpenInterface(actor.playerSession);
+                _wiresComponent.OpenInterface(actor.playerSession);
             } else
             {
                 UserInterface?.Toggle(actor.playerSession);
