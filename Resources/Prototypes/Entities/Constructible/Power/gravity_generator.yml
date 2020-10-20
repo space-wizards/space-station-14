@@ -8,9 +8,11 @@
     sprite: Constructible/Power/gravity_generator.rsi
     layers:
       - state: on
+        map: ["enum.GravityGeneratorVisualLayers.Base"]
       - sprite: Constructible/Power/gravity_generator_core.rsi
         state: activated
         shader: unshaded
+        map: ["enum.GravityGeneratorVisualLayers.Core"]
 
   - type: SnapGrid
     offset: Center
@@ -35,5 +37,13 @@
     interfaces:
       - key: enum.GravityGeneratorUiKey.Key
         type: GravityGeneratorBoundUserInterface
+  - type: Appearance
+    visuals:
+    - type: GravityGeneratorVisualizer
+      broken: "broken"
+      unpowered: "off"
+      off: "off"
+      on: "on"
+
   placement:
     mode: AlignTileAny

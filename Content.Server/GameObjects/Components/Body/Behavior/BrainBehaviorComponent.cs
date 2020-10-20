@@ -17,25 +17,25 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
     {
         public override string Name => "Brain";
 
-        protected override void OnAddedToBody()
+        protected override void OnAddedToBody(IBody body)
         {
-            base.OnAddedToBody();
+            base.OnAddedToBody(body);
 
-            HandleMind(Body!.Owner, Owner);
+            HandleMind(body.Owner, Owner);
         }
 
-        protected override void OnAddedToPart()
+        protected override void OnAddedToPart(IBodyPart part)
         {
-            base.OnAddedToPart();
+            base.OnAddedToPart(part);
 
-            HandleMind(Part!.Owner, Owner);
+            HandleMind(part.Owner, Owner);
         }
 
-        protected override void OnAddedToPartInBody()
+        protected override void OnAddedToPartInBody(IBody body, IBodyPart part)
         {
-            base.OnAddedToPartInBody();
+            base.OnAddedToPartInBody(body, part);
 
-            HandleMind(Body!.Owner, Owner);
+            HandleMind(body.Owner, Owner);
         }
 
         protected override void OnRemovedFromBody(IBody old)
@@ -52,16 +52,16 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
             HandleMind(Owner, old.Owner);
         }
 
-        protected override void OnRemovedFromPartInBody(IBody? oldBody, IBodyPart? oldPart)
+        protected override void OnRemovedFromPartInBody(IBody oldBody, IBodyPart oldPart)
         {
             base.OnRemovedFromPartInBody(oldBody, oldPart);
 
-            HandleMind(oldBody!.Owner, Owner);
+            HandleMind(oldBody.Owner, Owner);
         }
 
         private void HandleMind(IEntity newEntity, IEntity oldEntity)
         {
-            var newMind = newEntity.EnsureComponent<MindComponent>();
+            newEntity.EnsureComponent<MindComponent>();
             var oldMind = oldEntity.EnsureComponent<MindComponent>();
 
             oldMind.Mind?.TransferTo(newEntity);

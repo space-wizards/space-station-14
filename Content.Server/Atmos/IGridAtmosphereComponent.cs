@@ -63,7 +63,7 @@ namespace Content.Server.Atmos
         ///     Use with caution.
         /// </summary>
         /// <param name="tile"></param>
-        void RemoveActiveTile(TileAtmosphere tile);
+        void RemoveActiveTile(TileAtmosphere tile, bool disposeGroup = true);
 
         /// <summary>
         ///     Marks a tile as having a hotspot so it can be processed.
