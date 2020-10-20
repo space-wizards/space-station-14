@@ -115,12 +115,12 @@
       sprite: Mobs/Customization/human_hair.rsi
     - map: [ "enum.Slots.MASK" ]
     - map: [ "enum.Slots.HEAD" ]
-  - type: Collidable
+  - type: Physics
     anchored: false
     mass: 85
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.50,-0.30,0.40,0.30"
+      bounds: "-0.35,-0.35,0.35,0.35"
       mask:
       - Impassable
       - MobImpassable
@@ -156,10 +156,10 @@
     normalBodyTemperature: 310.15
     thermalRegulationTemperatureThreshold: 25
     needsGases:
-      Oxygen: 0.00332569564
+      Oxygen: 0.00060763888
     producesGases:
-      Oxygen: 0.00249427173
-      CarbonDioxide: 0.00083142391
+      Oxygen: 0.00045572916
+      CarbonDioxide: 0.00015190972
   - type: MobStateManager
   - type: HeatResistance
   - type: Appearance
@@ -195,6 +195,7 @@
       type: StrippableBoundUserInterface
     - key: enum.AcceptCloningUiKey.Key
       type: AcceptCloningBoundUserInterface
+  - type: Puller
 
 - type: entity
   save: false
@@ -281,7 +282,7 @@
       - map: ["enum.Slots.HEAD"]
       - map: ["hand-left"]
       - map: ["hand-right"]
-    - type: Collidable
+    - type: Physics
       anchored: false
       mass: 85
       shapes:

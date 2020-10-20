@@ -28,7 +28,6 @@
             "Wrench",
             "Crowbar",
             "MeleeWeapon",
-            "Storable",
             "Dice",
             "Construction",
             "Door",
@@ -125,7 +124,6 @@
             "RCD",
             "RCDDeconstructWhitelist",
             "RCDAmmo",
-            "Pullable",
             "CursedEntityStorage",
             "Listening",
             "Radio",
@@ -183,6 +181,7 @@
             "GasCanister",
             "GasCanisterPort",
             "Lung",
+            "Cleanable"
         };
     }
 }

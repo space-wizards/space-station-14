@@ -5,10 +5,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects.Components.Items;
-using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Mobs;
@@ -25,10 +23,11 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
-using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
+using Content.Server.GameObjects.Components.Pulling;
+using Robust.Shared.Map;
 
 namespace Content.Server.GameObjects.Components.GUI
 {
@@ -514,77 +513,6 @@ namespace Content.Server.GameObjects.Components.GUI
             }
 
             return false;
-        }
-
-        public void StartPull(PullableComponent pullable)
-        {
-            if (Owner == pullable.Owner)
-            {
-                return;
-            }
-
-            if (!Owner.IsInSameOrNoContainer(pullable.Owner))
-            {
-                return;
-            }
-
-            if (IsPulling)
-            {
-                StopPull();
-            }
-
-            PulledObject = pullable.Owner.GetComponent<IPhysicsComponent>();
-            var controller = PulledObject.EnsureController<PullController>();
-            controller.StartPull(Owner.GetComponent<IPhysicsComponent>());
-        }
-
-        public void MovePulledObject(EntityCoordinates puller, EntityCoordinates to)
-        {
-            if (PulledObject != null &&
-                PulledObject.TryGetController(out PullController controller))
-            {
-                controller.TryMoveTo(puller, to);
-            }
-        }
-
-        private void MoveEvent(MoveEvent moveEvent)
-        {
-            if (moveEvent.Sender != Owner)
-            {
-                return;
-            }
-
-            if (!IsPulling)
-            {
-                return;
-            }
-
-            PulledObject!.WakeBody();
-        }
-
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-
-            if (!(message is PullMessage pullMessage) ||
-                pullMessage.Puller.Owner != Owner)
-            {
-                return;
-            }
-
-            switch (message)
-            {
-                case PullStartedMessage msg:
-                    Owner.EntityManager.EventBus.SubscribeEvent<MoveEvent>(EventSource.Local, this, MoveEvent);
-
-                    AddPullingStatuses(msg.Pulled.Owner);
-                    break;
-                case PullStoppedMessage msg:
-                    Owner.EntityManager.EventBus.UnsubscribeEvent<MoveEvent>(EventSource.Local, this);
-
-                    RemovePullingStatuses(msg.Pulled.Owner);
-                    break;
-            }
         }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)

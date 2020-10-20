@@ -7,9 +7,9 @@ using Robust.Shared.Map;
 
 namespace Content.Shared.GameObjects.Components.Body.Part
 {
-    public interface IBodyPart : IHasBody, IBodyPartContainer
+    public interface IBodyPart : IComponent, IBodyPartContainer
     {
-        new IBody? Body { get; set; }
+        IBody? Body { get; set; }
 
         /// <summary>
         ///     <see cref="BodyPartType"/> that this <see cref="IBodyPart"/> is considered
@@ -17,11 +17,6 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         ///     For example, <see cref="BodyPartType.Arm"/>.
         /// </summary>
         BodyPartType PartType { get; }
-
-        /// <summary>
-        ///     Plural version of this <see cref="IBodyPart"/> name.
-        /// </summary>
-        public string Plural { get; }
 
         /// <summary>
         ///     Determines many things: how many mechanisms can be fit inside this
@@ -45,8 +40,6 @@ namespace Content.Shared.GameObjects.Components.Body.Part
         public bool IsVital { get; }
 
         public BodyPartSymmetry Symmetry { get; }
-
-        bool Drop();
 
         /// <summary>
         ///     Checks if the given <see cref="SurgeryType"/> can be used on

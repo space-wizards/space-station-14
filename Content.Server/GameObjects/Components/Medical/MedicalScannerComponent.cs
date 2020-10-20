@@ -31,6 +31,7 @@ namespace Content.Server.GameObjects.Components.Medical
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
+    [ComponentReference(typeof(SharedMedicalScannerComponent))]
     public class MedicalScannerComponent : SharedMedicalScannerComponent, IActivate, IDragDropOn
     {
         private ContainerSlot _bodyContainer = default!;
@@ -250,12 +251,12 @@ namespace Content.Server.GameObjects.Components.Medical
 
         public bool CanDragDropOn(DragDropEventArgs eventArgs)
         {
-            return eventArgs.Dropped.HasComponent<IBody>();
+            return eventArgs.Dragged.HasComponent<IBody>();
         }
 
         public bool DragDropOn(DragDropEventArgs eventArgs)
         {
-            _bodyContainer.Insert(eventArgs.Dropped);
+            _bodyContainer.Insert(eventArgs.Dragged);
             return true;
         }
     }

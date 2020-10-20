@@ -16,7 +16,7 @@
   - type: InteractionOutline
   - type: Clickable
   - type: Slippery
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.4,0.4,0.4"

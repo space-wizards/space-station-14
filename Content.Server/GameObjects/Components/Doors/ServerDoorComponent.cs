@@ -17,6 +17,7 @@ using Content.Shared.GameObjects.Components.Doors;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
@@ -49,6 +50,7 @@ namespace Content.Server.GameObjects.Components.Doors
                     return;
 
                 _state = value;
+
                 Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new DoorStateMessage(this, State));
             }
         }
@@ -256,7 +258,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
                 if (Owner.TryGetComponent(out IPhysicsComponent? physics))
                 {
-                    physics.Hard = false;
+                    physics.CanCollide = false;
                 }
 
                 await Timer.Delay(OpenTimeTwo, _cancellationTokenSource.Token);
@@ -409,7 +411,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
                 if (Owner.TryGetComponent(out IPhysicsComponent? body))
                 {
-                    body.Hard = true;
+                    body.CanCollide = true;
                 }
 
                 await Timer.Delay(CloseTimeTwo, _cancellationTokenSource.Token);

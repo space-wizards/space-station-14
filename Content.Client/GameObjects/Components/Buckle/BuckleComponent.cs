@@ -1,18 +1,23 @@
-using Content.Client.GameObjects.Components.Strap;
-using Content.Client.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects.Components.Buckle;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Client.GameObjects.Components.Buckle
 {
     [RegisterComponent]
-    public class BuckleComponent : SharedBuckleComponent, IClientDraggable
+    public class BuckleComponent : SharedBuckleComponent
     {
         private bool _buckled;
         private int? _originalDrawDepth;
 
         public override bool Buckled => _buckled;
+
+        public override bool TryBuckle(IEntity user, IEntity to)
+        {
+            // TODO: Prediction
+            return false;
+        }
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
@@ -40,16 +45,6 @@ namespace Content.Client.GameObjects.Components.Buckle
                 ownerSprite.DrawDepth = _originalDrawDepth.Value;
                 _originalDrawDepth = null;
             }
-        }
-
-        bool IClientDraggable.ClientCanDropOn(CanDropEventArgs eventArgs)
-        {
-            return eventArgs.Target.HasComponent<StrapComponent>();
-        }
-
-        bool IClientDraggable.ClientCanDrag(CanDragEventArgs eventArgs)
-        {
-            return true;
         }
     }
 }

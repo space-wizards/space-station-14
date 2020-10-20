@@ -34,8 +34,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
-    public class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IUse, IActivate, IStorageComponent, IDestroyAct, IExAct,
-        IDragDrop
+    public class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IUse, IActivate, IStorageComponent, IDestroyAct, IExAct
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
@@ -50,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         public readonly HashSet<IPlayerSession> SubscribedSessions = new HashSet<IPlayerSession>();
 
         [ViewVariables]
-        public IReadOnlyCollection<IEntity>? StoredEntities => _storage?.ContainedEntities;
+        public override IReadOnlyList<IEntity>? StoredEntities => _storage?.ContainedEntities;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool OccludesLight
@@ -87,7 +86,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             foreach (var entity in _storage.ContainedEntities)
             {
                 var item = entity.GetComponent<StorableComponent>();
-                _storageUsed += item.ObjectSize;
+                _storageUsed += item.Size;
             }
         }
 
@@ -107,7 +106,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             }
 
             if (entity.TryGetComponent(out StorableComponent? store) &&
-                store.ObjectSize > _storageCapacityMax - _storageUsed)
+                store.Size > _storageCapacityMax - _storageUsed)
             {
                 return false;
             }
@@ -125,12 +124,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             return CanInsert(entity) && _storage?.Insert(entity) == true;
         }
 
-        /// <summary>
-        ///     Removes from the storage container and updates the stored value
-        /// </summary>
-        /// <param name="entity">The entity to remove</param>
-        /// <returns>true if no longer in storage, false otherwise</returns>
-        public bool Remove(IEntity entity)
+        public override bool Remove(IEntity entity)
         {
             EnsureInitialCalculated();
             return _storage?.Remove(entity) == true;
@@ -147,7 +141,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
             Logger.DebugS(LoggerName, $"Storage (UID {Owner.Uid}) had entity (UID {message.Entity.Uid}) inserted into it.");
 
-            _storageUsed += message.Entity.GetComponent<StorableComponent>().ObjectSize;
+            _storageUsed += message.Entity.GetComponent<StorableComponent>().Size;
 
             UpdateClientInventories();
         }
@@ -171,7 +165,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 return;
             }
 
-            _storageUsed -= storable.ObjectSize;
+            _storageUsed -= storable.Size;
 
             UpdateClientInventories();
         }
@@ -258,14 +252,16 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 return;
             }
 
-            var storedEntities = new Dictionary<EntityUid, int>();
-
-            foreach (var entities in _storage.ContainedEntities)
+            if (StoredEntities == null)
             {
-                storedEntities.Add(entities.Uid, entities.GetComponent<StorableComponent>().ObjectSize);
+                Logger.WarningS(LoggerName, $"{nameof(UpdateClientInventory)} called with null {nameof(StoredEntities)}");
+
+                return;
             }
 
-            SendNetworkMessage(new StorageHeldItemsMessage(storedEntities, _storageUsed, _storageCapacityMax), session.ConnectedClient);
+            var stored = StoredEntities.Select(e => e.Uid).ToArray();
+
+            SendNetworkMessage(new StorageHeldItemsMessage(stored, _storageUsed, _storageCapacityMax), session.ConnectedClient);
         }
 
         /// <summary>
@@ -499,44 +495,6 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                     exAct.OnExplosion(eventArgs);
                 }
             }
-        }
-
-        bool IDragDrop.CanDragDrop(DragDropEventArgs eventArgs)
-        {
-            return eventArgs.Target.TryGetComponent(out PlaceableSurfaceComponent? placeable) &&
-                   placeable.IsPlaceable;
-        }
-
-        bool IDragDrop.DragDrop(DragDropEventArgs eventArgs)
-        {
-            if (!ActionBlockerSystem.CanInteract(eventArgs.User))
-            {
-                return false;
-            }
-
-            if (!eventArgs.Target.TryGetComponent<PlaceableSurfaceComponent>(out var placeableSurface) ||
-                !placeableSurface.IsPlaceable)
-            {
-                return false;
-            }
-
-            var storedEntities = StoredEntities?.ToList();
-
-            if (storedEntities == null)
-            {
-                return false;
-            }
-
-            // empty everything out
-            foreach (var storedEntity in StoredEntities.ToList())
-            {
-                if (Remove(storedEntity))
-                {
-                    storedEntity.Transform.WorldPosition = eventArgs.DropLocation.Position;
-                }
-            }
-
-            return true;
         }
     }
 }
