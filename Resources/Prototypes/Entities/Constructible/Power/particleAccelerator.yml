@@ -55,7 +55,7 @@
 - type: entity
   parent: ParticleAcceleratorBase
   id: ParticleAcceleratorControlBox
-  name: Particle Accelerator Control Box
+  name: Particle Accelerator Control Computer
   description: This controls the density of the particles.
   components:
     - type: Sprite
@@ -89,7 +89,8 @@
 - type: entity
   parent: ParticleAcceleratorBase
   id: ParticleAcceleratorEmitterLeft
-  name: Particle Accelerator Emitter (left)
+  name: EM Containment Grid
+  suffix: Left
   description: This launchs the Alpha particles, might not want to stand near this end.
   components:
     - type: Sprite
@@ -115,7 +116,8 @@
 - type: entity
   parent: ParticleAcceleratorBase
   id: ParticleAcceleratorEmitterCenter
-  name: Particle Accelerator Emitter (center)
+  name: EM Containment Grid
+  suffix: Center
   description: This launchs the Alpha particles, might not want to stand near this end.
   components:
     - type: Sprite
@@ -140,7 +142,8 @@
 - type: entity
   parent: ParticleAcceleratorBase
   id: ParticleAcceleratorEmitterRight
-  name: Particle Accelerator Emitter (right)
+  name: EM Containment Grid
+  suffix: Right
   description: This launchs the Alpha particles, might not want to stand near this end.
   components:
     - type: Sprite
@@ -165,8 +168,8 @@
 - type: entity
   parent: ParticleAcceleratorBase
   id: ParticleAcceleratorEndCap
-  name: Particle Accelerator End Cap
-  description: This is where Alpha particles are generated from \[REDACTED\].
+  name: Alpha Particle Generation Array
+  description: This is where Alpha particles are generated from [REDACTED].
   components:
     - type: Sprite
       sprite: Constructible/Power/PA/end_cap.rsi
@@ -179,7 +182,7 @@
 - type: entity
   parent: ParticleAcceleratorBase
   id: ParticleAcceleratorFuelChamber
-  name: Particle Accelerator Fuel Chamber
+  name: EM Acceleration Chamber
   description: This is where the Alpha particles are accelerated to radical speeds.
   components:
     - type: Sprite
@@ -203,7 +206,7 @@
 - type: entity
   parent: ParticleAcceleratorBase
   id: ParticleAcceleratorPowerBox
-  name: Particle Accelerator Power Box
+  name: Particle Focusing EM Lens
   description: This uses electromagnetic waves to focus the Alpha-Particles.
   components:
     - type: Sprite
@@ -236,9 +239,9 @@
 - type: entity
   parent: ParticleAcceleratorBase
   id: ParticleAcceleratorControlBoxUnfinished
-  name: Particle Accelerator Control Box
+  name: Particle Accelerator Control Computer
   suffix: Unfinished
-  description: This controls the density of the particles.
+  description: This controls the density of the particles. It looks unfinished.
   components:
     - type: Physics
       anchored: false
@@ -252,9 +255,9 @@
 - type: entity
   parent: ParticleAcceleratorBase
   id: ParticleAcceleratorEmitterLeftUnfinished
-  name: Particle Accelerator Emitter (left)
-  suffix: Unfinished
-  description: This launchs the Alpha particles, might not want to stand near this end.
+  name: EM Containment Grid
+  suffix: Unfinished, Left
+  description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
   components:
     - type: Physics
       anchored: false
@@ -268,9 +271,9 @@
 - type: entity
   parent: ParticleAcceleratorBase
   id: ParticleAcceleratorEmitterCenterUnfinished
-  name: Particle Accelerator Emitter (center)
-  suffix: Unfinished
-  description: This launchs the Alpha particles, might not want to stand near this end.
+  name: EM Containment Grid
+  suffix: Unfinished, Center
+  description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
   components:
     - type: Physics
       anchored: false
@@ -284,9 +287,9 @@
 - type: entity
   parent: ParticleAcceleratorBase
   id: ParticleAcceleratorEmitterRightUnfinished
-  name: Particle Accelerator Emitter (right)
-  suffix: Unfinished
-  description: This launchs the Alpha particles, might not want to stand near this end.
+  name: EM Containment Grid
+  suffix: Unfinished, Right
+  description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
   components:
     - type: Physics
       anchored: false
@@ -300,9 +303,9 @@
 - type: entity
   parent: ParticleAcceleratorBase
   id: ParticleAcceleratorEndCapUnfinished
-  name: Particle Accelerator End Cap
+  name: Alpha Particle Generation Array
   suffix: Unfinished
-  description: This is where Alpha particles are generated from \[REDACTED\]. It looks unfinished.
+  description: This is where Alpha particles are generated from [REDACTED]. It looks unfinished.
   components:
     - type: Physics
       anchored: false
@@ -316,9 +319,9 @@
 - type: entity
   parent: ParticleAcceleratorBase
   id: ParticleAcceleratorFuelChamberUnfinished
-  name: Particle Accelerator Fuel Chamber
+  name: EM Acceleration Chamber
   suffix: Unfinished
-  description: This is where the Alpha particles are accelerated to radical speeds.
+  description: This is where the Alpha particles are accelerated to radical speeds. It looks unfinished.
   components:
     - type: Physics
       anchored: false
@@ -332,9 +335,9 @@
 - type: entity
   parent: ParticleAcceleratorBase
   id: ParticleAcceleratorPowerBoxUnfinished
-  name: Particle Accelerator Power Box
+  name: Particle Focusing EM Lens
   suffix: Unfinished
-  description: This uses electromagnetic waves to focus the Alpha-Particles.
+  description: This uses electromagnetic waves to focus the Alpha-Particles. It looks unfinished.
   components:
     - type: Physics
       anchored: false
