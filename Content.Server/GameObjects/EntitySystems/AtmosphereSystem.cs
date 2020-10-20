@@ -27,7 +27,6 @@ namespace Content.Server.GameObjects.EntitySystems
         [Dependency] private readonly IPrototypeManager _protoMan = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPauseManager _pauseManager = default!;
-        [Dependency] private readonly IEventBus _eventBus = default!;
 
         private GasReactionPrototype[] _gasReactions = Array.Empty<GasReactionPrototype>();
 
@@ -55,14 +54,14 @@ namespace Content.Server.GameObjects.EntitySystems
             _mapManager.TileChanged += OnTileChanged;
 
             // Required for airtight components.
-            _eventBus.SubscribeEvent<RotateEvent>(EventSource.Local, this, RotateEvent);
+            EntityManager.EventBus.SubscribeEvent<RotateEvent>(EventSource.Local, this, RotateEvent);
         }
 
         public override void Shutdown()
         {
             base.Shutdown();
 
-            _eventBus.UnsubscribeEvent<RotateEvent>(EventSource.Local, this);
+            EntityManager.EventBus.UnsubscribeEvent<RotateEvent>(EventSource.Local, this);
         }
 
         private void RotateEvent(RotateEvent ev)
