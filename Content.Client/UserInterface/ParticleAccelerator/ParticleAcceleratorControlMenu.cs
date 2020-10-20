@@ -32,6 +32,7 @@ namespace Content.Client.ParticleAccelerator
         private readonly NoiseGenerator _drawNoiseGenerator;
         private readonly Button _onButton;
         private readonly Button _offButton;
+        private readonly Button _scanButton;
         private readonly Label _statusLabel;
         private readonly SpinBox _stateSpinBox;
 
@@ -143,7 +144,6 @@ namespace Content.Client.ParticleAccelerator
             };
             _drawLabel = new Label();
             var imgSize = new Vector2(32, 32);
-            Button scanButton;
             AddChild(new VBoxContainer
             {
                 Children =
@@ -288,9 +288,10 @@ namespace Content.Client.ParticleAccelerator
                                             }
                                         }
                                     },
-                                    (scanButton = new Button
+                                    (_scanButton = new Button
                                     {
-                                        Text = Loc.GetString("Scan Parts")
+                                        Text = Loc.GetString("Scan Parts"),
+                                        SizeFlagsHorizontal = SizeFlags.ShrinkCenter
                                     })
                                 }
                             }
@@ -338,7 +339,7 @@ namespace Content.Client.ParticleAccelerator
                 }
             });
 
-            scanButton.OnPressed += args => Owner.SendScanPartsMessage();
+            _scanButton.OnPressed += args => Owner.SendScanPartsMessage();
 
             _alarmControl.AnimationCompleted += s =>
             {
@@ -445,6 +446,7 @@ namespace Content.Client.ParticleAccelerator
             var cantUse = !assembled || blocked || powerBlock;
             _onButton.Disabled = cantUse;
             _offButton.Disabled = cantUse;
+            _scanButton.Disabled = blocked;
 
             var cantChangeLevel = !assembled || blocked;
             _stateSpinBox.SetButtonDisabled(cantChangeLevel);

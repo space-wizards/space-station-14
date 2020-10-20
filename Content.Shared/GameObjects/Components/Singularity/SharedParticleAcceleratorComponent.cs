@@ -45,6 +45,7 @@ namespace Content.Shared.GameObjects.Components
         Power,
         Keyboard,
         Limiter,
+        Strength,
     }
 
     [NetSerializable, Serializable]

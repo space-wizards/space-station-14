@@ -64,6 +64,7 @@ namespace Content.Server.GameObjects.Components.PA
         [ViewVariables] private bool _wireInterfaceBlocked;
         [ViewVariables] private bool _wirePowerBlocked;
         [ViewVariables] private bool _wireLimiterCut;
+        [ViewVariables] private bool _wireStrengthCut;
         [ViewVariables] private CancellationTokenSource? _fireCancelTokenSrc;
 
         /// <summary>
@@ -120,6 +121,12 @@ namespace Content.Server.GameObjects.Components.PA
 
             _powerReceiverComponent.OnPowerStateChanged += OnPowerStateChanged;
             _powerReceiverComponent.Load = 250;
+        }
+
+        protected override void Startup()
+        {
+            base.Startup();
+
             UpdateWireStatus();
         }
 
@@ -276,7 +283,15 @@ namespace Content.Server.GameObjects.Components.PA
                     break;
 
                 case ParticleAcceleratorControlBoxWires.Strength:
-                    SetStrength(_selectedStrength + 1);
+                    if (args.Action == WiresAction.Pulse)
+                    {
+                        SetStrength(_selectedStrength + 1);
+                    }
+                    else
+                    {
+                        _wireStrengthCut = args.Action == WiresAction.Cut;
+                    }
+
                     break;
 
                 case ParticleAcceleratorControlBoxWires.Interface:
@@ -299,9 +314,11 @@ namespace Content.Server.GameObjects.Components.PA
                     else
                     {
                         _wireLimiterCut = args.Action == WiresAction.Cut;
-                        if (_selectedStrength == ParticleAcceleratorPowerState.Level3)
+                        if (_selectedStrength == ParticleAcceleratorPowerState.Level3 && !_wireLimiterCut)
                         {
-                            SetStrength(_selectedStrength);
+                            // Yes, it's a feature that mending this wire WON'T WORK if the strength wire is also cut.
+                            // Since that blocks SetStrength().
+                            SetStrength(ParticleAcceleratorPowerState.Level2);
                         }
                     }
 
@@ -320,10 +337,11 @@ namespace Content.Server.GameObjects.Components.PA
             }
 
             var powerBlock = _wirePowerBlocked;
-            var keyboardLight = new StatusLightData(Color.Yellow,
-                wires.IsWireCut(ParticleAcceleratorControlBoxWires.Interface)
+            var keyboardLight = new StatusLightData(Color.Green,
+                _wireInterfaceBlocked
                     ? StatusLightState.BlinkingFast
-                    : StatusLightState.On, "KEYB");
+                    : StatusLightState.On,
+                "KEYB");
 
             var powerLight = new StatusLightData(
                 Color.Yellow,
@@ -331,12 +349,19 @@ namespace Content.Server.GameObjects.Components.PA
                 "POWR");
 
             var limiterLight = new StatusLightData(
-                wires.IsWireCut(ParticleAcceleratorControlBoxWires.Limiter) ? Color.Purple : Color.Teal,
-                StatusLightState.On, "LIMT");
+                _wireLimiterCut ? Color.Purple : Color.Teal,
+                StatusLightState.On,
+                "LIMT");
+
+            var strengthLight = new StatusLightData(
+                Color.Blue,
+                _wireStrengthCut ? StatusLightState.BlinkingSlow : StatusLightState.On,
+                "STRC");
 
             wires.SetStatus(ParticleAcceleratorWireStatus.Keyboard, keyboardLight);
             wires.SetStatus(ParticleAcceleratorWireStatus.Power, powerLight);
             wires.SetStatus(ParticleAcceleratorWireStatus.Limiter, limiterLight);
+            wires.SetStatus(ParticleAcceleratorWireStatus.Strength, strengthLight);
         }
 
         public void RescanParts()
@@ -519,6 +544,11 @@ namespace Content.Server.GameObjects.Components.PA
 
         private void SetStrength(ParticleAcceleratorPowerState state)
         {
+            if (_wireStrengthCut)
+            {
+                return;
+            }
+
             state = (ParticleAcceleratorPowerState) MathHelper.Clamp(
                 (int) state,
                 (int) ParticleAcceleratorPowerState.Standby,
@@ -626,6 +656,8 @@ namespace Content.Server.GameObjects.Components.PA
             {
                 PowerOff();
             }
+
+            UpdateUI();
         }
 
         private void UpdatePartVisualStates()
