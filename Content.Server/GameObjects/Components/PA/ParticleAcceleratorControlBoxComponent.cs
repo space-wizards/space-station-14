@@ -1,14 +1,15 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Content.Server.GameObjects.Components.VendingMachines;
 using Content.Server.Utility;
-using Content.Shared.Arcade;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
@@ -17,18 +18,91 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
+using Robust.Shared.ViewVariables;
+using static Content.Shared.GameObjects.Components.SharedWiresComponent;
+using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameObjects.Components.PA
 {
+    // This component is in control of the PA's logic because it's the one to contain the wires for hacking.
+    // And also it's the only PA component that meaningfully needs to work on its own.
+    /// <summary>
+    ///     Is the computer thing people interact with to control the PA.
+    ///     Also contains primary logic for actual PA behavior, part scanning, etc...
+    /// </summary>
+    [ComponentReference(typeof(IActivate))]
     [RegisterComponent]
-    public class ParticleAcceleratorControlBoxComponent : ParticleAcceleratorPartComponent, IInteractHand, IWires
+    public class ParticleAcceleratorControlBoxComponent : ParticleAcceleratorPartComponent, IActivate, IWires
     {
         public override string Name => "ParticleAcceleratorControlBox";
 
+        [ViewVariables]
         private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ParticleAcceleratorControlBoxUiKey.Key);
-        private PowerReceiverComponent? _powerReceiverComponent;
 
-        private bool Powered => _powerReceiverComponent != null && _powerReceiverComponent.Powered;
+        /// <summary>
+        ///     Power receiver for the control console itself.
+        /// </summary>
+        [ViewVariables] private PowerReceiverComponent? _powerReceiverComponent;
+
+        [ViewVariables] private ParticleAcceleratorFuelChamberComponent? _partFuelChamber;
+        [ViewVariables] private ParticleAcceleratorEndCapComponent? _partEndCap;
+        [ViewVariables] private ParticleAcceleratorPowerBoxComponent? _partPowerBox;
+        [ViewVariables] private ParticleAcceleratorEmitterComponent? _partEmitterLeft;
+        [ViewVariables] private ParticleAcceleratorEmitterComponent? _partEmitterCenter;
+        [ViewVariables] private ParticleAcceleratorEmitterComponent? _partEmitterRight;
+        [ViewVariables] private ParticleAcceleratorPowerState _selectedStrength = ParticleAcceleratorPowerState.Standby;
+
+        [ViewVariables] private bool _isAssembled;
+
+        // Enabled: power switch is on
+        [ViewVariables] private bool _isEnabled;
+
+        // Powered: power switch is on AND the PA is actively firing (if not on standby)
+        [ViewVariables] private bool _isPowered;
+        [ViewVariables] private bool _wireInterfaceBlocked;
+        [ViewVariables] private bool _wirePowerBlocked;
+        [ViewVariables] private bool _wireLimiterCut;
+        [ViewVariables] private CancellationTokenSource? _fireCancelTokenSrc;
+
+        /// <summary>
+        ///     Delay between consecutive PA shots.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)] private TimeSpan _firingDelay;
+
+        [ViewVariables(VVAccess.ReadWrite)] private int _powerDrawBase;
+        [ViewVariables(VVAccess.ReadWrite)] private int _powerDrawMult;
+
+        [ViewVariables] private bool ConsolePowered => _powerReceiverComponent?.Powered ?? true;
+
+        public ParticleAcceleratorControlBoxComponent()
+        {
+            Master = this;
+        }
+
+        private ParticleAcceleratorPowerState MaxPower => _wireLimiterCut
+            ? ParticleAcceleratorPowerState.Level3
+            : ParticleAcceleratorPowerState.Level2;
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+
+            // Fun fact:
+            // On /vg/station (can't check TG because lol they removed singulo),
+            // the PA emitter parts have var/fire_delay = 50.
+            // For anybody from the future not BYOND-initiated, that's 5 seconds.
+            // However, /obj/machinery/particle_accelerator/control_box/process(),
+            // which calls emit_particle() on the emitters,
+            // only gets called every *2* seconds, because of CarnMC timing.
+            // So the *actual* effective firing delay of the PA is 6 seconds, not 5 as listed in the code.
+            // So...
+            // I have reflected that here to be authentic.
+            serializer.DataField(ref _firingDelay, "fireDelay", TimeSpan.FromSeconds(6));
+            serializer.DataField(ref _powerDrawBase, "powerDrawBase", 500);
+            serializer.DataField(ref _powerDrawMult, "powerDrawMult", 1500);
+        }
 
         public override void Initialize()
         {
@@ -43,113 +117,120 @@ namespace Content.Server.GameObjects.Components.PA
                 Logger.Error("ParticleAcceleratorControlBox was created without PowerReceiverComponent");
                 return;
             }
+
             _powerReceiverComponent.OnPowerStateChanged += OnPowerStateChanged;
             _powerReceiverComponent.Load = 250;
+            UpdateWireStatus();
         }
 
+        // This is the power state for the PA control box itself.
+        // Keep in mind that the PA itself can keep firing as long as the HV cable under the power box has... power.
         private void OnPowerStateChanged(object? sender, PowerStateEventArgs e)
         {
-            if(Owner.TryGetComponent<AppearanceComponent>(out var appearanceComponent))
+            UpdateAppearance();
+
+            if (!e.Powered)
             {
-                appearanceComponent.SetData(ParticleAcceleratorVisuals.VisualState,
-                    e.Powered && ParticleAccelerator != null ? (ParticleAcceleratorVisualState) ParticleAccelerator.Power : ParticleAcceleratorVisualState.Unpowered);
-            }
-
-            if (ParticleAccelerator != null) ParticleAccelerator.Enabled = e.Powered; //try to enable / disable pa
-
-            if (e.Powered) return;
-
-            UserInterface?.CloseAll();
-            if (Owner.TryGetComponent<WiresComponent>(out var wires))
-            {
-                wires.CloseAll();
+                UserInterface?.CloseAll();
             }
         }
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
-            if (!Powered)
+            if (!ConsolePowered)
             {
                 return;
             }
 
-            if (ParticleAccelerator == null)
+
+            if (obj.Session.AttachedEntity == null ||
+                !ActionBlockerSystem.CanInteract(obj.Session.AttachedEntity))
             {
-                Logger.Error($"UserInterfaceOnOnReceiveMessage got called on {this} without a Particleaccelerator attached");
                 return;
             }
-            if(obj.Session.AttachedEntity == null || !ActionBlockerSystem.CanInteract(obj.Session.AttachedEntity)) return;
-            if(ParticleAccelerator.WireFlagInterfaceBlock) return;
+
+            if (_wireInterfaceBlocked)
+            {
+                return;
+            }
+
             switch (obj.Message)
             {
                 case ParticleAcceleratorSetEnableMessage enableMessage:
-                    if(ParticleAccelerator.Enabled == enableMessage.Enabled) break;
+                    if (enableMessage.Enabled)
+                    {
+                        SwitchOn();
+                    }
+                    else
+                    {
+                        SwitchOff();
+                    }
 
-                    ParticleAccelerator.Enabled = enableMessage.Enabled;
                     break;
-                case ParticleAcceleratorSetPowerStateMessage stateMessage:
-                    if (ParticleAccelerator.Power == stateMessage.State) break;
 
-                    ParticleAccelerator.Power = stateMessage.State;
+                case ParticleAcceleratorSetPowerStateMessage stateMessage:
+                    SetStrength(stateMessage.State);
+                    break;
+
+                case ParticleAcceleratorRescanPartsMessage _:
+                    RescanParts();
                     break;
             }
+
             UpdateUI();
-        }
-
-        public override ParticleAcceleratorPartComponent[] GetNeighbours()
-        {
-            return new ParticleAcceleratorPartComponent[]
-            {
-                ParticleAccelerator?.FuelChamber!
-            };
-        }
-
-        protected override void RegisterAtParticleAccelerator()
-        {
-            if (ParticleAccelerator != null) ParticleAccelerator.ControlBox = this;
-        }
-
-        protected override void UnRegisterAtParticleAccelerator()
-        {
-            if (ParticleAccelerator != null) ParticleAccelerator.ControlBox = null;
         }
 
         public void UpdateUI()
         {
-            if (ParticleAccelerator == null)
+            var draw = 0;
+            var receive = 0;
+
+            if (_isEnabled)
             {
-                Logger.Error($"OnParticleAcceleratorValuesChanged got called on {this} without a Particleaccelerator attached");
-                return;
+                draw = _partPowerBox!.PowerConsumerComponent!.DrawRate;
+                receive = _partPowerBox!.PowerConsumerComponent!.ReceivedPower;
             }
-            UserInterface?.SendMessage(ParticleAccelerator.DataMessage);
+
+            var state = new ParticleAcceleratorUIState(
+                _isAssembled,
+                _isEnabled,
+                _selectedStrength,
+                draw,
+                receive,
+                _partEmitterLeft != null,
+                _partEmitterCenter != null,
+                _partEmitterRight != null,
+                _partPowerBox != null,
+                _partFuelChamber != null,
+                _partEndCap != null,
+                _wireInterfaceBlocked,
+                MaxPower,
+                _wirePowerBlocked);
+
+            UserInterface?.SetState(state);
         }
 
-        public bool InteractHand(InteractHandEventArgs eventArgs)
+        void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!Powered) return false;
-            if(!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
-                return false;
+                return;
             }
-            if (_powerReceiverComponent?.Powered != true)
-            {
-                return false;
-            }
-            if(!ActionBlockerSystem.CanInteract(eventArgs.User)) return false;
-
 
             if (Owner.TryGetComponent<WiresComponent>(out var wires) && wires.IsPanelOpen)
             {
                 wires.OpenInterface(actor.playerSession);
-            } else
-            {
-                UserInterface?.Toggle(actor.playerSession);
-                if (UserInterface?.SessionHasOpen(actor.playerSession) == true && ParticleAccelerator != null)
-                {
-                    UserInterface?.SendMessage(ParticleAccelerator.DataMessage, actor.playerSession);
-                }
             }
-            return true;
+            else
+            {
+                if (!ConsolePowered)
+                {
+                    return;
+                }
+
+                UserInterface?.Toggle(actor.playerSession);
+                UpdateUI();
+            }
         }
 
         public override void OnRemove()
@@ -158,72 +239,423 @@ namespace Content.Server.GameObjects.Components.PA
             base.OnRemove();
         }
 
-        public void RegisterWires(WiresComponent.WiresBuilder builder)
+        void IWires.RegisterWires(WiresComponent.WiresBuilder builder)
         {
             builder.CreateWire(ParticleAcceleratorControlBoxWires.Toggle);
             builder.CreateWire(ParticleAcceleratorControlBoxWires.Strength);
             builder.CreateWire(ParticleAcceleratorControlBoxWires.Interface);
             builder.CreateWire(ParticleAcceleratorControlBoxWires.Limiter);
             builder.CreateWire(ParticleAcceleratorControlBoxWires.Nothing);
-            UpdateWireIndicators();
         }
 
-        private void UpdateWireIndicators()
+        public void WiresUpdate(WiresUpdateEventArgs args)
+        {
+            switch (args.Identifier)
+            {
+                case ParticleAcceleratorControlBoxWires.Toggle:
+                    if (args.Action == WiresAction.Pulse)
+                    {
+                        if (_isEnabled)
+                        {
+                            SwitchOff();
+                        }
+                        else
+                        {
+                            SwitchOn();
+                        }
+                    }
+                    else
+                    {
+                        _wirePowerBlocked = args.Action == WiresAction.Cut;
+                        if (_isEnabled)
+                        {
+                            SwitchOff();
+                        }
+                    }
+
+                    break;
+
+                case ParticleAcceleratorControlBoxWires.Strength:
+                    SetStrength(_selectedStrength + 1);
+                    break;
+
+                case ParticleAcceleratorControlBoxWires.Interface:
+                    if (args.Action == WiresAction.Pulse)
+                    {
+                        _wireInterfaceBlocked ^= true;
+                    }
+                    else
+                    {
+                        _wireInterfaceBlocked = args.Action == WiresAction.Cut;
+                    }
+
+                    break;
+
+                case ParticleAcceleratorControlBoxWires.Limiter:
+                    if (args.Action == WiresAction.Pulse)
+                    {
+                        Owner.PopupMessageEveryone(Loc.GetString("The control box makes a whirring noise."));
+                    }
+                    else
+                    {
+                        _wireLimiterCut = args.Action == WiresAction.Cut;
+                        if (_selectedStrength == ParticleAcceleratorPowerState.Level3)
+                        {
+                            SetStrength(_selectedStrength);
+                        }
+                    }
+
+                    break;
+            }
+
+            UpdateUI();
+            UpdateWireStatus();
+        }
+
+        private void UpdateWireStatus()
         {
             if (!Owner.TryGetComponent(out WiresComponent? wires))
             {
                 return;
             }
-            wires.SetStatus(ParticleAcceleratorWireStatus.KeyboardIndicator, new SharedWiresComponent.StatusLightData(Color.Yellow, wires.IsWireCut(ParticleAcceleratorControlBoxWires.Interface) ? SharedWiresComponent.StatusLightState.BlinkingFast : SharedWiresComponent.StatusLightState.On, "KEYB"));
-            wires.SetStatus(ParticleAcceleratorWireStatus.LimiterIndicator, new SharedWiresComponent.StatusLightData(wires.IsWireCut(ParticleAcceleratorControlBoxWires.Limiter) ? Color.Purple : Color.Teal, SharedWiresComponent.StatusLightState.On, "LMT"));
+
+            var powerBlock = _wirePowerBlocked;
+            var keyboardLight = new StatusLightData(Color.Yellow,
+                wires.IsWireCut(ParticleAcceleratorControlBoxWires.Interface)
+                    ? StatusLightState.BlinkingFast
+                    : StatusLightState.On, "KEYB");
+
+            var powerLight = new StatusLightData(
+                Color.Yellow,
+                powerBlock ? StatusLightState.Off : StatusLightState.On,
+                "POWR");
+
+            var limiterLight = new StatusLightData(
+                wires.IsWireCut(ParticleAcceleratorControlBoxWires.Limiter) ? Color.Purple : Color.Teal,
+                StatusLightState.On, "LIMT");
+
+            wires.SetStatus(ParticleAcceleratorWireStatus.Keyboard, keyboardLight);
+            wires.SetStatus(ParticleAcceleratorWireStatus.Power, powerLight);
+            wires.SetStatus(ParticleAcceleratorWireStatus.Limiter, limiterLight);
         }
 
-        public void WiresUpdate(WiresUpdateEventArgs args)
+        public void RescanParts()
         {
-            switch(args.Identifier)
+            SwitchOff();
+            foreach (var part in AllParts())
             {
-                case ParticleAcceleratorControlBoxWires.Toggle:
-                    if(ParticleAccelerator == null) return;
-                    if (args.Action == SharedWiresComponent.WiresAction.Pulse)
-                    {
-                        ParticleAccelerator.Enabled = !ParticleAccelerator.Enabled;
-                    }
-                    else
-                    {
-                        ParticleAccelerator.WireFlagPowerBlock = args.Action == SharedWiresComponent.WiresAction.Cut;
-                    }
-                    break;
-                case ParticleAcceleratorControlBoxWires.Strength:
-                    if (args.Action == SharedWiresComponent.WiresAction.Pulse && ParticleAccelerator != null) ParticleAccelerator.Power++;
-                    break;
-                case ParticleAcceleratorControlBoxWires.Interface:
-                    if (ParticleAccelerator == null) return;
-                    if (args.Action == SharedWiresComponent.WiresAction.Pulse)
-                    {
-                        if(ParticleAccelerator.WireFlagInterfaceBlock) return; //we dont want pulse to enable it after it has been cut
-
-                        ParticleAccelerator.WireFlagInterfaceBlock = !ParticleAccelerator.WireFlagInterfaceBlock;
-                    }else
-                    {
-                        ParticleAccelerator.WireFlagInterfaceBlock =
-                            args.Action == SharedWiresComponent.WiresAction.Cut;
-                    }
-                    break;
-                case ParticleAcceleratorControlBoxWires.Limiter:
-                    if (ParticleAccelerator == null) return;
-                    if (args.Action == SharedWiresComponent.WiresAction.Pulse)
-                    {
-                        Owner.PopupMessageEveryone(Loc.GetString("The Controlbox makes a whirring noise."));
-                    }
-                    else
-                    {
-                        ParticleAccelerator.WireFlagMaxPower = args.Action == SharedWiresComponent.WiresAction.Cut
-                            ? ParticleAcceleratorPowerState.Level3
-                            : ParticleAcceleratorPowerState.Level2;
-                    }
-                    break;
+                part.Master = null;
             }
-            UpdateWireIndicators();
+
+            _isAssembled = false;
+            _partFuelChamber = null;
+            _partEndCap = null;
+            _partPowerBox = null;
+            _partEmitterLeft = null;
+            _partEmitterCenter = null;
+            _partEmitterRight = null;
+
+            // Find fuel chamber first by scanning cardinals.
+            foreach (var maybeFuel in SnapGrid!.GetCardinalNeighborCells())
+            {
+                if (maybeFuel.Owner.TryGetComponent(out _partFuelChamber))
+                {
+                    break;
+                }
+            }
+
+            if (_partFuelChamber == null)
+            {
+                UpdateUI();
+                return;
+            }
+
+            // Align ourselves to match fuel chamber orientation.
+            // This means that if you mess up the orientation of the control box it's not a big deal,
+            // because the sprite is far from obvious about the orientation.
+            Owner.Transform.LocalRotation = _partFuelChamber.Owner.Transform.LocalRotation;
+
+            var offsetEndCap = RotateOffset((1, 1));
+            var offsetPowerBox = RotateOffset((1, -1));
+            var offsetEmitterLeft = RotateOffset((0, -2));
+            var offsetEmitterCenter = RotateOffset((1, -2));
+            var offsetEmitterRight = RotateOffset((2, -2));
+
+            ScanPart(offsetEndCap, out _partEndCap);
+            ScanPart(offsetPowerBox, out _partPowerBox);
+
+            if (!ScanPart(offsetEmitterCenter, out _partEmitterCenter) ||
+                _partEmitterCenter.Type != ParticleAcceleratorEmitterType.Center)
+            {
+                // if it's the wrong type we need to clear this to avoid shenanigans.
+                _partEmitterCenter = null;
+            }
+
+            if (ScanPart(offsetEmitterLeft, out _partEmitterLeft) &&
+                _partEmitterLeft.Type != ParticleAcceleratorEmitterType.Left)
+            {
+                _partEmitterLeft = null;
+            }
+
+            if (ScanPart(offsetEmitterRight, out _partEmitterRight) &&
+                _partEmitterRight.Type != ParticleAcceleratorEmitterType.Right)
+            {
+                _partEmitterRight = null;
+            }
+
+            _isAssembled = _partFuelChamber != null &&
+                           _partPowerBox != null &&
+                           _partEmitterCenter != null &&
+                           _partEmitterLeft != null &&
+                           _partEmitterRight != null &&
+                           _partEndCap != null;
+
+            foreach (var part in AllParts())
+            {
+                part.Master = this;
+            }
+
+            UpdateUI();
+
+            Vector2i RotateOffset(in Vector2i vec)
+            {
+                var rot = new Angle(Owner.Transform.LocalRotation + Math.PI / 2);
+                return (Vector2i) rot.RotateVec(vec);
+            }
+        }
+
+        private bool ScanPart<T>(Vector2i offset, [NotNullWhen(true)] out T? part)
+            where T : ParticleAcceleratorPartComponent
+        {
+            foreach (var ent in SnapGrid!.GetOffset(offset))
+            {
+                if (ent.TryGetComponent(out part) && !part.Deleted)
+                {
+                    return true;
+                }
+            }
+
+            part = default;
+            return false;
+        }
+
+        private IEnumerable<ParticleAcceleratorPartComponent> AllParts()
+        {
+            if (_partFuelChamber != null)
+                yield return _partFuelChamber;
+            if (_partEndCap != null)
+                yield return _partEndCap;
+            if (_partPowerBox != null)
+                yield return _partPowerBox;
+            if (_partEmitterLeft != null)
+                yield return _partEmitterLeft;
+            if (_partEmitterCenter != null)
+                yield return _partEmitterCenter;
+            if (_partEmitterRight != null)
+                yield return _partEmitterRight;
+        }
+
+        private void SwitchOn()
+        {
+            DebugTools.Assert(_isAssembled);
+
+            if (_isEnabled)
+            {
+                return;
+            }
+
+            _isEnabled = true;
+            UpdatePowerDraw();
+            // If we don't have power yet we'll turn on when we receive more power from the powernet.
+            // if we do we'll just go and turn on right now.
+            if (_partPowerBox!.PowerConsumerComponent!.ReceivedPower >= _partPowerBox.PowerConsumerComponent.DrawRate)
+            {
+                PowerOn();
+            }
+
+            UpdateUI();
+        }
+
+        private void UpdatePowerDraw()
+        {
+            _partPowerBox!.PowerConsumerComponent!.DrawRate = PowerDrawFor(_selectedStrength);
+        }
+
+        private void SwitchOff()
+        {
+            _isEnabled = false;
+            PowerOff();
+            UpdateUI();
+        }
+
+        private void PowerOn()
+        {
+            DebugTools.Assert(_isEnabled);
+            DebugTools.Assert(_isAssembled);
+
+            if (_isPowered)
+            {
+                return;
+            }
+
+            _isPowered = true;
+            UpdateFiring();
+            UpdatePartVisualStates();
+            UpdateUI();
+        }
+
+        private void PowerOff()
+        {
+            if (!_isPowered)
+            {
+                return;
+            }
+
+            _isPowered = false;
+            UpdateFiring();
+            UpdateUI();
+            UpdatePartVisualStates();
+        }
+
+        private void SetStrength(ParticleAcceleratorPowerState state)
+        {
+            state = (ParticleAcceleratorPowerState) MathHelper.Clamp(
+                (int) state,
+                (int) ParticleAcceleratorPowerState.Standby,
+                (int) MaxPower);
+
+            _selectedStrength = state;
+            UpdateAppearance();
+            UpdatePartVisualStates();
+
+            if (_isEnabled)
+            {
+                UpdatePowerDraw();
+                UpdateFiring();
+            }
+        }
+
+        private void UpdateAppearance()
+        {
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            {
+                appearance.SetData(ParticleAcceleratorVisuals.VisualState,
+                    _powerReceiverComponent!.Powered
+                        ? (ParticleAcceleratorVisualState) _selectedStrength
+                        : ParticleAcceleratorVisualState.Unpowered);
+            }
+        }
+
+        private void UpdateFiring()
+        {
+            if (!_isPowered || _selectedStrength == ParticleAcceleratorPowerState.Standby)
+            {
+                StopFiring();
+            }
+            else
+            {
+                StartFiring();
+            }
+        }
+
+        private void StartFiring()
+        {
+            EverythingIsWellToFire();
+
+            _fireCancelTokenSrc?.Cancel();
+            _fireCancelTokenSrc = new CancellationTokenSource();
+            var cancelToken = _fireCancelTokenSrc.Token;
+            Timer.SpawnRepeating(_firingDelay, Fire, cancelToken);
+        }
+
+        private void Fire()
+        {
+            EverythingIsWellToFire();
+
+            _partEmitterCenter!.Fire(_selectedStrength);
+            _partEmitterLeft!.Fire(_selectedStrength);
+            _partEmitterRight!.Fire(_selectedStrength);
+        }
+
+        [Conditional("DEBUG")]
+        private void EverythingIsWellToFire()
+        {
+            DebugTools.Assert(!Deleted);
+            DebugTools.Assert(_isPowered);
+            DebugTools.Assert(_selectedStrength != ParticleAcceleratorPowerState.Standby);
+            DebugTools.Assert(_isAssembled);
+            DebugTools.Assert(_partEmitterCenter != null);
+            DebugTools.Assert(_partEmitterLeft != null);
+            DebugTools.Assert(_partEmitterRight != null);
+        }
+
+        private void StopFiring()
+        {
+            _fireCancelTokenSrc?.Cancel();
+            _fireCancelTokenSrc = null;
+        }
+
+        private int PowerDrawFor(ParticleAcceleratorPowerState strength)
+        {
+            return strength switch
+            {
+                ParticleAcceleratorPowerState.Standby => 0,
+                ParticleAcceleratorPowerState.Level0 => 1,
+                ParticleAcceleratorPowerState.Level1 => 3,
+                ParticleAcceleratorPowerState.Level2 => 4,
+                ParticleAcceleratorPowerState.Level3 => 5,
+                _ => 0
+            } * _powerDrawMult + _powerDrawBase;
+        }
+
+        public void PowerBoxReceivedChanged(object? sender, ReceivedPowerChangedEventArgs eventArgs)
+        {
+            DebugTools.Assert(_isAssembled);
+
+            if (!_isEnabled)
+            {
+                return;
+            }
+
+            var isPowered = eventArgs.ReceivedPower >= eventArgs.DrawRate;
+            if (isPowered)
+            {
+                PowerOn();
+            }
+            else
+            {
+                PowerOff();
+            }
+        }
+
+        private void UpdatePartVisualStates()
+        {
+            // UpdatePartVisualState(ControlBox);
+            UpdatePartVisualState(_partFuelChamber);
+            UpdatePartVisualState(_partPowerBox);
+            UpdatePartVisualState(_partEmitterCenter);
+            UpdatePartVisualState(_partEmitterLeft);
+            UpdatePartVisualState(_partEmitterRight);
+            //no endcap because it has no powerlevel-sprites
+        }
+
+        private void UpdatePartVisualState(ParticleAcceleratorPartComponent? component)
+        {
+            if (component == null || !component.Owner.TryGetComponent<AppearanceComponent>(out var appearanceComponent))
+            {
+                return;
+            }
+
+            var state = _isPowered
+                ? (ParticleAcceleratorVisualState) _selectedStrength
+                : ParticleAcceleratorVisualState.Unpowered;
+            appearanceComponent.SetData(ParticleAcceleratorVisuals.VisualState, state);
+        }
+
+        public override void Rotated()
+        {
+            // We rotate OURSELVES when scanning for parts, so don't actually run rescan on rotate.
+            // That would be silly.
         }
 
         public enum ParticleAcceleratorControlBoxWires
@@ -232,18 +664,22 @@ namespace Content.Server.GameObjects.Components.PA
             /// Pulse toggles Power. Cut permanently turns off until Mend.
             /// </summary>
             Toggle,
+
             /// <summary>
             /// Pulsing increases level until at limit.
             /// </summary>
             Strength,
+
             /// <summary>
             /// Pulsing toggles Button-Disabled on UI. Cut disables, Mend enables.
             /// </summary>
             Interface,
+
             /// <summary>
             /// Pulsing will produce short message about whirring noise. Cutting increases the max level to 3. Mending reduces it back to 2.
             /// </summary>
             Limiter,
+
             /// <summary>
             /// Does Nothing
             /// </summary>

@@ -1,5 +1,4 @@
 ﻿#nullable enable
-using System.Collections.Generic;
 using Content.Server.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
@@ -11,15 +10,14 @@ namespace Content.Server.GameObjects.Components.PA
 {
     public abstract class ParticleAcceleratorPartComponent : Component
     {
-        [ViewVariables] public ParticleAccelerator? ParticleAccelerator;
-        [ViewVariables] public bool SetToDestroy;
-
-        private PhysicsComponent? _collidableComponent;
+        [ViewVariables] private PhysicsComponent? _collidableComponent;
+        [ViewVariables] public ParticleAcceleratorControlBoxComponent? Master;
+        [ViewVariables] protected SnapGridComponent? SnapGrid;
 
         public override void Initialize()
         {
             base.Initialize();
-            Owner.EntityManager.EventBus.SubscribeEvent<RotateEvent>(EventSource.Local, this, RotateEvent);
+            // FIXME: this has to be an entity system, full stop.
             if (!Owner.TryGetComponent(out _collidableComponent))
             {
                 Logger.Error("ParticleAcceleratorPartComponent created with no CollidableComponent");
@@ -28,46 +26,33 @@ namespace Content.Server.GameObjects.Components.PA
             {
                 _collidableComponent.AnchoredChanged += OnAnchorChanged;
             }
-        }
 
-        private void RotateEvent(RotateEvent ev)
-        {
-            if (ev.Sender != Owner) return;
-
-            RebuildParticleAccelerator();
+            if (!Owner.TryGetComponent(out SnapGrid))
+            {
+                Logger.Error("ParticleAcceleratorControlBox was created without SnapGridComponent");
+            }
         }
 
         public void OnAnchorChanged()
         {
-            if(_collidableComponent?.Anchored == true) Owner.SnapToGrid();
-            RebuildParticleAccelerator();
-        }
-
-        public void RebuildParticleAccelerator()
-        {
-            if (!_collidableComponent?.Anchored == true)
-            {
-                if (ParticleAccelerator != null) UnRegisterAtParticleAccelerator();
-                ParticleAccelerator = new ParticleAccelerator();
-            }
-            else
-            {
-                ParticleAccelerator = new ParticleAccelerator();
-                RegisterAtParticleAccelerator();
-            }
+            RescanIfPossible();
         }
 
         public override void OnRemove()
         {
             base.OnRemove();
-            SetToDestroy = true;
-            if (ParticleAccelerator != null) UnRegisterAtParticleAccelerator();
+
+            RescanIfPossible();
         }
 
-        public abstract ParticleAcceleratorPartComponent?[] GetNeighbours();
+        private void RescanIfPossible()
+        {
+            Master?.RescanParts();
+        }
 
-        protected abstract void RegisterAtParticleAccelerator();
-
-        protected abstract void UnRegisterAtParticleAccelerator();
+        public virtual void Rotated()
+        {
+            RescanIfPossible();
+        }
     }
 }

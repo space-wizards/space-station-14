@@ -4,13 +4,6 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components
 {
-    [Serializable, NetSerializable]
-    public enum ParticleAcceleratorWireStatus
-    {
-        KeyboardIndicator,
-        LimiterIndicator,
-    }
-
     [NetSerializable, Serializable]
     public enum ParticleAcceleratorVisuals
     {
@@ -46,13 +39,22 @@ namespace Content.Shared.GameObjects.Components
         Unlit
     }
 
+    [Serializable, NetSerializable]
+    public enum ParticleAcceleratorWireStatus
+    {
+        Power,
+        Keyboard,
+        Limiter,
+    }
+
     [NetSerializable, Serializable]
-    public class ParticleAcceleratorDataUpdateMessage : BoundUserInterfaceMessage
+    public class ParticleAcceleratorUIState : BoundUserInterfaceState
     {
         public bool Assembled;
         public bool Enabled;
         public ParticleAcceleratorPowerState State;
         public int PowerDraw;
+        public int PowerReceive;
 
         //dont need a bool for the controlbox because... this is sent to the controlbox :D
         public bool EmitterLeftExists;
@@ -66,12 +68,13 @@ namespace Content.Shared.GameObjects.Components
         public ParticleAcceleratorPowerState MaxLevel;
         public bool WirePowerBlock;
 
-        public ParticleAcceleratorDataUpdateMessage(bool assembled, bool enabled, ParticleAcceleratorPowerState state, int powerDraw, bool emitterLeftExists, bool emitterCenterExists, bool emitterRightExists, bool powerBoxExists, bool fuelChamberExists, bool endCapExists, bool interfaceBlock, ParticleAcceleratorPowerState maxLevel, bool wirePowerBlock)
+        public ParticleAcceleratorUIState(bool assembled, bool enabled, ParticleAcceleratorPowerState state, int powerReceive, int powerDraw, bool emitterLeftExists, bool emitterCenterExists, bool emitterRightExists, bool powerBoxExists, bool fuelChamberExists, bool endCapExists, bool interfaceBlock, ParticleAcceleratorPowerState maxLevel, bool wirePowerBlock)
         {
             Assembled = assembled;
             Enabled = enabled;
             State = state;
             PowerDraw = powerDraw;
+            PowerReceive = powerReceive;
             EmitterLeftExists = emitterLeftExists;
             EmitterCenterExists = emitterCenterExists;
             EmitterRightExists = emitterRightExists;
@@ -91,6 +94,14 @@ namespace Content.Shared.GameObjects.Components
         public ParticleAcceleratorSetEnableMessage(bool enabled)
         {
             Enabled = enabled;
+        }
+    }
+
+    [NetSerializable, Serializable]
+    public class ParticleAcceleratorRescanPartsMessage : BoundUserInterfaceMessage
+    {
+        public ParticleAcceleratorRescanPartsMessage()
+        {
         }
     }
 

@@ -1,7 +1,6 @@
 ﻿using Content.Shared.GameObjects.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects.Components.UserInterface;
-using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects.Components.UserInterface;
 
 namespace Content.Client.ParticleAccelerator
@@ -33,11 +32,14 @@ namespace Content.Client.ParticleAccelerator
             SendMessage(new ParticleAcceleratorSetPowerStateMessage(state));
         }
 
-        protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+        public void SendScanPartsMessage()
         {
-            if (!(message is ParticleAcceleratorDataUpdateMessage dataUpdateMessage)) return;
+            SendMessage(new ParticleAcceleratorRescanPartsMessage());
+        }
 
-            _menu.DataUpdate(dataUpdateMessage);
+        protected override void UpdateState(BoundUserInterfaceState state)
+        {
+            _menu.DataUpdate((ParticleAcceleratorUIState) state);
         }
 
         protected override void Dispose(bool disposing)

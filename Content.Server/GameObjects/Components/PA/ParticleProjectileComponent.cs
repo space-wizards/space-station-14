@@ -69,7 +69,6 @@ namespace Content.Server.GameObjects.Components.PA
 
             var suffix = state switch
             {
-                ParticleAcceleratorPowerState.Standby => "0",
                 ParticleAcceleratorPowerState.Level0 => "0",
                 ParticleAcceleratorPowerState.Level1 => "1",
                 ParticleAcceleratorPowerState.Level2 => "2",

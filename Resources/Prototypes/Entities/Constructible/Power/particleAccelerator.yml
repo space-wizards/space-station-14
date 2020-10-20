@@ -31,8 +31,9 @@
   components:
     - type: Sprite
       sprite: Constructible/Power/PA/particle.rsi
-      state: particle0
-      shader: unshaded
+      layers:
+      - state: particle0
+        shader: unshaded
     - type: Projectile
       delete_on_collide: false
       soundHit: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
@@ -105,7 +106,7 @@
         - type: ParticleAcceleratorPartVisualizer
           baseState: emitter_left_unlit
     - type: ParticleAcceleratorEmitter
-      emitterType: left
+      emitterType: Left
     - type: Construction
       graph: particleAcceleratorEmitterLeft
       node: completed
@@ -131,7 +132,7 @@
         - type: ParticleAcceleratorPartVisualizer
           baseState: emitter_center_unlit
     - type: ParticleAcceleratorEmitter
-      emitterType: center
+      emitterType: Center
     - type: Construction
       graph: particleAcceleratorEmitterCenter
       node: completed
@@ -156,7 +157,7 @@
         - type: ParticleAcceleratorPartVisualizer
           baseState: emitter_right_unlit
     - type: ParticleAcceleratorEmitter
-      emitterType: right
+      emitterType: Right
     - type: Construction
       graph: particleAcceleratorEmitterRight
       node: completed

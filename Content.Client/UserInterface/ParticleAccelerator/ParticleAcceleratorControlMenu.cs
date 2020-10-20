@@ -38,21 +38,21 @@ namespace Content.Client.ParticleAccelerator
         private readonly VBoxContainer _alarmControl;
         private readonly Animation _alarmControlAnimation;
 
-        private TextureRect _endCapTexture;
-        private TextureRect _fuelChamberTexture;
-        private TextureRect _controlBoxTexture;
-        private TextureRect _powerBoxTexture;
-        private TextureRect _emitterCenterTexture;
-        private TextureRect _emitterRightTexture;
-        private TextureRect _emitterLeftTexture;
+        private readonly PASegmentControl _endCapTexture;
+        private readonly PASegmentControl _fuelChamberTexture;
+        private readonly PASegmentControl _controlBoxTexture;
+        private readonly PASegmentControl _powerBoxTexture;
+        private readonly PASegmentControl _emitterCenterTexture;
+        private readonly PASegmentControl _emitterRightTexture;
+        private readonly PASegmentControl _emitterLeftTexture;
 
-        private readonly RSI _endCapRSI;
-        private readonly RSI _fuelChamberRSI;
-        private readonly RSI _controlBoxRSI;
-        private readonly RSI _powerBoxRSI;
-        private readonly RSI _emitterCenterRSI;
-        private readonly RSI _emitterRightRSI;
-        private readonly RSI _emitterLeftRSI;
+        private float _time;
+        private int _lastDraw;
+        private int _lastReceive;
+
+        private bool _blockSpinBox;
+        private bool _assembled;
+        private bool _shouldContinueAnimating;
 
         public ParticleAcceleratorControlMenu(ParticleAcceleratorBoundUserInterface owner)
         {
@@ -65,13 +65,6 @@ namespace Content.Client.ParticleAccelerator
             var resourceCache = IoCManager.Resolve<IResourceCache>();
             var font = resourceCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 13);
             var panelTex = resourceCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
-            _endCapRSI = resourceCache.GetResource<RSIResource>("/Textures/Constructible/Power/PA/end_cap.rsi").RSI;
-            _fuelChamberRSI = resourceCache.GetResource<RSIResource>("/Textures/Constructible/Power/PA/fuel_chamber.rsi").RSI;
-            _controlBoxRSI = resourceCache.GetResource<RSIResource>("/Textures/Constructible/Power/PA/control_box.rsi").RSI;
-            _powerBoxRSI = resourceCache.GetResource<RSIResource>("/Textures/Constructible/Power/PA/power_box.rsi").RSI;
-            _emitterCenterRSI = resourceCache.GetResource<RSIResource>("/Textures/Constructible/Power/PA/emitter_center.rsi").RSI;
-            _emitterRightRSI = resourceCache.GetResource<RSIResource>("/Textures/Constructible/Power/PA/emitter_right.rsi").RSI;
-            _emitterLeftRSI = resourceCache.GetResource<RSIResource>("/Textures/Constructible/Power/PA/emitter_left.rsi").RSI;
 
             MouseFilter = MouseFilterMode.Stop;
 
@@ -114,7 +107,7 @@ namespace Content.Client.ParticleAccelerator
             {
                 Value = 0,
             };
-            _stateSpinBox.IsValid = (n) => (n >= 0 && n <= 4 && !_blockSpinBox);
+            _stateSpinBox.IsValid = StrengthSpinBoxValid;
             _stateSpinBox.InitDefaultButtons();
             _stateSpinBox.ValueChanged += PowerStateChanged;
             _stateSpinBox.LineEditDisabled = true;
@@ -146,10 +139,11 @@ namespace Content.Client.ParticleAccelerator
             {
                 SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
                 StyleClasses = {StyleBase.StyleClassLabelSubText},
-                Text = "Refer to p.132 of service manual"
+                Text = Loc.GetString("Refer to p.132 of service manual")
             };
             _drawLabel = new Label();
-            var imgSize = new Vector2(32,32);
+            var imgSize = new Vector2(32, 32);
+            Button scanButton;
             AddChild(new VBoxContainer
             {
                 Children =
@@ -162,7 +156,7 @@ namespace Content.Client.ParticleAccelerator
                         {
                             new Label
                             {
-                                Text = "Mark 2 Particle Accelerator",
+                                Text = Loc.GetString("Mark 2 Particle Accelerator"),
                                 FontOverride = font,
                                 FontColorOverride = StyleNano.NanoGold,
                             },
@@ -207,7 +201,7 @@ namespace Content.Client.ParticleAccelerator
                                                 {
                                                     new Label
                                                     {
-                                                        Text = "Power: ",
+                                                        Text = Loc.GetString("Power: "),
                                                         SizeFlagsHorizontal = SizeFlags.Expand
                                                     },
                                                     _offButton,
@@ -220,7 +214,7 @@ namespace Content.Client.ParticleAccelerator
                                                 {
                                                     new Label
                                                     {
-                                                        Text = "Strength: ",
+                                                        Text = Loc.GetString("Strength: "),
                                                         SizeFlagsHorizontal = SizeFlags.Expand
                                                     },
                                                     _stateSpinBox
@@ -241,7 +235,7 @@ namespace Content.Client.ParticleAccelerator
                                                 {
                                                     new Label
                                                     {
-                                                        Text = "PARTICLE STRENGTH\nLIMITER FAILURE",
+                                                        Text = Loc.GetString("PARTICLE STRENGTH\nLIMITER FAILURE"),
                                                         FontColorOverride = Color.Red,
                                                         Align = Label.AlignMode.Center
                                                     },
@@ -278,22 +272,26 @@ namespace Content.Client.ParticleAccelerator
                                                 HSeparationOverride = 0,
                                                 Children =
                                                 {
-                                                    new Control{CustomMinimumSize = imgSize},
-                                                    (_endCapTexture = new TextureRect{CustomMinimumSize = imgSize}),
-                                                    new Control{CustomMinimumSize = imgSize},
-                                                    (_controlBoxTexture = new TextureRect{CustomMinimumSize = imgSize}),
-                                                    (_fuelChamberTexture = new TextureRect{CustomMinimumSize = imgSize}),
-                                                    new Control{CustomMinimumSize = imgSize},
-                                                    new Control{CustomMinimumSize = imgSize},
-                                                    (_powerBoxTexture = new TextureRect{CustomMinimumSize = imgSize}),
-                                                    new Control{CustomMinimumSize = imgSize},
-                                                    (_emitterLeftTexture = new TextureRect{CustomMinimumSize = imgSize}),
-                                                    (_emitterCenterTexture = new TextureRect{CustomMinimumSize = imgSize}),
-                                                    (_emitterRightTexture = new TextureRect{CustomMinimumSize = imgSize}),
+                                                    new Control {CustomMinimumSize = imgSize},
+                                                    (_endCapTexture = Segment("end_cap")),
+                                                    new Control {CustomMinimumSize = imgSize},
+                                                    (_controlBoxTexture = Segment("control_box")),
+                                                    (_fuelChamberTexture = Segment("fuel_chamber")),
+                                                    new Control {CustomMinimumSize = imgSize},
+                                                    new Control {CustomMinimumSize = imgSize},
+                                                    (_powerBoxTexture = Segment("power_box")),
+                                                    new Control {CustomMinimumSize = imgSize},
+                                                    (_emitterLeftTexture = Segment("emitter_left")),
+                                                    (_emitterCenterTexture = Segment("emitter_center")),
+                                                    (_emitterRightTexture = Segment("emitter_right")),
                                                 }
                                             }
                                         }
                                     },
+                                    (scanButton = new Button
+                                    {
+                                        Text = Loc.GetString("Scan Parts")
+                                    })
                                 }
                             }
                         }
@@ -311,7 +309,7 @@ namespace Content.Client.ParticleAccelerator
                                 {
                                     new Label
                                     {
-                                        Text = "Ensure containment field is active before operation",
+                                        Text = Loc.GetString("Ensure containment field is active before operation"),
                                         SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
                                         StyleClasses = {StyleBase.StyleClassLabelSubText},
                                     }
@@ -340,9 +338,11 @@ namespace Content.Client.ParticleAccelerator
                 }
             });
 
+            scanButton.OnPressed += args => Owner.SendScanPartsMessage();
+
             _alarmControl.AnimationCompleted += s =>
             {
-                if(_shouldContinueAnimating)
+                if (_shouldContinueAnimating)
                 {
                     _alarmControl.PlayAnimation(_alarmControlAnimation, "warningAnim");
                 }
@@ -352,6 +352,15 @@ namespace Content.Client.ParticleAccelerator
                 }
             };
 
+            PASegmentControl Segment(string name)
+            {
+                return new PASegmentControl(this, resourceCache, name);
+            }
+        }
+
+        private bool StrengthSpinBoxValid(int n)
+        {
+            return (n >= 0 && n <= 4 && !_blockSpinBox);
         }
 
         private void PowerStateChanged(object sender, ValueChangedEventArgs e)
@@ -377,6 +386,7 @@ namespace Content.Client.ParticleAccelerator
                 default:
                     return;
             }
+
             Owner.SendPowerStateMessage(newState);
         }
 
@@ -390,17 +400,21 @@ namespace Content.Client.ParticleAccelerator
             return (400, 300);
         }
 
-        public void DataUpdate(ParticleAcceleratorDataUpdateMessage dataUpdateMessage)
+        public void DataUpdate(ParticleAcceleratorUIState uiState)
         {
-            UpdateUI(dataUpdateMessage.Assembled, dataUpdateMessage.InterfaceBlock, dataUpdateMessage.Enabled, dataUpdateMessage.WirePowerBlock);
-            _statusLabel.Text = $"Status: {(dataUpdateMessage.Assembled ? "Operational" : "Incomplete")}";
-            UpdatePowerState(dataUpdateMessage.State, dataUpdateMessage.Enabled, dataUpdateMessage.Assembled, dataUpdateMessage.MaxLevel);
-            UpdatePreview(dataUpdateMessage);
-            UpdatePowerDraw(dataUpdateMessage.PowerDraw);
+            _assembled = uiState.Assembled;
+            UpdateUI(uiState.Assembled, uiState.InterfaceBlock, uiState.Enabled,
+                uiState.WirePowerBlock);
+            _statusLabel.Text = Loc.GetString($"Status: {(uiState.Assembled ? "Operational" : "Incomplete")}");
+            UpdatePowerState(uiState.State, uiState.Enabled, uiState.Assembled,
+                uiState.MaxLevel);
+            UpdatePreview(uiState);
+            _lastDraw = uiState.PowerDraw;
+            _lastReceive = uiState.PowerReceive;
         }
 
-        private bool _shouldContinueAnimating;
-        private void UpdatePowerState(ParticleAcceleratorPowerState state, bool enabled, bool assembled, ParticleAcceleratorPowerState maxState)
+        private void UpdatePowerState(ParticleAcceleratorPowerState state, bool enabled, bool assembled,
+            ParticleAcceleratorPowerState maxState)
         {
             _stateSpinBox.OverrideValue(state switch
             {
@@ -416,14 +430,13 @@ namespace Content.Client.ParticleAccelerator
             _shouldContinueAnimating = false;
             _alarmControl.StopAnimation("warningAnim");
             _alarmControl.Visible = false;
-            if (maxState == ParticleAcceleratorPowerState.Level3 && enabled==true && assembled==true)
+            if (maxState == ParticleAcceleratorPowerState.Level3 && enabled == true && assembled == true)
             {
                 _shouldContinueAnimating = true;
                 _alarmControl.PlayAnimation(_alarmControlAnimation, "warningAnim");
             }
         }
 
-        private bool _blockSpinBox;
         private void UpdateUI(bool assembled, bool blocked, bool enabled, bool powerBlock)
         {
             _onButton.Pressed = enabled;
@@ -438,56 +451,93 @@ namespace Content.Client.ParticleAccelerator
             _blockSpinBox = cantChangeLevel;
         }
 
-        private void UpdatePowerDraw(int powerDraw)
+        private void UpdatePreview(ParticleAcceleratorUIState updateMessage)
         {
-            _lastWatts = powerDraw;
+            _endCapTexture.SetPowerState(updateMessage, updateMessage.EndCapExists);
+            _fuelChamberTexture.SetPowerState(updateMessage, updateMessage.FuelChamberExists);
+            _controlBoxTexture.SetPowerState(updateMessage, true);
+            _powerBoxTexture.SetPowerState(updateMessage, updateMessage.PowerBoxExists);
+            _emitterCenterTexture.SetPowerState(updateMessage, updateMessage.EmitterCenterExists);
+            _emitterLeftTexture.SetPowerState(updateMessage, updateMessage.EmitterLeftExists);
+            _emitterRightTexture.SetPowerState(updateMessage, updateMessage.EmitterRightExists);
         }
 
-        private void UpdatePreview(ParticleAcceleratorDataUpdateMessage updateMessage)
-        {
-            SetTexture(ref _endCapTexture, "end_cap", updateMessage.EndCapExists, updateMessage.State, updateMessage.Enabled, _endCapRSI);
-            SetTexture(ref _fuelChamberTexture, "fuel_chamber", updateMessage.FuelChamberExists, updateMessage.State, updateMessage.Enabled, _fuelChamberRSI);
-            SetTexture(ref _controlBoxTexture, "control_box", true, updateMessage.State, updateMessage.Enabled, _controlBoxRSI); //always set to disable cause i have no idea how to show unlit layers
-            SetTexture(ref _powerBoxTexture, "power_box", updateMessage.PowerBoxExists, updateMessage.State, updateMessage.Enabled, _powerBoxRSI);
-            SetTexture(ref _emitterCenterTexture, "emitter_center", updateMessage.EmitterCenterExists, updateMessage.State, updateMessage.Enabled, _emitterCenterRSI);
-            SetTexture(ref _emitterLeftTexture, "emitter_left", updateMessage.EmitterLeftExists, updateMessage.State, updateMessage.Enabled, _emitterLeftRSI);
-            SetTexture(ref _emitterRightTexture, "emitter_right", updateMessage.EmitterRightExists, updateMessage.State, updateMessage.Enabled, _emitterRightRSI);
-        }
-
-        private void SetTexture(ref TextureRect rect, string baseState, bool exists, ParticleAcceleratorPowerState state, bool enabled, RSI rsi)
-        {
-            var suffix = "c";
-            /*TODO somehow display the unlit layers here too
-            if(enabled && exists)
-            {
-                suffix = state switch
-                {
-                    ParticleAcceleratorPowerState.Standby => "p",
-                    ParticleAcceleratorPowerState.Level0 => "p0",
-                    ParticleAcceleratorPowerState.Level1 => "p1",
-                    ParticleAcceleratorPowerState.Level2 => "p2",
-                    ParticleAcceleratorPowerState.Level3 => "p3",
-                    _ => "p"
-                };
-            }*/
-
-            rect.Texture = rsi[baseState + suffix].Frame0;
-            rect.ShaderOverride = exists ? null : _greyScaleShader;
-            rect.ModulateSelfOverride = exists ? (Color?)null : new Color(127, 127, 127);
-        }
-
-        private float _time;
-        private float _lastWatts;
         protected override void FrameUpdate(FrameEventArgs args)
         {
             base.FrameUpdate(args);
 
+            if (!_assembled)
+            {
+                _drawLabel.Text = Loc.GetString("Draw: N/A");
+                return;
+            }
+
             _time += args.DeltaSeconds;
 
-            var val = _drawNoiseGenerator.GetNoise(_time);
-            var watts = _lastWatts + val * 5;
+            var watts = 0;
+            if (_lastDraw != 0)
+            {
+                var val = _drawNoiseGenerator.GetNoise(_time);
+                watts = (int) (_lastDraw + val * 5);
+            }
 
-            _drawLabel.Text = $"Draw: {(int) watts:00,000} W";
+            _drawLabel.Text = Loc.GetString("Draw: {0:##,##0}/{1:##,##0} W", watts, _lastReceive);
+        }
+
+        private sealed class PASegmentControl : Control
+        {
+            private readonly ParticleAcceleratorControlMenu _menu;
+            private readonly string _baseState;
+            private readonly TextureRect _base;
+            private readonly TextureRect _unlit;
+            private readonly RSI _rsi;
+
+            public PASegmentControl(ParticleAcceleratorControlMenu menu, IResourceCache cache, string name)
+            {
+                _menu = menu;
+                _baseState = name;
+                _rsi = cache.GetResource<RSIResource>($"/Textures/Constructible/Power/PA/{name}.rsi").RSI;
+
+                AddChild(_base = new TextureRect {Texture = _rsi[$"{name}c"].Frame0});
+                AddChild(_unlit = new TextureRect());
+            }
+
+            public void SetPowerState(ParticleAcceleratorUIState state, bool exists)
+            {
+                _base.ShaderOverride = exists ? null : _menu._greyScaleShader;
+                _base.ModulateSelfOverride = exists ? (Color?)null : new Color(127, 127, 127);
+
+                if (!state.Enabled || !exists)
+                {
+                    _unlit.Visible = false;
+                    return;
+                }
+
+                _unlit.Visible = true;
+
+                var suffix = state.State switch
+                {
+                    ParticleAcceleratorPowerState.Standby => "_unlitp",
+                    ParticleAcceleratorPowerState.Level0 => "_unlitp0",
+                    ParticleAcceleratorPowerState.Level1 => "_unlitp1",
+                    ParticleAcceleratorPowerState.Level2 => "_unlitp2",
+                    ParticleAcceleratorPowerState.Level3 => "_unlitp3",
+                    _ => ""
+                };
+
+                if (!_rsi.TryGetState(_baseState + suffix, out var rState))
+                {
+                    _unlit.Visible = false;
+                    return;
+                }
+
+                _unlit.Texture = rState.Frame0;
+            }
+
+            protected override Vector2 CalculateMinimumSize()
+            {
+                return _rsi.Size;
+            }
         }
     }
 }
