@@ -13,6 +13,7 @@ using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -30,7 +31,8 @@ namespace Content.Server.GameObjects.Components.Arcade
 
         public override string Name => "BlockGameArcade";
         public override uint? NetID => ContentNetIDs.BLOCKGAME_ARCADE;
-        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+        [ComponentDependency] private PowerReceiverComponent? _powerReceiverComponent;
+        private bool Powered => _powerReceiverComponent != null && _powerReceiverComponent.Powered;
         private BoundUserInterface? UserInterface => Owner.GetUIOrNull(BlockGameUiKey.Key);
 
         private BlockGame? _game;
@@ -105,7 +107,21 @@ namespace Content.Server.GameObjects.Components.Arcade
             {
                 UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
             }
+
+            if (_powerReceiverComponent != null)
+            {
+                _powerReceiverComponent.OnPowerStateChanged += OnPowerStateChanged;
+            }
             _game = new BlockGame(this);
+        }
+
+        private void OnPowerStateChanged(object? sender, PowerStateEventArgs e)
+        {
+            if (e.Powered) return;
+
+            UserInterface?.CloseAll();
+            _player = null;
+            _spectators.Clear();
         }
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage obj)

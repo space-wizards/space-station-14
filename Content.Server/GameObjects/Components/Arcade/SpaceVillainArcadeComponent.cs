@@ -11,6 +11,7 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
@@ -27,7 +28,9 @@ namespace Content.Server.GameObjects.Components.Arcade
     {
         [Dependency] private IRobustRandom _random = null!;
 
-        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+        [ComponentDependency] private PowerReceiverComponent? _powerReceiverComponent;
+
+        private bool Powered => _powerReceiverComponent != null && _powerReceiverComponent.Powered;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(SpaceVillainArcadeUiKey.Key);
         [ViewVariables] private bool _overflowFlag;
@@ -92,6 +95,18 @@ namespace Content.Server.GameObjects.Components.Arcade
             {
                 UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
             }
+
+            if (_powerReceiverComponent != null)
+            {
+                _powerReceiverComponent.OnPowerStateChanged += OnOnPowerStateChanged;
+            }
+        }
+
+        private void OnOnPowerStateChanged(object? sender, PowerStateEventArgs e)
+        {
+            if(e.Powered) return;
+
+            UserInterface?.CloseAll();
         }
 
 
