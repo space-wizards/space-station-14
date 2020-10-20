@@ -11,6 +11,19 @@ namespace Content.Shared.GameObjects.Components.Arcade
         public override uint? NetID => ContentNetIDs.SPACE_VILLAIN_ARCADE;
 
         [Serializable, NetSerializable]
+        public enum Indicators
+        {
+            /// <summary>
+            /// Blinks when any invincible flag is set
+            /// </summary>
+            HealthManager,
+            /// <summary>
+            /// Blinks when Overflow flag is set
+            /// </summary>
+            HealthLimiter
+        }
+
+        [Serializable, NetSerializable]
         public enum PlayerAction
         {
             Attack,

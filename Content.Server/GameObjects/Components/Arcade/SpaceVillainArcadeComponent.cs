@@ -16,6 +16,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
+using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -29,6 +30,7 @@ namespace Content.Server.GameObjects.Components.Arcade
         [Dependency] private IRobustRandom _random = null!;
 
         [ComponentDependency] private PowerReceiverComponent? _powerReceiverComponent;
+        [ComponentDependency] private WiresComponent? _wiresComponent;
 
         private bool Powered => _powerReceiverComponent != null && _powerReceiverComponent.Powered;
 
@@ -160,6 +162,10 @@ namespace Content.Server.GameObjects.Components.Arcade
             builder.CreateWire(Wires.Overflow);
             builder.CreateWire(Wires.PlayerInvincible);
             builder.CreateWire(Wires.EnemyInvincible);
+            builder.CreateWire(4);
+            builder.CreateWire(5);
+            builder.CreateWire(6);
+            IndicatorUpdate();
         }
 
         public void WiresUpdate(WiresUpdateEventArgs args)
@@ -178,6 +184,14 @@ namespace Content.Server.GameObjects.Components.Arcade
                     _enemyInvincibilityFlag = value;
                     break;
             }
+
+            IndicatorUpdate();
+        }
+
+        public void IndicatorUpdate()
+        {
+            _wiresComponent?.SetStatus(Indicators.HealthManager, new SharedWiresComponent.StatusLightData(Color.Purple, _playerInvincibilityFlag || _enemyInvincibilityFlag ? SharedWiresComponent.StatusLightState.BlinkingSlow : SharedWiresComponent.StatusLightState.On, "MNGR"));
+            _wiresComponent?.SetStatus(Indicators.HealthLimiter, new SharedWiresComponent.StatusLightData(Color.Red, _overflowFlag ? SharedWiresComponent.StatusLightState.BlinkingSlow : SharedWiresComponent.StatusLightState.On, "LIMT"));
         }
 
         /// <summary>
