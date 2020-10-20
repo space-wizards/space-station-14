@@ -64,10 +64,12 @@ namespace Content.Shared.GameObjects.Components.Arcade
         {
             public readonly string GameTitle;
             public readonly string EnemyName;
-            public SpaceVillainArcadeMetaDataUpdateMessage(int playerHp, int playerMp, int enemyHp, int enemyMp, string playerActionMessage, string enemyActionMessage, string gameTitle, string enemyName) : base(playerHp, playerMp, enemyHp, enemyMp, playerActionMessage, enemyActionMessage)
+            public readonly bool ButtonsDisabled;
+            public SpaceVillainArcadeMetaDataUpdateMessage(int playerHp, int playerMp, int enemyHp, int enemyMp, string playerActionMessage, string enemyActionMessage, string gameTitle, string enemyName, bool buttonsDisabled) : base(playerHp, playerMp, enemyHp, enemyMp, playerActionMessage, enemyActionMessage)
             {
                 GameTitle = gameTitle;
                 EnemyName = enemyName;
+                ButtonsDisabled = buttonsDisabled;
             }
         }
 

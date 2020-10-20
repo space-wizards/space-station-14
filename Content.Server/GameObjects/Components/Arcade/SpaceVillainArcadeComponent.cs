@@ -311,7 +311,6 @@ namespace Content.Server.GameObjects.Components.Arcade
 
                 if (!CheckGameConditions())
                 {
-                    _running = false;
                     return;
                 }
 
@@ -320,7 +319,6 @@ namespace Content.Server.GameObjects.Components.Arcade
 
                 if (!CheckGameConditions())
                 {
-                    _running = false;
                     return;
                 }
                 ValidateVars();
@@ -335,20 +333,23 @@ namespace Content.Server.GameObjects.Components.Arcade
             {
                 if ((_enemyHp <= 0 || _enemyMp <= 0) && (_playerHp > 0 && _playerMp > 0))
                 {
-                    UpdateUi("You won!", $"{_enemyName} dies.");
+                    _running = false;
+                    UpdateUi("You won!", $"{_enemyName} dies.", true);
                     EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/win.ogg", Owner.Owner, AudioParams.Default.WithVolume(-4f));
                     Owner.ProcessWin();
                     return false;
                 }
                 if ((_playerHp <= 0 || _playerMp <= 0) && _enemyHp > 0 && _enemyMp > 0)
                 {
-                    UpdateUi("You lost!", $"{_enemyName} cheers.");
+                    _running = false;
+                    UpdateUi("You lost!", $"{_enemyName} cheers.", true);
                     EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/gameover.ogg", Owner.Owner, AudioParams.Default.WithVolume(-4f));
                     return false;
                 }
                 if ((_playerHp <= 0 || _playerMp <= 0) && (_enemyHp <= 0 || _enemyMp <= 0))
                 {
-                    UpdateUi("You lost!", $"{_enemyName} dies, but takes you with him.");
+                    _running = false;
+                    UpdateUi("You lost!", $"{_enemyName} dies, but takes you with him.", true);
                     EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/gameover.ogg", Owner.Owner, AudioParams.Default.WithVolume(-4f));
                     return false;
                 }
@@ -359,16 +360,21 @@ namespace Content.Server.GameObjects.Components.Arcade
             /// <summary>
             /// Updates the UI.
             /// </summary>
-            private void UpdateUi()
+            private void UpdateUi(bool metadata = false)
             {
-                Owner.UserInterface?.SendMessage(GenerateUpdateMessage(_latestPlayerActionMessage, _latestEnemyActionMessage));
+                if (metadata)
+                {
+                    Owner.UserInterface?.SendMessage(GenerateMetaDataMessage());
+                }else{
+                    Owner.UserInterface?.SendMessage(GenerateUpdateMessage());
+                }
             }
 
-            private void UpdateUi(string message1, string message2)
+            private void UpdateUi(string message1, string message2, bool metadata = false)
             {
                 _latestPlayerActionMessage = message1;
                 _latestEnemyActionMessage = message2;
-                UpdateUi();
+                UpdateUi(metadata);
             }
 
             /// <summary>
@@ -412,20 +418,18 @@ namespace Content.Server.GameObjects.Components.Arcade
             /// <returns>A Metadata-message.</returns>
             public SpaceVillainArcadeMetaDataUpdateMessage GenerateMetaDataMessage()
             {
-                return new SpaceVillainArcadeMetaDataUpdateMessage(_playerHp, _playerMp, _enemyHp, _enemyMp, _latestPlayerActionMessage, _latestEnemyActionMessage, Name, _enemyName);
+                return new SpaceVillainArcadeMetaDataUpdateMessage(_playerHp, _playerMp, _enemyHp, _enemyMp, _latestPlayerActionMessage, _latestEnemyActionMessage, Name, _enemyName, !_running);
             }
 
             /// <summary>
             /// Creates an Update-message based on the objects values.
             /// </summary>
-            /// <param name="playerAction">Content of the Playeraction-field.</param>
-            /// <param name="enemyAction">Content of the Enemyaction-field.</param>
-            /// <returns></returns>
+            /// <returns>An Update-Message.</returns>
             public SpaceVillainArcadeDataUpdateMessage
-                GenerateUpdateMessage(string playerAction = "", string enemyAction = "")
+                GenerateUpdateMessage()
             {
-                return new SpaceVillainArcadeDataUpdateMessage(_playerHp, _playerMp, _enemyHp, _enemyMp, playerAction,
-                    enemyAction);
+                return new SpaceVillainArcadeDataUpdateMessage(_playerHp, _playerMp, _enemyHp, _enemyMp, _latestPlayerActionMessage,
+                    _latestEnemyActionMessage);
             }
         }
     }
