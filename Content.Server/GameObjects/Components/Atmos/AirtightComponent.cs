@@ -88,15 +88,13 @@ namespace Content.Server.GameObjects.Components.Atmos
             if (!Owner.EnsureComponent(out SnapGridComponent _))
                 Logger.Warning($"Entity {Owner} at {Owner.Transform.MapPosition} didn't have a {nameof(SnapGridComponent)}");
 
-            Owner.EntityManager.EventBus.SubscribeEvent<RotateEvent>(EventSource.Local, this, RotateEvent);
-
             if(_fixAirBlockedDirectionInitialize)
                 RotateEvent(new RotateEvent(Owner, Angle.Zero, Owner.Transform.LocalRotation));
 
             UpdatePosition();
         }
 
-        private void RotateEvent(RotateEvent ev)
+        public void RotateEvent(RotateEvent ev)
         {
             if (!_rotateAirBlocked || ev.Sender != Owner || _initialAirBlockedDirection == (int)AtmosDirection.Invalid)
                 return;

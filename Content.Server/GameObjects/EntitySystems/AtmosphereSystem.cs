@@ -11,6 +11,7 @@ using Robust.Server.GameObjects.EntitySystems.TileLookup;
 using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Map;
+using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
@@ -26,6 +27,7 @@ namespace Content.Server.GameObjects.EntitySystems
         [Dependency] private readonly IPrototypeManager _protoMan = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPauseManager _pauseManager = default!;
+        [Dependency] private readonly IEventBus _eventBus = default!;
 
         private GasReactionPrototype[] _gasReactions = Array.Empty<GasReactionPrototype>();
 
@@ -51,6 +53,24 @@ namespace Content.Server.GameObjects.EntitySystems
             IoCManager.InjectDependencies(_spaceAtmos);
 
             _mapManager.TileChanged += OnTileChanged;
+
+            // Required for airtight components.
+            _eventBus.SubscribeEvent<RotateEvent>(EventSource.Local, this, RotateEvent);
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+
+            _eventBus.UnsubscribeEvent<RotateEvent>(EventSource.Local, this);
+        }
+
+        private void RotateEvent(RotateEvent ev)
+        {
+            if (ev.Sender.TryGetComponent(out AirtightComponent? airtight))
+            {
+                airtight.RotateEvent(ev);
+            }
         }
 
         public IGridAtmosphereComponent? GetGridAtmosphere(GridId gridId)
