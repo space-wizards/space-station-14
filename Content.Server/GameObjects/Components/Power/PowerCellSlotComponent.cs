@@ -4,6 +4,7 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
+using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
@@ -30,9 +31,14 @@ namespace Content.Server.GameObjects.Components.Power
         [ViewVariables(VVAccess.ReadWrite)] public PowerCellSize SlotSize = PowerCellSize.Small;
 
         /// <summary>
-        /// Can the cell be removed using the verb (or possibly other means)?
+        /// Can the cell be removed ?
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)] public bool CanRemoveCell = true;
+
+        /// <summary>
+        /// Should the "Remove cell" verb be displayed on this component?
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)] public bool ShowVerb = true;
 
         /// <summary>
         /// File path to a sound file that should be played when the cell is removed.
@@ -66,9 +72,16 @@ namespace Content.Server.GameObjects.Components.Power
         {
             base.ExposeData(serializer);
             serializer.DataField(ref CanRemoveCell, "canRemoveCell", true);
+            serializer.DataField(ref ShowVerb, "showVerb", true);
             serializer.DataField(ref _startEmpty, "startEmpty", false);
             serializer.DataField(ref CellRemoveSound, "cellRemoveSound", null);
             serializer.DataField(ref CellInsertSound, "cellInsertSound", null);
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            _cellContainer = ContainerManagerComponent.Ensure<ContainerSlot>("cellslot_cell_container", Owner, out _);
         }
 
         /// <summary>
@@ -78,7 +91,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         /// <param name="user">(optional) the user to give the removed cell to.</param>
         /// <param name="playSound">Should <see cref="CellRemoveSound"/> be played upon removal?</param>
-        /// <returns>The cell component that was removed, or null if removal failed.</returns>
+        /// <returns>The cell component of the entity that was removed, or null if removal failed.</returns>
         public PowerCellComponent? EjectCell(IEntity? user, bool playSound = true)
         {
             var cell = Cell;
@@ -104,9 +117,23 @@ namespace Content.Server.GameObjects.Components.Power
             return cell;
         }
 
+        /// <summary>
+        /// Tries to insert the given cell into this component. The cell will be put into the container of this component.
+        /// </summary>
+        /// <param name="cell">The cell to insert.</param>
+        /// <param name="playSound">Should <see cref="CellInsertSound"/> be played upon insertion?</param>
+        /// <returns>True if insertion succeeded; false otherwise.</returns>
         public bool InsertCell(IEntity cell, bool playSound = true)
         {
+            if (Cell != null) return false;
+            if (!_cellContainer.Insert(cell)) return false;
 
+            if (playSound && CellInsertSound != null)
+            {
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(CellInsertSound, Owner);
+            }
+
+            return true;
         }
 
         [Verb]
@@ -114,7 +141,7 @@ namespace Content.Server.GameObjects.Components.Power
         {
             protected override void GetData(IEntity user, PowerCellSlotComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!component.ShowVerb || !ActionBlockerSystem.CanInteract(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
@@ -123,11 +150,15 @@ namespace Content.Server.GameObjects.Components.Power
                 if (component.Cell == null)
                 {
                     data.Text = Loc.GetString("Eject cell (cell missing)");
-                    data.Visibility = VerbVisibility.Disabled;
                 }
                 else
                 {
                     data.Text = Loc.GetString("Eject cell");
+                }
+
+                if (component.Cell == null || !component.CanRemoveCell)
+                {
+                    data.Visibility = VerbVisibility.Disabled;
                 }
             }
 
