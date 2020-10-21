@@ -44,12 +44,12 @@ namespace Content.Server.GameObjects.Components.Power
         /// File path to a sound file that should be played when the cell is removed.
         /// </summary>
         /// <example>"/Audio/Items/pistol_magout.ogg"</example>
-        [ViewVariables(VVAccess.ReadWrite)] public string? CellRemoveSound = null;
+        [ViewVariables(VVAccess.ReadWrite)] public string? CellRemoveSound = "/Audio/Items/pistol_magout.ogg";
         /// <summary>
         /// File path to a sound file that should be played when a cell is inserted.
         /// </summary>
         /// <example>"/Audio/Items/pistol_magin.ogg"</example>
-        [ViewVariables(VVAccess.ReadWrite)] public string? CellInsertSound = null;
+        [ViewVariables(VVAccess.ReadWrite)] public string? CellInsertSound = "/Audio/Items/pistol_magin.ogg";
 
         [ViewVariables] private ContainerSlot _cellContainer = default!;
 
@@ -63,6 +63,8 @@ namespace Content.Server.GameObjects.Components.Power
             }
         }
 
+        [ViewVariables] public bool HasCell => Cell != null;
+
         /// <summary>
         /// True if we don't want a cell inserted during map init.
         /// </summary>
@@ -74,8 +76,8 @@ namespace Content.Server.GameObjects.Components.Power
             serializer.DataField(ref CanRemoveCell, "canRemoveCell", true);
             serializer.DataField(ref ShowVerb, "showVerb", true);
             serializer.DataField(ref _startEmpty, "startEmpty", false);
-            serializer.DataField(ref CellRemoveSound, "cellRemoveSound", null);
-            serializer.DataField(ref CellInsertSound, "cellInsertSound", null);
+            serializer.DataField(ref CellRemoveSound, "cellRemoveSound", "/Audio/Items/pistol_magin.ogg");
+            serializer.DataField(ref CellInsertSound, "cellInsertSound", "/Audio/Items/pistol_magout.ogg");
         }
 
         public override void Initialize()
@@ -126,8 +128,10 @@ namespace Content.Server.GameObjects.Components.Power
         public bool InsertCell(IEntity cell, bool playSound = true)
         {
             if (Cell != null) return false;
+            if (!cell.TryGetComponent<PowerCellComponent>(out var cellComponent)) return false;
+            if (cellComponent.CellSize != SlotSize) return false;
             if (!_cellContainer.Insert(cell)) return false;
-
+            Dirty();
             if (playSound && CellInsertSound != null)
             {
                 EntitySystem.Get<AudioSystem>().PlayFromEntity(CellInsertSound, Owner);
