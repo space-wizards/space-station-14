@@ -1134,12 +1134,11 @@ namespace Content.Server.Atmos
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void UpdateVisuals()
+        internal void UpdateVisuals(GasTileOverlaySystem gasTileOverlaySystem)
         {
             if (Air == null) return;
 
-            _gasTileOverlaySystem ??= EntitySystem.Get<GasTileOverlaySystem>();
-            _gasTileOverlaySystem.Invalidate(GridIndex, GridIndices);
+            gasTileOverlaySystem?.Invalidate(GridIndex, GridIndices);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

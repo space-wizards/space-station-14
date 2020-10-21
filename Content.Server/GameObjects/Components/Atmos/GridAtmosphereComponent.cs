@@ -8,6 +8,7 @@ using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Atmos.Piping;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.Atmos;
 using Content.Shared.Atmos;
 using Content.Shared.Maps;
 using Robust.Server.GameObjects.EntitySystems.TileLookup;
@@ -39,6 +40,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         [Robust.Shared.IoC.Dependency] private IServerEntityManager _serverEntityManager = default!;
 
         public GridTileLookupSystem GridTileLookupSystem { get; private set; } = default!;
+        internal GasTileOverlaySystem GasTileOverlaySystem { get; private set; } = default!;
         public AtmosphereSystem AtmosphereSystem { get; private set; } = default!;
 
         /// <summary>
@@ -176,6 +178,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             RepopulateTiles();
 
             GridTileLookupSystem = EntitySystem.Get<GridTileLookupSystem>();
+            GasTileOverlaySystem = EntitySystem.Get<GasTileOverlaySystem>();
             AtmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
         }
 
@@ -202,7 +205,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             foreach (var (_, tile) in Tiles.ToArray())
             {
                 tile.UpdateAdjacent();
-                tile.UpdateVisuals();
+                tile.UpdateVisuals(GasTileOverlaySystem);
             }
         }
 
@@ -256,7 +259,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 // TODO ATMOS: Query all the contents of this tile (like walls) and calculate the correct thermal conductivity
                 tile.ThermalConductivity = tile.Tile?.Tile.GetContentTileDefinition().ThermalConductivity ?? 0.5f;
                 tile.UpdateAdjacent();
-                tile.UpdateVisuals();
+                tile.UpdateVisuals(GasTileOverlaySystem);
 
                 for (var i = 0; i < Atmospherics.Directions; i++)
                 {
