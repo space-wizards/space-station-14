@@ -1,7 +1,5 @@
 <p align="center"> <img alt="Space Station 14" width="880" height="300" src="https://raw.githubusercontent.com/space-wizards/asset-dump/de329a7898bb716b9d5ba9a0cd07f38e61f1ed05/github-logo.svg" /></p>
 
-[![Build Status](https://travis-ci.org/space-wizards/space-station-14.svg?branch=master)](https://travis-ci.org/space-wizards/space-station-14)
-
 Space Station 14 is a revived attempt at an SS13 remake.
 
 This is the primary repo for Space Station 14. To prevent people forking RobustToolbox, a "content" pack is loaded by the client and server. This content pack contains everything needed to play the game on one specific server.
