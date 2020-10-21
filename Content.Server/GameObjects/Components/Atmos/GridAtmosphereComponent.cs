@@ -175,11 +175,11 @@ namespace Content.Server.GameObjects.Components.Atmos
         public override void Initialize()
         {
             base.Initialize();
-            RepopulateTiles();
-
             GridTileLookupSystem = EntitySystem.Get<GridTileLookupSystem>();
             GasTileOverlaySystem = EntitySystem.Get<GasTileOverlaySystem>();
             AtmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+
+            RepopulateTiles();
         }
 
         public override void OnAdd()
@@ -205,7 +205,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             foreach (var (_, tile) in Tiles.ToArray())
             {
                 tile.UpdateAdjacent();
-                tile.UpdateVisuals(GasTileOverlaySystem);
+                tile.UpdateVisuals();
             }
         }
 
@@ -259,7 +259,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 // TODO ATMOS: Query all the contents of this tile (like walls) and calculate the correct thermal conductivity
                 tile.ThermalConductivity = tile.Tile?.Tile.GetContentTileDefinition().ThermalConductivity ?? 0.5f;
                 tile.UpdateAdjacent();
-                tile.UpdateVisuals(GasTileOverlaySystem);
+                tile.UpdateVisuals();
 
                 for (var i = 0; i < Atmospherics.Directions; i++)
                 {
