@@ -73,6 +73,23 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             serializer.DataField(ref _slowdownTime, "slowdownTime", 5f);
         }
 
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+            switch (message)
+            {
+                case PowerCellChangedMessage m:
+                    if (component is PowerCellSlotComponent slotComponent && slotComponent == _cellSlot)
+                    {
+                        if (m.Ejected)
+                        {
+                            TurnOff();
+                        }
+                    }
+                    break;
+            }
+        }
+
         protected override bool OnHitEntities(IReadOnlyList<IEntity> entities, AttackEventArgs eventArgs)
         {
             if (!Activated || entities.Count == 0 || Cell == null)
@@ -181,7 +198,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         {
             if (_cellSlot.InsertCell(eventArgs.Using))
             {
-                Dirty();
                 return true;
             }
             return false;

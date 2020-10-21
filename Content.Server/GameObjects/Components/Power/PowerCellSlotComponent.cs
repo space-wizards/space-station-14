@@ -127,7 +127,7 @@ namespace Content.Server.GameObjects.Components.Power
             var cell = Cell;
             if (cell == null || !CanRemoveCell) return null;
             if (!_cellContainer.Remove(cell.Owner)) return null;
-            Dirty();
+            //Dirty();
             if (user != null)
             {
                 if (!user.TryGetComponent(out HandsComponent? hands) || !hands.PutInHand(cell.Owner.GetComponent<ItemComponent>()))
@@ -160,7 +160,7 @@ namespace Content.Server.GameObjects.Components.Power
             if (!cell.TryGetComponent<PowerCellComponent>(out var cellComponent)) return false;
             if (cellComponent.CellSize != SlotSize) return false;
             if (!_cellContainer.Insert(cell)) return false;
-            Dirty();
+            //Dirty();
             if (playSound && CellInsertSound != null)
             {
                 EntitySystem.Get<AudioSystem>().PlayFromEntity(CellInsertSound, Owner);
