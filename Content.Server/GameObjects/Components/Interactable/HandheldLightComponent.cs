@@ -25,19 +25,17 @@ namespace Content.Server.GameObjects.Components.Interactable
     [RegisterComponent]
     internal sealed class HandheldLightComponent : SharedHandheldLightComponent, IUse, IExamine, IInteractUsing
     {
-        [ViewVariables(VVAccess.ReadWrite)] public float Wattage => _powerSupply.Wattage;
-        [ViewVariables] private PowerCellSlotComponent CellSlot => _powerSupply.CellSlot;
-        private PowerCellComponent? Cell => _powerSupply.CellSlot.Cell;
-
-        [ViewVariables] private PowerCellPoweredComponent _powerSupply = default!;
+        [ViewVariables(VVAccess.ReadWrite)] public float Wattage = 10f;
+        [ViewVariables] private PowerCellSlotComponent _cellSlot = default!;
+        private PowerCellComponent? Cell => _cellSlot.Cell;
 
         /// <summary>
         ///     Status of light, whether or not it is emitting light.
         /// </summary>
         [ViewVariables]
-        public bool Activated => _powerSupply.PoweredOn;
+        public bool Activated { get; private set; }
 
-        [ViewVariables] protected override bool HasCell => _powerSupply.CellSlot.HasCell;
+        [ViewVariables] protected override bool HasCell => _cellSlot.HasCell;
 
         [ViewVariables(VVAccess.ReadWrite)] public string TurnOnSound = "/Audio/Items/flashlight_toggle.ogg";
         [ViewVariables(VVAccess.ReadWrite)] public string TurnOnFailSound = "/Audio/Machines/button.ogg";
@@ -46,6 +44,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
+            serializer.DataField(ref Wattage, "wattage", 10f);
             serializer.DataField(ref TurnOnSound, "turnOnSound", "/Audio/Items/flashlight_toggle.ogg");
             serializer.DataField(ref TurnOnFailSound, "turnOnFailSound", "/Audio/Machines/button.ogg");
             serializer.DataField(ref TurnOffSound, "turnOffSound", "/Audio/Items/flashlight_toggle.ogg");
@@ -56,7 +55,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             base.Initialize();
 
             Owner.EnsureComponent<PointLightComponent>();
-            _powerSupply = Owner.EnsureComponent<PowerCellPoweredComponent>();
+            _cellSlot = Owner.EnsureComponent<PowerCellSlotComponent>();
 
             Dirty();
         }
@@ -67,13 +66,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             switch (message)
             {
                 case PowerCellChangedMessage _:
-                    if (component is PowerCellSlotComponent slotComponent && slotComponent == CellSlot)
-                    {
-                        Dirty();
-                    }
-                    break;
-                case PowerStatusChangedMessage m:
-                    if (component is PowerCellPoweredComponent powerComponent && powerComponent == _powerSupply)
+                    if (component is PowerCellSlotComponent slotComponent && slotComponent == _cellSlot)
                     {
                         Dirty();
                     }
@@ -83,7 +76,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (_powerSupply.CellSlot.InsertCell(eventArgs.Using))
+            if (_cellSlot.InsertCell(eventArgs.Using))
             {
                 Dirty();
                 return true;
@@ -124,8 +117,8 @@ namespace Content.Server.GameObjects.Components.Interactable
                 return false;
             }
 
-            if (!_powerSupply.TryTurnOff()) return false;
             SetState(false);
+            Activated = false;
 
             if (makeNoise)
             {
@@ -142,7 +135,24 @@ namespace Content.Server.GameObjects.Components.Interactable
                 return false;
             }
 
-            if (!_powerSupply.TryTurnOn()) return false;
+            if (Cell == null)
+            {
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(TurnOnFailSound, Owner);
+                Owner.PopupMessage(user, Loc.GetString("Cell missing..."));
+                return false;
+            }
+
+            // To prevent having to worry about frame time in here.
+            // Let's just say you need a whole second of charge before you can turn it on.
+            // Simple enough.
+            if (Wattage > Cell.CurrentCharge)
+            {
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(TurnOnFailSound, Owner);
+                Owner.PopupMessage(user, Loc.GetString("Dead cell..."));
+                return false;
+            }
+
+            Activated = true;
             SetState(true);
 
             EntitySystem.Get<AudioSystem>().PlayFromEntity(TurnOnSound, Owner);
