@@ -11,9 +11,15 @@ namespace Content.Server.GameObjects.Components.Power
     {
         public override string Name => "Battery";
 
+        /// <summary>
+        /// Maximum charge of the battery in joules (ie. watt seconds)
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)] public int MaxCharge { get => _maxCharge; set => SetMaxCharge(value); }
         private int _maxCharge;
 
+        /// <summary>
+        /// Current charge of the battery in joules (ie. watt seconds)
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public float CurrentCharge { get => _currentCharge; set => SetCurrentCharge(value); }
 
