@@ -44,9 +44,9 @@ namespace Content.Server.GameObjects.Components.Power
         /// <summary>
         /// String passed to <see><cref>String.Format</cref></see> when showing the description text for this item.
         /// String.Format is given a single parameter which is the size letter (S/M/L) of the cells this component uses.
-        /// Use an empty string ("") to show no text.
+        /// Use null to show no text.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)] public string DescFormatString = "It uses size {0} power cells.";
+        [ViewVariables(VVAccess.ReadWrite)] public string? DescFormatString = "It uses size {0} power cells.";
 
         /// <summary>
         /// File path to a sound file that should be played when the cell is removed.
@@ -78,6 +78,11 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         private bool _startEmpty = false;
 
+        /// <summary>
+        /// If not null, this cell type will be inserted at MapInit instead of the default Standard cell.
+        /// </summary>
+        private string? _startingCellType = null;
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -85,6 +90,7 @@ namespace Content.Server.GameObjects.Components.Power
             serializer.DataField(ref CanRemoveCell, "canRemoveCell", true);
             serializer.DataField(ref ShowVerb, "showVerb", true);
             serializer.DataField(ref _startEmpty, "startEmpty", false);
+            serializer.DataField(ref _startingCellType, "startingCellType", null);
             serializer.DataField(ref CellRemoveSound, "cellRemoveSound", "/Audio/Items/pistol_magin.ogg");
             serializer.DataField(ref CellInsertSound, "cellInsertSound", "/Audio/Items/pistol_magout.ogg");
             serializer.DataField(ref DescFormatString, "descFormatString", "It uses size {0} power cells.");
@@ -105,7 +111,7 @@ namespace Content.Server.GameObjects.Components.Power
                 PowerCellSize.Large => Loc.GetString("L"),
                 _ => "???"
             };
-            message.AddMarkup(string.Format(DescFormatString, sizeLetter));
+            if (DescFormatString != null) message.AddMarkup(string.Format(DescFormatString, sizeLetter));
         }
 
         /// <summary>
@@ -202,13 +208,21 @@ namespace Content.Server.GameObjects.Components.Power
                 return;
             }
 
-            string type = SlotSize switch
+            string type;
+            if (_startingCellType != null)
             {
-                PowerCellSize.Small => "PowerCellSmallStandard",
-                PowerCellSize.Medium => "PowerCellMediumStandard",
-                PowerCellSize.Large => "PowerCellLargeStandard",
-                _ => throw new ArgumentOutOfRangeException()
-            };
+                type = _startingCellType;
+            }
+            else
+            {
+                type = SlotSize switch
+                {
+                    PowerCellSize.Small => "PowerCellSmallStandard",
+                    PowerCellSize.Medium => "PowerCellMediumStandard",
+                    PowerCellSize.Large => "PowerCellLargeStandard",
+                    _ => throw new ArgumentOutOfRangeException()
+                };
+            }
 
             var cell = Owner.EntityManager.SpawnEntity(type, Owner.Transform.Coordinates);
             _cellContainer.Insert(cell);

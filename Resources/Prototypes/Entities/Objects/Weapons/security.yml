@@ -15,6 +15,10 @@
       arcwidth: 0
       arc: default
 
+    - type: PowerCellSlot
+      slotSize: Medium
+      startingCellType: PowerCellMediumHigh
+
     - type: Item
       size: 10
       sprite: Objects/Weapons/Melee/stunbaton.rsi
