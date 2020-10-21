@@ -1,7 +1,10 @@
 ﻿using Content.Shared.GameObjects.Components.Power;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power
@@ -12,7 +15,7 @@ namespace Content.Server.GameObjects.Components.Power
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(BatteryComponent))]
-    public class PowerCellComponent : BatteryComponent
+    public class PowerCellComponent : BatteryComponent, IExamine
     {
         public override string Name => "PowerCell";
 
@@ -49,6 +52,14 @@ namespace Content.Server.GameObjects.Components.Power
             if (Owner.TryGetComponent(out AppearanceComponent appearance))
             {
                 appearance.SetData(PowerCellVisuals.ChargeLevel, CurrentCharge / MaxCharge);
+            }
+        }
+
+        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
+        {
+            if(inDetailsRange)
+            {
+                message.AddMarkup(Loc.GetString($"The charge indicator reads {CurrentCharge / MaxCharge * 100:F0} %."));
             }
         }
     }

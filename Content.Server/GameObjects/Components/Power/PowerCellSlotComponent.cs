@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System;
+using System.Diagnostics;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Shared.GameObjects.EntitySystems;
@@ -12,6 +13,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power
@@ -21,7 +23,7 @@ namespace Content.Server.GameObjects.Components.Power
     /// <see cref="PowerCellSize"/>. Intended to supplement other components, not very useful by itself.
     /// </summary>
     [RegisterComponent]
-    public class PowerCellSlotComponent : Component, IMapInit
+    public class PowerCellSlotComponent : Component, IExamine, IMapInit
     {
         public override string Name => "PowerCellSlot";
 
@@ -39,6 +41,13 @@ namespace Content.Server.GameObjects.Components.Power
         /// Should the "Remove cell" verb be displayed on this component?
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)] public bool ShowVerb = true;
+
+        /// <summary>
+        /// String passed to <see><cref>String.Format</cref></see> when showing the description text for this item.
+        /// String.Format is given a single parameter which is the size letter (S/M/L) of the cells this component uses.
+        /// Use an empty string ("") to show no text.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)] public string DescFormatString = "It uses size {0} power cells.";
 
         /// <summary>
         /// File path to a sound file that should be played when the cell is removed.
@@ -78,12 +87,25 @@ namespace Content.Server.GameObjects.Components.Power
             serializer.DataField(ref _startEmpty, "startEmpty", false);
             serializer.DataField(ref CellRemoveSound, "cellRemoveSound", "/Audio/Items/pistol_magin.ogg");
             serializer.DataField(ref CellInsertSound, "cellInsertSound", "/Audio/Items/pistol_magout.ogg");
+            serializer.DataField(ref DescFormatString, "descFormatString", "It uses size {0} power cells.");
         }
 
         public override void Initialize()
         {
             base.Initialize();
             _cellContainer = ContainerManagerComponent.Ensure<ContainerSlot>("cellslot_cell_container", Owner, out _);
+        }
+
+        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
+        {
+            string sizeLetter = SlotSize switch
+            {
+                PowerCellSize.Small => Loc.GetString("S"),
+                PowerCellSize.Medium => Loc.GetString("M"),
+                PowerCellSize.Large => Loc.GetString("L"),
+                _ => "???"
+            };
+            message.AddMarkup(string.Format(DescFormatString, sizeLetter));
         }
 
         /// <summary>
