@@ -50,6 +50,30 @@ namespace Content.Server.GameObjects.Components.Interactable
             serializer.DataField(ref TurnOffSound, "turnOffSound", "/Audio/Items/flashlight_toggle.ogg");
         }
 
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            Owner.EnsureComponent<PointLightComponent>();
+            _cellSlot = Owner.EnsureComponent<PowerCellSlotComponent>();
+
+            Dirty();
+        }
+
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+            switch (message)
+            {
+                case PowerCellChangedMessage _:
+                    if (component is PowerCellSlotComponent slotComponent && slotComponent == _cellSlot)
+                    {
+                        Dirty();
+                    }
+                    break;
+            }
+        }
+
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (_cellSlot.InsertCell(eventArgs.Using))
@@ -58,22 +82,6 @@ namespace Content.Server.GameObjects.Components.Interactable
                 return true;
             }
             return false;
-
-            // if (Cell != null) return false;
-            //
-            // var handsComponent = eventArgs.User.GetComponent<IHandsComponent>();
-            //
-            // if (!handsComponent.Drop(eventArgs.Using, _cellContainer))
-            // {
-            //     return false;
-            // }
-            //
-            // EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/pistol_magin.ogg", Owner);
-            //
-            //
-            // Dirty();
-            //
-            // return true;
         }
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
@@ -91,16 +99,6 @@ namespace Content.Server.GameObjects.Components.Interactable
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
             return ToggleStatus(eventArgs.User);
-        }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            Owner.EnsureComponent<PointLightComponent>();
-            _cellSlot = Owner.EnsureComponent<PowerCellSlotComponent>();
-
-            Dirty();
         }
 
         /// <summary>

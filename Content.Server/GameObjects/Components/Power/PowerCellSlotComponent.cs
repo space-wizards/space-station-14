@@ -116,6 +116,7 @@ namespace Content.Server.GameObjects.Components.Power
             {
                 EntitySystem.Get<AudioSystem>().PlayFromEntity(CellRemoveSound, Owner);
             }
+            Owner.SendMessage(this, new PowerCellChangedMessage(true));
             return cell;
         }
 
@@ -136,7 +137,7 @@ namespace Content.Server.GameObjects.Components.Power
             {
                 EntitySystem.Get<AudioSystem>().PlayFromEntity(CellInsertSound, Owner);
             }
-
+            Owner.SendMessage(this, new PowerCellChangedMessage(false));
             return true;
         }
 
@@ -189,6 +190,19 @@ namespace Content.Server.GameObjects.Components.Power
 
             var cell = Owner.EntityManager.SpawnEntity(type, Owner.Transform.Coordinates);
             _cellContainer.Insert(cell);
+        }
+    }
+
+    public class PowerCellChangedMessage : ComponentMessage
+    {
+        /// <summary>
+        /// If true, the cell was ejected; if false, it was inserted.
+        /// </summary>
+        public bool Ejected { get; }
+
+        public PowerCellChangedMessage(bool ejected)
+        {
+            Ejected = ejected;
         }
     }
 }
