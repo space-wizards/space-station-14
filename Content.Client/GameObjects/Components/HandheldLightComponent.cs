@@ -88,23 +88,32 @@ namespace Content.Client.GameObjects.Components
                 }
                 else
                 {
-                    level = 1 + (int) MathF.Round(charge * 6);
+                    if (charge > 0.8333) level = 6;
+                    else if (charge > 0.667) level = 5;
+                    else if (charge > 0.5) level = 4;
+                    else if (charge > 0.333) level = 3;
+                    else if (charge > 0.167) level = 2;
+                    else level = 1;
                 }
 
-                if (level == 1)
+                if (level == 0)
+                {
+                    _sections[0].PanelOverride = _styleBoxUnlit;
+                }
+                else if (level == 1)
                 {
                     // Flash the last light.
                     _sections[0].PanelOverride = _timer > TimerCycle / 2 ? _styleBoxLit : _styleBoxUnlit;
                 }
                 else
                 {
-                    _sections[0].PanelOverride = level > 2 ? _styleBoxLit : _styleBoxUnlit;
+                    _sections[0].PanelOverride = _styleBoxLit;
                 }
 
-                _sections[1].PanelOverride = level > 3 ? _styleBoxLit : _styleBoxUnlit;
-                _sections[2].PanelOverride = level > 4 ? _styleBoxLit : _styleBoxUnlit;
-                _sections[3].PanelOverride = level > 5 ? _styleBoxLit : _styleBoxUnlit;
-                _sections[4].PanelOverride = level > 6 ? _styleBoxLit : _styleBoxUnlit;
+                _sections[1].PanelOverride = level >= 3 ? _styleBoxLit : _styleBoxUnlit;
+                _sections[2].PanelOverride = level >= 4 ? _styleBoxLit : _styleBoxUnlit;
+                _sections[3].PanelOverride = level >= 5 ? _styleBoxLit : _styleBoxUnlit;
+                _sections[4].PanelOverride = level >= 6 ? _styleBoxLit : _styleBoxUnlit;
             }
         }
     }
