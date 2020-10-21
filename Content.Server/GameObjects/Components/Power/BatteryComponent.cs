@@ -81,7 +81,7 @@ namespace Content.Server.GameObjects.Components.Power
 
         private void UpdateStorageState()
         {
-            if (CurrentCharge == MaxCharge)
+            if (MathHelper.CloseTo(CurrentCharge, MaxCharge))
             {
                 BatteryState = BatteryState.Full;
             }
