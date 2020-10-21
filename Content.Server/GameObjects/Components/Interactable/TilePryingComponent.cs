@@ -38,7 +38,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             if (!_mapManager.TryGetGrid(clickLocation.GetGridId(Owner.EntityManager), out var mapGrid))
                 return;
-            
+
             var tile = mapGrid.GetTileRef(clickLocation);
 
             var coordinates = mapGrid.GridTileToLocal(tile.GridIndices);
