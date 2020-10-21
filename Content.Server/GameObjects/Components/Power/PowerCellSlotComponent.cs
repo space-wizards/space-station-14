@@ -81,6 +81,7 @@ namespace Content.Server.GameObjects.Components.Power
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
+            serializer.DataField(ref SlotSize, "slotSize", PowerCellSize.Small);
             serializer.DataField(ref CanRemoveCell, "canRemoveCell", true);
             serializer.DataField(ref ShowVerb, "showVerb", true);
             serializer.DataField(ref _startEmpty, "startEmpty", false);
