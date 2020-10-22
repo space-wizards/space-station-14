@@ -131,6 +131,26 @@
       prefix: s_hy
 
 - type: entity
+  name: small microreactor cell
+  description: A rechargeable standardized microreactor cell, size S. Intended for low-power devices, it slowly recharges by itself.
+  id: PowerCellSmallAutorecharge
+  parent: PowerCellSmallBase
+  components:
+    - type: Sprite
+      sprite: Objects/Power/PowerCells/power_cell_small_autorecharge.rsi
+      layers:
+        - state: s_ar
+    - type: PowerCell
+      maxCharge: 50
+      startingCharge: 50
+      autoRecharge: true
+      autoRechargeRate: 0.16667 #takes about 5 minutes to charge itself back to full
+    - type: Appearance
+      visuals:
+        - type: PowerCellVisualizer
+          prefix: s_ar
+
+- type: entity
   name: medium standard power cell
   description: A rechargeable standardized power cell, size M. This is the cheapest kind you can find.
   id: PowerCellMediumStandard

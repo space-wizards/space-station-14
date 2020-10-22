@@ -182,7 +182,6 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         public void OnUpdate(float frameTime)
         {
-            if (!Activated) return;
             if (Cell == null)
             {
                 TurnOff(false);
@@ -204,8 +203,7 @@ namespace Content.Server.GameObjects.Components.Interactable
                 appearanceComponent.SetData(HandheldLightVisuals.Power, HandheldLightPowerStates.Dying);
             }
 
-            if (!Cell.TryUseCharge(Wattage * frameTime)) TurnOff(false);
-
+            if (Activated && !Cell.TryUseCharge(Wattage * frameTime)) TurnOff(false);
             Dirty();
         }
 

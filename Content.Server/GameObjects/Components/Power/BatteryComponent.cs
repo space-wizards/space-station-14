@@ -22,8 +22,18 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public float CurrentCharge { get => _currentCharge; set => SetCurrentCharge(value); }
-
         private float _currentCharge;
+
+        /// <summary>
+        /// True if the battery is fully charged.
+        /// </summary>
+        [ViewVariables] public bool IsFullyCharged => MathHelper.CloseTo(CurrentCharge, MaxCharge);
+
+        [ViewVariables(VVAccess.ReadWrite)] public bool AutoRecharge => _autoRecharge;
+        private bool _autoRecharge;
+
+        [ViewVariables(VVAccess.ReadWrite)] public float AutoRechargeRate => _autoRechargeRate;
+        private float _autoRechargeRate;
 
         [ViewVariables] public BatteryState BatteryState { get; private set; }
 
@@ -32,6 +42,8 @@ namespace Content.Server.GameObjects.Components.Power
             base.ExposeData(serializer);
             serializer.DataField(ref _maxCharge, "maxCharge", 1000);
             serializer.DataField(ref _currentCharge, "startingCharge", 500);
+            serializer.DataField(ref _autoRecharge, "autoRecharge", false);
+            serializer.DataField(ref _autoRechargeRate, "autoRechargeRate", 0);
         }
 
         public override void Initialize()
@@ -81,7 +93,7 @@ namespace Content.Server.GameObjects.Components.Power
 
         private void UpdateStorageState()
         {
-            if (MathHelper.CloseTo(CurrentCharge, MaxCharge))
+            if (IsFullyCharged)
             {
                 BatteryState = BatteryState.Full;
             }
@@ -108,6 +120,13 @@ namespace Content.Server.GameObjects.Components.Power
             _currentCharge = MathHelper.Clamp(newChargeAmount, 0, MaxCharge);
             UpdateStorageState();
             OnChargeChanged();
+        }
+
+        public void OnUpdate(float frameTime)
+        {
+            if (!_autoRecharge) return;
+            if (IsFullyCharged) return;
+            CurrentCharge += AutoRechargeRate * frameTime;
         }
     }
 
