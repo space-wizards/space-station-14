@@ -1,5 +1,6 @@
 - type: entity
   name: stun baton
+  description: A stun baton for incapacitating people with.
   parent: BaseItem
   id: Stunbaton
   components:
