@@ -29,36 +29,42 @@ namespace Content.Server.GameObjects.Components.Power
         /// <summary>
         /// What size of cell fits into this component.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)] public PowerCellSize SlotSize = PowerCellSize.Small;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public PowerCellSize SlotSize { get; set; } = PowerCellSize.Small;
 
         /// <summary>
         /// Can the cell be removed ?
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)] public bool CanRemoveCell = true;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool CanRemoveCell { get; set; } = true;
 
         /// <summary>
         /// Should the "Remove cell" verb be displayed on this component?
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)] public bool ShowVerb = true;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool ShowVerb { get; set; } = true;
 
         /// <summary>
         /// String passed to <see><cref>String.Format</cref></see> when showing the description text for this item.
         /// String.Format is given a single parameter which is the size letter (S/M/L) of the cells this component uses.
         /// Use null to show no text.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)] public string? DescFormatString;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public string? DescFormatString { get; set; }
 
         /// <summary>
         /// File path to a sound file that should be played when the cell is removed.
         /// </summary>
         /// <example>"/Audio/Items/pistol_magout.ogg"</example>
-        [ViewVariables(VVAccess.ReadWrite)] public string? CellRemoveSound;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public string? CellRemoveSound { get; set; }
 
         /// <summary>
         /// File path to a sound file that should be played when a cell is inserted.
         /// </summary>
         /// <example>"/Audio/Items/pistol_magin.ogg"</example>
-        [ViewVariables(VVAccess.ReadWrite)] public string? CellInsertSound;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public string? CellInsertSound { get; set; }
 
         [ViewVariables] private ContainerSlot _cellContainer = default!;
 
@@ -87,14 +93,14 @@ namespace Content.Server.GameObjects.Components.Power
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref SlotSize, "slotSize", PowerCellSize.Small);
-            serializer.DataField(ref CanRemoveCell, "canRemoveCell", true);
-            serializer.DataField(ref ShowVerb, "showVerb", true);
+            serializer.DataField(this, x => x.SlotSize, "slotSize", PowerCellSize.Small);
+            serializer.DataField(this, x => x.CanRemoveCell, "canRemoveCell", true);
+            serializer.DataField(this, x => x.ShowVerb, "showVerb", true);
             serializer.DataField(ref _startEmpty, "startEmpty", false);
             serializer.DataField(ref _startingCellType, "startingCellType", null);
-            serializer.DataField(ref CellRemoveSound, "cellRemoveSound", "/Audio/Items/pistol_magin.ogg");
-            serializer.DataField(ref CellInsertSound, "cellInsertSound", "/Audio/Items/pistol_magout.ogg");
-            serializer.DataField(ref DescFormatString, "descFormatString", "It uses size {0} power cells.");
+            serializer.DataField(this, x => x.CellRemoveSound, "cellRemoveSound", "/Audio/Items/pistol_magin.ogg");
+            serializer.DataField(this, x => x.CellInsertSound, "cellInsertSound", "/Audio/Items/pistol_magout.ogg");
+            serializer.DataField(this, x => x.DescFormatString, "descFormatString", "It uses size {0} power cells.");
         }
 
         public override void Initialize()
@@ -105,6 +111,7 @@ namespace Content.Server.GameObjects.Components.Power
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
+            if (!inDetailsRange) return;
             string sizeLetter = SlotSize switch
             {
                 PowerCellSize.Small => Loc.GetString("S"),

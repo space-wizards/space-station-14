@@ -29,11 +29,9 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         [ViewVariables] public bool IsFullyCharged => MathHelper.CloseTo(CurrentCharge, MaxCharge);
 
-        [ViewVariables(VVAccess.ReadWrite)] public bool AutoRecharge => _autoRecharge;
-        private bool _autoRecharge;
+        [ViewVariables(VVAccess.ReadWrite)] public bool AutoRecharge { get; set; }
 
-        [ViewVariables(VVAccess.ReadWrite)] public float AutoRechargeRate => _autoRechargeRate;
-        private float _autoRechargeRate;
+        [ViewVariables(VVAccess.ReadWrite)] public float AutoRechargeRate { get; set; }
 
         [ViewVariables] public BatteryState BatteryState { get; private set; }
 
@@ -42,8 +40,8 @@ namespace Content.Server.GameObjects.Components.Power
             base.ExposeData(serializer);
             serializer.DataField(ref _maxCharge, "maxCharge", 1000);
             serializer.DataField(ref _currentCharge, "startingCharge", 500);
-            serializer.DataField(ref _autoRecharge, "autoRecharge", false);
-            serializer.DataField(ref _autoRechargeRate, "autoRechargeRate", 0);
+            serializer.DataField(this, x => x.AutoRecharge, "autoRecharge", false);
+            serializer.DataField(this, x => x.AutoRechargeRate, "autoRechargeRate", 0);
         }
 
         public override void Initialize()
@@ -124,7 +122,7 @@ namespace Content.Server.GameObjects.Components.Power
 
         public void OnUpdate(float frameTime)
         {
-            if (!_autoRecharge) return;
+            if (!AutoRecharge) return;
             if (IsFullyCharged) return;
             CurrentCharge += AutoRechargeRate * frameTime;
         }
