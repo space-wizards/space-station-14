@@ -9,17 +9,15 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     internal sealed class BatteryDischargerSystem : EntitySystem
     {
-        [Dependency] private readonly IPauseManager _pauseManager = default!;
-
         public override void Update(float frameTime)
         {
             foreach (var comp in ComponentManager.EntityQuery<BatteryDischargerComponent>())
             {
-                if (_pauseManager.IsEntityPaused(comp.Owner))
+                if (comp.Owner.Paused)
                 {
                     continue;
                 }
-                
+
                 comp.Update(frameTime);
             }
         }
