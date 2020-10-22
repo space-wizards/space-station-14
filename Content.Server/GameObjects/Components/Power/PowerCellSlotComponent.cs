@@ -145,7 +145,7 @@ namespace Content.Server.GameObjects.Components.Power
             {
                 EntitySystem.Get<AudioSystem>().PlayFromEntity(CellRemoveSound, Owner);
             }
-            Owner.SendMessage(this, new PowerCellChangedMessage(true));
+            SendMessage(new PowerCellChangedMessage(true));
             return cell;
         }
 
@@ -167,7 +167,7 @@ namespace Content.Server.GameObjects.Components.Power
             {
                 EntitySystem.Get<AudioSystem>().PlayFromEntity(CellInsertSound, Owner);
             }
-            Owner.SendMessage(this, new PowerCellChangedMessage(false));
+            SendMessage(new PowerCellChangedMessage(false));
             return true;
         }
 
