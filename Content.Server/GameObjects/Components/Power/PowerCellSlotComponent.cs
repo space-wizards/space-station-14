@@ -158,6 +158,7 @@ namespace Content.Server.GameObjects.Components.Power
         public bool InsertCell(IEntity cell, bool playSound = true)
         {
             if (Cell != null) return false;
+            if (!cell.TryGetComponent<ItemComponent>(out var _)) return false;
             if (!cell.TryGetComponent<PowerCellComponent>(out var cellComponent)) return false;
             if (cellComponent.CellSize != SlotSize) return false;
             if (!_cellContainer.Insert(cell)) return false;
