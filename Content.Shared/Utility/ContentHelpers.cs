@@ -58,8 +58,7 @@ namespace Content.Shared.Utility
         }
 
         /// <summary>
-        /// Finds the closest level to the given value, in terms of their difference (|a-b|).
-        ///  Like <see cref="RoundToLevels"/> but rounding to the closest level instead of flooring.
+        /// Finds the closest level out of a list of levels to the given value, in terms of their difference (|a-b|).
         /// </summary>
         /// <example>
         /// You have a scale from 0 to 100 with points at 0, 25, 50, 75 and 100, and a value between 0 and 100.
@@ -85,8 +84,7 @@ namespace Content.Shared.Utility
         }
 
         /// <summary>
-        /// Finds the closest level to the given value, in terms of their difference (|a-b|).
-        ///  Like <see cref="RoundToLevels"/> but rounding to the closest level instead of flooring.
+        /// Finds the closest level out of a list of levels to the given value, in terms of their difference (|a-b|).
         /// </summary>
         /// <example>
         /// You have a scale from 0 to 100 with points at 0, 25, 50, 75 and 100, and a value between 0 and 100.
