@@ -126,6 +126,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
         private bool ToggleStatus(IEntity user)
         {
+            if (!ActionBlockerSystem.CanUse(user)) return false;
             if (Activated)
             {
                 TurnOff();
@@ -196,11 +197,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (_cellSlot.InsertCell(eventArgs.Using))
-            {
-                return true;
-            }
-            return false;
+            if (!ActionBlockerSystem.CanInteract(eventArgs.User)) return false;
+            if (!_cellSlot.InsertCell(eventArgs.Using)) return false;
+            Dirty();
+            return true;
         }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)

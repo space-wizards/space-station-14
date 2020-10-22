@@ -76,12 +76,10 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (_cellSlot.InsertCell(eventArgs.Using))
-            {
-                Dirty();
-                return true;
-            }
-            return false;
+            if (!ActionBlockerSystem.CanInteract(eventArgs.User)) return false;
+            if (!_cellSlot.InsertCell(eventArgs.Using)) return false;
+            Dirty();
+            return true;
         }
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
