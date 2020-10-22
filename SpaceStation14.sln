@@ -54,12 +54,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{806ED41A-411B-4B3B-BEB6-DEC6DCA4C205}"
 	ProjectSection(SolutionItems) = preProject
 		.appveyor.yml = .appveyor.yml
-		.travis.yml = .travis.yml
 		Tools\gen_build_info.py = Tools\gen_build_info.py
 		Tools\generate_hashes.ps1 = Tools\generate_hashes.ps1
 		Jenkinsfile = Jenkinsfile
 		Tools\package_release_build.py = Tools\package_release_build.py
-		Tools\run_travis.sh = Tools\run_travis.sh
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Robust.Shared.Scripting", "RobustToolbox\Robust.Shared.Scripting\Robust.Shared.Scripting.csproj", "{41B450C0-A361-4CD7-8121-7072B8995CFC}"
@@ -68,8 +66,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{DDD55F86
 	ProjectSection(SolutionItems) = preProject
 		RobustToolbox\Tools\download_natives.py = RobustToolbox\Tools\download_natives.py
 	EndProjectSection
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lidgren.Network.UnitTests", "RobustToolbox\Lidgren.Network.UnitTests\Lidgren.Network.UnitTests.csproj", "{682E3140-4F27-4ECB-8029-D436319DDC48}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetSerializer", "RobustToolbox\NetSerializer\NetSerializer\NetSerializer.csproj", "{7B9472D3-79D4-48D1-9B22-BCDE518FE842}"
 EndProject
@@ -143,10 +139,6 @@ Global
 		{41B450C0-A361-4CD7-8121-7072B8995CFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41B450C0-A361-4CD7-8121-7072B8995CFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{41B450C0-A361-4CD7-8121-7072B8995CFC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{682E3140-4F27-4ECB-8029-D436319DDC48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{682E3140-4F27-4ECB-8029-D436319DDC48}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{682E3140-4F27-4ECB-8029-D436319DDC48}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{682E3140-4F27-4ECB-8029-D436319DDC48}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7B9472D3-79D4-48D1-9B22-BCDE518FE842}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7B9472D3-79D4-48D1-9B22-BCDE518FE842}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B9472D3-79D4-48D1-9B22-BCDE518FE842}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -171,7 +163,6 @@ Global
 		{50404922-9637-4394-BF59-165D0850ADC8} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 		{41B450C0-A361-4CD7-8121-7072B8995CFC} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 		{DDD55F86-0406-42E5-8443-93EDC6BB2D75} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
-		{682E3140-4F27-4ECB-8029-D436319DDC48} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 		{7B9472D3-79D4-48D1-9B22-BCDE518FE842} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 		{3BC34700-882F-426B-82BB-56D5708B5E0D} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 	EndGlobalSection

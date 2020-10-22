@@ -41,8 +41,8 @@ namespace Content.Client.GameObjects.EntitySystems
         private readonly int[] _fireFrameCounter = new int[FireStates];
         private readonly Texture[][] _fireFrames = new Texture[FireStates][];
 
-        private Dictionary<GridId, Dictionary<MapIndices, GasOverlayChunk>> _tileData =
-            new Dictionary<GridId, Dictionary<MapIndices, GasOverlayChunk>>();
+        private Dictionary<GridId, Dictionary<Vector2i, GasOverlayChunk>> _tileData =
+            new Dictionary<GridId, Dictionary<Vector2i, GasOverlayChunk>>();
 
         private AtmosphereSystem _atmosphereSystem = default!;
 
@@ -107,11 +107,11 @@ namespace Content.Client.GameObjects.EntitySystems
         }
 
         // Slightly different to the server-side system version
-        private GasOverlayChunk GetOrCreateChunk(GridId gridId, MapIndices indices)
+        private GasOverlayChunk GetOrCreateChunk(GridId gridId, Vector2i indices)
         {
             if (!_tileData.TryGetValue(gridId, out var chunks))
             {
-                chunks = new Dictionary<MapIndices, GasOverlayChunk>();
+                chunks = new Dictionary<Vector2i, GasOverlayChunk>();
                 _tileData[gridId] = chunks;
             }
 
@@ -148,7 +148,7 @@ namespace Content.Client.GameObjects.EntitySystems
             return _tileData.ContainsKey(gridId);
         }
 
-        public (Texture, Color color)[] GetOverlays(GridId gridIndex, MapIndices indices)
+        public (Texture, Color color)[] GetOverlays(GridId gridIndex, Vector2i indices)
         {
             if (!_tileData.TryGetValue(gridIndex, out var chunks))
                 return Array.Empty<(Texture, Color)>();

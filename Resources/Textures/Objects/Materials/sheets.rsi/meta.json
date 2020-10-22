@@ -124,6 +124,50 @@
         {
             "name": "metal",
             "directions": 1
+        },
+        {
+            "name": "plasteel-inhand-left",
+            "directions": 4,
+            "delays": [
+                [
+                    1
+                ],
+                [
+                    1
+                ],
+                [
+                    1
+                ],
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "plasteel-inhand-right",
+            "directions": 4,
+            "delays": [
+                [
+                    1
+                ],
+                [
+                    1
+                ],
+                [
+                    1
+                ],
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "plasteel",
+            "directions": 1
+        },
+        {
+            "name": "researchicon",
+            "directions": 1
         }
     ]
 }

@@ -1,22 +1,17 @@
-﻿using Content.Client.GameObjects.Components.Items;
-using Content.Client.Interfaces.GameObjects.Components.Interaction;
-using Content.Shared.GameObjects.Components.GUI;
+﻿using Content.Shared.GameObjects.Components.GUI;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 
 namespace Content.Client.GameObjects.Components.GUI
 {
     [RegisterComponent]
-    public class StrippableComponent : SharedStrippableComponent, IClientDraggable
+    [ComponentReference(typeof(SharedStrippableComponent))]
+    public class StrippableComponent : SharedStrippableComponent
     {
-        public bool ClientCanDropOn(CanDropEventArgs eventArgs)
+        public override bool Drop(DragDropEventArgs args)
         {
-            return eventArgs.Target.HasComponent<HandsComponent>()
-                   && eventArgs.Target != eventArgs.Dragged && eventArgs.Target == eventArgs.User;
-        }
-
-        public bool ClientCanDrag(CanDragEventArgs eventArgs)
-        {
-            return true;
+            // TODO: Prediction
+            return false;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using Content.Server.GameObjects.Components.Projectiles;
+using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects.Components;
@@ -39,9 +40,9 @@ namespace Content.Server.Throw
         /// <param name="throwSourceEnt">
         /// The entity that did the throwing. An opposite impulse will be applied to this entity if passed in.
         /// </param>
-        public static void Throw(IEntity thrownEnt, float throwForce, EntityCoordinates targetLoc, EntityCoordinates sourceLoc, bool spread = false, IEntity throwSourceEnt = null)
+        public static void Throw(this IEntity thrownEnt, float throwForce, EntityCoordinates targetLoc, EntityCoordinates sourceLoc, bool spread = false, IEntity throwSourceEnt = null)
         {
-            if (!thrownEnt.TryGetComponent(out ICollidableComponent colComp))
+            if (!thrownEnt.TryGetComponent(out IPhysicsComponent colComp))
                 return;
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
@@ -78,18 +79,16 @@ namespace Content.Server.Throw
                 }
             }
 
-            // scaling is handled elsewhere, this is just multiplying by 10 independent of timing as a fix until elsewhere values are updated
-            var spd = throwForce * 10;
+            // scaling is handled elsewhere, this is just multiplying by 60 independent of timing as a fix until elsewhere values are updated
+            var spd = throwForce * 60;
 
             projComp.StartThrow(angle.ToVec(), spd);
 
             if (throwSourceEnt != null &&
-                throwSourceEnt.TryGetComponent<ICollidableComponent>(out var physics) &&
-                physics.TryGetController(out MoverController mover))
+                throwSourceEnt.TryGetComponent<IPhysicsComponent>(out var physics) &&
+                physics.TryGetController(out ThrownController mover))
             {
-                var physicsMgr = IoCManager.Resolve<IPhysicsManager>();
-
-                if (physicsMgr.IsWeightless(throwSourceEnt.Transform.Coordinates))
+                if (throwSourceEnt.IsWeightless())
                 {
                     // We don't check for surrounding entities,
                     // so you'll still get knocked around if you're hugging the station wall in zero g.
@@ -97,7 +96,7 @@ namespace Content.Server.Throw
                     // If somebody wants they can come along and make it so magboots completely hold you still.
                     // Would be a cool incentive to use them.
                     const float ThrowFactor = 5.0f; // Break Newton's Third Law for better gameplay
-                    mover.Push(-angle.ToVec(), spd * ThrowFactor / physics.Mass);
+                    mover.Push(-angle.ToVec(), spd * ThrowFactor * physics.InvMass);
                 }
             }
         }
@@ -125,7 +124,7 @@ namespace Content.Server.Throw
         /// <param name="throwSourceEnt">
         /// The entity that did the throwing. An opposite impulse will be applied to this entity if passed in.
         /// </param>
-        public static void ThrowTo(IEntity thrownEnt, float throwForceMax, EntityCoordinates targetLoc,
+        public static void ThrowTo(this IEntity thrownEnt, float throwForceMax, EntityCoordinates targetLoc,
             EntityCoordinates sourceLoc, bool spread = false, IEntity throwSourceEnt = null)
         {
             var entityManager = IoCManager.Resolve<IEntityManager>();
@@ -138,18 +137,12 @@ namespace Content.Server.Throw
             }
 
             var throwDuration = ThrownItemComponent.DefaultThrowTime;
-            var mass = 1f;
-            if (thrownEnt.TryGetComponent(out ICollidableComponent physicsComponent))
-            {
-                mass = physicsComponent.Mass;
-            }
-
+            // TODO: Mass isn't even used on the system side yet for controllers so do that someday
             var velocityNecessary = distance / throwDuration;
-            var impulseNecessary = velocityNecessary * mass;
-            var forceNecessary = impulseNecessary * (1f / timing.TickRate);
+            var forceNecessary = velocityNecessary / timing.TickRate;
 
             // Then clamp it to the max force allowed and call Throw().
-            Throw(thrownEnt, MathF.Min(forceNecessary, throwForceMax), targetLoc, sourceLoc, spread, throwSourceEnt);
+            thrownEnt.Throw(MathF.Min(forceNecessary, throwForceMax), targetLoc, sourceLoc, spread, throwSourceEnt);
         }
     }
 }

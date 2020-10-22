@@ -42,13 +42,7 @@ namespace Content.Server.Atmos
         [ViewVariables] private int _currentCycle;
 
         [ViewVariables]
-        private static GasTileOverlaySystem _gasTileOverlaySystem;
-
-        [ViewVariables]
-        public int AtmosCooldown { get; set; } = 0;
-
-        [ViewVariables]
-        public float Temperature {get; private set; } = Atmospherics.T20C;
+        public float Temperature { get; private set; } = Atmospherics.T20C;
 
         [ViewVariables]
         private float _temperatureArchived = Atmospherics.T20C;
@@ -106,7 +100,7 @@ namespace Content.Server.Atmos
         public TileRef? Tile => GridIndices.GetTileRef(GridIndex);
 
         [ViewVariables]
-        public MapIndices GridIndices { get; }
+        public Vector2i GridIndices { get; }
 
         [ViewVariables]
         public ExcitedGroup ExcitedGroup { get; set; }
@@ -122,7 +116,7 @@ namespace Content.Server.Atmos
         [ViewVariables]
         public bool BlocksAllAir => BlockedAirflow == AtmosDirection.All;
 
-        public TileAtmosphere(GridAtmosphereComponent atmosphereComponent, GridId gridIndex, MapIndices gridIndices, GasMixture mixture = null, bool immutable = false)
+        public TileAtmosphere(GridAtmosphereComponent atmosphereComponent, GridId gridIndex, Vector2i gridIndices, GasMixture mixture = null, bool immutable = false)
         {
             IoCManager.InjectDependencies(this);
             _gridAtmosphereComponent = atmosphereComponent;
@@ -197,12 +191,12 @@ namespace Content.Server.Atmos
             {
                 if(_soundCooldown == 0)
                     EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Effects/space_wind.ogg",
-                        GridIndices.ToEntityCoordinates(_mapManager, GridIndex), AudioHelpers.WithVariation(0.125f).WithVolume(MathHelper.Clamp(PressureDifference / 10, 10, 100)));
+                        GridIndices.ToEntityCoordinates(GridIndex, _mapManager), AudioHelpers.WithVariation(0.125f).WithVolume(MathHelper.Clamp(PressureDifference / 10, 10, 100)));
             }
 
             foreach (var entity in _gridTileLookupSystem.GetEntitiesIntersecting(GridIndex, GridIndices))
             {
-                if (!entity.TryGetComponent(out ICollidableComponent physics)
+                if (!entity.TryGetComponent(out IPhysicsComponent physics)
                     ||  !entity.TryGetComponent(out MovedByPressureComponent pressure)
                     ||  ContainerHelpers.IsInContainer(entity))
                     continue;
@@ -212,7 +206,7 @@ namespace Content.Server.Atmos
                 var pressureMovements = physics.EnsureController<HighPressureMovementController>();
                 if (pressure.LastHighPressureMovementAirCycle < _gridAtmosphereComponent.UpdateCounter)
                 {
-                    pressureMovements.ExperiencePressureDifference(_gridAtmosphereComponent.UpdateCounter, PressureDifference, _pressureDirection, 0, PressureSpecificTarget?.GridIndices.ToEntityCoordinates(_mapManager, GridIndex) ?? EntityCoordinates.Invalid);
+                    pressureMovements.ExperiencePressureDifference(_gridAtmosphereComponent.UpdateCounter, PressureDifference, _pressureDirection, 0, PressureSpecificTarget?.GridIndices.ToEntityCoordinates(GridIndex, _mapManager) ?? EntityCoordinates.Invalid);
                 }
 
             }
@@ -647,7 +641,7 @@ namespace Content.Server.Atmos
             // Can't process a tile without air
             if (Air == null)
             {
-                _gridAtmosphereComponent.RemoveActiveTile(this);
+                Excited = false;
                 return;
             }
 
@@ -657,7 +651,6 @@ namespace Content.Server.Atmos
             _currentCycle = fireCount;
             var adjacentTileLength = 0;
 
-            AtmosCooldown++;
             for (var i = 0; i < Atmospherics.Directions; i++)
             {
                 var direction = (AtmosDirection) (1 << i);
@@ -738,7 +731,7 @@ namespace Content.Server.Atmos
                 if (ConsiderSuperconductivity(true))
                     remove = false;
 
-            if((ExcitedGroup == null && remove) || (AtmosCooldown > (Atmospherics.ExcitedGroupsDismantleCycles * 2)))
+            if(ExcitedGroup == null && remove)
                 _gridAtmosphereComponent.RemoveActiveTile(this);
         }
 
@@ -819,9 +812,7 @@ namespace Content.Server.Atmos
 
             var tileRef = GridIndices.GetTileRef(GridIndex);
 
-            if (tileRef == null) return;
-
-            foreach (var entity in tileRef?.GetEntitiesInTileFast(_gridTileLookupSystem))
+            foreach (var entity in tileRef.GetEntitiesInTileFast(_gridTileLookupSystem))
             {
                 foreach (var fireAct in entity.GetAllComponents<IFireAct>())
                 {
@@ -982,7 +973,7 @@ namespace Content.Server.Atmos
         {
             if (Air == null) return;
 
-            const int limit = Atmospherics.ZumosTileLimit;
+            const int limit = Atmospherics.ZumosHardTileLimit;
 
             var totalGasesRemoved = 0f;
             var queueCycle = ++_gridAtmosphereComponent.EqualizationQueueCycleControl;
@@ -1144,8 +1135,7 @@ namespace Content.Server.Atmos
         {
             if (Air == null) return;
 
-            _gasTileOverlaySystem ??= EntitySystem.Get<GasTileOverlaySystem>();
-            _gasTileOverlaySystem.Invalidate(GridIndex, GridIndices);
+            _gridAtmosphereComponent.GasTileOverlaySystem.Invalidate(GridIndex, GridIndices);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1189,11 +1179,9 @@ namespace Content.Server.Atmos
             if (lastShare > Atmospherics.MinimumAirToSuspend)
             {
                 ExcitedGroup.ResetCooldowns();
-                AtmosCooldown = 0;
             } else if (lastShare > Atmospherics.MinimumMolesDeltaToMove)
             {
                 ExcitedGroup.DismantleCooldown = 0;
-                AtmosCooldown = 0;
             }
         }
 

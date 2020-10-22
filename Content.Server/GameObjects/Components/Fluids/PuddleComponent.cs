@@ -377,8 +377,8 @@ namespace Content.Server.GameObjects.Components.Fluids
 
             foreach (var entity in _snapGrid.GetInDir(direction))
             {
-                if (entity.TryGetComponent(out ICollidableComponent collidable) &&
-                    (collidable.CollisionLayer & (int) CollisionGroup.Impassable) != 0)
+                if (entity.TryGetComponent(out IPhysicsComponent physics) &&
+                    (physics.CollisionLayer & (int) CollisionGroup.Impassable) != 0)
                 {
                     puddle = default;
                     return false;
