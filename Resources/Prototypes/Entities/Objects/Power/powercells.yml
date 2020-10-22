@@ -47,7 +47,7 @@
   parent: PowerCellMediumBase
   components:
   - type: Sprite
-    sprite: Objects/Power/Batteries/potato_battery.rsi
+    sprite: Objects/Power/PowerCells/potato_battery.rsi
     layers:
       - state: potato_battery
   - type: PowerCell
@@ -62,7 +62,7 @@
   parent: PowerCellSmallBase
   components:
   - type: Sprite
-    sprite: Objects/Power/Batteries/power_cell_small_st.rsi
+    sprite: Objects/Power/PowerCells/power_cell_small_st.rsi
     layers:
     - state: s_st
   - type: PowerCell
@@ -81,7 +81,7 @@
   parent: PowerCellSmallBase
   components:
   - type: Sprite
-    sprite: Objects/Power/Batteries/power_cell_small_hi.rsi
+    sprite: Objects/Power/PowerCells/power_cell_small_hi.rsi
     layers:
     - state: s_hi
   - type: PowerCell
@@ -100,7 +100,7 @@
   parent: PowerCellSmallBase
   components:
   - type: Sprite
-    sprite: Objects/Power/Batteries/power_cell_small_sup.rsi
+    sprite: Objects/Power/PowerCells/power_cell_small_sup.rsi
     layers:
     - state: s_sup
   - type: PowerCell
@@ -119,7 +119,7 @@
   parent: PowerCellSmallBase
   components:
   - type: Sprite
-    sprite: Objects/Power/Batteries/power_cell_small_hy.rsi
+    sprite: Objects/Power/PowerCells/power_cell_small_hy.rsi
     layers:
     - state: s_hy
   - type: PowerCell
@@ -137,7 +137,7 @@
   parent: PowerCellMediumBase
   components:
     - type: Sprite
-      sprite: Objects/Power/Batteries/power_cell_medium_st.rsi
+      sprite: Objects/Power/PowerCells/power_cell_medium_st.rsi
       layers:
         - state: m_st
     - type: PowerCell
@@ -155,7 +155,7 @@
   parent: PowerCellMediumBase
   components:
     - type: Sprite
-      sprite: Objects/Power/Batteries/power_cell_medium_hi.rsi
+      sprite: Objects/Power/PowerCells/power_cell_medium_hi.rsi
       layers:
         - state: m_hi
     - type: PowerCell
@@ -174,7 +174,7 @@
   parent: PowerCellMediumBase
   components:
     - type: Sprite
-      sprite: Objects/Power/Batteries/power_cell_medium_sup.rsi
+      sprite: Objects/Power/PowerCells/power_cell_medium_sup.rsi
       layers:
         - state: m_sup
     - type: PowerCell
@@ -192,7 +192,7 @@
   parent: PowerCellMediumBase
   components:
     - type: Sprite
-      sprite: Objects/Power/Batteries/power_cell_medium_hy.rsi
+      sprite: Objects/Power/PowerCells/power_cell_medium_hy.rsi
       layers:
         - state: m_hy
     - type: PowerCell
@@ -210,7 +210,7 @@
   parent: PowerCellLargeBase
   components:
     - type: Sprite
-      sprite: Objects/Power/Batteries/power_cell_large_st.rsi
+      sprite: Objects/Power/PowerCells/power_cell_large_st.rsi
       layers:
         - state: l_st
     - type: PowerCell
@@ -228,7 +228,7 @@
   parent: PowerCellLargeBase
   components:
     - type: Sprite
-      sprite: Objects/Power/Batteries/power_cell_large_hi.rsi
+      sprite: Objects/Power/PowerCells/power_cell_large_hi.rsi
       layers:
         - state: l_hi
     - type: PowerCell
@@ -246,7 +246,7 @@
   parent: PowerCellLargeBase
   components:
     - type: Sprite
-      sprite: Objects/Power/Batteries/power_cell_large_sup.rsi
+      sprite: Objects/Power/PowerCells/power_cell_large_sup.rsi
       layers:
         - state: l_sup
     - type: PowerCell
@@ -264,7 +264,7 @@
   parent: PowerCellLargeBase
   components:
     - type: Sprite
-      sprite: Objects/Power/Batteries/power_cell_large_hy.rsi
+      sprite: Objects/Power/PowerCells/power_cell_large_hy.rsi
       layers:
         - state: l_hy
     - type: PowerCell
