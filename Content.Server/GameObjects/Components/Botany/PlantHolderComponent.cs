@@ -3,11 +3,17 @@ using System;
 using Content.Server.Atmos;
 using Content.Server.Botany;
 using Content.Server.GameObjects.Components.Chemistry;
+using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.Chemistry;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.ComponentDependencies;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Random;
+using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.GameObjects.Components.Botany
@@ -18,10 +24,14 @@ namespace Content.Server.GameObjects.Components.Botany
         public const float HydroponicsSpeedMultiplier = 1f;
 
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override string Name => "PlantHolder";
 
         private int _lastProduce;
+        private readonly TimeSpan _cycleDelay = TimeSpan.FromSeconds(0.25f);
+        private TimeSpan _lastCycle = TimeSpan.Zero;
         private bool _updateSpriteAfterUpdate = false;
 
         protected virtual bool DrawWarnings { get; } = false;
@@ -38,7 +48,7 @@ namespace Content.Server.GameObjects.Components.Botany
         public bool Harvest { get; set; } = false;
         public bool Sampled { get; set; } = false;
 
-        public float YieldMod { get; set; } = 1f;
+        public int YieldMod { get; set; } = 1;
         public float MutationMod { get; set; } = 1f;
         public float MutationLevel { get; set; } = 0f;
 
@@ -47,6 +57,11 @@ namespace Content.Server.GameObjects.Components.Botany
         public float WeedCoefficient { get; set; } = 1f;
 
         public Seed? Seed { get; set; } = null;
+
+        public bool ImproperHeat { get; set; }
+        public bool ImproperPressure { get; set; }
+        public bool ImproperLight { get; set; }
+        public bool ForceUpdate { get; set; }
 
         [ComponentDependency] private readonly SolutionContainerComponent? _solutionContainer = default!;
 
@@ -63,9 +78,23 @@ namespace Content.Server.GameObjects.Components.Botany
             // TODO
         }
 
-        public void Update(float frameTime)
+        public void Update()
         {
-            UpdateReagents(frameTime);
+            UpdateReagents();
+
+            var curTime = _gameTiming.CurTime;
+
+            if (ForceUpdate)
+                ForceUpdate = false;
+            else if (curTime < (_lastCycle + _cycleDelay))
+            {
+                if(_updateSpriteAfterUpdate)
+                    UpdateSprite();
+                return;
+            }
+
+            _lastCycle = curTime;
+
 
             // Weeds like water and nutrients! They may appear even if there's not a seed planted.
             if (WaterLevel > 10 && NutritionLevel > 2 && _random.Prob(Seed == null ? 0.05f : 0.01f))
@@ -196,16 +225,26 @@ namespace Content.Server.GameObjects.Components.Botany
             if (pressure < Seed.LowPressureTolerance || pressure > Seed.HighPressureTolerance)
             {
                 Health -= healthMod;
+                ImproperPressure = true;
                 if (DrawWarnings)
                     _updateSpriteAfterUpdate = true;
+            }
+            else
+            {
+                ImproperPressure = false;
             }
 
             // Seed ideal temperature.
             if (MathF.Abs(environment.Temperature - Seed.IdealHeat) > Seed.HeatTolerance)
             {
                 Health -= healthMod;
+                ImproperHeat = true;
                 if (DrawWarnings)
                     _updateSpriteAfterUpdate = true;
+            }
+            else
+            {
+                ImproperHeat = false;
             }
 
             // Gas production.
@@ -269,7 +308,8 @@ namespace Content.Server.GameObjects.Components.Botany
             {
                 Seed.SpawnSeedPacket(Owner.Transform.Coordinates);
                 RemovePlant();
-                Update(frameTime);
+                ForceUpdate = true;
+                Update();
             }
 
             CheckHealth();
@@ -306,12 +346,43 @@ namespace Content.Server.GameObjects.Components.Botany
 
         private void CheckLevelSanity()
         {
-            // TODO
+            if (Seed != null)
+                Health = MathHelper.Clamp(Health, 0, Seed.Endurance);
+            else
+            {
+                Health = 0f;
+                Dead = false;
+            }
+
+            MutationLevel = MathHelper.Clamp(MutationLevel, 0f, 100f);
+            NutritionLevel = MathHelper.Clamp(NutritionLevel, 0f, 100f);
+            WaterLevel = MathHelper.Clamp(WaterLevel, 0f, 100f);
+            PestLevel = MathHelper.Clamp(PestLevel, 0f, 10f);
+            WeedLevel = MathHelper.Clamp(WeedLevel, 0f, 10f);
+            Toxins = MathHelper.Clamp(Toxins, 0f, 100f);
+            YieldMod = MathHelper.Clamp(YieldMod, 0, 2);
+            MutationMod = MathHelper.Clamp(MutationMod, 0f, 3f);
         }
 
         public void AutoHarvest()
         {
-            // TODO
+            if (Seed == null || !Harvest)
+                return;
+
+            Seed.AutoHarvest(Owner.Transform.Coordinates);
+            AfterHarvest();
+        }
+
+        private void AfterHarvest()
+        {
+            Harvest = false;
+            _lastProduce = Age;
+
+            if(Seed?.HarvestRepeat == HarvestType.NoRepeat)
+                RemovePlant();
+
+            CheckLevelSanity();
+            UpdateSprite();
         }
 
         public void CheckHealth()
@@ -329,7 +400,17 @@ namespace Content.Server.GameObjects.Components.Botany
 
         public void RemovePlant()
         {
-            // TODO
+            YieldMod = 1;
+            MutationMod = 1;
+            PestLevel = 0;
+            Seed = null;
+            Dead = false;
+            Age = 0;
+            Sampled = false;
+            Harvest = false;
+            ImproperLight = false;
+            ImproperPressure = false;
+            ImproperHeat = false;
         }
 
         public void AffectGrowth(int amount)
@@ -353,7 +434,53 @@ namespace Content.Server.GameObjects.Components.Botany
             }
         }
 
-        public void UpdateReagents(float frameTime)
+        public void AdjustNutrient(float amount)
+        {
+            NutritionLevel += amount;
+        }
+
+        public void AdjustWater(float amount)
+        {
+            WaterLevel += amount;
+
+            // Water dilutes toxins.
+            if (amount > 0)
+            {
+                Toxins -= amount * 4f;
+            }
+        }
+
+        public void UpdateReagents()
+        {
+            if (_solutionContainer == null)
+                return;
+
+            if (_solutionContainer.Solution.TotalVolume <= 0 || MutationLevel >= 25)
+            {
+                if (MutationLevel >= 0)
+                {
+                    Mutate(Math.Min(MutationLevel, 25));
+                    MutationLevel = 0;
+                }
+            }
+            else
+            {
+                var one = ReagentUnit.New(1);
+
+                foreach (var (reagent, amount) in _solutionContainer.ReagentList)
+                {
+                    var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent);
+                    reagentProto.ReactionPlant(Owner);
+                    _solutionContainer.Solution.RemoveReagent(reagent, one);
+                }
+
+                _solutionContainer.Solution.RemoveAllSolution();
+            }
+
+            CheckLevelSanity();
+        }
+
+        private void Mutate(float mutation)
         {
             // TODO
         }
@@ -361,6 +488,24 @@ namespace Content.Server.GameObjects.Components.Botany
         public void UpdateSprite()
         {
             _updateSpriteAfterUpdate = false;
+
+            UpdateName();
+        }
+
+        private void UpdateName()
+        {
+            // TODO
+        }
+
+        public void CheckForDivergence(bool modified)
+        {
+            // Make sure we're not modifying a "global" seed.
+            // If this seed is not in the global seed list, then no products of this line have been harvested yet.
+            // It is then safe to assume it's restricted to this tray.
+            if (Seed == null) return;
+            var plantSystem = EntitySystem.Get<PlantSystem>();
+            if (plantSystem.Seeds.ContainsKey(Seed.Uid))
+                Seed = Seed.Diverge(modified);
         }
     }
 }

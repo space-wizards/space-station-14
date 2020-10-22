@@ -1,10 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Content.Server.GameObjects.Components.Stack;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Atmos;
+using Content.Shared.Interfaces;
+using Content.Shared.Utility;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Random;
 using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
@@ -53,12 +65,19 @@ namespace Content.Server.Botany
     {
         public string ID { get; private set; }
 
+        /// <summary>
+        ///     Unique identifier of this seed. Do NOT set this.
+        /// </summary>
+        public int Uid { get; internal set; } = -1;
+
         #region Tracking
         public string Name { get; set; }
         public string SeedName { get; set; }
         public string SeedNoun { get; set; }
+        public string DisplayName { get; set; }
         public bool RoundStart { get; private set; }
         public bool Mysterious { get; set; }
+        public bool Immutable { get; set; }
         #endregion
 
         #region Output
@@ -84,7 +103,7 @@ namespace Content.Server.Botany
 
         #region General traits
         public float Endurance { get; set; }
-        public float Yield { get; set; }
+        public int Yield { get; set; }
         public float Lifespan { get; set; }
         public float Maturation { get; set; }
         public float Production { get; set; }
@@ -116,6 +135,8 @@ namespace Content.Server.Botany
         public void ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(this, x => x.ID, "id", null);
+
+            // TODO
         }
 
         public void LoadFrom(YamlMappingNode mapping)
@@ -175,6 +196,87 @@ namespace Content.Server.Botany
         {
             // TODO
             return null;
+        }
+
+        private void AddToDatabase()
+        {
+            var plantSystem = EntitySystem.Get<PlantSystem>();
+            if (plantSystem.AddSeedToDatabase(this))
+            {
+                Name = Uid.ToString();
+            }
+        }
+
+        public IEnumerable<IEntity> AutoHarvest(EntityCoordinates position, int yieldMod = 1)
+        {
+            if (position.IsValid(IoCManager.Resolve<IEntityManager>()) && ProductPrototypes != null &&
+                ProductPrototypes.Count > 0)
+                return GenerateProduct(position, yieldMod);
+
+            return Enumerable.Empty<IEntity>();
+        }
+
+        public IEnumerable<IEntity> Harvest(IEntity user, int yieldMod = 1)
+        {
+            AddToDatabase();
+
+            if (user == null)
+                return Enumerable.Empty<IEntity>();
+
+            if (ProductPrototypes == null || ProductPrototypes.Count == 0 || Yield <= 0)
+            {
+                user.PopupMessageCursor(Loc.GetString("You fail to harvest anything useful."));
+                return Enumerable.Empty<IEntity>();
+            }
+
+            user.PopupMessageCursor(Loc.GetString($"You harvest from the {DisplayName}"));
+            return GenerateProduct(user.Transform.Coordinates, yieldMod);
+        }
+
+        public IEnumerable<IEntity> GenerateProduct(EntityCoordinates position, int yieldMod = 1)
+        {
+            var totalYield = 0;
+            if (Yield > -1)
+            {
+                if (yieldMod < 0)
+                {
+                    yieldMod = 1;
+                    totalYield = Yield;
+                }
+                else
+                {
+                    totalYield = Yield * yieldMod;
+                }
+
+                totalYield = Math.Max(1, totalYield);
+            }
+
+            var random = IoCManager.Resolve<IRobustRandom>();
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+
+            var products = new List<IEntity>();
+
+            for (var i = 0; i < totalYield; i++)
+            {
+                var product = random.Pick(ProductPrototypes);
+
+                var entity = entityManager.SpawnEntity(product, position);
+                products.Add(entity);
+
+                if (Mysterious)
+                {
+                    entity.Name += "?";
+                    entity.Description += Loc.GetString(" On second thought, something about this one looks strange.");
+                }
+            }
+
+            return products;
+        }
+
+        public Seed Diverge(bool modified)
+        {
+            // TODO
+            return Clone();
         }
     }
 }
