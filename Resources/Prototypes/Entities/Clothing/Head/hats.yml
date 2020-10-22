@@ -290,26 +290,26 @@
 - type: entity
   parent: HatBase
   id: HatCake
-  name: cake
+  name: cake hat
   description: You put the cake on your head. Brilliant.
   components:
   - type: Sprite
-    sprite: Clothing/Head/cake0.rsi
+    sprite: Clothing/Head/cake.rsi
 
   - type: Clothing
-    sprite: Clothing/Head/cake0.rsi
+    sprite: Clothing/Head/cake.rsi
 
 - type: entity
   parent: HatBase
-  id: HatCakeLit
-  name: cake (lit)
-  description: You put this lit cake on your head. Perfect.
+  id: HatPumpkin
+  name: pumpkin hat
+  description: A jack o' lantern! Believed to ward off evil spirits.
   components:
-  - type: Sprite
-    sprite: Clothing/Head/cake1.rsi
+    - type: Sprite
+      sprite: Clothing/Head/pumpkin.rsi
 
-  - type: Clothing
-    sprite: Clothing/Head/cake1.rsi
+    - type: Clothing
+      sprite: Clothing/Head/pumpkin.rsi
 
 - type: entity
   parent: HatBase
