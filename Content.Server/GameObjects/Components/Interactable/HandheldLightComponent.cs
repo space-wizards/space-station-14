@@ -37,9 +37,9 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         [ViewVariables] protected override bool HasCell => _cellSlot.HasCell;
 
-        [ViewVariables(VVAccess.ReadWrite)] public string TurnOnSound = "/Audio/Items/flashlight_toggle.ogg";
-        [ViewVariables(VVAccess.ReadWrite)] public string TurnOnFailSound = "/Audio/Machines/button.ogg";
-        [ViewVariables(VVAccess.ReadWrite)] public string TurnOffSound = "/Audio/Items/flashlight_toggle.ogg";
+        [ViewVariables(VVAccess.ReadWrite)] public string? TurnOnSound;
+        [ViewVariables(VVAccess.ReadWrite)] public string? TurnOnFailSound;
+        [ViewVariables(VVAccess.ReadWrite)] public string? TurnOffSound;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -120,7 +120,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             if (makeNoise)
             {
-                EntitySystem.Get<AudioSystem>().PlayFromEntity(TurnOffSound, Owner);
+                if (TurnOffSound != null) EntitySystem.Get<AudioSystem>().PlayFromEntity(TurnOffSound, Owner);
             }
 
             return true;
@@ -135,7 +135,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             if (Cell == null)
             {
-                EntitySystem.Get<AudioSystem>().PlayFromEntity(TurnOnFailSound, Owner);
+                if (TurnOnFailSound != null) EntitySystem.Get<AudioSystem>().PlayFromEntity(TurnOnFailSound, Owner);
                 Owner.PopupMessage(user, Loc.GetString("Cell missing..."));
                 return false;
             }
@@ -145,7 +145,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             // Simple enough.
             if (Wattage > Cell.CurrentCharge)
             {
-                EntitySystem.Get<AudioSystem>().PlayFromEntity(TurnOnFailSound, Owner);
+                if (TurnOnFailSound != null) EntitySystem.Get<AudioSystem>().PlayFromEntity(TurnOnFailSound, Owner);
                 Owner.PopupMessage(user, Loc.GetString("Dead cell..."));
                 return false;
             }
@@ -153,7 +153,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             Activated = true;
             SetState(true);
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity(TurnOnSound, Owner);
+            if (TurnOnSound != null) EntitySystem.Get<AudioSystem>().PlayFromEntity(TurnOnSound, Owner);
             return true;
         }
 
