@@ -58,52 +58,48 @@ namespace Content.Shared.Utility
         }
 
         /// <summary>
-        /// Finds the closest level out of a list of levels to the given value, in terms of their difference (|a-b|).
+        /// Returns the segment <paramref name="actual"/> lies on on a decimal scale from 0 to <paramref name="max"/> divided into
+        /// <paramref name="levels"/> sections. In less mathematical terms, same as <see cref="RoundToLevels"/>
+        /// except <paramref name="actual"/> is rounded to the nearest matching level instead of 0 and the highest level being
+        /// precisely 0 and max and no other value.
         /// </summary>
         /// <example>
-        /// You have a scale from 0 to 100 with points at 0, 25, 50, 75 and 100, and a value between 0 and 100.
-        /// You want to find the nearest point to the value.
+        /// You have a 5-segment progress bar used to display a percentile value.
+        /// You want the display to match the percentile value as accurately as possible, so that eg.
+        /// 95% is rounded up to 5, 89.99% is rounded down to 4, 15% is rounded up to 1 and 5% is rounded down
+        /// to 0, in terms of number of segments lit.
+        /// In this case you would use <code>RoundToNearestLevels(value, max, 5)</code>
         /// </example>
-        /// <param name="value">Value to round.</param>
-        /// <param name="levels">Levels to round to.</param>
-        /// <returns>The closest level to the given value.</returns>
-        public static double RoundToClosest(double value, params double[] levels)
+        /// <param name="actual">The point to be rounded to the nearest level.</param>
+        /// <param name="max">The maximum value of the scale.</param>
+        /// <param name="levels">Number of segments the scale is subdivided into.</param>
+        /// <returns>The segment <paramref name="actual"/> lies on.</returns>
+        /// <exception cref="ArgumentException"></exception>
+        public static int RoundToNearestLevels(double actual, double max, int levels)
         {
-            var nearestDiff = Math.Abs(value - levels[0]);
-            var nearest = levels[0];
-            for (var i = 1; i < levels.Length; i++)
+            if (levels <= 1)
             {
-                var diff = Math.Abs(value - levels[i]);
-                if (diff < nearestDiff)
-                {
-                    nearestDiff = diff;
-                    nearest = levels[i];
-                }
+                throw new ArgumentException("Levels must be greater than 1.", nameof(levels));
             }
-            return nearest;
-        }
-
-        /// <summary>
-        /// Finds the closest level out of a list of levels to the given value, in terms of their difference (|a-b|).
-        /// </summary>
-        /// <example>
-        /// You have a scale from 0 to 100 with points at 0, 25, 50, 75 and 100, and a value between 0 and 100.
-        /// You want to find the nearest point to the value.
-        /// </example>
-        /// <param name="value">Value to round.</param>
-        /// <param name="levels">Levels to round to.</param>
-        /// <returns>The closest level to the given value.</returns>
-        public static int RoundToClosest(int value, params int[] levels)
-        {
-            var nearestDiff = Math.Abs(value - levels[0]);
-            var nearest = levels[0];
-            for (var i = 1; i < levels.Length; i++)
+            if (actual >= max)
             {
-                var diff = Math.Abs(value - levels[i]);
+                return levels;
+            }
+            if (actual <= 0)
+            {
+                return 0;
+            }
+            double step = max / levels;
+
+            int nearest = 0;
+            double nearestDiff = actual;
+            for (var i = 1; i <= levels; i++)
+            {
+                var diff = Math.Abs(actual - i * step);
                 if (diff < nearestDiff)
                 {
                     nearestDiff = diff;
-                    nearest = levels[i];
+                    nearest = i;
                 }
             }
             return nearest;
