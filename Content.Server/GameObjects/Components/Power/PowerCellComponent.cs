@@ -22,16 +22,10 @@ namespace Content.Server.GameObjects.Components.Power
         [ViewVariables] public PowerCellSize CellSize => _cellSize;
         private PowerCellSize _cellSize = PowerCellSize.Small;
 
-        /// <summary>
-        /// False if we shouldn't waste time updating the AppearanceComponent (if eg. the entity doesn't have one).
-        /// </summary>
-        private bool _updateVisual = true;
-
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _cellSize, "cellSize", PowerCellSize.Small);
-            serializer.DataField(ref _updateVisual, "updateVisual", true);
         }
 
         public override void Initialize()
