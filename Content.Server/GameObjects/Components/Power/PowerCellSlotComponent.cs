@@ -46,18 +46,19 @@ namespace Content.Server.GameObjects.Components.Power
         /// String.Format is given a single parameter which is the size letter (S/M/L) of the cells this component uses.
         /// Use null to show no text.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)] public string? DescFormatString = "It uses size {0} power cells.";
+        [ViewVariables(VVAccess.ReadWrite)] public string? DescFormatString;
 
         /// <summary>
         /// File path to a sound file that should be played when the cell is removed.
         /// </summary>
         /// <example>"/Audio/Items/pistol_magout.ogg"</example>
-        [ViewVariables(VVAccess.ReadWrite)] public string? CellRemoveSound = "/Audio/Items/pistol_magout.ogg";
+        [ViewVariables(VVAccess.ReadWrite)] public string? CellRemoveSound;
+
         /// <summary>
         /// File path to a sound file that should be played when a cell is inserted.
         /// </summary>
         /// <example>"/Audio/Items/pistol_magin.ogg"</example>
-        [ViewVariables(VVAccess.ReadWrite)] public string? CellInsertSound = "/Audio/Items/pistol_magin.ogg";
+        [ViewVariables(VVAccess.ReadWrite)] public string? CellInsertSound;
 
         [ViewVariables] private ContainerSlot _cellContainer = default!;
 
