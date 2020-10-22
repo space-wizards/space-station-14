@@ -1,3 +1,4 @@
+using System;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.Utility;
 using Robust.Client.GameObjects;
@@ -36,7 +37,9 @@ namespace Content.Client.GameObjects.Components.Power
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
             if (component.TryGetData(PowerCellVisuals.ChargeLevel, out float fraction))
             {
-                sprite.LayerSetState(Layers.Charge, $"{_prefix}_{ContentHelpers.RoundToLevels(fraction, 1, 5) * 25}");
+                var closest = ContentHelpers.RoundToClosest(fraction, 0.0, 0.25, 0.5, 0.75, 1.0);
+                int charge = Convert.ToInt32(closest * 100);
+                sprite.LayerSetState(Layers.Charge, $"{_prefix}_{charge}");
             }
         }
 

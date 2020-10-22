@@ -56,5 +56,59 @@ namespace Content.Shared.Utility
                 return (int)Math.Floor(preround);
             }
         }
+
+        /// <summary>
+        /// Finds the closest level to the given value, in terms of their difference (|a-b|).
+        ///  Like <see cref="RoundToLevels"/> but rounding to the closest level instead of flooring.
+        /// </summary>
+        /// <example>
+        /// You have a scale from 0 to 100 with points at 0, 25, 50, 75 and 100, and a value between 0 and 100.
+        /// You want to find the nearest point to the value.
+        /// </example>
+        /// <param name="value">Value to round.</param>
+        /// <param name="levels">Levels to round to.</param>
+        /// <returns>The closest level to the given value.</returns>
+        public static double RoundToClosest(double value, params double[] levels)
+        {
+            var nearestDiff = Math.Abs(value - levels[0]);
+            var nearest = levels[0];
+            for (var i = 1; i < levels.Length; i++)
+            {
+                var diff = Math.Abs(value - levels[i]);
+                if (diff < nearestDiff)
+                {
+                    nearestDiff = diff;
+                    nearest = levels[i];
+                }
+            }
+            return nearest;
+        }
+
+        /// <summary>
+        /// Finds the closest level to the given value, in terms of their difference (|a-b|).
+        ///  Like <see cref="RoundToLevels"/> but rounding to the closest level instead of flooring.
+        /// </summary>
+        /// <example>
+        /// You have a scale from 0 to 100 with points at 0, 25, 50, 75 and 100, and a value between 0 and 100.
+        /// You want to find the nearest point to the value.
+        /// </example>
+        /// <param name="value">Value to round.</param>
+        /// <param name="levels">Levels to round to.</param>
+        /// <returns>The closest level to the given value.</returns>
+        public static int RoundToClosest(int value, params int[] levels)
+        {
+            var nearestDiff = Math.Abs(value - levels[0]);
+            var nearest = levels[0];
+            for (var i = 1; i < levels.Length; i++)
+            {
+                var diff = Math.Abs(value - levels[i]);
+                if (diff < nearestDiff)
+                {
+                    nearestDiff = diff;
+                    nearest = levels[i];
+                }
+            }
+            return nearest;
+        }
     }
 }
