@@ -264,7 +264,7 @@
 
 - type: entity
   parent: OuterclothingBase
-  id: OuterclothingHoSTrenchcoat
+  id: Outerclothinrenchcoat
   name: head of security trenchcoat
   description: This trenchcoat was specifically designed for asserting superior authority.
   components:

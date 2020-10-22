@@ -93,3 +93,26 @@
   - type: StorageFill
     contents:
       - name: ApcExtensionCableStack1
+# Random assortment of things good for dressing up in.
+- type: entity
+  id: CrateCostumes
+  parent: CrateGeneric
+  name: costume crate
+  components:
+  - type: StorageFill
+    contents:
+      - name: OuterclothingBedsheet # boo!
+      - name: HatPhilosopherWig # Aristotle approves
+      - name: HatPirate # yarr
+      - name: HatPirate
+      - name: HatPirate
+      - name: HatPlaguedoctor # Needs more lavender.
+      - name: HatRedwizard    # wizzard wear.
+      - name: HatVioletwizard
+      - name: HatSantahat # Ho ho ho!
+      - name: HatSombrero # Insert mexican dance music
+      - name: HatTophat # Assist the clown in pretending to be a refined gentleman.
+      - name: HatTophat
+      - name: SunGlasses # Just needs a motorcycle
+      - name: SunGlasses
+      - name: ShoesCowboy
