@@ -9,17 +9,15 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     internal sealed class BatteryStorageSystem : EntitySystem
     {
-        [Dependency] private readonly IPauseManager _pauseManager = default!;
-
         public override void Update(float frameTime)
         {
             foreach (var comp in ComponentManager.EntityQuery<BatteryStorageComponent>())
             {
-                if (_pauseManager.IsEntityPaused(comp.Owner))
+                if (comp.Owner.Paused)
                 {
                     continue;
                 }
-                
+
                 comp.Update(frameTime);
             }
         }
