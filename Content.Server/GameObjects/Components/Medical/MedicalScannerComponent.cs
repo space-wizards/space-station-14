@@ -32,7 +32,7 @@ namespace Content.Server.GameObjects.Components.Medical
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(SharedMedicalScannerComponent))]
-    public class MedicalScannerComponent : SharedMedicalScannerComponent, IActivate, IDragDropOn
+    public class MedicalScannerComponent : SharedMedicalScannerComponent, IActivate, IDragDropOn, IDestroyAct
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = null!;
@@ -288,6 +288,11 @@ namespace Content.Server.GameObjects.Components.Medical
         {
             _bodyContainer.Insert(eventArgs.Dragged);
             return true;
+        }
+
+        void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
+        {
+            EjectBody();
         }
     }
 }
