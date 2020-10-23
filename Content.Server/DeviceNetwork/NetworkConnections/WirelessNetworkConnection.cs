@@ -23,9 +23,9 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
 
         protected override bool CanReceive(int frequency, string sender, IReadOnlyDictionary<string, string> payload, Metadata metadata, bool broadcast)
         {
-            if(_owner.TryGetComponent<ITransformComponent>(out var transform) && metadata.TryParseMetadata<Vector2>(WIRELESS_POSITION, out var position))
+            if(metadata.TryParseMetadata<Vector2>(WIRELESS_POSITION, out var position))
             {
-                var ownPosition = transform.WorldPosition;
+                var ownPosition = _owner.Transform.WorldPosition;
                 var distance = (ownPosition - position).Length;
                 return distance <= Range;
             }
@@ -35,18 +35,13 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
 
         protected override Metadata GetMetadata()
         {
-            if(_owner.TryGetComponent<ITransformComponent>(out var transform))
+            var position = _owner.Transform.WorldPosition;
+            var metadata = new Metadata
             {
-                var position = transform.WorldPosition;
-                var metadata = new Metadata
-                {
-                    {WIRELESS_POSITION, position}
-                };
+                {WIRELESS_POSITION, position}
+            };
 
-                return metadata;
-            }
-
-            return new Metadata();
+            return metadata;
         }
 
         protected override Dictionary<string, string> ManipulatePayload(Dictionary<string, string> payload)
