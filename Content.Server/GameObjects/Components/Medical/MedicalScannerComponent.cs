@@ -22,6 +22,7 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
@@ -34,16 +35,18 @@ namespace Content.Server.GameObjects.Components.Medical
     [ComponentReference(typeof(SharedMedicalScannerComponent))]
     public class MedicalScannerComponent : SharedMedicalScannerComponent, IActivate, IDragDropOn
     {
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = null!;
+
         private ContainerSlot _bodyContainer = default!;
         private readonly Vector2 _ejectOffset = new Vector2(-0.5f, 0f);
 
-        [Dependency] private readonly IPlayerManager _playerManager = null!;
-        public bool IsOccupied => _bodyContainer.ContainedEntity != null;
-
         [ViewVariables]
         private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+        [ViewVariables]
+        private BoundUserInterface? UserInterface => Owner.GetUIOrNull(MedicalScannerUiKey.Key);
 
-        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(MedicalScannerUiKey.Key);
+        public bool IsOccupied => _bodyContainer.ContainedEntity != null;
 
         public override void Initialize()
         {
