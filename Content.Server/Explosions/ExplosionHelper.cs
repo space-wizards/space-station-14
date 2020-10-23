@@ -75,42 +75,44 @@ namespace Content.Server.Explosions
 
             //Tile damage calculation mockup
             //TODO: make it into some sort of actual damage component or whatever the boys think is appropriate
-            var mapGrid = mapManager.GetGrid(coords.GetGridId(entityManager));
-            var circle = new Circle(coords.Position, maxRange);
-            var tiles = mapGrid.GetTilesIntersecting(circle);
-            foreach (var tile in tiles)
+            if (mapManager.TryGetGrid(coords.GetGridId(entityManager), out var mapGrid))
             {
-                var tileLoc = mapGrid.GridTileToLocal(tile.GridIndices);
-                var tileDef = (ContentTileDefinition) tileDefinitionManager[tile.Tile.TypeId];
-                var baseTurfs = tileDef.BaseTurfs;
-                if (baseTurfs.Count == 0)
+                var circle = new Circle(coords.Position, maxRange);
+                var tiles = mapGrid?.GetTilesIntersecting(circle);
+                foreach (var tile in tiles)
                 {
-                    continue;
-                }
+                    var tileLoc = mapGrid.GridTileToLocal(tile.GridIndices);
+                    var tileDef = (ContentTileDefinition) tileDefinitionManager[tile.Tile.TypeId];
+                    var baseTurfs = tileDef.BaseTurfs;
+                    if (baseTurfs.Count == 0)
+                    {
+                        continue;
+                    }
 
-                if (!tileLoc.TryDistance(entityManager, coords, out var distance))
-                {
-                    continue;
-                }
+                    if (!tileLoc.TryDistance(entityManager, coords, out var distance))
+                    {
+                        continue;
+                    }
 
-                var zeroTile = new Tile(tileDefinitionManager[baseTurfs[0]].TileId);
-                var previousTile = new Tile(tileDefinitionManager[baseTurfs[^1]].TileId);
+                    var zeroTile = new Tile(tileDefinitionManager[baseTurfs[0]].TileId);
+                    var previousTile = new Tile(tileDefinitionManager[baseTurfs[^1]].TileId);
 
-                switch (distance)
-                {
-                    case var d when d < devastationRange:
-                        mapGrid.SetTile(tileLoc, zeroTile);
-                        break;
-                    case var d when d < heavyImpactRange
-                                    && !previousTile.IsEmpty
-                                    && robustRandom.Prob(0.8f):
-                        mapGrid.SetTile(tileLoc, previousTile);
-                        break;
-                    case var d when d < lightImpactRange
-                                    && !previousTile.IsEmpty
-                                    && robustRandom.Prob(0.5f):
-                        mapGrid.SetTile(tileLoc, previousTile);
-                        break;
+                    switch (distance)
+                    {
+                        case var d when d < devastationRange:
+                            mapGrid.SetTile(tileLoc, zeroTile);
+                            break;
+                        case var d when d < heavyImpactRange
+                                        && !previousTile.IsEmpty
+                                        && robustRandom.Prob(0.8f):
+                            mapGrid.SetTile(tileLoc, previousTile);
+                            break;
+                        case var d when d < lightImpactRange
+                                        && !previousTile.IsEmpty
+                                        && robustRandom.Prob(0.5f):
+                            mapGrid.SetTile(tileLoc, previousTile);
+                            break;
+                    }
                 }
             }
 
