@@ -215,7 +215,7 @@
     - !type:AdjustPests
       amount: -1
     - !type:AdjustHealth
-      amount -2
+      amount: -2
 
 - type: reagent
   id: chem.Thermite

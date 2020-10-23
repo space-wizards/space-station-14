@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System;
+using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.Botany;
 using Content.Server.GameObjects.Components.Chemistry;
@@ -15,6 +16,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Botany
 {
@@ -29,38 +31,72 @@ namespace Content.Server.GameObjects.Components.Botany
 
         public override string Name => "PlantHolder";
 
-        private int _lastProduce;
-        private readonly TimeSpan _cycleDelay = TimeSpan.FromSeconds(0.25f);
-        private TimeSpan _lastCycle = TimeSpan.Zero;
-        private bool _updateSpriteAfterUpdate = false;
+        [ViewVariables] private int _lastProduce;
+        private readonly TimeSpan _cycleDelay = TimeSpan.FromSeconds(15f);
+        [ViewVariables] private TimeSpan _lastCycle = TimeSpan.Zero;
+        [ViewVariables] private bool _updateSpriteAfterUpdate = false;
 
-        protected virtual bool DrawWarnings { get; } = false;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool DrawWarnings { get; private set; } = false;
 
+        [ViewVariables(VVAccess.ReadWrite)]
         public float WaterLevel { get; set; } = 100f;
+
+        [ViewVariables(VVAccess.ReadWrite)]
         public float NutritionLevel { get; set; } = 100f;
+
+        [ViewVariables(VVAccess.ReadWrite)]
         public float PestLevel { get; set; } = 0f;
+
+        [ViewVariables(VVAccess.ReadWrite)]
         public float WeedLevel { get; set; } = 0f;
+
+        [ViewVariables(VVAccess.ReadWrite)]
         public float Toxins { get; set; } = 0f;
 
+        [ViewVariables(VVAccess.ReadWrite)]
         public int Age { get; set; } = 0;
+
+        [ViewVariables(VVAccess.ReadWrite)]
         public int SkipAging { get; set; } = 0;
+
+        [ViewVariables(VVAccess.ReadWrite)]
         public bool Dead { get; set; } = false;
+
+        [ViewVariables(VVAccess.ReadWrite)]
         public bool Harvest { get; set; } = false;
+
+        [ViewVariables(VVAccess.ReadWrite)]
         public bool Sampled { get; set; } = false;
 
+        [ViewVariables(VVAccess.ReadWrite)]
         public int YieldMod { get; set; } = 1;
+
+        [ViewVariables(VVAccess.ReadWrite)]
         public float MutationMod { get; set; } = 1f;
+
+        [ViewVariables(VVAccess.ReadWrite)]
         public float MutationLevel { get; set; } = 0f;
 
+        [ViewVariables(VVAccess.ReadWrite)]
         public float Health { get; set; } = 0f;
 
+        [ViewVariables(VVAccess.ReadWrite)]
         public float WeedCoefficient { get; set; } = 1f;
 
+        [ViewVariables(VVAccess.ReadWrite)]
         public Seed? Seed { get; set; } = null;
 
+        [ViewVariables(VVAccess.ReadWrite)]
         public bool ImproperHeat { get; set; }
+
+        [ViewVariables(VVAccess.ReadWrite)]
         public bool ImproperPressure { get; set; }
+
+        [ViewVariables(VVAccess.ReadWrite)]
         public bool ImproperLight { get; set; }
+
+        [ViewVariables(VVAccess.ReadWrite)]
         public bool ForceUpdate { get; set; }
 
         [ComponentDependency] private readonly SolutionContainerComponent? _solutionContainer = default!;
@@ -69,7 +105,7 @@ namespace Content.Server.GameObjects.Components.Botany
         {
             base.Initialize();
 
-            if(!Owner.EnsureComponent<SolutionContainerComponent>(out var _))
+            if(!Owner.EnsureComponent<SolutionContainerComponent>(out var solution))
                 Logger.Warning($"Entity {Owner} with a PlantHolderComponent did not have a SolutionContainerComponent.");
         }
 
@@ -467,14 +503,12 @@ namespace Content.Server.GameObjects.Components.Botany
             {
                 var one = ReagentUnit.New(1);
 
-                foreach (var (reagent, amount) in _solutionContainer.ReagentList)
+                foreach (var (reagent, amount) in _solutionContainer.ReagentList.ToArray())
                 {
                     var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent);
                     reagentProto.ReactionPlant(Owner);
-                    _solutionContainer.Solution.RemoveReagent(reagent, one);
+                    _solutionContainer.Solution.RemoveReagent(reagent, amount < one ? amount : one);
                 }
-
-                _solutionContainer.Solution.RemoveAllSolution();
             }
 
             CheckLevelSanity();

@@ -1,0 +1,27 @@
+- type: entity
+  name: hydroponics tray
+  id: hydroponicsTray
+  components:
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Anchorable
+      snap: true
+    - type: Physics
+      anchored: true
+      shapes:
+        - !type:PhysShapeAabb
+          mask:
+            - Impassable
+            - MobImpassable
+            - VaultImpassable
+    - type: Destructible
+      deadThreshold: 50
+      resistances: metallicResistances
+    - type: Sprite
+      sprite: Constructible/Hydroponics/hydro_tools.rsi
+      state: hydrotray3
+    - type: PlantHolder
+    - type: SolutionContainer
+      maxVol: 200
+      caps: AddTo, NoExamine
+    - type: Appearance

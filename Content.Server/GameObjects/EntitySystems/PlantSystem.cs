@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Content.Server.Botany;
 using Content.Server.GameObjects.Components.Botany;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
@@ -14,9 +16,12 @@ namespace Content.Server.GameObjects.EntitySystems
     {
         [Dependency] private readonly IComponentManager _componentManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         private int _nextUid = 0;
         private readonly Dictionary<int, Seed> _seeds = new Dictionary<int,Seed>();
+
+        private float _timer = 0f;
 
         public IReadOnlyDictionary<int, Seed> Seeds => _seeds;
 
@@ -49,6 +54,12 @@ namespace Content.Server.GameObjects.EntitySystems
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
+
+            _timer += frameTime;
+            if (_timer < 3f)
+                return;
+
+            _timer = 0f;
 
             foreach (var plantHolder in _componentManager.EntityQuery<PlantHolderComponent>())
             {
