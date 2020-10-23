@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -17,7 +18,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         void RemoveReceiver(PowerReceiverComponent receiver);
 
-        public Entity Owner { get; }
+        public IEntity ProviderOwner { get; }
     }
 
     [RegisterComponent]
@@ -25,7 +26,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
     {
         public override string Name => "PowerProvider";
 
-        public new Entity Owner => Owner;
+        public IEntity ProviderOwner => Owner;
 
         /// <summary>
         ///     The max distance this can transmit power to <see cref="PowerReceiverComponent"/>s from.
@@ -128,7 +129,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
             public void AddReceiver(PowerReceiverComponent receiver) { }
             public INodeGroup GetWireNet() { return new BaseNodeGroup(); }
             public void RemoveReceiver(PowerReceiverComponent receiver) { }
-            public Entity Owner => default;
+            public IEntity ProviderOwner => default;
         }
     }
 }

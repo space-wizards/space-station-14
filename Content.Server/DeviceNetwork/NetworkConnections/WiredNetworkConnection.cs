@@ -53,7 +53,7 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
 
         private bool TryGetWireNet(PowerReceiverComponent powerReceiver, out INodeGroup net)
         {
-            if (powerReceiver.Provider != default && powerReceiver.Provider.Owner.TryGetComponent<NodeContainerComponent>(out var nodeContainer))
+            if (powerReceiver.Provider != default && powerReceiver.Provider.ProviderOwner.TryGetComponent<NodeContainerComponent>(out var nodeContainer))
             {
                 var nodes = nodeContainer.Nodes;
                 for (var index = 0; index < nodes.Count; index++)
