@@ -1,0 +1,25 @@
+﻿- type: entity
+  parent: BaseItem
+  id: ProduceBase
+  abstract: true
+  components:
+    - type: SolutionContainer
+      caps: NoExamine
+    - type: Sprite
+      state: produce
+    - type: Produce
+
+- type: entity
+  name: wheat
+  desc: Sigh... wheat... a-grain?
+  id: Wheat
+  parent: ProduceBase
+  components:
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/wheat.rsi
+    - type: SolutionContainer
+      caps: NoExamine
+      contents:
+        chem.Flour: 5
+    - type: Produce
+      seed: wheat

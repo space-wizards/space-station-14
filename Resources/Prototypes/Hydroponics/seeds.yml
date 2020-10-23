@@ -1,0 +1,22 @@
+﻿- type: seed
+  id: wheat
+  name: wheat
+  displayName: wheat stalks
+  plantRsi: Objects/Specific/Hydroponics/wheat.rsi
+  productPrototypes:
+    - Wheat
+  lifespan: 25
+  maturation: 6
+  production: 1
+  yield: 4
+  potency: 5
+  idealLight: 8
+  nutrientConsumption: 0.15
+  chemicals:
+    chem.Nutriment:
+      Item1: 1
+      Item2: 20
+    chem.Flour:
+      Item1: 5
+      Item2: 5
+

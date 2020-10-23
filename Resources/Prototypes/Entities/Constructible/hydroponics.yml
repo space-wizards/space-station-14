@@ -8,6 +8,7 @@
       snap: true
     - type: Physics
       anchored: true
+      hard: false
       shapes:
         - !type:PhysShapeAabb
           mask:
@@ -21,7 +22,10 @@
       sprite: Constructible/Hydroponics/hydro_tools.rsi
       state: hydrotray3
     - type: PlantHolder
+      drawWarnings: true
     - type: SolutionContainer
       maxVol: 200
       caps: AddTo, NoExamine
     - type: Appearance
+      visuals:
+        - type: PlantHolderVisualizer

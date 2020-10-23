@@ -1,0 +1,21 @@
+﻿- type: entity
+  parent: BaseItem
+  id: SeedBase
+  abstract: true
+  components:
+    - type: Seed
+    - type: SolutionContainer
+      caps: NoExamine
+    - type: Sprite
+      state: seed
+      netsync: false
+
+- type: entity
+  parent: SeedBase
+  name: wheat seeds
+  id: WheatSeeds
+  components:
+    - type: Seed
+      seed: wheat
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/wheat.rsi

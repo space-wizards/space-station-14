@@ -1,27 +1,38 @@
 ﻿#nullable enable
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.Atmos;
 using Content.Server.Botany;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Chemistry;
+using Content.Shared.GameObjects.Components.Botany;
+using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.GameObjects.Components;
+using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Botany
 {
     [RegisterComponent]
-    public class PlantHolderComponent : Component
+    public class PlantHolderComponent : Component, IInteractUsing, IInteractHand, IActivate
     {
         public const float HydroponicsSpeedMultiplier = 1f;
 
@@ -31,10 +42,11 @@ namespace Content.Server.GameObjects.Components.Botany
 
         public override string Name => "PlantHolder";
 
-        [ViewVariables] private int _lastProduce;
+        [ViewVariables] private int _lastProduce = 0;
+        [ViewVariables(VVAccess.ReadWrite)] private int _missingGas = 0;
         private readonly TimeSpan _cycleDelay = TimeSpan.FromSeconds(15f);
         [ViewVariables] private TimeSpan _lastCycle = TimeSpan.Zero;
-        [ViewVariables] private bool _updateSpriteAfterUpdate = false;
+        [ViewVariables(VVAccess.ReadWrite)] private bool _updateSpriteAfterUpdate = false;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool DrawWarnings { get; private set; } = false;
@@ -100,6 +112,7 @@ namespace Content.Server.GameObjects.Components.Botany
         public bool ForceUpdate { get; set; }
 
         [ComponentDependency] private readonly SolutionContainerComponent? _solutionContainer = default!;
+        [ComponentDependency] private readonly AppearanceComponent? _appearanceComponent = default!;
 
         public override void Initialize()
         {
@@ -107,6 +120,12 @@ namespace Content.Server.GameObjects.Components.Botany
 
             if(!Owner.EnsureComponent<SolutionContainerComponent>(out var solution))
                 Logger.Warning($"Entity {Owner} with a PlantHolderComponent did not have a SolutionContainerComponent.");
+        }
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+            serializer.DataField(this, x => x.DrawWarnings, "drawWarnings", false);
         }
 
         public void WeedInvasion()
@@ -235,22 +254,22 @@ namespace Content.Server.GameObjects.Components.Botany
 
             if (Seed.ConsumeGasses.Count > 0)
             {
-                var missingGas = 0;
+                _missingGas = 0;
 
                 foreach (var (gas, amount) in Seed.ConsumeGasses)
                 {
                     if (environment.GetMoles(gas) < amount)
                     {
-                        missingGas++;
+                        _missingGas++;
                         continue;
                     }
 
                     environment.AdjustMoles(gas, -amount);
                 }
 
-                if (missingGas > 0)
+                if (_missingGas > 0)
                 {
-                    Health -= missingGas * HydroponicsSpeedMultiplier;
+                    Health -= _missingGas * HydroponicsSpeedMultiplier;
                     if (DrawWarnings)
                         _updateSpriteAfterUpdate = true;
                 }
@@ -400,6 +419,19 @@ namespace Content.Server.GameObjects.Components.Botany
             MutationMod = MathHelper.Clamp(MutationMod, 0f, 3f);
         }
 
+        public bool DoHarvest(IEntity user)
+        {
+            if (Seed == null || !Harvest || user.Deleted || !ActionBlockerSystem.CanInteract(user))
+                return false;
+
+            if (!Seed.CheckHarvest(user))
+                return false;
+
+            Seed.Harvest(user, YieldMod);
+            AfterHarvest();
+            return true;
+        }
+
         public void AutoHarvest()
         {
             if (Seed == null || !Harvest)
@@ -431,7 +463,17 @@ namespace Content.Server.GameObjects.Components.Botany
 
         public void Die()
         {
-             // TODO
+            Dead = true;
+            Harvest = false;
+            MutationLevel = 0;
+            YieldMod = 1;
+            MutationMod = 1;
+            ImproperLight = false;
+            ImproperHeat = false;
+            ImproperPressure = false;
+            WeedLevel += 1 * HydroponicsSpeedMultiplier;
+            PestLevel = 0;
+            UpdateSprite();
         }
 
         public void RemovePlant()
@@ -523,6 +565,46 @@ namespace Content.Server.GameObjects.Components.Botany
         {
             _updateSpriteAfterUpdate = false;
 
+            if (_appearanceComponent == null)
+                return;
+
+            if (Seed != null)
+            {
+                if(DrawWarnings)
+                    _appearanceComponent.SetData(PlantHolderVisuals.HealthLight, Health <= (Seed.Endurance / 2f));
+
+                if (Dead)
+                {
+                    _appearanceComponent.SetData(PlantHolderVisuals.Plant, new SpriteSpecifier.Rsi(Seed.PlantRsi, "dead"));
+                }
+                else if (Harvest)
+                {
+                    _appearanceComponent.SetData(PlantHolderVisuals.Plant, new SpriteSpecifier.Rsi(Seed.PlantRsi, "harvest"));
+                }
+                else if (Age < Seed.Maturation)
+                {
+                    var growthStage = Math.Max(1, (int)((Age * Seed.GrowthStages) / Seed.Maturation));
+                    _appearanceComponent.SetData(PlantHolderVisuals.Plant, new SpriteSpecifier.Rsi(Seed.PlantRsi,$"stage-{growthStage}"));
+                    _lastProduce = Age;
+                }
+                else
+                {
+                    _appearanceComponent.SetData(PlantHolderVisuals.Plant, new SpriteSpecifier.Rsi(Seed.PlantRsi,$"stage-{Seed.GrowthStages}"));
+                }
+            }
+            else
+            {
+                _appearanceComponent.SetData(PlantHolderVisuals.Plant, SpriteSpecifier.Invalid);
+            }
+
+            if (DrawWarnings)
+            {
+                _appearanceComponent.SetData(PlantHolderVisuals.WaterLight, WaterLevel <= 10);
+                _appearanceComponent.SetData(PlantHolderVisuals.NutritionLight, NutritionLevel <= 2);
+                _appearanceComponent.SetData(PlantHolderVisuals.AlertLight, WeedLevel >= 5 || PestLevel >= 5 || Toxins >= 40 || ImproperHeat || ImproperLight || ImproperPressure || _missingGas > 0);
+                _appearanceComponent.SetData(PlantHolderVisuals.HarvestLight, Harvest);
+            }
+
             UpdateName();
         }
 
@@ -540,6 +622,62 @@ namespace Content.Server.GameObjects.Components.Botany
             var plantSystem = EntitySystem.Get<PlantSystem>();
             if (plantSystem.Seeds.ContainsKey(Seed.Uid))
                 Seed = Seed.Diverge(modified);
+        }
+
+        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        {
+            var user = eventArgs.User;
+            var usingItem = eventArgs.Using;
+
+            if (usingItem == null || usingItem.Deleted || !ActionBlockerSystem.CanInteract(user))
+                return false;
+
+            if (usingItem.TryGetComponent(out SeedComponent? seeds))
+            {
+                if (Seed == null)
+                {
+                    if (seeds.Seed == null)
+                    {
+                        user.PopupMessageCursor(Loc.GetString("The packet seems to be empty. You throw it away."));
+                        usingItem.Delete();
+                        return false;
+                    }
+
+                    user.PopupMessageCursor(Loc.GetString("You plant the {0} {1}.", seeds.Seed.SeedName, seeds.Seed.SeedNoun));
+
+                    Seed = seeds.Seed;
+                    Dead = false;
+                    Age = 1;
+                    Health = Seed.Endurance;
+                    _lastCycle = _gameTiming.CurTime;
+
+                    usingItem.Delete();
+
+                    CheckLevelSanity();
+                    UpdateSprite();
+
+                    return true;
+                }
+                else
+                {
+                    user.PopupMessageCursor(Loc.GetString("The {0} already has seeds in it!", Owner.Name));
+                    return false;
+                }
+            }
+
+            return false;
+        }
+
+        public bool InteractHand(InteractHandEventArgs eventArgs)
+        {
+            // DoHarvest does the sanity checks.
+            return DoHarvest(eventArgs.User);
+        }
+
+        public void Activate(ActivateEventArgs eventArgs)
+        {
+            // DoHarvest does the sanity checks.
+            DoHarvest(eventArgs.User);
         }
     }
 }
