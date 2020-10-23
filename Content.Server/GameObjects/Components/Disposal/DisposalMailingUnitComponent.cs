@@ -662,6 +662,8 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             _container = null!;
 
+            _connection!.Close();
+
             base.OnRemove();
         }
 

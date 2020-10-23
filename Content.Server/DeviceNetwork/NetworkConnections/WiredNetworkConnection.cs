@@ -19,8 +19,13 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
 
         protected override bool CanReceive(int frequency, string sender, IReadOnlyDictionary<string, string> payload, Metadata metadata, bool broadcast)
         {
+            if (_owner.Deleted)
+            {
+                Connection.Close();
+                return false;
+            }
 
-            if (!_owner.Deleted && _owner.TryGetComponent<PowerReceiverComponent>(out var powerReceiver)
+            if (_owner.TryGetComponent<PowerReceiverComponent>(out var powerReceiver)
                 && TryGetWireNet(powerReceiver, out var ownNet)
                 && metadata.TryParseMetadata<INodeGroup>(WIRENET, out var senderNet))
             {
@@ -32,7 +37,13 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
 
         protected override Metadata GetMetadata()
         {
-            if (!_owner.Deleted && _owner.TryGetComponent<PowerReceiverComponent>(out var powerReceiver)
+            if (_owner.Deleted)
+            {
+                Connection.Close();
+                return new Metadata();
+            }
+
+            if (_owner.TryGetComponent<PowerReceiverComponent>(out var powerReceiver)
                 && TryGetWireNet(powerReceiver, out var net))
             {
                 var metadata = new Metadata
