@@ -5,6 +5,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
+using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -49,11 +50,12 @@ namespace Content.Server.GameObjects.Components.Botany
 
             solutionContainer.RemoveAllSolution();
 
-            foreach (var (chem, (min, max)) in Seed.Chemicals)
+            foreach (var (chem, quantity) in Seed.Chemicals)
             {
-                var amount = ReagentUnit.New(min);
-                if(max > 0 && Potency > 0)
-                    amount += ReagentUnit.New(Potency/max);
+                var amount = ReagentUnit.New(quantity.Min);
+                if(quantity.PotencyDivisor > 0 && Potency > 0)
+                    amount += ReagentUnit.New(Potency/quantity.PotencyDivisor);
+                amount = ReagentUnit.New((int) MathHelper.Clamp(amount.Float(), quantity.Min, quantity.Max));
                 solutionContainer.MaxVolume += amount;
                 solutionContainer.Solution.AddReagent(chem, amount);
             }

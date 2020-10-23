@@ -14,9 +14,11 @@
   nutrientConsumption: 0.15
   chemicals:
     chem.Nutriment:
-      Item1: 1
-      Item2: 20
+      Min: 1
+      Max: 20
+      PotencyDivisor: 20
     chem.Flour:
-      Item1: 5
-      Item2: 5
+      Min: 5
+      Max: 20
+      PotencyDivisor: 20
 

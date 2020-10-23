@@ -63,6 +63,13 @@ namespace Content.Server.Botany
     }
 */
 
+    public struct SeedChemQuantity
+    {
+        public int Min;
+        public int Max;
+        public int PotencyDivisor;
+    }
+
     [Prototype("seed")]
     public class Seed : IPrototype, IIndexedPrototype, IExposeData
     {
@@ -85,7 +92,7 @@ namespace Content.Server.Botany
 
         #region Output
         [ViewVariables] public List<string> ProductPrototypes { get; set; }
-        [ViewVariables] public Dictionary<string, (int min, int max)> Chemicals { get; set; }
+        [ViewVariables] public Dictionary<string, SeedChemQuantity> Chemicals { get; set; }
         [ViewVariables] public Dictionary<Gas, float> ConsumeGasses { get; set; }
         [ViewVariables]public Dictionary<Gas, float> ExudeGasses { get; set; }
         #endregion
@@ -146,7 +153,7 @@ namespace Content.Server.Botany
             serializer.DataField(this, x => x.Mysterious, "mysterious", false);
             serializer.DataField(this, x => x.Immutable, "immutable", false);
             serializer.DataField(this, x => x.ProductPrototypes, "productPrototypes", new List<string>());
-            serializer.DataField(this, x => x.Chemicals, "chemicals", new Dictionary<string, (int min, int max)>());
+            serializer.DataField(this, x => x.Chemicals, "chemicals", new Dictionary<string, SeedChemQuantity>());
             serializer.DataField(this, x => x.ConsumeGasses, "consumeGasses", new Dictionary<Gas, float>());
             serializer.DataField(this, x => x.ExudeGasses, "exudeGasses", new Dictionary<Gas, float>());
             serializer.DataField(this, x => x.NutrientConsumption, "nutrientConsumption", 0.25f);
@@ -193,7 +200,7 @@ namespace Content.Server.Botany
                 Mysterious = Mysterious,
 
                 ProductPrototypes = new List<string>(ProductPrototypes),
-                Chemicals = new Dictionary<string, (int, int)>(Chemicals),
+                Chemicals = new Dictionary<string, SeedChemQuantity>(Chemicals),
                 ConsumeGasses = new Dictionary<Gas, float>(ConsumeGasses),
                 ExudeGasses = new Dictionary<Gas, float>(ExudeGasses),
 
