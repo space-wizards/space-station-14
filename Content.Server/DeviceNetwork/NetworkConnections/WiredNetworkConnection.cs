@@ -20,7 +20,7 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
         protected override bool CanReceive(int frequency, string sender, IReadOnlyDictionary<string, string> payload, Metadata metadata, bool broadcast)
         {
 
-            if (_owner.TryGetComponent<PowerReceiverComponent>(out var powerReceiver)
+            if (!_owner.Deleted && _owner.TryGetComponent<PowerReceiverComponent>(out var powerReceiver)
                 && TryGetWireNet(powerReceiver, out var ownNet)
                 && metadata.TryParseMetadata<INodeGroup>(WIRENET, out var senderNet))
             {
@@ -32,7 +32,7 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
 
         protected override Metadata GetMetadata()
         {
-            if (_owner.TryGetComponent<PowerReceiverComponent>(out var powerReceiver)
+            if (!_owner.Deleted && _owner.TryGetComponent<PowerReceiverComponent>(out var powerReceiver)
                 && TryGetWireNet(powerReceiver, out var net))
             {
                 var metadata = new Metadata
@@ -53,7 +53,7 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
 
         private bool TryGetWireNet(PowerReceiverComponent powerReceiver, out INodeGroup net)
         {
-            if (powerReceiver.Provider != default && powerReceiver.Provider.ProviderOwner.TryGetComponent<NodeContainerComponent>(out var nodeContainer))
+            if (powerReceiver.Provider is PowerProviderComponent && powerReceiver.Provider.ProviderOwner.TryGetComponent<NodeContainerComponent>(out var nodeContainer))
             {
                 var nodes = nodeContainer.Nodes;
                 for (var index = 0; index < nodes.Count; index++)

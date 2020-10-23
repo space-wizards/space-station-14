@@ -1,5 +1,4 @@
 ﻿using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Maths;
 using System;
 using System.Collections.Generic;
@@ -23,7 +22,7 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
 
         protected override bool CanReceive(int frequency, string sender, IReadOnlyDictionary<string, string> payload, Metadata metadata, bool broadcast)
         {
-            if(metadata.TryParseMetadata<Vector2>(WIRELESS_POSITION, out var position))
+            if (!_owner.Deleted && metadata.TryParseMetadata<Vector2>(WIRELESS_POSITION, out var position))
             {
                 var ownPosition = _owner.Transform.WorldPosition;
                 var distance = (ownPosition - position).Length;
@@ -35,6 +34,9 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
 
         protected override Metadata GetMetadata()
         {
+            if (_owner.Deleted)
+                return new Metadata();
+
             var position = _owner.Transform.WorldPosition;
             var metadata = new Metadata
             {
