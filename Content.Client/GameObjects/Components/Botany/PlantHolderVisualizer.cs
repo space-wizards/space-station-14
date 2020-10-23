@@ -23,16 +23,18 @@ namespace Content.Client.GameObjects.Components.Botany
             sprite.LayerMapReserveBlank(PlantHolderLayers.AlertLight);
             sprite.LayerMapReserveBlank(PlantHolderLayers.HarvestLight);
 
+            var hydroTools = new ResourcePath("Constructible/Hydroponics/hydro_tools.rsi");
+
             sprite.LayerSetSprite(PlantHolderLayers.HealthLight,
-                new SpriteSpecifier.Rsi(new ResourcePath("Constructible/Hydroponics/hydro_tools.rsi"), "over_lowhealth3"));
+                new SpriteSpecifier.Rsi(hydroTools, "over_lowhealth3"));
             sprite.LayerSetSprite(PlantHolderLayers.WaterLight,
-                new SpriteSpecifier.Rsi(new ResourcePath("Constructible/Hydroponics/hydro_tools.rsi"), "over_lowwater3"));
+                new SpriteSpecifier.Rsi(hydroTools, "over_lowwater3"));
             sprite.LayerSetSprite(PlantHolderLayers.NutritionLight,
-                new SpriteSpecifier.Rsi(new ResourcePath("Constructible/Hydroponics/hydro_tools.rsi"), "over_lownutri3"));
+                new SpriteSpecifier.Rsi(hydroTools, "over_lownutri3"));
             sprite.LayerSetSprite(PlantHolderLayers.AlertLight,
-                new SpriteSpecifier.Rsi(new ResourcePath("Constructible/Hydroponics/hydro_tools.rsi"), "over_alert3"));
+                new SpriteSpecifier.Rsi(hydroTools, "over_alert3"));
             sprite.LayerSetSprite(PlantHolderLayers.HarvestLight,
-                new SpriteSpecifier.Rsi(new ResourcePath("Constructible/Hydroponics/hydro_tools.rsi"), "over_harvest3"));
+                new SpriteSpecifier.Rsi(hydroTools, "over_harvest3"));
 
             sprite.LayerSetVisible(PlantHolderLayers.Plant, false);
             sprite.LayerSetVisible(PlantHolderLayers.HealthLight, false);
