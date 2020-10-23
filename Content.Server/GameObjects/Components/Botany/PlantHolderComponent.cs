@@ -5,13 +5,17 @@ using System.Threading.Tasks;
 using Content.Server.Atmos;
 using Content.Server.Botany;
 using Content.Server.GameObjects.Components.Chemistry;
+using Content.Server.GameObjects.Components.Fluids;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
+using Content.Shared.Audio;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Botany;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.ComponentDependencies;
@@ -32,7 +36,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Botany
 {
     [RegisterComponent]
-    public class PlantHolderComponent : Component, IInteractUsing, IInteractHand, IActivate
+    public class PlantHolderComponent : Component, IInteractUsing, IInteractHand, IActivate, IReagentReaction
     {
         public const float HydroponicsSpeedMultiplier = 1f;
 
@@ -665,7 +669,64 @@ namespace Content.Server.GameObjects.Components.Botany
                 }
             }
 
+            if (usingItem.HasComponent<HoeComponent>())
+            {
+                if (WeedLevel > 0)
+                {
+                    user.PopupMessageCursor(Loc.GetString("You remove the weeds from the {0}.", Owner.Name));
+                    user.PopupMessageOtherClients(Loc.GetString("{0} starts uprooting the weeds.", user.Name));
+                    WeedLevel = 0;
+                    UpdateSprite();
+                }
+                else
+                {
+                    user.PopupMessageCursor(Loc.GetString("This plot is devoid of weeds! It doesn't need uprooting."));
+                }
+
+                return true;
+            }
+
+            if (usingItem.TryGetComponent(out SolutionContainerComponent? solution) && solution.CanRemoveSolutions)
+            {
+                var amount = 5f;
+                var sprayed = false;
+
+                if (usingItem.TryGetComponent(out SprayComponent? spray))
+                {
+                    sprayed = true;
+                    amount = 1f;
+                    EntitySystem.Get<AudioSystem>().PlayFromEntity(spray.SpraySound, usingItem, AudioHelpers.WithVariation(0.125f));
+                }
+
+                var chemAmount = ReagentUnit.New(amount);
+
+                var split = solution.Solution.SplitSolution(chemAmount <= solution.Solution.TotalVolume ? chemAmount : solution.Solution.TotalVolume);
+
+                user.PopupMessageCursor(sprayed ? $"You spray {Owner.Name} with {usingItem.Name}." : $"You transfer {split.TotalVolume.ToString()}u to {Owner.Name}");
+
+                _solutionContainer?.TryAddSolution(split);
+                return true;
+            }
+
             return false;
+        }
+
+        public ReagentUnit ReagentReactTouch(ReagentPrototype reagent, ReagentUnit volume)
+        {
+            if(_solutionContainer == null)
+                return ReagentUnit.Zero;
+
+            _solutionContainer.TryAddReagent(reagent.ID, volume, out var accepted);
+            return accepted;
+        }
+
+        public ReagentUnit ReagentReactInjection(ReagentPrototype reagent, ReagentUnit volume)
+        {
+            if(_solutionContainer == null)
+                return ReagentUnit.Zero;
+
+            _solutionContainer.TryAddReagent(reagent.ID, volume, out var accepted);
+            return accepted;
         }
 
         public bool InteractHand(InteractHandEventArgs eventArgs)

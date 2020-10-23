@@ -313,6 +313,30 @@
       amount: 0.1
 
 - type: reagent
+  id: chem.WeedKiller
+  name: weed killer
+  desc: A mixture that targets weeds.
+  color: "#49002E"
+  physicalDesc: bubbling
+  plantMetabolism:
+    - !type:AdjustToxins
+      amount: 4
+    - !type:AdjustWeeds
+      amount: -6
+
+- type: reagent
+  id: chem.PestKiller
+  name: pest killer
+  desc: A mixture that targets pests.
+  color: "#49002E"
+  physicalDesc: bubbling
+  plantMetabolism:
+    - !type:AdjustToxins
+      amount: 4
+    - !type:AdjustPests
+      amount: -6
+
+- type: reagent
   id: chem.Toxin
   name: toxin
   desc: A Toxic chemical.
