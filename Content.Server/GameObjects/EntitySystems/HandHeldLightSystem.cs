@@ -11,6 +11,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             foreach (var comp in ComponentManager.EntityQuery<HandheldLightComponent>())
             {
+                if (comp.Owner.Paused) continue;
                 comp.OnUpdate(frameTime);
             }
         }
