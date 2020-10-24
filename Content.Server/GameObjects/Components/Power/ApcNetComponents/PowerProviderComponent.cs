@@ -127,7 +127,6 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         private class NullPowerProvider : IPowerProvider
         {
             public void AddReceiver(PowerReceiverComponent receiver) { }
-            public INodeGroup GetWireNet() { return new BaseNodeGroup(); }
             public void RemoveReceiver(PowerReceiverComponent receiver) { }
             public IEntity ProviderOwner => default;
         }
