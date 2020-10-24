@@ -2,6 +2,7 @@
 using Content.Server.GameObjects.Components.Stack;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
@@ -62,12 +63,14 @@ namespace Content.Server.GameObjects.Components.Damage
                     var spawned = Owner.EntityManager.SpawnEntity(key, Owner.Transform.Coordinates);
                     var stack = spawned.GetComponent<StackComponent>();
                     stack.Count = count;
+                    spawned.RandomOffset(0.5f);
                 }
                 else
                 {
                     for (var i = 0; i < count; i++)
                     {
-                        Owner.EntityManager.SpawnEntity(key, Owner.Transform.Coordinates);
+                        var spawned = Owner.EntityManager.SpawnEntity(key, Owner.Transform.Coordinates);
+                        spawned.RandomOffset(0.5f);
                     }
                 }
             }
