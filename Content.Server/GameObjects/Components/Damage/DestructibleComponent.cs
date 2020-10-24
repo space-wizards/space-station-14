@@ -1,10 +1,15 @@
-﻿using Content.Shared.GameObjects.Components.Damage;
+﻿using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Stack;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Damage
@@ -17,6 +22,8 @@ namespace Content.Server.GameObjects.Components.Damage
     public class DestructibleComponent : RuinableComponent, IDestroyAct
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         protected ActSystem ActSystem;
 
@@ -24,22 +31,54 @@ namespace Content.Server.GameObjects.Components.Damage
         public override string Name => "Destructible";
 
         /// <summary>
-        ///     Entity spawned upon destruction.
+        /// Entities spawned on destruction plus the min and max amount spawned.
         /// </summary>
-        public string SpawnOnDestroy { get; private set; }
+        public Dictionary<string, List<int>> SpawnOnDestroy { get; private set; }
 
         void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
         {
-            if (!string.IsNullOrWhiteSpace(SpawnOnDestroy) && eventArgs.IsSpawnWreck)
+            if (SpawnOnDestroy == null || !eventArgs.IsSpawnWreck) return;
+            foreach (var (key, value) in SpawnOnDestroy)
             {
-                Owner.EntityManager.SpawnEntity(SpawnOnDestroy, Owner.Transform.Coordinates);
+                int count;
+                if (value == null)
+                {
+                    count = 1;
+                }
+                else if (value.Count == 1 || value[0] == value[1])
+                {
+                    count = value[0];
+                }
+                else
+                {
+                    count = _random.Next(value[0], value[1] + 1);
+                }
+
+                if (count == 0) continue;
+
+                var proto = _prototypeManager.Index<EntityPrototype>(key);
+                if (proto.Components.ContainsKey("Stack"))
+                {
+                    var spawned = Owner.EntityManager.SpawnEntity(key, Owner.Transform.Coordinates);
+                    var stack = spawned.GetComponent<StackComponent>();
+                    stack.Count = count;
+                }
+                else
+                {
+                    for (var i = 0; i < count; i++)
+                    {
+                        Owner.EntityManager.SpawnEntity(key, Owner.Transform.Coordinates);
+                    }
+                }
             }
         }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(this, d => d.SpawnOnDestroy, "spawnOnDestroy", string.Empty);
+
+
+            serializer.DataField(this, d => d.SpawnOnDestroy, "spawnOnDestroy", null);
         }
 
         public override void Initialize()

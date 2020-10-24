@@ -30,6 +30,8 @@
     deadThreshold: 15
     resistances: metallicResistances
     destroySound: /Audio/Effects/glass_break1.ogg # TODO: pick a random sound out of multiple possibilities
+    spawnOnDestroy:
+      ShardGlass: [1, 3]
   - type: SnapGrid
     offset: Center
   - type: Airtight
