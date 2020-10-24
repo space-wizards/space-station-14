@@ -50,15 +50,12 @@ namespace Content.Shared.GameObjects.Components.Body.Part
 
                 if (value != null)
                 {
-                    AddedToBody();
+                    AddedToBody(value);
                 }
             }
         }
 
         [ViewVariables] public BodyPartType PartType { get; private set; }
-
-        [ViewVariables] public string Plural { get; private set; } = string.Empty;
-
         [ViewVariables] public int Size { get; private set; }
 
         [ViewVariables] public int SizeUsed { get; private set; }
@@ -127,8 +124,6 @@ namespace Content.Shared.GameObjects.Components.Body.Part
             // TODO BODY serialize any changed properties?
 
             serializer.DataField(this, b => b.PartType, "partType", BodyPartType.Other);
-
-            serializer.DataField(this, b => b.Plural, "plural", string.Empty);
 
             serializer.DataField(this, b => b.Size, "size", 1);
 
@@ -289,14 +284,14 @@ namespace Content.Shared.GameObjects.Components.Body.Part
             return true;
         }
 
-        private void AddedToBody()
+        private void AddedToBody(IBody body)
         {
             Owner.Transform.AttachParent(Body!.Owner);
-            OnAddedToBody();
+            OnAddedToBody(body);
 
             foreach (var mechanism in _mechanisms)
             {
-                mechanism.AddedToBody();
+                mechanism.AddedToBody(body);
             }
         }
 
@@ -315,7 +310,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part
             }
         }
 
-        protected virtual void OnAddedToBody() { }
+        protected virtual void OnAddedToBody(IBody body) { }
 
         protected virtual void OnRemovedFromBody(IBody old) { }
     }
