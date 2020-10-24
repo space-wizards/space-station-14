@@ -24,6 +24,7 @@
     - type: SolutionContainer
       maxVol: 200
       caps: AddTo, NoExamine
+    - type: Pourable
     - type: Appearance
       visuals:
         - type: PlantHolderVisualizer
