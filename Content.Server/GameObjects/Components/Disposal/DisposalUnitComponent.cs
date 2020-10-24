@@ -138,16 +138,12 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
-            IDamageableComponent? damageState;
-            entity.TryGetComponent<IDamageableComponent>(out damageState);
 
             if (!entity.TryGetComponent(out IPhysicsComponent? physics) || 
                 !physics.CanCollide)
             {
-                if (damageState != null) {
-                    if (damageState.CurrentState != DamageState.Dead) {
-                        return false;
-                    }
+                if (entity.TryGetComponent(out IDamageableComponent? damageState) && damageState.CurrentState != DamageState.Dead) {
+                    return false;
                 }else
                 {
                     return false;
