@@ -621,20 +621,11 @@ namespace Content.Server.GameObjects.Components.Botany
                 _appearanceComponent.SetData(PlantHolderVisuals.HealthLight, false);
             }
 
-            if (DrawWarnings)
-            {
-                _appearanceComponent.SetData(PlantHolderVisuals.WaterLight, WaterLevel <= 10);
-                _appearanceComponent.SetData(PlantHolderVisuals.NutritionLight, NutritionLevel <= 2);
-                _appearanceComponent.SetData(PlantHolderVisuals.AlertLight, WeedLevel >= 5 || PestLevel >= 5 || Toxins >= 40 || ImproperHeat || ImproperLight || ImproperPressure || _missingGas > 0);
-                _appearanceComponent.SetData(PlantHolderVisuals.HarvestLight, Harvest);
-            }
-
-            UpdateName();
-        }
-
-        private void UpdateName()
-        {
-            // TODO
+            if (!DrawWarnings) return;
+            _appearanceComponent.SetData(PlantHolderVisuals.WaterLight, WaterLevel <= 10);
+            _appearanceComponent.SetData(PlantHolderVisuals.NutritionLight, NutritionLevel <= 2);
+            _appearanceComponent.SetData(PlantHolderVisuals.AlertLight, WeedLevel >= 5 || PestLevel >= 5 || Toxins >= 40 || ImproperHeat || ImproperLight || ImproperPressure || _missingGas > 0);
+            _appearanceComponent.SetData(PlantHolderVisuals.HarvestLight, Harvest);
         }
 
         public void CheckForDivergence(bool modified)
