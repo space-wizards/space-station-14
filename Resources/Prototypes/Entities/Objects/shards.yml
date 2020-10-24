@@ -1,0 +1,44 @@
+﻿- type: entity
+  id: ShardBase
+  name: shard
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Materials/Shards/shard.rsi
+    state: shard1
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    damageType: Slash
+  - type: Item
+    sprite: Objects/Materials/Shards/shard.rsi
+
+- type: entity
+  id: ShardGlass
+  name: glass shard
+  parent: ShardBase
+  components:
+  - type: Sprite
+    color: "#bbeeff"
+  - type: Item
+    color: "#bbeeff"
+
+- type: entity
+  id: ShardGlassReinforced
+  name: reinforced glass shard
+  parent: ShardBase
+  components:
+  - type: Sprite
+    color: "#96cdef"
+  - type: Item
+    color: "#96cdef"
+
+- type: entity
+  id: ShardGlassPhoron
+  name: phoron glass shard
+  parent: ShardBase
+  components:
+    - type: Sprite
+      color: "#f3b489"
+    - type: Item
+      color: "#f3b489"
