@@ -22,6 +22,7 @@ namespace Content.Server.GameObjects.Components
         {
             int current = eventArgs.Damageable.TotalDamage;
             int max = eventArgs.Damageable.Thresholds[DamageState.Dead];
+            if (eventArgs.Damageable.CurrentState == DamageState.Dead) return;
             UpdateVisuals(current, max);
         }
 

@@ -37,6 +37,9 @@
   - type: Construction
     graph: window
     node: window
+  - type: Appearance
+    visuals:
+    - type: WindowVisualizer
 
 - type: entity
   id: ReinforcedWindow
