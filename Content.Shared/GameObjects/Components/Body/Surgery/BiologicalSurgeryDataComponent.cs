@@ -260,7 +260,7 @@ namespace Content.Shared.GameObjects.Components.Body.Surgery
             performer.PopupMessage(Loc.GetString("Saw off the limb!"));
 
             // TODO BODY do_after: Delay
-            body.RemovePart(Parent, true);
+            body.RemovePart(Parent);
         }
     }
 }

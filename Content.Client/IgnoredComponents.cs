@@ -181,7 +181,8 @@
             "GasCanister",
             "GasCanisterPort",
             "Lung",
-            "Cleanable"
+            "Cleanable",
+            "Brain"
         };
     }
 }

@@ -3,26 +3,29 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.GameObjects.Components.Body.Behavior;
-using Robust.Shared.Interfaces.GameObjects;
+using Content.Shared.GameObjects.Components.Body.Part;
 
 namespace Content.Shared.GameObjects.Components.Body.Mechanism
 {
     public static class MechanismExtensions
     {
-        public static bool HasMechanismBehavior<T>(this IEntity entity) where T : IMechanismBehavior
+        public static bool HasMechanismBehavior<T>(this IBody body)
         {
-            // TODO BODY optimize
-            return entity.TryGetBody(out var body) &&
-                   body.Parts.Values.Any(p => p.Mechanisms.Any(m => m.Owner.HasComponent<T>()));
+            return body.Parts.Values.Any(p => p.HasMechanismBehavior<T>());
         }
 
-        public static IEnumerable<IMechanismBehavior> GetMechanismBehaviors(this IEntity entity)
+        public static bool HasMechanismBehavior<T>(this IBodyPart part)
         {
-            if (!entity.TryGetBody(out var body))
-            {
-                yield break;
-            }
+            return part.Mechanisms.Any(m => m.Owner.HasComponent<T>());
+        }
 
+        public static bool HasMechanismBehavior<T>(this IMechanism mechanism)
+        {
+            return mechanism.Owner.HasComponent<T>();
+        }
+
+        public static IEnumerable<IMechanismBehavior> GetMechanismBehaviors(this IBody body)
+        {
             foreach (var part in body.Parts.Values)
             foreach (var mechanism in part.Mechanisms)
             foreach (var behavior in mechanism.Owner.GetAllComponents<IMechanismBehavior>())
@@ -31,10 +34,10 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
             }
         }
 
-        public static bool TryGetMechanismBehaviors(this IEntity entity,
+        public static bool TryGetMechanismBehaviors(this IBody body,
             [NotNullWhen(true)] out List<IMechanismBehavior>? behaviors)
         {
-            behaviors = entity.GetMechanismBehaviors().ToList();
+            behaviors = body.GetMechanismBehaviors().ToList();
 
             if (behaviors.Count == 0)
             {
@@ -45,13 +48,8 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
             return true;
         }
 
-        public static IEnumerable<T> GetMechanismBehaviors<T>(this IEntity entity) where T : class, IMechanismBehavior
+        public static IEnumerable<T> GetMechanismBehaviors<T>(this IBody body) where T : class, IMechanismBehavior
         {
-            if (!entity.TryGetBody(out var body))
-            {
-                yield break;
-            }
-
             foreach (var part in body.Parts.Values)
             foreach (var mechanism in part.Mechanisms)
             {
@@ -62,7 +60,7 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
             }
         }
 
-        public static bool TryGetMechanismBehaviors<T>(this IEntity entity, [NotNullWhen(true)] out List<T>? behaviors)
+        public static bool TryGetMechanismBehaviors<T>(this IBody entity, [NotNullWhen(true)] out List<T>? behaviors)
             where T : class, IMechanismBehavior
         {
             behaviors = entity.GetMechanismBehaviors<T>().ToList();

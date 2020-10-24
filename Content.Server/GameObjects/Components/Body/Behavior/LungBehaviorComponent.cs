@@ -159,6 +159,7 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
         {
             var ratio = Atmospherics.BreathPercentage * frameTime;
 
+
             Transfer(from, Air, ratio);
             ToBloodstream(Air);
         }

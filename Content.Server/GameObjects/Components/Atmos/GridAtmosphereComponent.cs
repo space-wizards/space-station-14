@@ -8,6 +8,7 @@ using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Atmos.Piping;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.Atmos;
 using Content.Shared.Atmos;
 using Content.Shared.Maps;
 using Robust.Server.GameObjects.EntitySystems.TileLookup;
@@ -39,6 +40,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         [Robust.Shared.IoC.Dependency] private IServerEntityManager _serverEntityManager = default!;
 
         public GridTileLookupSystem GridTileLookupSystem { get; private set; } = default!;
+        internal GasTileOverlaySystem GasTileOverlaySystem { get; private set; } = default!;
         public AtmosphereSystem AtmosphereSystem { get; private set; } = default!;
 
         /// <summary>
@@ -173,10 +175,11 @@ namespace Content.Server.GameObjects.Components.Atmos
         public override void Initialize()
         {
             base.Initialize();
-            RepopulateTiles();
-
             GridTileLookupSystem = EntitySystem.Get<GridTileLookupSystem>();
+            GasTileOverlaySystem = EntitySystem.Get<GasTileOverlaySystem>();
             AtmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+
+            RepopulateTiles();
         }
 
         public override void OnAdd()
@@ -241,6 +244,12 @@ namespace Content.Server.GameObjects.Components.Atmos
                         FixVacuum(tile.GridIndices);
                     }
 
+                    // Tile used to be space, but isn't anymore.
+                    if (tile.Air?.Immutable ?? false)
+                    {
+                        tile.Air = null;
+                    }
+
                     tile.Air ??= new GasMixture(GetVolumeForCells(1), AtmosphereSystem){Temperature = Atmospherics.T20C};
                 }
 
@@ -300,12 +309,15 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void RemoveActiveTile(TileAtmosphere? tile)
+        public virtual void RemoveActiveTile(TileAtmosphere? tile, bool disposeGroup = true)
         {
             if (tile == null) return;
             _activeTiles.Remove(tile);
             tile.Excited = false;
-            tile.ExcitedGroup?.Dispose();
+            if(disposeGroup)
+                tile.ExcitedGroup?.Dispose();
+            else
+                tile.ExcitedGroup?.RemoveTile(tile);
         }
 
         /// <inheritdoc />
@@ -814,7 +826,8 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             foreach (var airtightComponent in GetObstructingComponents(indices))
             {
-                value |= airtightComponent.AirBlockedDirection;
+                if(airtightComponent.AirBlocked)
+                    value |= airtightComponent.AirBlockedDirection;
             }
 
             return value;

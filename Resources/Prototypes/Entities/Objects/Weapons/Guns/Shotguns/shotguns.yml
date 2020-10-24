@@ -75,12 +75,11 @@
 
 - type: entity
   name: double-barreled shotgun
-  parent: ShotgunBase
+  parent: LauncherBase
   id: ShotgunDB
   description: An immortal classic.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
     layers:
       - state: base
@@ -89,7 +88,9 @@
         map: ["enum.RangedBarrelVisualLayers.Bolt"]
   - type: Icon
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
+    state: icon
   - type: Item
+    size: 24
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
     state: icon
   - type: RangedWeapon
@@ -99,8 +100,8 @@
     allSelectors:
     - Single
     fillPrototype: ShellShotgun
-    capacity: 2
     fireRate: 8.0
+    capacity: 2
     minAngle: 10
     maxAngle: 60
     angleIncrease: 30
@@ -198,12 +199,11 @@
 
 - type: entity
   name: sawn-off shotgun
-  parent: ShotgunBase
+  parent: LauncherBase
   id: ShotgunSawn
   description: Omar's coming!
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
     layers:
       - state: base
@@ -212,7 +212,9 @@
         map: ["enum.RangedBarrelVisualLayers.Bolt"]
   - type: Icon
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
+    state: icon
   - type: Item
+    size: 24
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
     state: icon
   - type: RangedWeapon
@@ -222,8 +224,8 @@
     allSelectors:
     - Single
     fillPrototype: ShellShotgun
-    capacity: 2
     fireRate: 8.0
+    capacity: 2
     minAngle: 10
     maxAngle: 90
     angleIncrease: 45

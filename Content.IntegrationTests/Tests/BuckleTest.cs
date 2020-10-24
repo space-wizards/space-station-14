@@ -3,11 +3,9 @@ using Content.Server.GameObjects.Components.Buckle;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Strap;
-using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Buckle;
-using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Utility;
 using NUnit.Framework;
@@ -210,7 +208,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.True(human.TryGetComponent(out buckle));
                 Assert.True(chair.TryGetComponent(out strap));
                 Assert.True(human.TryGetComponent(out hands));
-                Assert.True(human.TryGetBody(out body));
+                Assert.True(human.TryGetComponent(out body));
 
                 // Buckle
                 Assert.True(buckle.TryBuckle(human, chair));
@@ -246,7 +244,7 @@ namespace Content.IntegrationTests.Tests
                 // Break our guy's kneecaps
                 foreach (var leg in legs)
                 {
-                    body.RemovePart(leg, false);
+                    body.RemovePart(leg);
                 }
             });
 
