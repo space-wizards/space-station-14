@@ -29,6 +29,7 @@
   - type: Destructible
     deadThreshold: 15
     resistances: metallicResistances
+    destroySound: /Audio/Effects/glass_break1.ogg # TODO: pick a random sound out of multiple possibilities
   - type: SnapGrid
     offset: Center
   - type: Airtight

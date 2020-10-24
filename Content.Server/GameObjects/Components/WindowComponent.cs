@@ -1,17 +1,22 @@
 ﻿using System;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedWindowComponent))]
-    public class WindowComponent : SharedWindowComponent, IExamine
+    public class WindowComponent : SharedWindowComponent, IExamine, IInteractHand
     {
         private int? Damage
         {
@@ -85,6 +90,14 @@ namespace Content.Server.GameObjects.Components
                     message.AddText("It is extremely badly cracked and on the verge of shattering.");
                     break;
             }
+        }
+
+        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
+        {
+            EntitySystem.Get<AudioSystem>()
+                .PlayAtCoords("/Audio/Effects/glass_knock.ogg", eventArgs.Target.Transform.Coordinates);
+            eventArgs.Target.PopupMessageEveryone(Loc.GetString("*knock knock*"));
+            return true;
         }
     }
 }
