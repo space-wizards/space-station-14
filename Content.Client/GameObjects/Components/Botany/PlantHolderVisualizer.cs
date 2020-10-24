@@ -36,12 +36,20 @@ namespace Content.Client.GameObjects.Components.Botany
             sprite.LayerSetSprite(PlantHolderLayers.HarvestLight,
                 new SpriteSpecifier.Rsi(hydroTools, "over_harvest3"));
 
+            // Let's make those invisible for now.
             sprite.LayerSetVisible(PlantHolderLayers.Plant, false);
             sprite.LayerSetVisible(PlantHolderLayers.HealthLight, false);
             sprite.LayerSetVisible(PlantHolderLayers.WaterLight, false);
             sprite.LayerSetVisible(PlantHolderLayers.NutritionLight, false);
             sprite.LayerSetVisible(PlantHolderLayers.AlertLight, false);
             sprite.LayerSetVisible(PlantHolderLayers.HarvestLight, false);
+
+            // Pretty unshaded lights!
+            sprite.LayerSetShader(PlantHolderLayers.HealthLight, "unshaded");
+            sprite.LayerSetShader(PlantHolderLayers.WaterLight, "unshaded");
+            sprite.LayerSetShader(PlantHolderLayers.NutritionLight, "unshaded");
+            sprite.LayerSetShader(PlantHolderLayers.AlertLight, "unshaded");
+            sprite.LayerSetShader(PlantHolderLayers.HarvestLight, "unshaded");
         }
 
         public override void OnChangeData(AppearanceComponent component)

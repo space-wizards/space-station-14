@@ -131,7 +131,7 @@ namespace Content.Server.Botany
         //public bool Hematophage { get; set; }
         //public bool Thorny { get; set; }
         //public bool Stinging { get; set; }
-        //public bool Ligneous { get; set; }
+        public bool Ligneous { get; set; }
         // public bool Teleporting { get; set; }
         // public PlantJuicy Juicy { get; set; }
         #endregion
@@ -178,6 +178,7 @@ namespace Content.Server.Botany
             serializer.DataField(this, x => x.GrowthStages, "growthStages", 6);
             serializer.DataField(this, x => x.HarvestRepeat, "harvestRepeat", HarvestType.NoRepeat);
             serializer.DataField(this, x => x.Potency, "potency", 1f);
+            serializer.DataField(this, x => x.Ligneous, "ligneous", false);
             serializer.DataField(this, x => x.PlantRsi, "plantRsi", null);
             serializer.DataField(this, x => x.PlantIconState, "plantIconState", "produce");
             serializer.DataField(this, x => x.Bioluminescent, "bioluminescent", false);
@@ -254,7 +255,6 @@ namespace Content.Server.Botany
             }
 
             seed.Name = Loc.GetString($"packet of {SeedName} {SeedNoun}");
-            seed.Description = Loc.GetString($"It has a picture of {DisplayName} on the front.");
 
             return seed;
         }

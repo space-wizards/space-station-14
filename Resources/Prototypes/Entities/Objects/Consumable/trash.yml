@@ -188,9 +188,8 @@
   id: TrashBananaPeel
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Food/banana.rsi
+    sprite: Objects/Specific/Hydroponics/banana.rsi
     state: peel
-
   - type: Slippery
     intersectPercentage: 0.2
   - type: Physics

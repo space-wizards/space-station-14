@@ -1,11 +1,9 @@
 - type: entity
-  name: hydroponics tray
-  id: hydroponicsTray
+  name: soil
+  id: hydroponicsSoil
   components:
     - type: Clickable
     - type: InteractionOutline
-    - type: Anchorable
-      snap: true
     - type: Physics
       anchored: true
       hard: false
@@ -20,12 +18,25 @@
       resistances: metallicResistances
     - type: Sprite
       sprite: Constructible/Hydroponics/hydro_tools.rsi
-      state: hydrotray3
+      state: soil
     - type: PlantHolder
-      drawWarnings: true
+      drawWarnings: false
     - type: SolutionContainer
       maxVol: 200
       caps: AddTo, NoExamine
     - type: Appearance
       visuals:
         - type: PlantHolderVisualizer
+
+- type: entity
+  name: hydroponics tray
+  parent: hydroponicsSoil
+  id: hydroponicsTray
+  components:
+    - type: Anchorable
+      snap: true
+    - type: Sprite
+      sprite: Constructible/Hydroponics/hydro_tools.rsi
+      state: hydrotray3
+    - type: PlantHolder
+      drawWarnings: true

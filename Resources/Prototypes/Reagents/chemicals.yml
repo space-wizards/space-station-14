@@ -316,7 +316,7 @@
   id: chem.WeedKiller
   name: weed killer
   desc: A mixture that targets weeds.
-  color: "#49002E"
+  color: "#968395"
   physicalDesc: bubbling
   plantMetabolism:
     - !type:AdjustToxins
@@ -328,7 +328,7 @@
   id: chem.PestKiller
   name: pest killer
   desc: A mixture that targets pests.
-  color: "#49002E"
+  color: "#9e9886"
   physicalDesc: bubbling
   plantMetabolism:
     - !type:AdjustToxins
@@ -345,3 +345,10 @@
   plantMetabolism:
     - !type:AdjustToxins
       amount: 10
+
+- type: reagent
+  id: chem.Sugar
+  name: sugar
+  desc: Sickly sweet.
+  color: "#ffffff"
+  physicalDesc: opaque

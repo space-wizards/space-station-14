@@ -17,7 +17,6 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.GameObjects.Systems;
@@ -47,11 +46,11 @@ namespace Content.Server.GameObjects.Components.Botany
 
         public override string Name => "PlantHolder";
 
-        [ViewVariables] private int _lastProduce = 0;
-        [ViewVariables(VVAccess.ReadWrite)] private int _missingGas = 0;
+        [ViewVariables] private int _lastProduce;
+        [ViewVariables(VVAccess.ReadWrite)] private int _missingGas;
         private readonly TimeSpan _cycleDelay = TimeSpan.FromSeconds(15f);
         [ViewVariables] private TimeSpan _lastCycle = TimeSpan.Zero;
-        [ViewVariables(VVAccess.ReadWrite)] private bool _updateSpriteAfterUpdate = false;
+        [ViewVariables(VVAccess.ReadWrite)] private bool _updateSpriteAfterUpdate;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool DrawWarnings { get; private set; } = false;
@@ -63,28 +62,28 @@ namespace Content.Server.GameObjects.Components.Botany
         public float NutritionLevel { get; set; } = 100f;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public float PestLevel { get; set; } = 0f;
+        public float PestLevel { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public float WeedLevel { get; set; } = 0f;
+        public float WeedLevel { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public float Toxins { get; set; } = 0f;
+        public float Toxins { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public int Age { get; set; } = 0;
+        public int Age { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public int SkipAging { get; set; } = 0;
+        public int SkipAging { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool Dead { get; set; } = false;
+        public bool Dead { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool Harvest { get; set; } = false;
+        public bool Harvest { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool Sampled { get; set; } = false;
+        public bool Sampled { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
         public int YieldMod { get; set; } = 1;
@@ -93,16 +92,16 @@ namespace Content.Server.GameObjects.Components.Botany
         public float MutationMod { get; set; } = 1f;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public float MutationLevel { get; set; } = 0f;
+        public float MutationLevel { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public float Health { get; set; } = 0f;
+        public float Health { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float WeedCoefficient { get; set; } = 1f;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public Seed? Seed { get; set; } = null;
+        public Seed? Seed { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool ImproperHeat { get; set; }
@@ -426,15 +425,26 @@ namespace Content.Server.GameObjects.Components.Botany
 
         public bool DoHarvest(IEntity user)
         {
-            if (Seed == null || !Harvest || user.Deleted || !ActionBlockerSystem.CanInteract(user))
+            if (Seed == null || user.Deleted || !ActionBlockerSystem.CanInteract(user))
                 return false;
 
-            if (!Seed.CheckHarvest(user))
-                return false;
+            if (Harvest && !Dead)
+            {
+                if (!Seed.CheckHarvest(user))
+                    return false;
 
-            Seed.Harvest(user, YieldMod);
+                Seed.Harvest(user, YieldMod);
+                AfterHarvest();
+                return true;
+            }
+
+            if (!Dead) return false;
+            
+            RemovePlant();
             AfterHarvest();
             return true;
+
+
         }
 
         public void AutoHarvest()
@@ -494,6 +504,8 @@ namespace Content.Server.GameObjects.Components.Botany
             ImproperLight = false;
             ImproperPressure = false;
             ImproperHeat = false;
+
+            UpdateSprite();
         }
 
         public void AffectGrowth(int amount)
@@ -561,9 +573,9 @@ namespace Content.Server.GameObjects.Components.Botany
             CheckLevelSanity();
         }
 
-        private void Mutate(float mutation)
+        private void Mutate(float severity)
         {
-            // TODO
+            // TODO: Coming soon in "Botany 2: Plant boogaloo".
         }
 
         public void UpdateSprite()
@@ -600,6 +612,7 @@ namespace Content.Server.GameObjects.Components.Botany
             else
             {
                 _appearanceComponent.SetData(PlantHolderVisuals.Plant, SpriteSpecifier.Invalid);
+                _appearanceComponent.SetData(PlantHolderVisuals.HealthLight, false);
             }
 
             if (DrawWarnings)
@@ -663,11 +676,9 @@ namespace Content.Server.GameObjects.Components.Botany
 
                     return true;
                 }
-                else
-                {
-                    user.PopupMessageCursor(Loc.GetString("The {0} already has seeds in it!", Owner.Name));
-                    return false;
-                }
+
+                user.PopupMessageCursor(Loc.GetString("The {0} already has seeds in it!", Owner.Name));
+                return false;
             }
 
             if (usingItem.HasComponent<HoeComponent>())
@@ -706,6 +717,11 @@ namespace Content.Server.GameObjects.Components.Botany
                 user.PopupMessageCursor(sprayed ? $"You spray {Owner.Name} with {usingItem.Name}." : $"You transfer {split.TotalVolume.ToString()}u to {Owner.Name}");
 
                 _solutionContainer?.TryAddSolution(split);
+
+                SkipAging++; // We're forcing an update cycle, so one age hasn't passed.
+                ForceUpdate = true;
+                Update();
+
                 return true;
             }
 
