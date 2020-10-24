@@ -43,7 +43,6 @@ namespace Content.Server.GameObjects.EntitySystems.AI
         public override void Initialize()
         {
             base.Initialize();
-            _configurationManager.RegisterCVar("ai.maxupdates", 64);
             SubscribeLocalEvent<SleepAiMessage>(HandleAiSleep);
 
             var processors = _reflectionManager.GetAllChildren<AiLogicProcessor>();
