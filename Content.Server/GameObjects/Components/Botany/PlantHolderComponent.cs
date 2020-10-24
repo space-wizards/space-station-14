@@ -6,6 +6,7 @@ using Content.Server.Atmos;
 using Content.Server.Botany;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Fluids;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Utility;
 using Content.Shared.Audio;
@@ -430,8 +431,15 @@ namespace Content.Server.GameObjects.Components.Botany
 
             if (Harvest && !Dead)
             {
-                if (!Seed.CheckHarvest(user))
+                if (user.TryGetComponent(out HandsComponent? hands))
+                {
+                    if (!Seed.CheckHarvest(user, hands.GetActiveHand?.Owner))
+                        return false;
+
+                } else if (!Seed.CheckHarvest(user))
+                {
                     return false;
+                }
 
                 Seed.Harvest(user, YieldMod);
                 AfterHarvest();
@@ -439,12 +447,10 @@ namespace Content.Server.GameObjects.Components.Botany
             }
 
             if (!Dead) return false;
-            
+
             RemovePlant();
             AfterHarvest();
             return true;
-
-
         }
 
         public void AutoHarvest()
@@ -760,6 +766,11 @@ namespace Content.Server.GameObjects.Components.Botany
                 Update();
 
                 return true;
+            }
+
+            if (usingItem.HasComponent<BotanySharpComponent>())
+            {
+                return DoHarvest(user);
             }
 
             return false;

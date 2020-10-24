@@ -54,6 +54,7 @@
     - type: MeleeWeapon
     - type: Produce
       seed: towercap
+    - type: Log
 
 - type: entity
   name: banana

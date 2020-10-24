@@ -345,10 +345,9 @@ namespace Content.Server.Botany
             return Clone();
         }
 
-        public bool CheckHarvest(IEntity user)
+        public bool CheckHarvest(IEntity user, IEntity held = null)
         {
-            // TODO: Add special interactions here.
-            return true;
+            return (!Ligneous || (Ligneous && held != null && held.HasComponent<BotanySharpComponent>()));
         }
     }
 }
