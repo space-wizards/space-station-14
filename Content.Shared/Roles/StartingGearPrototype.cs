@@ -14,6 +14,7 @@ namespace Content.Shared.Roles
     {
         private string _id;
         private Dictionary<Slots, string> _equipment;
+        private string _innerClothingSkirt;
 
         public IReadOnlyDictionary<string, string> Inhand => _inHand;
         /// <summary>
@@ -24,6 +25,11 @@ namespace Content.Shared.Roles
         [ViewVariables] public string ID => _id;
 
         [ViewVariables] public IReadOnlyDictionary<Slots, string> Equipment => _equipment;
+
+        /// <summary>
+        /// if empty, there is no skirt override - instead the uniform provided in equipment is added.
+        /// </summary>
+        [ViewVariables] public string InnerClothingSkirt => _innerClothingSkirt;
 
         public void LoadFrom(YamlMappingNode mapping)
         {
@@ -44,6 +50,8 @@ namespace Content.Shared.Roles
 
                 return slot;
             }, type => type.Value);
+
+            serializer.DataField(ref _innerClothingSkirt, "innerclothingskirt", string.Empty);
         }
     }
 }
