@@ -18,6 +18,11 @@ namespace Content.Client.GameObjects.Components.Wires
             {
                 sprite.LayerSetVisible(WiresVisualLayers.MaintenancePanel, state);
             }
+            // Mainly for spawn window
+            else
+            {
+                sprite.LayerSetVisible(WiresVisualLayers.MaintenancePanel, false);
+            }
         }
 
         public enum WiresVisualLayers
