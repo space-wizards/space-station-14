@@ -37,7 +37,8 @@
     sprite: Constructible/Structures/Tables/generic.rsi
   - type: Destructible
     deadThreshold: 15
-    destroySound: /Audio/Effects/metalbreak.ogg
+    destroySounds:
+      - /Audio/Effects/metalbreak.ogg
     resistances: metallicResistances
     spawnOnDestroy:
       SteelSheet1: [1]
@@ -54,7 +55,8 @@
     sprite: Constructible/Structures/Tables/frame.rsi
   - type: Destructible
     deadThreshold: 1
-    destroySound: /Audio/Effects/metalbreak.ogg
+    destroySounds:
+      - /Audio/Effects/metalbreak.ogg
     resistances: metallicResistances
     spawnOnDestroy:
       SteelSheet1: [1]
@@ -71,7 +73,8 @@
     sprite: Constructible/Structures/Tables/bar.rsi
   - type: Destructible
     deadThreshold: 1
-    destroySound: /Audio/Effects/metalbreak.ogg
+    destroySounds:
+      -/Audio/Effects/metalbreak.ogg
     resistances: metallicResistances
     spawnOnDestroy:
       SteelSheet1: [1]
@@ -88,7 +91,8 @@
     sprite: Constructible/Structures/Tables/metal.rsi
   - type: Destructible
     deadThreshold: 15
-    destroySound: /Audio/Effects/metalbreak.ogg
+    destroySounds:
+      - /Audio/Effects/metalbreak.ogg
     resistances: metallicResistances
     spawnOnDestroy:
       SteelSheet1: [1]
@@ -105,7 +109,8 @@
     sprite: Constructible/Structures/Tables/reinforced.rsi
   - type: Destructible
     deadThreshold: 1
-    destroySound: /Audio/Effects/metalbreak.ogg
+    destroySounds:
+      - /Audio/Effects/metalbreak.ogg
     resistances: metallicResistances
     spawnOnDestroy:
       SteelSheet1: [1]
@@ -122,7 +127,8 @@
     sprite: Constructible/Structures/Tables/glass.rsi
   - type: Destructible
     deadThreshold: 5
-    destroySound: /Audio/Effects/glassbreak2.ogg
+    destroySounds:
+      - /Audio/Effects/glass_break2.ogg
     resistances: metallicResistances
     spawnOnDestroy:
       ShardGlass: [1]
@@ -139,7 +145,8 @@
     sprite: Constructible/Structures/Tables/r_glass.rsi
   - type: Destructible
     deadThreshold: 20
-    destroySound: /Audio/Effects/glassbreak2.ogg
+    destroySounds:
+      - /Audio/Effects/glass_break2.ogg
     resistances: metallicResistances
     spawnOnDestroy:
       ShardGlass: [1]
@@ -156,7 +163,8 @@
     sprite: Constructible/Structures/Tables/wood.rsi
   - type: Destructible
     deadThreshold: 15
-    destroySound: /Audio/Effects/woodhit.ogg
+    destroySounds:
+      - /Audio/Effects/woodhit.ogg
     resistances: metallicResistances
     spawnOnDestroy:
       WoodPlank: [1]
@@ -173,7 +181,8 @@
     sprite: Constructible/Structures/Tables/carpet.rsi
   - type: Destructible
     deadThreshold: 15
-    destroySound: /Audio/Effects/woodhit.ogg
+    destroySounds:
+      - /Audio/Effects/woodhit.ogg
     resistances: metallicResistances
     spawnOnDestroy:
       WoodPlank: [1]
@@ -190,7 +199,8 @@
     sprite: Constructible/Structures/Tables/stone.rsi
   - type: Destructible
     deadThreshold: 50
-    destroySound: /Audio/Effects/picaxe2.ogg
+    destroySounds:
+      - /Audio/Effects/picaxe2.ogg
     resistances: metallicResistances
 
 - type: entity

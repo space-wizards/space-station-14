@@ -20,7 +20,8 @@
       - SmallImpassable
   - type: Destructible
     deadThreshold: 30
-    destroySound: /Audio/Effects/metalbreak.ogg
+    destroySounds:
+      - /Audio/Effects/metalbreak.ogg
     spawnOnDestroy:
       SteelSheet1: [1]
     resistances: metallicResistances
@@ -47,7 +48,8 @@
       - SmallImpassable
   - type: Destructible
     deadThreshold: 30
-    destroySound: /Audio/Effects/metalbreak.ogg
+    destroySounds:
+      - /Audio/Effects/metalbreak.ogg
     spawnOnDestroy:
       SteelSheet1: [1]
     resistances: metallicResistances

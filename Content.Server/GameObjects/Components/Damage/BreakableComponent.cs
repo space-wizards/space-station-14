@@ -65,10 +65,11 @@ namespace Content.Server.GameObjects.Components.Damage
         protected override void DestructionBehavior()
         {
             _actSystem.HandleBreakage(Owner);
-            if (!Owner.Deleted && DestroySound != string.Empty)
+            if (!Owner.Deleted && DestroySounds.Count > 0)
             {
                 var pos = Owner.Transform.Coordinates;
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(DestroySound, pos);
+                EntitySystem.Get<AudioSystem>()
+                    .PlayAtCoords(DestroySounds.Count == 1 ? DestroySounds[0] : _random.Pick(DestroySounds), pos);
             }
         }
     }

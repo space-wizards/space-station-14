@@ -4,6 +4,9 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Random;
+using Robust.Shared.IoC;
+using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -16,11 +19,12 @@ namespace Content.Server.GameObjects.Components.Damage
     [ComponentReference(typeof(IDamageableComponent))]
     public abstract class RuinableComponent : DamageableComponent
     {
+        [Dependency] private IRobustRandom _random = default!;
         /// <summary>
         ///     Sound played upon destruction.
         /// </summary>
         [ViewVariables]
-        protected string DestroySound { get; private set; }
+        protected List<string> DestroySounds { get; private set; }
 
         public override List<DamageState> SupportedDamageStates =>
             new List<DamageState> {DamageState.Alive, DamageState.Dead};
@@ -43,7 +47,7 @@ namespace Content.Server.GameObjects.Components.Damage
                 },
                 () => Thresholds.TryGetValue(DamageState.Dead, out var value) ? value : (int?) null);
 
-            serializer.DataField(this, ruinable => ruinable.DestroySound, "destroySound", string.Empty);
+            serializer.DataField(this, ruinable => ruinable.DestroySounds, "destroySounds", new List<string>());
         }
 
         protected override void EnterState(DamageState state)
@@ -65,10 +69,11 @@ namespace Content.Server.GameObjects.Components.Damage
         {
             CurrentState = DamageState.Dead;
 
-            if (!Owner.Deleted && DestroySound != string.Empty)
+            if (!Owner.Deleted && DestroySounds.Count > 0)
             {
                 var pos = Owner.Transform.Coordinates;
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(DestroySound, pos);
+                EntitySystem.Get<AudioSystem>()
+                    .PlayAtCoords(DestroySounds.Count == 1 ? DestroySounds[0] : _random.Pick(DestroySounds), pos);
             }
 
             DestructionBehavior();
