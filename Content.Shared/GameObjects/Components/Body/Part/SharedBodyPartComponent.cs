@@ -286,7 +286,8 @@ namespace Content.Shared.GameObjects.Components.Body.Part
 
         private void AddedToBody(IBody body)
         {
-            Owner.Transform.AttachParent(Body!.Owner);
+            Owner.Transform.LocalRotation = 0;
+            Owner.Transform.AttachParent(body.Owner);
             OnAddedToBody(body);
 
             foreach (var mechanism in _mechanisms)

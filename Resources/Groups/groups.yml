@@ -109,6 +109,7 @@
   - deleteewi
   - hurt
   - toggledisallowlatejoin
+  - attachbodypart
   CanViewVar: true
   CanAdminPlace: true
   CanAdminMenu: true
@@ -211,6 +212,7 @@
   - deleteewi
   - hurt
   - toggledisallowlatejoin
+  - attachbodypart
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true
