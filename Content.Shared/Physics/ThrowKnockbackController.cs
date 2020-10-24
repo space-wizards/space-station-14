@@ -32,7 +32,7 @@ namespace Content.Shared.Physics
 
             if (ControlledComponent.Owner.IsWeightless())
             {
-                if (!ActionBlockerSystem.CanMove(ControlledComponent.Owner)
+                if (ActionBlockerSystem.CanMove(ControlledComponent.Owner)
                     && ControlledComponent.IsColliding(Vector2.Zero, false))
                 {
                     Stop();
