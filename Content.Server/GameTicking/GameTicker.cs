@@ -284,9 +284,9 @@ namespace Content.Server.GameTicking
 
             if (!preset.Start(assignedJobs.Keys.ToList(), force))
             {
-                if (_configurationManager.GetCVar(CCVars.GameLobbyFallbackPreset))
+                if (_configurationManager.GetCVar(CCVars.GameLobbyFallbackEnabled))
                 {
-                    SetStartPreset(_configurationManager.GetCVar<string>("game.fallbackpreset"));
+                    SetStartPreset(_configurationManager.GetCVar(CCVars.GameLobbyFallbackPreset));
                     var newPreset = MakeGamePreset(profiles);
                     _chatManager.DispatchServerAnnouncement(
                         $"Failed to start {preset.ModeTitle} mode! Defaulting to {newPreset.ModeTitle}...");
