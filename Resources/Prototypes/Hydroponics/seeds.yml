@@ -157,6 +157,7 @@
   plantRsi: Objects/Specific/Hydroponics/tomato.rsi
   productPrototypes:
     - FoodTomato
+  harvestRepeat: Repeat
   lifespan: 25
   maturation: 8
   production: 6
