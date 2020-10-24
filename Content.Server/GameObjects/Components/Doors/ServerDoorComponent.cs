@@ -378,12 +378,17 @@ namespace Content.Server.GameObjects.Components.Doors
         public bool Close()
         {
             bool shouldCheckCrush = false;
+            if (Owner.TryGetComponent(out IPhysicsComponent? physics))
+                physics.CanCollide = true;
 
-            if (_canCrush && Owner.TryGetComponent(out IPhysicsComponent? physics) &&
+            if (_canCrush && physics != null &&
                 physics.IsColliding(Vector2.Zero, false))
             {
                 if (Safety)
+                {
+                    physics.CanCollide = false;
                     return false;
+                }
 
                 // check if we crush someone while closing
                 shouldCheckCrush = true;

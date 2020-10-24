@@ -182,7 +182,8 @@
             "GasCanisterPort",
             "Lung",
             "Cleanable",
-            "Configuration"
+            "Configuration",
+            "Brain"
         };
     }
 }

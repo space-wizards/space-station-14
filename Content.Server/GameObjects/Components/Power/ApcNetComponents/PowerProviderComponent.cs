@@ -115,7 +115,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         private void SetPowerTransferRange(int newPowerTransferRange)
         {
-            foreach (var receiver in _linkedReceivers)
+            foreach (var receiver in _linkedReceivers.ToArray())
             {
                 receiver.ClearProvider();
             }
