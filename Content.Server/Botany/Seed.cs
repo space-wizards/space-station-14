@@ -123,6 +123,7 @@ namespace Content.Server.Botany
         [ViewVariables] public int GrowthStages { get; set; }
         [ViewVariables] public HarvestType HarvestRepeat { get; set; }
         [ViewVariables] public float Potency { get; set; }
+        // No, I'm not removing these.
         //public PlantSpread Spread { get; set; }
         //public PlantMutation Mutation { get; set; }
         //public float AlterTemperature { get; set; }
