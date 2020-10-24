@@ -352,3 +352,10 @@
   desc: Sickly sweet.
   color: "#ffffff"
   physicalDesc: opaque
+  plantMetabolism:
+    - !type:AdjustNutrition
+      amount: 0.1
+    - !type:AdjustWeeds
+      amount: 2
+    - !type:AdjustPests
+      amount: 2
