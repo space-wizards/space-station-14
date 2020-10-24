@@ -12,7 +12,6 @@ using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.GameObjects.EntitySystems.TileLookup;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
@@ -251,7 +250,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             // This section probably needs tweaking so there can be caseless hitscan etc.
             if (projectile.TryGetComponent(out HitscanComponent hitscan))
             {
-                FireHitscan(shooter, hitscan, angle, targetPos);
+                FireHitscan(shooter, hitscan, angle);
             }
             else if (projectile.HasComponent<ProjectileComponent>())
             {
@@ -424,20 +423,17 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         /// <summary>
         /// Fires hitscan entities and then displays their effects
         /// </summary>
-        private void FireHitscan(IEntity shooter, HitscanComponent hitscan, Angle angle, Vector2 targetPos)
+        private void FireHitscan(IEntity shooter, HitscanComponent hitscan, Angle angle)
         {
             var ray = new CollisionRay(Owner.Transform.Coordinates.ToMapPos(Owner.EntityManager), angle.ToVec(), (int) hitscan.CollisionMask);
             var physicsManager = IoCManager.Resolve<IPhysicsManager>();
             var rayCastResults = physicsManager.IntersectRay(Owner.Transform.MapID, ray, hitscan.MaxLength, shooter, false).ToList();
-            Vector2i gridLocation = new Vector2i((int)MathF.Floor(targetPos.X), (int)MathF.Floor(targetPos.Y));
-
 
             if (rayCastResults.Count >= 1)
             {
                 var result = rayCastResults[0];
                 var distance = result.Distance;
                 hitscan.FireEffects(shooter, distance, angle, result.HitEntity);
-                var entitiesOnTile = EntitySystem.Get<GridTileLookupSystem>().GetEntitiesIntersecting(shooter.Transform.GridID, gridLocation);
 
                 if (!result.HitEntity.TryGetComponent(out IDamageableComponent damageable))
                     return;
