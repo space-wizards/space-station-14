@@ -74,7 +74,7 @@
   - type: Destructible
     deadThreshold: 1
     destroySounds:
-      -/Audio/Effects/metalbreak.ogg
+      - /Audio/Effects/metalbreak.ogg
     resistances: metallicResistances
     spawnOnDestroy:
       SteelSheet1: [1]
