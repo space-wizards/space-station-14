@@ -40,6 +40,7 @@ namespace Content.Server.GameObjects.Components.Botany
     public class PlantHolderComponent : Component, IInteractUsing, IInteractHand, IActivate, IReagentReaction, IExamine
     {
         public const float HydroponicsSpeedMultiplier = 1f;
+        public const float HydroponicsConsumptionMultiplier = 4f;
 
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -203,7 +204,7 @@ namespace Content.Server.GameObjects.Components.Botany
             }
 
             // Nutrient consumption.
-            if (Seed.NutrientConsumption > 0 && NutritionLevel > 0 && _random.Prob(0.25f))
+            if (Seed.NutrientConsumption > 0 && NutritionLevel > 0 && _random.Prob(0.75f))
             {
                 NutritionLevel -= MathF.Max(0f, Seed.NutrientConsumption * HydroponicsSpeedMultiplier);
                 if (DrawWarnings)
@@ -211,9 +212,9 @@ namespace Content.Server.GameObjects.Components.Botany
             }
 
             // Water consumption.
-            if (Seed.WaterConsumption > 0 && WaterLevel > 0 && _random.Prob(0.25f))
+            if (Seed.WaterConsumption > 0 && WaterLevel > 0 && _random.Prob(0.75f))
             {
-                WaterLevel -= MathF.Max(0f, Seed.NutrientConsumption * HydroponicsSpeedMultiplier);
+                WaterLevel -= MathF.Max(0f, Seed.NutrientConsumption * HydroponicsConsumptionMultiplier * HydroponicsSpeedMultiplier);
                 if (DrawWarnings)
                     _updateSpriteAfterUpdate = true;
             }
