@@ -14,6 +14,7 @@ using Content.Shared.GameObjects.Components.Botany;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Containers;
@@ -36,7 +37,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Botany
 {
     [RegisterComponent]
-    public class PlantHolderComponent : Component, IInteractUsing, IInteractHand, IActivate, IReagentReaction
+    public class PlantHolderComponent : Component, IInteractUsing, IInteractHand, IActivate, IReagentReaction, IExamine
     {
         public const float HydroponicsSpeedMultiplier = 1f;
 
@@ -708,6 +709,43 @@ namespace Content.Server.GameObjects.Components.Botany
                 return true;
             }
 
+            if (usingItem.HasComponent<PlantSampleTakerComponent>())
+            {
+                if (Seed == null)
+                {
+                    user.PopupMessageCursor(Loc.GetString("There is nothing to take a sample of!"));
+                    return false;
+                }
+
+                if (Sampled)
+                {
+                    user.PopupMessageCursor(Loc.GetString("This plant has already been sampled."));
+                    return false;
+                }
+
+                if (Dead)
+                {
+                    user.PopupMessageCursor(Loc.GetString("This plant is dead."));
+                    return false;
+                }
+
+                var seed = Seed.SpawnSeedPacket(user.Transform.Coordinates);
+                seed.RandomOffset(0.25f);
+                user.PopupMessageCursor(Loc.GetString($"You take a sample from the {Seed.DisplayName}."));
+                Health -= (_random.Next(3, 5) * 10);
+
+                if (_random.Prob(0.3f))
+                    Sampled = true;
+
+                // Just in case.
+                CheckLevelSanity();
+                SkipAging++; // We're forcing an update cycle, so one age hasn't passed.
+                ForceUpdate = true;
+                Update();
+
+                return true;
+            }
+
             return false;
         }
 
@@ -739,6 +777,55 @@ namespace Content.Server.GameObjects.Components.Botany
         {
             // DoHarvest does the sanity checks.
             DoHarvest(eventArgs.User);
+        }
+
+        public void Examine(FormattedMessage message, bool inDetailsRange)
+        {
+            if (!inDetailsRange)
+                return;
+
+            if (Seed == null)
+            {
+                message.AddMarkup(Loc.GetString("It has nothing planted in it.\n"));
+            }
+            else if (!Dead)
+            {
+                message.AddMarkup(Loc.GetString($"[color=green]{Seed.DisplayName}[/color] {(Seed.DisplayName.EndsWith('s') ? "are" : "is")} growing here.\n"));
+
+                if(Health <= Seed.Endurance / 2)
+                    message.AddMarkup(Loc.GetString($"The plant looks [color=red]{(Age > Seed.Lifespan ? "old and wilting" : "unhealthy")}[/color].\n"));
+            }
+            else
+            {
+                message.AddMarkup(Loc.GetString("It is full of [color=red]dead plant matter[/color].\n"));
+            }
+
+            if(WeedLevel >= 5)
+                message.AddMarkup(Loc.GetString("It is filled with [color=green]weeds[/color]!\n"));
+
+            if(PestLevel >= 5)
+                message.AddMarkup(Loc.GetString("It is filled with [color=gray]tiny worms[/color]!\n"));
+
+            message.AddMarkup(Loc.GetString($"Water:     [color=cyan]{(int)WaterLevel}[/color]\n"));
+            message.AddMarkup(Loc.GetString($"Nutrient: [color=orange]{(int)NutritionLevel}[/color]\n"));
+
+            if (DrawWarnings)
+            {
+                if(Toxins > 40f)
+                    message.AddMarkup(Loc.GetString("The [color=red]toxicity level alert[/color] is flashing red.\n"));
+
+                if(ImproperLight)
+                    message.AddMarkup(Loc.GetString("The [color=yellow]improper light level alert[/color] is blinking.\n"));
+
+                if(ImproperHeat)
+                    message.AddMarkup(Loc.GetString("The [color=orange]improper temperature level alert[/color] is blinking.\n"));
+
+                if(ImproperPressure)
+                    message.AddMarkup(Loc.GetString("The [color=lightblue]improper environment pressure alert[/color] is blinking.\n"));
+
+                if(_missingGas > 0)
+                    message.AddMarkup(Loc.GetString("The [color=cyan]improper gas environment alert[/color] is blinking.\n"));
+            }
         }
     }
 }

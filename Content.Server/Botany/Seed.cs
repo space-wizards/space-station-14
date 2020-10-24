@@ -8,6 +8,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Interfaces;
 using Content.Shared.Utility;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
@@ -73,6 +74,8 @@ namespace Content.Server.Botany
     [Prototype("seed")]
     public class Seed : IPrototype, IIndexedPrototype, IExposeData
     {
+        private const string SeedPrototype = "SeedBase";
+
         public string ID { get; private set; }
 
         /// <summary>
@@ -235,10 +238,25 @@ namespace Content.Server.Botany
             return newSeed;
         }
 
-        public IEntity SpawnSeedPacket(EntityCoordinates transformCoordinates)
+        public IEntity SpawnSeedPacket(EntityCoordinates transformCoordinates, IEntityManager entityManager = null)
         {
-            // TODO
-            return null;
+            entityManager ??= IoCManager.Resolve<IEntityManager>();
+
+            var seed = entityManager.SpawnEntity(SeedPrototype, transformCoordinates);
+
+            var seedComp = seed.EnsureComponent<SeedComponent>();
+            seedComp.Seed = this;
+
+            if (seed.TryGetComponent(out SpriteComponent sprite))
+            {
+                // Seed state will always be seed. Blame the spriter if that's not the case!
+                sprite.LayerSetSprite(0, new SpriteSpecifier.Rsi(PlantRsi, "seed"));
+            }
+
+            seed.Name = Loc.GetString($"packet of {SeedName} {SeedNoun}");
+            seed.Description = Loc.GetString($"It has a picture of {DisplayName} on the front.");
+
+            return seed;
         }
 
         private void AddToDatabase()

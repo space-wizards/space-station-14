@@ -27,6 +27,7 @@
       yellow: "#d58c18"
   - type: Item
     sprite: Objects/Tools/wirecutters.rsi
+  - type: PlantSampleTaker
 
 - type: entity
   name: screwdriver

@@ -8,11 +8,11 @@
       caps: NoExamine
     - type: Sprite
       state: seed
-      netsync: false
+      netsync: true
 
 - type: entity
   parent: SeedBase
-  name: wheat seeds
+  name: packet of wheat seeds
   id: WheatSeeds
   components:
     - type: Seed
