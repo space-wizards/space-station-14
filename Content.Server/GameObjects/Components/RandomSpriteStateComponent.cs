@@ -14,7 +14,7 @@ namespace Content.Server.GameObjects.Components
         [Dependency] private readonly IRobustRandom _random = default!;
         public override string Name => "RandomSpriteState";
 
-        private List<string>? _spriteStates;
+        private List<string> _spriteStates;
 
         private int _spriteLayer;
 
@@ -29,7 +29,7 @@ namespace Content.Server.GameObjects.Components
         {
             base.Initialize();
             if (_spriteStates == null) return;
-            if (!Owner.TryGetComponent(out SpriteComponent? spriteComponent)) return;
+            if (!Owner.TryGetComponent(out SpriteComponent spriteComponent)) return;
             spriteComponent.LayerSetState(_spriteLayer, _random.Pick(_spriteStates));
         }
     }
