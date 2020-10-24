@@ -224,7 +224,7 @@ namespace Content.Server.GameObjects.Components.Body.Part
         }
 
         [Verb]
-        private class AttachVerb : Verb<BodyPartComponent>
+        public class AttachBodyPartVerb : Verb<BodyPartComponent>
         {
             protected override void GetData(IEntity user, BodyPartComponent component, VerbData data)
             {
@@ -268,7 +268,7 @@ namespace Content.Server.GameObjects.Components.Body.Part
                     return;
                 }
 
-                body.TryAddPart($"{nameof(AttachBodyPartCommand)}-{component.Owner.Uid}", component, true);
+                body.TryAddPart($"{nameof(AttachBodyPartVerb)}-{component.Owner.Uid}", component, true);
             }
         }
     }

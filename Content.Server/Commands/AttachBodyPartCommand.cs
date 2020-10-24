@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using Content.Server.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Robust.Server.Interfaces.Console;
@@ -96,7 +97,7 @@ namespace Content.Server.Commands
                 return;
             }
 
-            body.TryAddPart($"{nameof(AttachBodyPartCommand)}-{partEntity.Uid}", part, true);
+            body.TryAddPart($"{nameof(BodyPartComponent.AttachBodyPartVerb)}-{partEntity.Uid}", part, true);
         }
     }
 }
