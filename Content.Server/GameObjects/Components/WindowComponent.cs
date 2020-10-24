@@ -1,14 +1,36 @@
-﻿using Content.Shared.GameObjects.Components;
+﻿using System;
+using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedWindowComponent))]
-    public class WindowComponent : SharedWindowComponent
+    public class WindowComponent : SharedWindowComponent, IExamine
     {
+        private int? Damage
+        {
+            get
+            {
+                if (!Owner.TryGetComponent(out IDamageableComponent damageableComponent)) return null;
+                return damageableComponent.TotalDamage;
+            }
+        }
+
+        private int? MaxDamage
+        {
+            get
+            {
+                if (!Owner.TryGetComponent(out IDamageableComponent damageableComponent)) return null;
+                return damageableComponent.Thresholds[DamageState.Dead];
+            }
+        }
+
         public override void Initialize()
         {
             base.Initialize();
@@ -31,6 +53,37 @@ namespace Content.Server.GameObjects.Components
             if (Owner.TryGetComponent(out AppearanceComponent appearance))
             {
                 appearance.SetData(WindowVisuals.Damage, (float) currentDamage / maxDamage);
+            }
+        }
+
+
+        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
+        {
+            int? damage = Damage;
+            int? maxDamage = MaxDamage;
+            if (damage == null || maxDamage == null) return;
+            float fraction = ((damage == 0 || maxDamage == 0) ? 0f : (float) damage / maxDamage) ?? 0f;
+            int level = Math.Min(ContentHelpers.RoundToLevels(fraction, 1, 7), 5);
+            switch (level)
+            {
+                case 0:
+                    message.AddText("It looks fully intact.");
+                    break;
+                case 1:
+                    message.AddText("It has a few scratches.");
+                    break;
+                case 2:
+                    message.AddText("It has a few small cracks.");
+                    break;
+                case 3:
+                    message.AddText("It has several big cracks running along its surface.");
+                    break;
+                case 4:
+                    message.AddText("It has deep cracks across multiple layers.");
+                    break;
+                case 5:
+                    message.AddText("It is extremely badly cracked and on the verge of shattering.");
+                    break;
             }
         }
     }
