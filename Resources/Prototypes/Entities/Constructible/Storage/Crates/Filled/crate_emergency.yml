@@ -1,50 +1,54 @@
 - type: entity
-  id: CrateExplosiveEmergency
+  id: CrateEmergencyExplosive
   name: explosive emergency crate
   parent: CrateSecgear
   components:
   - type: StorageFill
     contents:
-      - OuterclothingBombsuit
-      - HatBombsuit
-      - OldGasMaskClothing
-      - Screwdriver
-      - Wirecutter
-      - Multitool
+      - name: HatBombsuit
+        amount: 1
+      - name: OldGasMaskClothing
+        amount: 1
+      - name: Screwdriver
+        amount: 1
+      - name: Wirecutter
+        amount: 1
+      - name: Multitool
+        amount: 1
+      - name: OuterclothingBombsuit
+        amount: 1
 
 - type: entity
-  id: CrateFireEmergency
+  id: CrateEmergencyFire
   name: firefighting crate
   parent: CrateGenericonimo
   components:
   - type: StorageFill
     contents:
-      - OuterclothingFiresuit
-      - OuterclothingFiresuit
-      - OldGasMaskClothing
-      - OldGasMaskClothing
-      - FlashlightLantern
-      - FlashlightLantern
-#      - RedOxygenTank
-#      - RedOxygenTank
-      - FireExtinguisher
-      - FireExtinguisher
-      - HatHardhatRed
-      - HatHardhatRed
+      - name: FlashlightLantern
+        amount: 2
+      - name: FireExtinguisher
+        amount: 2
+      - name: HatHardhatRed
+        amount: 2
+      - name: OldGasMaskClothing
+        amount: 2
+      - name: OuterclothingFiresuit
+        amount: 2
+#      - name: RedOxygenTank
+#        amount: 2
 
 - type: entity
-  id: CrateInternalsEmergency
+  id: CrateEmergencyInternals
   name: internals crate
   parent: CrateInternals
   components:
   - type: StorageFill
     contents:
-      - OldGasMaskClothing
-      - OldGasMaskClothing
-      - OldGasMaskClothing
-      - BreathMaskClothing
-      - BreathMaskClothing
-      - BreathMaskClothing
+      - name: OldGasMaskClothing
+        amount: 3
+      - name: BreathMaskClothing
+        amount: 3
 #      - SmallOxygenTank
 #      - SmallOxygenTank
 #      - SmallOxygenTank
@@ -53,18 +57,18 @@
 #      - AirTank
 
 - type: entity
-  id: CrateRadiationEmergency
+  id: CrateEmergencyRadiation
   name: radiation protection crate
   parent: CrateRadiation
   components:
   - type: StorageFill
     contents:
-      - OuterclothingRad
-      - OuterclothingRad
-      - HatRad
-      - HatRad
-#      - GeigerCounter
-#      - GeigerCounter
+      - name: OuterclothingRad
+        amount: 2
+      - name: HatRad
+        amount: 2
+      - name: GeigerCounter
+        amount: 2
       - DrinkVodkaBottleFull
-      - DrinkShotGlass
-      - DrinkShotGlass
+      - name: DrinkShotGlass
+        amount: 2

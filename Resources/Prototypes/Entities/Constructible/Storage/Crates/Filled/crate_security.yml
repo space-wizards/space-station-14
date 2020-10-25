@@ -1,5 +1,5 @@
 - type: entity
-  id: CrateArmorSecurity
+  id: CrateSecurityArmor
   name: security armor crate
   parent: CrateSecgear
   components:
@@ -11,7 +11,7 @@
         amount: 3
 
 - type: entity
-  id: CrateNonlethalSecurity
+  id: CrateSecurityNonlethal
   name: nonlethals crate
   parent: CrateSecgear
   components:
@@ -29,7 +29,7 @@
 #      - GrenadeTeargas
 
 - type: entity
-  id: CrateLethalSecurity
+  id: CrateSecurityLethal
   name: lethals crate
   parent: CrateSecgear
   components:
@@ -49,7 +49,7 @@
         amount: 12
 
 - type: entity
-  id: CrateRiotSecurity
+  id: CrateSecurityRiot
   name: swat crate
   parent: CrateSecgear
   components:
@@ -67,7 +67,7 @@
 #      - SecGasmask
 
 - type: entity
-  id: CrateSuppliesSecurity
+  id: CrateSecuritySupplies
   name: security supplies crate
   parent: CrateSecgear
   components:

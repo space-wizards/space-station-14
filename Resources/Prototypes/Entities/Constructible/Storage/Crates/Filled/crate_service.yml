@@ -1,0 +1,19 @@
+- type: entity
+  id: CrateJanitorialSupplies
+  name: generator crate
+  parent: CrateEngineering
+  components:
+  - type: StorageFill
+    contents:
+      - name: MopItem
+        amount: 1
+      - name: MopBucket
+        amount: 1
+      - name: Bucket
+        amount: 3
+      - name: WetFloorSign
+        amount: 2
+      - name: Soap
+        amount: 1
+      - name: SprayBottleSpaceCleaner
+        amount: 2

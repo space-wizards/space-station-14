@@ -1,46 +1,45 @@
 - type: entity
-  id: CrateGearEngineering
+  id: CrateEngineeringGear
   name: engineering gear crate
-  parent: CrateGenericonimo
+  parent: CrateEngineering
   components:
   - type: StorageFill
     contents:
-      - UtilityBeltClothing
-      - UtilityBeltClothing
-      - UtilityBeltClothing
-      - MesonGlasses
-      - MesonGlasses
-      - MesonGlasses
-      - HatHardhatYellow
-      - HatHardhatYellow
-      - HatHardhatYellow
-      - HatWelding
-      - HatWelding
-      - HatWelding
-#      - ThatOneOrangeVest
-#      - ThatOneOrangeVest
-#      - ThatOneOrangeVest
-      - GlovesYellow
-      - GlovesYellow
-      - GlovesYellow
+      - name: UtilityBeltClothing
+        amount: 2
+      - name: MesonGlasses
+        amount: 2
+      - name: HatHardhatYellow
+        amount: 2
+      - name: HatWelding
+        amount: 2
+#      - name: ThatOneOrangeVest
+#        amount: 3
+      - name: GlovesYellow
+        amount: 2
 
 - type: entity
-  id: CrateGeneratorEngineering
-  name: generator crate
-  parent: CrateGenericonimo
-  components:
-  - type: StorageFill
-    contents:
-      - DebugGenerator
-
-- type: entity
-  id: CrateToolboxEngineering
+  id: CrateEngineeringToolbox
   name: toolbox crate
-  parent: CrateGenericonimo
+  parent: CrateEngineering
   components:
   - type: StorageFill
     contents:
-      - ToolboxMechanical
-      - ToolboxMechanical
-      - ToolboxElectrical
-      - ToolboxElectrical
+      - name: ToolboxMechanical
+        amount: 2
+      - name: ToolboxElectricalFilled
+        amount: 2
+
+#- type: entity
+#  id: CrateEngineeringPowercell
+#  name:  ame crate
+#  parent: CrateElectrical
+#  components:
+#  - type: StorageFill
+#    contents:
+#      - name: PowerCellLargeStandard
+#        amount: 3
+#      - name: PowerCellMediumStandard
+#        amount: 3
+#      - name: PowerCellSmallAutorecharge
+#        amount: 3

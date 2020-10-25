@@ -168,7 +168,7 @@
   - type: Sprite
     sprite: Constructible/Structures/Crates/electricalcrate.rsi
     layers:
-    - state: electricalcratecrate
+    - state: electricalcrate
     - state: electricalcrate_door
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
@@ -191,7 +191,7 @@
   - type: Sprite
     sprite: Constructible/Structures/Crates/engicrate.rsi
     layers:
-    - state: engicratecrate
+    - state: engicrate
     - state: engicrate_door
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
@@ -214,7 +214,7 @@
   - type: Sprite
     sprite: Constructible/Structures/Crates/scicrate.rsi
     layers:
-    - state: scicratecrate
+    - state: scicrate
     - state: scicrate_door
       map: ["enum.StorageVisualLayers.Door"]
     - state: welded
@@ -502,6 +502,8 @@
     - type: StorageVisualizer
       state_open: weaponcrate_open
       state_closed: weaponcrate_door
+
+#### REMOVE THIS SWEPT!!
 
 - type: entity
   id: CrateLightBulb
