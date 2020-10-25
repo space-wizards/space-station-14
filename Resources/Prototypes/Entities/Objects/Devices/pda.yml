@@ -3,7 +3,7 @@
   parent: BaseItem
   id: BasePDA
   abstract: true
-  description: Personal Data Assistant
+  description: Personal Data Assistant.
   components:
   - type: Appearance
     visuals:

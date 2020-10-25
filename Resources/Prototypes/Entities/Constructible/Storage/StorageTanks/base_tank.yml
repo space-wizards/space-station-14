@@ -1,7 +1,7 @@
 ﻿- type: entity
   id: StorageTank
   name: storage tank
-  description: "A liquids storage tank"
+  description: "A liquids storage tank."
   abstract: true
   components:
   - type: Clickable
