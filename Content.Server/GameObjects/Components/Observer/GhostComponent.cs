@@ -15,15 +15,22 @@ using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
+using Content.Shared.GameObjects.EntitySystems;
+using Robust.Shared.Utility;
+using Robust.Shared.Localization;
+using Robust.Shared.Interfaces.Timing;
+using System;
 
 #nullable enable
 namespace Content.Server.GameObjects.Components.Observer
 {
     [RegisterComponent]
-    public class GhostComponent : SharedGhostComponent
+    public class GhostComponent : SharedGhostComponent, IExamine
     {
         private bool _canReturnToBody = true;
+        private TimeSpan _timeOfDeath = TimeSpan.Zero;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IGameTiming _gameTimer = default!;
         [ViewVariables(VVAccess.ReadWrite)]
         public bool CanReturnToBody
         {
@@ -40,6 +47,7 @@ namespace Content.Server.GameObjects.Components.Observer
             base.Initialize();
 
             Owner.EnsureComponent<VisibilityComponent>().Layer = (int) VisibilityFlags.Ghost;
+            _timeOfDeath = _gameTimer.RealTime;
         }
 
         public override ComponentState GetComponentState() => new GhostComponentState(CanReturnToBody);
@@ -137,6 +145,18 @@ namespace Content.Server.GameObjects.Components.Observer
         {
             var comp = IoCManager.Resolve<IComponentManager>();
             return comp.EntityQuery<WarpPointComponent>().ToList();
+        }
+
+        public void Examine(FormattedMessage message, bool inDetailsRange)
+        {
+            var mind = Owner.GetComponent<IActorComponent>().playerSession.ContentData()!.Mind;
+            var timeSinceDeath = _gameTimer.RealTime.Subtract(_timeOfDeath);
+            if(mind != null)
+            {
+                message.AddMarkup(Loc.GetString("Ghost of [color=white]{0}[/color].\nTime since death: [color=yellow]{1}[/color]",
+                mind.CharacterName,
+                timeSinceDeath));
+            }
         }
 
         public class GhostReturnMessage : EntitySystemMessage
