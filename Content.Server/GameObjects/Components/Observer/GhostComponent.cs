@@ -149,14 +149,11 @@ namespace Content.Server.GameObjects.Components.Observer
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            var mind = Owner.GetComponent<IActorComponent>().playerSession.ContentData()!.Mind;
             var timeSinceDeath = _gameTimer.RealTime.Subtract(_timeOfDeath);
-            if(mind != null)
-            {
-                message.AddMarkup(Loc.GetString("Ghost of [color=white]{0}[/color].\nTime since death: [color=yellow]{1}[/color]",
-                mind.CharacterName,
-                timeSinceDeath));
-            }
+            //If we've been dead for longer than 1 minute use minutes, otherwise use seconds. Ignore the improper plurals.
+            var deathTimeInfo = timeSinceDeath.Minutes > 0 ? Loc.GetString($"{timeSinceDeath.Minutes} minutes ago") : Loc.GetString($"{timeSinceDeath.Seconds} seconds ago");
+
+            message.AddMarkup(Loc.GetString("Died [color=yellow]{0}[/color].", deathTimeInfo));
         }
 
         public class GhostReturnMessage : EntitySystemMessage
