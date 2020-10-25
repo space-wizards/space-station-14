@@ -1,4 +1,6 @@
-﻿using Content.Server.Atmos;
+﻿using System;
+using System.Diagnostics;
+using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Atmos.Piping;
 using Content.Server.Interfaces;
 using Robust.Shared.GameObjects;
@@ -6,22 +8,43 @@ using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using System;
 using System.Linq;
+using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Server.Utility;
+using Content.Shared.GameObjects.Components.Atmos;
+using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.GameObjects.Components;
+using Robust.Server.GameObjects.Components.UserInterface;
+using Robust.Server.Interfaces.GameObjects;
+using Robust.Shared.Containers;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Localization;
+using Robust.Shared.Log;
+using Serilog;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
+    /// <summary>
+    /// Component that manages gas mixtures temperature, pressure and output.
+    /// </summary>
     [RegisterComponent]
-    public class GasCanisterComponent : Component, IGasMixtureHolder
+    public class GasCanisterComponent : Component, IGasMixtureHolder, IInteractHand
     {
         public override string Name => "GasCanister";
 
+        /// <summary>
+        /// What <see cref="GasMixture"/> the canister contains.
+        /// </summary>
         [ViewVariables]
         public GasMixture Air { get; set; }
 
         [ViewVariables]
         public bool Anchored => !Owner.TryGetComponent<IPhysicsComponent>(out var physics) || physics.Anchored;
 
+        /// <summary>
+        /// The floor connector port that the canister is attached to.
+        /// </summary>
         [ViewVariables]
         public GasCanisterPortComponent ConnectedPort { get; private set; }
 
@@ -29,6 +52,18 @@ namespace Content.Server.GameObjects.Components.Atmos
         public bool ConnectedToPort => ConnectedPort != null;
 
         private const float DefaultVolume = 10;
+
+        [ViewVariables] public float ReleasePressure;
+
+        /// <summary>
+        /// The user interface bound to the canister.
+        /// </summary>
+        private BoundUserInterface? UserInterface => Owner.GetUIOrNull(SharedGasCanisterComponent.GasCanisterUiKey.Key);
+
+        /// <summary>
+        /// Stores the last ui state after it's been casted into <see cref="GasCanisterBoundUserInterface"/>
+        /// </summary>
+        private GasCanisterBoundUserInterfaceState? _lastUiState;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -44,6 +79,11 @@ namespace Content.Server.GameObjects.Components.Atmos
                 AnchorUpdate();
                 physics.AnchoredChanged += AnchorUpdate;
             }
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += OnUiReceiveMessage;
+            }
+            UpdateUserInterface();
         }
 
         public override void OnRemove()
@@ -87,5 +127,133 @@ namespace Content.Server.GameObjects.Components.Atmos
                 DisconnectFromPort();
             }
         }
+
+        /// <summary>
+        /// Manages what happens when an actor interacts with an empty hand on the canister
+        /// </summary>
+        /// <param name="eventArgs"></param>
+        /// <returns>True if the interaction has succeded</returns>
+        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
+        {
+            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
+            {
+                return false;
+            }
+            // Duplicated code here, not sure how else to get actor inside to make UserInterface happy.
+
+            if (IsValidInteraction(eventArgs))
+            {
+                UserInterface?.Open(actor.playerSession);
+                return true;
+            }
+
+            return false;
+        }
+
+        private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
+        {
+            if (obj.Session.AttachedEntity == null)
+            {
+                return;
+            }
+
+            if (!PlayerCanUse(obj.Session.AttachedEntity))
+            {
+                return;
+            }
+
+            // If the release pressure has been adjusted by the client on the gas canister
+            if (obj.Message is ReleasePressureButtonPressedMessage cast)
+            {
+                ReleasePressure += cast.ReleasePressure;
+                ReleasePressure = Math.Clamp(ReleasePressure, 0, 10000);
+                UpdateUserInterface();
+            }
+
+            if (!(obj.Message is UiButtonPressedMessage message))
+            {
+                return;
+            }
+
+            switch (message.Button)
+            {
+            }
+        }
+
+        /// <summary>
+        /// Update the user interface if relevant
+        /// </summary>
+        private void UpdateUserInterface()
+        {
+            var state = GetUserInterfaceState();
+
+            if (_lastUiState != null && _lastUiState.Equals(state))
+            {
+                return;
+            }
+
+            _lastUiState = state;
+            UserInterface?.SetState(state);
+        }
+
+        /// <summary>
+        /// Get the current interface state from server data
+        /// </summary>
+        /// <returns>The state</returns>
+        private GasCanisterBoundUserInterfaceState GetUserInterfaceState()
+        {
+            return new GasCanisterBoundUserInterfaceState(Name, Air.Pressure, ReleasePressure);
+        }
+
+
+        #region Check methods
+
+        /// <summary>
+        /// Check if the actor has the ability to do such thing
+        /// </summary>
+        /// <param name="eventArgs"></param>
+        /// <returns>True if the actor can interact</returns>
+        bool IsValidInteraction(ITargetedInteractEventArgs eventArgs)
+        {
+            if (!ActionBlockerSystem.CanInteract(eventArgs.User))
+            {
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("You can't do that!"));
+                return false;
+            }
+
+            if (ContainerHelpers.IsInContainer(eventArgs.User))
+            {
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("You can't reach there!"));
+                return false;
+            }
+            // This popup message doesn't appear on clicks, even when code was seperate. Unsure why.
+
+            if (!eventArgs.User.HasComponent<IHandsComponent>())
+            {
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("You have no hands!"));
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool PlayerCanUse(IEntity? player)
+        {
+            if (player == null)
+            {
+                return false;
+            }
+
+            if (!ActionBlockerSystem.CanInteract(player) ||
+                !ActionBlockerSystem.CanUse(player))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        #endregion
+
     }
 }
