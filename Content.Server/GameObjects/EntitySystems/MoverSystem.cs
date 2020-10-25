@@ -31,7 +31,6 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     internal class MoverSystem : SharedMoverSystem
     {
-        [Dependency] private readonly IPauseManager _pauseManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
@@ -73,15 +72,16 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        private static void PlayerDetached(PlayerDetachedSystemMessage ev)
+        private void PlayerDetached(PlayerDetachedSystemMessage ev)
         {
             if (ev.Entity.HasComponent<PlayerInputMoverComponent>())
             {
                 ev.Entity.RemoveComponent<PlayerInputMoverComponent>();
             }
 
-            if (ev.Entity.TryGetComponent(out ICollidableComponent? physics) &&
-                physics.TryGetController(out MoverController controller))
+            if (ev.Entity.TryGetComponent(out IPhysicsComponent? physics) &&
+                physics.TryGetController(out MoverController controller) &&
+                !ev.Entity.IsWeightless())
             {
                 controller.StopMoving();
             }

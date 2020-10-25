@@ -3,7 +3,7 @@
   id: PlaqueAtmos
   name: Atmos Plaque
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.3,-0.3,0.3,0.3"

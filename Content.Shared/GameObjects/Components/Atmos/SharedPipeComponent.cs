@@ -57,6 +57,7 @@ namespace Content.Shared.GameObjects.Components.Atmos
 
     public enum PipeShape
     {
+        Half,
         Straight,
         Bend,
         TJunction,
@@ -126,6 +127,11 @@ namespace Content.Shared.GameObjects.Components.Atmos
         {
             return pipeDirection switch
             {
+                PipeDirection.North         => PipeShape.Half,
+                PipeDirection.South         => PipeShape.Half,
+                PipeDirection.East          => PipeShape.Half,
+                PipeDirection.West          => PipeShape.Half,
+
                 PipeDirection.Lateral       => PipeShape.Straight,
                 PipeDirection.Longitudinal  => PipeShape.Straight,
 
@@ -143,6 +149,20 @@ namespace Content.Shared.GameObjects.Components.Atmos
 
                 _ => throw new ArgumentOutOfRangeException(nameof(pipeDirection)),
             };
+        }
+
+        public static PipeDirection RotatePipeDirection(this PipeDirection pipeDirection, double diff)
+        {
+            var newPipeDir = PipeDirection.None;
+            for (var i = 0; i < PipeDirections; i++)
+            {
+                var currentPipeDirection = (PipeDirection) (1 << i);
+                if (!pipeDirection.HasFlag(currentPipeDirection)) continue;
+                var angle = currentPipeDirection.ToAngle();
+                angle += diff;
+                newPipeDir |= angle.GetCardinalDir().ToPipeDirection();
+            }
+            return newPipeDir;
         }
     }
 }

@@ -17,6 +17,7 @@ using Content.Shared.GameObjects.Components.Doors;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
@@ -49,6 +50,7 @@ namespace Content.Server.GameObjects.Components.Doors
                     return;
 
                 _state = value;
+
                 Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new DoorStateMessage(this, State));
             }
         }
@@ -101,7 +103,7 @@ namespace Content.Server.GameObjects.Components.Doors
         ///     Whether something is currently using a welder on this so DoAfter isn't spammed.
         /// </summary>
         private bool _beingWelded = false;
-        
+
         [ViewVariables(VVAccess.ReadWrite)]
         private bool _canCrush = true;
 
@@ -147,7 +149,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
             // Disabled because it makes it suck hard to walk through double doors.
 
-            if (entity.HasComponent<ISharedBodyManagerComponent>())
+            if (entity.HasComponent<IBody>())
             {
                 if (!entity.TryGetComponent<IMoverComponent>(out var mover)) return;
 
@@ -254,9 +256,9 @@ namespace Content.Server.GameObjects.Components.Doors
                     airtight.AirBlocked = false;
                 }
 
-                if (Owner.TryGetComponent(out ICollidableComponent? collidable))
+                if (Owner.TryGetComponent(out IPhysicsComponent? physics))
                 {
-                    collidable.Hard = false;
+                    physics.CanCollide = false;
                 }
 
                 await Timer.Delay(OpenTimeTwo, _cancellationTokenSource.Token);
@@ -297,7 +299,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
         private void CheckCrush()
         {
-            if (!Owner.TryGetComponent(out ICollidableComponent? body))
+            if (!Owner.TryGetComponent(out IPhysicsComponent? body))
                 return;
 
             // Crush
@@ -305,7 +307,7 @@ namespace Content.Server.GameObjects.Components.Doors
             {
                 if (!e.TryGetComponent(out StunnableComponent? stun)
                     || !e.TryGetComponent(out IDamageableComponent? damage)
-                    || !e.TryGetComponent(out ICollidableComponent? otherBody))
+                    || !e.TryGetComponent(out IPhysicsComponent? otherBody))
                     continue;
 
                 var percentage = otherBody.WorldAABB.IntersectPercentage(body.WorldAABB);
@@ -315,7 +317,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
                 damage.ChangeDamage(DamageType.Blunt, DoorCrushDamage, false, Owner);
                 stun.Paralyze(DoorStunTime);
-                
+
                 // If we hit someone, open up after stun (opens right when stun ends)
                 Timer.Spawn(TimeSpan.FromSeconds(DoorStunTime) - OpenTimeOne - OpenTimeTwo, Open);
                 break;
@@ -376,11 +378,17 @@ namespace Content.Server.GameObjects.Components.Doors
         public bool Close()
         {
             bool shouldCheckCrush = false;
+            if (Owner.TryGetComponent(out IPhysicsComponent? physics))
+                physics.CanCollide = true;
 
-            if (_canCrush && Owner.TryGetComponent(out ICollidableComponent? collidable) && collidable.IsColliding(Vector2.Zero, false))
+            if (_canCrush && physics != null &&
+                physics.IsColliding(Vector2.Zero, false))
             {
                 if (Safety)
+                {
+                    physics.CanCollide = false;
                     return false;
+                }
 
                 // check if we crush someone while closing
                 shouldCheckCrush = true;
@@ -406,9 +414,9 @@ namespace Content.Server.GameObjects.Components.Doors
                     airtight.AirBlocked = true;
                 }
 
-                if (Owner.TryGetComponent(out ICollidableComponent? body))
+                if (Owner.TryGetComponent(out IPhysicsComponent? body))
                 {
-                    body.Hard = true;
+                    body.CanCollide = true;
                 }
 
                 await Timer.Delay(CloseTimeTwo, _cancellationTokenSource.Token);
@@ -479,7 +487,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
             if (_beingWelded)
                 return false;
-            
+
             _beingWelded = true;
 
             if (!await tool.UseTool(eventArgs.User, Owner, 3f, ToolQuality.Welding, 3f, () => _canWeldShut))
@@ -487,7 +495,7 @@ namespace Content.Server.GameObjects.Components.Doors
                 _beingWelded = false;
                 return false;
             }
-            
+
             _beingWelded = false;
             IsWeldedShut ^= true;
             return true;

@@ -44,7 +44,7 @@ namespace Content.Server.StationEvents
                 if (inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.BELT, out ItemComponent? item)
                     && item?.Owner.Prototype?.ID == "UtilityBeltClothingFilledEvent") return;
                 if (player.AttachedEntity.TryGetComponent<IDamageableComponent>(out var damageable)
-                && damageable.CurrentDamageState == DamageState.Dead) return;
+                && damageable.CurrentState == DamageState.Dead) return;
 
                 var entityManager = IoCManager.Resolve<IEntityManager>();
                 var playerPos = player.AttachedEntity.Transform.Coordinates;

@@ -7,4 +7,5 @@
     visuals:
     - type: StorageVisualizer
       state: cabinet
-
+  - type: Icon
+    state: cabinet_icon

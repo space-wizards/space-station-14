@@ -1,5 +1,5 @@
 - type: bodyTemplate
-  id: bodyTemplate.Quadrupedal
+  id: QuadrupedalTemplate
   name: "quadrupedal"
   centerSlot: "torso"
   slots:

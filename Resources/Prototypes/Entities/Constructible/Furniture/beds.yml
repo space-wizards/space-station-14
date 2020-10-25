@@ -5,7 +5,7 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
   - type: Sprite
     sprite: Constructible/Misc/furniture.rsi
     state: bed

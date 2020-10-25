@@ -3,7 +3,8 @@
   abstract: true
   parent: BaseItem
   components:
-  - type: Collidable
+  - type: Physics
+    anchored: false
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.15,-0.3,0.2,0.3"
@@ -103,11 +104,10 @@
     visuals:
     - type: PowerChargerVisualizer
   - type: Anchorable
-  - type: Physics
-    mass: 5
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
+    mass: 5
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.25,-0.25,0.25,0.25"
@@ -132,11 +132,10 @@
     visuals:
     - type: PowerChargerVisualizer
   - type: Anchorable
-  - type: Physics
-    mass: 5
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
+    mass: 5
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.25,-0.25,0.25,0.25"
@@ -160,11 +159,10 @@
   - type: Appearance
     visuals:
     - type: PowerChargerVisualizer
-  - type: Physics
-    mass: 5
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
+    mass: 5
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.25,-0.25,0.25,0.25"

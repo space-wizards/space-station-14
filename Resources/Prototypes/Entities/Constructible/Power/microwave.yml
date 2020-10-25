@@ -21,7 +21,7 @@
     interfaces:
     - key: enum.MicrowaveUiKey.Key
       type: MicrowaveBoundUserInterface
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.16,-0.3,0.16,0.3"

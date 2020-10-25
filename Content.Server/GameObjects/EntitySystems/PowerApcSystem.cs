@@ -11,8 +11,6 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     internal sealed class PowerApcSystem : EntitySystem
     {
-        [Dependency] private readonly IPauseManager _pauseManager = default!;
-
         public override void Update(float frameTime)
         {
             var uniqueApcNets = new HashSet<IApcNet>(); //could be improved by maintaining set instead of getting collection every frame 
@@ -21,7 +19,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 uniqueApcNets.Add(apc.Net);
                 apc.Update();
             }
-            
+
             foreach (var apcNet in uniqueApcNets)
             {
                 apcNet.Update(frameTime);

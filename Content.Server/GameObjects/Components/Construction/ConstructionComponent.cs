@@ -32,7 +32,6 @@ namespace Content.Server.GameObjects.Components.Construction
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IComponentFactory _componentFactory = default!;
 
         public override string Name => "Construction";
 
@@ -422,10 +421,10 @@ namespace Content.Server.GameObjects.Components.Construction
                 }
             }
 
-            if (Owner.TryGetComponent(out CollidableComponent? collidable) &&
-                entity.TryGetComponent(out CollidableComponent? otherCollidable))
+            if (Owner.TryGetComponent(out IPhysicsComponent? physics) &&
+                entity.TryGetComponent(out IPhysicsComponent? otherPhysics))
             {
-                otherCollidable.Anchored = collidable.Anchored;
+                otherPhysics.Anchored = physics.Anchored;
             }
 
             Owner.Delete();

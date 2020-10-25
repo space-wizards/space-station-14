@@ -38,7 +38,7 @@ namespace Content.Server.GameObjects.Components
         /// <returns>true if it is valid, false otherwise</returns>
         private async Task<bool> Valid(IEntity user, IEntity? utilizing, [MaybeNullWhen(false)] bool force = false)
         {
-            if (!Owner.HasComponent<ICollidableComponent>())
+            if (!Owner.HasComponent<IPhysicsComponent>())
             {
                 return false;
             }
@@ -70,7 +70,7 @@ namespace Content.Server.GameObjects.Components
                 return false;
             }
 
-            var physics = Owner.GetComponent<ICollidableComponent>();
+            var physics = Owner.GetComponent<IPhysicsComponent>();
             physics.Anchored = true;
 
             return true;
@@ -90,7 +90,7 @@ namespace Content.Server.GameObjects.Components
                 return false;
             }
 
-            var physics = Owner.GetComponent<ICollidableComponent>();
+            var physics = Owner.GetComponent<IPhysicsComponent>();
             physics.Anchored = false;
 
             return true;
@@ -105,12 +105,12 @@ namespace Content.Server.GameObjects.Components
         /// <returns>true if toggled, false otherwise</returns>
         private async Task<bool> TryToggleAnchor(IEntity user, IEntity? utilizing = null, bool force = false)
         {
-            if (!Owner.TryGetComponent(out ICollidableComponent? collidable))
+            if (!Owner.TryGetComponent(out IPhysicsComponent? physics))
             {
                 return false;
             }
 
-            return collidable.Anchored ?
+            return physics.Anchored ?
                 await TryUnAnchor(user, utilizing, force) :
                 await TryAnchor(user, utilizing, force);
         }
@@ -118,7 +118,7 @@ namespace Content.Server.GameObjects.Components
         public override void Initialize()
         {
             base.Initialize();
-            Owner.EnsureComponent<CollidableComponent>();
+            Owner.EnsureComponent<PhysicsComponent>();
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)

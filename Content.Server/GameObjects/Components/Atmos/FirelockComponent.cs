@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Doors;
 using Content.Server.GameObjects.Components.Interactable;
-using Content.Server.Interfaces;
 using Content.Shared.GameObjects.Components.Doors;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces;
@@ -11,7 +9,6 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
@@ -39,11 +36,12 @@ namespace Content.Server.GameObjects.Components.Atmos
                 airtightComponent.AirBlocked = false;
             }
 
-            if (Owner.TryGetComponent(out ICollidableComponent collidableComponent))
+            if (Owner.TryGetComponent(out IPhysicsComponent physics))
             {
-                collidableComponent.Hard = false;
+                physics.CanCollide = false;
             }
 
+            AutoClose = false;
             Safety = false;
 
             if (Occludes && Owner.TryGetComponent(out OccluderComponent occluder))

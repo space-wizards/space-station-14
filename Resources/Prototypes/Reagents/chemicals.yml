@@ -127,7 +127,8 @@
   color: "#c8ff69"
   boilingPoint: 147.0 # Made this up, loosely based on bleach
   meltingPoint: -11.0
-  # You should probably add a tile reaction here that tries to clean the tile.
+  tileReactions:
+    - !type:CleanTileReaction {}
 
 - type: reagent
   id: chem.SpaceLube

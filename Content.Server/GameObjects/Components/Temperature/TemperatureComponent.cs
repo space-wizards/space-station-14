@@ -31,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Temperature
         [ViewVariables] public float HeatCapacity {
             get
             {
-                if (Owner.TryGetComponent<ICollidableComponent>(out var physics))
+                if (Owner.TryGetComponent<IPhysicsComponent>(out var physics))
                 {
                     return SpecificHeat * physics.Mass;
                 }

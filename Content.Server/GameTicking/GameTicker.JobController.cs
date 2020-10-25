@@ -196,5 +196,11 @@ namespace Content.Server.GameTicking
         {
             _spawnedPositions[jobId] = _spawnedPositions.GetValueOrDefault(jobId, 0) + 1;
         }
+
+        private void UpdateJobsAvailable()
+        {
+            var lobbyPlayers = _playersInLobby.Keys.Select(p => p.ConnectedClient).ToList();
+            _netManager.ServerSendToMany(GetJobsAvailable(), lobbyPlayers);
+        }
     }
 }
