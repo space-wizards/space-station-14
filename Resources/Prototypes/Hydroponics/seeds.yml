@@ -196,3 +196,24 @@
       Min: 1
       Max: 10
       PotencyDivisor: 10
+
+- type: seed
+  id: apple
+  name: apple
+  seedName: apple
+  displayName: apple tree
+  plantRsi: Objects/Specific/Hydroponics/apple.rsi
+  productPrototypes:
+    - FoodApple
+  harvestRepeat: Repeat
+  lifespan: 55
+  maturation: 6
+  production: 6
+  yield: 5
+  potency: 10
+  idealLight: 6
+  chemicals:
+    chem.Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
