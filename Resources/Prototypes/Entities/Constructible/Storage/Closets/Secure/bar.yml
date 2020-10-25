@@ -2,6 +2,7 @@
   id: LockerBooze
   parent: LockerSecureBase
   name: "booze storage"
+  description: This is where the bartender keeps the booze.
   components:
   - type: Appearance
     visuals:

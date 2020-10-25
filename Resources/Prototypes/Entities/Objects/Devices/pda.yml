@@ -61,7 +61,7 @@
   name: Clown PDA
   parent: BasePDA
   id: ClownPDA
-  description: Looks can be deceiving.
+  description: "Looks can be deceiving. Warning: extra slippery"
   components:
   - type: PDA
     idCard: ClownIDCard

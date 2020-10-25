@@ -1,6 +1,6 @@
 - type: entity
   id: CarpetBase
-  description:
+  description: "Fancy walking surface."
   abstract: true
   placement:
     mode: SnapgridCenter
