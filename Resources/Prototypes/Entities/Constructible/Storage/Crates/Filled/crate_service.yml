@@ -1,7 +1,7 @@
 - type: entity
   id: CrateJanitorialSupplies
-  name: generator crate
-  parent: CrateEngineering
+  name: janitorial supplies crate
+  parent: CratePlastic
   components:
   - type: StorageFill
     contents:

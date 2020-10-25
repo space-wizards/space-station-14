@@ -41,6 +41,8 @@
         amount: 1
       - name: MaskSterile
         amount: 1
+      - name: PlushieSmug
+        amount: 1
 
 - type: entity
   id: CrateMedicalScrubs
