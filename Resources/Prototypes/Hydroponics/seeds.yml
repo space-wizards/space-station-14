@@ -174,3 +174,25 @@
       Min: 1
       Max: 10
       PotencyDivisor: 10
+
+- type: seed
+  id: eggplant
+  name: eggplant
+  seedName: eggplant
+  displayName: eggplants
+  plantRsi: Objects/Specific/Hydroponics/eggplant.rsi
+  productPrototypes:
+    - FoodEggplant
+  harvestRepeat: Repeat
+  lifespan: 25
+  maturation: 6
+  production: 6
+  yield: 2
+  potency: 20
+  idealLight: 9
+  idealHeat: 298
+  chemicals:
+    chem.Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
