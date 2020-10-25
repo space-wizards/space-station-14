@@ -231,7 +231,7 @@
     }
 
     /// <summary>
-    ///     Gases to Ids. Keep these updated with the prototypes!
+    ///     Gasses to Ids. Keep these updated with the prototypes!
     /// </summary>
     public enum Gas : sbyte
     {
