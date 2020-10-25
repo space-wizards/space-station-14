@@ -1,6 +1,8 @@
 - type: entity
   name: soil
   id: hydroponicsSoil
+  placement:
+    mode: SnapgridCenter
   components:
     - type: Clickable
     - type: InteractionOutline
@@ -25,6 +27,8 @@
       maxVol: 200
       caps: AddTo, NoExamine
     - type: Pourable
+    - type: SnapGrid
+      offset: Center
     - type: Appearance
       visuals:
         - type: PlantHolderVisualizer
