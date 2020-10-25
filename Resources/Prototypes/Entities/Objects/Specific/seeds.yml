@@ -110,3 +110,13 @@
       seed: apple
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/apple.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of corn seeds
+  id: CornSeeds
+  components:
+    - type: Seed
+      seed: apple
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/corn.rsi

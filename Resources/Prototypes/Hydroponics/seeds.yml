@@ -217,3 +217,26 @@
       Min: 1
       Max: 10
       PotencyDivisor: 10
+
+- type: seed
+  id: corn
+  name: corn
+  seedName: corn
+  displayName: ears of corn
+  plantRsi: Objects/Specific/Hydroponics/corn.rsi
+  productPrototypes:
+    - FoodCorn
+  lifespan: 25
+  maturation: 8
+  production: 6
+  yield: 3
+  potency: 20
+  growthStages: 3
+  idealLight: 8
+  waterConsumption: 6
+  idealHeat: 298
+  chemicals:
+    chem.Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10

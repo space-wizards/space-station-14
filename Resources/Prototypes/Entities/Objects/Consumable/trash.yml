@@ -46,7 +46,8 @@
 
 
 - type: entity
-  name: corn cob (trash)
+  name: corn cob
+  description: A reminder of meals gone by.
   parent: TrashBase
   id: TrashCornCob
   components:
