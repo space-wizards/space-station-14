@@ -9,11 +9,6 @@ using Content.Server.GameObjects.Components.Markers;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.Components.PDA;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.GameObjects.EntitySystems.AI.Pathfinding;
-using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible;
-using Content.Server.GameObjects.EntitySystems.Atmos;
-using Content.Server.GameObjects.EntitySystems.StationEvents;
 using Content.Server.GameTicking.GamePresets;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
@@ -36,7 +31,6 @@ using Robust.Server.Player;
 using Robust.Server.ServerStatus;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
@@ -70,6 +64,7 @@ namespace Content.Server.GameTicking
 
         private static readonly TimeSpan UpdateRestartDelay = TimeSpan.FromSeconds(20);
 
+        public const float PresetFailedCooldownIncrease = 30f;
         private const string PlayerPrototypeName = "HumanMob_Content";
         private const string ObserverPrototypeName = "MobObserver";
         private const string MapFile = "Maps/saltern.yml";
@@ -143,6 +138,7 @@ namespace Content.Server.GameTicking
             _netManager.RegisterNetMessage<MsgRoundEndMessage>(nameof(MsgRoundEndMessage));
             _netManager.RegisterNetMessage<MsgRequestWindowAttention>(nameof(MsgRequestWindowAttention));
             _netManager.RegisterNetMessage<MsgTickerLateJoinStatus>(nameof(MsgTickerLateJoinStatus));
+            _netManager.RegisterNetMessage<MsgTickerJobsAvailable>(nameof(MsgTickerJobsAvailable));
 
             SetStartPreset(_configurationManager.GetCVar(CCVars.GameLobbyDefaultPreset));
 
@@ -290,23 +286,34 @@ namespace Content.Server.GameTicking
 
             if (!preset.Start(assignedJobs.Keys.ToList(), force))
             {
-                SetStartPreset(_configurationManager.GetCVar<string>("game.fallbackpreset"));
-                var newPreset = MakeGamePreset(profiles);
-                _chatManager.DispatchServerAnnouncement(
-                    $"Failed to start {preset.ModeTitle} mode! Defaulting to {newPreset.ModeTitle}...");
-                if (!newPreset.Start(readyPlayers, force))
+                if (_configurationManager.GetCVar<bool>("game.fallbackenabled"))
                 {
-                    throw new ApplicationException("Fallback preset failed to start!");
-                }
+                    SetStartPreset(_configurationManager.GetCVar<string>("game.fallbackpreset"));
+                    var newPreset = MakeGamePreset(profiles);
+                    _chatManager.DispatchServerAnnouncement(
+                        $"Failed to start {preset.ModeTitle} mode! Defaulting to {newPreset.ModeTitle}...");
+                    if (!newPreset.Start(readyPlayers, force))
+                    {
+                        throw new ApplicationException("Fallback preset failed to start!");
+                    }
 
-                DisallowLateJoin = false;
-                DisallowLateJoin |= newPreset.DisallowLateJoin;
+                    DisallowLateJoin = false;
+                    DisallowLateJoin |= newPreset.DisallowLateJoin;
+                }
+                else
+                {
+                    SendServerMessage($"Failed to start {preset.ModeTitle} mode! Restarting round...");
+                    RestartRound();
+                    DelayStart(TimeSpan.FromSeconds(PresetFailedCooldownIncrease));
+                    return;
+                }
             }
 
             _roundStartTimeSpan = IoCManager.Resolve<IGameTiming>().RealTime;
             _sendStatusToAll();
             ReqWindowAttentionAll();
             UpdateLateJoinStatus();
+            UpdateJobsAvailable();
         }
 
         private void UpdateLateJoinStatus()
@@ -420,6 +427,7 @@ namespace Content.Server.GameTicking
         {
             DisallowLateJoin = disallowLateJoin;
             UpdateLateJoinStatus();
+            UpdateJobsAvailable();
         }
 
         public T AddGameRule<T>() where T : GameRule, new()
@@ -817,6 +825,7 @@ namespace Content.Server.GameTicking
             var character = GetPlayerProfile(session);
 
             SpawnPlayer(session, character, jobId, lateJoin);
+            UpdateJobsAvailable();
         }
 
         private void SpawnPlayer(IPlayerSession session,
@@ -915,6 +924,7 @@ namespace Content.Server.GameTicking
             _netManager.ServerSendMessage(_getStatusMsg(session), session.ConnectedClient);
             _netManager.ServerSendMessage(GetInfoMsg(), session.ConnectedClient);
             _netManager.ServerSendMessage(GetPlayerStatus(), session.ConnectedClient);
+            _netManager.ServerSendMessage(GetJobsAvailable(), session.ConnectedClient);
         }
 
         private void _playerJoinGame(IPlayerSession session)
@@ -936,6 +946,22 @@ namespace Content.Server.GameTicking
                 msg.PlayerStatus.Add(player.UserId, status);
             }
             return msg;
+        }
+
+        private MsgTickerJobsAvailable GetJobsAvailable()
+        {
+            var message = _netManager.CreateNetMessage<MsgTickerJobsAvailable>();
+
+            // If late join is disallowed, return no available jobs.
+            if (DisallowLateJoin)
+                return message;
+
+            message.JobsAvailable = GetAvailablePositions()
+                .Where(e => e.Value > 0)
+                .Select(e => e.Key)
+                .ToArray();
+
+            return message;
         }
 
         private MsgTickerLobbyReady GetStatusSingle(IPlayerSession player, PlayerStatus status)

@@ -57,3 +57,4 @@
       normal: running
       crit: crit
       dead: dead
+  - type: Puller

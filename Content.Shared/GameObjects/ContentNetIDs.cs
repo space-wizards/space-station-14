@@ -81,7 +81,8 @@
         public const uint CRAYONS = 1075;
         public const uint PLACEABLE_SURFACE = 1076;
         public const uint STORABLE = 1077;
-        public const uint AMMO = 1078;
+        public const uint PULLABLE = 1078;
+        public const uint AMMO = 1079;
 
         // Net IDs for integration tests.
         public const uint PREDICTION_TEST = 10001;

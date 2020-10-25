@@ -165,5 +165,9 @@
             "name": "plasteel",
             "directions": 1
         },
+        {
+            "name": "researchicon",
+            "directions": 1
+        }
     ]
 }

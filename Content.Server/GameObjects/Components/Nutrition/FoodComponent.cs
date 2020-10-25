@@ -7,6 +7,7 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Utensil;
 using Content.Shared.Chemistry;
+using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Behavior;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Utensil;
@@ -131,7 +132,8 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             var trueTarget = target ?? user;
 
-            if (!trueTarget.TryGetMechanismBehaviors<SharedStomachBehaviorComponent>(out var stomachs))
+            if (!trueTarget.TryGetComponent(out IBody? body) ||
+                !body.TryGetMechanismBehaviors<SharedStomachBehaviorComponent>(out var stomachs))
             {
                 return false;
             }
@@ -186,7 +188,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             foreach (var (reagentId, quantity) in split.Contents)
             {
                 if (!_prototypeManager.TryIndex(reagentId, out ReagentPrototype reagent)) continue;
-                split.RemoveReagent(reagentId, reagent.ReactionEntity(target, ReactionMethod.Ingestion, quantity));
+                split.RemoveReagent(reagentId, reagent.ReactionEntity(trueTarget, ReactionMethod.Ingestion, quantity));
             }
 
             firstStomach.TryTransferSolution(split);

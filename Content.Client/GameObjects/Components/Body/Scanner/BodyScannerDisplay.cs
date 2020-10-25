@@ -19,7 +19,7 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
         private IEntity? _currentEntity;
         private IBodyPart? _currentBodyPart;
 
-        private IBody? CurrentBody => _currentEntity?.GetBody();
+        private IBody? CurrentBody => _currentEntity?.GetComponentOrNull<IBody>();
 
         public BodyScannerDisplay(BodyScannerBoundUserInterface owner)
         {

@@ -47,7 +47,9 @@
   name: material sheet printing
   id: Sheets
   description: Print those sheets!
-  icon: Objects/Materials/materials.rsi/sheet_metal.png
+  icon:
+    sprite: Objects/Materials/sheets.rsi
+    state: researchicon
   requiredPoints: 250
   requiredTechnologies:
     - IndustrialEngineering

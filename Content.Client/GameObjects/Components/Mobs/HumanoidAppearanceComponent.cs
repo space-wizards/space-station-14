@@ -47,7 +47,7 @@ namespace Content.Client.GameObjects.Components.Mobs
                 return;
             }
 
-            if (Owner.TryGetBody(out var body))
+            if (Owner.TryGetComponent(out IBody body))
             {
                 foreach (var part in body.Parts.Values)
                 {

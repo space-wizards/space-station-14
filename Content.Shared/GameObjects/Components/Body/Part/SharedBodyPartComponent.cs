@@ -43,27 +43,19 @@ namespace Content.Shared.GameObjects.Components.Body.Part
                 var old = _body;
                 _body = value;
 
+                if (old != null)
+                {
+                    RemovedFromBody(old);
+                }
+
                 if (value != null)
                 {
-                    foreach (var mechanism in _mechanisms)
-                    {
-                        mechanism.OnBodyAdd(old, value);
-                    }
-                }
-                else if (old != null)
-                {
-                    foreach (var mechanism in _mechanisms)
-                    {
-                        mechanism.OnBodyRemove(old);
-                    }
+                    AddedToBody(value);
                 }
             }
         }
 
         [ViewVariables] public BodyPartType PartType { get; private set; }
-
-        [ViewVariables] public string Plural { get; private set; } = string.Empty;
-
         [ViewVariables] public int Size { get; private set; }
 
         [ViewVariables] public int SizeUsed { get; private set; }
@@ -133,8 +125,6 @@ namespace Content.Shared.GameObjects.Components.Body.Part
 
             serializer.DataField(this, b => b.PartType, "partType", BodyPartType.Other);
 
-            serializer.DataField(this, b => b.Plural, "plural", string.Empty);
-
             serializer.DataField(this, b => b.Size, "size", 1);
 
             serializer.DataField(this, b => b.Compatibility, "compatibility", BodyPartCompatibility.Universal);
@@ -188,13 +178,6 @@ namespace Content.Shared.GameObjects.Components.Body.Part
             }
         }
 
-        public bool Drop()
-        {
-            Body = null;
-            Owner.Transform.AttachToGridOrMap();
-            return true;
-        }
-
         public bool SurgeryCheck(SurgeryType surgery)
         {
             return SurgeryDataComponent?.CheckSurgery(surgery) ?? false;
@@ -222,7 +205,7 @@ namespace Content.Shared.GameObjects.Components.Body.Part
             return SurgeryDataComponent?.CanAttachBodyPart(part) ?? false;
         }
 
-        public bool CanAddMechanism(IMechanism mechanism)
+        public virtual bool CanAddMechanism(IMechanism mechanism)
         {
             DebugTools.AssertNotNull(mechanism);
 
@@ -300,12 +283,42 @@ namespace Content.Shared.GameObjects.Components.Body.Part
             mechanism.Owner.Delete();
             return true;
         }
+
+        private void AddedToBody(IBody body)
+        {
+            Owner.Transform.AttachParent(Body!.Owner);
+            OnAddedToBody(body);
+
+            foreach (var mechanism in _mechanisms)
+            {
+                mechanism.AddedToBody(body);
+            }
+        }
+
+        private void RemovedFromBody(IBody old)
+        {
+            if (!Owner.Transform.Deleted)
+            {
+                Owner.Transform.AttachToGridOrMap();
+            }
+
+            OnRemovedFromBody(old);
+
+            foreach (var mechanism in _mechanisms)
+            {
+                mechanism.RemovedFromBody(old);
+            }
+        }
+
+        protected virtual void OnAddedToBody(IBody body) { }
+
+        protected virtual void OnRemovedFromBody(IBody old) { }
     }
 
     [Serializable, NetSerializable]
     public class BodyPartComponentState : ComponentState
     {
-        private List<IMechanism>? _mechanisms;
+        [NonSerialized] private List<IMechanism>? _mechanisms;
 
         public readonly EntityUid[] MechanismIds;
 
