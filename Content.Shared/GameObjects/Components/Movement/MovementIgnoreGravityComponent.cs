@@ -1,4 +1,5 @@
 #nullable enable
+using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Physics;
@@ -14,12 +15,15 @@ namespace Content.Shared.GameObjects.Components.Movement
 
     public static class GravityExtensions
     {
+        public static Action<IEntity,bool> ?OnWeightlessChanged;
         public static bool IsWeightless(this IEntity entity, IPhysicsManager? physicsManager = null)
         {
             physicsManager ??= IoCManager.Resolve<IPhysicsManager>();
 
-            return !entity.HasComponent<MovementIgnoreGravityComponent>() &&
+            bool isWeightless = !entity.HasComponent<MovementIgnoreGravityComponent>() &&
                    physicsManager.IsWeightless(entity.Transform.Coordinates);
+            OnWeightlessChanged?.Invoke(entity,isWeightless);
+            return isWeightless;
         }
     }
 }

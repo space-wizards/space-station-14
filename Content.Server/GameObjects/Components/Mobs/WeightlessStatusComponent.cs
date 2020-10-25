@@ -1,3 +1,4 @@
+using System;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Movement;
 using Robust.Shared.GameObjects;
@@ -8,9 +9,7 @@ using Robust.Shared.GameObjects;
 /// Simple component to indicate to players when they are experiencing weightlessness.
 /// </summary>
 public class WeightlessStatusComponent : SharedWeightlessStatusComponent
-{    public void Update()
-    {
-        UpdateStatus(Owner.IsWeightless());
-    }
+{
+
 
 }
