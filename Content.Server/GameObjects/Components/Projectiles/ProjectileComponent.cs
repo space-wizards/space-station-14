@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
@@ -8,6 +9,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -37,6 +39,8 @@ namespace Content.Server.GameObjects.Components.Projectiles
         private string _soundHitSpecies;
 
         private bool _damagedEntity;
+
+        public Vector2 targetPosition;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -72,7 +76,8 @@ namespace Content.Server.GameObjects.Components.Projectiles
             }
 
             // This is so entities that shouldn't get a collision are ignored.
-            if (entity.TryGetComponent(out IPhysicsComponent otherPhysics) && otherPhysics.Hard == false)
+            Vector2 entityPos = entity.Transform.Coordinates.ToMapPos(entity.EntityManager);
+            if (entity.TryGetComponent(out IPhysicsComponent otherPhysics) && otherPhysics.Hard == false || entity.TryGetComponent(out IDamageableComponent damageableComponent) && damageableComponent.CurrentState != DamageState.Alive &&  Math.Sqrt(Math.Pow(targetPosition.X-entityPos.X,2)+Math.Pow(targetPosition.Y-entityPos.Y,2)) > 1)
             {
                 _deleteOnCollide = false;
                 return;
