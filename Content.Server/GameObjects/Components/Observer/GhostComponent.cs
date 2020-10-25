@@ -15,15 +15,22 @@ using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
+using Content.Shared.GameObjects.EntitySystems;
+using Robust.Shared.Utility;
+using Robust.Shared.Localization;
+using Robust.Shared.Interfaces.Timing;
+using System;
 
 #nullable enable
 namespace Content.Server.GameObjects.Components.Observer
 {
     [RegisterComponent]
-    public class GhostComponent : SharedGhostComponent
+    public class GhostComponent : SharedGhostComponent, IExamine
     {
         private bool _canReturnToBody = true;
+        private TimeSpan _timeOfDeath = TimeSpan.Zero;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IGameTiming _gameTimer = default!;
         [ViewVariables(VVAccess.ReadWrite)]
         public bool CanReturnToBody
         {
@@ -40,6 +47,7 @@ namespace Content.Server.GameObjects.Components.Observer
             base.Initialize();
 
             Owner.EnsureComponent<VisibilityComponent>().Layer = (int) VisibilityFlags.Ghost;
+            _timeOfDeath = _gameTimer.RealTime;
         }
 
         public override ComponentState GetComponentState() => new GhostComponentState(CanReturnToBody);
@@ -137,6 +145,15 @@ namespace Content.Server.GameObjects.Components.Observer
         {
             var comp = IoCManager.Resolve<IComponentManager>();
             return comp.EntityQuery<WarpPointComponent>().ToList();
+        }
+
+        public void Examine(FormattedMessage message, bool inDetailsRange)
+        {
+            var timeSinceDeath = _gameTimer.RealTime.Subtract(_timeOfDeath);
+            //If we've been dead for longer than 1 minute use minutes, otherwise use seconds. Ignore the improper plurals.
+            var deathTimeInfo = timeSinceDeath.Minutes > 0 ? Loc.GetString($"{timeSinceDeath.Minutes} minutes ago") : Loc.GetString($"{timeSinceDeath.Seconds} seconds ago");
+
+            message.AddMarkup(Loc.GetString("Died [color=yellow]{0}[/color].", deathTimeInfo));
         }
 
         public class GhostReturnMessage : EntitySystemMessage
