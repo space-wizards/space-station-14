@@ -4,22 +4,43 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
   - type: Sprite
     drawdepth: WallTops
     sprite: Constructible/Misc/barsign.rsi
     state: empty
-  - type: Icon
-    sprite: Constructible/Misc/barsign.rsi
-    state: empty
+
   - type: PowerReceiver
   - type: BarSign
 
+- type: entity
+  id: LargeBarSign
+  name: large bar sign
+  abstract: true
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Misc/sylphs.rsi
+    state: sylph
+
+  - type: PowerReceiver
+  - type: BarSign
 
 - type: entity
-  id: BarSignMalteseFalcon
-  name: Maltese Falcon
+  id: BarSignEngineChange
+  name: The Engine Change
   parent: BarSign
   components:
   - type: BarSign
-    current: MalteseFalcon
+    current: EngineChange
+
+- type: entity
+  id: BarSignCyberSylph
+  name: Cyber Sylph
+  parent: LargeBarSign
+  components:
+  - type: BarSign
+    current: CyberSylph

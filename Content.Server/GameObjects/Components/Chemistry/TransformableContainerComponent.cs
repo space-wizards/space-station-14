@@ -4,6 +4,7 @@ using Content.Shared.Chemistry;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -40,7 +41,14 @@ namespace Content.Server.GameObjects.Components.Chemistry
         protected override void Startup()
         {
             base.Startup();
-            Owner.GetComponent<SolutionComponent>().Capabilities |= SolutionCaps.FitsInDispenser;
+
+            if (!Owner.EnsureComponent(out SolutionContainerComponent solution))
+            {
+                Logger.Warning(
+                    $"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(SolutionContainerComponent)}");
+            }
+
+            solution.Capabilities |= SolutionContainerCaps.FitsInDispenser;
         }
 
         public void CancelTransformation()
@@ -60,7 +68,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         void ISolutionChange.SolutionChanged(SolutionChangeEventArgs eventArgs)
         {
-            var solution = eventArgs.Owner.GetComponent<SolutionComponent>();
+            var solution = eventArgs.Owner.GetComponent<SolutionContainerComponent>();
             //Transform container into initial state when emptied
             if (_currentReagent != null && solution.ReagentList.Count == 0)
             {

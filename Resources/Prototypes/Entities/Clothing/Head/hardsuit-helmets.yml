@@ -16,8 +16,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/hardsuit-old.rsi
-  - type: Icon
-    sprite: Clothing/Head/hardsuit-old.rsi
+
   - type: Clothing
     sprite: Clothing/Head/hardsuit-old.rsi
   - type: PressureProtection
@@ -33,8 +32,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/hardsuit-atmos.rsi
-  - type: Icon
-    sprite: Clothing/Head/hardsuit-atmos.rsi
+
   - type: Clothing
     sprite: Clothing/Head/hardsuit-atmos.rsi
   - type: PressureProtection
@@ -49,8 +47,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/hardsuit-engineering.rsi
-  - type: Icon
-    sprite: Clothing/Head/hardsuit-engineering.rsi
+
   - type: Clothing
     sprite: Clothing/Head/hardsuit-engineering.rsi
   - type: PressureProtection
@@ -65,8 +62,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/hardsuit-hazardhardsuit.rsi
-  - type: Icon
-    sprite: Clothing/Head/hardsuit-hazardhardsuit.rsi
+
   - type: Clothing
     sprite: Clothing/Head/hardsuit-hazardhardsuit.rsi
 
@@ -78,8 +74,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/hardsuit-medical.rsi
-  - type: Icon
-    sprite: Clothing/Head/hardsuit-medical.rsi
+
   - type: Clothing
     sprite: Clothing/Head/hardsuit-medical.rsi
   - type: PressureProtection
@@ -94,8 +89,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/hardsuit-mining.rsi
-  - type: Icon
-    sprite: Clothing/Head/hardsuit-mining.rsi
+
   - type: Clothing
     sprite: Clothing/Head/hardsuit-mining.rsi
   - type: PressureProtection
@@ -110,8 +104,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/hardsuit-sectg.rsi
-  - type: Icon
-    sprite: Clothing/Head/hardsuit-sectg.rsi
+
   - type: Clothing
     sprite: Clothing/Head/hardsuit-sectg.rsi
   - type: PressureProtection
@@ -127,9 +120,7 @@
   - type: Sprite
     sprite: Clothing/Head/hardsuit-syndie.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Head/hardsuit-syndie.rsi
-    state: icon
+
   - type: Clothing
     sprite: Clothing/Head/hardsuit-syndie.rsi
   - type: PressureProtection
@@ -144,8 +135,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/hardsuit-white.rsi
-  - type: Icon
-    sprite: Clothing/Head/hardsuit-white.rsi
+
   - type: Clothing
     sprite: Clothing/Head/hardsuit-white.rsi
   - type: PressureProtection
@@ -160,8 +150,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/hardsuit-wiz.rsi
-  - type: Icon
-    sprite: Clothing/Head/hardsuit-wiz.rsi
+
   - type: Clothing
     sprite: Clothing/Head/hardsuit-wiz.rsi
   - type: PressureProtection

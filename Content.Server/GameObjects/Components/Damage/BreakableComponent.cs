@@ -21,20 +21,15 @@ namespace Content.Server.GameObjects.Components.Damage
     [ComponentReference(typeof(IDamageableComponent))]
     public class BreakableComponent : RuinableComponent, IExAct
     {
-#pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-        [Dependency] private readonly IRobustRandom _random;
-#pragma warning restore 649
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         public override string Name => "Breakable";
 
         private ActSystem _actSystem;
-        private DamageState _currentDamageState;
 
         public override List<DamageState> SupportedDamageStates =>
             new List<DamageState> {DamageState.Alive, DamageState.Dead};
-
-        public override DamageState CurrentDamageState => _currentDamageState;
 
         void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
         {
@@ -64,7 +59,7 @@ namespace Content.Server.GameObjects.Components.Damage
         public void FixAllDamage()
         {
             Heal();
-            _currentDamageState = DamageState.Alive;
+            CurrentState = DamageState.Alive;
         }
 
         protected override void DestructionBehavior()
@@ -72,7 +67,7 @@ namespace Content.Server.GameObjects.Components.Damage
             _actSystem.HandleBreakage(Owner);
             if (!Owner.Deleted && DestroySound != string.Empty)
             {
-                var pos = Owner.Transform.GridPosition;
+                var pos = Owner.Transform.Coordinates;
                 EntitySystem.Get<AudioSystem>().PlayAtCoords(DestroySound, pos);
             }
         }

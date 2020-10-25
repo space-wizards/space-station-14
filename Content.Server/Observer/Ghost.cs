@@ -28,6 +28,12 @@ namespace Content.Server.Observer
             }
 
             var mind = player.ContentData().Mind;
+            if (mind == null)
+            {
+                shell.SendText(player, "You can't ghost here!");
+                return;
+            }
+
             var canReturn = player.AttachedEntity != null && CanReturn;
             var name = player.AttachedEntity?.Name ?? player.Name;
 
@@ -40,11 +46,11 @@ namespace Content.Server.Observer
                 mind.VisitingEntity.Delete();
             }
 
-            var position = player.AttachedEntity?.Transform.GridPosition ?? IoCManager.Resolve<IGameTicker>().GetObserverSpawnPoint();
+            var position = player.AttachedEntity?.Transform.Coordinates ?? IoCManager.Resolve<IGameTicker>().GetObserverSpawnPoint();
 
             if (canReturn && player.AttachedEntity.TryGetComponent(out IDamageableComponent damageable))
             {
-                switch (damageable.CurrentDamageState)
+                switch (damageable.CurrentState)
                 {
                     case DamageState.Dead:
                         canReturn = true;

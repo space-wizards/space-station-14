@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
@@ -33,6 +34,73 @@ namespace Content.Shared.GameObjects.Components.Observer
     [Serializable, NetSerializable]
     public class ReturnToBodyComponentMessage : ComponentMessage
     {
-        public ReturnToBodyComponentMessage() => Directed = true;
+        public ReturnToBodyComponentMessage()
+        {
+            Directed = true;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class GhostWarpRequestMessage : ComponentMessage
+    {
+        public EntityUid PlayerTarget;
+        public string WarpName;
+        public GhostWarpRequestMessage(EntityUid playerTarget = default, string warpTarget = default)
+        {
+            WarpName = warpTarget;
+            PlayerTarget = playerTarget;
+            Directed = true;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class GhostRequestWarpPointData : ComponentMessage
+    {
+        public GhostRequestWarpPointData()
+        {
+            Directed = true;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class GhostRequestPlayerNameData : ComponentMessage
+    {
+        public GhostRequestPlayerNameData()
+        {
+            Directed = true;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class GhostReplyWarpPointData : ComponentMessage
+    {
+        public List<string> WarpName;
+
+        public GhostReplyWarpPointData(List<string> warpName)
+        {
+            WarpName = warpName;
+            Directed = true;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class GhostReplyPlayerNameData : ComponentMessage
+    {
+        public Dictionary<EntityUid,string> PlayerNames;
+
+        public GhostReplyPlayerNameData(Dictionary<EntityUid, string> playerNameDict)
+        {
+            PlayerNames = playerNameDict;
+            Directed = true;
+        }
+    }
+
+
+    [Serializable, NetSerializable]
+    public class ReturnToCloneComponentMessage : ComponentMessage
+    {
+        public ReturnToCloneComponentMessage() => Directed = true;
     }
 }
+
+

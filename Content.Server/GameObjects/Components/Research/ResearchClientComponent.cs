@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.Components.UserInterface;
@@ -18,11 +19,7 @@ namespace Content.Server.GameObjects.Components.Research
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
         // TODO: Create GUI for changing RD server.
-        private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
-            ui.TryGetBoundUserInterface(ResearchClientUiKey.Key, out var boundUi)
-                ? boundUi
-                : null;
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ResearchClientUiKey.Key);
 
         public bool ConnectedToServer => Server != null;
 

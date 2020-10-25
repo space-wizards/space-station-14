@@ -1,0 +1,37 @@
+﻿- type: entity
+  abstract: true
+  id: ScrubberBase
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+  - type: SnapGrid
+    offset: Center
+
+  - type: Sprite
+    sprite: Constructible/Atmos/pipeitems.rsi
+    state: scrubber
+  - type: Appearance
+    visuals:
+    - type: PipeVisualizer
+      pipeRSI: Constructible/Atmos/pipe.rsi
+    - type: SiphonVisualizer
+      siphonRSI: Constructible/Atmos/scrubber.rsi
+  - type: Destructible
+    thresholdvalue: 100
+    resistances: metallicResistances
+
+- type: entity
+  parent: ScrubberBase
+  id: Scrubber
+  name: Scrubber
+  components:
+  - type: NodeContainer
+    nodes:
+    - !type:PipeNode
+      nodeGroID: Pipe
+      pipeDirection: East
+  - type: PressureSiphon
+    scrubberOutletDirection: East

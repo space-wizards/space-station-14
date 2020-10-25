@@ -63,8 +63,25 @@
         public const uint GAS_ANALYZER = 1057;
         public const uint DO_AFTER = 1058;
         public const uint RADIATION_PULSE = 1059;
-        public const uint BODY_MANAGER = 1060;
+        public const uint BODY = 1060;
         public const uint CLIMBING = 1061;
+        public const uint BOLTACTION_BARREL = 1062;
+        public const uint PUMP_BARREL = 1063;
+        public const uint REVOLVER_BARREL = 1064;
+        public const uint CUFFED = 1065;
+        public const uint HANDCUFFS = 1066;
+        public const uint BATTERY_BARREL = 1067;
+        public const uint SUSPICION_ROLE = 1068;
+        public const uint ROTATION = 1069;
+        public const uint MOB_STATE_MANAGER = 1070;
+        public const uint SLIP = 1071;
+        public const uint SPACE_VILLAIN_ARCADE = 1072;
+        public const uint BLOCKGAME_ARCADE = 1073;
+        public const uint BODY_PART = 1074;
+        public const uint CRAYONS = 1075;
+        public const uint PLACEABLE_SURFACE = 1076;
+        public const uint STORABLE = 1077;
+        public const uint PULLABLE = 1078;
 
         // Net IDs for integration tests.
         public const uint PREDICTION_TEST = 10001;

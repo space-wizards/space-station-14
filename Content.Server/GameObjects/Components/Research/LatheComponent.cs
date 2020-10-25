@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.Stack;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Materials;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.GameObjects.Components.Research;
@@ -40,17 +41,14 @@ namespace Content.Server.GameObjects.Components.Research
             set => _state = value;
         }
 
+        [ViewVariables]
         private LatheRecipePrototype? _producingRecipe;
+        [ViewVariables]
         private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
 
         private static readonly TimeSpan InsertionTime = TimeSpan.FromSeconds(0.9f);
 
-        [ViewVariables]
-        private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
-            ui.TryGetBoundUserInterface(LatheUiKey.Key, out var boundUi)
-                ? boundUi
-                : null;
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(LatheUiKey.Key);
 
         public override void Initialize()
         {
@@ -70,7 +68,7 @@ namespace Content.Server.GameObjects.Components.Research
             switch (message.Message)
             {
                 case LatheQueueRecipeMessage msg:
-                    _prototypeManager.TryIndex(msg.ID, out LatheRecipePrototype recipe);
+                    PrototypeManager.TryIndex(msg.ID, out LatheRecipePrototype recipe);
                     if (recipe != null!)
                         for (var i = 0; i < msg.Quantity; i++)
                         {
@@ -130,7 +128,7 @@ namespace Content.Server.GameObjects.Components.Research
             {
                 Producing = false;
                 _producingRecipe = null;
-                Owner.EntityManager.SpawnEntity(recipe.Result, Owner.Transform.GridPosition);
+                Owner.EntityManager.SpawnEntity(recipe.Result, Owner.Transform.Coordinates);
                 UserInterface?.SendMessage(new LatheStoppedProducingRecipeMessage());
                 State = LatheState.Base;
                 SetAppearance(LatheVisualState.Idle);

@@ -9,6 +9,9 @@
   components:
   - type: AiController
     logic: Xeno
+  - type: AiFactionTag
+    factions:
+    - Xeno
   - type: Hands
   - type: MovementSpeedModifier
   - type: InteractionOutline
@@ -18,13 +21,10 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
       sprite: Mobs/Aliens/Xenos/xeno_hunter.rsi
-  - type: Icon
-    sprite: Mobs/Aliens/Xenos/xeno_hunter.rsi
-    state: standing
   - type: Clickable
   - type: Physics
+    anchored: false
     mass: 85
-  - type: Collidable
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.35,-0.35,0.35,0.35"
@@ -57,3 +57,4 @@
       normal: running
       crit: crit
       dead: dead
+  - type: Puller

@@ -22,6 +22,12 @@ namespace Content.Server.Administration
             }
 
             var mind = player.ContentData().Mind;
+            if (mind == null)
+            {
+                shell.SendText(player, "You can't ghost here!");
+                return;
+            }
+
             if (mind.VisitingEntity != null && mind.VisitingEntity.Prototype.ID == "AdminObserver")
             {
                 var visiting = mind.VisitingEntity;

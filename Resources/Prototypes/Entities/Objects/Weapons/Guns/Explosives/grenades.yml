@@ -9,9 +9,7 @@
     layers:
     - state: icon
       map: ["enum.TriggerVisualLayers.Base"]
-  - type: Icon
-    sprite: Objects/Weapons/Grenades/grenade.rsi
-    state: icon
+
   - type: Item
     size: 5
   - type: OnUseTimerTrigger
@@ -39,9 +37,7 @@
     layers:
     - state: icon
       map: ["enum.TriggerVisualLayers.Base"]
-  - type: Icon
-    sprite: Objects/Weapons/Grenades/flashbang.rsi
-    state: icon
+
   - type: Item
     size: 5
   - type: OnUseTimerTrigger
@@ -65,9 +61,7 @@
     layers:
     - state: icon
       map: ["enum.TriggerVisualLayers.Base"]
-  - type: Icon
-    sprite: Objects/Weapons/Grenades/syndgrenade.rsi
-    state: icon
+
   - type: Item
     size: 5
   - type: OnUseTimerTrigger
@@ -95,9 +89,7 @@
     layers:
     - state: icon
       map: ["enum.TriggerVisualLayers.Base"]
-  - type: Icon
-    sprite: Objects/Weapons/Grenades/nukenade.rsi
-    state: icon
+
   - type: Item
     size: 5
   - type: OnUseTimerTrigger

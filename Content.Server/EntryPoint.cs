@@ -1,9 +1,10 @@
 ﻿using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.WorldState;
+using Content.Server.Database;
+using Content.Server.GameObjects.Components.Mobs.Speech;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
-using Content.Server.Body.Network;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Interfaces.PDA;
 using Content.Server.Sandbox;
@@ -47,8 +48,6 @@ namespace Content.Server
 
             IoCManager.BuildGraph();
 
-            IoCManager.Resolve<IBodyNetworkFactory>().DoAutoRegistrations();
-
             _gameTicker = IoCManager.Resolve<IGameTicker>();
 
             IoCManager.Resolve<IServerNotifyManager>().Initialize();
@@ -61,16 +60,18 @@ namespace Content.Server
             var logManager = IoCManager.Resolve<ILogManager>();
             logManager.GetSawmill("Storage").Level = LogLevel.Info;
 
-            IoCManager.Resolve<IServerPreferencesManager>().StartInit();
+            IoCManager.Resolve<IConnectionManager>().Initialize();
+            IoCManager.Resolve<IServerDbManager>().Init();
+            IoCManager.Resolve<IServerPreferencesManager>().Init();
             IoCManager.Resolve<INodeGroupFactory>().Initialize();
             IoCManager.Resolve<ISandboxManager>().Initialize();
+            IoCManager.Resolve<IAccentManager>().Initialize();
         }
 
         public override void PostInit()
         {
             base.PostInit();
 
-            IoCManager.Resolve<IServerPreferencesManager>().FinishInit();
             _gameTicker.Initialize();
             IoCManager.Resolve<RecipeManager>().Initialize();
             IoCManager.Resolve<BlackboardManager>().Initialize();

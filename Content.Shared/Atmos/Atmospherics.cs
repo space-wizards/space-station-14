@@ -1,45 +1,10 @@
-﻿using System.Collections.Generic;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
-
-namespace Content.Shared.Atmos
+﻿namespace Content.Shared.Atmos
 {
     /// <summary>
     ///     Class to store atmos constants.
     /// </summary>
-    public static class Atmospherics
+    public class Atmospherics
     {
-        static Atmospherics()
-        {
-            var protoMan = IoCManager.Resolve<IPrototypeManager>();
-
-            GasPrototypes = new GasPrototype[TotalNumberOfGases];
-            GasOverlays = new SpriteSpecifier[TotalNumberOfGases];
-
-            for (var i = 0; i < TotalNumberOfGases; i++)
-            {
-                var gasPrototype = protoMan.Index<GasPrototype>(i.ToString());
-                GasPrototypes[i] = gasPrototype;
-
-                if(string.IsNullOrEmpty(gasPrototype.GasOverlaySprite) && !string.IsNullOrEmpty(gasPrototype.GasOverlayTexture))
-                    GasOverlays[i] = new SpriteSpecifier.Texture(new ResourcePath(gasPrototype.GasOverlayTexture));
-
-                if(!string.IsNullOrEmpty(gasPrototype.GasOverlaySprite) && !string.IsNullOrEmpty(gasPrototype.GasOverlayState))
-                    GasOverlays[i] = new SpriteSpecifier.Rsi(new ResourcePath(gasPrototype.GasOverlaySprite), gasPrototype.GasOverlayState);
-            }
-        }
-
-        private static readonly GasPrototype[] GasPrototypes;
-
-        public static GasPrototype GetGas(int gasId) => GasPrototypes[gasId];
-        public static GasPrototype GetGas(Gas gasId) => GasPrototypes[(int) gasId];
-        public static IEnumerable<GasPrototype> Gases => GasPrototypes;
-
-        private static readonly SpriteSpecifier[] GasOverlays;
-        
-        public static SpriteSpecifier GetOverlay(int overlayId) => GasOverlays[overlayId];
-
         #region ATMOS
         /// <summary>
         ///     The universal gas constant, in kPa*L/(K*mol)
@@ -144,8 +109,8 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     Minimum temperature for starting superconduction.
         /// </summary>
-        public const float MinimumTemperatureStartSuperConduction = (T20C + 200f);
-        public const float MinimumTemperatureForSuperconduction = (T20C + 10f);
+        public const float MinimumTemperatureStartSuperConduction = (T20C + 400f);
+        public const float MinimumTemperatureForSuperconduction = (T20C + 80f);
 
         /// <summary>
         ///     Minimum heat capacity.
@@ -246,12 +211,29 @@ namespace Content.Shared.Atmos
         public const int LowPressureDamage = 4;
 
         public const float WindowHeatTransferCoefficient = 0.1f;
+
+        /// <summary>
+        ///     Directions that atmos currently supports. Modify in case of multi-z.
+        ///     See <see cref="AtmosDirection"/> on the server.
+        /// </summary>
+        public const int Directions = 4;
+
+        /// <summary>
+        ///     The normal body temperature in degrees Celsius.
+        /// </summary>
+        public const float NormalBodyTemperature = 37f;
+
+        public const float HumanNeededOxygen = MolesCellStandard * BreathPercentage * 0.16f;
+
+        public const float HumanProducedOxygen = HumanNeededOxygen * 0.75f;
+
+        public const float HumanProducedCarbonDioxide = HumanNeededOxygen * 0.25f;
     }
 
     /// <summary>
     ///     Gases to Ids. Keep these updated with the prototypes!
     /// </summary>
-    public enum Gas
+    public enum Gas : sbyte
     {
         Oxygen = 0,
         Nitrogen = 1,

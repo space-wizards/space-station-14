@@ -4,13 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects.Components.Items;
-using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystemMessages;
@@ -25,6 +24,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Items.Storage
 {
@@ -34,10 +34,8 @@ namespace Content.Server.GameObjects.Components.Items.Storage
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
-    public class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IUse, IActivate, IStorageComponent, IDestroyAct, IExAct,
-        IDragDrop
+    public class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IUse, IActivate, IStorageComponent, IDestroyAct, IExAct
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private const string LoggerName = "Storage";
@@ -50,8 +48,10 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         private int _storageCapacityMax;
         public readonly HashSet<IPlayerSession> SubscribedSessions = new HashSet<IPlayerSession>();
 
-        public IReadOnlyCollection<IEntity>? StoredEntities => _storage?.ContainedEntities;
+        [ViewVariables]
+        public override IReadOnlyList<IEntity>? StoredEntities => _storage?.ContainedEntities;
 
+        [ViewVariables(VVAccess.ReadWrite)]
         public bool OccludesLight
         {
             get => _occludesLight;
@@ -86,7 +86,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             foreach (var entity in _storage.ContainedEntities)
             {
                 var item = entity.GetComponent<StorableComponent>();
-                _storageUsed += item.ObjectSize;
+                _storageUsed += item.Size;
             }
         }
 
@@ -106,7 +106,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             }
 
             if (entity.TryGetComponent(out StorableComponent? store) &&
-                store.ObjectSize > _storageCapacityMax - _storageUsed)
+                store.Size > _storageCapacityMax - _storageUsed)
             {
                 return false;
             }
@@ -124,12 +124,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             return CanInsert(entity) && _storage?.Insert(entity) == true;
         }
 
-        /// <summary>
-        ///     Removes from the storage container and updates the stored value
-        /// </summary>
-        /// <param name="entity">The entity to remove</param>
-        /// <returns>true if no longer in storage, false otherwise</returns>
-        public bool Remove(IEntity entity)
+        public override bool Remove(IEntity entity)
         {
             EnsureInitialCalculated();
             return _storage?.Remove(entity) == true;
@@ -146,7 +141,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
             Logger.DebugS(LoggerName, $"Storage (UID {Owner.Uid}) had entity (UID {message.Entity.Uid}) inserted into it.");
 
-            _storageUsed += message.Entity.GetComponent<StorableComponent>().ObjectSize;
+            _storageUsed += message.Entity.GetComponent<StorableComponent>().Size;
 
             UpdateClientInventories();
         }
@@ -170,7 +165,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 return;
             }
 
-            _storageUsed -= storable.ObjectSize;
+            _storageUsed -= storable.Size;
 
             UpdateClientInventories();
         }
@@ -257,14 +252,16 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 return;
             }
 
-            var storedEntities = new Dictionary<EntityUid, int>();
-
-            foreach (var entities in _storage.ContainedEntities)
+            if (StoredEntities == null)
             {
-                storedEntities.Add(entities.Uid, entities.GetComponent<StorableComponent>().ObjectSize);
+                Logger.WarningS(LoggerName, $"{nameof(UpdateClientInventory)} called with null {nameof(StoredEntities)}");
+
+                return;
             }
 
-            SendNetworkMessage(new StorageHeldItemsMessage(storedEntities, _storageUsed, _storageCapacityMax), session.ConnectedClient);
+            var stored = StoredEntities.Select(e => e.Uid).ToArray();
+
+            SendNetworkMessage(new StorageHeldItemsMessage(stored, _storageUsed, _storageCapacityMax), session.ConnectedClient);
         }
 
         /// <summary>
@@ -364,7 +361,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                     var ownerTransform = Owner.Transform;
                     var playerTransform = player.Transform;
 
-                    if (!playerTransform.GridPosition.InRange(_mapManager, ownerTransform.GridPosition, 2) ||
+                    if (!playerTransform.Coordinates.InRange(_entityManager, ownerTransform.Coordinates, 2) ||
                         !ownerTransform.IsMapTransform &&
                         !playerTransform.ContainsEntity(ownerTransform))
                     {
@@ -405,9 +402,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                         break;
                     }
 
-                    var storagePosition = Owner.Transform.MapPosition;
-
-                    if (!InteractionChecks.InRangeUnobstructed(player, storagePosition))
+                    if (!player.InRangeUnobstructed(Owner, popup: true))
                     {
                         break;
                     }
@@ -500,44 +495,6 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                     exAct.OnExplosion(eventArgs);
                 }
             }
-        }
-
-        bool IDragDrop.CanDragDrop(DragDropEventArgs eventArgs)
-        {
-            return eventArgs.Target.TryGetComponent(out PlaceableSurfaceComponent? placeable) &&
-                   placeable.IsPlaceable;
-        }
-
-        bool IDragDrop.DragDrop(DragDropEventArgs eventArgs)
-        {
-            if (!ActionBlockerSystem.CanInteract(eventArgs.User))
-            {
-                return false;
-            }
-
-            if (!eventArgs.Target.TryGetComponent<PlaceableSurfaceComponent>(out var placeableSurface) ||
-                !placeableSurface.IsPlaceable)
-            {
-                return false;
-            }
-
-            var storedEntities = StoredEntities?.ToList();
-
-            if (storedEntities == null)
-            {
-                return false;
-            }
-
-            // empty everything out
-            foreach (var storedEntity in StoredEntities.ToList())
-            {
-                if (Remove(storedEntity))
-                {
-                    storedEntity.Transform.WorldPosition = eventArgs.DropLocation.Position;
-                }
-            }
-
-            return true;
         }
     }
 }

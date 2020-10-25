@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.VendingMachines;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -21,6 +22,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
 using Robust.Shared.Utility;
+using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.SharedWiresComponent;
 
 namespace Content.Server.GameObjects.Components.VendingMachines
@@ -30,6 +32,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
     public class VendingMachineComponent : SharedVendingMachineComponent, IActivate, IExamine, IBreakAct, IWires
     {
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         private bool _ejecting;
         private TimeSpan _animationDuration = TimeSpan.Zero;
@@ -42,11 +45,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
 
         private string _soundVend = "";
 
-        private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
-            ui.TryGetBoundUserInterface(VendingMachineUiKey.Key, out var boundUi)
-                ? boundUi
-                : null;
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(VendingMachineUiKey.Key);
 
         public void Activate(ActivateEventArgs eventArgs)
         {
@@ -63,7 +62,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
                 wires.OpenInterface(actor.playerSession);
             } else
             {
-                UserInterface?.Open(actor.playerSession);
+                UserInterface?.Toggle(actor.playerSession);
             }
         }
 
@@ -79,8 +78,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
         private void InitializeFromPrototype()
         {
             if (string.IsNullOrEmpty(_packPrototypeId)) { return; }
-            var prototypeManger = IoCManager.Resolve<IPrototypeManager>();
-            if (!prototypeManger.TryIndex(_packPrototypeId, out VendingMachineInventoryPrototype packPrototype))
+            if (!_prototypeManager.TryIndex(_packPrototypeId, out VendingMachineInventoryPrototype packPrototype))
             {
                 return;
             }
@@ -190,7 +188,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
             {
                 _ejecting = false;
                 TrySetVisualState(VendingMachineVisualState.Normal);
-                Owner.EntityManager.SpawnEntity(id, Owner.Transform.GridPosition);
+                Owner.EntityManager.SpawnEntity(id, Owner.Transform.Coordinates);
             });
 
             EntitySystem.Get<AudioSystem>().PlayFromEntity(_soundVend, Owner, AudioParams.Default.WithVolume(-2f));

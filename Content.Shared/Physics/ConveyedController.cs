@@ -10,12 +10,11 @@ namespace Content.Shared.Physics
 {
     public class ConveyedController : VirtualController
     {
-        public override ICollidableComponent? ControlledComponent { protected get; set; }
+        public override IPhysicsComponent? ControlledComponent { protected get; set; }
 
         public void Move(Vector2 velocityDirection, float speed)
         {
-            if (ControlledComponent?.Owner.HasComponent<MovementIgnoreGravityComponent>() == false &&
-                IoCManager.Resolve<IPhysicsManager>().IsWeightless(ControlledComponent.Owner.Transform.GridPosition))
+            if (ControlledComponent?.Owner.IsWeightless() ?? false)
             {
                 return;
             }

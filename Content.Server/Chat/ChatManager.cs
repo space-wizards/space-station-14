@@ -1,18 +1,26 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Content.Server.GameObjects.Components;
+using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Headset;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Shared.Chat;
+using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.EntitySystems;
-using NFluidsynth;
+using Content.Shared.Interfaces;
 using Robust.Server.Console;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using static Content.Server.Interfaces.Chat.IChatManager;
 
 namespace Content.Server.Chat
 {
@@ -33,14 +41,13 @@ namespace Content.Server.Chat
         /// </summary>
         private const string MaxLengthExceededMessage = "Your message exceeded {0} character limit";
 
-#pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-        [Dependency] private readonly IServerNetManager _netManager;
-        [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-        [Dependency] private readonly IMoMMILink _mommiLink;
-        [Dependency] private readonly IConGroupController _conGroupController;
-#pragma warning restore 649
+        //TODO: make prio based?
+        private List<TransformChat> _chatTransformHandlers;
+
+        [Dependency] private readonly IServerNetManager _netManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IMoMMILink _mommiLink = default!;
+        [Dependency] private readonly IConGroupController _conGroupController = default!;
 
         public void Initialize()
         {
@@ -51,6 +58,8 @@ namespace Content.Server.Chat
             var msg = _netManager.CreateNetMessage<ChatMaxMsgLengthMessage>();
             msg.MaxMessageLength = MaxMessageLength;
             _netManager.ServerSendToAll(msg);
+
+            _chatTransformHandlers = new List<TransformChat>();
         }
 
         public void DispatchServerAnnouncement(string message)
@@ -67,7 +76,7 @@ namespace Content.Server.Chat
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Radio;
             msg.Message = message;
-            msg.MessageWrap = "Station: {0}";
+            msg.MessageWrap = "Centcom Announcement:\n{0}";
             _netManager.ServerSendToAll(msg);
         }
 
@@ -87,29 +96,64 @@ namespace Content.Server.Chat
                 return;
             }
 
-            // Get entity's PlayerSession
-            IPlayerSession playerSession = source.GetComponent<IActorComponent>().playerSession;
-
             // Check if message exceeds the character limit if the sender is a player
-            if (playerSession != null)
-                if (message.Length > MaxMessageLength)
-                {
-                    DispatchServerMessage(playerSession, Loc.GetString(MaxLengthExceededMessage, MaxMessageLength));
-                    return;
-                }
+            if (source.TryGetComponent(out IActorComponent actor) &&
+                message.Length > MaxMessageLength)
+            {
+                var feedback = Loc.GetString(MaxLengthExceededMessage, MaxMessageLength);
 
-            var pos = source.Transform.GridPosition;
+                DispatchServerMessage(actor.playerSession, feedback);
+
+                return;
+            }
+
+            foreach (var handler in _chatTransformHandlers)
+            {
+                //TODO: rather return a bool and use a out var?
+                message = handler(source, message);
+            }
+
+            message = message.Trim();
+
+            var pos = source.Transform.Coordinates;
             var clients = _playerManager.GetPlayersInRange(pos, VoiceRange).Select(p => p.ConnectedClient);
+
+            if (message.StartsWith(';'))
+            {
+                // Remove semicolon
+                message = message.Substring(1).TrimStart();
+
+                // Capitalize first letter
+                message = message[0].ToString().ToUpper() +
+                          message.Remove(0,1);
+
+                if (source.TryGetComponent(out InventoryComponent inventory) &&
+                    inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.EARS, out ItemComponent item) &&
+                    item.Owner.TryGetComponent(out HeadsetComponent headset))
+                {
+                    headset.RadioRequested = true;
+                }
+                else
+                {
+                    source.PopupMessage(Loc.GetString("You don't have a headset on!"));
+                }
+            }
+            else
+            {
+                // Capitalize first letter
+                message = message[0].ToString().ToUpper() +
+                          message.Remove(0,1);
+            }
+
+            var listeners = EntitySystem.Get<ListeningSystem>();
+            listeners.PingListeners(source, message);
 
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Local;
             msg.Message = message;
-            msg.MessageWrap = $"{source.Name} says, \"{{0}}\"";
+            msg.MessageWrap = Loc.GetString("{0} says, \"{{0}}\"", source.Name);
             msg.SenderEntity = source.Uid;
             _netManager.ServerSendToMany(msg, clients.ToList());
-
-            var listeners = _entitySystemManager.GetEntitySystem<ListeningSystem>();
-            listeners.PingListeners(source, pos, message);
         }
 
         public void EntityMe(IEntity source, string action)
@@ -130,7 +174,7 @@ namespace Content.Server.Chat
                     return;
                 }
 
-            var pos = source.Transform.GridPosition;
+            var pos = source.Transform.Coordinates;
             var clients = _playerManager.GetPlayersInRange(pos, VoiceRange).Select(p => p.ConnectedClient);
 
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
@@ -153,10 +197,10 @@ namespace Content.Server.Chat
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.OOC;
             msg.Message = message;
-            msg.MessageWrap = $"OOC: {player.SessionId}: {{0}}";
+            msg.MessageWrap = $"OOC: {player.Name}: {{0}}";
             _netManager.ServerSendToAll(msg);
 
-            _mommiLink.SendOOCMessage(player.SessionId.ToString(), message);
+            _mommiLink.SendOOCMessage(player.Name, message);
         }
 
         public void SendDeadChat(IPlayerSession player, string message)
@@ -173,7 +217,7 @@ namespace Content.Server.Chat
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Dead;
             msg.Message = message;
-            msg.MessageWrap = $"{_localizationManager.GetString("DEAD")}: {player.AttachedEntity.Name}: {{0}}";
+            msg.MessageWrap = $"{Loc.GetString("DEAD")}: {player.AttachedEntity.Name}: {{0}}";
             msg.SenderEntity = player.AttachedEntityUid.GetValueOrDefault();
             _netManager.ServerSendToMany(msg, clients.ToList());
         }
@@ -198,7 +242,7 @@ namespace Content.Server.Chat
 
             msg.Channel = ChatChannel.AdminChat;
             msg.Message = message;
-            msg.MessageWrap = $"{_localizationManager.GetString("ADMIN")}: {player.SessionId}: {{0}}";
+            msg.MessageWrap = $"{Loc.GetString("ADMIN")}: {player.Name}: {{0}}";
             _netManager.ServerSendToMany(msg, clients.ToList());
         }
 
@@ -216,6 +260,11 @@ namespace Content.Server.Chat
             var response = _netManager.CreateNetMessage<ChatMaxMsgLengthMessage>();
             response.MaxMessageLength = MaxMessageLength;
             _netManager.ServerSendMessage(response, msg.MsgChannel);
+        }
+
+        public void RegisterChatTransform(TransformChat handler)
+        {
+            _chatTransformHandlers.Add(handler);
         }
     }
 }

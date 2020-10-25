@@ -33,12 +33,15 @@ namespace Content.Server.GameObjects.Components.Projectiles
         void ICollideBehavior.CollideWith(IEntity entity)
         {
             if (!_shouldCollide) return;
-            if (entity.TryGetComponent(out CollidableComponent collid))
+            if (entity.TryGetComponent(out PhysicsComponent collid))
             {
                 if (!collid.Hard) // ignore non hard
                     return;
 
                 _shouldStop = true; // hit something hard => stop after this collision
+
+                // Raise an event.
+                EntitySystem.Get<InteractionSystem>().ThrowCollideInteraction(User, Owner, entity, Owner.Transform.Coordinates);
             }
             if (entity.TryGetComponent(out IDamageableComponent damage))
             {
@@ -49,7 +52,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             // after impacting the first object.
             // For realism this should actually be changed when the velocity of the object is less than a threshold.
             // This would allow ricochets off walls, and weird gravity effects from slowing the object.
-            if (Owner.TryGetComponent(out ICollidableComponent body) && body.PhysicsShapes.Count >= 1)
+            if (Owner.TryGetComponent(out IPhysicsComponent body) && body.PhysicsShapes.Count >= 1)
             {
                 _shouldCollide = false;
             }
@@ -62,7 +65,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 return;
             }
 
-            if (Owner.TryGetComponent(out ICollidableComponent body) && body.PhysicsShapes.Count >= 1)
+            if (Owner.TryGetComponent(out IPhysicsComponent body) && body.PhysicsShapes.Count >= 1)
             {
                 body.PhysicsShapes[0].CollisionMask &= (int) ~CollisionGroup.ThrownItem;
 
@@ -74,7 +77,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 body.Status = BodyStatus.OnGround;
 
                 Owner.RemoveComponent<ThrownItemComponent>();
-                EntitySystem.Get<InteractionSystem>().LandInteraction(User, Owner, Owner.Transform.GridPosition);
+                EntitySystem.Get<InteractionSystem>().LandInteraction(User, Owner, Owner.Transform.Coordinates);
             }
         }
 
@@ -88,7 +91,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
 
         public void StartThrow(Vector2 direction, float speed)
         {
-            var comp = Owner.GetComponent<ICollidableComponent>();
+            var comp = Owner.GetComponent<IPhysicsComponent>();
             comp.Status = BodyStatus.InAir;
 
             var controller = comp.EnsureController<ThrownController>();
@@ -109,7 +112,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 return;
             }
 
-            if (IoCManager.Resolve<IPhysicsManager>().IsWeightless(Owner.Transform.GridPosition))
+            if (IoCManager.Resolve<IPhysicsManager>().IsWeightless(Owner.Transform.Coordinates))
             {
                 StartStopTimer();
                 return;
@@ -122,7 +125,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
         {
             base.Initialize();
 
-            Owner.EnsureComponent<CollidableComponent>().EnsureController<ThrownController>();
+            Owner.EnsureComponent<PhysicsComponent>().EnsureController<ThrownController>();
         }
     }
 }

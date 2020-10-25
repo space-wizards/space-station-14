@@ -1,7 +1,7 @@
 ﻿using Content.Client.GameObjects.Components.Disposal;
-using Content.Client.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Client.Graphics;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.ResourceManagement;
@@ -10,6 +10,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Renderable;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.IoC;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -18,12 +19,14 @@ namespace Content.Client.GameObjects.Components.Items
 {
     [RegisterComponent]
     [ComponentReference(typeof(IItemComponent))]
-    public class ItemComponent : Component, IItemComponent, IClientDraggable
+    public class ItemComponent : Component, IItemComponent, IDraggable
     {
         public override string Name => "Item";
         public override uint? NetID => ContentNetIDs.ITEM;
 
         [ViewVariables] protected ResourcePath RsiPath;
+
+        [ViewVariables(VVAccess.ReadWrite)] protected Color Color;
 
         private string _equippedPrefix;
 
@@ -40,7 +43,7 @@ namespace Content.Client.GameObjects.Components.Items
             }
         }
 
-        public (RSI rsi, RSI.StateId stateId)? GetInHandStateInfo(HandLocation hand)
+        public (RSI rsi, RSI.StateId stateId, Color color)? GetInHandStateInfo(HandLocation hand)
         {
             if (RsiPath == null)
             {
@@ -52,7 +55,7 @@ namespace Content.Client.GameObjects.Components.Items
             var stateId = EquippedPrefix != null ? $"{EquippedPrefix}-inhand-{handName}" : $"inhand-{handName}";
             if (rsi.TryGetState(stateId, out _))
             {
-                return (rsi, stateId);
+                return (rsi, stateId, Color);
             }
 
             return null;
@@ -62,6 +65,7 @@ namespace Content.Client.GameObjects.Components.Items
         {
             base.ExposeData(serializer);
 
+            serializer.DataFieldCached(ref Color, "color", Color.White);
             serializer.DataFieldCached(ref RsiPath, "sprite", null);
             serializer.DataFieldCached(ref _equippedPrefix, "HeldPrefix", null);
         }
@@ -81,14 +85,15 @@ namespace Content.Client.GameObjects.Components.Items
             EquippedPrefix = itemComponentState.EquippedPrefix;
         }
 
-        bool IClientDraggable.ClientCanDropOn(CanDropEventArgs eventArgs)
+        bool IDraggable.CanDrop(CanDropEventArgs args)
         {
-            return eventArgs.Target.HasComponent<DisposalUnitComponent>();
+            return args.Target.HasComponent<DisposalUnitComponent>();
         }
 
-        bool IClientDraggable.ClientCanDrag(CanDragEventArgs eventArgs)
+        public bool Drop(DragDropEventArgs args)
         {
-            return true;
+            // TODO: Shared item class
+            return false;
         }
     }
 }

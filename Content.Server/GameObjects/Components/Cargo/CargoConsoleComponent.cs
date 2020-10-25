@@ -2,6 +2,7 @@
 using Content.Server.Cargo;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Cargo;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Prototypes.Cargo;
@@ -59,12 +60,7 @@ namespace Content.Server.GameObjects.Components.Cargo
         private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
         private CargoConsoleSystem _cargoConsoleSystem = default!;
 
-        [ViewVariables]
-        private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
-            ui.TryGetBoundUserInterface(CargoConsoleUiKey.Key, out var boundUi)
-                ? boundUi
-                : null;
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(CargoConsoleUiKey.Key);
 
         public override void Initialize()
         {
@@ -147,7 +143,7 @@ namespace Content.Server.GameObjects.Components.Cargo
                         break;
                     }
 
-                    _prototypeManager.TryIndex(order.ProductId, out CargoProductPrototype product);
+                    PrototypeManager.TryIndex(order.ProductId, out CargoProductPrototype product);
                     if (product == null!)
                         break;
                     var capacity = _cargoOrderDataManager.GetCapacity(orders.Database.Id);
@@ -168,11 +164,11 @@ namespace Content.Server.GameObjects.Components.Cargo
                     // TEMPORARY loop for spawning stuff on top of console
                     foreach (var order in approvedOrders)
                     {
-                        if (!_prototypeManager.TryIndex(order.ProductId, out CargoProductPrototype product))
+                        if (!PrototypeManager.TryIndex(order.ProductId, out CargoProductPrototype product))
                             continue;
                         for (var i = 0; i < order.Amount; i++)
                         {
-                            Owner.EntityManager.SpawnEntity(product.Product, Owner.Transform.GridPosition);
+                            Owner.EntityManager.SpawnEntity(product.Product, Owner.Transform.Coordinates);
                         }
                     }
                     break;

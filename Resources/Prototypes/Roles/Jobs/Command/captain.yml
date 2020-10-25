@@ -28,10 +28,11 @@
   id: CaptainGear
   equipment:
     innerclothing: UniformCaptain
-    backpack: BackpackCaptain
+    backpack: BackpackCaptainFilled
     shoes: ShoesBlack
     head: HatCaptain
     eyes: SunGlasses
     gloves: GlovesCaptain
     outerclothing: OuterclothingCaparmor
     idcard: CaptainPDA
+    ears: HeadsetCommand

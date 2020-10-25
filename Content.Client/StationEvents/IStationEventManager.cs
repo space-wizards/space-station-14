@@ -9,5 +9,6 @@ namespace Content.Client.StationEvents
         public List<string>? StationEvents { get; }
         public void Initialize();
         public event Action OnStationEventsReceived;
+        public void RequestEvents();
     }
 }

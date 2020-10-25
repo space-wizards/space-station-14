@@ -1,7 +1,11 @@
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.Components.StationEvents;
+using Content.Server.Interfaces.GameTicking;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
@@ -17,9 +21,8 @@ namespace Content.Server.StationEvents
     public sealed class RadiationStorm : StationEvent
     {
         // Based on Goonstation style radiation storm with some TG elements (announcer, etc.)
-        
+
         [Dependency] private IEntityManager _entityManager = default!;
-        [Dependency] private IMapManager _mapManager = default!;
         [Dependency] private IRobustRandom _robustRandom = default!;
 
         public override string Name => "RadiationStorm";
@@ -33,7 +36,7 @@ namespace Content.Server.StationEvents
         /// <summary>
         /// How long until the radiation storm starts
         /// </summary>
-        private const float StartupTime = 10;
+        private const float StartupTime = 5;
 
         /// <summary>
         /// How long the radiation storm has been running for
@@ -45,12 +48,18 @@ namespace Content.Server.StationEvents
         private const float MinPulseDelay = 0.2f;
         private const float MaxPulseDelay = 0.8f;
 
+        private void ResetTimeUntilPulse()
+        {
+            _timeUntilPulse = _robustRandom.NextFloat() * (MaxPulseDelay - MinPulseDelay) + MinPulseDelay;
+        }
+
         public override void Startup()
         {
             base.Startup();
             EntitySystem.Get<AudioSystem>().PlayGlobal("/Audio/Announcements/radiation.ogg");
             IoCManager.InjectDependencies(this);
 
+            ResetTimeUntilPulse();
             _timeElapsed = 0.0f;
             _pulsesRemaining = _robustRandom.Next(30, 100);
 
@@ -65,12 +74,11 @@ namespace Content.Server.StationEvents
         public override void Shutdown()
         {
             base.Shutdown();
-            
+
             // IOC uninject?
             _entityManager = null;
-            _mapManager = null;
             _robustRandom = null;
-            
+
             var componentManager = IoCManager.Resolve<IComponentManager>();
 
             foreach (var overlay in componentManager.EntityQuery<ServerOverlayEffectsComponent>())
@@ -78,7 +86,7 @@ namespace Content.Server.StationEvents
                 overlay.RemoveOverlay(SharedOverlayID.RadiationPulseOverlay);
             }
         }
-        
+
         public override void Update(float frameTime)
         {
             _timeElapsed += frameTime;
@@ -102,30 +110,49 @@ namespace Content.Server.StationEvents
 
             if (_timeUntilPulse <= 0.0f)
             {
-                // TODO: Probably rate-limit this for small grids (e.g. no more than 25% covered)
-                foreach (var grid in _mapManager.GetAllGrids())
-                {
-                    if (grid.IsDefaultGrid) continue;
-                    SpawnPulse(grid);
-                }
+                var pauseManager = IoCManager.Resolve<IPauseManager>();
+                var gameTicker = IoCManager.Resolve<IGameTicker>();
+                var defaultGrid = IoCManager.Resolve<IMapManager>().GetGrid(gameTicker.DefaultGridId);
+
+                if (pauseManager.IsGridPaused(defaultGrid))
+                    return;
+
+                SpawnPulse(defaultGrid);
             }
         }
 
         private void SpawnPulse(IMapGrid mapGrid)
-        { 
-            _entityManager.SpawnEntity("RadiationPulse", FindRandomGrid(mapGrid));
-            _timeUntilPulse = _robustRandom.NextFloat() * (MaxPulseDelay - MinPulseDelay) + MinPulseDelay;
+        {
+            if (!TryFindRandomGrid(mapGrid, out var coordinates))
+                return;
+
+            var pulse = _entityManager.SpawnEntity("RadiationPulse", coordinates);
+            pulse.GetComponent<RadiationPulseComponent>().DoPulse();
+            ResetTimeUntilPulse();
             _pulsesRemaining -= 1;
         }
 
-        private GridCoordinates FindRandomGrid(IMapGrid mapGrid)
+        private bool TryFindRandomGrid(IMapGrid mapGrid, out EntityCoordinates coordinates)
         {
-            // TODO: Need to get valid tiles? (maybe just move right if the tile we chose is invalid?)
+            if (!mapGrid.Index.IsValid())
+            {
+                coordinates = default;
+                return false;
+            }
 
             var randomX = _robustRandom.Next((int) mapGrid.WorldBounds.Left, (int) mapGrid.WorldBounds.Right);
             var randomY = _robustRandom.Next((int) mapGrid.WorldBounds.Bottom, (int) mapGrid.WorldBounds.Top);
 
-            return mapGrid.GridTileToLocal(new MapIndices(randomX, randomY));
+            coordinates = mapGrid.ToCoordinates(randomX, randomY);
+
+            // TODO: Need to get valid tiles? (maybe just move right if the tile we chose is invalid?)
+            if (!coordinates.IsValid(_entityManager))
+            {
+                coordinates = default;
+                return false;
+            }
+
+            return true;
         }
     }
 }

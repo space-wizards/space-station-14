@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.Utility;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -28,14 +29,9 @@ namespace Content.Server.GameObjects.Components.Research
 
         private const string SoundCollectionName = "keyboard";
 
-        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+        [ViewVariables] private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
 
-        [ViewVariables]
-        private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
-            ui.TryGetBoundUserInterface(ResearchConsoleUiKey.Key, out var boundUi)
-                ? boundUi
-                : null;
+        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ResearchConsoleUiKey.Key);
 
         public override void Initialize()
         {
@@ -61,8 +57,7 @@ namespace Content.Server.GameObjects.Components.Research
             switch (message.Message)
             {
                 case ConsoleUnlockTechnologyMessage msg:
-                    var protoMan = IoCManager.Resolve<IPrototypeManager>();
-                    if (!protoMan.TryIndex(msg.Id, out TechnologyPrototype tech)) break;
+                    if (!_prototypeManager.TryIndex(msg.Id, out TechnologyPrototype tech)) break;
                     if (client.Server == null) break;
                     if (!client.Server.CanUnlockTechnology(tech)) break;
                     if (client.Server.UnlockTechnology(tech))

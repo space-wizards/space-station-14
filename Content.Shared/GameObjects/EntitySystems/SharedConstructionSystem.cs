@@ -22,7 +22,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             /// <summary>
             ///     Position to start building.
             /// </summary>
-            public readonly GridCoordinates Location;
+            public readonly EntityCoordinates Location;
 
             /// <summary>
             ///     The construction prototype to start building.
@@ -36,7 +36,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             /// </summary>
             public readonly int Ack;
 
-            public TryStartStructureConstructionMessage(GridCoordinates loc, string prototypeName, Angle angle, int ack)
+            public TryStartStructureConstructionMessage(EntityCoordinates loc, string prototypeName, Angle angle, int ack)
             {
                 Location = loc;
                 PrototypeName = prototypeName;
@@ -74,29 +74,6 @@ namespace Content.Shared.GameObjects.EntitySystems
             public AckStructureConstructionMessage(int ghostId)
             {
                 GhostId = ghostId;
-            }
-        }
-
-        public void DoExamine(FormattedMessage message, ConstructionPrototype prototype, int stage, bool inDetailRange)
-        {
-            var stages = prototype.Stages;
-            if (stage >= 0 && stage < stages.Count)
-            {
-                var curStage = stages[stage];
-                if (curStage.Backward != null && curStage.Backward is ConstructionStepTool)
-                {
-                    var backward = (ConstructionStepTool) curStage.Backward;
-                    message.AddText(Loc.GetString("To deconstruct: {0}x {1} Tool", backward.Amount, backward.ToolQuality));
-                }
-                if (curStage.Forward != null && curStage.Forward is ConstructionStepMaterial)
-                {
-                    if (curStage.Backward != null)
-                    {
-                        message.AddText("\n");
-                    }
-                    var forward = (ConstructionStepMaterial) curStage.Forward;
-                    message.AddText(Loc.GetString("To construct: {0}x {1}", forward.Amount, forward.Material));
-                }
             }
         }
     }

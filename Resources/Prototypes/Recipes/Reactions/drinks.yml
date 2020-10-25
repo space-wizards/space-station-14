@@ -101,3 +101,37 @@
       amount: 1
   products:
     chem.Antifreeze: 4
+
+- type: reaction
+  id: react.Moonshine
+  reactants:
+    chem.Vodka:
+      amount: 1
+    chem.Tequila:
+      amount: 1
+    chem.Whiskey:
+      amount: 1
+  products:
+    chem.Moonshine: 3
+
+- type: reaction
+  id: react.CreamyDelight
+  reactants:
+    chem.Moonshine:
+      amount: 1
+    chem.Cream:
+      amount: 1
+    chem.Wine:
+      amount: 1
+  products:
+    chem.CreamyDelight: 3
+
+- type: reaction
+  id: react.LeanShine
+  reactants:
+    chem.Lean:
+      amount: 1
+    chem.Moonshine:
+      amount: 1
+  products:
+    chem.LeanShine: 2

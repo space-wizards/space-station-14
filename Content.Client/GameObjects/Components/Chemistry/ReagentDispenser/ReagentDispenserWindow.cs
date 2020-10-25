@@ -20,9 +20,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ReagentDispenser
     /// </summary>
     public class ReagentDispenserWindow : SS14Window
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-#pragma warning restore 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         /// <summary>Contains info about the reagent container such as it's contents, if one is loaded into the dispenser.</summary>
         private readonly VBoxContainer ContainerInfo;

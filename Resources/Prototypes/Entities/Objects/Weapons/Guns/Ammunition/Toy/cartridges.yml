@@ -10,11 +10,10 @@
     netsync: false
     directional: true
     sprite: Objects/Consumable/Trash/ash.rsi
-    state: icon
+    layers:
+    - state: base
+      map: ["enum.AmmoVisualLayers.Base"]
     drawdepth: FloorObjects
-  - type: Icon
-    sprite: Objects/Consumable/Trash/ash.rsi
-    state: icon
 
 - type: entity
   id: CartridgeCap

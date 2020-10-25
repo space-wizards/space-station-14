@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -14,11 +14,11 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
         public const byte ChunkSize = 8;
         protected float AccumulatedFrameTime;
 
-        public static MapIndices GetGasChunkIndices(MapIndices indices)
+        public static Vector2i GetGasChunkIndices(Vector2i indices)
         {
-            return new MapIndices((int) Math.Floor((float) indices.X / ChunkSize) * ChunkSize, (int) MathF.Floor((float) indices.Y / ChunkSize) * ChunkSize);
+            return new Vector2i((int) Math.Floor((float) indices.X / ChunkSize) * ChunkSize, (int) MathF.Floor((float) indices.Y / ChunkSize) * ChunkSize);
         }
-        
+
         [Serializable, NetSerializable]
         public struct GasData
         {
@@ -59,9 +59,9 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
                 {
                     return true;
                 }
-                
+
                 DebugTools.Assert(other.Gas != null);
-                
+
                 for (var i = 0; i < Gas.Length; i++)
                 {
                     var thisGas = Gas[i];
@@ -86,9 +86,9 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
         {
             public GridId GridId { get; }
 
-            public List<(MapIndices, GasOverlayData)> OverlayData { get; }
+            public List<(Vector2i, GasOverlayData)> OverlayData { get; }
 
-            public GasOverlayMessage(GridId gridIndices, List<(MapIndices,GasOverlayData)> overlayData)
+            public GasOverlayMessage(GridId gridIndices, List<(Vector2i,GasOverlayData)> overlayData)
             {
                 GridId = gridIndices;
                 OverlayData = overlayData;

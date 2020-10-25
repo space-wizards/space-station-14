@@ -34,11 +34,8 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
     [RegisterComponent]
     public class LightBulbComponent : Component, ILand
     {
-
-#pragma warning disable 649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly IRobustRandom _random;
-#pragma warning restore 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         /// <summary>
         ///     Invoked whenever the state of the light bulb changes.

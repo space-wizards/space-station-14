@@ -15,6 +15,7 @@
   equipment:
     innerclothing: UniformBartender
     outerclothing: OuterclothingArmorVest
-    backpack: BackpackClothing
+    backpack: BackpackClothingFilled
     shoes: ShoesBlack
     idcard: BartenderPDA
+    ears: HeadsetService

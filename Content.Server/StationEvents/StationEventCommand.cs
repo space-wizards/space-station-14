@@ -6,7 +6,7 @@ using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Localization;
 
-namespace Content.Client.Commands
+namespace Content.Server.StationEvents
 {
     [UsedImplicitly]
     public sealed class StationEventCommand : IClientCommand

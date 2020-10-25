@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.PDA;
@@ -19,10 +19,9 @@ namespace Content.Client.GameObjects.Components.PDA
 {
     public class PDABoundUserInterface : BoundUserInterface
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
-#pragma warning restore 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+
         private PDAMenu _menu;
         private PDAMenuPopup failPopup;
 
@@ -70,7 +69,7 @@ namespace Content.Client.GameObjects.Components.PDA
                     };
                 }
 
-                SendMessage(new PDAUplinkBuyListingMessage(listing));
+                SendMessage(new PDAUplinkBuyListingMessage(listing.ItemId));
             };
 
             _menu.OnCategoryButtonPressed += (args, category) =>
@@ -84,9 +83,8 @@ namespace Content.Client.GameObjects.Components.PDA
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-            DebugTools.Assert((state is PDAUBoundUserInterfaceState));
+            DebugTools.Assert(state is PDAUBoundUserInterfaceState);
 
-            var cstate = (PDAUBoundUserInterfaceState)state;
             switch (state)
             {
                 case PDAUpdateState msg:
@@ -135,6 +133,9 @@ namespace Content.Client.GameObjects.Components.PDA
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
+            if (!disposing)
+                return;
+
             _menu?.Dispose();
         }
 

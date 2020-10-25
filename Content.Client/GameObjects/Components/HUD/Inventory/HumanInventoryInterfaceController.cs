@@ -18,11 +18,8 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
     [UsedImplicitly]
     public class HumanInventoryInterfaceController : InventoryInterfaceController
     {
-#pragma warning disable 649
-        [Dependency] private readonly ILocalizationManager _loc;
-        [Dependency] private readonly IResourceCache _resourceCache;
-        [Dependency] private readonly IItemSlotManager _itemSlotManager;
-#pragma warning restore 649
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
 
         private readonly Dictionary<Slots, List<ItemSlotButton>> _inventoryButtons
             = new Dictionary<Slots, List<ItemSlotButton>>();
@@ -42,8 +39,8 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         {
             base.Initialize();
 
-            _window = new HumanInventoryWindow(_loc, _resourceCache);
-            _window.OnClose += () => _gameHud.InventoryButtonDown = false;
+            _window = new HumanInventoryWindow(_resourceCache);
+            _window.OnClose += () => GameHud.InventoryButtonDown = false;
             foreach (var (slot, button) in _window.Buttons)
             {
                 button.OnPressed = (e) => AddToInventory(e, slot);
@@ -153,7 +150,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         {
             base.PlayerAttached();
 
-            _gameHud.InventoryQuickButtonContainer.AddChild(_quickButtonsContainer);
+            GameHud.InventoryQuickButtonContainer.AddChild(_quickButtonsContainer);
 
             // Update all the buttons to make sure they check out.
 
@@ -175,7 +172,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         {
             base.PlayerDetached();
 
-            _gameHud.InventoryQuickButtonContainer.RemoveChild(_quickButtonsContainer);
+            GameHud.InventoryQuickButtonContainer.RemoveChild(_quickButtonsContainer);
 
             foreach (var (slot, list) in _inventoryButtons)
             {
@@ -194,9 +191,9 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
 
             public IReadOnlyDictionary<Slots, ItemSlotButton> Buttons { get; }
 
-            public HumanInventoryWindow(ILocalizationManager loc, IResourceCache resourceCache)
+            public HumanInventoryWindow(IResourceCache resourceCache)
             {
-                Title = loc.GetString("Your Inventory");
+                Title = Loc.GetString("Your Inventory");
                 Resizable = false;
 
                 var buttonDict = new Dictionary<Slots, ItemSlotButton>();
@@ -226,6 +223,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
                 AddButton(Slots.EYES, "glasses", (0, 0));
                 AddButton(Slots.NECK, "neck", (0, sizep));
                 AddButton(Slots.INNERCLOTHING, "uniform", (0, 2 * sizep));
+                AddButton(Slots.POCKET1, "pocket", (0, 3 * sizep));
 
                 // Middle column.
                 AddButton(Slots.HEAD, "head", (sizep, 0));
@@ -236,14 +234,12 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
                 // Right column
                 AddButton(Slots.EARS, "ears", (2 * sizep, 0));
                 AddButton(Slots.IDCARD, "id", (2 * sizep, sizep));
-                AddButton(Slots.EXOSUITSLOT1, "suit_storage", (2 * sizep, 2 * sizep));
-                AddButton(Slots.POCKET1, "pocket", (2 * sizep, 3 * sizep));
+                AddButton(Slots.GLOVES, "gloves", (2 * sizep, 2 * sizep));
+                AddButton(Slots.POCKET2, "pocket", (2 * sizep, 3 * sizep));
 
                 // Far right column.
                 AddButton(Slots.BACKPACK, "back", (3 * sizep, 0));
                 AddButton(Slots.BELT, "belt", (3 * sizep, sizep));
-                AddButton(Slots.GLOVES, "gloves", (3 * sizep, 2 * sizep));
-                AddButton(Slots.POCKET2, "pocket", (3 * sizep, 3 * sizep));
             }
         }
     }

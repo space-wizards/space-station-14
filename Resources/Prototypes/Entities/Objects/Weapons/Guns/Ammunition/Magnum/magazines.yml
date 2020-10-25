@@ -9,8 +9,7 @@
     caliber: Magnum
     magazineType: Pistol
     capacity: 10
-  - type: Icon
-    state: icon
+
   - type: Sprite
     netsync: false
     layers:
@@ -35,8 +34,7 @@
     caliber: Magnum
     magazineType: Smg
     capacity: 25
-  - type: Icon
-    state: icon
+
   - type: Sprite
     netsync: false
     layers:
@@ -59,8 +57,7 @@
   components:
   - type: RangedMagazine
     fillPrototype: CartridgeMagnum
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_mag.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_mag.rsi
 
@@ -71,8 +68,7 @@
   components:
   - type: RangedMagazine
     fillPrototype: CartridgeMagnumFlash
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_mag_flash.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_mag_flash.rsi
 
@@ -83,8 +79,7 @@
   components:
   - type: RangedMagazine
     fillPrototype: CartridgeMagnumHV
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_mag_hv.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_mag_hv.rsi
 
@@ -95,8 +90,7 @@
   components:
   - type: RangedMagazine
     fillPrototype: CartridgeMagnumPractice
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_mag_practice.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_mag_practice.rsi
 
@@ -107,8 +101,7 @@
   components:
   - type: RangedMagazine
     fillPrototype: CartridgeMagnumRubber
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_mag_rubber.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_mag_rubber.rsi
 
@@ -119,8 +112,7 @@
   components:
   - type: RangedMagazine
     fillPrototype: CartridgeMagnum
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag.rsi
 
@@ -131,8 +123,7 @@
   components:
   - type: RangedMagazine
     fillPrototype: CartridgeMagnumHV
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag_hv.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag_hv.rsi
 
@@ -143,8 +134,7 @@
   components:
   - type: RangedMagazine
     fillPrototype: CartridgeMagnumPractice
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag_practice.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag_practice.rsi
 
@@ -155,7 +145,6 @@
   components:
   - type: RangedMagazine
     fillPrototype: CartridgeMagnumRubber
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag_rubber.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag_rubber.rsi

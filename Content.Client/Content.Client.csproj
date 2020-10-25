@@ -21,6 +21,17 @@
     <ProjectReference Include="..\RobustToolbox\Robust.Client\Robust.Client.csproj" />
     <ProjectReference Include="..\Content.Shared\Content.Shared.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Update="UserInterface\OptionsMenu.Graphics.cs">
+      <DependentUpon>OptionsMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Update="UserInterface\OptionsMenu.KeyRebind.cs">
+      <DependentUpon>OptionsMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Update="UserInterface\OptionsMenu.Audio.cs">
+      <DependentUpon>OptionsMenu.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Engine.targets" />
   <Target Name="ContentAfterBuild" DependsOnTargets="ClientAfterBuild" AfterTargets="Build" />
 </Project>

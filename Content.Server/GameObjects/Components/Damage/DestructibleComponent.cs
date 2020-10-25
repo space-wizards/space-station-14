@@ -16,9 +16,7 @@ namespace Content.Server.GameObjects.Components.Damage
     [ComponentReference(typeof(IDamageableComponent))]
     public class DestructibleComponent : RuinableComponent, IDestroyAct
     {
-#pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-#pragma warning restore 649
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
         protected ActSystem ActSystem;
 
@@ -28,20 +26,20 @@ namespace Content.Server.GameObjects.Components.Damage
         /// <summary>
         ///     Entity spawned upon destruction.
         /// </summary>
-        public string SpawnOnDestroy { get; set; }
+        public string SpawnOnDestroy { get; private set; }
 
         void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
         {
             if (!string.IsNullOrWhiteSpace(SpawnOnDestroy) && eventArgs.IsSpawnWreck)
             {
-                Owner.EntityManager.SpawnEntity(SpawnOnDestroy, Owner.Transform.GridPosition);
+                Owner.EntityManager.SpawnEntity(SpawnOnDestroy, Owner.Transform.Coordinates);
             }
         }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(this, d => d.SpawnOnDestroy, "spawnondestroy", string.Empty);
+            serializer.DataField(this, d => d.SpawnOnDestroy, "spawnOnDestroy", string.Empty);
         }
 
         public override void Initialize()
@@ -55,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Damage
         {
             if (!Owner.Deleted)
             {
-                var pos = Owner.Transform.GridPosition;
+                var pos = Owner.Transform.Coordinates;
                 ActSystem.HandleDestruction(Owner,
                     true); //This will call IDestroyAct.OnDestroy on this component (and all other components on this entity)
                 if (DestroySound != string.Empty)

@@ -47,6 +47,7 @@ namespace Content.Client.UserInterface
         Action<bool> SandboxButtonToggled { get; set; }
 
         Control HandsContainer { get; }
+        Control SuspicionContainer { get; }
         Control InventoryQuickButtonContainer { get; }
 
         bool CombatPanelVisible { get; set; }
@@ -74,13 +75,11 @@ namespace Content.Client.UserInterface
         private Button _combatModeButton;
         private VBoxContainer _combatPanelContainer;
 
-#pragma warning disable 649
-        [Dependency] private readonly IResourceCache _resourceCache;
-        [Dependency] private readonly ILocalizationManager _loc;
-        [Dependency] private readonly IInputManager _inputManager;
-#pragma warning restore 649
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private readonly IInputManager _inputManager = default!;
 
         public Control HandsContainer { get; private set; }
+        public Control SuspicionContainer { get; private set; }
         public Control InventoryQuickButtonContainer { get; private set; }
 
         public bool CombatPanelVisible
@@ -130,7 +129,7 @@ namespace Content.Client.UserInterface
             // Escape
             _buttonEscapeMenu = new TopButton(escapeTexture, "Esc")
             {
-                ToolTip = _loc.GetString("Open escape menu.")
+                ToolTip = Loc.GetString("Open escape menu.")
             };
 
             _topButtonsContainer.AddChild(_buttonEscapeMenu);
@@ -140,7 +139,7 @@ namespace Content.Client.UserInterface
             // Tutorial
             _buttonTutorial = new TopButton(tutorialTexture, "F1")
             {
-                ToolTip = _loc.GetString("Open tutorial.")
+                ToolTip = Loc.GetString("Open tutorial.")
             };
 
             _topButtonsContainer.AddChild(_buttonTutorial);
@@ -150,7 +149,7 @@ namespace Content.Client.UserInterface
             // Character
             _buttonCharacterMenu = new TopButton(characterTexture, "C")
             {
-                ToolTip = _loc.GetString("Open character menu."),
+                ToolTip = Loc.GetString("Open character menu."),
                 Visible = false
             };
 
@@ -161,7 +160,7 @@ namespace Content.Client.UserInterface
             // Inventory
             _buttonInventoryMenu = new TopButton(inventoryTexture, "I")
             {
-                ToolTip = _loc.GetString("Open inventory menu."),
+                ToolTip = Loc.GetString("Open inventory menu."),
                 Visible = false
             };
 
@@ -172,7 +171,7 @@ namespace Content.Client.UserInterface
             // Crafting
             _buttonCraftingMenu = new TopButton(craftingTexture, "G")
             {
-                ToolTip = _loc.GetString("Open crafting menu."),
+                ToolTip = Loc.GetString("Open crafting menu."),
                 Visible = false
             };
 
@@ -183,7 +182,7 @@ namespace Content.Client.UserInterface
             // Sandbox
             _buttonSandboxMenu = new TopButton(sandboxTexture, "B")
             {
-                ToolTip = _loc.GetString("Open sandbox menu."),
+                ToolTip = Loc.GetString("Open sandbox menu."),
                 Visible = false
             };
 
@@ -220,7 +219,7 @@ namespace Content.Client.UserInterface
                 {
                     (_combatModeButton = new Button
                     {
-                        Text = _loc.GetString("Combat Mode"),
+                        Text = Loc.GetString("Combat Mode"),
                         ToggleMode = true
                     }),
                     (_targetingDoll = new TargetingDoll(_resourceCache))
@@ -244,6 +243,17 @@ namespace Content.Client.UserInterface
             LayoutContainer.SetAnchorAndMarginPreset(HandsContainer, LayoutContainer.LayoutPreset.CenterBottom);
             LayoutContainer.SetGrowHorizontal(HandsContainer, LayoutContainer.GrowDirection.Both);
             LayoutContainer.SetGrowVertical(HandsContainer, LayoutContainer.GrowDirection.Begin);
+
+            SuspicionContainer = new MarginContainer
+            {
+                SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter
+            };
+
+            RootControl.AddChild(SuspicionContainer);
+
+            LayoutContainer.SetAnchorAndMarginPreset(SuspicionContainer, LayoutContainer.LayoutPreset.BottomLeft, margin: 10);
+            LayoutContainer.SetGrowHorizontal(SuspicionContainer, LayoutContainer.GrowDirection.End);
+            LayoutContainer.SetGrowVertical(SuspicionContainer, LayoutContainer.GrowDirection.Begin);
         }
 
         private void ButtonTutorialOnOnToggled()

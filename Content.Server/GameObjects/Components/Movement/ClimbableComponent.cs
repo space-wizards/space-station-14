@@ -1,22 +1,26 @@
-﻿
+﻿using System;
+using Content.Server.GameObjects.Components.Body;
+using Content.Server.GameObjects.EntitySystems.DoAfter;
+using Content.Server.Utility;
+using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Body.Part;
+using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Verbs;
+using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
+using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using Robust.Server.Interfaces.Player;
-using Content.Server.Interfaces;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.Interfaces;
-using Content.Server.GameObjects.Components.Body;
-using Content.Server.GameObjects.EntitySystems.DoAfter;
-using Robust.Shared.Maths;
-using System;
 
 namespace Content.Server.GameObjects.Components.Movement
 {
@@ -24,9 +28,6 @@ namespace Content.Server.GameObjects.Components.Movement
     [ComponentReference(typeof(IClimbable))]
     public class ClimbableComponent : SharedClimbableComponent, IDragDropOn
     {
-        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-
         /// <summary>
         ///     The range from which this entity can be climbed.
         /// </summary>
@@ -39,14 +40,17 @@ namespace Content.Server.GameObjects.Components.Movement
         [ViewVariables]
         private float _climbDelay;
 
-        private ICollidableComponent _collidableComponent;
         private DoAfterSystem _doAfterSystem;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            _collidableComponent = Owner.GetComponent<ICollidableComponent>();
+            if (!Owner.EnsureComponent(out PhysicsComponent _))
+            {
+                Logger.Warning($"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(PhysicsComponent)}");
+            }
+
             _doAfterSystem = EntitySystem.Get<DoAfterSystem>();
         }
 
@@ -60,80 +64,103 @@ namespace Content.Server.GameObjects.Components.Movement
 
         bool IDragDropOn.CanDragDropOn(DragDropEventArgs eventArgs)
         {
-            if (!ActionBlockerSystem.CanInteract(eventArgs.User))
-            {
-                _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, Loc.GetString("You can't do that!"));
+            string reason;
+            bool canVault;
 
+            if (eventArgs.User == eventArgs.Dragged)
+                canVault = CanVault(eventArgs.User, eventArgs.Target, out reason);
+            else
+                canVault = CanVault(eventArgs.User, eventArgs.Dragged, eventArgs.Target, out reason);
+
+            if (!canVault)
+                eventArgs.User.PopupMessage(reason);
+
+            return canVault;
+        }
+
+        /// <summary>
+        /// Checks if the user can vault the target
+        /// </summary>
+        /// <param name="user">The entity that wants to vault</param>
+        /// <param name="target">The object that is being vaulted</param>
+        /// <param name="reason">The reason why it cant be dropped</param>
+        /// <returns></returns>
+        private bool CanVault(IEntity user, IEntity target, out string reason)
+        {
+            if (!ActionBlockerSystem.CanInteract(user))
+            {
+                reason = Loc.GetString("You can't do that!");
                 return false;
             }
 
-            if (eventArgs.User == eventArgs.Dropped) // user is dragging themselves onto a climbable
+            if (!user.HasComponent<ClimbingComponent>() ||
+                !user.TryGetComponent(out IBody body))
             {
-                if (!eventArgs.User.HasComponent<ClimbingComponent>())
-                {
-                    _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, Loc.GetString("You are incapable of climbing!"));
-
-                    return false;
-                }
-
-                var bodyManager = eventArgs.User.GetComponent<BodyManagerComponent>();
-
-                if (bodyManager.GetBodyPartsOfType(Shared.GameObjects.Components.Body.BodyPartType.Leg).Count == 0 ||
-                    bodyManager.GetBodyPartsOfType(Shared.GameObjects.Components.Body.BodyPartType.Foot).Count == 0)
-                {
-                    _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, Loc.GetString("You are unable to climb!"));
-
-                    return false;
-                }
-
-                var userPosition = eventArgs.User.Transform.MapPosition;
-                var climbablePosition = eventArgs.Target.Transform.MapPosition;
-                var interaction = EntitySystem.Get<SharedInteractionSystem>();
-                bool Ignored(IEntity entity) => (entity == eventArgs.Target || entity == eventArgs.User);
-
-                if (!interaction.InRangeUnobstructed(userPosition, climbablePosition, _range, predicate: Ignored))
-                {
-                    _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, Loc.GetString("You can't reach there!"));
-
-                    return false;
-                }
-            }
-            else // user is dragging some other entity onto a climbable
-            {
-                if (eventArgs.Target == null || !eventArgs.Dropped.HasComponent<ClimbingComponent>())
-                {
-                    _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, Loc.GetString("You can't do that!"));
-
-                    return false;
-                }
-
-                var userPosition = eventArgs.User.Transform.MapPosition;
-                var otherUserPosition = eventArgs.Dropped.Transform.MapPosition;
-                var climbablePosition = eventArgs.Target.Transform.MapPosition;
-                var interaction = EntitySystem.Get<SharedInteractionSystem>();
-                bool Ignored(IEntity entity) => (entity == eventArgs.Target || entity == eventArgs.User || entity == eventArgs.Dropped);
-
-                if (!interaction.InRangeUnobstructed(userPosition, climbablePosition, _range, predicate: Ignored) ||
-                    !interaction.InRangeUnobstructed(userPosition, otherUserPosition, _range, predicate: Ignored))
-                {
-                    _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, Loc.GetString("You can't reach there!"));
-
-                    return false;
-                }
+                reason = Loc.GetString("You are incapable of climbing!");
+                return false;
             }
 
+            if (body.GetPartsOfType(BodyPartType.Leg).Count == 0 ||
+                body.GetPartsOfType(BodyPartType.Foot).Count == 0)
+            {
+                reason = Loc.GetString("You are unable to climb!");
+                return false;
+            }
+
+            if (!user.InRangeUnobstructed(target, _range))
+            {
+                reason = Loc.GetString("You can't reach there!");
+                return false;
+            }
+
+            reason = string.Empty;
+            return true;
+        }
+
+        /// <summary>
+        /// Checks if the user can vault the dragged entity onto the the target
+        /// </summary>
+        /// <param name="user">The user that wants to vault the entity</param>
+        /// <param name="dragged">The entity that is being vaulted</param>
+        /// <param name="target">The object that is being vaulted onto</param>
+        /// <param name="reason">The reason why it cant be dropped</param>
+        /// <returns></returns>
+        private bool CanVault(IEntity user, IEntity dragged, IEntity target, out string reason)
+        {
+            if (!ActionBlockerSystem.CanInteract(user))
+            {
+                reason = Loc.GetString("You can't do that!");
+                return false;
+            }
+
+            if (target == null || !dragged.HasComponent<ClimbingComponent>())
+            {
+                reason = Loc.GetString("You can't do that!");
+                return false;
+            }
+
+            bool Ignored(IEntity entity) => entity == target || entity == user || entity == dragged;
+
+            if (!user.InRangeUnobstructed(target, _range, predicate: Ignored) ||
+                !user.InRangeUnobstructed(dragged, _range, predicate: Ignored))
+            {
+                reason = Loc.GetString("You can't reach there!");
+                return false;
+            }
+
+            reason = string.Empty;
             return true;
         }
 
         bool IDragDropOn.DragDropOn(DragDropEventArgs eventArgs)
         {
-            if (eventArgs.User == eventArgs.Dropped)
+            if (eventArgs.User == eventArgs.Dragged)
             {
                 TryClimb(eventArgs.User);
             }
             else
             {
-                TryMoveEntity(eventArgs.User, eventArgs.Dropped);
+                TryMoveEntity(eventArgs.User, eventArgs.Dragged);
             }
 
             return true;
@@ -151,7 +178,7 @@ namespace Content.Server.GameObjects.Components.Movement
 
             var result = await _doAfterSystem.DoAfter(doAfterEventArgs);
 
-            if (result != DoAfterStatus.Cancelled && entityToMove.TryGetComponent(out ICollidableComponent body) && body.PhysicsShapes.Count >= 1)
+            if (result != DoAfterStatus.Cancelled && entityToMove.TryGetComponent(out IPhysicsComponent body) && body.PhysicsShapes.Count >= 1)
             {
                 var direction = (Owner.Transform.WorldPosition - entityToMove.Transform.WorldPosition).Normalized;
                 var endPoint = Owner.Transform.WorldPosition;
@@ -172,13 +199,20 @@ namespace Content.Server.GameObjects.Components.Movement
                 // we may potentially need additional logic since we're forcing a player onto a climbable
                 // there's also the cases where the user might collide with the person they are forcing onto the climbable that i haven't accounted for
 
-                PopupMessageOtherClientsInRange(user, Loc.GetString("{0:theName} forces {1:theName} onto {2:theName}!", user, entityToMove, Owner), 15);
-                _notifyManager.PopupMessage(user, user, Loc.GetString("You force {0:theName} onto {1:theName}!", entityToMove, Owner));
+                var othersMessage = Loc.GetString("{0:theName} forces {1:theName} onto {2:theName}!", user,
+                    entityToMove, Owner);
+                user.PopupMessageOtherClients(othersMessage);
+
+                var selfMessage = Loc.GetString("You force {0:theName} onto {1:theName}!", entityToMove, Owner);
+                user.PopupMessage(selfMessage);
             }
         }
 
         private async void TryClimb(IEntity user)
         {
+            if (!user.TryGetComponent(out ClimbingComponent climbingComponent) || climbingComponent.IsClimbing)
+                return;
+
             var doAfterEventArgs = new DoAfterEventArgs(user, _climbDelay, default, Owner)
             {
                 BreakOnTargetMove = true,
@@ -189,7 +223,7 @@ namespace Content.Server.GameObjects.Components.Movement
 
             var result = await _doAfterSystem.DoAfter(doAfterEventArgs);
 
-            if (result != DoAfterStatus.Cancelled && user.TryGetComponent(out ICollidableComponent body) && body.PhysicsShapes.Count >= 1)
+            if (result != DoAfterStatus.Cancelled && user.TryGetComponent(out IPhysicsComponent body) && body.PhysicsShapes.Count >= 1)
             {
                 var direction = (Owner.Transform.WorldPosition - user.Transform.WorldPosition).Normalized;
                 var endPoint = Owner.Transform.WorldPosition;
@@ -208,25 +242,33 @@ namespace Content.Server.GameObjects.Components.Movement
 
                 climbMode.TryMoveTo(user.Transform.WorldPosition, endPoint);
 
-                PopupMessageOtherClientsInRange(user, Loc.GetString("{0:theName} jumps onto {1:theName}!", user, Owner), 15);
-                _notifyManager.PopupMessage(user, user, Loc.GetString("You jump onto {0:theName}!", Owner));
+                var othersMessage = Loc.GetString("{0:theName} jumps onto {1:theName}!", user, Owner);
+                user.PopupMessageOtherClients(othersMessage);
+
+                var selfMessage = Loc.GetString("You jump onto {0:theName}!", Owner);
+                user.PopupMessage(selfMessage);
             }
         }
 
-        private void PopupMessageOtherClientsInRange(IEntity source, string message, int maxReceiveDistance)
+        /// <summary>
+        ///     Allows you to vault an object with the ClimbableComponent through right click
+        /// </summary>
+        [Verb]
+        private sealed class ClimbVerb : Verb<ClimbableComponent>
         {
-            var viewers = _playerManager.GetPlayersInRange(source.Transform.GridPosition, maxReceiveDistance);
-
-            foreach (var viewer in viewers)
+            protected override void GetData(IEntity user, ClimbableComponent component, VerbData data)
             {
-                var viewerEntity = viewer.AttachedEntity;
-
-                if (viewerEntity == null || source == viewerEntity)
+                if (!component.CanVault(user, component.Owner, out var _))
                 {
-                    continue;
+                    data.Visibility = VerbVisibility.Invisible;
                 }
 
-                source.PopupMessage(viewer.AttachedEntity, message);
+                data.Text = Loc.GetString("Vault");
+            }
+
+            protected override void Activate(IEntity user, ClimbableComponent component)
+            {
+                component.TryClimb(user);
             }
         }
     }

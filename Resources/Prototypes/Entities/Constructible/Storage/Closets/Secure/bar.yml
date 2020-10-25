@@ -8,5 +8,4 @@
     - type: StorageVisualizer
       state: cabinet
   - type: Icon
-    state: cabinet_door
-
+    state: cabinet_icon

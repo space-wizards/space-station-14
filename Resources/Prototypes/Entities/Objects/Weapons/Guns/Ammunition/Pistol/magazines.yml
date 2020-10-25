@@ -8,8 +8,7 @@
     caliber: Pistol
     magazineType: Pistol
     capacity: 10
-  - type: Icon
-    state: icon
+
   - type: Sprite
     netsync: false
     layers:
@@ -34,8 +33,7 @@
     caliber: Pistol
     magazineType: HCPistol
     capacity: 16
-  - type: Icon
-    state: icon
+
   - type: Sprite
     netsync: false
     layers:
@@ -60,8 +58,7 @@
     caliber: Pistol
     magazineType: Smg
     capacity: 35
-  - type: Icon
-    state: icon
+
   - type: Sprite
     netsync: false
     layers:
@@ -86,8 +83,7 @@
     caliber: Pistol
     magazineType: SmgTopMounted
     fillPrototype: CartridgePistol
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag_top_mounted.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag_top_mounted.rsi
     layers:
@@ -104,14 +100,38 @@
       zeroVisible: false
 
 - type: entity
+  id: MagazinePistolCalicoTopMounted
+  name: Calico Magazine (.35 auto top-mounted)
+  parent: MagazinePistolSmgBase
+  components:
+  - type: RangedMagazine
+    caliber: Pistol
+    magazineType: CalicoTopMounted
+    fillPrototype: CartridgePistol
+    capacity: 100
+
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/calico_mag.rsi
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-1
+      shader: unshaded
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 1
+      zeroVisible: false
+
+- type: entity
   id: MagazinePistol
   name: magazine (.35 auto)
   parent: MagazinePistolBase
   components:
   - type: RangedMagazine
     fillPrototype: CartridgePistol
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag.rsi
 
@@ -122,8 +142,7 @@
   components:
   - type: RangedMagazine
     fillPrototype: CartridgePistolFlash
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag_flash.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag_flash.rsi
 
@@ -134,8 +153,7 @@
   components:
   - type: RangedMagazine
     fillPrototype: CartridgePistolHV
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag_hv.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag_hv.rsi
 
@@ -146,8 +164,7 @@
   components:
   - type: RangedMagazine
     fillPrototype: CartridgePistolPractice
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag_practice.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag_practice.rsi
 
@@ -158,8 +175,7 @@
   components:
   - type: RangedMagazine
     fillPrototype: CartridgePistolRubber
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag_rubber.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag_rubber.rsi
 
@@ -170,8 +186,7 @@
   components:
   - type: RangedMagazine
     fillPrototype: CartridgePistol
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_hc_mag.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_hc_mag.rsi
 
@@ -182,8 +197,7 @@
   components:
   - type: RangedMagazine
     fillPrototype: CartridgePistol
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_hc_mag_hv.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_hc_mag_hv.rsi
 
@@ -194,8 +208,7 @@
   components:
   - type: RangedMagazine
     fillPrototype: CartridgePistol
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_hc_mag_practice.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_hc_mag_practice.rsi
 
@@ -206,8 +219,7 @@
   components:
   - type: RangedMagazine
     fillPrototype: CartridgePistol
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_hc_mag_rubber.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_hc_mag_rubber.rsi
 
@@ -218,8 +230,7 @@
   components:
   - type: RangedMagazine
     fillPrototype: CartridgePistol
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag.rsi
 
@@ -230,8 +241,7 @@
   components:
   - type: RangedMagazine
     fillPrototype: CartridgePistolFlash
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag_flash.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag_flash.rsi
 
@@ -242,8 +252,7 @@
   components:
   - type: RangedMagazine
     fillPrototype: CartridgePistolHV
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag_hv.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag_hv.rsi
 
@@ -254,8 +263,7 @@
   components:
   - type: RangedMagazine
     fillPrototype: CartridgePistolPractice
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag_practice.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag_practice.rsi
 
@@ -266,7 +274,6 @@
   components:
   - type: RangedMagazine
     fillPrototype: CartridgePistolRubber
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag_rubber.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag_rubber.rsi

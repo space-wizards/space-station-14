@@ -1,7 +1,6 @@
 #nullable enable
 using System;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
@@ -24,9 +23,9 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
 
         public float Elapsed { get; set; }
 
-        public GridCoordinates UserGrid { get; }
+        public EntityCoordinates UserGrid { get; }
 
-        public GridCoordinates TargetGrid { get; }
+        public EntityCoordinates TargetGrid { get; }
 
         private bool _tookDamage;
 
@@ -43,13 +42,13 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
 
             if (eventArgs.BreakOnUserMove)
             {
-                UserGrid = eventArgs.User.Transform.GridPosition;
+                UserGrid = eventArgs.User.Transform.Coordinates;
             }
 
             if (eventArgs.BreakOnTargetMove)
             {
                 // Target should never be null if the bool is set.
-                TargetGrid = eventArgs.Target!.Transform.GridPosition;
+                TargetGrid = eventArgs.Target!.Transform.Coordinates;
             }
 
             // For this we need to stay on the same hand slot and need the same item in that hand slot
@@ -86,7 +85,16 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
 
             if (IsFinished())
             {
-                Tcs.SetResult(DoAfterStatus.Finished);
+                // Do the final checks here
+                if (!TryPostCheck())
+                {
+                    Tcs.SetResult(DoAfterStatus.Cancelled);
+                }
+                else
+                {
+                    Tcs.SetResult(DoAfterStatus.Finished);
+                }
+
                 return;
             }
 
@@ -98,6 +106,11 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
 
         private bool IsCancelled()
         {
+            if (EventArgs.User.Deleted || EventArgs.Target?.Deleted == true)
+            {
+                return true;
+            }
+
             //https://github.com/tgstation/tgstation/blob/1aa293ea337283a0191140a878eeba319221e5df/code/__HELPERS/mobs.dm
             if (EventArgs.CancelToken.IsCancellationRequested)
             {
@@ -105,12 +118,12 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
             }
 
             // TODO :Handle inertia in space.
-            if (EventArgs.BreakOnUserMove && EventArgs.User.Transform.GridPosition != UserGrid)
+            if (EventArgs.BreakOnUserMove && EventArgs.User.Transform.Coordinates != UserGrid)
             {
                 return true;
             }
 
-            if (EventArgs.BreakOnTargetMove && EventArgs.Target!.Transform.GridPosition != TargetGrid)
+            if (EventArgs.BreakOnTargetMove && EventArgs.Target!.Transform.Coordinates != TargetGrid)
             {
                 return true;
             }
@@ -159,6 +172,11 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
             }
 
             return false;
+        }
+
+        private bool TryPostCheck()
+        {
+            return EventArgs.PostCheck?.Invoke() != false;
         }
 
         private bool IsFinished()

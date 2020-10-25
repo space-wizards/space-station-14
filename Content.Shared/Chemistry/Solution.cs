@@ -12,11 +12,13 @@ namespace Content.Shared.Chemistry
     /// <summary>
     ///     A solution of reagents.
     /// </summary>
+    [Serializable, NetSerializable]
     public class Solution : IExposeData, IEnumerable<Solution.ReagentQuantity>
     {
         // Most objects on the station hold only 1 or 2 reagents
         [ViewVariables]
         private List<ReagentQuantity> _contents = new List<ReagentQuantity>(2);
+
         public IReadOnlyList<ReagentQuantity> Contents => _contents;
 
         /// <summary>
@@ -246,7 +248,7 @@ namespace Content.Shared.Chemistry
         }
 
         [Serializable, NetSerializable]
-        public readonly struct ReagentQuantity
+        public readonly struct ReagentQuantity: IComparable<ReagentQuantity>
         {
             public readonly string ReagentId;
             public readonly ReagentUnit Quantity;
@@ -261,6 +263,14 @@ namespace Content.Shared.Chemistry
             public override string ToString()
             {
                 return $"{ReagentId}:{Quantity}";
+            }
+
+            public int CompareTo(ReagentQuantity other) { return Quantity.Float().CompareTo(other.Quantity.Float()); }
+
+            public void Deconstruct(out string reagentId, out ReagentUnit quantity)
+            {
+                reagentId = ReagentId;
+                quantity = Quantity;
             }
         }
 

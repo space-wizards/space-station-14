@@ -15,7 +15,8 @@
   id: ScientistGear
   equipment:
     innerclothing: UniformScientist
-    backpack: BackpackClothing
+    backpack: BackpackClothingFilled
     shoes: ShoesWhite
     outerclothing: OuterclothingLabcoat
     idcard: SciencePDA
+    ears: HeadsetScience

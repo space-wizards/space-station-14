@@ -5,15 +5,14 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
   - type: Destructible
     thresholdvalue: 5
+    resistances: metallicResistances
   - type: Sprite
     drawdepth: WallTops
-    sprite: Constructible/Misc/decals.rsi
-  - type: Icon
     sprite: Constructible/Misc/decals.rsi
 
 # These signs would not have collision otherwise, they simply
@@ -27,7 +26,7 @@
   name: monkey painting
   description: monky
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.1,-0.4,0.1,0.4"
@@ -39,8 +38,6 @@
       - SmallImpassable
       - Clickable
   - type: Sprite
-    state: monkey_painting
-  - type: Icon
     state: monkey_painting
 
 # Directional Station Guide Signs
@@ -52,7 +49,7 @@
   description: A direction sign, pointing out which way Security is.
   components:
   - type: Rotatable
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.1,-0.4,0.1,0.4"
@@ -64,8 +61,6 @@
       - SmallImpassable
       - Clickable
   - type: Sprite
-    state: direction_sec
-  - type: Icon
     state: direction_sec
 
 - type: entity
@@ -75,7 +70,7 @@
   description: A direction sign, pointing out which way evac is.
   components:
   - type: Rotatable
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.1,-0.4,0.1,0.4"
@@ -88,8 +83,7 @@
       - Clickable
   - type: Sprite
     state: direction_evac
-  - type: Icon
-    state: direction_evac
+
 
 - type: entity
   parent: BaseSign
@@ -98,7 +92,7 @@
   description: A direction sign, pointing out which way the Bridge is.
   components:
   - type: Rotatable
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.1,-0.4,0.1,0.4"
@@ -111,8 +105,7 @@
       - Clickable
   - type: Sprite
     state: direction_bridge
-  - type: Icon
-    state: direction_bridge
+
 
 - type: entity
   parent: BaseSign
@@ -121,7 +114,7 @@
   description: A direction sign, pointing out which way the Medical department is.
   components:
   - type: Rotatable
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.1,-0.4,0.1,0.4"
@@ -134,8 +127,7 @@
       - Clickable
   - type: Sprite
     state: direction_med
-  - type: Icon
-    state: direction_med
+
 
 - type: entity
   parent: BaseSign
@@ -144,7 +136,7 @@
   description: A direction sign, pointing out which way the Engineering department is.
   components:
   - type: Rotatable
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.1,-0.4,0.1,0.4"
@@ -156,8 +148,6 @@
       - SmallImpassable
       - Clickable
   - type: Sprite
-    state: direction_eng
-  - type: Icon
     state: direction_eng
 
 - type: entity
@@ -167,7 +157,7 @@
   description: A direction sign, pointing out which way the Science department is.
   components:
   - type: Rotatable
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.1,-0.4,0.1,0.4"
@@ -179,8 +169,6 @@
       - SmallImpassable
       - Clickable
   - type: Sprite
-    state: direction_sci
-  - type: Icon
     state: direction_sci
 
 - type: entity
@@ -190,7 +178,7 @@
   description: A direction sign, pointing to some supplies.
   components:
   - type: Rotatable
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.1,-0.4,0.1,0.4"
@@ -203,8 +191,6 @@
       - Clickable
   - type: Sprite
     state: direction_supply
-  - type: Icon
-    state: direction_supply
 
 # Regular Signs
 
@@ -213,7 +199,7 @@
   id: SignArmory
   name: armory sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -226,15 +212,14 @@
       - Clickable
   - type: Sprite
     state: armory
-  - type: Icon
-    state: armory
+
 
 - type: entity
   parent: BaseSign
   id: SignToolStorage
   name: tool storage sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -247,15 +232,14 @@
       - Clickable
   - type: Sprite
     state: ass
-  - type: Icon
-    state: ass
+
 
 - type: entity
   parent: BaseSign
   id: SignAnomaly
   name: anomaly lab sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -268,15 +252,14 @@
       - Clickable
   - type: Sprite
     state: anomaly
-  - type: Icon
-    state: anomaly
+
 
 - type: entity
   parent: BaseSign
   id: SignAtmos
   name: atmos sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -289,15 +272,14 @@
       - Clickable
   - type: Sprite
     state: atmos
-  - type: Icon
-    state: atmos
+
 
 - type: entity
   parent: BaseSign
   id: SignBar
   name: bar sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -310,15 +292,14 @@
       - Clickable
   - type: Sprite
     state: bar
-  - type: Icon
-    state: bar
+
 
 - type: entity
   parent: BaseSign
   id: SignLibrary
   name: library sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -331,15 +312,14 @@
       - Clickable
   - type: Sprite
     state: biblio
-  - type: Icon
-    state: biblio
+
 
 - type: entity
   parent: BaseSign
   id: SignChapel
   name: chapel sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -352,15 +332,14 @@
       - Clickable
   - type: Sprite
     state: chapel
-  - type: Icon
-    state: chapel
+
 
 - type: entity
   parent: BaseSign
   id: SignHead
   name: head sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -373,15 +352,14 @@
       - Clickable
   - type: Sprite
     state: commander
-  - type: Icon
-    state: commander
+
 
 - type: entity
   parent: BaseSign
   id: SignConference
   name: conference room sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -394,15 +372,14 @@
       - Clickable
   - type: Sprite
     state: conference_room
-  - type: Icon
-    state: conference_room
+
 
 - type: entity
   parent: BaseSign
   id: SignDrones
   name: drones sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -415,15 +392,14 @@
       - Clickable
   - type: Sprite
     state: drones
-  - type: Icon
-    state: drones
+
 
 - type: entity
   parent: BaseSign
   id: SignEngine
   name: engine sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -436,15 +412,14 @@
       - Clickable
   - type: Sprite
     state: engine
-  - type: Icon
-    state: engine
+
 
 - type: entity
   parent: BaseSign
   id: SignCloning
   name: cloning sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -457,15 +432,14 @@
       - Clickable
   - type: Sprite
     state: cloning
-  - type: Icon
-    state: cloning
+
 
 - type: entity
   parent: BaseSign
   id: SignInterrogation
   name: interrogation sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -478,15 +452,14 @@
       - Clickable
   - type: Sprite
     state: interrogation
-  - type: Icon
-    state: interrogation
+
 
 - type: entity
   parent: BaseSign
   id: SignSurgery
   name: surgery sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -499,15 +472,14 @@
       - Clickable
   - type: Sprite
     state: surgery
-  - type: Icon
-    state: surgery
+
 
 - type: entity
   parent: BaseSign
   id: SignTelecomms
   name: telecomms sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -520,15 +492,14 @@
       - Clickable
   - type: Sprite
     state: telecoms
-  - type: Icon
-    state: telecoms
+
 
 - type: entity
   parent: BaseSign
   id: SignCargo
   name: cargo sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -541,15 +512,14 @@
       - Clickable
   - type: Sprite
     state: cargo
-  - type: Icon
-    state: cargo
+
 
 - type: entity
   parent: BaseSign
   id: SignCargoDock
   name: cargo dock sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -562,15 +532,14 @@
       - Clickable
   - type: Sprite
     state: cargo_dock
-  - type: Icon
-    state: cargo_dock
+
 
 - type: entity
   parent: BaseSign
   id: SignChem
   name: chemistry sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -583,15 +552,14 @@
       - Clickable
   - type: Sprite
     state: chem
-  - type: Icon
-    state: chem
+
 
 - type: entity
   parent: BaseSign
   id: SignShipDock
   name: docking sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -604,15 +572,14 @@
       - Clickable
   - type: Sprite
     state: dock
-  - type: Icon
-    state: dock
+
 
 - type: entity
   parent: BaseSign
   id: SignEngineering
   name: engineering sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -625,15 +592,14 @@
       - Clickable
   - type: Sprite
     state: eng
-  - type: Icon
-    state: eng
+
 
 - type: entity
   parent: BaseSign
   id: SignEVA
   name: EVA sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -646,15 +612,14 @@
       - Clickable
   - type: Sprite
     state: eva
-  - type: Icon
-    state: eva
+
 
 - type: entity
   parent: BaseSign
   id: SignGravity
   name: gravity sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -667,15 +632,14 @@
       - Clickable
   - type: Sprite
     state: gravi
-  - type: Icon
-    state: gravi
+
 
 - type: entity
   parent: BaseSign
   id: SignMedical
   name: medbay sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -688,15 +652,14 @@
       - Clickable
   - type: Sprite
     state: medbay
-  - type: Icon
-    state: medbay
+
 
 - type: entity
   parent: BaseSign
   id: SignMorgue
   name: morgue sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -709,8 +672,7 @@
       - Clickable
   - type: Sprite
     state: morgue
-  - type: Icon
-    state: morgue
+
 
 - type: entity
   parent: BaseSign
@@ -718,7 +680,7 @@
   name: prison sign
   description:
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -731,15 +693,14 @@
       - Clickable
   - type: Sprite
     state: prison
-  - type: Icon
-    state: prison
+
 
 - type: entity
   parent: BaseSign
   id: SignRND
   name: research and development sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -752,15 +713,14 @@
       - Clickable
   - type: Sprite
     state: rnd
-  - type: Icon
-    state: rnd
+
 
 - type: entity
   parent: BaseSign
   id: SignScience
   name: science sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -773,15 +733,14 @@
       - Clickable
   - type: Sprite
     state: sci
-  - type: Icon
-    state: sci
+
 
 - type: entity
   parent: BaseSign
   id: SignToxins
   name: toxins sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -794,15 +753,14 @@
       - Clickable
   - type: Sprite
     state: toxins
-  - type: Icon
-    state: toxins
+
 
 - type: entity
   parent: BaseSign
   id: SignBridge
   name: bridge sign
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -815,8 +773,7 @@
       - Clickable
   - type: Sprite
     state: bridge
-  - type: Icon
-    state: bridge
+
 
 # Atmos Warnings
 
@@ -826,7 +783,7 @@
   name: air warning sign
   description: WARNING! Air flow tube. Ensure the flow is disengaged before working.
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.2,-0.3,0.2,0.3"
@@ -839,8 +796,7 @@
       - Clickable
   - type: Sprite
     state: atmos_air
-  - type: Icon
-    state: atmos_air
+
 
 - type: entity
   parent: BaseSign
@@ -848,7 +804,7 @@
   name: CO2 warning sign
   description: WARNING! CO2 flow tube. Ensure the flow is disengaged before working.
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.2,-0.3,0.2,0.3"
@@ -861,8 +817,7 @@
       - Clickable
   - type: Sprite
     state: atmos_co2
-  - type: Icon
-    state: atmos_co2
+
 
 - type: entity
   parent: BaseSign
@@ -870,7 +825,7 @@
   name: N2 warning sign
   description: WARNING! N2 flow tube. Ensure the flow is disengaged before working.
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.2,-0.3,0.2,0.3"
@@ -883,8 +838,7 @@
       - Clickable
   - type: Sprite
     state: atmos_n2
-  - type: Icon
-    state: atmos_n2
+
 
 - type: entity
   parent: BaseSign
@@ -892,7 +846,7 @@
   name: N2O warning sign
   description: WARNING! N2O flow tube. Ensure the flow is disengaged before working.
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.2,-0.3,0.2,0.3"
@@ -905,8 +859,7 @@
       - Clickable
   - type: Sprite
     state: atmos_n2o
-  - type: Icon
-    state: atmos_n2o
+
 
 - type: entity
   parent: BaseSign
@@ -914,7 +867,7 @@
   name: O2 warning sign
   description: WARNING! O2 flow tube. Ensure the flow is disengaged before working.
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.2,-0.3,0.2,0.3"
@@ -927,8 +880,7 @@
       - Clickable
   - type: Sprite
     state: atmos_o2
-  - type: Icon
-    state: atmos_o2
+
 
 - type: entity
   parent: BaseSign
@@ -936,7 +888,7 @@
   name: phoron waste sign
   description: WARNING! Plasma flow tube. Ensure the flow is disengaged before working.
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.2,-0.3,0.2,0.3"
@@ -949,8 +901,7 @@
       - Clickable
   - type: Sprite
     state: atmos_phoron
-  - type: Icon
-    state: atmos_phoron
+
 
 - type: entity
   parent: BaseSign
@@ -958,7 +909,7 @@
   name: atmos waste sign
   description: WARNING! Waste flow tube. Ensure the flow is disengaged before working.
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.2,-0.3,0.2,0.3"
@@ -971,52 +922,7 @@
       - Clickable
   - type: Sprite
     state: atmos_waste
-  - type: Icon
-    state: atmos_waste
 
-- type: entity
-  parent: BaseSign
-  id: PlaqueZum
-  name: zumos plaque
-  description: "This plaque commemorates the rise of the Atmos ZUM division. May they carry the torch that the Atmos ZAS, LINDA and FEA divisions left behind."
-  components:
-  - type: Collidable
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.3,-0.3,0.3,0.3"
-      layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
-      - Clickable
-  - type: Sprite
-    state: zumosplaque
-  - type: Icon
-    state: zumosplaque
-
-- type: entity
-  parent: BaseSign
-  id: PlaqueAtmos
-  name: atmos plaque
-  description: "This plaque commemorates the fall of the Atmos FEA division. For all the charred, dizzy, and brittle men who have died in its hands."
-  components:
-    - type: Collidable
-      shapes:
-        - !type:PhysShapeAabb
-          bounds: "-0.3,-0.3,0.3,0.3"
-          layer:
-            - Opaque
-            - Impassable
-            - MobImpassable
-            - VaultImpassable
-            - SmallImpassable
-            - Clickable
-    - type: Sprite
-      state: atmosplaque
-    - type: Icon
-      state: atmosplaque
 
 - type: entity
   parent: BaseSign
@@ -1024,7 +930,7 @@
   name: no smoking sign
   description: A warning sign which reads 'NO SMOKING'
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -1037,8 +943,7 @@
       - Clickable
   - type: Sprite
     state: nosmoking2
-  - type: Icon
-    state: nosmoking2
+
 
 - type: entity
   parent: BaseSign
@@ -1046,7 +951,7 @@
   name: old sign
   description: Technical information of some sort, shame its too worn-out to read.
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -1059,8 +964,7 @@
       - Clickable
   - type: Sprite
     state: something-old1
-  - type: Icon
-    state: something-old1
+
 
 - type: entity
   parent: BaseSign
@@ -1068,7 +972,7 @@
   name: old sign
   description: Looks like a planet crashing by some station above it. Its kinda scary.
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
@@ -1081,5 +985,4 @@
       - Clickable
   - type: Sprite
     state: something-old2
-  - type: Icon
-    state: something-old2
+

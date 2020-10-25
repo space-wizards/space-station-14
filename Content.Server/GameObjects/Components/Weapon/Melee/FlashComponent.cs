@@ -22,10 +22,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
     [RegisterComponent]
     public class FlashComponent : MeleeWeaponComponent, IUse, IExamine
     {
-#pragma warning disable 649
-        [Dependency] private readonly IEntityManager _entityManager;
-        [Dependency] private readonly ISharedNotifyManager _notifyManager;
-#pragma warning restore 649
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public override string Name => "Flash";
 
@@ -86,7 +83,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 return false;
             }
 
-            foreach (var entity in _entityManager.GetEntitiesInRange(Owner.Transform.GridPosition, _range))
+            foreach (var entity in _entityManager.GetEntitiesInRange(Owner.Transform.Coordinates, _range))
             {
                 Flash(entity, eventArgs.User, _aoeFlashDuration);
             }
@@ -103,7 +100,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 {
                     sprite.LayerSetState(0, "burnt");
 
-                    _notifyManager.PopupMessage(Owner, user, Loc.GetString("The flash burns out!"));
+                    Owner.PopupMessage(user, Loc.GetString("The flash burns out!"));
                 }
                 else if (!_flashing)
                 {
@@ -117,7 +114,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                     });
                 }
 
-                EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Weapons/flash.ogg", Owner.Transform.GridPosition,
+                EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Weapons/flash.ogg", Owner.Transform.Coordinates,
                     AudioParams.Default);
 
                 return true;
@@ -157,7 +154,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
             if (entity != user)
             {
-                _notifyManager.PopupMessage(user, entity, Loc.GetString("{0:TheName} blinds you with {1:theName}", user, Owner));
+                user.PopupMessage(entity, Loc.GetString("{0:TheName} blinds you with {1:theName}", user, Owner));
             }
         }
 

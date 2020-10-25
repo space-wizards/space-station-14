@@ -8,7 +8,6 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 
@@ -24,17 +23,17 @@ namespace Content.Server.GameObjects.Components.Fluids
 
         public ReagentUnit MaxVolume
         {
-            get => Owner.TryGetComponent(out SolutionComponent? solution) ? solution.MaxVolume : ReagentUnit.Zero;
+            get => Owner.TryGetComponent(out SolutionContainerComponent? solution) ? solution.MaxVolume : ReagentUnit.Zero;
             set
             {
-                if (Owner.TryGetComponent(out SolutionComponent? solution))
+                if (Owner.TryGetComponent(out SolutionContainerComponent? solution))
                 {
                     solution.MaxVolume = value;
                 }
             }
         }
 
-        public ReagentUnit CurrentVolume => Owner.TryGetComponent(out SolutionComponent? solution)
+        public ReagentUnit CurrentVolume => Owner.TryGetComponent(out SolutionContainerComponent? solution)
             ? solution.CurrentVolume
             : ReagentUnit.Zero;
 
@@ -50,12 +49,19 @@ namespace Content.Server.GameObjects.Components.Fluids
         public override void Initialize()
         {
             base.Initialize();
-            Owner.EnsureComponent<SolutionComponent>();
+            Owner.EnsureComponent<SolutionContainerComponent>();
         }
 
         private bool TryGiveToMop(MopComponent mopComponent)
         {
-            if (!Owner.TryGetComponent(out SolutionComponent? contents))
+            if (!Owner.TryGetComponent(out SolutionContainerComponent? contents))
+            {
+                return false;
+            }
+
+            var mopContents = mopComponent.Contents;
+
+            if (mopContents == null)
             {
                 return false;
             }
@@ -64,7 +70,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             // If this is called the mop should be empty but just in case we'll do Max - Current
             var transferAmount = ReagentUnit.Min(mopComponent.MaxVolume - mopComponent.CurrentVolume, CurrentVolume);
             var solution = contents.SplitSolution(transferAmount);
-            if (!mopComponent.Contents.TryAddSolution(solution) || mopComponent.CurrentVolume == 0)
+            if (!mopContents.TryAddSolution(solution) || mopComponent.CurrentVolume == 0)
             {
                 return false;
             }
@@ -81,7 +87,7 @@ namespace Content.Server.GameObjects.Components.Fluids
 
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!Owner.TryGetComponent(out SolutionComponent? contents))
+            if (!Owner.TryGetComponent(out SolutionContainerComponent? contents))
             {
                 return false;
             }
@@ -109,7 +115,14 @@ namespace Content.Server.GameObjects.Components.Fluids
                 return false;
             }
 
-            var solution = mopComponent.Contents.SplitSolution(transferAmount);
+            var mopContents = mopComponent.Contents;
+
+            if (mopContents == null)
+            {
+                return false;
+            }
+
+            var solution = mopContents.SplitSolution(transferAmount);
             if (!contents.TryAddSolution(solution))
             {
                 //This really shouldn't happen
@@ -127,7 +140,6 @@ namespace Content.Server.GameObjects.Components.Fluids
             EntitySystem.Get<AudioSystem>().PlayFromEntity(_sound, Owner);
 
             return true;
-
         }
     }
 }

@@ -10,6 +10,7 @@ using Content.Shared.GameObjects.Components.Conveyor;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -19,7 +20,6 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
-using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -29,7 +29,6 @@ namespace Content.Server.GameObjects.Components.Conveyor
     public class ConveyorComponent : Component, IInteractUsing
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
 
         public override string Name => "Conveyor";
 
@@ -112,8 +111,8 @@ namespace Content.Server.GameObjects.Components.Conveyor
                 return false;
             }
 
-            if (!entity.TryGetComponent(out ICollidableComponent? collidable) ||
-                collidable.Anchored)
+            if (!entity.TryGetComponent(out IPhysicsComponent? physics) ||
+                physics.Anchored)
             {
                 return false;
             }
@@ -153,9 +152,9 @@ namespace Content.Server.GameObjects.Components.Conveyor
                     continue;
                 }
 
-                if (entity.TryGetComponent(out ICollidableComponent? collidable))
+                if (entity.TryGetComponent(out IPhysicsComponent? physics))
                 {
-                    var controller = collidable.EnsureController<ConveyedController>();
+                    var controller = physics.EnsureController<ConveyedController>();
                     controller.Move(direction, _speed * frameTime);
                 }
             }
@@ -170,7 +169,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
 
                 Owner.AddComponent<ItemComponent>();
                 _group?.RemoveConveyor(this);
-                Owner.Transform.WorldPosition += (_random.NextFloat() * 0.4f - 0.2f, _random.NextFloat() * 0.4f - 0.2f);
+                Owner.RandomOffset(0.2f);
 
                 return true;
             }

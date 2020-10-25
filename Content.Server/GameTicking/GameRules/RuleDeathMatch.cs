@@ -7,8 +7,10 @@ using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameTicking.GameRules
@@ -21,18 +23,17 @@ namespace Content.Server.GameTicking.GameRules
     {
         private static readonly TimeSpan DeadCheckDelay = TimeSpan.FromSeconds(5);
 
-#pragma warning disable 649
-        [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private readonly IEntityManager _entityManager;
-        [Dependency] private readonly IChatManager _chatManager;
-        [Dependency] private readonly IGameTicker _gameTicker;
-#pragma warning restore 649
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly IGameTicker _gameTicker = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         private CancellationTokenSource _checkTimerCancel;
 
         public override void Added()
         {
-            _chatManager.DispatchServerAnnouncement("The game is now a death match. Kill everybody else to win!");
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("The game is now a death match. Kill everybody else to win!"));
 
             _entityManager.EventBus.SubscribeEvent<HealthChangedEventArgs>(EventSource.Local, this, OnHealthChanged);
             _playerManager.PlayerStatusChanged += PlayerManagerOnPlayerStatusChanged;
@@ -55,6 +56,9 @@ namespace Content.Server.GameTicking.GameRules
         {
             _checkTimerCancel = null;
 
+            if (!_cfg.GetCVar<bool>("game.enablewin"))
+                return;
+
             IPlayerSession winner = null;
             foreach (var playerSession in _playerManager.GetAllPlayers())
             {
@@ -64,7 +68,7 @@ namespace Content.Server.GameTicking.GameRules
                     continue;
                 }
 
-                if (damageable.CurrentDamageState != DamageState.Alive)
+                if (damageable.CurrentState != DamageState.Alive)
                 {
                     continue;
                 }
@@ -78,19 +82,15 @@ namespace Content.Server.GameTicking.GameRules
                 winner = playerSession;
             }
 
-            if (winner == null)
-            {
-                _chatManager.DispatchServerAnnouncement("Everybody is dead, it's a stalemate!");
-            }
-            else
-            {
-                // We have a winner!
-                _chatManager.DispatchServerAnnouncement($"{winner} wins the death match!");
-            }
+            _chatManager.DispatchServerAnnouncement(winner == null
+                ? Loc.GetString("Everybody is dead, it's a stalemate!")
+                : Loc.GetString("{0} wins the death match!", winner));
 
-            _chatManager.DispatchServerAnnouncement($"Restarting in 10 seconds.");
+            var restartDelay = 10;
 
-            Timer.Spawn(TimeSpan.FromSeconds(10), () => _gameTicker.RestartRound());
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("Restarting in {0} seconds.", restartDelay));
+
+            Timer.Spawn(TimeSpan.FromSeconds(restartDelay), () => _gameTicker.RestartRound());
         }
 
         private void PlayerManagerOnPlayerStatusChanged(object sender, SessionStatusEventArgs e)

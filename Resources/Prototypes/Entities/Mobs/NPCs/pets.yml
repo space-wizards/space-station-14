@@ -12,14 +12,17 @@
   components:
   - type: AiController
     logic: Civilian
+  - type: AiFactionTag
+    factions:
+    - SimpleNeutral
   - type: MovementSpeedModifier
     baseWalkSpeed : 5
     baseSprintSpeed : 5
   - type: InteractionOutline
   - type: Clickable
   - type: Physics
+    anchored: false
     mass: 50
-  - type: Collidable
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.30,-0.35,0.45,0.35"
@@ -67,12 +70,8 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: corgi
-  - type: Icon
-    sprite: Mobs/Pets/corgi.rsi
-    state: corgi
   - type: Physics
     mass: 10
-  - type: Collidable
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.50,-0.25,0.30,0.25"
@@ -105,12 +104,8 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: ian
-  - type: Icon
-    sprite: Mobs/Pets/corgi.rsi
-    state: ian
   - type: Physics
     mass: 10
-  - type: Collidable
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.50,-0.25,0.30,0.25"
@@ -143,12 +138,8 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: cat
-  - type: Icon
-    sprite: Mobs/Pets/cat.rsi
-    state: cat
   - type: Physics
     mass: 10
-  - type: Collidable
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.45,-0.20,0.30,0.20"
@@ -168,6 +159,40 @@
 
 - type: entity
   save: false
+  name: calico cat
+  parent: PetBaseMob_Content
+  id: CatCalicoMob_Content
+  description:
+  drawdepth: Mobs
+  suffix: AI
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/cat.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: cat2
+
+  - type: Physics
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.50,-0.25,0.30,0.25"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: cat2
+      dead: cat2_dead
+
+- type: entity
+  save: false
   name: sloth
   parent: PetBaseMob_Content
   id: SlothMob_Content
@@ -184,12 +209,8 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: sloth
-  - type: Icon
-    sprite: Mobs/Pets/sloth.rsi
-    state: sloth
   - type: Physics
     mass: 10
-  - type: Collidable
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.45,-0.35,0.15,0.35"

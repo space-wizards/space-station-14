@@ -5,18 +5,18 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.VendingMachines;
-using Content.Server.Interfaces;
 using Content.Shared.GameObjects.Components.Doors;
 using Content.Shared.GameObjects.Components.Interactable;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.SharedWiresComponent;
 using static Content.Shared.GameObjects.Components.SharedWiresComponent.WiresAction;
 using Timer = Robust.Shared.Timers.Timer;
@@ -26,7 +26,7 @@ namespace Content.Server.GameObjects.Components.Doors
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(ServerDoorComponent))]
-    public class AirlockComponent : ServerDoorComponent, IWires, IInteractUsing
+    public class AirlockComponent : ServerDoorComponent, IWires
     {
         public override string Name => "Airlock";
 
@@ -42,6 +42,7 @@ namespace Content.Server.GameObjects.Components.Doors
         /// <summary>
         /// True if either power wire was pulsed in the last <see cref="PowerWiresTimeout"/>.
         /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
         private bool PowerWiresPulsed
         {
             get => _powerWiresPulsed;
@@ -55,7 +56,8 @@ namespace Content.Server.GameObjects.Components.Doors
 
         private bool _boltsDown;
 
-        private bool BoltsDown
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool BoltsDown
         {
             get => _boltsDown;
             set
@@ -67,6 +69,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
         private bool _boltLightsWirePulsed = true;
 
+        [ViewVariables(VVAccess.ReadWrite)]
         private bool BoltLightsVisible
         {
             get => _boltLightsWirePulsed && BoltsDown && IsPowered() && State == DoorState.Closed;
@@ -79,6 +82,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
         private const float AutoCloseDelayFast = 1;
         // True => AutoCloseDelay; False => AutoCloseDelayFast
+        [ViewVariables(VVAccess.ReadWrite)]
         private bool NormalCloseSpeed
         {
             get => CloseSpeed == AutoCloseDelay;
@@ -305,6 +309,7 @@ namespace Content.Server.GameObjects.Components.Doors
                     case Wires.BackupPower:
                         PowerWiresPulsed = true;
                         _powerWiresPulsedTimerCancel.Cancel();
+                        _powerWiresPulsedTimerCancel = new CancellationTokenSource();
                         Timer.Spawn(PowerWiresTimeout,
                             () => PowerWiresPulsed = false,
                             _powerWiresPulsedTimerCancel.Token);
@@ -383,7 +388,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
         public override bool CanOpen()
         {
-            return IsPowered() && !IsBolted();
+            return base.CanOpen() && IsPowered() && !IsBolted();
         }
 
         public override bool CanClose()
@@ -412,8 +417,11 @@ namespace Content.Server.GameObjects.Components.Doors
                    || receiver.Powered;
         }
 
-        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+        public override async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
+            if (await base.InteractUsing(eventArgs))
+                return true;
+
             if (!eventArgs.Using.TryGetComponent<ToolComponent>(out var tool))
                 return false;
 
@@ -435,16 +443,14 @@ namespace Content.Server.GameObjects.Components.Doors
             {
                 if (IsBolted())
                 {
-                    var notify = IoCManager.Resolve<IServerNotifyManager>();
-                    notify.PopupMessage(Owner, eventArgs.User,
+                    Owner.PopupMessage(eventArgs.User,
                         Loc.GetString("The airlock's bolts prevent it from being forced!"));
                     return false;
                 }
 
                 if (IsPowered())
                 {
-                    var notify = IoCManager.Resolve<IServerNotifyManager>();
-                    notify.PopupMessage(Owner, eventArgs.User, Loc.GetString("The powered motors block your efforts!"));
+                    Owner.PopupMessage(eventArgs.User, Loc.GetString("The powered motors block your efforts!"));
                     return false;
                 }
 
