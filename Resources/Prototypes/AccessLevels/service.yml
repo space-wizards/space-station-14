@@ -5,6 +5,9 @@
   id: Kitchen
 
 - type: accessLevel
+  id: Hydroponics
+
+- type: accessLevel
   id: Service
 
 - type: accessLevel
