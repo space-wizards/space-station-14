@@ -1,4 +1,10 @@
 - type: accessLevel
+  id: Bar
+
+- type: accessLevel
+  id: Kitchen
+
+- type: accessLevel
   id: Service
 
 - type: accessLevel
