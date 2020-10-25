@@ -51,7 +51,10 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         private bool _showContents;
         private bool _occludesLight;
         private bool _open;
+        private bool _canWeldShut;
         private bool _isWeldedShut;
+        private string _closeSound = "/Audio/Machines/closetclose.ogg";
+        private string _openSound = "/Audio/Machines/closetopen.ogg";
 
         [ViewVariables]
         protected Container Contents;
@@ -104,7 +107,17 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool CanWeldShut { get; set; }
+        public bool CanWeldShut {
+            get => _canWeldShut;
+            set
+            {
+                _canWeldShut = value;
+                if (Owner.TryGetComponent(out AppearanceComponent appearance))
+                {
+                    appearance.SetData(StorageVisuals.CanWeld, value);
+                }
+            }
+        }
 
         /// <inheritdoc />
         public override void Initialize()
@@ -134,6 +147,8 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             serializer.DataField(ref _open, "open", false);
             serializer.DataField(this, a => a.IsWeldedShut, "IsWeldedShut", false);
             serializer.DataField(this, a => a.CanWeldShut, "CanWeldShut", true);
+            serializer.DataField(this, x => _closeSound, "closeSound", "/Audio/Machines/closetclose.ogg");
+            serializer.DataField(this, x => _openSound, "openSound", "/Audio/Machines/closetopen.ogg");
         }
 
         public virtual void Activate(ActivateEventArgs eventArgs)
@@ -141,21 +156,30 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             ToggleOpen(eventArgs.User);
         }
 
-        private void ToggleOpen(IEntity user)
+        protected virtual bool CanOpen(IEntity user)
         {
             if (IsWeldedShut)
             {
                 Owner.PopupMessage(user, Loc.GetString("It's welded completely shut!"));
-                return;
+                return false;
             }
+            return true;
+        }
 
+        protected virtual bool CanClose(IEntity user)
+        {
+            return true;
+        }
+
+        private void ToggleOpen(IEntity user)
+        {
             if (Open)
             {
-                CloseStorage();
+                if(CanClose(user)) CloseStorage();
             }
             else
             {
-                TryOpenStorage(user);
+                if(CanOpen(user)) TryOpenStorage(user);
             }
         }
 
@@ -187,7 +211,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             }
 
             ModifyComponents();
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/closetclose.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity(_closeSound, Owner);
             _lastInternalOpenAttempt = default;
         }
 
@@ -196,7 +220,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             Open = true;
             EmptyContents();
             ModifyComponents();
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/closetopen.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity(_openSound, Owner);
         }
 
         private void ModifyComponents()

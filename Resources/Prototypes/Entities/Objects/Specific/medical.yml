@@ -85,3 +85,55 @@
     max: 5
     count: 5
     stacktype: enum.StackType.Gauze
+
+- type: entity
+  id: BodyBag_Container
+  name: body bag
+  description: A plastic bag designed for the storage and transportation of cadavers.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Specific/Medical/bodybags.rsi
+    layers:
+    - state: bag
+    - state: open_overlay
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: label_overlay
+      map: ["enum.BodyBagVisualLayers.Label"]
+  - type: Icon
+    sprite: Objects/Specific/Medical/bodybags.rsi
+    state: bag
+  - type: Clickable
+  - type: InteractionOutline
+  - type: MovedByPressure
+  - type: Physics
+    mass: 5
+    anchored: false
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.45,-0.5,0.1,0.5"
+      layer:
+      - Clickable
+  - type: BodyBagEntityStorage
+    CanWeldShut: false
+    Capacity: 1
+    closeSound: /Audio/Misc/zip.ogg
+    openSound: /Audio/Misc/zip.ogg
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state_open: open_overlay
+      state_closed: bag
+    - type: BodyBagVisualizer
+  - type: Pullable
+  
+- type: entity
+  id: BodyBag_Item
+  name: body bag
+  description: A plastic bag designed for the storage and transportation of cadavers.
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/bodybags.rsi
+    state: item
+  - type: BodyBagItem
