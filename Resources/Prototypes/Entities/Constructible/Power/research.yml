@@ -6,7 +6,6 @@
   - type: Sprite
     sprite: Constructible/Power/server.rsi
     state: server
-
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
@@ -30,7 +29,6 @@
     - state: rndpointsource
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
-
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
