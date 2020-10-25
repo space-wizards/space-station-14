@@ -196,6 +196,8 @@
     - key: enum.AcceptCloningUiKey.Key
       type: AcceptCloningBoundUserInterface
   - type: Puller
+  - type: Butcherable
+    meat: FoodMeat
 
 - type: entity
   save: false
