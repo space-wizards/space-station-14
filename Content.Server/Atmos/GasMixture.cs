@@ -103,7 +103,7 @@ namespace Content.Server.Atmos
             get
             {
                 if (Volume <= 0) return 0f;
-                return TotalMoles * Atmospherics.R * Temperature / Volume;
+                return TotalMoles * Atmospherics.R * Temperature / (Volume * 1000);
             }
         }
 
