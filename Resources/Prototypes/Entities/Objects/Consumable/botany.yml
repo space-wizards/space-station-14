@@ -193,3 +193,20 @@
       sprite: Objects/Specific/Hydroponics/corn.rsi
     - type: Produce
       seed: corn
+
+- type: entity
+  name: chanterelle cluster
+  parent: ProduceBase
+  id: FoodMushroom
+  description: "Cantharellus Cibarius: These jolly yellow little shrooms sure look tasty!"
+  components:
+    - type: Food
+    - type: SolutionContainer
+      contents:
+        reagents:
+          - ReagentId: chem.Nutriment
+            Quantity: 6
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/chanterelle.rsi
+    - type: Produce
+      seed: chanterelle

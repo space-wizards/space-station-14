@@ -120,3 +120,13 @@
       seed: apple
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/corn.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of chanterelle spores
+  id: ChanterelleSeeds
+  components:
+    - type: Seed
+      seed: chanterelle
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/chanterelle.rsi

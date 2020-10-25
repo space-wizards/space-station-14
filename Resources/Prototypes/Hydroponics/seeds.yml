@@ -240,3 +240,27 @@
       Min: 1
       Max: 10
       PotencyDivisor: 10
+
+- type: seed
+  id: chanterelle
+  name: chanterelle
+  seedName: chanterelle
+  seedNoun: spores
+  displayName: chanterelle mushrooms
+  plantRsi: Objects/Specific/Hydroponics/chanterelle.rsi
+  productPrototypes:
+    - FoodMushroom
+  lifespan: 35
+  maturation: 7
+  production: 1
+  yield: 5
+  potency: 1
+  growthStages: 3
+  lightTolerance: 6
+  waterConsumption: 6
+  idealHeat: 288
+  chemicals:
+    chem.Nutriment:
+      Min: 1
+      Max: 25
+      PotencyDivisor: 25
