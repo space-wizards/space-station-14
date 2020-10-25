@@ -5962,17 +5962,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
   - maxAngle: 59.99999999999999
-    type: PumpBarrel
-  - containers:
-      BoltActionBarrel-ammo-container:
-        type: Robust.Server.GameObjects.Components.Container.Container
-      BoltActionBarrel-chamber-container:
-        type: Content.Server.GameObjects.ContainerSlot
-      PumpBarrel-ammo-container:
-        type: Robust.Server.GameObjects.Components.Container.Container
-      PumpBarrel-chamber-container:
-        type: Content.Server.GameObjects.ContainerSlot
-    type: ContainerContainer
+    type: BoltActionBarrel
 - uid: 594
   type: AirlockScienceLocked
   components:
