@@ -116,7 +116,7 @@ namespace Content.Server.GameObjects.Components.Doors
             base.ExposeData(serializer);
 
             serializer.DataField(ref _occludes, "occludes", true);
-            serializer.DataField(ref _autoOpen, "auto_open", true);
+            serializer.DataField(ref _autoOpen, "autoOpen", true);
             serializer.DataField(ref _isWeldedShut, "welded", false);
             serializer.DataField(ref _canCrush, "canCrush", true);
         }
