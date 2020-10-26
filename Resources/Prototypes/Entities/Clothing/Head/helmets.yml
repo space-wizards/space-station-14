@@ -50,7 +50,7 @@
   parent: HatBase
   id: HatHardhatPumpkin
   name: hardhat pumpkin
-  description: A jack o' lantern! Believed to ward off evil spirits.
+  description: "A jack o' lantern! Believed to ward off evil spirits."
   components:
   - type: Sprite
     sprite: Clothing/Head/hardhat0_pumpkin.rsi
@@ -98,7 +98,7 @@
   parent: HatBase
   id: HatHardhatPumpkinAlt
   name: hardhat pumpkin (alt)
-  description: A jack o' lantern! Believed to ward off evil spirits.
+  description: "A jack o' lantern! Believed to ward off evil spirits."
   components:
   - type: Sprite
     sprite: Clothing/Head/hardhat1_pumpkin.rsi
@@ -111,7 +111,7 @@
   parent: HatBase
   id: HatLightRiot
   name: light riot
-  description: It's a helmet specifically designed to protect against close range attacks.
+  description: "It's a helmet specifically designed to protect against close range attacks."
   components:
   - type: Sprite
     sprite: Clothing/Head/light_riot.rsi

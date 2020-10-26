@@ -45,7 +45,7 @@
   id: TableFrame
   parent: TableBase
   name: "table frame"
-  description:
+  description: Pieces of metal that make the frame of a table.
   components:
   - type: Sprite
     sprite: Constructible/Structures/Tables/frame.rsi
@@ -61,7 +61,7 @@
   id: TableBar
   parent: TableBase
   name: "bar table"
-  description:
+  description: "Fancy table. Perfect for serving drinks."
   components:
   - type: Sprite
     sprite: Constructible/Structures/Tables/bar.rsi
@@ -77,7 +77,7 @@
   id: TableMetal
   parent: TableBase
   name: "metal table"
-  description:
+  description: "Just a metal table."
   components:
   - type: Sprite
     sprite: Constructible/Structures/Tables/metal.rsi
@@ -93,7 +93,7 @@
   id: TableR
   parent: TableBase
   name: "reinforced table"
-  description:
+  description: "A square piece of metal standing on four metal legs. Extra robust."
   components:
   - type: Sprite
     sprite: Constructible/Structures/Tables/reinforced.rsi
@@ -109,7 +109,7 @@
   id: TableGlass
   parent: TableBase
   name: "glass table"
-  description:
+  description: "A square piece of glass, standing on four metal legs."
   components:
   - type: Sprite
     sprite: Constructible/Structures/Tables/glass.rsi
@@ -124,7 +124,7 @@
   id: TableGlassR
   parent: TableBase
   name: "reinforced glass table"
-  description:
+  description: "A square piece of glass, standing on four metal legs. Extra robust."
   components:
   - type: Sprite
     sprite: Constructible/Structures/Tables/r_glass.rsi

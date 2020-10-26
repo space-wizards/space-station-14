@@ -32,7 +32,7 @@
   name: screwdriver
   parent: BaseItem
   id: Screwdriver
-  description: Industrial grade torque in a small screwdriving package
+  description: Industrial grade torque in a small screwdriving package.
   components:
   - type: Sprite
     sprite: Objects/Tools/screwdriver.rsi
@@ -98,7 +98,7 @@
   name: wrench
   parent: BaseItem
   id: Wrench
-  description: A common tool for assembly and disassembly, righty tighty lefty loosey
+  description: A common tool for assembly and disassembly, righty tighty lefty loosey.
   components:
   - type: Sprite
     sprite: Objects/Tools/wrench.rsi
@@ -116,7 +116,7 @@
   name: crowbar
   parent: BaseItem
   id: Crowbar
-  description: A multipurpose tool to pry open doors and fight interdimensional invaders
+  description: A multipurpose tool to pry open doors and fight interdimensional invaders.
   components:
   - type: Sprite
     sprite: Objects/Tools/crowbar.rsi
@@ -135,7 +135,7 @@
   name: emergency crowbar
   parent: BaseItem
   id: CrowbarRed
-  description: A multipurpose tool to pry open doors and fight interdimensional invaders
+  description: A multipurpose tool to pry open doors and fight interdimensional invaders.
   components:
   - type: Sprite
     sprite: Objects/Tools/crowbar_red.rsi
