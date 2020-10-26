@@ -15,12 +15,13 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             _timer += frameTime;
             if (_timer < TimePerUpdate) return;
-            _timer = 0f;
 
             foreach (var gasTankComponent in ComponentManager.EntityQuery<GasTankComponent>())
             {
-                gasTankComponent.Update();
+                gasTankComponent.Update(_timer);
             }
+
+            _timer = 0f;
         }
 
     }

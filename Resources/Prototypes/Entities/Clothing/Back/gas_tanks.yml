@@ -1,27 +1,62 @@
 ﻿- type: entity
   parent: BaseItem
-  id: GasTank
+  abstract: true
+  id: GasTankBase
   name: Gas Tank
   description: It's a gas tank. It has gas.
   components:
     - type: Sprite
-      sprite: Clothing/Back/Backpacks/medical.rsi
+      sprite: Objects/Tanks/generic.rsi
       state: icon
     - type: Icon
-      sprite: Clothing/Back/Backpacks/medical.rsi
+      sprite: Objects/Tanks/generic.rsi
       state: icon
+    - type: UserInterface
+      interfaces:
+        - key: enum.SharedGasTankUiKey.Key
+          type: GasTankBoundUserInterface
     - type: Clothing
-      sprite: Clothing/Back/Backpacks/medical.rsi
+      sprite: Objects/Tanks/generic.rsi
       Slots:
         - back
+
+- type: entity
+  id: OxygenTank
+  parent: GasTankBase
+  name: Oxygen Tank
+  components:
     - type: GasTank
       air:
         volume: 1
         moles:
-          - 1  #oxy
+          - 1   #oxy
           - 0   #nitrogen
           - 0   #co2
           - 0   #phoron
+          - 0   #tritium
+          - 0   #water vapor
+        molesArchived:
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        temperature: 293.15
+
+- type: entity
+  id: PlasmaTank
+  parent: GasTankBase
+  name: Plasma Tank
+  components:
+    - type: GasTank
+      air:
+        volume: 10
+        moles:
+          - 0   #oxy
+          - 0   #nitrogen
+          - 0   #co2
+          - 50  #phoron
           - 0   #tritium
           - 0   #water vapor
         molesArchived:

@@ -169,6 +169,7 @@
         type: StrippableBoundUserInterface
       - key: enum.AcceptCloningUiKey.Key
         type: AcceptCloningBoundUserInterface
+  - type: Internals
 
 
 - type: entity

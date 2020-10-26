@@ -3,6 +3,7 @@ using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.Body.Circulatory;
 using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.Interfaces;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Inventory;
@@ -18,13 +19,12 @@ namespace Content.Server.GameObjects.Components.Body.Respiratory
         public override string Name => "Lung";
 
         private float _accumulatedFrameTime;
-        private InventoryComponent _inventory;
-        private InventoryComponent Inventory => _inventory ??= Owner.GetComponent<InventoryComponent>();
 
         /// <summary>
         ///     The pressure that this lung exerts on the air around it
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)] private float Pressure { get; set; }
+        [ViewVariables(VVAccess.ReadWrite)]
+        private float Pressure { get; set; }
 
         [ViewVariables] public GasMixture Air { get; set; }
 
@@ -89,17 +89,21 @@ namespace Content.Server.GameObjects.Components.Body.Respiratory
                 return;
             }
 
-            GasMixture air;
-            if (Inventory.TryGetSlotItem<BreathMaskComponent>(EquipmentSlotDefines.Slots.MASK, out var mask) &&
-                mask.IsConnected())
+            GasMixture air = null;
+            // if (Owner.TryGetComponent(out InventoryComponent inventory) &&
+            //     inventory.TryGetSlotItem<ItemComponent>(EquipmentSlotDefines.Slots.MASK, out var maskItem) &&
+            //     maskItem.Owner.TryGetComponent<BreathToolComponent>(out var mask) && mask.IsConnected())
+            // {
+            //     air = mask.ConnectedGasTank.GetComponent<IGasMixtureHolder>().Air;
+            // }
+
+            // just get air from tile
+            if (air == null)
             {
-                air = mask.ConnectedGasTank.Air;
-            }
-            else if (!Owner.Transform.Coordinates.TryGetTileAir(out air))
-            {
-                    return;
+                Owner.Transform.Coordinates.TryGetTileAir(out air);
             }
 
+            // no matter what there are no available air sources
             if (air == null)
             {
                 return;

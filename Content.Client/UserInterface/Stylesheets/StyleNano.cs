@@ -337,6 +337,31 @@ namespace Content.Client.UserInterface.Stylesheets
                     .Pseudo(ContainerButton.StylePseudoClassDisabled)
                     .Prop(ContainerButton.StylePropertyStyleBox, buttonRDisabled),
 
+                // right open buttons on spin box
+                Element<ContainerButton>()
+                    .Class(ContainerButton.StyleClassButton)
+                    .Class(SpinBox.LeftButtonStyle)
+                    .Pseudo(ContainerButton.StylePseudoClassNormal)
+                    .Prop(ContainerButton.StylePropertyStyleBox, buttonRNormal),
+
+                Element<ContainerButton>()
+                    .Class(ContainerButton.StyleClassButton)
+                    .Class(SpinBox.LeftButtonStyle)
+                    .Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(ContainerButton.StylePropertyStyleBox, buttonRHover),
+
+                Element<ContainerButton>()
+                    .Class(ContainerButton.StyleClassButton)
+                    .Class(SpinBox.LeftButtonStyle)
+                    .Pseudo(ContainerButton.StylePseudoClassPressed)
+                    .Prop(ContainerButton.StylePropertyStyleBox, buttonRPressed),
+
+                Element<ContainerButton>()
+                    .Class(ContainerButton.StyleClassButton)
+                    .Class(SpinBox.LeftButtonStyle)
+                    .Pseudo(ContainerButton.StylePseudoClassDisabled)
+                    .Prop(ContainerButton.StylePropertyStyleBox, buttonRDisabled),
+
                 // Left open buttons.
                 Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonOpenLeft)
                     .Pseudo(ContainerButton.StylePseudoClassNormal)
@@ -351,6 +376,31 @@ namespace Content.Client.UserInterface.Stylesheets
                     .Prop(ContainerButton.StylePropertyStyleBox, buttonLPressed),
 
                 Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonOpenLeft)
+                    .Pseudo(ContainerButton.StylePseudoClassDisabled)
+                    .Prop(ContainerButton.StylePropertyStyleBox, buttonLDisabled),
+
+                // left open buttons on spin box
+                Element<ContainerButton>()
+                    .Class(ContainerButton.StyleClassButton)
+                    .Class(SpinBox.RightButtonStyle)
+                    .Pseudo(ContainerButton.StylePseudoClassNormal)
+                    .Prop(ContainerButton.StylePropertyStyleBox, buttonLNormal),
+
+                Element<ContainerButton>()
+                    .Class(ContainerButton.StyleClassButton)
+                    .Class(SpinBox.RightButtonStyle)
+                    .Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(ContainerButton.StylePropertyStyleBox, buttonLHover),
+
+                Element<ContainerButton>()
+                    .Class(ContainerButton.StyleClassButton)
+                    .Class(SpinBox.RightButtonStyle)
+                    .Pseudo(ContainerButton.StylePseudoClassPressed)
+                    .Prop(ContainerButton.StylePropertyStyleBox, buttonLPressed),
+
+                Element<ContainerButton>()
+                    .Class(ContainerButton.StyleClassButton)
+                    .Class(SpinBox.RightButtonStyle)
                     .Pseudo(ContainerButton.StylePseudoClassDisabled)
                     .Prop(ContainerButton.StylePropertyStyleBox, buttonLDisabled),
 
@@ -371,6 +421,30 @@ namespace Content.Client.UserInterface.Stylesheets
                     .Pseudo(ContainerButton.StylePseudoClassDisabled)
                     .Prop(ContainerButton.StylePropertyStyleBox, buttonBDisabled),
 
+                // both open buttons on spin box
+                Element<ContainerButton>()
+                    .Class(ContainerButton.StyleClassButton)
+                    .Class(SpinBox.MiddleButtonStyle)
+                    .Pseudo(ContainerButton.StylePseudoClassNormal)
+                    .Prop(ContainerButton.StylePropertyStyleBox, buttonBNormal),
+
+                Element<ContainerButton>()
+                    .Class(ContainerButton.StyleClassButton)
+                    .Class(SpinBox.MiddleButtonStyle)
+                    .Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(ContainerButton.StylePropertyStyleBox, buttonBHover),
+
+                Element<ContainerButton>()
+                    .Class(ContainerButton.StyleClassButton)
+                    .Class(SpinBox.MiddleButtonStyle)
+                    .Pseudo(ContainerButton.StylePseudoClassPressed)
+                    .Prop(ContainerButton.StylePropertyStyleBox, buttonBPressed),
+
+                Element<ContainerButton>()
+                    .Class(ContainerButton.StyleClassButton)
+                    .Class(SpinBox.MiddleButtonStyle)
+                    .Pseudo(ContainerButton.StylePseudoClassDisabled)
+                    .Prop(ContainerButton.StylePropertyStyleBox, buttonBDisabled),
 
                 new StyleRule(new SelectorChild(
                     new SelectorElement(typeof(Button), null, null, new[] {ContainerButton.StylePseudoClassDisabled}),

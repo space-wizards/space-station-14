@@ -1,17 +1,25 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Content.Server.Atmos;
-using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.Components.Body.Respiratory;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Server.Interfaces;
-using Content.Shared.GameObjects;
+using Content.Server.Utility;
+using Content.Shared.GameObjects.Components.Atmos.GasTank;
+using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
+using Robust.Server.GameObjects.Components.UserInterface;
+using Robust.Server.Interfaces.GameObjects;
+using Robust.Server.Interfaces.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -19,22 +27,64 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Atmos
 {
     [RegisterComponent]
-    public class GasTankComponent : ItemComponent, IExamine, IGasMixtureHolder
+    public class GasTankComponent : SharedGasTankComponent, IExamine, IGasMixtureHolder, IUnequipped, IUse, IEquipped
     {
+        private const float DefaultOutputPressure = 303.3f;
+        private const float DefaultNozzleArea = 0.00039f;
+
+        /// <summary>
+        /// Tank is functional only in allowed slots
+        /// </summary>
+        private EquipmentSlotDefines.SlotFlags _allowedSlots;
+
+
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        [ViewVariables] private BoundUserInterface? _userInterface;
 
-        private const float MinimumThreshold = 16f;
-        private const float DefaultOutputRatio = 0.01f;
-        public override string Name => "GasTank";
-        public override uint? NetID => ContentNetIDs.GAS_TANK;
+        [ViewVariables] public GasMixture? Air { get; set; }
 
-        [ViewVariables] public GasMixture Air { get; set; }
-        [ViewVariables] public bool IsOpen { get; set; }
-        [ViewVariables] public float OutputRatio { get; set; }
+        /// <summary>
+        /// Valve state. When tank is controlled by internals component this has no effect
+        /// </summary>
+        [ViewVariables] public bool IsOpen { get; private set; }
 
-        [ViewVariables] public IConnectableToGasTank Connectable { get; set; }
+        /// <summary>
+        /// Maximum output pressure when valve is open. When tank is controlled
+        /// by internals component it has no effect.
+        /// </summary>
+        [ViewVariables] public float OutputPressure { get; private set; }
 
-        [ViewVariables] public bool IsConnected => Connectable != null;
+        /// <summary>
+        /// Cross-sectional area of nozzle
+        /// </summary>
+        [ViewVariables] public float NozzleArea { get; private set; }
+
+        /// <summary>
+        /// Tank is connected to external system and valve is controlled automatically
+        /// </summary>
+        [ViewVariables] public bool IsConnected { get; set; }
+
+        /// <summary>
+        /// Represents that tank is functional and can be connected to internals
+        /// </summary>
+        public bool IsFunctional { get; private set; }
+
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            _userInterface = Owner.GetUIOrNull(SharedGasTankUiKey.Key);
+            if (_userInterface != null)
+            {
+                _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
+            }
+        }
+
+        public void OpenInterface(IPlayerSession session)
+        {
+            _userInterface?.Open(session);
+            UpdateUserInterface(true);
+        }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -42,38 +92,201 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             serializer.DataReadWriteFunction("air", new GasMixture(), x => Air = x, () => Air);
             serializer.DataReadWriteFunction("isOpen", false, x => IsOpen = x, () => IsOpen);
-            serializer.DataReadWriteFunction("outputRatio", DefaultOutputRatio, x => OutputRatio = x, () => OutputRatio);
-
+            serializer.DataReadWriteFunction("outputPressure", DefaultOutputPressure, x => OutputPressure = x,
+                () => OutputPressure);
+            serializer.DataReadWriteFunction("nozzleArea", DefaultNozzleArea, x => NozzleArea = x, () => NozzleArea);
+            serializer.DataField(ref _allowedSlots, "allowedSlots",
+                EquipmentSlotDefines.SlotFlags.BACKPACK | EquipmentSlotDefines.SlotFlags.POCKET |
+                EquipmentSlotDefines.SlotFlags.BELT);
         }
 
+        public void SetValveState(bool valveState)
+        {
+            if (IsOpen == valveState) return;
+            IsOpen = valveState;
+            UpdateUserInterface();
+        }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddMarkup(Loc.GetString("Pressure: [color={0}]{1}[/color] kPa.",
-                Air.Pressure < MinimumThreshold ? "darkorange" : "orange", Math.Round(Air.Pressure)));
-            message.AddMarkup(Loc.GetString("\nValve: [color={0}]{1}[/color]", IsOpen ? "green" : "red", IsOpen? "Open" : "Closed"));
+            message.AddMarkup(Loc.GetString("Pressure: [color=orange]{0}[/color] kPa.",
+                Math.Round(Air?.Pressure ?? 0)));
+            message.AddMarkup(Loc.GetString("\nValve: [color={0}]{1}[/color]", IsOpen ? "green" : "red",
+                IsOpen ? "Open" : "Closed"));
             if (IsConnected)
             {
                 message.AddMarkup(Loc.GetString("\nConnected to external component"));
             }
         }
 
-        public void Update()
+        public void Update(float deltaTime)
         {
-            if (!IsOpen || Air.TotalMoles == 0 || IsConnected) return;
-            var gas = Air.RemoveRatio(OutputRatio);
+            EmitContents(deltaTime);
+            UpdateUserInterface();
+        }
+
+        public void Equipped(EquippedEventArgs eventArgs)
+        {
+            var flag = EquipmentSlotDefines.SlotMasks[eventArgs.Slot];
+            IsFunctional = (_allowedSlots & flag) == flag;
+            if (!IsFunctional) DisconnectFromInternals();
+            UpdateUserInterface();
+        }
+
+
+        public void Unequipped(UnequippedEventArgs eventArgs)
+        {
+            IsFunctional = false;
+            DisconnectFromInternals(eventArgs.User);
+            UpdateUserInterface();
+        }
+
+        public bool UseEntity(UseEntityEventArgs eventArgs)
+        {
+            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor)) return false;
+            OpenInterface(actor.playerSession);
+            return true;
+        }
+
+        public void ConnectToInternals()
+        {
+            if (IsConnected || !IsFunctional) return;
+            var internals = GetInternalsComponent();
+            if (internals == null) return;
+            IsConnected = true;
+            IsOpen = false;
+            internals.ConnectTank(Owner);
+            UpdateUserInterface();
+        }
+
+        public void DisconnectFromInternals(IEntity? owner = null)
+        {
+            if (!IsConnected) return;
+            IsOpen = false;
+            IsConnected = false;
+            GetInternalsComponent(owner)?.DisconnectTank();
+            UpdateUserInterface();
+        }
+
+        private void UpdateUserInterface(bool initialUpdate = false)
+        {
+            _userInterface?.SetState(
+                new GasTankBoundUserInterfaceState
+                {
+                    TankPressure = Air?.Pressure ?? 0,
+                    OutputPressure = initialUpdate ? OutputPressure : (float?) null,
+                    ValveOpen = IsOpen,
+                    InternalsConnected = IsConnected,
+                    CanConnectInternals = IsFunctional && GetInternalsComponent() != null
+                });
+        }
+
+        private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)
+        {
+            switch (message.Message)
+            {
+                case GasTankSetPressureMessage msg:
+                    OutputPressure = msg.Pressure;
+                    break;
+                case GasTankToggleValveMessage _:
+                    SetValveState(!IsOpen);
+                    break;
+                case GasTankToggleInternalsMessage _:
+                    ToggleInternals();
+                    break;
+            }
+        }
+
+        private void ToggleInternals()
+        {
+            if (IsConnected)
+            {
+                DisconnectFromInternals();
+                return;
+            }
+
+            ConnectToInternals();
+        }
+
+        private InternalsComponent? GetInternalsComponent(IEntity? owner = null)
+        {
+            if (owner != null) return owner.GetComponentOrNull<InternalsComponent>();
+            return ContainerHelpers.TryGetContainer(Owner, out var container)
+                ? container.Owner.GetComponentOrNull<InternalsComponent>()
+                : null;
+        }
+
+        private void EmitContents(float deltaTime)
+        {
+            if (!IsOpen || Air == null || Air.TotalMoles == 0 || IsConnected) return;
             var tile = Owner.Transform.Coordinates.GetTileAtmosphere(_entityManager);
+            var amt = CalculateMolesFlowRate(tile, Air, NozzleArea, OutputPressure);
+            var gas = Air.Remove(amt * deltaTime);
             if (tile?.Air == null) return;
             tile.AssumeAir(gas);
         }
 
-        public override void Unequipped(UnequippedEventArgs eventArgs)
+        private static float CalculateMolesFlowRate(IGasMixtureHolder? tile, GasMixture air, float nozzleArea,
+            float outputPressure)
         {
-            if (!IsConnected) return;
-            Connectable.Disconnect();
+            // no gas = no flow
+            if (air.Pressure <= 0) return 0;
+            var targetPressure = tile?.Air?.Pressure ?? 0;
+            var tankPressure = Math.Min(air.Pressure, outputPressure);
+            // actually tank nozzle should become a diffuser for the outside atmosphere in that case
+            // but to avoid madness we just do nothing
+            if (tankPressure <= targetPressure) return 0;
+            var mixtureHcr = air.HeatCapacityRatio;
+            var criticalPressureRatio = MathF.Pow(2 / (mixtureHcr + 1),
+                mixtureHcr / (mixtureHcr - 1));
+            var pressureRatio = targetPressure / tankPressure;
+            if (pressureRatio < criticalPressureRatio)
+            {
+                pressureRatio = criticalPressureRatio;
+            }
+
+            var mixtureMolarMass = air.MolarMass;
+            return nozzleArea * tankPressure *
+                   MathF.Sqrt(2 * mixtureHcr * mixtureMolarMass *
+                              (MathF.Pow(pressureRatio, 2 / mixtureHcr) - MathF.Pow(pressureRatio,
+                                  (mixtureHcr + 1) / mixtureHcr))) /
+                   mixtureMolarMass;
         }
 
+        /// <summary>
+        /// Open interaction window
+        /// </summary>
+        [Verb]
+        private sealed class ControlVerb : Verb<GasTankComponent>
+        {
+            public override bool RequireInteractionRange => true;
 
+            protected override void GetData(IEntity user, GasTankComponent component, VerbData data)
+            {
+                data.Visibility = VerbVisibility.Invisible;
+                if (!user.TryGetComponent<IActorComponent>(out _))
+                {
+                    return;
+                }
+
+                data.Visibility = VerbVisibility.Visible;
+                data.Text = "Open Control Panel";
+            }
+
+            protected override void Activate(IEntity user, GasTankComponent component)
+            {
+                if (!user.TryGetComponent<IActorComponent>(out var actor))
+                {
+                    return;
+                }
+
+                component.OpenInterface(actor.playerSession);
+            }
+        }
+
+        /// <summary>
+        /// Verb to operate tank valve state
+        /// </summary>
         [Verb]
         private sealed class ValveStateVerb : Verb<GasTankComponent>
         {
@@ -88,7 +301,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             protected override void Activate(IEntity user, GasTankComponent component)
             {
                 if (CheckVisibility(user, component.Owner) == VerbVisibility.Invisible) return;
-                component.IsOpen = !component.IsOpen;
+                component.SetValveState(!component.IsOpen);
             }
 
             private static VerbVisibility CheckVisibility(IEntity user, IEntity tank)
@@ -105,6 +318,5 @@ namespace Content.Server.GameObjects.Components.Atmos
                     : VerbVisibility.Invisible;
             }
         }
-
     }
 }
