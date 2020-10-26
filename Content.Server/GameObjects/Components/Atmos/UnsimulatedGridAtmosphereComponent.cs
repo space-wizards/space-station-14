@@ -86,7 +86,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             return false;
         }
 
-        public override bool ProcessHighPressureDelta(bool resumed = false)
+        public override bool ProcessHighPressureDelta(float frameTime, bool resumed = false)
         {
             return false;
         }

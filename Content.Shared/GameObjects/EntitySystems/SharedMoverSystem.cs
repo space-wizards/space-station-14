@@ -93,7 +93,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                     return;
                 }
 
-                var total = walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed * 1/frameTime;
+                var total = (walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed) * 1/frameTime;
 
                 {
                     if (physics.TryGetController(out MoverController controller))

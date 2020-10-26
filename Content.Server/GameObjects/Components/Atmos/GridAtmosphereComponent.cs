@@ -513,7 +513,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                     _state = ProcessState.HighPressureDelta;
                     return;
                 case ProcessState.HighPressureDelta:
-                    if (!ProcessHighPressureDelta(_paused))
+                    if (!ProcessHighPressureDelta(frameTime, _paused))
                     {
                         _paused = true;
                         return;
@@ -655,7 +655,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             return true;
         }
 
-        public virtual bool ProcessHighPressureDelta(bool resumed = false)
+        public virtual bool ProcessHighPressureDelta(float frameTime, bool resumed = false)
         {
             _stopwatch.Restart();
 
@@ -666,7 +666,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             while (_currentRunTiles.Count > 0)
             {
                 var tile = _currentRunTiles.Dequeue();
-                tile.HighPressureMovements();
+                tile.HighPressureMovements(frameTime);
                 tile.PressureDifference = 0f;
                 tile.PressureSpecificTarget = null;
                 _highPressureDelta.Remove(tile);

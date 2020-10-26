@@ -26,7 +26,7 @@ namespace Content.Server.Atmos
         private const float ThrowForce = 100f;
 
         public void ExperiencePressureDifference(int cycle, float pressureDifference, AtmosDirection direction,
-            EntityCoordinates throwTarget)
+            EntityCoordinates throwTarget, float frameTime)
         {
             if (ControlledComponent == null)
                 return;
