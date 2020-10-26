@@ -8,6 +8,13 @@
   - type: Appearance
     visuals:
     - type: PDAVisualizer
+      state: pda
+  - type: Sprite
+    sprite: Objects/Devices/pda.rsi
+    netsync: false
+  - type: Icon
+    sprite: Objects/Devices/pda.rsi
+    state: pda
   - type: Clothing
     QuickEquip: false
     Slots:
@@ -29,33 +36,21 @@
   components:
   - type: PDA
     idCard: AssistantIDCard
-  - type: Sprite
-    sprite: Objects/Devices/pda.rsi
-    netsync: false
-    layers:
-    - state: pda
-      map: ["enum.PDAVisualLayers.Base"]
-    - state: light_overlay
-      shader: unshaded
-      map: ["enum.PDAVisualLayers.Flashlight"]
 
 - type: entity
   name: Chef PDA
   parent: BasePDA
   id: ChefPDA
-  description: Why isn't it gray?
+  description: Covered in grease and flour.
   components:
   - type: PDA
     idCard: ChefIDCard
-  - type: Sprite
-    sprite: Objects/Devices/pda.rsi
-    netsync: false
-    layers:
-    - state: pda-cook
-      map: ["enum.PDAVisualLayers.Base"]
-    - state: light_overlay
-      shader: unshaded
-      map: ["enum.PDAVisualLayers.Flashlight"]
+  - type: Appearance
+    visuals:
+    - type: PDAVisualizer
+      state: pda-cook
+  - type: Icon
+    state: pda-cook
 
 - type: entity
   name: Clown PDA
@@ -65,15 +60,12 @@
   components:
   - type: PDA
     idCard: ClownIDCard
-  - type: Sprite
-    sprite: Objects/Devices/pda.rsi
-    netsync: false
-    layers:
-    - state: pda-clown
-      map: ["enum.PDAVisualLayers.Base"]
-    - state: light_overlay
-      shader: unshaded
-      map: ["enum.PDAVisualLayers.Flashlight"]
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-clown
+  - type: Icon
+    state: pda-clown
   - type: Slippery
     paralyzeTime: 4
   - type: Physics
@@ -91,15 +83,28 @@
   components:
   - type: PDA
     idCard: MimeIDCard
-  - type: Sprite
-    sprite: Objects/Devices/pda.rsi
-    netsync: false
-    layers:
-    - state: pda-mime
-      map: ["enum.PDAVisualLayers.Base"]
-    - state: light_overlay
-      shader: unshaded
-      map: ["enum.PDAVisualLayers.Flashlight"]
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-mime
+  - type: Icon
+    state: pda-mime
+
+# TODO: uncomment this when the QM job gets added
+#- type: entity
+#  name: Quartermaster PDA
+#  parent: BasePDA
+#  id: QuartermasterPDA
+#  description: PDA for the guy that orders the guns.
+#  components:
+#    - type: PDA
+#      idCard: QuartermasterIDCard
+#    - type: Appearance
+#      visuals:
+#        - type: PDAVisualizer
+#          state: pda-qm
+#    - type: Icon
+#      state: pda-qm
 
 - type: entity
   name: Cargo PDA
@@ -109,16 +114,12 @@
   components:
   - type: PDA
     idCard: CargoIDCard
-
-  - type: Sprite
-    sprite: Objects/Devices/pda.rsi
-    netsync: false
-    layers:
-    - state: pda-cargo
-      map: ["enum.PDAVisualLayers.Base"]
-    - state: light_overlay
-      shader: unshaded
-      map: ["enum.PDAVisualLayers.Flashlight"]
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-cargo
+  - type: Icon
+    state: pda-cargo
 
 - type: entity
   name: Bartender PDA
@@ -128,16 +129,12 @@
   components:
   - type: PDA
     idCard: BartenderIDCard
-
-  - type: Sprite
-    sprite: Objects/Devices/pda.rsi
-    netsync: false
-    layers:
-    - state: pda-bartender
-      map: ["enum.PDAVisualLayers.Base"]
-    - state: light_overlay
-      shader: unshaded
-      map: ["enum.PDAVisualLayers.Flashlight"]
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-bartender
+  - type: Icon
+    state: pda-bartender
 
 
 - type: entity
@@ -148,195 +145,180 @@
   components:
   - type: PDA
     idCard: JanitorIDCard
-
-  - type: Sprite
-    sprite: Objects/Devices/pda.rsi
-    netsync: false
-    layers:
-    - state: pda-janitor
-      map: ["enum.PDAVisualLayers.Base"]
-    - state: light_overlay
-      shader: unshaded
-      map: ["enum.PDAVisualLayers.Flashlight"]
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-janitor
+  - type: Icon
+    state: pda-janitor
 
 - type: entity
   name: Captain PDA
   parent: BasePDA
   id: CaptainPDA
-  description: Surprisingly no different than your PDA.
+  description: Surprisingly no different from your PDA.
   components:
   - type: PDA
     idCard: CaptainIDCard
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-captain
+  - type: Icon
+    state: pda-captain
 
-  - type: Sprite
-    sprite: Objects/Devices/pda.rsi
-    netsync: false
-    layers:
-    - state: pda-captain
-      map: ["enum.PDAVisualLayers.Base"]
-    - state: light_overlay
-      shader: unshaded
-      map: ["enum.PDAVisualLayers.Flashlight"]
 
 - type: entity
-  name: HoP PDA
+  name: Head of Personnel PDA
   parent: BasePDA
   id: HoPPDA
+  description: Looks like it's been chewed on.
   components:
   - type: PDA
     idCard: HoPIDCard
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-hop
+  - type: Icon
+    state: pda-hop
 
-  - type: Sprite
-    sprite: Objects/Devices/pda.rsi
-    netsync: false
-    layers:
-    - state: pda-hop
-      map: ["enum.PDAVisualLayers.Base"]
-    - state: light_overlay
-      shader: unshaded
-      map: ["enum.PDAVisualLayers.Flashlight"]
 
 - type: entity
-  name: CE PDA
+  name: Chief Engineer PDA
   parent: BasePDA
   id: CEPDA
+  description: Looks like it's barely been used.
   components:
   - type: PDA
     idCard: CEIDCard
-
-  - type: Sprite
-    sprite: Objects/Devices/pda.rsi
-    netsync: false
-    layers:
-    - state: pda-ce
-      map: ["enum.PDAVisualLayers.Base"]
-    - state: light_overlay
-      shader: unshaded
-      map: ["enum.PDAVisualLayers.Flashlight"]
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-ce
+  - type: Icon
+    state: pda-ce
 
 
 - type: entity
   name: Engineer PDA
   parent: BasePDA
   id: EngineerPDA
+  description: Rugged and well-worn.
   components:
   - type: PDA
     idCard: EngineeringIDCard
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-engineer
+  - type: Icon
+    state: pda-engineer
 
-  - type: Sprite
-    sprite: Objects/Devices/pda.rsi
-    netsync: false
-    layers:
-    - state: pda-engineer
-      map: ["enum.PDAVisualLayers.Base"]
-    - state: light_overlay
-      shader: unshaded
-      map: ["enum.PDAVisualLayers.Flashlight"]
 
 - type: entity
-  name: CMO PDA
+  name: Chief Medical Officer PDA
   parent: BasePDA
   id: CMOPDA
+  description: Extraordinarily shiny and sterile.
   components:
   - type: PDA
     idCard: CMOIDCard
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-cmo
+  - type: Icon
+    state: pda-cmo
 
-  - type: Sprite
-    sprite: Objects/Devices/pda.rsi
-    netsync: false
-    layers:
-    - state: pda-cmo
-      map: ["enum.PDAVisualLayers.Base"]
-    - state: light_overlay
-      shader: unshaded
-      map: ["enum.PDAVisualLayers.Flashlight"]
 
 - type: entity
   name: Medical PDA
   parent: BasePDA
   id: MedicalPDA
+  description: Shiny and sterile.
   components:
   - type: PDA
     idCard: MedicalIDCard
-
-  - type: Sprite
-    sprite: Objects/Devices/pda.rsi
-    netsync: false
-    layers:
-    - state: pda-medical
-      map: ["enum.PDAVisualLayers.Base"]
-    - state: light_overlay
-      shader: unshaded
-      map: ["enum.PDAVisualLayers.Flashlight"]
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-medical
+  - type: Icon
+    state: pda-medical
 
 - type: entity
-  name: RnD PDA
+  name: Research Director PDA
   parent: BasePDA
   id: RnDPDA
+  description: It appears surprisingly ordinary.
   components:
   - type: PDA
     idCard: RDIDCard
-
-  - type: Sprite
-    sprite: Objects/Devices/pda.rsi
-    netsync: false
-    layers:
-    - state: pda-rd
-      map: ["enum.PDAVisualLayers.Base"]
-    - state: light_overlay
-      shader: unshaded
-      map: ["enum.PDAVisualLayers.Flashlight"]
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-rd
+  - type: Icon
+    state: pda-rd
 
 - type: entity
   name: Science PDA
   parent: BasePDA
   id: SciencePDA
+  description:
   components:
   - type: PDA
     idCard: ResearchIDCard
-
-  - type: Sprite
-    sprite: Objects/Devices/pda.rsi
-    netsync: false
-    layers:
-    - state: pda-rd
-      map: ["enum.PDAVisualLayers.Base"]
-    - state: light_overlay
-      shader: unshaded
-      map: ["enum.PDAVisualLayers.Flashlight"]
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-science
+  - type: Icon
+    state: pda-science
 
 - type: entity
-  name: HoS PDA
+  name: Head of Security PDA
   parent: BasePDA
   id: HoSPDA
+  description: Whosoever bears this PDA is the law.
   components:
   - type: PDA
     idCard: HoSIDCard
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-hos
+  - type: Icon
+    state: pda-hos
 
-  - type: Sprite
-    sprite: Objects/Devices/pda.rsi
-    netsync: false
-    layers:
-    - state: pda-hos
-      map: ["enum.PDAVisualLayers.Base"]
-    - state: light_overlay
-      shader: unshaded
-      map: ["enum.PDAVisualLayers.Flashlight"]
+# TODO: Uncomment this when the Warden job gets added
+#- type: entity
+#  name: Warden PDA
+#  parent: BasePDA
+#  id: WardenPDA
+#  description: The OS appears to have been jailbroken.
+#  components:
+#    - type: PDA
+#      idCard: WardenIDCard
+#    - type: Appearance
+#      visuals:
+#        - type: PDAVisualizer
+#          state: pda-warden
+#    - type: Icon
+#      state: pda-warden
 
 - type: entity
   name: Security PDA
   parent: BasePDA
   id: SecurityPDA
+  description: Red to hide the stains of assistant blood.
   components:
   - type: PDA
     idCard: SecurityIDCard
-
-  - type: Sprite
-    sprite: Objects/Devices/pda.rsi
-    netsync: false
-    layers:
-    - state: pda-security
-      map: ["enum.PDAVisualLayers.Base"]
-    - state: light_overlay
-      shader: unshaded
-      map: ["enum.PDAVisualLayers.Flashlight"]
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-security
+  - type: Icon
+    state: pda-security
