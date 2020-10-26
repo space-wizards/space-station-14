@@ -1,5 +1,5 @@
 - type: entity
-  id: CrateJanitorialSupplies
+  id: CrateServiceJanitorialSupplies
   name: janitorial supplies crate
   parent: CratePlastic
   components:
@@ -17,3 +17,15 @@
         amount: 1
       - name: SprayBottleSpaceCleaner
         amount: 2
+
+- type: entity
+  id: CrateServiceReplacementLights
+  name: replacement lights crate
+  parent: CrateGenericonimo
+  components:
+  - type: StorageFill
+    contents:
+      - name: LightTube
+        amount: 5
+      - name: LightBulb
+        amount: 5
