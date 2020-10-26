@@ -290,8 +290,7 @@ namespace Content.Server.GameObjects.Components.Buckle
             Owner.EntityManager.EventBus.SubscribeEvent<MoveEvent>(EventSource.Local, this, MoveEvent);
 
 
-            PullableComponent? pullableComponent;
-            if (Owner.TryGetComponent(out pullableComponent))
+            if (Owner.TryGetComponent(out PullableComponent? pullableComponent))
             {
                 if (pullableComponent.Puller != null)
                 {
