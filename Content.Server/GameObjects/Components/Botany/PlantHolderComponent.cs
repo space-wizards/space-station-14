@@ -712,7 +712,7 @@ namespace Content.Server.GameObjects.Components.Botany
 
                 var split = solution.Solution.SplitSolution(chemAmount <= solution.Solution.TotalVolume ? chemAmount : solution.Solution.TotalVolume);
 
-                user.PopupMessageCursor(sprayed ? $"You spray {Owner.Name} with {usingItem.Name}." : $"You transfer {split.TotalVolume.ToString()}u to {Owner.Name}");
+                user.PopupMessageCursor(Loc.GetString(sprayed ? $"You spray {Owner.Name} with {usingItem.Name}." : $"You transfer {split.TotalVolume.ToString()}u to {Owner.Name}"));
 
                 _solutionContainer?.TryAddSolution(split);
 
