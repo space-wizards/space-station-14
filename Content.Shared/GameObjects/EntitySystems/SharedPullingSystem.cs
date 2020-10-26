@@ -6,6 +6,8 @@ using Content.Shared.Input;
 using Content.Shared.Physics.Pull;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
@@ -17,6 +19,9 @@ namespace Content.Shared.GameObjects.EntitySystems
     [UsedImplicitly]
     public class SharedPullingSystem : EntitySystem
     {
+        /// <summary>
+        ///     A mapping of pullers to the entity that they are pulling.
+        /// </summary>
         private readonly Dictionary<IEntity, IEntity> _pullers =
             new Dictionary<IEntity, IEntity>();
 
@@ -26,6 +31,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             SubscribeLocalEvent<PullStartedMessage>(OnPullStarted);
             SubscribeLocalEvent<PullStoppedMessage>(OnPullStopped);
+            SubscribeLocalEvent<MoveEvent>(PullerMoved);
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.MovePulledObject, new PointerInputCmdHandler(HandleMovePulledObject))
@@ -41,6 +47,21 @@ namespace Content.Shared.GameObjects.EntitySystems
         private void OnPullStopped(PullStoppedMessage message)
         {
             RemovePuller(message.Puller.Owner);
+        }
+
+        private void PullerMoved(MoveEvent ev)
+        {
+            if (!TryGetPulled(ev.Sender, out var pulled))
+            {
+                return;
+            }
+
+            if (!pulled.TryGetComponent(out IPhysicsComponent? physics))
+            {
+                return;
+            }
+
+            physics.WakeBody();
         }
 
         private bool HandleMovePulledObject(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
