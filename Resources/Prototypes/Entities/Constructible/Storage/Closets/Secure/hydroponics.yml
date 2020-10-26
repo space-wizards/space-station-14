@@ -9,3 +9,5 @@
       state: hydro
   - type: Icon
     state: hydro_icon
+  - type: AccessReader
+    access: [ [ "Hydroponics" ] ]

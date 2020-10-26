@@ -2,7 +2,7 @@
   name: lantern
   parent: BaseItem
   id: lantern
-  description: The holy light guides the way
+  description: The holy light guides the way.
   components:
     - type: HandheldLight
     - type: Sprite
