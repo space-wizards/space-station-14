@@ -8,10 +8,10 @@ namespace Content.Shared.Interfaces.Chemistry
     public interface IPlantMetabolizable : IExposeData
     {
         /// <summary>
-        ///     Metabolize 1 unit of a reagent.
+        ///     Metabolize <paramref name="customPlantMetabolism"/> unit(s) of a reagent.
         /// </summary>
-        /// <param name="plantHolder"></param>
-        /// <param name="reactVolume"></param>
+        /// <param name="plantHolder">Entity holding the plant</param>
+        /// <param name="customPlantMetabolism">Units to metabolize</param>
         void Metabolize(IEntity plantHolder, float customPlantMetabolism = 1f);
     }
 }
