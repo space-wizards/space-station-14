@@ -100,7 +100,7 @@
   - type: Icon
     sprite: Constructible/Structures/Tables/reinforced.rsi
   - type: Destructible
-    deadThreshold: 1
+    deadThreshold: 75
     destroySound: /Audio/Effects/metalbreak.ogg
     resistances: metallicResistances
     spawnOnDestroy: SteelSheet1
