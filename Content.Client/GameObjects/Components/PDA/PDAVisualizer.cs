@@ -1,16 +1,20 @@
 ﻿using Content.Shared.GameObjects.Components.PDA;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 
 namespace Content.Client.GameObjects.Components.PDA
 {
+    [UsedImplicitly]
+    // ReSharper disable once InconsistentNaming
     public class PDAVisualizer : AppearanceVisualizer
     {
 
         private enum PDAVisualLayers
         {
             Base,
-            Flashlight
+            Flashlight,
+            IDLight
         }
 
 
@@ -23,13 +27,16 @@ namespace Content.Client.GameObjects.Components.PDA
             }
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
             sprite.LayerSetVisible(PDAVisualLayers.Flashlight, false);
-            if(!component.TryGetData<bool>(PDAVisuals.FlashlightLit, out var isScreenLit))
+            if (component.TryGetData(PDAVisuals.FlashlightLit, out bool isScreenLit))
             {
-                return;
+                sprite.LayerSetState(PDAVisualLayers.Flashlight, "light_overlay");
+                sprite.LayerSetVisible(PDAVisualLayers.Flashlight, isScreenLit);
             }
-            sprite.LayerSetState(PDAVisualLayers.Flashlight, "light_overlay");
-            sprite.LayerSetVisible(PDAVisualLayers.Flashlight, isScreenLit);
 
+            if (component.TryGetData(PDAVisuals.IDCardInserted, out bool isCardInserted))
+            {
+                sprite.LayerSetVisible(PDAVisualLayers.IDLight, isCardInserted);
+            }
 
         }
 

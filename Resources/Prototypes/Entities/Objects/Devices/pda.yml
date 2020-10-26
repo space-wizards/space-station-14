@@ -20,15 +20,6 @@
     - key: enum.PDAUiKey.Key
       type: PDABoundUserInterface
   - type: LoopingSound
-
-- type: entity
-  name: Assistant PDA
-  parent: BasePDA
-  id: AssistantPDA
-  description: Why isn't it gray?
-  components:
-  - type: PDA
-    idCard: AssistantIDCard
   - type: Sprite
     sprite: Objects/Devices/pda.rsi
     netsync: false
@@ -38,6 +29,18 @@
     - state: light_overlay
       shader: unshaded
       map: ["enum.PDAVisualLayers.Flashlight"]
+    - state: id_overlay
+      shader: unshaded
+      map: ["enum.PDAVisualLayers.IDLight"]
+
+- type: entity
+  name: Assistant PDA
+  parent: BasePDA
+  id: AssistantPDA
+  description: Why isn't it gray?
+  components:
+  - type: PDA
+    idCard: AssistantIDCard
 
 - type: entity
   name: Chef PDA
@@ -53,9 +56,6 @@
     layers:
     - state: pda-cook
       map: ["enum.PDAVisualLayers.Base"]
-    - state: light_overlay
-      shader: unshaded
-      map: ["enum.PDAVisualLayers.Flashlight"]
 
 - type: entity
   name: Clown PDA
