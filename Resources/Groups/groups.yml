@@ -110,7 +110,7 @@
   - hurt
   - toggledisallowlatejoin
   - attachbodypart
-  - parenttoself
+  - attachtoself
   - attachtogrid
   - attachtograndparent
   CanViewVar: true
@@ -216,7 +216,7 @@
   - hurt
   - toggledisallowlatejoin
   - attachbodypart
-  - parenttoself
+  - attachtoself
   - attachtogrid
   - attachtograndparent
   CanViewVar: true

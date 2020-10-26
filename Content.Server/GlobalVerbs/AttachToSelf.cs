@@ -8,7 +8,7 @@ using Robust.Shared.Localization;
 namespace Content.Server.GlobalVerbs
 {
     [GlobalVerb]
-    public class SelfParentVerb : GlobalVerb
+    public class AttachToSelf : GlobalVerb
     {
         public override void GetData(IEntity user, IEntity target, VerbData data)
         {
@@ -25,13 +25,13 @@ namespace Content.Server.GlobalVerbs
             }
 
             var groupController = IoCManager.Resolve<IConGroupController>();
-            if (!groupController.CanCommand(actor.playerSession, "parenttoself"))
+            if (!groupController.CanCommand(actor.playerSession, "attachtoself"))
             {
                 return;
             }
 
             data.Visibility = VerbVisibility.Visible;
-            data.Text = Loc.GetString("Parent to self");
+            data.Text = Loc.GetString("Attach to self");
             data.CategoryData = VerbCategories.Debug;
         }
 
@@ -43,7 +43,7 @@ namespace Content.Server.GlobalVerbs
             }
 
             var groupController = IoCManager.Resolve<IConGroupController>();
-            if (!groupController.CanCommand(actor.playerSession, "parenttoself"))
+            if (!groupController.CanCommand(actor.playerSession, "attachtoself"))
             {
                 return;
             }
