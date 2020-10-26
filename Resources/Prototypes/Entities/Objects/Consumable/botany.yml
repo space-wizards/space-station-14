@@ -129,7 +129,7 @@
   name: tomato
   parent: ProduceBase
   id: FoodTomato
-  description: The space Irish starved to death after their potato crops died. Sadly they were unable to fish for space carp due to it being the queen's space. Bringing this up to any space IRA member will drive them insane with anger.
+  description: I say to-mah-to, you say tom-mae-to.
   components:
     - type: Food
     - type: SolutionContainer

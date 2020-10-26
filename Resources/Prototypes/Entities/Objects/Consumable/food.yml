@@ -931,7 +931,8 @@
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/egg.rsi
-
+  - type: Produce
+    seed: eggy
   - type: Item
     sprite: Objects/Consumable/Food/egg.rsi
 

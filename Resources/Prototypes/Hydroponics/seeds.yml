@@ -264,3 +264,25 @@
       Min: 1
       Max: 25
       PotencyDivisor: 25
+
+- type: seed
+  id: eggy
+  name: eggy
+  seedName: egg-plant
+  displayName: egg-plants
+  plantRsi: Objects/Specific/Hydroponics/eggy.rsi
+  productPrototypes:
+    - FoodEgg
+  harvestRepeat: Repeat
+  lifespan: 75
+  maturation: 6
+  production: 12
+  yield: 2
+  potency: 20
+  idealLight: 9
+  idealHeat: 298
+  chemicals:
+    chem.Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
