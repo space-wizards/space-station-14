@@ -118,12 +118,20 @@ namespace Content.Shared.GameObjects.Components.Pulling
 
         public bool TogglePull(IEntity puller)
         {
-            if (Puller == null)
+            if (BeingPulled)
             {
-                return TryStartPull(puller);
+                if (Puller == puller)
+                {
+                    return TryStopPull();
+                }
+                else
+                {
+                    TryStopPull();
+                    return TryStartPull(puller);
+                }
             }
 
-            return TryStopPull();
+            return TryStartPull(puller);
         }
 
         public bool TryMoveTo(EntityCoordinates to)
