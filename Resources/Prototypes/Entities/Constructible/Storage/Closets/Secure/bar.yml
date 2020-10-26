@@ -10,3 +10,5 @@
       state: cabinet
   - type: Icon
     state: cabinet_icon
+  - type: AccessReader
+    access: [["Bar"]]

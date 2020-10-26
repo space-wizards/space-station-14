@@ -284,4 +284,26 @@
   - type: IdCard
     jobTitle: Central Commander
   - type: Access
-    tags: ["Maintenance", "Cargo", "Engineering", "Medical", "Research", "Security", "Service", "Captain", "Command", "External", "HeadOfPersonnel", "Janitor", "Theatre"]
+    #GOD DEAR FUCKING GOD WE NEED AN ALL-ACCESS FLAG
+    tags:
+    - Maintenance
+    - Cargo
+    - Quartermaster
+    - Engineering
+    - ChiefEngineer
+    - Medical
+    - ChiefMedicalOfficer
+    - Research
+    - ResearchDirector
+    - Security
+    - Service
+    - Captain
+    - Command
+    - External
+    - HeadOfSecurity
+    - HeadOfPersonnel
+    - Bar
+    - Hydroponics
+    - Kitchen
+    - Janitor
+    - Theatre
