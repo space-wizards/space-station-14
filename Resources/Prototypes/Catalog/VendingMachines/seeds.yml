@@ -1,6 +1,6 @@
 - type: vendingMachineInventory
   id: MegaSeed Servitor
   name: MegaSeed Servitor
-  description: "A vending machine containing Security equipment. A label reads \"SECURITY PERSONNEL ONLY\"."
+  description: For when you need seeds fast. Hands down the best seed selection on the station!
   animationDuration: 1.3
   spriteName: seeds

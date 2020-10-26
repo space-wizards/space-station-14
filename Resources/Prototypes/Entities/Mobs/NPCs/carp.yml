@@ -2,7 +2,7 @@
   save: false
   name: space carp
   id: CarpMob_Content
-  description:
+  description: It's a space carp.
   drawdepth: Mobs
   suffix: AI
   components:
@@ -58,7 +58,7 @@
   name: magicarp
   parent: CarpMob_Content
   id: MagicarpMob_Content
-  description:
+  description: Looks like some kind of fish. Might be magical.
   drawdepth: Mobs
   suffix: AI
   components:
@@ -81,7 +81,7 @@
   name: holocarp
   parent: CarpMob_Content
   id: HolocarpMob_Content
-  description:
+  description: Carp made out of holographic energies.
   drawdepth: Mobs
   suffix: AI
   components:

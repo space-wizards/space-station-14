@@ -2,7 +2,7 @@
   parent: Clothing
   id: IDCardStandard
   name: identification card
-  description: A card necessary to access various areas aboard the station
+  description: A card necessary to access various areas aboard the station.
   abstract: true
   components:
   - type: Sprite

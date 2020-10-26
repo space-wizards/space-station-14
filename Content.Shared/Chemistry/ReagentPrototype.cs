@@ -88,6 +88,9 @@ namespace Content.Shared.Chemistry
         {
             var removed = ReagentUnit.Zero;
 
+            if (entity == null || entity.Deleted)
+                return removed;
+
             foreach (var react in entity.GetAllComponents<IReagentReaction>())
             {
                 switch (method)

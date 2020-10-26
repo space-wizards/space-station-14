@@ -4,7 +4,7 @@
   save: false
   name: Urist McHands
   id: BaseHumanMob_Content
-  description: A miserable pile of secrets
+  description: A miserable pile of secrets.
   drawdepth: Mobs
   abstract: true
   components:
@@ -156,10 +156,10 @@
     normalBodyTemperature: 310.15
     thermalRegulationTemperatureThreshold: 25
     needsGases:
-      Oxygen: 0.00332569564
+      Oxygen: 0.00060763888
     producesGases:
-      Oxygen: 0.00249427173
-      CarbonDioxide: 0.00083142391
+      Oxygen: 0.00045572916
+      CarbonDioxide: 0.00015190972
   - type: MobStateManager
   - type: HeatResistance
   - type: Appearance
@@ -195,13 +195,14 @@
       type: StrippableBoundUserInterface
     - key: enum.AcceptCloningUiKey.Key
       type: AcceptCloningBoundUserInterface
+  - type: Puller
 
 - type: entity
   save: false
   name: Urist McHands
   id: HumanMob_Dummy
   abstract: true
-  description: A dummy human meant to be used in character setup
+  description: A dummy human meant to be used in character setup.
   components:
     - type: Hands
     - type: Inventory

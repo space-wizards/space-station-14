@@ -124,7 +124,6 @@
             "RCD",
             "RCDDeconstructWhitelist",
             "RCDAmmo",
-            "Pullable",
             "CursedEntityStorage",
             "Listening",
             "Radio",
@@ -182,7 +181,8 @@
             "GasCanister",
             "GasCanisterPort",
             "Lung",
-            "Cleanable"
+            "Cleanable",
+            "Brain"
         };
     }
 }

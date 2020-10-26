@@ -25,13 +25,13 @@
 
 - type: entity
   parent: ScrubberBase
-  id: FromSouthScrubber
-  name: From South Scrubber
+  id: Scrubber
+  name: Scrubber
   components:
   - type: NodeContainer
     nodes:
     - !type:PipeNode
       nodeGroID: Pipe
-      pipeDirection: South
+      pipeDirection: East
   - type: PressureSiphon
-    scrubberOutletDirection: South
+    scrubberOutletDirection: East

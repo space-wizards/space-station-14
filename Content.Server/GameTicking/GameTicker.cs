@@ -9,11 +9,6 @@ using Content.Server.GameObjects.Components.Markers;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.Components.PDA;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.GameObjects.EntitySystems.AI.Pathfinding;
-using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible;
-using Content.Server.GameObjects.EntitySystems.Atmos;
-using Content.Server.GameObjects.EntitySystems.StationEvents;
 using Content.Server.GameTicking.GamePresets;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
@@ -36,7 +31,6 @@ using Robust.Server.Player;
 using Robust.Server.ServerStatus;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
@@ -70,6 +64,7 @@ namespace Content.Server.GameTicking
 
         private static readonly TimeSpan UpdateRestartDelay = TimeSpan.FromSeconds(20);
 
+        public const float PresetFailedCooldownIncrease = 30f;
         private const string PlayerPrototypeName = "HumanMob_Content";
         private const string ObserverPrototypeName = "MobObserver";
         private const string MapFile = "Maps/saltern.yml";
@@ -291,17 +286,27 @@ namespace Content.Server.GameTicking
 
             if (!preset.Start(assignedJobs.Keys.ToList(), force))
             {
-                SetStartPreset(_configurationManager.GetCVar<string>("game.fallbackpreset"));
-                var newPreset = MakeGamePreset(profiles);
-                _chatManager.DispatchServerAnnouncement(
-                    $"Failed to start {preset.ModeTitle} mode! Defaulting to {newPreset.ModeTitle}...");
-                if (!newPreset.Start(readyPlayers, force))
+                if (_configurationManager.GetCVar<bool>("game.fallbackenabled"))
                 {
-                    throw new ApplicationException("Fallback preset failed to start!");
-                }
+                    SetStartPreset(_configurationManager.GetCVar<string>("game.fallbackpreset"));
+                    var newPreset = MakeGamePreset(profiles);
+                    _chatManager.DispatchServerAnnouncement(
+                        $"Failed to start {preset.ModeTitle} mode! Defaulting to {newPreset.ModeTitle}...");
+                    if (!newPreset.Start(readyPlayers, force))
+                    {
+                        throw new ApplicationException("Fallback preset failed to start!");
+                    }
 
-                DisallowLateJoin = false;
-                DisallowLateJoin |= newPreset.DisallowLateJoin;
+                    DisallowLateJoin = false;
+                    DisallowLateJoin |= newPreset.DisallowLateJoin;
+                }
+                else
+                {
+                    SendServerMessage($"Failed to start {preset.ModeTitle} mode! Restarting round...");
+                    RestartRound();
+                    DelayStart(TimeSpan.FromSeconds(PresetFailedCooldownIncrease));
+                    return;
+                }
             }
 
             _roundStartTimeSpan = IoCManager.Resolve<IGameTiming>().RealTime;
