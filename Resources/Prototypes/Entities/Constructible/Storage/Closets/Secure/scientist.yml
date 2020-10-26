@@ -20,8 +20,8 @@
     - type: Appearance
       visuals:
         - type: StorageVisualizer
-          state: rd
+          state: science
     - type: Icon
-      state: rd_icon
+      state: science_icon
     - type: AccessReader
       access: [ [ "Research" ] ]
