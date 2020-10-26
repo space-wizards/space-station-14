@@ -13,7 +13,7 @@
     access: [ [ "ResearchDirector" ] ]
 
 - type: entity
-  id: LockerResearchDirector
+  id: LockerScientist
   parent: LockerSecureBase
   name: "scientist's locker"
   components:
