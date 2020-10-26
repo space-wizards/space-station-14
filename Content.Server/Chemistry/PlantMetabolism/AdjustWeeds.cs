@@ -11,8 +11,7 @@ namespace Content.Server.Chemistry.PlantMetabolism
     {
         public override void Metabolize(IEntity plantHolder, float customPlantMetabolism = 1f)
         {
-            if (plantHolder.Deleted || !plantHolder.TryGetComponent(out PlantHolderComponent? plantHolderComp)
-            || !CanMetabolize())
+            if (!CanMetabolize(plantHolder, out var plantHolderComp, false))
                 return;
 
             plantHolderComp.WeedLevel += Amount;
