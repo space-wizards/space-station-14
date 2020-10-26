@@ -10,13 +10,14 @@ namespace Content.Shared.Physics
 {
     public class ConveyedController : VirtualController
     {
-        [Dependency] private readonly IPhysicsManager _physicsManager = default!;
-
-		public override IPhysicsComponent? ControlledComponent { protected get; set; }       
-
         public void Move(Vector2 velocityDirection, float speed)
         {
-            if (ControlledComponent?.Owner.IsWeightless() ?? false)
+            if (ControlledComponent == null)
+            {
+                return;
+            }
+
+            if (ControlledComponent.Owner.IsWeightless() ?? false)
             {
                 return;
             }
