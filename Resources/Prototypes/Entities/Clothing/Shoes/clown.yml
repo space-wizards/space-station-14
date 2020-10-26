@@ -2,7 +2,7 @@
   parent: ShoesBase
   id: ShoesClown
   name: clown shoes
-  description: The prankster's standard-issue clowning shoes. Damn they're huge!
+  description: "The prankster's standard-issue clowning shoes. Damn they're huge!"
   components:
   - type: Sprite
     sprite: Clothing/Shoes/clown.rsi

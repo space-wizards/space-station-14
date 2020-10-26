@@ -24,7 +24,7 @@
   name: 4no raisins
   parent: FoodBase
   id: Food4NoRaisins
-  description: Dried raisins
+  description: Dried raisins.
   components:
   - type: Food
     trash: TrashRaisins
@@ -74,7 +74,7 @@
   name: amanita jelly
   parent: FoodBase
   id: FoodAmanitaJelly
-  description: Looks curiously toxic
+  description: Looks curiously toxic.
   components:
   - type: Food
     trash: TrashSnackBowl
@@ -432,7 +432,7 @@
   name: cheesecake (slice)
   parent: FoodBase
   id: FoodCheeseCakeSlice
-  description: Slice of pure cheestisfaction
+  description: Slice of pure cheestisfaction.
   components:
   - type: Food
     trash: TrashPlate
@@ -464,7 +464,7 @@
   name: cheesie honkers
   parent: FoodBase
   id: FoodCheesieHonkers
-  description: Bite sized cheesie snacks that will honk all over your mouth
+  description: Bite sized cheesie snacks that will honk all over your mouth.
   components:
   - type: Food
     trash: TrashCheesieHonkers
@@ -513,7 +513,7 @@
   name: chips
   parent: FoodBase
   id: FoodChips
-  description: Commander Riker's What-The-Crisps
+  description: Commander Riker's What-The-Crisps.
   components:
   - type: Food
     trash: TrashChips
@@ -549,7 +549,7 @@
   name: chocolate cake (slice)
   parent: FoodBase
   id: FoodChocolateCakeSlice
-  description: A cake with added chocolate
+  description: A cake with added chocolate.
   components:
   - type: Food
     trash: TrashPlate

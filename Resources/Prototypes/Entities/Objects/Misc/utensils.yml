@@ -10,6 +10,7 @@
   parent: UtensilBase
   id: Fork
   name: fork
+  description: An eating utensil, perfect for stabbing.
   components:
   - type: Sprite
     state: fork
@@ -22,6 +23,7 @@
   parent: UtensilBase
   id: ForkPlastic
   name: plastic fork
+  description: An eating utensil, perfect for stabbing.
   components:
   - type: Sprite
     state: plastic_fork
@@ -62,6 +64,7 @@
   parent: UtensilBase
   id: KnifePlastic
   name: plastic knife
+  description: That's not a knife. This is a knife.
   components:
   - type: Sprite
     state: plastic_knife

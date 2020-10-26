@@ -24,9 +24,9 @@ namespace Content.Server.Explosions
         /// Distance used for camera shake when distance from explosion is (0.0, 0.0).
         /// Avoids getting NaN values down the line from doing math on (0.0, 0.0).
         /// </summary>
-        private static Vector2 _epicenterDistance = (0.1f, 0.1f);
+        private static readonly Vector2 EpicenterDistance = (0.1f, 0.1f);
 
-        public static void SpawnExplosion(EntityCoordinates coords, int devastationRange, int heavyImpactRange, int lightImpactRange, int flashRange)
+        public static void SpawnExplosion(this EntityCoordinates coords, int devastationRange, int heavyImpactRange, int lightImpactRange, int flashRange)
         {
             var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
             var serverEntityManager = IoCManager.Resolve<IServerEntityManager>();
@@ -151,7 +151,7 @@ namespace Content.Server.Explosions
                 var delta = coords.ToMapPos(entityManager) - playerPos;
                 //Change if zero. Will result in a NaN later breaking camera shake if not changed
                 if (delta.EqualsApprox((0.0f, 0.0f)))
-                    delta = _epicenterDistance;
+                    delta = EpicenterDistance;
 
                 var distance = delta.LengthSquared;
                 var effect = 10 * (1 / (1 + distance));
@@ -161,6 +161,12 @@ namespace Content.Server.Explosions
                     recoil.Kick(kick);
                 }
             }
+        }
+
+        public static void SpawnExplosion(this IEntity entity, int devastationRange, int heavyImpactRange,
+            int lightImpactRange, int flashRange)
+        {
+            entity.Transform.Coordinates.SpawnExplosion(devastationRange, heavyImpactRange, lightImpactRange, flashRange);
         }
     }
 }
