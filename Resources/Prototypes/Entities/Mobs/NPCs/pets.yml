@@ -60,7 +60,7 @@
   name: corgi
   parent: PetBaseMob_Content
   id: CorgiMob_Content
-  description:
+  description: Finally, a space corgi!
   drawdepth: Mobs
   suffix: AI
   components:
@@ -94,7 +94,7 @@
   name: ian
   parent: PetBaseMob_Content
   id: IanMob_Content
-  description:
+  description: Favorite pet corgi.
   drawdepth: Mobs
   suffix: AI
   components:
@@ -128,7 +128,7 @@
   name: cat
   parent: PetBaseMob_Content
   id: CatMob_Content
-  description:
+  description: Feline pet, very funny.
   drawdepth: Mobs
   suffix: AI
   components:
@@ -162,7 +162,7 @@
   name: calico cat
   parent: PetBaseMob_Content
   id: CatCalicoMob_Content
-  description:
+  description: Feline pet, very funny.
   drawdepth: Mobs
   suffix: AI
   components:
@@ -196,7 +196,7 @@
   name: sloth
   parent: PetBaseMob_Content
   id: SlothMob_Content
-  description:
+  description: Very slow animal. For people with low energy.
   drawdepth: Mobs
   suffix: AI
   components:

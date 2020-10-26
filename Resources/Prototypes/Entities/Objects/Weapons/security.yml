@@ -3,6 +3,7 @@
   description: A stun baton for incapacitating people with.
   parent: BaseItem
   id: Stunbaton
+  description: A melee weapon which delivers an incapacitating shock, knocking them to the ground or at least disorientating them.
   components:
     - type: Sprite
       sprite: Objects/Weapons/Melee/stunbaton.rsi

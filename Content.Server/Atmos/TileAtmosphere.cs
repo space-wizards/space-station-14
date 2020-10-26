@@ -42,10 +42,7 @@ namespace Content.Server.Atmos
         [ViewVariables] private int _currentCycle;
 
         [ViewVariables]
-        private static GasTileOverlaySystem _gasTileOverlaySystem;
-
-        [ViewVariables]
-        public float Temperature {get; private set; } = Atmospherics.T20C;
+        public float Temperature { get; private set; } = Atmospherics.T20C;
 
         [ViewVariables]
         private float _temperatureArchived = Atmospherics.T20C;
@@ -1138,8 +1135,7 @@ namespace Content.Server.Atmos
         {
             if (Air == null) return;
 
-            _gasTileOverlaySystem ??= EntitySystem.Get<GasTileOverlaySystem>();
-            _gasTileOverlaySystem.Invalidate(GridIndex, GridIndices);
+            _gridAtmosphereComponent.GasTileOverlaySystem.Invalidate(GridIndex, GridIndices);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

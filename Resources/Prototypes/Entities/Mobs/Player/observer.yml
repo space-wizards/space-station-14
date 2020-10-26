@@ -6,6 +6,8 @@
   description: Boo!
   components:
   - type: Mind
+  - type: Clickable
+  - type: InteractionOutline
   - type: Physics
     anchored: false
     mass: 5

@@ -8,6 +8,7 @@ using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Atmos.Piping;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.Atmos;
 using Content.Shared.Atmos;
 using Content.Shared.Maps;
 using Robust.Server.GameObjects.EntitySystems.TileLookup;
@@ -39,6 +40,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         [Robust.Shared.IoC.Dependency] private IServerEntityManager _serverEntityManager = default!;
 
         public GridTileLookupSystem GridTileLookupSystem { get; private set; } = default!;
+        internal GasTileOverlaySystem GasTileOverlaySystem { get; private set; } = default!;
         public AtmosphereSystem AtmosphereSystem { get; private set; } = default!;
 
         /// <summary>
@@ -173,10 +175,11 @@ namespace Content.Server.GameObjects.Components.Atmos
         public override void Initialize()
         {
             base.Initialize();
-            RepopulateTiles();
-
             GridTileLookupSystem = EntitySystem.Get<GridTileLookupSystem>();
+            GasTileOverlaySystem = EntitySystem.Get<GasTileOverlaySystem>();
             AtmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+
+            RepopulateTiles();
         }
 
         public override void OnAdd()
