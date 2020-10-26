@@ -164,6 +164,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         public virtual void CloseStorage()
         {
             Open = false;
+            _entityQuery ??= new IntersectingEntityQuery(Owner);
             var entities = Owner.EntityManager.GetEntities(_entityQuery);
             var count = 0;
             foreach (var entity in entities)
@@ -264,7 +265,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         }
 
         /// <inheritdoc />
-        public override void HandleMessage(ComponentMessage message, IComponent component)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
 
