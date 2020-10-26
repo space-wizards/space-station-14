@@ -17,7 +17,7 @@ namespace Content.Shared.Physics
                 return;
             }
 
-            if (ControlledComponent.Owner.IsWeightless() ?? false)
+            if (ControlledComponent.Owner.IsWeightless())
             {
                 return;
             }
