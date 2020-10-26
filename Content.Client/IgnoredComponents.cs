@@ -182,7 +182,15 @@
             "GasCanisterPort",
             "Lung",
             "Cleanable",
-            "Brain"
+            "Brain",
+            "PlantHolder",
+            "SeedExtractor",
+            "Produce",
+            "Log",
+            "Hoe",
+            "Seed",
+            "BotanySharp",
+            "PlantSampleTaker"
         };
     }
 }
