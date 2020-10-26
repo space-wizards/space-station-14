@@ -2,6 +2,7 @@
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Client.GameObjects.Components.PDA
 {
@@ -17,6 +18,17 @@ namespace Content.Client.GameObjects.Components.PDA
             IDLight
         }
 
+        public override void InitializeEntity(IEntity entity)
+        {
+            base.InitializeEntity(entity);
+            var sprite = entity.GetComponent<ISpriteComponent>();
+
+            sprite.LayerMapSet(PDAVisualLayers.Flashlight, sprite.AddLayerState("light_overlay"));
+            sprite.LayerSetShader(PDAVisualLayers.Flashlight, "unshaded");
+            sprite.LayerMapSet(PDAVisualLayers.IDLight, sprite.AddLayerState("id_overlay"));
+            sprite.LayerSetShader(PDAVisualLayers.IDLight, "unshaded");
+        }
+
 
         public override void OnChangeData(AppearanceComponent component)
         {
@@ -29,7 +41,6 @@ namespace Content.Client.GameObjects.Components.PDA
             sprite.LayerSetVisible(PDAVisualLayers.Flashlight, false);
             if (component.TryGetData(PDAVisuals.FlashlightLit, out bool isScreenLit))
             {
-                sprite.LayerSetState(PDAVisualLayers.Flashlight, "light_overlay");
                 sprite.LayerSetVisible(PDAVisualLayers.Flashlight, isScreenLit);
             }
 

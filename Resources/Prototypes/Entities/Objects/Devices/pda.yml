@@ -26,12 +26,6 @@
     layers:
     - state: pda
       map: ["enum.PDAVisualLayers.Base"]
-    - state: light_overlay
-      shader: unshaded
-      map: ["enum.PDAVisualLayers.Flashlight"]
-    - state: id_overlay
-      shader: unshaded
-      map: ["enum.PDAVisualLayers.IDLight"]
 
 - type: entity
   name: Assistant PDA
@@ -71,9 +65,6 @@
     layers:
     - state: pda-clown
       map: ["enum.PDAVisualLayers.Base"]
-    - state: light_overlay
-      shader: unshaded
-      map: ["enum.PDAVisualLayers.Flashlight"]
   - type: Slippery
     paralyzeTime: 4
   - type: Physics
@@ -97,9 +88,6 @@
     layers:
     - state: pda-mime
       map: ["enum.PDAVisualLayers.Base"]
-    - state: light_overlay
-      shader: unshaded
-      map: ["enum.PDAVisualLayers.Flashlight"]
 
 - type: entity
   name: Cargo PDA
@@ -116,9 +104,6 @@
     layers:
     - state: pda-cargo
       map: ["enum.PDAVisualLayers.Base"]
-    - state: light_overlay
-      shader: unshaded
-      map: ["enum.PDAVisualLayers.Flashlight"]
 
 - type: entity
   name: Bartender PDA
@@ -135,9 +120,6 @@
     layers:
     - state: pda-bartender
       map: ["enum.PDAVisualLayers.Base"]
-    - state: light_overlay
-      shader: unshaded
-      map: ["enum.PDAVisualLayers.Flashlight"]
 
 
 - type: entity
@@ -155,9 +137,6 @@
     layers:
     - state: pda-janitor
       map: ["enum.PDAVisualLayers.Base"]
-    - state: light_overlay
-      shader: unshaded
-      map: ["enum.PDAVisualLayers.Flashlight"]
 
 - type: entity
   name: Captain PDA
@@ -174,9 +153,6 @@
     layers:
     - state: pda-captain
       map: ["enum.PDAVisualLayers.Base"]
-    - state: light_overlay
-      shader: unshaded
-      map: ["enum.PDAVisualLayers.Flashlight"]
 
 - type: entity
   name: HoP PDA
@@ -192,9 +168,6 @@
     layers:
     - state: pda-hop
       map: ["enum.PDAVisualLayers.Base"]
-    - state: light_overlay
-      shader: unshaded
-      map: ["enum.PDAVisualLayers.Flashlight"]
 
 - type: entity
   name: CE PDA
@@ -210,9 +183,6 @@
     layers:
     - state: pda-ce
       map: ["enum.PDAVisualLayers.Base"]
-    - state: light_overlay
-      shader: unshaded
-      map: ["enum.PDAVisualLayers.Flashlight"]
 
 
 - type: entity
@@ -229,9 +199,6 @@
     layers:
     - state: pda-engineer
       map: ["enum.PDAVisualLayers.Base"]
-    - state: light_overlay
-      shader: unshaded
-      map: ["enum.PDAVisualLayers.Flashlight"]
 
 - type: entity
   name: CMO PDA
@@ -247,9 +214,6 @@
     layers:
     - state: pda-cmo
       map: ["enum.PDAVisualLayers.Base"]
-    - state: light_overlay
-      shader: unshaded
-      map: ["enum.PDAVisualLayers.Flashlight"]
 
 - type: entity
   name: Medical PDA
@@ -265,9 +229,6 @@
     layers:
     - state: pda-medical
       map: ["enum.PDAVisualLayers.Base"]
-    - state: light_overlay
-      shader: unshaded
-      map: ["enum.PDAVisualLayers.Flashlight"]
 
 - type: entity
   name: RnD PDA
@@ -276,16 +237,12 @@
   components:
   - type: PDA
     idCard: RDIDCard
-
   - type: Sprite
     sprite: Objects/Devices/pda.rsi
     netsync: false
     layers:
     - state: pda-rd
       map: ["enum.PDAVisualLayers.Base"]
-    - state: light_overlay
-      shader: unshaded
-      map: ["enum.PDAVisualLayers.Flashlight"]
 
 - type: entity
   name: Science PDA
@@ -294,16 +251,12 @@
   components:
   - type: PDA
     idCard: ResearchIDCard
-
   - type: Sprite
     sprite: Objects/Devices/pda.rsi
     netsync: false
     layers:
     - state: pda-rd
       map: ["enum.PDAVisualLayers.Base"]
-    - state: light_overlay
-      shader: unshaded
-      map: ["enum.PDAVisualLayers.Flashlight"]
 
 - type: entity
   name: HoS PDA
@@ -312,16 +265,12 @@
   components:
   - type: PDA
     idCard: HoSIDCard
-
   - type: Sprite
     sprite: Objects/Devices/pda.rsi
     netsync: false
     layers:
     - state: pda-hos
       map: ["enum.PDAVisualLayers.Base"]
-    - state: light_overlay
-      shader: unshaded
-      map: ["enum.PDAVisualLayers.Flashlight"]
 
 - type: entity
   name: Security PDA
@@ -330,13 +279,9 @@
   components:
   - type: PDA
     idCard: SecurityIDCard
-
   - type: Sprite
     sprite: Objects/Devices/pda.rsi
     netsync: false
     layers:
     - state: pda-security
       map: ["enum.PDAVisualLayers.Base"]
-    - state: light_overlay
-      shader: unshaded
-      map: ["enum.PDAVisualLayers.Flashlight"]
