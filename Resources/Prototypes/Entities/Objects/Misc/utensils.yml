@@ -6,9 +6,6 @@
   - type: Sprite
     sprite: Objects/Misc/utensils.rsi
 
-
-
-
 - type: entity
   parent: UtensilBase
   id: Fork
@@ -17,7 +14,7 @@
   components:
   - type: Sprite
     state: fork
-
+  - type: Hoe
   - type: Utensil
     types:
     - Fork

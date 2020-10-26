@@ -22,6 +22,8 @@ namespace Content.Server.Atmos
     {
         private readonly AtmosphereSystem _atmosphereSystem;
 
+        public static GasMixture SpaceGas => new GasMixture() {Volume = 2500f, Immutable = true, Temperature = Atmospherics.TCMB};
+
         [ViewVariables]
         private float[] _moles = new float[Atmospherics.TotalNumberOfGases];
 

@@ -931,7 +931,8 @@
         Quantity: 2
   - type: Sprite
     sprite: Objects/Consumable/Food/egg.rsi
-
+  - type: Produce
+    seed: eggy
   - type: Item
     sprite: Objects/Consumable/Food/egg.rsi
 
@@ -2856,24 +2857,6 @@
         Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Food/milkape.rsi
-
-
-- type: entity
-  name: banana
-  parent: FoodBase
-  id: FoodBanana
-  description: Rich in potassium.
-  components:
-    - type: Food
-      trash: TrashBananaPeel
-    - type: SolutionContainer
-      contents:
-        reagents:
-          - ReagentId: chem.Nutriment
-            Quantity: 6
-    - type: Sprite
-      sprite: Objects/Consumable/Food/banana.rsi
-
 
 - type: entity
   name: memory leek
