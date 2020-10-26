@@ -41,6 +41,12 @@ namespace Content.Shared.GameObjects.EntitySystems
 
         private void OnPullStarted(PullStartedMessage message)
         {
+            if (_pullers.TryGetValue(message.Puller.Owner, out var pulled) &&
+                pulled.TryGetComponent(out SharedPullableComponent? pulledComponent))
+            {
+                pulledComponent.TryStopPull();
+            }
+
             SetPuller(message.Puller.Owner, message.Pulled.Owner);
         }
 
