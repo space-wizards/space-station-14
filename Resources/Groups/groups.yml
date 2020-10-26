@@ -109,6 +109,10 @@
   - deleteewi
   - hurt
   - toggledisallowlatejoin
+  - showcontainedcontext
+  - hidecontainedcontext
+  - showmechanisms
+  - hidemechanisms
   - attachbodypart
   - attachtoself
   - attachtogrid
@@ -215,6 +219,10 @@
   - deleteewi
   - hurt
   - toggledisallowlatejoin
+  - showcontainedcontext
+  - hidecontainedcontext
+  - showmechanisms
+  - hidemechanisms
   - attachbodypart
   - attachtoself
   - attachtogrid
