@@ -1,0 +1,23 @@
+- type: entity
+  id: CrateFunPlushie
+  name: plushie crate
+  parent: CrateGenericonimo
+  components:
+  - type: StorageFill
+    contents:
+      - name: PlushieBee
+        amount: 1
+      - name: PlushieNar
+        amount: 1
+      - name: PlushieCarp
+        amount: 1
+      - name: PlushieNuke
+        amount: 1
+      - name: PlushieSmug
+        amount: 1
+      - name: PlushieSlime
+        amount: 1
+      - name: PlushieSnake
+        amount: 1
+      - name: PlushieLizard
+        amount: 1

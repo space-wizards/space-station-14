@@ -1,1 +1,45 @@
-# Bro what do I PUT here
+- type: entity
+  id: CrateMiscInstruments
+  name: big band instrument collection
+  parent: CrateGenericonimo
+  components:
+  - type: StorageFill
+    contents:
+      - name: SynthesizerInstrument
+        amount: 1
+      - name: AcousticGuitarInstrument
+        amount: 1
+      - name: ViolinInstrument
+        amount: 1
+      - name: TrumpetInstrument
+        amount: 1
+      - name: ElectricGuitarInstrument
+        amount: 1
+      - name: AccordionInstrument
+        amount: 1
+      - name: HarmonicaInstrument
+        amount: 1
+      - name: RecorderInstrument
+        amount: 1
+      - name: TromboneInstrument
+        amount: 1
+      - name: SaxophoneInstrument
+        amount: 1
+      - name: GlockenspielInstrument
+        amount: 1
+      - name: BanjoInstrument
+        amount: 1
+      - name: BikeHornInstrument
+        amount: 1
+
+- type: entity
+  id: CrateMiscArtSupplies
+  name: art supplies
+  parent: CrateGenericonimo
+  components:
+  - type: StorageFill
+    contents:
+      - name: CrayonBoxFilled
+        amount: 1
+      - name: CrayonWhite
+        amount: 1
