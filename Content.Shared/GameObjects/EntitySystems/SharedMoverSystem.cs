@@ -54,7 +54,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
         protected void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, IPhysicsComponent physics, float frameTime)
         {
-            physics.EnsureController<MoverController>();
+            var moverController = physics.EnsureController<MoverController>();
 
             var weightless = transform.Owner.IsWeightless();
 
@@ -75,32 +75,21 @@ namespace Content.Shared.GameObjects.EntitySystems
             var combined = walkDir + sprintDir;
             if (combined.LengthSquared < 0.001 || !ActionBlockerSystem.CanMove(mover.Owner) && !weightless)
             {
-                if (physics.TryGetController(out MoverController controller))
-                {
-                    controller.StopMoving();
-                }
+                moverController.StopMoving();
             }
             else
             {
                 if (weightless)
                 {
-                    if (physics.TryGetController(out MoverController controller))
-                    {
-                        controller.Push(combined, mover.CurrentPushSpeed);
-                    }
-
+                    moverController.Move(combined, mover.CurrentPushSpeed);
                     transform.LocalRotation = physics.LinearVelocity.GetDir().ToAngle();
+
                     return;
                 }
 
                 var total = (walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed) * 1/frameTime;
 
-                {
-                    if (physics.TryGetController(out MoverController controller))
-                    {
-                        controller.Move(total, 1f);
-                    }
-                }
+                moverController.Move(total, 1f);
 
                 transform.LocalRotation = total.GetDir().ToAngle();
 
