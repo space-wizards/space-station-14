@@ -110,6 +110,9 @@
   - hurt
   - toggledisallowlatejoin
   - attachbodypart
+  - attachtoself
+  - attachtogrid
+  - attachtograndparent
   CanViewVar: true
   CanAdminPlace: true
   CanAdminMenu: true
@@ -213,6 +216,9 @@
   - hurt
   - toggledisallowlatejoin
   - attachbodypart
+  - attachtoself
+  - attachtogrid
+  - attachtograndparent
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true
