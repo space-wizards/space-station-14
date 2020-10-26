@@ -4,7 +4,7 @@
   save: false
   name: Urist McHands
   id: BaseHumanMob_Content
-  description: A miserable pile of secrets
+  description: A miserable pile of secrets.
   drawdepth: Mobs
   abstract: true
   components:
@@ -202,7 +202,7 @@
   name: Urist McHands
   id: HumanMob_Dummy
   abstract: true
-  description: A dummy human meant to be used in character setup
+  description: A dummy human meant to be used in character setup.
   components:
     - type: Hands
     - type: Inventory

@@ -113,6 +113,10 @@
   - hidecontainedcontext
   - showmechanisms
   - hidemechanisms
+  - attachbodypart
+  - attachtoself
+  - attachtogrid
+  - attachtograndparent
   CanViewVar: true
   CanAdminPlace: true
   CanAdminMenu: true
@@ -219,6 +223,10 @@
   - hidecontainedcontext
   - showmechanisms
   - hidemechanisms
+  - attachbodypart
+  - attachtoself
+  - attachtogrid
+  - attachtograndparent
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true

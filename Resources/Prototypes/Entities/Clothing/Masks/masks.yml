@@ -23,7 +23,7 @@
   parent: MasksBase
   id: GasMaskClothing
   name: gas mask
-  description: Regulations require these to be stocked after the fourth coolant leak
+  description: Regulations require these to be stocked after the fourth coolant leak.
   components:
   - type: Sprite
     sprite: Clothing/Masks/mask_gas.rsi
@@ -36,7 +36,7 @@
   parent: MasksBase
   id: BreathMaskClothing
   name: breath mask
-  description: Might as well keep this on 24/7
+  description: Might as well keep this on 24/7.
   components:
   - type: Sprite
     sprite: Clothing/Masks/mask_breath.rsi

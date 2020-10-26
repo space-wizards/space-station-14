@@ -1,13 +1,16 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.Commands;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Body.Surgery;
+using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.Components.UserInterface;
@@ -15,6 +18,7 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.ViewVariables;
@@ -216,6 +220,55 @@ namespace Content.Server.GameObjects.Components.Body.Part
                 case ReceiveBodyPartSlotSurgeryUIMessage msg:
                     ReceiveBodyPartSlot(msg.SelectedOptionId);
                     break;
+            }
+        }
+
+        [Verb]
+        public class AttachBodyPartVerb : Verb<BodyPartComponent>
+        {
+            protected override void GetData(IEntity user, BodyPartComponent component, VerbData data)
+            {
+                data.Visibility = VerbVisibility.Invisible;
+
+                if (user == component.Owner)
+                {
+                    return;
+                }
+
+                if (!user.TryGetComponent(out IActorComponent? actor))
+                {
+                    return;
+                }
+
+                var groupController = IoCManager.Resolve<IConGroupController>();
+
+                if (!groupController.CanCommand(actor.playerSession, "attachbodypart"))
+                {
+                    return;
+                }
+
+                if (!user.TryGetComponent(out IBody? body))
+                {
+                    return;
+                }
+
+                if (body.HasPart(component))
+                {
+                    return;
+                }
+
+                data.Visibility = VerbVisibility.Visible;
+                data.Text = Loc.GetString("Attach Body Part");
+            }
+
+            protected override void Activate(IEntity user, BodyPartComponent component)
+            {
+                if (!user.TryGetComponent(out IBody? body))
+                {
+                    return;
+                }
+
+                body.TryAddPart($"{nameof(AttachBodyPartVerb)}-{component.Owner.Uid}", component, true);
             }
         }
     }

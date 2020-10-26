@@ -90,17 +90,20 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             {
                 if (!apc.MainBreakerEnabled)
                     continue;
-                
+
                 totalCharge += battery.CurrentCharge;
                 totalMaxCharge += battery.MaxCharge;
             }
-            var availablePowerFraction = totalCharge / totalMaxCharge;
-            foreach (var receiver in _providerReceivers.SelectMany(kvp => kvp.Value))
-            {
-                if (!receiver.NeedsPower || receiver.PowerDisabled)
-                    continue;
 
-                receiver.HasApcPower = TryUsePower(receiver.Load * frameTime);
+            foreach (var (_, receivers) in _providerReceivers)
+            {
+                foreach (var receiver in receivers)
+                {
+                    if (!receiver.NeedsPower || receiver.PowerDisabled)
+                        continue;
+
+                    receiver.HasApcPower = TryUsePower(receiver.Load * frameTime);
+                }
             }
         }
 
@@ -110,7 +113,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             {
                 if (!apc.MainBreakerEnabled)
                     continue;
-                
+
                 if (battery.TryUseCharge(neededCharge)) //simplification - all power needed must come from one battery
                 {
                     return true;

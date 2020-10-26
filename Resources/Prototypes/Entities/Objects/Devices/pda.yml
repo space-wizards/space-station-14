@@ -3,7 +3,7 @@
   parent: BaseItem
   id: BasePDA
   abstract: true
-  description: Personal Data Assistant
+  description: Personal Data Assistant.
   components:
   - type: Appearance
     visuals:
@@ -61,7 +61,7 @@
   name: Clown PDA
   parent: BasePDA
   id: ClownPDA
-  description: Looks can be deceiving.
+  description: "Looks can be deceiving. Warning: extra slippery"
   components:
   - type: PDA
     idCard: ClownIDCard

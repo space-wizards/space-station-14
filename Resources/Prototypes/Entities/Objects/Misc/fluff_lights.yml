@@ -16,7 +16,7 @@
   name: lamp
   id: Lamp
   parent: BaseLamp
-  description:
+  description: A light emitting device.
   components:
     - type: Sprite
       layers:
@@ -36,7 +36,7 @@
   name: banana lamp
   id: LampBanana
   parent: BaseLamp
-  description:
+  description: A light emitting device, shaped like bannana.
   components:
     - type: Sprite
       layers:
@@ -56,7 +56,7 @@
   name: desk lamp
   id: LampGold
   parent: BaseLamp
-  description:
+  description: A light emitting device, that would look great on a desk.
   components:
     - type: Sprite
       layers:

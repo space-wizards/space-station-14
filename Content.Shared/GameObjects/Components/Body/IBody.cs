@@ -56,6 +56,8 @@ namespace Content.Shared.GameObjects.Components.Body
 
         bool HasPart(string slot);
 
+        bool HasPart(IBodyPart part);
+
         /// <summary>
         ///     Removes the given <see cref="IBodyPart"/> reference, potentially
         ///     dropping other <see cref="IBodyPart">BodyParts</see> if they

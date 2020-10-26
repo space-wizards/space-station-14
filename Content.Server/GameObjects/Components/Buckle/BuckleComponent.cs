@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Mobs.State;
+using Content.Server.GameObjects.Components.Pulling;
 using Content.Server.GameObjects.Components.Strap;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Buckle;
@@ -14,6 +15,7 @@ using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
+using NFluidsynth;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystemMessages;
 using Robust.Server.GameObjects.EntitySystems;
@@ -27,6 +29,7 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -285,6 +288,15 @@ namespace Content.Server.GameObjects.Components.Buckle
             SendMessage(new BuckleMessage(Owner, to));
 
             Owner.EntityManager.EventBus.SubscribeEvent<MoveEvent>(EventSource.Local, this, MoveEvent);
+
+
+            if (Owner.TryGetComponent(out PullableComponent? pullableComponent))
+            {
+                if (pullableComponent.Puller != null)
+                {
+                    pullableComponent.TryStopPull();
+                }
+            }
 
             return true;
         }
