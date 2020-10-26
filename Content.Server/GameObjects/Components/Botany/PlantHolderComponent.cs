@@ -58,10 +58,10 @@ namespace Content.Server.GameObjects.Components.Botany
         public bool DrawWarnings { get; private set; } = false;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public float WaterLevel { get; set; } = 100f;
+        public float WaterLevel { get; private set; } = 100f;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public float NutritionLevel { get; set; } = 100f;
+        public float NutritionLevel { get; private set; } = 100f;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float PestLevel { get; set; }
