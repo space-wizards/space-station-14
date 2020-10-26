@@ -110,7 +110,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             }
 
             // TODO BODY Layer color, sprite and state
-            sprite.LayerSetVisible(layer, false);
+            sprite.LayerSetVisible(layer, true);
         }
 
         public void BodyPartRemoved(BodyPartRemovedEventArgs args)
