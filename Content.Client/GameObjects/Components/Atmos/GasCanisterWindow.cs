@@ -19,10 +19,14 @@ namespace Content.Client.GameObjects.Components.Atmos
     public class GasCanisterWindow : SS14Window
     {
         private readonly Label _pressure;
-        private readonly Label _label;
         private readonly Label _releasePressure;
 
-        public readonly Button Test;
+        public readonly LineEdit LabelInput;
+        public readonly Button EditLabelBtn;
+        public string OldLabel = "";
+
+        public readonly string EditLabelBtnStateEdit = Loc.GetString("Edit");
+        public readonly string EditLabelBtnStateSubmit = Loc.GetString("OK");
 
         public List<ReleasePressureButton> ReleasePressureButtons { get; private set; }
 
@@ -40,7 +44,16 @@ namespace Content.Client.GameObjects.Components.Atmos
                         {
                             Children =
                             {
-                                (Test = new Button {Text = "Set pressure"}),
+                                new HBoxContainer()
+                                    {
+                                        Children =
+                                        {
+                                            new Label(){ Text = "Label" },
+                                            (LabelInput = new LineEdit() { Text = Name, Editable = false,
+                                                CustomMinimumSize = new Vector2(200, 30)}),
+                                            (EditLabelBtn = new Button() { Text = "" }),
+                                        }
+                                    },
                                 new HBoxContainer
                                     {
                                         Children =
@@ -49,14 +62,6 @@ namespace Content.Client.GameObjects.Components.Atmos
                                             (_pressure = new Label())
                                         }
                                     },
-                                new HBoxContainer()
-                                {
-                                    Children =
-                                    {
-                                        new Label {Text = Loc.GetString("Label:")},
-                                        (_label = new Label())
-                                    }
-                                },
                                 new VBoxContainer()
                                 {
                                     Children =
@@ -104,6 +109,8 @@ namespace Content.Client.GameObjects.Components.Atmos
                 var btn = (ReleasePressureButton) control;
                 ReleasePressureButtons.Add(btn);
             }
+
+
         }
 
         /// <summary>
@@ -114,6 +121,16 @@ namespace Content.Client.GameObjects.Components.Atmos
         {
             _pressure.Text = state.Volume + "kPa";
             _releasePressure.Text = state.ReleasePressure + "kPa";
+
+            // Update the canister label
+            OldLabel = LabelInput.Text;
+            LabelInput.Text = state.Label;
+            Title = state.Label;
+
+            // Reset the editable label
+            LabelInput.Editable = false;
+            EditLabelBtn.Text = EditLabelBtnStateEdit;
+
         }
     }
 

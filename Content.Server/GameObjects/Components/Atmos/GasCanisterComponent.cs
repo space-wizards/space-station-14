@@ -32,6 +32,7 @@ namespace Content.Server.GameObjects.Components.Atmos
     public class GasCanisterComponent : Component, IGasMixtureHolder, IInteractHand
     {
         public override string Name => "GasCanister";
+        public string Label = "Gas Canister";
 
         /// <summary>
         /// What <see cref="GasMixture"/> the canister contains.
@@ -162,22 +163,32 @@ namespace Content.Server.GameObjects.Components.Atmos
                 return;
             }
 
-            // If the release pressure has been adjusted by the client on the gas canister
-            if (obj.Message is ReleasePressureButtonPressedMessage cast)
+            // If the label has been changed by a client
+            if (obj.Message is CanisterLabelChangedMessage canLabelMessage)
             {
-                ReleasePressure += cast.ReleasePressure;
-                ReleasePressure = Math.Clamp(ReleasePressure, 0, 10000);
+                Label = canLabelMessage.NewLabel;
                 UpdateUserInterface();
-            }
-
-            if (!(obj.Message is UiButtonPressedMessage message))
-            {
                 return;
             }
 
-            switch (message.Button)
+            // If the release pressure has been adjusted by the client on the gas canister
+            if (obj.Message is ReleasePressureButtonPressedMessage rPMessage)
             {
+                ReleasePressure += rPMessage.ReleasePressure;
+                ReleasePressure = Math.Clamp(ReleasePressure, 0, 10000);
+                UpdateUserInterface();
+                return;
             }
+
+
+            if (obj.Message is UiButtonPressedMessage btnPressedMessage)
+            {
+                switch (btnPressedMessage.Button)
+                {
+                }
+            }
+
+
         }
 
         /// <summary>
@@ -202,7 +213,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// <returns>The state</returns>
         private GasCanisterBoundUserInterfaceState GetUserInterfaceState()
         {
-            return new GasCanisterBoundUserInterfaceState(Name, Air.Pressure, ReleasePressure);
+            return new GasCanisterBoundUserInterfaceState(Label, Air.Pressure, ReleasePressure);
         }
 
 

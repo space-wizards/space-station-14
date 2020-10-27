@@ -52,12 +52,37 @@ namespace Content.Client.GameObjects.Components.Atmos
             _window.OnClose += Close;
 
             // Bind buttons OnPressed event
-            _window.Test.OnPressed += _ => ButtonPressed(UiButton.Test);
             foreach (ReleasePressureButton btn in _window.ReleasePressureButtons)
             {
                 btn.OnPressed += _ => ReleasePressureButtonPressed(btn.PressureChange);
             }
+
+            // Bind internal events
+            _window.EditLabelBtn.OnPressed += _ => EditLabel();
         }
+
+
+        private void EditLabel()
+        {
+            // Obligatory check because bool isn't nullable
+            if (_window == null) return;
+
+            if (_window.LabelInput.Editable)
+            {
+                if (_window.LabelInput.Text != _window.OldLabel)
+                    SendMessage(new CanisterLabelChangedMessage(_window.LabelInput.Text));
+
+                _window.LabelInput.Editable = false;
+                _window.EditLabelBtn.Text = _window.EditLabelBtnStateEdit;
+            }
+            else
+            {
+                _window.LabelInput.Editable = true;
+                _window.LabelInput.HasKeyboardFocus();
+                _window.EditLabelBtn.Text = _window.EditLabelBtnStateSubmit;
+            }
+        }
+
 
         protected override void UpdateState(BoundUserInterfaceState state)
         {

@@ -23,7 +23,7 @@ namespace Content.Shared.GameObjects.Components.Atmos
     [Serializable, NetSerializable]
     public enum UiButton
     {
-        Test
+
     }
 
     /// <summary>
@@ -32,13 +32,13 @@ namespace Content.Shared.GameObjects.Components.Atmos
     [Serializable, NetSerializable]
     public class GasCanisterBoundUserInterfaceState : BoundUserInterfaceState
     {
-        public readonly string CanisterName;
+        public readonly string Label;
         public readonly float Volume;
         public readonly float ReleasePressure;
 
-        public GasCanisterBoundUserInterfaceState(string canName, float volume, float releasePressure)
+        public GasCanisterBoundUserInterfaceState(string newLabel, float volume, float releasePressure)
         {
-            CanisterName = canName;
+            Label = newLabel;
             Volume = volume;
             ReleasePressure = releasePressure;
         }
@@ -47,7 +47,7 @@ namespace Content.Shared.GameObjects.Components.Atmos
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return CanisterName == other.CanisterName &&
+            return Label == other.Label &&
                    Volume.Equals(other.Volume) &&
                    ReleasePressure.Equals(other.ReleasePressure);
         }
@@ -81,5 +81,17 @@ namespace Content.Shared.GameObjects.Components.Atmos
         }
     }
 
+    /// <summary>
+    /// Message sent when the canister label has been changed
+    /// </summary>
+    [Serializable, NetSerializable]
+    public class CanisterLabelChangedMessage : BoundUserInterfaceMessage
+    {
+        public readonly string NewLabel;
 
+        public CanisterLabelChangedMessage(string newLabel) : base()
+        {
+            NewLabel = newLabel;
+        }
+    }
 }
