@@ -374,7 +374,7 @@
 - type: entity
   parent: UniformBase
   id: UniformQM
-  name: qm jumpsuit
+  name: quartermaster's jumpsuit
   description: 'What can brown do for you?'
   components:
   - type: Sprite
@@ -387,7 +387,7 @@
 - type: entity
   parent: UniformQM
   id: UniformQMSkirt
-  name: qm jumpskirt
+  name: quartermaster's jumpskirt
   desciption: 'What can brown do for you?'
   components:
   - type: Sprite
@@ -713,7 +713,7 @@
 - type: entity
   parent: UniformBase
   id: UniformWarden
-  name: security suit
+  name: warden's uniform
   description: A formal security suit for officers complete with Nanotrasen belt buckle.
   components:
   - type: Sprite
