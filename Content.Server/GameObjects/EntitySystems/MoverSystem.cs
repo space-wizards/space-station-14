@@ -60,7 +60,7 @@ namespace Content.Server.GameObjects.EntitySystems
             foreach (var (moverComponent, collidableComponent) in EntityManager.ComponentManager.EntityQuery<IMoverComponent, IPhysicsComponent>(false))
             {
                 var entity = moverComponent.Owner;
-                UpdateKinematics(entity.Transform, moverComponent, collidableComponent);
+                UpdateKinematics(entity.Transform, moverComponent, collidableComponent, frameTime);
             }
         }
 
@@ -83,7 +83,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 physics.TryGetController(out MoverController controller) &&
                 !ev.Entity.IsWeightless())
             {
-                controller.StopMoving();
+                //controller.StopMoving();
             }
         }
 
