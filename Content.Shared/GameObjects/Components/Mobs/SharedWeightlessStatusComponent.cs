@@ -10,7 +10,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
 
 
 
-        protected void UpdateStatus(bool isWeightless)
+        public void UpdateStatus(bool isWeightless)
         {
 
             if (!Owner.TryGetComponent(out SharedStatusEffectsComponent status))
