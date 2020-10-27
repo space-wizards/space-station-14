@@ -245,7 +245,7 @@ namespace Content.Server.GameObjects.Components.GUI
             return false;
         }
 
-        public bool Drop(string slot, EntityCoordinates coords, bool doMobChecks = true)
+        public bool Drop(string slot, EntityCoordinates coords, bool doMobChecks = true, bool doDropInteraction = true)
         {
             var hand = GetHand(slot);
             if (!CanDrop(slot, doMobChecks) || hand?.Entity == null)
@@ -260,7 +260,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 return false;
             }
 
-            if (!DroppedInteraction(item, false))
+            if (doDropInteraction && !DroppedInteraction(item, false))
                 return false;
 
             item.RemovedFromSlot();
@@ -282,7 +282,7 @@ namespace Content.Server.GameObjects.Components.GUI
             return true;
         }
 
-        public bool Drop(IEntity entity, EntityCoordinates coords, bool doMobChecks = true)
+        public bool Drop(IEntity entity, EntityCoordinates coords, bool doMobChecks = true, bool doDropInteraction = true)
         {
             if (entity == null)
             {
@@ -294,15 +294,15 @@ namespace Content.Server.GameObjects.Components.GUI
                 throw new ArgumentException("Entity must be held in one of our hands.", nameof(entity));
             }
 
-            return Drop(slot, coords, doMobChecks);
+            return Drop(slot, coords, doMobChecks, doDropInteraction);
         }
 
-        public bool Drop(string slot, bool mobChecks = true)
+        public bool Drop(string slot, bool mobChecks = true, bool doDropInteraction = true)
         {
-            return Drop(slot, Owner.Transform.Coordinates, mobChecks);
+            return Drop(slot, Owner.Transform.Coordinates, mobChecks, doDropInteraction);
         }
 
-        public bool Drop(IEntity entity, bool mobChecks = true)
+        public bool Drop(IEntity entity, bool mobChecks = true, bool doDropInteraction = true)
         {
             if (entity == null)
             {
@@ -314,10 +314,10 @@ namespace Content.Server.GameObjects.Components.GUI
                 throw new ArgumentException("Entity must be held in one of our hands.", nameof(entity));
             }
 
-            return Drop(slot, Owner.Transform.Coordinates, mobChecks);
+            return Drop(slot, Owner.Transform.Coordinates, mobChecks, doDropInteraction);
         }
 
-        public bool Drop(string slot, BaseContainer targetContainer, bool doMobChecks = true)
+        public bool Drop(string slot, BaseContainer targetContainer, bool doMobChecks = true, bool doDropInteraction = true)
         {
             if (slot == null)
             {
@@ -352,7 +352,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 throw new InvalidOperationException();
             }
 
-            if (!DroppedInteraction(item, doMobChecks))
+            if (doDropInteraction && !DroppedInteraction(item, doMobChecks))
                 return false;
 
             item.RemovedFromSlot();
@@ -368,7 +368,7 @@ namespace Content.Server.GameObjects.Components.GUI
             return true;
         }
 
-        public bool Drop(IEntity entity, BaseContainer targetContainer, bool doMobChecks = true)
+        public bool Drop(IEntity entity, BaseContainer targetContainer, bool doMobChecks = true, bool doDropInteraction = true)
         {
             if (entity == null)
             {
@@ -380,7 +380,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 throw new ArgumentException("Entity must be held in one of our hands.", nameof(entity));
             }
 
-            return Drop(slot, targetContainer, doMobChecks);
+            return Drop(slot, targetContainer, doMobChecks, doDropInteraction);
         }
 
         /// <summary>

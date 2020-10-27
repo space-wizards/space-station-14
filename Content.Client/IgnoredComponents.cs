@@ -190,7 +190,10 @@
             "Hoe",
             "Seed",
             "BotanySharp",
-            "PlantSampleTaker"
+            "PlantSampleTaker",
+            "Internals",
+            "GasTank",
+            "BreathMask",
         };
     }
 }

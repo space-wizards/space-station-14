@@ -160,6 +160,7 @@
     producesGases:
       Oxygen: 0.00045572916
       CarbonDioxide: 0.00015190972
+  - type: Internals
   - type: MobStateManager
   - type: HeatResistance
   - type: Appearance
