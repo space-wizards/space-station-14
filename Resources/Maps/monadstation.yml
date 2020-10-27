@@ -81,7 +81,7 @@ grids:
   - ind: "-2,-3"
     tiles: GQAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAZAAAAFgAAABYAAAAZAAAACQAAAAkAAAAZAAAAGAAAABkAAAAYAAAAGQAAABkAAAAZAAAAGQAAABkAAAAYAAAAGQAAABkAAAAAAAAAGQAAABkAAAAZAAAAGQAAABgAAAAZAAAAGAAAABkAAAAHAAAABwAAAAcAAAAZAAAAGAAAABgAAAAZAAAAFgAAABYAAAAYAAAAGAAAABkAAAAZAAAAGAAAABgAAAAZAAAABwAAAAcAAAAHAAAAGAAAABgAAAAYAAAAGAAAABYAAAAWAAAAGQAAABgAAAAYAAAAGAAAABkAAAAZAAAAGQAAAAcAAAAHAAAABwAAABkAAAAYAAAAGAAAABkAAAAZAAAAFgAAABkAAAAYAAAAGAAAABgAAAAWAAAAFgAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAFgAAABYAAAAZAAAAGQAAABkAAAAZAAAAFgAAABYAAAAZAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAGQAAABYAAAAWAAAAGQAAABYAAAAWAAAAFgAAABYAAAAWAAAAGQAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABkAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABkAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAZAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAZAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAGQAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABkAAAAZAAAAGQAAABkAAAAYAAAAGAAAABgAAAAZAAAAFgAAABkAAAAWAAAAFgAAABkAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAGQAAABgAAAAZAAAAFgAAABYAAAAZAAAAGQAAABkAAAAZAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAGQAAAAcAAAAHAAAABwAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABkAAAAHAAAABwAAAAcAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAZAAAABwAAAAcAAAAHAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAWAAAAFgAAABYAAAAWAAAABwAAAAcAAAAHAAAABwAAAA==
   - ind: "-3,-3"
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAABgAAAAYAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAYAAAAGAAAABkAAAAWAAAAFgAAABYAAAAZAAAAFgAAABYAAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAABkAAAAZAAAAGQAAABkAAAAWAAAAFgAAABkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABkAAAAWAAAAFgAAABYAAAAZAAAAFgAAABYAAAAZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAABkAAAAZAAAAGQAAABkAAAAWAAAAFgAAABkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABkAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABkAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAZAAAAFgAAABYAAAAWAAAAGQAAABkAAAAZAAAAGQAAAA==
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAGAAAABgAAAAYAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAABgAAAAYAAAAAAAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAABgAAAAYAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAYAAAAGAAAABkAAAAWAAAAFgAAABYAAAAZAAAAFgAAABYAAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAABkAAAAZAAAAGQAAABkAAAAWAAAAFgAAABkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABkAAAAWAAAAFgAAABYAAAAZAAAAFgAAABYAAAAZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAABkAAAAZAAAAGQAAABkAAAAWAAAAFgAAABkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABkAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABkAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAZAAAAFgAAABYAAAAWAAAAGQAAABkAAAAZAAAAGQAAAA==
   - ind: "-1,-3"
     tiles: GAAAABgAAAAYAAAAGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAYAAAAGAAAABkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZAAAAGAAAABkAAAAZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAABgAAAAYAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAYAAAAGAAAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZAAAAGQAAABkAAAAZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABYAAAAWAAAAGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAAWAAAAFgAAABkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAAAFgAAABYAAAAZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABYAAAAWAAAAGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAAWAAAAFgAAABkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZAAAAGQAAABkAAAAZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwAAAAcAAAAHAAAAGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcAAAAHAAAABwAAABkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHAAAABwAAAAcAAAAZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwAAAAcAAAAHAAAAGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: "1,0"
@@ -91,9 +91,11 @@ grids:
   - ind: "-4,-2"
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: "-2,-4"
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABkAAAAZAAAAGQAAABkAAAAZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZAAAACQAAAAkAAAAJAAAACQAAAAAAAAAAAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAGQAAAAkAAAAJAAAACQAAAAkAAAAAAAAAAAAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABkAAAAJAAAACQAAAAkAAAAJAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAFgAAABYAAAAJAAAACQAAAAkAAAAZAAAAGQAAAA==
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAACQAAAAkAAAAJAAAACQAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAGQAAAAkAAAAJAAAACQAAAAkAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABkAAAAJAAAACQAAAAkAAAAJAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAFgAAABYAAAAJAAAACQAAAAkAAAAZAAAAGQAAAA==
   - ind: "-1,-4"
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZAAAAGQAAABkAAAAZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACQAAAAkAAAAJAAAAGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkAAAAJAAAACQAAABkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJAAAACQAAAAkAAAAZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAABkAAAAZAAAAGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+  - ind: "-3,-4"
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABkAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABkAAAAZAAAAGQAAAAAAAAAAAAAAAAAAAAAAAAAZAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAZAAAAFgAAABYAAAAAAAAAAAAAAAAAAAAAAAAAGQAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAAAAAAAAAAAAAAAAAAAAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAFgAAABYAAAAWAAAAFgAAAA==
 entities:
 - uid: 0
   components:
@@ -5034,7 +5036,7 @@ entities:
   type: WaterTankFull
   components:
   - parent: 0
-    pos: -35.503014,1.5430462
+    pos: -35.503014,1.5326874
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 662
@@ -23180,17 +23182,17 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2843
-  type: solid_wall
+  type: AirlockMaintMedLocked
   components:
   - parent: 0
-    pos: -34.5,-43.5
+    pos: -35.5,-44.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2844
-  type: solid_wall
+  type: AirlockMaintMedLocked
   components:
   - parent: 0
-    pos: -33.5,-43.5
+    pos: -32.5,-44.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2845
@@ -25297,19 +25299,31 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 3118
-  type: solid_wall
+  type: LockerFireFilled
   components:
   - parent: 0
-    pos: -33.5,-45.5
+    pos: -42.5,13.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - IsPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent:
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
 - uid: 3119
-  type: solid_wall
+  type: LockerFireFilled
   components:
   - parent: 0
-    pos: -34.5,-45.5
+    pos: -35.5,2.5172644
     rot: -1.5707963267948966 rad
     type: Transform
+  - IsPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent:
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
 - uid: 3120
   type: solid_wall
   components:
@@ -27079,10 +27093,10 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 3324
-  type: hydroponicsSoil
+  type: Scythe
   components:
   - parent: 0
-    pos: -2.5,-5.5
+    pos: -2.8629565,-10.4055
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 3325
@@ -27121,17 +27135,17 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 3330
-  type: hydroponicsSoil
+  type: WallLight
   components:
   - parent: 0
-    pos: 3.5,-5.5
+    pos: 4.5,-12
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 3331
-  type: hydroponicsSoil
+  type: WallLight
   components:
   - parent: 0
-    pos: 4.5,-5.5
+    pos: -1.5,-12
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 3332
@@ -27226,10 +27240,10 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 3345
-  type: hydroponicsTray
+  type: solid_wall
   components:
   - parent: 0
-    pos: -41.5,-2.5
+    pos: -21.5,-51.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 3346
@@ -27708,4 +27722,830 @@ entities:
     pos: 19.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
+- uid: 3414
+  type: Scythe
+  components:
+  - parent: 0
+    pos: -47.450665,-4.4442716
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3415
+  type: Hatchet
+  components:
+  - parent: 0
+    pos: -47.544415,-4.3192716
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3416
+  type: Hatchet
+  components:
+  - parent: 0
+    pos: -2.8629565,-10.233625
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3417
+  type: TableMetal
+  components:
+  - parent: 0
+    pos: -1.5,-10.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3418
+  type: Bucket
+  components:
+  - parent: 0
+    pos: -1.8896878,-10.664969
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3419
+  type: Bucket
+  components:
+  - parent: 0
+    pos: -1.4990628,-10.524344
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3420
+  type: SprayBottleWater
+  components:
+  - parent: 0
+    pos: -1.9209378,-10.258719
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3421
+  type: AirlockFreezerLocked
+  components:
+  - parent: 0
+    pos: -71.5,1.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3422
+  type: Rack
+  components:
+  - parent: 0
+    pos: -69.5,-2.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3423
+  type: LockerEmergencyFilledRandom
+  components:
+  - parent: 0
+    pos: -68.5,-2.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - IsPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent:
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
+- uid: 3424
+  type: LockerFireFilled
+  components:
+  - parent: 0
+    pos: -71.5,-2.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - IsPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent:
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
+- uid: 3425
+  type: LockerEmergencyFilledRandom
+  components:
+  - parent: 0
+    pos: -39.5,15.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - IsPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent:
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
+- uid: 3426
+  type: AirlockMedicalGlassLocked
+  components:
+  - parent: 0
+    pos: -34.5,-43.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3427
+  type: AirlockMedicalGlassLocked
+  components:
+  - parent: 0
+    pos: -33.5,-43.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3428
+  type: AirlockMedicalGlassLocked
+  components:
+  - parent: 0
+    pos: -34.5,-45.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3429
+  type: AirlockMedicalGlassLocked
+  components:
+  - parent: 0
+    pos: -33.5,-45.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3430
+  type: FirelockGlass
+  components:
+  - parent: 0
+    pos: -35.5,-48.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - on: False
+    type: Physics
+  - airBlocked: False
+    type: Airtight
+- uid: 3431
+  type: FirelockGlass
+  components:
+  - parent: 0
+    pos: -34.5,-48.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - on: False
+    type: Physics
+  - airBlocked: False
+    type: Airtight
+- uid: 3432
+  type: FirelockGlass
+  components:
+  - parent: 0
+    pos: -34.5,-49.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - on: False
+    type: Physics
+  - airBlocked: False
+    type: Airtight
+- uid: 3433
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -36.5,-48.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3434
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -37.5,-48.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3435
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -38.5,-48.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3436
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -39.5,-48.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3437
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -40.5,-48.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3438
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -41.5,-48.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3439
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -42.5,-48.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3440
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -43.5,-48.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3441
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -43.5,-49.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3442
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -43.5,-50.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3443
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -43.5,-51.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3444
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -43.5,-52.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3445
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -43.5,-53.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3446
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -43.5,-54.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3447
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -42.5,-54.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3448
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -41.5,-54.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3449
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -40.5,-54.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3450
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -39.5,-54.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3451
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -38.5,-54.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3452
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -37.5,-54.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3453
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -36.5,-54.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3454
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -35.5,-54.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3455
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -34.5,-54.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3456
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -34.5,-53.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3457
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -34.5,-52.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3458
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -34.5,-51.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3459
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -34.5,-50.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3460
+  type: WallLight
+  components:
+  - parent: 0
+    pos: -41.5,-49
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3461
+  type: WallLight
+  components:
+  - parent: 0
+    pos: -36.5,-54
+    rot: 1.5707963267948966 rad
+    type: Transform
+- uid: 3462
+  type: WallLight
+  components:
+  - parent: 0
+    pos: -29.5,-49
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3463
+  type: WallLight
+  components:
+  - parent: 0
+    pos: -25.5,-49
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3464
+  type: WallLight
+  components:
+  - parent: 0
+    pos: -37.5,-46
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3465
+  type: WallLight
+  components:
+  - parent: 0
+    pos: -41.5,-54
+    rot: 1.5707963267948966 rad
+    type: Transform
+- uid: 3466
+  type: WallLight
+  components:
+  - parent: 0
+    pos: -32,-47.5
+    rot: 3.141592653589793 rad
+    type: Transform
+- uid: 3467
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -39.5,-46.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3468
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -43.5,-45.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3469
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -43.5,-46.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3470
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -43.5,-47.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3471
+  type: AirlockMedicalGlass
+  components:
+  - name: biological waste retrieval airlock
+    type: MetaData
+  - parent: 0
+    pos: -39.5,-47.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3472
+  type: DisposalPipe
+  components:
+  - parent: 0
+    pos: -42.5,-46.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Breakable
+  - containers:
+      DisposalTransit:
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
+- uid: 3473
+  type: DisposalTrunk
+  components:
+  - parent: 0
+    pos: -42.5,-47.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Breakable
+  - containers:
+      DisposalEntry:
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
+- uid: 3474
+  type: DisposalUnit
+  components:
+  - parent: 0
+    pos: -42.5,-47.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - entryDelay: 0
+    type: DisposalUnit
+  - deadThreshold: 100
+    type: Destructible
+  - containers:
+      DisposalUnit:
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
+- uid: 3475
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -33.5,-51.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3476
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -32.5,-51.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3477
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -31.5,-51.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3478
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -30.5,-51.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3479
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -29.5,-51.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3480
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -28.5,-51.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3481
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -27.5,-51.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3482
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -26.5,-51.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3483
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -25.5,-51.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3484
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -24.5,-51.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3485
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -23.5,-51.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3486
+  type: solid_wall
+  components:
+  - parent: 0
+    pos: -22.5,-51.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3487
+  type: SalternApc
+  components:
+  - parent: 0
+    pos: -69.5,4.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - startingCharge: 11999.834
+    type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
+- uid: 3488
+  type: ApcExtensionCable
+  components:
+  - parent: 0
+    pos: -69.5,3.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3489
+  type: ApcExtensionCable
+  components:
+  - parent: 0
+    pos: -69.5,2.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3490
+  type: ApcExtensionCable
+  components:
+  - parent: 0
+    pos: -69.5,1.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3491
+  type: ApcExtensionCable
+  components:
+  - parent: 0
+    pos: -69.5,0.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3492
+  type: MVWire
+  components:
+  - parent: 0
+    pos: -68.5,8.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3493
+  type: MVWire
+  components:
+  - parent: 0
+    pos: -68.5,7.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3494
+  type: MVWire
+  components:
+  - parent: 0
+    pos: -68.5,6.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3495
+  type: MVWire
+  components:
+  - parent: 0
+    pos: -68.5,5.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3496
+  type: MVWire
+  components:
+  - parent: 0
+    pos: -69.5,5.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3497
+  type: MVWire
+  components:
+  - parent: 0
+    pos: -70.5,5.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3498
+  type: MVWire
+  components:
+  - parent: 0
+    pos: -71.5,5.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3499
+  type: MVWire
+  components:
+  - parent: 0
+    pos: -72.5,5.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3500
+  type: MVWire
+  components:
+  - parent: 0
+    pos: -72.5,4.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3501
+  type: MVWire
+  components:
+  - parent: 0
+    pos: -72.5,3.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3502
+  type: MVWire
+  components:
+  - parent: 0
+    pos: -72.5,2.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3503
+  type: MVWire
+  components:
+  - parent: 0
+    pos: -72.5,1.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3504
+  type: MVWire
+  components:
+  - parent: 0
+    pos: -72.5,0.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3505
+  type: MVWire
+  components:
+  - parent: 0
+    pos: -72.5,-0.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3506
+  type: MVWire
+  components:
+  - parent: 0
+    pos: -72.5,-1.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3507
+  type: MVWire
+  components:
+  - parent: 0
+    pos: -72.5,-2.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3508
+  type: MVWire
+  components:
+  - parent: 0
+    pos: -72.5,-3.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3509
+  type: MVWire
+  components:
+  - parent: 0
+    pos: -72.5,-4.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3510
+  type: MVWire
+  components:
+  - parent: 0
+    pos: -72.5,-5.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3511
+  type: MVWire
+  components:
+  - parent: 0
+    pos: -71.5,-5.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3512
+  type: MVWire
+  components:
+  - parent: 0
+    pos: -71.5,-6.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3513
+  type: MVWire
+  components:
+  - parent: 0
+    pos: -70.5,-6.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3514
+  type: MVWire
+  components:
+  - parent: 0
+    pos: -69.5,-6.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 3515
+  type: MVWire
+  components:
+  - parent: 0
+    pos: -69.5,-7.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
 ...
