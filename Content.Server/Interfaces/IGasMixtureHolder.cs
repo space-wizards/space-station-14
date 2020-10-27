@@ -6,17 +6,17 @@ namespace Content.Server.Interfaces
     {
         public GasMixture Air { get; set; }
 
-        void AssumeAir(GasMixture giver)
+        public void AssumeAir(GasMixture giver)
         {
             Air.Merge(giver);
         }
 
-        GasMixture RemoveAir(float amount)
+        public GasMixture RemoveAir(float amount)
         {
             return Air.Remove(amount);
         }
 
-        GasMixture RemoveAirVolume(float ratio)
+        public GasMixture RemoveAirVolume(float ratio)
         {
             return Air.RemoveRatio(ratio);
         }

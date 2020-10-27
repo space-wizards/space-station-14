@@ -36,11 +36,9 @@ namespace Content.Server.GameObjects.Components.Atmos
     public class GasTankComponent : SharedGasTankComponent, IExamine, IGasMixtureHolder, IUse, IDropped
     {
     	private const float MaxExplosionRange = 14f;
-        private const float DefaultOutputPressure = 303.3f;
-        private const float DefaultNozzleArea = 0.00039f;
+        private const float DefaultOutputPressure = Atmospherics.OneAtmosphere;
 
-		private float _pressureResistance;
-        private float _distributePressure;
+        private float _pressureResistance;
 
         private int _integrity = 3;
 
@@ -54,11 +52,6 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// by internals component it has no effect.
         /// </summary>
         [ViewVariables] public float OutputPressure { get; private set; }
-
-        /// <summary>
-        /// Cross-sectional area of nozzle
-        /// </summary>
-        [ViewVariables] public float NozzleArea { get; private set; }
 
         /// <summary>
         /// Tank is connected to external system and valve is controlled automatically
@@ -93,9 +86,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             serializer.DataReadWriteFunction("air", new GasMixture(), x => Air = x, () => Air);
             serializer.DataReadWriteFunction("outputPressure", DefaultOutputPressure, x => OutputPressure = x,
                 () => OutputPressure);
-            serializer.DataReadWriteFunction("nozzleArea", DefaultNozzleArea, x => NozzleArea = x, () => NozzleArea);
             serializer.DataField(ref _pressureResistance, "pressureResistance", Atmospherics.OneAtmosphere * 5f);
-            serializer.DataField(ref _distributePressure, "distributePressure", Atmospherics.OneAtmosphere);
         }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
@@ -119,6 +110,29 @@ namespace Content.Server.GameObjects.Components.Atmos
         	Air?.React(this);
             CheckStatus();
             UpdateUserInterface();
+        }
+
+        public GasMixture? RemoveAir(float amount)
+        {
+            var gas = Air?.Remove(amount);
+            CheckStatus();
+            return gas;
+        }
+
+        public GasMixture? RemoveAirVolume(float volume)
+        {
+            if (Air == null)
+                return null;
+
+            var tankPressure = Air.Pressure;
+            if (tankPressure < OutputPressure)
+            {
+                OutputPressure = tankPressure;
+                UpdateUserInterface();
+            }
+
+            var molesNeeded = OutputPressure * volume / (Atmospherics.R * Air.Temperature);
+            return RemoveAir(molesNeeded);
         }
 
         public bool UseEntity(UseEntityEventArgs eventArgs)
@@ -189,34 +203,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 : null;
         }
 
-        private static float CalculateMolesFlowRate(IGasMixtureHolder? tile, GasMixture air, float nozzleArea,
-            float outputPressure)
-        {
-            // no gas = no flow
-            if (air.Pressure <= 0) return 0;
-            var targetPressure = tile?.Air?.Pressure ?? 0;
-            var tankPressure = Math.Min(air.Pressure, outputPressure);
-            // actually tank nozzle should become a diffuser for the outside atmosphere in that case
-            // but to avoid madness we just do nothing
-            if (tankPressure <= targetPressure) return 0;
-            var mixtureHcr = air.HeatCapacityRatio;
-            var criticalPressureRatio = MathF.Pow(2 / (mixtureHcr + 1),
-                mixtureHcr / (mixtureHcr - 1));
-            var pressureRatio = targetPressure / tankPressure;
-            if (pressureRatio < criticalPressureRatio)
-            {
-                pressureRatio = criticalPressureRatio;
-            }
-
-            var mixtureMolarMass = air.MolarMass;
-            return nozzleArea * tankPressure *
-                   MathF.Sqrt(2 * mixtureHcr * mixtureMolarMass *
-                              (MathF.Pow(pressureRatio, 2 / mixtureHcr) - MathF.Pow(pressureRatio,
-                                  (mixtureHcr + 1) / mixtureHcr))) /
-                   mixtureMolarMass;
-        }
-
-		public void AssumeAir(GasMixture giver)
+        public void AssumeAir(GasMixture giver)
         {
             Air?.Merge(giver);
             CheckStatus();
@@ -323,7 +310,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public void Dropped(DroppedEventArgs eventArgs)
         {
-            DisconnectFromInternals();
+            DisconnectFromInternals(eventArgs.User);
         }
     }
 }

@@ -2,7 +2,9 @@
 using System;
 using System.Linq;
 using Content.Server.Atmos;
+using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.Body.Circulatory;
+using Content.Server.GameObjects.Components.Body.Respiratory;
 using Content.Server.Utility;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Body.Behavior;
@@ -147,6 +149,20 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
 
         public override void Inhale(float frameTime)
         {
+            if (Body != null && Body.Owner.TryGetComponent(out InternalsComponent? internals)
+                             && internals.BreathToolEntity != null && internals.GasTankEntity != null
+                             && internals.BreathToolEntity.TryGetComponent(out BreathToolComponent? breathTool)
+                             && breathTool.IsFunctional && internals.GasTankEntity.TryGetComponent(out GasTankComponent? gasTank)
+                             && gasTank.Air != null)
+            {
+                var air = gasTank.RemoveAirVolume(Atmospherics.BreathVolume);
+                if (air == null)
+                    return;
+
+                ToBloodstream(air);
+                return;
+            }
+
             if (!Owner.Transform.Coordinates.TryGetTileAir(out var tileAir))
             {
                 return;
