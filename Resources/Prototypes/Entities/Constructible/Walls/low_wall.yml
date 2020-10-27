@@ -9,6 +9,7 @@
   components:
   - type: Clickable
   - type: RCDDeconstructWhitelist
+  - type: CanBuildWindowOnTop
   - type: InteractionOutline
   - type: Sprite
     netsync: false
@@ -18,20 +19,25 @@
   - type: Icon
     sprite: Constructible/Structures/Walls/low_wall.rsi
     state: metal
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       layer:
       - VaultImpassable
       - SmallImpassable
-  - type: Destructible
+  - type: BreakableConstruction
+    node: start
     deadThreshold: 100
+    resistances: metallicResistances
   - type: SnapGrid
     offset: Center
   - type: Climbable
   - type: LowWall
     key: walls
     base: metal_
+  - type: Construction
+    graph: lowWall
+    node: lowWall
 
 - type: entity
   id: LowWallOverlay

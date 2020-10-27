@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Reactions;
-using Content.Server.Interfaces;
+using Content.Server.GameObjects.Components.Atmos;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects.EntitySystems.TileLookup;
 using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Map;
+using Robust.Shared.GameObjects.Components.Transform;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
@@ -24,19 +27,18 @@ namespace Content.Server.GameObjects.EntitySystems
         [Dependency] private readonly IPrototypeManager _protoMan = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPauseManager _pauseManager = default!;
-        [Dependency] private IEntityManager _entityManager = default!;
 
         private GasReactionPrototype[] _gasReactions = Array.Empty<GasReactionPrototype>();
+
+        private SpaceGridAtmosphereComponent _spaceAtmos = default!;
+        private GridTileLookupSystem? _gridTileLookup = null;
 
         /// <summary>
         ///     List of gas reactions ordered by priority.
         /// </summary>
         public IEnumerable<GasReactionPrototype> GasReactions => _gasReactions!;
 
-        /// <summary>
-        ///     EventBus reference for gas reactions.
-        /// </summary>
-        public IEventBus EventBus => _entityManager.EventBus;
+        public GridTileLookupSystem GridTileLookupSystem => _gridTileLookup ??= Get<GridTileLookupSystem>();
 
         public override void Initialize()
         {
@@ -45,17 +47,43 @@ namespace Content.Server.GameObjects.EntitySystems
             _gasReactions = _protoMan.EnumeratePrototypes<GasReactionPrototype>().ToArray();
             Array.Sort(_gasReactions, (a, b) => b.Priority.CompareTo(a.Priority));
 
+            _spaceAtmos = new SpaceGridAtmosphereComponent();
+            _spaceAtmos.Initialize();
+            IoCManager.InjectDependencies(_spaceAtmos);
+
             _mapManager.TileChanged += OnTileChanged;
+
+            // Required for airtight components.
+            EntityManager.EventBus.SubscribeEvent<RotateEvent>(EventSource.Local, this, RotateEvent);
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+
+            EntityManager.EventBus.UnsubscribeEvent<RotateEvent>(EventSource.Local, this);
+        }
+
+        private void RotateEvent(RotateEvent ev)
+        {
+            if (ev.Sender.TryGetComponent(out AirtightComponent? airtight))
+            {
+                airtight.RotateEvent(ev);
+            }
         }
 
         public IGridAtmosphereComponent? GetGridAtmosphere(GridId gridId)
         {
-            // TODO Return space grid atmosphere for invalid grids or grids with no atmos
+            if (!gridId.IsValid())
+            {
+                return _spaceAtmos;
+            }
+
             var grid = _mapManager.GetGrid(gridId);
 
-            if (!EntityManager.TryGetEntity(grid.GridEntityId, out var gridEnt)) return null;
+            if (!EntityManager.TryGetEntity(grid.GridEntityId, out var gridEnt)) return _spaceAtmos;
 
-            return gridEnt.TryGetComponent(out IGridAtmosphereComponent? atmos) ? atmos : null;
+            return gridEnt.TryGetComponent(out IGridAtmosphereComponent? atmos) ? atmos : _spaceAtmos;
         }
 
         public override void Update(float frameTime)
@@ -64,8 +92,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             foreach (var (mapGridComponent, gridAtmosphereComponent) in EntityManager.ComponentManager.EntityQuery<IMapGridComponent, IGridAtmosphereComponent>())
             {
-                if (_pauseManager.IsGridPaused(mapGridComponent.GridIndex))
-                    continue;
+                if (_pauseManager.IsGridPaused(mapGridComponent.GridIndex)) continue;
 
                 gridAtmosphereComponent.Update(frameTime);
             }

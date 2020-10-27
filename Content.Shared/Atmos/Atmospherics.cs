@@ -109,8 +109,8 @@
         /// <summary>
         ///     Minimum temperature for starting superconduction.
         /// </summary>
-        public const float MinimumTemperatureStartSuperConduction = (T20C + 200f);
-        public const float MinimumTemperatureForSuperconduction = (T20C + 10f);
+        public const float MinimumTemperatureStartSuperConduction = (T20C + 400f);
+        public const float MinimumTemperatureForSuperconduction = (T20C + 80f);
 
         /// <summary>
         ///     Minimum heat capacity.
@@ -217,12 +217,23 @@
         ///     See <see cref="AtmosDirection"/> on the server.
         /// </summary>
         public const int Directions = 4;
+
+        /// <summary>
+        ///     The normal body temperature in degrees Celsius.
+        /// </summary>
+        public const float NormalBodyTemperature = 37f;
+
+        public const float HumanNeededOxygen = MolesCellStandard * BreathPercentage * 0.16f;
+
+        public const float HumanProducedOxygen = HumanNeededOxygen * 0.75f;
+
+        public const float HumanProducedCarbonDioxide = HumanNeededOxygen * 0.25f;
     }
 
     /// <summary>
     ///     Gases to Ids. Keep these updated with the prototypes!
     /// </summary>
-    public enum Gas
+    public enum Gas : sbyte
     {
         Oxygen = 0,
         Nitrogen = 1,

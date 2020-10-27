@@ -1,26 +1,28 @@
 ﻿using System;
 using Robust.Shared.Maths;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos
 {
     /// <summary>
     ///     The reason we use this over <see cref="Direction"/> is that we are going to do some heavy bitflag usage.
     /// </summary>
-    [Flags]
-    public enum AtmosDirection : byte
+    [Flags, Serializable]
+    [FlagsFor(typeof(AtmosDirectionFlags))]
+    public enum AtmosDirection
     {
-        Invalid = 0,
-        North   = 1 << 0,
-        South   = 1 << 1,
-        East    = 1 << 2,
-        West    = 1 << 3,
+        Invalid = 0,                        // 0
+        North   = 1 << 0,                   // 1
+        South   = 1 << 1,                   // 2
+        East    = 1 << 2,                   // 4
+        West    = 1 << 3,                   // 8
 
-        NorthEast = North | East,
-        NorthWest = North | West,
-        SouthEast = South | East,
-        SouthWest = South | West,
+        NorthEast = North | East,           // 5
+        SouthEast = South | East,           // 6
+        NorthWest = North | West,           // 9
+        SouthWest = South | West,           // 10
 
-        All = North | South | East | West,
+        All = North | South | East | West,  // 15
     }
 
     public static class AtmosDirectionHelpers
@@ -75,6 +77,49 @@ namespace Content.Shared.Atmos
             };
         }
 
+        /// <summary>
+        /// Converts a direction to an angle, where angle is -PI to +PI.
+        /// </summary>
+        /// <param name="direction"></param>
+        /// <returns></returns>
+        public static Angle ToAngle(this AtmosDirection direction)
+        {
+            return direction switch
+            {
+                AtmosDirection.East => Angle.FromDegrees(0),
+                AtmosDirection.North => Angle.FromDegrees(90),
+                AtmosDirection.West => Angle.FromDegrees(180),
+                AtmosDirection.South => Angle.FromDegrees(270),
+
+                AtmosDirection.NorthEast => Angle.FromDegrees(45),
+                AtmosDirection.NorthWest => Angle.FromDegrees(135),
+                AtmosDirection.SouthWest => Angle.FromDegrees(225),
+                AtmosDirection.SouthEast => Angle.FromDegrees(315),
+
+                _ => throw new ArgumentOutOfRangeException(nameof(direction), $"It was {direction}."),
+            };
+        }
+
+        /// <summary>
+        /// Converts an angle to a cardinal AtmosDirection
+        /// </summary>
+        /// <param name="angle"></param>
+        /// <returns></returns>
+        public static AtmosDirection ToAtmosDirectionCardinal(this Angle angle)
+        {
+            return angle.GetCardinalDir().ToAtmosDirection();
+        }
+
+        /// <summary>
+        /// Converts an angle to an AtmosDirection
+        /// </summary>
+        /// <param name="angle"></param>
+        /// <returns></returns>
+        public static AtmosDirection ToAtmosDirection(this Angle angle)
+        {
+            return angle.GetDir().ToAtmosDirection();
+        }
+
         public static int ToIndex(this AtmosDirection direction)
         {
             // This will throw if you pass an invalid direction. Not this method's fault, but yours!
@@ -85,5 +130,12 @@ namespace Content.Shared.Atmos
         {
             return direction | other;
         }
+
+        public static AtmosDirection WithoutFlag(this AtmosDirection direction, AtmosDirection other)
+        {
+            return direction & ~other;
+        }
     }
+
+    public sealed class AtmosDirectionFlags { }
 }

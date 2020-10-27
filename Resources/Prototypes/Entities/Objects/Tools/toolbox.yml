@@ -15,12 +15,9 @@
   name: emergency toolbox
   parent: ToolboxBase
   id: ToolboxEmergency
-  description: A bright red toolbox, stocked with emergency tools
+  description: A bright red toolbox, stocked with emergency tools.
   components:
   - type: Sprite
-    sprite: Objects/Tools/Toolboxes/toolbox_red.rsi
-    state: icon
-  - type: Icon
     sprite: Objects/Tools/Toolboxes/toolbox_red.rsi
     state: icon
   - type: Item
@@ -32,18 +29,26 @@
   parent: ToolboxEmergency
   suffix: Filled
   components:
-  - type: ToolboxEmergencyFill
+  - type: StorageFill
+    contents:
+      - name: BreathMaskClothing
+        amount: 2
+      - name: FoodChocolateBar
+      - name: FlashlightLantern
+        amount: 2
+      - name: HarmonicaInstrument
+        prob: 0.15
+        orGroup: HarmonicaOrChocolate
+      - name: FoodChocolateBar
+        orGroup: HarmonicaOrChocolate
 
 - type: entity
   name: mechanical toolbox
   parent: ToolboxBase
   id: ToolboxMechanical
-  description: A blue box, stocked with mechanical tools
+  description: A blue box, stocked with mechanical tools.
   components:
   - type: Sprite
-    sprite: Objects/Tools/Toolboxes/toolbox_blue.rsi
-    state: icon
-  - type: Icon
     sprite: Objects/Tools/Toolboxes/toolbox_blue.rsi
     state: icon
   - type: Item
@@ -53,12 +58,9 @@
   name: electrical toolbox
   parent: ToolboxBase
   id: ToolboxElectrical
-  description: A toolbox typically stocked with electrical gear
+  description: A toolbox typically stocked with electrical gear.
   components:
   - type: Sprite
-    sprite: Objects/Tools/Toolboxes/toolbox_yellow.rsi
-    state: icon
-  - type: Icon
     sprite: Objects/Tools/Toolboxes/toolbox_yellow.rsi
     state: icon
   - type: Item
@@ -70,18 +72,26 @@
   suffix: Filled
   parent: ToolboxElectrical
   components:
-  - type: ToolboxElectricalFill
+  - type: StorageFill
+    contents:
+      - name: Screwdriver
+      - name: Crowbar
+      - name: Wirecutter
+      - name: ApcExtensionCableStack
+      - name: MVWireStack
+      - name: GlovesYellow
+        prob: 0.05
+        orGroup: GlovesOrWires
+      - name: HVWireStack
+        orGroup: GlovesOrWires
 
 - type: entity
   name: artistic toolbox
   parent: ToolboxBase
   id: ToolboxArtistic
-  description: A toolbox typically stocked with artistic supplies
+  description: A toolbox typically stocked with artistic supplies.
   components:
   - type: Sprite
-    sprite: Objects/Tools/Toolboxes/toolbox_green.rsi
-    state: icon
-  - type: Icon
     sprite: Objects/Tools/Toolboxes/toolbox_green.rsi
     state: icon
   - type: Item
@@ -96,9 +106,6 @@
   - type: Sprite
     sprite: Objects/Tools/Toolboxes/toolbox_syn.rsi
     state: icon
-  - type: Icon
-    sprite: Objects/Tools/Toolboxes/toolbox_syn.rsi
-    state: icon
   - type: Item
     sprite: Objects/Tools/Toolboxes/toolbox_syn.rsi
 
@@ -111,9 +118,6 @@
   - type: Sprite
     sprite: Objects/Tools/Toolboxes/toolbox_gold.rsi
     state: icon
-  - type: Icon
-    sprite: Objects/Tools/Toolboxes/toolbox_gold.rsi
-    state: icon
   - type: Item
     sprite: Objects/Tools/Toolboxes/toolbox_gold.rsi
 
@@ -123,4 +127,12 @@
   parent: ToolboxGolden
   suffix: Filled
   components:
-  - type: ToolboxGoldFill
+  - type: StorageFill
+    contents:
+      - name: GoldStack
+        amount: 5
+      - name: DrinkGoldenCup
+        prob: 0.05
+        orGroup: CupOrGold
+      - name: GoldStack
+        orGroup: CupOrGold

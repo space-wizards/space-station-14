@@ -11,17 +11,17 @@ using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Interactable;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using Robust.Shared.Serialization;
-using Content.Shared.GameObjects.EntitySystems;
 
 namespace Content.Server.GameObjects.Components.Interactable
 {
@@ -48,13 +48,13 @@ namespace Content.Server.GameObjects.Components.Interactable
         private bool _welderLit;
         private WelderSystem _welderSystem = default!;
         private SpriteComponent? _spriteComponent;
-        private SolutionComponent? _solutionComponent;
+        private SolutionContainerComponent? _solutionComponent;
         private PointLightComponent? _pointLightComponent;
 
         public string? WeldSoundCollection { get; set; }
 
         [ViewVariables]
-        public float Fuel => _solutionComponent?.Solution.GetReagentQuantity("chem.WeldingFuel").Float() ?? 0f;
+        public float Fuel => _solutionComponent?.Solution?.GetReagentQuantity("chem.WeldingFuel").Float() ?? 0f;
 
         [ViewVariables]
         public float FuelCapacity => _solutionComponent?.MaxVolume.Float() ?? 0f;

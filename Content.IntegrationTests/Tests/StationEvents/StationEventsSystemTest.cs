@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.StationEvents;
 using NUnit.Framework;
 using Robust.Shared.GameObjects.Systems;
@@ -15,7 +14,7 @@ namespace Content.IntegrationTests.Tests.StationEvents
         public async Task Test()
         {
             var server = StartServerDummyTicker();
-            
+
             server.Assert(() =>
             {
                 // Idle each event once
@@ -29,8 +28,8 @@ namespace Content.IntegrationTests.Tests.StationEvents
                     stationEvent.Shutdown();
                     Assert.That(stationEvent.Occurrences == 1);
                 }
-                
-                stationEventsSystem.ResettingCleanup();
+
+                stationEventsSystem.Reset();
 
                 foreach (var stationEvent in stationEventsSystem.StationEvents)
                 {

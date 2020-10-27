@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.VendingMachines;
-using Content.Server.Interfaces;
 using Content.Shared.GameObjects.Components.Doors;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces;
@@ -15,9 +14,9 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.SharedWiresComponent;
 using static Content.Shared.GameObjects.Components.SharedWiresComponent.WiresAction;
 using Timer = Robust.Shared.Timers.Timer;
@@ -43,6 +42,7 @@ namespace Content.Server.GameObjects.Components.Doors
         /// <summary>
         /// True if either power wire was pulsed in the last <see cref="PowerWiresTimeout"/>.
         /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
         private bool PowerWiresPulsed
         {
             get => _powerWiresPulsed;
@@ -56,7 +56,8 @@ namespace Content.Server.GameObjects.Components.Doors
 
         private bool _boltsDown;
 
-        private bool BoltsDown
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool BoltsDown
         {
             get => _boltsDown;
             set
@@ -68,6 +69,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
         private bool _boltLightsWirePulsed = true;
 
+        [ViewVariables(VVAccess.ReadWrite)]
         private bool BoltLightsVisible
         {
             get => _boltLightsWirePulsed && BoltsDown && IsPowered() && State == DoorState.Closed;
@@ -80,6 +82,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
         private const float AutoCloseDelayFast = 1;
         // True => AutoCloseDelay; False => AutoCloseDelayFast
+        [ViewVariables(VVAccess.ReadWrite)]
         private bool NormalCloseSpeed
         {
             get => CloseSpeed == AutoCloseDelay;

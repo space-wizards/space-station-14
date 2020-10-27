@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Items;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
@@ -14,8 +16,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using Content.Shared.Damage;
-using Content.Shared.Interfaces.GameObjects.Components;
 
 namespace Content.Server.GameObjects.Components.Weapon.Melee
 {
@@ -29,8 +29,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         private TimeSpan _lastAttackTime;
         private TimeSpan _cooldownEnd;
 
-        private string _hitSound;
-        private string _missSound;
+        private readonly string _hitSound = default!;
+        private readonly string _missSound = default!;
         public float ArcCooldownTime { get; private set; } = 1f;
         public float CooldownTime { get; private set; } = 0.5f;
 
@@ -93,7 +93,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             var entities = ArcRayCast(eventArgs.User.Transform.WorldPosition, angle, eventArgs.User);
 
             var audioSystem = EntitySystem.Get<AudioSystem>();
-            if (entities.Count() != 0)
+            if (entities.Count != 0)
             {
                 audioSystem.PlayFromEntity( _hitSound, entities.First());
             }
@@ -173,7 +173,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             if (ClickArc != null)
             {
                 var sys = EntitySystem.Get<MeleeWeaponSystem>();
-                sys.SendAnimation(ClickArc, angle, eventArgs.User, Owner, targets, ClickAttackEffect);
+                sys.SendAnimation(ClickArc, angle, eventArgs.User, Owner, targets, ClickAttackEffect, false);
             }
 
             _lastAttackTime = curTime;
@@ -191,7 +191,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         private HashSet<IEntity> ArcRayCast(Vector2 position, Angle angle, IEntity ignore)
         {
             var widthRad = Angle.FromDegrees(ArcWidth);
-            var increments = 1 + (35 * (int) Math.Ceiling(widthRad / (2 * Math.PI)));
+            var increments = 1 + 35 * (int) Math.Ceiling(widthRad / (2 * Math.PI));
             var increment = widthRad / increments;
             var baseAngle = angle - widthRad / 2;
 

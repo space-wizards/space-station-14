@@ -1,14 +1,16 @@
-﻿using Content.Shared.GameObjects.Components.Mobs;
+﻿using Content.Client.GameObjects.Components.ActionBlocking;
+using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Body.Part;
+using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Preferences;
 using Content.Shared.Preferences.Appearance;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using Content.Client.GameObjects.Components.ActionBlocking;
 
 namespace Content.Client.GameObjects.Components.Mobs
 {
     [RegisterComponent]
-    public sealed class HumanoidAppearanceComponent : SharedHumanoidAppearanceComponent
+    public sealed class HumanoidAppearanceComponent : SharedHumanoidAppearanceComponent, IBodyPartAdded, IBodyPartRemoved
     {
         public override HumanoidCharacterAppearance Appearance
         {
@@ -39,8 +41,24 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         private void UpdateLooks()
         {
-            if (Appearance is null) return;
-            var sprite = Owner.GetComponent<SpriteComponent>();
+            if (Appearance is null ||
+                !Owner.TryGetComponent(out SpriteComponent sprite))
+            {
+                return;
+            }
+
+            if (Owner.TryGetComponent(out IBody body))
+            {
+                foreach (var part in body.Parts.Values)
+                {
+                    if (!part.Owner.TryGetComponent(out SpriteComponent partSprite))
+                    {
+                        continue;
+                    }
+
+                    partSprite.Color = Appearance.SkinColor;
+                }
+            }
 
             sprite.LayerSetColor(HumanoidVisualLayers.Hair, Appearance.HairColor);
             sprite.LayerSetColor(HumanoidVisualLayers.FacialHair, Appearance.FacialHairColor);
@@ -70,6 +88,52 @@ namespace Content.Client.GameObjects.Components.Mobs
                 facialHairStyle = HairStyles.DefaultFacialHairStyle;
             sprite.LayerSetState(HumanoidVisualLayers.FacialHair,
                 HairStyles.FacialHairStylesMap[facialHairStyle]);
+        }
+
+        public void BodyPartAdded(BodyPartAddedEventArgs args)
+        {
+            if (!Owner.TryGetComponent(out SpriteComponent sprite))
+            {
+                return;
+            }
+
+            if (!args.Part.Owner.TryGetComponent(out SpriteComponent partSprite))
+            {
+                return;
+            }
+
+            var layer = args.Part.ToHumanoidLayer();
+
+            if (layer == null)
+            {
+                return;
+            }
+
+            // TODO BODY Layer color, sprite and state
+            sprite.LayerSetVisible(layer, true);
+        }
+
+        public void BodyPartRemoved(BodyPartRemovedEventArgs args)
+        {
+            if (!Owner.TryGetComponent(out SpriteComponent sprite))
+            {
+                return;
+            }
+
+            if (!args.Part.Owner.TryGetComponent(out SpriteComponent partSprite))
+            {
+                return;
+            }
+
+            var layer = args.Part.ToHumanoidLayer();
+
+            if (layer == null)
+            {
+                return;
+            }
+
+            // TODO BODY Layer color, sprite and state
+            sprite.LayerSetVisible(layer, false);
         }
     }
 }

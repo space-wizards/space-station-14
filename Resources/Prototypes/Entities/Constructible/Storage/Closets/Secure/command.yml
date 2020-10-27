@@ -8,7 +8,9 @@
     - type: StorageVisualizer
       state: cap
   - type: Icon
-    state: cap_door
+    state: cap_icon
+  - type: AccessReader
+    access: [["Captain"]]
 
 - type: entity
   id: LockerHeadOfPersonnel
@@ -20,4 +22,6 @@
     - type: StorageVisualizer
       state: hop
   - type: Icon
-    state: hop_door
+    state: hop_icon
+  - type: AccessReader
+    access: [["HeadOfPersonnel"]]

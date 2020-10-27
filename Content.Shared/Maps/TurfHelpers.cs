@@ -1,5 +1,7 @@
 ﻿#nullable enable
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Physics;
 using Content.Shared.Utility;
@@ -26,18 +28,18 @@ namespace Content.Shared.Maps
         /// <summary>
         ///     Attempts to get the turf at map indices with grid id or null if no such turf is found.
         /// </summary>
-        public static TileRef? GetTileRef(this MapIndices mapIndices, GridId gridId)
+        public static TileRef GetTileRef(this Vector2i Vector2i, GridId gridId, IMapManager? mapManager = null)
         {
             if (!gridId.IsValid())
-                return null;
+                return default;
 
-            var mapManager = IoCManager.Resolve<IMapManager>();
+            mapManager ??= IoCManager.Resolve<IMapManager>();
 
             if (!mapManager.TryGetGrid(gridId, out var grid))
-                return null;
+                return default;
 
-            if (!grid.TryGetTileRef(mapIndices, out var tile))
-                return null;
+            if (!grid.TryGetTileRef(Vector2i, out var tile))
+                return default;
 
             return tile;
         }
@@ -57,7 +59,7 @@ namespace Content.Shared.Maps
             if (!mapManager.TryGetGrid(coordinates.GetGridId(entityManager), out var grid))
                 return null;
 
-            if (!grid.TryGetTileRef(coordinates.ToMapIndices(entityManager, mapManager), out var tile))
+            if (!grid.TryGetTileRef(coordinates, out var tile))
                 return null;
 
             return tile;
@@ -74,10 +76,10 @@ namespace Content.Shared.Maps
             entityManager ??= IoCManager.Resolve<IEntityManager>();
             mapManager ??= IoCManager.Resolve<IMapManager>();
 
-            return coordinates.ToMapIndices(entityManager, mapManager).PryTile(coordinates.GetGridId(entityManager));
+            return coordinates.ToVector2i(entityManager, mapManager).PryTile(coordinates.GetGridId(entityManager));
         }
 
-        public static bool PryTile(this MapIndices indices, GridId gridId,
+        public static bool PryTile(this Vector2i indices, GridId gridId,
             IMapManager? mapManager = null, ITileDefinitionManager? tileDefinitionManager = null, IEntityManager? entityManager = null)
         {
             mapManager ??= IoCManager.Resolve<IMapManager>();
@@ -112,7 +114,7 @@ namespace Content.Shared.Maps
              var half = mapGrid.TileSize / 2f;
 
             //Actually spawn the relevant tile item at the right position and give it some random offset.
-            var tileItem = entityManager.SpawnEntity(tileDef.ItemDropPrototypeName, indices.ToEntityCoordinates(mapManager, tileRef.GridIndex).Offset(new Vector2(half, half)));
+            var tileItem = entityManager.SpawnEntity(tileDef.ItemDropPrototypeName, indices.ToEntityCoordinates(tileRef.GridIndex, mapManager).Offset(new Vector2(half, half)));
             tileItem.RandomOffset(0.25f);
             return true;
         }
@@ -120,11 +122,33 @@ namespace Content.Shared.Maps
         /// <summary>
         ///     Helper that returns all entities in a turf.
         /// </summary>
-        public static IEnumerable<IEntity> GetEntitiesInTile(this TileRef turf, bool approximate = false)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static IEnumerable<IEntity> GetEntitiesInTile(this TileRef turf, bool approximate = false, IEntityManager? entityManager = null)
         {
-            var entityManager = IoCManager.Resolve<IEntityManager>();
+            entityManager ??= IoCManager.Resolve<IEntityManager>();
 
             return entityManager.GetEntitiesIntersecting(turf.MapIndex, GetWorldTileBox(turf), approximate);
+        }
+
+        /// <summary>
+        ///     Helper that returns all entities in a turf.
+        /// </summary>
+        public static IEnumerable<IEntity> GetEntitiesInTile(this EntityCoordinates coordinates, bool approximate = false, IEntityManager? entityManager = null)
+        {
+            var turf = coordinates.GetTileRef();
+
+            if (turf == null)
+                return Enumerable.Empty<IEntity>();
+
+            return GetEntitiesInTile(turf.Value, approximate, entityManager);
+        }
+
+        /// <summary>
+        ///     Helper that returns all entities in a turf.
+        /// </summary>
+        public static IEnumerable<IEntity> GetEntitiesInTile(this Vector2i indices, GridId gridId, bool approximate = false, IEntityManager? entityManager = null)
+        {
+            return GetEntitiesInTile(indices.GetTileRef(gridId), approximate, entityManager);
         }
 
         /// <summary>
@@ -154,7 +178,7 @@ namespace Content.Shared.Maps
         {
             mapManager ??= IoCManager.Resolve<IMapManager>();
 
-            return turf.GridIndices.ToEntityCoordinates(mapManager, turf.GridIndex);
+            return turf.GridIndices.ToEntityCoordinates(turf.GridIndex, mapManager);
         }
 
         /// <summary>
@@ -163,19 +187,17 @@ namespace Content.Shared.Maps
         private static Box2 GetWorldTileBox(TileRef turf)
         {
             var map = IoCManager.Resolve<IMapManager>();
-            var tileGrid = map.GetGrid(turf.GridIndex);
-            var tileBox = Box2.UnitCentered.Scale(tileGrid.TileSize);
-            return tileBox.Translated(tileGrid.GridTileToWorldPos(turf.GridIndices));
-        }
 
-        /// <summary>
-        /// Creates a box the size of a tile.
-        /// </summary>
-        private static Box2 GetTileBox(this TileRef turf)
-        {
-            var map = IoCManager.Resolve<IMapManager>();
-            var tileGrid = map.GetGrid(turf.GridIndex);
-            return Box2.UnitCentered.Scale(tileGrid.TileSize);
+            // This is scaled to 90 % so it doesn't encompass walls on other tiles.
+            var tileBox = Box2.UnitCentered.Scale(0.9f);
+
+            if (map.TryGetGrid(turf.GridIndex, out var tileGrid))
+            {
+                tileBox = tileBox.Scale(tileGrid.TileSize);
+                return tileBox.Translated(tileGrid.GridTileToWorldPos(turf.GridIndices));
+            }
+
+            return tileBox;
         }
     }
 }

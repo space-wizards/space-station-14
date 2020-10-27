@@ -8,8 +8,8 @@
     baseOperateTime: 5
   - type: UserInterface
     interfaces:
-    - key: enum.GenericSurgeryUiKey.Key
-      type: GenericSurgeryBoundUserInterface
+    - key: enum.SurgeryUIKey.Key
+      type: SurgeryBoundUserInterface
 
 - type: entity
   name: scalpel
@@ -23,9 +23,6 @@
   - type: Sprite
     sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: scalpel
-  - type: Icon
-    sprite: Objects/Specific/Medical/surgery_tools.rsi
-    state: scalpel
   - type: ItemCooldown
   - type: MeleeWeapon
 
@@ -33,15 +30,12 @@
   name: retractor
   parent: BaseSurgeryTool
   id: Retractor
-  desc: A surgical tool used to hold open incisions.
+  description: A surgical tool used to hold open incisions.
   components:
   - type: SurgeryTool
     surgeryType: Retraction
     baseOperateTime: 3
   - type: Sprite
-    sprite: Objects/Specific/Medical/surgery_tools.rsi
-    state: retractor
-  - type: Icon
     sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: retractor
   - type: ItemCooldown
@@ -51,15 +45,12 @@
   name: cautery
   parent: BaseSurgeryTool
   id: Cautery
-  desc: A surgical tool used to cauterize open wounds.
+  description: A surgical tool used to cauterize open wounds.
   components:
   - type: SurgeryTool
     surgeryType: Cauterization
     baseOperateTime: 3
   - type: Sprite
-    sprite: Objects/Specific/Medical/surgery_tools.rsi
-    state: cautery
-  - type: Icon
     sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: cautery
   - type: ItemCooldown
@@ -69,15 +60,12 @@
   name: drill
   parent: BaseSurgeryTool
   id: Drill
-  desc: A surgical drill for making holes into hard material.
+  description: A surgical drill for making holes into hard material.
   components:
   - type: SurgeryTool
     surgeryType: Drilling
     baseOperateTime: 3
   - type: Sprite
-    sprite: Objects/Specific/Medical/surgery_tools.rsi
-    state: drill
-  - type: Icon
     sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: drill
   - type: ItemCooldown
@@ -87,15 +75,12 @@
   name: bone saw
   parent: BaseSurgeryTool
   id: BoneSaw
-  desc: A surgical tool used to cauterize open wounds.
+  description: A surgical tool used to cauterize open wounds.
   components:
   - type: SurgeryTool
     surgeryType: Amputation
     baseOperateTime: 3
   - type: Sprite
-    sprite: Objects/Specific/Medical/surgery_tools.rsi
-    state: bone_saw
-  - type: Icon
     sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: bone_saw
   - type: ItemCooldown
@@ -105,15 +90,12 @@
   name: hemostat
   parent: BaseSurgeryTool
   id: Hemostat
-  desc: A surgical tool used to compress blood vessels to prevent bleeding.
+  description: A surgical tool used to compress blood vessels to prevent bleeding.
   components:
   - type: SurgeryTool
     surgeryType: VesselCompression
     baseOperateTime: 3
   - type: Sprite
-    sprite: Objects/Specific/Medical/surgery_tools.rsi
-    state: hemostat
-  - type: Icon
     sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: hemostat
   - type: ItemCooldown

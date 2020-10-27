@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Content.Shared.GameObjects.Components;
+using Robust.Client.Animations;
 using Robust.Client.GameObjects;
+using Robust.Client.GameObjects.Components.Animations;
 using Robust.Shared.Animations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Random;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
-using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
-using Content.Shared.GameObjects.Components;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
-using Robust.Shared.Interfaces.Serialization;
-using Robust.Client.Animations;
-using Robust.Client.GameObjects.Components.Animations;
-using System.Linq;
+using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components
 {

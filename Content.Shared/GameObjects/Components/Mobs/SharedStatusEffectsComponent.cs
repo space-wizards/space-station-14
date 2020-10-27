@@ -14,7 +14,11 @@ namespace Content.Shared.GameObjects.Components.Mobs
         public override string Name => "StatusEffectsUI";
         public override uint? NetID => ContentNetIDs.STATUSEFFECTS;
 
+        public abstract void ChangeStatusEffectIcon(StatusEffect effect, string icon);
+
         public abstract void ChangeStatusEffect(StatusEffect effect, string icon, ValueTuple<TimeSpan, TimeSpan>? cooldown);
+
+        public abstract void RemoveStatusEffect(StatusEffect effect);
     }
 
     [Serializable, NetSerializable]
@@ -57,6 +61,8 @@ namespace Content.Shared.GameObjects.Components.Mobs
         Hunger,
         Thirst,
         Pressure,
+        Fire,
+        Temperature,
         Stun,
         Cuffed,
         Buckled,

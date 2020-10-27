@@ -29,12 +29,12 @@ namespace Content.Server.Mobs
             }
 
             var mgr = IoCManager.Resolve<IPlayerManager>();
-            if (mgr.TryGetPlayerData(new NetSessionId(args[0]), out var data))
+            if (mgr.TryGetSessionByUsername(args[0], out var data))
             {
                 var mind = data.ContentData().Mind;
 
                 var builder = new StringBuilder();
-                builder.AppendFormat("player: {0}, mob: {1}\nroles: ", mind.SessionId, mind.OwnedMob?.Owner?.Uid);
+                builder.AppendFormat("player: {0}, mob: {1}\nroles: ", mind.UserId, mind.OwnedMob?.Owner?.Uid);
                 foreach (var role in mind.AllRoles)
                 {
                     builder.AppendFormat("{0} ", role.Name);
@@ -68,7 +68,7 @@ namespace Content.Server.Mobs
             }
 
             var mgr = IoCManager.Resolve<IPlayerManager>();
-            if (mgr.TryGetPlayerData(new NetSessionId(args[0]), out var data))
+            if (mgr.TryGetPlayerDataByUsername(args[0], out var data))
             {
                 var mind = data.ContentData().Mind;
                 var role = new Job(mind, _prototypeManager.Index<JobPrototype>(args[1]));
@@ -100,7 +100,7 @@ namespace Content.Server.Mobs
             }
 
             var mgr = IoCManager.Resolve<IPlayerManager>();
-            if (mgr.TryGetPlayerData(new NetSessionId(args[0]), out var data))
+            if (mgr.TryGetPlayerDataByUsername(args[0], out var data))
             {
                 var mind = data.ContentData().Mind;
                 var role = new Job(mind, _prototypeManager.Index<JobPrototype>(args[1]));

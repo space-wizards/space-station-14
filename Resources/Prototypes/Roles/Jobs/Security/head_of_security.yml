@@ -10,6 +10,9 @@
   icon: "HeadOfSecurity"
   access:
   - Command
+  - HeadOfSecurity
+  - Brig
+  - Detective
   - Security
   - Maintenance
   - Service
@@ -24,3 +27,4 @@
     eyes: SecGlasses
     head: HatBeretHoS
     idcard: HoSPDA
+    ears: HeadsetSecurityAlt

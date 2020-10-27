@@ -13,7 +13,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels.Visualize
         {
             base.InitializeEntity(entity);
             var sprite = entity.GetComponent<ISpriteComponent>();
-            sprite.LayerSetState(RangedBarrelVisualLayers.Bolt, $"bolt-open");
+            sprite.LayerSetState(RangedBarrelVisualLayers.Bolt, "bolt-open");
         }
 
         public override void OnChangeData(AppearanceComponent component)

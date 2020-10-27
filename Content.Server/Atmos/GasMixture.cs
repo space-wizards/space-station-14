@@ -9,8 +9,6 @@ using Content.Server.Interfaces;
 using Content.Shared.Atmos;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Serialization;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -23,6 +21,8 @@ namespace Content.Server.Atmos
     public class GasMixture : IExposeData, IEquatable<GasMixture>, ICloneable
     {
         private readonly AtmosphereSystem _atmosphereSystem;
+
+        public static GasMixture SpaceGas => new GasMixture() {Volume = 2500f, Immutable = true, Temperature = Atmospherics.TCMB};
 
         [ViewVariables]
         private float[] _moles = new float[Atmospherics.TotalNumberOfGases];
@@ -544,7 +544,7 @@ namespace Content.Server.Atmos
                 if (!doReaction)
                     continue;
 
-                reaction = prototype.React(this, holder, _atmosphereSystem.EventBus);
+                reaction = prototype.React(this, holder, _atmosphereSystem.GridTileLookupSystem);
                 if(reaction.HasFlag(ReactionResult.StopReactions))
                     break;
             }
@@ -578,6 +578,10 @@ namespace Content.Server.Atmos
             serializer.DataField(ref _moles, "moles", new float[Atmospherics.TotalNumberOfGases]);
             serializer.DataField(ref _molesArchived, "molesArchived", new float[Atmospherics.TotalNumberOfGases]);
             serializer.DataField(ref _temperature, "temperature", Atmospherics.TCMB);
+
+            // The arrays MUST have a specific length.
+            Array.Resize(ref _moles, Atmospherics.TotalNumberOfGases);
+            Array.Resize(ref _molesArchived, Atmospherics.TotalNumberOfGases);
         }
 
         public override bool Equals(object? obj)

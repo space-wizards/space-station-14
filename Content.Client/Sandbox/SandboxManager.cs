@@ -1,12 +1,9 @@
 ﻿using System;
 using Content.Client.UserInterface;
-using Content.Client.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Sandbox;
 using Robust.Client.Console;
-using Robust.Client.Interfaces.Console;
 using Robust.Client.Interfaces.Input;
-using Robust.Client.Interfaces.Graphics.Lighting;
 using Robust.Client.Interfaces.Placement;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
@@ -29,12 +26,14 @@ namespace Content.Client.Sandbox
         public Button GiveFullAccessButton;  //A button that just puts a captain's ID in your hands.
         public Button GiveAghostButton;
         public Button ToggleLightButton;
+        public Button ToggleFovButton;
+        public Button ToggleShadowsButton;
         public Button SuicideButton;
         public Button ToggleSubfloorButton;
         public Button ShowMarkersButton; //Shows spawn points
         public Button ShowBbButton; //Shows bounding boxes
 
-        public SandboxWindow(ILocalizationManager loc)
+        public SandboxWindow()
         {
             Resizable = false;
 
@@ -43,34 +42,40 @@ namespace Content.Client.Sandbox
             var vBox = new VBoxContainer { SeparationOverride = 4 };
             Contents.AddChild(vBox);
 
-            RespawnButton = new Button { Text = loc.GetString("Respawn") };
+            RespawnButton = new Button { Text = Loc.GetString("Respawn") };
             vBox.AddChild(RespawnButton);
 
-            SpawnEntitiesButton = new Button { Text = loc.GetString("Spawn Entities") };
+            SpawnEntitiesButton = new Button { Text = Loc.GetString("Spawn Entities") };
             vBox.AddChild(SpawnEntitiesButton);
 
-            SpawnTilesButton = new Button { Text = loc.GetString("Spawn Tiles") };
+            SpawnTilesButton = new Button { Text = Loc.GetString("Spawn Tiles") };
             vBox.AddChild(SpawnTilesButton);
 
-            GiveFullAccessButton = new Button { Text = loc.GetString("Give AA Id") };
+            GiveFullAccessButton = new Button { Text = Loc.GetString("Grant Full Access") };
             vBox.AddChild(GiveFullAccessButton);
 
-            GiveAghostButton = new Button { Text = loc.GetString("Ghost") };
+            GiveAghostButton = new Button { Text = Loc.GetString("Ghost") };
             vBox.AddChild(GiveAghostButton);
 
-            ToggleLightButton = new Button { Text = loc.GetString("Toggle Lights"), ToggleMode = true };
+            ToggleLightButton = new Button { Text = Loc.GetString("Toggle Lights"), ToggleMode = true };
             vBox.AddChild(ToggleLightButton);
 
-            ToggleSubfloorButton = new Button { Text = loc.GetString("Toggle Subfloor"), ToggleMode = true };
+            ToggleFovButton = new Button { Text = Loc.GetString("Toggle FOV"), ToggleMode = true };
+            vBox.AddChild(ToggleFovButton);
+
+            ToggleShadowsButton = new Button { Text = Loc.GetString("Toggle Shadows"), ToggleMode = true };
+            vBox.AddChild(ToggleShadowsButton);
+
+            ToggleSubfloorButton = new Button { Text = Loc.GetString("Toggle Subfloor"), ToggleMode = true };
             vBox.AddChild(ToggleSubfloorButton);
 
-            SuicideButton = new Button { Text = loc.GetString("Suicide") };
+            SuicideButton = new Button { Text = Loc.GetString("Suicide") };
             vBox.AddChild(SuicideButton);
 
-            ShowMarkersButton = new Button { Text = loc.GetString("Show Spawns"), ToggleMode = true };
+            ShowMarkersButton = new Button { Text = Loc.GetString("Show Spawns"), ToggleMode = true };
             vBox.AddChild(ShowMarkersButton);
 
-            ShowBbButton = new Button { Text = loc.GetString("Show Bb"), ToggleMode = true };
+            ShowBbButton = new Button { Text = Loc.GetString("Show Bb"), ToggleMode = true };
             vBox.AddChild(ShowBbButton);
         }
     }
@@ -80,7 +85,6 @@ namespace Content.Client.Sandbox
         [Dependency] private readonly IClientConsole _console = default!;
         [Dependency] private readonly IGameHud _gameHud = default!;
         [Dependency] private readonly IClientNetManager _netManager = default!;
-        [Dependency] private readonly ILocalizationManager _localization = default!;
         [Dependency] private readonly IPlacementManager _placementManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
@@ -95,7 +99,7 @@ namespace Content.Client.Sandbox
         private EntitySpawnWindow _spawnWindow;
         private TileSpawnWindow _tilesSpawnWindow;
         private bool _sandboxWindowToggled;
-        bool SpawnEntitiesButton { get; set; }
+        private bool SpawnEntitiesButton { get; set; }
 
         public void Initialize()
         {
@@ -166,7 +170,7 @@ namespace Content.Client.Sandbox
                 return;
             }
 
-            _window = new SandboxWindow(_localization);
+            _window = new SandboxWindow();
 
             _window.OnClose += WindowOnOnClose;
 
@@ -176,6 +180,8 @@ namespace Content.Client.Sandbox
             _window.GiveFullAccessButton.OnPressed += OnGiveAdminAccessButtonClicked;
             _window.GiveAghostButton.OnPressed += OnGiveAghostButtonClicked;
             _window.ToggleLightButton.OnToggled += OnToggleLightButtonClicked;
+            _window.ToggleFovButton.OnToggled += OnToggleFovButtonClicked;
+            _window.ToggleShadowsButton.OnToggled += OnToggleShadowsButtonClicked;
             _window.SuicideButton.OnPressed += OnSuicideButtonClicked;
             _window.ToggleSubfloorButton.OnPressed += OnToggleSubfloorButtonClicked;
             _window.ShowMarkersButton.OnPressed += OnShowMarkersButtonClicked;
@@ -211,9 +217,19 @@ namespace Content.Client.Sandbox
             ToggleLight();
         }
 
+        private void OnToggleFovButtonClicked(BaseButton.ButtonEventArgs args)
+        {
+            ToggleFov();
+        }
+
+        private void OnToggleShadowsButtonClicked(BaseButton.ButtonEventArgs args)
+        {
+            ToggleShadows();
+        }
+
         private void OnToggleSubfloorButtonClicked(BaseButton.ButtonEventArgs args)
         {
-            ToggleSubfloor();
+            ToggleSubFloor();
         }
 
         private void OnShowMarkersButtonClicked(BaseButton.ButtonEventArgs args)
@@ -244,7 +260,7 @@ namespace Content.Client.Sandbox
         private void ToggleEntitySpawnWindow()
         {
             if (_spawnWindow == null)
-                _spawnWindow = new EntitySpawnWindow(_placementManager, _prototypeManager, _resourceCache, _localization);
+                _spawnWindow = new EntitySpawnWindow(_placementManager, _prototypeManager, _resourceCache);
 
             if (_spawnWindow.IsOpen)
             {
@@ -252,7 +268,7 @@ namespace Content.Client.Sandbox
             }
             else
             {
-                _spawnWindow = new EntitySpawnWindow(_placementManager, _prototypeManager, _resourceCache, _localization);
+                _spawnWindow = new EntitySpawnWindow(_placementManager, _prototypeManager, _resourceCache);
                 _spawnWindow.OpenToLeft();
             }
         }
@@ -278,7 +294,17 @@ namespace Content.Client.Sandbox
             _console.ProcessCommand("togglelight");
         }
 
-        private void ToggleSubfloor()
+        private void ToggleFov()
+        {
+            _console.ProcessCommand("togglefov");
+        }
+
+        private void ToggleShadows()
+        {
+            _console.ProcessCommand("toggleshadows");
+        }
+
+        private void ToggleSubFloor()
         {
             _console.ProcessCommand("showsubfloor");
         }

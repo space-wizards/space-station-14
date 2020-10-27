@@ -70,12 +70,15 @@ WINDOWS_NATIVES = {
     "libgthread-2.0-0.dll",
     "libinstpatch-2.dll",
     "libintl-8.dll",
-    "libsndfile-1.dll"
+    "libsndfile-1.dll",
+    "libEGL.dll",
+    "libGLESv2.dll"
 }
 
 LINUX_NATIVES = {
     "libglfw.so.3",
     "libswnfd.so",
+    "libopenal.so.1"
 }
 
 MAC_NATIVES = {

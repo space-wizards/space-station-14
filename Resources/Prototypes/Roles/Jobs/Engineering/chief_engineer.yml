@@ -11,6 +11,7 @@
   access:
   - Maintenance
   - Engineering
+  - ChiefEngineer
   - Command
   - External
 
@@ -22,3 +23,5 @@
     backpack: BackpackEngineeringFilled
     shoes: ShoesBrown
     idcard: CEPDA
+    belt: UtilityBeltClothingFilled
+    ears: HeadsetEngineering

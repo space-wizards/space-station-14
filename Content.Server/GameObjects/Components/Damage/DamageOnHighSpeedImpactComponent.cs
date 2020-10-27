@@ -52,9 +52,9 @@ namespace Content.Server.GameObjects.Components.Damage
 
         public void CollideWith(IEntity collidedWith)
         {
-            if (!Owner.TryGetComponent(out ICollidableComponent collidable) || !Owner.TryGetComponent(out IDamageableComponent damageable)) return;
+            if (!Owner.TryGetComponent(out IPhysicsComponent physics) || !Owner.TryGetComponent(out IDamageableComponent damageable)) return;
 
-            var speed = collidable.LinearVelocity.Length;
+            var speed = physics.LinearVelocity.Length;
 
             if (speed < MinimumSpeed) return;
 

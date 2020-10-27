@@ -11,7 +11,7 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.5, -0.5, 0.5, 0.5"
@@ -19,9 +19,8 @@
   - type: SnapGrid
     offset: Center
   - type: Sprite
-    texture: Constructible/Power/wiredmachine.png
-  - type: Icon
-    texture: Constructible/Power/wiredmachine.png
+    sprite: Constructible/Power/power.rsi
+    state: wiredmachine
   - type: NodeContainer
     nodes:
     - !type:AdjacentNode
@@ -30,6 +29,7 @@
     drawRate: 50
   - type: Breakable
     deadThreshold: 100
+    resistances: metallicResistances
   - type: Anchorable
 
 - type: entity
@@ -40,7 +40,7 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.5, -0.5, 0.5, 0.5"
@@ -48,9 +48,8 @@
   - type: SnapGrid
     offset: Center
   - type: Sprite
-    texture: Constructible/Power/provider.png
-  - type: Icon
-    texture: Constructible/Power/provider.png
+    sprite: Constructible/Power/power.rsi
+    state: provider
   - type: Battery
   - type: NodeContainer
     nodes:
@@ -68,7 +67,7 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.5, -0.5, 0.5, 0.5"
@@ -76,9 +75,8 @@
   - type: SnapGrid
     offset: Center
   - type: Sprite
-    texture: Constructible/Power/provider.png
-  - type: Icon
-    texture: Constructible/Power/provider.png
+    sprite: Constructible/Power/power.rsi
+    state: provider
   - type: Battery
   - type: NodeContainer
     nodes:
@@ -111,7 +109,7 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.5, -0.5, 0.5, 0.5"
@@ -119,8 +117,7 @@
   - type: SnapGrid
     offset: Center
   - type: Sprite
-    texture: Constructible/Power/wirelessmachine.png
-  - type: Icon
-    texture: Constructible/Power/wirelessmachine.png
+    sprite: Constructible/Power/power.rsi
+    state: wirelessmachine
   - type: PowerReceiver
   - type: Anchorable

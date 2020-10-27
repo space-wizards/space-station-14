@@ -14,6 +14,9 @@ namespace Content.IntegrationTests
     {
         public GameRunLevel RunLevel { get; } = GameRunLevel.InRound;
 
+        public MapId DefaultMap { get; } = MapId.Nullspace;
+        public GridId DefaultGridId { get; } = GridId.Invalid;
+
         public event Action<GameRunLevelChangedEventArgs> OnRunLevelChanged
         {
             add { }
@@ -55,6 +58,10 @@ namespace Content.IntegrationTests
         }
 
         public void ToggleReady(IPlayerSession player, bool ready)
+        {
+        }
+
+        public void ToggleDisallowLateJoin(bool disallowLateJoin)
         {
         }
 

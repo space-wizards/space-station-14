@@ -11,7 +11,7 @@
       state: eng
       state_closed: eng_tool_door
   - type: Icon
-    state: eng_tool_door
+    state: eng_tool_icon
 
 # Radiation suit closet
 - type: entity
@@ -26,7 +26,7 @@
       state: eng
       state_closed: eng_rad_door
   - type: Icon
-    state: eng_rad_door
+    state: eng_rad_icon
 
 # Emergency closet
 - type: entity
@@ -40,7 +40,7 @@
     - type: StorageVisualizer
       state: emergency
   - type: Icon
-    state: emergency_door
+    state: emergency_icon
 
 # Fire safety closet
 - type: entity
@@ -54,7 +54,7 @@
     - type: StorageVisualizer
       state: fire
   - type: Icon
-    state: fire_door
+    state: fire_icon
 
 # EOD closet
 - type: entity
@@ -68,4 +68,4 @@
     - type: StorageVisualizer
       state: bomb
   - type: Icon
-    state: bomb_door
+    state: bomb_icon

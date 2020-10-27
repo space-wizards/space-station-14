@@ -5,13 +5,11 @@ namespace Content.Shared.Physics.Pull
 {
     public class PullMessage : ComponentMessage
     {
-        public readonly PullController Controller;
-        public readonly ICollidableComponent Puller;
-        public readonly ICollidableComponent Pulled;
+        public readonly IPhysicsComponent Puller;
+        public readonly IPhysicsComponent Pulled;
 
-        protected PullMessage(PullController controller, ICollidableComponent puller, ICollidableComponent pulled)
+        protected PullMessage(IPhysicsComponent puller, IPhysicsComponent pulled)
         {
-            Controller = controller;
             Puller = puller;
             Pulled = pulled;
         }

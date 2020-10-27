@@ -9,7 +9,9 @@
     - type: StorageVisualizer
       state: ce
   - type: Icon
-    state: ce_door
+    state: ce_icon
+  - type: AccessReader
+    access: [ [ "ChiefEngineer" ] ]
 
 # Electrical supplies
 - type: entity
@@ -23,7 +25,9 @@
       state: eng
       state_closed: eng_elec_door
   - type: Icon
-    state: eng_elec_door
+    state: eng_elec_icon
+  - type: AccessReader
+    access: [ [ "Engineering" ] ]
 
 # Welding supplies
 - type: entity
@@ -37,7 +41,9 @@
       state: eng
       state_closed: eng_weld_door
   - type: Icon
-    state: eng_weld_door
+    state: eng_weld_icon
+  - type: AccessReader
+    access: [ [ "Engineering" ] ]
 
 # Atmos tech
 - type: entity
@@ -50,7 +56,9 @@
     - type: StorageVisualizer
       state: atmos
   - type: Icon
-    state: atmos_door
+    state: atmos_icon
+  - type: AccessReader
+    access: [ [ "Engineering" ] ]
 
 # Engineer
 - type: entity
@@ -63,4 +71,6 @@
     - type: StorageVisualizer
       state: eng_secure
   - type: Icon
-    state: eng_secure_door
+    state: eng_secure_icon
+  - type: AccessReader
+    access: [ [ "Engineering" ] ]

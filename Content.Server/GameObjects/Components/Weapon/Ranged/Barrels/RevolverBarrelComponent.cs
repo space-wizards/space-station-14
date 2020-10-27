@@ -19,6 +19,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 {
@@ -30,8 +31,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override string Name => "RevolverBarrel";
         public override uint? NetID => ContentNetIDs.REVOLVER_BARREL;
 
+        [ViewVariables]
         private BallisticCaliber _caliber;
         private Container _ammoContainer;
+        [ViewVariables]
         private int _currentSlot = 0;
         public override int Capacity => _ammoSlots.Length;
         private IEntity[] _ammoSlots;
@@ -39,7 +42,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override int ShotsLeft => _ammoContainer.ContainedEntities.Count;
 
         private AppearanceComponent _appearanceComponent;
+        [ViewVariables]
         private string _fillPrototype;
+        [ViewVariables]
         private int _unspawnedCount;
 
         // Sounds
@@ -198,14 +203,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public override IEntity TakeProjectile(EntityCoordinates spawnAtGrid, MapCoordinates spawnAtMap)
+        public override IEntity TakeProjectile(EntityCoordinates spawnAt)
         {
             var ammo = _ammoSlots[_currentSlot];
             IEntity bullet = null;
             if (ammo != null)
             {
                 var ammoComponent = ammo.GetComponent<AmmoComponent>();
-                bullet = ammoComponent.TakeBullet(spawnAtGrid, spawnAtMap);
+                bullet = ammoComponent.TakeBullet(spawnAt);
                 if (ammoComponent.Caseless)
                 {
                     _ammoSlots[_currentSlot] = null;

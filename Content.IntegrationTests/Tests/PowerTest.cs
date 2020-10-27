@@ -1,14 +1,13 @@
-﻿using Content.Server.GameObjects.Components.Power;
+﻿using System.Threading.Tasks;
+using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.Power.PowerNetComponents;
+using Content.Shared.Utility;
 using NUnit.Framework;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using System.Threading.Tasks;
-using Content.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests
 {

@@ -5,14 +5,12 @@
   - type: Marker
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
   - type: Sprite
     netsync: false
     visible: false
     sprite: Interface/Misc/markers.rsi
     state: cross_blue
 
-  - type: Icon
-    sprite: Interface/Misc/markers.rsi
-    state: cross_blue
+
 

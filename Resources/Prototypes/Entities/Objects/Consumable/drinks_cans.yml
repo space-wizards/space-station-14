@@ -6,8 +6,9 @@
   - type: Drink
     openSounds: canOpenSounds
     pressurized: true
-  - type: Solution
+  - type: SolutionContainer
     maxVol: 20
+    caps: AddTo, RemoveFrom
     contents:
       reagents:
       - ReagentId: chem.Cola
@@ -16,9 +17,8 @@
     transferAmount: 5
   - type: Sprite
     state: icon
-  - type: Icon
-    state: icon
-  - type: CanSpill
+
+  - type: Spillable
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -26,24 +26,22 @@
   name: space cola
   description: A refreshing beverage.
   components:
-  - type: Solution
+  - type: SolutionContainer
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cola.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/cola.rsi
+
   - type: Item
     sprite: Objects/Consumable/Drinks/cola.rsi
 
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkIceTeaCan
-  name: ice tea can
-  description: A can of refreshing ice tea.
+  name: iced tea can
+  description: A refreshing can of iced tea.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/ice_tea_can.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/ice_tea_can.rsi
+
   - type: Item
     sprite: Objects/Consumable/Drinks/ice_tea_can.rsi
 
@@ -51,12 +49,11 @@
   parent: DrinkCanBaseFull
   id: DrinkLemonLimeCan
   name: lemon-lime can
-  description: You wanted ORANGE. It gave you Lemon Lime.
+  description: You wanted ORANGE. It gave you Lemon-Lime.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lemon-lime.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/lemon-lime.rsi
+
   - type: Item
     sprite: Objects/Consumable/Drinks/lemon-lime.rsi
 
@@ -64,12 +61,11 @@
   parent: DrinkCanBaseFull
   id: DrinkGrapeCan
   name: grape soda can
-  description: 'Sweetened drink with a grape flavor and a deep purple color.'
+  description: Sweetened drink with a grape flavor and a deep purple color.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/purple_can.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/purple_can.rsi
+
   - type: Item
     sprite: Objects/Consumable/Drinks/purple_can.rsi
 
@@ -81,8 +77,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/space_mountain_wind.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/space_mountain_wind.rsi
+
   - type: Item
     sprite: Objects/Consumable/Drinks/space_mountain_wind.rsi
 
@@ -94,8 +89,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/space-up.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/space-up.rsi
+
   - type: Item
     sprite: Objects/Consumable/Drinks/space-up.rsi
 
@@ -107,8 +101,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/starkist.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/starkist.rsi
+
   - type: Item
     sprite: Objects/Consumable/Drinks/starkist.rsi
 
@@ -120,8 +113,7 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/thirteen_loko.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/thirteen_loko.rsi
+
   - type: Item
     sprite: Objects/Consumable/Drinks/thirteen_loko.rsi
 
@@ -134,8 +126,7 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/changelingsting.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/changelingsting.rsi
+
   - type: Item
     sprite: Objects/Consumable/Drinks/changelingsting.rsi
 
@@ -143,26 +134,24 @@
   parent: DrinkCanBaseFull
   id: DrinkDrGibb
   name: Dr. Gibb
-  description: A delicious blend of 42 different flavours
+  description: A delicious blend of 42 different flavours.
   components:
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/dr_gibb.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/dr_gibb.rsi
+
   - type: Item
     sprite: Objects/Consumable/Drinks/dr_gibb.rsi
 
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkEnergyDrink
-  name: Energy drink
-  description: ''
+  name: red bool energy drink
+  description: A can of Red Bool, with enough caffeine to kill a horse.
   components:
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/energy_drink.rsi
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/energy_drink.rsi
+
   - type: Item
     sprite: Objects/Consumable/Drinks/energy_drink.rsi

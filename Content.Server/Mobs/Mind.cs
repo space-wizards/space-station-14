@@ -30,10 +30,10 @@ namespace Content.Server.Mobs
         /// <summary>
         ///     Creates the new mind attached to a specific player session.
         /// </summary>
-        /// <param name="sessionId">The session ID of the owning player.</param>
-        public Mind(NetSessionId sessionId)
+        /// <param name="userId">The session ID of the owning player.</param>
+        public Mind(NetUserId userId)
         {
-            SessionId = sessionId;
+            UserId = userId;
         }
 
         // TODO: This session should be able to be changed, probably.
@@ -41,7 +41,7 @@ namespace Content.Server.Mobs
         ///     The session ID of the player owning this mind.
         /// </summary>
         [ViewVariables]
-        public NetSessionId? SessionId { get; private set; }
+        public NetUserId? UserId { get; private set; }
 
         [ViewVariables]
         public bool IsVisitingEntity => VisitingEntity != null;
@@ -83,12 +83,12 @@ namespace Content.Server.Mobs
         {
             get
             {
-                if (!SessionId.HasValue)
+                if (!UserId.HasValue)
                 {
                     return null;
                 }
                 var playerMgr = IoCManager.Resolve<IPlayerManager>();
-                playerMgr.TryGetSessionById(SessionId.Value, out var ret);
+                playerMgr.TryGetSessionById(UserId.Value, out var ret);
                 return ret;
             }
         }
@@ -195,7 +195,7 @@ namespace Content.Server.Mobs
             VisitingEntity = null;
         }
 
-        public void ChangeOwningPlayer(NetSessionId? newOwner)
+        public void ChangeOwningPlayer(NetUserId? newOwner)
         {
             var playerMgr = IoCManager.Resolve<IPlayerManager>();
             PlayerData newOwnerData = null;
@@ -216,12 +216,12 @@ namespace Content.Server.Mobs
             var oldSession = Session;
             oldSession?.AttachToEntity(null);
 
-            if (SessionId.HasValue)
+            if (UserId.HasValue)
             {
-                playerMgr.GetPlayerData(SessionId.Value).ContentData().Mind = null;
+                playerMgr.GetPlayerData(UserId.Value).ContentData().Mind = null;
             }
 
-            SessionId = newOwner;
+            UserId = newOwner;
             if (!newOwner.HasValue)
             {
                 return;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Players;
 using Content.Shared.Maps;
@@ -129,7 +130,7 @@ namespace Content.Server.GameTicking
             var playerMgr = IoCManager.Resolve<IPlayerManager>();
             var ticker = IoCManager.Resolve<IGameTicker>();
 
-            NetSessionId sessionId;
+            NetUserId userId;
             if (args.Length == 0)
             {
                 if (player == null)
@@ -138,16 +139,17 @@ namespace Content.Server.GameTicking
                     return;
                 }
 
-                sessionId = player.SessionId;
+                userId = player.UserId;
             }
-            else
+            else if (!playerMgr.TryGetUserId(args[0], out userId))
             {
-                sessionId = new NetSessionId(args[0]);
+                shell.SendText(player, "Unknown player");
+                return;
             }
 
-            if (!playerMgr.TryGetSessionById(sessionId, out var targetPlayer))
+            if (!playerMgr.TryGetSessionById(userId, out var targetPlayer))
             {
-                if (!playerMgr.TryGetPlayerData(sessionId, out var data))
+                if (!playerMgr.TryGetPlayerData(userId, out var data))
                 {
                     shell.SendText(player, "Unknown player");
                     return;
@@ -244,6 +246,34 @@ namespace Content.Server.GameTicking
         }
     }
 
+    class ToggleDisallowLateJoinCommand: IClientCommand
+    {
+        public string Command => "toggledisallowlatejoin";
+        public string Description => "Allows or disallows latejoining during mid-game.";
+        public string Help => $"Usage: {Command} <disallow>";
+
+        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        {
+            if (args.Length != 1)
+            {
+                shell.SendText(player, "Need exactly one argument.");
+                return;
+            }
+
+            var ticker = IoCManager.Resolve<IGameTicker>();
+
+            if (bool.TryParse(args[0], out var result))
+            {
+                ticker.ToggleDisallowLateJoin(bool.Parse(args[0]));
+                shell.SendText(player, result ? "Late joining has been disabled." : "Late joining has been enabled.");
+            }
+            else
+            {
+                shell.SendText(player, "Invalid argument.");
+            }
+        }
+    }
+
     class SetGamePresetCommand : IClientCommand
     {
         public string Command => "setgamepreset";
@@ -301,7 +331,7 @@ namespace Content.Server.GameTicking
     {
         public string Command => "mapping";
         public string Description => "Creates and teleports you to a new uninitialized map for mapping.";
-        public string Help => $"Usage: {Command} <id> <mapname>";
+        public string Help => $"Usage: {Command} <mapname> / {Command} <id> <mapname>";
 
         public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
         {
@@ -311,18 +341,45 @@ namespace Content.Server.GameTicking
                 return;
             }
 
-            if (args.Length != 2)
+            var mapManager = IoCManager.Resolve<IMapManager>();
+            int mapId;
+            string mapName;
+
+            switch (args.Length)
             {
-                shell.SendText(player, Help);
-                return;
+                case 1:
+                    if (player.AttachedEntity == null)
+                    {
+                        shell.SendText(player, "The map name argument cannot be omitted if you have no entity.");
+                        return;
+                    }
+
+                    mapId = (int) mapManager.NextMapId();
+                    mapName = args[0];
+                    break;
+                case 2:
+                    if (!int.TryParse(args[0], out var id))
+                    {
+                        shell.SendText(player, $"{args[0]} is not a valid integer.");
+                        return;
+                    }
+
+                    mapId = id;
+                    mapName = args[1];
+                    break;
+                default:
+                    shell.SendText(player, Help);
+                    return;
             }
 
-            shell.ExecuteCommand(player, $"addmap {args[0]} false");
-            shell.ExecuteCommand(player, $"loadbp {args[0]} \"{CommandParsing.Escape(args[1])}\"");
-            shell.ExecuteCommand(player, $"aghost");
-            shell.ExecuteCommand(player, $"tp 0 0 {args[0]}");
+            shell.ExecuteCommand(player, $"addmap {mapId} false");
+            shell.ExecuteCommand(player, $"loadbp {mapId} \"{CommandParsing.Escape(mapName)}\"");
+            shell.ExecuteCommand(player, "aghost");
+            shell.ExecuteCommand(player, $"tp 0 0 {mapId}");
 
-            shell.SendText(player, $"Created unloaded map from file {args[1]} with id {args[0]}. Use \"savebp 4 foo.yml\" to save it.");
+            var newGridId = mapManager.GetAllGrids().Max(g => (int) g.Index);
+
+            shell.SendText(player, $"Created unloaded map from file {mapName} with id {mapId}. Use \"savebp {newGridId} foo.yml\" to save the new grid as a map.");
         }
     }
 

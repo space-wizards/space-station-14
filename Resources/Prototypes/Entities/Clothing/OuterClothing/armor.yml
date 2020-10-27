@@ -8,8 +8,7 @@
     - outerclothing
   - type: Sprite
     state: icon
-  - type: Icon
-    state: icon
+
 
 - type: entity
   parent: OuterclothingBase
@@ -20,9 +19,7 @@
   - type: Sprite
     sprite: Clothing/OuterClothing/armor.rsi
     state: armor
-  - type: Icon
-    sprite: Clothing/OuterClothing/armor.rsi
-    state: armor
+
   - type: Clothing
     sprite: Clothing/OuterClothing/armor.rsi
     ClothingPrefix: armor
@@ -35,8 +32,7 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/armor_reflec.rsi
-  - type: Icon
-    sprite: Clothing/OuterClothing/armor_reflec.rsi
+
   - type: Clothing
     sprite: Clothing/OuterClothing/armor_reflec.rsi
 
@@ -48,8 +44,7 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/bulletproof.rsi
-  - type: Icon
-    sprite: Clothing/OuterClothing/bulletproof.rsi
+
   - type: Clothing
     sprite: Clothing/OuterClothing/bulletproof.rsi
 
@@ -61,8 +56,7 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/caparmor.rsi
-  - type: Icon
-    sprite: Clothing/OuterClothing/caparmor.rsi
+
   - type: Clothing
     sprite: Clothing/OuterClothing/caparmor.rsi
 
@@ -74,8 +68,7 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/acolyte.rsi
-  - type: Icon
-    sprite: Clothing/OuterClothing/acolyte.rsi
+
   - type: Clothing
     sprite: Clothing/OuterClothing/acolyte.rsi
 
@@ -87,8 +80,7 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/cult_armour.rsi
-  - type: Icon
-    sprite: Clothing/OuterClothing/cult_armour.rsi
+
   - type: Clothing
     sprite: Clothing/OuterClothing/cult_armour.rsi
 
@@ -100,8 +92,7 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/custodian.rsi
-  - type: Icon
-    sprite: Clothing/OuterClothing/custodian.rsi
+
   - type: Clothing
     sprite: Clothing/OuterClothing/custodian.rsi
 
@@ -113,8 +104,7 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/heavy.rsi
-  - type: Icon
-    sprite: Clothing/OuterClothing/heavy.rsi
+
   - type: Clothing
     sprite: Clothing/OuterClothing/heavy.rsi
 
@@ -126,8 +116,7 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/hm_armorvest.rsi
-  - type: Icon
-    sprite: Clothing/OuterClothing/hm_armorvest.rsi
+
   - type: Clothing
     sprite: Clothing/OuterClothing/hm_armorvest.rsi
 
@@ -139,8 +128,7 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/hos.rsi
-  - type: Icon
-    sprite: Clothing/OuterClothing/hos.rsi
+
   - type: Clothing
     sprite: Clothing/OuterClothing/hos.rsi
 
@@ -152,8 +140,7 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/kvest.rsi
-  - type: Icon
-    sprite: Clothing/OuterClothing/kvest.rsi
+
   - type: Clothing
     sprite: Clothing/OuterClothing/kvest.rsi
 
@@ -165,8 +152,7 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/magusblue.rsi
-  - type: Icon
-    sprite: Clothing/OuterClothing/magusblue.rsi
+
   - type: Clothing
     sprite: Clothing/OuterClothing/magusblue.rsi
 
@@ -178,8 +164,7 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/magusred.rsi
-  - type: Icon
-    sprite: Clothing/OuterClothing/magusred.rsi
+
   - type: Clothing
     sprite: Clothing/OuterClothing/magusred.rsi
 
@@ -191,8 +176,7 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/mercwebvest.rsi
-  - type: Icon
-    sprite: Clothing/OuterClothing/mercwebvest.rsi
+
   - type: Clothing
     sprite: Clothing/OuterClothing/mercwebvest.rsi
 
@@ -204,8 +188,7 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/reactive.rsi
-  - type: Icon
-    sprite: Clothing/OuterClothing/reactive.rsi
+
   - type: Clothing
     sprite: Clothing/OuterClothing/reactive.rsi
 
@@ -217,8 +200,7 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/reactiveoff.rsi
-  - type: Icon
-    sprite: Clothing/OuterClothing/reactiveoff.rsi
+
   - type: Clothing
     sprite: Clothing/OuterClothing/reactiveoff.rsi
 
@@ -230,8 +212,7 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/riot.rsi
-  - type: Icon
-    sprite: Clothing/OuterClothing/riot.rsi
+
   - type: Clothing
     sprite: Clothing/OuterClothing/riot.rsi
 
@@ -243,8 +224,7 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/scaf.rsi
-  - type: Icon
-    sprite: Clothing/OuterClothing/scaf.rsi
+
   - type: Clothing
     sprite: Clothing/OuterClothing/scaf.rsi
 
@@ -256,8 +236,7 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/swat.rsi
-  - type: Icon
-    sprite: Clothing/OuterClothing/swat.rsi
+
   - type: Clothing
     sprite: Clothing/OuterClothing/swat.rsi
 
@@ -269,8 +248,7 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/s_ninja.rsi
-  - type: Icon
-    sprite: Clothing/OuterClothing/s_ninja.rsi
+
   - type: Clothing
     sprite: Clothing/OuterClothing/s_ninja.rsi
 
@@ -282,7 +260,6 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/webvest.rsi
-  - type: Icon
-    sprite: Clothing/OuterClothing/webvest.rsi
+
   - type: Clothing
     sprite: Clothing/OuterClothing/webvest.rsi
