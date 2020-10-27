@@ -9,15 +9,6 @@ namespace Content.Shared.GameObjects.Components.Mobs
         public override string Name => "WeightlessStatus";
 
 
-        public override void Initialize()
-        {
-            base.Initialize();
-            GravityExtensions.OnWeightlessChanged += (entity,isWeightless) =>
-            {
-                if(entity != Owner) return;
-                UpdateStatus(isWeightless);
-            };
-        }
 
         protected void UpdateStatus(bool isWeightless)
         {
