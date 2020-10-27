@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Content.Server.Botany;
 using Content.Server.GameObjects.Components.Botany;
+using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
@@ -12,7 +13,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    public class PlantSystem : EntitySystem
+    public class PlantSystem : EntitySystem, IResettingEntitySystem
     {
         [Dependency] private readonly IComponentManager _componentManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -28,6 +29,15 @@ namespace Content.Server.GameObjects.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
+
+            PopulateDatabase();
+        }
+
+        private void PopulateDatabase()
+        {
+            _nextUid = 0;
+
+            _seeds.Clear();
 
             foreach (var seed in _prototypeManager.EnumeratePrototypes<Seed>())
             {
@@ -65,6 +75,11 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 plantHolder.Update();
             }
+        }
+
+        public void Reset()
+        {
+            PopulateDatabase();
         }
     }
 }
