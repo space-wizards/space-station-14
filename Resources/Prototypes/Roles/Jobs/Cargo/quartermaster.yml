@@ -1,6 +1,6 @@
 - type: job
   id: Quartermaster
-  name: "Quartermaster"
+  name: "quartermaster"
   positions: 1
   spawnPositions: 1
   startingGear: QuartermasterGear
