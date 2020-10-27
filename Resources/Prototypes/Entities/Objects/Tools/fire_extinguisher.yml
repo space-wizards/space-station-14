@@ -10,7 +10,7 @@
         - state: fire_extinguisher_closed
           map: [ "enum.SprayVisualLayers.Base" ]
     - type: Item
-      sprite: Objects/Misc/fire_extinguisher.rsi
+      sprite: Objects/Tools/fire_extinguisher.rsi
       size: 10
     - type: SolutionContainer
       maxVol: 100

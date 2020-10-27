@@ -1,7 +1,7 @@
 - type: entity
   id: CrateEngineeringAME
   name:  ame crate
-  parent: CrateElectrical
+  parent: CrateRadiation
   components:
   - type: StorageFill
     contents:

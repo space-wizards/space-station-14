@@ -1,6 +1,6 @@
 - type: entity
   id: CrateEmergencyExplosive
-  name: explosive emergency crate
+  name: bomb suit crate
   parent: CrateSecgear
   components:
   - type: StorageFill
