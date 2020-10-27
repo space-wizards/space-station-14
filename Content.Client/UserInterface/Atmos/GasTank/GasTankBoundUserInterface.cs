@@ -9,7 +9,7 @@ namespace Content.Client.UserInterface.Atmos.GasTank
     public class GasTankBoundUserInterface
         : BoundUserInterface
     {
-        public GasTankBoundUserInterface([NotNull] ClientUserInterfaceComponent owner, [NotNull] object uiKey) :
+        public GasTankBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) :
             base(owner, uiKey)
         {
         }

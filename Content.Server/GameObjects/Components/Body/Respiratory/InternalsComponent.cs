@@ -7,7 +7,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Body.Respiratory
 {
     [RegisterComponent]
-    public class InternalsComponent: Component
+    public class InternalsComponent : Component
     {
         public override string Name => "Internals";
         [ViewVariables] public IEntity? GasTankEntity { get; set; }

@@ -36,7 +36,7 @@ namespace Content.Server.GameObjects.Components.Atmos
     [ComponentReference(typeof(IActivate))]
     public class GasTankComponent : SharedGasTankComponent, IExamine, IGasMixtureHolder, IUse, IDropped, IActivate
     {
-    	private const float MaxExplosionRange = 14f;
+    	  private const float MaxExplosionRange = 14f;
         private const float DefaultOutputPressure = Atmospherics.OneAtmosphere;
 
         private float _pressureResistance;
@@ -108,7 +108,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public void Update()
         {
-        	Air?.React(this);
+            Air?.React(this);
             CheckStatus();
             UpdateUserInterface();
         }
@@ -272,7 +272,8 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                     var leakedGas = Air.RemoveRatio(0.25f);
                     tileAtmos.AssumeAir(leakedGas);
-                } else
+                }
+                else
                 {
                     _integrity--;
                 }
@@ -295,7 +296,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             protected override void GetData(IEntity user, GasTankComponent component, VerbData data)
             {
                 data.Visibility = VerbVisibility.Invisible;
-                if (!user.TryGetComponent<IActorComponent>(out _))
+                if (!user.HasComponent<IActorComponent>())
                 {
                     return;
                 }
