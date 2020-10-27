@@ -170,7 +170,7 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
 
         public void Inhale(float frameTime, GasMixture from)
         {
-            var ratio = (Atmospherics.BreathVolume / from.Volume);
+            var ratio = (Atmospherics.BreathVolume / from.Volume) * frameTime;
 
             Transfer(from, Air, ratio);
             ToBloodstream(Air);
