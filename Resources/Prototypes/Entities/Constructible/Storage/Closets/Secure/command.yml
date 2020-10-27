@@ -9,6 +9,8 @@
       state: cap
   - type: Icon
     state: cap_icon
+  - type: AccessReader
+    access: [["Captain"]]
 
 - type: entity
   id: LockerHeadOfPersonnel
@@ -21,3 +23,5 @@
       state: hop
   - type: Icon
     state: hop_icon
+  - type: AccessReader
+    access: [["HeadOfPersonnel"]]

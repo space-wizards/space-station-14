@@ -226,7 +226,6 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
         private bool AddToContents(IEntity entity)
         {
-            var physics = Owner.GetComponent<IPhysicsComponent>();
             if (entity.TryGetComponent(out IPhysicsComponent entityPhysicsComponent))
             {
                 if(MaxSize < entityPhysicsComponent.WorldAABB.Size.X
@@ -234,39 +233,11 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 {
                     return false;
                 }
-
-                if (physics.WorldAABB.Left > entityPhysicsComponent.WorldAABB.Left)
-                {
-                    entity.Transform.WorldPosition += new Vector2(physics.WorldAABB.Left - entityPhysicsComponent.WorldAABB.Left, 0);
-                }
-                else if (physics.WorldAABB.Right < entityPhysicsComponent.WorldAABB.Right)
-                {
-                    entity.Transform.WorldPosition += new Vector2(physics.WorldAABB.Right - entityPhysicsComponent.WorldAABB.Right, 0);
-                }
-                if (physics.WorldAABB.Bottom > entityPhysicsComponent.WorldAABB.Bottom)
-                {
-                    entity.Transform.WorldPosition += new Vector2(0, physics.WorldAABB.Bottom - entityPhysicsComponent.WorldAABB.Bottom);
-                }
-                else if (physics.WorldAABB.Top < entityPhysicsComponent.WorldAABB.Top)
-                {
-                    entity.Transform.WorldPosition += new Vector2(0, physics.WorldAABB.Top - entityPhysicsComponent.WorldAABB.Top);
-                }
             }
             if (Contents.CanInsert(entity))
             {
-                // Because Insert sets the local position to (0,0), and we want to keep the contents spread out,
-                // we re-apply the world position after inserting.
-                Vector2 worldPos;
-                if (entity.HasComponent<IActorComponent>())
-                {
-                    worldPos = Owner.Transform.WorldPosition;
-                }
-                else
-                {
-                    worldPos = entity.Transform.WorldPosition;
-                }
                 Contents.Insert(entity);
-                entity.Transform.WorldPosition = worldPos;
+                entity.Transform.LocalPosition = Vector2.Zero;
                 if (entityPhysicsComponent != null)
                 {
                     entityPhysicsComponent.CanCollide = false;

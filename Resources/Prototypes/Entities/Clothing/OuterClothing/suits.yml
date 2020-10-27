@@ -158,7 +158,7 @@
   parent: OuterclothingBase
   id: OuterclothingRadSuit
   name: rad suit
-  description: A suit that protects against radiation. The label reads, 'Made with lead. Please do not consume insulation.'
+  description: "A suit that protects against radiation. The label reads, 'Made with lead. Please do not consume insulation.'"
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/radsuit.rsi
@@ -183,7 +183,7 @@
   parent: OuterclothingBase
   id: OuterclothingSyndicate
   name: syndicate
-  description: Has a tag on it 'Totally not property of an enemy corporation, honest!'
+  description: "Has a tag on it 'Totally not property of an enemy corporation, honest!'"
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/syndicate.rsi
