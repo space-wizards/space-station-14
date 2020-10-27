@@ -130,7 +130,7 @@ namespace Content.Client
 
         private class PopupLabel : Label
         {
-            private IEyeManager _eyeManager;
+            private readonly IEyeManager _eyeManager;
 
             public float TimeLeft { get; private set; }
             public Vector2 InitialPos { get; set; }
@@ -144,7 +144,7 @@ namespace Content.Client
                 FontColorShadowOverride = Color.Black;
             }
 
-            protected override void Update(FrameEventArgs eventArgs)
+            protected override void FrameUpdate(FrameEventArgs eventArgs)
             {
                 TimeLeft += eventArgs.DeltaSeconds;
 
