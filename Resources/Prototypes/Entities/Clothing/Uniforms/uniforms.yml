@@ -543,7 +543,7 @@
 - type: entity
   parent: UniformBase
   id: UniformResearchDirector
-  name: rd turtleneck
+  name: research director's turtleneck
   description: It's a turtleneck worn by those with the know-how to achieve the position of Research Director. Its fabric provides minor protection from biological contaminants.
   components:
   - type: Sprite
@@ -556,7 +556,7 @@
 - type: entity
   parent: UniformResearchDirector
   id: UniformResearchDirectorSkirt
-  name: rd skirtleneck
+  name: research director's skirtleneck
   desciption: It's a turtleneck worn by those with the know-how to achieve the position of Research Director. Its fabric provides minor protection from biological contaminants.
   components:
   - type: Sprite
@@ -591,6 +591,32 @@
   - type: Clothing
     ClothingPrefix: mime_skirt
     femaleMask: UniformTop
+
+- type: entity
+  parent: UniformBase
+  id: UniformChaplain
+  name: chaplain's jumpsuit
+  description: It's a black jumpsuit, often worn by religious folk.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/uniform_chaplain.rsi
+      state: icon
+
+    - type: Clothing
+      sprite: Clothing/Uniforms/uniform_chaplain.rsi
+
+- type: entity
+  parent: UniformChaplain
+  id: UniformChaplainSkirt
+  name: chaplain's jumpskirt
+  desciption: It's a black jumpskirt. If you wear this, you probably need religious help more than you will be providing it.
+  components:
+    - type: Sprite
+      state: chaplain_skirt
+
+    - type: Clothing
+      ClothingPrefix: chaplain_skirt
+      femaleMask: UniformTop
 
 - type: entity
   parent: UniformBase
