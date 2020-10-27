@@ -228,6 +228,26 @@
         public const float HumanProducedOxygen = HumanNeededOxygen * 0.75f;
 
         public const float HumanProducedCarbonDioxide = HumanNeededOxygen * 0.25f;
+
+        /// <summary>
+        ///     Pressure at which tanks start leaking.
+        /// </summary>
+        public const float TankLeakPressure =     30 * OneAtmosphere;
+
+        /// <summary>
+        ///     Pressure at which tank spills all contents into atmosphere.
+        /// </summary>
+        public const float TankRupturePressure =  40 * OneAtmosphere;
+
+        /// <summary>
+        ///     Base 3x3 explosion.
+        /// </summary>
+        public const float TankFragmentPressure = 50 * OneAtmosphere;
+
+        /// <summary>
+        ///     Increases explosion for each scale kPa above threshold.
+        /// </summary>
+        public const float TankFragmentScale =    10 * OneAtmosphere;
     }
 
     /// <summary>
