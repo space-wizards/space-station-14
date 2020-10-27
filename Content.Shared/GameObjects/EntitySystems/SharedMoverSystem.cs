@@ -77,7 +77,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             {
                 if (physics.TryGetController(out MoverController controller))
                 {
-                    controller.StopMoving(frameTime);
+                    controller.StopMoving();
                 }
             }
             else
