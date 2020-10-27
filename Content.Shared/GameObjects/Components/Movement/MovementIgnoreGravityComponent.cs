@@ -15,7 +15,6 @@ namespace Content.Shared.GameObjects.Components.Movement
 
     public static class GravityExtensions
     {
-        public static Action<IEntity,bool> ?OnWeightlessChanged;
         public static bool IsWeightless(this IEntity entity, IPhysicsManager? physicsManager = null)
         {
             physicsManager ??= IoCManager.Resolve<IPhysicsManager>();
