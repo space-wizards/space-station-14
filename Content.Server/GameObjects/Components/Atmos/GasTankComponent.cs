@@ -120,10 +120,10 @@ namespace Content.Server.GameObjects.Components.Atmos
             return gas;
         }
 
-        public GasMixture? RemoveAirVolume(float volume)
+        public GasMixture RemoveAirVolume(float volume)
         {
             if (Air == null)
-                return null;
+                return new GasMixture(volume);
 
             var tankPressure = Air.Pressure;
             if (tankPressure < OutputPressure)
@@ -133,7 +133,15 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
 
             var molesNeeded = OutputPressure * volume / (Atmospherics.R * Air.Temperature);
-            return RemoveAir(molesNeeded);
+
+            var air = RemoveAir(molesNeeded);
+
+            if (air != null)
+                air.Volume = volume;
+            else
+                return new GasMixture(volume);
+
+            return air;
         }
 
         public bool UseEntity(UseEntityEventArgs eventArgs)

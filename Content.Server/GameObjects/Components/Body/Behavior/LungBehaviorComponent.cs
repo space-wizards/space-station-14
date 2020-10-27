@@ -12,6 +12,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -155,11 +156,7 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
                              && breathTool.IsFunctional && internals.GasTankEntity.TryGetComponent(out GasTankComponent? gasTank)
                              && gasTank.Air != null)
             {
-                var air = gasTank.RemoveAirVolume(Atmospherics.BreathVolume);
-                if (air == null)
-                    return;
-
-                ToBloodstream(air);
+                Inhale(frameTime, gasTank.RemoveAirVolume(Atmospherics.BreathVolume));
                 return;
             }
 
@@ -173,8 +170,7 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
 
         public void Inhale(float frameTime, GasMixture from)
         {
-            var ratio = Atmospherics.BreathPercentage * frameTime;
-
+            var ratio = (Atmospherics.BreathVolume / from.Volume);
 
             Transfer(from, Air, ratio);
             ToBloodstream(Air);
