@@ -71,7 +71,7 @@
       layers:
         - state: default
         - state: assigned
-        - state: idsecurityofficer
+        - state: idwarden
 
     - type: PresetIdCard
       job: Warden
@@ -117,6 +117,20 @@
 
   - type: PresetIdCard
     job: CargoTechnician
+
+- type: entity
+  parent: IDCardStandard
+  id: QuartermasterIDCard
+  name: quartermaster ID card
+  components:
+    - type: Sprite
+      layers:
+        - state: default
+        - state: assigned
+        - state: idquartermaster
+
+    - type: PresetIdCard
+      job: Quartermaster
 
 - type: entity
   parent: IDCardStandard
