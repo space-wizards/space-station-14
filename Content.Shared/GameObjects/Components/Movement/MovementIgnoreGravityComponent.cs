@@ -22,7 +22,8 @@ namespace Content.Shared.GameObjects.Components.Movement
 
             bool isWeightless = !entity.HasComponent<MovementIgnoreGravityComponent>() &&
                    physicsManager.IsWeightless(entity.Transform.Coordinates);
-            OnWeightlessChanged?.Invoke(entity,isWeightless);
+            if(entity.TryGetComponent<SharedWeightlessStatusComponent> statusComp)
+                statusComp.UpdateStatus(isWeightless);
             return isWeightless;
         }
     }
