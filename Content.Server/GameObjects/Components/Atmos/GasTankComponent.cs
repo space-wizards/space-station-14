@@ -49,20 +49,39 @@ namespace Content.Server.GameObjects.Components.Atmos
         [ViewVariables] public GasMixture? Air { get; set; }
 
         /// <summary>
-        /// Maximum output pressure when valve is open. When tank is controlled
-        /// by internals component it has no effect.
+        ///     Distributed pressure.
         /// </summary>
         [ViewVariables] public float OutputPressure { get; private set; }
 
         /// <summary>
-        /// Tank is connected to external system and valve is controlled automatically
+        ///     Tank is connected to internals.
         /// </summary>
         [ViewVariables] public bool IsConnected { get; set; }
 
         /// <summary>
-        /// Represents that tank is functional and can be connected to internals
+        ///     Represents that tank is functional and can be connected to internals.
         /// </summary>
         public bool IsFunctional => GetInternalsComponent() != null;
+
+        /// <summary>
+        ///     Pressure at which tanks start leaking.
+        /// </summary>
+        public float TankLeakPressure { get; set; }     = 30 * Atmospherics.OneAtmosphere;
+
+        /// <summary>
+        ///     Pressure at which tank spills all contents into atmosphere.
+        /// </summary>
+        public float TankRupturePressure { get; set; }  = 40 * Atmospherics.OneAtmosphere;
+
+        /// <summary>
+        ///     Base 3x3 explosion.
+        /// </summary>
+        public float TankFragmentPressure { get; set; } = 50 * Atmospherics.OneAtmosphere;
+
+        /// <summary>
+        ///     Increases explosion for each scale kPa above threshold.
+        /// </summary>
+        public float TankFragmentScale { get; set; }    = 10 * Atmospherics.OneAtmosphere;
 
         public override void Initialize()
         {
@@ -84,9 +103,12 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             base.ExposeData(serializer);
 
-            serializer.DataReadWriteFunction("air", new GasMixture(), x => Air = x, () => Air);
-            serializer.DataReadWriteFunction("outputPressure", DefaultOutputPressure, x => OutputPressure = x,
-                () => OutputPressure);
+            serializer.DataField(this, x => x.Air, "air", new GasMixture());
+            serializer.DataField(this, x => x.OutputPressure, "outputPressure", DefaultOutputPressure);
+            serializer.DataField(this, x => x.TankLeakPressure, "tankLeakPressure", 30 * Atmospherics.OneAtmosphere);
+            serializer.DataField(this, x => x.TankRupturePressure, "tankRupturePressure", 40 * Atmospherics.OneAtmosphere);
+            serializer.DataField(this, x => x.TankFragmentPressure, "tankFragmentPressure", 50 * Atmospherics.OneAtmosphere);
+            serializer.DataField(this, x => x.TankFragmentScale, "tankFragmentScale", 10 * Atmospherics.OneAtmosphere);
             serializer.DataField(ref _pressureResistance, "pressureResistance", Atmospherics.OneAtmosphere * 5f);
         }
 
@@ -231,7 +253,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             var pressure = Air.Pressure;
 
-            if (pressure > Atmospherics.TankFragmentPressure)
+            if (pressure > TankFragmentPressure)
             {
                 // Give the gas a chance to build up more pressure.
                 for (var i = 0; i < 3; i++)
@@ -240,7 +262,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 }
 
                 pressure = Air.Pressure;
-                var range = (pressure - Atmospherics.TankFragmentPressure) / Atmospherics.TankFragmentScale;
+                var range = (pressure - TankFragmentPressure) / TankFragmentScale;
 
                 // Let's cap the explosion, yeah?
                 if (range > MaxExplosionRange)
@@ -254,7 +276,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 return;
             }
 
-            if (pressure > Atmospherics.TankRupturePressure)
+            if (pressure > TankRupturePressure)
             {
                 if (_integrity <= 0)
                 {
@@ -272,7 +294,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 return;
             }
 
-            if (pressure > Atmospherics.TankLeakPressure)
+            if (pressure > TankLeakPressure)
             {
                 if (_integrity <= 0)
                 {
