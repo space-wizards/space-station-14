@@ -92,11 +92,11 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddMarkup(Loc.GetString("Pressure: [color=orange]{0}[/color] kPa.",
+            message.AddMarkup(Loc.GetString("Pressure: [color=orange]{0}[/color] kPa.\n",
                 Math.Round(Air?.Pressure ?? 0)));
             if (IsConnected)
             {
-                message.AddMarkup(Loc.GetString("\nConnected to external component"));
+                message.AddMarkup(Loc.GetString("Connected to external component"));
             }
         }
 
