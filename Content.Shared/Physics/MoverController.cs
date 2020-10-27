@@ -12,6 +12,7 @@ namespace Content.Shared.Physics
 
         public void Move(Vector2 velocityDirection, float speed)
         {
+            // TODO: This is being double-checked 4 no raisin
             if (ControlledComponent?.Owner.IsWeightless() ?? false)
             {
                 return;
@@ -22,12 +23,12 @@ namespace Content.Shared.Physics
 
         public void Push(Vector2 velocityDirection, float speed)
         {
-            LinearVelocity = velocityDirection * speed;
+            ApplyAcceleration(velocityDirection * speed);
         }
 
         public void StopMoving()
         {
-            LinearVelocity = Vector2.Zero;
+            Stop();
         }
     }
 }
