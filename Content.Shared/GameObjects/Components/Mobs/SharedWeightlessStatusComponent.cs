@@ -1,4 +1,3 @@
-using Content.Shared.GameObjects.Components.Movement;
 using Robust.Shared.GameObjects;
 
 namespace Content.Shared.GameObjects.Components.Mobs

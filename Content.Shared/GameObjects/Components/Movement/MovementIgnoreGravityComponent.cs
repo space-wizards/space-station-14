@@ -1,5 +1,6 @@
 #nullable enable
 using System;
+using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Physics;
@@ -21,8 +22,10 @@ namespace Content.Shared.GameObjects.Components.Movement
 
             bool isWeightless = !entity.HasComponent<MovementIgnoreGravityComponent>() &&
                    physicsManager.IsWeightless(entity.Transform.Coordinates);
-            if(entity.TryGetComponent<SharedWeightlessStatusComponent> statusComp)
+            if(entity.TryGetComponent<SharedWeightlessStatusComponent>(out var statusComp))
+            {
                 statusComp.UpdateStatus(isWeightless);
+            }
             return isWeightless;
         }
     }
