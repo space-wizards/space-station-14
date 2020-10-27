@@ -2,7 +2,7 @@
   parent: Clothing
   id: IDCardStandard
   name: identification card
-  description: A card necessary to access various areas aboard the station
+  description: A card necessary to access various areas aboard the station.
   abstract: true
   components:
   - type: Sprite
@@ -284,4 +284,26 @@
   - type: IdCard
     jobTitle: Central Commander
   - type: Access
-    tags: ["Maintenance", "Cargo", "Engineering", "Medical", "Research", "Security", "Service", "Captain", "Command", "External", "HeadOfPersonnel", "Janitor", "Theatre"]
+    #GOD DEAR FUCKING GOD WE NEED AN ALL-ACCESS FLAG
+    tags:
+    - Maintenance
+    - Cargo
+    - Quartermaster
+    - Engineering
+    - ChiefEngineer
+    - Medical
+    - ChiefMedicalOfficer
+    - Research
+    - ResearchDirector
+    - Security
+    - Service
+    - Captain
+    - Command
+    - External
+    - HeadOfSecurity
+    - HeadOfPersonnel
+    - Bar
+    - Hydroponics
+    - Kitchen
+    - Janitor
+    - Theatre
