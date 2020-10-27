@@ -4,6 +4,8 @@
         "x": 32,
         "y": 32
     },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "https://github.com/tgstation/tgstation/commit/f2a314f575fd3ed9c6abf3b2cada6ebf5a8c1a4b",
     "states": [
         {
             "name": "chaplain_skirt-equipped-INNERCLOTHING",
