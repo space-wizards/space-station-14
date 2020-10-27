@@ -226,9 +226,11 @@ namespace Content.Server.GameObjects.Components.Atmos
             if (pressure > Atmospherics.TankFragmentPressure)
             {
                 // Give the gas a chance to build up more pressure.
-                Air.React(this);
-                Air.React(this);
-                Air.React(this);
+                for (var i = 0; i < 3; i++)
+                {
+                    Air.React(this);
+                }
+
                 pressure = Air.Pressure;
                 var range = (pressure - Atmospherics.TankFragmentPressure) / Atmospherics.TankFragmentScale;
 
