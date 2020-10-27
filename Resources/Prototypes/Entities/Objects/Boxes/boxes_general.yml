@@ -91,7 +91,7 @@
   - type: StorageFill
     contents:
       - name: BreathMaskClothing
-      - name: EmergencyOxygenTank
+      - name: EmergencyOxygenTankFilled
       #- name: Injector
   - type: Sprite
     layers:
