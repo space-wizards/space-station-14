@@ -15,7 +15,14 @@ namespace Content.Server.GameObjects.Components.Body.Respiratory
 
         public void DisconnectBreathTool()
         {
+            var old = BreathToolEntity;
             BreathToolEntity = null;
+
+            if (old != null && old.TryGetComponent(out BreathToolComponent? breathTool) )
+            {
+                breathTool.DisconnectInternals();
+                DisconnectTank();
+            }
         }
 
         public void ConnectBreathTool(IEntity toolEntity)
@@ -30,16 +37,26 @@ namespace Content.Server.GameObjects.Components.Body.Respiratory
 
         public void DisconnectTank()
         {
+            if (GasTankEntity != null && GasTankEntity.TryGetComponent(out GasTankComponent? tank))
+            {
+                tank.DisconnectFromInternals(Owner);
+            }
+
             GasTankEntity = null;
         }
 
-        public void ConnectTank(IEntity tankEntity)
+        public bool TryConnectTank(IEntity tankEntity)
         {
+            if (BreathToolEntity == null)
+                return false;
+
             if (GasTankEntity != null && GasTankEntity.TryGetComponent(out GasTankComponent? tank))
             {
-                tank.DisconnectFromInternals();
+                tank.DisconnectFromInternals(Owner);
             }
+
             GasTankEntity = tankEntity;
+            return true;
         }
 
     }

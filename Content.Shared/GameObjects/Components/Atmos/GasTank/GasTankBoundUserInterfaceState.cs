@@ -9,8 +9,6 @@ namespace Content.Shared.GameObjects.Components.Atmos.GasTank
     {
         public float TankPressure { get; set; }
         public float? OutputPressure { get; set; }
-        public bool ValveOpen { get; set; }
-
         public bool InternalsConnected { get; set; }
         public bool CanConnectInternals { get; set; }
 

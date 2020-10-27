@@ -21,12 +21,6 @@ namespace Content.Client.UserInterface.Atmos.GasTank
             SendMessage(new GasTankSetPressureMessage {Pressure = value});
         }
 
-        public void ToggleValve()
-        {
-            SendMessage(new GasTankToggleValveMessage());
-        }
-
-
         public void ToggleInternals()
         {
             SendMessage(new GasTankToggleInternalsMessage());

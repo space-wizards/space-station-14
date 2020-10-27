@@ -23,11 +23,9 @@ namespace Content.Client.UserInterface.Atmos.GasTank
 
         private readonly IResourceCache _resourceCache = default!;
         private readonly RichTextLabel _lblPressure;
-        private readonly RichTextLabel _lblValve;
         private readonly FloatSpinBox _spbPressure;
         private readonly RichTextLabel _lblInternals;
         private readonly Button _btnInternals;
-        private readonly Button _btnValve;
 
         public GasTankWindow(GasTankBoundUserInterface owner)
         {
@@ -154,23 +152,6 @@ namespace Content.Client.UserInterface.Atmos.GasTank
             _lblPressure = new RichTextLabel();
             _contentContainer.AddChild(_lblPressure);
 
-            // valve
-            _lblValve = new RichTextLabel {CustomMinimumSize = (200, 0), SizeFlagsVertical = SizeFlags.ShrinkCenter};
-            _btnValve = new Button {Text = Loc.GetString("Toggle")};
-
-            _contentContainer.AddChild(
-                new MarginContainer
-                {
-                    MarginTopOverride = 7,
-                    Children =
-                    {
-                        new HBoxContainer
-                        {
-                            Children = {_lblValve, _btnValve}
-                        }
-                    }
-                });
-
             //internals
             _lblInternals = new RichTextLabel
                 {CustomMinimumSize = (200, 0), SizeFlagsVertical = SizeFlags.ShrinkCenter};
@@ -214,12 +195,7 @@ namespace Content.Client.UserInterface.Atmos.GasTank
                 }
             );
 
-            // handlers
-            _btnValve.OnPressed += args =>
-            {
-                _owner.ToggleValve();
-            };
-
+            // Handlers
             _spbPressure.OnValueChanged += args =>
             {
                 _owner.SetOutputPressure(args.Value);
@@ -236,29 +212,7 @@ namespace Content.Client.UserInterface.Atmos.GasTank
         public void UpdateState(GasTankBoundUserInterfaceState state)
         {
             _lblPressure.SetMarkup(Loc.GetString("Pressure: {0:0.##} kPa", state.TankPressure));
-            var valveColor = string.Empty;
-            var valveText = string.Empty;
-            switch (state.InternalsConnected)
-            {
-                case false when state.ValveOpen:
-                    valveColor = "green";
-                    valveText = "Open";
-                    break;
-                case false when !state.ValveOpen:
-                    valveColor = "red";
-                    valveText = "Closed";
-                    break;
-                case true:
-                    valveColor = "orange";
-                    valveText = "Automatic";
-                    break;
-            }
-
-            ;
-            _btnValve.Disabled = state.InternalsConnected;
             _btnInternals.Disabled = !state.CanConnectInternals;
-            _lblValve.SetMarkup(Loc.GetString("Valve: [color={0}]{1}[/color]", valveColor,
-                valveText));
             _lblInternals.SetMarkup(Loc.GetString("Internals: [color={0}]{1}[/color]",
                 state.InternalsConnected ? "green" : "red",
                 state.InternalsConnected ? "Connected" : "Disconnected"));

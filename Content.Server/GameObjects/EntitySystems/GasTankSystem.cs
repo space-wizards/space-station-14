@@ -1,6 +1,7 @@
 using System;
 using Content.Server.GameObjects.Components.Atmos;
 using JetBrains.Annotations;
+using Robust.Shared.GameObjects.EntitySystemMessages;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
