@@ -3,12 +3,9 @@
   abstract: true
   id: GasTankBase
   name: Gas Tank
-  description: It's a gas tank. It has gas.
+  description: It's a gas tank. It contains gas.
   components:
     - type: Sprite
-      sprite: Objects/Tanks/generic.rsi
-      state: icon
-    - type: Icon
       sprite: Objects/Tanks/generic.rsi
       state: icon
     - type: UserInterface
@@ -17,53 +14,175 @@
           type: GasTankBoundUserInterface
     - type: Clothing
       sprite: Objects/Tanks/generic.rsi
+      QuickEquip: false
       Slots:
-        - back
+        - Back
+        - Belt
+    - type: GasTank
 
 - type: entity
   id: OxygenTank
   parent: GasTankBase
-  name: Oxygen Tank
+  name: oxygen tank
+  description: A tank of oxygen.
   components:
+    - type: Sprite
+      sprite: Objects/Tanks/oxygen.rsi
+      state: icon
     - type: GasTank
+      outputPressure: 21.27825
       air:
-        volume: 1
+        volume: 70
         moles:
-          - 1   #oxy
-          - 0   #nitrogen
-          - 0   #co2
-          - 0   #phoron
-          - 0   #tritium
-          - 0   #water vapor
-        molesArchived:
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
+          - 22.6293856 # oxygen
         temperature: 293.15
+    - type: Clothing
+      sprite: Objects/Tanks/oxygen.rsi
+      Slots:
+        - Back
+        - Belt
 
 - type: entity
-  id: PlasmaTank
-  parent: GasTankBase
-  name: Plasma Tank
+  id: YellowOxygenTank
+  parent: OxygenTank
+  name: oxygen tank
+  description: A tank of oxygen. This one is in yellow.
   components:
+    - type: Sprite
+      sprite: Objects/Tanks/yellow.rsi
+      state: icon
+    - type: Clothing
+      sprite: Objects/Tanks/yellow.rsi
+      Slots:
+        - Back
+        - Belt
+
+- type: entity
+  id: RedOxygenTank
+  parent: OxygenTank
+  name: oxygen tank
+  description: A tank of oxygen. This one is in yellow.
+  components:
+    - type: Sprite
+      sprite: Objects/Tanks/red.rsi
+      state: icon
+    - type: Clothing
+      sprite: Objects/Tanks/red.rsi
+      Slots:
+        - Back
+        - Belt
+
+- type: entity
+  id: EmergencyOxygenTank
+  parent: OxygenTank
+  name: emergency oxygen tank
+  description: Used for emergencies. Contains very little oxygen, so try to conserve it until you actually need it.
+  components:
+    - type: Sprite
+      sprite: Objects/Tanks/emergency.rsi
+      state: icon
     - type: GasTank
+      outputPressure: 21.27825
+      air:
+        volume: 2
+        moles:
+          - 0.323460326 # oxygen
+        temperature: 293.15
+    - type: Clothing
+      sprite: Objects/Tanks/emergency.rsi
+      Slots:
+        - Back
+        - Pocket
+        - Belt
+
+- type: entity
+  id: ExtendedEmergencyOxygenTank
+  parent: EmergencyOxygenTank
+  name: extended-capacity emergency oxygen tank
+  description: Used for emergencies. Contains very little oxygen, so try to conserve it until you actually need it.
+  components:
+    - type: Sprite
+      sprite: Objects/Tanks/emergency_yellow.rsi
+      state: icon
+    - type: GasTank
+      outputPressure: 21.27825
+      air:
+        volume: 6
+        moles:
+          - 0.969830813 # oxygen
+        temperature: 293.15
+    - type: Clothing
+      sprite: Objects/Tanks/emergency_yellow.rsi
+      Slots:
+        - Back
+        - Pocket
+        - Belt
+
+- type: entity
+  id: DoubleEmergencyOxygenTank
+  parent: ExtendedEmergencyOxygenTank
+  name: double emergency oxygen tank
+  description: Used for emergencies. Contains very little oxygen, so try to conserve it until you actually need it.
+  components:
+    - type: Sprite
+      sprite: Objects/Tanks/emergency_double.rsi
+      state: icon
+    - type: GasTank
+      outputPressure: 21.27825
       air:
         volume: 10
         moles:
-          - 0   #oxy
-          - 0   #nitrogen
-          - 0   #co2
-          - 50  #phoron
-          - 0   #tritium
-          - 0   #water vapor
-        molesArchived:
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
+          - 1.61721219 # oxygen
         temperature: 293.15
+    - type: Clothing
+      sprite: Objects/Tanks/emergency_double.rsi
+      Slots:
+        - Back
+        - Pocket
+        - Belt
+
+- type: entity
+  id: AirTank
+  parent: GasTankBase
+  name: air tank
+  description: Mixed anyone?
+  components:
+    - type: Sprite
+      sprite: Objects/Tanks/generic.rsi
+      state: icon
+    - type: GasTank
+      outputPressure: 21.27825
+      air:
+        volume: 70
+        moles:
+          - 4.75217098 # oxygen
+          - 17.8772147 # nitrogen
+        temperature: 293.15
+    - type: Clothing
+      sprite: Objects/Tanks/generic.rsi
+      Slots:
+        - Back
+        - Belt
+
+- type: entity
+  id: PhoronTank
+  parent: GasTankBase
+  name: phoron tank
+  description: "Contains dangerous phoron. Do not inhale. Warning: extremely flammable."
+  components:
+    - type: Sprite
+      sprite: Objects/Tanks/phoron.rsi
+      state: icon
+    - type: GasTank
+      outputPressure: 101.325
+      air:
+        volume: 70
+        moles:
+          - 0
+          - 0
+          - 0
+          - 11.3146928 # phoron
+        temperature: 293.15
+    - type: Clothing
+      sprite: Objects/Tanks/phoron.rsi
+      Slots: [] # no straps

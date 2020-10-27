@@ -33,7 +33,8 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Atmos
 {
     [RegisterComponent]
-    public class GasTankComponent : SharedGasTankComponent, IExamine, IGasMixtureHolder, IUse, IDropped
+    [ComponentReference(typeof(IActivate))]
+    public class GasTankComponent : SharedGasTankComponent, IExamine, IGasMixtureHolder, IUse, IDropped, IActivate
     {
     	private const float MaxExplosionRange = 14f;
         private const float DefaultOutputPressure = Atmospherics.OneAtmosphere;
@@ -140,6 +141,12 @@ namespace Content.Server.GameObjects.Components.Atmos
             if (!eventArgs.User.TryGetComponent(out IActorComponent? actor)) return false;
             OpenInterface(actor.playerSession);
             return true;
+        }
+
+        public void Activate(ActivateEventArgs eventArgs)
+        {
+            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor)) return;
+            OpenInterface(actor.playerSession);
         }
 
         public void ConnectToInternals()
