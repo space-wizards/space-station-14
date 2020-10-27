@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Body.Respiratory;
@@ -29,9 +29,15 @@ namespace Content.Server.GameObjects.Components.Atmos
     [RegisterComponent]
     public class GasTankComponent : SharedGasTankComponent, IExamine, IGasMixtureHolder, IUnequipped, IUse, IEquipped
     {
+    	private const float MaxExplosionRange = 14f;
         private const float DefaultOutputPressure = 303.3f;
         private const float DefaultNozzleArea = 0.00039f;
 
+		private float _pressureResistance;
+        private float _distributePressure;
+
+        private int _integrity = 3;
+        
         /// <summary>
         /// Tank is functional only in allowed slots
         /// </summary>
@@ -98,6 +104,8 @@ namespace Content.Server.GameObjects.Components.Atmos
             serializer.DataField(ref _allowedSlots, "allowedSlots",
                 EquipmentSlotDefines.SlotFlags.BACKPACK | EquipmentSlotDefines.SlotFlags.POCKET |
                 EquipmentSlotDefines.SlotFlags.BELT);
+			serializer.DataField(ref _pressureResistance, "pressureResistance", Atmospherics.OneAtmosphere * 5f);
+            serializer.DataField(ref _distributePressure, "distributePressure", Atmospherics.OneAtmosphere);
         }
 
         public void SetValveState(bool valveState)
@@ -121,6 +129,8 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public void Update(float deltaTime)
         {
+        	Air?.React(this);
+            CheckStatus();
             EmitContents(deltaTime);
             UpdateUserInterface();
         }
@@ -253,6 +263,81 @@ namespace Content.Server.GameObjects.Components.Atmos
                    mixtureMolarMass;
         }
 
+		public void AssumeAir(GasMixture giver)
+        {
+            Air.Merge(giver);
+
+            CheckStatus();
+        }
+
+        private void CheckStatus()
+        {
+            if (Air == null)
+                return;
+
+            var pressure = Air.Pressure;
+
+            if (pressure > Atmospherics.TankFragmentPressure)
+            {
+                // Give the gas a chance to build up more pressure.
+                Air.React(this);
+                Air.React(this);
+                Air.React(this);
+                pressure = Air.Pressure;
+                var range = (pressure - Atmospherics.TankFragmentPressure) / Atmospherics.TankFragmentScale;
+
+                // Let's cap the explosion, yeah?
+                if (range > MaxExplosionRange)
+                {
+                    range = MaxExplosionRange;
+                }
+
+                Owner.SpawnExplosion((int) (range * 0.25f), (int) (range * 0.5f), (int) (range * 1.5f), 1);
+
+                Owner.Delete();
+                return;
+            }
+
+            if (pressure > Atmospherics.TankRupturePressure)
+            {
+                if (_integrity <= 0)
+                {
+                    var tileAtmos = Owner.Transform.Coordinates.GetTileAtmosphere();
+                    tileAtmos?.AssumeAir(Air);
+
+                    EntitySystem.Get<AudioSystem>().PlayAtCoords("Audio/Effects/spray.ogg", Owner.Transform.Coordinates,
+                        AudioHelpers.WithVariation(0.125f));
+
+                    Owner.Delete();
+                    return;
+                }
+
+                _integrity--;
+                return;
+            }
+
+            if (pressure > Atmospherics.TankLeakPressure)
+            {
+                if (_integrity <= 0)
+                {
+                    var tileAtmos = Owner.Transform.Coordinates.GetTileAtmosphere();
+                    if (tileAtmos == null)
+                        return;
+
+                    var leakedGas = Air.RemoveRatio(0.25f);
+                    tileAtmos.AssumeAir(leakedGas);
+                } else
+                {
+                    _integrity--;
+                }
+
+                return;
+            }
+
+            if (_integrity < 3)
+                _integrity++;
+        }
+        
         /// <summary>
         /// Open interaction window
         /// </summary>

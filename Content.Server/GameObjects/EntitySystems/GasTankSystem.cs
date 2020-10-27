@@ -1,28 +1,31 @@
-﻿using Content.Server.GameObjects.Components.Atmos;
+using System;
+using Content.Server.GameObjects.Components.Atmos;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.Timing;
+using Robust.Shared.IoC;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    public class GasTankSystem: EntitySystem
+    public class GasTankSystem : EntitySystem
     {
-        private const float TimePerUpdate = 1f;
-
-        private float _timer;
+        private float _timer = 0f;
+        private const float Interval = 0.5f;
 
         public override void Update(float frameTime)
         {
+            base.Update(frameTime);
+
             _timer += frameTime;
-            if (_timer < TimePerUpdate) return;
 
-            foreach (var gasTankComponent in ComponentManager.EntityQuery<GasTankComponent>())
-            {
-                gasTankComponent.Update(_timer);
-            }
-
+            if (_timer < Interval) return;
             _timer = 0f;
-        }
 
+            foreach (var gasTank in EntityManager.ComponentManager.EntityQuery<GasTankComponent>())
+            {
+                gasTank.Update();
+            }
+        }
     }
 }
