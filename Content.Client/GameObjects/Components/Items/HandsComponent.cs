@@ -19,6 +19,8 @@ namespace Content.Client.GameObjects.Components.Items
     {
         [Dependency] private readonly IGameHud _gameHud = default!;
 
+        private HandsGui? _gui;
+
         private readonly List<Hand> _hands = new List<Hand>();
 
         [ViewVariables] public IReadOnlyList<Hand> Hands => _hands;
@@ -28,8 +30,6 @@ namespace Content.Client.GameObjects.Components.Items
         [ViewVariables] private ISpriteComponent? _sprite;
 
         [ViewVariables] public IEntity? ActiveHand => GetEntity(ActiveIndex);
-
-        public HandsGui? Gui { get; private set; }
 
         private void AddHand(Hand hand)
         {
@@ -60,7 +60,7 @@ namespace Content.Client.GameObjects.Components.Items
         {
             base.OnRemove();
 
-            Gui?.Dispose();
+            _gui?.Dispose();
         }
 
         public override void Initialize()
@@ -111,14 +111,14 @@ namespace Content.Client.GameObjects.Components.Items
                 if (cast.Hands.All(newHand => newHand.Name != currentHand.Name))
                 {
                     _hands.Remove(currentHand);
-                    Gui?.RemoveHand(currentHand);
+                    _gui?.RemoveHand(currentHand);
                     HideHand(currentHand);
                 }
             }
 
             ActiveIndex = cast.ActiveIndex;
 
-            Gui?.UpdateHandIcons();
+            _gui?.UpdateHandIcons();
             RefreshInHands();
         }
 
@@ -186,20 +186,20 @@ namespace Content.Client.GameObjects.Components.Items
             switch (message)
             {
                 case PlayerAttachedMsg _:
-                    if (Gui == null)
+                    if (_gui == null)
                     {
-                        Gui = new HandsGui();
+                        _gui = new HandsGui();
                     }
                     else
                     {
-                        Gui.Parent?.RemoveChild(Gui);
+                        _gui.Parent?.RemoveChild(_gui);
                     }
 
-                    _gameHud.HandsContainer.AddChild(Gui);
-                    Gui.UpdateHandIcons();
+                    _gameHud.HandsContainer.AddChild(_gui);
+                    _gui.UpdateHandIcons();
                     break;
                 case PlayerDetachedMsg _:
-                    Gui?.Parent?.RemoveChild(Gui);
+                    _gui?.Parent?.RemoveChild(_gui);
                     break;
                 case HandEnabledMsg msg:
                 {
