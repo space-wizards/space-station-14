@@ -7,7 +7,6 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_steel
-
   - type: FloorTile
     output: floor_steel
   - type: Stack
@@ -25,23 +24,6 @@
     HeldPrefix: tile_steel
 
 - type: entity
-  name: carpet floor tile
-  parent: FloorTileItemBase
-  id: FloorTileItemCarpet
-  components:
-  - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_carpet
-
-  - type: Item
-    sprite: Objects/Tiles/tile.rsi
-    HeldPrefix: tile_carpet
-  - type: FloorTile
-    output: floor_carpet
-  - type: Stack
-    stacktype: FloorTileCarpet
-
-- type: entity
   name: wood floor tile
   parent: FloorTileItemBase
   id: FloorTileItemWood
@@ -49,7 +31,6 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_wood
-
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_wood
@@ -68,7 +49,6 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_white
-
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_white
@@ -87,7 +67,6 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_dark
-
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_dark
@@ -106,7 +85,6 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_dark_techfloor_grid
-
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_dark
@@ -121,7 +99,6 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_showroom
-
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_showroom
@@ -136,7 +113,6 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_showroom
-
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_showroom
@@ -151,7 +127,6 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_snow
-
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_silver
@@ -166,7 +141,6 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_gcircuit
-
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_silver
@@ -181,7 +155,6 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_gold
-
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_gold
@@ -196,7 +169,6 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_reinforced
-
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_reinforced
@@ -211,7 +183,6 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_rockvault
-
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_steel
@@ -226,7 +197,6 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_white_monofloor
-
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_steel
@@ -241,7 +211,6 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_white_monofloor
-
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_steel
@@ -256,7 +225,6 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_white
-
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_brown
@@ -271,7 +239,6 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_hydro
-
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_hydro
@@ -286,7 +253,6 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_dirty
-
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_brown
