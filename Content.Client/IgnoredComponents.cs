@@ -206,7 +206,11 @@
             "ParticleAcceleratorEmitter",
             "ParticleAcceleratorEndCap",
             "ParticleAcceleratorFuelChamber",
-            "ParticleAcceleratorPowerBox"
+            "ParticleAcceleratorPowerBox",
+            "BodyBagEntityStorage",
+            "MorgueEntityStorage",
+            "MorgueTray",
+            "CrematoriumEntityStorage",
         };
     }
 }
