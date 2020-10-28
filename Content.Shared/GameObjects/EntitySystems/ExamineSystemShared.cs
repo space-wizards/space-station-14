@@ -92,12 +92,12 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             foreach (var result in rayResults)
             {
-                if (!result.HitEntity.TryGetComponent(out IPhysicsComponent p))
+                if (!result.HitEntity.TryGetComponent(out OccluderComponent o))
                 {
                     continue;
                 }
 
-                var bBox = p.WorldAABB;
+                var bBox = o.BoundingBox.Translated(o.Owner.Transform.WorldPosition);
 
                 if (bBox.Contains(origin.Position) || bBox.Contains(other.Position))
                 {

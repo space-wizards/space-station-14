@@ -3,6 +3,7 @@ using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Physics;
@@ -134,12 +135,12 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             foreach (var result in rayResults)
             {
-                if (!result.HitEntity.TryGetComponent(out OccluderComponent o))
+                if (!result.HitEntity.TryGetComponent(out IPhysicsComponent p))
                 {
                     continue;
                 }
 
-                var bBox = o.BoundingBox.Translated(o.Owner.Transform.WorldPosition);
+                var bBox = p.WorldAABB;
 
                 if (bBox.Contains(origin.Position) || bBox.Contains(other.Position))
                 {
