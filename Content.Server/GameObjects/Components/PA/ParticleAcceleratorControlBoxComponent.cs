@@ -381,11 +381,14 @@ namespace Content.Server.GameObjects.Components.PA
             _partEmitterRight = null;
 
             // Find fuel chamber first by scanning cardinals.
-            foreach (var maybeFuel in SnapGrid!.GetCardinalNeighborCells())
+            if (SnapGrid != null)
             {
-                if (maybeFuel.Owner.TryGetComponent(out _partFuelChamber))
+                foreach (var maybeFuel in SnapGrid.GetCardinalNeighborCells())
                 {
-                    break;
+                    if (maybeFuel.Owner.TryGetComponent(out _partFuelChamber))
+                    {
+                        break;
+                    }
                 }
             }
 

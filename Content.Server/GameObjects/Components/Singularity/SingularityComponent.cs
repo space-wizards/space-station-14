@@ -1,6 +1,7 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.GameObjects.Components.StationEvents;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.EntitySystemMessages;
@@ -84,7 +85,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                 _spriteComponent?.LayerSetRSI(0, "Effects/Singularity/singularity_" + _level + ".rsi");
                 _spriteComponent?.LayerSetState(0, "singularity_" + _level);
 
-                if(_collidableComponent != null && _collidableComponent.PhysicsShapes[0] is PhysShapeCircle circle)
+                if(_collidableComponent != null && _collidableComponent.PhysicsShapes.Any() && _collidableComponent.PhysicsShapes[0] is PhysShapeCircle circle)
                 {
                     circle.Radius = _level - 0.5f;
                 }

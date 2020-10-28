@@ -22,8 +22,7 @@ namespace Content.Server.GameObjects.Components.PA
                 return;
             }
 
-            Logger.Error($"ParticleAcceleratorPowerBoxComponent Component initialized without PowerConsumerComponent. Deleting entity {Owner}.");
-            Owner.Delete();
+            Logger.Error($"ParticleAcceleratorPowerBoxComponent Component initialized without PowerConsumerComponent.");
         }
 
         private void PowerReceivedChanged(object? sender, ReceivedPowerChangedEventArgs e)
