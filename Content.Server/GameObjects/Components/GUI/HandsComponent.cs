@@ -4,12 +4,10 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Content.Shared.GameObjects.Components.Items;
-using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Physics.Pull;
 using Robust.Server.GameObjects;
@@ -18,7 +16,6 @@ using Robust.Server.GameObjects.EntitySystemMessages;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
@@ -26,7 +23,6 @@ using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
-using Content.Server.GameObjects.Components.Pulling;
 using Robust.Shared.Map;
 
 namespace Content.Server.GameObjects.Components.GUI
@@ -119,7 +115,8 @@ namespace Content.Server.GameObjects.Components.GUI
             : GetItem(ActiveHand);
 
         /// <summary>
-        ///     Enumerates over the hand keys, returning the active hand first.
+        ///     Enumerates over the enabled hand keys,
+        ///     returning the active hand first.
         /// </summary>
         public IEnumerable<string> ActivePriorityEnumerable()
         {
@@ -131,6 +128,11 @@ namespace Content.Server.GameObjects.Components.GUI
             foreach (var hand in _hands)
             {
                 if (hand.Name == ActiveHand)
+                {
+                    continue;
+                }
+
+                if (!hand.Enabled)
                 {
                     continue;
                 }
@@ -205,7 +207,11 @@ namespace Content.Server.GameObjects.Components.GUI
             if (mobCheck && !ActionBlockerSystem.CanPickup(Owner))
                 return false;
 
-            return GetHand(index)?.Container.CanInsert(item.Owner) == true;
+            var hand = GetHand(index);
+
+            return hand != null &&
+                   hand.Enabled &&
+                   hand.Container.CanInsert(item.Owner) == true;
         }
 
         /// <summary>
@@ -411,7 +417,7 @@ namespace Content.Server.GameObjects.Components.GUI
             }
 
             var container = ContainerManagerComponent.Create<ContainerSlot>($"hand {_nextHand++}", Owner);
-            var hand = new Hand(name, container);
+            var hand = new Hand(this, name, container);
 
             _hands.Add(hand);
 
@@ -513,6 +519,53 @@ namespace Content.Server.GameObjects.Components.GUI
             }
 
             return false;
+        }
+
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+
+            if (message is PullMessage pullMessage &&
+                pullMessage.Puller.Owner != Owner)
+            {
+                return;
+            }
+
+            switch (message)
+            {
+                case PullAttemptMessage msg:
+                    if (!_hands.Any(hand => hand.Enabled))
+                    {
+                        msg.Cancelled = true;
+                    }
+
+                    break;
+                case PullStartedMessage _:
+                    var firstFreeHand = _hands.FirstOrDefault(hand => hand.Enabled);
+
+                    if (firstFreeHand == null)
+                    {
+                        break;
+                    }
+
+                    firstFreeHand.Enabled = false;
+
+                    break;
+                case PullStoppedMessage _:
+                    var firstOccupiedHand = _hands.FirstOrDefault(hand => !hand.Enabled);
+
+                    if (firstOccupiedHand == null)
+                    {
+                        break;
+                    }
+
+                    firstOccupiedHand.Enabled = true;
+
+                    break;
+                case HandDisabledMsg msg:
+                    Drop(msg.Name, false);
+                    break;
+            }
         }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
@@ -625,34 +678,6 @@ namespace Content.Server.GameObjects.Components.GUI
             }
         }
 
-        private void AddPullingStatuses(IEntity pulled)
-        {
-            if (pulled.TryGetComponent(out ServerStatusEffectsComponent? pulledStatus))
-            {
-                pulledStatus.ChangeStatusEffectIcon(StatusEffect.Pulled,
-                    "/Textures/Interface/StatusEffects/Pull/pulled.png");
-            }
-
-            if (Owner.TryGetComponent(out ServerStatusEffectsComponent? ownerStatus))
-            {
-                ownerStatus.ChangeStatusEffectIcon(StatusEffect.Pulling,
-                    "/Textures/Interface/StatusEffects/Pull/pulling.png");
-            }
-        }
-
-        private void RemovePullingStatuses(IEntity pulled)
-        {
-            if (pulled.TryGetComponent(out ServerStatusEffectsComponent? pulledStatus))
-            {
-                pulledStatus.RemoveStatusEffect(StatusEffect.Pulled);
-            }
-
-            if (Owner.TryGetComponent(out ServerStatusEffectsComponent? ownerStatus))
-            {
-                ownerStatus.RemoveStatusEffect(StatusEffect.Pulling);
-            }
-        }
-
         void IBodyPartAdded.BodyPartAdded(BodyPartAddedEventArgs args)
         {
             if (args.Part.PartType != BodyPartType.Hand)
@@ -676,15 +701,41 @@ namespace Content.Server.GameObjects.Components.GUI
 
     public class Hand : IDisposable
     {
-        public Hand(string name, ContainerSlot container)
+        private bool _enabled = true;
+
+        public Hand(HandsComponent parent, string name, ContainerSlot container)
         {
+            Parent = parent;
             Name = name;
             Container = container;
         }
 
+        private HandsComponent Parent { get; }
         public string Name { get; }
         public IEntity? Entity => Container.ContainedEntity;
         public ContainerSlot Container { get; }
+
+        public bool Enabled
+        {
+            get => _enabled;
+            set
+            {
+                if (_enabled == value)
+                {
+                    return;
+                }
+
+                _enabled = value;
+                Parent.Dirty();
+
+                var message = value
+                    ? (ComponentMessage) new HandEnabledMsg(Name)
+                    : new HandDisabledMsg(Name);
+
+                Parent.HandleMessage(message, Parent);
+                Parent.Owner.SendMessage(Parent, message);
+            }
+        }
 
         public void Dispose()
         {
@@ -693,7 +744,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public SharedHand ToShared(int index, HandLocation location)
         {
-            return new SharedHand(index, Name, Entity?.Uid, location);
+            return new SharedHand(index, Name, Entity?.Uid, location, Enabled);
         }
     }
 

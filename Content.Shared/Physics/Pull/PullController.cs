@@ -100,6 +100,22 @@ namespace Content.Shared.Physics.Pull
                 return false;
             }
 
+            var pullAttempt = new PullAttemptMessage(puller, ControlledComponent);
+
+            puller.Owner.SendMessage(null, pullAttempt);
+
+            if (pullAttempt.Cancelled)
+            {
+                return false;
+            }
+
+            ControlledComponent.Owner.SendMessage(null, pullAttempt);
+
+            if (pullAttempt.Cancelled)
+            {
+                return false;
+            }
+
             _puller = puller;
 
             var message = new PullStartedMessage(this, _puller, ControlledComponent);
