@@ -4,6 +4,7 @@ using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
+using NFluidsynth;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
@@ -16,6 +17,7 @@ using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
+using Logger = Robust.Shared.Log.Logger;
 
 namespace Content.Shared.GameObjects.EntitySystems
 {
@@ -52,7 +54,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             base.Shutdown();
         }
 
-        protected void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, IPhysicsComponent physics)
+        protected void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, IPhysicsComponent physics, float frameTime)
         {
             physics.EnsureController<MoverController>();
 
@@ -77,7 +79,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             {
                 if (physics.TryGetController(out MoverController controller))
                 {
-                    controller.StopMoving();
+                    controller.ApplyForce(Vector2.Zero);
                 }
             }
             else
@@ -94,11 +96,20 @@ namespace Content.Shared.GameObjects.EntitySystems
                 }
 
                 var total = walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed;
+                // var drag_coeff = 25f;
+                // var thrust = (mover.CurrentWalkSpeed + mover.CurrentSprintSpeed) * drag_coeff;
+                // var force = (walkDir + sprintDir) * thrust;
+                // var drag = -physics.LinearVelocity * drag_coeff;
+                // force += drag;
+                // var acceleration = thrust / physics.Mass;
+                // physics.LinearVelocity += acceleration;
+
 
                 {
                     if (physics.TryGetController(out MoverController controller))
                     {
-                        controller.Move(total, 1);
+                        //controller.Move(total, 1);
+                        controller.ApplyForce(walkDir + sprintDir);
                     }
                 }
 
