@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using System;
 using System.Diagnostics;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects.Components.UserInterface;
@@ -23,6 +24,7 @@ namespace Content.Client.GameObjects.Components.Atmos
 
         }
 
+
         /// <summary>
         /// When a button is pressed, send a network message to the server
         /// </summary>
@@ -32,6 +34,7 @@ namespace Content.Client.GameObjects.Components.Atmos
             SendMessage(new UiButtonPressedMessage(button));
         }
 
+
         /// <summary>
         /// When the release pressure is changed
         /// </summary>
@@ -40,6 +43,7 @@ namespace Content.Client.GameObjects.Components.Atmos
         {
             SendMessage(new ReleasePressureButtonPressedMessage(value));
         }
+
 
         protected override void Open()
         {
@@ -57,11 +61,15 @@ namespace Content.Client.GameObjects.Components.Atmos
                 btn.OnPressed += _ => ReleasePressureButtonPressed(btn.PressureChange);
             }
 
-            // Bind internal events
+            // Bind events
             _window.EditLabelBtn.OnPressed += _ => EditLabel();
+            _window.ToggleValve.OnPressed += _ => ToggleValve();
         }
 
 
+        /// <summary>
+        /// Called when the edit label button is pressed
+        /// </summary>
         private void EditLabel()
         {
             // Obligatory check because bool isn't nullable
@@ -84,6 +92,16 @@ namespace Content.Client.GameObjects.Components.Atmos
         }
 
 
+        private void ToggleValve()
+        {
+            SendMessage(new UiButtonPressedMessage(UiButton.ValveToggle));
+        }
+
+
+        /// <summary>
+        /// Update the UI state based on server-sent info
+        /// </summary>
+        /// <param name="state"></param>
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);

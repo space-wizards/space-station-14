@@ -14,13 +14,14 @@ using Content.Shared.GameObjects.Components.Atmos;
 namespace Content.Client.GameObjects.Components.Atmos
 {
     /// <summary>
-    /// Client-side UI used to control a <see cref="SharedDisposalUnitComponent"/>
+    /// Client-side UI used to control a <see cref="SharedGasCanisterComponent"/>
     /// </summary>
     public class GasCanisterWindow : SS14Window
     {
         private readonly Label _pressure;
         private readonly Label _releasePressure;
 
+        public readonly CheckButton ToggleValve;
         public readonly LineEdit LabelInput;
         public readonly Button EditLabelBtn;
         public string OldLabel = "";
@@ -51,7 +52,7 @@ namespace Content.Client.GameObjects.Components.Atmos
                                             new Label(){ Text = "Label" },
                                             (LabelInput = new LineEdit() { Text = Name, Editable = false,
                                                 CustomMinimumSize = new Vector2(200, 30)}),
-                                            (EditLabelBtn = new Button() { Text = "" }),
+                                            (EditLabelBtn = new Button()),
                                         }
                                     },
                                 new HBoxContainer
@@ -66,7 +67,7 @@ namespace Content.Client.GameObjects.Components.Atmos
                                 {
                                     Children =
                                     {
-                                        new VBoxContainer()
+                                        new HBoxContainer()
                                         {
                                             Children =
                                             {
@@ -90,15 +91,16 @@ namespace Content.Client.GameObjects.Components.Atmos
                                         })
                                     }
                                 },
-                                new VBoxContainer()
+                                new HBoxContainer()
                                 {
                                     Children =
                                     {
-                                        new Label {Text = "Valve"}
+                                        new Label { Text = "Valve" },
+                                        (ToggleValve = new CheckButton() { Text = "Open" })
                                     }
                                 }
-                            }
-                        },
+                            },
+                        }
                 }
             });
 
@@ -109,9 +111,8 @@ namespace Content.Client.GameObjects.Components.Atmos
                 var btn = (ReleasePressureButton) control;
                 ReleasePressureButtons.Add(btn);
             }
-
-
         }
+
 
         /// <summary>
         /// Update the UI based on <see cref="GasCanisterBoundUserInterfaceState"/>
@@ -131,8 +132,10 @@ namespace Content.Client.GameObjects.Components.Atmos
             LabelInput.Editable = false;
             EditLabelBtn.Text = EditLabelBtnStateEdit;
 
+            ToggleValve.Pressed = state.ValveOpened;
         }
     }
+
 
     /// <summary>
     /// Special button class which stores a numerical value and has it as a label
@@ -154,6 +157,4 @@ namespace Content.Client.GameObjects.Components.Atmos
 
         public ReleasePressureButton() : base() {}
     }
-
-
 }

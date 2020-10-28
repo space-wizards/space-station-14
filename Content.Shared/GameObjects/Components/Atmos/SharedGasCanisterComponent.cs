@@ -23,7 +23,7 @@ namespace Content.Shared.GameObjects.Components.Atmos
     [Serializable, NetSerializable]
     public enum UiButton
     {
-
+        ValveToggle
     }
 
     /// <summary>
@@ -35,12 +35,14 @@ namespace Content.Shared.GameObjects.Components.Atmos
         public readonly string Label;
         public readonly float Volume;
         public readonly float ReleasePressure;
+        public readonly bool ValveOpened;
 
-        public GasCanisterBoundUserInterfaceState(string newLabel, float volume, float releasePressure)
+        public GasCanisterBoundUserInterfaceState(string newLabel, float volume, float releasePressure, bool valveOpened)
         {
             Label = newLabel;
             Volume = volume;
             ReleasePressure = releasePressure;
+            ValveOpened = valveOpened;
         }
 
         public bool Equals(GasCanisterBoundUserInterfaceState? other)
@@ -49,7 +51,8 @@ namespace Content.Shared.GameObjects.Components.Atmos
             if (ReferenceEquals(this, other)) return true;
             return Label == other.Label &&
                    Volume.Equals(other.Volume) &&
-                   ReleasePressure.Equals(other.ReleasePressure);
+                   ReleasePressure.Equals(other.ReleasePressure) &&
+                   ValveOpened == other.ValveOpened;
         }
     }
 

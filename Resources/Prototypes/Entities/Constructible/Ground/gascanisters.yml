@@ -60,3 +60,20 @@
       moles:
         - 100
       temperature: 293.15
+
+- type: entity
+  parent: GasCanister
+  id: PhoronCanister
+  name: Phoron Canister
+  components:
+    - type: Sprite
+      state: orange
+    - type: GasCanister
+      gasMixture:
+        volume: 10
+        moles:
+          - 0
+          - 0
+          - 0
+          - 100
+        temperature: 293.15

@@ -9,18 +9,26 @@ using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System.Linq;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
+using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Atmos;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Containers;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
+using Robust.Shared.Map;
+using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Serilog;
 
 namespace Content.Server.GameObjects.Components.Atmos
@@ -32,12 +40,17 @@ namespace Content.Server.GameObjects.Components.Atmos
     public class GasCanisterComponent : Component, IGasMixtureHolder, IInteractHand
     {
         public override string Name => "GasCanister";
+
+        [ViewVariables(VVAccess.ReadWrite)]
         public string Label = "Gas Canister";
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool ValveOpened = false;
 
         /// <summary>
         /// What <see cref="GasMixture"/> the canister contains.
         /// </summary>
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         public GasMixture Air { get; set; }
 
         [ViewVariables]
@@ -54,7 +67,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         private const float DefaultVolume = 10;
 
-        [ViewVariables] public float ReleasePressure;
+        [ViewVariables(VVAccess.ReadWrite)] public float ReleasePressure;
 
         /// <summary>
         /// The user interface bound to the canister.
@@ -66,11 +79,14 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// </summary>
         private GasCanisterBoundUserInterfaceState? _lastUiState;
 
+        private IGridAtmosphereComponent _gridAtmosphere;
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
             serializer.DataField(this, x => Air, "gasMixture", new GasMixture(DefaultVolume));
         }
+
 
         public override void Initialize()
         {
@@ -84,8 +100,19 @@ namespace Content.Server.GameObjects.Components.Atmos
             {
                 UserInterface.OnReceiveMessage += OnUiReceiveMessage;
             }
+
+            // Init some variables
+            Label = Owner.Name;
+
+            // Get the GridAtmosphere
+            var gridId = Owner.Transform.Coordinates.GetGridId(Owner.EntityManager);
+            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+            _gridAtmosphere = atmosphereSystem.GetGridAtmosphere(gridId);
+
             UpdateUserInterface();
         }
+
+        #region Connector port methods
 
         public override void OnRemove()
         {
@@ -111,6 +138,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             ConnectedPort.ConnectGasCanister(this);
         }
 
+
         public void DisconnectFromPort()
         {
             ConnectedPort?.DisconnectGasCanister();
@@ -128,6 +156,8 @@ namespace Content.Server.GameObjects.Components.Atmos
                 DisconnectFromPort();
             }
         }
+
+        #endregion
 
         /// <summary>
         /// Manages what happens when an actor interacts with an empty hand on the canister
@@ -166,7 +196,11 @@ namespace Content.Server.GameObjects.Components.Atmos
             // If the label has been changed by a client
             if (obj.Message is CanisterLabelChangedMessage canLabelMessage)
             {
-                Label = canLabelMessage.NewLabel;
+                var newLabel = canLabelMessage.NewLabel;
+                if (newLabel.Length > 500)
+                    newLabel = newLabel.Substring(0, 500);
+                Label = newLabel;
+                Owner.Name = Label;
                 UpdateUserInterface();
                 return;
             }
@@ -175,7 +209,8 @@ namespace Content.Server.GameObjects.Components.Atmos
             if (obj.Message is ReleasePressureButtonPressedMessage rPMessage)
             {
                 ReleasePressure += rPMessage.ReleasePressure;
-                ReleasePressure = Math.Clamp(ReleasePressure, 0, 10000);
+                ReleasePressure = Math.Clamp(ReleasePressure, 0, 1000);
+                ReleasePressure = MathF.Round(ReleasePressure, 2);
                 UpdateUserInterface();
                 return;
             }
@@ -185,6 +220,9 @@ namespace Content.Server.GameObjects.Components.Atmos
             {
                 switch (btnPressedMessage.Button)
                 {
+                    case UiButton.ValveToggle:
+                        ToggleValve();
+                        break;
                 }
             }
 
@@ -213,7 +251,11 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// <returns>The state</returns>
         private GasCanisterBoundUserInterfaceState GetUserInterfaceState()
         {
-            return new GasCanisterBoundUserInterfaceState(Label, Air.Pressure, ReleasePressure);
+            // We round the pressure for ease of reading
+            return new GasCanisterBoundUserInterfaceState(Label,
+                MathF.Round(Air.Pressure, 2),
+                ReleasePressure,
+                ValveOpened);
         }
 
 
@@ -266,5 +308,31 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         #endregion
 
+
+        /// <summary>
+        /// Called when the canister's valve is toggled
+        /// </summary>
+        private void ToggleValve()
+        {
+            ValveOpened = !ValveOpened;
+            UpdateUserInterface();
+        }
+
+        /// <summary>
+        /// Called every frame
+        /// </summary>
+        /// <param name="frameTime"></param>
+        public void Update(in float frameTime)
+        {
+
+            if (ValveOpened)
+            {
+                var tileAtmosphere = Owner.Transform.Coordinates.GetTileAtmosphere();
+                Air.ReleaseGasTo(tileAtmosphere.Air, ReleasePressure);
+                _gridAtmosphere.Invalidate(tileAtmosphere.GridIndices);
+
+                UpdateUserInterface();
+            }
+        }
     }
 }
