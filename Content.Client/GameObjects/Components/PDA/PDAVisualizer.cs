@@ -1,16 +1,48 @@
 ﻿using Content.Shared.GameObjects.Components.PDA;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Utility;
+using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.PDA
 {
+    [UsedImplicitly]
+    // ReSharper disable once InconsistentNaming
     public class PDAVisualizer : AppearanceVisualizer
     {
+        /// <summary>
+        /// The base PDA sprite state, eg. "pda", "pda-clown"
+        /// </summary>
+        private string _state;
 
         private enum PDAVisualLayers
         {
             Base,
-            Flashlight
+            Flashlight,
+            IDLight
+        }
+
+        public override void LoadData(YamlMappingNode node)
+        {
+            base.LoadData(node);
+            if (node.TryGetNode("state", out var child))
+            {
+                _state = child.AsString();
+            }
+        }
+
+        public override void InitializeEntity(IEntity entity)
+        {
+            base.InitializeEntity(entity);
+            var sprite = entity.GetComponent<ISpriteComponent>();
+
+            sprite.LayerMapSet(PDAVisualLayers.Base, sprite.AddLayerState(_state));
+            sprite.LayerMapSet(PDAVisualLayers.Flashlight, sprite.AddLayerState("light_overlay"));
+            sprite.LayerSetShader(PDAVisualLayers.Flashlight, "unshaded");
+            sprite.LayerMapSet(PDAVisualLayers.IDLight, sprite.AddLayerState("id_overlay"));
+            sprite.LayerSetShader(PDAVisualLayers.IDLight, "unshaded");
         }
 
 
@@ -23,13 +55,15 @@ namespace Content.Client.GameObjects.Components.PDA
             }
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
             sprite.LayerSetVisible(PDAVisualLayers.Flashlight, false);
-            if(!component.TryGetData<bool>(PDAVisuals.FlashlightLit, out var isScreenLit))
+            if (component.TryGetData(PDAVisuals.FlashlightLit, out bool isScreenLit))
             {
-                return;
+                sprite.LayerSetVisible(PDAVisualLayers.Flashlight, isScreenLit);
             }
-            sprite.LayerSetState(PDAVisualLayers.Flashlight, "light_overlay");
-            sprite.LayerSetVisible(PDAVisualLayers.Flashlight, isScreenLit);
 
+            if (component.TryGetData(PDAVisuals.IDCardInserted, out bool isCardInserted))
+            {
+                sprite.LayerSetVisible(PDAVisualLayers.IDLight, isCardInserted);
+            }
 
         }
 

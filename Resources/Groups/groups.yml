@@ -109,6 +109,15 @@
   - deleteewi
   - hurt
   - toggledisallowlatejoin
+  - showcontainedcontext
+  - hidecontainedcontext
+  - showmechanisms
+  - hidemechanisms
+  - attachbodypart
+  - attachtoself
+  - attachtogrid
+  - attachtograndparent
+  - inrangeunoccluded
   CanViewVar: true
   CanAdminPlace: true
   CanAdminMenu: true
@@ -211,6 +220,15 @@
   - deleteewi
   - hurt
   - toggledisallowlatejoin
+  - showcontainedcontext
+  - hidecontainedcontext
+  - showmechanisms
+  - hidemechanisms
+  - attachbodypart
+  - attachtoself
+  - attachtogrid
+  - attachtograndparent
+  - inrangeunoccluded
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true

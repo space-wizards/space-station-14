@@ -38,7 +38,7 @@
   name: Atreides
   parent: SmgBase
   id: SmgAtreides
-  description: Pla-ket-ket-ket-ket
+  description: Pla-ket-ket-ket-ket!
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/atreides.rsi

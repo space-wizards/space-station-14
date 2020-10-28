@@ -9,10 +9,21 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
+    mass: 25
+    anchored: true
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.5, -0.5, 0.3, 0.5"
-      layer: [MobMask, Opaque]
+      bounds: "-0.5, -0.4, 0.3, 0.4"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: SnapGrid
     offset: Center
   - type: Sprite
@@ -25,6 +36,7 @@
   - type: PowerSupplier
     supplyRate: 3000
   - type: Anchorable
+  - type: Pullable
 
 - type: entity
   id: BaseSmes
@@ -37,10 +49,20 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
+    mass: 25
+    anchored: true
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.5, -0.5, 0.5, 0.5"
-      layer: [MobMask, Opaque]
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: SnapGrid
     offset: Center
   - type: Sprite
@@ -68,6 +90,7 @@
   - type: BatteryDischarger
     activeSupplyRate: 1000
   - type: Anchorable
+  - type: Pullable
 
 - type: entity
   id: BaseSubstation
@@ -80,10 +103,20 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
+    mass: 25
+    anchored: true
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.5, -0.5, 0.5, 0.5"
-      layer: [MobMask, Opaque]
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: SnapGrid
     offset: Center
   - type: Sprite
@@ -106,6 +139,7 @@
   - type: BatteryDischarger
     activeSupplyRate: 1000
   - type: Anchorable
+  - type: Pullable
 
 - type: entity
   id: BaseApc
@@ -119,8 +153,9 @@
   - type: InteractionOutline
   - type: Physics
     shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.25, -0.25, 0.25, 0.3"
+      - !type:PhysShapeAabb
+        bounds: "-0.25, -0.25, 0.25, 0.3"
+        layer: [ Passable ]
   - type: SnapGrid
     offset: Center
   - type: Sprite
@@ -163,9 +198,20 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
+    mass: 25
+    anchored: false
     shapes:
     - !type:PhysShapeAabb
-      layer: [MobMask, Opaque]
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     sprite: Constructible/Power/solar_panel.rsi
     state: normal
@@ -181,3 +227,5 @@
   - type: Breakable
     deadThreshold: 100
     resistances: metallicResistances
+  - type: Anchorable
+  - type: Pullable

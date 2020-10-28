@@ -1,0 +1,63 @@
+﻿- type: entity
+  name: Emitter
+  description: "A machine that fires bolts of energy, used for powering containment fields at a safe distance."
+  id: Emitter
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: InteractionOutline
+  - type: Clickable
+  - type: Physics
+    anchored: true
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5, -0.5, 0.5, 0.5"
+      layer: [MobMask, Opaque]
+  - type: SnapGrid
+    offset: Center
+  - type: Sprite
+    sprite: Constructible/Power/emitter.rsi
+    layers:
+    - state: emitter2
+    - state: emitter-beam
+      shader: unshaded
+      visible: false
+    - state: emitter-lock
+      shader: unshaded
+      visible: false
+  - type: Emitter
+  - type: PowerConsumer
+    voltage: Medium
+  - type: NodeContainer
+    nodes:
+    - !type:AdjacentNode
+      nodeGroupID: MVPower
+  - type: Anchorable
+  - type: Pullable
+  - type: Appearance
+    visuals:
+    - type: EmitterVisualizer
+  - type: AccessReader
+    access: [[ "Engineering" ]]
+
+
+- type: entity
+  name: Emitter Bolt
+  description: "A bolt of energy."
+  id: EmitterBolt
+  parent: BulletBase
+  components:
+  - type: Sprite
+    sprite: Constructible/Power/emitter.rsi
+    state: ''
+    layers:
+    - state: emitter_projectile
+      shader: unshaded
+  - type: Icon
+    sprite: Constructible/Power/emitter.rsi
+    state: emitter_projectile
+  - type: EmitterBoltComponent
+  - type: Projectile
+    soundHit: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
+    damages:
+      Heat: 20

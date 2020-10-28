@@ -26,7 +26,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
     public class AmmoComponent : Component, IExamine
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public override string Name => "Ammo";
         public BallisticCaliber Caliber => _caliber;

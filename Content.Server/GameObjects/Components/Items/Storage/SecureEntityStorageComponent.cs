@@ -11,6 +11,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -104,7 +105,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
         private void DoUnlock(IEntity user)
         {
-            if (CheckAccess(user)) return;
+            if (!CheckAccess(user)) return;
 
             Locked = false;
             EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/door_lock_off.ogg", Owner, AudioParams.Default.WithVolume(-5));
@@ -112,7 +113,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
         private void DoLock(IEntity user)
         {
-            if (CheckAccess(user)) return;
+            if (!CheckAccess(user)) return;
 
             Locked = true;
             EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/door_lock_on.ogg", Owner, AudioParams.Default.WithVolume(-5));
@@ -125,11 +126,11 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 if (!reader.IsAllowed(user))
                 {
                     Owner.PopupMessage(user, Loc.GetString("Access denied"));
-                    return true;
+                    return false;
                 }
             }
 
-            return false;
+            return true;
         }
 
         [Verb]
