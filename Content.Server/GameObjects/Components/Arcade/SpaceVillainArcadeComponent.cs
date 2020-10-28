@@ -191,8 +191,18 @@ namespace Content.Server.GameObjects.Components.Arcade
 
         public void IndicatorUpdate()
         {
-            _wiresComponent?.SetStatus(Indicators.HealthManager, new SharedWiresComponent.StatusLightData(Color.Purple, _playerInvincibilityFlag || _enemyInvincibilityFlag ? SharedWiresComponent.StatusLightState.BlinkingSlow : SharedWiresComponent.StatusLightState.On, "MNGR"));
-            _wiresComponent?.SetStatus(Indicators.HealthLimiter, new SharedWiresComponent.StatusLightData(Color.Red, _overflowFlag ? SharedWiresComponent.StatusLightState.BlinkingSlow : SharedWiresComponent.StatusLightState.On, "LIMT"));
+            _wiresComponent?.SetStatus(Indicators.HealthManager,
+                new SharedWiresComponent.StatusLightData(Color.Purple,
+                    _playerInvincibilityFlag || _enemyInvincibilityFlag
+                        ? SharedWiresComponent.StatusLightState.BlinkingSlow
+                        : SharedWiresComponent.StatusLightState.On,
+                    "MNGR"));
+            _wiresComponent?.SetStatus(Indicators.HealthLimiter,
+                new SharedWiresComponent.StatusLightData(Color.Red,
+                    _overflowFlag
+                        ? SharedWiresComponent.StatusLightState.BlinkingSlow
+                        : SharedWiresComponent.StatusLightState.On,
+                    "LIMT"));
         }
 
         /// <summary>
