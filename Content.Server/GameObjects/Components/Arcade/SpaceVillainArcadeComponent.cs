@@ -343,7 +343,7 @@ namespace Content.Server.GameObjects.Components.Arcade
             /// <returns>A bool indicating if the game should continue.</returns>
             private bool CheckGameConditions()
             {
-                if ((_enemyHp <= 0 || _enemyMp <= 0) && (_playerHp > 0 && _playerMp > 0))
+                if ((_playerHp > 0 && _playerMp > 0) && (_enemyHp <= 0 || _enemyMp <= 0))
                 {
                     _running = false;
                     UpdateUi(Loc.GetString("You won!"), Loc.GetString("{0} dies.", _enemyName), true);
@@ -351,14 +351,17 @@ namespace Content.Server.GameObjects.Components.Arcade
                     Owner.ProcessWin();
                     return false;
                 }
-                if ((_playerHp <= 0 || _playerMp <= 0) && _enemyHp > 0 && _enemyMp > 0)
+
+                if (_playerHp > 0 && _playerMp > 0) return true;
+
+                if ((_enemyHp > 0 && _enemyMp > 0))
                 {
                     _running = false;
                     UpdateUi(Loc.GetString("You lost!"), Loc.GetString("{0} cheers.", _enemyName), true);
                     EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/gameover.ogg", Owner.Owner, AudioParams.Default.WithVolume(-4f));
                     return false;
                 }
-                if ((_playerHp <= 0 || _playerMp <= 0) && (_enemyHp <= 0 || _enemyMp <= 0))
+                if (_enemyHp <= 0 || _enemyMp <= 0)
                 {
                     _running = false;
                     UpdateUi(Loc.GetString("You lost!"), Loc.GetString("{0} dies, but takes you with him.", _enemyName), true);
