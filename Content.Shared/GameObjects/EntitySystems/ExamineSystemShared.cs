@@ -4,6 +4,8 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
+using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
@@ -88,9 +90,24 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             if (!ignoreInsideBlocker) return false;
 
-            if (rayResults.Count <= 0) return false;
+            foreach (var result in rayResults)
+            {
+                if (!result.HitEntity.TryGetComponent(out OccluderComponent o))
+                {
+                    continue;
+                }
 
-            return (rayResults[0].HitPos - other.Position).Length < 1f;
+                var bBox = o.BoundingBox.Translated(o.Owner.Transform.WorldPosition);
+
+                if (bBox.Contains(origin.Position) || bBox.Contains(other.Position))
+                {
+                    continue;
+                }
+
+                return false;
+            }
+
+            return true;
         }
 
         public static bool InRangeUnOccluded(IEntity origin, IEntity other, float range, Ignored predicate, bool ignoreInsideBlocker = true)

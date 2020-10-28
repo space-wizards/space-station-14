@@ -37,8 +37,7 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             foreach (var comp in EntityManager.ComponentManager.EntityQuery<SubFloorHideComponent>())
             {
-                var gridId = comp.Owner.Transform.GridID;
-                var grid = _mapManager.GetGrid(gridId);
+                if (!_mapManager.TryGetGrid(comp.Owner.Transform.GridID, out var grid)) return;
 
                 var snapPos = comp.Owner.GetComponent<SnapGridComponent>();
                 UpdateTile(grid, snapPos.Position);

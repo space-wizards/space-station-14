@@ -1,12 +1,10 @@
 <p align="center"> <img alt="Space Station 14" width="880" height="300" src="https://raw.githubusercontent.com/space-wizards/asset-dump/de329a7898bb716b9d5ba9a0cd07f38e61f1ed05/github-logo.svg" /></p>
 
-[![Build Status](https://travis-ci.org/space-wizards/space-station-14.svg?branch=master)](https://travis-ci.org/space-wizards/space-station-14)
+Space Station 14 is a revived attempt at an SS13 remake.
 
-Amazing Space Station 14 is a revived attempt at an SS13 remake.
+This is the primary repo for Space Station 14. To prevent people forking RobustToolbox, a "content" pack is loaded by the client and server. This content pack contains everything needed to play the game on one specific server.
 
-This is the primary repo for Amazing Space Station 14. To prevent people forking RobustToolbox, a "content" pack is loaded by the client and server. This content pack contains everything needed to play the game on one specific server.
-
-If you want to host or create content for Amazing SS14, this is the repo you need. Contains both RobustToolbox and the content pack for development of new content packs.
+If you want to host or create content for SS14, this is the repo you need. Contains both RobustToolbox and the content pack for development of new content packs.
 
 ## Getting in Touch
 
@@ -21,7 +19,7 @@ The IRC is setup to relay back and forth to the Discord server so [IRC nerds](ht
 
 We have various documentation articles about various systems on both content pack and engine on HackMD wiki.
 
-* [Robust Toolbox & Amazing Space Station 14 HackMD Wiki](https://hackmd.io/@ss14/docs/)
+* [Robust Toolbox & Space Station 14 HackMD Wiki](https://hackmd.io/@ss14/docs/)
 
 ## Contributing
 

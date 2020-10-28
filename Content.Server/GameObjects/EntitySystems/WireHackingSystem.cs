@@ -1,11 +1,12 @@
 using System.Collections.Generic;
+using Content.Shared.GameTicking;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.SharedWiresComponent;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
-    public class WireHackingSystem : EntitySystem
+    public class WireHackingSystem : EntitySystem, IResettingEntitySystem
     {
         [ViewVariables] private readonly Dictionary<string, WireLayout> _layouts =
             new Dictionary<string, WireLayout>();
@@ -20,7 +21,7 @@ namespace Content.Server.GameObjects.EntitySystems
             _layouts.Add(id, layout);
         }
 
-        public void ResetLayouts()
+        public void Reset()
         {
             _layouts.Clear();
         }

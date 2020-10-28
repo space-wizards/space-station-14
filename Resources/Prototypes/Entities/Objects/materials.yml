@@ -163,8 +163,21 @@
 - type: entity
   name: wood plank
   id: WoodPlank
-  parent: BaseItem
+  parent: MaterialStack
+  suffix: Full
   components:
-  - type: Sprite
-    sprite: Objects/Materials/materials.rsi
-    state: wood_plank
+    # TODO: Specify a material.
+    - type: Sprite
+      sprite: Objects/Materials/materials.rsi
+      state: wood_plank
+    - type: Stack
+      stacktype: enum.StackType.Wood
+
+- type: entity
+  id: WoodPlank1
+  name: wood plank
+  parent: WoodPlank
+  suffix: 1
+  components:
+    - type: Stack
+      count: 1

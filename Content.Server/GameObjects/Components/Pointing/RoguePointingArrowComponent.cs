@@ -127,7 +127,7 @@ namespace Content.Server.GameObjects.Components.Pointing
                 return;
             }
 
-            ExplosionHelper.SpawnExplosion(Owner.Transform.Coordinates, 0, 2, 1, 1);
+            Owner.SpawnExplosion(0, 2, 1, 1);
             EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/explosion.ogg", Owner);
 
             Owner.Delete();

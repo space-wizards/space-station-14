@@ -1,0 +1,49 @@
+﻿- type: entity
+  id: GravityGenerator
+  name: gravity generator
+  description: It's what keeps you to the floor.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Constructible/Power/gravity_generator.rsi
+    layers:
+      - state: on
+        map: ["enum.GravityGeneratorVisualLayers.Base"]
+      - sprite: Constructible/Power/gravity_generator_core.rsi
+        state: activated
+        shader: unshaded
+        map: ["enum.GravityGeneratorVisualLayers.Core"]
+
+  - type: SnapGrid
+    offset: Center
+  - type: PowerReceiver
+    powerLoad: 500
+  - type: Physics
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "-1.5,-1.5,1.5,1.5"
+        layer:
+        - Opaque
+        - Impassable
+        - MobImpassable
+        - VaultImpassable
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Breakable
+    deadThreshold: 150
+    resistances: metallicResistances
+  - type: GravityGenerator
+  - type: UserInterface
+    interfaces:
+      - key: enum.GravityGeneratorUiKey.Key
+        type: GravityGeneratorBoundUserInterface
+  - type: Appearance
+    visuals:
+    - type: GravityGeneratorVisualizer
+      broken: "broken"
+      unpowered: "off"
+      off: "off"
+      on: "on"
+
+  placement:
+    mode: AlignTileAny

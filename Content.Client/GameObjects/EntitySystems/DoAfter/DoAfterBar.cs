@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 using System;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Graphics.Shaders;
@@ -70,8 +70,9 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
         private const int XPixelDiff = 20 * DoAfterBarScale;
 
         public const byte DoAfterBarScale = 2;
-        private static readonly Color StartColor = new Color(0.8f, 0.0f, 0.2f);
-        private static readonly Color EndColor = new Color(0.2f, 0.4f, 1.0f);
+        private static readonly Color StartColor = new Color(0.8f, 0.0f, 0.2f); // red
+        private static readonly Color EndColor = new Color(0.92f, 0.77f, 0.34f); // yellow
+        private static readonly Color CompletedColor = new Color(0.0f, 0.8f, 0.27f); // green
 
         public DoAfterBar()
         {
@@ -110,15 +111,15 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
             } 
             else if (Ratio >= 1.0f)
             {
-                color = new Color(0.92f, 0.77f, 0.34f);
+                color = CompletedColor;
             }
             else
             {
                 // lerp
                 color = new Color(
-                    StartColor.R + (EndColor.R - StartColor.R) * Ratio, 
-                    StartColor.G + (EndColor.G - StartColor.G) * Ratio, 
-                    StartColor.B + (EndColor.B - StartColor.B) * Ratio, 
+                    StartColor.R + (EndColor.R - StartColor.R) * Ratio,
+                    StartColor.G + (EndColor.G - StartColor.G) * Ratio,
+                    StartColor.B + (EndColor.B - StartColor.B) * Ratio,
                     StartColor.A);
             }
             
