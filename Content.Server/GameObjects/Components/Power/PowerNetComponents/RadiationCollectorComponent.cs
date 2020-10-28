@@ -88,7 +88,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 
         protected void SetAppearance(RadiationCollectorVisualState state)
         {
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (Owner.TryGetComponent(out AppearanceComponent appearance))
             {
                 appearance.SetData(RadiationCollectorVisuals.VisualState, state);
             }

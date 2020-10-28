@@ -97,7 +97,7 @@ namespace Content.Server.GameObjects.Components.Singularity
             _powerConsumer.OnReceivedPowerChanged += OnReceivedPowerChanged;
         }
 
-        private void OnReceivedPowerChanged(object sender, ReceivedPowerChangedEventArgs e)
+        private void OnReceivedPowerChanged(object? sender, ReceivedPowerChangedEventArgs e)
         {
             if (!_isOn)
             {
