@@ -132,9 +132,24 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             if (!ignoreInsideBlocker) return false;
 
-            if (rayResults.Count <= 0) return false;
+            foreach (var result in rayResults)
+            {
+                if (!result.HitEntity.TryGetComponent(out OccluderComponent o))
+                {
+                    continue;
+                }
 
-            return (rayResults[0].HitPos - other.Position).Length < 1f;
+                var bBox = o.BoundingBox.Translated(o.Owner.Transform.WorldPosition);
+
+                if (bBox.Contains(origin.Position) || bBox.Contains(other.Position))
+                {
+                    continue;
+                }
+
+                return false;
+            }
+
+            return true;
         }
 
         /// <summary>
