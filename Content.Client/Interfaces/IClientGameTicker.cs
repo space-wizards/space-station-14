@@ -14,11 +14,13 @@ namespace Content.Client.Interfaces
         DateTime StartTime { get; }
         bool Paused { get; }
         Dictionary<NetUserId, PlayerStatus> Status { get; }
+        IReadOnlyList<string> JobsAvailable { get; }
 
         void Initialize();
         event Action InfoBlobUpdated;
         event Action LobbyStatusUpdated;
         event Action LobbyReadyUpdated;
         event Action LobbyLateJoinStatusUpdated;
+        event Action<IReadOnlyList<string>> LobbyJobsAvailableUpdated;
     }
 }

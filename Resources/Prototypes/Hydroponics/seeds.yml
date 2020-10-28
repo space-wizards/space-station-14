@@ -1,0 +1,288 @@
+﻿- type: seed
+  id: wheat
+  name: wheat
+  seedName: wheat
+  displayName: wheat stalks
+  plantRsi: Objects/Specific/Hydroponics/wheat.rsi
+  productPrototypes:
+    - Wheat
+  lifespan: 25
+  maturation: 6
+  production: 1
+  yield: 4
+  potency: 5
+  idealLight: 8
+  nutrientConsumption: 0.15
+  chemicals:
+    chem.Nutriment:
+      Min: 1
+      Max: 20
+      PotencyDivisor: 20
+    chem.Flour:
+      Min: 5
+      Max: 20
+      PotencyDivisor: 20
+
+- type: seed
+  id: banana
+  name: banana
+  seedName: banana
+  displayName: banana plant
+  plantRsi: Objects/Specific/Hydroponics/banana.rsi
+  productPrototypes:
+    - FoodBanana
+  harvestRepeat: Repeat
+  lifespan: 50
+  maturation: 6
+  production: 6
+  yield: 3
+  idealLight: 9
+  waterConsumption: 6
+  idealHeat: 298
+  chemicals:
+    chem.Nutriment:
+      Min: 1
+      Max: 20
+      PotencyDivisor: 20
+
+- type: seed
+  id: carrots
+  name: carrot
+  seedName: carrot
+  displayName: carrots
+  plantRsi: Objects/Specific/Hydroponics/carrot.rsi
+  productPrototypes:
+    - FoodCarrot
+  lifespan: 25
+  maturation: 10
+  production: 1
+  yield: 5
+  potency: 10
+  growthStages: 3
+  waterConsumption: 6
+  chemicals:
+    chem.Nutriment:
+      Min: 1
+      Max: 20
+      PotencyDivisor: 20
+
+- type: seed
+  id: lemon
+  name: lemon
+  seedName: lemon
+  displayName: lemon trees
+  plantRsi: Objects/Specific/Hydroponics/lemon.rsi
+  productPrototypes:
+    - FoodLemon
+  harvestRepeat: Repeat
+  lifespan: 55
+  maturation: 6
+  production: 6
+  yield: 4
+  potency: 10
+  idealLight: 8
+  chemicals:
+    chem.Nutriment:
+      Min: 1
+      Max: 20
+      PotencyDivisor: 20
+
+- type: seed
+  id: potato
+  name: potato
+  seedName: potato
+  displayName: potatoes
+  plantRsi: Objects/Specific/Hydroponics/potato.rsi
+  productPrototypes:
+    - FoodPotato
+  lifespan: 30
+  maturation: 10
+  production: 1
+  yield: 4
+  potency: 10
+  growthStages: 4
+  waterConsumption: 6
+  chemicals:
+    chem.Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+
+- type: seed
+  id: sugarcane
+  name: sugarcane
+  seedName: sugarcane
+  displayName: sugarcanes
+  plantRsi: Objects/Specific/Hydroponics/sugarcane.rsi
+  productPrototypes:
+    - Sugarcane
+  harvestRepeat: Repeat
+  lifespan: 60
+  maturation: 3
+  production: 6
+  yield: 4
+  potency: 10
+  growthStages: 3
+  idealHeat: 298
+  chemicals:
+    chem.Sugar:
+      Min: 4
+      Max: 5
+      PotencyDivisor: 5
+
+- type: seed
+  id: towercap
+  name: towercap
+  seedName: tower cap
+  displayName: tower caps
+  plantRsi: Objects/Specific/Hydroponics/towercap.rsi
+  productPrototypes:
+    - Log
+  lifespan: 80
+  maturation: 15
+  ligneous: true
+  production: 1
+  yield: 5
+  potency: 1
+  growthStages: 3
+  waterConsumption: 6
+  lightTolerance: 6
+  idealLight: 288
+
+- type: seed
+  id: tomato
+  name: tomato
+  seedName: tomato
+  displayName: tomato plant
+  plantRsi: Objects/Specific/Hydroponics/tomato.rsi
+  productPrototypes:
+    - FoodTomato
+  harvestRepeat: Repeat
+  lifespan: 25
+  maturation: 8
+  production: 6
+  yield: 2
+  potency: 10
+  waterConsumption: 6
+  nutrientConsumption: 0.25
+  idealLight: 8
+  idealHeat: 298
+  juicy: true
+  splatPrototype: PuddleSplatter
+  chemicals:
+    chem.Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+
+- type: seed
+  id: eggplant
+  name: eggplant
+  seedName: eggplant
+  displayName: eggplants
+  plantRsi: Objects/Specific/Hydroponics/eggplant.rsi
+  productPrototypes:
+    - FoodEggplant
+  harvestRepeat: Repeat
+  lifespan: 25
+  maturation: 6
+  production: 6
+  yield: 2
+  potency: 20
+  idealLight: 9
+  idealHeat: 298
+  chemicals:
+    chem.Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+
+- type: seed
+  id: apple
+  name: apple
+  seedName: apple
+  displayName: apple tree
+  plantRsi: Objects/Specific/Hydroponics/apple.rsi
+  productPrototypes:
+    - FoodApple
+  harvestRepeat: Repeat
+  lifespan: 55
+  maturation: 6
+  production: 6
+  yield: 5
+  potency: 10
+  idealLight: 6
+  chemicals:
+    chem.Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+
+- type: seed
+  id: corn
+  name: corn
+  seedName: corn
+  displayName: ears of corn
+  plantRsi: Objects/Specific/Hydroponics/corn.rsi
+  productPrototypes:
+    - FoodCorn
+  lifespan: 25
+  maturation: 8
+  production: 6
+  yield: 3
+  potency: 20
+  growthStages: 3
+  idealLight: 8
+  waterConsumption: 6
+  idealHeat: 298
+  chemicals:
+    chem.Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+
+- type: seed
+  id: chanterelle
+  name: chanterelle
+  seedName: chanterelle
+  seedNoun: spores
+  displayName: chanterelle mushrooms
+  plantRsi: Objects/Specific/Hydroponics/chanterelle.rsi
+  productPrototypes:
+    - FoodMushroom
+  lifespan: 35
+  maturation: 7
+  production: 1
+  yield: 5
+  potency: 1
+  growthStages: 3
+  lightTolerance: 6
+  waterConsumption: 6
+  idealHeat: 288
+  chemicals:
+    chem.Nutriment:
+      Min: 1
+      Max: 25
+      PotencyDivisor: 25
+
+- type: seed
+  id: eggy
+  name: eggy
+  seedName: egg-plant
+  displayName: egg-plants
+  plantRsi: Objects/Specific/Hydroponics/eggy.rsi
+  productPrototypes:
+    - FoodEgg
+  harvestRepeat: Repeat
+  lifespan: 75
+  maturation: 6
+  production: 12
+  yield: 2
+  potency: 20
+  idealLight: 9
+  idealHeat: 298
+  chemicals:
+    chem.Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10

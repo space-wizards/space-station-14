@@ -53,7 +53,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
                 // Test for components existing
                 Assert.True(human.TryGetComponent(out cuffed!), $"Human has no {nameof(CuffableComponent)}");
                 Assert.True(human.TryGetComponent(out hands!), $"Human has no {nameof(HandsComponent)}");
-                Assert.True(human.TryGetBody(out body!), $"Human has no {nameof(IBody)}");
+                Assert.True(human.TryGetComponent(out body!), $"Human has no {nameof(IBody)}");
                 Assert.True(cuffs.TryGetComponent(out handcuff!), $"Handcuff has no {nameof(HandcuffComponent)}");
                 Assert.True(cables.TryGetComponent(out cableHandcuff!), $"Cablecuff has no {nameof(HandcuffComponent)}");
 

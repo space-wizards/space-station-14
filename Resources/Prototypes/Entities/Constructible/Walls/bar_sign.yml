@@ -51,3 +51,5 @@
       - !type:PhysShapeAabb
         bounds: "-0.45, -0.95, 0.95, 1.5"
         layer: [ Passable ]
+  - type: Sprite
+    drawdepth: Ghosts

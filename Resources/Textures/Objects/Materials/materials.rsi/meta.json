@@ -94,14 +94,6 @@
         {
             "name": "rods",
             "directions": 1
-        },
-        {
-            "name": "sheet_glass",
-            "directions": 1
-        },
-        {
-            "name": "sheet_metal",
-            "directions": 1
         }
     ]
 }

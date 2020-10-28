@@ -108,6 +108,15 @@
   - godmode
   - deleteewi
   - hurt
+  - toggledisallowlatejoin
+  - showcontainedcontext
+  - hidecontainedcontext
+  - showmechanisms
+  - hidemechanisms
+  - attachbodypart
+  - attachtoself
+  - attachtogrid
+  - attachtograndparent
   CanViewVar: true
   CanAdminPlace: true
   CanAdminMenu: true
@@ -209,6 +218,15 @@
   - godmode
   - deleteewi
   - hurt
+  - toggledisallowlatejoin
+  - showcontainedcontext
+  - hidecontainedcontext
+  - showmechanisms
+  - hidemechanisms
+  - attachbodypart
+  - attachtoself
+  - attachtogrid
+  - attachtograndparent
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true

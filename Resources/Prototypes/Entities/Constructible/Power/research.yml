@@ -1,19 +1,29 @@
 ﻿- type: entity
   id: ResearchAndDevelopmentServer
   name: "R&D server"
-  description: 'Thats a R&D server'
+  description: 'Thats a R&D server.'
   components:
   - type: Sprite
     sprite: Constructible/Power/server.rsi
     state: server
-
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
+    mass: 25
+    anchored: true
     shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.4, -0.45, 0.45, 0.45"
-        layer: [ Passable ]
+    - !type:PhysShapeAabb
+      bounds: "-0.4, -0.45, 0.45, 0.45"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: SnapGrid
     offset: Center
   - type: ResearchServer
@@ -21,6 +31,8 @@
   - type: PowerReceiver
     powerLoad: 200
     priority: Low
+  - type: Pullable
+  - type: Anchorable
 
 - type: entity
   id: BaseResearchAndDevelopmentPointSource
@@ -34,7 +46,6 @@
     - state: rndpointsource
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
-
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
@@ -42,9 +53,13 @@
     anchored: true
     shapes:
     - !type:PhysShapeAabb
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
       layer:
       - Opaque
-      - Impassable
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
@@ -61,4 +76,5 @@
     visuals:
     - type: PowerDeviceVisualizer
   - type: PowerReceiver
+  - type: Pullable
   - type: Anchorable

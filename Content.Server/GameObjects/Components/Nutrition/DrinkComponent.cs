@@ -5,6 +5,7 @@ using Content.Server.GameObjects.Components.Fluids;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Audio;
 using Content.Shared.Chemistry;
+using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Nutrition;
 using Content.Shared.GameObjects.EntitySystems;
@@ -151,7 +152,8 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 return false;
             }
 
-            if (!target.TryGetMechanismBehaviors<StomachBehaviorComponent>(out var stomachs))
+            if (!target.TryGetComponent(out IBody body) ||
+                !body.TryGetMechanismBehaviors<StomachBehaviorComponent>(out var stomachs))
             {
                 return false;
             }

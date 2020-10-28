@@ -56,7 +56,7 @@
   parent: Duffelbag
   id: DuffelbagClown
   name: clown duffelbag
-  description:
+  description: "A large duffel bag for holding extra honk goods."
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/duffel_clown.rsi
@@ -68,7 +68,7 @@
   parent: Duffelbag
   id: DuffelbagSecurity
   name: security duffelbag
-  description:
+  description: "A large duffel bag for holding extra security related goods."
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/duffel_sec.rsi
@@ -80,7 +80,7 @@
   parent: Duffelbag
   id: DuffelbagSyndicate
   name: syndicate duffelbag
-  description:
+  description: "A large duffel bag for holding various traitor goods."
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/duffel_syn.rsi

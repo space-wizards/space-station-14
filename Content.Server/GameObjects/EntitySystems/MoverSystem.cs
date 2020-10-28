@@ -31,7 +31,6 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     internal class MoverSystem : SharedMoverSystem
     {
-        [Dependency] private readonly IPauseManager _pauseManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
@@ -58,13 +57,10 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public override void Update(float frameTime)
         {
-            foreach (var (moverComponent, physics) in EntityManager.ComponentManager.EntityQuery<IMoverComponent, IPhysicsComponent>())
+            foreach (var (moverComponent, collidableComponent) in EntityManager.ComponentManager.EntityQuery<IMoverComponent, IPhysicsComponent>(false))
             {
                 var entity = moverComponent.Owner;
-                if (_pauseManager.IsEntityPaused(entity))
-                    continue;
-
-                UpdateKinematics(entity.Transform, moverComponent, physics);
+                UpdateKinematics(entity.Transform, moverComponent, collidableComponent);
             }
         }
 
