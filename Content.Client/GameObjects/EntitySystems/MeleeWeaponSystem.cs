@@ -6,6 +6,7 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.GameObjects.EntitySystemMessages;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Timing;
@@ -95,7 +96,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 var newColor = Color.Red * originalColor;
                 sprite.Color = newColor;
 
-                Timer.Spawn(100, () =>
+                hitEntity.SpawnTimer(100, () =>
                 {
                     // Only reset back to the original color if something else didn't change the color in the mean time.
                     if (sprite.Color == newColor)

@@ -7,6 +7,7 @@ using Content.Shared.Physics;
 using Robust.Client.Audio.Midi;
 using Robust.Shared.Audio.Midi;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -173,7 +174,7 @@ namespace Content.Client.GameObjects.Components.Instruments
             var renderer = _renderer;
 
             // We dispose of the synth two seconds from now to allow the last notes to stop from playing.
-            Timer.Spawn(2000, () => { renderer?.Dispose(); });
+            Owner.SpawnTimer(2000, () => { renderer?.Dispose(); });
             _renderer = null;
             _midiEventBuffer.Clear();
 
