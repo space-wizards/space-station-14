@@ -58,12 +58,12 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             }
         }
 
-        public void Equipped(EquippedEventArgs eventArgs)
+        public virtual void Equipped(EquippedEventArgs eventArgs)
         {
             EquippedToSlot();
         }
 
-        public void Unequipped(UnequippedEventArgs eventArgs)
+        public virtual void Unequipped(UnequippedEventArgs eventArgs)
         {
             RemovedFromSlot();
         }

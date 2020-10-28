@@ -157,8 +157,8 @@
 - type: entity
   parent: GlovesBase
   id: GlovesLeather
-  name: 'botanist''s leather gloves'
-  description: 'These leather gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin. They''re also quite warm.'
+  name: "botanist's leather gloves"
+  description: "These leather gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin. They're also quite warm."
   components:
   - type: Sprite
     sprite: Clothing/Gloves/leather.rsi

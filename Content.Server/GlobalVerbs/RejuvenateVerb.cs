@@ -58,6 +58,7 @@ namespace Content.Server.GlobalVerbs
             if (target.TryGetComponent(out IDamageableComponent damage))
             {
                 damage.Heal();
+                damage.CurrentState = DamageState.Alive;
             }
 
             if (target.TryGetComponent(out HungerComponent hunger))

@@ -30,7 +30,7 @@
   name: retractor
   parent: BaseSurgeryTool
   id: Retractor
-  desc: A surgical tool used to hold open incisions.
+  description: A surgical tool used to hold open incisions.
   components:
   - type: SurgeryTool
     surgeryType: Retraction
@@ -45,7 +45,7 @@
   name: cautery
   parent: BaseSurgeryTool
   id: Cautery
-  desc: A surgical tool used to cauterize open wounds.
+  description: A surgical tool used to cauterize open wounds.
   components:
   - type: SurgeryTool
     surgeryType: Cauterization
@@ -60,7 +60,7 @@
   name: drill
   parent: BaseSurgeryTool
   id: Drill
-  desc: A surgical drill for making holes into hard material.
+  description: A surgical drill for making holes into hard material.
   components:
   - type: SurgeryTool
     surgeryType: Drilling
@@ -75,7 +75,7 @@
   name: bone saw
   parent: BaseSurgeryTool
   id: BoneSaw
-  desc: A surgical tool used to cauterize open wounds.
+  description: A surgical tool used to cauterize open wounds.
   components:
   - type: SurgeryTool
     surgeryType: Amputation
@@ -90,7 +90,7 @@
   name: hemostat
   parent: BaseSurgeryTool
   id: Hemostat
-  desc: A surgical tool used to compress blood vessels to prevent bleeding.
+  description: A surgical tool used to compress blood vessels to prevent bleeding.
   components:
   - type: SurgeryTool
     surgeryType: VesselCompression

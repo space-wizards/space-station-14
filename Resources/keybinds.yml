@@ -105,9 +105,9 @@ binds:
   key: E
 - function: ThrowItemInHand
   type: State
-  key: MouseLeft
+  key: Q
   canFocus: true
-  mod1: Alt
+  mod1: Shift
 - function: TryPullObject
   type: State
   canFocus: true
