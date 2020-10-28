@@ -62,7 +62,7 @@
   parent: UniformBase
   id: UniformAssistant
   name: assistant jumpsuit
-  desciption: It's a generic grey jumpsuit. That's about what assistants are worth, anyway.
+  description: It's a generic grey jumpsuit. That's about what assistants are worth, anyway.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_assistant.rsi
@@ -75,7 +75,7 @@
   parent: UniformBase
   id: UniformChemistry
   name: chemistry jumpsuit
-  desciption: There's some odd stains on this jumpsuit. Hm.
+  description: There's some odd stains on this jumpsuit. Hm.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_medical.rsi
@@ -89,7 +89,7 @@
   parent: UniformChemistry
   id: UniformChemistrySkirt
   name: chemistry jumpskirt
-  desciption: A sterile jumpskirt in Chemistry colors.
+  description: A sterile jumpskirt in Chemistry colors.
   components:
   - type: Sprite
     state: chemistry_skirt
@@ -102,7 +102,7 @@
   parent: UniformBase
   id: UniformParamedic
   name: paramedic jumpsuit
-  desciption: It's got a red plus on it, that's a good thing right?
+  description: It's got a red plus on it, that's a good thing right?
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_medical.rsi
@@ -116,7 +116,7 @@
   parent: UniformParamedic
   id: UniformParamedicSkirt
   name: paramedic jumpskirt
-  desciption: A sterile jumpskirt in Paramedic colors.
+  description: A sterile jumpskirt in Paramedic colors.
   components:
   - type: Sprite
     state: paramedic_skirt
@@ -129,7 +129,7 @@
   parent: UniformBase
   id: UniformScrubsPurple
   name: purple scrubs
-  desciption: A combination of comfort and utility intended to make removing every last organ someone has and selling them to a space robot much more official looking.
+  description: A combination of comfort and utility intended to make removing every last organ someone has and selling them to a space robot much more official looking.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_medical.rsi
@@ -143,7 +143,7 @@
   parent: UniformBase
   id: UniformScrubsGreen
   name: green scrubs
-  desciption: A combination of comfort and utility intended to make removing every last organ someone has and selling them to a space robot much more official looking.
+  description: A combination of comfort and utility intended to make removing every last organ someone has and selling them to a space robot much more official looking.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_medical.rsi
@@ -157,7 +157,7 @@
   parent: UniformBase
   id: UniformScrubsBlue
   name: blue scrubs
-  desciption: A combination of comfort and utility intended to make removing every last organ someone has and selling them to a space robot much more official looking.
+  description: A combination of comfort and utility intended to make removing every last organ someone has and selling them to a space robot much more official looking.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_medical.rsi
@@ -362,7 +362,7 @@
   parent: UniformCargoTech
   id: UniformCargoTechSkirt
   name: cargo tech jumpskirt
-  desciption: A sturdy jumpskirt, issued to members of the Cargo department.
+  description: A sturdy jumpskirt, issued to members of the Cargo department.
   components:
   - type: Sprite
     state: cargo_skirt
@@ -374,7 +374,7 @@
 - type: entity
   parent: UniformBase
   id: UniformQM
-  name: qm jumpsuit
+  name: quartermaster's jumpsuit
   description: 'What can brown do for you?'
   components:
   - type: Sprite
@@ -387,8 +387,8 @@
 - type: entity
   parent: UniformQM
   id: UniformQMSkirt
-  name: qm jumpskirt
-  desciption: 'What can brown do for you?'
+  name: quartermaster's jumpskirt
+  description: 'What can brown do for you?'
   components:
   - type: Sprite
     state: qm_skirt
@@ -414,7 +414,7 @@
   parent: UniformChef
   id: UniformChefSkirt
   name: chef skirt
-  desciption: Can't cook without this.
+  description: Can't cook without this.
   components:
   - type: Sprite
     state: chef_skirt
@@ -453,7 +453,7 @@
   parent: UniformChiefEngineer
   id: UniformChiefEngineerSkirt
   name: ce jumpskirt
-  desciption: It's a high visibility jumpskirt given to those engineers insane enough to achieve the rank of Chief Engineer. It has minor radiation shielding.
+  description: It's a high visibility jumpskirt given to those engineers insane enough to achieve the rank of Chief Engineer. It has minor radiation shielding.
   components:
   - type: Sprite
     state: chief_skirt
@@ -479,7 +479,7 @@
   parent: UniformCMO
   id: UniformCMOSkirt
   name: cmo jumpskirt
-  desciption: It's a jumpskirt worn by those with the experience to be Chief Medical Officer. It provides minor biological protection.
+  description: It's a jumpskirt worn by those with the experience to be Chief Medical Officer. It provides minor biological protection.
   components:
   - type: Sprite
     state: cmo_skirt
@@ -505,7 +505,7 @@
   parent: UniformMedicalDoctor
   id: UniformMedicalDoctorSkirt
   name: medical doctor jumpskirt
-  desciption: It's made of a special fiber that provides minor protection against biohazards. It has a cross on the chest denoting that the wearer is trained medical personnel.
+  description: It's made of a special fiber that provides minor protection against biohazards. It has a cross on the chest denoting that the wearer is trained medical personnel.
   components:
   - type: Sprite
     state: medical_skirt
@@ -531,7 +531,7 @@
   parent: UniformScientist
   id: UniformScientistSkirt
   name: scientist jumpskirt
-  desciption: It's made of a special fiber that provides minor protection against explosives. It has markings that denote the wearer as a scientist.
+  description: It's made of a special fiber that provides minor protection against explosives. It has markings that denote the wearer as a scientist.
   components:
   - type: Sprite
     state: sci_skirt
@@ -543,7 +543,7 @@
 - type: entity
   parent: UniformBase
   id: UniformResearchDirector
-  name: rd turtleneck
+  name: research director's turtleneck
   description: It's a turtleneck worn by those with the know-how to achieve the position of Research Director. Its fabric provides minor protection from biological contaminants.
   components:
   - type: Sprite
@@ -556,8 +556,8 @@
 - type: entity
   parent: UniformResearchDirector
   id: UniformResearchDirectorSkirt
-  name: rd skirtleneck
-  desciption: It's a turtleneck worn by those with the know-how to achieve the position of Research Director. Its fabric provides minor protection from biological contaminants.
+  name: research director's skirtleneck
+  description: It's a turtleneck worn by those with the know-how to achieve the position of Research Director. Its fabric provides minor protection from biological contaminants.
   components:
   - type: Sprite
     state: rnd_skirt
@@ -583,7 +583,7 @@
   parent: UniformMime
   id: UniformMimeSkirt
   name: mime skirt
-  desciption: ...
+  description: ...
   components:
   - type: Sprite
     state: mime_skirt
@@ -591,6 +591,32 @@
   - type: Clothing
     ClothingPrefix: mime_skirt
     femaleMask: UniformTop
+
+- type: entity
+  parent: UniformBase
+  id: UniformChaplain
+  name: chaplain's jumpsuit
+  description: It's a black jumpsuit, often worn by religious folk.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/uniform_chaplain.rsi
+      state: icon
+
+    - type: Clothing
+      sprite: Clothing/Uniforms/uniform_chaplain.rsi
+
+- type: entity
+  parent: UniformChaplain
+  id: UniformChaplainSkirt
+  name: chaplain's jumpskirt
+  description: It's a black jumpskirt. If you wear this, you probably need religious help more than you will be providing it.
+  components:
+    - type: Sprite
+      state: chaplain_skirt
+
+    - type: Clothing
+      ClothingPrefix: chaplain_skirt
+      femaleMask: UniformTop
 
 - type: entity
   parent: UniformBase
@@ -610,7 +636,7 @@
   parent: UniformHoSAlt
   id: UniformHoSAltSkirt
   name: head of security skirtleneck
-  desciption: It's a skirtleneck worn by those who were strong and disciplined enough to achieve the position of Head of Security. Its sturdy fabric provides minor protection from mechanical damage.
+  description: It's a skirtleneck worn by those who were strong and disciplined enough to achieve the position of Head of Security. Its sturdy fabric provides minor protection from mechanical damage.
   components:
   - type: Sprite
     state: hosalt_skirt
@@ -638,7 +664,7 @@
   parent: UniformHoS
   id: UniformHoSSkirt
   name: head of security jumpskirt
-  desciption: It's bright red and rather crisp, much like security's victims tend to be.
+  description: It's bright red and rather crisp, much like security's victims tend to be.
   components:
   - type: Sprite
     state: hos_skirt
@@ -713,7 +739,7 @@
 - type: entity
   parent: UniformBase
   id: UniformWarden
-  name: security suit
+  name: warden's uniform
   description: A formal security suit for officers complete with Nanotrasen belt buckle.
   components:
   - type: Sprite
@@ -792,7 +818,7 @@
   parent: UniformPrisoner
   id: UniformPrisonerSkirt
   name: prisoner jumpskirt
-  desciption: Busted.
+  description: Busted.
   components:
   - type: Sprite
     state: prisoner_skirt
@@ -805,7 +831,7 @@
   parent: UniformBase
   id: UniformHoP
   name: hop jumpsuit
-  desciption: Rather bland and inoffensive. Perfect for vanishing off the face of the universe.
+  description: Rather bland and inoffensive. Perfect for vanishing off the face of the universe.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_hop.rsi
@@ -818,7 +844,7 @@
   parent: UniformHoP
   id: UniformHoPSkirt
   name: hop jumpskirt
-  desciption: Rather bland and inoffensive. Perfect for vanishing off the face of the universe.
+  description: Rather bland and inoffensive. Perfect for vanishing off the face of the universe.
   components:
   - type: Sprite
     state: hop_skirt
@@ -831,7 +857,7 @@
   parent: UniformBase
   id: UniformHydroponics
   name: hydroponics jumpsuit
-  desciption: Has a strong earthy smell to it. Hopefully it's merely dirty as opposed to soiled.
+  description: Has a strong earthy smell to it. Hopefully it's merely dirty as opposed to soiled.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_hydro.rsi
@@ -844,7 +870,7 @@
   parent: UniformHydroponics
   id: UniformHydroponicsSkirt
   name: hydroponics jumpskirt
-  desciption: Has a strong earthy smell to it. Hopefully it's merely dirty as opposed to soiled.
+  description: Has a strong earthy smell to it. Hopefully it's merely dirty as opposed to soiled.
   components:
   - type: Sprite
     state: hydro_skirt
@@ -870,7 +896,7 @@
   parent: UniformBartender
   id: UniformBartenderSkirt
   name: bartender's skirt
-  desciption: A nice and tidy skirt. Shame about the bar though.
+  description: A nice and tidy skirt. Shame about the bar though.
   components:
   - type: Sprite
     state: skirt
@@ -883,7 +909,7 @@
   parent: UniformBartender
   id: UniformBartenderPurple
   name: purple bartender's uniform
-  desciption: A special purple outfit to serve drinks.
+  description: A special purple outfit to serve drinks.
   components:
   - type: Sprite
     state: purple

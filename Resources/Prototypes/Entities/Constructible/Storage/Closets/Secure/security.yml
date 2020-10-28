@@ -10,6 +10,8 @@
       state: hos
   - type: Icon
     state: hos_icon
+  - type: AccessReader
+    access: [["HeadOfSecurity"]]
 
 # Warden
 - type: entity
@@ -23,6 +25,8 @@
       state: warden
   - type: Icon
     state: warden_icon
+  - type: AccessReader
+    access: [["Brig"]]
 
 # Security Officer
 - type: entity
@@ -36,6 +40,8 @@
       state: sec
   - type: Icon
     state: sec_icon
+  - type: AccessReader
+    access: [["Security"]]
 
 # Detective
 - type: entity
@@ -49,3 +55,5 @@
       state: cabinet
   - type: Icon
     state: cabinet_icon
+  - type: AccessReader
+    access: [["Detective"]]

@@ -62,7 +62,10 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
         ///     For instance, attaching a head with a brain inside to a body.
         ///     DO NOT CALL THIS DIRECTLY FROM OUTSIDE BODY SYSTEM CODE!
         /// </summary>
-        void AddedToBody();
+        /// <param name="body">
+        ///     The body that this <see cref="IMechanism"/> was added to.
+        /// </param>
+        void AddedToBody(IBody body);
 
         /// <summary>
         ///     Called when the parent <see cref="IMechanism"/> is
@@ -71,7 +74,10 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
         ///     For instance, adding a brain to a dismembered head.
         ///     DO NOT CALL THIS DIRECTLY FROM OUTSIDE BODY SYSTEM CODE!
         /// </summary>
-        void AddedToPart();
+        /// <param name="part">
+        ///     The part that this <see cref="IMechanism"/> was added to.
+        /// </param>
+        void AddedToPart(IBodyPart part);
 
         /// <summary>
         ///     Called when the parent <see cref="IMechanism"/> is added to a
@@ -79,7 +85,13 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
         ///     For instance, adding a brain to a head that is attached to a body.
         ///     DO NOT CALL THIS DIRECTLY FROM OUTSIDE BODY SYSTEM CODE!
         /// </summary>
-        void AddedToPartInBody();
+        /// <param name="body">
+        ///     The body that this <see cref="IMechanism"/> was added to.
+        /// </param>
+        /// <param name="part">
+        ///     The part that this <see cref="IMechanism"/> was added to.
+        /// </param>
+        void AddedToPartInBody(IBody body, IBodyPart part);
 
         /// <summary>
         ///     Called when the parent <see cref="IBodyPart"/> is removed from a
@@ -87,6 +99,9 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
         ///     For instance, removing a head with a brain inside from a body.
         ///     DO NOT CALL THIS DIRECTLY FROM OUTSIDE BODY SYSTEM CODE!
         /// </summary>
+        /// <param name="old">
+        ///     The body that this <see cref="IMechanism"/> was removed from.
+        /// </param>
         void RemovedFromBody(IBody old);
 
         /// <summary>
@@ -96,6 +111,9 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
         ///     For instance, removing a brain from a dismembered head.
         ///     DO NOT CALL THIS DIRECTLY FROM OUTSIDE BODY SYSTEM CODE!
         /// </summary>
+        /// <param name="old">
+        ///     The part that this <see cref="IMechanism"/> was removed from.
+        /// </param>
         void RemovedFromPart(IBodyPart old);
 
         /// <summary>
@@ -104,6 +122,12 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
         ///     For instance, removing a brain from a head that is attached to a body.
         ///     DO NOT CALL THIS DIRECTLY FROM OUTSIDE BODY SYSTEM CODE!
         /// </summary>
-        void RemovedFromPartInBody(IBody? oldBody, IBodyPart? oldPart);
+        /// <param name="oldBody">
+        ///     The body that this <see cref="IMechanism"/> was removed from.
+        /// </param>
+        /// <param name="oldPart">
+        ///     The part that this <see cref="IMechanism"/> was removed from.
+        /// </param>
+        void RemovedFromPartInBody(IBody oldBody, IBodyPart oldPart);
     }
 }

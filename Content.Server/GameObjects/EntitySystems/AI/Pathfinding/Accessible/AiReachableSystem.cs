@@ -621,7 +621,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         /// <param name="chunk"></param>
         private void GenerateRegions(PathfindingChunk chunk)
         {
-            // Grid deleted while update queued.
+            // Grid deleted while update queued, or invalid grid.
             if (!_mapManager.TryGetGrid(chunk.GridId, out _))
             {
                 return;
@@ -688,7 +688,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         private void SendDebugMessage(PlayerAttachSystemMessage message)
         {
             var playerGrid = message.Entity.Transform.GridID;
-            SendRegionsDebugMessage(playerGrid);
+            if(playerGrid.IsValid())
+                SendRegionsDebugMessage(playerGrid);
         }
 
         private void SendRegionsDebugMessage(GridId gridId)

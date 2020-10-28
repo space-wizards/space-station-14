@@ -187,21 +187,17 @@ namespace Content.Shared.Maps
         private static Box2 GetWorldTileBox(TileRef turf)
         {
             var map = IoCManager.Resolve<IMapManager>();
-            var tileGrid = map.GetGrid(turf.GridIndex);
 
             // This is scaled to 90 % so it doesn't encompass walls on other tiles.
-            var tileBox = Box2.UnitCentered.Scale(tileGrid.TileSize).Scale(0.9f);
-            return tileBox.Translated(tileGrid.GridTileToWorldPos(turf.GridIndices));
-        }
+            var tileBox = Box2.UnitCentered.Scale(0.9f);
 
-        /// <summary>
-        /// Creates a box the size of a tile.
-        /// </summary>
-        private static Box2 GetTileBox(this TileRef turf)
-        {
-            var map = IoCManager.Resolve<IMapManager>();
-            var tileGrid = map.GetGrid(turf.GridIndex);
-            return Box2.UnitCentered.Scale(tileGrid.TileSize);
+            if (map.TryGetGrid(turf.GridIndex, out var tileGrid))
+            {
+                tileBox = tileBox.Scale(tileGrid.TileSize);
+                return tileBox.Translated(tileGrid.GridTileToWorldPos(turf.GridIndices));
+            }
+
+            return tileBox;
         }
     }
 }

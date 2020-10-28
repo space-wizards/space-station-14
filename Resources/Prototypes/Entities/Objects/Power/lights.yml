@@ -2,7 +2,7 @@
   parent: BaseLightbulb
   name: light bulb
   id: LightBulb
-  description: That's a light bulb
+  description: That's a light bulb.
   components:
   - type: LightBulb
     bulb: Bulb
