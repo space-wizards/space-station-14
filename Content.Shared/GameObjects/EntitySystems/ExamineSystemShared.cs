@@ -93,7 +93,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             foreach (var result in rayResults)
             {
-                if (!result.HitEntity.TryGetComponent(out OccluderComponent o))
+                if (!result.HitEntity.TryGetComponent(out OccluderComponent? o))
                 {
                     continue;
                 }
