@@ -28,7 +28,6 @@
     digestionDelay: 20
   # StatusEffects
   - type: Stunnable
-  - type: WeightlessStatus
   # Other
   - type: Inventory
   - type: Clickable
