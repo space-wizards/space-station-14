@@ -29,6 +29,11 @@
   physicalDesc: bubbly
   color: "#cfa85f"
   spritePath: beerglass.rsi
+  plantMetabolism:
+    - !type:AdjustNutrition
+      amount: 0.25
+    - !type:AdjustWater
+      amount: 0.7
 
 - type: reagent
   id: chem.Vodka
@@ -156,6 +161,13 @@
   metabolism:
     - !type:DefaultDrink
       rate: 1
+  plantMetabolism:
+    - !type:AdjustNutrition
+      amount: 0.1
+    - !type:AdjustWater
+      amount: 1
+    - !type:AdjustHealth
+      amount: 0.1
 
 - type: reagent
   id: chem.Coffee
@@ -196,6 +208,11 @@
   metabolism:
     - !type:DefaultDrink
       rate: 1
+  plantMetabolism:
+    - !type:AdjustNutrition
+      amount: 0.1
+    - !type:AdjustWater
+      amount: 0.9
 
 - type: reagent
   id: chem.SpoiledMilk

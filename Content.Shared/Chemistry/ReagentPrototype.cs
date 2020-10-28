@@ -23,9 +23,11 @@ namespace Content.Shared.Chemistry
         private string _description;
         private string _physicalDescription;
         private Color _substanceColor;
-        private List<IMetabolizable> _metabolism;
         private string _spritePath;
+        private List<IMetabolizable> _metabolism;
         private List<ITileReaction> _tileReactions;
+        private List<IPlantMetabolizable> _plantMetabolism;
+        private float _customPlantMetabolism = 1f;
 
         public string ID => _id;
         public string Name => _name;
@@ -34,8 +36,9 @@ namespace Content.Shared.Chemistry
         public Color SubstanceColor => _substanceColor;
 
         //List of metabolism effects this reagent has, should really only be used server-side.
-        public List<IMetabolizable> Metabolism => _metabolism;
-        public List<ITileReaction> TileReactions => _tileReactions;
+        public IReadOnlyList<IMetabolizable> Metabolism => _metabolism;
+        public IReadOnlyList<ITileReaction> TileReactions => _tileReactions;
+        public IReadOnlyList<IPlantMetabolizable> PlantMetabolism => _plantMetabolism;
         public string SpriteReplacementPath => _spritePath;
 
         public ReagentPrototype()
@@ -53,16 +56,19 @@ namespace Content.Shared.Chemistry
             serializer.DataField(ref _physicalDescription, "physicalDesc", string.Empty);
             serializer.DataField(ref _substanceColor, "color", Color.White);
             serializer.DataField(ref _spritePath, "spritePath", string.Empty);
+            serializer.DataField(ref _customPlantMetabolism, "customPlantMetabolism", 1f);
 
             if (_moduleManager.IsServerModule)
             {
                 serializer.DataField(ref _metabolism, "metabolism", new List<IMetabolizable> { new DefaultMetabolizable() });
                 serializer.DataField(ref _tileReactions, "tileReactions", new List<ITileReaction> { });
+                serializer.DataField(ref _plantMetabolism, "plantMetabolism", new List<IPlantMetabolizable> { });
             }
             else
             {
                 _metabolism = new List<IMetabolizable> { new DefaultMetabolizable() };
-                _tileReactions = new List<ITileReaction>();
+                _tileReactions = new List<ITileReaction>(0);
+                _plantMetabolism = new List<IPlantMetabolizable>(0);
             }
         }
 
@@ -135,6 +141,17 @@ namespace Content.Shared.Chemistry
             }
 
             return removed;
+        }
+
+        public void ReactionPlant(IEntity plantHolder)
+        {
+            if (plantHolder == null || plantHolder.Deleted)
+                return;
+
+            foreach (var plantMetabolizable in _plantMetabolism)
+            {
+                plantMetabolizable.Metabolize(plantHolder, _customPlantMetabolism);
+            }
         }
     }
 }
