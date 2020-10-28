@@ -47,7 +47,8 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         [ViewVariables]
         private bool _isCollidableWhenOpen;
         [ViewVariables]
-        private IEntityQuery _entityQuery;
+        protected IEntityQuery EntityQuery;
+
         private bool _showContents;
         private bool _occludesLight;
         private bool _open;
@@ -124,7 +125,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         {
             base.Initialize();
             Contents = ContainerManagerComponent.Ensure<Container>(nameof(EntityStorageComponent), Owner);
-            _entityQuery = new IntersectingEntityQuery(Owner);
+            EntityQuery = new IntersectingEntityQuery(Owner);
 
             Contents.ShowContents = _showContents;
             Contents.OccludesLight = _occludesLight;
@@ -186,7 +187,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         public virtual void CloseStorage()
         {
             Open = false;
-            var entities = Owner.EntityManager.GetEntities(_entityQuery);
+            var entities = Owner.EntityManager.GetEntities(EntityQuery);
             var count = 0;
             foreach (var entity in entities)
             {
@@ -215,7 +216,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             _lastInternalOpenAttempt = default;
         }
 
-        private void OpenStorage()
+        public virtual void OpenStorage()
         {
             Open = true;
             EmptyContents();
@@ -248,8 +249,9 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             }
         }
 
-        private bool AddToContents(IEntity entity)
+        protected virtual bool AddToContents(IEntity entity)
         {
+            if (entity == Owner) return false;
             if (entity.TryGetComponent(out IPhysicsComponent entityPhysicsComponent))
             {
                 if(MaxSize < entityPhysicsComponent.WorldAABB.Size.X
@@ -271,12 +273,18 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             return false;
         }
 
+        public virtual Vector2 ContentsDumpPosition()
+        {
+            return Owner.Transform.WorldPosition;
+        }
+
         private void EmptyContents()
         {
             foreach (var contained in Contents.ContainedEntities.ToArray())
             {
                 if(Contents.Remove(contained))
                 {
+                    contained.Transform.WorldPosition = ContentsDumpPosition();
                     if (contained.TryGetComponent<IPhysicsComponent>(out var physics))
                     {
                         physics.CanCollide = true;

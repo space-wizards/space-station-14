@@ -182,7 +182,11 @@
             "GasCanisterPort",
             "Lung",
             "Cleanable",
-            "Brain"
+            "Brain",
+            "BodyBagEntityStorage",
+            "MorgueEntityStorage",
+            "MorgueTray",
+            "CrematoriumEntityStorage",
         };
     }
 }

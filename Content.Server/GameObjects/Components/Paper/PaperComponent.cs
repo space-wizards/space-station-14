@@ -17,7 +17,7 @@ namespace Content.Server.GameObjects.Components.Paper
     public class PaperComponent : SharedPaperComponent, IExamine, IInteractUsing, IUse
     {
         private PaperAction _mode;
-        public string Content { get; private set; }
+        public string Content { get; private set; } = "";
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(PaperUiKey.Key);
 

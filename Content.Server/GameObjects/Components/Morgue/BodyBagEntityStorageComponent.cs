@@ -4,8 +4,7 @@ using Content.Server.GameObjects.Components.Paper;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Rotation;
-using Content.Shared.GameObjects.Components.Storage;
+using Content.Shared.GameObjects.Components.Morgue;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
@@ -18,12 +17,9 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Content.Server.GameObjects.Components.Medical
+namespace Content.Server.GameObjects.Components.Morgue
 {
     [RegisterComponent]
     [ComponentReference(typeof(EntityStorageComponent))]
@@ -33,7 +29,8 @@ namespace Content.Server.GameObjects.Components.Medical
     {
         public override string Name => "BodyBagEntityStorage";
         private IEntityQuery _entityQuery;
-        [ViewVariables] private AppearanceComponent _appearance;
+        private AppearanceComponent _appearance;
+
         [ViewVariables] public ContainerSlot LabelContainer { get; private set; }
 
         public override void Initialize()
@@ -45,14 +42,10 @@ namespace Content.Server.GameObjects.Components.Medical
             LabelContainer = ContainerManagerComponent.Ensure<ContainerSlot>("body_bag_label", Owner, out _);
         }
 
-        protected override bool CanClose(IEntity user)
+        protected override bool AddToContents(IEntity entity)
         {
-            foreach (var entity in Owner.EntityManager.GetEntities(_entityQuery))
-            {
-                if (entity == Owner) continue;
-                if (entity.HasComponent<IBody>() && !EntitySystem.Get<StandingStateSystem>().IsDown(entity)) return false;
-            }
-            return base.CanClose(user);
+            if (entity.HasComponent<IBody>() && !EntitySystem.Get<StandingStateSystem>().IsDown(entity)) return false;
+            return base.AddToContents(entity);
         }
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)

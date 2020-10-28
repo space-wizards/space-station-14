@@ -1,9 +1,8 @@
-﻿using Content.Shared.GameObjects.Components.Storage;
+﻿using Content.Shared.GameObjects.Components.Morgue;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
 
-namespace Content.Client.GameObjects.Components.Storage
+namespace Content.Client.GameObjects.Components.Morgue
 {
     public sealed class BodyBagVisualizer : AppearanceVisualizer
     {
@@ -15,6 +14,7 @@ namespace Content.Client.GameObjects.Components.Storage
             {
                 return;
             }
+
             if (component.TryGetData(BodyBagVisuals.Label, out bool labelVal))
             {
                 sprite.LayerSetVisible(BodyBagVisualLayers.Label, labelVal);
