@@ -3,6 +3,7 @@ using Content.Client.GameObjects.Components.Arcade;
 using Content.Shared.GameObjects.Components.Arcade;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.Localization;
 using Vector2 = Robust.Shared.Maths.Vector2;
 
 namespace Content.Client.Arcade
@@ -21,13 +22,13 @@ namespace Content.Client.Arcade
         private Button[] _gameButtons = new Button[3]; //used to disable/enable all game buttons
         public SpaceVillainArcadeMenu(SpaceVillainArcadeBoundUserInterface owner)
         {
-            Title = "Space Villain";
+            Title = Loc.GetString("Space Villain");
             Owner = owner;
 
             var grid = new GridContainer {Columns = 1};
 
             var infoGrid = new GridContainer {Columns = 3};
-            infoGrid.AddChild(new Label{ Text = "Player", Align = Label.AlignMode.Center });
+            infoGrid.AddChild(new Label{ Text = Loc.GetString("Player"), Align = Label.AlignMode.Center });
             infoGrid.AddChild(new Label{ Text = "|", Align = Label.AlignMode.Center });
             _enemyNameLabel = new Label{ Align = Label.AlignMode.Center};
             infoGrid.AddChild(_enemyNameLabel);
@@ -49,15 +50,15 @@ namespace Content.Client.Arcade
 
             var buttonGrid = new GridContainer {Columns = 3};
             _gameButtons[0] = new ActionButton(Owner, SharedSpaceVillainArcadeComponent.PlayerAction.Attack)
-                {Text = "ATTACK"};
+                {Text = Loc.GetString("ATTACK")};
             buttonGrid.AddChild(_gameButtons[0]);
 
             _gameButtons[1] = new ActionButton(Owner, SharedSpaceVillainArcadeComponent.PlayerAction.Heal)
-                {Text = "HEAL"};
+                {Text = Loc.GetString("HEAL")};
             buttonGrid.AddChild(_gameButtons[1]);
 
             _gameButtons[2] = new ActionButton(Owner, SharedSpaceVillainArcadeComponent.PlayerAction.Recharge)
-                {Text = "RECHARGE"};
+                {Text = Loc.GetString("RECHARGE")};
             buttonGrid.AddChild(_gameButtons[2]);
 
             centerContainer = new CenterContainer();
@@ -65,7 +66,7 @@ namespace Content.Client.Arcade
             grid.AddChild(centerContainer);
 
             var newGame = new ActionButton(Owner, SharedSpaceVillainArcadeComponent.PlayerAction.NewGame)
-                {Text = "New Game"};
+                {Text = Loc.GetString("New Game")};
             grid.AddChild(newGame);
 
             centerContainer = new CenterContainer();
