@@ -47581,4 +47581,22 @@ entities:
     pos: -21.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
+- uid: 4188
+  type: ComputerSupplyOrdering
+  components:
+  - parent: 855
+    pos: 23.5,13.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - containers:
+      board:
+        entities:
+        - 4189
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
+- uid: 4189
+  type: SupplyComputerCircuitboard
+  components:
+  - parent: 4188
+    type: Transform
 ...
