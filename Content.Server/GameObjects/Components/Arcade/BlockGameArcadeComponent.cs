@@ -19,7 +19,6 @@ using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Arcade
 {
@@ -31,7 +30,7 @@ namespace Content.Server.GameObjects.Components.Arcade
 
         public override string Name => "BlockGameArcade";
         public override uint? NetID => ContentNetIDs.BLOCKGAME_ARCADE;
-        [ComponentDependency] private PowerReceiverComponent? _powerReceiverComponent;
+        [ComponentDependency] private PowerReceiverComponent? _powerReceiverComponent = default!;
         private bool Powered => _powerReceiverComponent != null && _powerReceiverComponent.Powered;
         private BoundUserInterface? UserInterface => Owner.GetUIOrNull(BlockGameUiKey.Key);
 

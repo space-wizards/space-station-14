@@ -1,5 +1,4 @@
 ﻿#nullable enable
-using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.VendingMachines;
@@ -23,7 +22,6 @@ using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using Serilog;
 
 namespace Content.Server.GameObjects.Components.Arcade
 {
@@ -33,8 +31,8 @@ namespace Content.Server.GameObjects.Components.Arcade
     {
         [Dependency] private IRobustRandom _random = null!;
 
-        [ComponentDependency] private PowerReceiverComponent? _powerReceiverComponent;
-        [ComponentDependency] private WiresComponent? _wiresComponent;
+        [ComponentDependency] private PowerReceiverComponent? _powerReceiverComponent = default!;
+        [ComponentDependency] private WiresComponent? _wiresComponent = default!;
 
         private bool Powered => _powerReceiverComponent != null && _powerReceiverComponent.Powered;
 
@@ -308,7 +306,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                     case PlayerAction.Heal:
                         var pointAmount = _random.Next(1, 3);
                         var healAmount = _random.Next(6, 8);
-                        _latestPlayerActionMessage = Loc.GetString("You use {0} magic to heal for {1} damage!",pointAmount, healAmount);
+                        _latestPlayerActionMessage = Loc.GetString("You use {0} magic to heal for {1} damage!", pointAmount, healAmount);
                         EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/player_heal.ogg", Owner.Owner, AudioParams.Default.WithVolume(-4f));
                         if(!Owner._playerInvincibilityFlag) _playerMp -= pointAmount;
                         _playerHp += healAmount;
@@ -356,14 +354,14 @@ namespace Content.Server.GameObjects.Components.Arcade
                 if ((_playerHp <= 0 || _playerMp <= 0) && _enemyHp > 0 && _enemyMp > 0)
                 {
                     _running = false;
-                    UpdateUi(Loc.GetString("You lost!"), Loc.GetString("{0} cheers.",_enemyName), true);
+                    UpdateUi(Loc.GetString("You lost!"), Loc.GetString("{0} cheers.", _enemyName), true);
                     EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/gameover.ogg", Owner.Owner, AudioParams.Default.WithVolume(-4f));
                     return false;
                 }
                 if ((_playerHp <= 0 || _playerMp <= 0) && (_enemyHp <= 0 || _enemyMp <= 0))
                 {
                     _running = false;
-                    UpdateUi(Loc.GetString("You lost!"), Loc.GetString("{0} dies, but takes you with him.",_enemyName), true);
+                    UpdateUi(Loc.GetString("You lost!"), Loc.GetString("{0} dies, but takes you with him.", _enemyName), true);
                     EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/gameover.ogg", Owner.Owner, AudioParams.Default.WithVolume(-4f));
                     return false;
                 }
@@ -376,12 +374,7 @@ namespace Content.Server.GameObjects.Components.Arcade
             /// </summary>
             private void UpdateUi(bool metadata = false)
             {
-                if (metadata)
-                {
-                    Owner.UserInterface?.SendMessage(GenerateMetaDataMessage());
-                }else{
-                    Owner.UserInterface?.SendMessage(GenerateUpdateMessage());
-                }
+                Owner.UserInterface?.SendMessage(metadata ? GenerateMetaDataMessage() : GenerateUpdateMessage());
             }
 
             private void UpdateUi(string message1, string message2, bool metadata = false)
