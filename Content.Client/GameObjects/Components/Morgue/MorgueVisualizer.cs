@@ -1,4 +1,5 @@
-﻿using Content.Shared.GameObjects.Components.Morgue;
+﻿#nullable enable
+using Content.Shared.GameObjects.Components.Morgue;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Utility;
@@ -8,12 +9,12 @@ namespace Content.Client.GameObjects.Components.Storage
 {
     public sealed class MorgueVisualizer : AppearanceVisualizer
     {
-        private string _stateOpen;
-        private string _stateClosed;
+        private string _stateOpen = "";
+        private string _stateClosed = "";
 
-        private string _lightContents;
-        private string _lightMob;
-        private string _lightSoul;
+        private string _lightContents = "";
+        private string _lightMob = "";
+        private string _lightSoul = "";
 
         public override void LoadData(YamlMappingNode node)
         {
@@ -46,10 +47,7 @@ namespace Content.Client.GameObjects.Components.Storage
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent(out ISpriteComponent sprite))
-            {
-                return;
-            }
+            if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite)) return;
 
             sprite.LayerSetState(
                 MorgueVisualLayers.Base,

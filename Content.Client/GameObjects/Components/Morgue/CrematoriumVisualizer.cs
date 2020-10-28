@@ -1,9 +1,7 @@
-﻿using Content.Client.GameObjects.Components.Sound;
+﻿#nullable enable
 using Content.Shared.GameObjects.Components.Morgue;
-using Content.Shared.GameObjects.Components.Sound;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Shared.Audio;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -11,14 +9,11 @@ namespace Content.Client.GameObjects.Components.Storage
 {
     public sealed class CrematoriumVisualizer : AppearanceVisualizer
     {
-        private string _stateOpen;
-        private string _stateClosed;
+        private string _stateOpen = "";
+        private string _stateClosed = "";
 
-        private string _lightContents;
-        private string _lightBurning;
-
-        private LoopingSoundComponent _loopingSoundComponent;
-
+        private string _lightContents = "";
+        private string _lightBurning = "";
 
         public override void LoadData(YamlMappingNode node)
         {
@@ -47,12 +42,7 @@ namespace Content.Client.GameObjects.Components.Storage
         {
             base.OnChangeData(component);
 
-            _loopingSoundComponent ??= component.Owner.GetComponent<LoopingSoundComponent>();
-
-            if (!component.Owner.TryGetComponent(out ISpriteComponent sprite))
-            {
-                return;
-            }
+            if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite)) return;
 
             sprite.LayerSetState(
                 CrematoriumVisualLayers.Base,
@@ -64,20 +54,6 @@ namespace Content.Client.GameObjects.Components.Storage
             var lightState = "";
             if (component.TryGetData(MorgueVisuals.HasContents,  out bool hasContents) && hasContents) lightState = _lightContents;
             if (component.TryGetData(CrematoriumVisuals.Burning, out bool isBurning)   && isBurning)   lightState = _lightBurning;
-
-            /* TODO: get a nice fire loop
-            if (isBurning)
-            {
-                var scheduledSound = new ScheduledSound();
-                scheduledSound.Filename = "/Audio/Effects/fireloop.ogg";
-                scheduledSound.AudioParams = AudioParams.Default.WithLoop(true);
-                _loopingSoundComponent.StopAllSounds();
-                _loopingSoundComponent.AddScheduledSound(scheduledSound);
-            }
-            else
-            {
-                _loopingSoundComponent.StopAllSounds();
-            }*/
 
             if (!string.IsNullOrEmpty(lightState))
             {

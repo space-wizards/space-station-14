@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.GUI;
+﻿#nullable enable
+using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Paper;
 using Content.Server.GameObjects.EntitySystems;
@@ -12,6 +13,7 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
@@ -28,17 +30,16 @@ namespace Content.Server.GameObjects.Components.Morgue
     public class BodyBagEntityStorageComponent : EntityStorageComponent, IExamine, IInteractUsing
     {
         public override string Name => "BodyBagEntityStorage";
-        private IEntityQuery _entityQuery;
-        private AppearanceComponent _appearance;
 
-        [ViewVariables] public ContainerSlot LabelContainer { get; private set; }
+        [ViewVariables]
+        [ComponentDependency] private AppearanceComponent? _appearance = null;
+
+        [ViewVariables] public ContainerSlot? LabelContainer { get; private set; }
 
         public override void Initialize()
         {
             base.Initialize();
-            _entityQuery = new IntersectingEntityQuery(Owner);
-            _appearance = Owner.GetComponent<AppearanceComponent>();
-            _appearance.SetData(BodyBagVisuals.Label, false);
+            _appearance?.SetData(BodyBagVisuals.Label, false);
             LabelContainer = ContainerManagerComponent.Ensure<ContainerSlot>("body_bag_label", Owner, out _);
         }
 
@@ -52,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Morgue
         {
             if (inDetailsRange)
             {
-                if (LabelContainer.ContainedEntity != null && LabelContainer.ContainedEntity.TryGetComponent<PaperComponent>(out var paper))
+                if (LabelContainer?.ContainedEntity != null && LabelContainer.ContainedEntity.TryGetComponent<PaperComponent>(out var paper))
                 {
                     message.AddText(Loc.GetString("The label reads: {0}", paper.Content));
                 }
@@ -61,6 +62,8 @@ namespace Content.Server.GameObjects.Components.Morgue
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
+            if (LabelContainer == null) return false;
+
             if (LabelContainer.ContainedEntity != null)
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("There's already a label attached."));
@@ -73,7 +76,7 @@ namespace Content.Server.GameObjects.Components.Morgue
                 return false;
             }
 
-            _appearance.SetData(BodyBagVisuals.Label, true);
+            _appearance?.SetData(BodyBagVisuals.Label, true);
 
             Owner.PopupMessage(eventArgs.User, Loc.GetString("You attach {0:theName} to the body bag.", eventArgs.Using));
             return true;
@@ -81,15 +84,17 @@ namespace Content.Server.GameObjects.Components.Morgue
 
         public void RemoveLabel(IEntity user)
         {
-            if (user.TryGetComponent(out HandsComponent hands))
+            if (LabelContainer == null) return;
+
+            if (user.TryGetComponent(out HandsComponent? hands))
             {
                 hands.PutInHandOrDrop(LabelContainer.ContainedEntity.GetComponent<ItemComponent>());
-                _appearance.SetData(BodyBagVisuals.Label, false);
+                _appearance?.SetData(BodyBagVisuals.Label, false);
             }
             else if (LabelContainer.Remove(LabelContainer.ContainedEntity))
             {
                 LabelContainer.ContainedEntity.Transform.Coordinates = Owner.Transform.Coordinates;
-                _appearance.SetData(BodyBagVisuals.Label, false);
+                _appearance?.SetData(BodyBagVisuals.Label, false);
             }
         }
 
@@ -99,7 +104,7 @@ namespace Content.Server.GameObjects.Components.Morgue
         {
             protected override void GetData(IEntity user, BodyBagEntityStorageComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user) || component.LabelContainer.ContainedEntity == null)
+                if (!ActionBlockerSystem.CanInteract(user) || component.LabelContainer?.ContainedEntity == null)
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;

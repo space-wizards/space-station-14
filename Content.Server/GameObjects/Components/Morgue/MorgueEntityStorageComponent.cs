@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.Items.Storage;
+﻿#nullable enable
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Morgue;
@@ -11,6 +12,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
@@ -30,23 +32,25 @@ namespace Content.Server.GameObjects.Components.Morgue
         public override string Name => "MorgueEntityStorage";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private string _trayPrototypeId;
+        private string? _trayPrototypeId;
 
         [ViewVariables]
-        private IEntity _tray;
+        private IEntity? _tray;
 
-        [ViewVariables] public ContainerSlot TrayContainer { get; private set; }
+        [ViewVariables]
+        public ContainerSlot? TrayContainer { get; private set; }
 
-        [ViewVariables(VVAccess.ReadWrite)] public bool DoSoulBeep = true;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool DoSoulBeep = true;
 
-        protected AppearanceComponent Appearance;
+        [ViewVariables]
+        [ComponentDependency] protected readonly AppearanceComponent? Appearance = null;
 
 
         public override void Initialize()
         {
             base.Initialize();
-            Appearance = Owner.GetComponent<AppearanceComponent>();
-            Appearance.SetData(MorgueVisuals.Open, false);
+            Appearance?.SetData(MorgueVisuals.Open, false);
             TrayContainer = ContainerManagerComponent.Ensure<ContainerSlot>("morgue_tray", Owner, out _);
         }
 
@@ -86,10 +90,10 @@ namespace Content.Server.GameObjects.Components.Morgue
 
         protected override void OpenStorage()
         {
-            Appearance.SetData(MorgueVisuals.Open, true);
-            Appearance.SetData(MorgueVisuals.HasContents, false);
-            Appearance.SetData(MorgueVisuals.HasMob, false);
-            Appearance.SetData(MorgueVisuals.HasSoul, false);
+            Appearance?.SetData(MorgueVisuals.Open, true);
+            Appearance?.SetData(MorgueVisuals.HasContents, false);
+            Appearance?.SetData(MorgueVisuals.HasMob, false);
+            Appearance?.SetData(MorgueVisuals.HasSoul, false);
 
             if (_tray == null)
             {
@@ -100,7 +104,7 @@ namespace Content.Server.GameObjects.Components.Morgue
             }
             else
             {
-                TrayContainer.Remove(_tray);
+                TrayContainer?.Remove(_tray);
             }
 
             _tray.Transform.WorldPosition = Owner.Transform.WorldPosition + Owner.Transform.LocalRotation.GetCardinalDir().ToVec();
@@ -120,21 +124,21 @@ namespace Content.Server.GameObjects.Components.Morgue
                 if (!hasMob && entity.HasComponent<IBody>()) hasMob = true;
                 if (!hasSoul && entity.TryGetComponent<BasicActorComponent>(out var actor) && actor.playerSession != null) hasSoul = true;
             }
-            Appearance.SetData(MorgueVisuals.HasContents, count > 0);
-            Appearance.SetData(MorgueVisuals.HasMob, hasMob);
-            Appearance.SetData(MorgueVisuals.HasSoul, hasSoul);
+            Appearance?.SetData(MorgueVisuals.HasContents, count > 0);
+            Appearance?.SetData(MorgueVisuals.HasMob, hasMob);
+            Appearance?.SetData(MorgueVisuals.HasSoul, hasSoul);
         }
 
         protected override void CloseStorage()
         {
             base.CloseStorage();
 
-            Appearance.SetData(MorgueVisuals.Open, false);
+            Appearance?.SetData(MorgueVisuals.Open, false);
             CheckContents();
 
             if (_tray != null)
             {
-                TrayContainer.Insert(_tray);
+                TrayContainer?.Insert(_tray);
             }
         }
 
@@ -143,12 +147,14 @@ namespace Content.Server.GameObjects.Components.Morgue
         {
             CheckContents();
 
-            if(DoSoulBeep && Appearance.TryGetData(MorgueVisuals.HasSoul, out bool hasSoul) && hasSoul)
+            if(DoSoulBeep && Appearance !=null && Appearance.TryGetData(MorgueVisuals.HasSoul, out bool hasSoul) && hasSoul)
                 EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg", Owner);
         }
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
+            if (Appearance == null) return;
+
             if (inDetailsRange)
             {
                 if (Appearance.TryGetData(MorgueVisuals.HasSoul, out bool hasSoul) && hasSoul)

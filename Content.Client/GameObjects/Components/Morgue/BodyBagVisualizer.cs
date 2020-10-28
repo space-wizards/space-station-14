@@ -1,4 +1,5 @@
-﻿using Content.Shared.GameObjects.Components.Morgue;
+﻿#nullable enable
+using Content.Shared.GameObjects.Components.Morgue;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 
@@ -10,7 +11,7 @@ namespace Content.Client.GameObjects.Components.Morgue
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent(out ISpriteComponent sprite))
+            if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite))
             {
                 return;
             }

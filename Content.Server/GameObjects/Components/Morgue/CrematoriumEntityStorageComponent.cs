@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.Items.Storage;
+﻿#nullable enable
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Shared.GameObjects.Components.Morgue;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
@@ -31,6 +32,8 @@ namespace Content.Server.GameObjects.Components.Morgue
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
+            if (Appearance == null) return;
+
             if (inDetailsRange)
             {
                 if (Appearance.TryGetData(CrematoriumVisuals.Burning, out bool isBurning) && isBurning)
@@ -53,12 +56,12 @@ namespace Content.Server.GameObjects.Components.Morgue
         {
             if (Cooking) return;
 
-            Appearance.SetData(CrematoriumVisuals.Burning, true);
+            Appearance?.SetData(CrematoriumVisuals.Burning, true);
             Cooking = true;
 
             Timer.Spawn(_burnMilis, () =>
             {
-                Appearance.SetData(CrematoriumVisuals.Burning, false);
+                Appearance?.SetData(CrematoriumVisuals.Burning, false);
                 Cooking = false;
 
                 for (var i = Contents.ContainedEntities.Count - 1; i >= 0; i--)
