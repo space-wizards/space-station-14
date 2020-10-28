@@ -541,7 +541,7 @@ namespace Content.Server.GameObjects.Components.GUI
             var list = new List<KeyValuePair<Slots, EntityUid>>();
             foreach (var (slot, container) in _slotContainers)
             {
-                if (container.ContainedEntity != null)
+                if (container != null && container.ContainedEntity != null)
                 {
                     list.Add(new KeyValuePair<Slots, EntityUid>(slot, container.ContainedEntity.Uid));
                 }
