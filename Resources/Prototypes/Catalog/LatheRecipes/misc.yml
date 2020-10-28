@@ -15,3 +15,13 @@
   materials:
     steel: 30
     glass: 50
+
+- type: latheRecipe
+  id: MetalRod
+  icon:
+    sprite: Objects/Materials/materials.rsi
+    state: rods
+  result: MetalRod1
+  completetime: 250
+  materials:
+    steel: 1875

@@ -214,3 +214,26 @@
   components:
     - type: Stack
       count: 1
+
+- type: entity
+  name: metal rod
+  id: MetalRodStack
+  parent: MaterialStack
+  suffix: Full
+  description: Some rods. Used for building things, or to extend the station.
+  components:
+    # TODO: This is metal, but it's half of a metal sheet per item in the stack.
+  - type: Stack
+    stacktype: enum.StackType.MetalRod
+  - type: Sprite
+    sprite: Objects/Materials/materials.rsi
+    state: rods
+
+- type: entity
+  id: MetalRod1
+  parent: MetalRodStack
+  suffix: 1
+  components:
+  - type: Stack
+    stacktype: enum.StackType.MetalRod
+    count: 1
