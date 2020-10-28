@@ -126,27 +126,31 @@ namespace Content.Server.GameObjects.Components.Arcade
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
-            if (obj.Message is BlockGameMessages.BlockGameUserUnregisterMessage unregisterMessage)
+            switch (obj.Message)
             {
-                UnRegisterPlayerSession(obj.Session);
-                return;
-            }
-            if (obj.Session != _player) return;
+                case BlockGameMessages.BlockGameUserUnregisterMessage unregisterMessage:
+                    UnRegisterPlayerSession(obj.Session);
+                    break;
+                case BlockGameMessages.BlockGamePlayerActionMessage playerActionMessage:
+                    if (obj.Session != _player) break;
 
-            if (!ActionBlockerSystem.CanInteract(Owner))
-            {
-                DeactivePlayer(obj.Session);
-            }
+                    if (!ActionBlockerSystem.CanInteract(Owner))
+                    {
+                        DeactivePlayer(obj.Session);
+                        break;
+                    }
 
-            if (!(obj.Message is BlockGameMessages.BlockGamePlayerActionMessage message)) return;
-            if (message.PlayerAction == BlockGamePlayerAction.NewGame)
-            {
-                if(_game?.Started == true) _game = new BlockGame(this);
-                _game?.StartGame();
-            }
-            else
-            {
-                _game?.ProcessInput(message.PlayerAction);
+                    if (playerActionMessage.PlayerAction == BlockGamePlayerAction.NewGame)
+                    {
+                        if(_game?.Started == true) _game = new BlockGame(this);
+                        _game?.StartGame();
+                    }
+                    else
+                    {
+                        _game?.ProcessInput(playerActionMessage.PlayerAction);
+                    }
+
+                    break;
             }
         }
 
