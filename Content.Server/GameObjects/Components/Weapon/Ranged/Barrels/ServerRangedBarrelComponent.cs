@@ -256,7 +256,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             {
                 var ammoComponent = ammo.GetComponent<AmmoComponent>();
 
-                FireProjectiles(shooter, projectile, ammoComponent.ProjectilesFired, ammoComponent.EvenSpreadAngle, angle, ammoComponent.Velocity, targetPos);
+                FireProjectiles(shooter, projectile, ammoComponent.ProjectilesFired, ammoComponent.EvenSpreadAngle, angle, ammoComponent.Velocity);
 
                 if (CanMuzzleFlash)
                 {
@@ -355,7 +355,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         /// <summary>
         /// Handles firing one or many projectiles
         /// </summary>
-        private void FireProjectiles(IEntity shooter, IEntity baseProjectile, int count, float evenSpreadAngle, Angle angle, float velocity, Vector2 targetPos)
+        private void FireProjectiles(IEntity shooter, IEntity baseProjectile, int count, float evenSpreadAngle, Angle angle, float velocity)
         {
             List<Angle> sprayAngleChange = null;
             if (count > 1)
@@ -394,14 +394,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
                 var projectileComponent = projectile.GetComponent<ProjectileComponent>();
                 projectileComponent.IgnoreEntity(shooter);
-                projectileComponent.targetPosition = targetPos;
 
                 projectile
                     .GetComponent<IPhysicsComponent>()
                     .EnsureController<BulletController>()
                     .LinearVelocity = projectileAngle.ToVec() * velocity;
-
-                
 
                 projectile.Transform.LocalRotation = projectileAngle.Theta;
             }
