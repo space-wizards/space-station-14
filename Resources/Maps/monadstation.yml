@@ -145,23 +145,7 @@ entities:
   - uniqueMixes:
     - volume: 2500
       moles:
-      - 21.824879
-      - 82.10312
-      - 0
-      - 0
-      - 0
-      - 0
-      molesArchived:
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      temperature: 293.15
-    - volume: 2500
-      moles:
-      - 0
+      - 103.92799
       - 0
       - 0
       - 0
@@ -15856,1207 +15840,1207 @@ entities:
       : 0
       ? X: -64
         Y: 13
-      : 1
+      : 0
       ? X: -64
         Y: 14
-      : 1
+      : 0
       ? X: -63
         Y: 12
-      : 1
+      : 0
       ? X: -63
         Y: 13
-      : 1
+      : 0
       ? X: -63
         Y: 14
-      : 1
+      : 0
       ? X: -63
         Y: 15
-      : 1
+      : 0
       ? X: -62
         Y: 12
-      : 1
+      : 0
       ? X: -62
         Y: 13
-      : 1
+      : 0
       ? X: -62
         Y: 14
-      : 1
+      : 0
       ? X: -62
         Y: 15
-      : 1
+      : 0
       ? X: -61
         Y: 12
-      : 1
+      : 0
       ? X: -61
         Y: 13
-      : 1
+      : 0
       ? X: -61
         Y: 14
-      : 1
+      : 0
       ? X: -61
         Y: 15
-      : 1
+      : 0
       ? X: -60
         Y: 12
-      : 1
+      : 0
       ? X: -60
         Y: 13
-      : 1
+      : 0
       ? X: -60
         Y: 14
-      : 1
+      : 0
       ? X: -60
         Y: 15
-      : 1
+      : 0
       ? X: -63
         Y: 16
-      : 1
+      : 0
       ? X: -62
         Y: 16
-      : 1
+      : 0
       ? X: -61
         Y: 16
-      : 1
+      : 0
       ? X: -60
         Y: 16
-      : 1
+      : 0
       ? X: -79
         Y: 11
-      : 1
+      : 0
       ? X: -79
         Y: 12
-      : 1
+      : 0
       ? X: -79
         Y: 13
-      : 1
+      : 0
       ? X: -79
         Y: 14
-      : 1
+      : 0
       ? X: -79
         Y: 15
-      : 1
+      : 0
       ? X: -77
         Y: 11
-      : 1
+      : 0
       ? X: -77
         Y: 12
-      : 1
+      : 0
       ? X: -77
         Y: 13
-      : 1
+      : 0
       ? X: -77
         Y: 14
-      : 1
+      : 0
       ? X: -77
         Y: 15
-      : 1
+      : 0
       ? X: -75
         Y: 11
-      : 1
+      : 0
       ? X: -75
         Y: 12
-      : 1
+      : 0
       ? X: -75
         Y: 13
-      : 1
+      : 0
       ? X: -75
         Y: 14
-      : 1
+      : 0
       ? X: -75
         Y: 15
-      : 1
+      : 0
       ? X: -73
         Y: 11
-      : 1
+      : 0
       ? X: -73
         Y: 12
-      : 1
+      : 0
       ? X: -73
         Y: 13
-      : 1
+      : 0
       ? X: -73
         Y: 14
-      : 1
+      : 0
       ? X: -73
         Y: 15
-      : 1
+      : 0
       ? X: -65
         Y: 13
-      : 1
+      : 0
       ? X: -65
         Y: 14
-      : 1
+      : 0
       ? X: -79
         Y: 16
-      : 1
+      : 0
       ? X: -77
         Y: 16
-      : 1
+      : 0
       ? X: -75
         Y: 16
-      : 1
+      : 0
       ? X: -73
         Y: 16
-      : 1
+      : 0
       ? X: -85
         Y: 11
-      : 1
+      : 0
       ? X: -85
         Y: 12
-      : 1
+      : 0
       ? X: -85
         Y: 13
-      : 1
+      : 0
       ? X: -85
         Y: 14
-      : 1
+      : 0
       ? X: -85
         Y: 15
-      : 1
+      : 0
       ? X: -83
         Y: 11
-      : 1
+      : 0
       ? X: -83
         Y: 12
-      : 1
+      : 0
       ? X: -83
         Y: 13
-      : 1
+      : 0
       ? X: -83
         Y: 14
-      : 1
+      : 0
       ? X: -83
         Y: 15
-      : 1
+      : 0
       ? X: -81
         Y: 11
-      : 1
+      : 0
       ? X: -81
         Y: 12
-      : 1
+      : 0
       ? X: -81
         Y: 13
-      : 1
+      : 0
       ? X: -81
         Y: 14
-      : 1
+      : 0
       ? X: -81
         Y: 15
-      : 1
+      : 0
       ? X: -85
         Y: 16
-      : 1
+      : 0
       ? X: -83
         Y: 16
-      : 1
+      : 0
       ? X: -81
         Y: 16
-      : 1
+      : 0
       ? X: -64
         Y: 15
-      : 1
+      : 0
       ? X: -65
         Y: 15
-      : 1
+      : 0
       ? X: -12
         Y: -32
-      : 1
+      : 0
       ? X: -11
         Y: -32
-      : 1
+      : 0
       ? X: -10
         Y: -32
-      : 1
+      : 0
       ? X: -9
         Y: -32
-      : 1
+      : 0
       ? X: -8
         Y: -32
-      : 1
+      : 0
       ? X: -8
         Y: -31
-      : 1
+      : 0
       ? X: -8
         Y: -30
-      : 1
+      : 0
       ? X: -8
         Y: -29
-      : 1
+      : 0
       ? X: -8
         Y: -28
-      : 1
+      : 0
       ? X: -8
         Y: -27
-      : 1
+      : 0
       ? X: -8
         Y: -26
-      : 1
+      : 0
       ? X: -8
         Y: -25
-      : 1
+      : 0
       ? X: -8
         Y: -24
-      : 1
+      : 0
       ? X: -8
         Y: -23
-      : 1
+      : 0
       ? X: -8
         Y: -22
-      : 1
+      : 0
       ? X: -8
         Y: -21
-      : 1
+      : 0
       ? X: -8
         Y: -20
-      : 1
+      : 0
       ? X: -8
         Y: -19
-      : 1
+      : 0
       ? X: -8
         Y: -18
-      : 1
+      : 0
       ? X: -7
         Y: -32
-      : 1
+      : 0
       ? X: -7
         Y: -31
-      : 1
+      : 0
       ? X: -7
         Y: -30
-      : 1
+      : 0
       ? X: -7
         Y: -29
-      : 1
+      : 0
       ? X: -7
         Y: -28
-      : 1
+      : 0
       ? X: -7
         Y: -27
-      : 1
+      : 0
       ? X: -7
         Y: -26
-      : 1
+      : 0
       ? X: -7
         Y: -25
-      : 1
+      : 0
       ? X: -7
         Y: -24
-      : 1
+      : 0
       ? X: -7
         Y: -23
-      : 1
+      : 0
       ? X: -7
         Y: -22
-      : 1
+      : 0
       ? X: -7
         Y: -21
-      : 1
+      : 0
       ? X: -7
         Y: -20
-      : 1
+      : 0
       ? X: -7
         Y: -19
-      : 1
+      : 0
       ? X: -7
         Y: -18
-      : 1
+      : 0
       ? X: -6
         Y: -32
-      : 1
+      : 0
       ? X: -6
         Y: -31
-      : 1
+      : 0
       ? X: -6
         Y: -30
-      : 1
+      : 0
       ? X: -6
         Y: -29
-      : 1
+      : 0
       ? X: -6
         Y: -28
-      : 1
+      : 0
       ? X: -6
         Y: -27
-      : 1
+      : 0
       ? X: -6
         Y: -26
-      : 1
+      : 0
       ? X: -6
         Y: -25
-      : 1
+      : 0
       ? X: -6
         Y: -24
-      : 1
+      : 0
       ? X: -6
         Y: -23
-      : 1
+      : 0
       ? X: -6
         Y: -22
-      : 1
+      : 0
       ? X: -6
         Y: -21
-      : 1
+      : 0
       ? X: -6
         Y: -20
-      : 1
+      : 0
       ? X: -6
         Y: -19
-      : 1
+      : 0
       ? X: -6
         Y: -18
-      : 1
+      : 0
       ? X: -5
         Y: -32
-      : 1
+      : 0
       ? X: -5
         Y: -31
-      : 1
+      : 0
       ? X: -5
         Y: -30
-      : 1
+      : 0
       ? X: -5
         Y: -29
-      : 1
+      : 0
       ? X: -5
         Y: -28
-      : 1
+      : 0
       ? X: -5
         Y: -27
-      : 1
+      : 0
       ? X: -5
         Y: -26
-      : 1
+      : 0
       ? X: -5
         Y: -25
-      : 1
+      : 0
       ? X: -5
         Y: -24
-      : 1
+      : 0
       ? X: -5
         Y: -23
-      : 1
+      : 0
       ? X: -5
         Y: -22
-      : 1
+      : 0
       ? X: -5
         Y: -21
-      : 1
+      : 0
       ? X: -5
         Y: -20
-      : 1
+      : 0
       ? X: -5
         Y: -19
-      : 1
+      : 0
       ? X: -5
         Y: -18
-      : 1
+      : 0
       ? X: -5
         Y: -17
-      : 1
+      : 0
       ? X: -4
         Y: -32
-      : 1
+      : 0
       ? X: -4
         Y: -31
-      : 1
+      : 0
       ? X: -4
         Y: -30
-      : 1
+      : 0
       ? X: -4
         Y: -29
-      : 1
+      : 0
       ? X: -4
         Y: -28
-      : 1
+      : 0
       ? X: -4
         Y: -27
-      : 1
+      : 0
       ? X: -4
         Y: -26
-      : 1
+      : 0
       ? X: -4
         Y: -25
-      : 1
+      : 0
       ? X: -4
         Y: -24
-      : 1
+      : 0
       ? X: -4
         Y: -23
-      : 1
+      : 0
       ? X: -4
         Y: -22
-      : 1
+      : 0
       ? X: -4
         Y: -21
-      : 1
+      : 0
       ? X: -4
         Y: -20
-      : 1
+      : 0
       ? X: -4
         Y: -19
-      : 1
+      : 0
       ? X: -4
         Y: -18
-      : 1
+      : 0
       ? X: -4
         Y: -17
-      : 1
+      : 0
       ? X: -3
         Y: -32
-      : 1
+      : 0
       ? X: -3
         Y: -31
-      : 1
+      : 0
       ? X: -3
         Y: -30
-      : 1
+      : 0
       ? X: -3
         Y: -29
-      : 1
+      : 0
       ? X: -3
         Y: -28
-      : 1
+      : 0
       ? X: -3
         Y: -27
-      : 1
+      : 0
       ? X: -3
         Y: -26
-      : 1
+      : 0
       ? X: -3
         Y: -25
-      : 1
+      : 0
       ? X: -3
         Y: -24
-      : 1
+      : 0
       ? X: -3
         Y: -23
-      : 1
+      : 0
       ? X: -3
         Y: -22
-      : 1
+      : 0
       ? X: -3
         Y: -21
-      : 1
+      : 0
       ? X: -3
         Y: -20
-      : 1
+      : 0
       ? X: -3
         Y: -19
-      : 1
+      : 0
       ? X: -3
         Y: -18
-      : 1
+      : 0
       ? X: -3
         Y: -17
-      : 1
+      : 0
       ? X: -2
         Y: -32
-      : 1
+      : 0
       ? X: -2
         Y: -31
-      : 1
+      : 0
       ? X: -2
         Y: -30
-      : 1
+      : 0
       ? X: -2
         Y: -29
-      : 1
+      : 0
       ? X: -2
         Y: -28
-      : 1
+      : 0
       ? X: -2
         Y: -27
-      : 1
+      : 0
       ? X: -2
         Y: -26
-      : 1
+      : 0
       ? X: -2
         Y: -25
-      : 1
+      : 0
       ? X: -2
         Y: -24
-      : 1
+      : 0
       ? X: -2
         Y: -23
-      : 1
+      : 0
       ? X: -2
         Y: -22
-      : 1
+      : 0
       ? X: -2
         Y: -21
-      : 1
+      : 0
       ? X: -2
         Y: -20
-      : 1
+      : 0
       ? X: -2
         Y: -19
-      : 1
+      : 0
       ? X: -2
         Y: -18
-      : 1
+      : 0
       ? X: -2
         Y: -17
-      : 1
+      : 0
       ? X: -1
         Y: -32
-      : 1
+      : 0
       ? X: -1
         Y: -31
-      : 1
+      : 0
       ? X: -1
         Y: -30
-      : 1
+      : 0
       ? X: -1
         Y: -29
-      : 1
+      : 0
       ? X: -1
         Y: -28
-      : 1
+      : 0
       ? X: -1
         Y: -27
-      : 1
+      : 0
       ? X: -1
         Y: -26
-      : 1
+      : 0
       ? X: -1
         Y: -25
-      : 1
+      : 0
       ? X: -1
         Y: -24
-      : 1
+      : 0
       ? X: -1
         Y: -23
-      : 1
+      : 0
       ? X: -1
         Y: -22
-      : 1
+      : 0
       ? X: -1
         Y: -21
-      : 1
+      : 0
       ? X: -1
         Y: -20
-      : 1
+      : 0
       ? X: -1
         Y: -19
-      : 1
+      : 0
       ? X: -1
         Y: -18
-      : 1
+      : 0
       ? X: -1
         Y: -17
-      : 1
+      : 0
       ? X: -12
         Y: -48
-      : 1
+      : 0
       ? X: -12
         Y: -47
-      : 1
+      : 0
       ? X: -12
         Y: -46
-      : 1
+      : 0
       ? X: -12
         Y: -45
-      : 1
+      : 0
       ? X: -12
         Y: -44
-      : 1
+      : 0
       ? X: -12
         Y: -43
-      : 1
+      : 0
       ? X: -12
         Y: -42
-      : 1
+      : 0
       ? X: -12
         Y: -41
-      : 1
+      : 0
       ? X: -12
         Y: -40
-      : 1
+      : 0
       ? X: -12
         Y: -39
-      : 1
+      : 0
       ? X: -12
         Y: -38
-      : 1
+      : 0
       ? X: -12
         Y: -37
-      : 1
+      : 0
       ? X: -12
         Y: -36
-      : 1
+      : 0
       ? X: -12
         Y: -35
-      : 1
+      : 0
       ? X: -12
         Y: -34
-      : 1
+      : 0
       ? X: -12
         Y: -33
-      : 1
+      : 0
       ? X: -11
         Y: -48
-      : 1
+      : 0
       ? X: -11
         Y: -47
-      : 1
+      : 0
       ? X: -11
         Y: -46
-      : 1
+      : 0
       ? X: -11
         Y: -45
-      : 1
+      : 0
       ? X: -11
         Y: -44
-      : 1
+      : 0
       ? X: -11
         Y: -43
-      : 1
+      : 0
       ? X: -11
         Y: -42
-      : 1
+      : 0
       ? X: -11
         Y: -41
-      : 1
+      : 0
       ? X: -11
         Y: -40
-      : 1
+      : 0
       ? X: -11
         Y: -39
-      : 1
+      : 0
       ? X: -11
         Y: -38
-      : 1
+      : 0
       ? X: -11
         Y: -37
-      : 1
+      : 0
       ? X: -11
         Y: -36
-      : 1
+      : 0
       ? X: -11
         Y: -35
-      : 1
+      : 0
       ? X: -11
         Y: -34
-      : 1
+      : 0
       ? X: -11
         Y: -33
-      : 1
+      : 0
       ? X: -10
         Y: -48
-      : 1
+      : 0
       ? X: -10
         Y: -47
-      : 1
+      : 0
       ? X: -10
         Y: -46
-      : 1
+      : 0
       ? X: -10
         Y: -45
-      : 1
+      : 0
       ? X: -10
         Y: -44
-      : 1
+      : 0
       ? X: -10
         Y: -43
-      : 1
+      : 0
       ? X: -10
         Y: -42
-      : 1
+      : 0
       ? X: -10
         Y: -41
-      : 1
+      : 0
       ? X: -10
         Y: -40
-      : 1
+      : 0
       ? X: -10
         Y: -39
-      : 1
+      : 0
       ? X: -10
         Y: -38
-      : 1
+      : 0
       ? X: -10
         Y: -37
-      : 1
+      : 0
       ? X: -10
         Y: -36
-      : 1
+      : 0
       ? X: -10
         Y: -35
-      : 1
+      : 0
       ? X: -10
         Y: -34
-      : 1
+      : 0
       ? X: -10
         Y: -33
-      : 1
+      : 0
       ? X: -9
         Y: -48
-      : 1
+      : 0
       ? X: -9
         Y: -47
-      : 1
+      : 0
       ? X: -9
         Y: -46
-      : 1
+      : 0
       ? X: -9
         Y: -45
-      : 1
+      : 0
       ? X: -9
         Y: -44
-      : 1
+      : 0
       ? X: -9
         Y: -43
-      : 1
+      : 0
       ? X: -9
         Y: -42
-      : 1
+      : 0
       ? X: -9
         Y: -41
-      : 1
+      : 0
       ? X: -9
         Y: -40
-      : 1
+      : 0
       ? X: -9
         Y: -39
-      : 1
+      : 0
       ? X: -9
         Y: -38
-      : 1
+      : 0
       ? X: -9
         Y: -37
-      : 1
+      : 0
       ? X: -9
         Y: -36
-      : 1
+      : 0
       ? X: -9
         Y: -35
-      : 1
+      : 0
       ? X: -9
         Y: -34
-      : 1
+      : 0
       ? X: -9
         Y: -33
-      : 1
+      : 0
       ? X: -8
         Y: -38
-      : 1
+      : 0
       ? X: -8
         Y: -37
-      : 1
+      : 0
       ? X: -8
         Y: -36
-      : 1
+      : 0
       ? X: -8
         Y: -35
-      : 1
+      : 0
       ? X: -8
         Y: -34
-      : 1
+      : 0
       ? X: -8
         Y: -33
-      : 1
+      : 0
       ? X: -7
         Y: -38
-      : 1
+      : 0
       ? X: -7
         Y: -37
-      : 1
+      : 0
       ? X: -7
         Y: -36
-      : 1
+      : 0
       ? X: -7
         Y: -35
-      : 1
+      : 0
       ? X: -7
         Y: -34
-      : 1
+      : 0
       ? X: -7
         Y: -33
-      : 1
+      : 0
       ? X: -6
         Y: -38
-      : 1
+      : 0
       ? X: -6
         Y: -37
-      : 1
+      : 0
       ? X: -6
         Y: -36
-      : 1
+      : 0
       ? X: -6
         Y: -35
-      : 1
+      : 0
       ? X: -6
         Y: -34
-      : 1
+      : 0
       ? X: -6
         Y: -33
-      : 1
+      : 0
       ? X: -5
         Y: -38
-      : 1
+      : 0
       ? X: -5
         Y: -37
-      : 1
+      : 0
       ? X: -5
         Y: -36
-      : 1
+      : 0
       ? X: -5
         Y: -35
-      : 1
+      : 0
       ? X: -5
         Y: -34
-      : 1
+      : 0
       ? X: -5
         Y: -33
-      : 1
+      : 0
       ? X: -4
         Y: -38
-      : 1
+      : 0
       ? X: -4
         Y: -37
-      : 1
+      : 0
       ? X: -4
         Y: -36
-      : 1
+      : 0
       ? X: -4
         Y: -35
-      : 1
+      : 0
       ? X: -4
         Y: -34
-      : 1
+      : 0
       ? X: -4
         Y: -33
-      : 1
+      : 0
       ? X: -3
         Y: -38
-      : 1
+      : 0
       ? X: -3
         Y: -37
-      : 1
+      : 0
       ? X: -3
         Y: -36
-      : 1
+      : 0
       ? X: -3
         Y: -35
-      : 1
+      : 0
       ? X: -3
         Y: -34
-      : 1
+      : 0
       ? X: -3
         Y: -33
-      : 1
+      : 0
       ? X: -2
         Y: -38
-      : 1
+      : 0
       ? X: -2
         Y: -37
-      : 1
+      : 0
       ? X: -2
         Y: -36
-      : 1
+      : 0
       ? X: -2
         Y: -35
-      : 1
+      : 0
       ? X: -2
         Y: -34
-      : 1
+      : 0
       ? X: -2
         Y: -33
-      : 1
+      : 0
       ? X: -1
         Y: -38
-      : 1
+      : 0
       ? X: -1
         Y: -37
-      : 1
+      : 0
       ? X: -1
         Y: -36
-      : 1
+      : 0
       ? X: -1
         Y: -35
-      : 1
+      : 0
       ? X: -1
         Y: -34
-      : 1
+      : 0
       ? X: -1
         Y: -33
-      : 1
+      : 0
       ? X: -12
         Y: -52
-      : 1
+      : 0
       ? X: -12
         Y: -51
-      : 1
+      : 0
       ? X: -12
         Y: -50
-      : 1
+      : 0
       ? X: -12
         Y: -49
-      : 1
+      : 0
       ? X: -11
         Y: -52
-      : 1
+      : 0
       ? X: -11
         Y: -51
-      : 1
+      : 0
       ? X: -11
         Y: -50
-      : 1
+      : 0
       ? X: -11
         Y: -49
-      : 1
+      : 0
       ? X: -10
         Y: -52
-      : 1
+      : 0
       ? X: -10
         Y: -51
-      : 1
+      : 0
       ? X: -10
         Y: -50
-      : 1
+      : 0
       ? X: -10
         Y: -49
-      : 1
+      : 0
       ? X: -9
         Y: -52
-      : 1
+      : 0
       ? X: -9
         Y: -51
-      : 1
+      : 0
       ? X: -9
         Y: -50
-      : 1
+      : 0
       ? X: -9
         Y: -49
-      : 1
+      : 0
       ? X: 0
         Y: -32
-      : 1
+      : 0
       ? X: 0
         Y: -31
-      : 1
+      : 0
       ? X: 0
         Y: -30
-      : 1
+      : 0
       ? X: 0
         Y: -29
-      : 1
+      : 0
       ? X: 0
         Y: -28
-      : 1
+      : 0
       ? X: 0
         Y: -27
-      : 1
+      : 0
       ? X: 0
         Y: -26
-      : 1
+      : 0
       ? X: 0
         Y: -25
-      : 1
+      : 0
       ? X: 0
         Y: -24
-      : 1
+      : 0
       ? X: 0
         Y: -23
-      : 1
+      : 0
       ? X: 0
         Y: -22
-      : 1
+      : 0
       ? X: 0
         Y: -21
-      : 1
+      : 0
       ? X: 0
         Y: -20
-      : 1
+      : 0
       ? X: 0
         Y: -19
-      : 1
+      : 0
       ? X: 0
         Y: -18
-      : 1
+      : 0
       ? X: 0
         Y: -17
-      : 1
+      : 0
       ? X: 1
         Y: -30
-      : 1
+      : 0
       ? X: 1
         Y: -29
-      : 1
+      : 0
       ? X: 1
         Y: -28
-      : 1
+      : 0
       ? X: 1
         Y: -27
-      : 1
+      : 0
       ? X: 1
         Y: -26
-      : 1
+      : 0
       ? X: 1
         Y: -25
-      : 1
+      : 0
       ? X: 1
         Y: -24
-      : 1
+      : 0
       ? X: 1
         Y: -23
-      : 1
+      : 0
       ? X: 1
         Y: -22
-      : 1
+      : 0
       ? X: 1
         Y: -21
-      : 1
+      : 0
       ? X: 1
         Y: -20
-      : 1
+      : 0
       ? X: 1
         Y: -19
-      : 1
+      : 0
       ? X: 1
         Y: -18
-      : 1
+      : 0
       ? X: 1
         Y: -17
-      : 1
+      : 0
       ? X: 2
         Y: -28
-      : 1
+      : 0
       ? X: 2
         Y: -22
-      : 1
+      : 0
       ? X: 2
         Y: -21
-      : 1
+      : 0
       ? X: 2
         Y: -20
-      : 1
+      : 0
       ? X: 2
         Y: -19
-      : 1
+      : 0
       ? X: 2
         Y: -18
-      : 1
+      : 0
       ? X: 2
         Y: -17
-      : 1
+      : 0
       ? X: 3
         Y: -28
-      : 1
+      : 0
       ? X: 3
         Y: -22
-      : 1
+      : 0
       ? X: 3
         Y: -21
-      : 1
+      : 0
       ? X: 3
         Y: -20
-      : 1
+      : 0
       ? X: 3
         Y: -19
-      : 1
+      : 0
       ? X: 3
         Y: -18
-      : 1
+      : 0
       ? X: 3
         Y: -17
-      : 1
+      : 0
       ? X: 4
         Y: -28
-      : 1
+      : 0
       ? X: 4
         Y: -22
-      : 1
+      : 0
       ? X: 4
         Y: -21
-      : 1
+      : 0
       ? X: 4
         Y: -20
-      : 1
+      : 0
       ? X: 4
         Y: -19
-      : 1
+      : 0
       ? X: 4
         Y: -18
-      : 1
+      : 0
       ? X: 4
         Y: -17
-      : 1
+      : 0
       ? X: 5
         Y: -28
-      : 1
+      : 0
       ? X: 6
         Y: -28
-      : 1
+      : 0
       ? X: 7
         Y: -28
-      : 1
+      : 0
       ? X: 8
         Y: -28
-      : 1
+      : 0
       ? X: 9
         Y: -28
-      : 1
+      : 0
       ? X: 9
         Y: -27
-      : 1
+      : 0
       ? X: 9
         Y: -26
-      : 1
+      : 0
       ? X: 9
         Y: -25
-      : 1
+      : 0
       ? X: 9
         Y: -24
-      : 1
+      : 0
       ? X: 9
         Y: -23
-      : 1
+      : 0
       ? X: 9
         Y: -22
-      : 1
+      : 0
       ? X: 9
         Y: -21
-      : 1
+      : 0
       ? X: 9
         Y: -20
-      : 1
+      : 0
       ? X: 9
         Y: -19
-      : 1
+      : 0
       ? X: 9
         Y: -18
-      : 1
+      : 0
       ? X: 9
         Y: -17
-      : 1
+      : 0
       ? X: 10
         Y: -28
-      : 1
+      : 0
       ? X: 10
         Y: -27
-      : 1
+      : 0
       ? X: 11
         Y: -28
-      : 1
+      : 0
       ? X: 0
         Y: -38
-      : 1
+      : 0
       ? X: 0
         Y: -37
-      : 1
+      : 0
       ? X: 0
         Y: -36
-      : 1
+      : 0
       ? X: 0
         Y: -35
-      : 1
+      : 0
       ? X: 0
         Y: -34
-      : 1
+      : 0
       ? X: 0
         Y: -33
-      : 1
+      : 0
     type: GridAtmosphere
 - uid: 1
   type: LowWall
@@ -18528,8 +18512,10 @@ entities:
   - parent: 0
     pos: -10.5,1.5
     type: Transform
-  - startingCharge: 11998.838
+  - startingCharge: 11997.676
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 209
   type: ApcExtensionCable
   components:
@@ -19589,8 +19575,10 @@ entities:
   - parent: 0
     pos: -10.5,-3.5
     type: Transform
-  - startingCharge: 11999.585
+  - startingCharge: 11999.17
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 343
   type: ApcExtensionCable
   components:
@@ -22320,8 +22308,10 @@ entities:
     pos: -42.5,2.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.336
+  - startingCharge: 11998.672
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 704
   type: SalternApc
   components:
@@ -22329,8 +22319,10 @@ entities:
     pos: -38.5,-5.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.668
+  - startingCharge: 11999.336
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 705
   type: SalternApc
   components:
@@ -22338,8 +22330,10 @@ entities:
     pos: -32.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.502
+  - startingCharge: 11999.004
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 706
   type: SalternApc
   components:
@@ -22347,8 +22341,10 @@ entities:
     pos: -28.5,4.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.668
+  - startingCharge: 11999.336
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 707
   type: ApcExtensionCable
   components:
@@ -23096,8 +23092,10 @@ entities:
     pos: 0.5,-4.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.751
+  - startingCharge: 11999.502
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 796
   type: HVWire
   components:
@@ -24224,8 +24222,10 @@ entities:
     pos: -38.5,11.5
     rot: 3.141592653589793 rad
     type: Transform
-  - startingCharge: 11999.668
+  - startingCharge: 11999.336
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 924
   type: ApcExtensionCable
   components:
@@ -24287,8 +24287,10 @@ entities:
     pos: -21.5,-1.5
     rot: 3.141592653589793 rad
     type: Transform
-  - startingCharge: 11999.751
+  - startingCharge: 11999.502
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 931
   type: ApcExtensionCable
   components:
@@ -24773,8 +24775,10 @@ entities:
     pos: -35.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.668
+  - startingCharge: 11999.336
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 985
   type: ApcExtensionCable
   components:
@@ -28048,8 +28052,10 @@ entities:
     pos: -54.5,3.5
     rot: 1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.17
+  - startingCharge: 11998.34
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 1388
   type: SalternApc
   components:
@@ -28057,8 +28063,10 @@ entities:
     pos: -63.5,-2.5
     rot: 1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.668
+  - startingCharge: 11999.336
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 1389
   type: SalternApc
   components:
@@ -28066,8 +28074,10 @@ entities:
     pos: -63.5,-6.5
     rot: 1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.668
+  - startingCharge: 11999.336
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 1390
   type: SalternApc
   components:
@@ -28075,8 +28085,10 @@ entities:
     pos: -62.5,8.5
     rot: 1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.751
+  - startingCharge: 11999.502
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 1391
   type: SalternApc
   components:
@@ -28084,8 +28096,10 @@ entities:
     pos: -47.5,10.5
     rot: 1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.585
+  - startingCharge: 11999.17
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 1392
   type: ApcExtensionCable
   components:
@@ -30901,8 +30915,10 @@ entities:
     pos: -32.5,-18.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.502
+  - startingCharge: 11999.004
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 1716
   type: AirlockMedicalGlassLocked
   components:
@@ -33002,10 +33018,8 @@ entities:
     pos: -16.5,-26.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11998.672
+  - startingCharge: 11999.336
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 1964
   type: ApcExtensionCable
   components:
@@ -34510,7 +34524,7 @@ entities:
   - parent: 0
     pos: -28.5,-44.5
     type: Transform
-  - startingCharge: 3999966.5
+  - startingCharge: 3999900
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
@@ -34539,8 +34553,10 @@ entities:
     pos: -23.5,21.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.834
+  - startingCharge: 11999.668
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 2158
   type: ApcExtensionCable
   components:
@@ -35146,8 +35162,10 @@ entities:
     pos: -28.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 9999.585
+  - startingCharge: 9999.17
     type: Battery
+  - drawRate: 1000
+    type: PowerConsumer
 - uid: 2231
   type: MVWire
   components:
@@ -36823,7 +36841,7 @@ entities:
   - parent: 0
     pos: -37.5,10.5
     type: Transform
-  - startingCharge: 3999966.5
+  - startingCharge: 3999900
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
@@ -38655,18 +38673,18 @@ entities:
   - parent: 0
     pos: -12.5,-39.5
     type: Transform
-  - startingCharge: 11999.834
+  - startingCharge: 11999.917
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 2665
   type: SalternApc
   components:
   - parent: 0
     pos: -12.5,-33.5
     type: Transform
-  - startingCharge: 11999.834
+  - startingCharge: 11999.668
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 2666
   type: ApcExtensionCable
   components:
@@ -42523,8 +42541,10 @@ entities:
     pos: -29.5,-25.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.751
+  - startingCharge: 11999.502
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 3136
   type: MVWire
   components:
@@ -42627,10 +42647,8 @@ entities:
     pos: -14.5,-48.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.834
+  - startingCharge: 11999.917
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 3148
   type: ApcExtensionCable
   components:
@@ -44559,7 +44577,7 @@ entities:
   - parent: 0
     pos: 6.5,-2.5
     type: Transform
-  - startingCharge: 3999966.5
+  - startingCharge: 3999900
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
@@ -45329,8 +45347,10 @@ entities:
     pos: -69.5,4.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.917
+  - startingCharge: 11999.834
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 3485
   type: ApcExtensionCable
   components:
@@ -45639,10 +45659,8 @@ entities:
     pos: -27.5,-48.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.17
+  - startingCharge: 11999.585
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 3520
   type: ApcExtensionCable
   components:
@@ -45866,8 +45884,10 @@ entities:
     pos: -37.5,-48.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.668
+  - startingCharge: 11999.336
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 3545
   type: ApcExtensionCable
   components:
@@ -46298,8 +46318,10 @@ entities:
     pos: -41.5,-45.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.751
+  - startingCharge: 11999.502
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 3593
   type: MVWire
   components:
@@ -47477,8 +47499,10 @@ entities:
     pos: -30.5,-33.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11998.589
+  - startingCharge: 11997.178
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 3698
   type: FirelockGlass
   components:
@@ -59836,8 +59860,10 @@ entities:
     pos: -60.5,16.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.834
+  - startingCharge: 11999.668
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 5007
   type: solid_wall
   components:
@@ -65597,10 +65623,6 @@ entities:
     pos: 5.5,-40.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3999933.2
-    type: Battery
-  - drawRate: 8000
-    type: PowerConsumer
   - supplyRate: 6000
     type: PowerSupplier
 - uid: 5797
@@ -66349,8 +66371,10 @@ entities:
     pos: 5.5,-35.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11996.501
+  - startingCharge: 11993.002
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 5879
   type: ApcExtensionCable
   components:
@@ -67113,8 +67137,10 @@ entities:
     pos: -49.5,-34.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.502
+  - startingCharge: 11999.004
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 5977
   type: SalternApc
   components:
@@ -67122,10 +67148,8 @@ entities:
     pos: -42.5,-34.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.668
+  - startingCharge: 11999.834
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 5978
   type: ApcExtensionCable
   components:
@@ -67470,10 +67494,6 @@ entities:
     pos: -60.5,-43.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3999933.2
-    type: Battery
-  - drawRate: 8000
-    type: PowerConsumer
   - supplyRate: 6000
     type: PowerSupplier
 - uid: 6020
@@ -68617,10 +68637,8 @@ entities:
     pos: -49.5,-40.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.668
+  - startingCharge: 11999.834
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 6147
   type: ApcExtensionCable
   components:
@@ -68808,7 +68826,7 @@ entities:
     pos: -65.5,-44.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3999900
+  - startingCharge: 3999999.8
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
@@ -70211,10 +70229,8 @@ entities:
     pos: 11.5,-24.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.502
+  - startingCharge: 11999.751
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 6369
   type: SalternApc
   components:
@@ -70222,10 +70238,8 @@ entities:
     pos: -4.5,-34.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11996.846
+  - startingCharge: 11998.423
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 6370
   type: SalternApc
   components:
@@ -71542,10 +71556,8 @@ entities:
     pos: 12.5,-15.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.17
+  - startingCharge: 11999.585
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 6516
   type: ApcExtensionCable
   components:
@@ -72291,8 +72303,10 @@ entities:
     pos: -8.5,-29.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.834
+  - startingCharge: 11999.668
     type: Battery
+  - drawRate: 2000
+    type: PowerConsumer
 - uid: 6599
   type: ApcExtensionCable
   components:
@@ -72606,10 +72620,8 @@ entities:
     pos: -8.5,-61.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11998.506
+  - startingCharge: 11999.253
     type: Battery
-  - drawRate: 2000
-    type: PowerConsumer
 - uid: 6634
   type: ApcExtensionCable
   components:
