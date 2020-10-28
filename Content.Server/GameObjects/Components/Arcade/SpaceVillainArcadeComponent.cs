@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.VendingMachines;
@@ -17,10 +18,12 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using Serilog;
 
 namespace Content.Server.GameObjects.Components.Arcade
 {
@@ -297,7 +300,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                 {
                     case PlayerAction.Attack:
                         var attackAmount = _random.Next(2, 6);
-                        _latestPlayerActionMessage = $"You attack {_enemyName} for {attackAmount}!";
+                        _latestPlayerActionMessage = Loc.GetString("You attack {0} for {1}!", _enemyName, attackAmount);
                         EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/player_attack.ogg", Owner.Owner, AudioParams.Default.WithVolume(-4f));
                         if(!Owner._enemyInvincibilityFlag) _enemyHp -= attackAmount;
                         _turtleTracker -= _turtleTracker > 0 ? 1 : 0;
@@ -305,17 +308,17 @@ namespace Content.Server.GameObjects.Components.Arcade
                     case PlayerAction.Heal:
                         var pointAmount = _random.Next(1, 3);
                         var healAmount = _random.Next(6, 8);
-                        _latestPlayerActionMessage = $"You use {pointAmount} magic to heal for {healAmount} damage!";
+                        _latestPlayerActionMessage = Loc.GetString("You use {0} magic to heal for {1} damage!",pointAmount, healAmount);
                         EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/player_heal.ogg", Owner.Owner, AudioParams.Default.WithVolume(-4f));
                         if(!Owner._playerInvincibilityFlag) _playerMp -= pointAmount;
                         _playerHp += healAmount;
                         _turtleTracker++;
                         break;
                     case PlayerAction.Recharge:
-                        var charge_amount = _random.Next(4, 7);
-                        _latestPlayerActionMessage = $"You regain {charge_amount} points";
+                        var chargeAmount = _random.Next(4, 7);
+                        _latestPlayerActionMessage = Loc.GetString("You regain {0} points", chargeAmount);
                         EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/player_charge.ogg", Owner.Owner, AudioParams.Default.WithVolume(-4f));
-                        _playerMp += charge_amount;
+                        _playerMp += chargeAmount;
                         _turtleTracker -= _turtleTracker > 0 ? 1 : 0;
                         break;
                 }
@@ -345,7 +348,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                 if ((_enemyHp <= 0 || _enemyMp <= 0) && (_playerHp > 0 && _playerMp > 0))
                 {
                     _running = false;
-                    UpdateUi("You won!", $"{_enemyName} dies.", true);
+                    UpdateUi(Loc.GetString("You won!"), Loc.GetString("{0} dies.", _enemyName), true);
                     EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/win.ogg", Owner.Owner, AudioParams.Default.WithVolume(-4f));
                     Owner.ProcessWin();
                     return false;
@@ -353,14 +356,14 @@ namespace Content.Server.GameObjects.Components.Arcade
                 if ((_playerHp <= 0 || _playerMp <= 0) && _enemyHp > 0 && _enemyMp > 0)
                 {
                     _running = false;
-                    UpdateUi("You lost!", $"{_enemyName} cheers.", true);
+                    UpdateUi(Loc.GetString("You lost!"), Loc.GetString("{0} cheers.",_enemyName), true);
                     EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/gameover.ogg", Owner.Owner, AudioParams.Default.WithVolume(-4f));
                     return false;
                 }
                 if ((_playerHp <= 0 || _playerMp <= 0) && (_enemyHp <= 0 || _enemyMp <= 0))
                 {
                     _running = false;
-                    UpdateUi("You lost!", $"{_enemyName} dies, but takes you with him.", true);
+                    UpdateUi(Loc.GetString("You lost!"), Loc.GetString("{0} dies, but takes you with him.",_enemyName), true);
                     EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/Arcade/gameover.ogg", Owner.Owner, AudioParams.Default.WithVolume(-4f));
                     return false;
                 }
@@ -397,14 +400,14 @@ namespace Content.Server.GameObjects.Components.Arcade
                 if (_turtleTracker >= 4)
                 {
                     var boomAmount = _random.Next(5, 10);
-                    _latestEnemyActionMessage = $"{_enemyName} throws a bomb, exploding you for {boomAmount} damage!";
+                    _latestEnemyActionMessage = Loc.GetString("{0} throws a bomb, exploding you for {1} damage!", _enemyName, boomAmount);
                     if (Owner._playerInvincibilityFlag) return;
                     _playerHp -= boomAmount;
                     _turtleTracker--;
                 }else if (_enemyMp <= 5 && _random.Prob(0.7f))
                 {
                     var stealAmount = _random.Next(2, 3);
-                    _latestEnemyActionMessage = $"{_enemyName} steals {stealAmount} of your power!";
+                    _latestEnemyActionMessage = Loc.GetString("{0} steals {1} of your power!", _enemyName, stealAmount);
                     if (Owner._playerInvincibilityFlag) return;
                     _playerMp -= stealAmount;
                     _enemyMp += stealAmount;
@@ -412,12 +415,13 @@ namespace Content.Server.GameObjects.Components.Arcade
                 {
                     _enemyHp += 4;
                     _enemyMp -= 4;
-                    _latestEnemyActionMessage = $"{_enemyName} heals for 4 health!";
+                    _latestEnemyActionMessage = Loc.GetString("{0} heals for 4 health!", _enemyName);
                 }
                 else
                 {
                     var attackAmount = _random.Next(3, 6);
-                    _latestEnemyActionMessage = $"{_enemyName} attacks you for {attackAmount} damage!";
+                    _latestEnemyActionMessage =
+                        Loc.GetString("{0} attacks you for {1} damage!", _enemyName, attackAmount);
                     if (Owner._playerInvincibilityFlag) return;
                     _playerHp -= attackAmount;
                 }
