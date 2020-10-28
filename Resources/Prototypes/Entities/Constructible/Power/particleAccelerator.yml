@@ -31,9 +31,8 @@
   components:
     - type: Sprite
       sprite: Constructible/Power/PA/particle.rsi
-      layers:
-      - state: particle0
-        shader: unshaded
+      state: particle0
+      shader: unshaded
     - type: Projectile
       delete_on_collide: false
       soundHit: /Audio/Weapons/Guns/Hits/bullet_hit.ogg

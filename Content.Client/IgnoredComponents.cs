@@ -197,7 +197,16 @@
             "RadiationCollector",
             "ContainmentFieldGenerator",
             "ContainmentField",
-            "Emitter"
+            "Emitter",
+            "Singularity",
+            "SingularityGenerator",
+            "EmitterBoltComponent",
+            "ParticleProjectile",
+            "ParticleAcceleratorControlBox",
+            "ParticleAcceleratorEmitter",
+            "ParticleAcceleratorEndCap",
+            "ParticleAcceleratorFuelChamber",
+            "ParticleAcceleratorPowerBox"
         };
     }
 }
