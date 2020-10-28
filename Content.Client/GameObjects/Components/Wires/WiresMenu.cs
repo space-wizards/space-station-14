@@ -21,7 +21,7 @@ namespace Content.Client.GameObjects.Components.Wires
 {
     public class WiresMenu : BaseWindow
     {
-        [Dependency] private IResourceCache _resourceCache;
+        [Dependency] private IResourceCache _resourceCache = default!;
 
         public WiresBoundUserInterface Owner { get; }
 

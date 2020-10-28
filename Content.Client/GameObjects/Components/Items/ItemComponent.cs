@@ -21,7 +21,7 @@ namespace Content.Client.GameObjects.Components.Items
     [ComponentReference(typeof(IItemComponent))]
     public class ItemComponent : Component, IItemComponent, IDraggable
     {
-        [Dependency] private IResourceCache _resourceCache;
+        [Dependency] private IResourceCache _resourceCache = default!;
 
         public override string Name => "Item";
         public override uint? NetID => ContentNetIDs.ITEM;

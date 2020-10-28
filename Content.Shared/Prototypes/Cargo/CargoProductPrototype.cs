@@ -12,7 +12,7 @@ namespace Content.Shared.Prototypes.Cargo
     [NetSerializable, Serializable, Prototype("cargoProduct")]
     public class CargoProductPrototype : IPrototype, IIndexedPrototype
     {
-        [Dependency] private IPrototypeManager _prototypeManager;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
 
         private string _id;
         private string _name;
