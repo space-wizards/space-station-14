@@ -5,7 +5,7 @@ using Robust.Shared.GameObjects.Systems;
 namespace Content.Shared.GameObjects.EntitySystems
 {
 
-    public class WeightlessStatusSystem : EntitySystem
+    public sealed class WeightlessStatusSystem : EntitySystem
     {
 
         public override void Initialize()
@@ -22,7 +22,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                 return;
             }
 
-            if(msg.IsNowWeightless)
+            if(msg.Weightless)
             {
                 status.ChangeStatusEffect(StatusEffect.Weightless,"/Textures/Interface/StatusEffects/Weightless/weightless.png",null);
             }

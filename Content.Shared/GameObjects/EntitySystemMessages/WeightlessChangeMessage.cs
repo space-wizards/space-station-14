@@ -9,12 +9,12 @@ namespace Content.Shared.GameObjects.EntitySystemMessages
     public sealed class WeightlessChangeMessage : EntitySystemMessage
     {
         public readonly IEntity Entity;
-        public readonly bool IsNowWeightless;
+        public readonly bool Weightless;
 
         public WeightlessChangeMessage(IEntity ent, bool isNowWeightless)
         {
             Entity = ent;
-            IsNowWeightless = isNowWeightless;
+            Weightless = isNowWeightless;
         }
     }
 

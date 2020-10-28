@@ -21,9 +21,9 @@ namespace Content.Shared.GameObjects.Components.Movement
         {
             physicsManager ??= IoCManager.Resolve<IPhysicsManager>();
 
-            bool isWeightless = !entity.HasComponent<MovementIgnoreGravityComponent>() &&
+            var isWeightless = !entity.HasComponent<MovementIgnoreGravityComponent>() &&
                    physicsManager.IsWeightless(entity.Transform.Coordinates);
-            entity.EntityManager.EventBus.RaiseEvent<WeightlessChangeMessage>(EventSource.Local, new WeightlessChangeMessage(entity,isWeightless));
+            entity.EntityManager.EventBus.RaiseEvent(EventSource.Local, new WeightlessChangeMessage(entity,isWeightless));
             return isWeightless;
         }
     }
