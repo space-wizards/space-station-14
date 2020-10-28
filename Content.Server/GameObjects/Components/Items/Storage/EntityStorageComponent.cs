@@ -157,17 +157,17 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             ToggleOpen(eventArgs.User);
         }
 
-        protected virtual bool CanOpen(IEntity user)
+        public virtual bool CanOpen(IEntity user, bool silent = false)
         {
             if (IsWeldedShut)
             {
-                Owner.PopupMessage(user, Loc.GetString("It's welded completely shut!"));
+                if(!silent) Owner.PopupMessage(user, Loc.GetString("It's welded completely shut!"));
                 return false;
             }
             return true;
         }
 
-        protected virtual bool CanClose(IEntity user)
+        public virtual bool CanClose(IEntity user, bool silent = false)
         {
             return true;
         }
@@ -176,15 +176,15 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         {
             if (Open)
             {
-                if(CanClose(user)) CloseStorage();
+                TryCloseStorage(user);
             }
             else
             {
-                if(CanOpen(user)) TryOpenStorage(user);
+                TryOpenStorage(user);
             }
         }
 
-        public virtual void CloseStorage()
+        protected virtual void CloseStorage()
         {
             Open = false;
             var entities = Owner.EntityManager.GetEntities(EntityQuery);
@@ -216,7 +216,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             _lastInternalOpenAttempt = default;
         }
 
-        public virtual void OpenStorage()
+        protected virtual void OpenStorage()
         {
             Open = true;
             EmptyContents();
@@ -316,14 +316,18 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             }
         }
 
-        protected virtual void TryOpenStorage(IEntity user)
+        public virtual bool TryOpenStorage(IEntity user)
         {
-            if (IsWeldedShut)
-            {
-                Owner.PopupMessage(user, Loc.GetString("It's welded completely shut!"));
-                return;
-            }
+            if (!CanOpen(user)) return false;
             OpenStorage();
+            return true;
+        }
+
+        public virtual bool TryCloseStorage(IEntity user)
+        {
+            if (!CanClose(user)) return false;
+            CloseStorage();
+            return true;
         }
 
         /// <inheritdoc />

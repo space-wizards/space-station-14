@@ -168,6 +168,8 @@
     closeSound: /Audio/Items/deconstruct.ogg
     openSound: /Audio/Items/deconstruct.ogg
     trayPrototype: CrematoriumTray
+    doSoulBeep: false
+  - type: LoopingSound
   - type: Appearance
     visuals:
     - type: CrematoriumVisualizer

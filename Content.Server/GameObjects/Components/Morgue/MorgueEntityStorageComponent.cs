@@ -29,13 +29,15 @@ namespace Content.Server.GameObjects.Components.Morgue
     {
         public override string Name => "MorgueEntityStorage";
 
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         private string _trayPrototypeId;
 
         [ViewVariables]
         private IEntity _tray;
 
         [ViewVariables] public ContainerSlot TrayContainer { get; private set; }
+
+        [ViewVariables(VVAccess.ReadWrite)] public bool DoSoulBeep = true;
 
         protected AppearanceComponent Appearance;
 
@@ -53,6 +55,7 @@ namespace Content.Server.GameObjects.Components.Morgue
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _trayPrototypeId, "trayPrototype", "");
+            serializer.DataField(ref DoSoulBeep, "doSoulBeep", true);
         }
 
         public override Vector2 ContentsDumpPosition()
@@ -67,21 +70,21 @@ namespace Content.Server.GameObjects.Components.Morgue
             return base.AddToContents(entity);
         }
 
-        protected override bool CanOpen(IEntity user)
+        public override bool CanOpen(IEntity user, bool silent = false)
         {
             if (!Owner.InRangeUnobstructed(
                 Owner.Transform.Coordinates.Offset(Owner.Transform.LocalRotation.GetCardinalDir()),
                 collisionMask: CollisionGroup.Impassable | CollisionGroup.VaultImpassable
             ))
             {
-                Owner.PopupMessage(user, Loc.GetString("There's no room for the tray to extend!"));
+                if(!silent) Owner.PopupMessage(user, Loc.GetString("There's no room for the tray to extend!"));
                 return false;
             }
 
-            return base.CanOpen(user);
+            return base.CanOpen(user, silent);
         }
 
-        public override void OpenStorage()
+        protected override void OpenStorage()
         {
             Appearance.SetData(MorgueVisuals.Open, true);
             Appearance.SetData(MorgueVisuals.HasContents, false);
@@ -122,7 +125,7 @@ namespace Content.Server.GameObjects.Components.Morgue
             Appearance.SetData(MorgueVisuals.HasSoul, hasSoul);
         }
 
-        public override void CloseStorage()
+        protected override void CloseStorage()
         {
             base.CloseStorage();
 
@@ -140,7 +143,7 @@ namespace Content.Server.GameObjects.Components.Morgue
         {
             CheckContents();
 
-            if(Appearance.TryGetData(MorgueVisuals.HasSoul, out bool hasSoul) && hasSoul)
+            if(DoSoulBeep && Appearance.TryGetData(MorgueVisuals.HasSoul, out bool hasSoul) && hasSoul)
                 EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg", Owner);
         }
 

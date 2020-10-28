@@ -26,7 +26,7 @@ namespace Content.Server.GameObjects.Components.Morgue
         [ViewVariables]
         public bool Cooking { get; private set; }
 
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         private int _burnMilis = 3000;
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
