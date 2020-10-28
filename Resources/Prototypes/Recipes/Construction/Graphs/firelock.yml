@@ -1,0 +1,31 @@
+﻿- type: constructionGraph
+  id: Firelock
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: frame1
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: Metal
+              amount: 3
+              doAfter: 1
+
+
+    - node: frame1
+      entity: FirelockFrame
+      edges:
+        - to: frame2
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - material: Cable
+              amount: 2
+              doAfter: 1
+
+    - node: frame2
+      actions:
+        - !type:SpriteStateChange
+          state: frame2

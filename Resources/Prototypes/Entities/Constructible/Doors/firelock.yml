@@ -56,6 +56,10 @@
     - type: Occluder
     - type: SnapGrid
       offset: Center
+    - type: Construction
+      graph: Firelock
+      node: frame2
+
   placement:
     mode: SnapgridCenter
 
