@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
@@ -7,6 +7,8 @@ using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+
+
 
 namespace Content.Shared.GameObjects.Components.Mobs
 {
@@ -110,11 +112,46 @@ namespace Content.Shared.GameObjects.Components.Mobs
         }
     }
 
+    [Serializable, NetSerializable]
+    public class TextureOverlayParameter : OverlayParameter
+    {
+        [ViewVariables(VVAccess.ReadOnly)]
+
+        public string[] Names { get; set; }
+        public string[] RSIPaths { get; set; }
+        public string[] States { get; set; }
+
+
+        public TextureOverlayParameter(string[] names, string[] rsiPaths, string[] states)
+        {
+            Names = names;
+            RSIPaths = rsiPaths;
+            States = states;
+        }
+
+        public Dictionary<string, KeyValuePair<string, string>> ToDictionary()
+        {
+            if (Names.Length != RSIPaths.Length || Names.Length != States.Length) 
+                return null;
+            Dictionary<string, KeyValuePair<string, string>> toReturn = new Dictionary<string, KeyValuePair<string, string>>();
+            for (int i = 0; i < Names.Length; i++)
+            {
+                toReturn.Add(Names[i], new KeyValuePair<string, string>(RSIPaths[i], States[i]));
+            }
+            return toReturn;
+        }
+
+    }
+
+ 
+
     public enum SharedOverlayID
     {
         GradientCircleMaskOverlay,
+        ColoredScreenBorderOverlay,
         CircleMaskOverlay,
         FlashOverlay,
         RadiationPulseOverlay,
+        SingularityOverlay
     }
 }

@@ -135,7 +135,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             }
             else
             {
-                Logger.ErrorS("overlay", $"Could not add overlay {container.ID}");
+                Logger.ErrorS("overlay", $"Could not add overlay {container.ID}, as this ID was not found!");
             }
         }
 

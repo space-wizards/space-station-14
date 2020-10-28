@@ -26,6 +26,7 @@ namespace Content.Server.GameObjects.Components.Mobs.State
             if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlay))
             {
                 overlay.AddOverlay(SharedOverlayID.GradientCircleMaskOverlay);
+                //overlay.AddOverlay(SharedOverlayID.ColoredScreenBorderOverlay);
             }
 
             if (entity.TryGetComponent(out StunnableComponent stun))
