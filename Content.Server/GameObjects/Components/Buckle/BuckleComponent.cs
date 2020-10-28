@@ -460,6 +460,7 @@ namespace Content.Server.GameObjects.Components.Buckle
             if (Moved)
             {
                 TryUnbuckle(Owner, true);
+                Moved = false;
                 return;
             }
 
