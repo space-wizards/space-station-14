@@ -34,7 +34,7 @@
   name: "hand teleporter - direct"
   parent: BaseHandTele
   id: DirHandTele
-  description: "Travel to a specific spot in a short range"
+  description: "Travel to a specific spot in a short range."
   components:
   - type: ItemTeleporter
     teleporter_type: Directed
@@ -46,7 +46,7 @@
   name: portal
   id: Portal
   abstract: true
-  description: "Portal to another location"
+  description: "Portal to another location."
   components:
   - type: Physics
     shapes:

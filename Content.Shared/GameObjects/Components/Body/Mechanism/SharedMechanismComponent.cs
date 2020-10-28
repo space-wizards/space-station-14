@@ -15,13 +15,9 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
         public override string Name => "Mechanism";
 
         private IBodyPart? _part;
-
         protected readonly Dictionary<int, object> OptionsCache = new Dictionary<int, object>();
-
         protected IBody? BodyCache;
-
         protected int IdHash;
-
         protected IEntity? PerformerCache;
 
         public IBody? Body => Part?.Body;
@@ -55,11 +51,11 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
                 {
                     if (value.Body == null)
                     {
-                        AddedToPart();
+                        AddedToPart(value);
                     }
                     else
                     {
-                        AddedToPartInBody();
+                        AddedToPartInBody(value.Body, value);
                     }
                 }
             }
@@ -104,20 +100,54 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
             serializer.DataField(this, m => m.Compatibility, "compatibility", BodyPartCompatibility.Universal);
         }
 
-        public void AddedToBody()
+        public void AddedToBody(IBody body)
         {
             DebugTools.AssertNotNull(Body);
+            DebugTools.AssertNotNull(body);
 
-            OnAddedToBody();
+            OnAddedToBody(body);
 
             foreach (var behavior in Owner.GetAllComponents<IMechanismBehavior>())
             {
-                behavior.AddedToBody();
+                behavior.AddedToBody(body);
+            }
+        }
+
+        public void AddedToPart(IBodyPart part)
+        {
+            DebugTools.AssertNotNull(Part);
+            DebugTools.AssertNotNull(part);
+
+            Owner.Transform.AttachParent(part.Owner);
+            OnAddedToPart(part);
+
+            foreach (var behavior in Owner.GetAllComponents<IMechanismBehavior>().ToArray())
+            {
+                behavior.AddedToPart(part);
+            }
+        }
+
+        public void AddedToPartInBody(IBody body, IBodyPart part)
+        {
+            DebugTools.AssertNotNull(Body);
+            DebugTools.AssertNotNull(body);
+            DebugTools.AssertNotNull(Part);
+            DebugTools.AssertNotNull(part);
+
+            Owner.Transform.AttachParent(part.Owner);
+            OnAddedToPartInBody(body, part);
+
+            foreach (var behavior in Owner.GetAllComponents<IMechanismBehavior>())
+            {
+                behavior.AddedToPartInBody(body, part);
             }
         }
 
         public void RemovedFromBody(IBody old)
         {
+            DebugTools.AssertNull(Body);
+            DebugTools.AssertNotNull(old);
+
             OnRemovedFromBody(old);
 
             foreach (var behavior in Owner.GetAllComponents<IMechanismBehavior>())
@@ -126,35 +156,11 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
             }
         }
 
-        public void AddedToPart()
-        {
-            DebugTools.AssertNotNull(Part);
-
-            Owner.Transform.AttachParent(Part!.Owner);
-            OnAddedToPart();
-
-            foreach (var behavior in Owner.GetAllComponents<IMechanismBehavior>().ToArray())
-            {
-                behavior.AddedToPart();
-            }
-        }
-
-        public void AddedToPartInBody()
-        {
-            DebugTools.AssertNotNull(Body);
-            DebugTools.AssertNotNull(Part);
-
-            Owner.Transform.AttachParent(Part!.Owner);
-            OnAddedToPartInBody();
-
-            foreach (var behavior in Owner.GetAllComponents<IMechanismBehavior>())
-            {
-                behavior.AddedToPartInBody();
-            }
-        }
-
         public void RemovedFromPart(IBodyPart old)
         {
+            DebugTools.AssertNull(Part);
+            DebugTools.AssertNotNull(old);
+
             Owner.Transform.AttachToGridOrMap();
             OnRemovedFromPart(old);
 
@@ -164,10 +170,15 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
             }
         }
 
-        public void RemovedFromPartInBody(IBody? oldBody, IBodyPart? oldPart)
+        public void RemovedFromPartInBody(IBody oldBody, IBodyPart oldPart)
         {
+            DebugTools.AssertNull(Body);
+            DebugTools.AssertNotNull(oldBody);
+            DebugTools.AssertNull(Part);
+            DebugTools.AssertNotNull(oldPart);
+
             Owner.Transform.AttachToGridOrMap();
-            OnRemovedFromPartInBody();
+            OnRemovedFromPartInBody(oldBody, oldPart);
 
             foreach (var behavior in Owner.GetAllComponents<IMechanismBehavior>())
             {
@@ -175,16 +186,16 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
             }
         }
 
-        protected virtual void OnAddedToBody() { }
+        protected virtual void OnAddedToBody(IBody body) { }
+
+        protected virtual void OnAddedToPart(IBodyPart part) { }
+
+        protected virtual void OnAddedToPartInBody(IBody body, IBodyPart part) { }
 
         protected virtual void OnRemovedFromBody(IBody old) { }
 
-        protected virtual void OnAddedToPart() { }
-
         protected virtual void OnRemovedFromPart(IBodyPart old) { }
 
-        protected virtual void OnAddedToPartInBody() { }
-
-        protected virtual void OnRemovedFromPartInBody() { }
+        protected virtual void OnRemovedFromPartInBody(IBody oldBody, IBodyPart oldPart) { }
     }
 }

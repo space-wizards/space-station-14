@@ -1,11 +1,11 @@
-using System;
+﻿using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Gravity
 {
-    public class SharedGravityGeneratorComponent: Component
+    public class SharedGravityGeneratorComponent : Component
     {
         public override string Name => "GravityGenerator";
 
@@ -53,5 +53,21 @@ namespace Content.Shared.GameObjects.Components.Gravity
         {
             Key
         }
+    }
+
+    [Serializable, NetSerializable]
+    public enum GravityGeneratorVisuals
+    {
+        State,
+        CoreVisible
+    }
+
+    [Serializable, NetSerializable]
+    public enum GravityGeneratorStatus
+    {
+        Broken,
+        Unpowered,
+        Off,
+        On
     }
 }

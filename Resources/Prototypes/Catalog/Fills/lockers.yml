@@ -62,15 +62,10 @@
         prob: 0.4
       - name: BreathMaskClothing
         prob: 0.25
-      # TODO: uncomment when we actually have these items.
-      #- name: TankOxygenSmallFilled
-      #  prob: 0.4s
-      #- name: TankOxygenSmallFilled
-      #  prob: 0.25
-      #- name: MedkitOxygenFilled
-      #  prob: 0.25
-      #- name: TankOxygenFilled
-      #  prob: 0.2
+      - name: EmergencyOxygenTankFilled
+        prob: 0.4
+      - name: OxygenTankFilled
+        prob: 0.2
 
 - type: entity
   id: LockerBoozeFilled
@@ -291,6 +286,13 @@
   id: LockerFireFilled
   parent: LockerFire
   suffix: Filled
+  components:
+    - type: StorageFill
+      contents:
+        - name: RedOxygenTankFilled
+          prob: 0.6
+        - name: OuterclothingFiresuit
+          prob: 0.75
 
 - type: entity
   id: WardrobePajama

@@ -24,9 +24,9 @@ namespace Content.Server.Explosions
         /// Distance used for camera shake when distance from explosion is (0.0, 0.0).
         /// Avoids getting NaN values down the line from doing math on (0.0, 0.0).
         /// </summary>
-        private static Vector2 _epicenterDistance = (0.1f, 0.1f);
+        private static readonly Vector2 EpicenterDistance = (0.1f, 0.1f);
 
-        public static void SpawnExplosion(EntityCoordinates coords, int devastationRange, int heavyImpactRange, int lightImpactRange, int flashRange)
+        public static void SpawnExplosion(this EntityCoordinates coords, int devastationRange, int heavyImpactRange, int lightImpactRange, int flashRange)
         {
             var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
             var serverEntityManager = IoCManager.Resolve<IServerEntityManager>();
@@ -75,42 +75,44 @@ namespace Content.Server.Explosions
 
             //Tile damage calculation mockup
             //TODO: make it into some sort of actual damage component or whatever the boys think is appropriate
-            var mapGrid = mapManager.GetGrid(coords.GetGridId(entityManager));
-            var circle = new Circle(coords.Position, maxRange);
-            var tiles = mapGrid.GetTilesIntersecting(circle);
-            foreach (var tile in tiles)
+            if (mapManager.TryGetGrid(coords.GetGridId(entityManager), out var mapGrid))
             {
-                var tileLoc = mapGrid.GridTileToLocal(tile.GridIndices);
-                var tileDef = (ContentTileDefinition) tileDefinitionManager[tile.Tile.TypeId];
-                var baseTurfs = tileDef.BaseTurfs;
-                if (baseTurfs.Count == 0)
+                var circle = new Circle(coords.Position, maxRange);
+                var tiles = mapGrid?.GetTilesIntersecting(circle);
+                foreach (var tile in tiles)
                 {
-                    continue;
-                }
+                    var tileLoc = mapGrid.GridTileToLocal(tile.GridIndices);
+                    var tileDef = (ContentTileDefinition) tileDefinitionManager[tile.Tile.TypeId];
+                    var baseTurfs = tileDef.BaseTurfs;
+                    if (baseTurfs.Count == 0)
+                    {
+                        continue;
+                    }
 
-                if (!tileLoc.TryDistance(entityManager, coords, out var distance))
-                {
-                    continue;
-                }
+                    if (!tileLoc.TryDistance(entityManager, coords, out var distance))
+                    {
+                        continue;
+                    }
 
-                var zeroTile = new Tile(tileDefinitionManager[baseTurfs[0]].TileId);
-                var previousTile = new Tile(tileDefinitionManager[baseTurfs[^1]].TileId);
+                    var zeroTile = new Tile(tileDefinitionManager[baseTurfs[0]].TileId);
+                    var previousTile = new Tile(tileDefinitionManager[baseTurfs[^1]].TileId);
 
-                switch (distance)
-                {
-                    case var d when d < devastationRange:
-                        mapGrid.SetTile(tileLoc, zeroTile);
-                        break;
-                    case var d when d < heavyImpactRange
-                                    && !previousTile.IsEmpty
-                                    && robustRandom.Prob(0.8f):
-                        mapGrid.SetTile(tileLoc, previousTile);
-                        break;
-                    case var d when d < lightImpactRange
-                                    && !previousTile.IsEmpty
-                                    && robustRandom.Prob(0.5f):
-                        mapGrid.SetTile(tileLoc, previousTile);
-                        break;
+                    switch (distance)
+                    {
+                        case var d when d < devastationRange:
+                            mapGrid.SetTile(tileLoc, zeroTile);
+                            break;
+                        case var d when d < heavyImpactRange
+                                        && !previousTile.IsEmpty
+                                        && robustRandom.Prob(0.8f):
+                            mapGrid.SetTile(tileLoc, previousTile);
+                            break;
+                        case var d when d < lightImpactRange
+                                        && !previousTile.IsEmpty
+                                        && robustRandom.Prob(0.5f):
+                            mapGrid.SetTile(tileLoc, previousTile);
+                            break;
+                    }
                 }
             }
 
@@ -149,7 +151,7 @@ namespace Content.Server.Explosions
                 var delta = coords.ToMapPos(entityManager) - playerPos;
                 //Change if zero. Will result in a NaN later breaking camera shake if not changed
                 if (delta.EqualsApprox((0.0f, 0.0f)))
-                    delta = _epicenterDistance;
+                    delta = EpicenterDistance;
 
                 var distance = delta.LengthSquared;
                 var effect = 10 * (1 / (1 + distance));
@@ -159,6 +161,12 @@ namespace Content.Server.Explosions
                     recoil.Kick(kick);
                 }
             }
+        }
+
+        public static void SpawnExplosion(this IEntity entity, int devastationRange, int heavyImpactRange,
+            int lightImpactRange, int flashRange)
+        {
+            entity.Transform.Coordinates.SpawnExplosion(devastationRange, heavyImpactRange, lightImpactRange, flashRange);
         }
     }
 }

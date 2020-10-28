@@ -146,6 +146,7 @@ namespace Content.Server.GameObjects.Components.PDA
             if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(PDAVisuals.FlashlightLit, _lightOn);
+                appearance.SetData(PDAVisuals.IDCardInserted, !IdSlotEmpty);
             }
         }
 
@@ -290,6 +291,25 @@ namespace Content.Server.GameObjects.Components.PDA
             protected override void Activate(IEntity user, PDAComponent component)
             {
                 component.HandleIDEjection(user);
+            }
+        }
+
+        public sealed class ToggleFlashlightVerb : Verb<PDAComponent>
+        {
+            protected override void GetData(IEntity user, PDAComponent component, VerbData data)
+            {
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
+                data.Text = Loc.GetString("Toggle flashlight");
+            }
+
+            protected override void Activate(IEntity user, PDAComponent component)
+            {
+                component.ToggleLight();
             }
         }
 
