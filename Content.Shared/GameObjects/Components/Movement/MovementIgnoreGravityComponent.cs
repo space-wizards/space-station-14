@@ -5,6 +5,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
+using Content.Shared.GameObjects.EntitySystemMessages;
 
 namespace Content.Shared.GameObjects.Components.Movement
 {
@@ -22,10 +23,7 @@ namespace Content.Shared.GameObjects.Components.Movement
 
             bool isWeightless = !entity.HasComponent<MovementIgnoreGravityComponent>() &&
                    physicsManager.IsWeightless(entity.Transform.Coordinates);
-            if(entity.TryGetComponent<SharedWeightlessStatusComponent>(out var statusComp))
-            {
-                statusComp.UpdateStatus(isWeightless);
-            }
+            entity.EntityManager.EventBus.RaiseEvent<WeightlessChangeMessage>(EventSource.Local, new WeightlessChangeMessage(entity,isWeightless));
             return isWeightless;
         }
     }
