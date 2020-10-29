@@ -23,7 +23,9 @@
     deadThreshold: 30
     destroySound: /Audio/Effects/woodhit.ogg
     spawnOnDestroy:
-      WoodPlank: [1]
+      WoodPlank:
+        Min: 1
+        Max: 1
     resistances: metallicResistances
   - type: Occluder
     sizeX: 32

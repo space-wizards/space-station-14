@@ -31,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Damage
         /// <summary>
         /// Entities spawned on destruction plus the min and max amount spawned.
         /// </summary>
-        public Dictionary<string, List<int>> SpawnOnDestroy { get; private set; }
+        public Dictionary<string, MinMax> SpawnOnDestroy { get; private set; }
 
         void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
         {
@@ -39,17 +39,13 @@ namespace Content.Server.GameObjects.Components.Damage
             foreach (var (key, value) in SpawnOnDestroy)
             {
                 int count;
-                if (value == null)
+                if (value.Min >= value.Max)
                 {
-                    count = 1;
-                }
-                else if (value.Count == 1 || value[0] == value[1])
-                {
-                    count = value[0];
+                    count = value.Min;
                 }
                 else
                 {
-                    count = _random.Next(value[0], value[1] + 1);
+                    count = _random.Next(value.Min, value.Max + 1);
                 }
 
                 if (count == 0) continue;
@@ -95,6 +91,12 @@ namespace Content.Server.GameObjects.Components.Damage
                 ActSystem.HandleDestruction(Owner,
                     true); //This will call IDestroyAct.OnDestroy on this component (and all other components on this entity)
             }
+        }
+
+        public struct MinMax
+        {
+            public int Min;
+            public int Max;
         }
     }
 }

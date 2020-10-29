@@ -47,7 +47,9 @@
   - type: Destructible
     resistances: metallicResistances
     spawnOnDestroy:
-      HVWireStack1: [1]
+      HVWireStack1:
+        Min: 1
+        Max: 1
 
 - type: entity
   parent: WireBase
@@ -75,7 +77,9 @@
   - type: Destructible
     resistances: metallicResistances
     spawnOnDestroy:
-      MVWireStack1: [1]
+      MVWireStack1:
+        Min: 1
+        Max: 1
 
 - type: entity
   parent: WireBase
@@ -105,4 +109,6 @@
   - type: Destructible
     resistances: metallicResistances
     spawnOnDestroy:
-      ApcExtensionCableStack1: [1]
+      ApcExtensionCableStack1:
+        Min: 1
+        Max: 1

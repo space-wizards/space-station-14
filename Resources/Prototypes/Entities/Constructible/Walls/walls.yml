@@ -47,7 +47,9 @@
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy:
-      Girder: [1]
+      Girder:
+        Min: 1
+        Max: 1
     resistances: metallicResistances
   - type: IconSmooth
     key: walls
@@ -65,7 +67,9 @@
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy:
-      Girder: [1]
+      Girder:
+        Min: 1
+        Max: 1
     resistances: metallicResistances
   - type: IconSmooth
     key: walls
@@ -83,7 +87,9 @@
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy:
-      Girder: [1]
+      Girder:
+        Min: 1
+        Max: 1
     resistances: metallicResistances
   - type: IconSmooth
     key: walls
@@ -102,7 +108,9 @@
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy:
-      Girder: [1]
+      Girder:
+        Min: 1
+        Max: 1
     resistances: metallicResistances
   - type: IconSmooth
     key: walls
@@ -120,7 +128,9 @@
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy:
-      Girder: [1]
+      Girder:
+        Min: 1
+        Max: 1
     resistances: metallicResistances
   - type: IconSmooth
     key: walls
@@ -138,7 +148,9 @@
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy:
-      Girder: [1]
+      Girder:
+        Min: 1
+        Max: 1
     resistances: metallicResistances
   - type: IconSmooth
     key: walls
@@ -157,7 +169,9 @@
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy:
-      Girder: [1]
+      Girder:
+        Min: 1
+        Max: 1
     resistances: metallicResistances
   - type: IconSmooth
     key: walls
@@ -175,7 +189,9 @@
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy:
-      Girder: [1]
+      Girder:
+        Min: 1
+        Max: 1
     resistances: metallicResistances
   - type: IconSmooth
     key: walls
@@ -193,7 +209,9 @@
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy:
-      Girder: [1]
+      Girder:
+        Min: 1
+        Max: 1
     resistances: metallicResistances
   - type: IconSmooth
     key: walls
@@ -211,7 +229,9 @@
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy:
-      Girder: [1]
+      Girder:
+        Min: 1
+        Max: 1
     resistances: metallicResistances
   - type: IconSmooth
     key: walls
@@ -229,7 +249,9 @@
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy:
-      Girder: [1]
+      Girder:
+        Min: 1
+        Max: 1
     resistances: metallicResistances
   - type: IconSmooth
     key: walls
@@ -274,7 +296,9 @@
   - type: Destructible
     deadThreshold: 1000
     spawnOnDestroy:
-      Girder: [1]
+      Girder:
+        Min: 1
+        Max: 1
     resistances: metallicResistances
   - type: IconSmooth
     key: walls
@@ -292,7 +316,9 @@
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy:
-      Girder: [1]
+      Girder:
+        Min: 1
+        Max: 1
     resistances: metallicResistances
   - type: IconSmooth
     key: walls
@@ -310,7 +336,9 @@
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy:
-      Girder: [1]
+      Girder:
+        Min: 1
+        Max: 1
     resistances: metallicResistances
   - type: IconSmooth
     key: walls
@@ -350,7 +378,9 @@
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy:
-      Girder: [1]
+      Girder:
+        Min: 1
+        Max: 1
     resistances: metallicResistances
   - type: IconSmooth
     key: walls
@@ -368,7 +398,9 @@
   - type: Destructible
     deadThreshold: 300
     spawnOnDestroy:
-      Girder: [1]
+      Girder:
+        Min: 1
+        Max: 1
     resistances: metallicResistances
   - type: IconSmooth
     key: walls

@@ -40,7 +40,9 @@
     destroySound: /Audio/Effects/metalbreak.ogg
     resistances: metallicResistances
     spawnOnDestroy:
-      SteelSheet1: [1]
+      SteelSheet1:
+        Min: 1
+        Max: 1
 
 - type: entity
   id: TableFrame
@@ -57,7 +59,9 @@
     destroySound: /Audio/Effects/metalbreak.ogg
     resistances: metallicResistances
     spawnOnDestroy:
-      SteelSheet1: [1]
+      SteelSheet1:
+        Min: 1
+        Max: 1
 
 - type: entity
   id: TableBar
@@ -74,7 +78,9 @@
     destroySound: /Audio/Effects/metalbreak.ogg
     resistances: metallicResistances
     spawnOnDestroy:
-      SteelSheet1: [1]
+      SteelSheet1:
+        Min: 1
+        Max: 1
 
 - type: entity
   id: TableMetal
@@ -91,7 +97,9 @@
     destroySound: /Audio/Effects/metalbreak.ogg
     resistances: metallicResistances
     spawnOnDestroy:
-      SteelSheet1: [1]
+      SteelSheet1:
+        Min: 1
+        Max: 1
 
 - type: entity
   id: TableR
@@ -108,7 +116,9 @@
     destroySound: /Audio/Effects/metalbreak.ogg
     resistances: metallicResistances
     spawnOnDestroy:
-      SteelSheet1: [1]
+      SteelSheet1:
+        Min: 1
+        Max: 1
 
 - type: entity
   id: TableGlass
@@ -125,7 +135,9 @@
     destroySound: /Audio/Effects/glass_break2.ogg
     resistances: metallicResistances
     spawnOnDestroy:
-      ShardGlass: [1]
+      ShardGlass:
+        Min: 1
+        Max: 1
 
 - type: entity
   id: TableGlassR
@@ -142,7 +154,9 @@
     destroySound: /Audio/Effects/glass_break2.ogg
     resistances: metallicResistances
     spawnOnDestroy:
-      ShardGlass: [1]
+      ShardGlass:
+        Min: 1
+        Max: 1
 
 - type: entity
   id: TableWood
@@ -159,7 +173,9 @@
     destroySound: /Audio/Effects/woodhit.ogg
     resistances: metallicResistances
     spawnOnDestroy:
-      WoodPlank: [1]
+      WoodPlank:
+        Min: 1
+        Max: 1
 
 - type: entity
   id: TableCarpet
@@ -176,7 +192,9 @@
     destroySound: /Audio/Effects/woodhit.ogg
     resistances: metallicResistances
     spawnOnDestroy:
-      WoodPlank: [1]
+      WoodPlank:
+        Min: 1
+        Max: 1
 
 - type: entity
   id: TableStone

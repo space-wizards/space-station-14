@@ -127,7 +127,9 @@
     - type: Destructible
       deadThreshold: 10
       spawnOnDestroy:
-        FloodlightBroken: [1]
+        FloodlightBroken:
+          Min: 1
+          Max: 1
       destroySound: /Audio/Effects/glass_break1.ogg
       resistances: metallicResistances
     - type: Appearance

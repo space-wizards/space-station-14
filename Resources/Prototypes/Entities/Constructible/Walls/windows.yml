@@ -31,7 +31,9 @@
     resistances: metallicResistances
     destroySoundCollection: WindowBreak
     spawnOnDestroy:
-      ShardGlass: [1, 3]
+      ShardGlass:
+        Min: 1
+        Max: 3
   - type: SnapGrid
     offset: Center
   - type: Airtight
