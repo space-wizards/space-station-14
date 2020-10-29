@@ -8,11 +8,20 @@
   - type: InteractionOutline
   - type: Clickable
   - type: Physics
+    mass: 25
     anchored: true
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.5, -0.5, 0.5, 0.5"
-      layer: [MobMask, Opaque]
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - Opaque
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
   - type: SnapGrid
     offset: Center
   - type: Sprite
@@ -35,6 +44,8 @@
   - type: Anchorable
   - type: Pullable
   - type: Appearance
+#  - type: Rotatable
+# Idk why but the emitter breaks when I apply this.
     visuals:
     - type: EmitterVisualizer
   - type: AccessReader

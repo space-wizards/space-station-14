@@ -2,6 +2,8 @@
   id: chem_master
   name: ChemMaster 4000
   description: An industrial grade chemical manipulator with pill and bottle production included.
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Sprite
     sprite: Constructible/Power/mixer.rsi
@@ -46,6 +48,7 @@
   id: chem_master_broken
   name: ChemMaster 4000 [Broken]
   description: A broken industrial grade chemical manipulator.
+  abstract: true
   components:
   - type: Sprite
     sprite: Constructible/Power/mixer.rsi
