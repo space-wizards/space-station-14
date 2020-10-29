@@ -4,14 +4,15 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.45, -0.15, 0.45, 0.35"
+      layer: [ Passable ]
   - type: LoopingSound
   - type: Sprite
     sprite: Constructible/Lighting/light_tube.rsi
     state: on
-  - type: Icon
-    sprite: Constructible/Lighting/light_tube.rsi
-    state: off
   - type: PointLight
     radius: 8
     energy: 1.2
@@ -30,9 +31,6 @@
   - type: Sprite
     sprite: Constructible/Lighting/light_tube.rsi
     state: off
-  - type: Icon
-    sprite: Constructible/Lighting/light_tube.rsi
-    state: on
   - type: PointLight
     enabled: false
   - type: PoweredLight
@@ -50,13 +48,15 @@
   - type: Sprite
     sprite: Constructible/Lighting/light_small.rsi
     state: off
-  - type: Icon
-    sprite: Constructible/Lighting/light_small.rsi
-    state: off
   - type: PointLight
     energy: 1.0
     enabled: false
     offset: "-0.5, 0"
+  - type: Physics
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "0, 0.1, 0.25, 0.1"
+        layer: [ Passable ]
   - type: PoweredLight
     bulb: Bulb
   - type: PowerReceiver

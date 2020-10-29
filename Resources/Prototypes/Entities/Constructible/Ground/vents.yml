@@ -6,12 +6,10 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
   - type: SnapGrid
     offset: Center
-  - type: Icon
-    sprite: Constructible/Atmos/pipeitems.rsi
-    state: vent
+
   - type: Sprite
     sprite: Constructible/Atmos/pipeitems.rsi
     state: vent
@@ -27,13 +25,13 @@
 
 - type: entity
   parent: VentBase
-  id: FromSouthVent
-  name: From South Vent
+  id: Vent
+  name: Vent
   components:
   - type: NodeContainer
     nodes:
     - !type:PipeNode
       nodeGroupID: Pipe
-      pipeDirection: South
+      pipeDirection: East
   - type: PressureVent
-    ventInletDirection: South
+    ventInletDirection: East

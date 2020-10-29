@@ -15,9 +15,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_janitor.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_janitor.rsi
-    state: icon
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_janitor.rsi
 
@@ -29,8 +27,7 @@
   components:
   - type: Sprite
     state: jan_skirt
-  - type: Icon
-    state: jan_skirt
+
   - type: Clothing
     ClothingPrefix: jan_skirt
     femaleMask: UniformTop
@@ -44,9 +41,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_engineering.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_engineering.rsi
-    state: icon
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_engineering.rsi
 
@@ -58,8 +53,7 @@
   components:
   - type: Sprite
     state: engine_skirt
-  - type: Icon
-    state: engine_skirt
+
   - type: Clothing
     ClothingPrefix: engine_skirt
     femaleMask: UniformTop
@@ -68,14 +62,12 @@
   parent: UniformBase
   id: UniformAssistant
   name: assistant jumpsuit
-  desciption: It's a generic grey jumpsuit. That's about what assistants are worth, anyway.
+  description: It's a generic grey jumpsuit. That's about what assistants are worth, anyway.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_assistant.rsi
     state: assistant
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_assistant.rsi
-    state: assistant
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_assistant.rsi
 
@@ -83,14 +75,12 @@
   parent: UniformBase
   id: UniformChemistry
   name: chemistry jumpsuit
-  desciption: There's some odd stains on this jumpsuit. Hm.
+  description: There's some odd stains on this jumpsuit. Hm.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_medical.rsi
     state: chemistry
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_medical.rsi
-    state: chemistry
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_medical.rsi
     ClothingPrefix: chemistry
@@ -99,12 +89,11 @@
   parent: UniformChemistry
   id: UniformChemistrySkirt
   name: chemistry jumpskirt
-  desciption: A sterile jumpskirt in Chemistry colors.
+  description: A sterile jumpskirt in Chemistry colors.
   components:
   - type: Sprite
     state: chemistry_skirt
-  - type: Icon
-    state: chemistry_skirt
+
   - type: Clothing
     ClothingPrefix: chemistry_skirt
     femaleMask: UniformTop
@@ -113,14 +102,12 @@
   parent: UniformBase
   id: UniformParamedic
   name: paramedic jumpsuit
-  desciption: It's got a red plus on it, that's a good thing right?
+  description: It's got a red plus on it, that's a good thing right?
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_medical.rsi
     state: paramedic
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_medical.rsi
-    state: paramedic
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_medical.rsi
     ClothingPrefix: paramedic
@@ -129,12 +116,11 @@
   parent: UniformParamedic
   id: UniformParamedicSkirt
   name: paramedic jumpskirt
-  desciption: A sterile jumpskirt in Paramedic colors.
+  description: A sterile jumpskirt in Paramedic colors.
   components:
   - type: Sprite
     state: paramedic_skirt
-  - type: Icon
-    state: paramedic_skirt
+
   - type: Clothing
     ClothingPrefix: paramedic_skirt
     femaleMask: UniformTop
@@ -143,14 +129,12 @@
   parent: UniformBase
   id: UniformScrubsPurple
   name: purple scrubs
-  desciption: A combination of comfort and utility intended to make removing every last organ someone has and selling them to a space robot much more official looking.
+  description: A combination of comfort and utility intended to make removing every last organ someone has and selling them to a space robot much more official looking.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_medical.rsi
     state: scrubspurple
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_medical.rsi
-    state: scrubspurple
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_medical.rsi
     ClothingPrefix: scrubspurple
@@ -159,14 +143,12 @@
   parent: UniformBase
   id: UniformScrubsGreen
   name: green scrubs
-  desciption: A combination of comfort and utility intended to make removing every last organ someone has and selling them to a space robot much more official looking.
+  description: A combination of comfort and utility intended to make removing every last organ someone has and selling them to a space robot much more official looking.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_medical.rsi
     state: scrubsgreen
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_medical.rsi
-    state: scrubsgreen
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_medical.rsi
     ClothingPrefix: scrubsgreen
@@ -175,14 +157,12 @@
   parent: UniformBase
   id: UniformScrubsBlue
   name: blue scrubs
-  desciption: A combination of comfort and utility intended to make removing every last organ someone has and selling them to a space robot much more official looking.
+  description: A combination of comfort and utility intended to make removing every last organ someone has and selling them to a space robot much more official looking.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_medical.rsi
     state: scrubsblue
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_medical.rsi
-    state: scrubsblue
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_medical.rsi
     ClothingPrefix: scrubsblue
@@ -196,9 +176,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_clown.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_clown.rsi
-    state: icon
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_clown.rsi
     femaleMask: UniformTop
@@ -212,9 +190,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_sec.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_sec.rsi
-    state: icon
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_sec.rsi
 
@@ -226,8 +202,7 @@
   components:
   - type: Sprite
     state: sec_skirt
-  - type: Icon
-    state: sec_skirt
+
   - type: Clothing
     ClothingPrefix: sec_skirt
     femaleMask: UniformTop
@@ -240,8 +215,7 @@
   components:
     - type: Sprite
       state: blueshift
-    - type: Icon
-      state: blueshift
+
     - type: Clothing
       ClothingPrefix: blueshift
 
@@ -253,8 +227,7 @@
   components:
     - type: Sprite
       state: constable
-    - type: Icon
-      state: constable
+
     - type: Clothing
       ClothingPrefix: constable
 
@@ -266,8 +239,7 @@
   components:
     - type: Sprite
       state: officerblueclothes
-    - type: Icon
-      state: officerblueclothes
+
     - type: Clothing
       ClothingPrefix: officerblueclothes
 
@@ -279,8 +251,7 @@
   components:
     - type: Sprite
       state: officertanclothes
-    - type: Icon
-      state: officertanclothes
+
     - type: Clothing
       ClothingPrefix: officertanclothes
 
@@ -292,8 +263,7 @@
   components:
     - type: Sprite
       state: security_grey
-    - type: Icon
-      state: security_grey
+
     - type: Clothing
       ClothingPrefix: security_grey
       HeldPrefix: gy_suit
@@ -306,8 +276,7 @@
   components:
     - type: Sprite
       state: spacepol
-    - type: Icon
-      state: spacepol
+
     - type: Clothing
       ClothingPrefix: spacepol
 
@@ -319,8 +288,7 @@
   components:
     - type: Sprite
       state: spacepolice_families
-    - type: Icon
-      state: spacepolice_families
+
     - type: Clothing
       ClothingPrefix: spacepolice_families
 
@@ -333,9 +301,7 @@
     - type: Sprite
       sprite: Clothing/Uniforms/uniform_detective.rsi
       state: detective
-    - type: Icon
-      sprite: Clothing/Uniforms/uniform_detective.rsi
-      state: detective
+
     - type: Clothing
       sprite: Clothing/Uniforms/uniform_detective.rsi
       ClothingPrefix: detective
@@ -349,8 +315,7 @@
   components:
     - type: Sprite
       state: detective_skirt
-    - type: Icon
-      state: detective_skirt
+
     - type: Clothing
       ClothingPrefix: detective_skirt
       femaleMask: UniformTop
@@ -363,8 +328,7 @@
   components:
     - type: Sprite
       state: greydetective
-    - type: Icon
-      state: greydetective
+
     - type: Clothing
       ClothingPrefix: greydetective
 
@@ -376,8 +340,7 @@
   components:
     - type: Sprite
       state: greydetective_skirt
-    - type: Icon
-      state: greydetective_skirt
+
     - type: Clothing
       ClothingPrefix: greydetective_skirt
       femaleMask: UniformTop
@@ -391,9 +354,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_cargotech.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_cargotech.rsi
-    state: icon
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_cargotech.rsi
 
@@ -401,12 +362,11 @@
   parent: UniformCargoTech
   id: UniformCargoTechSkirt
   name: cargo tech jumpskirt
-  desciption: A sturdy jumpskirt, issued to members of the Cargo department.
+  description: A sturdy jumpskirt, issued to members of the Cargo department.
   components:
   - type: Sprite
     state: cargo_skirt
-  - type: Icon
-    state: cargo_skirt
+
   - type: Clothing
     ClothingPrefix: cargo_skirt
     femaleMask: UniformTop
@@ -414,28 +374,25 @@
 - type: entity
   parent: UniformBase
   id: UniformQM
-  name: qm jumpsuit
+  name: quartermaster's jumpsuit
   description: 'What can brown do for you?'
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_cargotech.rsi
     state: qm
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_cargotech.rsi
-    state: qm
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_cargotech.rsi
 
 - type: entity
   parent: UniformQM
   id: UniformQMSkirt
-  name: qm jumpskirt
-  desciption: 'What can brown do for you?'
+  name: quartermaster's jumpskirt
+  description: 'What can brown do for you?'
   components:
   - type: Sprite
     state: qm_skirt
-  - type: Icon
-    state: qm_skirt
+
   - type: Clothing
     ClothingPrefix: qm_skirt
     femaleMask: UniformTop
@@ -449,9 +406,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_chef.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_chef.rsi
-    state: icon
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_chef.rsi
 
@@ -459,12 +414,11 @@
   parent: UniformChef
   id: UniformChefSkirt
   name: chef skirt
-  desciption: Can't cook without this.
+  description: Can't cook without this.
   components:
   - type: Sprite
     state: chef_skirt
-  - type: Icon
-    state: chef_skirt
+
   - type: Clothing
     ClothingPrefix: chef_skirt
     femaleMask: UniformTop
@@ -478,9 +432,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_captain.rsi
     state: captain
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_captain.rsi
-    state: captain
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_captain.rsi
 
@@ -493,9 +445,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_ce.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_ce.rsi
-    state: icon
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_ce.rsi
 
@@ -503,12 +453,11 @@
   parent: UniformChiefEngineer
   id: UniformChiefEngineerSkirt
   name: ce jumpskirt
-  desciption: It's a high visibility jumpskirt given to those engineers insane enough to achieve the rank of Chief Engineer. It has minor radiation shielding.
+  description: It's a high visibility jumpskirt given to those engineers insane enough to achieve the rank of Chief Engineer. It has minor radiation shielding.
   components:
   - type: Sprite
     state: chief_skirt
-  - type: Icon
-    state: chief_skirt
+
   - type: Clothing
     ClothingPrefix: chief_skirt
     femaleMask: UniformTop
@@ -522,9 +471,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_cmo.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_cmo.rsi
-    state: icon
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_cmo.rsi
 
@@ -532,12 +479,11 @@
   parent: UniformCMO
   id: UniformCMOSkirt
   name: cmo jumpskirt
-  desciption: It's a jumpskirt worn by those with the experience to be Chief Medical Officer. It provides minor biological protection.
+  description: It's a jumpskirt worn by those with the experience to be Chief Medical Officer. It provides minor biological protection.
   components:
   - type: Sprite
     state: cmo_skirt
-  - type: Icon
-    state: cmo_skirt
+
   - type: Clothing
     ClothingPrefix: cmo_skirt
     femaleMask: UniformTop
@@ -551,9 +497,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_medical.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_medical.rsi
-    state: icon
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_medical.rsi
 
@@ -561,12 +505,11 @@
   parent: UniformMedicalDoctor
   id: UniformMedicalDoctorSkirt
   name: medical doctor jumpskirt
-  desciption: It's made of a special fiber that provides minor protection against biohazards. It has a cross on the chest denoting that the wearer is trained medical personnel.
+  description: It's made of a special fiber that provides minor protection against biohazards. It has a cross on the chest denoting that the wearer is trained medical personnel.
   components:
   - type: Sprite
     state: medical_skirt
-  - type: Icon
-    state: medical_skirt
+
   - type: Clothing
     ClothingPrefix: medical_skirt
     femaleMask: UniformTop
@@ -580,9 +523,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_scientist.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_scientist.rsi
-    state: icon
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_scientist.rsi
 
@@ -590,12 +531,11 @@
   parent: UniformScientist
   id: UniformScientistSkirt
   name: scientist jumpskirt
-  desciption: It's made of a special fiber that provides minor protection against explosives. It has markings that denote the wearer as a scientist.
+  description: It's made of a special fiber that provides minor protection against explosives. It has markings that denote the wearer as a scientist.
   components:
   - type: Sprite
     state: sci_skirt
-  - type: Icon
-    state: sci_skirt
+
   - type: Clothing
     ClothingPrefix: sci_skirt
     femaleMask: UniformTop
@@ -603,28 +543,25 @@
 - type: entity
   parent: UniformBase
   id: UniformResearchDirector
-  name: rd turtleneck
+  name: research director's turtleneck
   description: It's a turtleneck worn by those with the know-how to achieve the position of Research Director. Its fabric provides minor protection from biological contaminants.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_rnd.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_rnd.rsi
-    state: icon
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_rnd.rsi
 
 - type: entity
   parent: UniformResearchDirector
   id: UniformResearchDirectorSkirt
-  name: rd skirtleneck
-  desciption: It's a turtleneck worn by those with the know-how to achieve the position of Research Director. Its fabric provides minor protection from biological contaminants.
+  name: research director's skirtleneck
+  description: It's a turtleneck worn by those with the know-how to achieve the position of Research Director. Its fabric provides minor protection from biological contaminants.
   components:
   - type: Sprite
     state: rnd_skirt
-  - type: Icon
-    state: rnd_skirt
+
   - type: Clothing
     ClothingPrefix: rnd_skirt
     femaleMask: UniformTop
@@ -638,9 +575,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_mime.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_mime.rsi
-    state: icon
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_mime.rsi
 
@@ -648,15 +583,40 @@
   parent: UniformMime
   id: UniformMimeSkirt
   name: mime skirt
-  desciption: ...
+  description: ...
   components:
   - type: Sprite
     state: mime_skirt
-  - type: Icon
-    state: mime_skirt
+
   - type: Clothing
     ClothingPrefix: mime_skirt
     femaleMask: UniformTop
+
+- type: entity
+  parent: UniformBase
+  id: UniformChaplain
+  name: chaplain's jumpsuit
+  description: It's a black jumpsuit, often worn by religious folk.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/uniform_chaplain.rsi
+      state: icon
+
+    - type: Clothing
+      sprite: Clothing/Uniforms/uniform_chaplain.rsi
+
+- type: entity
+  parent: UniformChaplain
+  id: UniformChaplainSkirt
+  name: chaplain's jumpskirt
+  description: It's a black jumpskirt. If you wear this, you probably need religious help more than you will be providing it.
+  components:
+    - type: Sprite
+      state: chaplain_skirt
+
+    - type: Clothing
+      ClothingPrefix: chaplain_skirt
+      femaleMask: UniformTop
 
 - type: entity
   parent: UniformBase
@@ -667,9 +627,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_hos.rsi
     state: hosalt
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_hos.rsi
-    state: hosalt
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_hos.rsi
     HeldPrefix: hosalt
@@ -678,12 +636,11 @@
   parent: UniformHoSAlt
   id: UniformHoSAltSkirt
   name: head of security skirtleneck
-  desciption: It's a skirtleneck worn by those who were strong and disciplined enough to achieve the position of Head of Security. Its sturdy fabric provides minor protection from mechanical damage.
+  description: It's a skirtleneck worn by those who were strong and disciplined enough to achieve the position of Head of Security. Its sturdy fabric provides minor protection from mechanical damage.
   components:
   - type: Sprite
     state: hosalt_skirt
-  - type: Icon
-    state: hosalt_skirt
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_hos.rsi
     ClothingPrefix: hosalt_skirt
@@ -699,9 +656,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_hos.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_hos.rsi
-    state: icon
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_hos.rsi
 
@@ -709,12 +664,11 @@
   parent: UniformHoS
   id: UniformHoSSkirt
   name: head of security jumpskirt
-  desciption: It's bright red and rather crisp, much like security's victims tend to be.
+  description: It's bright red and rather crisp, much like security's victims tend to be.
   components:
   - type: Sprite
     state: hos_skirt
-  - type: Icon
-    state: hos_skirt
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_hos.rsi
     ClothingPrefix: hos_skirt
@@ -728,8 +682,7 @@
   components:
     - type: Sprite
       state: hos_grey
-    - type: Icon
-      state: hos_grey
+
     - type: Clothing
       ClothingPrefix: hos_grey
       HeldPrefix: gy_suit
@@ -742,8 +695,7 @@
   components:
     - type: Sprite
       state: hos_parade_male
-    - type: Icon
-      state: hos_parade_male
+
     - type: Clothing
       ClothingPrefix: hos_parade_male
 
@@ -755,8 +707,7 @@
   components:
     - type: Sprite
       state: hos_parade_fem
-    - type: Icon
-      state: hos_parade_fem
+
     - type: Clothing
       ClothingPrefix: hos_parade_fem
       femaleMask: UniformTop
@@ -769,8 +720,7 @@
   components:
     - type: Sprite
       state: hosblueclothes
-    - type: Icon
-      state: hosblueclothes
+
     - type: Clothing
       ClothingPrefix: hosblueclothes
 
@@ -782,23 +732,20 @@
   components:
     - type: Sprite
       state: hostanclothes
-    - type: Icon
-      state: hostanclothes
+
     - type: Clothing
       ClothingPrefix: hostanclothes
 
 - type: entity
   parent: UniformBase
   id: UniformWarden
-  name: security suit
+  name: warden's uniform
   description: A formal security suit for officers complete with Nanotrasen belt buckle.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_warden.rsi
     state: rwarden
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_warden.rsi
-    state: rwarden
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_warden.rsi
     ClothingPrefix: rwarden
@@ -812,8 +759,7 @@
   components:
     - type: Sprite
       state: rwarden_skirt
-    - type: Icon
-      state: rwarden
+
     - type: Clothing
       femaleMask: UniformTop
       ClothingPrefix: rwarden_skirt
@@ -826,8 +772,7 @@
   components:
     - type: Sprite
       state: warden
-    - type: Icon
-      state: warden
+
     - type: Clothing
       ClothingPrefix: warden
       HeldPrefix: gy_suit
@@ -840,8 +785,7 @@
   components:
     - type: Sprite
       state: wardenblueclothes
-    - type: Icon
-      state: wardenblueclothes
+
     - type: Clothing
       ClothingPrefix: wardenblueclothes
 
@@ -853,8 +797,7 @@
   components:
     - type: Sprite
       state: wardentanclothes
-    - type: Icon
-      state: wardentanclothes
+
     - type: Clothing
       ClothingPrefix: wardentanclothes
 
@@ -867,9 +810,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_prisoner.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_prisoner.rsi
-    state: icon
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_prisoner.rsi
 
@@ -877,12 +818,11 @@
   parent: UniformPrisoner
   id: UniformPrisonerSkirt
   name: prisoner jumpskirt
-  desciption: Busted.
+  description: Busted.
   components:
   - type: Sprite
     state: prisoner_skirt
-  - type: Icon
-    state: prisoner_skirt
+
   - type: Clothing
     ClothingPrefix: prisoner_skirt
     femaleMask: UniformTop
@@ -891,14 +831,12 @@
   parent: UniformBase
   id: UniformHoP
   name: hop jumpsuit
-  desciption: Rather bland and inoffensive. Perfect for vanishing off the face of the universe.
+  description: Rather bland and inoffensive. Perfect for vanishing off the face of the universe.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_hop.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_hop.rsi
-    state: icon
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_hop.rsi
 
@@ -906,12 +844,11 @@
   parent: UniformHoP
   id: UniformHoPSkirt
   name: hop jumpskirt
-  desciption: Rather bland and inoffensive. Perfect for vanishing off the face of the universe.
+  description: Rather bland and inoffensive. Perfect for vanishing off the face of the universe.
   components:
   - type: Sprite
     state: hop_skirt
-  - type: Icon
-    state: hop_skirt
+
   - type: Clothing
     ClothingPrefix: hop_skirt
     femaleMask: UniformTop
@@ -920,14 +857,12 @@
   parent: UniformBase
   id: UniformHydroponics
   name: hydroponics jumpsuit
-  desciption: Has a strong earthy smell to it. Hopefully it's merely dirty as opposed to soiled.
+  description: Has a strong earthy smell to it. Hopefully it's merely dirty as opposed to soiled.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_hydro.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_hydro.rsi
-    state: icon
+
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_hydro.rsi
 
@@ -935,12 +870,11 @@
   parent: UniformHydroponics
   id: UniformHydroponicsSkirt
   name: hydroponics jumpskirt
-  desciption: Has a strong earthy smell to it. Hopefully it's merely dirty as opposed to soiled.
+  description: Has a strong earthy smell to it. Hopefully it's merely dirty as opposed to soiled.
   components:
   - type: Sprite
     state: hydro_skirt
-  - type: Icon
-    state: hydro_skirt
+
   - type: Clothing
     ClothingPrefix: hydro_skirt
     femaleMask: UniformTop
@@ -954,9 +888,7 @@
   - type: Sprite
     sprite: Clothing/Uniforms/bartender.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Uniforms/bartender.rsi
-    state: icon
+
   - type: Clothing
     sprite: Clothing/Uniforms/bartender.rsi
 
@@ -964,12 +896,11 @@
   parent: UniformBartender
   id: UniformBartenderSkirt
   name: bartender's skirt
-  desciption: A nice and tidy skirt. Shame about the bar though.
+  description: A nice and tidy skirt. Shame about the bar though.
   components:
   - type: Sprite
     state: skirt
-  - type: Icon
-    state: skirt
+
   - type: Clothing
     ClothingPrefix: skirt
     femaleMask: UniformTop
@@ -978,11 +909,10 @@
   parent: UniformBartender
   id: UniformBartenderPurple
   name: purple bartender's uniform
-  desciption: A special purple outfit to serve drinks.
+  description: A special purple outfit to serve drinks.
   components:
   - type: Sprite
     state: purple
-  - type: Icon
-    state: purple
+
   - type: Clothing
     ClothingPrefix: purple

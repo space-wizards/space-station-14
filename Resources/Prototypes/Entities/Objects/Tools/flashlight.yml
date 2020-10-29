@@ -2,7 +2,7 @@
   name: flashlight
   parent: BaseItem
   id: FlashlightLantern
-  description: They light the way to freedom
+  description: They light the way to freedom.
   components:
     - type: HandheldLight
     - type: Sprite
@@ -12,9 +12,6 @@
         - state: HandheldLightOnOverlay
           shader: unshaded
           visible: false
-    - type: Icon
-      sprite: Objects/Tools/flashlight.rsi
-      state: lantern_off
     - type: Item
       sprite: Objects/Tools/flashlight.rsi
       HeldPrefix: off

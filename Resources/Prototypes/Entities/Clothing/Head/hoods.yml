@@ -6,8 +6,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/bio_cmo.rsi
-  - type: Icon
-    sprite: Clothing/Head/bio_cmo.rsi
+
   - type: Clothing
     sprite: Clothing/Head/bio_cmo.rsi
 
@@ -19,8 +18,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/bio_general.rsi
-  - type: Icon
-    sprite: Clothing/Head/bio_general.rsi
+
   - type: Clothing
     sprite: Clothing/Head/bio_general.rsi
 
@@ -32,8 +30,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/bio_janitor.rsi
-  - type: Icon
-    sprite: Clothing/Head/bio_janitor.rsi
+
   - type: Clothing
     sprite: Clothing/Head/bio_janitor.rsi
 
@@ -45,8 +42,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/bio_scientist.rsi
-  - type: Icon
-    sprite: Clothing/Head/bio_scientist.rsi
+
   - type: Clothing
     sprite: Clothing/Head/bio_scientist.rsi
 
@@ -58,8 +54,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/bio_security.rsi
-  - type: Icon
-    sprite: Clothing/Head/bio_security.rsi
+
   - type: Clothing
     sprite: Clothing/Head/bio_security.rsi
 
@@ -71,8 +66,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/bio_virology.rsi
-  - type: Icon
-    sprite: Clothing/Head/bio_virology.rsi
+
   - type: Clothing
     sprite: Clothing/Head/bio_virology.rsi
 
@@ -84,8 +78,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/bombsuit.rsi
-  - type: Icon
-    sprite: Clothing/Head/bombsuit.rsi
+
   - type: Clothing
     sprite: Clothing/Head/bombsuit.rsi
 
@@ -97,8 +90,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/bombsuitsec.rsi
-  - type: Icon
-    sprite: Clothing/Head/bombsuitsec.rsi
+
   - type: Clothing
     sprite: Clothing/Head/bombsuitsec.rsi
 
@@ -110,8 +102,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/bombsuit_white.rsi
-  - type: Icon
-    sprite: Clothing/Head/bombsuit_white.rsi
+
   - type: Clothing
     sprite: Clothing/Head/bombsuit_white.rsi
 
@@ -123,8 +114,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/chaplain_hood.rsi
-  - type: Icon
-    sprite: Clothing/Head/chaplain_hood.rsi
+
   - type: Clothing
     sprite: Clothing/Head/chaplain_hood.rsi
 
@@ -136,8 +126,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/culthood.rsi
-  - type: Icon
-    sprite: Clothing/Head/culthood.rsi
+
   - type: Clothing
     sprite: Clothing/Head/culthood.rsi
 
@@ -149,8 +138,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/nun_hood.rsi
-  - type: Icon
-    sprite: Clothing/Head/nun_hood.rsi
+
   - type: Clothing
     sprite: Clothing/Head/nun_hood.rsi
 
@@ -162,7 +150,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/rad.rsi
-  - type: Icon
-    sprite: Clothing/Head/rad.rsi
+
   - type: Clothing
     sprite: Clothing/Head/rad.rsi

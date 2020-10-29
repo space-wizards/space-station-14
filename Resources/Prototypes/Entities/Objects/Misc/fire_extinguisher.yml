@@ -2,16 +2,13 @@
   name: fire extinguisher
   parent: BaseItem
   id: FireExtinguisher
-  description: Extinguishes fires.
+  description: It extinguishes fires.
   components:
     - type: Sprite
       sprite: Objects/Misc/fire_extinguisher.rsi
       layers:
         - state: fire_extinguisher_closed
           map: [ "enum.SprayVisualLayers.Base" ]
-    - type: Icon
-      sprite: Objects/Misc/fire_extinguisher.rsi
-      state: fire_extinguisher_closed
     - type: Item
       sprite: Objects/Misc/fire_extinguisher.rsi
       size: 10
@@ -50,10 +47,7 @@
       layers:
         - state: extinguish
           map: [ "enum.VaporVisualLayers.Base" ]
-    - type: Icon
-      sprite: Effects/extinguisherSpray.rsi
-      state: extinguish
-    - type: Collidable
+    - type: Physics
       hard: false
       shapes:
         - !type:PhysShapeAabb

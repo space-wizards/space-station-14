@@ -22,7 +22,11 @@ namespace Content.Client.GameObjects.Components.Nutrition
 
         public override void OnChangeData(AppearanceComponent component)
         {
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
+            if(!component.Owner.TryGetComponent<ISpriteComponent>(out var sprite))
+            {
+                return;
+            };
+
             if (!component.TryGetData<float>(SharedFoodComponent.FoodVisuals.MaxUses, out var maxUses))
             {
                 return;

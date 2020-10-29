@@ -27,6 +27,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
     ///    ECS component that manages a liquid solution of reagents.
     /// </summary>
     [RegisterComponent]
+    [ComponentReference(typeof(SharedSolutionContainerComponent))]
     public class SolutionContainerComponent : SharedSolutionContainerComponent, IExamine
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -43,40 +44,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
         private SpriteComponent _spriteComponent;
 
         /// <summary>
-        ///     The total volume of all the of the reagents in the container.
-        /// </summary>
-        [ViewVariables]
-        public ReagentUnit CurrentVolume => Solution.TotalVolume;
-
-        /// <summary>
         ///     The volume without reagents remaining in the container.
         /// </summary>
         [ViewVariables]
         public ReagentUnit EmptyVolume => MaxVolume - CurrentVolume;
-
-        /// <summary>
-        ///     The current blended color of all the reagents in the container.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public Color SubstanceColor { get; private set; }
-
-        /// <summary>
-        ///     The current capabilities of this container (is the top open to pour? can I inject it into another object?).
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public SolutionContainerCaps Capabilities { get; set; }
-
-        /// <summary>
-        ///     The contained solution.
-        /// </summary>
-        [ViewVariables]
-        public Solution Solution { get; set; }
-
-        /// <summary>
-        ///     The maximum volume of the container.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public ReagentUnit MaxVolume { get; set; }
 
         public IReadOnlyList<Solution.ReagentQuantity> ReagentList => Solution.Contents;
         public bool CanExamineContents => (Capabilities & SolutionContainerCaps.NoExamine) == 0;
@@ -91,7 +62,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             serializer.DataField(this, x => MaxVolume, "maxVol", ReagentUnit.New(0));
             serializer.DataField(this, x => Solution, "contents", new Solution());
-            serializer.DataField(this, x => Capabilities, "caps", SolutionContainerCaps.AddTo | SolutionContainerCaps.RemoveFrom); 
+            serializer.DataField(this, x => Capabilities, "caps", SolutionContainerCaps.AddTo | SolutionContainerCaps.RemoveFrom);
             serializer.DataField(ref _fillInitState, "fillingState", string.Empty);
             serializer.DataField(ref _fillInitSteps, "fillingSteps", 7);
         }
@@ -124,7 +95,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             OnSolutionChanged(false);
         }
 
-        public bool TryRemoveReagent(string reagentId, ReagentUnit quantity)
+        public override bool TryRemoveReagent(string reagentId, ReagentUnit quantity)
         {
             if (!ContainsReagent(reagentId, out var currentQuantity))
             {
@@ -147,7 +118,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             {
                 return false;
             }
-                
+
             Solution.RemoveSolution(quantity);
             OnSolutionChanged(false);
             return true;
@@ -179,7 +150,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 {
                     continue;
                 }
-                    
+
                 if (mixColor == default)
                 {
                     mixColor = proto.SubstanceColor;
@@ -229,13 +200,13 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 {
                     return;
                 }
-                    
+
                 if (!hands.GetActiveHand.Owner.TryGetComponent<SolutionContainerComponent>(out var handSolutionComp) ||
                     !handSolutionComp.CanRemoveSolutions ||
                     !component.CanAddSolutions)
                 {
                     return;
-                }          
+                }
 
                 var transferQuantity = ReagentUnit.Min(component.MaxVolume - component.CurrentVolume, handSolutionComp.CurrentVolume, ReagentUnit.New(10));
 
@@ -243,7 +214,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 {
                     return;
                 }
-                 
+
                 var transferSolution = handSolutionComp.SplitSolution(transferQuantity);
                 component.TryAddSolution(transferSolution);
             }
@@ -393,9 +364,14 @@ namespace Content.Server.GameObjects.Components.Chemistry
             return true;
         }
 
-        public bool TryAddSolution(Solution solution, bool skipReactionCheck = false, bool skipColor = false)
+        public override bool CanAddSolution(Solution solution)
         {
-            if (solution.TotalVolume > (MaxVolume - Solution.TotalVolume))
+            return solution.TotalVolume <= (MaxVolume - Solution.TotalVolume);
+        }
+
+        public override bool TryAddSolution(Solution solution, bool skipReactionCheck = false, bool skipColor = false)
+        {
+            if (!CanAddSolution(solution))
                 return false;
 
             Solution.AddSolution(solution);

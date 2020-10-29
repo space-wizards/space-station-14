@@ -2,7 +2,7 @@
   name: lantern
   parent: BaseItem
   id: lantern
-  description: The holy light guides the way
+  description: The holy light guides the way.
   components:
     - type: HandheldLight
     - type: Sprite
@@ -12,9 +12,6 @@
         - state: lantern-on
           shader: unshaded
           visible: false
-    - type: Icon
-      sprite: Objects/Tools/lantern.rsi
-      state: lantern
     - type: Item
       sprite: Objects/Tools/lantern.rsi
       HeldPrefix: off

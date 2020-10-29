@@ -7,10 +7,11 @@
   - type: Sprite
     sprite: Clothing/Back/Satchels/satchel.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Back/Satchels/satchel.rsi
-    state: icon
   - type: Clothing
+    size: 9999
+    QuickEquip: false
+    Slots:
+    - back
     sprite: Clothing/Back/Satchels/satchel.rsi
   - type: Storage
     capacity: 100
@@ -22,9 +23,6 @@
   description: A tough satchel with extra pockets.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchels/satchel_engineering.rsi
-    state: icon
-  - type: Icon
     sprite: Clothing/Back/Satchels/satchel_engineering.rsi
     state: icon
   - type: Clothing
@@ -39,9 +37,6 @@
   - type: Sprite
     sprite: Clothing/Back/Satchels/satchel_medical.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Back/Satchels/satchel_medical.rsi
-    state: icon
   - type: Clothing
     sprite: Clothing/Back/Satchels/satchel_medical.rsi
 
@@ -52,9 +47,6 @@
   description: A sterile satchel with chemist colours.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchels/satchel_chemistry.rsi
-    state: icon
-  - type: Icon
     sprite: Clothing/Back/Satchels/satchel_chemistry.rsi
     state: icon
   - type: Clothing
@@ -69,9 +61,6 @@
   - type: Sprite
     sprite: Clothing/Back/Satchels/satchel_science.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Back/Satchels/satchel_science.rsi
-    state: icon
   - type: Clothing
     sprite: Clothing/Back/Satchels/satchel_science.rsi
 
@@ -82,9 +71,6 @@
   description: A robust satchel for security related needs.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchels/satchel_security.rsi
-    state: icon
-  - type: Icon
     sprite: Clothing/Back/Satchels/satchel_security.rsi
     state: icon
   - type: Clothing
@@ -99,9 +85,6 @@
   - type: Sprite
     sprite: Clothing/Back/Satchels/satchel_captain.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Back/Satchels/satchel_captain.rsi
-    state: icon
   - type: Clothing
     sprite: Clothing/Back/Satchels/satchel_captain.rsi
 
@@ -112,9 +95,6 @@
   description: A satchel made of all natural fibers.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchels/satchel_hydroponics.rsi
-    state: icon
-  - type: Icon
     sprite: Clothing/Back/Satchels/satchel_hydroponics.rsi
     state: icon
   - type: Clothing

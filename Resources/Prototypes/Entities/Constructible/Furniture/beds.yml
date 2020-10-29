@@ -1,0 +1,34 @@
+- type: entity
+  name: bed
+  id: Bed
+  description: This is used to lie in, sleep in or strap on.
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    mass: 25
+    anchored: true
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.45, -0.45, 0.05, 0.45"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    sprite: Constructible/Misc/furniture.rsi
+    state: bed
+  - type: Strap
+    position: Down
+    rotation: -90
+  - type: Destructible
+    deadThreshold: 75
+    resistances: metallicResistances
+  placement:
+    mode: SnapgridCenter

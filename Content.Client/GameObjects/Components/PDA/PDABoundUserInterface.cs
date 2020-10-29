@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.PDA;
@@ -133,6 +133,9 @@ namespace Content.Client.GameObjects.Components.PDA
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
+            if (!disposing)
+                return;
+
             _menu?.Dispose();
         }
 

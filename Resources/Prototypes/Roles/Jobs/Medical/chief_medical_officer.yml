@@ -12,6 +12,7 @@
   icon: "ChiefMedicalOfficer"
   access:
   - Medical
+  - ChiefMedicalOfficer
   - Command
   - Maintenance
 
@@ -23,3 +24,4 @@
     shoes: ShoesBrown
     outerclothing: OuterclothingLabcoatcmo
     idcard: CMOPDA
+    ears: HeadsetMedicalAlt

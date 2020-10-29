@@ -130,7 +130,7 @@
 
 - type: entity
   name: handmade pistol
-  parent: BaseItem
+  parent: PistolBase
   id: PistolHMPistol
   description: Looks unreliable.
   components:
@@ -144,7 +144,6 @@
         map: ["enum.RangedBarrelVisualLayers.Bolt"]
   - type: Icon
     sprite: Objects/Weapons/Guns/Pistols/hm_pistol.rsi
-    state: icon
   - type: Item
     size: 12
     sprite: Objects/Weapons/Guns/Pistols/hm_pistol.rsi

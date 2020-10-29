@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.Mobs;
+﻿using Content.Server.GameObjects.Components.Atmos;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Nutrition;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Verbs;
@@ -57,6 +58,7 @@ namespace Content.Server.GlobalVerbs
             if (target.TryGetComponent(out IDamageableComponent damage))
             {
                 damage.Heal();
+                damage.CurrentState = DamageState.Alive;
             }
 
             if (target.TryGetComponent(out HungerComponent hunger))
@@ -72,6 +74,16 @@ namespace Content.Server.GlobalVerbs
             if (target.TryGetComponent(out StunnableComponent stun))
             {
                 stun.ResetStuns();
+            }
+
+            if (target.TryGetComponent(out FlammableComponent flammable))
+            {
+                flammable.Extinguish();
+            }
+
+            if (target.TryGetComponent(out CreamPiedComponent creamPied))
+            {
+                creamPied.Wash();
             }
         }
     }

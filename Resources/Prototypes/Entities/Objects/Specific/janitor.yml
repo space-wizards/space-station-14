@@ -7,9 +7,6 @@
   - type: Sprite
     sprite: Objects/Specific/Janitorial/mop.rsi
     state: mop
-  - type: Icon
-    sprite: Objects/Specific/Janitorial/mop.rsi
-    state: mop
   - type: Item
     size: 10
     sprite: Objects/Specific/Janitorial/mop.rsi
@@ -26,17 +23,20 @@
   components:
   - type: Clickable
   - type: Sprite
-    texture: Objects/Specific/Janitorial/mopbucket.png
+    sprite: Objects/Specific/Janitorial/janitorial.rsi
+    layers:
+    - state: mopbucket
+    - state: mopbucket_water
     drawdepth: Objects
-  - type: Icon
-    texture: Objects/Specific/Janitorial/mopbucket.png
   - type: InteractionOutline
   - type: Bucket
   - type: LoopingSound
   - type: SolutionContainer
     maxVol: 500
     caps: AddTo, RemoveFrom
-  - type: Collidable
+  - type: Physics
+    mass: 5
+    anchored: false
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.40,-0.25,0.25,0.25"
@@ -45,10 +45,6 @@
       - Opaque
       layer:
       - Opaque
-    IsScrapingFloor: true
-  - type: Physics
-    mass: 5
-    anchored: false
   - type: Spillable
   - type: Pullable
 
@@ -60,25 +56,24 @@
   components:
   - type: Clickable
   - type: Sprite
-    texture: Objects/Specific/Janitorial/bucket.png
+    sprite: Objects/Specific/Janitorial/janitorial.rsi
+    layers:
+    - state: bucket
+    - state: bucket_water
     drawdepth: Objects
-  - type: Icon
-    texture: Objects/Specific/Janitorial/bucket.png
   - type: Bucket
   - type: LoopingSound
   - type: SolutionContainer
     maxVol: 500
     caps: AddTo, RemoveFrom
-  - type: Collidable
+  - type: Physics
+    mass: 5
+    anchored: false
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.25,-0.25,0.25,0.25"
       mask:
       - Impassable
-    IsScrapingFloor: true
-  - type: Physics
-    mass: 5
-    anchored: false
   - type: Spillable
 
 - type: entity
@@ -88,9 +83,6 @@
   description: Caution! Wet Floor!
   components:
   - type: Sprite
-    sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
-    state: caution
-  - type: Icon
     sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
     state: caution
   - type: Item
@@ -105,14 +97,11 @@
   - type: Sprite
     sprite: Objects/Specific/Janitorial/soap.rsi
     state: soap
-  - type: Icon
-    sprite: Objects/Specific/Janitorial/soap.rsi
-    state: soap
   - type: Item
     sprite: Objects/Specific/Janitorial/soap.rsi
   - type: Slippery
     paralyzeTime: 2.5
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.3,-0.4,0.3,0.4"
@@ -127,8 +116,6 @@
   components:
     - type: Sprite
       state: soapnt
-    - type: Icon
-      state: soapnt
 
 - type: entity
   name: soap
@@ -138,8 +125,6 @@
   components:
     - type: Sprite
       state: soapdeluxe
-    - type: Icon
-      state: soapdeluxe
 
 - type: entity
   name: soap
@@ -148,8 +133,6 @@
   description: An untrustworthy bar of soap. Smells of fear.
   components:
     - type: Sprite
-      state: soapsyndie
-    - type: Icon
       state: soapsyndie
     - type: Slippery
       paralyzeTime: 5
@@ -162,8 +145,6 @@
   components:
     - type: Sprite
       state: soapgibs
-    - type: Icon
-      state: soapgibs
     - type: Slippery
       paralyzeTime: 2
 
@@ -174,8 +155,6 @@
   description: The most advanced soap known to mankind. Smells of bluespace.
   components:
     - type: Sprite
-      state: soapomega
-    - type: Icon
       state: soapomega
     - type: Slippery
       paralyzeTime: 7
@@ -196,11 +175,8 @@
       layers:
         - state: chempuff
           map: [ "enum.VaporVisualLayers.Base" ]
-    - type: Icon
-      sprite: Effects/chempuff.rsi
-      state: chempuff
     - type: Physics
-    - type: Collidable
+      anchored: false
       hard: false
       shapes:
         - !type:PhysShapeAabb
@@ -221,9 +197,8 @@
   description: A spray bottle with an unscrewable top.
   components:
   - type: Sprite
-    texture: Objects/Specific/Janitorial/cleaner.png
-  - type: Icon
-    texture: Objects/Specific/Janitorial/cleaner.png
+    sprite: Objects/Specific/Janitorial/janitorial.rsi
+    state: cleaner
   - type: SolutionContainer
     maxVol: 100
     caps: AddTo, RemoveFrom

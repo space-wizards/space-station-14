@@ -3,7 +3,7 @@
   id: PlaqueAtmos
   name: Atmos Plaque
   components:
-  - type: Collidable
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.3,-0.3,0.3,0.3"
@@ -15,8 +15,7 @@
       - SmallImpassable
       - Clickable
 
-  - type: Icon
-    state: atmosplaque
+
   - type: Sprite
     state: atmosplaque
   - type: AtmosPlaque

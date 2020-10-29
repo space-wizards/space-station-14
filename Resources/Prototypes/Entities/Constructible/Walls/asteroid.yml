@@ -9,10 +9,8 @@
   - type: Sprite
     sprite: Constructible/Structures/Walls/asteroid_rock.rsi
     state: 0
-  - type: Icon
-    sprite: Constructible/Structures/Walls/asteroid_rock.rsi
-    state: 0
-  - type: Collidable
+
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       layer: [MobMask]

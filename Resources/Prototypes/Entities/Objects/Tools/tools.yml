@@ -9,9 +9,6 @@
     layers:
     - state: cutters-map
     - state: cutters-cutty-thingy
-  - type: Icon
-    sprite: Objects/Tools/wirecutters.rsi
-    state: cutters-map
   - type: ItemCooldown
   - type: MeleeWeapon
   - type: Tool
@@ -30,12 +27,13 @@
       yellow: "#d58c18"
   - type: Item
     sprite: Objects/Tools/wirecutters.rsi
+  - type: PlantSampleTaker
 
 - type: entity
   name: screwdriver
   parent: BaseItem
   id: Screwdriver
-  description: Industrial grade torque in a small screwdriving package
+  description: Industrial grade torque in a small screwdriving package.
   components:
   - type: Sprite
     sprite: Objects/Tools/screwdriver.rsi
@@ -43,9 +41,6 @@
       - state: screwdriver-map
       - state: screwdriver-screwybits
 
-  - type: Icon
-    sprite: Objects/Tools/screwdriver.rsi
-    state: screwdriver-map
 
   - type: Item
     sprite: Objects/Tools/screwdriver.rsi
@@ -79,9 +74,6 @@
     - state: welder_flame
       shader: unshaded
       visible: false
-  - type: Icon
-    sprite: Objects/Tools/welder.rsi
-    state: welder
   - type: Item
     size: 10
     sprite: Objects/Tools/welder.rsi
@@ -107,12 +99,9 @@
   name: wrench
   parent: BaseItem
   id: Wrench
-  description: A common tool for assembly and disassembly, righty tighty lefty loosey
+  description: A common tool for assembly and disassembly, righty tighty lefty loosey.
   components:
   - type: Sprite
-    sprite: Objects/Tools/wrench.rsi
-    state: icon
-  - type: Icon
     sprite: Objects/Tools/wrench.rsi
     state: icon
   - type: Item
@@ -128,12 +117,9 @@
   name: crowbar
   parent: BaseItem
   id: Crowbar
-  description: A multipurpose tool to pry open doors and fight interdimensional invaders
+  description: A multipurpose tool to pry open doors and fight interdimensional invaders.
   components:
   - type: Sprite
-    sprite: Objects/Tools/crowbar.rsi
-    state: icon
-  - type: Icon
     sprite: Objects/Tools/crowbar.rsi
     state: icon
   - type: Item
@@ -150,12 +136,9 @@
   name: emergency crowbar
   parent: BaseItem
   id: CrowbarRed
-  description: A multipurpose tool to pry open doors and fight interdimensional invaders
+  description: A multipurpose tool to pry open doors and fight interdimensional invaders.
   components:
   - type: Sprite
-    sprite: Objects/Tools/crowbar_red.rsi
-    state: icon
-  - type: Icon
     sprite: Objects/Tools/crowbar_red.rsi
     state: icon
   - type: Item
@@ -177,9 +160,6 @@
   - type: Sprite
     sprite: Objects/Tools/multitool.rsi
     state: multitool
-  - type: Icon
-    sprite: Objects/Tools/multitool.rsi
-    state: multitool
   - type: Item
     sprite: Objects/Tools/multitool.rsi
   - type: Tool
@@ -194,9 +174,6 @@
   description: A set of jaws of life, compressed through the magic of science.
   components:
     - type: Sprite
-      sprite: Objects/Tools/jaws_of_life.rsi
-      state: jaws_pry
-    - type: Icon
       sprite: Objects/Tools/jaws_of_life.rsi
       state: jaws_pry
     - type: Item
@@ -224,9 +201,6 @@
   description: A simple powered hand drill.
   components:
     - type: Sprite
-      sprite: Objects/Tools/drill.rsi
-      state: drill_screw
-    - type: Icon
       sprite: Objects/Tools/drill.rsi
       state: drill_screw
     - type: Item
@@ -258,9 +232,6 @@
   - type: Sprite
     sprite: Objects/Tools/rcd.rsi
     state: rcd
-  - type: Icon
-    sprite: Objects/Tools/rcd.rsi
-    state: rcd
   - type: Item
     sprite: Objects/Tools/rcd.rsi
 
@@ -272,8 +243,5 @@
   components:
     - type: RCDAmmo
     - type: Sprite
-      sprite: Objects/Tools/rcd.rsi
-      state: rcd_ammo
-    - type: Icon
       sprite: Objects/Tools/rcd.rsi
       state: rcd_ammo

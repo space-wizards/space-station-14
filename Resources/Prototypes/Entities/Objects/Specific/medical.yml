@@ -5,9 +5,8 @@
   id: Medkit
   components:
   - type: Sprite
-    texture: Objects/Specific/Medical/medkit_r.png
-  - type: Icon
-    texture: Objects/Specific/Medical/medkit_r.png
+    sprite: Objects/Specific/Medical/medical.rsi
+    state: medkit_r
   - type: Storage
     capacity: 60
   - type: Item
@@ -43,9 +42,8 @@
   id: Ointment
   components:
   - type: Sprite
-    texture: Objects/Specific/Medical/ointment.png
-  - type: Icon
-    texture: Objects/Specific/Medical/ointment.png
+    sprite: Objects/Specific/Medical/medical.rsi
+    state: ointment
   - type: Healing
     heal:
       Heat: 10
@@ -55,19 +53,35 @@
     stacktype: enum.StackType.Ointment
 
 - type: entity
-  name: roll of gauze
-  description: Some sterile gauze to wrap around bloody stumps.
+  name: bruise pack
+  description: A therapeutic gel pack and bandages designed to treat blunt-force trauma.
   parent: MedicalStack
   id: Brutepack
   components:
+    - type: Sprite
+      sprite: Objects/Specific/Medical/medical.rsi
+      state: brutepack
+    - type: Healing
+      heal:
+        Blunt: 10
+    - type: Stack
+      max: 5
+      count: 5
+      stacktype: enum.StackType.Brutepack
+
+- type: entity
+  name: roll of gauze
+  description: Some sterile gauze to wrap around bloody stumps.
+  parent: MedicalStack
+  id: Gauze
+  components:
   - type: Sprite
-    texture: Objects/Specific/Medical/brutepack.png
-  - type: Icon
-    texture: Objects/Specific/Medical/brutepack.png
-  - type: Healing
-    heal:
-      Blunt: 10
+    sprite: Objects/Specific/Medical/medical.rsi
+    state: gauze
+#  - type: Healing
+#    heal:
+#      Blunt: 10
   - type: Stack
     max: 5
     count: 5
-    stacktype: enum.StackType.Brutepack
+    stacktype: enum.StackType.Gauze

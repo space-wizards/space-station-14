@@ -15,8 +15,6 @@ namespace Content.Server.GameObjects.Components.Items.Storage
     [RegisterComponent]
     internal sealed class StorageFillComponent : Component, IMapInit
     {
-        [Dependency] private readonly IEntityManager _entityManager;
-
         public override string Name => "StorageFill";
 
         private List<PrototypeItemData> _contents;
@@ -46,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             foreach (var storageItem in _contents)
             {
                 if (string.IsNullOrEmpty(storageItem.PrototypeName)) continue;
-                if (string.IsNullOrEmpty(storageItem.GroupId) && alreadySpawnedGroups.Contains(storageItem.GroupId)) continue;
+                if (!string.IsNullOrEmpty(storageItem.GroupId) && alreadySpawnedGroups.Contains(storageItem.GroupId)) continue;
 
                 if (storageItem.SpawnProbability != 1f &&
                     !random.Prob(storageItem.SpawnProbability))
@@ -54,8 +52,11 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                     continue;
                 }
 
-                storage.Insert(_entityManager.SpawnEntity(storageItem.PrototypeName, Owner.Transform.Coordinates));
-                if(string.IsNullOrEmpty(storageItem.GroupId)) alreadySpawnedGroups.Add(storageItem.GroupId);
+                for (var i = 0; i < storageItem.Amount; i++)
+                {
+                    storage.Insert(Owner.EntityManager.SpawnEntity(storageItem.PrototypeName, Owner.Transform.Coordinates));
+                }
+                if (!string.IsNullOrEmpty(storageItem.GroupId)) alreadySpawnedGroups.Add(storageItem.GroupId);
             }
         }
 

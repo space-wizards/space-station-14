@@ -20,6 +20,17 @@ namespace Content.Shared.Atmos
         public float SpecificHeat { get; private set; }
 
         /// <summary>
+        /// Heat capacity ratio for gas
+        /// </summary>
+        public float HeatCapacityRatio { get; private set; }
+
+        /// <summary>
+        /// Molar mass of gas
+        /// </summary>
+        public float MolarMass { get; set; }
+
+
+        /// <summary>
         ///     Minimum amount of moles for this gas to be visible.
         /// </summary>
         public float GasMolesVisible { get; private set; }
@@ -49,6 +60,7 @@ namespace Content.Shared.Atmos
         /// </summary>
         public string OverlayPath { get; private set; }
 
+
         public string Color { get; private set; }
 
         public void LoadFrom(YamlMappingNode mapping)
@@ -59,6 +71,8 @@ namespace Content.Shared.Atmos
             serializer.DataField(this, x => Name, "name", string.Empty);
             serializer.DataField(this, x => OverlayPath, "overlayPath", string.Empty);
             serializer.DataField(this, x => SpecificHeat, "specificHeat", 0f);
+            serializer.DataField(this, x => HeatCapacityRatio, "heatCapacityRatio", 1.4f);
+            serializer.DataField(this, x => MolarMass, "molarMass", 1f);
             serializer.DataField(this, x => GasMolesVisible, "gasMolesVisible", 0.25f);
             serializer.DataField(this, x => GasOverlayTexture, "gasOverlayTexture", string.Empty);
             serializer.DataField(this, x => GasOverlaySprite, "gasOverlaySprite", string.Empty);

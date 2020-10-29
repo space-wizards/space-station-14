@@ -15,9 +15,7 @@
   - type: Sprite
     sprite: Clothing/Glasses/meson_scanners.rsi
     state: meson
-  - type: Icon
-    sprite: Clothing/Glasses/meson_scanners.rsi
-    state: meson
+
   - type: Clothing
     sprite: Clothing/Glasses/meson_scanners.rsi
 
@@ -30,9 +28,7 @@
   - type: Sprite
     sprite: Clothing/Glasses/sunglasses.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Glasses/sunglasses.rsi
-    state: icon
+
   - type: Clothing
     sprite: Clothing/Glasses/sunglasses.rsi
 
@@ -45,8 +41,6 @@
   - type: Sprite
     sprite: Clothing/Glasses/sunglasses_sec.rsi
     state: icon
-  - type: Icon
-    sprite: Clothing/Glasses/sunglasses_sec.rsi
-    state: icon
+
   - type: Clothing
     sprite: Clothing/Glasses/sunglasses_sec.rsi

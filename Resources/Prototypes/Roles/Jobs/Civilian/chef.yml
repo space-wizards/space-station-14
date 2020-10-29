@@ -8,6 +8,7 @@
   icon: "Chef"
   access:
   - Service
+  - Kitchen
   - Maintenance
 
 - type: startingGear
@@ -17,3 +18,4 @@
     backpack: BackpackClothingFilled
     shoes: ShoesBlack
     idcard: ChefPDA
+    ears: HeadsetService

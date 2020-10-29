@@ -6,13 +6,13 @@
     mode: SnapgridCenter
   components:
   - type: Clickable
+  - type: InteractionOutline
   - type: Sprite
     drawdepth: Walls
     sprite: Constructible/Power/ame_shielding.rsi
     state: shield_0
-  - type: Icon
-    texture: Constructible/Power/ame_shielding_base.png
-  - type: Collidable
+
+  - type: Physics
     shapes:
     - !type:PhysShapeAabb
       layer:
@@ -24,7 +24,7 @@
   - type: Destructible
     maxHP: 500
     resistances: metallicResistances
-    spawnondestroy: AMEPart
+    spawnOnDestroy: AMEPart
   - type: SnapGrid
     offset: Center
   - type: Airtight

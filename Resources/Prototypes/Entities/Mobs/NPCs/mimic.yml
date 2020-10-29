@@ -22,10 +22,10 @@
     state: normal
   - type: Icon
     sprite: Constructible/Power/VendingMachines/cola.rsi
-    state: off
+    state: normal
   - type: Physics
+    anchored: false
     mass: 85
-  - type: Collidable
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.35,-0.35,0.35,0.35"

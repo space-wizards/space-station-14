@@ -92,4 +92,4 @@
   components:
   - type: StorageFill
     contents:
-      - name: CableStack1
+      - name: ApcExtensionCableStack1

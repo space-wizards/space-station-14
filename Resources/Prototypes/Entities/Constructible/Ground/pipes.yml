@@ -1,45 +1,89 @@
 ﻿- type: entity
   abstract: true
   id: PipeBase
+  name: Pipe
+  description: Holds gas.
   placement:
     mode: SnapgridCenter
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Collidable
+  - type: Physics
   - type: SnapGrid
     offset: Center
-  - type: Sprite
   - type: Destructible
     thresholdvalue: 100
-    resistances: metallicResistances
+  - type: Sprite
   - type: Appearance
     visuals:
     - type: PipeVisualizer
       pipeRSI: Constructible/Atmos/pipe.rsi
+  - type: Icon
+    sprite: Constructible/Atmos/pipe.rsi
+
+#Note: The PipeDirection of the PipeNode should be the east-facing version, because the entity starts at an angle of 0 (east)
 
 - type: entity
   parent: PipeBase
-  id: FourwayPipe
-  name: Fourway Pipe
+  id: PipeHalf
+  suffix: Half
   components:
+  - type: NodeContainer
+    nodes:
+    - !type:PipeNode
+      nodeGroupID: Pipe
+      pipeDirection: East
   - type: Icon
-    texture: Constructible/Atmos/pipe.rsi/pipeFourway2.png
+    state: pipeHalf2
+
+- type: entity
+  parent: PipeBase
+  id: PipeStraight
+  suffix: Straight
+  components:
+  - type: NodeContainer
+    nodes:
+    - !type:PipeNode
+      nodeGroupID: Pipe
+      pipeDirection: Lateral
+  - type: Icon
+    state: pipeStraight2
+
+- type: entity
+  parent: PipeBase
+  id: PipeBend
+  suffix: Bend
+  components:
+  - type: NodeContainer
+    nodes:
+    - !type:PipeNode
+      nodeGroupID: Pipe
+      pipeDirection: SEBend
+  - type: Icon
+    state: pipeBend2
+
+- type: entity
+  parent: PipeBase
+  id: PipeTJunction
+  suffix: TJunction
+  components:
+  - type: NodeContainer
+    nodes:
+    - !type:PipeNode
+      nodeGroupID: Pipe
+      pipeDirection: TEast
+  - type: Icon
+    state: pipeTJunction2
+
+- type: entity
+  parent: PipeBase
+  id: PipeFourway
+  suffix: Fourway
+  components:
   - type: NodeContainer
     nodes:
     - !type:PipeNode
       nodeGroupID: Pipe
       pipeDirection: Fourway
-
-- type: entity
-  parent: PipeBase
-  id: LongitudinalPipe
-  name: Longitudinal Pipe
-  components:
   - type: Icon
-    texture: Constructible/Atmos/pipe.rsi/pipeLongitudinal2.png
-  - type: NodeContainer
-    nodes:
-    - !type:PipeNode
-      nodeGroupID: Pipe
-      pipeDirection: Longitudinal
+    state: pipeFourway2

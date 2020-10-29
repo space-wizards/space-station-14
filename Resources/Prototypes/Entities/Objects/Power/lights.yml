@@ -2,14 +2,11 @@
   parent: BaseLightbulb
   name: light bulb
   id: LightBulb
-  description: That's a light bulb
+  description: That's a light bulb.
   components:
   - type: LightBulb
     bulb: Bulb
   - type: Sprite
-    sprite: Objects/Power/light_bulb.rsi
-    state: normal
-  - type: Icon
     sprite: Objects/Power/light_bulb.rsi
     state: normal
 
@@ -32,9 +29,6 @@
   - type: Sprite
     sprite:  Objects/Power/light_tube.rsi
     state: normal
-  - type: Icon
-    sprite:  Objects/Power/light_tube.rsi
-    state: normal
 
 - type: entity
   parent: BaseLightbulb
@@ -47,8 +41,5 @@
     BurningTemperature: 350
     PowerUse: 9
   - type: Sprite
-    sprite:  Objects/Power/light_tube.rsi
-    state: normal
-  - type: Icon
     sprite:  Objects/Power/light_tube.rsi
     state: normal

@@ -7,9 +7,6 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_steel
-  - type: Icon
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_steel
   - type: FloorTile
     output: floor_steel
   - type: Stack
@@ -27,33 +24,11 @@
     HeldPrefix: tile_steel
 
 - type: entity
-  name: carpet floor tile
-  parent: FloorTileItemBase
-  id: FloorTileItemCarpet
-  components:
-  - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_carpet
-  - type: Icon
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_carpet
-  - type: Item
-    sprite: Objects/Tiles/tile.rsi
-    HeldPrefix: tile_carpet
-  - type: FloorTile
-    output: floor_carpet
-  - type: Stack
-    stacktype: FloorTileCarpet
-
-- type: entity
   name: wood floor tile
   parent: FloorTileItemBase
   id: FloorTileItemWood
   components:
   - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_wood
-  - type: Icon
     sprite: Objects/Tiles/tile.rsi
     state: tile_wood
   - type: Item
@@ -74,9 +49,6 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_white
-  - type: Icon
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_white
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_white
@@ -93,9 +65,6 @@
   id: FloorTileItemDark
   components:
   - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_dark
-  - type: Icon
     sprite: Objects/Tiles/tile.rsi
     state: tile_dark
   - type: Item
@@ -116,9 +85,6 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_dark_techfloor_grid
-  - type: Icon
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_dark_techfloor_grid
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_dark
@@ -131,9 +97,6 @@
   id: FloorTileItemFreezer
   components:
   - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_showroom
-  - type: Icon
     sprite: Objects/Tiles/tile.rsi
     state: tile_showroom
   - type: Item
@@ -150,9 +113,6 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_showroom
-  - type: Icon
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_showroom
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_showroom
@@ -165,9 +125,6 @@
   id: FloorTileItemSnow
   components:
   - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_snow
-  - type: Icon
     sprite: Objects/Tiles/tile.rsi
     state: tile_snow
   - type: Item
@@ -184,9 +141,6 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_gcircuit
-  - type: Icon
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_gcircuit
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_silver
@@ -199,9 +153,6 @@
   id: FloorTileItemGold
   components:
   - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_gold
-  - type: Icon
     sprite: Objects/Tiles/tile.rsi
     state: tile_gold
   - type: Item
@@ -218,9 +169,6 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_reinforced
-  - type: Icon
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_reinforced
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_reinforced
@@ -233,9 +181,6 @@
   id: FloorTileItemRock
   components:
   - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_rockvault
-  - type: Icon
     sprite: Objects/Tiles/tile.rsi
     state: tile_rockvault
   - type: Item
@@ -252,9 +197,6 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_white_monofloor
-  - type: Icon
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_white_monofloor
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_steel
@@ -267,9 +209,6 @@
   id: FloorTileItemLino
   components:
   - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_white_monofloor
-  - type: Icon
     sprite: Objects/Tiles/tile.rsi
     state: tile_white_monofloor
   - type: Item
@@ -286,9 +225,6 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_white
-  - type: Icon
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_white
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_brown
@@ -303,9 +239,6 @@
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
     state: tile_hydro
-  - type: Icon
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_hydro
   - type: Item
     sprite: Objects/Tiles/tile.rsi
     HeldPrefix: tile_hydro
@@ -318,9 +251,6 @@
   id: FloorTileItemDirty
   components:
   - type: Sprite
-    sprite: Objects/Tiles/tile.rsi
-    state: tile_dirty
-  - type: Icon
     sprite: Objects/Tiles/tile.rsi
     state: tile_dirty
   - type: Item

@@ -1,5 +1,6 @@
 ﻿- type: entity
   id: SalternGenerator
+  description: A high efficiency thermoelectric generator.
   parent: BaseGenerator
   name: Generator
   components:
@@ -8,6 +9,7 @@
 
 - type: entity
   id: SalternSmes
+  description: A high-capacity superconducting magnetic energy storage (SMES) unit.
   parent: BaseSmes
   name: Smes
   components:
@@ -21,6 +23,7 @@
 
 - type: entity
   id: SalternSubstation
+  description: Reduces the voltage of electricity put into it.
   parent: BaseSubstation
   name: Substation
   components:
@@ -34,6 +37,7 @@
 
 - type: entity
   id: SalternApc
+  description: A control terminal for the area's electrical systems.
   parent: BaseApc
   name: Apc
   components:
