@@ -6,6 +6,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Map;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Construction.Completions
@@ -27,8 +28,14 @@ namespace Content.Server.Construction.Completions
             var mapManager = IoCManager.Resolve<IMapManager>();
             var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
 
-            var grid = mapManager.GetGrid(entity.Transform.GridID);
-            grid.SetTile(entity.Transform.Coordinates, new Tile(tileDefinitionManager[Tile].TileId));
+            if (mapManager.TryGetGrid(entity.Transform.GridID, out var grid))
+            {
+                grid.SetTile(entity.Transform.Coordinates, new Tile(tileDefinitionManager[Tile].TileId));
+            }
+            else
+            {
+                Logger.WarningS("construction", "Construction SpawnTile by {} on a non-existent grid at {}", user?.Name ?? "(null)", entity.Transform.ToString());
+            }
         }
     }
 }
