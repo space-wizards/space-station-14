@@ -118,7 +118,7 @@
   - type: Physics
     anchored: false
     mass: 85
-    friction: 25
+    friction: 1 #humans are high drag no friction
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.35,-0.35,0.35,0.35"
