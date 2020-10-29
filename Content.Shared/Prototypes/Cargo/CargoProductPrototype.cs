@@ -12,8 +12,6 @@ namespace Content.Shared.Prototypes.Cargo
     [NetSerializable, Serializable, Prototype("cargoProduct")]
     public class CargoProductPrototype : IPrototype, IIndexedPrototype
     {
-        [Dependency] private IPrototypeManager _prototypeManager = default!;
-
         private string _id;
         private string _name;
         private string _description;
@@ -37,7 +35,7 @@ namespace Content.Shared.Prototypes.Cargo
                 if (_name.Trim().Length != 0)
                     return _name;
                 EntityPrototype prototype = null;
-                _prototypeManager?.TryIndex(_product, out prototype);
+                IoCManager.Resolve<IPrototypeManager>()?.TryIndex(_product, out prototype);
                 if (prototype?.Name != null)
                     _name = prototype.Name;
                 return _name;
@@ -55,7 +53,7 @@ namespace Content.Shared.Prototypes.Cargo
                 if (_description.Trim().Length != 0)
                     return _description;
                 EntityPrototype prototype = null;
-                _prototypeManager?.TryIndex(_product, out prototype);
+                IoCManager.Resolve<IPrototypeManager>()?.TryIndex(_product, out prototype);
                 if (prototype?.Description != null)
                     _description = prototype.Description;
                 return _description;
