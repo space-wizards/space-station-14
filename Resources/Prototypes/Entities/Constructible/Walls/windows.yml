@@ -29,6 +29,11 @@
   - type: Destructible
     deadThreshold: 15
     resistances: metallicResistances
+    destroySoundCollection: WindowBreak
+    spawnOnDestroy:
+      ShardGlass:
+        Min: 1
+        Max: 3
   - type: SnapGrid
     offset: Center
   - type: Airtight
@@ -37,6 +42,9 @@
   - type: Construction
     graph: window
     node: window
+  - type: Appearance
+    visuals:
+    - type: WindowVisualizer
 
 - type: entity
   id: ReinforcedWindow
@@ -75,3 +83,10 @@
   - type: Construction
     graph: window
     node: phoronWindow
+
+- type: soundCollection
+  id: WindowBreak
+  files:
+  - /Audio/Effects/glass_break1.ogg
+  - /Audio/Effects/glass_break2.ogg
+  - /Audio/Effects/glass_break3.ogg

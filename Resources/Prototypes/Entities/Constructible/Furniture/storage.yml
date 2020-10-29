@@ -21,7 +21,10 @@
   - type: Destructible
     deadThreshold: 30
     destroySound: /Audio/Effects/metalbreak.ogg
-    spawnOnDestroy: SteelSheet1
+    spawnOnDestroy:
+      SteelSheet1:
+        Min: 1
+        Max: 1
     resistances: metallicResistances
 
 - type: entity
@@ -47,5 +50,8 @@
   - type: Destructible
     deadThreshold: 30
     destroySound: /Audio/Effects/metalbreak.ogg
-    spawnOnDestroy: SteelSheet1
+    spawnOnDestroy:
+      SteelSheet1:
+        Min: 1
+        Max: 1
     resistances: metallicResistances

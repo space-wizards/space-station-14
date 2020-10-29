@@ -39,7 +39,10 @@
     deadThreshold: 15
     destroySound: /Audio/Effects/metalbreak.ogg
     resistances: metallicResistances
-    spawnOnDestroy: SteelSheet1
+    spawnOnDestroy:
+      SteelSheet1:
+        Min: 1
+        Max: 1
 
 - type: entity
   id: TableFrame
@@ -55,7 +58,10 @@
     deadThreshold: 1
     destroySound: /Audio/Effects/metalbreak.ogg
     resistances: metallicResistances
-    spawnOnDestroy: SteelSheet1
+    spawnOnDestroy:
+      SteelSheet1:
+        Min: 1
+        Max: 1
 
 - type: entity
   id: TableBar
@@ -71,7 +77,10 @@
     deadThreshold: 1
     destroySound: /Audio/Effects/metalbreak.ogg
     resistances: metallicResistances
-    spawnOnDestroy: SteelSheet1
+    spawnOnDestroy:
+      SteelSheet1:
+        Min: 1
+        Max: 1
 
 - type: entity
   id: TableMetal
@@ -87,7 +96,10 @@
     deadThreshold: 15
     destroySound: /Audio/Effects/metalbreak.ogg
     resistances: metallicResistances
-    spawnOnDestroy: SteelSheet1
+    spawnOnDestroy:
+      SteelSheet1:
+        Min: 1
+        Max: 1
 
 - type: entity
   id: TableR
@@ -103,7 +115,10 @@
     deadThreshold: 75
     destroySound: /Audio/Effects/metalbreak.ogg
     resistances: metallicResistances
-    spawnOnDestroy: SteelSheet1
+    spawnOnDestroy:
+      SteelSheet1:
+        Min: 1
+        Max: 1
 
 - type: entity
   id: TableGlass
@@ -117,8 +132,12 @@
     sprite: Constructible/Structures/Tables/glass.rsi
   - type: Destructible
     deadThreshold: 5
-    destroySound: /Audio/Effects/glassbreak2.ogg
+    destroySound: /Audio/Effects/glass_break2.ogg
     resistances: metallicResistances
+    spawnOnDestroy:
+      ShardGlass:
+        Min: 1
+        Max: 1
 
 - type: entity
   id: TableGlassR
@@ -132,8 +151,12 @@
     sprite: Constructible/Structures/Tables/r_glass.rsi
   - type: Destructible
     deadThreshold: 20
-    destroySound: /Audio/Effects/glassbreak2.ogg
+    destroySound: /Audio/Effects/glass_break2.ogg
     resistances: metallicResistances
+    spawnOnDestroy:
+      ShardGlass:
+        Min: 1
+        Max: 1
 
 - type: entity
   id: TableWood
@@ -149,7 +172,10 @@
     deadThreshold: 15
     destroySound: /Audio/Effects/woodhit.ogg
     resistances: metallicResistances
-    spawnOnDestroy: WoodPlank
+    spawnOnDestroy:
+      WoodPlank:
+        Min: 1
+        Max: 1
 
 - type: entity
   id: TableCarpet
@@ -165,7 +191,10 @@
     deadThreshold: 15
     destroySound: /Audio/Effects/woodhit.ogg
     resistances: metallicResistances
-    spawnOnDestroy: WoodPlank
+    spawnOnDestroy:
+      WoodPlank:
+        Min: 1
+        Max: 1
 
 - type: entity
   id: TableStone

@@ -32,7 +32,10 @@
     offset: Center
   - type: Destructible
     deadThreshold: 50
-    spawnOnDestroy: chem_master_broken
+    spawnOnDestroy:
+      chem_master_broken:
+        Min: 1
+        Max: 1
   - type: UserInterface
     interfaces:
     - key: enum.ChemMasterUiKey.Key
@@ -71,7 +74,10 @@
     offset: Center
   - type: Destructible
     deadThreshold: 25
-    spawnOnDestroy: SteelSheet1
+    spawnOnDestroy:
+      SteelSheet1:
+        Min: 1
+        Max: 1
   - type: UserInterface
     interfaces:
     - key: enum.ChemMasterUiKey.Key
