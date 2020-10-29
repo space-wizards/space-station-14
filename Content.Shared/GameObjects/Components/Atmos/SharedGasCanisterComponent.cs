@@ -2,6 +2,7 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Atmos
 {
@@ -20,11 +21,27 @@ namespace Content.Shared.GameObjects.Components.Atmos
         }
     }
 
+    #region Enums
+
+    /// <summary>
+    /// Enum representing a UI button.
+    /// </summary>
     [Serializable, NetSerializable]
     public enum UiButton
     {
         ValveToggle
     }
+
+    /// <summary>
+    /// Used in <see cref="GasCanisterVisualizer"/> to determine which visuals to update.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public enum GasCanisterVisuals
+    {
+        ConnectedState
+    }
+
+    #endregion
 
     /// <summary>
     /// Represents a <see cref="GasCanisterComponent"/> state that can be sent to the client
@@ -55,6 +72,8 @@ namespace Content.Shared.GameObjects.Components.Atmos
                    ValveOpened == other.ValveOpened;
         }
     }
+
+    #region NetMessages
 
     /// <summary>
     /// Message sent from the client to the server when a gas canister button is pressed
@@ -97,4 +116,6 @@ namespace Content.Shared.GameObjects.Components.Atmos
             NewLabel = newLabel;
         }
     }
+
+    #endregion
 }

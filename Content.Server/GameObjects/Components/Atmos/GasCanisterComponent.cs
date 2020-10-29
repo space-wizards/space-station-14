@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Atmos.Piping;
 using Content.Server.Interfaces;
@@ -12,24 +11,17 @@ using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
-using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Atmos;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Utility;
+using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
-using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using Robust.Shared.Physics;
-using Serilog;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
@@ -81,6 +73,8 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         private IGridAtmosphereComponent _gridAtmosphere;
 
+        private AppearanceComponent? _appearance;
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -103,6 +97,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             // Init some variables
             Label = Owner.Name;
+            Owner.TryGetComponent(out _appearance);
 
             // Get the GridAtmosphere
             var gridId = Owner.Transform.Coordinates.GetGridId(Owner.EntityManager);
@@ -110,6 +105,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             _gridAtmosphere = atmosphereSystem.GetGridAtmosphere(gridId);
 
             UpdateUserInterface();
+            UpdateAppearance();
         }
 
         #region Connector port methods
@@ -123,7 +119,6 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
             DisconnectFromPort();
         }
-
 
         public void TryConnectToPort()
         {
@@ -155,6 +150,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             {
                 DisconnectFromPort();
             }
+            UpdateAppearance();
         }
 
         #endregion
@@ -225,8 +221,6 @@ namespace Content.Server.GameObjects.Components.Atmos
                         break;
                 }
             }
-
-
         }
 
         /// <summary>
@@ -243,6 +237,14 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             _lastUiState = state;
             UserInterface?.SetState(state);
+        }
+
+        /// <summary>
+        /// Update the canister's sprite
+        /// </summary>
+        private void UpdateAppearance()
+        {
+            _appearance?.SetData(GasCanisterVisuals.ConnectedState, ConnectedToPort);
         }
 
         /// <summary>
