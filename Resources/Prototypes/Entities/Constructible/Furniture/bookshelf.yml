@@ -21,8 +21,7 @@
       - SmallImpassable
   - type: Destructible
     deadThreshold: 30
-    destroySounds:
-      - /Audio/Effects/woodhit.ogg
+    destroySound: /Audio/Effects/woodhit.ogg
     spawnOnDestroy:
       WoodPlank: [1]
     resistances: metallicResistances

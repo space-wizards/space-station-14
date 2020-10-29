@@ -128,8 +128,7 @@
       deadThreshold: 10
       spawnOnDestroy:
         FloodlightBroken: [1]
-      destroySounds:
-        - /Audio/Effects/glass_break1.ogg
+      destroySound: /Audio/Effects/glass_break1.ogg
       resistances: metallicResistances
     - type: Appearance
       visuals:
@@ -149,8 +148,7 @@
       deadThreshold: 20
       spawnOnDestroy:
         SteelSheet1: [1]
-      destroySounds:
-        - /Audio/Effects/metalbreak.ogg
+      destroySound: /Audio/Effects/metalbreak.ogg
       resistances: metallicResistances
     - type: Physics
       shapes:

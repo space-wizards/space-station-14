@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Stack;
+using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Utility;
@@ -9,6 +10,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -58,6 +60,7 @@ namespace Content.Server.GameObjects.Components.Damage
                 if (count == 0) continue;
 
                 var proto = _prototypeManager.Index<EntityPrototype>(key);
+
                 if (proto.Components.ContainsKey("Stack"))
                 {
                     var spawned = Owner.EntityManager.SpawnEntity(key, Owner.Transform.Coordinates);
@@ -98,11 +101,6 @@ namespace Content.Server.GameObjects.Components.Damage
                 var pos = Owner.Transform.Coordinates;
                 ActSystem.HandleDestruction(Owner,
                     true); //This will call IDestroyAct.OnDestroy on this component (and all other components on this entity)
-                if (!Owner.Deleted && DestroySounds.Count > 0)
-                {
-                    EntitySystem.Get<AudioSystem>()
-                        .PlayAtCoords(DestroySounds.Count == 1 ? DestroySounds[0] : _random.Pick(DestroySounds), pos);
-                }
             }
         }
     }

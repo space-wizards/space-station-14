@@ -332,8 +332,7 @@
   - type: BreakableConstruction
     deadThreshold: 300
     node: girder
-    destroySounds:
-      - /Audio/Effects/metalbreak.ogg
+    destroySound: /Audio/Effects/metalbreak.ogg
     resistances: metallicResistances
   - type: IconSmooth
     key: walls
