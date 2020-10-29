@@ -40,9 +40,9 @@ namespace Content.Server
 
             ServerContentIoC.Register();
 
-            if (TestingCallbacks != null)
+            foreach (var callback in TestingCallbacks)
             {
-                var cast = (ServerModuleTestingCallbacks) TestingCallbacks;
+                var cast = (ServerModuleTestingCallbacks) callback;
                 cast.ServerBeforeIoC?.Invoke();
             }
 
