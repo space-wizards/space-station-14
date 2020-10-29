@@ -60,20 +60,6 @@ namespace Content.Server.GameObjects.Components.Interactable
             Dirty();
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-            switch (message)
-            {
-                case PowerCellChangedMessage _:
-                    if (component is PowerCellSlotComponent slotComponent && slotComponent == _cellSlot)
-                    {
-                        Dirty();
-                    }
-                    break;
-            }
-        }
-
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!ActionBlockerSystem.CanInteract(eventArgs.User)) return false;
