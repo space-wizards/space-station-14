@@ -1,0 +1,9 @@
+﻿- type: objective
+  id: TestObjective
+  prob: 1
+  issuer: The Syndicate
+  requirements:
+    - !type: TraitorRequirement {}
+  conditions:
+    - !type: StealCondition
+      prototype: SoapDeluxe

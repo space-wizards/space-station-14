@@ -11,6 +11,8 @@ using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Interfaces.PDA;
+using Content.Server.Objectives;
+using Content.Server.Objectives.Interfaces;
 using Content.Server.PDA;
 using Content.Server.Preferences;
 using Content.Server.Sandbox;
@@ -44,6 +46,7 @@ namespace Content.Server
             IoCManager.Register<ConsiderationsManager, ConsiderationsManager>();
             IoCManager.Register<IAccentManager, AccentManager>();
             IoCManager.Register<IConnectionManager, ConnectionManager>();
+            IoCManager.Register<IObjectivesManager, ObjectivesManager>();
         }
     }
 }
