@@ -129,7 +129,7 @@ namespace Content.IntegrationTests
             return grid;
         }
 
-        protected async Task WaitUntil(IntegrationInstance instance, Func<bool> func, int tickStep = 10, int maxTicks = 600)
+        protected async Task WaitUntil(IntegrationInstance instance, Func<bool> func, int tickStep = 5, int maxTicks = 600)
         {
             var ticksAwaited = 0;
             bool passed;
