@@ -1,5 +1,6 @@
 ﻿using System;
 using Content.Shared.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -88,12 +89,7 @@ namespace Content.Client.GameObjects.Components
                 }
                 else
                 {
-                    if (charge > 0.8333) level = 6;
-                    else if (charge > 0.667) level = 5;
-                    else if (charge > 0.5) level = 4;
-                    else if (charge > 0.333) level = 3;
-                    else if (charge > 0.167) level = 2;
-                    else level = 1;
+                    level = ContentHelpers.RoundToNearestLevels(charge, 1.0, 6) + 1;
                 }
 
                 if (level == 0)
