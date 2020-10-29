@@ -21,6 +21,7 @@ using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
@@ -88,7 +89,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        private async Task<IEntity?> Construct(IEntity user, string materialContainer, ConstructionGraphPrototype graph, ConstructionGraphEdge edge, ConstructionGraphNode targetNode)
+        private async Task<IEntity?> Construct(IEntity user, EntityCoordinates coordinates, Angle angle, string materialContainer, ConstructionGraphPrototype graph, ConstructionGraphEdge edge, ConstructionGraphNode targetNode)
         {
             // We need a place to hold our construction items!
             var container = ContainerManagerComponent.Ensure<Container>(materialContainer, user, out var existed);
@@ -263,13 +264,24 @@ namespace Content.Server.GameObjects.EntitySystems
                 return null;
             }
 
-            var newEntity = EntityManager.SpawnEntity(graph.Nodes[edge.Target].Entity, user.Transform.Coordinates);
+            var newEntityProto = graph.Nodes[edge.Target].Entity;
+            var newEntityIsDummy = string.IsNullOrEmpty(newEntityProto);
+            var newEntity = EntityManager.SpawnEntity(newEntityIsDummy ? null : newEntityProto, coordinates);
+            newEntity.Transform.LocalRotation = angle;
 
             // Yes, this should throw if it's missing the component.
-            var construction = newEntity.GetComponent<ConstructionComponent>();
-
-            // We attempt to set the pathfinding target.
-            construction.Target = targetNode;
+            if (newEntity.TryGetComponent<ConstructionComponent>(out var construction))
+            {
+                // We attempt to set the pathfinding target.
+                construction.Target = targetNode;
+            }
+            else
+            {
+                if (!newEntityIsDummy)
+                {
+                    throw new InvalidDataException($"On construction graph {graph.ID}/{edge.Target}, was constructing {newEntityProto}, but it has no construction component");
+                }
+            }
 
             // We preserve the containers...
             foreach (var (name, cont) in containers)
@@ -299,6 +311,15 @@ namespace Content.Server.GameObjects.EntitySystems
             foreach (var completed in edge.Completed)
             {
                 await completed.PerformAction(newEntity, user);
+            }
+
+            // Don't leak dummy entities. They're an implementation detail ONLY.
+            if (newEntityIsDummy)
+            {
+                if (!newEntity.Deleted)
+                {
+                    newEntity.Delete();
+                }
             }
 
             return newEntity;
@@ -354,7 +375,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 }
             }
 
-            var item = await Construct(user, "item_construction", constructionGraph, edge, targetNode);
+            var item = await Construct(user, user.Transform.Coordinates, Angle.South, "item_construction", constructionGraph, edge, targetNode);
 
             if(item != null && item.TryGetComponent(out ItemComponent? itemComp))
                 hands.PutInHandOrDrop(itemComp);
@@ -461,16 +482,13 @@ namespace Content.Server.GameObjects.EntitySystems
                 return;
             }
 
-            var structure = await Construct(user, (ev.Ack + constructionPrototype.GetHashCode()).ToString(), constructionGraph, edge, targetNode);
+            var structure = await Construct(user, ev.Location, ev.Angle, (ev.Ack + constructionPrototype.GetHashCode()).ToString(), constructionGraph, edge, targetNode);
 
             if (structure == null)
             {
                 Cleanup();
                 return;
             }
-
-            structure.Transform.Coordinates = ev.Location;
-            structure.Transform.LocalRotation = constructionPrototype.CanRotate ? ev.Angle : Angle.South;
 
             RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));
 
