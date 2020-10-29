@@ -1,0 +1,71 @@
+- type: cargoProduct
+  name: "armor crate"
+  id: cargo.securityarmor
+  description: "Three vests of well-rounded, decently-protective armor. Requires Security access to open."
+  icon:
+    sprite: Clothing/OuterClothing/armor.rsi
+    state: armor
+  product: CrateSecurityArmor
+  cost: 1500
+  category: Security
+  group: market
+
+- type: cargoProduct
+  name: "helmet crate"
+  id: cargo.securityhelmet
+  description: "Contains three standard-issue brain buckets. Requires Security access to open."
+  icon:
+    sprite: Clothing/Head/helmet.rsi
+    state: icon
+  product: CrateSecurityHelmet
+  cost: 1000
+  category: Security
+  group: market
+
+- type: cargoProduct
+  name: "non-lethals crate"
+  id: cargo.securitynonlethal
+  description: "Stamina-draining disabler weapons. Requires Security access to open."
+  icon:
+    sprite: Clothing/Head/bombsuit.rsi
+    state: icon
+  product: CrateSecurityNonlethal
+  cost: 1500
+  category: Security
+  group: market
+
+- type: cargoProduct
+  name: "Lasers Crate"
+  id: cargo.securitylaser
+  description: "Contains three lethal, high-energy laser guns. Requires Security access to open."
+  icon:
+    sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
+    state: icon
+  product: CrateSecurityLaser
+  cost: 1500
+  category: Security
+  group: market
+
+- type: cargoProduct
+  name: "riot crate"
+  id: cargo.securityriot
+  description: ""
+  icon:
+    sprite: Clothing/Head/bombsuit.rsi
+    state: icon
+  product: CrateSecurityRiot
+  cost: 1500
+  category: Security
+  group: market
+
+- type: cargoProduct
+  name: "explosive emergency crate"
+  id: cargo.securitysupplies
+  description: ""
+  icon:
+    sprite: Clothing/Head/bombsuit.rsi
+    state: icon
+  product: CrateSecuritySupplies
+  cost: 1500
+  category: Security
+  group: market

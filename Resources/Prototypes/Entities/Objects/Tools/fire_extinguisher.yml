@@ -5,7 +5,7 @@
   description: It extinguishes fires.
   components:
     - type: Sprite
-      sprite: Objects/Misc/fire_extinguisher.rsi
+      sprite: Objects/Tools/fire_extinguisher.rsi
       layers:
         - state: fire_extinguisher_closed
           map: [ "enum.SprayVisualLayers.Base" ]

@@ -1,12 +1,22 @@
 - type: entity
   id: CrateSecurityArmor
-  name: security armor crate
+  name: armor crate
   parent: CrateSecgear
+  description: "Three vests of well-rounded, decently-protective armor. Requires Security access to open."
   components:
   - type: StorageFill
     contents:
       - name: OuterclothingHmarmorvest
         amount: 3
+
+- type: entity
+  id: CrateSecurityHelmet
+  name: helmet crate
+  parent: CrateSecgear
+  description: "Contains three standard-issue brain buckets. Requires Security access to open."
+  components:
+  - type: StorageFill
+    contents:
       - name: HatHelmet
         amount: 3
 
@@ -29,24 +39,14 @@
 #      - GrenadeTeargas
 
 - type: entity
-  id: CrateSecurityLethal
-  name: lethals crate
+  id: CrateSecurityLaser
+  name: lasers crate
   parent: CrateSecgear
   components:
   - type: StorageFill
     contents:
       - name: LaserGun
-        amount: 2
-      - name: SmgC20r
-        amount: 2
-      - name: MagazinePistolSmg
-        amount: 5
-      - name: ShotgunGladstone
-        amount: 2
-      - name: SmgC20r
-        amount: 2
-      - name: ShellShotgun
-        amount: 12
+        amount: 3
 
 - type: entity
   id: CrateSecurityRiot
