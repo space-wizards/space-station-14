@@ -1,10 +1,10 @@
-﻿using Content.Server.GameObjects.Components.Body;
-using Content.Server.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.Components.Body;
+﻿using Content.Server.GameObjects.Components.Damage;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Mobs.State
@@ -13,6 +13,8 @@ namespace Content.Server.GameObjects.Components.Mobs.State
     {
         public override void EnterState(IEntity entity)
         {
+            EntitySystem.Get<StandingStateSystem>().Standing(entity);
+
             if (entity.TryGetComponent(out AppearanceComponent appearance))
             {
                 appearance.SetData(DamageStateVisuals.State, DamageState.Alive);
