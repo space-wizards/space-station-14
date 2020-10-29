@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿#nullable enable
+using System.Linq;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
@@ -40,7 +41,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         [Pure]
         protected static bool CanExamine(IEntity examiner, IEntity examined)
         {
-            if (!examiner.TryGetComponent(out ExaminerComponent examinerComponent))
+            if (!examiner.TryGetComponent(out ExaminerComponent? examinerComponent))
             {
                 return false;
             }
@@ -70,7 +71,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                 ignoreInsideBlocker: true);
         }
 
-        public static bool InRangeUnOccluded(MapCoordinates origin, MapCoordinates other, float range, Ignored predicate, bool ignoreInsideBlocker = true)
+        public static bool InRangeUnOccluded(MapCoordinates origin, MapCoordinates other, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
         {
             var occluderSystem = Get<OccluderSystem>();
             if (!origin.InRange(other, range)) return false;
@@ -92,7 +93,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             foreach (var result in rayResults)
             {
-                if (!result.HitEntity.TryGetComponent(out OccluderComponent o))
+                if (!result.HitEntity.TryGetComponent(out OccluderComponent? o))
                 {
                     continue;
                 }
@@ -110,7 +111,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             return true;
         }
 
-        public static bool InRangeUnOccluded(IEntity origin, IEntity other, float range, Ignored predicate, bool ignoreInsideBlocker = true)
+        public static bool InRangeUnOccluded(IEntity origin, IEntity other, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
         {
             var originPos = origin.Transform.MapPosition;
             var otherPos = other.Transform.MapPosition;
@@ -118,7 +119,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
 
-        public static bool InRangeUnOccluded(IEntity origin, IComponent other, float range, Ignored predicate, bool ignoreInsideBlocker = true)
+        public static bool InRangeUnOccluded(IEntity origin, IComponent other, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
         {
             var originPos = origin.Transform.MapPosition;
             var otherPos = other.Owner.Transform.MapPosition;
@@ -126,7 +127,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
 
-        public static bool InRangeUnOccluded(IEntity origin, EntityCoordinates other, float range, Ignored predicate, bool ignoreInsideBlocker = true)
+        public static bool InRangeUnOccluded(IEntity origin, EntityCoordinates other, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
         {
             var originPos = origin.Transform.MapPosition;
             var otherPos = other.ToMap(origin.EntityManager);
@@ -134,14 +135,14 @@ namespace Content.Shared.GameObjects.EntitySystems
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
 
-        public static bool InRangeUnOccluded(IEntity origin, MapCoordinates other, float range, Ignored predicate, bool ignoreInsideBlocker = true)
+        public static bool InRangeUnOccluded(IEntity origin, MapCoordinates other, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
         {
             var originPos = origin.Transform.MapPosition;
 
             return InRangeUnOccluded(originPos, other, range, predicate, ignoreInsideBlocker);
         }
 
-        public static bool InRangeUnOccluded(ITargetedInteractEventArgs args, float range, Ignored predicate, bool ignoreInsideBlocker = true)
+        public static bool InRangeUnOccluded(ITargetedInteractEventArgs args, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
         {
             var originPos = args.User.Transform.MapPosition;
             var otherPos = args.Target.Transform.MapPosition;
@@ -149,7 +150,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
 
-        public static bool InRangeUnOccluded(DragDropEventArgs args, float range, Ignored predicate, bool ignoreInsideBlocker = true)
+        public static bool InRangeUnOccluded(DragDropEventArgs args, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
         {
             var originPos = args.User.Transform.MapPosition;
             var otherPos = args.DropLocation.ToMap(args.User.EntityManager);
@@ -157,7 +158,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
 
-        public static bool InRangeUnOccluded(AfterInteractEventArgs args, float range, Ignored predicate, bool ignoreInsideBlocker = true)
+        public static bool InRangeUnOccluded(AfterInteractEventArgs args, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
         {
             var originPos = args.User.Transform.MapPosition;
             var otherPos = args.Target.Transform.MapPosition;
