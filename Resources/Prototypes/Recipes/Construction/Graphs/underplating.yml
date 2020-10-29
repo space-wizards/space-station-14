@@ -1,0 +1,18 @@
+﻿- type: constructionGraph
+  id: underplating
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: underplating
+          completed:
+            - !type:SnapToGrid { }
+            - !type:SpawnPrototype
+              prototype: CarpMob_Content
+              amount: 1
+          steps:
+            - material: MetalRod
+              amount: 2
+              doAfter: 1
+    - node: underplating
+

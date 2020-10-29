@@ -1,4 +1,4 @@
-﻿- type: construction
+- type: construction
   name: girder
   id: girder
   graph: girder
@@ -24,6 +24,19 @@
   icon:
     sprite: Constructible/Structures/Walls/solid.rsi
     state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+
+- type: construction
+  name: underplating
+  id: underplating
+  graph: underplating
+  startNode: start
+  targetNode: underplating
+  category: Structures
+  description: The plating underneath the station.
+  icon: Constructible/Tiles/underplating.png
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
