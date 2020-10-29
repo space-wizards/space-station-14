@@ -178,6 +178,9 @@ namespace Content.Shared.GameObjects.Components.Pulling
                 return;
             }
 
+            if (!state.Puller.Value.IsValid())
+                return;
+
             Puller = Owner.EntityManager.GetEntity(state.Puller.Value);
         }
 
