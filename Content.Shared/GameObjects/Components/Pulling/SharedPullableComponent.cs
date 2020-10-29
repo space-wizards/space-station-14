@@ -178,10 +178,10 @@ namespace Content.Shared.GameObjects.Components.Pulling
                 return;
             }
 
-            if (!state.Puller.Value.IsValid())
+            if (!Owner.EntityManager.TryGetEntity(state.Puller.Value, out var entity))
                 return;
 
-            Puller = Owner.EntityManager.GetEntity(state.Puller.Value);
+            Puller = entity;
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
