@@ -146,6 +146,7 @@ namespace Content.Server.GameObjects.Components.PDA
             if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(PDAVisuals.FlashlightLit, _lightOn);
+                appearance.SetData(PDAVisuals.IDCardInserted, !IdSlotEmpty);
             }
         }
 

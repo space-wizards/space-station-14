@@ -38,8 +38,6 @@ namespace Content.Server.GameObjects.Components.Mobs.State
 
         public override void ExitState(IEntity entity)
         {
-            EntitySystem.Get<StandingStateSystem>().Standing(entity);
-
             if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlay))
             {
                 overlay.ClearOverlays();

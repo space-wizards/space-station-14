@@ -62,7 +62,7 @@
   parent: HatBase
   id: HatBandcamo
   name: bandana camo
-  description: A camo bandana to make you look cool.
+  description: A camo bandana to make you look cool. No stealth bonus provided.
   components:
   - type: Sprite
     sprite: Clothing/Head/bandcamo.rsi
@@ -219,7 +219,7 @@
   parent: HatBase
   id: HatBluesoft
   name: bluesoft
-  description: It's a baseball hat in a tasteless blue colour.
+  description: "It's a baseball hat in a tasteless blue colour."
   components:
   - type: Sprite
     sprite: Clothing/Head/bluesoft.rsi
@@ -231,7 +231,7 @@
   parent: HatBase
   id: HatBluesoftFlipped
   name: bluesoft flipped
-  description: It's a baseball hat in a tasteless blue colour. Flipped.
+  description: "It's a baseball hat in a tasteless blue colour. Flipped."
   components:
   - type: Sprite
     sprite: Clothing/Head/bluesoft_flipped.rsi
@@ -363,7 +363,7 @@
   parent: HatBase
   id: HatCargosoft
   name: cargosoft
-  description: It's a baseball hat painted in Cargo colours.
+  description: "It's a baseball hat painted in Cargo colours."
   components:
   - type: Sprite
     sprite: Clothing/Head/cargosoft.rsi
@@ -375,7 +375,7 @@
   parent: HatBase
   id: HatCargosoftFlipped
   name: cargosoft flipped
-  description: It's a baseball hat painted in Cargo colours. Flipped.
+  description: "It's a baseball hat painted in Cargo colours. Flipped."
   components:
   - type: Sprite
     sprite: Clothing/Head/cargosoft_flipped.rsi
@@ -387,7 +387,7 @@
   parent: HatBase
   id: HatCentcom
   name: centcom
-  description: It's good to be emperor.
+  description: "It's good to be the emperor."
   components:
   - type: Sprite
     sprite: Clothing/Head/centcom.rsi
@@ -399,7 +399,7 @@
   parent: HatBase
   id: HatChefhat
   name: chef hat
-  description: It's a hat used by chefs to keep hair out of your food. Judging by the food in the mess, they don't work.
+  description: "It's a hat used by chefs to keep hair out of your food. Judging by the food in the mess, they don't work."
   components:
   - type: Sprite
     sprite: Clothing/Head/chefhat.rsi
@@ -411,7 +411,7 @@
   parent: HatBase
   id: HatChickenhead
   name: chicken head
-  description: It's a chicken head. Bok bok bok!
+  description: "It's a chicken head. Bok bok bok!"
   components:
   - type: Sprite
     sprite: Clothing/Head/chickenhead.rsi
@@ -519,7 +519,7 @@
   parent: HatBase
   id: HatGladiator
   name: gladiator
-  description: 'Are you not entertained?'
+  description: "Are you not entertained?"
   components:
   - type: Sprite
     sprite: Clothing/Head/gladiator.rsi
@@ -543,7 +543,7 @@
   parent: HatBase
   id: HatGreensoft
   name: greensoft
-  description: It's a baseball hat in a tasteless green colour.
+  description: "It's a baseball hat in a tasteless green colour."
   components:
   - type: Sprite
     sprite: Clothing/Head/greensoft.rsi
@@ -555,7 +555,7 @@
   parent: HatBase
   id: HatGreensoftFlipped
   name: greensoft flipped
-  description: It's a baseball hat in a tasteless green colour. Flipped.
+  description: "It's a baseball hat in a tasteless green colour. Flipped."
   components:
   - type: Sprite
     sprite: Clothing/Head/greensoft_flipped.rsi
@@ -567,7 +567,7 @@
   parent: HatBase
   id: HatGreysoft
   name: greysoft
-  description: It's a baseball hat in a tasteless grey colour.
+  description: "It's a baseball hat in a tasteless grey colour."
   components:
   - type: Sprite
     sprite: Clothing/Head/greysoft.rsi
@@ -579,7 +579,7 @@
   parent: HatBase
   id: HatGreysoftFlipped
   name: greysoft flipped
-  description: It's a baseball hat in a tasteless grey colour. Flipped.
+  description: "It's a baseball hat in a tasteless grey colour. Flipped."
   components:
   - type: Sprite
     sprite: Clothing/Head/greysoft_flipped.rsi
@@ -651,7 +651,7 @@
   parent: HatBase
   id: HatHoshat
   name: HoS hat
-  description: There's a new sheriff in station.
+  description: "There's a new sheriff in station."
   components:
   - type: Sprite
     sprite: Clothing/Head/hoshat.rsi
@@ -699,7 +699,7 @@
   parent: HatBase
   id: HatWizardHelm
   name: wizard helm
-  description: Strange-looking helmet that most certainly belongs to a real magic user.
+  description: "Strange-looking helmet that most certainly belongs to a real magic user."
   components:
   - type: Sprite
     sprite: Clothing/Head/wizardhelm.rsi
@@ -711,7 +711,7 @@
   parent: HatBase
   id: HatMimesoft
   name: mimesoft
-  description: It's a baseball hat in a tasteless white colour.
+  description: "It's a baseball hat in a tasteless white colour."
   components:
   - type: Sprite
     sprite: Clothing/Head/mimesoft.rsi
@@ -926,7 +926,7 @@
   parent: HatBase
   id: HatSantahat
   name: santa hat
-  description: ''
+  description: "A festive hat worn by Santa Claus"
   components:
   - type: Sprite
     sprite: Clothing/Head/santahat.rsi
@@ -962,7 +962,7 @@
   parent: HatBase
   id: HatSombrero
   name: sombrero
-  description: ''
+  description: "Perfectly for Space Mexico, si?"
   components:
   - type: Sprite
     sprite: Clothing/Head/sombrero.rsi
@@ -1046,7 +1046,7 @@
   parent: HatBase
   id: HatUshankadown
   name: ushanka (down)
-  description: Perfect for winter in Siberia, da?
+  description: "Perfect for winter in Siberia, da?"
   components:
   - type: Sprite
     sprite: Clothing/Head/ushankadown.rsi
@@ -1058,7 +1058,7 @@
   parent: HatBase
   id: HatUshankaup
   name: ushanka (up)
-  description: Perfect for winter in Siberia, da?
+  description: "Perfect for winter in Siberia, da?"
   components:
   - type: Sprite
     sprite: Clothing/Head/ushankaup.rsi
@@ -1082,7 +1082,7 @@
   parent: HatBase
   id: HatVioletwizard
   name: violetwizard
-  description: Strange-looking violet hat-wear that most certainly belongs to a real magic user.
+  description: "Strange-looking violet hat-wear that most certainly belongs to a real magic user."
   components:
   - type: Sprite
     sprite: Clothing/Head/violetwizard.rsi

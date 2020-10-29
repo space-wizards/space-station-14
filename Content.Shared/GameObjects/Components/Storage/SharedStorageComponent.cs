@@ -144,8 +144,9 @@ namespace Content.Shared.GameObjects.Components.Storage
     public enum StorageVisuals
     {
         Open,
-        CanLock,
+        CanWeld,
         Welded,
+        CanLock,
         Locked
     }
 }

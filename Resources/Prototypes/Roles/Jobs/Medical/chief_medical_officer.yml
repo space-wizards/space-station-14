@@ -12,6 +12,7 @@
   icon: "ChiefMedicalOfficer"
   access:
   - Medical
+  - ChiefMedicalOfficer
   - Command
   - Maintenance
 
