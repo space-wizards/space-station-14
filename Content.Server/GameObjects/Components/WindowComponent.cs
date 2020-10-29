@@ -73,22 +73,22 @@ namespace Content.Server.GameObjects.Components
             switch (level)
             {
                 case 0:
-                    message.AddText("It looks fully intact.");
+                    message.AddText(Loc.GetString("It looks fully intact."));
                     break;
                 case 1:
-                    message.AddText("It has a few scratches.");
+                    message.AddText(Loc.GetString("It has a few scratches."));
                     break;
                 case 2:
-                    message.AddText("It has a few small cracks.");
+                    message.AddText(Loc.GetString("It has a few small cracks."));
                     break;
                 case 3:
-                    message.AddText("It has several big cracks running along its surface.");
+                    message.AddText(Loc.GetString("It has several big cracks running along its surface."));
                     break;
                 case 4:
-                    message.AddText("It has deep cracks across multiple layers.");
+                    message.AddText(Loc.GetString("It has deep cracks across multiple layers."));
                     break;
                 case 5:
-                    message.AddText("It is extremely badly cracked and on the verge of shattering.");
+                    message.AddText(Loc.GetString("It is extremely badly cracked and on the verge of shattering."));
                     break;
             }
         }
