@@ -68,7 +68,6 @@ namespace Content.Shared.GameObjects.Components.Mobs
         Buckled,
         Piloting,
         Pulling,
-        Pulled,
-        Weightless
+        Pulled
     }
 }
