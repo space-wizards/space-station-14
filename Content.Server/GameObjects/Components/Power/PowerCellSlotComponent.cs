@@ -2,6 +2,7 @@
 using System;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Shared.Audio;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
 using Robust.Server.GameObjects.Components.Container;
@@ -150,7 +151,7 @@ namespace Content.Server.GameObjects.Components.Power
 
             if (playSound && CellRemoveSound != null)
             {
-                EntitySystem.Get<AudioSystem>().PlayFromEntity(CellRemoveSound, Owner);
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(CellRemoveSound, Owner, AudioHelpers.WithVariation(0.125f));
             }
             SendMessage(new PowerCellChangedMessage(true));
             return cell;
@@ -172,7 +173,7 @@ namespace Content.Server.GameObjects.Components.Power
             //Dirty();
             if (playSound && CellInsertSound != null)
             {
-                EntitySystem.Get<AudioSystem>().PlayFromEntity(CellInsertSound, Owner);
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(CellInsertSound, Owner, AudioHelpers.WithVariation(0.125f));
             }
             SendMessage(new PowerCellChangedMessage(false));
             return true;
