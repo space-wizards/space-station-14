@@ -149,7 +149,9 @@
     - type: Destructible
       deadThreshold: 20
       spawnOnDestroy:
-        SteelSheet1: [1]
+        SteelSheet1:
+          Min: 1
+          Max: 1
       destroySound: /Audio/Effects/metalbreak.ogg
       resistances: metallicResistances
     - type: Physics
