@@ -1,0 +1,79 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Content.Shared.GameObjects.Components;
+using Content.Shared.GameObjects.Components.Singularity;
+using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
+using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Reflection;
+using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.IoC;
+using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
+using YamlDotNet.RepresentationModel;
+
+namespace Content.Client.GameObjects.Components
+{
+    public class ParticleAcceleratorPartVisualizer : AppearanceVisualizer
+    {
+        private Dictionary<ParticleAcceleratorVisualState, string> _states = new Dictionary<ParticleAcceleratorVisualState, string>();
+
+        public override void LoadData(YamlMappingNode node)
+        {
+            base.LoadData(node);
+
+            var serializer = YamlObjectSerializer.NewReader(node);
+            if (!serializer.TryReadDataField<string>("baseState", out var baseState))
+            {
+                throw new PrototypeLoadException("No baseState property specified for ParticleAcceleratorPartVisualizer");
+            }
+
+            _states.Add(ParticleAcceleratorVisualState.Powered, baseState+"p");
+            _states.Add(ParticleAcceleratorVisualState.Level0, baseState+"p0");
+            _states.Add(ParticleAcceleratorVisualState.Level1, baseState+"p1");
+            _states.Add(ParticleAcceleratorVisualState.Level2, baseState+"p2");
+            _states.Add(ParticleAcceleratorVisualState.Level3, baseState+"p3");
+        }
+
+        public override void InitializeEntity(IEntity entity)
+        {
+            base.InitializeEntity(entity);
+            if (!entity.TryGetComponent<SpriteComponent>(out var sprite))
+            {
+                throw new EntityCreationException("No sprite component found in entity that has ParticleAcceleratorPartVisualizer");
+            }
+
+            if (!sprite.AllLayers.Any())
+            {
+                throw new EntityCreationException("No Layer set for entity that has ParticleAcceleratorPartVisualizer");
+            }
+        }
+
+        public override void OnChangeData(AppearanceComponent component)
+        {
+            if (component.Owner.Deleted)
+                return;
+
+            if (!component.Owner.TryGetComponent<ISpriteComponent>(out var sprite)) return;
+            if (!component.TryGetData(ParticleAcceleratorVisuals.VisualState, out ParticleAcceleratorVisualState state))
+            {
+                state = ParticleAcceleratorVisualState.Unpowered;
+            }
+
+            if (state != ParticleAcceleratorVisualState.Unpowered)
+            {
+                sprite.LayerSetVisible(ParticleAcceleratorVisualLayers.Unlit, true);
+                sprite.LayerSetState(ParticleAcceleratorVisualLayers.Unlit, _states[state]);
+            }
+            else
+            {
+                sprite.LayerSetVisible(ParticleAcceleratorVisualLayers.Unlit, false);
+            }
+        }
+    }
+}

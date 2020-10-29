@@ -27,6 +27,11 @@
   - type: Sprite
     state: chair
     color: "#8e9799"
+  - type: Physics
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.45, -0.45, 0.05, 0.45"
+        layer: [ Passable ]
 
 - type: entity
   name: stool
@@ -37,6 +42,11 @@
   - type: Sprite
     state: stool_base
     color: "#8e9799"
+  - type: Physics
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.5, -0.25, 0.05, 0.25"
+        layer: [ Passable ]
 
 - type: entity
   name: bar stool
@@ -46,6 +56,11 @@
   - type: Sprite
     state: bar_stool
     color: "white"
+  - type: Physics
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.5, -0.2, 0.2, 0.25"
+        layer: [ Passable ]
 
 - type: entity
   name: white office chair
@@ -55,11 +70,16 @@
   - type: Rotatable
   - type: Sprite
     state: officechair_white
+  - type: Physics
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.49, -0.25, 0.37, 0.25"
+        layer: [ Passable ]
 
 - type: entity
   name: dark office chair
   id: ChairOfficeDark
-  parent: SeatBase
+  parent: ChairOfficeLight
   components:
   - type: Sprite
     state: officechair_dark
@@ -72,6 +92,11 @@
   components:
   - type: Sprite
     state: comfychair_preview
+  - type: Physics
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.45, -0.3, 0.35, 0.3"
+        layer: [ MobMask ]
 
 - type: entity
   name: wooden chair
@@ -81,3 +106,8 @@
   - type: Sprite
     state: wooden_chair
     color: "white"
+  - type: Physics
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.37, -0.25, 0.49, 0.24"
+        layer: [ Passable ]

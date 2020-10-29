@@ -1,0 +1,142 @@
+﻿- type: entity
+  parent: BaseItem
+  id: SeedBase
+  abstract: true
+  components:
+    - type: Seed
+    - type: SolutionContainer
+      caps: NoExamine
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/seeds.rsi
+      state: seed
+      netsync: true
+
+- type: entity
+  parent: SeedBase
+  name: packet of wheat seeds
+  id: WheatSeeds
+  components:
+    - type: Seed
+      seed: wheat
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/wheat.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of banana seeds
+  id: BananaSeeds
+  components:
+    - type: Seed
+      seed: banana
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/banana.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of carrot seeds
+  id: CarrotSeeds
+  components:
+    - type: Seed
+      seed: carrots
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/carrot.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of lemon seeds
+  id: LemonSeeds
+  components:
+    - type: Seed
+      seed: lemon
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/lemon.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of potato seeds
+  id: PotatoSeeds
+  components:
+    - type: Seed
+      seed: potato
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/potato.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of sugarcane seeds
+  id: SugarcaneSeeds
+  components:
+    - type: Seed
+      seed: sugarcane
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/sugarcane.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of tower cap seeds
+  id: TowercapSeeds
+  components:
+    - type: Seed
+      seed: towercap
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/towercap.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of tomato seeds
+  id: TomatoSeeds
+  components:
+    - type: Seed
+      seed: tomato
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/tomato.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of eggplant seeds
+  id: EggplantSeeds
+  components:
+    - type: Seed
+      seed: eggplant
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/eggplant.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of apple seeds
+  id: AppleSeeds
+  components:
+    - type: Seed
+      seed: apple
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/apple.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of corn seeds
+  id: CornSeeds
+  components:
+    - type: Seed
+      seed: apple
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/corn.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of chanterelle spores
+  id: ChanterelleSeeds
+  components:
+    - type: Seed
+      seed: chanterelle
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/chanterelle.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of egg-plant seeds
+  id: EggySeeds
+  components:
+    - type: Seed
+      seed: eggy
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/eggy.rsi

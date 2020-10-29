@@ -46,7 +46,8 @@
 
 
 - type: entity
-  name: corn cob (trash)
+  name: corn cob
+  description: A reminder of meals gone by.
   parent: TrashBase
   id: TrashCornCob
   components:
@@ -188,9 +189,8 @@
   id: TrashBananaPeel
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Food/banana.rsi
+    sprite: Objects/Specific/Hydroponics/banana.rsi
     state: peel
-
   - type: Slippery
     intersectPercentage: 0.2
   - type: Physics

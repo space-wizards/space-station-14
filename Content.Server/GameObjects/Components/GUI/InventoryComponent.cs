@@ -156,6 +156,13 @@ namespace Content.Server.GameObjects.Components.GUI
         {
             return GetSlotItem<ItemComponent>(slot);
         }
+
+        public IEnumerable<T> LookupItems<T>() where T: Component
+        {
+            return _slotContainers.Values.SelectMany(x => x.ContainedEntities.Select(e => e.GetComponentOrNull<T>()))
+                .Where(x => x != null);
+        }
+
         public T GetSlotItem<T>(Slots slot) where T : ItemComponent
         {
             if (!_slotContainers.ContainsKey(slot))
@@ -435,7 +442,7 @@ namespace Content.Server.GameObjects.Components.GUI
                     var activeHand = hands.GetActiveHand;
                     if (activeHand != null && activeHand.Owner.TryGetComponent(out ItemComponent clothing))
                     {
-                        hands.Drop(hands.ActiveHand);
+                        hands.Drop(hands.ActiveHand, doDropInteraction:false);
                         if (!Equip(msg.Inventoryslot, clothing, true, out var reason))
                         {
                             hands.PutInHand(clothing);
@@ -534,7 +541,7 @@ namespace Content.Server.GameObjects.Components.GUI
             var list = new List<KeyValuePair<Slots, EntityUid>>();
             foreach (var (slot, container) in _slotContainers)
             {
-                if (container.ContainedEntity != null)
+                if (container != null && container.ContainedEntity != null)
                 {
                     list.Add(new KeyValuePair<Slots, EntityUid>(slot, container.ContainedEntity.Uid));
                 }

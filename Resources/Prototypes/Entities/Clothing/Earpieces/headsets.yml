@@ -16,7 +16,7 @@
   parent: HeadsetBase
   id: HeadsetCargo
   name: cargo headset
-  description: A headset used by the QM and his slaves.
+  description: A headset used by the quartermaster and his slaves.
   components:
   - type: Sprite
     sprite: Clothing/Ears/Headsets/cargo.rsi
