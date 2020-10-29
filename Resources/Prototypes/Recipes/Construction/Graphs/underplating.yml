@@ -7,9 +7,8 @@
         - to: underplating
           completed:
             - !type:SnapToGrid { }
-            - !type:SpawnPrototype
-              prototype: CarpMob_Content
-              amount: 1
+            - !type:SpawnTile
+              tile: underplating
           steps:
             - material: MetalRod
               amount: 2

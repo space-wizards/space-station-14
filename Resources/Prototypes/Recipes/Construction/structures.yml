@@ -36,6 +36,9 @@
   targetNode: underplating
   category: Structures
   description: The plating underneath the station.
+  conditions:
+    - !type:TileIsExactly
+      tile: space
   icon: Constructible/Tiles/underplating.png
   objectType: Structure
   placementMode: SnapgridCenter
