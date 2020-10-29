@@ -155,7 +155,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
                 if (entity.TryGetComponent(out IPhysicsComponent? physics))
                 {
                     var controller = physics.EnsureController<ConveyedController>();
-                    controller.Move(direction, _speed * frameTime);
+                    controller.Move(direction, _speed);
                 }
             }
         }

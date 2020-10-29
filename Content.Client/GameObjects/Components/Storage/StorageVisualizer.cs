@@ -1,4 +1,4 @@
-using Content.Shared.GameObjects.Components.Storage;
+﻿using Content.Shared.GameObjects.Components.Storage;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
@@ -74,9 +74,12 @@ namespace Content.Client.GameObjects.Components.Storage
                 }
             }
 
-            if (component.TryGetData(StorageVisuals.Welded, out bool weldedVal))
+            if (component.TryGetData(StorageVisuals.CanWeld, out bool canWeld) && canWeld)
             {
-                sprite.LayerSetVisible(StorageVisualLayers.Welded, weldedVal);
+                if (component.TryGetData(StorageVisuals.Welded, out bool weldedVal))
+                {
+                    sprite.LayerSetVisible(StorageVisualLayers.Welded, weldedVal);
+                }
             }
         }
     }

@@ -24,6 +24,7 @@ namespace Content.Client.GameObjects.Components.Nutrition
         {
             base.OnChangeData(component);
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
+
             if (!component.TryGetData<float>(SharedFoodComponent.FoodVisuals.MaxUses, out var maxUses))
             {
                 return;

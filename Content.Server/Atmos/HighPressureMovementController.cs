@@ -2,6 +2,7 @@
 using System;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Shared.Atmos;
+using Content.Shared.Physics;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Random;
@@ -13,7 +14,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Atmos
 {
-    public class HighPressureMovementController : VirtualController
+    public class HighPressureMovementController : FrictionController
     {
         [Dependency] private IRobustRandom _robustRandom = default!;
         [Dependency] private IPhysicsManager _physicsManager = default!;
@@ -67,18 +68,6 @@ namespace Content.Server.Atmos
 
                     pressureComponent.LastHighPressureMovementAirCycle = cycle;
                 }
-            }
-        }
-
-        public override void UpdateAfterProcessing()
-        {
-            base.UpdateAfterProcessing();
-
-            if (ControlledComponent != null && !_physicsManager.IsWeightless(ControlledComponent.Owner.Transform.Coordinates))
-            {
-                LinearVelocity *= 0.85f;
-                if (MathF.Abs(LinearVelocity.Length) < 1f)
-                    Stop();
             }
         }
     }
