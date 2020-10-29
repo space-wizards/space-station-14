@@ -10,6 +10,8 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
     public class DeviceNetwork : IDeviceNetwork
     {
         private const int PACKAGES_PER_TICK = 30;
+        private const int MAX_PACKET_COUNT = 100;
+        private const int MAX_DATA_COUNT = 100;
 
         private readonly IRobustRandom _random = IoCManager.Resolve<IRobustRandom>();
         private readonly Dictionary<int, List<NetworkDevice>> _devices = new Dictionary<int, List<NetworkDevice>>();
@@ -59,7 +61,7 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
 
         public bool EnqueuePackage(int netId, int frequency, string address, IReadOnlyDictionary<string, string> data, string sender, Metadata metadata, bool broadcast = false)
         {
-            if (!_devices.ContainsKey(netId))
+            if (!_devices.ContainsKey(netId) || data.Count > MAX_DATA_COUNT || _packages.Count > MAX_PACKET_COUNT)
                 return false;
 
             var package = new NetworkPackage()
