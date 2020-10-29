@@ -1,5 +1,6 @@
 ﻿using System;
 using Content.Server.Utility;
+using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.EntitySystems;
@@ -95,7 +96,7 @@ namespace Content.Server.GameObjects.Components
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
             EntitySystem.Get<AudioSystem>()
-                .PlayAtCoords("/Audio/Effects/glass_knock.ogg", eventArgs.Target.Transform.Coordinates);
+                .PlayAtCoords("/Audio/Effects/glass_knock.ogg", eventArgs.Target.Transform.Coordinates, AudioHelpers.WithVariation(0.05f));
             eventArgs.Target.PopupMessageEveryone(Loc.GetString("*knock knock*"));
             return true;
         }
