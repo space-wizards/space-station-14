@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.Buckle;
-using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Movement;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Pulling;
 using Content.Shared.GameObjects.EntitySystems;
@@ -22,6 +22,20 @@ namespace Content.Server.GameObjects.Components.Mobs
     {
         [ViewVariables]
         private readonly Dictionary<StatusEffect, StatusEffectStatus> _statusEffects = new Dictionary<StatusEffect, StatusEffectStatus>();
+
+        protected override void Startup()
+        {
+            base.Startup();
+
+            EntitySystem.Get<WeightlessSystem>().AddStatus(this);
+        }
+
+        public override void OnRemove()
+        {
+            EntitySystem.Get<WeightlessSystem>().RemoveStatus(this);
+
+            base.OnRemove();
+        }
 
         public override ComponentState GetComponentState()
         {
