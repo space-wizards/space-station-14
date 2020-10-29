@@ -194,6 +194,23 @@
             "Internals",
             "GasTank",
             "BreathMask",
+            "RadiationCollector",
+            "ContainmentFieldGenerator",
+            "ContainmentField",
+            "Emitter",
+            "Singularity",
+            "SingularityGenerator",
+            "EmitterBoltComponent",
+            "ParticleProjectile",
+            "ParticleAcceleratorControlBox",
+            "ParticleAcceleratorEmitter",
+            "ParticleAcceleratorEndCap",
+            "ParticleAcceleratorFuelChamber",
+            "ParticleAcceleratorPowerBox",
+            "BodyBagEntityStorage",
+            "MorgueEntityStorage",
+            "MorgueTray",
+            "CrematoriumEntityStorage",
         };
     }
 }

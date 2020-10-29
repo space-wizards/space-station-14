@@ -25,12 +25,12 @@ namespace Content.Server.GameObjects.EntitySystems
             if (newState != oldState)
             {
                 appearance.SetData(RotationVisuals.RotationState, newState);
-            }
 
-            if (playSound)
-            {
-                var file = AudioHelpers.GetRandomFileFromSoundCollection("bodyfall");
-                Get<AudioSystem>().PlayFromEntity(file, entity, AudioHelpers.WithVariation(0.25f));
+                if (playSound)
+                {
+                    var file = AudioHelpers.GetRandomFileFromSoundCollection("bodyfall");
+                    Get<AudioSystem>().PlayFromEntity(file, entity, AudioHelpers.WithVariation(0.25f));
+                }
             }
 
             return true;
@@ -60,6 +60,22 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 hands.Drop(heldItem.Owner, doMobChecks);
             }
+        }
+
+        //TODO: RotationState can be null and I want to burn all lifeforms in the universe for this!!!
+        //If you use these it's atleast slightly less painful (null is treated as false)
+        public bool IsStanding(IEntity entity)
+        {
+            return entity.TryGetComponent<AppearanceComponent>(out var appearance)
+                && appearance.TryGetData<RotationState>(RotationVisuals.RotationState, out var rotation)
+                && rotation == RotationState.Vertical;
+        }
+
+        public bool IsDown(IEntity entity)
+        {
+            return entity.TryGetComponent<AppearanceComponent>(out var appearance)
+                && appearance.TryGetData<RotationState>(RotationVisuals.RotationState, out var rotation)
+                && rotation == RotationState.Horizontal;
         }
     }
 }

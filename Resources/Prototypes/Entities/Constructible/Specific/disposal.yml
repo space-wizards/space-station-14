@@ -35,7 +35,6 @@
     drawdepth: BelowFloor
     sprite: Constructible/Power/disposal.rsi
     state: conpipe-s
-
   - type: DisposalTransit
   - type: Appearance
     visuals:
@@ -43,6 +42,11 @@
       state_free: conpipe-s
       state_anchored: pipe-s
       state_broken: pipe-b
+  - type: Physics
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5,-0.25,0.5,0.25"
+      layer: [ Underplating ]
 
 - type: entity
   id: DisposalTagger
@@ -54,7 +58,6 @@
     drawdepth: BelowFloor
     sprite: Constructible/Power/disposal.rsi
     state: conpipe-tagger
-
   - type: DisposalTagger
   - type: Appearance
     visuals:
@@ -66,6 +69,11 @@
     interfaces:
     - key: enum.DisposalTaggerUiKey.Key
       type: DisposalTaggerBoundUserInterface
+  - type: Physics
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.5,-0.25,0.5,0.25"
+        layer: [ Underplating ]
 
 - type: entity
   id: DisposalTrunk
@@ -77,7 +85,6 @@
     drawdepth: BelowFloor
     sprite: Constructible/Power/disposal.rsi
     state: conpipe-t
-
   - type: DisposalEntry
   - type: Appearance
     visuals:
@@ -85,6 +92,11 @@
       state_free: conpipe-t
       state_anchored: pipe-t
       state_broken: pipe-b
+  - type: Physics
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.5,-0.25,0.4,0.25"
+        layer: [ Underplating ]
 
 - type: entity
   id: DisposalUnit
@@ -105,7 +117,6 @@
       map: ["enum.DisposalUnitVisualLayers.Handle"]
     - state: dispover-ready
       map: ["enum.DisposalUnitVisualLayers.Light"]
-
   - type: PowerReceiver
   - type: DisposalUnit
     flushTime: 2
@@ -115,7 +126,7 @@
     anchored: true
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.35,-0.3,0.35,0.3"
+      bounds: "-0.3,-0.35,0.3,0.35"
       mask:
       - Impassable
       - MobImpassable
@@ -162,7 +173,6 @@
     drawdepth: BelowFloor
     sprite: Constructible/Power/disposal.rsi
     state: conpipe-j1s
-
   - type: DisposalRouter
     degrees:
     - 0
@@ -180,17 +190,21 @@
     interfaces:
     - key: enum.DisposalRouterUiKey.Key
       type: DisposalRouterBoundUserInterface
+  - type: Physics
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.5,-0.5,0.5,0.25"
+        layer: [ Underplating ]
 
 - type: entity
   id: DisposalRouterFlipped
   parent: DisposalRouter
-  name: flipped router junction
+  suffix: flipped
   components:
   - type: Sprite
     drawdepth: BelowFloor
     sprite: Constructible/Power/disposal.rsi
     state: conpipe-j2s
-
   - type: DisposalRouter
     degrees:
     - 0
@@ -204,6 +218,11 @@
       state_broken: pipe-b
   - type: Flippable
     entity: DisposalRouter
+  - type: Physics
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.5,-0.25,0.5,0.5"
+        layer: [ Underplating ]
 
 - type: entity
   id: DisposalJunction
@@ -215,7 +234,6 @@
     drawdepth: BelowFloor
     sprite: Constructible/Power/disposal.rsi
     state: conpipe-j1
-
   - type: DisposalJunction
     degrees:
     - 0
@@ -229,17 +247,21 @@
       state_broken: pipe-b
   - type: Flippable
     entity: DisposalJunctionFlipped
+  - type: Physics
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.5,-0.5,0.5,0.25"
+        layer: [ Underplating ]
 
 - type: entity
   id: DisposalJunctionFlipped
   parent: DisposalJunction
-  name: flipped disposal junction
+  suffix: flipped
   components:
   - type: Sprite
     drawdepth: BelowFloor
     sprite: Constructible/Power/disposal.rsi
     state: conpipe-j2
-
   - type: DisposalJunction
     degrees:
     - 0
@@ -253,6 +275,11 @@
       state_broken: pipe-b
   - type: Flippable
     entity: DisposalJunction
+  - type: Physics
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.5,-0.25,0.5,0.5"
+        layer: [ Underplating ]
 
 - type: entity
   id: DisposalYJunction
@@ -264,7 +291,6 @@
     drawdepth: BelowFloor
     sprite: Constructible/Power/disposal.rsi
     state: conpipe-y
-
   - type: DisposalJunction
     degrees:
     - 0
@@ -276,6 +302,11 @@
       state_free: conpipe-y
       state_anchored: pipe-y
       state_broken: pipe-b
+  - type: Physics
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.5,-0.5,0.25,0.5"
+        layer: [ Underplating ]
 
 - type: entity
   id: DisposalBend
@@ -287,7 +318,6 @@
     drawdepth: BelowFloor
     sprite: Constructible/Power/disposal.rsi
     state: conpipe-c
-
   - type: DisposalBend
   - type: Appearance
     visuals:
@@ -295,3 +325,8 @@
       state_free: conpipe-c
       state_anchored: pipe-c
       state_broken: pipe-b
+  - type: Physics
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.5,-0.5,0.25,0.25"
+        layer: [ Underplating ]

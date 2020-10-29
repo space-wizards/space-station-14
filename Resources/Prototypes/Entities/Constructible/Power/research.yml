@@ -13,6 +13,7 @@
     anchored: true
     shapes:
     - !type:PhysShapeAabb
+      bounds: "-0.4, -0.45, 0.45, 0.45"
       mask:
       - Impassable
       - MobImpassable

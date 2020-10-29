@@ -6,8 +6,12 @@
     mode: SnapgridCenter
   components:
   - type: Clickable
-  - type: InteractionOutline
   - type: Physics
+    shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.5, -0.5, 0.5, 0.5"
+        layer: [ Underplating ]
+  - type: InteractionOutline
   - type: SnapGrid
     offset: Center
   - type: Sprite
