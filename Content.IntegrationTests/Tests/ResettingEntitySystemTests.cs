@@ -45,6 +45,8 @@ namespace Content.IntegrationTests.Tests
 
                 var system = entitySystemManager.GetEntitySystem<TestResettingEntitySystem>();
 
+                system.HasBeenReset = false;
+
                 Assert.False(system.HasBeenReset);
 
                 gameTicker.RestartRound();
