@@ -49,7 +49,7 @@ grids:
   - ind: "0,1"
     tiles: GQAAABMAAAATAAAAEwAAABMAAAATAAAAGQAAABMAAAATAAAAEwAAABMAAAAZAAAAGAAAABUAAAAZAAAAFQAAABUAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAGQAAABgAAAAVAAAAGQAAAAAAAAAZAAAAEwAAABMAAAATAAAAEwAAABMAAAAZAAAAEwAAABMAAAATAAAAEwAAABkAAAAYAAAAFQAAABkAAAAAAAAAGQAAABMAAAATAAAAEwAAABMAAAATAAAAGQAAABMAAAATAAAAEwAAABMAAAAZAAAAGAAAABUAAAAZAAAAAAAAABUAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAFQAAABgAAAAVAAAAGQAAAAAAAAAZAAAAEwAAABMAAAATAAAAEwAAABMAAAAZAAAAEwAAABMAAAATAAAAEwAAABkAAAAVAAAAFQAAABkAAAAAAAAAGQAAABkAAAATAAAAGQAAABMAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAFQAAABkAAAAZAAAAAAAAAA0AAAAZAAAAEwAAABMAAAATAAAAGQAAABcAAAAXAAAAFwAAABcAAAAZAAAAFQAAABUAAAAVAAAAGQAAAAAAAAANAAAADQAAABMAAAATAAAAEwAAABkAAAAXAAAAFwAAABcAAAAXAAAAGQAAABgAAAAYAAAAGAAAABkAAAAAAAAADQAAAA0AAAATAAAAEwAAABMAAAATAAAAFwAAABcAAAAXAAAAFwAAABkAAAAZAAAAGQAAABkAAAAZAAAAAAAAAA0AAAAZAAAAEwAAABMAAAATAAAAGQAAABcAAAAXAAAAFwAAABcAAAAZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZAAAAGQAAABMAAAATAAAAEwAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAAZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAGQAAABkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: "-2,0"
-    tiles: GQAAABcAAAAXAAAAFwAAABcAAAAXAAAAEwAAABMAAAATAAAAEwAAABkAAAATAAAAEwAAABMAAAATAAAAEwAAABkAAAAXAAAAFwAAABcAAAAXAAAAGQAAABkAAAATAAAAEwAAABkAAAAZAAAAEwAAABMAAAATAAAAEwAAABMAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAATAAAAEwAAABMAAAATAAAAGQAAABkAAAAZAAAAGQAAABkAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAEwAAABMAAAATAAAAEwAAABkAAAAZAAAAGQAAABkAAAAZAAAAFQAAABgAAAAZAAAAEwAAABMAAAATAAAAGQAAABkAAAATAAAAEwAAABkAAAAZAAAAEwAAABMAAAAZAAAAGAAAABgAAAAVAAAAGQAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAAZAAAAEwAAABMAAAATAAAAGQAAABgAAAAVAAAAFQAAABkAAAATAAAAEwAAABMAAAATAAAAGQAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABkAAAAYAAAAFQAAABUAAAAZAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABkAAAATAAAAEwAAABMAAAAZAAAAGAAAABUAAAAVAAAAGQAAABMAAAATAAAAEwAAABMAAAAZAAAAEwAAABMAAAAZAAAAGQAAABUAAAAZAAAAGQAAABgAAAAYAAAAFQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABUAAAAYAAAAFQAAABUAAAAYAAAAFQAAABUAAAAVAAAAFQAAABUAAAAVAAAAFQAAABUAAAAVAAAAFQAAABUAAAAVAAAAGAAAABgAAAAYAAAAGAAAABUAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAZAAAAGQAAABgAAAAVAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABgAAAAYAAAAFQAAAA==
+    tiles: GQAAABcAAAAXAAAAFwAAABcAAAAXAAAAEwAAABMAAAATAAAAEwAAABkAAAAMAAAAEwAAABMAAAATAAAAEwAAABkAAAAXAAAAFwAAABcAAAAXAAAAGQAAABkAAAATAAAAEwAAABkAAAAZAAAADAAAAAwAAAAMAAAADAAAABMAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAATAAAAEwAAABMAAAATAAAAGQAAABkAAAAZAAAAGQAAABkAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAEwAAABMAAAATAAAAEwAAABkAAAAZAAAAGQAAABkAAAAZAAAAFQAAABgAAAAZAAAAEwAAABMAAAATAAAAGQAAABkAAAATAAAAEwAAABkAAAAZAAAAEwAAABMAAAAZAAAAGAAAABgAAAAVAAAAGQAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAAZAAAAEwAAABMAAAATAAAAGQAAABgAAAAVAAAAFQAAABkAAAATAAAAEwAAABMAAAATAAAAGQAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABkAAAAYAAAAFQAAABUAAAAZAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABkAAAATAAAAEwAAABMAAAAZAAAAGAAAABUAAAAVAAAAGQAAABMAAAATAAAAEwAAABMAAAAZAAAAEwAAABMAAAAZAAAAGQAAABUAAAAZAAAAGQAAABgAAAAYAAAAFQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABUAAAAYAAAAFQAAABUAAAAYAAAAFQAAABUAAAAVAAAAFQAAABUAAAAVAAAAFQAAABUAAAAVAAAAFQAAABUAAAAVAAAAGAAAABgAAAAYAAAAGAAAABUAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAZAAAAGQAAABgAAAAVAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABgAAAAYAAAAFQAAAA==
   - ind: "1,-1"
     tiles: FgAAABYAAAAWAAAAFgAAABkAAAAWAAAAFgAAABYAAAAWAAAAGQAAABgAAAAVAAAAGQAAAAAAAAAAAAAAAAAAABYAAAAWAAAAFgAAABYAAAAZAAAAFgAAABYAAAAWAAAAFgAAABkAAAAYAAAAFQAAABkAAAAAAAAAAAAAAAAAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAZAAAAGAAAABUAAAAZAAAAAAAAAAAAAAAAAAAAGQAAABkAAAAWAAAAFgAAABkAAAAWAAAAFgAAABYAAAAWAAAAGQAAABgAAAAVAAAAGQAAAAAAAAAAAAAAAAAAABYAAAAWAAAAFgAAABYAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAYAAAAFQAAABkAAAAAAAAAAAAAAAAAAAAWAAAAFgAAABYAAAAWAAAAFQAAABgAAAAVAAAAFQAAABUAAAAVAAAAGAAAABUAAAAZAAAAAAAAAAAAAAAAAAAAFgAAABYAAAAWAAAAFgAAABkAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAVAAAAGQAAAAAAAAAAAAAAAAAAABYAAAAWAAAAFgAAABYAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAYAAAAFQAAABkAAAAZAAAAGQAAABkAAAAWAAAAFgAAABYAAAAWAAAAGQAAABYAAAAWAAAAFgAAABYAAAAZAAAAGAAAABUAAAAZAAAAGAAAABgAAAAYAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAGQAAABgAAAAYAAAAGAAAABgAAAAVAAAAFQAAABYAAAAWAAAAFgAAABYAAAAZAAAAFgAAABYAAAAWAAAAFgAAABkAAAAYAAAAFQAAABkAAAAZAAAAGQAAABkAAAAWAAAAFgAAABYAAAAWAAAAGQAAABYAAAAWAAAAFgAAABYAAAAZAAAAGAAAABUAAAAZAAAAEwAAABMAAAATAAAAGQAAABYAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABgAAAAVAAAAGQAAABMAAAATAAAAEwAAABYAAAAWAAAAFgAAABkAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAFQAAABkAAAATAAAAEwAAABMAAAAWAAAAFgAAABYAAAAZAAAAGAAAABUAAAAVAAAAFQAAABUAAAAVAAAAFQAAABUAAAAZAAAAEwAAABMAAAATAAAAFgAAABYAAAAWAAAAGQAAABgAAAAVAAAAFQAAABgAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAEwAAAA==
   - ind: "0,-2"
@@ -77,7 +77,7 @@ grids:
   - ind: "-2,-2"
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZAAAAGQAAABkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAA8AAAAPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABkAAAAPAAAADwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZAAAADwAAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAABkAAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABkAAAAWAAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZAAAAFgAAABYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAABYAAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABkAAAAWAAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZAAAAFgAAABYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAABYAAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABkAAAAZAAAAFQAAAA==
   - ind: "-2,-1"
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAGQAAABgAAAAVAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABkAAAAYAAAAGAAAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAAZAAAAGAAAABUAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAEwAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABgAAAAVAAAAGQAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAFQAAABkAAAAVAAAAFQAAABUAAAAVAAAAFQAAABUAAAAVAAAAFQAAABgAAAAVAAAAFQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAVAAAAGQAAABkAAAAZAAAAEwAAABMAAAATAAAAGQAAABkAAAATAAAAEwAAABMAAAATAAAAGQAAABMAAAATAAAAEwAAABMAAAATAAAAGQAAABMAAAATAAAAEwAAABkAAAAZAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAAVAAAAFQAAABkAAAAZAAAAGQAAABkAAAAZAAAAEwAAABMAAAATAAAAEwAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAXAAAAFwAAABcAAAAXAAAAFwAAABMAAAATAAAAEwAAABMAAAAZAAAAEwAAABMAAAATAAAAGQAAABgAAAAZAAAAFwAAABcAAAAXAAAAFwAAABkAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABkAAAAYAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAEwAAABMAAAATAAAAEwAAABkAAAAZAAAAGQAAABkAAAAZAAAAEwAAABkAAAAXAAAAFwAAABcAAAAXAAAAFwAAABMAAAATAAAAEwAAABMAAAAZAAAAEwAAABMAAAATAAAAEwAAABMAAAAZAAAAFwAAABcAAAAXAAAAFwAAABkAAAATAAAAEwAAABMAAAATAAAAGQAAABMAAAATAAAAEwAAABMAAAATAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAEwAAABMAAAATAAAAEwAAABkAAAATAAAAEwAAABMAAAATAAAAEwAAAA==
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAGQAAABgAAAAVAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABkAAAAYAAAAGAAAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAAZAAAAGAAAABUAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAEwAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABgAAAAVAAAAGQAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAFQAAABkAAAAVAAAAFQAAABUAAAAVAAAAFQAAABUAAAAVAAAAFQAAABgAAAAVAAAAFQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAVAAAAGQAAABkAAAAZAAAAEwAAABMAAAATAAAAGQAAABkAAAATAAAAEwAAABMAAAATAAAAGQAAABMAAAATAAAAEwAAABMAAAATAAAAGQAAABMAAAATAAAAEwAAABkAAAAZAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAAVAAAAFQAAABkAAAAZAAAAGQAAABkAAAAZAAAAEwAAABMAAAATAAAAEwAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAXAAAAFwAAABcAAAAXAAAAFwAAABMAAAATAAAAEwAAABMAAAAZAAAAEwAAABMAAAATAAAAGQAAABgAAAAZAAAAFwAAABcAAAAXAAAAFwAAABkAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABkAAAAYAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAEwAAABMAAAATAAAAEwAAABkAAAAZAAAAGQAAABkAAAAZAAAAEwAAABkAAAAXAAAAFwAAABcAAAAXAAAAFwAAABMAAAATAAAAEwAAABMAAAAZAAAADAAAAAwAAAAMAAAADAAAABMAAAAZAAAAFwAAABcAAAAXAAAAFwAAABkAAAATAAAAEwAAABMAAAATAAAAGQAAAAwAAAATAAAAEwAAABMAAAATAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAEwAAABMAAAATAAAAEwAAABkAAAAMAAAADAAAAAwAAAATAAAAEwAAAA==
   - ind: "-3,0"
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAABMAAAATAAAAEwAAABkAAAAYAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZAAAAGQAAABkAAAATAAAAEwAAABMAAAAZAAAAGQAAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABkAAAAVAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAABkAAAAZAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABUAAAAVAAAAFQAAABMAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZAAAAGQAAABkAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABkAAAATAAAAEwAAABMAAAATAAAAEwAAABMAAAAZAAAAGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABkAAAAZAAAAGQAAABMAAAATAAAAEwAAABMAAAATAAAAGQAAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVAAAAFQAAABUAAAATAAAAEwAAABMAAAATAAAAEwAAABUAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAABkAAAAZAAAAEwAAABMAAAATAAAAEwAAABMAAAAZAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZAAAAEwAAABMAAAATAAAAEwAAABMAAAATAAAAGQAAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABkAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZAAAAGQAAAA==
   - ind: "-4,0"
@@ -955,6 +955,8 @@ entities:
   - containers:
       flashlight_cell_container:
         type: Content.Server.GameObjects.ContainerSlot
+      cellslot_cell_container:
+        type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - uid: 116
   type: FlashlightLantern
@@ -964,6 +966,8 @@ entities:
     type: Transform
   - containers:
       flashlight_cell_container:
+        type: Content.Server.GameObjects.ContainerSlot
+      cellslot_cell_container:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - uid: 117
@@ -1022,6 +1026,8 @@ entities:
   - containers:
       stunbaton_cell_container:
         type: Content.Server.GameObjects.ContainerSlot
+      cellslot_cell_container:
+        type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - uid: 125
   type: Stunbaton
@@ -1032,6 +1038,8 @@ entities:
     type: Transform
   - containers:
       stunbaton_cell_container:
+        type: Content.Server.GameObjects.ContainerSlot
+      cellslot_cell_container:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - uid: 126
@@ -7078,10 +7086,10 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 734
-  type: SpawnPointMedicalDoctor
+  type: solid_wall
   components:
   - parent: 856
-    pos: 15.5,-15.5
+    pos: 14.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 735
@@ -21466,38 +21474,26 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 1112
-  type: Medkit
+  type: SpawnPointBotanist
   components:
   - parent: 856
-    pos: 6.5068817,-9.984968
-    rot: 1.5707963267948966 rad
+    pos: -17.5,-0.5
+    rot: -1.5707963267948966 rad
     type: Transform
-  - containers:
-      storagebase:
-        type: Robust.Server.GameObjects.Components.Container.Container
-    type: ContainerContainer
 - uid: 1113
-  type: Medkit
+  type: Scythe
   components:
   - parent: 856
-    pos: 6.5225067,-9.141218
-    rot: 1.5707963267948966 rad
+    pos: -20.5,-1.5
+    rot: -1.5707963267948966 rad
     type: Transform
-  - containers:
-      storagebase:
-        type: Robust.Server.GameObjects.Components.Container.Container
-    type: ContainerContainer
 - uid: 1114
-  type: Medkit
+  type: Hatchet
   components:
   - parent: 856
-    pos: 6.5693817,-8.359968
-    rot: 1.5707963267948966 rad
+    pos: -20.5,-2.5
+    rot: -1.5707963267948966 rad
     type: Transform
-  - containers:
-      storagebase:
-        type: Robust.Server.GameObjects.Components.Container.Container
-    type: ContainerContainer
 - uid: 1115
   type: Catwalk
   components:
@@ -21594,16 +21590,12 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 1128
-  type: Medkit
+  type: MiniHoe
   components:
   - parent: 856
-    pos: 6.5537567,-7.609968
-    rot: 1.5707963267948966 rad
+    pos: -20.5,-1.5
+    rot: -1.5707963267948966 rad
     type: Transform
-  - containers:
-      storagebase:
-        type: Robust.Server.GameObjects.Components.Container.Container
-    type: ContainerContainer
 - uid: 1129
   type: Poweredlight
   components:
@@ -21678,10 +21670,10 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 1135
-  type: Window
+  type: solid_wall
   components:
   - parent: 856
-    pos: 15.5,-12.5
+    pos: 16.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 1136
@@ -21699,10 +21691,10 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 1138
-  type: LowWall
+  type: solid_wall
   components:
   - parent: 856
-    pos: 15.5,-12.5
+    pos: 16.5,-16.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 1139
@@ -21731,16 +21723,12 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 1142
-  type: MedicalScanner
+  type: VendingMachineSeeds
   components:
   - parent: 856
-    pos: 16.5,-13.5
+    pos: -18.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - containers:
-      MedicalScanner-bodyContainer:
-        type: Content.Server.GameObjects.ContainerSlot
-    type: ContainerContainer
 - uid: 1143
   type: Beaker
   components:
@@ -21777,17 +21765,23 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 1148
-  type: Table
+  type: LockerBotanistFilled
   components:
   - parent: 856
-    pos: 6.5,-7.5
+    pos: -19.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - IsPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent:
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
 - uid: 1149
   type: Table
   components:
   - parent: 856
-    pos: 6.5,-8.5
+    pos: -20.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 1150
@@ -21801,14 +21795,14 @@ entities:
   type: Table
   components:
   - parent: 856
-    pos: 6.5,-9.5
+    pos: -20.5,-1.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 1152
-  type: Table
+  type: SeedExtractor
   components:
   - parent: 856
-    pos: 6.5,-10.5
+    pos: -17.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 1153
@@ -21846,10 +21840,10 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 1157
-  type: VendingMachineMedical
+  type: WaterTankFull
   components:
   - parent: 856
-    pos: 6.5,-11.5
+    pos: -17.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 1158
@@ -22196,6 +22190,8 @@ entities:
     pos: -35.166924,-3.5
     rot: 3.141592653589793 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 1198
@@ -22714,7 +22710,7 @@ entities:
     pos: -5.5120974,-7.5
     rot: 1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.17
+  - startingCharge: 11999.336
     type: Battery
 - uid: 1247
   type: Poweredlight
@@ -32453,7 +32449,7 @@ entities:
     pos: 9.5,27.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.502
+  - startingCharge: 11999.552
     type: Battery
 - uid: 2514
   type: SalternApc
@@ -32462,7 +32458,7 @@ entities:
     pos: -2.5,27.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.004
+  - startingCharge: 11999.137
     type: Battery
 - uid: 2515
   type: SalternApc
@@ -32471,7 +32467,7 @@ entities:
     pos: 9.5,22.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.419
+  - startingCharge: 11999.485
     type: Battery
 - uid: 2516
   type: SalternApc
@@ -32480,7 +32476,7 @@ entities:
     pos: 24.5,14.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.336
+  - startingCharge: 11999.485
     type: Battery
 - uid: 2517
   type: SalternApc
@@ -32489,7 +32485,7 @@ entities:
     pos: 28.5,14.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.502
+  - startingCharge: 11999.651
     type: Battery
 - uid: 2518
   type: SalternApc
@@ -32498,7 +32494,7 @@ entities:
     pos: 47.5,-1.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11991.501
+  - startingCharge: 11991.567
     type: Battery
 - uid: 2519
   type: SalternApc
@@ -32507,7 +32503,7 @@ entities:
     pos: 31.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.087
+  - startingCharge: 11999.07
     type: Battery
 - uid: 2520
   type: SalternApc
@@ -32516,7 +32512,7 @@ entities:
     pos: 43.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.419
+  - startingCharge: 11999.635
     type: Battery
 - uid: 2521
   type: SalternApc
@@ -32525,7 +32521,7 @@ entities:
     pos: 12.5,13.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.087
+  - startingCharge: 11999.203
     type: Battery
 - uid: 2522
   type: SalternApc
@@ -32534,7 +32530,7 @@ entities:
     pos: 7.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.336
+  - startingCharge: 11999.701
     type: Battery
 - uid: 2523
   type: SalternApc
@@ -32543,7 +32539,7 @@ entities:
     pos: 22.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11998.755
+  - startingCharge: 11998.821
     type: Battery
 - uid: 2524
   type: SalternApc
@@ -32552,7 +32548,7 @@ entities:
     pos: 16.5,2.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.502
+  - startingCharge: 11999.469
     type: Battery
 - uid: 2525
   type: PoweredSmallLight
@@ -32574,7 +32570,7 @@ entities:
     pos: -3.5,15.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.336
+  - startingCharge: 11999.402
     type: Battery
 - uid: 2527
   type: SalternApc
@@ -32583,7 +32579,7 @@ entities:
     pos: -28.5,12.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.253
+  - startingCharge: 11999.402
     type: Battery
 - uid: 2528
   type: SalternApc
@@ -32592,7 +32588,7 @@ entities:
     pos: -39.5,11.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.336
+  - startingCharge: 11999.402
     type: Battery
 - uid: 2529
   type: SalternApc
@@ -32601,7 +32597,7 @@ entities:
     pos: -11.5,2.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11998.423
+  - startingCharge: 11998.489
     type: Battery
 - uid: 2530
   type: Table
@@ -32642,7 +32638,7 @@ entities:
     pos: -1.5,-18.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.253
+  - startingCharge: 11999.087
     type: Battery
 - uid: 2535
   type: SalternApc
@@ -32651,7 +32647,7 @@ entities:
     pos: -9.75476,-21.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11996.086
+  - startingCharge: 11996.152
     type: Battery
 - uid: 2536
   type: SalternApc
@@ -32660,7 +32656,7 @@ entities:
     pos: -14.5,-16.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.751
+  - startingCharge: 11999.817
     type: Battery
 - uid: 2537
   type: ApcExtensionCable
@@ -32903,7 +32899,7 @@ entities:
     pos: -16.302551,15.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.917
+  - startingCharge: 11999.834
     type: Battery
 - uid: 2564
   type: ApcExtensionCable
@@ -35016,7 +35012,7 @@ entities:
     pos: -14.5,-8.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.253
+  - startingCharge: 11999.286
     type: Battery
 - uid: 2799
   type: ApcExtensionCable
@@ -42428,7 +42424,7 @@ entities:
     pos: 42.5,-0.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3999955
+  - startingCharge: 3999956
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
@@ -42441,7 +42437,7 @@ entities:
     pos: 27.5,13.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3999955
+  - startingCharge: 3999956
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
@@ -42454,7 +42450,7 @@ entities:
     pos: 11.5,24.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3999955
+  - startingCharge: 3999956
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
@@ -42467,7 +42463,7 @@ entities:
     pos: 21.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3999955
+  - startingCharge: 3999956
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
@@ -42480,7 +42476,7 @@ entities:
     pos: -15.5,16.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3999955
+  - startingCharge: 3999956
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
@@ -42493,7 +42489,7 @@ entities:
     pos: -0.5,-22.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3999955
+  - startingCharge: 3999956
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
@@ -42515,7 +42511,7 @@ entities:
     pos: 0.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3999955
+  - startingCharge: 3999956
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
@@ -42528,7 +42524,7 @@ entities:
     pos: -21.5,-10.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3999955
+  - startingCharge: 3999956
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
@@ -42541,7 +42537,7 @@ entities:
     pos: -32.5,7.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 3999955
+  - startingCharge: 3999956
     type: Battery
   - drawRate: 8000
     type: PowerConsumer
@@ -44890,6 +44886,8 @@ entities:
     pos: 44.486908,10
     rot: -1.5707963267948966 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3893
@@ -44898,6 +44896,8 @@ entities:
   - parent: 856
     pos: 47.22923,-3
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3894
@@ -44906,6 +44906,8 @@ entities:
   - parent: 856
     pos: 29.299644,-7.5
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3895
@@ -44915,6 +44917,8 @@ entities:
     pos: 31.467993,-4.5
     rot: 1.5707963267948966 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3896
@@ -44923,6 +44927,8 @@ entities:
   - parent: 856
     pos: 30.278831,9.5
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3897
@@ -44931,6 +44937,8 @@ entities:
   - parent: 856
     pos: 18.260162,9.5
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3898
@@ -44940,6 +44948,8 @@ entities:
     pos: 26.46292,-1
     rot: -1.5707963267948966 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3899
@@ -44949,6 +44959,8 @@ entities:
     pos: 17.399544,2
     rot: -1.5707963267948966 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3900
@@ -44957,6 +44969,8 @@ entities:
   - parent: 856
     pos: 7.2721233,-15.5
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3901
@@ -44965,6 +44979,8 @@ entities:
   - parent: 856
     pos: 7.3033733,-20.5
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3902
@@ -44974,6 +44990,8 @@ entities:
     pos: -10.487591,2
     rot: -1.5707963267948966 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3903
@@ -44983,6 +45001,8 @@ entities:
     pos: -2.7508366,15
     rot: -1.5707963267948966 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3904
@@ -44992,6 +45012,8 @@ entities:
     pos: 5.701264,16.5
     rot: 3.141592653589793 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3905
@@ -45000,6 +45022,8 @@ entities:
   - parent: 856
     pos: 6.2924953,10.5
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3906
@@ -45009,6 +45033,8 @@ entities:
     pos: 12.41432,9.5
     rot: 1.5707963267948966 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3907
@@ -45018,6 +45044,8 @@ entities:
     pos: 16.47682,3.5
     rot: 1.5707963267948966 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3908
@@ -45027,6 +45055,8 @@ entities:
     pos: -24.514448,12
     rot: -1.5707963267948966 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3909
@@ -45035,6 +45065,8 @@ entities:
   - parent: 856
     pos: -39.802197,11.207858
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3910
@@ -45044,6 +45076,8 @@ entities:
     pos: -22.347473,-1.5
     rot: 3.141592653589793 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3911
@@ -45052,6 +45086,8 @@ entities:
   - parent: 856
     pos: -20.745232,-0.5
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3912
@@ -45061,6 +45097,8 @@ entities:
     pos: -13.885857,-9
     rot: -1.5707963267948966 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3913
@@ -45077,6 +45115,8 @@ entities:
     pos: 10.68897,19.5
     rot: 3.141592653589793 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3915
@@ -45086,6 +45126,8 @@ entities:
     pos: 8.923345,28.5
     rot: 1.5707963267948966 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3916
@@ -45095,6 +45137,8 @@ entities:
     pos: -2.4985301,28.5
     rot: 1.5707963267948966 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3917
@@ -45103,6 +45147,8 @@ entities:
   - parent: 856
     pos: -2.7641551,26.5
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3918
@@ -45112,6 +45158,8 @@ entities:
     pos: 9.704595,26.5
     rot: 3.141592653589793 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3919
@@ -45121,6 +45169,8 @@ entities:
     pos: -12.509865,6
     rot: -1.5707963267948966 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3920
@@ -45235,7 +45285,7 @@ entities:
     pos: -12.5,12.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - startingCharge: 11999.17
+  - startingCharge: 11999.303
     type: Battery
 - uid: 3931
   type: EmergencyLight
@@ -45244,6 +45294,8 @@ entities:
     pos: -13.5,-17
     rot: -1.5707963267948966 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3932
@@ -45253,6 +45305,8 @@ entities:
     pos: -10.5,-17
     rot: -1.5707963267948966 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3933
@@ -45262,6 +45316,8 @@ entities:
     pos: 5.7693076,-15.5
     rot: 3.141592653589793 rad
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3934
@@ -45270,6 +45326,8 @@ entities:
   - parent: 856
     pos: 2.2274737,8.5
     type: Transform
+  - powerLoad: 1
+    type: PowerReceiver
   - startingCharge: 30000
     type: Battery
 - uid: 3935
@@ -46100,10 +46158,10 @@ entities:
   - enabled: False
     type: Occluder
 - uid: 4020
-  type: LowWall
+  type: solid_wall
   components:
   - parent: 856
-    pos: 12.5,-12.5
+    pos: 16.5,-14.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4021
@@ -46604,10 +46662,10 @@ entities:
     pos: -2.5880268,-3.3710017
     type: Transform
 - uid: 4069
-  type: Window
+  type: solid_wall
   components:
   - parent: 856
-    pos: 12.5,-12.5
+    pos: 15.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4070
@@ -47033,7 +47091,7 @@ entities:
     pos: -30.517641,-3.5
     rot: 3.141592653589793 rad
     type: Transform
-  - startingCharge: 11999.17
+  - startingCharge: 11999.236
     type: Battery
 - uid: 4121
   type: Bed
@@ -47374,4 +47432,193 @@ entities:
       light_bulb:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
+- uid: 4161
+  type: hydroponicsTray
+  components:
+  - parent: 856
+    pos: -18.5,1.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4162
+  type: hydroponicsTray
+  components:
+  - parent: 856
+    pos: -19.5,1.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4163
+  type: hydroponicsTray
+  components:
+  - parent: 856
+    pos: -20.5,1.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4164
+  type: hydroponicsTray
+  components:
+  - parent: 856
+    pos: -20.5,0.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4165
+  type: hydroponicsTray
+  components:
+  - parent: 856
+    pos: -20.5,-0.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4166
+  type: hydroponicsTray
+  components:
+  - parent: 856
+    pos: -19.5,-0.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4167
+  type: hydroponicsTray
+  components:
+  - parent: 856
+    pos: -18.5,-0.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4168
+  type: solid_wall
+  components:
+  - parent: 856
+    pos: 16.5,-13.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4169
+  type: solid_wall
+  components:
+  - parent: 856
+    pos: 12.5,-12.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4170
+  type: solid_wall
+  components:
+  - parent: 856
+    pos: 13.5,-12.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4171
+  type: Morgue
+  components:
+  - parent: 856
+    pos: 12.5,-13.5
+    type: Transform
+  - containers:
+      EntityStorageComponent:
+        type: Robust.Server.GameObjects.Components.Container.Container
+      morgue_tray:
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+- uid: 4172
+  type: Morgue
+  components:
+  - parent: 856
+    pos: 12.5,-14.5
+    type: Transform
+  - containers:
+      EntityStorageComponent:
+        type: Robust.Server.GameObjects.Components.Container.Container
+      morgue_tray:
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+- uid: 4173
+  type: Morgue
+  components:
+  - parent: 856
+    pos: 12.5,-15.5
+    type: Transform
+  - containers:
+      EntityStorageComponent:
+        type: Robust.Server.GameObjects.Components.Container.Container
+      morgue_tray:
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+- uid: 4174
+  type: Morgue
+  components:
+  - parent: 856
+    pos: 12.5,-16.5
+    type: Transform
+  - containers:
+      EntityStorageComponent:
+        type: Robust.Server.GameObjects.Components.Container.Container
+      morgue_tray:
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+- uid: 4175
+  type: Morgue
+  components:
+  - parent: 856
+    pos: 12.5,-17.5
+    type: Transform
+  - containers:
+      EntityStorageComponent:
+        type: Robust.Server.GameObjects.Components.Container.Container
+      morgue_tray:
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+- uid: 4176
+  type: SignMorgue
+  components:
+  - parent: 856
+    pos: 17.313038,-12.573634
+    type: Transform
+  - deadThreshold: 100
+    type: Destructible
+- uid: 4177
+  type: TableMetal
+  components:
+  - parent: 856
+    pos: 14.5,-13.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4178
+  type: TableMetal
+  components:
+  - parent: 856
+    pos: 15.5,-13.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4179
+  type: BodyBag_Item
+  components:
+  - parent: 856
+    pos: 14.446062,-13.212488
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4180
+  type: BodyBag_Item
+  components:
+  - parent: 856
+    pos: 14.992937,-13.196863
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4181
+  type: BodyBag_Item
+  components:
+  - parent: 856
+    pos: 15.539812,-13.181238
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4182
+  type: AirlockMedicalLocked
+  components:
+  - name: Morgue
+    type: MetaData
+  - parent: 856
+    pos: 16.5,-15.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 4183
+  type: VendingMachineMedical
+  components:
+  - parent: 856
+    pos: 13.5,-11.5
+    rot: -1.5707963267948966 rad
+    type: Transform
 ...
