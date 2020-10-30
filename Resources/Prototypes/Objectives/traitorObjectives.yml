@@ -1,6 +1,6 @@
 ﻿- type: objective
-  id: TestObjective
-  prob: 1
+  id: SoapDeluxeStealObjective
+  prob: 0.3
   issuer: The Syndicate
   requirements:
     - !type:TraitorRequirement {}
@@ -9,8 +9,8 @@
       prototype: SoapDeluxe
 
 - type: objective
-  id: TestObjectiveNoReq
-  prob: 1
+  id: SoapDeluxeStealObjectiveNoReq
+  prob: 0.3
   issuer: The Syndicate
   conditions:
     - !type:StealCondition
