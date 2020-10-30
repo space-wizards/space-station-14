@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.EntitySystems;
@@ -7,6 +8,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Random;
 
 namespace Content.Server.GameObjects.Components.Damage
@@ -65,11 +67,6 @@ namespace Content.Server.GameObjects.Components.Damage
         protected override void DestructionBehavior()
         {
             _actSystem.HandleBreakage(Owner);
-            if (!Owner.Deleted && DestroySound != string.Empty)
-            {
-                var pos = Owner.Transform.Coordinates;
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(DestroySound, pos);
-            }
         }
     }
 }

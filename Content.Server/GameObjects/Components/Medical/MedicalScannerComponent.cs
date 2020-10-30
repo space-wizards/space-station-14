@@ -20,6 +20,7 @@ using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -126,9 +127,12 @@ namespace Content.Server.GameObjects.Components.Medical
                 return new MedicalScannerBoundUserInterfaceState(body.Uid, classes, types, true);
             }
 
+            var cloningSystem = EntitySystem.Get<CloningSystem>();
+            var scanned = _bodyContainer.ContainedEntity.TryGetComponent(out MindComponent? mindComponent) &&
+                         mindComponent.Mind != null &&
+                         cloningSystem.HasDnaScan(mindComponent.Mind);
 
-            return new MedicalScannerBoundUserInterfaceState(body.Uid, classes, types,
-                CloningSystem.HasDnaScan(_bodyContainer.ContainedEntity.GetComponent<MindComponent>().Mind));
+            return new MedicalScannerBoundUserInterfaceState(body.Uid, classes, types, scanned);
         }
 
         private void UpdateUserInterface()
@@ -261,7 +265,8 @@ namespace Content.Server.GameObjects.Components.Medical
                     if (_bodyContainer.ContainedEntity != null)
                     {
                         //TODO: Show a 'ERROR: Body is completely devoid of soul' if no Mind owns the entity.
-                        CloningSystem.AddToDnaScans(_playerManager
+                        var cloningSystem = EntitySystem.Get<CloningSystem>();
+                        cloningSystem.AddToDnaScans(_playerManager
                             .GetPlayersBy(playerSession =>
                             {
                                 var mindOwnedMob = playerSession.ContentData()?.Mind?.OwnedEntity;
