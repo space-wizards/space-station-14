@@ -1,11 +1,8 @@
 #nullable enable
-using System;
-using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
-using Content.Shared.GameObjects.EntitySystemMessages;
 
 namespace Content.Shared.GameObjects.Components.Movement
 {
@@ -21,10 +18,8 @@ namespace Content.Shared.GameObjects.Components.Movement
         {
             physicsManager ??= IoCManager.Resolve<IPhysicsManager>();
 
-            var isWeightless = !entity.HasComponent<MovementIgnoreGravityComponent>() &&
+            return !entity.HasComponent<MovementIgnoreGravityComponent>() &&
                    physicsManager.IsWeightless(entity.Transform.Coordinates);
-            entity.EntityManager.EventBus.RaiseEvent(EventSource.Local, new WeightlessChangeMessage(entity,isWeightless));
-            return isWeightless;
         }
     }
 }

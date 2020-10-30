@@ -31,7 +31,10 @@
   - type: Destructible
     deadThreshold: 50
     resistances: metallicResistances
-    spawnOnDestroy: SteelSheet1
+    spawnOnDestroy:
+      SteelSheet1:
+        Min: 1
+        Max: 1
   - type: SnapGrid
     offset: Edge
   placement:
