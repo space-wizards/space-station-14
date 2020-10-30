@@ -53,6 +53,21 @@
     state: pda-cook
 
 - type: entity
+  name: Botanist PDA
+  parent: BasePDA
+  id: BotanistPDA
+  description: Has an earthy scent.
+  components:
+  - type: PDA
+    idCard: BotanistIDCard
+  - type: Appearance
+    visuals:
+      - type: PDAVisualizer
+        state: pda-hydro
+  - type: Icon
+    state: pda-hydro
+
+- type: entity
   name: Clown PDA
   parent: BasePDA
   id: ClownPDA
@@ -90,21 +105,35 @@
   - type: Icon
     state: pda-mime
 
-# TODO: uncomment this when the QM job gets added
-#- type: entity
-#  name: Quartermaster PDA
-#  parent: BasePDA
-#  id: QuartermasterPDA
-#  description: PDA for the guy that orders the guns.
-#  components:
-#    - type: PDA
-#      idCard: QuartermasterIDCard
-#    - type: Appearance
-#      visuals:
-#        - type: PDAVisualizer
-#          state: pda-qm
-#    - type: Icon
-#      state: pda-qm
+- type: entity
+  name: Chaplain PDA
+  parent: BasePDA
+  id: ChaplainPDA
+  description: God's chosen PDA.
+  components:
+    - type: PDA
+      idCard: ChaplainIDCard
+    - type: Appearance
+      visuals:
+        - type: PDAVisualizer
+          state: pda-chaplain
+    - type: Icon
+      state: pda-chaplain
+
+- type: entity
+  name: Quartermaster PDA
+  parent: BasePDA
+  id: QuartermasterPDA
+  description: PDA for the guy that orders the guns.
+  components:
+    - type: PDA
+      idCard: QuartermasterIDCard
+    - type: Appearance
+      visuals:
+        - type: PDAVisualizer
+          state: pda-qm
+    - type: Icon
+      state: pda-qm
 
 - type: entity
   name: Cargo PDA
@@ -292,21 +321,20 @@
   - type: Icon
     state: pda-hos
 
-# TODO: Uncomment this when the Warden job gets added
-#- type: entity
-#  name: Warden PDA
-#  parent: BasePDA
-#  id: WardenPDA
-#  description: The OS appears to have been jailbroken.
-#  components:
-#    - type: PDA
-#      idCard: WardenIDCard
-#    - type: Appearance
-#      visuals:
-#        - type: PDAVisualizer
-#          state: pda-warden
-#    - type: Icon
-#      state: pda-warden
+- type: entity
+  name: Warden PDA
+  parent: BasePDA
+  id: WardenPDA
+  description: The OS appears to have been jailbroken.
+  components:
+    - type: PDA
+      idCard: WardenIDCard
+    - type: Appearance
+      visuals:
+        - type: PDAVisualizer
+          state: pda-warden
+    - type: Icon
+      state: pda-warden
 
 - type: entity
   name: Security PDA

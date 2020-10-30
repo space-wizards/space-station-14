@@ -7,6 +7,7 @@ using Content.Server.Database;
 using Content.Server.GameObjects.Components.Mobs.Speech;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.GameObjects.Components.Power.PowerNetComponents;
+using Content.Server.GameObjects.EntitySystems.DeviceNetwork;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
@@ -46,6 +47,7 @@ namespace Content.Server
             IoCManager.Register<IAccentManager, AccentManager>();
             IoCManager.Register<IConnectionManager, ConnectionManager>();
             IoCManager.Register<IAdminManager, AdminManager>();
+            IoCManager.Register<IDeviceNetwork, DeviceNetwork>();
         }
     }
 }

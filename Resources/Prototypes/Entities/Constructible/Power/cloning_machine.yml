@@ -2,6 +2,8 @@
   id: CloningPod
   name: Cloning Pod
   description: A Cloning Pod. 50% reliable.
+  placement:
+    mode: SnapgridCenter
   components:
     - type: Sprite
       netsync: false
@@ -10,7 +12,6 @@
         - state: pod_0
           map: ["enum.CloningPodVisualLayers.Machine"]
     - type: PowerReceiver
-
     - type: Anchorable
     - type: Clickable
     - type: InteractionOutline

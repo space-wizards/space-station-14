@@ -18,6 +18,16 @@
   - type: Sprite
     state: Assistant
 
+# Quartermaster
+- type: entity
+  id: SpawnPointQuartermaster
+  parent: SpawnPointJobBase
+  name: spawn point (quartermaster)
+  components:
+    - type: SpawnPoint
+      job_id: Quartermaster
+    - type: Sprite
+      state: Quartermaster
 
 # Cargo tech
 - type: entity
@@ -43,7 +53,7 @@
     state: Bartender
 
 
-# Bartender
+# Chef
 - type: entity
   id: SpawnPointChef
   parent: SpawnPointJobBase
@@ -54,6 +64,16 @@
   - type: Sprite
     state: Cook
 
+# Botanist
+- type: entity
+  id: SpawnPointBotanist
+  parent: SpawnPointJobBase
+  name: spawn point (botanist)
+  components:
+    - type: SpawnPoint
+      job_id: Botanist
+    - type: Sprite
+      state: Botanist
 
 # Clown
 - type: entity
@@ -78,6 +98,16 @@
   - type: Sprite
     state: Mime
 
+# Chaplain
+- type: entity
+  id: SpawnPointChaplain
+  parent: SpawnPointJobBase
+  name: spawn point (chaplain)
+  components:
+    - type: SpawnPoint
+      job_id: Chaplain
+    - type: Sprite
+      state: Chaplain
 
 # Janitor
 - type: entity
@@ -198,6 +228,16 @@
   - type: Sprite
     state: Head of Security
 
+# Warden
+- type: entity
+  id: SpawnPointWarden
+  parent: SpawnPointJobBase
+  name: spawn point (warden)
+  components:
+    - type: SpawnPoint
+      job_id: Warden
+    - type: Sprite
+      state: Warden
 
 # SecurityOfficer
 - type: entity

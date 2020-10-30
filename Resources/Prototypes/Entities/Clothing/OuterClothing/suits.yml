@@ -150,7 +150,9 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/firesuit.rsi
-
+  - type: PressureProtection
+    highPressureMultiplier: 0.85
+    lowPressureMultiplier: 25
   - type: Clothing
     sprite: Clothing/OuterClothing/firesuit.rsi
 

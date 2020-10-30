@@ -127,19 +127,26 @@ namespace Content.IntegrationTests
             return grid;
         }
 
-        protected async Task WaitUntil(IntegrationInstance instance, Func<bool> func, int tickStep = 10, int maxTicks = 600)
+        protected async Task WaitUntil(IntegrationInstance instance, Func<bool> func, int maxTicks = 600, int tickStep = 1)
         {
             var ticksAwaited = 0;
             bool passed;
 
+            await instance.WaitIdleAsync();
+
             while (!(passed = func()) && ticksAwaited < maxTicks)
             {
-                await instance.WaitIdleAsync();
-                instance.RunTicks(tickStep);
-                ticksAwaited += tickStep;
-            }
+                var ticksToRun = tickStep;
 
-            await instance.WaitIdleAsync();
+                if (ticksAwaited + tickStep > maxTicks)
+                {
+                    ticksToRun = maxTicks - ticksAwaited;
+                }
+
+                await instance.WaitRunTicks(ticksToRun);
+
+                ticksAwaited += ticksToRun;
+            }
 
             Assert.That(passed);
         }

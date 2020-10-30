@@ -24,112 +24,75 @@
 
 - type: entity
   parent: HatBase
-  id: HatHardhatDblue
-  name: hardhat dblue
-  description: A hardhat, painted in blue, used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
+  id: HatHardhatBlue
+  name: blue hard hat
+  description: A hard hat, painted in blue, used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
   components:
   - type: Sprite
-    sprite: Clothing/Head/hardhat0_dblue.rsi
+    sprite: Clothing/Head/hardhat_blue.rsi
 
   - type: Clothing
-    sprite: Clothing/Head/hardhat0_dblue.rsi
+    sprite: Clothing/Head/hardhat_blue.rsi
 
 - type: entity
   parent: HatBase
-  id: HatHardhat Orange
-  name: hardhat orange
-  description: A hardhat, painted in orange, used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
+  id: HatHardhatOrange
+  name: orange hard hat
+  description: A hard hat, painted in orange, used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
   components:
   - type: Sprite
-    sprite: Clothing/Head/hardhat0_orange.rsi
+    sprite: Clothing/Head/hardhat_orange.rsi
 
   - type: Clothing
-    sprite: Clothing/Head/hardhat0_orange.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatHardhatPumpkin
-  name: hardhat pumpkin
-  description: "A jack o' lantern! Believed to ward off evil spirits."
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/hardhat0_pumpkin.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/hardhat0_pumpkin.rsi
+    sprite: Clothing/Head/hardhat_orange.rsi
 
 - type: entity
   parent: HatBase
   id: HatHardhatRed
-  name: hardhat red
-  description: A hardhat, painted in red, used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
+  name: red hard hat
+  description: A hard hat, painted in red, used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
   components:
   - type: Sprite
-    sprite: Clothing/Head/hardhat0_red.rsi
+    sprite: Clothing/Head/hardhat_red.rsi
 
   - type: Clothing
-    sprite: Clothing/Head/hardhat0_red.rsi
+    sprite: Clothing/Head/hardhat_red.rsi
 
 - type: entity
   parent: HatBase
   id: HatHardhatWhite
-  name: hardhat white
-  description: A hardhat, painted in white, used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
+  name: white hard hat
+  description: A hard hat, painted in white, used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
   components:
   - type: Sprite
-    sprite: Clothing/Head/hardhat0_white.rsi
+    sprite: Clothing/Head/hardhat_white.rsi
 
   - type: Clothing
-    sprite: Clothing/Head/hardhat0_white.rsi
+    sprite: Clothing/Head/hardhat_white.rsi
 
 - type: entity
   parent: HatBase
   id: HatHardhatYellow
-  name: hardhat yellow
-  description: A hardhat, painted in yellow, used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
+  name: yellow hard hat
+  description: A hard hat, painted in yellow, used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
   components:
   - type: Sprite
-    sprite: Clothing/Head/hardhat0_yellow.rsi
+    sprite: Clothing/Head/hardhat_yellow.rsi
 
   - type: Clothing
-    sprite: Clothing/Head/hardhat0_yellow.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatHardhatPumpkinAlt
-  name: hardhat pumpkin (alt)
-  description: "A jack o' lantern! Believed to ward off evil spirits."
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/hardhat1_pumpkin.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/hardhat1_pumpkin.rsi
-
+    sprite: Clothing/Head/hardhat_yellow.rsi
 
 - type: entity
   parent: HatBase
   id: HatLightRiot
-  name: light riot
-  description: "It's a helmet specifically designed to protect against close range attacks."
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/light_riot.rsi
-
-  - type: Clothing
-    sprite: Clothing/Head/light_riot.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatLightRiotOn
-  name: light riot (on)
+  name: light riot helmet
   description: It's a helmet specifically designed to protect against close range attacks.
   components:
   - type: Sprite
-    sprite: Clothing/Head/light_riot_on.rsi
+    sprite: Clothing/Head/light_riot.rsi
 
   - type: Clothing
-    sprite: Clothing/Head/light_riot_on.rsi
+    sprite: Clothing/Head/light_riot.rsi
 
 - type: entity
   parent: HatBase

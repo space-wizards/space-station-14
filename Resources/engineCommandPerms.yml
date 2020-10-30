@@ -19,6 +19,7 @@
   - netaudit
   - querymappaused
   - showtime
+  - inrangeunoccluded
 
 - Flags: MAPPING
   Commands:
@@ -39,7 +40,8 @@
   - delete
   - kick
   - listplayers
-  - teleport
+  - tp
+  - tpto
 
 - Flags: SERVER
   Commands:

@@ -1,21 +1,25 @@
 ﻿#nullable enable
 using System;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Pulling
 {
-    public abstract class SharedPullableComponent : Component
+    public abstract class SharedPullableComponent : Component, ICollideSpecial
     {
         public override string Name => "Pullable";
         public override uint? NetID => ContentNetIDs.PULLABLE;
+
+        [ComponentDependency] private IPhysicsComponent? _physics = default!;
 
         private IEntity? _puller;
 
@@ -231,6 +235,16 @@ namespace Content.Shared.GameObjects.Components.Pulling
             TryStopPull();
 
             base.OnRemove();
+        }
+
+        public bool PreventCollide(IPhysBody collidedWith)
+        {
+            if (_puller == null || _physics == null)
+            {
+                return false;
+            }
+
+            return (_physics.CollisionLayer & collidedWith.CollisionMask) == (int) CollisionGroup.MobImpassable;
         }
     }
 

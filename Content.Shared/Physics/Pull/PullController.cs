@@ -26,8 +26,6 @@ namespace Content.Shared.Physics.Pull
 
         private IPhysicsComponent? _puller;
 
-        public bool GettingPulled => _puller != null;
-
         private EntityCoordinates? _movingTo;
 
         public IPhysicsComponent? Puller => _puller;
@@ -45,18 +43,6 @@ namespace Content.Shared.Physics.Pull
                 _movingTo = value;
                 ControlledComponent.WakeBody();
             }
-        }
-
-        private float DistanceBeforeStopPull()
-        {
-            if (_puller == null)
-            {
-                return 0;
-            }
-
-            var aabbSize =  _puller.AABB.Size;
-
-            return (aabbSize.X > aabbSize.Y ? aabbSize.X : aabbSize.Y) + 0.15f;
         }
 
         private bool PullerMovingTowardsPulled()
@@ -83,7 +69,7 @@ namespace Content.Shared.Physics.Pull
             var ray = new CollisionRay(origin, velocity, (int) CollisionGroup.AllMask);
             bool Predicate(IEntity e) => e != ControlledComponent.Owner;
             var rayResults =
-                _physicsManager.IntersectRayWithPredicate(mapId, ray, DistanceBeforeStopPull() * 2, Predicate);
+                _physicsManager.IntersectRayWithPredicate(mapId, ray, DistBeforeStopPull, Predicate);
 
             return rayResults.Any();
         }
@@ -110,6 +96,22 @@ namespace Content.Shared.Physics.Pull
             }
 
             if (ControlledComponent == null)
+            {
+                return false;
+            }
+
+            var pullAttempt = new PullAttemptMessage(puller, ControlledComponent);
+
+            puller.Owner.SendMessage(null, pullAttempt);
+
+            if (pullAttempt.Cancelled)
+            {
+                return false;
+            }
+
+            ControlledComponent.Owner.SendMessage(null, pullAttempt);
+
+            if (pullAttempt.Cancelled)
             {
                 return false;
             }
@@ -219,13 +221,23 @@ namespace Content.Shared.Physics.Pull
                 var diff = MovingTo.Value.Position - ControlledComponent.Owner.Transform.Coordinates.Position;
                 LinearVelocity = diff.Normalized * 5;
             }
-            else if (distance.Length > DistanceBeforeStopPull() && !PullerMovingTowardsPulled())
-            {
-                LinearVelocity = distance.Normalized * _puller.LinearVelocity.Length * 1.5f;
-            }
             else
             {
-                LinearVelocity = Vector2.Zero;
+                if (PullerMovingTowardsPulled())
+                {
+                    LinearVelocity = Vector2.Zero;
+                    return;
+                }
+
+                var distanceAbs = Vector2.Abs(distance);
+                var totalAabb = _puller.AABB.Size + ControlledComponent.AABB.Size / 2;
+                if (distanceAbs.X < totalAabb.X && distanceAbs.Y < totalAabb.Y)
+                {
+                    LinearVelocity = Vector2.Zero;
+                    return;
+                }
+
+                LinearVelocity = distance.Normalized * _puller.LinearVelocity.Length * 1.5f;
             }
         }
 
@@ -243,6 +255,12 @@ namespace Content.Shared.Physics.Pull
                 ControlledComponent.Owner.Transform.Coordinates.Position.EqualsApprox(MovingTo.Value.Position, 0.01))
             {
                 MovingTo = null;
+            }
+
+            if (LinearVelocity != Vector2.Zero)
+            {
+                var angle = LinearVelocity.ToAngle();
+                ControlledComponent.Owner.Transform.LocalRotation = angle;
             }
         }
     }

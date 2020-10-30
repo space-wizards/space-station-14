@@ -2,7 +2,9 @@
 using System;
 using System.Linq;
 using Content.Server.Atmos;
+using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.Body.Circulatory;
+using Content.Server.GameObjects.Components.Body.Respiratory;
 using Content.Server.Utility;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Body.Behavior;
@@ -10,6 +12,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -147,6 +150,16 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
 
         public override void Inhale(float frameTime)
         {
+            if (Body != null && Body.Owner.TryGetComponent(out InternalsComponent? internals)
+                             && internals.BreathToolEntity != null && internals.GasTankEntity != null
+                             && internals.BreathToolEntity.TryGetComponent(out BreathToolComponent? breathTool)
+                             && breathTool.IsFunctional && internals.GasTankEntity.TryGetComponent(out GasTankComponent? gasTank)
+                             && gasTank.Air != null)
+            {
+                Inhale(frameTime, gasTank.RemoveAirVolume(Atmospherics.BreathVolume));
+                return;
+            }
+
             if (!Owner.Transform.Coordinates.TryGetTileAir(out var tileAir))
             {
                 return;
@@ -157,8 +170,7 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
 
         public void Inhale(float frameTime, GasMixture from)
         {
-            var ratio = Atmospherics.BreathPercentage * frameTime;
-
+            var ratio = (Atmospherics.BreathVolume / from.Volume) * frameTime;
 
             Transfer(from, Air, ratio);
             ToBloodstream(Air);

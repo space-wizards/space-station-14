@@ -1,0 +1,23 @@
+- type: entity
+  id: BoozeDispenser
+  name: booze dispenser
+  description: A booze dispenser with a single slot for a container to be filled.
+  parent: ReagentDispenserBase
+  components:
+  - type: Sprite
+    sprite: Constructible/Power/dispensers.rsi
+    state: booze_dispenser
+  - type: ReagentDispenser
+    pack: BoozeDispenserInventory
+
+- type: reagentDispenserInventory
+  id: BoozeDispenserInventory
+  inventory:
+  - chem.Whiskey
+  - chem.Ale
+  - chem.Wine
+  - chem.Ice
+  - chem.Beer
+  - chem.Vodka
+  - chem.Cognac
+  - chem.Kahlua
