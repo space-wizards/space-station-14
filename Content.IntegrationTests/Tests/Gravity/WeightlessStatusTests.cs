@@ -1,43 +1,95 @@
 ﻿using System.Threading.Tasks;
+using Content.Server.GameObjects.Components.Gravity;
+using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Components.Gravity;
 using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Utility;
 using NUnit.Framework;
+using Robust.Server.Interfaces.Timing;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.IntegrationTests.Tests.Gravity
 {
     [TestFixture]
-    [TestOf(typeof(WeightlessStatusSystem))]
-    [TestOf(typeof(WeightlessChangeMessage))]
+    [TestOf(typeof(WeightlessSystem))]
+    [TestOf(typeof(GravityGeneratorComponent))]
     public class WeightlessStatusTests : ContentIntegrationTest
     {
         [Test]
         public async Task WeightlessStatusTest()
         {
-            var server = StartServerDummyTicker();
+            var server = StartServer();
+
+            await server.WaitIdleAsync();
+
+            var mapManager = server.ResolveDependency<IMapManager>();
+            var entityManager = server.ResolveDependency<IEntityManager>();
+            var pauseManager = server.ResolveDependency<IPauseManager>();
+            var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
+
+            IEntity human = null;
+            SharedStatusEffectsComponent statusEffects = null;
 
             await server.WaitAssertion(() =>
             {
-                var mapManager = IoCManager.Resolve<IMapManager>();
+                var mapId = mapManager.CreateMap();
 
-                mapManager.CreateNewMapEntity(MapId.Nullspace);
+                pauseManager.AddUninitializedMap(mapId);
 
-                var entityManager = IoCManager.Resolve<IEntityManager>();
+                var gridId = new GridId(1);
 
-                var human = entityManager.SpawnEntity("HumanMob_Content", MapCoordinates.Nullspace);
+                if (!mapManager.TryGetGrid(gridId, out var grid))
+                {
+                    grid = mapManager.CreateGrid(mapId, gridId);
+                }
 
-               // Sanity checks
-                Assert.True(human.TryGetComponent(out SharedStatusEffectsComponent statusEffects));
+                var tileDefinition = tileDefinitionManager["underplating"];
+                var tile = new Tile(tileDefinition.TileId);
+                var coordinates = grid.ToCoordinates();
 
-                human.IsWeightless();
+                grid.SetTile(coordinates, tile);
 
-                // No gravity in null space
+                pauseManager.DoMapInitialize(mapId);
+
+                human = entityManager.SpawnEntity("HumanMob_Content", coordinates);
+
+                Assert.True(human.TryGetComponent(out statusEffects));
+            });
+
+            // Let WeightlessSystem and GravitySystem tick
+            await server.WaitRunTicks(1);
+
+            GravityGeneratorComponent gravityGenerator = null;
+
+            await server.WaitAssertion(() =>
+            {
+                // No gravity without a gravity generator
                 Assert.True(statusEffects.Statuses.ContainsKey(StatusEffect.Weightless));
+
+                gravityGenerator = human.EnsureComponent<GravityGeneratorComponent>();
+            });
+
+            // Let WeightlessSystem and GravitySystem tick
+            await server.WaitRunTicks(1);
+
+            await server.WaitAssertion(() =>
+            {
+                Assert.False(statusEffects.Statuses.ContainsKey(StatusEffect.Weightless));
+
+                // Disable the gravity generator
+                var args = new BreakageEventArgs {Owner = human};
+                gravityGenerator.OnBreak(args);
+            });
+
+            await server.WaitRunTicks(1);
+
+            await server.WaitAssertion(() =>
+            {
+                Assert.False(statusEffects.Statuses.ContainsKey(StatusEffect.Weightless));
             });
         }
     }
