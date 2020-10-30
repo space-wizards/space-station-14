@@ -72,7 +72,7 @@ namespace Content.Client.GameObjects.Components.Instruments
         ///     Changes the instrument the midi renderer will play.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public byte InstrumentProgram
+        public override byte InstrumentProgram
         {
             get => _instrumentProgram;
             set
@@ -89,7 +89,7 @@ namespace Content.Client.GameObjects.Components.Instruments
         ///     Changes the instrument bank the midi renderer will use.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public byte InstrumentBank
+        public override byte InstrumentBank
         {
             get => _instrumentBank;
             set
@@ -103,7 +103,7 @@ namespace Content.Client.GameObjects.Components.Instruments
         }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool AllowPercussion
+        public override bool AllowPercussion
         {
             get => _allowPercussion;
             set
@@ -117,7 +117,7 @@ namespace Content.Client.GameObjects.Components.Instruments
         }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool AllowProgramChange
+        public override bool AllowProgramChange
         {
             get => _allowProgramChange;
             set
@@ -316,6 +316,11 @@ namespace Content.Client.GameObjects.Components.Instruments
             {
                 EndRenderer(true);
             }
+
+            AllowPercussion = state.AllowPercussion;
+            AllowProgramChange = state.AllowProgramChange;
+            InstrumentBank = state.InstrumentBank;
+            InstrumentProgram = state.InstrumentProgram;
         }
 
         /// <inheritdoc cref="MidiRenderer.OpenInput"/>
