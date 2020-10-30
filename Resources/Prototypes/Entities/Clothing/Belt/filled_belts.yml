@@ -33,7 +33,7 @@
     contents:
       - name: Crowbar
       - name: Wrench
-      - name: Screwdriver
+      - name: PowerDrill
       - name: Wirecutter
       - name: Welder
       - name: Multitool
