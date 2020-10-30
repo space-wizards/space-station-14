@@ -1,5 +1,6 @@
 ﻿- type: entity
-  id: Arcade
+  abstract: true
+  id: ArcadeBase
   description: An arcade cabinet.
   name: arcade
   parent: ComputerBase
@@ -25,15 +26,20 @@
       bodyBroken: arcade
   - type: Anchorable
   - type: Pullable
+
+- type: entity
+  id: SpaceVillainArcade
+  parent: ArcadeBase
+  components:
   - type: SpaceVillainArcade
   - type: Wires
     BoardName: "Arcade"
   - type: UserInterface
     interfaces:
-    - key: enum.SpaceVillainArcadeUiKey.Key
-      type: SpaceVillainArcadeBoundUserInterface
-    - key: enum.WiresUiKey.Key
-      type: WiresBoundUserInterface
+      - key: enum.SpaceVillainArcadeUiKey.Key
+        type: SpaceVillainArcadeBoundUserInterface
+      - key: enum.WiresUiKey.Key
+        type: WiresBoundUserInterface
   - type: Computer
     board: SpaceVillainArcadeComputerCircuitboard
 
@@ -41,35 +47,28 @@
   id: BlockGameArcade
   description: An arcade cabinet with a strangely familiar game.
   name: NT block game
-  parent: ComputerBase
+  parent: ArcadeBase
   components:
-    - type: PowerReceiver
-    - type: Sprite
-      sprite: Constructible/Power/computers.rsi
-      layers:
-        - state: arcade
-          map: ["enum.ComputerVisualizer+Layers.Body"]
-        - state: invaders
-          shader: unshaded
-          map: ["enum.ComputerVisualizer+Layers.Screen"]
-    - type: Icon
-      sprite: Constructible/Power/computers.rsi
-      state: arcade
-    - type: Appearance
-      visuals:
-        - type: ComputerVisualizer
-          screen: invaders
-          key: ""
-          body: arcade
-          bodyBroken: arcade
-    - type: Anchorable
-    - type: Pullable
-    - type: BlockGameArcade
-    - type: UserInterface
-      interfaces:
-        - key: enum.BlockGameUiKey.Key
-          type: BlockGameBoundUserInterface
-        - key: enum.WiresUiKey.Key
-          type: WiresBoundUserInterface
-    - type: Computer
-      board: BlockGameArcadeComputerCircuitboard
+  - type: BlockGameArcade
+  - type: UserInterface
+    interfaces:
+      - key: enum.BlockGameUiKey.Key
+        type: BlockGameBoundUserInterface
+      - key: enum.WiresUiKey.Key
+        type: WiresBoundUserInterface
+  - type: Computer
+    board: BlockGameArcadeComputerCircuitboard
+
+- type: entity
+  id: RandomArcade
+  name: Random Arcade Spawner
+  components:
+  - type: RandomArcade
+  - type: Sprite
+    netsync: false
+    visible: false
+    sprite: Interface/Misc/markers.rsi
+    state: cross_blue
+  - type: Marker
+  - type: Clickable
+  - type: InteractionOutline
