@@ -1,5 +1,6 @@
 ﻿using System;
 using Content.Shared.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -88,23 +89,27 @@ namespace Content.Client.GameObjects.Components
                 }
                 else
                 {
-                    level = 1 + (int) MathF.Round(charge * 6);
+                    level = ContentHelpers.RoundToNearestLevels(charge, 1.0, 6) + 1;
                 }
 
-                if (level == 1)
+                if (level == 0)
+                {
+                    _sections[0].PanelOverride = _styleBoxUnlit;
+                }
+                else if (level == 1)
                 {
                     // Flash the last light.
                     _sections[0].PanelOverride = _timer > TimerCycle / 2 ? _styleBoxLit : _styleBoxUnlit;
                 }
                 else
                 {
-                    _sections[0].PanelOverride = level > 2 ? _styleBoxLit : _styleBoxUnlit;
+                    _sections[0].PanelOverride = _styleBoxLit;
                 }
 
-                _sections[1].PanelOverride = level > 3 ? _styleBoxLit : _styleBoxUnlit;
-                _sections[2].PanelOverride = level > 4 ? _styleBoxLit : _styleBoxUnlit;
-                _sections[3].PanelOverride = level > 5 ? _styleBoxLit : _styleBoxUnlit;
-                _sections[4].PanelOverride = level > 6 ? _styleBoxLit : _styleBoxUnlit;
+                _sections[1].PanelOverride = level >= 3 ? _styleBoxLit : _styleBoxUnlit;
+                _sections[2].PanelOverride = level >= 4 ? _styleBoxLit : _styleBoxUnlit;
+                _sections[3].PanelOverride = level >= 5 ? _styleBoxLit : _styleBoxUnlit;
+                _sections[4].PanelOverride = level >= 6 ? _styleBoxLit : _styleBoxUnlit;
             }
         }
     }

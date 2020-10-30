@@ -15,7 +15,7 @@
   - type: Sprite
     sprite: Clothing/Masks/mask_gasalt.rsi
     state: icon
-
+  - type: BreathMask
   - type: Clothing
     sprite: Clothing/Masks/mask_gasalt.rsi
 
@@ -28,7 +28,7 @@
   - type: Sprite
     sprite: Clothing/Masks/mask_gas.rsi
     state: icon
-
+  - type: BreathMask
   - type: Clothing
     sprite: Clothing/Masks/mask_gas.rsi
 
@@ -41,7 +41,7 @@
   - type: Sprite
     sprite: Clothing/Masks/mask_breath.rsi
     state: icon
-
+  - type: BreathMask
   - type: Clothing
     sprite: Clothing/Masks/mask_breath.rsi
 
@@ -54,7 +54,7 @@
   - type: Sprite
     sprite: Clothing/Masks/mask_clown.rsi
     state: icon
-
+  - type: BreathMask
   - type: Clothing
     sprite: Clothing/Masks/mask_clown.rsi
 
@@ -67,7 +67,7 @@
   - type: Sprite
     sprite: Clothing/Masks/mask_joy.rsi
     state: icon
-
+  - type: BreathMask
   - type: Clothing
     sprite: Clothing/Masks/mask_joy.rsi
 
@@ -80,7 +80,7 @@
   - type: Sprite
     sprite: Clothing/Masks/mask_mime.rsi
     state: icon
-
+  - type: BreathMask
   - type: Clothing
     sprite: Clothing/Masks/mask_mime.rsi
 
@@ -93,6 +93,6 @@
   - type: Sprite
     sprite: Clothing/Masks/mask_sterile.rsi
     state: icon
-
+  - type: BreathMask
   - type: Clothing
     sprite: Clothing/Masks/mask_sterile.rsi
