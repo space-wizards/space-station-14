@@ -7,6 +7,8 @@ using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Components.Map;
 using Robust.Shared.GameObjects.EntitySystemMessages;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.Map;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
 
@@ -15,6 +17,8 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     public class WeightlessSystem : EntitySystem, IResettingEntitySystem
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
+
         private readonly Dictionary<GridId, List<ServerStatusEffectsComponent>> _statuses = new Dictionary<GridId, List<ServerStatusEffectsComponent>>();
 
         public override void Initialize()
@@ -32,10 +36,22 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public void AddStatus(ServerStatusEffectsComponent status)
         {
-            var grid = status.Owner.Transform.GridID;
-            var statuses = _statuses.GetOrNew(grid);
+            var gridId = status.Owner.Transform.GridID;
+            var statuses = _statuses.GetOrNew(gridId);
 
             statuses.Add(status);
+
+            if (_mapManager.TryGetGrid(status.Owner.Transform.GridID, out var grid))
+            {
+                if (grid.HasGravity)
+                {
+                    RemoveWeightless(status);
+                }
+                else
+                {
+                    AddWeightless(status);
+                }
+            }
         }
 
         public void RemoveStatus(ServerStatusEffectsComponent status)

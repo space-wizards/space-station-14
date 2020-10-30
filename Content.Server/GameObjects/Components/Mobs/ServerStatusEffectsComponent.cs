@@ -23,6 +23,8 @@ namespace Content.Server.GameObjects.Components.Mobs
         [ViewVariables]
         private readonly Dictionary<StatusEffect, StatusEffectStatus> _statusEffects = new Dictionary<StatusEffect, StatusEffectStatus>();
 
+        public override IReadOnlyDictionary<StatusEffect, StatusEffectStatus> Statuses => _statusEffects;
+
         protected override void Startup()
         {
             base.Startup();
