@@ -3,7 +3,7 @@
   prob: 1
   issuer: The Syndicate
   requirements:
-    - !type: TraitorRequirement {}
+    - !type:TraitorRequirement {}
   conditions:
-    - !type: StealCondition
+    - !type:StealCondition
       prototype: SoapDeluxe

@@ -1,30 +1,21 @@
-﻿using Robust.Shared.Interfaces.GameObjects;
+﻿using System.Diagnostics.CodeAnalysis;
+using Content.Server.Mobs;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Objectives.Interfaces
 {
     public interface IObjectivesManager
     {
         /// <summary>
-        /// Returns all objectives the provided entity is valid for.
+        /// Returns all objectives the provided mind is valid for.
         /// </summary>
-        ObjectivePrototype[] GetAllPossibleObjectives(IEntity entity);
+        ObjectivePrototype[] GetAllPossibleObjectives(Mind mind);
 
         /// <summary>
-        /// Returns a randomly picked (no pop) collection of objectives the provided entity is valid for.
+        /// Returns a randomly picked (no pop) collection of objectives the provided mind is valid for.
         /// </summary>
-        ObjectivePrototype[] GetRandomObjectives(IEntity entity, float maxDifficulty = 3f);
-
-        /// <summary>
-        /// Assigns a objective to the entity.
-        /// </summary>
-        public void AssignObjective(IEntity entity, ObjectivePrototype objective)
-        {
-            AssignObjectives(entity, new[] {objective});
-        }
-
-        /// <summary>
-        /// Assigns the objectives to the entity.
-        /// </summary>
-        void AssignObjectives(IEntity entity, ObjectivePrototype[] objectives);
+        ObjectivePrototype[] GetRandomObjectives(Mind mind, float maxDifficulty = 3f);
     }
 }

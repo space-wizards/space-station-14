@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Interfaces.GameObjects;
+﻿using Content.Server.Mobs;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Utility;
 
@@ -25,7 +26,7 @@ namespace Content.Server.Objectives.Interfaces
         /// Returns the current progress of the condition in %.
         /// </summary>
         /// <returns>Current progress in %.</returns>
-        float GetProgress(IEntity entity);
+        float GetProgress(Mind mind);
 
         /// <summary>
         /// Returns a difficulty of the condition.

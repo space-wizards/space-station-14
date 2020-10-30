@@ -80,6 +80,8 @@
   - mindinfo
   - addrole
   - rmrole
+  - addobjective
+  - rmobjective
   - addoverlay
   - rmoverlay
   - showtime
@@ -161,6 +163,8 @@
   - mindinfo
   - addrole
   - rmrole
+  - addobjective
+  - rmobjective
   - addoverlay
   - rmoverlay
   - srvpopupmsg

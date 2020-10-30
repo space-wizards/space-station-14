@@ -1,4 +1,5 @@
 ﻿using System;
+using Content.Server.Mobs;
 using Content.Server.Objectives.Interfaces;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
@@ -25,7 +26,7 @@ namespace Content.Server.Objectives.Conditions
             throw new NotImplementedException();
         }
 
-        public float GetProgress(IEntity entity)
+        public float GetProgress(Mind mind)
         {
             //TODO
             throw new NotImplementedException();

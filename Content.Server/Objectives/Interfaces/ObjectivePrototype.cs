@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Content.Server.Mobs;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Server.Objectives.Interfaces
@@ -10,27 +12,34 @@ namespace Content.Server.Objectives.Interfaces
     [Prototype("objective")]
     public class ObjectivePrototype : IPrototype, IIndexedPrototype
     {
+        [ViewVariables]
         public string ID { get; private set; }
 
+        [ViewVariables(VVAccess.ReadWrite)]
         public string Issuer { get; private set; }
 
+        [ViewVariables]
         public float Probability { get; private set; }
 
+        [ViewVariables]
         public IReadOnlyList<IObjectiveCondition> Conditions => _conditions;
+        [ViewVariables]
         public IReadOnlyList<IObjectiveRequirement> Requirements => _requirements;
 
+        [ViewVariables]
         public float Difficulty => _difficultyOverride ?? _conditions.Sum(c => c.GetDifficulty());
 
         private List<IObjectiveCondition> _conditions = new List<IObjectiveCondition>();
         private List<IObjectiveRequirement> _requirements = new List<IObjectiveRequirement>();
 
+        [ViewVariables(VVAccess.ReadWrite)]
         private float? _difficultyOverride = null;
 
-        public bool CanBeAssigned(IEntity entity)
+        public bool CanBeAssigned(Mind mind)
         {
             foreach (var requirement in _requirements)
             {
-                if (!requirement.CanBeAssigned(entity)) return false;
+                if (!requirement.CanBeAssigned(mind)) return false;
             }
 
             return true;

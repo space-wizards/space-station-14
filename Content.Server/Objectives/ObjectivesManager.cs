@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.Mobs;
 using Content.Server.Objectives.Interfaces;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
@@ -16,14 +18,14 @@ namespace Content.Server.Objectives
         [Dependency] private IPrototypeManager _prototypeManager = default!;
         [Dependency] private IRobustRandom _random = default!;
 
-        public ObjectivePrototype[] GetAllPossibleObjectives(IEntity entity)
+        public ObjectivePrototype[] GetAllPossibleObjectives(Mind mind)
         {
-            return _prototypeManager.EnumeratePrototypes<ObjectivePrototype>().Where(objectivePrototype => objectivePrototype.CanBeAssigned(entity)).ToArray();
+            return _prototypeManager.EnumeratePrototypes<ObjectivePrototype>().Where(objectivePrototype => objectivePrototype.CanBeAssigned(mind)).ToArray();
         }
 
-        public ObjectivePrototype[] GetRandomObjectives(IEntity entity, float maxDifficulty = 3)
+        public ObjectivePrototype[] GetRandomObjectives(Mind mind, float maxDifficulty = 3)
         {
-            var objectives = GetAllPossibleObjectives(entity);
+            var objectives = GetAllPossibleObjectives(mind);
 
             //to prevent endless loops
             if(objectives.Length == 0 || objectives.Sum(o => o.Difficulty) == 0f) return objectives;
@@ -49,12 +51,6 @@ namespace Content.Server.Objectives
             }
 
             return result.ToArray();
-        }
-
-
-        public void AssignObjectives(IEntity entity, ObjectivePrototype[] objectives)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

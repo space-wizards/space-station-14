@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Mobs.Roles;
+using Content.Server.Objectives;
+using Content.Server.Objectives.Interfaces;
 using Content.Server.Players;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Mobs
@@ -26,6 +30,8 @@ namespace Content.Server.Mobs
     public sealed class Mind
     {
         private readonly ISet<Role> _roles = new HashSet<Role>();
+
+        private readonly SortedSet<Objective> _objectives = new SortedSet<Objective>();
 
         /// <summary>
         ///     Creates the new mind attached to a specific player session.
@@ -73,6 +79,12 @@ namespace Content.Server.Mobs
         /// </summary>
         [ViewVariables]
         public IEnumerable<Role> AllRoles => _roles;
+
+        /// <summary>
+        ///     An enumerable over all the objectives this mind has.
+        /// </summary>
+        [ViewVariables]
+        public IEnumerable<Objective> AllObjectives => _objectives;
 
         /// <summary>
         ///     The session of the player owning this mind.
@@ -142,6 +154,38 @@ namespace Content.Server.Mobs
             var t = typeof(T);
 
             return _roles.Any(role => role.GetType() == t);
+        }
+
+        public bool TryAddObjective(string objectiveID, [NotNullWhen(true)] out Objective objective)
+        {
+            if (!IoCManager.Resolve<IPrototypeManager>()
+                .TryIndex<ObjectivePrototype>(objectiveID, out var objectivePrototype) || !objectivePrototype.CanBeAssigned(this))
+            {
+                objective = null;
+                return false;
+            }
+
+            objective = new Objective(this, objectivePrototype);
+            _objectives.Add(objective);
+            return true;
+        }
+
+        /// <summary>
+        /// Adds an objective to this mind.
+        /// </summary>
+        public Objective AddObjective(Objective objective)
+        {
+            _objectives.Add(objective);
+            return objective;
+        }
+
+        /// <summary>
+        /// Removes an objective to this mind.
+        /// </summary>
+        /// <returns>Returns true if the removal succeeded.</returns>
+        public bool RemoveObjective(Objective objective)
+        {
+            return _objectives.Remove(objective);
         }
 
         /// <summary>
