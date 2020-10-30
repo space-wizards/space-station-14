@@ -1,4 +1,5 @@
-﻿using Content.Server.Objectives.Interfaces;
+﻿#nullable enable
+using Content.Server.Objectives.Interfaces;
 using Content.Server.Players;
 using Content.Shared.Roles;
 using Robust.Server.Interfaces.Console;
