@@ -1,4 +1,5 @@
-﻿using Content.Server.AI.Utility.Considerations;
+﻿using Content.Server.Administration;
+using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.WorldState;
 using Content.Server.Cargo;
 using Content.Server.Chat;
@@ -44,6 +45,7 @@ namespace Content.Server
             IoCManager.Register<ConsiderationsManager, ConsiderationsManager>();
             IoCManager.Register<IAccentManager, AccentManager>();
             IoCManager.Register<IConnectionManager, ConnectionManager>();
+            IoCManager.Register<IAdminManager, AdminManager>();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Content.Shared.Administration;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
@@ -7,8 +8,9 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
-namespace Content.Server.Administration
+namespace Content.Server.Administration.Commands
 {
+    [AdminCommand(AdminFlags.Admin)]
     class DeleteEntitiesWithComponent : IClientCommand
     {
         public string Command => "deleteewc";

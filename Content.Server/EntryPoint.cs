@@ -1,4 +1,5 @@
-﻿using Content.Server.AI.Utility.Considerations;
+﻿using Content.Server.Administration;
+using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.WorldState;
 using Content.Server.Database;
 using Content.Server.GameObjects.Components.Mobs.Speech;
@@ -77,6 +78,7 @@ namespace Content.Server
             IoCManager.Resolve<BlackboardManager>().Initialize();
             IoCManager.Resolve<ConsiderationsManager>().Initialize();
             IoCManager.Resolve<IPDAUplinkManager>().Initialize();
+            IoCManager.Resolve<IAdminManager>().Initialize();
         }
 
         public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)

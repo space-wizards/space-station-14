@@ -1,12 +1,14 @@
 ﻿#nullable enable
 using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
+using Content.Shared.Administration;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.IoC;
 
-namespace Content.Server.Administration
+namespace Content.Server.Administration.Commands
 {
+    [AdminCommand(AdminFlags.Server)]
     public class ReadyAll : IClientCommand
     {
         public string Command => "readyall";

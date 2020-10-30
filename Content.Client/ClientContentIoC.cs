@@ -1,4 +1,5 @@
-﻿using Content.Client.Chat;
+﻿using Content.Client.Administration;
+using Content.Client.Chat;
 using Content.Client.GameTicking;
 using Content.Client.Interfaces;
 using Content.Client.Interfaces.Chat;
@@ -35,6 +36,7 @@ namespace Content.Client
             IoCManager.Register<IClickMapManager, ClickMapManager>();
             IoCManager.Register<IStationEventManager, StationEventManager>();
             IoCManager.Register<IAdminMenuManager, AdminMenuManager>();
+            IoCManager.Register<IClientAdminManager, ClientAdminManager>();
         }
     }
 }

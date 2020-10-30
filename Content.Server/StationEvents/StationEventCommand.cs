@@ -1,6 +1,7 @@
 ﻿#nullable enable
+using Content.Server.Administration;
 using Content.Server.GameObjects.EntitySystems.StationEvents;
-using JetBrains.Annotations;
+using Content.Shared.Administration;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects.Systems;
@@ -8,14 +9,14 @@ using Robust.Shared.Localization;
 
 namespace Content.Server.StationEvents
 {
-    [UsedImplicitly]
+    [AdminCommand(AdminFlags.Server)]
     public sealed class StationEventCommand : IClientCommand
     {
         public string Command => "events";
         public string Description => "Provides admin control to station events";
-        public string Help => "events <list/pause/resume/stop/run <eventname/random>>\n" + 
+        public string Help => "events <list/pause/resume/stop/run <eventname/random>>\n" +
                               "list: return all event names that can be run\n " +
-                              "pause: stop all random events from running\n" + 
+                              "pause: stop all random events from running\n" +
                               "resume: allow random events to run again\n" +
                               "run: start a particular event now; <eventname> is case-insensitive and not localized";
         public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
@@ -25,19 +26,19 @@ namespace Content.Server.StationEvents
                 shell.SendText(player, "Need more args");
                 return;
             }
-            
+
             if (args[0] == "list")
             {
                 var resultText = "Random\n" + EntitySystem.Get<StationEventSystem>().GetEventNames();
                 shell.SendText(player, resultText);
                 return;
             }
-            
+
             // Didn't use a "toggle" so it's explicit
             if (args[0] == "pause")
             {
                 var stationEventSystem = EntitySystem.Get<StationEventSystem>();
-                
+
                 if (!stationEventSystem.Enabled)
                 {
                     shell.SendText(player, Loc.GetString("Station events are already paused"));
@@ -50,11 +51,11 @@ namespace Content.Server.StationEvents
                     return;
                 }
             }
-            
+
             if (args[0] == "resume")
             {
                 var stationEventSystem = EntitySystem.Get<StationEventSystem>();
-                
+
                 if (stationEventSystem.Enabled)
                 {
                     shell.SendText(player, Loc.GetString("Station events are already running"));
@@ -88,7 +89,7 @@ namespace Content.Server.StationEvents
                 {
                     resultText = EntitySystem.Get<StationEventSystem>().RunEvent(eventName);
                 }
-                
+
                 shell.SendText(player, resultText);
                 return;
             }

@@ -45,6 +45,9 @@ namespace Content.Server.Database
 
         // Connection log
         Task AddConnectionLogAsync(NetUserId userId, string userName, IPAddress address);
+
+        // Admins
+        Task<Admin?> GetAdminDataForAsync(NetUserId userId);
     }
 
     public sealed class ServerDbManager : IServerDbManager
@@ -135,6 +138,11 @@ namespace Content.Server.Database
         public Task AddConnectionLogAsync(NetUserId userId, string userName, IPAddress address)
         {
             return _db.AddConnectionLogAsync(userId, userName, address);
+        }
+
+        public Task<Admin?> GetAdminDataForAsync(NetUserId userId)
+        {
+            return _db.GetAdminDataForAsync(userId);
         }
 
         private DbContextOptions<ServerDbContext> CreatePostgresOptions()

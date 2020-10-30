@@ -1,12 +1,14 @@
 ﻿using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Players;
+using Content.Shared.Administration;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Server.Administration
+namespace Content.Server.Administration.Commands
 {
+    [AdminCommand(AdminFlags.Admin)]
     public class AGhost : IClientCommand
     {
         public string Command => "aghost";

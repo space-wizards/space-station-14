@@ -34,6 +34,9 @@ namespace Content.Shared
         public static readonly CVarDef<bool>
             GamePersistGuests = CVarDef.Create("game.persistguests", true, CVar.ARCHIVE | CVar.SERVERONLY);
 
+        public static readonly CVarDef<bool>
+            ConsoleLoginLocal = CVarDef.Create("console.loginlocal", true, CVar.ARCHIVE);
+
 
         /*
          * Database stuff

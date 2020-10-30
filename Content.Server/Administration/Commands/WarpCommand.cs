@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Markers;
+using Content.Shared.Administration;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Enums;
@@ -10,8 +11,9 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
-namespace Content.Server.Administration
+namespace Content.Server.Administration.Commands
 {
+    [AdminCommand(AdminFlags.Admin)]
     public class WarpCommand : IClientCommand
     {
         public string Command => "warp";

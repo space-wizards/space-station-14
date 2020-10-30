@@ -1,8 +1,10 @@
 ﻿#nullable enable
 using System;
+using Content.Server.Administration;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.Atmos;
+using Content.Shared.Administration;
 using Content.Shared.Atmos;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
@@ -15,6 +17,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Server.Atmos
 {
+    [AdminCommand(AdminFlags.Debug)]
     public class AddAtmos : IClientCommand
     {
         public string Command => "addatmos";

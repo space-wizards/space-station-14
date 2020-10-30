@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Net;
 using Content.Server.Database;
+using Content.Shared.Administration;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.IoC;
@@ -8,8 +8,9 @@ using Robust.Shared.Network;
 
 #nullable enable
 
-namespace Content.Server.Administration
+namespace Content.Server.Administration.Commands
 {
+    [AdminCommand(AdminFlags.Ban)]
     public sealed class BanCommand : IClientCommand
     {
         public string Command => "ban";
