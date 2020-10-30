@@ -4,9 +4,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.UserInterface;
 using Content.Shared.GameObjects.Components.Items;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
@@ -19,13 +21,42 @@ namespace Content.Client.GameObjects.Components.Items
     {
         [Dependency] private readonly IGameHud _gameHud = default!;
 
+        private string? _activeIndex;
         private HandsGui? _gui;
-
         private readonly List<Hand> _hands = new List<Hand>();
 
         [ViewVariables] public IReadOnlyList<Hand> Hands => _hands;
 
-        [ViewVariables] public string? ActiveIndex { get; private set; }
+        [ViewVariables]
+        public string? ActiveIndex
+        {
+            get => _activeIndex;
+            set
+            {
+                if (_activeIndex == value)
+                {
+                    return;
+                }
+
+                var old = _activeIndex;
+                _activeIndex = value;
+
+                var interactionSystem = EntitySystem.Get<SharedInteractionSystem>();
+
+                if (TryGetEntity(old, out var oldHeld))
+                {
+                    interactionSystem.HandDeselectedInteraction(Owner, oldHeld);
+                }
+
+                if (TryGetEntity(_activeIndex, out var newHeld))
+                {
+                    interactionSystem.HandSelectedInteraction(Owner, newHeld);
+                }
+
+                SendNetworkMessage(new ClientChangedHandMsg(ActiveIndex));
+                Dirty();
+            }
+        }
 
         [ViewVariables] private ISpriteComponent? _sprite;
 
@@ -56,6 +87,17 @@ namespace Content.Client.GameObjects.Components.Items
             return GetHand(handName)?.Entity;
         }
 
+        public bool TryGetEntity(string? handName, [NotNullWhen(true)] out IEntity? entity)
+        {
+            if (handName == null)
+            {
+                entity = null;
+                return false;
+            }
+
+            return (entity = GetEntity(handName)) != null;
+        }
+
         public override void OnRemove()
         {
             base.OnRemove();
@@ -79,13 +121,12 @@ namespace Content.Client.GameObjects.Components.Items
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
-            if (curState == null)
+            if (!(curState is HandsComponentState state))
             {
                 return;
             }
 
-            var cast = (HandsComponentState) curState;
-            foreach (var sharedHand in cast.Hands)
+            foreach (var sharedHand in state.Hands)
             {
                 if (!TryHand(sharedHand.Name, out var hand))
                 {
@@ -108,7 +149,7 @@ namespace Content.Client.GameObjects.Components.Items
 
             foreach (var currentHand in _hands.ToList())
             {
-                if (cast.Hands.All(newHand => newHand.Name != currentHand.Name))
+                if (state.Hands.All(newHand => newHand.Name != currentHand.Name))
                 {
                     _hands.Remove(currentHand);
                     _gui?.RemoveHand(currentHand);
@@ -116,7 +157,7 @@ namespace Content.Client.GameObjects.Components.Items
                 }
             }
 
-            ActiveIndex = cast.ActiveIndex;
+            _activeIndex = state.ActiveIndex;
 
             _gui?.UpdateHandIcons();
             RefreshInHands();
@@ -228,11 +269,6 @@ namespace Content.Client.GameObjects.Components.Items
                     break;
                 }
             }
-        }
-
-        public void SendChangeHand(string index)
-        {
-            SendNetworkMessage(new ClientChangedHandMsg(index));
         }
 
         public void AttackByInHand(string index)

@@ -717,51 +717,6 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         }
 
         /// <summary>
-        ///     Calls HandSelected on all components that implement the IHandSelected interface
-        ///     on an item entity on a hand that has just been selected.
-        /// </summary>
-        public void HandSelectedInteraction(IEntity user, IEntity item)
-        {
-            var handSelectedMsg = new HandSelectedMessage(user, item);
-            RaiseLocalEvent(handSelectedMsg);
-            if (handSelectedMsg.Handled)
-            {
-                return;
-            }
-
-            var comps = item.GetAllComponents<IHandSelected>().ToList();
-
-            // Call Land on all components that implement the interface
-            foreach (var comp in comps)
-            {
-                comp.HandSelected(new HandSelectedEventArgs(user));
-            }
-        }
-
-        /// <summary>
-        ///     Calls HandDeselected on all components that implement the IHandDeselected interface
-        ///     on an item entity on a hand that has just been deselected.
-        /// </summary>
-        public void HandDeselectedInteraction(IEntity user, IEntity item)
-        {
-            var handDeselectedMsg = new HandDeselectedMessage(user, item);
-            RaiseLocalEvent(handDeselectedMsg);
-            if (handDeselectedMsg.Handled)
-            {
-                return;
-            }
-
-            var comps = item.GetAllComponents<IHandDeselected>().ToList();
-
-            // Call Land on all components that implement the interface
-            foreach (var comp in comps)
-            {
-                comp.HandDeselected(new HandDeselectedEventArgs(user));
-            }
-        }
-
-
-        /// <summary>
         /// Will have two behaviors, either "uses" the weapon at range on the entity if it is capable of accepting that action
         /// Or it will use the weapon itself on the position clicked, regardless of what was there
         /// </summary>

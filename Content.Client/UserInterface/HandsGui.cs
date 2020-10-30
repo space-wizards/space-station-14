@@ -209,7 +209,7 @@ namespace Content.Client.UserInterface
 
             if (args.Function == ContentKeyFunctions.MouseMiddle)
             {
-                hands.SendChangeHand(slotName);
+                hands.ActiveIndex = slotName;
                 args.Handle();
                 return;
             }
@@ -219,7 +219,7 @@ namespace Content.Client.UserInterface
             {
                 if (args.Function == EngineKeyFunctions.UIClick && hands.ActiveIndex != slotName)
                 {
-                    hands.SendChangeHand(slotName);
+                    hands.ActiveIndex = slotName;
                     args.Handle();
                 }
 

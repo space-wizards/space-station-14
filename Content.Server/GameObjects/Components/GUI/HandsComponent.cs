@@ -452,7 +452,7 @@ namespace Content.Server.GameObjects.Components.GUI
             Dirty();
         }
 
-        public bool HasHand(string name)
+        public bool HasHand(string? name)
         {
             return _hands.Any(hand => hand.Name == name);
         }

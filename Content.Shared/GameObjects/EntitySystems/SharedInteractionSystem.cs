@@ -28,6 +28,50 @@ namespace Content.Shared.GameObjects.EntitySystems
         public delegate bool Ignored(IEntity entity);
 
         /// <summary>
+        ///     Calls HandSelected on all components that implement the IHandSelected interface
+        ///     on an item entity on a hand that has just been selected.
+        /// </summary>
+        public void HandSelectedInteraction(IEntity user, IEntity item)
+        {
+            var handSelectedMsg = new HandSelectedMessage(user, item);
+            RaiseLocalEvent(handSelectedMsg);
+            if (handSelectedMsg.Handled)
+            {
+                return;
+            }
+
+            var comps = item.GetAllComponents<IHandSelected>().ToList();
+
+            // Call HandSelected on all components that implement the interface
+            foreach (var comp in comps)
+            {
+                comp.HandSelected(new HandSelectedEventArgs(user));
+            }
+        }
+
+        /// <summary>
+        ///     Calls HandDeselected on all components that implement the IHandDeselected interface
+        ///     on an item entity on a hand that has just been deselected.
+        /// </summary>
+        public void HandDeselectedInteraction(IEntity user, IEntity item)
+        {
+            var handDeselectedMsg = new HandDeselectedMessage(user, item);
+            RaiseLocalEvent(handDeselectedMsg);
+            if (handDeselectedMsg.Handled)
+            {
+                return;
+            }
+
+            var comps = item.GetAllComponents<IHandDeselected>().ToList();
+
+            // Call HandDeselected on all components that implement the interface
+            foreach (var comp in comps)
+            {
+                comp.HandDeselected(new HandDeselectedEventArgs(user));
+            }
+        }
+
+        /// <summary>
         ///     Traces a ray from coords to otherCoords and returns the length
         ///     of the vector between coords and the ray's first hit.
         /// </summary>

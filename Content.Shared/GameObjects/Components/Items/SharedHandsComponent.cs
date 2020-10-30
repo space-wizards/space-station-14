@@ -86,9 +86,9 @@ namespace Content.Shared.GameObjects.Components.Items
     [Serializable, NetSerializable]
     public class ClientChangedHandMsg : ComponentMessage
     {
-        public string Index { get; }
+        public string? Index { get; }
 
-        public ClientChangedHandMsg(string index)
+        public ClientChangedHandMsg(string? index)
         {
             Directed = true;
             Index = index;
