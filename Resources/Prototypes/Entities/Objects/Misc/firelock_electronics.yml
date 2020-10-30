@@ -1,0 +1,9 @@
+﻿- type: entity
+  id: FirelockElectronics
+  parent: BaseItem
+  name: firelock electronics
+  description: desc here!
+  components:
+    - type: Sprite
+      sprite: Constructible/Misc/module.rsi
+      state: mainboard
