@@ -182,6 +182,7 @@
             "GasCanisterPort",
             "Lung",
             "Cleanable",
+            "Configuration",
             "Brain",
             "PlantHolder",
             "SeedExtractor",
