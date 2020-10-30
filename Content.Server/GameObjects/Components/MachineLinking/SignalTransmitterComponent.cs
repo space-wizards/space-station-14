@@ -87,11 +87,10 @@ namespace Content.Server.GameObjects.Components.MachineLinking
             }
         }
 
-        public bool TransmitSignal<T>(IEntity user, T signal)
+        public bool TransmitSignal<T>(T signal)
         {
             if (_receivers.Count == 0)
             {
-                Owner.PopupMessage(user, Loc.GetString("No receivers connected."));
                 return false;
             }
 

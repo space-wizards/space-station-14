@@ -136,7 +136,6 @@
             "DisposalBend",
             "Recycler",
             "Conveyor",
-            "ConveyorSwitch",
             "Flippable",
             "Airtight",
             "MovedByPressure",

@@ -25,7 +25,8 @@
     sprite: Constructible/Power/conveyor.rsi
     state: conveyor_started_cw
     drawdepth: FloorObjects
-
+  - type: SignalReceiver
+    maxTransmitters: 1
   - type: Conveyor
   - type: Appearance
     visuals:
@@ -37,9 +38,9 @@
   - type: PowerReceiver
 
 - type: entity
-  id: ConveyorSwitch
-  name: conveyor switch
-  description: A conveyor control switch.
+  id: TwoWaySwitch
+  name: two way switch
+  description: A two way switch.
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -47,12 +48,10 @@
     netsync: false
     sprite: Constructible/Power/conveyor.rsi
     state: switch-off
-
-  - type: ConveyorSwitch
+  - type: TwoWayLever
   - type: Appearance
     visuals:
-      - type: ConveyorSwitchVisualizer
+      - type: TwoWaySwitchVisualizer
         state_forward: switch-fwd
         state_off: switch-off
         state_reversed: switch-rev
-        state_loose: switch
