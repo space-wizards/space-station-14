@@ -1,9 +1,8 @@
 ﻿using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
 using System;
-using System.Collections.Generic;
 
-namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
+namespace Content.Server.DeviceNetwork
 {
     public class WirelessNetworkConnection : BaseNetworkConnection
     {
@@ -20,7 +19,7 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
             Range = range;
         }
 
-        protected override bool CanReceive(int frequency, string sender, IReadOnlyDictionary<string, string> payload, Metadata metadata, bool broadcast)
+        protected override bool CanReceive(int frequency, string sender, NetworkPayload payload, Metadata metadata, bool broadcast)
         {
             if (_owner.Deleted)
             {
@@ -55,7 +54,7 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
             return metadata;
         }
 
-        protected override Dictionary<string, string> ManipulatePayload(Dictionary<string, string> payload)
+        protected override NetworkPayload ManipulatePayload(NetworkPayload payload)
         {
             return payload;
         }

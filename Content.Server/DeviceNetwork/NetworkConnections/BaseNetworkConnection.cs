@@ -1,9 +1,8 @@
 ﻿using Content.Server.Interfaces;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
-using System.Collections.Generic;
 
-namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
+namespace Content.Server.DeviceNetwork
 {
     public abstract class BaseNetworkConnection : IDeviceNetworkConnection
     {
@@ -26,26 +25,26 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
 
         }
 
-        public bool Send(int frequency, string address, Dictionary<string, string> payload)
+        public bool Send(int frequency, string address, NetworkPayload payload)
         {
             var data = ManipulatePayload(payload);
             var metadata = GetMetadata();
             return Connection.Send(frequency, address, data, metadata);
         }
 
-        public bool Send(string address, Dictionary<string, string> payload)
+        public bool Send(string address, NetworkPayload payload)
         {
             return Send(0, address, payload);
         }
 
-        public bool Broadcast(int frequency, Dictionary<string, string> payload)
+        public bool Broadcast(int frequency, NetworkPayload payload)
         {
             var data = ManipulatePayload(payload);
             var metadata = GetMetadata();
             return Connection.Broadcast(frequency, data, metadata);
         }
 
-        public bool Broadcast(Dictionary<string, string> payload)
+        public bool Broadcast(NetworkPayload payload)
         {
             return Broadcast(0, payload);
         }
@@ -55,7 +54,7 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
             Connection.Close();
         }
 
-        private void OnReceiveNetMessage(int frequency, string sender, IReadOnlyDictionary<string, string> payload, Metadata metadata, bool broadcast)
+        private void OnReceiveNetMessage(int frequency, string sender, NetworkPayload payload, Metadata metadata, bool broadcast)
         {
             if (CanReceive(frequency, sender, payload, metadata, broadcast))
             {
@@ -63,8 +62,8 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
             }
         }
 
-        protected abstract bool CanReceive(int frequency, string sender, IReadOnlyDictionary<string, string> payload, Metadata metadata, bool broadcast);
-        protected abstract Dictionary<string, string> ManipulatePayload(Dictionary<string, string> payload);
+        protected abstract bool CanReceive(int frequency, string sender, NetworkPayload payload, Metadata metadata, bool broadcast);
+        protected abstract NetworkPayload ManipulatePayload(NetworkPayload payload);
         protected abstract Metadata GetMetadata();
     }
 }
