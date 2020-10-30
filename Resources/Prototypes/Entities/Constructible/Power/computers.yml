@@ -1,25 +1,29 @@
 ﻿- type: entity
   id: ComputerFrame
   name: computer frame
+  placement:
+    mode: SnapgridCenter
   components:
     - type: Physics
       mass: 25
-      anchored: false
+      anchored: true
       shapes:
-        - !type:PhysShapeAabb
-          bounds: "-0.5,-0.25,0.5,0.25"
-          layer:
-            - Impassable
-            - MobImpassable
-            - VaultImpassable
-            - Opaque
-          mask:
-            - Impassable
-            - MobImpassable
-            - VaultImpassable
+      - !type:PhysShapeAabb
+        bounds: "-0.5,-0.25,0.5,0.25"
+        layer:
+        - Impassable
+        - MobImpassable
+        - VaultImpassable
+        - Opaque
+        mask:
+        - Impassable
+        - MobImpassable
+        - VaultImpassable
     - type: Clickable
     - type: InteractionOutline
     - type: Anchorable
+    - type: Rotatable
+    - type: Pullable
     - type: Construction
       graph: computer
       node: frameUnsecured
@@ -33,21 +37,21 @@
   description: This computer has seen better days.
   abstract: true # We don't want this to show up in the entity spawner menu.
   components:
-    - type: Physics
-      mass: 25
-      anchored: true
-      shapes:
-        - !type:PhysShapeAabb
-          bounds: "-0.5,-0.25,0.5,0.25"
-          layer:
-            - Impassable
-            - MobImpassable
-            - VaultImpassable
-            - Opaque
-          mask:
-            - Impassable
-            - MobImpassable
-            - VaultImpassable
+  - type: Physics
+    mass: 25
+    anchored: true
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5,-0.25,0.5,0.25"
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - Opaque
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
     - type: Clickable
     - type: InteractionOutline
     - type: Anchorable
@@ -62,12 +66,15 @@
   id: ComputerBase
   name: computer
   abstract: true
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Clickable
   - type: InteractionOutline
   - type: Construction
     graph: computer
     node: computer
+  - type: Rotatable
   - type: Physics
     mass: 25
     anchored: true
@@ -86,9 +93,9 @@
   - type: Computer
   - type: PowerReceiver
   - type: Anchorable
+  - type: Pullable
   - type: BreakableConstruction
     node: monitorBroken
-
   - type: Sprite
     sprite: Constructible/Power/computers.rsi
     layers:
@@ -102,13 +109,11 @@
     - state: generic_key
       shader: unshaded
       map: ["enum.ComputerVisualizer+Layers.KeyboardOn"]
-
   - type: Appearance
     visuals:
     - type: ComputerVisualizer
       key: generic_key
       screen: generic
-
 
 - type: entity
   id: ComputerAlert
@@ -122,7 +127,6 @@
       key: atmos_key
       screen: "alert-2"
 
-
 - type: entity
   id: ComputerPowerMonitoring
   parent: ComputerBase
@@ -134,7 +138,6 @@
     - type: ComputerVisualizer
       key: power_key
       screen: power_monitor
-
 
 - type: entity
   id: ComputerSupplyOrdering
@@ -198,7 +201,6 @@
     - type: ComputerVisualizer
       key: med_key
       screen: medcomp
-
 
 - type: entity
   id: ComputerResearchAndDevelopment

@@ -8,6 +8,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -107,7 +108,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                     int animLayer = sprite.AddLayerWithState("flashing");
                     _flashing = true;
 
-                    Timer.Spawn(400, () =>
+                    Owner.SpawnTimer(400, () =>
                     {
                         sprite.RemoveLayer(animLayer);
                         _flashing = false;

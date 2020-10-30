@@ -60,6 +60,7 @@
   - spawn
   - delete
   - tp
+  - tpto
   - tpgrid
   - setgamepreset
   - forcepreset
@@ -144,6 +145,7 @@
   - spawn
   - delete
   - tp
+  - tpto
   - tpgrid
   - setgamepreset
   - forcepreset
