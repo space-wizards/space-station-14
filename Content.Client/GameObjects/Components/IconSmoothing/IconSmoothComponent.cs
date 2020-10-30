@@ -203,7 +203,17 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
                 cornerNW |= CornerFill.Diagonal;
             }
 
-            return (cornerNE, cornerNW, cornerSW, cornerSE);
+            switch (Owner.Transform.WorldRotation.GetCardinalDir())
+            {
+                case Direction.North:
+                    return (cornerSW, cornerSE, cornerNE, cornerNW);
+                case Direction.West:
+                    return (cornerSE, cornerNE, cornerNW, cornerSW);
+                case Direction.South:
+                    return (cornerNE, cornerNW, cornerSW, cornerSE);
+                default:
+                    return (cornerNW, cornerSW, cornerSE, cornerNE);
+            }
         }
 
         /// <inheritdoc />

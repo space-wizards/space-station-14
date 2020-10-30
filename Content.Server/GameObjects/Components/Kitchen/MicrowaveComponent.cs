@@ -26,6 +26,7 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -312,7 +313,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                            (_currentCookTimerTime == (uint)recipeToCook.CookTime);
             SetAppearance(MicrowaveVisualState.Cooking);
             _audioSystem.PlayFromEntity(_startCookingSound, Owner, AudioParams.Default);
-            Timer.Spawn((int)(_currentCookTimerTime * _cookTimeMultiplier), (Action)(() =>
+            Owner.SpawnTimer((int)(_currentCookTimerTime * _cookTimeMultiplier), (Action)(() =>
             {
                 if (_lostPower)
                 {

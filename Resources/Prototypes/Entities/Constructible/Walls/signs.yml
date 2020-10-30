@@ -24,7 +24,7 @@
   parent: BaseSign
   id: PaintingMonkey
   name: monkey painting
-  description: monky
+  description: Return to monky.
   components:
   - type: Physics
     shapes:

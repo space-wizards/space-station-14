@@ -6,12 +6,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.Components.Mobs.State;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Disposal;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.EntitySystems;
@@ -27,6 +29,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
@@ -136,10 +139,13 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
+
             if (!entity.TryGetComponent(out IPhysicsComponent? physics) ||
                 !physics.CanCollide)
             {
-                return false;
+                if (!(entity.TryGetComponent(out IDamageableComponent? damageState) && damageState.CurrentState == DamageState.Dead)) {
+                    return false;
+                }
             }
 
             if (!entity.HasComponent<ItemComponent>() &&
@@ -160,7 +166,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             _automaticEngageToken = new CancellationTokenSource();
 
-            Timer.Spawn(_automaticEngageTime, () =>
+            Owner.SpawnTimer(_automaticEngageTime, () =>
             {
                 if (!TryFlush())
                 {
@@ -255,7 +261,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             if (Engaged && CanFlush())
             {
-                Timer.Spawn(_flushDelay, () => TryFlush());
+                Owner.SpawnTimer(_flushDelay, () => TryFlush());
             }
         }
 

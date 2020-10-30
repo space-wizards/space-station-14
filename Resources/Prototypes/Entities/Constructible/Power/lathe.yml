@@ -2,6 +2,8 @@
   id: BaseLathe
   name: "lathe"
   abstract: true
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -10,7 +12,12 @@
     anchored: true
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.4,-0.25,0.4,0.25"
+      bounds: "-0.4,-0.4,0.4,0.4"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
       layer:
       - Opaque
       - Impassable
@@ -21,6 +28,7 @@
   - type: Lathe
   - type: MaterialStorage
   - type: Anchorable
+  - type: Pullable
   - type: UserInterface
     interfaces:
     - key: enum.LatheUiKey.Key
@@ -41,18 +49,6 @@
     - state: autolathe_unlit
       shader: unshaded
       map: ["enum.AutolatheVisualLayers.BaseUnlit"]
-
-  - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-  - type: SnapGrid
-    offset: Center
-  - type: Lathe
   - type: LatheDatabase
     static: true
     recipes:
@@ -89,17 +85,6 @@
       map: ["enum.ProtolatheVisualLayers.BaseUnlit"]
     - state: protolathe
       map: ["enum.ProtolatheVisualLayers.AnimationLayer"]
-
-  - type: Physics
-    shapes:
-    - !type:PhysShapeAabb
-      layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-  - type: SnapGrid
-    offset: Center
   - type: ResearchClient
   - type: TechnologyDatabase
   - type: ProtolatheDatabase

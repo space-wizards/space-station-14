@@ -70,6 +70,47 @@ namespace Content.Server.GameObjects.Components.Instruments
         [ViewVariables]
         private int _midiEventCount = 0;
 
+        private byte _instrumentProgram;
+        private byte _instrumentBank;
+        private bool _allowPercussion;
+        private bool _allowProgramChange;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public override byte InstrumentProgram { get => _instrumentProgram;
+            set
+            {
+                _instrumentProgram = value;
+                Dirty();
+            }
+        }
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public override byte InstrumentBank { get => _instrumentBank;
+            set
+            {
+                _instrumentBank = value;
+                Dirty();
+            }
+        }
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public override bool AllowPercussion { get => _allowPercussion;
+            set
+            {
+                _allowPercussion = value;
+                Dirty();
+            }
+        }
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public override bool AllowProgramChange { get => _allowProgramChange;
+            set
+            {
+                _allowProgramChange = value;
+                Dirty();
+            }
+        }
+
         /// <summary>
         ///     Whether the instrument is an item which can be held or not.
         /// </summary>
@@ -130,11 +171,15 @@ namespace Content.Server.GameObjects.Components.Instruments
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _handheld, "handheld", false);
+            serializer.DataField(ref _instrumentProgram, "program", (byte) 1);
+            serializer.DataField(ref _instrumentBank, "bank", (byte) 0);
+            serializer.DataField(ref _allowPercussion, "allowPercussion", false);
+            serializer.DataField(ref _allowProgramChange, "allowProgramChange", false);
         }
 
         public override ComponentState GetComponentState()
         {
-            return new InstrumentState(Playing, _lastSequencerTick);
+            return new InstrumentState(Playing, InstrumentProgram, InstrumentBank, AllowPercussion, AllowProgramChange, _lastSequencerTick);
         }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)

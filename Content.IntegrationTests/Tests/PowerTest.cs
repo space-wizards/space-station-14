@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.Power.PowerNetComponents;
@@ -33,6 +34,11 @@ namespace Content.IntegrationTests.Tests
                 var generatorEnt = entityMan.SpawnEntity("DebugGenerator", grid.ToCoordinates());
                 var consumerEnt1 = entityMan.SpawnEntity("DebugConsumer", grid.ToCoordinates(0, 1));
                 var consumerEnt2 = entityMan.SpawnEntity("DebugConsumer", grid.ToCoordinates(0, 2));
+
+                if (generatorEnt.TryGetComponent(out AnchorableComponent anchorable))
+                {
+                    anchorable.TryAnchor(null, force:true);
+                }
 
                 Assert.That(generatorEnt.TryGetComponent(out supplier));
                 Assert.That(consumerEnt1.TryGetComponent(out consumer1));
