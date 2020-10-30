@@ -121,12 +121,5 @@ namespace Content.Server.GameObjects.Components.Projectiles
 
             StopThrow();
         }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            Owner.EnsureComponent<PhysicsComponent>().EnsureController<ThrownController>();
-        }
     }
 }

@@ -153,8 +153,9 @@
   - type: InteractionOutline
   - type: Physics
     shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.25, -0.25, 0.25, 0.3"
+      - !type:PhysShapeAabb
+        bounds: "-0.25, -0.25, 0.25, 0.3"
+        layer: [ Passable ]
   - type: SnapGrid
     offset: Center
   - type: Sprite

@@ -25,3 +25,11 @@
       state_closed: atmos_wardrobe_door
   - type: Icon
     state: atmos_wardrobe_icon
+
+# Janitor locker (moved here from the Fills group because it was being misused)
+- type: entity
+  id: LockerJanitor
+  parent: WardrobeMixed
+  name: "custodial closet"
+  description: "It's a storage unit for janitorial clothes and gear."
+
