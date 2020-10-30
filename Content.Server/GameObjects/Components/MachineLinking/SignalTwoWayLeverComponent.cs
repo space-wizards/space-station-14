@@ -27,7 +27,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
             {
                 _state = value;
 
-                if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+                if (Owner.TryGetComponent(out AppearanceComponent appearance))
                 {
                     appearance.SetData(TwoWayLeverVisuals.State, value);
                 }
