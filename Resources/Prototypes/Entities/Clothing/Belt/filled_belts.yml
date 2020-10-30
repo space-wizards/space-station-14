@@ -31,10 +31,8 @@
   components:
   - type: StorageFill
     contents:
-      - name: Crowbar
-      - name: Wrench
       - name: PowerDrill
-      - name: Wirecutter
-      - name: Welder
+      - name: JawsOfLife
+      - name: WelderExperimental
       - name: Multitool
       - name: ApcExtensionCableStack
