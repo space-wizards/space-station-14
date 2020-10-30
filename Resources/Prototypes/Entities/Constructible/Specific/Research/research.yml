@@ -2,6 +2,8 @@
   id: ResearchAndDevelopmentServer
   name: "R&D server"
   description: 'Thats a R&D server.'
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Sprite
     sprite: Constructible/Power/server.rsi
@@ -37,6 +39,8 @@
 - type: entity
   id: BaseResearchAndDevelopmentPointSource
   name: "base R&D point source"
+  placement:
+    mode: SnapgridCenter
   # We should make this abstract once there are actual point sources.
   components:
   - type: Sprite

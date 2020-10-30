@@ -9,8 +9,6 @@
     state: booze_dispenser
   - type: ReagentDispenser
     pack: BoozeDispenserInventory
-  - type: Anchorable
-  - type: Pullable
 
 - type: reagentDispenserInventory
   id: BoozeDispenserInventory

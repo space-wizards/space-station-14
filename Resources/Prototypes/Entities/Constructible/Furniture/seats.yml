@@ -7,6 +7,21 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
+    anchored: true
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5,-0.25,0.5,0.25"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     sprite: Constructible/Misc/furniture.rsi
   - type: Strap

@@ -9,8 +9,6 @@
     state: soda_dispenser
   - type: ReagentDispenser
     pack: SodaDispenserInventory
-  - type: Anchorable
-  - type: Pullable
 
 - type: reagentDispenserInventory
   id: SodaDispenserInventory
