@@ -68,7 +68,7 @@ namespace Content.Server.GameObjects.Components.Markers
         {
             TokenSource?.Cancel();
             TokenSource = new CancellationTokenSource();
-            Owner.SpawnRepeatingTimer(TimeSpan.FromSeconds(IntervalSeconds), OnTimerFired, TokenSource);
+            Owner.SpawnRepeatingTimer(TimeSpan.FromSeconds(IntervalSeconds), OnTimerFired, TokenSource.Token);
         }
 
         private void OnTimerFired()

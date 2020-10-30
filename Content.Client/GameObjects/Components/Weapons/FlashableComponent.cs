@@ -84,7 +84,7 @@ namespace Content.Client.GameObjects.Components.Weapons
             }
 
             _cancelToken = new CancellationTokenSource();
-            Owner.Spawn((int) duration * 1000, DisableOverlay, _cancelToken.Token);
+            Owner.SpawnTimer((int) duration * 1000, DisableOverlay, _cancelToken.Token);
         }
 
         private void DisableOverlay()

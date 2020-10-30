@@ -313,7 +313,7 @@ namespace Content.Server.GameObjects.Components.Doors
                         _powerWiresPulsedTimerCancel = new CancellationTokenSource();
                         Owner.SpawnTimer(PowerWiresTimeout,
                             () => PowerWiresPulsed = false,
-                            _powerWiresPulsedTimerCancel);
+                            _powerWiresPulsedTimerCancel.Token);
                         break;
                     case Wires.Bolts:
                         if (!BoltsDown)

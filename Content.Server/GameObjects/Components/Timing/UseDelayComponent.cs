@@ -47,7 +47,7 @@ namespace Content.Server.GameObjects.Components.Timing
 
             cancellationTokenSource = new CancellationTokenSource();
 
-            Owner.SpawnTimer(TimeSpan.FromSeconds(Delay), () => ActiveDelay = false, cancellationTokenSource);
+            Owner.SpawnTimer(TimeSpan.FromSeconds(Delay), () => ActiveDelay = false, cancellationTokenSource.Token);
 
             _lastUseTime = IoCManager.Resolve<IGameTiming>().CurTime;
 

@@ -255,7 +255,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             _evaporationToken = new CancellationTokenSource();
 
             // KYS to evaporate
-            Owner.SpawnTimer(TimeSpan.FromSeconds(_evaporateTime), Evaporate, _evaporationToken);
+            Owner.SpawnTimer(TimeSpan.FromSeconds(_evaporateTime), Evaporate, _evaporationToken.Token);
         }
 
         private void UpdateSlip()

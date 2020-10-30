@@ -140,7 +140,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
 
 
-            if (!entity.TryGetComponent(out IPhysicsComponent? physics) || 
+            if (!entity.TryGetComponent(out IPhysicsComponent? physics) ||
                 !physics.CanCollide)
             {
                 if (!(entity.TryGetComponent(out IDamageableComponent? damageState) && damageState.CurrentState == DamageState.Dead)) {
@@ -172,7 +172,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 {
                     TryQueueEngage();
                 }
-            }, _automaticEngageToken);
+            }, _automaticEngageToken.Token);
         }
 
         private void AfterInsert(IEntity entity)

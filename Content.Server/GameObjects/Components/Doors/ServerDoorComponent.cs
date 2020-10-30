@@ -266,7 +266,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
                 State = DoorState.Open;
                 SetAppearance(DoorVisualState.Open);
-            }, _cancellationTokenSource);
+            }, _cancellationTokenSource.Token);
 
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new AccessReaderChangeMessage(Owner, false));
         }
@@ -425,7 +425,7 @@ namespace Content.Server.GameObjects.Components.Doors
                 _canWeldShut = true;
                 State = DoorState.Closed;
                 SetAppearance(DoorVisualState.Closed);
-            }, _cancellationTokenSource);
+            }, _cancellationTokenSource.Token);
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new AccessReaderChangeMessage(Owner, true));
             return true;
         }
@@ -439,7 +439,7 @@ namespace Content.Server.GameObjects.Components.Doors
             Owner.SpawnTimer(DenyTime, () =>
             {
                 SetAppearance(DoorVisualState.Closed);
-            }, _cancellationTokenSource);
+            }, _cancellationTokenSource.Token);
         }
 
         public virtual void OnUpdate(float frameTime)
