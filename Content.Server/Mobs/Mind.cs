@@ -156,27 +156,23 @@ namespace Content.Server.Mobs
             return _roles.Any(role => role.GetType() == t);
         }
 
-        public bool TryAddObjective(string objectiveID, [NotNullWhen(true)] out Objective objective)
+        /// <summary>
+        /// Adds an objective to this mind.
+        /// </summary>
+        public bool TryAddObjective(ObjectivePrototype objectivePrototype)
         {
-            if (!IoCManager.Resolve<IPrototypeManager>()
-                .TryIndex<ObjectivePrototype>(objectiveID, out var objectivePrototype) || !objectivePrototype.CanBeAssigned(this))
-            {
-                objective = null;
-                return false;
-            }
-
-            objective = new Objective(this, objectivePrototype);
-            _objectives.Add(objective);
-            return true;
+            return TryAddObjective(new Objective(this, objectivePrototype));
         }
 
         /// <summary>
         /// Adds an objective to this mind.
         /// </summary>
-        public Objective AddObjective(Objective objective)
+        public bool TryAddObjective(Objective objective)
         {
+            if (!objective.Prototype.CanBeAssigned(this))
+                return false;
             _objectives.Add(objective);
-            return objective;
+            return true;
         }
 
         /// <summary>

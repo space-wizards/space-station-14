@@ -12,7 +12,7 @@ namespace Content.Server.Objectives.Requirements
 
         public bool CanBeAssigned(Mind mind)
         {
-            return true; //mind.HasRole<SuspicionTraitorRole>();
+            return mind.HasRole<SuspicionTraitorRole>();
         }
     }
 }

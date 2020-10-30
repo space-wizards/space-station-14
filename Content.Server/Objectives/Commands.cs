@@ -30,11 +30,19 @@ namespace Content.Server.Objectives
                 if (mind == null)
                 {
                     shell.SendText(player, "Can't find the mind.");
+                    return;
                 }
 
-                if (!mind.TryAddObjective(args[1], out var _))
+                if (!IoCManager.Resolve<IPrototypeManager>()
+                    .TryIndex<ObjectivePrototype>(args[1], out var objectivePrototype))
                 {
-                     shell.SendText(player, "Objective either doesn't exist or cannot be added.");
+                    shell.SendText(player, $"Can't find matching ObjectivePrototype");
+                    return;
+                }
+
+                if (!mind.TryAddObjective(objectivePrototype))
+                {
+                     shell.SendText(player, "Objective requirements dont allow that objective to be added.");
                 }
             }
             else
