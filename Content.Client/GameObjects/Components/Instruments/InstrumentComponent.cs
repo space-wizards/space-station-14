@@ -42,6 +42,10 @@ namespace Content.Client.GameObjects.Components.Instruments
 
         private uint _sequenceStartTick;
 
+        private bool _allowPercussion;
+
+        private bool _allowProgramChange;
+
         /// <summary>
         ///     A queue of MidiEvents to be sent to the server.
         /// </summary>
@@ -98,6 +102,34 @@ namespace Content.Client.GameObjects.Components.Instruments
             }
         }
 
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool AllowPercussion
+        {
+            get => _allowPercussion;
+            set
+            {
+                _allowPercussion = value;
+                if (_renderer != null)
+                {
+                    _renderer.DisablePercussionChannel = !_allowPercussion;
+                }
+            }
+        }
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool AllowProgramChange
+        {
+            get => _allowProgramChange;
+            set
+            {
+                _allowProgramChange = value;
+                if (_renderer != null)
+                {
+                    _renderer.DisableProgramChangeEvent = !_allowProgramChange;
+                }
+            }
+        }
+
         /// <summary>
         ///     Whether this instrument is handheld or not.
         /// </summary>
@@ -128,7 +160,7 @@ namespace Content.Client.GameObjects.Components.Instruments
             IoCManager.InjectDependencies(this);
         }
 
-        protected void SetupRenderer(bool fromStateChange = false)
+        protected virtual void SetupRenderer(bool fromStateChange = false)
         {
             if (IsRendererAlive) return;
 
@@ -142,6 +174,8 @@ namespace Content.Client.GameObjects.Components.Instruments
                 _renderer.MidiBank = _instrumentBank;
                 _renderer.MidiProgram = _instrumentProgram;
                 _renderer.TrackingEntity = Owner;
+                _renderer.DisablePercussionChannel = !_allowPercussion;
+                _renderer.DisableProgramChangeEvent = !_allowProgramChange;
                 _renderer.OnMidiPlayerFinished += () =>
                 {
                     OnMidiPlaybackEnded?.Invoke();
@@ -196,6 +230,8 @@ namespace Content.Client.GameObjects.Components.Instruments
             serializer.DataField(this, x => Handheld, "handheld", false);
             serializer.DataField(ref _instrumentProgram, "program", (byte) 1);
             serializer.DataField(ref _instrumentBank, "bank", (byte) 0);
+            serializer.DataField(ref _allowPercussion, "allowPercussion", false);
+            serializer.DataField(ref _allowProgramChange, "allowProgramChange", false);
         }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
