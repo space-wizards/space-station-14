@@ -19,7 +19,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
         public override string Name => "Pullable";
         public override uint? NetID => ContentNetIDs.PULLABLE;
 
-        [ComponentDependency] private IPhysicsComponent? _physics = default!;
+        [ComponentDependency] private readonly IPhysicsComponent? _physics = default!;
 
         private IEntity? _puller;
 
@@ -67,12 +67,12 @@ namespace Content.Shared.GameObjects.Components.Pulling
                 return false;
             }
 
-            if (!puller.TryGetComponent(out IPhysicsComponent? physics))
+            if (!Owner.TryGetComponent(out IPhysicsComponent? ownerPhysics))
             {
                 return false;
             }
 
-            if (physics.Anchored)
+            if (ownerPhysics.Anchored)
             {
                 return false;
             }
