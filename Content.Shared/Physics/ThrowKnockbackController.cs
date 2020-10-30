@@ -1,17 +1,24 @@
-﻿using Robust.Shared.Interfaces.Physics;
+﻿using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.GameObjects.EntitySystems;
+using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 
 namespace Content.Shared.Physics
 {
-    public class SlipController : VirtualController
+    public class ThrowKnockbackController : VirtualController
     {
         [Dependency] private readonly IPhysicsManager _physicsManager = default!;
 
-        public SlipController()
+        public ThrowKnockbackController()
         {
             IoCManager.InjectDependencies(this);
+        }
+
+        public void Push(Vector2 velocityDirection, float speed)
+        {
+            LinearVelocity = velocityDirection * speed;
         }
 
         private float Decay { get; set; } = 0.95f;
@@ -23,9 +30,10 @@ namespace Content.Shared.Physics
                 return;
             }
 
-            if (_physicsManager.IsWeightless(ControlledComponent.Owner.Transform.Coordinates))
+            if (ControlledComponent.Owner.IsWeightless())
             {
-                if (ControlledComponent.IsColliding(Vector2.Zero, false))
+                if (ActionBlockerSystem.CanMove(ControlledComponent.Owner)
+                    && ControlledComponent.IsColliding(Vector2.Zero, false))
                 {
                     Stop();
                 }
