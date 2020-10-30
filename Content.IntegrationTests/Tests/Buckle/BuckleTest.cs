@@ -14,7 +14,7 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
-namespace Content.IntegrationTests.Tests
+namespace Content.IntegrationTests.Tests.Buckle
 {
     [TestFixture]
     [TestOf(typeof(BuckleComponent))]
@@ -22,7 +22,7 @@ namespace Content.IntegrationTests.Tests
     public class BuckleTest : ContentIntegrationTest
     {
         [Test]
-        public async Task Test()
+        public async Task BuckleUnbuckleCooldownRangeTest()
         {
             var server = StartServerDummyTicker();
 
@@ -31,7 +31,7 @@ namespace Content.IntegrationTests.Tests
             BuckleComponent buckle = null;
             StrapComponent strap = null;
 
-            server.Assert(() =>
+            await server.WaitAssertion(() =>
             {
                 var mapManager = IoCManager.Resolve<IMapManager>();
 
@@ -82,9 +82,9 @@ namespace Content.IntegrationTests.Tests
             });
 
             // Wait enough ticks for the unbuckling cooldown to run out
-            server.RunTicks(60);
+            await server.WaitRunTicks(60);
 
-            server.Assert(() =>
+            await server.WaitAssertion(() =>
             {
                 // Still buckled
                 Assert.True(buckle.Buckled);
@@ -115,9 +115,9 @@ namespace Content.IntegrationTests.Tests
             });
 
             // Wait enough ticks for the unbuckling cooldown to run out
-            server.RunTicks(60);
+            await server.WaitRunTicks(60);
 
-            server.Assert(() =>
+            await server.WaitAssertion(() =>
             {
                 // Still buckled
                 Assert.True(buckle.Buckled);
@@ -159,17 +159,15 @@ namespace Content.IntegrationTests.Tests
                 human.Transform.WorldPosition += (1, 0);
             });
 
-            server.RunTicks(1);
+            await server.WaitRunTicks(1);
 
-            server.Assert(() =>
+            await server.WaitAssertion(() =>
             {
                 // No longer buckled
                 Assert.False(buckle.Buckled);
                 Assert.Null(buckle.BuckledTo);
                 Assert.IsEmpty(strap.BuckledEntities);
             });
-
-            await server.WaitIdleAsync();
         }
 
         [Test]
@@ -177,14 +175,13 @@ namespace Content.IntegrationTests.Tests
         {
             var server = StartServer();
 
-            IEntity human = null;
-            IEntity chair = null;
+            IEntity human;
+            IEntity chair;
             BuckleComponent buckle = null;
-            StrapComponent strap = null;
             HandsComponent hands = null;
             IBody body = null;
 
-            server.Assert(() =>
+            await server.WaitAssertion(() =>
             {
                 var mapManager = IoCManager.Resolve<IMapManager>();
 
@@ -206,7 +203,7 @@ namespace Content.IntegrationTests.Tests
 
                 // Component sanity check
                 Assert.True(human.TryGetComponent(out buckle));
-                Assert.True(chair.TryGetComponent(out strap));
+                Assert.True(chair.HasComponent<StrapComponent>());
                 Assert.True(human.TryGetComponent(out hands));
                 Assert.True(human.TryGetComponent(out body));
 
@@ -226,9 +223,9 @@ namespace Content.IntegrationTests.Tests
                 }
             });
 
-            server.RunTicks(10);
+            await server.WaitRunTicks(10);
 
-            server.Assert(() =>
+            await server.WaitAssertion(() =>
             {
                 // Still buckled
                 Assert.True(buckle.Buckled);
@@ -248,9 +245,9 @@ namespace Content.IntegrationTests.Tests
                 }
             });
 
-            server.RunTicks(10);
+            await server.WaitRunTicks(10);
 
-            server.Assert(() =>
+            await server.WaitAssertion(() =>
             {
                 // Still buckled
                 Assert.True(buckle.Buckled);
@@ -261,8 +258,73 @@ namespace Content.IntegrationTests.Tests
                     Assert.Null(hands.GetItem(slot));
                 }
             });
+        }
 
-            await server.WaitIdleAsync();
+        [Test]
+        public async Task ForceUnbuckleBuckleTest()
+        {
+            var server = StartServer();
+
+            IEntity human = null;
+            IEntity chair = null;
+            BuckleComponent buckle = null;
+
+            await server.WaitAssertion(() =>
+            {
+                var mapManager = IoCManager.Resolve<IMapManager>();
+
+                var mapId = new MapId(1);
+                mapManager.CreateNewMapEntity(mapId);
+
+                var entityManager = IoCManager.Resolve<IEntityManager>();
+                var gridId = new GridId(1);
+                var grid = mapManager.CreateGrid(mapId, gridId);
+                var coordinates = grid.GridEntityId.ToCoordinates();
+                var tileManager = IoCManager.Resolve<ITileDefinitionManager>();
+                var tileId = tileManager["underplating"].TileId;
+                var tile = new Tile(tileId);
+
+                grid.SetTile(coordinates, tile);
+
+                human = entityManager.SpawnEntity("HumanMob_Content", coordinates);
+                chair = entityManager.SpawnEntity("ChairWood", coordinates);
+
+                // Component sanity check
+                Assert.True(human.TryGetComponent(out buckle));
+                Assert.True(chair.HasComponent<StrapComponent>());
+
+                // Buckle
+                Assert.True(buckle.TryBuckle(human, chair));
+                Assert.NotNull(buckle.BuckledTo);
+                Assert.True(buckle.Buckled);
+
+                // Move the buckled entity away
+                human.Transform.LocalPosition += (100, 0);
+            });
+
+            await WaitUntil(server, () => !buckle.Buckled, maxTicks: 10);
+
+            Assert.False(buckle.Buckled);
+
+            await server.WaitAssertion(() =>
+            {
+                // Move the now unbuckled entity back onto the chair
+                human.Transform.LocalPosition -= (100, 0);
+
+                // Buckle
+                Assert.True(buckle.TryBuckle(human, chair));
+                Assert.NotNull(buckle.BuckledTo);
+                Assert.True(buckle.Buckled);
+            });
+
+            await server.WaitRunTicks(60);
+
+            await server.WaitAssertion(() =>
+            {
+                // Still buckled
+                Assert.NotNull(buckle.BuckledTo);
+                Assert.True(buckle.Buckled);
+            });
         }
     }
 }
