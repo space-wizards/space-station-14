@@ -31,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Arcade
         public override string Name => "BlockGameArcade";
         public override uint? NetID => ContentNetIDs.BLOCKGAME_ARCADE;
         [ComponentDependency] private PowerReceiverComponent? _powerReceiverComponent = default!;
-        private bool Powered => _powerReceiverComponent != null && _powerReceiverComponent.Powered;
+        private bool Powered => _powerReceiverComponent?.Powered ?? false;
         private BoundUserInterface? UserInterface => Owner.GetUIOrNull(BlockGameUiKey.Key);
 
         private BlockGame? _game;
