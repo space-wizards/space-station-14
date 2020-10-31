@@ -7,12 +7,14 @@ using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -40,6 +42,11 @@ namespace Content.Server.GameObjects.Components.Interactable
         [ViewVariables(VVAccess.ReadWrite)] public string? TurnOnSound;
         [ViewVariables(VVAccess.ReadWrite)] public string? TurnOnFailSound;
         [ViewVariables(VVAccess.ReadWrite)] public string? TurnOffSound;
+
+        /// <summary>
+        ///     Client-side ItemStatus level
+        /// </summary>
+        private byte? _lastLevel;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -190,24 +197,34 @@ namespace Content.Server.GameObjects.Components.Interactable
             }
 
             if (Activated && !Cell.TryUseCharge(Wattage * frameTime)) TurnOff(false);
-            Dirty();
+
+            var level = GetLevel();
+
+            if (level != _lastLevel)
+            {
+                _lastLevel = level;
+                Dirty();
+            }
+        }
+
+        // Curently every single flashlight has the same number of levels for status and that's all it uses the charge for
+        // Thus we'll just check if the level changes.
+        private byte? GetLevel()
+        {
+            if (Cell == null)
+                return null;
+
+            var currentCharge = Cell.CurrentCharge;
+
+            if (MathHelper.CloseTo(currentCharge, 0) || Wattage > currentCharge)
+                return 0;
+
+            return (byte?) ContentHelpers.RoundToNearestLevels(currentCharge / Cell.MaxCharge * 255, 255, StatusLevels);
         }
 
         public override ComponentState GetComponentState()
         {
-            if (Cell == null)
-            {
-                return new HandheldLightComponentState(null, false);
-            }
-
-            if (Wattage > Cell.CurrentCharge)
-            {
-                // Practically zero.
-                // This is so the item status works correctly.
-                return new HandheldLightComponentState(0, HasCell);
-            }
-
-            return new HandheldLightComponentState(Cell.CurrentCharge / Cell.MaxCharge, HasCell);
+            return new HandheldLightComponentState(GetLevel());
         }
     }
 }
