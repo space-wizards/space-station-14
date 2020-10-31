@@ -79,7 +79,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             {
                 if (physics.TryGetController(out MoverController controller))
                 {
-                    controller.ApplyForce(Vector2.Zero, frameTime);
+                    controller.StopMoving(frameTime);
                 }
             }
             else
@@ -109,7 +109,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                     if (physics.TryGetController(out MoverController controller))
                     {
                         //controller.Move(total, 1);
-                        controller.ApplyForce(total, frameTime);
+                        controller.Move(total, frameTime);
                     }
                 }
 
