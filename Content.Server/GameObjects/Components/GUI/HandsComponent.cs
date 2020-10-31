@@ -45,6 +45,11 @@ namespace Content.Server.GameObjects.Components.GUI
             get => _activeHand;
             set
             {
+                if (_activeHand == value)
+                {
+                    return;
+                }
+
                 if (value != null && GetHand(value) == null)
                 {
                     throw new ArgumentException($"No hand '{value}'");
