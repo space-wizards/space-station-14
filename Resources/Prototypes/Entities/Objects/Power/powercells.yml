@@ -1,5 +1,7 @@
-﻿- type: entity
-  id: PowerCellSmallBase
+﻿# Power cells
+
+- type: entity
+  id: PowerCellBase
   abstract: true
   parent: BaseItem
   components:
@@ -7,16 +9,55 @@
     anchored: false
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.15,-0.3,0.2,0.3"
+      bounds: "-0.15,-0.3,0.2,0.3" # TODO: these are placeholder values
       layer:
       - Clickable
   - type: PowerCell
-  - type: Appearance
   - type: Sprite
     netsync: false
 
 - type: entity
+  id: PowerCellSmallBase
+  abstract: true
+  parent: PowerCellBase
+  components:
+  - type: PowerCell
+    cellSize: Small
+
+- type: entity
+  id: PowerCellMediumBase
+  abstract: true
+  parent: PowerCellBase
+  components:
+  - type: PowerCell
+    cellSize: Medium
+
+- type: entity
+  id: PowerCellLargeBase
+  abstract: true
+  parent: PowerCellBase
+  components:
+  - type: PowerCell
+    cellSize: Large
+
+- type: entity
+  name: potato battery
+  description: Someone's stuck two nails and some wire in a large potato. Somehow it provides a little charge. You might be able to cram it into an M-sized slot.
+  id: PowerCellMediumPotato
+  parent: PowerCellMediumBase
+  components:
+  - type: Sprite
+    sprite: Objects/Power/PowerCells/potato_battery.rsi
+    layers:
+      - state: potato_battery
+  - type: PowerCell
+    maxCharge: 360
+    startingCharge: 360
+    updateVisual: false
+
+- type: entity
   name: small standard power cell
+  description: A rechargeable standardized power cell, size S. This is the cheapest kind you can find.
   id: PowerCellSmallStandard
   parent: PowerCellSmallBase
   components:
@@ -25,8 +66,8 @@
     layers:
     - state: s_st
   - type: PowerCell
-    maxCharge: 15000
-    startingCharge: 15000
+    maxCharge: 360
+    startingCharge: 360
   - type: Appearance
     visuals:
     - type: PowerCellVisualizer
@@ -35,6 +76,7 @@
 
 - type: entity
   name: small high-capacity power cell
+  description: A rechargeable standardized power cell, size S. This is the popular and reliable version.
   id: PowerCellSmallHigh
   parent: PowerCellSmallBase
   components:
@@ -43,8 +85,8 @@
     layers:
     - state: s_hi
   - type: PowerCell
-    maxCharge: 30000
-    startingCharge: 30000
+    maxCharge: 720
+    startingCharge: 720
   - type: Appearance
     visuals:
     - type: PowerCellVisualizer
@@ -53,6 +95,7 @@
 
 - type: entity
   name: small super-capacity power cell
+  description: A rechargeable standardized power cell, size S. This premium high-capacity brand stores up to 50% more energy than the competition.
   id: PowerCellSmallSuper
   parent: PowerCellSmallBase
   components:
@@ -61,8 +104,8 @@
     layers:
     - state: s_sup
   - type: PowerCell
-    maxCharge: 60000
-    startingCharge: 60000
+    maxCharge: 1080
+    startingCharge: 1080
   - type: Appearance
     visuals:
     - type: PowerCellVisualizer
@@ -71,6 +114,7 @@
 
 - type: entity
   name: small hyper-capacity power cell
+  description: A rechargeable standardized power cell, size S. This one looks like a rare and powerful prototype.
   id: PowerCellSmallHyper
   parent: PowerCellSmallBase
   components:
@@ -79,12 +123,177 @@
     layers:
     - state: s_hy
   - type: PowerCell
-    maxCharge: 80000
-    startingCharge: 80000
+    maxCharge: 1800
+    startingCharge: 1800
   - type: Appearance
     visuals:
     - type: PowerCellVisualizer
       prefix: s_hy
+
+- type: entity
+  name: small microreactor cell
+  description: A rechargeable standardized microreactor cell, size S. Intended for low-power devices, it slowly recharges by itself.
+  id: PowerCellSmallAutorecharge
+  parent: PowerCellSmallBase
+  components:
+    - type: Sprite
+      sprite: Objects/Power/PowerCells/power_cell_small_autorecharge.rsi
+      layers:
+        - state: s_ar
+    - type: PowerCell
+      maxCharge: 50
+      startingCharge: 50
+      autoRecharge: true
+      autoRechargeRate: 0.16667 #takes about 5 minutes to charge itself back to full
+    - type: Appearance
+      visuals:
+        - type: PowerCellVisualizer
+          prefix: s_ar
+
+- type: entity
+  name: medium standard power cell
+  description: A rechargeable standardized power cell, size M. This is the cheapest kind you can find.
+  id: PowerCellMediumStandard
+  parent: PowerCellMediumBase
+  components:
+    - type: Sprite
+      sprite: Objects/Power/PowerCells/power_cell_medium_st.rsi
+      layers:
+        - state: m_st
+    - type: PowerCell
+      maxCharge: 2160
+      startingCharge: 2160
+    - type: Appearance
+      visuals:
+        - type: PowerCellVisualizer
+          prefix: m_st
+
+- type: entity
+  name: medium high-capacity power cell
+  description: A rechargeable standardized power cell, size M. This is the popular and reliable version.
+  id: PowerCellMediumHigh
+  parent: PowerCellMediumBase
+  components:
+    - type: Sprite
+      sprite: Objects/Power/PowerCells/power_cell_medium_hi.rsi
+      layers:
+        - state: m_hi
+    - type: PowerCell
+      maxCharge: 2880
+      startingCharge: 2880
+      powerCellSize: Medium
+    - type: Appearance
+      visuals:
+        - type: PowerCellVisualizer
+          prefix: m_hi
+
+- type: entity
+  name: medium super-capacity power cell
+  description: A rechargeable standardized power cell, size M. This premium high-capacity brand stores up to 50% more energy than the competition.
+  id: PowerCellMediumSuper
+  parent: PowerCellMediumBase
+  components:
+    - type: Sprite
+      sprite: Objects/Power/PowerCells/power_cell_medium_sup.rsi
+      layers:
+        - state: m_sup
+    - type: PowerCell
+      maxCharge: 3600
+      startingCharge: 3600
+    - type: Appearance
+      visuals:
+        - type: PowerCellVisualizer
+          prefix: m_sup
+
+- type: entity
+  name: medium hyper-capacity power cell
+  description: A rechargeable standardized power cell, size M. This one looks like a rare and powerful prototype.
+  id: PowerCellMediumHyper
+  parent: PowerCellMediumBase
+  components:
+    - type: Sprite
+      sprite: Objects/Power/PowerCells/power_cell_medium_hy.rsi
+      layers:
+        - state: m_hy
+    - type: PowerCell
+      maxCharge: 5400
+      startingCharge: 5400
+    - type: Appearance
+      visuals:
+        - type: PowerCellVisualizer
+          prefix: m_hy
+
+- type: entity
+  name: large standard power cell
+  description: A rechargeable standardized power cell, size L. This is the cheapest kind you can find.
+  id: PowerCellLargeStandard
+  parent: PowerCellLargeBase
+  components:
+    - type: Sprite
+      sprite: Objects/Power/PowerCells/power_cell_large_st.rsi
+      layers:
+        - state: l_st
+    - type: PowerCell
+      maxCharge: 9000
+      startingCharge: 9000
+    - type: Appearance
+      visuals:
+        - type: PowerCellVisualizer
+          prefix: l_st
+
+- type: entity
+  name: large high-capacity power cell
+  description: A rechargeable standardized power cell, size L. This is the popular and reliable version.
+  id: PowerCellLargeHigh
+  parent: PowerCellLargeBase
+  components:
+    - type: Sprite
+      sprite: Objects/Power/PowerCells/power_cell_large_hi.rsi
+      layers:
+        - state: l_hi
+    - type: PowerCell
+      maxCharge: 18000
+      startingCharge: 18000
+    - type: Appearance
+      visuals:
+        - type: PowerCellVisualizer
+          prefix: l_hi
+
+- type: entity
+  name: large super-capacity power cell
+  description: A rechargeable standardized power cell, size M. This premium high-capacity brand stores up to 50% more energy than the competition.
+  id: PowerCellLargeSuper
+  parent: PowerCellLargeBase
+  components:
+    - type: Sprite
+      sprite: Objects/Power/PowerCells/power_cell_large_sup.rsi
+      layers:
+        - state: l_sup
+    - type: PowerCell
+      maxCharge: 54000
+      startingCharge: 54000
+    - type: Appearance
+      visuals:
+        - type: PowerCellVisualizer
+          prefix: l_sup
+
+- type: entity
+  name: large hyper-capacity power cell
+  description: A rechargeable standardized power cell, size L. This one looks like a rare and powerful prototype.
+  id: PowerCellLargeHyper
+  parent: PowerCellLargeBase
+  components:
+    - type: Sprite
+      sprite: Objects/Power/PowerCells/power_cell_large_hy.rsi
+      layers:
+        - state: l_hy
+    - type: PowerCell
+      maxCharge: 72000
+      startingCharge: 72000
+    - type: Appearance
+      visuals:
+        - type: PowerCellVisualizer
+          prefix: l_hy
 
 - type: entity
   name: cell recharger

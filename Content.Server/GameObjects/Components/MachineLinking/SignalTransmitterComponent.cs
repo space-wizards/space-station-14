@@ -87,7 +87,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
             }
         }
 
-        public bool TransmitSignal(IEntity user, SignalState state)
+        public bool TransmitSignal<T>(IEntity user, T signal)
         {
             if (_receivers.Count == 0)
             {
@@ -102,7 +102,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
                     continue;
                 }
 
-                receiver.DistributeSignal(state);
+                receiver.DistributeSignal(signal);
             }
             return true;
         }

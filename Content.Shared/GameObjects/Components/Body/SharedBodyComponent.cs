@@ -145,6 +145,13 @@ namespace Content.Shared.GameObjects.Components.Body
             return _parts.ContainsKey(slot);
         }
 
+        public bool HasPart(IBodyPart part)
+        {
+            DebugTools.AssertNotNull(part);
+
+            return _parts.ContainsValue(part);
+        }
+
         public void RemovePart(IBodyPart part)
         {
             DebugTools.AssertNotNull(part);

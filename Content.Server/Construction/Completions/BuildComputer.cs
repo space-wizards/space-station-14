@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Construction;
 using Content.Shared.Construction;
@@ -53,7 +54,18 @@ namespace Content.Server.Construction.Completions
             var computer = entityManager.SpawnEntity(boardComponent.Prototype, entity.Transform.Coordinates);
             computer.Transform.LocalRotation = entity.Transform.LocalRotation;
 
-            var computerContainer = ContainerManagerComponent.Ensure<Container>(Container, computer);
+            var computerContainer = ContainerManagerComponent.Ensure<Container>(Container, computer, out var existed);
+
+            if (existed)
+            {
+                // In case there are any entities inside this, delete them.
+                foreach (var ent in computerContainer.ContainedEntities.ToArray())
+                {
+                    computerContainer.ForceRemove(ent);
+                    ent.Delete();
+                }
+            }
+
             computerContainer.Insert(board);
 
             if (computer.TryGetComponent(out ConstructionComponent? construction))

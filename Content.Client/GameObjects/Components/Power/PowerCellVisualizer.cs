@@ -36,7 +36,8 @@ namespace Content.Client.GameObjects.Components.Power
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
             if (component.TryGetData(PowerCellVisuals.ChargeLevel, out float fraction))
             {
-                sprite.LayerSetState(Layers.Charge, $"{_prefix}_{ContentHelpers.RoundToLevels(fraction, 1, 5) * 25}");
+                int level = ContentHelpers.RoundToNearestLevels(fraction, 1, 4) * 25;
+                sprite.LayerSetState(Layers.Charge, $"{_prefix}_{level}");
             }
         }
 

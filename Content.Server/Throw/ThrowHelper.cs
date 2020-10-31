@@ -85,8 +85,7 @@ namespace Content.Server.Throw
             projComp.StartThrow(angle.ToVec(), spd);
 
             if (throwSourceEnt != null &&
-                throwSourceEnt.TryGetComponent<IPhysicsComponent>(out var physics) &&
-                physics.TryGetController(out ThrownController mover))
+                throwSourceEnt.TryGetComponent<IPhysicsComponent>(out var physics))
             {
                 if (throwSourceEnt.IsWeightless())
                 {
@@ -95,8 +94,9 @@ namespace Content.Server.Throw
                     // I got kinda lazy is the reason why. Also it makes a bit of sense.
                     // If somebody wants they can come along and make it so magboots completely hold you still.
                     // Would be a cool incentive to use them.
-                    const float ThrowFactor = 5.0f; // Break Newton's Third Law for better gameplay
-                    mover.Push(-angle.ToVec(), spd * ThrowFactor * physics.InvMass);
+                    const float throwFactor = 0.2f; // Break Newton's Third Law for better gameplay
+                    var mover = physics.EnsureController<ThrowKnockbackController>();
+                    mover.Push(-angle.ToVec(), spd * throwFactor);
                 }
             }
         }

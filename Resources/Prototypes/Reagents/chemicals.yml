@@ -7,6 +7,11 @@
   metabolism:
     - !type:DefaultFood
       rate: 1
+  plantMetabolism:
+    - !type:AdjustNutrition
+      amount: 1
+    - !type:AdjustHealth
+      amount: 0.5
 
 - type: reagent
   id: chem.H2SO4
@@ -16,6 +21,13 @@
   color: "#BF8C00"
   boilingPoint: 337.0
   meltingPoint: 10.31
+  plantMetabolism:
+    - !type:AdjustToxins
+      amount: 10
+    - !type:AdjustWeeds
+      amount: -2
+    - !type:AdjustHealth
+      amount: -4
 
 - type: reagent
   id: chem.H2O
@@ -31,6 +43,9 @@
   tileReactions:
     - !type:ExtinguishTileReaction {}
     - !type:SpillIfPuddlePresentTileReaction {}
+  plantMetabolism:
+    - !type:AdjustWater
+      amount: 1
 
 - type: reagent
   id: chem.Ice
@@ -40,6 +55,9 @@
   color: "#bed8e6"
   meltingPoint: 0.0
   boilingPoint: 100.0
+  plantMetabolism:
+    - !type:AdjustWater
+      amount: 1
 
 - type: reagent
   id: chem.Phoron
@@ -73,6 +91,13 @@
   color: "#ffffff"
   boilingPoint: 340282300000000000000000000000000000000 #Fun fact: Glucose can't boil. So let's just set it to the maximum float value.
   meltingPoint: 146.0
+  plantMetabolism:
+    - !type:AdjustNutrition
+      amount: 0.1
+    - !type:AdjustWeeds
+      amount: 2
+    - !type:AdjustPests
+      amount: 2
 
 - type: reagent
   id: chem.Ammonia
@@ -82,6 +107,11 @@
   color: "#77b58e"
   boilingPoint: -33.0
   meltingPoint: -77.7
+  plantMetabolism:
+    - !type:AdjustNutrition
+      amount: 1
+    - !type:AdjustHealth
+      amount: 0.5
 
 - type: reagent
   id: chem.Bleach
@@ -100,6 +130,20 @@
   color: "#a1000b"
   boilingPoint: 55.5
   meltingPoint: -50.0
+  customPlantMetabolism: 0.1
+  plantMetabolism:
+    - !type:AdjustNutrition
+      amount: 0.1
+    - !type:AdjustPests
+      prob: 0.1
+      amount: -1
+    - !type:AdjustHealth
+      amount: 0.1
+    - !type:AffectGrowth
+      prob: 0.2
+      amount: 1
+    - !type:Diethylamine {}
+
 
 - type: reagent
   id: chem.FoamingAgent
@@ -118,6 +162,13 @@
   color: "#a1000b"
   boilingPoint: 78.2 # This isn't a real chemical...
   meltingPoint: -19.4
+  plantMetabolism:
+    - !type:AdjustToxins
+      amount: 20
+    - !type:AdjustWeeds
+      amount: -4
+    - !type:AdjustHealth
+      amount: -8
 
 - type: reagent
   id: chem.SpaceCleaner
@@ -152,6 +203,19 @@
   color: "#a1000b"
   boilingPoint: 1465.0
   meltingPoint: 800.7
+  plantMetabolism:
+    - !type:AdjustWater
+      amount: -3
+    - !type:AdjustNutrition
+      amount: -0.3
+    - !type:AdjustToxins
+      amount: 8
+    - !type:AdjustWeeds
+      amount: -2
+    - !type:AdjustPests
+      amount: -1
+    - !type:AdjustHealth
+      amount: -2
 
 - type: reagent
   id: chem.Thermite
@@ -173,6 +237,10 @@
   color: "#00ff5f"
   boilingPoint: 340282300000000000000000000000000000000 # Ethidium bromide, which doesn't boil.
   meltingPoint: 261.0
+  customPlantMetabolism: 2
+  plantMetabolism:
+    - !type:AdjustMutationLevel
+      amount: 1
 
 - type: reagent
   id: chem.WeldingFuel
@@ -184,3 +252,110 @@
   meltingPoint: -80.7
   tileReactions:
     - !type:FlammableTileReaction {}
+
+- type: reagent
+  id: chem.EZNutrient
+  name: EZ nutrient
+  desc: Give your plants some of those EZ nutrients!
+  color: "#664330"
+  physicalDesc: thick
+  plantMetabolism:
+    - !type:AdjustNutrition
+      amount: 1
+
+- type: reagent
+  id: chem.Left4Zed
+  name: left-4-zed
+  desc: A cocktail of mutagenic compounds, which cause plant life to become highly unstable.
+  color: "#5b406c"
+  physicalDesc: heterogeneous
+  plantMetabolism:
+    - !type:AdjustNutrition
+      amount: 1
+    - !type:AdjustHealth
+      amount: -0.5
+    - !type:AdjustMutationMod
+      prob: 0.3
+      amount: 0.2
+
+- type: reagent
+  id: chem.RobustHarvest
+  name: robust harvest
+  desc: Plant-enhancing hormones, good for increasing potency.
+  color: "#3e901c"
+  physicalDesc: robust
+  customPlantMetabolism: 0.1
+  plantMetabolism:
+    - !type:AdjustNutrition
+      amount: 0.05
+    - !type:AdjustWeeds
+      prob: 0.025
+      amount: 1
+    - !type:AdjustPests
+      prob: 0.025
+      amount: 1
+    - !type:RobustHarvest {}
+
+- type: reagent
+  id: chem.PlantBGone
+  name: plant-B-gone
+  desc: A harmful toxic mixture to kill plantlife. Do not ingest!
+  color: "#49002E"
+  physicalDesc: bubbling
+  plantMetabolism:
+    - !type:AdjustToxins
+      amount: 6
+    - !type:AdjustWeeds
+      amount: -8
+    - !type:AdjustHealth
+      amount: -20
+    - !type:AdjustMutationMod
+      amount: 0.1
+
+- type: reagent
+  id: chem.WeedKiller
+  name: weed killer
+  desc: A mixture that targets weeds.
+  color: "#968395"
+  physicalDesc: bubbling
+  plantMetabolism:
+    - !type:AdjustToxins
+      amount: 4
+    - !type:AdjustWeeds
+      amount: -6
+
+- type: reagent
+  id: chem.PestKiller
+  name: pest killer
+  desc: A mixture that targets pests.
+  color: "#9e9886"
+  physicalDesc: bubbling
+  plantMetabolism:
+    - !type:AdjustToxins
+      amount: 4
+    - !type:AdjustPests
+      amount: -6
+
+- type: reagent
+  id: chem.Toxin
+  name: toxin
+  desc: A Toxic chemical.
+  color: "#cf3600"
+  physicalDesc: opaque
+  plantMetabolism:
+    - !type:AdjustToxins
+      amount: 10
+
+- type: reagent
+  id: chem.Sugar
+  name: sugar
+  desc: Sickly sweet.
+  color: "#ffffff"
+  physicalDesc: opaque
+  plantMetabolism:
+    - !type:AdjustNutrition
+      amount: 0.1
+    - !type:AdjustWeeds
+      amount: 2
+    - !type:AdjustPests
+      amount: 2
