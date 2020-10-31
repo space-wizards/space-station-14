@@ -154,14 +154,11 @@ namespace Content.Server.GameObjects.Components.Disposal
         [Verb]
         public sealed class ConfigureVerb : Verb<DisposalTaggerComponent>
         {
-            public override bool RequireInteractionRange => false;
-            public override bool BlockedByContainers => false;
-
             protected override void GetData(IEntity user, DisposalTaggerComponent component, VerbData data)
             {
 
                 var groupController = IoCManager.Resolve<IConGroupController>();
-                if (!user.TryGetComponent(out IActorComponent actor) || !groupController.CanAdminMenu(actor.playerSession))
+                if (!user.TryGetComponent(out IActorComponent? actor) || !groupController.CanAdminMenu(actor.playerSession))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
@@ -173,7 +170,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             protected override void Activate(IEntity user, DisposalTaggerComponent component)
             {
-                if (user.TryGetComponent(out IActorComponent actor))
+                if (user.TryGetComponent(out IActorComponent? actor))
                 {
                     component.OpenUserInterface(actor);
                 }

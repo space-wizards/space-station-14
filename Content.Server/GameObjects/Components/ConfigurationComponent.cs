@@ -10,6 +10,7 @@ using Robust.Server.Console;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -133,9 +134,9 @@ namespace Content.Server.GameObjects.Components
         {
             protected override void GetData(IEntity user, ConfigurationComponent component, VerbData data)
             {
-
+                var session = user.PlayerSession();
                 var groupController = IoCManager.Resolve<IConGroupController>();
-                if (!user.TryGetComponent(out IActorComponent actor) || !groupController.CanAdminMenu(actor.playerSession))
+                if (session == null || !groupController.CanAdminMenu(session))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;

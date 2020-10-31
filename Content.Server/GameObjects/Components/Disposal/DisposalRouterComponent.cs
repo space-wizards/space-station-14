@@ -14,6 +14,7 @@ using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
@@ -193,14 +194,11 @@ namespace Content.Server.GameObjects.Components.Disposal
         [Verb]
         public sealed class ConfigureVerb : Verb<DisposalRouterComponent>
         {
-            public override bool RequireInteractionRange => false;
-            public override bool BlockedByContainers => false;
-
             protected override void GetData(IEntity user, DisposalRouterComponent component, VerbData data)
             {
-
+                var session = user.PlayerSession();
                 var groupController = IoCManager.Resolve<IConGroupController>();
-                if (!user.TryGetComponent(out IActorComponent actor) || !groupController.CanAdminMenu(actor.playerSession))
+                if (session == null || !groupController.CanAdminMenu(session))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
@@ -212,7 +210,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             protected override void Activate(IEntity user, DisposalRouterComponent component)
             {
-                if (user.TryGetComponent(out IActorComponent actor))
+                if (user.TryGetComponent(out IActorComponent? actor))
                 {
                     component.OpenUserInterface(actor);
                 }
