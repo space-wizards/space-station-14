@@ -10,7 +10,7 @@ namespace Content.Shared.Physics
     {
         public override IPhysicsComponent? ControlledComponent { protected get; set; }
 
-        private float time_to_vmax = 5f;
+        private float time_to_vmax = 0.2f;
 
         public void Move(Vector2 velocityDirection, float frameTime)
         {
