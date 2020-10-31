@@ -11,7 +11,10 @@ namespace Content.Shared.Physics
 
         public void Push(Vector2 velocityDirection, float speed)
         {
-            LinearVelocity = velocityDirection * speed;
+            if (ControlledComponent != null)
+            {
+                ControlledComponent.Force += velocityDirection * speed;
+            }
         }
     }
 }

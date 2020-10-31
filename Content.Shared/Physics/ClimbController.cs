@@ -10,9 +10,9 @@ namespace Content.Shared.Physics
     /// </summary>
     public class ClimbController : VirtualController
     {
-        private Vector2? _movingTo = null;
-        private Vector2 _lastKnownPosition = default;
-        private int _numTicksBlocked = 0;
+        private Vector2? _movingTo;
+        private Vector2 _lastKnownPosition;
+        private int _numTicksBlocked;
 
         /// <summary>
         /// If 5 ticks have passed and our position has not changed then something is blocking us.
@@ -24,8 +24,8 @@ namespace Content.Shared.Physics
         /// </summary>
         public bool IsActive => _movingTo.HasValue;
 
-        private float _initialDist = default;
-        private bool _isMovingWrongDirection = false;
+        private float _initialDist;
+        private bool _isMovingWrongDirection;
 
         public void TryMoveTo(Vector2 from, Vector2 to)
         {
@@ -63,7 +63,7 @@ namespace Content.Shared.Physics
 
             _lastKnownPosition = ControlledComponent.Owner.Transform.WorldPosition;
 
-            if ((ControlledComponent.Owner.Transform.WorldPosition - _movingTo.Value).Length <= 0.1f) 
+            if ((ControlledComponent.Owner.Transform.WorldPosition - _movingTo.Value).Length <= 0.1f)
             {
                 _movingTo = null;
             }
@@ -78,11 +78,7 @@ namespace Content.Shared.Physics
                 }
 
                 var diff = _movingTo.Value - ControlledComponent.Owner.Transform.WorldPosition;
-                LinearVelocity = diff.Normalized * 5;
-            }
-            else
-            {
-                LinearVelocity = Vector2.Zero;
+                ControlledComponent.Force += diff.Normalized * 5;
             }
         }
     }

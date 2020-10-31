@@ -10,28 +10,24 @@ namespace Content.Shared.Physics
 {
     public class ConveyedController : VirtualController
     {
-        public override IPhysicsComponent? ControlledComponent { protected get; set; }
-
         public void Move(Vector2 velocityDirection, float speed)
         {
-            if (ControlledComponent?.Owner.IsWeightless() ?? false)
+            if (ControlledComponent == null)
             {
                 return;
             }
 
-            if (ControlledComponent?.Status == BodyStatus.InAir)
+            if (ControlledComponent.Owner.IsWeightless())
             {
                 return;
             }
 
-            LinearVelocity = velocityDirection * speed * 100;
-        }
+            if (ControlledComponent.Status == BodyStatus.InAir)
+            {
+                return;
+            }
 
-        public override void UpdateAfterProcessing()
-        {
-            base.UpdateAfterProcessing();
-
-            LinearVelocity = Vector2.Zero;
+            ControlledComponent.Force += velocityDirection * speed * 100;
         }
     }
 }

@@ -3,13 +3,13 @@ using Robust.Shared.Physics;
 
 namespace Content.Shared.Physics
 {
-    public class VaporController : VirtualController
+    public class GasVaporController : VirtualController
     {
         public void Move(Vector2 velocityDirection, float speed)
         {
             if (ControlledComponent != null)
             {
-                LinearVelocity = velocityDirection * speed;
+                ControlledComponent.Force += velocityDirection * speed;
             }
         }
     }
