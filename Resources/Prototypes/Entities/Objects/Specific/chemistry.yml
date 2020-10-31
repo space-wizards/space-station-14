@@ -59,7 +59,7 @@
 - type: entity
   name: syringe
   parent: BaseItem
-  description: Used to draw blood samples from mobs, or to inject them with reagents
+  description: Used to draw blood samples from mobs, or to inject them with reagents.
   id: Syringe
   components:
   - type: Sprite

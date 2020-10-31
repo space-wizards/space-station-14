@@ -1,6 +1,7 @@
 using Content.Client.GameObjects.Components.Instruments;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Client.Audio.Midi;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.UserInterface;
@@ -176,33 +177,19 @@ namespace Content.Client.Instruments
             var filters = new FileDialogFilters(new FileDialogFilters.Group("mid", "midi"));
             var filename = await _fileDialogManager.OpenFile(filters);
 
-            var instrumentEnt = _owner.Instrument.Owner;
-            var instrument = _owner.Instrument;
-
-            ContainerHelpers.TryGetContainerMan(_owner.Instrument.Owner, out var conMan);
-
-            var localPlayer = IoCManager.Resolve<IPlayerManager>().LocalPlayer;
-
             // The following checks are only in place to prevent players from playing MIDI songs locally.
             // There are equivalents for these checks on the server.
 
             if (string.IsNullOrEmpty(filename)) return;
-
-            // If we don't have a player or controlled entity, we return.
-            if(localPlayer?.ControlledEntity == null) return;
-
-            // If the instrument is handheld and we're not holding it, we return.
-            if((instrument.Handheld && (conMan == null
-                                        || conMan.Owner != localPlayer.ControlledEntity))) return;
-
-            // We check that we're in range unobstructed just in case.
-            if (!localPlayer.InRangeUnobstructed(instrumentEnt)) return;
 
             if (!_midiManager.IsMidiFile(filename))
             {
                 Logger.Warning($"Not a midi file! Chosen file: {filename}");
                 return;
             }
+
+            if (!PlayCheck())
+                return;
 
             MidiStopButtonOnPressed(null);
             await Timer.Delay(100);
@@ -216,11 +203,34 @@ namespace Content.Client.Instruments
         {
             if (obj.Pressed)
             {
+                if (!PlayCheck())
+                    return;
+
                 MidiStopButtonOnPressed(null);
                 _owner.Instrument.OpenInput();
             }
             else
                 _owner.Instrument.CloseInput();
+        }
+
+        private bool PlayCheck()
+        {
+            var instrumentEnt = _owner.Instrument.Owner;
+            var instrument = _owner.Instrument;
+
+            ContainerHelpers.TryGetContainerMan(_owner.Instrument.Owner, out var conMan);
+
+            var localPlayer = IoCManager.Resolve<IPlayerManager>().LocalPlayer;
+
+            // If we don't have a player or controlled entity, we return.
+            if(localPlayer?.ControlledEntity == null) return false;
+
+            // If the instrument is handheld and we're not holding it, we return.
+            if((instrument.Handheld && (conMan == null
+                                        || conMan.Owner != localPlayer.ControlledEntity))) return false;
+
+            // We check that we're in range unobstructed just in case.
+            return localPlayer.InRangeUnobstructed(instrumentEnt, predicate:(e) => e == instrumentEnt || e == localPlayer.ControlledEntity);
         }
 
         private void MidiStopButtonOnPressed(BaseButton.ButtonEventArgs obj)

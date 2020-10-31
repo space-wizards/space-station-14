@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Atmos;
@@ -46,7 +47,7 @@ namespace Content.IntegrationTests.Tests.Body
 
                 var originalOxygen = 2;
                 var originalNitrogen = 8;
-                var breathedPercentage = Atmospherics.BreathPercentage;
+                var breathedPercentage = Atmospherics.BreathVolume / gas.Volume;
 
                 gas.AdjustMoles(Gas.Oxygen, originalOxygen);
                 gas.AdjustMoles(Gas.Nitrogen, originalNitrogen);
@@ -76,7 +77,7 @@ namespace Content.IntegrationTests.Tests.Body
                 lung.Exhale(1, gas);
 
                 var lungOxygenAfterExhale = lung.Air.GetMoles(Gas.Oxygen);
-                var exhaledOxygen = lungOxygenBeforeExhale - lungOxygenAfterExhale;
+                var exhaledOxygen = Math.Abs(lungOxygenBeforeExhale - lungOxygenAfterExhale);
 
                 // Not completely empty
                 Assert.Positive(lung.Air.Gases.Sum());

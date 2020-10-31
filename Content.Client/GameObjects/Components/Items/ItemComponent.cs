@@ -21,6 +21,8 @@ namespace Content.Client.GameObjects.Components.Items
     [ComponentReference(typeof(IItemComponent))]
     public class ItemComponent : Component, IItemComponent, IDraggable
     {
+        [Dependency] private IResourceCache _resourceCache = default!;
+
         public override string Name => "Item";
         public override uint? NetID => ContentNetIDs.ITEM;
 
@@ -72,8 +74,7 @@ namespace Content.Client.GameObjects.Components.Items
 
         protected RSI GetRSI()
         {
-            var resourceCache = IoCManager.Resolve<IResourceCache>();
-            return resourceCache.GetResource<RSIResource>(SharedSpriteComponent.TextureRoot / RsiPath).RSI;
+            return _resourceCache.GetResource<RSIResource>(SharedSpriteComponent.TextureRoot / RsiPath).RSI;
         }
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)

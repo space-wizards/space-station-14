@@ -23,6 +23,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
         private string? _meatPrototype;
         private string _meatSource1p = "?";
         private string _meatSource0 = "?";
+        private string _meatName = "?";
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
@@ -38,7 +39,11 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
                 if (!string.IsNullOrEmpty(_meatPrototype))
                 {
-                    Owner.EntityManager.SpawnEntity(_meatPrototype, Owner.Transform.Coordinates);
+                    var meat = Owner.EntityManager.SpawnEntity(_meatPrototype, Owner.Transform.Coordinates);
+                    if (meat != null)
+                    {
+                        meat.Name = _meatName;
+                    }
                 }
 
                 if (_meatParts != 0)
@@ -74,6 +79,9 @@ namespace Content.Server.GameObjects.Components.Kitchen
             _meatParts = 5;
             _meatSource1p = Loc.GetString("You remove some meat from {0:theName}.", victim);
             _meatSource0 = Loc.GetString("You remove the last piece of meat from {0:theName}!", victim);
+            // TODO: This could stand to be improved somehow, but it'd require Name to be much 'richer' in detail than it presently is.
+            // But Name is RobustToolbox-level, so presumably it'd have to be done in some other way (interface???)
+            _meatName = Loc.GetString("{0:name} meat", victim);
 
             if (Owner.TryGetComponent(out sprite))
             {

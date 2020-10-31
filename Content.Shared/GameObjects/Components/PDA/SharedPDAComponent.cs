@@ -108,6 +108,7 @@ namespace Content.Shared.GameObjects.Components.PDA
     public enum PDAVisuals
     {
         FlashlightLit,
+        IDCardInserted
     }
 
     [Serializable, NetSerializable]

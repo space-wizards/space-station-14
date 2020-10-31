@@ -3,6 +3,7 @@ using Content.Shared.Damage;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.GameObjects.EntitySystemMessages;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
@@ -94,7 +95,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHitWall, user.Transform.Coordinates.Offset(offset));
             }
 
-            Timer.Spawn((int) _deathTime.TotalMilliseconds, () =>
+            Owner.SpawnTimer((int) _deathTime.TotalMilliseconds, () =>
             {
                 if (!Owner.Deleted)
                 {

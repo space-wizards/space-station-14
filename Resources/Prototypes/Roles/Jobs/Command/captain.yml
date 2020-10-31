@@ -10,15 +10,26 @@
   access:
   # All of em.
   # Could probably do with some kind of wildcard or whatever to automate this.
+  # HELL FUCKING YEAH WE COULD
   - Captain
   - HeadOfPersonnel
   - Command
   - Security
+  - HeadOfSecurity
+  - Brig
+  - Detective
+  - ChiefEngineer
   - Engineering
+  - ChiefMedicalOfficer
   - Medical
+  - Quartermaster
   - Cargo
+  - ResearchDirector
   - Research
+  - Bar
+  - Kitchen
   - Service
+  - Hydroponics
   - Maintenance
   - External
   - Janitor
