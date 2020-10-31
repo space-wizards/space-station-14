@@ -1,0 +1,9 @@
+﻿- type: reagent
+  id: chem.Blood
+  name: blood
+  desc: Sanguis.
+  physicalDesc: goey
+  color: "#bb0a1e"
+  metabolism:
+  - !type:DefaultBlood
+    rate: 0

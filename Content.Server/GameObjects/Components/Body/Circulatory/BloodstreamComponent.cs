@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Metabolism;
@@ -43,6 +43,7 @@ namespace Content.Server.GameObjects.Components.Body.Circulatory
 
             _internalSolution = Owner.EnsureComponent<SolutionContainerComponent>();
             _internalSolution.MaxVolume = _initialMaxVolume;
+            _internalSolution.TryAddReagent("chem.Blood", ReagentUnit.New(20), out var accepted);
         }
 
         public override void ExposeData(ObjectSerializer serializer)
