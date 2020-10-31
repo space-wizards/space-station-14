@@ -83,7 +83,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 physics.TryGetController(out MoverController controller) &&
                 !ev.Entity.IsWeightless())
             {
-                controller.StopMoving();
+                //controller.StopMoving();
             }
         }
 
