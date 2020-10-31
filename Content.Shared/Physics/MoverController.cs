@@ -25,8 +25,6 @@ namespace Content.Shared.Physics
             }
             Vector2 force = velocityDirection;
             //apply a counteracting force to the standard friction between a human and a floor
-            float gravity = 9.8f;
-            float friction = 0.35f;
             Vector2 antiFriction = force.Normalized * (0.35f * 9.8f / mass / frameTime);
 
 
