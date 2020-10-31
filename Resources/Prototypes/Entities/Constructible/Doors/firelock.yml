@@ -58,7 +58,7 @@
       offset: Center
     - type: Construction
       graph: Firelock
-      node: frame2
+      node: Firelock
 
   placement:
     mode: SnapgridCenter

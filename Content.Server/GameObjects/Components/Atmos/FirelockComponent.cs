@@ -73,10 +73,13 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public override async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
+
+            await base.InteractUsing(eventArgs);
+
             if (!eventArgs.Using.TryGetComponent<ToolComponent>(out var tool))
                 return false;
 
-            if (tool.HasQuality(ToolQuality.Prying))
+            if (tool.HasQuality(ToolQuality.Prying) && !IsWeldedShut)
             {
                 var holdingPressure = IsHoldingPressure();
                 var holdingFire = IsHoldingFire();
@@ -89,13 +92,14 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                 if (!await tool.UseTool(eventArgs.User, Owner, holdingPressure || holdingFire ? 1.5f : 0.25f, ToolQuality.Prying)) return false;
 
-                if (State == DoorState.Closed)
+                if (State == DoorState.Closed && !IsWeldedShut)
                     Open();
                 else if (State == DoorState.Open)
                     Close();
 
                 return true;
             }
+
 
             return false;
         }

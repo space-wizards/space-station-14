@@ -1,0 +1,13 @@
+﻿- type: constructionGraph
+  id: Table
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: frame
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: Metal
+              amount: 1
+              doAfter: 1

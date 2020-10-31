@@ -116,7 +116,7 @@
   id: Firelock
   graph: Firelock
   startNode: start
-  targetNode: frame2
+  targetNode: Firelock
   category: Structures
   description: This is a firelock - it locks an area when a fire alarm in the area is triggered. Don't get squished!
   icon:
