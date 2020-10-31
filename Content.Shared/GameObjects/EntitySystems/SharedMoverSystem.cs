@@ -4,7 +4,6 @@ using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
-using NFluidsynth;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
@@ -17,7 +16,6 @@ using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
-using Logger = Robust.Shared.Log.Logger;
 
 namespace Content.Shared.GameObjects.EntitySystems
 {

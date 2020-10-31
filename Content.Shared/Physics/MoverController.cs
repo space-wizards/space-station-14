@@ -1,8 +1,6 @@
 ﻿#nullable enable
-using System;
 using Content.Shared.GameObjects.Components.Movement;
 using Robust.Shared.GameObjects.Components;
-using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 
@@ -12,7 +10,7 @@ namespace Content.Shared.Physics
     {
         public override IPhysicsComponent? ControlledComponent { protected get; set; }
 
-        private float time_to_vmax = 0.2f;
+        private float time_to_vmax = 5f;
 
         public void Move(Vector2 velocityDirection, float frameTime)
         {
