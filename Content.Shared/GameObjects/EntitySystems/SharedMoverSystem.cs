@@ -88,7 +88,8 @@ namespace Content.Shared.GameObjects.EntitySystems
                 {
                     if (physics.TryGetController(out MoverController controller))
                     {
-                        controller.Push(combined, mover.CurrentPushSpeed);
+                        //TODO: weightless movement
+                        //controller.Push(combined, mover.CurrentPushSpeed);
                     }
 
                     transform.LocalRotation = physics.LinearVelocity.GetDir().ToAngle();
