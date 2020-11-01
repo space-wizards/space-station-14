@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 using Content.Server.Database;
+using Content.Server.Interfaces.Chat;
 using Content.Server.Players;
 using Content.Shared;
 using Content.Shared.Administration;
@@ -35,6 +36,7 @@ namespace Content.Server.Administration
         [Dependency] private readonly IConGroupController _conGroup = default!;
         [Dependency] private readonly IResourceManager _res = default!;
         [Dependency] private readonly IConsoleShell _consoleShell = default!;
+        [Dependency] private readonly IChatManager _chat = default!;
 
         private readonly Dictionary<IPlayerSession, AdminReg> _admins = new Dictionary<IPlayerSession, AdminReg>();
 
@@ -69,11 +71,12 @@ namespace Content.Server.Administration
                 return;
             }
 
+            _chat.SendAdminAnnouncement(Loc.GetString("{0} de-adminned themselves.", session.Name));
+            _chat.DispatchServerMessage(session, Loc.GetString("You are now a normal player."));
+
             var plyData = session.ContentData()!;
             plyData.ExplicitlyDeadminned = true;
             reg.Data.Active = false;
-
-            // TODO: Send messages to all admins.
 
             UpdateAdminStatus(session);
         }
@@ -85,11 +88,13 @@ namespace Content.Server.Administration
                 throw new ArgumentException($"Player {session} is not an admin");
             }
 
+            _chat.DispatchServerMessage(session, Loc.GetString("You are now an admin."));
+
             var plyData = session.ContentData()!;
             plyData.ExplicitlyDeadminned = true;
             reg.Data.Active = true;
 
-            // TODO: Send messages to all admins.
+            _chat.SendAdminAnnouncement(Loc.GetString("{0} re-adminned themselves.", session.Name));
 
             UpdateAdminStatus(session);
         }

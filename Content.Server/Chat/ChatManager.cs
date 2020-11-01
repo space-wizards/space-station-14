@@ -124,7 +124,7 @@ namespace Content.Server.Chat
 
                 // Capitalize first letter
                 message = message[0].ToString().ToUpper() +
-                          message.Remove(0,1);
+                          message.Remove(0, 1);
 
                 if (source.TryGetComponent(out InventoryComponent inventory) &&
                     inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.EARS, out ItemComponent item) &&
@@ -141,7 +141,7 @@ namespace Content.Server.Chat
             {
                 // Capitalize first letter
                 message = message[0].ToString().ToUpper() +
-                          message.Remove(0,1);
+                          message.Remove(0, 1);
             }
 
             var listeners = EntitySystem.Get<ListeningSystem>();
@@ -211,7 +211,10 @@ namespace Content.Server.Chat
                 return;
             }
 
-            var clients = _playerManager.GetPlayersBy(x => x.AttachedEntity != null && x.AttachedEntity.HasComponent<GhostComponent>()).Select(p => p.ConnectedClient);;
+            var clients = _playerManager
+                .GetPlayersBy(x => x.AttachedEntity != null && x.AttachedEntity.HasComponent<GhostComponent>())
+                .Select(p => p.ConnectedClient);
+            ;
 
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Dead;
@@ -237,6 +240,19 @@ namespace Content.Server.Chat
             msg.Channel = ChatChannel.AdminChat;
             msg.Message = message;
             msg.MessageWrap = $"{Loc.GetString("ADMIN")}: {player.Name}: {{0}}";
+            _netManager.ServerSendToMany(msg, clients.ToList());
+        }
+
+        public void SendAdminAnnouncement(string message)
+        {
+            var clients = _adminManager.ActiveAdmins.Select(p => p.ConnectedClient);
+
+            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
+
+            msg.Channel = ChatChannel.AdminChat;
+            msg.Message = message;
+            msg.MessageWrap = $"{Loc.GetString("ADMIN")}: {{0}}";
+
             _netManager.ServerSendToMany(msg, clients.ToList());
         }
 
