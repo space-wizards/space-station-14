@@ -14,7 +14,6 @@ namespace Content.Shared.GameObjects.Components.Conveyor
     {
         Off,
         Forward,
-        Reversed,
-        Loose
+        Reversed
     }
 }

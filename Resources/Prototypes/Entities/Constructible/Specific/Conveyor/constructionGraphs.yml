@@ -1,0 +1,8 @@
+﻿- type: constructionGraph
+  id: ConveyorGraph
+
+  start: item
+
+  graph:
+    - node: item
+      entity:
