@@ -1,5 +1,6 @@
 - type: entity
   name: stun baton
+  description: A stun baton for incapacitating people with.
   parent: BaseItem
   id: Stunbaton
   components:
@@ -14,6 +15,10 @@
       range: 0.75
       arcwidth: 0
       arc: default
+
+    - type: PowerCellSlot
+      slotSize: Medium
+      startingCellType: PowerCellMediumHigh
 
     - type: Item
       size: 10

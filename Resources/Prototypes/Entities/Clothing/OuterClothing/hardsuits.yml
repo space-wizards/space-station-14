@@ -194,7 +194,7 @@
   parent: HardsuitBase
   id: HardsuitTDRed
   name: red TD hardsuit
-  description: Heavily armored black and red suit for long combat situations, also provides protection from low-pressure/vacuum damage
+  description: Heavily armored black and red suit for long combat situations, also provides protection from low-pressure/vacuum damage.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/tdred.rsi

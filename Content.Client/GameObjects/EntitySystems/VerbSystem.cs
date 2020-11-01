@@ -8,8 +8,10 @@ using Content.Client.UserInterface;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.GameObjects.Verbs;
+using Content.Shared.GameTicking;
 using Content.Shared.Input;
 using JetBrains.Annotations;
+using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
@@ -38,7 +40,7 @@ using Timer = Robust.Shared.Timers.Timer;
 namespace Content.Client.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    public sealed class VerbSystem : SharedVerbSystem
+    public sealed class VerbSystem : SharedVerbSystem, IResettingEntitySystem
     {
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -56,12 +58,14 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private bool IsAnyContextMenuOpen => _currentEntityList != null || _currentVerbListRoot != null;
 
+        private bool _playerCanSeeThroughContainers;
 
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeNetworkEvent<VerbSystemMessages.VerbsResponseMessage>(FillEntityPopup);
+            SubscribeNetworkEvent<PlayerContainerVisibilityMessage>(HandleContainerVisibilityMessage);
 
             IoCManager.InjectDependencies(this);
 
@@ -75,6 +79,16 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             CommandBinds.Unregister<VerbSystem>();
             base.Shutdown();
+        }
+
+        public void Reset()
+        {
+            _playerCanSeeThroughContainers = false;
+        }
+
+        private void HandleContainerVisibilityMessage(PlayerContainerVisibilityMessage ev)
+        {
+            _playerCanSeeThroughContainers = ev.CanSeeThrough;
         }
 
         public void OpenContextMenu(IEntity entity, ScreenCoordinates screenCoordinates)
@@ -97,6 +111,28 @@ namespace Content.Client.GameObjects.EntitySystems
 
             var box = UIBox2.FromDimensions(screenCoordinates.Position, (1, 1));
             _currentVerbListRoot.Open(box);
+        }
+
+        public bool CanSeeOnContextMenu(IEntity entity)
+        {
+            if (!entity.TryGetComponent(out SpriteComponent sprite) || !sprite.Visible)
+            {
+                return false;
+            }
+
+            if (entity.GetAllComponents<IShowContextMenu>().Any(s => !s.ShowContextMenu(entity)))
+            {
+                return false;
+            }
+
+            if (!_playerCanSeeThroughContainers &&
+                ContainerHelpers.TryGetContainer(entity, out var container) &&
+                !container.ShowContents)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private bool OnOpenContextMenu(in PointerInputCmdHandler.PointerInputCmdArgs args)
@@ -125,17 +161,7 @@ namespace Content.Client.GameObjects.EntitySystems
             var first = true;
             foreach (var entity in entities)
             {
-                if (!entity.TryGetComponent(out ISpriteComponent sprite) || !sprite.Visible)
-                {
-                    continue;
-                }
-
-                if (entity.GetAllComponents<IShowContextMenu>().Any(s => !s.ShowContextMenu(playerEntity)))
-                {
-                    continue;
-                }
-
-                if (ContainerHelpers.TryGetContainer(entity, out var container) && !container.ShowContents)
+                if (!CanSeeOnContextMenu(entity))
                 {
                     continue;
                 }

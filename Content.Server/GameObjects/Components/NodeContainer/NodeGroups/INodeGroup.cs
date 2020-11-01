@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         void RemakeGroup();
     }
 
-    [NodeGroup(NodeGroupID.Default)]
+    [NodeGroup(NodeGroupID.Default, NodeGroupID.WireNet)]
     public class BaseNodeGroup : INodeGroup
     {
         [ViewVariables]

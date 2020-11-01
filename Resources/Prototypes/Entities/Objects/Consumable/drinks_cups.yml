@@ -21,7 +21,7 @@
   parent: DrinkBaseCup
   id: DrinkGoldenCup
   name: golden cup
-  description: A golden cup
+  description: A golden cup.
   components:
   - type: SolutionContainer
     maxVol: 10

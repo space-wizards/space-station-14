@@ -1,4 +1,4 @@
-﻿﻿using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Utility;

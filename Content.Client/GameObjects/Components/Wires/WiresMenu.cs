@@ -21,6 +21,8 @@ namespace Content.Client.GameObjects.Components.Wires
 {
     public class WiresMenu : BaseWindow
     {
+        [Dependency] private IResourceCache _resourceCache = default!;
+
         public WiresBoundUserInterface Owner { get; }
 
         private readonly Control _wiresHBox;
@@ -34,7 +36,7 @@ namespace Content.Client.GameObjects.Components.Wires
 
         public WiresMenu(WiresBoundUserInterface owner)
         {
-            var resourceCache = IoCManager.Resolve<IResourceCache>();
+            IoCManager.InjectDependencies(this);
 
             Owner = owner;
             var rootContainer = new LayoutContainer {Name = "WireRoot"};
@@ -42,7 +44,7 @@ namespace Content.Client.GameObjects.Components.Wires
 
             MouseFilter = MouseFilterMode.Stop;
 
-            var panelTex = resourceCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
+            var panelTex = _resourceCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
             var back = new StyleBoxTexture
             {
                 Texture = panelTex,
@@ -135,8 +137,8 @@ namespace Content.Client.GameObjects.Components.Wires
 
             LayoutContainer.SetAnchorPreset(topContainerWrap, LayoutContainer.LayoutPreset.Wide);
 
-            var font = resourceCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 13);
-            var fontSmall = resourceCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 10);
+            var font = _resourceCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 13);
+            var fontSmall = _resourceCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 10);
 
             Button helpButton;
             var topRow = new MarginContainer
@@ -255,7 +257,7 @@ namespace Content.Client.GameObjects.Components.Wires
                 var mirror = random.Next(2) == 0;
                 var flip = random.Next(2) == 0;
                 var type = random.Next(2);
-                var control = new WireControl(wire.Color, wire.Letter, wire.IsCut, flip, mirror, type)
+                var control = new WireControl(wire.Color, wire.Letter, wire.IsCut, flip, mirror, type, _resourceCache)
                 {
                     SizeFlagsVertical = SizeFlags.ShrinkEnd
                 };
@@ -278,7 +280,7 @@ namespace Content.Client.GameObjects.Components.Wires
             {
                 if (status.Value is StatusLightData statusLightData)
                 {
-                    _statusContainer.AddChild(new StatusLight(statusLightData));
+                    _statusContainer.AddChild(new StatusLight(statusLightData, _resourceCache));
                 }
                 else
                 {
@@ -305,17 +307,19 @@ namespace Content.Client.GameObjects.Components.Wires
 
         private sealed class WireControl : Control
         {
+            private IResourceCache _resourceCache;
+
             private const string TextureContact = "/Textures/Interface/WireHacking/contact.svg.96dpi.png";
 
             public event Action WireClicked;
             public event Action ContactsClicked;
 
-            public WireControl(WireColor color, WireLetter letter, bool isCut, bool flip, bool mirror, int type)
+            public WireControl(WireColor color, WireLetter letter, bool isCut, bool flip, bool mirror, int type, IResourceCache resourceCache)
             {
+                _resourceCache = resourceCache;
+
                 SizeFlagsHorizontal = SizeFlags.ShrinkCenter;
                 MouseFilter = MouseFilterMode.Stop;
-
-                var resourceCache = IoCManager.Resolve<IResourceCache>();
 
                 var layout = new LayoutContainer();
                 AddChild(layout);
@@ -326,7 +330,7 @@ namespace Content.Client.GameObjects.Components.Wires
                     SizeFlagsVertical = SizeFlags.ShrinkEnd,
                     SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
                     Align = Label.AlignMode.Center,
-                    FontOverride = resourceCache.GetFont("/Fonts/NotoSansDisplay/NotoSansDisplay-Bold.ttf", 12),
+                    FontOverride = _resourceCache.GetFont("/Fonts/NotoSansDisplay/NotoSansDisplay-Bold.ttf", 12),
                     FontColorOverride = Color.Gray,
                     ToolTip = letter.Name(),
                     MouseFilter = MouseFilterMode.Stop
@@ -337,7 +341,7 @@ namespace Content.Client.GameObjects.Components.Wires
                 LayoutContainer.SetGrowVertical(greek, LayoutContainer.GrowDirection.Begin);
                 LayoutContainer.SetGrowHorizontal(greek, LayoutContainer.GrowDirection.Both);
 
-                var contactTexture = resourceCache.GetTexture(TextureContact);
+                var contactTexture = _resourceCache.GetTexture(TextureContact);
                 var contact1 = new TextureRect
                 {
                     Texture = contactTexture,
@@ -356,7 +360,7 @@ namespace Content.Client.GameObjects.Components.Wires
                 layout.AddChild(contact2);
                 LayoutContainer.SetPosition(contact2, (0, 60));
 
-                var wire = new WireRender(color, isCut, flip, mirror, type);
+                var wire = new WireRender(color, isCut, flip, mirror, type, _resourceCache);
 
                 layout.AddChild(wire);
                 LayoutContainer.SetPosition(wire, (2, 16));
@@ -420,8 +424,11 @@ namespace Content.Client.GameObjects.Components.Wires
                     "/Textures/Interface/WireHacking/wire_2_copper.svg.96dpi.png"
                 };
 
-                public WireRender(WireColor color, bool isCut, bool flip, bool mirror, int type)
+                private IResourceCache _resourceCache;
+
+                public WireRender(WireColor color, bool isCut, bool flip, bool mirror, int type, IResourceCache resourceCache)
                 {
+                    _resourceCache = resourceCache;
                     _color = color;
                     _isCut = isCut;
                     _flip = flip;
@@ -436,10 +443,8 @@ namespace Content.Client.GameObjects.Components.Wires
 
                 protected override void Draw(DrawingHandleScreen handle)
                 {
-                    var resC = IoCManager.Resolve<IResourceCache>();
-
                     var colorValue = _color.ColorValue();
-                    var tex = resC.GetTexture(_isCut ? TextureCut[_type] : TextureNormal[_type]);
+                    var tex = _resourceCache.GetTexture(_isCut ? TextureCut[_type] : TextureNormal[_type]);
 
                     var l = 0f;
                     var r = tex.Width + l;
@@ -465,7 +470,7 @@ namespace Content.Client.GameObjects.Components.Wires
                     if (_isCut)
                     {
                         var copper = Color.Orange;
-                        var copperTex = resC.GetTexture(TextureCopper[_type]);
+                        var copperTex = _resourceCache.GetTexture(TextureCopper[_type]);
                         handle.DrawTextureRect(copperTex, rect, copper);
                     }
 
@@ -516,9 +521,8 @@ namespace Content.Client.GameObjects.Components.Wires
                 }
             };
 
-            public StatusLight(StatusLightData data)
+            public StatusLight(StatusLightData data, IResourceCache resourceCache)
             {
-                var resC = IoCManager.Resolve<IResourceCache>();
                 var hsv = Color.ToHsv(data.Color);
                 hsv.Z /= 2;
                 var dimColor = Color.FromHsv(hsv);
@@ -530,7 +534,7 @@ namespace Content.Client.GameObjects.Components.Wires
                     {
                         new TextureRect
                         {
-                            Texture = resC.GetTexture(
+                            Texture = resourceCache.GetTexture(
                                 "/Textures/Interface/WireHacking/light_off_base.svg.96dpi.png"),
                             Stretch = TextureRect.StretchMode.KeepCentered,
                             ModulateSelfOverride = dimColor
@@ -540,7 +544,7 @@ namespace Content.Client.GameObjects.Components.Wires
                             ModulateSelfOverride = data.Color.WithAlpha(0.4f),
                             Stretch = TextureRect.StretchMode.KeepCentered,
                             Texture =
-                                resC.GetTexture("/Textures/Interface/WireHacking/light_on_base.svg.96dpi.png"),
+                                resourceCache.GetTexture("/Textures/Interface/WireHacking/light_on_base.svg.96dpi.png"),
                         })
                     }
                 };
@@ -577,7 +581,7 @@ namespace Content.Client.GameObjects.Components.Wires
                     };
                 }
 
-                var font = IoCManager.Resolve<IResourceCache>().GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 12);
+                var font = resourceCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 12);
 
                 var hBox = new HBoxContainer {SeparationOverride = 4};
                 hBox.AddChild(new Label
