@@ -203,6 +203,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
             {
                 if (sender == null || !accessReader.IsAllowed(sender))
                 {
+                    FlickDenyAnimation();
                     return;
                 }
             }
