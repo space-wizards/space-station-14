@@ -199,7 +199,7 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
 
             OnAddedToBody(body);
 
-            foreach (var behavior in Owner.GetAllComponents<IMechanismBehavior>())
+            foreach (var behavior in _behaviors.Values)
             {
                 behavior.AddedToBody(body);
             }
@@ -213,7 +213,7 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
             Owner.Transform.AttachParent(part.Owner);
             OnAddedToPart(part);
 
-            foreach (var behavior in Owner.GetAllComponents<IMechanismBehavior>().ToArray())
+            foreach (var behavior in _behaviors.Values)
             {
                 behavior.AddedToPart(part);
             }
@@ -229,7 +229,7 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
             Owner.Transform.AttachParent(part.Owner);
             OnAddedToPartInBody(body, part);
 
-            foreach (var behavior in Owner.GetAllComponents<IMechanismBehavior>())
+            foreach (var behavior in _behaviors.Values)
             {
                 behavior.AddedToPartInBody(body, part);
             }
@@ -242,7 +242,7 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
 
             OnRemovedFromBody(old);
 
-            foreach (var behavior in Owner.GetAllComponents<IMechanismBehavior>())
+            foreach (var behavior in _behaviors.Values)
             {
                 behavior.RemovedFromBody(old);
             }
@@ -256,7 +256,7 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
             Owner.Transform.AttachToGridOrMap();
             OnRemovedFromPart(old);
 
-            foreach (var behavior in Owner.GetAllComponents<IMechanismBehavior>())
+            foreach (var behavior in _behaviors.Values)
             {
                 behavior.RemovedFromPart(old);
             }
@@ -272,7 +272,7 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
             Owner.Transform.AttachToGridOrMap();
             OnRemovedFromPartInBody(oldBody, oldPart);
 
-            foreach (var behavior in Owner.GetAllComponents<IMechanismBehavior>())
+            foreach (var behavior in _behaviors.Values)
             {
                 behavior.RemovedFromPartInBody(oldBody, oldPart);
             }
