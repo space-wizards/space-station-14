@@ -62,5 +62,15 @@ namespace Content.Shared
 
         public static readonly CVarDef<string> DatabasePgPassword =
             CVarDef.Create("database.pg_password", "", CVar.SERVERONLY);
+
+        /*
+         * Admin stuff
+         */
+
+        public static readonly CVarDef<bool> AdminAnnounceLogin =
+            CVarDef.Create("admin.announce_login", true, CVar.SERVERONLY);
+
+        public static readonly CVarDef<bool> AdminAnnounceLogout =
+            CVarDef.Create("admin.announce_logout", true, CVar.SERVERONLY);
     }
 }

@@ -203,6 +203,11 @@ namespace Content.Server.Administration
             else if (e.NewStatus == SessionStatus.Disconnected)
             {
                 _admins.Remove(e.Session);
+
+                if (_cfg.GetCVar(CCVars.AdminAnnounceLogout))
+                {
+                    _chat.SendAdminAnnouncement(Loc.GetString("Admin logout: {0}", e.Session.Name));
+                }
             }
         }
 
@@ -274,6 +279,11 @@ namespace Content.Server.Administration
             if (!session.ContentData()!.ExplicitlyDeadminned)
             {
                 reg.Data.Active = true;
+
+                if (_cfg.GetCVar(CCVars.AdminAnnounceLogin))
+                {
+                    _chat.SendAdminAnnouncement(Loc.GetString("Admin login: {0}", session.Name));
+                }
             }
 
             UpdateAdminStatus(session);
