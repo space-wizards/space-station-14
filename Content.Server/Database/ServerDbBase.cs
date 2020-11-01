@@ -224,7 +224,11 @@ namespace Content.Server.Database
         {
             await using var db = await GetDb();
 
-            return await db.DbContext.Admin.SingleOrDefaultAsync(p => p.UserId == userId.UserId);
+            return await db.DbContext.Admin
+                .Include(p => p.Flags)
+                .Include(p => p.AdminRank)
+                .ThenInclude(p => p.Flags)
+                .SingleOrDefaultAsync(p => p.UserId == userId.UserId);
         }
 
         protected abstract Task<DbGuard> GetDb();
