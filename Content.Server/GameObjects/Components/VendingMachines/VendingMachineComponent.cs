@@ -148,7 +148,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
             switch (message)
             {
                 case VendingMachineEjectMessage msg:
-                    TryEject(msg.ID, serverMsg.Session.AttachedEntity!);
+                    TryEject(msg.ID, serverMsg.Session.AttachedEntity);
                     break;
                 case InventorySyncRequestMessage _:
                     UserInterface?.SendMessage(new VendingMachineInventoryMessage(Inventory));
@@ -197,11 +197,11 @@ namespace Content.Server.GameObjects.Components.VendingMachines
             EntitySystem.Get<AudioSystem>().PlayFromEntity(_soundVend, Owner, AudioParams.Default.WithVolume(-2f));
         }
 
-        private void TryEject(string id, IEntity sender)
+        private void TryEject(string id, IEntity? sender)
         {
             if (Owner.TryGetComponent<AccessReader>(out var accessReader))
             {
-                if (!accessReader.IsAllowed(sender))
+                if (sender == null || !accessReader.IsAllowed(sender))
                 {
                     return;
                 }
