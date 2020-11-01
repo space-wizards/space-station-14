@@ -1,20 +1,17 @@
 ﻿using Content.Shared.GameObjects.Components.Body.Behavior;
 using Content.Shared.GameObjects.Components.Body.Networks;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Body.Behavior
 {
-    [RegisterComponent]
-    [ComponentReference(typeof(SharedHeartBehaviorComponent))]
-    public class HeartBehaviorComponent : SharedHeartBehaviorComponent
+    public class HeartBehavior : MechanismBehavior
     {
         private float _accumulatedFrameTime;
 
         public override void Update(float frameTime)
         {
             // TODO BODY do between pre and metabolism
-            if (Mechanism?.Body == null ||
-                !Mechanism.Body.Owner.HasComponent<SharedBloodstreamComponent>())
+            if (Parent.Body == null ||
+                !Parent.Body.Owner.HasComponent<SharedBloodstreamComponent>())
             {
                 return;
             }

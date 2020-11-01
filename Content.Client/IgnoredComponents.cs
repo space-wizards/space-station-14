@@ -214,6 +214,7 @@
             "CrematoriumEntityStorage",
             "RandomArcade",
             "RandomSpriteState",
+            "Heart",
         };
     }
 }

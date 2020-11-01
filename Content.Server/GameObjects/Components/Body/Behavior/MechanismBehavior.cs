@@ -1,23 +1,33 @@
 ﻿#nullable enable
+using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Body.Behavior;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Body.Part;
-using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.GameObjects.Components.Body.Behavior
+namespace Content.Server.GameObjects.Components.Body.Behavior
 {
-    public abstract class MechanismBehaviorComponent : Component, IMechanismBehavior
+    public abstract class MechanismBehavior : IMechanismBehavior
     {
         public IBody? Body => Part?.Body;
 
-        public IBodyPart? Part => Mechanism?.Part;
+        public IBodyPart? Part => Parent.Part;
 
-        public IMechanism? Mechanism => Owner.GetComponentOrNull<IMechanism>();
+        public IMechanism Parent { get; private set; } = default!;
 
-        protected override void Startup()
+        public IEntity Owner => Parent.Owner;
+
+        public virtual void ExposeData(ObjectSerializer serializer) { }
+
+        public virtual void Initialize(IMechanism parent)
         {
-            base.Startup();
+            Parent = parent;
+        }
 
+        public virtual void Startup()
+        {
             if (Part == null)
             {
                 return;
@@ -32,8 +42,6 @@ namespace Content.Shared.GameObjects.Components.Body.Behavior
                 AddedToPartInBody(Body, Part);
             }
         }
-
-        public abstract void Update(float frameTime);
 
         public void AddedToBody(IBody body)
         {
@@ -98,5 +106,7 @@ namespace Content.Shared.GameObjects.Components.Body.Behavior
         protected virtual void OnRemovedFromPart(IBodyPart old) { }
 
         protected virtual void OnRemovedFromPartInBody(IBody oldBody, IBodyPart oldPart) { }
+
+        public virtual void Update(float frameTime) { }
     }
 }
