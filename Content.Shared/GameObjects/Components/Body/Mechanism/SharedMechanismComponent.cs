@@ -112,7 +112,7 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
             {
                 serializer.DataReadWriteFunction(
                     "behaviors",
-                    null,
+                    null!,
                     behaviors =>
                     {
                         if (behaviors == null)
