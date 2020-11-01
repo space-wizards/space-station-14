@@ -765,7 +765,7 @@
       denyUnshaded: true
       broken: true
     - type: WiresVisualizer
-  - type: AccessLevel
+  - type: AccessReader
     access: [["Medical"]]
 
 - type: entity
