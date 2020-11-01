@@ -227,7 +227,7 @@ namespace Content.Server.Database
             return await db.DbContext.Admin
                 .Include(p => p.Flags)
                 .Include(p => p.AdminRank)
-                .ThenInclude(p => p.Flags)
+                .ThenInclude(p => p!.Flags)
                 .SingleOrDefaultAsync(p => p.UserId == userId.UserId);
         }
 
