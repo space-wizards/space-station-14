@@ -1,7 +1,6 @@
 ﻿#nullable enable
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Body.Behavior;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
