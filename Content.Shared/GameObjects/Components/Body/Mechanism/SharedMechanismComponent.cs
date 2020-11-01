@@ -197,8 +197,6 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
             DebugTools.AssertNotNull(Body);
             DebugTools.AssertNotNull(body);
 
-            OnAddedToBody(body);
-
             foreach (var behavior in _behaviors.Values)
             {
                 behavior.AddedToBody(body);
@@ -211,7 +209,6 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
             DebugTools.AssertNotNull(part);
 
             Owner.Transform.AttachParent(part.Owner);
-            OnAddedToPart(part);
 
             foreach (var behavior in _behaviors.Values)
             {
@@ -227,7 +224,6 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
             DebugTools.AssertNotNull(part);
 
             Owner.Transform.AttachParent(part.Owner);
-            OnAddedToPartInBody(body, part);
 
             foreach (var behavior in _behaviors.Values)
             {
@@ -239,8 +235,6 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
         {
             DebugTools.AssertNull(Body);
             DebugTools.AssertNotNull(old);
-
-            OnRemovedFromBody(old);
 
             foreach (var behavior in _behaviors.Values)
             {
@@ -254,7 +248,6 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
             DebugTools.AssertNotNull(old);
 
             Owner.Transform.AttachToGridOrMap();
-            OnRemovedFromPart(old);
 
             foreach (var behavior in _behaviors.Values)
             {
@@ -270,24 +263,11 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
             DebugTools.AssertNotNull(oldPart);
 
             Owner.Transform.AttachToGridOrMap();
-            OnRemovedFromPartInBody(oldBody, oldPart);
 
             foreach (var behavior in _behaviors.Values)
             {
                 behavior.RemovedFromPartInBody(oldBody, oldPart);
             }
         }
-
-        protected virtual void OnAddedToBody(IBody body) { }
-
-        protected virtual void OnAddedToPart(IBodyPart part) { }
-
-        protected virtual void OnAddedToPartInBody(IBody body, IBodyPart part) { }
-
-        protected virtual void OnRemovedFromBody(IBody old) { }
-
-        protected virtual void OnRemovedFromPart(IBodyPart old) { }
-
-        protected virtual void OnRemovedFromPartInBody(IBody oldBody, IBodyPart oldPart) { }
     }
 }
