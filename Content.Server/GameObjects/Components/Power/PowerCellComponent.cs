@@ -1,5 +1,6 @@
 ﻿using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -45,8 +46,13 @@ namespace Content.Server.GameObjects.Components.Power
         {
             if (Owner.TryGetComponent(out AppearanceComponent appearance))
             {
-                appearance.SetData(PowerCellVisuals.ChargeLevel, CurrentCharge / MaxCharge);
+                appearance.SetData(PowerCellVisuals.ChargeLevel, GetLevel(CurrentCharge / MaxCharge));
             }
+        }
+
+        private byte GetLevel(float fraction)
+        {
+            return (byte) ContentHelpers.RoundToNearestLevels(fraction, 1, SharedPowerCell.PowerCellVisualsLevels);
         }
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)

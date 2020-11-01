@@ -1,4 +1,5 @@
-﻿using Content.Shared.Interfaces;
+﻿using Content.Server.GameObjects.Components.MachineLinking.Signals;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -29,7 +30,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
                 return;
             }
 
-            if (transmitter.TransmitSignal(user, SignalState.Toggle))
+            if (transmitter.TransmitSignal(user, new ToggleSignal()))
             {
                 // Since the button doesn't have an animation, I'm going to use a popup message
                 Owner.PopupMessage(user, Loc.GetString("Click."));

@@ -212,6 +212,8 @@
             "MorgueEntityStorage",
             "MorgueTray",
             "CrematoriumEntityStorage",
+            "RandomArcade",
+            "RandomSpriteState",
         };
     }
 }
