@@ -1,10 +1,8 @@
 ﻿using Content.Shared.Chat;
-using Robust.Client.Console;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
@@ -97,16 +95,13 @@ namespace Content.Client.Chat
                 ToggleMode = true,
             };
 
-            var groupController = IoCManager.Resolve<IClientConGroupController>();
-            if(groupController.CanCommand("asay"))
+            AdminButton = new Button
             {
-                AdminButton = new Button
-                {
-                    Text = Loc.GetString("Admin"),
-                    Name = "Admin",
-                    ToggleMode = true,
-                };
-            }
+                Text = Loc.GetString("Admin"),
+                Name = "Admin",
+                ToggleMode = true,
+                Visible = false
+            };
 
             AllButton.OnToggled += OnFilterToggled;
             LocalButton.OnToggled += OnFilterToggled;

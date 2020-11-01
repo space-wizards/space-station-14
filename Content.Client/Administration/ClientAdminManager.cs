@@ -19,6 +19,8 @@ namespace Content.Client.Administration
         private AdminData? _adminData;
         private readonly HashSet<string> _availableCommands = new HashSet<string>();
 
+        public event Action? AdminStatusUpdated;
+
         public bool HasFlag(AdminFlags flag)
         {
             return _adminData?.HasFlag(flag) ?? false;
@@ -70,6 +72,8 @@ namespace Content.Client.Administration
             {
                 Logger.InfoS("admin", $"Updated admin status: Not admin");
             }
+
+            AdminStatusUpdated?.Invoke();
         }
 
         public event Action? ConGroupUpdated;
