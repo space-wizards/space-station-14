@@ -1,0 +1,37 @@
+- type: entity
+  id: KitchenReagentGrinder
+  name: "reagent grinder"
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: SnapGrid
+    offset: Center
+  - type: ReagentGrinder
+    grind_list:
+    - "Wheat"
+  - type: Clickable
+  - type: InteractionOutline
+  - type: PowerReceiver
+  - type: Appearance
+    visuals:
+    - type: MicrowaveVisualizer
+  - type: LoopingSound
+  - type: Physics
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.16,-0.3,0.16,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+  - type: Sprite
+    netsync: false
+    sprite: Constructible/Power/microwave.rsi
+    drawdepth: Items
+    layers:
+    - state: mw0
+      map: ["enum.MicrowaveVisualizerLayers.Base"]
+    - state: mw_unlit
+      shader: unshaded
+      map: ["enum.MicrowaveVisualizerLayers.BaseUnlit"]
