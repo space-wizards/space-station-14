@@ -14,6 +14,7 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -184,7 +185,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
             UserInterface?.SendMessage(new VendingMachineInventoryMessage(Inventory));
             TrySetVisualState(VendingMachineVisualState.Eject);
 
-            Timer.Spawn(_animationDuration, () =>
+            Owner.SpawnTimer(_animationDuration, () =>
             {
                 _ejecting = false;
                 TrySetVisualState(VendingMachineVisualState.Normal);
@@ -198,7 +199,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
         {
             TrySetVisualState(VendingMachineVisualState.Deny);
             //TODO: This duration should be a distinct value specific to the deny animation
-            Timer.Spawn(_animationDuration, () =>
+            Owner.SpawnTimer(_animationDuration, () =>
             {
                 TrySetVisualState(VendingMachineVisualState.Normal);
             });

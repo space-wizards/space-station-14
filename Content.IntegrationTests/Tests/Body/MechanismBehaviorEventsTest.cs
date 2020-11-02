@@ -1,12 +1,12 @@
 ﻿#nullable enable
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Server.GameObjects.Components.Body.Behavior;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Behavior;
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Body.Part;
 using NUnit.Framework;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
@@ -18,22 +18,17 @@ namespace Content.IntegrationTests.Tests.Body
     [TestOf(typeof(SharedBodyComponent))]
     [TestOf(typeof(SharedBodyPartComponent))]
     [TestOf(typeof(SharedMechanismComponent))]
-    [TestOf(typeof(MechanismBehaviorComponent))]
+    [TestOf(typeof(MechanismBehavior))]
     public class MechanismBehaviorEventsTest : ContentIntegrationTest
     {
-        [RegisterComponent]
-        private class TestBehaviorComponent : MechanismBehaviorComponent
+        private class TestMechanismBehavior : MechanismBehavior
         {
-            public override string Name => nameof(MechanismBehaviorEventsTest) + "TestBehavior";
-
             public bool WasAddedToBody;
             public bool WasAddedToPart;
             public bool WasAddedToPartInBody;
             public bool WasRemovedFromBody;
             public bool WasRemovedFromPart;
             public bool WasRemovedFromPartInBody;
-
-            public override void Update(float frameTime) { }
 
             public bool NoAdded()
             {
@@ -111,13 +106,7 @@ namespace Content.IntegrationTests.Tests.Body
         [Test]
         public async Task EventsTest()
         {
-            var server = StartServerDummyTicker(new ServerContentIntegrationOption
-            {
-                ContentBeforeIoC = () =>
-                {
-                    IoCManager.Resolve<IComponentFactory>().Register<TestBehaviorComponent>();
-                }
-            });
+            var server = StartServerDummyTicker();
 
             await server.WaitAssertion(() =>
             {
@@ -141,68 +130,68 @@ namespace Content.IntegrationTests.Tests.Body
                 var mechanism = centerPart!.Mechanisms.First();
                 Assert.NotNull(mechanism);
 
-                var component = mechanism.Owner.AddComponent<TestBehaviorComponent>();
-                Assert.False(component.WasAddedToBody);
-                Assert.False(component.WasAddedToPart);
-                Assert.That(component.WasAddedToPartInBody);
-                Assert.That(component.NoRemoved);
+                mechanism.EnsureBehavior<TestMechanismBehavior>(out var behavior);
+                Assert.False(behavior.WasAddedToBody);
+                Assert.False(behavior.WasAddedToPart);
+                Assert.That(behavior.WasAddedToPartInBody);
+                Assert.That(behavior.NoRemoved);
 
-                component.ResetAll();
+                behavior.ResetAll();
 
-                Assert.That(component.NoAdded);
-                Assert.That(component.NoRemoved);
+                Assert.That(behavior.NoAdded);
+                Assert.That(behavior.NoRemoved);
 
                 centerPart.RemoveMechanism(mechanism);
 
-                Assert.That(component.NoAdded);
-                Assert.False(component.WasRemovedFromBody);
-                Assert.False(component.WasRemovedFromPart);
-                Assert.That(component.WasRemovedFromPartInBody);
+                Assert.That(behavior.NoAdded);
+                Assert.False(behavior.WasRemovedFromBody);
+                Assert.False(behavior.WasRemovedFromPart);
+                Assert.That(behavior.WasRemovedFromPartInBody);
 
-                component.ResetAll();
+                behavior.ResetAll();
 
                 centerPart.TryAddMechanism(mechanism, true);
 
-                Assert.False(component.WasAddedToBody);
-                Assert.False(component.WasAddedToPart);
-                Assert.That(component.WasAddedToPartInBody);
-                Assert.That(component.NoRemoved());
+                Assert.False(behavior.WasAddedToBody);
+                Assert.False(behavior.WasAddedToPart);
+                Assert.That(behavior.WasAddedToPartInBody);
+                Assert.That(behavior.NoRemoved());
 
-                component.ResetAll();
+                behavior.ResetAll();
 
                 body.RemovePart(centerPart);
 
-                Assert.That(component.NoAdded);
-                Assert.That(component.WasRemovedFromBody);
-                Assert.False(component.WasRemovedFromPart);
-                Assert.False(component.WasRemovedFromPartInBody);
+                Assert.That(behavior.NoAdded);
+                Assert.That(behavior.WasRemovedFromBody);
+                Assert.False(behavior.WasRemovedFromPart);
+                Assert.False(behavior.WasRemovedFromPartInBody);
 
-                component.ResetAll();
+                behavior.ResetAll();
 
                 centerPart.RemoveMechanism(mechanism);
 
-                Assert.That(component.NoAdded);
-                Assert.False(component.WasRemovedFromBody);
-                Assert.That(component.WasRemovedFromPart);
-                Assert.False(component.WasRemovedFromPartInBody);
+                Assert.That(behavior.NoAdded);
+                Assert.False(behavior.WasRemovedFromBody);
+                Assert.That(behavior.WasRemovedFromPart);
+                Assert.False(behavior.WasRemovedFromPartInBody);
 
-                component.ResetAll();
+                behavior.ResetAll();
 
                 centerPart.TryAddMechanism(mechanism, true);
 
-                Assert.False(component.WasAddedToBody);
-                Assert.That(component.WasAddedToPart);
-                Assert.False(component.WasAddedToPartInBody);
-                Assert.That(component.NoRemoved);
+                Assert.False(behavior.WasAddedToBody);
+                Assert.That(behavior.WasAddedToPart);
+                Assert.False(behavior.WasAddedToPartInBody);
+                Assert.That(behavior.NoRemoved);
 
-                component.ResetAll();
+                behavior.ResetAll();
 
                 body.TryAddPart(centerSlot!, centerPart, true);
 
-                Assert.That(component.WasAddedToBody);
-                Assert.False(component.WasAddedToPart);
-                Assert.False(component.WasAddedToPartInBody);
-                Assert.That(component.NoRemoved);
+                Assert.That(behavior.WasAddedToBody);
+                Assert.False(behavior.WasAddedToPart);
+                Assert.False(behavior.WasAddedToPartInBody);
+                Assert.That(behavior.NoRemoved);
             });
         }
     }

@@ -60,6 +60,7 @@
   - spawn
   - delete
   - tp
+  - tpto
   - tpgrid
   - setgamepreset
   - forcepreset
@@ -118,6 +119,7 @@
   - attachtogrid
   - attachtograndparent
   - inrangeunoccluded
+  - hungry
   CanViewVar: true
   CanAdminPlace: true
   CanAdminMenu: true
@@ -142,6 +144,7 @@
   - spawn
   - delete
   - tp
+  - tpto
   - tpgrid
   - setgamepreset
   - forcepreset
@@ -229,6 +232,7 @@
   - attachtogrid
   - attachtograndparent
   - inrangeunoccluded
+  - hungry
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true

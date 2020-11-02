@@ -5,6 +5,7 @@ using Content.Shared.GameObjects.Components.Sound;
 using Content.Shared.Physics;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Random;
@@ -53,7 +54,7 @@ namespace Content.Client.GameObjects.Components.Sound
         {
             if (!schedule.Play) return;
 
-            Timer.Spawn((int) schedule.Delay + (_random.Next((int) schedule.RandomDelay)),() =>
+            Owner.SpawnTimer((int) schedule.Delay + (_random.Next((int) schedule.RandomDelay)),() =>
                 {
                     if (!schedule.Play) return; // We make sure this hasn't changed.
                     if (_audioSystem == null) _audioSystem = EntitySystem.Get<AudioSystem>();
