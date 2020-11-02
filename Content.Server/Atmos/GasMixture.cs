@@ -25,11 +25,12 @@ namespace Content.Server.Atmos
 
         public static GasMixture SpaceGas => new GasMixture() {Volume = 2500f, Immutable = true, Temperature = Atmospherics.TCMB};
 
+        // This must always have a length that is a multiple of 4 for SIMD acceleration.
         [ViewVariables]
-        private float[] _moles = new float[Atmospherics.TotalNumberOfGases];
+        private float[] _moles;
 
         [ViewVariables]
-        private float[] _molesArchived = new float[Atmospherics.TotalNumberOfGases];
+        private float[] _molesArchived;
 
         [ViewVariables]
         private float _temperature = Atmospherics.TCMB;
@@ -159,7 +160,7 @@ namespace Content.Server.Atmos
         public GasMixture(AtmosphereSystem? atmosphereSystem)
         {
             _atmosphereSystem = atmosphereSystem ?? EntitySystem.Get<AtmosphereSystem>();
-            _moles = new float[_atmosphereSystem.Gases.Count()];
+            _moles = new float[MathHelper.NextMultipleOf(Atmospherics.TotalNumberOfGases, 4)];
             _molesArchived = new float[_moles.Length];
         }
 
@@ -547,17 +548,19 @@ namespace Content.Server.Atmos
 
         public void ExposeData(ObjectSerializer serializer)
         {
+            var length = MathHelper.NextMultipleOf(Atmospherics.TotalNumberOfGases, 4);
+
             serializer.DataField(this, x => Immutable, "immutable", false);
             serializer.DataField(this, x => Volume, "volume", 0f);
             serializer.DataField(this, x => LastShare, "lastShare", 0f);
             serializer.DataField(this, x => TemperatureArchived, "temperatureArchived", 0f);
-            serializer.DataField(ref _moles, "moles", new float[Atmospherics.TotalNumberOfGases]);
-            serializer.DataField(ref _molesArchived, "molesArchived", new float[Atmospherics.TotalNumberOfGases]);
+            serializer.DataField(ref _moles, "moles", new float[length]);
+            serializer.DataField(ref _molesArchived, "molesArchived", new float[length]);
             serializer.DataField(ref _temperature, "temperature", Atmospherics.TCMB);
 
             // The arrays MUST have a specific length.
-            Array.Resize(ref _moles, Atmospherics.TotalNumberOfGases);
-            Array.Resize(ref _molesArchived, Atmospherics.TotalNumberOfGases);
+            Array.Resize(ref _moles, length);
+            Array.Resize(ref _molesArchived, length);
         }
 
         public override bool Equals(object? obj)
