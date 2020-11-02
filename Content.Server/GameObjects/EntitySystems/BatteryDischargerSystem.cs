@@ -11,7 +11,7 @@ namespace Content.Server.GameObjects.EntitySystems
     {
         public override void Update(float frameTime)
         {
-            foreach (var comp in ComponentManager.EntityQuery<BatteryDischargerComponent>())
+            foreach (var comp in ComponentManager.EntityQuery<BatteryDischargerComponent>(false))
             {
                 comp.Update(frameTime);
             }
