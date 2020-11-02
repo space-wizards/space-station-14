@@ -299,6 +299,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                 _component = component;
                 _allBlockGamePieces = (BlockGamePieceType[]) Enum.GetValues(typeof(BlockGamePieceType));
                 _internalNextPiece = GetRandomBlockGamePiece(_component._random);
+                InitializeNewBlock();
             }
 
             private void SendHighscoreUpdate()
@@ -315,8 +316,6 @@ namespace Content.Server.GameObjects.Components.Arcade
 
             public void StartGame()
             {
-                InitializeNewBlock();
-
                 _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Game));
 
                 FullUpdate();
