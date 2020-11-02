@@ -572,7 +572,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                         _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Pause, _started));
                         break;
                     case BlockGamePlayerAction.Unpause:
-                        if (!_gameOver)
+                        if (!_gameOver && _started)
                         {
                             _running = true;
                             _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Game));
