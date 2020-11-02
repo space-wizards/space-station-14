@@ -9,6 +9,7 @@ using Content.Server.Interfaces;
 using Content.Shared.Atmos;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -118,17 +119,7 @@ namespace Content.Server.Atmos
         public float TotalMoles
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get
-            {
-                var moles = 0f;
-
-                foreach (var gas in _moles)
-                {
-                    moles += gas;
-                }
-
-                return moles;
-            }
+            get => NumericsHelpers.HorizontalAdd(_moles);
         }
 
         [ViewVariables]
@@ -207,10 +198,7 @@ namespace Content.Server.Atmos
                 }
             }
 
-            for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
-            {
-                _moles[i] += giver._moles[i];
-            }
+            NumericsHelpers.Add(_moles, giver._moles);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -268,19 +256,10 @@ namespace Content.Server.Atmos
 
             var removed = new GasMixture(_atmosphereSystem) {Volume = Volume, Temperature = Temperature};
 
-            for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
-            {
-                var moles = _moles[i];
-                if (moles < Atmospherics.GasMinMoles)
-                    removed._moles[i] = 0f;
-                else
-                {
-                    var removedMoles = moles * ratio;
-                    removed._moles[i] = removedMoles;
-                    if (!Immutable)
-                        _moles[i] -= removedMoles;
-                }
-            }
+            _moles.CopyTo(removed._moles.AsSpan());
+            NumericsHelpers.Multiply(removed._moles, ratio);
+            if (!Immutable)
+                NumericsHelpers.Sub(_moles, removed._moles);
 
             return removed;
         }
@@ -563,10 +542,7 @@ namespace Content.Server.Atmos
         public void Multiply(float multiplier)
         {
             if (Immutable) return;
-            for(var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
-            {
-                _moles[i] *= multiplier;
-            }
+            NumericsHelpers.Multiply(_moles, multiplier);
         }
 
         public void ExposeData(ObjectSerializer serializer)
