@@ -57,7 +57,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public override void Update(float frameTime)
         {
-            foreach (var (moverComponent, collidableComponent) in EntityManager.ComponentManager.EntityQuery<IMoverComponent, IPhysicsComponent>(false))
+            foreach (var (moverComponent, collidableComponent) in EntityManager.ComponentManager.EntityQuery<IMoverComponent, IPhysicsComponent>())
             {
                 var entity = moverComponent.Owner;
                 UpdateKinematics(entity.Transform, moverComponent, collidableComponent);
