@@ -36,7 +36,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
                 _puller = value;
                 Dirty();
 
-                if (!Owner.TryGetComponent(out IPhysicsComponent? physics))
+                if (_physics == null)
                 {
                     return;
                 }
@@ -45,7 +45,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
 
                 if (value == null)
                 {
-                    if (physics.TryGetController(out controller))
+                    if (_physics.TryGetController(out controller))
                     {
                         controller.StopPull();
                     }
@@ -53,7 +53,7 @@ namespace Content.Shared.GameObjects.Components.Pulling
                     return;
                 }
 
-                controller = physics.EnsureController<PullController>();
+                controller = _physics.EnsureController<PullController>();
                 controller.StartPull(value);
             }
         }
@@ -67,12 +67,12 @@ namespace Content.Shared.GameObjects.Components.Pulling
                 return false;
             }
 
-            if (!Owner.TryGetComponent(out IPhysicsComponent? ownerPhysics))
+            if (_physics == null)
             {
                 return false;
             }
 
-            if (ownerPhysics.Anchored)
+            if (_physics.Anchored)
             {
                 return false;
             }
@@ -145,12 +145,12 @@ namespace Content.Shared.GameObjects.Components.Pulling
                 return false;
             }
 
-            if (!Owner.TryGetComponent(out IPhysicsComponent? physics))
+            if (_physics == null)
             {
                 return false;
             }
 
-            if (!physics.TryGetController(out PullController controller))
+            if (!_physics.TryGetController(out PullController controller))
             {
                 return false;
             }
