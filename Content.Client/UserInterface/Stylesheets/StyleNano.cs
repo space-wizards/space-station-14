@@ -14,7 +14,6 @@ namespace Content.Client.UserInterface.Stylesheets
     public sealed class StyleNano : StyleBase
     {
         public const string StyleClassBorderedWindowPanel = "BorderedWindowPanel";
-        public const string StyleClassPopupPanel = "PopupPanel";
 
         public const string StyleClassSliderRed = "Red";
         public const string StyleClassSliderGreen = "Green";
