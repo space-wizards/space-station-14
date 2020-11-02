@@ -1,23 +1,23 @@
-#nullable enable
+﻿#nullable enable
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.GameObjects.Components.Chemistry;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Body.Networks;
 using Content.Shared.GameObjects.Components.Chemistry;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.GameObjects.Components.Body.Behavior
+namespace Content.Server.GameObjects.Components.Body.Behavior
 {
     /// <summary>
     /// Where reagents go when ingested. Tracks ingested reagents over time, and
     /// eventually transfers them to <see cref="SharedBloodstreamComponent"/> once digested.
     /// </summary>
-    public abstract class SharedStomachBehaviorComponent : MechanismBehaviorComponent
+    public class StomachBehavior : MechanismBehavior
     {
-        public override string Name => "Stomach";
-
         private float _accumulatedFrameTime;
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Content.Shared.GameObjects.Components.Body.Behavior
 
             _accumulatedFrameTime -= 1;
 
-            if (!Body.Owner.TryGetComponent(out SharedSolutionContainerComponent? solution) ||
+            if (!Owner.TryGetComponent(out SharedSolutionContainerComponent? solution) ||
                 !Body.Owner.TryGetComponent(out SharedBloodstreamComponent? bloodstream))
             {
                 return;
@@ -58,7 +58,7 @@ namespace Content.Shared.GameObjects.Components.Body.Behavior
             foreach (var delta in _reagentDeltas.ToList())
             {
                 //Increment lifetime of reagents
-                delta.Increment(frameTime);
+                delta.Increment(1);
                 if (delta.Lifetime > _digestionDelay)
                 {
                     solution.TryRemoveReagent(delta.ReagentId, delta.Quantity);
@@ -110,6 +110,18 @@ namespace Content.Shared.GameObjects.Components.Body.Behavior
             base.ExposeData(serializer);
             serializer.DataField(this, s => s.InitialMaxVolume, "maxVolume", ReagentUnit.New(100));
             serializer.DataField(ref _digestionDelay, "digestionDelay", 20);
+        }
+
+        public override void Startup()
+        {
+            base.Startup();
+
+            if (!Owner.EnsureComponent(out SolutionContainerComponent solution))
+            {
+                Logger.Warning($"Entity {Owner} at {Owner.Transform.MapPosition} didn't have a {nameof(SolutionContainerComponent)}");
+            }
+
+            solution.MaxVolume = InitialMaxVolume;
         }
 
         public bool CanTransferSolution(Solution solution)

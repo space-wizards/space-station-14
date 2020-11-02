@@ -23,9 +23,6 @@
     caps: AddTo, RemoveFrom, NoExamine
   - type: Bloodstream
     max_volume: 100
-  - type: Stomach
-    max_volume: 250
-    digestionDelay: 20
   # StatusEffects
   - type: Stunnable
   # Other

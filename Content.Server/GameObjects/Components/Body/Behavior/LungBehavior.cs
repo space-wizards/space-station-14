@@ -8,19 +8,15 @@ using Content.Server.GameObjects.Components.Body.Respiratory;
 using Content.Server.Utility;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components.Body.Behavior;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Body.Behavior
 {
-    [RegisterComponent]
-    [ComponentReference(typeof(SharedLungBehaviorComponent))]
-    public class LungBehaviorComponent : SharedLungBehaviorComponent
+    public class LungBehavior : MechanismBehavior
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -30,17 +26,23 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
 
         [ViewVariables] public GasMixture Air { get; set; } = default!;
 
-        [ViewVariables] public override float Temperature => Air.Temperature;
+        [ViewVariables] public float Temperature => Air.Temperature;
 
-        [ViewVariables] public override float Volume => Air.Volume;
+        [ViewVariables] public float Volume => Air.Volume;
 
         [ViewVariables] public TimeSpan GaspPopupCooldown { get; private set; }
+
+        [ViewVariables] public LungStatus Status { get; set; }
+
+        [ViewVariables] public float CycleDelay { get; set; }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
             Air = new GasMixture {Temperature = Atmospherics.NormalBodyTemperature};
+
+            serializer.DataField(this, l => l.CycleDelay, "cycleDelay", 2);
 
             serializer.DataReadWriteFunction(
                 "volume",
@@ -61,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
                 () => GaspPopupCooldown.TotalSeconds);
         }
 
-        public override void Gasp()
+        public void Gasp()
         {
             if (_gameTiming.CurTime >= _lastGaspPopupTime + GaspPopupCooldown)
             {
@@ -148,7 +150,7 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
             _accumulatedFrameTime = absoluteTime - delay;
         }
 
-        public override void Inhale(float frameTime)
+        public void Inhale(float frameTime)
         {
             if (Body != null && Body.Owner.TryGetComponent(out InternalsComponent? internals)
                              && internals.BreathToolEntity != null && internals.GasTankEntity != null
@@ -176,7 +178,7 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
             ToBloodstream(Air);
         }
 
-        public override void Exhale(float frameTime)
+        public void Exhale(float frameTime)
         {
             if (!Owner.Transform.Coordinates.TryGetTileAir(out var tileAir))
             {
@@ -217,5 +219,12 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
 
             Air.Merge(lungRemoved);
         }
+    }
+
+    public enum LungStatus
+    {
+        None = 0,
+        Inhaling,
+        Exhaling
     }
 }
