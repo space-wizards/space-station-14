@@ -569,7 +569,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                         break;
                     case BlockGamePlayerAction.Pause:
                         _running = false;
-                        _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Pause, _running));
+                        _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Pause, _started));
                         break;
                     case BlockGamePlayerAction.Unpause:
                         if (!_gameOver)
@@ -583,7 +583,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                         break;
                     case BlockGamePlayerAction.ShowHighscores:
                         _running = false;
-                        _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Highscores, _running));
+                        _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Highscores, _started));
                         break;
                 }
             }
