@@ -13,6 +13,9 @@ namespace Content.Client.UserInterface.Stylesheets
 {
     public sealed class StyleNano : StyleBase
     {
+        public const string StyleClassBorderedWindowPanel = "BorderedWindowPanel";
+        public const string StyleClassPopupPanel = "PopupPanel";
+
         public const string StyleClassSliderRed = "Red";
         public const string StyleClassSliderGreen = "Green";
         public const string StyleClassSliderBlue = "Blue";
@@ -72,6 +75,13 @@ namespace Content.Client.UserInterface.Stylesheets
             };
             windowBackground.SetPatchMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
             windowBackground.SetExpandMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
+
+            var borderedWindowBackgroundTex = resCache.GetTexture("/Textures/Interface/Nano/window_background_bordered.png");
+            var borderedWindowBackground = new StyleBoxTexture
+            {
+                Texture = borderedWindowBackgroundTex,
+            };
+            borderedWindowBackground.SetPatchMargin(StyleBox.Margin.All, 2);
 
             var textureInvertedTriangle = resCache.GetTexture("/Textures/Interface/Nano/inverted_triangle.svg.png");
 
@@ -244,6 +254,13 @@ namespace Content.Client.UserInterface.Stylesheets
                     new[]
                     {
                         new StyleProperty(PanelContainer.StylePropertyPanel, windowBackground),
+                    }),
+                // bordered window background
+                new StyleRule(
+                    new SelectorElement(null, new[] {StyleClassBorderedWindowPanel}, null, null),
+                    new[]
+                    {
+                        new StyleProperty(PanelContainer.StylePropertyPanel, borderedWindowBackground),
                     }),
                 // Window header.
                 new StyleRule(
