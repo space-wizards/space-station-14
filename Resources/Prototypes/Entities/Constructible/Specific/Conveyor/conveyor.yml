@@ -34,7 +34,23 @@
       state_running: conveyor_started_cw
       state_stopped: conveyor_stopped_cw
       state_reversed: conveyor_started_cw_r
-      state_loose: conveyor_loose
   - type: PowerReceiver
+  - type: Construction
+    graph: ConveyorGraph
+    node: entity
 
 - type: entity
+  id: ConveyorBeltItem
+  parent: BaseItem
+  name: conveyor belt
+  suffix: assembly
+  description: A conveyor belt assembly. Used to construct a conveyor belt.
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Constructible/Power/conveyor.rsi
+      state: conveyor_loose
+    - type: ConveyorItem
+    - type: Construction
+      graph: ConveyorGraph
+      node: item

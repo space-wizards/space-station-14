@@ -1,14 +1,9 @@
 ﻿#nullable enable
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.MachineLinking;
-using Content.Server.GameObjects.Components.MachineLinking.Signals;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Conveyor;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.Components.MachineLinking;
@@ -21,7 +16,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Map;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
@@ -30,7 +24,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Conveyor
 {
     [RegisterComponent]
-    public class ConveyorComponent : Component, IInteractUsing, ISignalReceiver<TwoWayLeverSignal>
+    public class ConveyorComponent : Component, ISignalReceiver<TwoWayLeverSignal>
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
@@ -39,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
         /// <summary>
         ///     The angle to move entities by in relation to the owner's rotation.
         /// </summary>
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         private Angle _angle;
 
         /// <summary>
@@ -162,42 +156,12 @@ namespace Content.Server.GameObjects.Components.Conveyor
             }
         }
 
-        private async Task<bool> ToolUsed(IEntity user, ToolComponent tool)
-        {
-            if (!Owner.HasComponent<ItemComponent>() &&
-                await tool.UseTool(user, Owner, 0.5f, ToolQuality.Prying))
-            {
-                Owner.AddComponent<ItemComponent>();
-                if (Owner.TryGetComponent<SignalReceiverComponent>(out var signalReceiverComponent))
-                {
-                    signalReceiverComponent.UnsubscribeAll();
-                }
-
-                State = ConveyorState.Loose;
-                Owner.RandomOffset(0.2f);
-
-                return true;
-            }
-
-            return false;
-        }
-
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
             serializer.DataField(ref _angle, "angle", 0);
             serializer.DataField(ref _speed, "speed", 2);
-        }
-
-        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
-        {
-            if (eventArgs.Using.TryGetComponent(out ToolComponent? tool))
-            {
-                return await ToolUsed(eventArgs.User, tool);
-            }
-
-            return false;
         }
 
         public void TriggerSignal(TwoWayLeverSignal signal)

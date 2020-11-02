@@ -1,4 +1,4 @@
-﻿﻿- type: entity
+﻿- type: entity
   id: TwoWaySwitch
   name: two way switch
   description: A two way switch.
@@ -16,3 +16,6 @@
           state_forward: switch-fwd
           state_off: switch-off
           state_reversed: switch-rev
+    - type: Construction
+      graph: leverDefinitelyNotCopiedFromGirderNoNoNo
+      node: lever
