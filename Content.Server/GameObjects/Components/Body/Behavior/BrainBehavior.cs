@@ -1,22 +1,14 @@
 ﻿#nullable enable
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.Mobs;
 using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Body.Behavior;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Log;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Body.Behavior
 {
-    [RegisterComponent]
-    public class BrainBehaviorComponent : MechanismBehaviorComponent
+    public class BrainBehavior : MechanismBehavior
     {
-        public override string Name => "Brain";
-
         protected override void OnAddedToBody(IBody body)
         {
             base.OnAddedToBody(body);
@@ -65,10 +57,6 @@ namespace Content.Server.GameObjects.Components.Body.Behavior
             var oldMind = oldEntity.EnsureComponent<MindComponent>();
 
             oldMind.Mind?.TransferTo(newEntity);
-        }
-
-        public override void Update(float frameTime)
-        {
         }
     }
 }

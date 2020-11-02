@@ -2,33 +2,29 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body.Behavior;
 using Content.Shared.GameObjects.Components.Body.Part;
 
-namespace Content.Shared.GameObjects.Components.Body.Mechanism
+namespace Content.Server.GameObjects.Components.Body.Behavior
 {
     public static class MechanismExtensions
     {
-        public static bool HasMechanismBehavior<T>(this IBody body)
+        public static bool HasMechanismBehavior<T>(this IBody body) where T : IMechanismBehavior
         {
             return body.Parts.Values.Any(p => p.HasMechanismBehavior<T>());
         }
 
-        public static bool HasMechanismBehavior<T>(this IBodyPart part)
+        public static bool HasMechanismBehavior<T>(this IBodyPart part) where T : IMechanismBehavior
         {
-            return part.Mechanisms.Any(m => m.Owner.HasComponent<T>());
-        }
-
-        public static bool HasMechanismBehavior<T>(this IMechanism mechanism)
-        {
-            return mechanism.Owner.HasComponent<T>();
+            return part.Mechanisms.Any(m => m.HasBehavior<T>());
         }
 
         public static IEnumerable<IMechanismBehavior> GetMechanismBehaviors(this IBody body)
         {
             foreach (var part in body.Parts.Values)
             foreach (var mechanism in part.Mechanisms)
-            foreach (var behavior in mechanism.Owner.GetAllComponents<IMechanismBehavior>())
+            foreach (var behavior in mechanism.Behaviors.Values)
             {
                 yield return behavior;
             }
@@ -52,10 +48,11 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
         {
             foreach (var part in body.Parts.Values)
             foreach (var mechanism in part.Mechanisms)
+            foreach (var behavior in mechanism.Behaviors.Values)
             {
-                if (mechanism.Owner.TryGetComponent(out T? behavior))
+                if (behavior is T tBehavior)
                 {
-                    yield return behavior;
+                    yield return tBehavior;
                 }
             }
         }

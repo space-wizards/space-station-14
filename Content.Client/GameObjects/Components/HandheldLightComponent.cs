@@ -14,10 +14,9 @@ namespace Content.Client.GameObjects.Components
     [RegisterComponent]
     public sealed class HandheldLightComponent : SharedHandheldLightComponent, IItemStatus
     {
-        private bool _hasCell;
+        [ViewVariables] protected override bool HasCell => _level != null;
 
-        [ViewVariables] public float? Charge { get; private set; }
-        [ViewVariables] protected override bool HasCell => _hasCell;
+        private byte? _level;
 
         public Control MakeControl()
         {
@@ -29,8 +28,7 @@ namespace Content.Client.GameObjects.Components
             if (!(curState is HandheldLightComponentState cast))
                 return;
 
-            Charge = cast.Charge;
-            _hasCell = cast.HasCell;
+            _level = cast.Charge;
         }
 
         private sealed class StatusControl : Control
@@ -38,7 +36,7 @@ namespace Content.Client.GameObjects.Components
             private const float TimerCycle = 1;
 
             private readonly HandheldLightComponent _parent;
-            private readonly PanelContainer[] _sections = new PanelContainer[5];
+            private readonly PanelContainer[] _sections = new PanelContainer[StatusLevels - 1];
 
             private float _timer;
 
@@ -76,40 +74,37 @@ namespace Content.Client.GameObjects.Components
             {
                 base.Update(args);
 
+                if (!_parent.HasCell)
+                    return;
+
                 _timer += args.DeltaSeconds;
                 _timer %= TimerCycle;
 
-                var charge = _parent.Charge ?? 0;
+                var level = _parent._level;
 
-                int level;
+                for (var i = 0; i < _sections.Length; i++)
+                {
+                    if (i == 0)
+                    {
+                        if (level == 0)
+                        {
+                            _sections[0].PanelOverride = _styleBoxUnlit;
+                        }
+                        else if (level == 1)
+                        {
+                            // Flash the last light.
+                            _sections[0].PanelOverride = _timer > TimerCycle / 2 ? _styleBoxLit : _styleBoxUnlit;
+                        }
+                        else
+                        {
+                            _sections[0].PanelOverride = _styleBoxLit;
+                        }
 
-                if (MathHelper.CloseTo(charge, 0))
-                {
-                    level = 0;
-                }
-                else
-                {
-                    level = ContentHelpers.RoundToNearestLevels(charge, 1.0, 6) + 1;
-                }
+                        continue;
+                    }
 
-                if (level == 0)
-                {
-                    _sections[0].PanelOverride = _styleBoxUnlit;
+                    _sections[i].PanelOverride = level >= i + 2 ? _styleBoxLit : _styleBoxUnlit;
                 }
-                else if (level == 1)
-                {
-                    // Flash the last light.
-                    _sections[0].PanelOverride = _timer > TimerCycle / 2 ? _styleBoxLit : _styleBoxUnlit;
-                }
-                else
-                {
-                    _sections[0].PanelOverride = _styleBoxLit;
-                }
-
-                _sections[1].PanelOverride = level >= 3 ? _styleBoxLit : _styleBoxUnlit;
-                _sections[2].PanelOverride = level >= 4 ? _styleBoxLit : _styleBoxUnlit;
-                _sections[3].PanelOverride = level >= 5 ? _styleBoxLit : _styleBoxUnlit;
-                _sections[4].PanelOverride = level >= 6 ? _styleBoxLit : _styleBoxUnlit;
             }
         }
     }
