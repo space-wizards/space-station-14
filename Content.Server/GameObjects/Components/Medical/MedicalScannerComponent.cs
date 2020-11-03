@@ -33,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Medical
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(SharedMedicalScannerComponent))]
-    public class MedicalScannerComponent : SharedMedicalScannerComponent, IActivate, IDragDropOn, IDestroyAct
+    public class MedicalScannerComponent : SharedMedicalScannerComponent, IActivate, IDestroyAct
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = null!;
@@ -284,12 +284,7 @@ namespace Content.Server.GameObjects.Components.Medical
             }
         }
 
-        public bool CanDragDropOn(DragDropEventArgs eventArgs)
-        {
-            return eventArgs.Dragged.HasComponent<IBody>();
-        }
-
-        public bool DragDropOn(DragDropEventArgs eventArgs)
+        public override bool DragDropOn(DragDropEventArgs eventArgs)
         {
             _bodyContainer.Insert(eventArgs.Dragged);
             return true;

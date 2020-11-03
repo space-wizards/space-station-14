@@ -34,8 +34,6 @@ namespace Content.Server.GameObjects.Components.Movement
         [ViewVariables]
         private float _climbDelay;
 
-        private DoAfterSystem _doAfterSystem;
-
         public override void Initialize()
         {
             base.Initialize();
@@ -44,8 +42,6 @@ namespace Content.Server.GameObjects.Components.Movement
             {
                 Logger.Warning($"Entity {Owner.Name} at {Owner.Transform.MapPosition} didn't have a {nameof(PhysicsComponent)}");
             }
-
-            _doAfterSystem = EntitySystem.Get<DoAfterSystem>();
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -172,7 +168,7 @@ namespace Content.Server.GameObjects.Components.Movement
                 BreakOnStun = true
             };
 
-            var result = await _doAfterSystem.DoAfter(doAfterEventArgs);
+            var result = await EntitySystem.Get<DoAfterSystem>().DoAfter(doAfterEventArgs);
 
             if (result != DoAfterStatus.Cancelled && entityToMove.TryGetComponent(out IPhysicsComponent body) && body.PhysicsShapes.Count >= 1)
             {
@@ -217,7 +213,7 @@ namespace Content.Server.GameObjects.Components.Movement
                 BreakOnStun = true
             };
 
-            var result = await _doAfterSystem.DoAfter(doAfterEventArgs);
+            var result = await EntitySystem.Get<DoAfterSystem>().DoAfter(doAfterEventArgs);
 
             if (result != DoAfterStatus.Cancelled && user.TryGetComponent(out IPhysicsComponent body) && body.PhysicsShapes.Count >= 1)
             {
