@@ -57,12 +57,12 @@ namespace Content.Client.GameObjects.Components.Kitchen
             }
 
             _menu.BeakerContentBox.EjectButton.Disabled = !cState.HasBeakerIn;
-            RefreshContentsDisplay(cState.ReagentQuantities, cState.ChamberContents);
+            RefreshContentsDisplay(cState.ReagentQuantities, cState.ChamberContents, cState.HasBeakerIn);
 
         }
 
 
-        private void RefreshContentsDisplay(Solution.ReagentQuantity[] reagents, EntityUid[] containedSolids)
+        private void RefreshContentsDisplay(Solution.ReagentQuantity[] reagents, EntityUid[] containedSolids, bool isBeakerAttached)
         {
 
             //Much of this component's interface will just be ripped straight from microwave...
@@ -99,8 +99,8 @@ namespace Content.Client.GameObjects.Components.Kitchen
             _beakerVisualContents.Clear();
             _menu.BeakerContentBox.BoxContents.Clear();
 
-            //But, the beaker can be null so we have to watch out for that.
-            if (reagents == null)
+            //But, if no beaker is attached use this guard to prevent hitting a null reference.
+            if (!isBeakerAttached || reagents == null)
             {
                 return;
             }
