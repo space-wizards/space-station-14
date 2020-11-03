@@ -73,7 +73,7 @@ namespace Content.Server.GameObjects.Components.Damage
             }
 
             var pos = Owner.Transform.Coordinates;
-            string sound = string.Empty;
+            var sound = string.Empty;
             if (DestroySoundCollection != string.Empty)
             {
                 sound = AudioHelpers.GetRandomFileFromSoundCollection(DestroySoundCollection);
@@ -88,10 +88,6 @@ namespace Content.Server.GameObjects.Components.Damage
                 Logger.Debug("Playing destruction sound");
                 EntitySystem.Get<AudioSystem>().PlayAtCoords(sound, pos, AudioHelpers.WithVariation(0.125f));
             }
-
-            DestructionBehavior();
         }
-
-        protected abstract void DestructionBehavior();
     }
 }
