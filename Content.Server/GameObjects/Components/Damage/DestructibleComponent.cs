@@ -122,11 +122,6 @@ namespace Content.Server.GameObjects.Components.Damage
                 return;
             }
 
-            if (Owner.TryGetComponent(out IDamageableComponent? damageable))
-            {
-                damageable.CurrentState = DamageState.Dead;
-            }
-
             var pos = Owner.Transform.Coordinates;
             var sound = string.Empty;
             if (DestroySoundCollection != string.Empty)

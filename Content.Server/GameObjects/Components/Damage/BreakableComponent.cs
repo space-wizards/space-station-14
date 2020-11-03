@@ -1,10 +1,7 @@
-﻿using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.GameObjects.EntitySystems;
+﻿using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
-using Robust.Shared.Random;
 
 namespace Content.Server.GameObjects.Components.Damage
 {
@@ -13,33 +10,13 @@ namespace Content.Server.GameObjects.Components.Damage
     ///     enough damage.
     /// </summary>
     [RegisterComponent]
-    [ComponentReference(typeof(IDamageableComponent))]
-    public class BreakableComponent : RuinableComponent, IExAct
+    public class BreakableComponent : Component, IDestroyAct
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
 
         public override string Name => "Breakable";
 
         private ActSystem _actSystem;
-
-        void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
-        {
-            switch (eventArgs.Severity)
-            {
-                case ExplosionSeverity.Destruction:
-                case ExplosionSeverity.Heavy:
-                    PerformDestruction();
-                    break;
-                case ExplosionSeverity.Light:
-                    if (_random.Prob(0.5f))
-                    {
-                        PerformDestruction();
-                    }
-
-                    break;
-            }
-        }
 
         public override void Initialize()
         {
@@ -47,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Damage
             _actSystem = _entitySystemManager.GetEntitySystem<ActSystem>();
         }
 
-        protected override void DestructionBehavior()
+        void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
         {
             _actSystem.HandleBreakage(Owner);
         }
