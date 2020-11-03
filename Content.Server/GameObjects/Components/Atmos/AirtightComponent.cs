@@ -113,7 +113,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             for (var i = 0; i < Atmospherics.Directions; i++)
             {
                 var direction = (AtmosDirection) (1 << i);
-                if (!myDirection.HasFlag(direction)) continue;
+                if (!myDirection.IsFlagSet(direction)) continue;
                 var angle = direction.ToAngle();
                 angle += myAngle;
                 newAirBlockedDirs |= angle.ToAtmosDirectionCardinal();

@@ -135,6 +135,11 @@ namespace Content.Shared.Atmos
         {
             return direction & ~other;
         }
+
+        public static bool IsFlagSet(this AtmosDirection direction, AtmosDirection other)
+        {
+            return (direction & other) != 0;
+        }
     }
 
     public sealed class AtmosDirectionFlags { }

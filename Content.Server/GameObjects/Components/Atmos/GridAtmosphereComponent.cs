@@ -428,7 +428,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (!obstructingComponent.AirBlocked)
                     continue;
 
-                if (obstructingComponent.AirBlockedDirection.HasFlag(direction))
+                if (obstructingComponent.AirBlockedDirection.IsFlagSet(direction))
                     return true;
             }
 
