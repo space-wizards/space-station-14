@@ -28,9 +28,10 @@
       - VaultImpassable
       - SmallImpassable
   - type: Pullable
-  - type: Destructible
+  - type: Damageable
     deadThreshold: 50
     resistances: metallicResistances
+  - type: Destructible
     spawnOnDestroy:
       SteelSheet1:
         Min: 1

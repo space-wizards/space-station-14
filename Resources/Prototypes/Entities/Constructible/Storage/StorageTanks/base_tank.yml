@@ -23,9 +23,10 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
-  - type: Destructible
+  - type: Damageable
     deadThreshold: 10
     resistances: metallicResistances
+  - type: Destructible
   - type: SolutionContainer
     maxVol: 1500
     caps: RemoveFrom

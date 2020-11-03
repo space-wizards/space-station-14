@@ -13,8 +13,10 @@
   - type: SnapGrid
     offset: Center
   - type: Anchorable
-  - type: Breakable
+  - type: Damageable
+    deadThreshold: 100
     resistances: metallicResistances
+  - type: Breakable
   - type: Rotatable
   - type: Pullable
 
@@ -141,9 +143,10 @@
   - type: SnapGrid
     offset: Center
   - type: Anchorable
-  - type: Destructible
-    thresholdvalue: 100
+  - type: Damageable
+    deadThreshold: 100
     resistances: metallicResistances
+  - type: Destructible
   - type: Appearance
     visuals:
     - type: DisposalUnitVisualizer
@@ -378,9 +381,10 @@
   - type: SnapGrid
     offset: Center
   - type: Anchorable
-  - type: Destructible
-    thresholdvalue: 100
+  - type: Damageable
+    deadThreshold: 100
     resistances: metallicResistances
+  - type: Destructible
   - type: Appearance
     visuals:
     - type: DisposalUnitVisualizer

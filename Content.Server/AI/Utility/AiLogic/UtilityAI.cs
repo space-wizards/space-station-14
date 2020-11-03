@@ -148,7 +148,7 @@ namespace Content.Server.AI.Utility.AiLogic
             currentOp?.Shutdown(Outcome.Failed);
         }
 
-        private void DeathHandle(HealthChangedEventArgs eventArgs)
+        private void DeathHandle(DamageChangedEventArgs eventArgs)
         {
             var oldDeadState = _isDead;
             _isDead = eventArgs.Damageable.CurrentState == DamageState.Dead || eventArgs.Damageable.CurrentState == DamageState.Critical;

@@ -1,74 +1,66 @@
-﻿using Robust.Shared.Interfaces.GameObjects;
-
-namespace Content.Shared.GameObjects.Components.Mobs.State
+﻿namespace Content.Shared.GameObjects.Components.Mobs.State
 {
     /// <summary>
     ///     The standard state an entity is in; no negative effects.
     /// </summary>
-    public abstract class SharedNormalState : IMobState
+    public abstract class SharedNormalState : MobState
     {
-        public abstract void EnterState(IEntity entity);
-
-        public abstract void ExitState(IEntity entity);
-
-        public abstract void UpdateState(IEntity entity);
-
-        public bool CanInteract()
+        public override bool CanInteract()
         {
             return true;
         }
 
-        public bool CanMove()
+        public override bool CanMove()
         {
             return true;
         }
 
-        public bool CanUse()
+        public override bool CanUse()
         {
             return true;
         }
 
-        public bool CanThrow()
+        public override bool CanThrow()
         {
             return true;
         }
 
-        public bool CanSpeak()
+        public override bool CanSpeak()
         {
             return true;
         }
 
-        public bool CanDrop()
+        public override bool CanDrop()
         {
             return true;
         }
 
-        public bool CanPickup()
+        public override bool CanPickup()
         {
             return true;
         }
 
-        public bool CanEmote()
+        public override bool CanEmote()
         {
             return true;
         }
 
-        public bool CanAttack()
+        public override bool CanAttack()
         {
             return true;
         }
 
-        public bool CanEquip()
+        public override bool CanEquip()
         {
             return true;
         }
 
-        public bool CanUnequip()
+        public override bool CanUnequip()
         {
             return true;
         }
 
-        public bool CanChangeDirection()
+        public override bool CanChangeDirection()
         {
             return true;
         }

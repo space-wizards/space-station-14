@@ -27,14 +27,15 @@
       - VaultImpassable
   - type: Pullable
   - type: Anchorable
-  - type: Destructible
+  - type: Damageable
     deadThreshold: 30
+    resistances: metallicResistances
+  - type: Destructible
     destroySound: /Audio/Effects/metalbreak.ogg
     spawnOnDestroy:
       SteelSheet1:
         Min: 1
         Max: 1
-    resistances: metallicResistances
 
 - type: entity
   id: Shelf
@@ -65,11 +66,12 @@
       - VaultImpassable
   - type: Pullable
   - type: Anchorable
-  - type: Destructible
+  - type: Damageable
     deadThreshold: 30
+    resistances: metallicResistances
+  - type: Destructible
     destroySound: /Audio/Effects/metalbreak.ogg
     spawnOnDestroy:
       SteelSheet1:
         Min: 1
         Max: 1
-    resistances: metallicResistances

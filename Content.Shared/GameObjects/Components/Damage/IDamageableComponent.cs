@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Damage;
-using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.Interfaces.GameObjects;
 
@@ -17,7 +16,7 @@ namespace Content.Shared.GameObjects.Components.Damage
         ///     (including both damage negated by resistance or simply inputting 0 as
         ///     the amount of damage to deal).
         /// </summary>
-        event Action<HealthChangedEventArgs> HealthChangedEvent;
+        event Action<DamageChangedEventArgs> HealthChangedEvent;
 
         Dictionary<DamageState, int> Thresholds { get; }
 
@@ -101,10 +100,10 @@ namespace Content.Shared.GameObjects.Components.Damage
         /// </param>
         /// <returns>
         ///     False if the given type is not supported or improper
-        ///     <see cref="HealthChangeParams"/> were provided; true otherwise.
+        ///     <see cref="DamageChangeParams"/> were provided; true otherwise.
         /// </returns>
         bool ChangeDamage(DamageType type, int amount, bool ignoreResistances, IEntity? source = null,
-            HealthChangeParams? extraParams = null);
+            DamageChangeParams? extraParams = null);
 
         /// <summary>
         ///     Changes the specified <see cref="DamageClass"/>, applying
@@ -127,10 +126,10 @@ namespace Content.Shared.GameObjects.Components.Damage
         /// </param>
         /// <returns>
         ///     Returns false if the given class is not supported or improper
-        ///     <see cref="HealthChangeParams"/> were provided; true otherwise.
+        ///     <see cref="DamageChangeParams"/> were provided; true otherwise.
         /// </returns>
         bool ChangeDamage(DamageClass @class, int amount, bool ignoreResistances, IEntity? source = null,
-            HealthChangeParams? extraParams = null);
+            DamageChangeParams? extraParams = null);
 
         /// <summary>
         ///     Forcefully sets the specified <see cref="DamageType"/> to the given
@@ -145,9 +144,9 @@ namespace Content.Shared.GameObjects.Components.Damage
         /// </param>
         /// <returns>
         ///     Returns false if the given type is not supported or improper
-        ///     <see cref="HealthChangeParams"/> were provided; true otherwise.
+        ///     <see cref="DamageChangeParams"/> were provided; true otherwise.
         /// </returns>
-        bool SetDamage(DamageType type, int newValue, IEntity? source = null, HealthChangeParams? extraParams = null);
+        bool SetDamage(DamageType type, int newValue, IEntity? source = null, DamageChangeParams? extraParams = null);
 
         /// <summary>
         ///     Sets all damage values to zero.
@@ -183,78 +182,5 @@ namespace Content.Shared.GameObjects.Components.Damage
         ///     True if <see cref="threshold"/> is supported, false otherwise.
         /// </returns>
         bool TryHealth(DamageState threshold, [NotNullWhen(true)] out (int current, int max) health);
-    }
-
-    /// <summary>
-    ///     Data class with information on how to damage a
-    ///     <see cref="IDamageableComponent"/>.
-    ///     While not necessary to damage for all instances, classes such as
-    ///     <see cref="SharedBodyComponent"/> may require it for extra data
-    ///     (such as selecting which limb to target).
-    /// </summary>
-    public class HealthChangeParams : EventArgs
-    {
-    }
-
-    /// <summary>
-    ///     Data class with information on how the <see cref="DamageType"/>
-    ///     values of a <see cref="IDamageableComponent"/> have changed.
-    /// </summary>
-    public class HealthChangedEventArgs : EventArgs
-    {
-        /// <summary>
-        ///     Reference to the <see cref="IDamageableComponent"/> that invoked the event.
-        /// </summary>
-        public readonly IDamageableComponent Damageable;
-
-        /// <summary>
-        ///     List containing data on each <see cref="DamageType"/> that was changed.
-        /// </summary>
-        public readonly List<HealthChangeData> Data;
-
-        public HealthChangedEventArgs(IDamageableComponent damageable, List<HealthChangeData> data)
-        {
-            Damageable = damageable;
-            Data = data;
-        }
-
-        public HealthChangedEventArgs(IDamageableComponent damageable, DamageType type, int newValue, int delta)
-        {
-            Damageable = damageable;
-
-            var datum = new HealthChangeData(type, newValue, delta);
-            var data = new List<HealthChangeData> {datum};
-
-            Data = data;
-        }
-    }
-
-    /// <summary>
-    ///     Data class with information on how the value of a
-    ///     single <see cref="DamageType"/> has changed.
-    /// </summary>
-    public struct HealthChangeData
-    {
-        /// <summary>
-        ///     Type of damage that changed.
-        /// </summary>
-        public DamageType Type;
-
-        /// <summary>
-        ///     The new current value for that damage.
-        /// </summary>
-        public int NewValue;
-
-        /// <summary>
-        ///     How much the health value changed from its last value (negative is heals, positive is damage).
-        /// </summary>
-        public int Delta;
-
-        public HealthChangeData(DamageType type, int newValue, int delta)
-        {
-            Type = type;
-            NewValue = newValue;
-            Delta = delta;
-        }
     }
 }

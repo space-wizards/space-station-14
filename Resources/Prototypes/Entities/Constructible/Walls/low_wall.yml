@@ -25,10 +25,11 @@
       layer:
       - VaultImpassable
       - SmallImpassable
-  - type: BreakableConstruction
-    node: start
+  - type: Damageable
     deadThreshold: 100
     resistances: metallicResistances
+  - type: BreakableConstruction
+    node: start
   - type: SnapGrid
     offset: Center
   - type: Climbable

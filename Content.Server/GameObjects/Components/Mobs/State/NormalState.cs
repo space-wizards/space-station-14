@@ -1,4 +1,4 @@
-﻿using Content.Server.GameObjects.Components.Damage;
+﻿#nullable enable
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
@@ -15,7 +15,7 @@ namespace Content.Server.GameObjects.Components.Mobs.State
         {
             EntitySystem.Get<StandingStateSystem>().Standing(entity);
 
-            if (entity.TryGetComponent(out AppearanceComponent appearance))
+            if (entity.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(DamageStateVisuals.State, DamageState.Alive);
             }
@@ -27,49 +27,25 @@ namespace Content.Server.GameObjects.Components.Mobs.State
 
         public override void UpdateState(IEntity entity)
         {
-            if (!entity.TryGetComponent(out ServerStatusEffectsComponent status))
+            if (!entity.TryGetComponent(out IDamageableComponent? damageable))
             {
                 return;
             }
 
-            if (!entity.TryGetComponent(out IDamageableComponent damageable))
+            if (!entity.TryGetComponent(out ServerStatusEffectsComponent? status))
             {
-                status.ChangeStatusEffectIcon(StatusEffect.Health,
-                    "/Textures/Interface/StatusEffects/Human/human0.png");
                 return;
             }
 
-            // TODO
-            switch (damageable)
+            if (!damageable.TryGetEarliestIncapacitatedThreshold(out var threshold))
             {
-                case RuinableComponent ruinable:
-                {
-                    if (!ruinable.Thresholds.TryGetValue(DamageState.Dead, out var threshold))
-                    {
-                        return;
-                    }
-
-                    var modifier = (int) (ruinable.TotalDamage / (threshold / 7f));
-
-                    status.ChangeStatusEffectIcon(StatusEffect.Health,
-                        "/Textures/Interface/StatusEffects/Human/human" + modifier + ".png");
-
-                    break;
-                }
-                default:
-                {
-                    if (!damageable.Thresholds.TryGetValue(DamageState.Critical, out var threshold))
-                    {
-                        return;
-                    }
-
-                    var modifier = (int) (damageable.TotalDamage / (threshold / 7f));
-
-                    status.ChangeStatusEffectIcon(StatusEffect.Health,
-                        "/Textures/Interface/StatusEffects/Human/human" + modifier + ".png");
-                    break;
-                }
+                return;
             }
+
+            var modifier = (int) (damageable.TotalDamage / (threshold / 7f));
+
+            status.ChangeStatusEffectIcon(StatusEffect.Health,
+                "/Textures/Interface/StatusEffects/Human/human" + modifier + ".png");
         }
     }
 }

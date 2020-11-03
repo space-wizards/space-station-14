@@ -18,6 +18,7 @@
     state: spike
   - type: Anchorable
   - type: Pullable
-  - type: Destructible
+  - type: Damageable
     deadThreshold: 50
+  - type: Destructible
   - type: KitchenSpike

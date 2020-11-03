@@ -17,7 +17,7 @@ namespace Content.Shared.Damage.DamageContainer
     {
         private Dictionary<DamageType, int> _damageList = DamageTypeExtensions.ToDictionary();
 
-        public delegate void HealthChangedDelegate(List<HealthChangeData> changes);
+        public delegate void HealthChangedDelegate(List<DamageChangeData> changes);
 
         [NonSerialized] public readonly HealthChangedDelegate OnHealthChanged;
 
@@ -151,8 +151,8 @@ namespace Content.Shared.Damage.DamageContainer
                     current = 0;
                 }
 
-                var datum = new HealthChangeData(type, current, delta);
-                var data = new List<HealthChangeData> {datum};
+                var datum = new DamageChangeData(type, current, delta);
+                var data = new List<DamageChangeData> {datum};
 
                 OnHealthChanged(data);
 
@@ -190,8 +190,8 @@ namespace Content.Shared.Damage.DamageContainer
 
             current = _damageList[type];
 
-            var datum = new HealthChangeData(type, current, delta);
-            var data = new List<HealthChangeData> {datum};
+            var datum = new DamageChangeData(type, current, delta);
+            var data = new List<DamageChangeData> {datum};
 
             OnHealthChanged(data);
 
@@ -219,8 +219,8 @@ namespace Content.Shared.Damage.DamageContainer
                 _damageList[type] = newValue;
 
                 var delta = newValue - old;
-                var datum = new HealthChangeData(type, newValue, delta);
-                var data = new List<HealthChangeData> {datum};
+                var datum = new DamageChangeData(type, newValue, delta);
+                var data = new List<DamageChangeData> {datum};
 
                 OnHealthChanged(data);
 
@@ -257,8 +257,8 @@ namespace Content.Shared.Damage.DamageContainer
             if (!quiet)
             {
                 var delta = newValue - old;
-                var datum = new HealthChangeData(type, 0, delta);
-                var data = new List<HealthChangeData> {datum};
+                var datum = new DamageChangeData(type, 0, delta);
+                var data = new List<DamageChangeData> {datum};
 
                 OnHealthChanged(data);
             }
@@ -268,12 +268,12 @@ namespace Content.Shared.Damage.DamageContainer
 
         public void Heal()
         {
-            var data = new List<HealthChangeData>();
+            var data = new List<DamageChangeData>();
 
             foreach (var type in SupportedTypes)
             {
                 var delta = -GetDamageValue(type);
-                var datum = new HealthChangeData(type, 0, delta);
+                var datum = new DamageChangeData(type, 0, delta);
 
                 data.Add(datum);
                 SetDamageValue(type, 0, true);

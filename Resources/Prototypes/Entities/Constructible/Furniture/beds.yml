@@ -27,8 +27,9 @@
   - type: Strap
     position: Down
     rotation: -90
-  - type: Destructible
+  - type: Damageable
     deadThreshold: 75
     resistances: metallicResistances
+  - type: Destructible
   placement:
     mode: SnapgridCenter

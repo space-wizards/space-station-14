@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.Buckle;
@@ -89,7 +90,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             Dirty();
         }
 
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession session = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, netChannel, session);
 
@@ -113,13 +114,13 @@ namespace Content.Server.GameObjects.Components.Mobs
                     switch (msg.Effect)
                     {
                         case StatusEffect.Buckled:
-                            if (!player.TryGetComponent(out BuckleComponent buckle))
+                            if (!player.TryGetComponent(out BuckleComponent? buckle))
                                 break;
 
                             buckle.TryUnbuckle(player);
                             break;
                         case StatusEffect.Piloting:
-                            if (!player.TryGetComponent(out ShuttleControllerComponent controller))
+                            if (!player.TryGetComponent(out ShuttleControllerComponent? controller))
                                 break;
 
                             controller.RemoveController();
@@ -133,7 +134,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
                             break;
                         case StatusEffect.Fire:
-                            if (!player.TryGetComponent(out FlammableComponent flammable))
+                            if (!player.TryGetComponent(out FlammableComponent? flammable))
                                 break;
 
                             flammable.Resist();
@@ -148,5 +149,4 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
         }
     }
-
 }

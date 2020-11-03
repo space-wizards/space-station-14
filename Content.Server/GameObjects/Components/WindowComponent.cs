@@ -46,7 +46,7 @@ namespace Content.Server.GameObjects.Components
             }
         }
 
-        private void OnDamage(HealthChangedEventArgs eventArgs)
+        private void OnDamage(DamageChangedEventArgs eventArgs)
         {
             int current = eventArgs.Damageable.TotalDamage;
             int max = eventArgs.Damageable.Thresholds[DamageState.Dead];

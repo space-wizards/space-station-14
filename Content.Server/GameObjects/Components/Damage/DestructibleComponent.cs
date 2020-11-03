@@ -1,13 +1,11 @@
 ﻿using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Stack;
-using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Damage
@@ -16,11 +14,9 @@ namespace Content.Server.GameObjects.Components.Damage
     ///     When attached to an <see cref="IEntity"/>, allows it to take damage and deletes it after taking enough damage.
     /// </summary>
     [RegisterComponent]
-    [ComponentReference(typeof(IDamageableComponent))]
-    public class DestructibleComponent : RuinableComponent, IDestroyAct
+    public class DestructibleComponent : Component, IDestroyAct
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
         protected ActSystem ActSystem;
@@ -82,8 +78,7 @@ namespace Content.Server.GameObjects.Components.Damage
             ActSystem = _entitySystemManager.GetEntitySystem<ActSystem>();
         }
 
-
-        protected override void DestructionBehavior()
+        protected void DestructionBehavior()
         {
             if (!Owner.Deleted)
             {

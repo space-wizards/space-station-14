@@ -26,9 +26,10 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
-  - type: Destructible
+  - type: Damageable
     deadThreshold: 15
     resistances: metallicResistances
+  - type: Destructible
     destroySoundCollection: WindowBreak
     spawnOnDestroy:
       ShardGlass:
@@ -56,9 +57,10 @@
     sprite: Constructible/Structures/Windows/reinforced_window.rsi
   - type: Icon
     sprite: Constructible/Structures/Windows/reinforced_window.rsi
-  - type: Destructible
+  - type: Damageable
     deadThreshold: 75
     resistances: metallicResistances
+  - type: Destructible
   - type: Window
     base: rwindow
   - type: Construction
@@ -75,9 +77,10 @@
     sprite: Constructible/Structures/Windows/phoron_window.rsi
   - type: Icon
     sprite: Constructible/Structures/Windows/phoron_window.rsi
-  - type: Destructible
+  - type: Damageable
     deadThreshold: 100
     resistances: metallicResistances
+  - type: Destructible
   - type: Window
     base: pwindow
   - type: Construction

@@ -32,8 +32,9 @@
       - VaultImpassable
   - type: SnapGrid
     offset: Center
-  - type: Destructible
+  - type: Damageable
     deadThreshold: 50
+  - type: Destructible
     spawnOnDestroy:
       chem_master_broken:
         Min: 1
@@ -75,8 +76,9 @@
       - VaultImpassable
   - type: SnapGrid
     offset: Center
-  - type: Destructible
+  - type: Damageable
     deadThreshold: 25
+  - type: Destructible
     spawnOnDestroy:
       SteelSheet1:
         Min: 1

@@ -27,9 +27,10 @@
       nodeGroupID: HVPower
   - type: PowerConsumer
     drawRate: 50
-  - type: Breakable
+  - type: Damageable
     deadThreshold: 100
     resistances: metallicResistances
+  - type: Breakable
   - type: Anchorable
 
 - type: entity

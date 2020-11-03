@@ -19,9 +19,10 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
-  - type: Destructible
-    maxHP: 500
+  - type: Damageable
+    deadThreshold: 500
     resistances: metallicResistances
+  - type: Destructible
   - type: SnapGrid
     offset: Center
   - type: Anchorable

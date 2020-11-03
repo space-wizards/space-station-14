@@ -56,9 +56,10 @@
   - type: Occluder
   - type: SnapGrid
     offset: Center
-  - type: Destructible
+  - type: Damageable
     deadThreshold: 500
     resistances: metallicResistances
+  - type: Destructible
   placement:
     mode: SnapgridCenter
 

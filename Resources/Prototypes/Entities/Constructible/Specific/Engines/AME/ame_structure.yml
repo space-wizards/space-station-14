@@ -21,9 +21,10 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
-  - type: Destructible
-    maxHP: 500
+  - type: Damageable
+    deadThreshold: 500
     resistances: metallicResistances
+  - type: Destructible
     spawnOnDestroy:
       AMEPart:
         Min: 1

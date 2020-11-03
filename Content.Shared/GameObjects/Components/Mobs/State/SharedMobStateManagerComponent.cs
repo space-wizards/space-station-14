@@ -1,8 +1,10 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Mobs.State
@@ -13,7 +15,7 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
     ///     Additionally, it handles sending effects to clients
     ///     (such as blur effect for unconsciousness) and managing the health HUD.
     /// </summary>
-    public abstract class SharedMobStateManagerComponent : Component, IOnHealthChangedBehavior, IActionBlocker
+    public abstract class SharedMobStateManagerComponent : Component, IActionBlocker
     {
         public override string Name => "MobStateManager";
 
@@ -21,7 +23,7 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
 
         protected abstract IReadOnlyDictionary<DamageState, IMobState> Behavior { get; }
 
-        public virtual IMobState CurrentMobState { get; protected set; }
+        public virtual IMobState CurrentMobState { get; protected set; } = default!;
 
         public virtual DamageState CurrentDamageState { get; protected set; }
 
@@ -95,17 +97,25 @@ namespace Content.Shared.GameObjects.Components.Mobs.State
             return CurrentMobState.CanChangeDirection();
         }
 
-        public void OnHealthChanged(HealthChangedEventArgs e)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
-            if (e.Damageable.CurrentState != CurrentDamageState)
+            switch (message)
             {
-                CurrentDamageState = e.Damageable.CurrentState;
-                CurrentMobState.ExitState(Owner);
-                CurrentMobState = Behavior[CurrentDamageState];
-                CurrentMobState.EnterState(Owner);
-            }
+                case DamageChangedMessage msg:
+                {
+                    if (msg.Damageable.CurrentState != CurrentDamageState)
+                    {
+                        CurrentDamageState = msg.Damageable.CurrentState;
+                        CurrentMobState.ExitState(Owner);
+                        CurrentMobState = Behavior[CurrentDamageState];
+                        CurrentMobState.EnterState(Owner);
+                    }
 
-            CurrentMobState.UpdateState(Owner);
+                    CurrentMobState.UpdateState(Owner);
+
+                    break;
+                }
+            }
         }
     }
 

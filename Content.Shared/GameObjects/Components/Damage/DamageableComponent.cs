@@ -31,10 +31,10 @@ namespace Content.Shared.GameObjects.Components.Damage
 
         public override string Name => "Damageable";
 
-        private DamageState _damageState;
+        private DamageState _currentState;
         private DamageFlag _flags;
 
-        public event Action<HealthChangedEventArgs>? HealthChangedEvent;
+        public event Action<DamageChangedEventArgs>? HealthChangedEvent;
 
         [ViewVariables] private ResistanceSet Resistances { get; set; } = default!;
 
@@ -42,7 +42,7 @@ namespace Content.Shared.GameObjects.Components.Damage
 
         public Dictionary<DamageState, int> Thresholds { get; set; } = new Dictionary<DamageState, int>();
 
-        public virtual List<DamageState> SupportedDamageStates
+        public List<DamageState> SupportedDamageStates
         {
             get
             {
@@ -56,16 +56,29 @@ namespace Content.Shared.GameObjects.Components.Damage
 
         public virtual DamageState CurrentState
         {
-            get => _damageState;
+            get => _currentState;
             set
             {
-                var old = _damageState;
-                _damageState = value;
+                if (_currentState == value)
+                {
+                    return;
+                }
+
+                if (!SupportedDamageStates.Contains(value))
+                {
+                    return;
+                }
+
+                var old = _currentState;
+                _currentState = value;
 
                 if (old != value)
                 {
                     EnterState(value);
                 }
+
+                var message = new DamageStateChangeMessage(this, value);
+                SendMessage(message);
 
                 Dirty();
             }
@@ -140,7 +153,7 @@ namespace Content.Shared.GameObjects.Components.Damage
                 },
                 () => Thresholds.TryGetValue(DamageState.Dead, out var value) ? value : (int?) null);
 
-            serializer.DataField(ref _damageState, "damageState", DamageState.Alive);
+            serializer.DataField(ref _currentState, "damageState", DamageState.Alive);
 
             serializer.DataReadWriteFunction(
                 "flags",
@@ -196,19 +209,12 @@ namespace Content.Shared.GameObjects.Components.Damage
                 () => Resistances.ID);
         }
 
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            foreach (var behavior in Owner.GetAllComponents<IOnHealthChangedBehavior>())
-            {
-                HealthChangedEvent += behavior.OnHealthChanged;
-            }
-        }
-
         protected override void Startup()
         {
             base.Startup();
+
+            var message = new DamageStateChangeMessage(this, _currentState);
+            SendMessage(message);
 
             ForceHealthChangedEvent();
         }
@@ -220,7 +226,7 @@ namespace Content.Shared.GameObjects.Components.Damage
 
         public bool ChangeDamage(DamageType type, int amount, bool ignoreResistances,
             IEntity? source = null,
-            HealthChangeParams? extraParams = null)
+            DamageChangeParams? extraParams = null)
         {
             if (amount > 0 && HasFlag(DamageFlag.Invulnerable))
             {
@@ -245,7 +251,7 @@ namespace Content.Shared.GameObjects.Components.Damage
 
         public bool ChangeDamage(DamageClass @class, int amount, bool ignoreResistances,
             IEntity? source = null,
-            HealthChangeParams? extraParams = null)
+            DamageChangeParams? extraParams = null)
         {
             if (amount > 0 && HasFlag(DamageFlag.Invulnerable))
             {
@@ -271,7 +277,7 @@ namespace Content.Shared.GameObjects.Components.Damage
                         healThisCycle = 0;
 
                         int healPerType;
-                        if (healingLeft > -types.Count && healingLeft < 0)
+                        if (healingLeft > -types.Count)
                         {
                             // Say we were to distribute 2 healing between 3
                             // this will distribute 1 to each (and stop after 2 are given)
@@ -305,7 +311,7 @@ namespace Content.Shared.GameObjects.Components.Damage
                 {
                     int damagePerType;
 
-                    if (damageLeft < types.Count && damageLeft > 0)
+                    if (damageLeft < types.Count)
                     {
                         damagePerType = 1;
                     }
@@ -329,7 +335,7 @@ namespace Content.Shared.GameObjects.Components.Damage
         }
 
         public bool SetDamage(DamageType type, int newValue, IEntity? source = null,
-            HealthChangeParams? extraParams = null)
+            DamageChangeParams? extraParams = null)
         {
             if (newValue >= TotalDamage && HasFlag(DamageFlag.Invulnerable))
             {
@@ -348,17 +354,18 @@ namespace Content.Shared.GameObjects.Components.Damage
 
         public void Heal()
         {
+            CurrentState = DamageState.Alive;
             Damage.Heal();
         }
 
         public void ForceHealthChangedEvent()
         {
-            var data = new List<HealthChangeData>();
+            var data = new List<DamageChangeData>();
 
             foreach (var type in Damage.SupportedTypes)
             {
                 var damage = Damage.GetDamageValue(type);
-                var datum = new HealthChangeData(type, damage, 0);
+                var datum = new DamageChangeData(type, damage, 0);
                 data.Add(datum);
             }
 
@@ -391,15 +398,15 @@ namespace Content.Shared.GameObjects.Components.Damage
             return true;
         }
 
-        private void OnHealthChanged(List<HealthChangeData> changes)
+        private void OnHealthChanged(List<DamageChangeData> changes)
         {
-            var args = new HealthChangedEventArgs(this, changes);
+            var args = new DamageChangedEventArgs(this, changes);
             OnHealthChanged(args);
         }
 
         protected virtual void EnterState(DamageState state) { }
 
-        protected virtual void OnHealthChanged(HealthChangedEventArgs e)
+        protected virtual void OnHealthChanged(DamageChangedEventArgs e)
         {
             if (CurrentState != DamageState.Dead)
             {
@@ -421,6 +428,9 @@ namespace Content.Shared.GameObjects.Components.Damage
 
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, e);
             HealthChangedEvent?.Invoke(e);
+
+            var message = new DamageChangedMessage(this, e.Data);
+            SendMessage(message);
 
             Dirty();
         }

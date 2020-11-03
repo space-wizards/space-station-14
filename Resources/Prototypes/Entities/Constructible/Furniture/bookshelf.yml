@@ -19,14 +19,15 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
-  - type: Destructible
+  - type: Damageable
     deadThreshold: 30
+    resistances: metallicResistances
+  - type: Destructible
     destroySound: /Audio/Effects/woodhit.ogg
     spawnOnDestroy:
       WoodPlank:
         Min: 1
         Max: 1
-    resistances: metallicResistances
   - type: Occluder
     sizeX: 32
     sizeY: 32

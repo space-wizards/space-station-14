@@ -94,6 +94,8 @@
   - type: PowerReceiver
   - type: Anchorable
   - type: Pullable
+  - type: Damageable
+    deadThreshold: 100
   - type: BreakableConstruction
     node: monitorBroken
   - type: Sprite

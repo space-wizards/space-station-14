@@ -1,76 +1,75 @@
-﻿using Robust.Shared.Interfaces.GameObjects;
-
-namespace Content.Shared.GameObjects.Components.Mobs.State
+﻿namespace Content.Shared.GameObjects.Components.Mobs.State
 {
-    public abstract class SharedDeadState : IMobState
+    public abstract class SharedDeadState : MobState
     {
-        public abstract void EnterState(IEntity entity);
-
-        public abstract void ExitState(IEntity entity);
-
-        public abstract void UpdateState(IEntity entity);
-
-        public bool CanInteract()
+        public override bool CanInteract()
         {
             return false;
         }
 
-        public bool CanMove()
+        public override bool CanMove()
         {
             return false;
         }
 
-        public bool CanUse()
+        public override bool CanUse()
         {
             return false;
         }
 
-        public bool CanThrow()
+        public override bool CanThrow()
         {
             return false;
         }
 
-        public bool CanSpeak()
+        public override bool CanSpeak()
         {
             return false;
         }
 
-        public bool CanDrop()
+        public override bool CanDrop()
         {
             return false;
         }
 
-        public bool CanPickup()
+        public override bool CanPickup()
         {
             return false;
         }
 
-        public bool CanEmote()
+        public override bool CanEmote()
         {
             return false;
         }
 
-        public bool CanAttack()
+        public override bool CanAttack()
         {
             return false;
         }
 
-        public bool CanEquip()
+        public override bool CanEquip()
         {
             return false;
         }
 
-        public bool CanUnequip()
+        public override bool CanUnequip()
         {
             return false;
         }
 
-        public bool CanChangeDirection()
+        public override bool CanChangeDirection()
         {
             return false;
         }
 
-        public bool CanShiver() => false;
-        public bool CanSweat() => false;
+        public bool CanShiver()
+        {
+            return false;
+        }
+
+        public bool CanSweat()
+        {
+            return false;
+        }
     }
 }

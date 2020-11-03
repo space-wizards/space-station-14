@@ -23,9 +23,10 @@
         - MobImpassable
         - VaultImpassable
         - SmallImpassable
-    - type: Destructible
+    - type: Damageable
       deadThreshold: 50
       resistances: metallicResistances
+    - type: Destructible
     - type: Sprite
       sprite: Constructible/Hydroponics/hydro_tools.rsi
       state: soil

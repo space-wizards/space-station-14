@@ -224,8 +224,9 @@
     supply: 1500
   - type: SnapGrid
     offset: Center
-  - type: Breakable
+  - type: Damageable
     deadThreshold: 100
     resistances: metallicResistances
+  - type: Breakable
   - type: Anchorable
   - type: Pullable

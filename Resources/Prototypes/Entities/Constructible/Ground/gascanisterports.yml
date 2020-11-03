@@ -10,8 +10,9 @@
   - type: SnapGrid
     offset: Center
   - type: Sprite
+  - type: Damageable
+    deadThreshold: 100
   - type: Destructible
-    thresholdvalue: 100
   - type: GasCanisterPort
 
 - type: entity
