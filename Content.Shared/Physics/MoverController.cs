@@ -52,27 +52,6 @@ namespace Content.Shared.Physics
             Logger.Debug($"LV: {linearVelocity} resulting in net force of {netForce}");
             Force = netForce;
 
-            // float dragCoeff = 5 / time_to_vmax;
-            // Vector2 thrustForce = velocityDirection * dragCoeff;
-            // Vector2 dragForce;
-            // Vector2 linearVelocity = ControlledComponent.LinearVelocity;
-            // if(ControlledComponent.LinearVelocity.LengthSquared > 0)
-            // {
-            //     dragForce = -linearVelocity * dragCoeff;
-            // }
-            // else
-            // {
-            //     dragForce = Vector2.Zero;
-            // }
-            // Vector2 netForce = thrustForce + antiFriction + dragForce;
-            // Vector2 k1 = netForce * frameTime;
-            // netForce = thrustForce + antiFriction - (linearVelocity + k1) * dragCoeff;
-            // Vector2 k2 = netForce * frameTime;
-            // netForce = (k1 + k2) / 2;
-            // netForce *= ControlledComponent.Mass * ControlledComponent.Mass;
-            //Logger.Debug($"MOVE LinearVelocity: {ControlledComponent.LinearVelocity} ThrustForce: {thrustForce} DragForce: {dragForce} NetForce: {netForce}");
-
-            Force = netForce;
         }
 
         public void Push(Vector2 velocityDirection, float speed)
@@ -103,7 +82,7 @@ namespace Content.Shared.Physics
             Vector2 deltaV = netForce * ControlledComponent.InvMass * frameTime;
             if (deltaV.LengthSquared > ControlledComponent.LinearVelocity.LengthSquared)
             {
-                //Logger.Debug("STOP: Clamping overshoot.");
+                Logger.Debug("STOP: Clamping overshoot.");
                 Force = -(ControlledComponent.LinearVelocity * ControlledComponent.Mass) / frameTime;
             }
             else
