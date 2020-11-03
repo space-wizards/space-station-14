@@ -8,7 +8,7 @@ using Robust.Shared.Map;
 namespace Content.Shared.GameObjects.EntitySystems
 {
     /// <summary>
-    /// This interface gives components behavior on getting destoyed.
+    /// This interface gives components behavior on getting destroyed.
     /// </summary>
     public interface IDestroyAct
     {
