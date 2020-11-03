@@ -362,9 +362,10 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                     // After attack: Check if we clicked on an empty location, if so the only interaction we can do is AfterInteract
                     var distSqrt = (playerTransform.WorldPosition - coordinates.ToMapPos(EntityManager)).LengthSquared;
                     InteractAfter(player, item, coordinates, distSqrt <= InteractionRangeSquared);
+                    return true;
                 }
 
-                return true;
+                return false;
             }
 
             // Verify attacked object is on the map if we managed to click on it somehow
