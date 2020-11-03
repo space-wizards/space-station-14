@@ -10,6 +10,7 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.MachineLinking
@@ -149,7 +150,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
         {
             base.Shutdown();
 
-            foreach (var receiver in _receivers)
+            foreach (var receiver in _receivers.ShallowClone())
             {
                 if (receiver.Deleted)
                 {

@@ -126,7 +126,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
         {
             base.Shutdown();
 
-            foreach (var transmitter in _transmitters)
+            foreach (var transmitter in _transmitters.ShallowClone())
             {
                 if (transmitter.Deleted)
                 {
