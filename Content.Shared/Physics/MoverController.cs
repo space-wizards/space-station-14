@@ -25,35 +25,54 @@ namespace Content.Shared.Physics
             //TODO: friction should involve mass, but in the current physics system it doesn't so we can't have it here either
             Vector2 antiFriction = velocityDirection.Normalized * (0.35f * 9.8f * frameTime);
 
-
+            float mass = ControlledComponent.Mass;
             float dragCoeff = 5 / time_to_vmax;
-            Vector2 thrustForce = velocityDirection * dragCoeff;
-            Vector2 dragForce;
+            Vector2 thrustForce = velocityDirection * dragCoeff * mass;
             Vector2 linearVelocity = ControlledComponent.LinearVelocity;
-            if(ControlledComponent.LinearVelocity.LengthSquared > 0)
-            {
-                dragForce = -linearVelocity * dragCoeff;
-            }
-            else
-            {
-                dragForce = Vector2.Zero;
-            }
-            Vector2 netForce = thrustForce + antiFriction;
-            netForce += dragForce;
-            netForce *= ControlledComponent.Mass;
+
+            Vector2 netForce = thrustForce - linearVelocity * dragCoeff * mass;
+            Vector2 a = netForce / mass;
+            Vector2 k1 = a * frameTime;
+
+            netForce = thrustForce - (linearVelocity + k1/2) * dragCoeff * mass;
+            a = netForce / mass;
+            Vector2 k2 = a * frameTime;
+
+            netForce = thrustForce - (linearVelocity + k2/2) * dragCoeff * mass;
+            a = netForce / mass;
+            Vector2 k3 = a * frameTime;
+
+            netForce = thrustForce - (linearVelocity + k3) * dragCoeff * mass;
+            a = netForce / mass;
+            Vector2 k4 = a * frameTime;
+
+            Vector2 deltaV = (k1 + k2*2 + k3*2 + k4) / 6;
+            a = deltaV / frameTime;
+            netForce = a * mass;
+            Logger.Debug($"LV: {linearVelocity} resulting in net force of {netForce}");
+            Force = netForce;
+
+            // float dragCoeff = 5 / time_to_vmax;
+            // Vector2 thrustForce = velocityDirection * dragCoeff;
+            // Vector2 dragForce;
+            // Vector2 linearVelocity = ControlledComponent.LinearVelocity;
+            // if(ControlledComponent.LinearVelocity.LengthSquared > 0)
+            // {
+            //     dragForce = -linearVelocity * dragCoeff;
+            // }
+            // else
+            // {
+            //     dragForce = Vector2.Zero;
+            // }
+            // Vector2 netForce = thrustForce + antiFriction + dragForce;
+            // Vector2 k1 = netForce * frameTime;
+            // netForce = thrustForce + antiFriction - (linearVelocity + k1) * dragCoeff;
+            // Vector2 k2 = netForce * frameTime;
+            // netForce = (k1 + k2) / 2;
+            // netForce *= ControlledComponent.Mass * ControlledComponent.Mass;
             //Logger.Debug($"MOVE LinearVelocity: {ControlledComponent.LinearVelocity} ThrustForce: {thrustForce} DragForce: {dragForce} NetForce: {netForce}");
 
-            //Overshoot check
-            Vector2 newV = (netForce * ControlledComponent.InvMass * frameTime);
-            if (newV.LengthSquared > velocityDirection.LengthSquared)
-            {
-                Logger.Debug("MOVE: Clamping overshoot.");
-                Force = ((netForce.Normalized * velocityDirection.Length) * ControlledComponent.Mass) / frameTime;
-            }
-            else
-            {
-                Force = netForce;
-            }
+            Force = netForce;
         }
 
         public void Push(Vector2 velocityDirection, float speed)
@@ -84,7 +103,7 @@ namespace Content.Shared.Physics
             Vector2 deltaV = netForce * ControlledComponent.InvMass * frameTime;
             if (deltaV.LengthSquared > ControlledComponent.LinearVelocity.LengthSquared)
             {
-                Logger.Debug("STOP: Clamping overshoot.");
+                //Logger.Debug("STOP: Clamping overshoot.");
                 Force = -(ControlledComponent.LinearVelocity * ControlledComponent.Mass) / frameTime;
             }
             else
