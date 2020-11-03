@@ -11,9 +11,9 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        private readonly GasPrototype[] GasPrototypes = new GasPrototype[Atmospherics.TotalNumberOfGases];
+        protected readonly GasPrototype[] GasPrototypes = new GasPrototype[Atmospherics.TotalNumberOfGases];
 
-        private readonly SpriteSpecifier[] GasOverlays = new SpriteSpecifier[Atmospherics.TotalNumberOfGases];
+        private readonly SpriteSpecifier[] _gasOverlays = new SpriteSpecifier[Atmospherics.TotalNumberOfGases];
 
         public override void Initialize()
         {
@@ -25,10 +25,10 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
                 GasPrototypes[i] = gasPrototype;
 
                 if(string.IsNullOrEmpty(gasPrototype.GasOverlaySprite) && !string.IsNullOrEmpty(gasPrototype.GasOverlayTexture))
-                    GasOverlays[i] = new SpriteSpecifier.Texture(new ResourcePath(gasPrototype.GasOverlayTexture));
+                    _gasOverlays[i] = new SpriteSpecifier.Texture(new ResourcePath(gasPrototype.GasOverlayTexture));
 
                 if(!string.IsNullOrEmpty(gasPrototype.GasOverlaySprite) && !string.IsNullOrEmpty(gasPrototype.GasOverlayState))
-                    GasOverlays[i] = new SpriteSpecifier.Rsi(new ResourcePath(gasPrototype.GasOverlaySprite), gasPrototype.GasOverlayState);
+                    _gasOverlays[i] = new SpriteSpecifier.Rsi(new ResourcePath(gasPrototype.GasOverlaySprite), gasPrototype.GasOverlayState);
             }
         }
 
@@ -38,6 +38,6 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
 
         public IEnumerable<GasPrototype> Gases => GasPrototypes;
 
-        public SpriteSpecifier GetOverlay(int overlayId) => GasOverlays[overlayId];
+        public SpriteSpecifier GetOverlay(int overlayId) => _gasOverlays[overlayId];
     }
 }

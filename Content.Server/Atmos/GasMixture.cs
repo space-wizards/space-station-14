@@ -35,6 +35,22 @@ namespace Content.Server.Atmos
         [ViewVariables]
         private float _temperature = Atmospherics.TCMB;
 
+        [ViewVariables]
+        private float _volume;
+
+        #region Cache
+
+        [ViewVariables]
+        private bool _dirty = true;
+
+        private float _pressure = 0f;
+        private float _totalMoles = 0f;
+        private float _heatCapacity = 0f;
+        private float _heatCapacityArchived = 0f;
+        private float _thermalEnergy = 0f;
+
+        #endregion
+
         public IReadOnlyList<float> Gases => _moles;
 
         [ViewVariables]
@@ -56,71 +72,35 @@ namespace Content.Server.Atmos
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                var capacity = 0f;
+                if(_dirty)
+                    Clean();
 
-                for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
-                {
-                    capacity += _atmosphereSystem.GetGas(i).SpecificHeat * _moles[i];
-                }
-
-                return MathF.Max(capacity, Atmospherics.MinimumHeatCapacity);
-            }
-        }
-
-        /// <summary>
-        /// Heat capacity ratio of gas mixture
-        /// </summary>
-        [ViewVariables]
-        public float HeatCapacityRatio
-        {
-            get
-            {
-                var delimiterSum = 0f;
-                for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
-                {
-                    delimiterSum += _moles[i] / (_atmosphereSystem.GetGas(i).HeatCapacityRatio - 1);
-                }
-                return 1 + TotalMoles / delimiterSum;
-            }
-        }
-
-        public float MolarMass
-        {
-            get
-            {
-                var molarMass = 0f;
-                var totalMoles = TotalMoles;
-                for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
-                {
-                    molarMass += _atmosphereSystem.GetGas(i).MolarMass * (_moles[i] / totalMoles);
-                }
-
-                return molarMass;
+                return _heatCapacity;
             }
         }
 
         [ViewVariables]
         public float HeatCapacityArchived
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                var capacity = 0f;
+                if(_dirty)
+                    Clean();
 
-                for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
-                {
-                    capacity += _atmosphereSystem.GetGas(i).SpecificHeat * _molesArchived[i];
-                }
-
-                return MathF.Max(capacity, Atmospherics.MinimumHeatCapacity);
+                return _heatCapacityArchived;
             }
         }
 
         [ViewVariables]
         public float TotalMoles
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => NumericsHelpers.HorizontalAdd(_moles);
+            get
+            {
+                if(_dirty)
+                    Clean();
+
+                return _totalMoles;
+            }
         }
 
         [ViewVariables]
@@ -128,8 +108,22 @@ namespace Content.Server.Atmos
         {
             get
             {
-                if (Volume <= 0) return 0f;
-                return TotalMoles * Atmospherics.R * Temperature / Volume;
+                if(_dirty)
+                    Clean();
+
+                return _pressure;
+            }
+        }
+
+        [ViewVariables]
+        public float ThermalEnergy
+        {
+            get
+            {
+                if(_dirty)
+                    Clean();
+
+                return _thermalEnergy;
             }
         }
 
@@ -141,17 +135,26 @@ namespace Content.Server.Atmos
             {
                 if (Immutable) return;
                 _temperature = MathF.Max(value, Atmospherics.TCMB);
+                _dirty = true;
             }
         }
-
-        [ViewVariables]
-        public float ThermalEnergy => Temperature * HeatCapacity;
 
         [ViewVariables]
         public float TemperatureArchived { get; private set; }
 
         [ViewVariables]
-        public float Volume { get; set; }
+        public float Volume
+        {
+            get => _volume;
+            set
+            {
+                if (value > 0)
+                {
+                    _volume = value;
+                    _dirty = true;
+                }
+            }
+        }
 
         public GasMixture() : this(null)
         {
@@ -162,13 +165,33 @@ namespace Content.Server.Atmos
             _atmosphereSystem = atmosphereSystem ?? EntitySystem.Get<AtmosphereSystem>();
             _moles = new float[MathHelper.NextMultipleOf(Atmospherics.TotalNumberOfGases, 4)];
             _molesArchived = new float[_moles.Length];
+            Clean();
         }
 
         public GasMixture(float volume, AtmosphereSystem? atmosphereSystem = null): this(atmosphereSystem)
         {
             if (volume < 0)
                 volume = 0;
-            Volume = volume;
+            _volume = volume;
+        }
+
+        /// <summary>
+        ///     Forces an update of all cached values.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Clean()
+        {
+            _totalMoles = NumericsHelpers.HorizontalAdd(_moles);
+            if(Volume > 0)
+                _pressure = _totalMoles * Atmospherics.R * Temperature / Volume;
+            Span<float> tmp = stackalloc float[_moles.Length];
+            NumericsHelpers.Multiply(_moles, _atmosphereSystem.GasSpecificHeats, tmp);
+            _heatCapacity = MathF.Max(NumericsHelpers.HorizontalAdd(tmp), Atmospherics.MinimumHeatCapacity);
+            NumericsHelpers.Multiply(_molesArchived, _atmosphereSystem.GasSpecificHeats, tmp);
+            _heatCapacityArchived = MathF.Max(NumericsHelpers.HorizontalAdd(tmp), Atmospherics.MinimumHeatCapacity);
+            _thermalEnergy = Temperature * _heatCapacity;
+
+            _dirty = false;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -200,6 +223,7 @@ namespace Content.Server.Atmos
             }
 
             NumericsHelpers.Add(_moles, giver._moles);
+            _dirty = true;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -218,7 +242,10 @@ namespace Content.Server.Atmos
         public void SetMoles(int gasId, float quantity)
         {
             if (!Immutable)
+            {
                 _moles[gasId] = quantity;
+                _dirty = true;
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -231,7 +258,10 @@ namespace Content.Server.Atmos
         public void AdjustMoles(int gasId, float quantity)
         {
             if (!Immutable)
+            {
                 _moles[gasId] += quantity;
+                _dirty = true;
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -260,7 +290,10 @@ namespace Content.Server.Atmos
             _moles.CopyTo(removed._moles.AsSpan());
             NumericsHelpers.Multiply(removed._moles, ratio);
             if (!Immutable)
+            {
                 NumericsHelpers.Sub(_moles, removed._moles);
+                _dirty = true;
+            }
 
             return removed;
         }
@@ -271,6 +304,7 @@ namespace Content.Server.Atmos
             if (Immutable) return;
             sample._moles.CopyTo(_moles, 0);
             Temperature = sample.Temperature;
+            _dirty = true;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -350,6 +384,9 @@ namespace Content.Server.Atmos
                 !(MathF.Abs(movedMoles) > Atmospherics.MinimumMolesDeltaToMove)) return 0f;
             var moles = TotalMoles;
             var theirMoles = sharer.TotalMoles;
+
+            _dirty = true;
+            sharer._dirty = true;
 
             return (TemperatureArchived * (moles + movedMoles)) - (sharer.TemperatureArchived * (theirMoles - movedMoles)) * Atmospherics.R / Volume;
 
@@ -537,6 +574,7 @@ namespace Content.Server.Atmos
         {
             if (Immutable) return;
             Array.Clear(_moles, 0, Atmospherics.TotalNumberOfGases);
+            _dirty = true;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -544,6 +582,7 @@ namespace Content.Server.Atmos
         {
             if (Immutable) return;
             NumericsHelpers.Multiply(_moles, multiplier);
+            _dirty = true;
         }
 
         public void ExposeData(ObjectSerializer serializer)
@@ -561,6 +600,7 @@ namespace Content.Server.Atmos
             // The arrays MUST have a specific length.
             Array.Resize(ref _moles, length);
             Array.Resize(ref _molesArchived, length);
+            _dirty = true;
         }
 
         public override bool Equals(object? obj)
@@ -616,6 +656,7 @@ namespace Content.Server.Atmos
                 LastShare = LastShare,
                 TemperatureArchived = TemperatureArchived,
                 Volume = Volume,
+                _dirty = true,
             };
             return newMixture;
         }

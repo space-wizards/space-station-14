@@ -52,15 +52,15 @@
       - Impassable
       - MobImpassable
       - VaultImpassable
-    - type: Clickable
-    - type: InteractionOutline
-    - type: Anchorable
-    - type: Construction
-      graph: computer
-      node: monitorBroken
-    - type: Sprite
-      sprite: "Constructible/Power/computers.rsi"
-      state: "broken"
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Anchorable
+  - type: Construction
+    graph: computer
+    node: monitorBroken
+  - type: Sprite
+    sprite: "Constructible/Power/computers.rsi"
+    state: "broken"
 
 - type: entity
   id: ComputerBase
