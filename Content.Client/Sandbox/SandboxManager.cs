@@ -330,7 +330,7 @@ namespace Content.Client.Sandbox
 
         private void LinkMachines()
         {
-            _console.ProcessCommand(("signallink"));
+            _console.ProcessCommand("signallink");
         }
     }
 }
