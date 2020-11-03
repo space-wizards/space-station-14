@@ -1,4 +1,5 @@
 ﻿using System;
+using Content.Shared.Chemistry;
 using Content.Shared.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
@@ -55,10 +56,15 @@ namespace Content.Shared.Kitchen
     public sealed class ReagentGrinderInterfaceState : BoundUserInterfaceState
     {
         public bool HasBeakerIn;
+        public EntityUid[] ChamberContents;
+        public Solution.ReagentQuantity[] ReagentQuantities;
 
-        public ReagentGrinderInterfaceState(bool hasBeaker)
+
+        public ReagentGrinderInterfaceState(bool hasBeaker, EntityUid[] chamberContents, Solution.ReagentQuantity[] heldBeakerContents)
         {
             HasBeakerIn = hasBeaker;
+            ChamberContents = chamberContents;
+            ReagentQuantities = heldBeakerContents;
         }
     }
 }

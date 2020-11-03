@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.GUI;
@@ -43,6 +44,12 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
 
         [ViewVariables] private ContainerSlot _beakerContainer = default!;
+
+        /// <summary>
+        /// Can be null since we won't always have a beaker in the grinder.
+        /// </summary>
+        [ViewVariables] private SolutionContainerComponent? _heldBeaker = default!;
+
         /// <summary>
         /// Contains the things that are going to be ground or juiced.
         /// </summary>
@@ -102,7 +109,10 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
             switch(message.Message)
             {
-
+                case ReagentGrinderEjectBeakerMessage msg:
+                    EjectBeaker(message.Session.AttachedEntity!);
+                    //EjectBeaker will dirty the UI for us, we don't have to do it explicitly here.
+                    break;
             }
         }
 
@@ -112,7 +122,10 @@ namespace Content.Server.GameObjects.Components.Kitchen
             {
                 UserInterface?.SetState(new ReagentGrinderInterfaceState
                 (
-                    hasBeaker:HasBeaker
+                    HasBeaker,
+                    _chamber.ContainedEntities.Select(item => item.Uid).ToArray(),
+                    //Remember the beaker can be null!
+                    _heldBeaker?.Solution.Contents.ToArray()
                 ));
                 _dirty = false;
             }
@@ -122,19 +135,23 @@ namespace Content.Server.GameObjects.Components.Kitchen
         /// If this component contains an entity with a <see cref="SolutionContainerComponent"/>, eject it.
         /// Tries to eject into user's hands first, then ejects onto dispenser if both hands are full.
         /// </summary>
-        private void TryEject(IEntity user)
+        private void EjectBeaker(IEntity user)
         {
             if (!HasBeaker)
                 return;
 
-            var beaker = _beakerContainer.ContainedEntity;
+            //Eject the beaker into the hands of the user.
             _beakerContainer.Remove(_beakerContainer.ContainedEntity);
+
             //UpdateUserInterface();
 
-            if (!user.TryGetComponent<HandsComponent>(out var hands) || !beaker.TryGetComponent<ItemComponent>(out var item))
+            if (!user.TryGetComponent<HandsComponent>(out var hands) || !_heldBeaker!.Owner.TryGetComponent<ItemComponent>(out var item))
                 return;
             if (hands.CanPutInHand(item))
                 hands.PutInHand(item);
+
+            _heldBeaker = null;
+            _dirty = true;
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
@@ -144,13 +161,14 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 return;
             }
 
-            //_uiDirty = true;
+            _dirty = true;
             UserInterface?.Toggle(actor.playerSession);
         }
 
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
 
+            //look at this dude, got no hands.
             if (!eventArgs.User.TryGetComponent(out IHandsComponent? hands))
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("You have no hands."));
@@ -161,15 +179,21 @@ namespace Content.Server.GameObjects.Components.Kitchen
             var heldEnt = eventArgs.Using;
 
             //First, check if user is trying to insert a beaker.
-            //No promise it will be a beaker, but whatever.
-            //Should this be a string comparison to see if the prototype id contains "beaker"?
-            if(heldEnt!.TryGetComponent(out SolutionContainerComponent? beaker))
+            //No promise it will be a beaker right now, but whatever.
+            //Maybe this should whitelist "beaker" in the prototype id of heldEnt?
+            if(heldEnt!.TryGetComponent(out SolutionContainerComponent? beaker) && heldEnt!.Prototype!.ID.ToLower().Contains("beaker"))
             {
-                _beakerContainer.Insert(beaker.Owner);
+                _beakerContainer.Insert(heldEnt);
+                _heldBeaker = beaker;
                 _dirty = true;
+                return true;
             }
 
-            //woot, string comparison
+            //Next, see if the user is trying to insert something they want to be ground/juiced.
+
+            /*Magic number of 16 at the moment to cap the chamber, will be a constant or yaml based.
+            Don't want someone putting in 500 entities and ejecting them all at once. Maybe I should have done that for the microwave too?
+            */
             if (!_grindableIds.Contains(heldEnt!.Prototype!.ID) || _chamber.ContainedEntities.Count >= 16) return false;
             _chamber.Insert(heldEnt);
             _dirty = true;

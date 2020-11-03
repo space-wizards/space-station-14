@@ -10,14 +10,24 @@ using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Content.Shared.Kitchen;
+using Robust.Shared.GameObjects;
+using Content.Shared.Chemistry;
+using Robust.Shared.IoC;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Prototypes;
+using Robust.Client.Graphics;
+using Robust.Client.GameObjects;
 
 namespace Content.Client.GameObjects.Components.Kitchen
 {
     public class ReagentGrinderBoundUserInterface : BoundUserInterface
     {
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         private GrinderMenu _menu;
-
+        private Dictionary<int, EntityUid> _chamberVisualContents = new Dictionary<int, EntityUid>();
+        private Dictionary<int, Solution.ReagentQuantity> _beakerVisualContents = new Dictionary<int, Solution.ReagentQuantity>();
         public ReagentGrinderBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner,uiKey) { }
 
         protected override void Open()
@@ -25,17 +35,17 @@ namespace Content.Client.GameObjects.Components.Kitchen
             base.Open();
             _menu = new GrinderMenu(this);
             _menu.OpenCentered();
-            _menu.OnClose += OnMenuClose;
+            _menu.OnClose += Close;
+            _menu.BeakerContentBox.EjectButton.OnPressed += args => SendMessage(new SharedReagentGrinderComponent.ReagentGrinderEjectBeakerMessage());
         }
 
-        private void OnMenuClose()
-        {
-            //throw new NotImplementedException();
-        }
 
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
+            _chamberVisualContents?.Clear();
+            _beakerVisualContents?.Clear();
+            _menu?.Dispose();
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
@@ -47,9 +57,70 @@ namespace Content.Client.GameObjects.Components.Kitchen
             }
 
             _menu.BeakerContentBox.EjectButton.Disabled = !cState.HasBeakerIn;
+            RefreshContentsDisplay(cState.ReagentQuantities, cState.ChamberContents);
 
         }
 
+
+        private void RefreshContentsDisplay(Solution.ReagentQuantity[] reagents, EntityUid[] containedSolids)
+        {
+
+            //Much of this component's interface will just be ripped straight from microwave...
+            _chamberVisualContents.Clear();
+            _menu.ChamberConentBox.BoxContents.Clear();
+            for (var j = 0; j < containedSolids.Length; j++)
+            {
+                if (!_entityManager.TryGetEntity(containedSolids[j], out var entity))
+                {
+                    return;
+                }
+                if (entity.Deleted)
+                {
+                    continue;
+                }
+
+                Texture texture;
+                if (entity.TryGetComponent(out IconComponent iconComponent))
+                {
+                    texture = iconComponent.Icon?.Default;
+                }
+                else if (entity.TryGetComponent(out SpriteComponent spriteComponent))
+                {
+                    texture = spriteComponent.Icon?.Default;
+                }
+                else { continue; }
+
+                var solidItem = _menu.ChamberConentBox.BoxContents.AddItem(entity.Name, texture);
+                var solidIndex = _menu.ChamberConentBox.BoxContents.IndexOf(solidItem);
+                _chamberVisualContents.Add(solidIndex, containedSolids[j]);
+            }
+
+            //Always clear the list no matter what.
+            _beakerVisualContents.Clear();
+            _menu.BeakerContentBox.BoxContents.Clear();
+
+            //But, the beaker can be null so we have to watch out for that.
+            if (reagents == null)
+            {
+                return;
+            }
+
+            //Looks like we have a beaker attached.
+            if (reagents.Length <= 0)
+            {
+                _menu.BeakerContentBox.BoxContents.AddItem(Loc.GetString("Empty"));
+            }
+            else
+            {
+                for (var i = 0; i < reagents.Length; i++)
+                {
+                    _prototypeManager.TryIndex(reagents[i].ReagentId, out ReagentPrototype proto);
+                    var reagentAdded = _menu.BeakerContentBox.BoxContents.AddItem($"{reagents[i].Quantity} {proto.Name}");
+                    var reagentIndex = _menu.BeakerContentBox.BoxContents.IndexOf(reagentAdded);
+                    _beakerVisualContents.Add(reagentIndex, reagents[i]);
+                }
+            }
+        }
 
         public class GrinderMenu : SS14Window
         {
@@ -70,12 +141,9 @@ namespace Content.Client.GameObjects.Components.Kitchen
             protected override Vector2? CustomSize => (512, 256);
 
             //We'll need 4 buttons, grind, juice, eject beaker, eject the chamber contents.
+            //The other 2 are referenced in the Open function.
             public Button GrindButton { get; }
             public Button JuiceButton { get; }
-
-            public Button EjectChamberButton { get; }
-            public Button EjectBeakerButton { get; }
-
 
             public LabelledContentBox ChamberConentBox { get; }
             public LabelledContentBox BeakerContentBox { get; }
