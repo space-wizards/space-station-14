@@ -28,6 +28,7 @@
   - type: Damageable
     deadThreshold: 100
     resistances: metallicResistances
+  - type: Destructible
   - type: BreakableConstruction
     node: start
   - type: SnapGrid

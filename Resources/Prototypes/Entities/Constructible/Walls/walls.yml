@@ -285,6 +285,7 @@
   - type: Damageable
     deadThreshold: 600
     resistances: metallicResistances
+  - type: Destructible
   - type: BreakableConstruction
     node: girder
   - type: ReinforcedWall
@@ -375,6 +376,7 @@
   - type: Damageable
     deadThreshold: 300
     resistances: metallicResistances
+  - type: Destructible
   - type: BreakableConstruction
     node: girder
     destroySound: /Audio/Effects/metalbreak.ogg

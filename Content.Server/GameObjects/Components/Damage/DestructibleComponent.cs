@@ -23,7 +23,6 @@ namespace Content.Server.GameObjects.Components.Damage
     [RegisterComponent]
     public class DestructibleComponent : Component, IDestroyAct
     {
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
         private ActSystem _actSystem = default!;
@@ -40,13 +39,13 @@ namespace Content.Server.GameObjects.Components.Damage
         ///     Sound played upon destruction.
         /// </summary>
         [ViewVariables]
-        protected string DestroySound { get; private set; } = string.Empty;
+        private string DestroySound { get; set; } = string.Empty;
 
         /// <summary>
         /// Used instead of <see cref="DestroySound"/> if specified.
         /// </summary>
         [ViewVariables]
-        protected string DestroySoundCollection { get; private set; } = string.Empty;
+        private string DestroySoundCollection { get; set; } = string.Empty;
 
         void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
         {
@@ -89,7 +88,7 @@ namespace Content.Server.GameObjects.Components.Damage
         public override void Initialize()
         {
             base.Initialize();
-            _actSystem = _entitySystemManager.GetEntitySystem<ActSystem>();
+            _actSystem = EntitySystem.Get<ActSystem>();
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
@@ -102,7 +101,7 @@ namespace Content.Server.GameObjects.Components.Damage
                 {
                     if (msg.State == DamageState.Dead)
                     {
-                        PerformDestruction();
+                        Destroy();
                     }
 
                     break;
@@ -115,7 +114,7 @@ namespace Content.Server.GameObjects.Components.Damage
         ///     <see cref="IDamageableComponent.CurrentState"/> to
         ///     <see cref="DamageState.Dead"/>
         /// </summary>
-        protected void PerformDestruction()
+        private void Destroy()
         {
             if (Owner.Deleted)
             {

@@ -1,6 +1,5 @@
 ﻿#nullable enable
 using Content.Server.GameObjects.Components.Construction;
-using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
@@ -9,7 +8,7 @@ using Robust.Shared.Serialization;
 namespace Content.Server.GameObjects.Components.Damage
 {
     [RegisterComponent]
-    public class BreakableConstructionComponent : RuinableComponent, IDestroyAct
+    public class BreakableConstructionComponent : Component, IDestroyAct
     {
         private ActSystem _actSystem = default!;
 
@@ -33,7 +32,12 @@ namespace Content.Server.GameObjects.Components.Damage
 
         async void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
         {
-            if (Owner.Deleted ||!Owner.TryGetComponent(out ConstructionComponent? construction) || string.IsNullOrEmpty(Node)) return;
+            if (Owner.Deleted ||
+                !Owner.TryGetComponent(out ConstructionComponent? construction) ||
+                string.IsNullOrEmpty(Node))
+            {
+                return;
+            }
 
             _actSystem.HandleBreakage(Owner);
 
