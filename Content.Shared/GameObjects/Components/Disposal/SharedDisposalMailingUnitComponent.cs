@@ -7,7 +7,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.GameObjects.Components.Disposal
 {
-    public abstract class SharedDisposalMailingUnitComponent : SharedDisposalUnitComponent, ICollideSpecial
+    public abstract class SharedDisposalMailingUnitComponent : SharedDisposalUnitComponent
     {
         public override string Name => "DisposalMailingUnit";
 

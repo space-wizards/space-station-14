@@ -306,7 +306,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             // If we've moved to space or the likes then remove us.
             if (moveEvent.Sender.Deleted ||
                 !moveEvent.Sender.TryGetComponent(out IPhysicsComponent physics) ||
-                !PathfindingNode.IsRelevant(moveEvent.Sender, physics))
+                !PathfindingNode.IsRelevant(moveEvent.Sender, physics) ||
+                moveEvent.NewPosition.GetGridId(EntityManager) == GridId.Invalid)
             {
                 HandleEntityRemove(moveEvent.Sender);
                 return;

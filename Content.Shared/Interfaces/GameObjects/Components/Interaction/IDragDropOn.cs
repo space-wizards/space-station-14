@@ -7,7 +7,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     public interface IDragDropOn
     {
         /// <summary>
-        ///     Invoked server-side when another entity is being dragged and dropped
+        ///     Invoked when another entity is being dragged and dropped
         ///     onto this one before invoking <see cref="DragDropOn"/>.
         ///     Note that other drag and drop interactions may be attempted if
         ///     this one fails.

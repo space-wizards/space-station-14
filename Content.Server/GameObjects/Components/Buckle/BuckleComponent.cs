@@ -15,7 +15,6 @@ using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
-using NFluidsynth;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystemMessages;
 using Robust.Server.GameObjects.EntitySystems;
@@ -25,11 +24,9 @@ using Robust.Shared.GameObjects.ComponentDependencies;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -37,6 +34,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Buckle
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedBuckleComponent))]
     public class BuckleComponent : SharedBuckleComponent, IInteractHand
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -49,12 +47,6 @@ namespace Content.Server.GameObjects.Components.Buckle
         [ComponentDependency] private readonly MobStateManagerComponent? _mobStateManagerComponent = null;
 
         private int _size;
-
-        /// <summary>
-        ///     The range from which this entity can buckle to a <see cref="StrapComponent"/>.
-        /// </summary>
-        [ViewVariables]
-        private float _range;
 
         /// <summary>
         ///     The amount of time that must pass for this entity to
@@ -198,7 +190,7 @@ namespace Content.Server.GameObjects.Components.Buckle
             var component = strap;
             bool Ignored(IEntity entity) => entity == Owner || entity == user || entity == component.Owner;
 
-            if (!Owner.InRangeUnobstructed(strap, _range, predicate: Ignored, popup: true))
+            if (!Owner.InRangeUnobstructed(strap, Range, predicate: Ignored, popup: true))
             {
                 return false;
             }
@@ -335,7 +327,7 @@ namespace Content.Server.GameObjects.Components.Buckle
                     return false;
                 }
 
-                if (!user.InRangeUnobstructed(oldBuckledTo, _range, popup: true))
+                if (!user.InRangeUnobstructed(oldBuckledTo, Range, popup: true))
                 {
                     return false;
                 }
@@ -491,7 +483,6 @@ namespace Content.Server.GameObjects.Components.Buckle
             base.ExposeData(serializer);
 
             serializer.DataField(ref _size, "size", 100);
-            serializer.DataField(ref _range, "range", SharedInteractionSystem.InteractionRange / 1.4f);
 
             var seconds = 0.25f;
             serializer.DataField(ref seconds, "cooldown", 0.25f);
