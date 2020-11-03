@@ -35,7 +35,7 @@
   components:
   - type: Instrument
     program: 1
- - type: Sprite
+  - type: Sprite
     sprite: Objects/Fun/Instruments/otherinstruments.rsi
     state: piano
 
