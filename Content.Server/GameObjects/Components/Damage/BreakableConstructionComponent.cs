@@ -9,7 +9,6 @@ using Robust.Shared.Serialization;
 namespace Content.Server.GameObjects.Components.Damage
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IDamageableComponent))]
     public class BreakableConstructionComponent : RuinableComponent, IDestroyAct
     {
         private ActSystem _actSystem = default!;

@@ -96,6 +96,7 @@
   - type: Pullable
   - type: Damageable
     deadThreshold: 100
+    resistances: metallicResistances
   - type: BreakableConstruction
     node: monitorBroken
   - type: Sprite
