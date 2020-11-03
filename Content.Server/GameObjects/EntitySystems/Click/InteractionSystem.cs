@@ -214,27 +214,27 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             if (!_mapManager.GridExists(coords.GetGridId(_entityManager)))
             {
                 Logger.InfoS("system.interaction", $"Invalid Coordinates: client={session}, coords={coords}");
-                return true;
+                return false;
             }
 
             if (uid.IsClientSide())
             {
                 Logger.WarningS("system.interaction",
                     $"Client sent interaction with client-side entity. Session={session}, Uid={uid}");
-                return true;
+                return false;
             }
 
             var userEntity = ((IPlayerSession) session).AttachedEntity;
 
             if (userEntity == null || !userEntity.IsValid())
             {
-                return true;
+                return false;
             }
 
             if (userEntity.TryGetComponent(out CombatModeComponent combat) && combat.IsInCombatMode)
                 DoAttack(userEntity, coords, false, uid);
             else
-                UserInteraction(userEntity, coords, uid);
+                return UserInteraction(userEntity, coords, uid);
 
             return true;
         }
@@ -288,7 +288,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             return pull.TogglePull(player);
         }
 
-        private void UserInteraction(IEntity player, EntityCoordinates coordinates, EntityUid clickedUid)
+        private bool UserInteraction(IEntity player, EntityCoordinates coordinates, EntityUid clickedUid)
         {
             // Get entity clicked upon from UID if valid UID, if not assume no entity clicked upon and null
             if (!EntityManager.TryGetEntity(clickedUid, out var attacked))
@@ -299,7 +299,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             // Verify player has a transform component
             if (!player.TryGetComponent<ITransformComponent>(out var playerTransform))
             {
-                return;
+                return false;
             }
 
             // Verify player is on the same map as the entity he clicked on
@@ -307,13 +307,13 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             {
                 Logger.WarningS("system.interaction",
                     $"Player named {player.Name} clicked on a map he isn't located on");
-                return;
+                return false;
             }
 
             // Verify player has a hand, and find what object he is currently holding in his active hand
             if (!player.TryGetComponent<IHandsComponent>(out var hands))
             {
-                return;
+                return false;
             }
 
             var item = hands.GetActiveHand?.Owner;
@@ -329,13 +329,13 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
             if (!ActionBlockerSystem.CanInteract(player))
             {
-                return;
+                return false;
             }
 
             // If in a container
             if (ContainerHelpers.IsInContainer(player))
             {
-                return;
+                return false;
             }
 
 
@@ -348,7 +348,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                     !ContainerHelpers.TryGetContainer(attacked, out var attackedContainer) ||
                     attackedContainer != playerContainer)
                 {
-                    return;
+                    return false;
                 }
             }
 
@@ -364,7 +364,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                     InteractAfter(player, item, coordinates, distSqrt <= InteractionRangeSquared);
                 }
 
-                return;
+                return true;
             }
 
             // Verify attacked object is on the map if we managed to click on it somehow
@@ -372,7 +372,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             {
                 Logger.WarningS("system.interaction",
                     $"Player named {player.Name} clicked on object {attacked.Name} that isn't currently on the map somehow");
-                return;
+                return false;
             }
 
             // RangedInteract/AfterInteract: Check distance between user and clicked item, if too large parse it in the ranged function
@@ -383,10 +383,10 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 if (item != null)
                 {
                     RangedInteraction(player, item, attacked, coordinates);
-                    return;
+                    return true;
                 }
 
-                return; // Add some form of ranged InteractHand here if you need it someday, or perhaps just ways to modify the range of InteractHand
+                return false; // Add some form of ranged InteractHand here if you need it someday, or perhaps just ways to modify the range of InteractHand
             }
 
             // We are close to the nearby object and the object isn't contained in our active hand
@@ -400,6 +400,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             {
                 Interaction(player, attacked);
             }
+            return true;
         }
 
         /// <summary>
