@@ -1,10 +1,14 @@
 ﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.GameObjects.Components.Body.Behavior;
 using Content.Shared.GameObjects.Components.Body.Part;
+using Content.Shared.Interfaces;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -14,11 +18,12 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
     {
         public override string Name => "Mechanism";
 
-        private IBodyPart? _part;
         protected readonly Dictionary<int, object> OptionsCache = new Dictionary<int, object>();
         protected IBody? BodyCache;
         protected int IdHash;
         protected IEntity? PerformerCache;
+        private IBodyPart? _part;
+        private readonly Dictionary<Type, IMechanismBehavior> _behaviors = new Dictionary<Type, IMechanismBehavior>();
 
         public IBody? Body => Part?.Body;
 
@@ -61,6 +66,8 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
             }
         }
 
+        public IReadOnlyDictionary<Type, IMechanismBehavior> Behaviors => _behaviors;
+
         public string Description { get; set; } = string.Empty;
 
         public string ExamineMessage { get; set; } = string.Empty;
@@ -98,6 +105,91 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
             serializer.DataField(this, m => m.Size, "size", 1);
 
             serializer.DataField(this, m => m.Compatibility, "compatibility", BodyPartCompatibility.Universal);
+
+            var moduleManager = IoCManager.Resolve<IModuleManager>();
+
+            if (moduleManager.IsServerModule)
+            {
+                serializer.DataReadWriteFunction(
+                    "behaviors",
+                    null!,
+                    behaviors =>
+                    {
+                        if (behaviors == null)
+                        {
+                            return;
+                        }
+
+                        foreach (var behavior in behaviors)
+                        {
+                            var type = behavior.GetType();
+
+                            if (!_behaviors.TryAdd(type, behavior))
+                            {
+                                Logger.Warning($"Duplicate behavior in {nameof(SharedMechanismComponent)} for entity {Owner.Name}: {type}.");
+                                continue;
+                            }
+
+                            IoCManager.InjectDependencies(behavior);
+                        }
+                    },
+                    () => _behaviors.Values.ToList());
+            }
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            foreach (var behavior in _behaviors.Values)
+            {
+                behavior.Initialize(this);
+            }
+        }
+
+        protected override void Startup()
+        {
+            base.Startup();
+
+            foreach (var behavior in _behaviors.Values)
+            {
+                behavior.Startup();
+            }
+        }
+
+        public bool EnsureBehavior<T>(out T behavior) where T : IMechanismBehavior, new()
+        {
+            if (_behaviors.TryGetValue(typeof(T), out var rawBehavior))
+            {
+                behavior = (T) rawBehavior;
+                return true;
+            }
+
+            behavior = new T();
+            IoCManager.InjectDependencies(behavior);
+            _behaviors.Add(typeof(T), behavior);
+            behavior.Initialize(this);
+            behavior.Startup();
+
+            return false;
+        }
+
+        public bool HasBehavior<T>() where T : IMechanismBehavior
+        {
+            return _behaviors.ContainsKey(typeof(T));
+        }
+
+        public bool TryRemoveBehavior<T>() where T : IMechanismBehavior
+        {
+            return _behaviors.Remove(typeof(T));
+        }
+
+        public void Update(float frameTime)
+        {
+            foreach (var behavior in _behaviors.Values)
+            {
+                behavior.Update(frameTime);
+            }
         }
 
         public void AddedToBody(IBody body)
@@ -105,9 +197,7 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
             DebugTools.AssertNotNull(Body);
             DebugTools.AssertNotNull(body);
 
-            OnAddedToBody(body);
-
-            foreach (var behavior in Owner.GetAllComponents<IMechanismBehavior>())
+            foreach (var behavior in _behaviors.Values)
             {
                 behavior.AddedToBody(body);
             }
@@ -119,9 +209,8 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
             DebugTools.AssertNotNull(part);
 
             Owner.Transform.AttachParent(part.Owner);
-            OnAddedToPart(part);
 
-            foreach (var behavior in Owner.GetAllComponents<IMechanismBehavior>().ToArray())
+            foreach (var behavior in _behaviors.Values)
             {
                 behavior.AddedToPart(part);
             }
@@ -135,9 +224,8 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
             DebugTools.AssertNotNull(part);
 
             Owner.Transform.AttachParent(part.Owner);
-            OnAddedToPartInBody(body, part);
 
-            foreach (var behavior in Owner.GetAllComponents<IMechanismBehavior>())
+            foreach (var behavior in _behaviors.Values)
             {
                 behavior.AddedToPartInBody(body, part);
             }
@@ -148,9 +236,7 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
             DebugTools.AssertNull(Body);
             DebugTools.AssertNotNull(old);
 
-            OnRemovedFromBody(old);
-
-            foreach (var behavior in Owner.GetAllComponents<IMechanismBehavior>())
+            foreach (var behavior in _behaviors.Values)
             {
                 behavior.RemovedFromBody(old);
             }
@@ -162,9 +248,8 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
             DebugTools.AssertNotNull(old);
 
             Owner.Transform.AttachToGridOrMap();
-            OnRemovedFromPart(old);
 
-            foreach (var behavior in Owner.GetAllComponents<IMechanismBehavior>())
+            foreach (var behavior in _behaviors.Values)
             {
                 behavior.RemovedFromPart(old);
             }
@@ -178,24 +263,11 @@ namespace Content.Shared.GameObjects.Components.Body.Mechanism
             DebugTools.AssertNotNull(oldPart);
 
             Owner.Transform.AttachToGridOrMap();
-            OnRemovedFromPartInBody(oldBody, oldPart);
 
-            foreach (var behavior in Owner.GetAllComponents<IMechanismBehavior>())
+            foreach (var behavior in _behaviors.Values)
             {
                 behavior.RemovedFromPartInBody(oldBody, oldPart);
             }
         }
-
-        protected virtual void OnAddedToBody(IBody body) { }
-
-        protected virtual void OnAddedToPart(IBodyPart part) { }
-
-        protected virtual void OnAddedToPartInBody(IBody body, IBodyPart part) { }
-
-        protected virtual void OnRemovedFromBody(IBody old) { }
-
-        protected virtual void OnRemovedFromPart(IBodyPart old) { }
-
-        protected virtual void OnRemovedFromPartInBody(IBody oldBody, IBodyPart oldPart) { }
     }
 }

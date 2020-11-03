@@ -55,6 +55,7 @@ namespace Content.Server.GameObjects.Components.Morgue
         public void Cremate()
         {
             if (Cooking) return;
+            if (Open) return;
 
             Appearance?.SetData(CrematoriumVisuals.Burning, true);
             Cooking = true;
@@ -64,16 +65,19 @@ namespace Content.Server.GameObjects.Components.Morgue
                 Appearance?.SetData(CrematoriumVisuals.Burning, false);
                 Cooking = false;
 
-                for (var i = Contents.ContainedEntities.Count - 1; i >= 0; i--)
+                if (Contents.ContainedEntities.Count > 0)
                 {
-                    var item = Contents.ContainedEntities[i];
-                    Contents.Remove(item);
-                    item.Delete();
+                    for (var i = Contents.ContainedEntities.Count - 1; i >= 0; i--)
+                    {
+                        var item = Contents.ContainedEntities[i];
+                        Contents.Remove(item);
+                        item.Delete();
+                    }
+
+                    var ash = Owner.EntityManager.SpawnEntity("Ash", Owner.Transform.Coordinates);
+                    Contents.Insert(ash);
                 }
-
-                var ash = Owner.EntityManager.SpawnEntity("Ash", Owner.Transform.Coordinates);
-                Contents.Insert(ash);
-
+               
                 TryOpenStorage(Owner);
 
                 EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/ding.ogg", Owner);
