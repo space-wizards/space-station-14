@@ -1325,7 +1325,7 @@ entities:
   - deadThreshold: 100
     type: Destructible
 - uid: 156
-  type: AirlockMaintCargo
+  type: AirlockMaint
   components:
   - parent: 855
     pos: -24.5,-12.5
@@ -4532,7 +4532,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 407
-  type: AirlockMaintCommon
+  type: AirlockMaint
   components:
   - parent: 855
     pos: -24.5,-12.5
@@ -46793,7 +46793,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4088
-  type: AirlockMaintCommon
+  type: AirlockMaint
   components:
   - parent: 855
     pos: -8.5,-6.5
@@ -46947,7 +46947,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4110
-  type: AirlockMaintCommon
+  type: AirlockMaint
   components:
   - parent: 855
     pos: -31.5,-7.5
