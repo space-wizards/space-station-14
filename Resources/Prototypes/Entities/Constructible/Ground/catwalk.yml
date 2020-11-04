@@ -22,4 +22,5 @@
   - type: IconSmooth
     key: catwalk
     base: catwalk_
-  - type: Catwalk
+  - type: FootstepModifier
+    footstepSoundCollection: footstep_catwalk
