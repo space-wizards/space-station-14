@@ -76,15 +76,13 @@ namespace Content.Server.GameObjects.Components.Kitchen
         private bool _busy = false;
 
 
-        //Serialization vars
-        private List<string> _grindableIds = new List<string>();
+        //YAML serialization vars
         private int _storageCap = 16;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);    
-            serializer.DataField(ref _grindableIds, "grind_list", new List<string>());
-            serializer.DataField(ref _storageCap, "solids_capacity", 16);
+            serializer.DataField(ref _storageCap, "chamber_capacity", 16);
         }
 
         public override void Initialize()
@@ -233,15 +231,24 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 _beakerContainer.Insert(heldEnt);
                 _heldBeaker = beaker;
                 _dirty = true;
+                //We are done, return. Insert the beaker and exit!
                 return true;
             }
 
             //Next, see if the user is trying to insert something they want to be ground/juiced.
 
-            /*Magic number of 16 at the moment to cap the chamber, will be a constant or yaml based.
-            Don't want someone putting in 500 entities and ejecting them all at once. Maybe I should have done that for the microwave too?
-            */
-            if (!_grindableIds.Contains(heldEnt!.Prototype!.ID) || _chamber.ContainedEntities.Count >= 16) return false;
+            if(!heldEnt!.TryGetComponent(out GrindableComponent? grind))
+            {
+                //Entity did NOT pass the whitelist for grindables. Wouldn't want the clown grinding up the Captain's ID card now would you? Why am I asking you, you're biased.
+                return false;
+            }
+
+            //Cap the chamber. Don't want someone putting in 500 entities and ejecting them all at once.
+            //Maybe I should have done that for the microwave too?         
+            if (_chamber.ContainedEntities.Count >= _storageCap)
+            {
+                return false;
+            }
             _chamber.Insert(heldEnt);
             _dirty = true;
 
@@ -256,10 +263,35 @@ namespace Content.Server.GameObjects.Components.Kitchen
         /// <param name="isJuiceMode">If user intends to juicce or grind the contents.</param>
         private void Work(bool isJuiceMode)
         {
-            if(!Powered || _busy || ChamberEmpty)
+            //No power, are  we busy, chamber has anything to grind, a beaker for the grounds to go?
+            if(!Powered || _busy || ChamberEmpty || !HasBeaker)
             {
                 return;
             }
+
+
+            //This block is for grinding behaviour only.
+            if(!isJuiceMode)
+            {
+                //Get each item inside the chamber and get the reagents it contains. Transfer those reagents to the beaker, given we have one in.
+                var items = _chamber.ContainedEntities.ToArray();
+                for (int i = 0; i < items.Length; i++)
+                {
+                    var item = items[i];
+                    if (item.TryGetComponent<SolutionContainerComponent>(out var solution))
+                    {
+                        _heldBeaker!.TryAddSolution(solution.Solution);
+                        solution!.RemoveAllSolution();
+                        _chamber.ContainedEntities[i].Delete();
+                    }
+                }
+
+                _dirty = true;
+            }
+
+           
+            //K, so if we made it this far we want to juice instead.
+
 
             
         }
