@@ -36,6 +36,8 @@ namespace Content.Client.GameObjects.Components.Kitchen
             _menu = new GrinderMenu(this);
             _menu.OpenCentered();
             _menu.OnClose += Close;
+            _menu.GrindButton.OnPressed += args => SendMessage(new SharedReagentGrinderComponent.ReagentGrinderGrindStartMessage());
+            _menu.JuiceButton.OnPressed += args => SendMessage(new SharedReagentGrinderComponent.ReagentGrinderJuiceStartMessage());
             _menu.ChamberConentBox.EjectButton.OnPressed += args => SendMessage(new SharedReagentGrinderComponent.ReagentGrinderEjectChamberAllMessage());
             _menu.BeakerContentBox.EjectButton.OnPressed += args => SendMessage(new SharedReagentGrinderComponent.ReagentGrinderEjectBeakerMessage());
             _menu.ChamberConentBox.BoxContents.OnItemSelected += args =>

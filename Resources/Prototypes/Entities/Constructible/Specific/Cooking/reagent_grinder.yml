@@ -8,8 +8,6 @@
   - type: SnapGrid
     offset: Center
   - type: ReagentGrinder
-    grind_list:
-    - "Wheat"
   - type: UserInterface
     interfaces:
     - key: enum.ReagentGrinderUiKey.Key
