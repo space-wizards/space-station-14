@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using Content.Shared.Status;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.GameObjects.Components.Mobs
 {
@@ -11,6 +14,9 @@ namespace Content.Shared.GameObjects.Components.Mobs
     /// </summary>
     public abstract class SharedStatusEffectsComponent : Component
     {
+        [Dependency]
+        protected readonly StatusEffectStateManager _statusEffectStateManager = default!;
+
         public override string Name => "StatusEffectsUI";
         public override uint? NetID => ContentNetIDs.STATUSEFFECTS;
 
@@ -19,6 +25,8 @@ namespace Content.Shared.GameObjects.Components.Mobs
         public abstract void ChangeStatusEffectIcon(StatusEffect effect, string icon);
 
         public abstract void ChangeStatusEffect(StatusEffect effect, string icon, ValueTuple<TimeSpan, TimeSpan>? cooldown);
+
+        public abstract void ChangeStatusEffect(string statusEffectStateId, ValueTuple<TimeSpan, TimeSpan>? cooldown = null);
 
         public abstract void RemoveStatusEffect(StatusEffect effect);
     }
@@ -52,7 +60,11 @@ namespace Content.Shared.GameObjects.Components.Mobs
     [Serializable, NetSerializable]
     public struct StatusEffectStatus
     {
+        //TODO: remove
         public string Icon;
+        public int StatusEffectStateEncoded;
+        // -1 if no severity
+        public short Severity;
         public ValueTuple<TimeSpan, TimeSpan>? Cooldown;
     }
 
@@ -71,6 +83,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         Piloting,
         Pulling,
         Pulled,
-        Weightless
+        Weightless,
+        Error
     }
 }

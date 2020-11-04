@@ -14,6 +14,7 @@ using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 
@@ -105,7 +106,8 @@ namespace Content.Client.GameObjects.Components.Mobs
             _status[effect] = new StatusEffectStatus
             {
                 Icon = icon,
-                Cooldown = value.Cooldown
+                Cooldown = value.Cooldown,
+                StatusEffectStateEncoded = -1
             };
 
             Dirty();
@@ -191,10 +193,26 @@ namespace Content.Client.GameObjects.Components.Mobs
             _status[effect] = new StatusEffectStatus()
             {
                 Icon = icon,
-                Cooldown = cooldown
+                Cooldown = cooldown,
+                StatusEffectStateEncoded = -1
             };
 
             Dirty();
+        }
+
+        public override void ChangeStatusEffect(string statusEffectStateId, (TimeSpan, TimeSpan)? cooldown = null)
+        {
+            if (_statusEffectStateManager.TryGet(statusEffectStateId, out var statusEffectState))
+            {
+                if (_statusEffectStateManager.TryEncode(statusEffectState, out var encoded))
+                {
+                    _status[statusEffectState.StatusEffect] = new StatusEffectStatus()
+                        {Icon = null, Cooldown = cooldown, StatusEffectStateEncoded = encoded};
+                    Dirty();
+                }
+            }
+            Logger.ErrorS("status", "Unable to set status effect state {0}, please ensure this is a valid statusEffectState",
+                statusEffectStateId);
         }
     }
 }

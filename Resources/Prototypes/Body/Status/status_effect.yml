@@ -1,0 +1,7 @@
+﻿- type: statusEffectState
+  id: lowpressure
+  statusEffect: enum.StatusEffect.Pressure
+  icon: /Textures/Interface/StatusEffects/Pressure/lowpressure.png
+  maxSeverity: 2
+  tooltip:
+

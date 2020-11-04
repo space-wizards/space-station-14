@@ -8,9 +8,12 @@ using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Pulling;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
+using Content.Shared.Status;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Network;
+using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 
@@ -52,7 +55,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
 
             _statusEffects[effect] = new StatusEffectStatus()
-                {Icon = icon, Cooldown = value.Cooldown};
+                {Icon = icon, Cooldown = value.Cooldown, StatusEffectStateEncoded = -1};
             Dirty();
         }
 
@@ -66,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
             _statusEffects[effect] = new StatusEffectStatus()
             {
-                Icon = value.Icon, Cooldown = cooldown
+                Icon = value.Icon, Cooldown = cooldown, StatusEffectStateEncoded = value.StatusEffectStateEncoded
             };
             Dirty();
         }
@@ -74,9 +77,24 @@ namespace Content.Server.GameObjects.Components.Mobs
         public override void ChangeStatusEffect(StatusEffect effect, string icon, ValueTuple<TimeSpan, TimeSpan>? cooldown)
         {
             _statusEffects[effect] = new StatusEffectStatus()
-                {Icon = icon, Cooldown = cooldown};
+                {Icon = icon, Cooldown = cooldown, StatusEffectStateEncoded = -1};
 
             Dirty();
+        }
+
+        public override void ChangeStatusEffect(string statusEffectStateId, (TimeSpan, TimeSpan)? cooldown = null)
+        {
+            if (_statusEffectStateManager.TryGet(statusEffectStateId, out var statusEffectState))
+            {
+                if (_statusEffectStateManager.TryEncode(statusEffectState, out var encoded))
+                {
+                    _statusEffects[statusEffectState.StatusEffect] = new StatusEffectStatus()
+                        {Icon = null, Cooldown = cooldown, StatusEffectStateEncoded = encoded};
+                    Dirty();
+                }
+            }
+            Logger.ErrorS("status", "Unable to set status effect state {0}, please ensure this is a valid statusEffectState",
+                statusEffectStateId);
         }
 
         public override void RemoveStatusEffect(StatusEffect effect)

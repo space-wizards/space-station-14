@@ -156,7 +156,7 @@ namespace Content.Client.UserInterface.Stylesheets
                 Texture = tooltipTexture,
             };
             tooltipBox.SetPatchMargin(StyleBox.Margin.All, 2);
-            tooltipBox.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
+            tooltipBox.SetContentMarginOverride(StyleBox.Margin.Horizontal, 7);
 
             // Placeholder
             var placeholderTexture = resCache.GetTexture("/Textures/Interface/Nano/placeholder.png");

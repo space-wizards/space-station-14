@@ -31,4 +31,8 @@
     <EmbeddedResource Include="Text\Names\*.txt" />
     <Folder Include="GameObjects\Components\Visualizers" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Status\StatusEffectState.cs" />
+    <Compile Remove="Status\IStatusEffectStatePrototype.cs" />
+  </ItemGroup>
 </Project>
