@@ -30,9 +30,9 @@ namespace Content.Shared.Kitchen
         }
 
         [Serializable, NetSerializable]
-        public class ReagentGrinderEjectChamberMessage : BoundUserInterfaceMessage
+        public class ReagentGrinderEjectChamberAllMessage : BoundUserInterfaceMessage
         {
-            public ReagentGrinderEjectChamberMessage()
+            public ReagentGrinderEjectChamberAllMessage()
             {
             }
         }
@@ -45,6 +45,27 @@ namespace Content.Shared.Kitchen
             }
         }
 
+        [Serializable, NetSerializable]
+        public class ReagentGrinderEjectChamberContentMessage : BoundUserInterfaceMessage
+        {
+
+            public EntityUid EntityID;
+            public ReagentGrinderEjectChamberContentMessage(EntityUid entityID)
+            {
+                EntityID = entityID;
+            }
+        }
+
+        [Serializable, NetSerializable]
+        public class ReagentGrinderVaporizeReagentIndexedMessage : BoundUserInterfaceMessage
+        {
+
+            public Solution.ReagentQuantity ReagentQuantity;
+            public ReagentGrinderVaporizeReagentIndexedMessage(Solution.ReagentQuantity reagentQuantity)
+            {
+                ReagentQuantity = reagentQuantity;
+            }
+        }
         [NetSerializable, Serializable]
         public enum ReagentGrinderUiKey
         {

@@ -36,13 +36,28 @@ namespace Content.Client.GameObjects.Components.Kitchen
             _menu = new GrinderMenu(this);
             _menu.OpenCentered();
             _menu.OnClose += Close;
+            _menu.ChamberConentBox.EjectButton.OnPressed += args => SendMessage(new SharedReagentGrinderComponent.ReagentGrinderEjectChamberAllMessage());
             _menu.BeakerContentBox.EjectButton.OnPressed += args => SendMessage(new SharedReagentGrinderComponent.ReagentGrinderEjectBeakerMessage());
+            _menu.ChamberConentBox.BoxContents.OnItemSelected += args =>
+            {
+                SendMessage(new SharedReagentGrinderComponent.ReagentGrinderEjectChamberContentMessage(_chamberVisualContents[args.ItemIndex]));
+            };
+
+            _menu.BeakerContentBox.BoxContents.OnItemSelected += args =>
+            {
+                SendMessage(new SharedReagentGrinderComponent.ReagentGrinderVaporizeReagentIndexedMessage(_beakerVisualContents[args.ItemIndex]));
+            };
         }
 
 
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
+            if (!disposing)
+            {
+                return;
+            }
+
             _chamberVisualContents?.Clear();
             _beakerVisualContents?.Clear();
             _menu?.Dispose();
@@ -57,6 +72,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
             }
 
             _menu.BeakerContentBox.EjectButton.Disabled = !cState.HasBeakerIn;
+            _menu.ChamberConentBox.EjectButton.Disabled = cState.ChamberContents.Length <= 0;
             RefreshContentsDisplay(cState.ReagentQuantities, cState.ChamberContents, cState.HasBeakerIn);
 
         }

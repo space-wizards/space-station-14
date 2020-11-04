@@ -17,10 +17,12 @@ using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -40,6 +42,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
 
 
@@ -54,6 +57,8 @@ namespace Content.Server.GameObjects.Components.Kitchen
         /// Contains the things that are going to be ground or juiced.
         /// </summary>
         [ViewVariables] private Container _chamber = default!;
+
+        [ViewVariables] private bool ChamberEmpty => _chamber.ContainedEntities.Count <= 0;
         [ViewVariables] private bool HasBeaker => _beakerContainer.ContainedEntity != null;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ReagentGrinderUiKey.Key);
@@ -109,6 +114,33 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
             switch(message.Message)
             {
+                case ReagentGrinderGrindStartMessage msg:
+                    Work(isJuiceMode:false);
+                    break;
+
+                case ReagentGrinderJuiceStartMessage msg:
+                    Work(isJuiceMode:true);
+                    break;
+
+                case ReagentGrinderEjectChamberAllMessage msg:
+                    if(!ChamberEmpty)
+                    {
+                        for (var i = _chamber.ContainedEntities.Count - 1; i >= 0; i--)
+                        {
+                            EjectSolid(_chamber.ContainedEntities.ElementAt(i).Uid);
+                        }
+                    }
+                    break;
+
+                case ReagentGrinderEjectChamberContentMessage msg:
+                    if (!ChamberEmpty)
+                    {
+                        EjectSolid(msg.EntityID);
+                        //ClickSound();
+                        _dirty = true;
+                    }
+                    break;
+
                 case ReagentGrinderEjectBeakerMessage msg:
                     EjectBeaker(message.Session.AttachedEntity!);
                     //EjectBeaker will dirty the UI for us, we don't have to do it explicitly here.
@@ -129,6 +161,21 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 ));
                 _dirty = false;
             }
+        }
+
+        private void EjectSolid(EntityUid entityID)
+        {
+            if (_entityManager.EntityExists(entityID))
+            {
+                var entity = _entityManager.GetEntity(entityID);
+                _chamber.Remove(entity);
+
+                //Give the ejected entity a tiny bit of offset so each one is apparent in case of a big stack,
+                //but (hopefully) not enough to clip it through a solid (wall).
+                const float ejectOffset = 0.4f;
+                entity.Transform.LocalPosition += (_random.NextFloat() * ejectOffset, _random.NextFloat() * ejectOffset);
+            }
+            _dirty = true;
         }
 
         /// <summary>
@@ -202,14 +249,20 @@ namespace Content.Server.GameObjects.Components.Kitchen
         }
 
 
-        private void Grind()
+        //Could maybe use an enum instead of the bool, but let's face it, we will only need a binary state.
+        /// <summary>
+        /// The wzhzhzh of the grinder.
+        /// </summary>
+        /// <param name="isJuiceMode">If user intends to juicce or grind the contents.</param>
+        private void Work(bool isJuiceMode)
         {
+            if(!Powered || _busy || ChamberEmpty)
+            {
+                return;
+            }
 
+            
         }
 
-        private void Juice()
-        {
-
-        }
     }
 }
