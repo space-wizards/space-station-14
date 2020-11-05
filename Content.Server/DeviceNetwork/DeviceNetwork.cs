@@ -11,7 +11,8 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
     {
         private const int PACKAGES_PER_TICK = 30;
 
-        private readonly IRobustRandom _random = IoCManager.Resolve<IRobustRandom>();
+        [Dependency] private readonly IRobustRandom _random = default!;
+
         private readonly Dictionary<int, List<NetworkDevice>> _devices = new Dictionary<int, List<NetworkDevice>>();
         private readonly Queue<NetworkPackage> _packages = new Queue<NetworkPackage>();
 
@@ -72,7 +73,7 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
                 Sender = sender,
                 Metadata = metadata
             };
-            
+
             _packages.Enqueue(package);
             return true;
         }
@@ -192,7 +193,6 @@ namespace Content.Server.GameObjects.EntitySystems.DeviceNetwork
             public IReadOnlyDictionary<string, string> Data { get; set; }
             public Metadata Metadata;
             public string Sender;
-
         }
     }
 }
