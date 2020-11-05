@@ -20,8 +20,7 @@ namespace Content.Server.GameObjects.Components.Mobs.State
 
             if (entity.TryGetComponent(out ServerStatusEffectsComponent status))
             {
-                status.ChangeStatusEffectIcon(StatusEffect.Health,
-                    "/Textures/Interface/StatusEffects/Human/humandead.png");
+                status.ChangeStatusEffectIcon("humandead");
             }
 
             if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlayComponent))

@@ -70,11 +70,11 @@ namespace Content.Server.GameObjects.Components.Nutrition
         }
 
 
-        public static readonly Dictionary<HungerThreshold, string> HungerThresholdImages = new Dictionary<HungerThreshold, string>
+        public static readonly Dictionary<HungerThreshold, string> HungerThresholdAlertIds = new Dictionary<HungerThreshold, string>
         {
-            { HungerThreshold.Overfed, "/Textures/Interface/StatusEffects/Hunger/Overfed.png" },
-            { HungerThreshold.Peckish, "/Textures/Interface/StatusEffects/Hunger/Peckish.png" },
-            { HungerThreshold.Starving, "/Textures/Interface/StatusEffects/Hunger/Starving.png" },
+            { HungerThreshold.Overfed, "overfed" },
+            { HungerThreshold.Peckish, "peckish" },
+            { HungerThreshold.Starving, "starving" },
         };
 
         public void HungerThresholdEffect(bool force = false)
@@ -91,9 +91,9 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 // Update UI
                 Owner.TryGetComponent(out ServerStatusEffectsComponent statusEffectsComponent);
 
-                if (HungerThresholdImages.TryGetValue(_currentHungerThreshold, out var statusTexture))
+                if (HungerThresholdAlertIds.TryGetValue(_currentHungerThreshold, out var alertId))
                 {
-                    statusEffectsComponent?.ChangeStatusEffectIcon(StatusEffect.Hunger, statusTexture);
+                    statusEffectsComponent?.ChangeStatusEffectIcon(alertId);
                 }
                 else
                 {

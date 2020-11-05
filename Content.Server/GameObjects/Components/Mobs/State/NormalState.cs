@@ -34,8 +34,7 @@ namespace Content.Server.GameObjects.Components.Mobs.State
 
             if (!entity.TryGetComponent(out IDamageableComponent damageable))
             {
-                status.ChangeStatusEffectIcon(StatusEffect.Health,
-                    "/Textures/Interface/StatusEffects/Human/human0.png");
+                status.ChangeStatusEffectIcon("human", 0);
                 return;
             }
 
@@ -49,10 +48,9 @@ namespace Content.Server.GameObjects.Components.Mobs.State
                         return;
                     }
 
-                    var modifier = (int) (ruinable.TotalDamage / (threshold / 7f));
+                    var modifier = (short) (ruinable.TotalDamage / (threshold / 7f));
 
-                    status.ChangeStatusEffectIcon(StatusEffect.Health,
-                        "/Textures/Interface/StatusEffects/Human/human" + modifier + ".png");
+                    status.ChangeStatusEffectIcon("human", modifier);
 
                     break;
                 }
@@ -63,10 +61,9 @@ namespace Content.Server.GameObjects.Components.Mobs.State
                         return;
                     }
 
-                    var modifier = (int) (damageable.TotalDamage / (threshold / 7f));
+                    var modifier = (short) (damageable.TotalDamage / (threshold / 7f));
 
-                    status.ChangeStatusEffectIcon(StatusEffect.Health,
-                        "/Textures/Interface/StatusEffects/Human/human" + modifier + ".png");
+                    status.ChangeStatusEffectIcon("human", modifier);
                     break;
                 }
             }

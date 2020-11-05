@@ -22,11 +22,21 @@ namespace Content.Shared.GameObjects.Components.Mobs
 
         public abstract IReadOnlyDictionary<StatusEffect, StatusEffectStatus> Statuses { get; }
 
-        public abstract void ChangeStatusEffectIcon(StatusEffect effect, string icon);
+        /// <summary>
+        /// Changes the status effect state without affecting the current cooldown
+        /// </summary>
+        /// <param name="statusEffectStateId">id of the statusEffectState to set</param>
+        /// <param name="severity">severity, if supported by the statusEffectState</param>
+        public abstract void ChangeStatusEffectIcon(string statusEffectStateId, short? severity = null);
 
-        public abstract void ChangeStatusEffect(StatusEffect effect, string icon, ValueTuple<TimeSpan, TimeSpan>? cooldown);
-
-        public abstract void ChangeStatusEffect(string statusEffectStateId, ValueTuple<TimeSpan, TimeSpan>? cooldown = null);
+        /// <summary>
+        /// Changes the status effect state
+        /// </summary>
+        /// <param name="statusEffectStateId">id of the statusEffectState to set</param>
+        /// <param name="severity">severity, if supported by the statusEffectState</param>
+        /// <param name="cooldown">cooldown start and end, if null there will be no cooldown (and it will
+        /// be erased if there is currently a cooldown for the status effect)</param>
+        public abstract void ChangeStatusEffect(string statusEffectStateId, short? severity = null, ValueTuple<TimeSpan, TimeSpan>? cooldown = null);
 
         public abstract void RemoveStatusEffect(StatusEffect effect);
     }
@@ -60,11 +70,8 @@ namespace Content.Shared.GameObjects.Components.Mobs
     [Serializable, NetSerializable]
     public struct StatusEffectStatus
     {
-        //TODO: remove
-        public string Icon;
         public int StatusEffectStateEncoded;
-        // -1 if no severity
-        public short Severity;
+        public short? Severity;
         public ValueTuple<TimeSpan, TimeSpan>? Cooldown;
     }
 

@@ -54,6 +54,24 @@ namespace Content.Shared.Status
         }
 
         /// <summary>
+        /// Tries to get the status effect state with the indicated id along with its encoding
+        /// </summary>
+        /// <returns>true if found</returns>
+        public bool TryGetWithEncoded(string statusEffectStateId, out StatusEffectStatePrototype statusEffectState, out int encoded)
+        {
+            if (_idToIndex.TryGetValue(statusEffectStateId, out var idx))
+            {
+                statusEffectState = _orderedStatusEffectStates[idx];
+                encoded = idx;
+                return true;
+            }
+
+            statusEffectState = null;
+            encoded = -1;
+            return false;
+        }
+
+        /// <summary>
         /// Tries to get the compact encoded representation of this status effect state
         /// </summary>
         /// <returns>true if successful</returns>
@@ -84,6 +102,23 @@ namespace Content.Shared.Status
 
             encoded = -1;
             return false;
+        }
+
+        /// <summary>
+        /// Tries to get the status effect state from the encoded representation
+        /// </summary>
+        /// <returns>true if successful</returns>
+        public bool TryDecode(int encodedStatusEffectState, out StatusEffectStatePrototype statusEffectState)
+        {
+            if (encodedStatusEffectState < 0 ||
+                encodedStatusEffectState >= _orderedStatusEffectStates.Length)
+            {
+                statusEffectState = null;
+                return false;
+            }
+
+            statusEffectState = _orderedStatusEffectStates[encodedStatusEffectState];
+            return true;
         }
     }
 }

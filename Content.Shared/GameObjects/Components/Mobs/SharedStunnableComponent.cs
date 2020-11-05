@@ -41,7 +41,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         protected float KnockdownTimer;
         protected float SlowdownTimer;
 
-        private string _stunTexture;
+        private string _stunAlertId;
 
         protected CancellationTokenSource StatusRemoveCancellation = new CancellationTokenSource();
 
@@ -197,7 +197,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
                 return;
             }
 
-            status.ChangeStatusEffect(StatusEffect.Stun, _stunTexture,
+            status.ChangeStatusEffect("stun", cooldown:
                 (StunStart == null || StunEnd == null) ? default : (StunStart.Value, StunEnd.Value));
             StatusRemoveCancellation.Cancel();
             StatusRemoveCancellation = new CancellationTokenSource();
@@ -212,8 +212,8 @@ namespace Content.Shared.GameObjects.Components.Mobs
             serializer.DataField(ref _slowdownCap, "slowdownCap", 20f);
             serializer.DataField(ref _helpInterval, "helpInterval", 1f);
             serializer.DataField(ref _helpKnockdownRemove, "helpKnockdownRemove", 1f);
-            serializer.DataField(ref _stunTexture, "stunTexture",
-                "/Textures/Objects/Weapons/Melee/stunbaton.rsi/stunbaton_off.png");
+            serializer.DataField(ref _stunAlertId, "stunAlertId",
+                "stun");
         }
 
         protected virtual void OnInteractHand() { }

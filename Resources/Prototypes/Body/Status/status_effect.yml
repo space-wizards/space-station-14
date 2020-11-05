@@ -3,5 +3,154 @@
   statusEffect: enum.StatusEffect.Pressure
   icon: /Textures/Interface/StatusEffects/Pressure/lowpressure.png
   maxSeverity: 2
-  tooltip:
+  name: Low Pressure
+  description: The air around you is hazardously thin. A space suit would protect you.
 
+- type: statusEffectState
+  id: highpressure
+  statusEffect: enum.StatusEffect.Pressure
+  icon: /Textures/Interface/StatusEffects/Pressure/highpressure.png
+  maxSeverity: 2
+  name: High Pressure
+  description: The air around you is hazardously thick. A fire suit would protect you.
+
+- type: statusEffectState
+  id: fire
+  statusEffect: enum.StatusEffect.Fire
+  icon: /Textures/Interface/StatusEffects/Fire/fire.png
+  name: On Fire
+  description: You're on fire. Stop, drop and roll to put the fire out or move to a vacuum area.
+
+- type: statusEffectState
+  id: cold
+  statusEffect: enum.StatusEffect.Temperature
+  icon: /Textures/Interface/StatusEffects/Temperature/cold.png
+  maxSeverity: 3
+  name: Too Cold
+  description: You're freezing cold! Get somewhere warmer and take off any insulating clothing like a space suit.
+
+- type: statusEffectState
+  id: hot
+  statusEffect: enum.StatusEffect.Temperature
+  icon: /Textures/Interface/StatusEffects/Temperature/hot.png
+  maxSeverity: 3
+  name: Too Hot
+  description: You're freezing cold! Get somewhere warmer and take off any insulating clothing like a space suit.
+
+- type: statusEffectState
+  id: weightless
+  statusEffect: enum.StatusEffect.Weightless
+  icon: /Textures/Interface/StatusEffects/Weightless/weightless.png
+  name: Weightless
+  description: >-
+    Gravity has ceased affecting you, and you're floating around aimlessly. You'll need something large and heavy, like a
+    wall or lattice, to push yourself off if you want to move. A jetpack would enable free range of motion. A pair of
+    magboots would let you walk around normally on the floor. Barring those, you can throw things, use a fire extinguisher,
+    or shoot a gun to move around via Newton's 3rd Law of Motion.
+
+- type: statusEffectState
+  id: stun
+  statusEffect: enum.StatusEffect.Stun
+  icon: /Textures/Objects/Weapons/Melee/stunbaton.rsi/stunbaton_off.png
+  name: Stunned
+  description: You're stunned! Wait for it to wear off.
+
+- type: statusEffectState
+  id: handcuffed
+  statusEffect: enum.StatusEffect.Cuffed
+  icon: /Textures/Interface/StatusEffects/Handcuffed/Handcuffed.png
+  name: Handcuffed
+  description: You're handcuffed and can't act. If anyone drags you, you won't be able to move. Click the alert to free yourself.
+
+- type: statusEffectState
+  id: buckled
+  statusEffect: enum.StatusEffect.Buckled
+  icon: /Textures/Interface/StatusEffects/Buckle/buckled.png
+  name: Buckled
+  description: You've been buckled to something. Click the alert to unbuckle unless you're handcuffed.
+
+- type: statusEffectState
+  id: humancrit
+  statusEffect: enum.StatusEffect.Health
+  icon: /Textures/Interface/StatusEffects/Human/humancrit-0.png
+  name: Critical Condition
+  description: You're severely injured and unconscious.
+
+- type: statusEffectState
+  id: humandead
+  statusEffect: enum.StatusEffect.Health
+  icon: /Textures/Interface/StatusEffects/Human/humandead.png
+  name: Dead
+  description: You're dead.
+
+- type: statusEffectState
+  id: health
+  statusEffect: enum.StatusEffect.Health
+  icon: /Textures/Interface/StatusEffects/Human/human.png
+  name: Health
+  description: Green good. Red bad.
+  minSeverity: 0
+  maxSeverity: 6
+
+- type: statusEffectState
+  id: pilotingshuttle
+  statusEffect: enum.StatusEffect.Piloting
+  icon: /Textures/Interface/StatusEffects/Buckle/buckled.png
+  name: Piloting Shuttle
+  description: You are piloting a shuttle.
+
+- type: statusEffectState
+  id: overfed
+  statusEffect: enum.StatusEffect.Hunger
+  icon: /Textures/Interface/StatusEffects/Hunger/Overfed.png
+  name: Overfed
+  description: You ate too much food, lardass. Run around the station and lose some weight.
+
+- type: statusEffectState
+  id: peckish
+  statusEffect: enum.StatusEffect.Hunger
+  icon: /Textures/Interface/StatusEffects/Hunger/Peckish.png
+  name: Peckish
+  description: Some food would be good right about now.
+
+- type: statusEffectState
+  id: starving
+  statusEffect: enum.StatusEffect.Hunger
+  icon: /Textures/Interface/StatusEffects/Hunger/Starving.png
+  name: Starving
+  description: You're severely malnourished. The hunger pains make moving around a chore.
+
+- type: statusEffectState
+  id: overhydrated
+  statusEffect: enum.StatusEffect.Thirst
+  icon: /Textures/Interface/StatusEffects/Thirst/OverHydrated.png
+  name: Overhydrated
+  description: You drank too much.
+
+- type: statusEffectState
+  id: thirsty
+  statusEffect: enum.StatusEffect.Thirst
+  icon: /Textures/Interface/StatusEffects/Thirst/Thirsty.png
+  name: Thirsty
+  description: Something to drink would be good right about now.
+
+- type: statusEffectState
+  id: parched
+  statusEffect: enum.StatusEffect.Thirst
+  icon: /Textures/Interface/StatusEffects/Thirst/Parched.png
+  name: Parched
+  description: You're severely thirsty. The thirst makes moving around a chore.
+
+- type: statusEffectState
+  id: pulled
+  statusEffect: enum.StatusEffect.Pulled
+  icon: /Textures/Interface/StatusEffects/Pull/pulled.png
+  name: Pulled
+  description: You're being pulled. Move to break free.
+
+- type: statusEffectState
+  id: pulling
+  statusEffect: enum.StatusEffect.Pulling
+  icon: /Textures/Interface/StatusEffects/Pull/pulling.png
+  name: Pulling
+  description: You're pulling something.

@@ -90,7 +90,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private void AddWeightless(ServerStatusEffectsComponent status)
         {
-            status.ChangeStatusEffect(StatusEffect.Weightless, "/Textures/Interface/StatusEffects/Weightless/weightless.png", null);
+            status.ChangeStatusEffect("weightless");
         }
 
         private void RemoveWeightless(ServerStatusEffectsComponent status)

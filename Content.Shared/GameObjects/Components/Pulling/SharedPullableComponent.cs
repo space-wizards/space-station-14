@@ -206,14 +206,12 @@ namespace Content.Shared.GameObjects.Components.Pulling
         {
             if (Owner.TryGetComponent(out SharedStatusEffectsComponent? pulledStatus))
             {
-                pulledStatus.ChangeStatusEffectIcon(StatusEffect.Pulled,
-                    "/Textures/Interface/StatusEffects/Pull/pulled.png");
+                pulledStatus.ChangeStatusEffectIcon("pulled");
             }
 
             if (puller.TryGetComponent(out SharedStatusEffectsComponent? ownerStatus))
             {
-                ownerStatus.ChangeStatusEffectIcon(StatusEffect.Pulling,
-                    "/Textures/Interface/StatusEffects/Pull/pulling.png");
+                ownerStatus.ChangeStatusEffectIcon("pulling");
             }
         }
 

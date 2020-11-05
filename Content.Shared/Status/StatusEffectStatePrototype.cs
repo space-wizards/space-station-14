@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.GameObjects.Components.Mobs;
+using Robust.Shared.Interfaces.Reflection;
+using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -16,6 +19,8 @@ namespace Content.Shared.Status
     [NetSerializable, Serializable, Prototype("statusEffectState")]
     public class StatusEffectStatePrototype : IPrototype
     {
+        private const string SerializationCache = "statusEffectState";
+
         private string _id;
         private string _icon;
         private StatusEffect _statusEffect;
@@ -31,9 +36,10 @@ namespace Content.Shared.Status
         public string ID => _id;
 
         /// <summary>
-        /// Path to the icon (png) to show in status window. If severity levels are supported,
+        /// Path to the icon (png) or  to show in status window. If severity levels are supported,
         /// this should be the path to the icon without the severity number
-        /// (i.e. hot.png if there is hot1.png and hot2.png).
+        /// (i.e. hot.png if there is hot1.png and hot2.png). Use <see cref="GetSpriteSpecifier"/>
+        /// to get the correct icon path for a particular severity level.
         /// </summary>
         [ViewVariables]
         public string IconPath => _icon;
@@ -83,6 +89,64 @@ namespace Content.Shared.Status
                 s => _name = FormattedMessage.FromMarkup(s));
             serializer.DataReadFunction("description", string.Empty,
                 s => _description = FormattedMessage.FromMarkup(s));
+
+            // TODO: kinda verbose and slightly duplicated in SharedStackComponent, refactor to a common method
+            if (serializer.TryReadDataFieldCached("statusEffect", out string raw))
+            {
+                var refl = IoCManager.Resolve<IReflectionManager>();
+                if (refl.TryParseEnumReference(raw, out var @enum))
+                {
+                    _statusEffect = (StatusEffect) @enum;
+                }
+                else
+                {
+                    Logger.WarningS("unable to parse StatusEffect in {0} from statusEffect: {1}", _id, raw);
+                    _statusEffect = StatusEffect.Error;
+                }
+            }
+            else
+            {
+                Logger.WarningS("no statusEffect defined for status effect state {0}", _id);
+                _statusEffect = StatusEffect.Error;
+            }
+        }
+
+        /// <param name="severity">severity level, if supported by this status effect state</param>
+        /// <returns>the icon path to the texture for the provided severity level</returns>
+        public string GetIconPath(short? severity = null)
+        {
+            if (!SupportsSeverity && severity != null)
+            {
+                Logger.WarningS("status", "attempted to get icon path for severity level for statusEffectState {0}, but" +
+                                          " this statusEffectState does not support severity levels", _id);
+            }
+            if (!SupportsSeverity) return _icon;
+            if (severity == null)
+            {
+                Logger.WarningS("status", "attempted to get icon path without severity level for statusEffectState {0}," +
+                                " but this statusEffectState requires a severity level. Using lowest" +
+                                " valid severity level instead...", _id);
+                severity = MinSeverity;
+            }
+
+            if (severity < MinSeverity)
+            {
+                Logger.WarningS("status", "attempted to get icon path with severity level {0} for statusEffectState {1}," +
+                                          " but the minimum severity level for this statusEffectState is {2}. Using" +
+                                          " lowest valid severity level instead...", severity, _id, MinSeverity);
+                severity = MinSeverity;
+            }
+            if (severity > MinSeverity)
+            {
+                Logger.WarningS("status", "attempted to get icon path with severity level {0} for statusEffectState {1}," +
+                                          " but the max severity level for this statusEffectState is {2}. Using" +
+                                          " highest valid severity level instead...", severity, _id, MaxSeverity);
+                severity = MaxSeverity;
+            }
+
+            // split and add the severity number to the path
+            var ext = _icon.LastIndexOf('.');
+            return _icon.Substring(0, ext) + severity + _icon.Substring(ext, _icon.Length - ext);
         }
     }
 }

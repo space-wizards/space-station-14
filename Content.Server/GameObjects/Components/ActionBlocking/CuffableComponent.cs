@@ -191,7 +191,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
                 }
                 else
                 {
-                    status.ChangeStatusEffectIcon(StatusEffect.Cuffed, "/Textures/Interface/StatusEffects/Handcuffed/Handcuffed.png");
+                    status.ChangeStatusEffectIcon("handcuffed");
                 }
             }
         }

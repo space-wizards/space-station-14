@@ -122,7 +122,7 @@ namespace Content.Server.GameObjects.Components.Buckle
             {
                 if (Buckled)
                 {
-                    _serverStatusEffectsComponent.ChangeStatusEffectIcon(StatusEffect.Buckled, BuckledTo!.BuckledIcon);
+                    _serverStatusEffectsComponent.ChangeStatusEffectIcon(BuckledTo?.BuckledAlertId);
                 }
                 else
                 {

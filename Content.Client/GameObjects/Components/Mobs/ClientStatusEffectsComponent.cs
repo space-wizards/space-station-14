@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.UserInterface;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Player;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
@@ -17,6 +19,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
+using Serilog;
 
 namespace Content.Client.GameObjects.Components.Mobs
 {
@@ -31,6 +34,10 @@ namespace Content.Client.GameObjects.Components.Mobs
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         private StatusEffectsUI _ui;
+        private PanelContainer _tooltip;
+        private RichTextLabel _stateName;
+        private RichTextLabel _stateDescription;
+
         [ViewVariables]
         private Dictionary<StatusEffect, StatusEffectStatus> _status = new Dictionary<StatusEffect, StatusEffectStatus>();
         [ViewVariables]
@@ -85,6 +92,21 @@ namespace Content.Client.GameObjects.Components.Mobs
             }
             _ui = new StatusEffectsUI();
             _userInterfaceManager.StateRoot.AddChild(_ui);
+            _tooltip = new PanelContainer
+            {
+                Visible = false,
+                StyleClasses = { StyleNano.StyleClassTooltipPanel }
+            };
+            var tooltipVBox = new VBoxContainer();
+            _tooltip.AddChild(tooltipVBox);
+            // TODO: Make slightly bigger
+            _stateName = new RichTextLabel();
+            tooltipVBox.AddChild(_stateName);
+            _stateDescription = new RichTextLabel();
+            tooltipVBox.AddChild(_stateDescription);
+
+            _userInterfaceManager.PopupRoot.AddChild(_tooltip);
+
             UpdateStatusEffects();
         }
 
@@ -93,24 +115,6 @@ namespace Content.Client.GameObjects.Components.Mobs
             _ui?.Dispose();
             _ui = null;
             _cooldown.Clear();
-        }
-
-        public override void ChangeStatusEffectIcon(StatusEffect effect, string icon)
-        {
-            if (_status.TryGetValue(effect, out var value) &&
-                value.Icon == icon)
-            {
-                return;
-            }
-
-            _status[effect] = new StatusEffectStatus
-            {
-                Icon = icon,
-                Cooldown = value.Cooldown,
-                StatusEffectStateEncoded = -1
-            };
-
-            Dirty();
         }
 
         public void UpdateStatusEffects()
@@ -124,11 +128,24 @@ namespace Content.Client.GameObjects.Components.Mobs
 
             foreach (var (key, effect) in _status.OrderBy(x => (int) x.Key))
             {
-                var texture = _resourceCache.GetTexture(effect.Icon);
-                var status = new StatusControl(key, texture)
+                if (!_statusEffectStateManager.TryDecode(effect.StatusEffectStateEncoded, out var statusEffectState))
                 {
-                    ToolTip = key.ToString()
+                    Logger.ErrorS("status", "Unable to decode status effect state {0}", effect.StatusEffectStateEncoded);
+                    continue;
+                }
+
+                var texture = _resourceCache.GetTexture(statusEffectState.GetIconPath(effect.Severity));
+                var status = new StatusControl(key, texture);
+                // show custom tooltip for the status control
+                status.OnShowTooltip += (sender, args) =>
+                {
+                    _stateName.SetMessage(statusEffectState.Name);
+                    _stateDescription.SetMessage(statusEffectState.Description);
+                    // TODO: Text display of cooldown
+                    _tooltip.Visible = true;
+                    Tooltips.PositionTooltip(_tooltip);
                 };
+                status.OnHideTooltip += StatusOnOnHideTooltip;
 
                 if (effect.Cooldown.HasValue)
                 {
@@ -143,6 +160,11 @@ namespace Content.Client.GameObjects.Components.Mobs
             }
         }
 
+        private void StatusOnOnHideTooltip(object? sender, EventArgs e)
+        {
+            _tooltip.Visible = false;
+        }
+
         private void StatusPressed(BaseButton.ButtonEventArgs args, StatusControl status)
         {
             if (args.Event.Function != EngineKeyFunctions.UIClick)
@@ -151,17 +173,6 @@ namespace Content.Client.GameObjects.Components.Mobs
             }
 
             SendNetworkMessage(new ClickStatusMessage(status.Effect));
-        }
-
-        public override void RemoveStatusEffect(StatusEffect effect)
-        {
-            if (!_status.Remove(effect))
-            {
-                return;
-            }
-
-            UpdateStatusEffects();
-            Dirty();
         }
 
         public void FrameUpdate(float frameTime)
@@ -188,31 +199,55 @@ namespace Content.Client.GameObjects.Components.Mobs
             }
         }
 
-        public override void ChangeStatusEffect(StatusEffect effect, string icon, (TimeSpan, TimeSpan)? cooldown)
+        /// <inheritdoc />
+        public override void ChangeStatusEffectIcon(string statusEffectStateId, short? severity = null)
         {
-            _status[effect] = new StatusEffectStatus()
+            if (_statusEffectStateManager.TryGetWithEncoded(statusEffectStateId, out var statusEffectState,
+                out var encoded))
             {
-                Icon = icon,
-                Cooldown = cooldown,
-                StatusEffectStateEncoded = -1
-            };
+                if (_status.TryGetValue(statusEffectState.StatusEffect, out var value) &&
+                    value.StatusEffectStateEncoded == encoded)
+                {
+                    return;
+                }
+                _status[statusEffectState.StatusEffect] = new StatusEffectStatus
+                {
+                    Cooldown = value.Cooldown,
+                    StatusEffectStateEncoded = encoded,
+                    Severity = severity
+                };
 
-            Dirty();
+                Dirty();
+            }
+
+            Logger.ErrorS("status",
+                "Unable to set status effect state {0}, please ensure this is a valid statusEffectState",
+                statusEffectStateId);
         }
 
-        public override void ChangeStatusEffect(string statusEffectStateId, (TimeSpan, TimeSpan)? cooldown = null)
+        /// <inheritdoc />
+        public override void ChangeStatusEffect(string statusEffectStateId, short? severity = null, (TimeSpan, TimeSpan)? cooldown = null)
         {
-            if (_statusEffectStateManager.TryGet(statusEffectStateId, out var statusEffectState))
+            if (_statusEffectStateManager.TryGetWithEncoded(statusEffectStateId, out var statusEffectState, out var encoded))
             {
-                if (_statusEffectStateManager.TryEncode(statusEffectState, out var encoded))
-                {
-                    _status[statusEffectState.StatusEffect] = new StatusEffectStatus()
-                        {Icon = null, Cooldown = cooldown, StatusEffectStateEncoded = encoded};
-                    Dirty();
-                }
+                _status[statusEffectState.StatusEffect] = new StatusEffectStatus()
+                    {Cooldown = cooldown, StatusEffectStateEncoded = encoded, Severity = severity};
+                Dirty();
+
             }
             Logger.ErrorS("status", "Unable to set status effect state {0}, please ensure this is a valid statusEffectState",
                 statusEffectStateId);
+        }
+
+        public override void RemoveStatusEffect(StatusEffect effect)
+        {
+            if (!_status.Remove(effect))
+            {
+                return;
+            }
+
+            UpdateStatusEffects();
+            Dirty();
         }
     }
 }

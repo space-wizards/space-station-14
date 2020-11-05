@@ -19,8 +19,7 @@ namespace Content.Server.GameObjects.Components.Mobs.State
 
             if (entity.TryGetComponent(out ServerStatusEffectsComponent status))
             {
-                status.ChangeStatusEffectIcon(StatusEffect.Health,
-                    "/Textures/Interface/StatusEffects/Human/humancrit-0.png"); //Todo: combine humancrit-0 and humancrit-1 into a gif and display it
+                status.ChangeStatusEffectIcon("humancrit"); //Todo: combine humancrit-0 and humancrit-1 into a gif and display it
             }
 
             if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlay))

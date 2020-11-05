@@ -80,17 +80,17 @@ namespace Content.Server.GameObjects.Components.Temperature
                 {
                     // Cold strong.
                     case var t when t <= 260:
-                        status.ChangeStatusEffect(StatusEffect.Temperature, "/Textures/Interface/StatusEffects/Temperature/cold3.png", null);
+                        status.ChangeStatusEffect("cold", 3);
                         break;
 
                     // Cold mild.
                     case var t when t <= 280 && t > 260:
-                        status.ChangeStatusEffect(StatusEffect.Temperature, "/Textures/Interface/StatusEffects/Temperature/cold2.png", null);
+                        status.ChangeStatusEffect("cold", 2);
                         break;
 
                     // Cold weak.
                     case var t when t <= 292 && t > 280:
-                        status.ChangeStatusEffect(StatusEffect.Temperature, "/Textures/Interface/StatusEffects/Temperature/cold1.png", null);
+                        status.ChangeStatusEffect("cold", 1);
                         break;
 
                     // Safe.
@@ -100,17 +100,17 @@ namespace Content.Server.GameObjects.Components.Temperature
 
                     // Heat weak.
                     case var t when t <= 335 && t > 327:
-                        status.ChangeStatusEffect(StatusEffect.Temperature, "/Textures/Interface/StatusEffects/Temperature/hot1.png", null);
+                        status.ChangeStatusEffect("hot", 1);
                         break;
 
                     // Heat mild.
                     case var t when t <= 345 && t > 335:
-                        status.ChangeStatusEffect(StatusEffect.Temperature, "/Textures/Interface/StatusEffects/Temperature/hot2.png", null);
+                        status.ChangeStatusEffect("hot", 2);
                         break;
 
                     // Heat strong.
                     case var t when t > 345:
-                        status.ChangeStatusEffect(StatusEffect.Temperature, "/Textures/Interface/StatusEffects/Temperature/hot3.png", null);
+                        status.ChangeStatusEffect("hot", 3);
                         break;
                 }
             }

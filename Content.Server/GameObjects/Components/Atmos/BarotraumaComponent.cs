@@ -50,11 +50,11 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                     if (pressure <= Atmospherics.HazardLowPressure)
                     {
-                        status.ChangeStatusEffect(StatusEffect.Pressure, "/Textures/Interface/StatusEffects/Pressure/lowpressure2.png", null);
+                        status.ChangeStatusEffect("lowpressure", 2);
                         break;
                     }
 
-                    status.ChangeStatusEffect(StatusEffect.Pressure, "/Textures/Interface/StatusEffects/Pressure/lowpressure1.png", null);
+                    status.ChangeStatusEffect("lowpressure", 1);
                     break;
 
                 // High pressure.
@@ -72,11 +72,11 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                     if (pressure >= Atmospherics.HazardHighPressure)
                     {
-                        status.ChangeStatusEffect(StatusEffect.Pressure, "/Textures/Interface/StatusEffects/Pressure/highpressure2.png", null);
+                        status.ChangeStatusEffect("highpressure", 2);
                         break;
                     }
 
-                    status.ChangeStatusEffect(StatusEffect.Pressure, "/Textures/Interface/StatusEffects/Pressure/highpressure1.png", null);
+                    status.ChangeStatusEffect("highpressure", 1);
                     break;
 
                 // Normal pressure.

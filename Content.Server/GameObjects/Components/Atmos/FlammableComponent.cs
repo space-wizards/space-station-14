@@ -101,7 +101,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 return;
             }
 
-            status?.ChangeStatusEffect(StatusEffect.Fire, "/Textures/Interface/StatusEffects/Fire/fire.png", null);
+            status.ChangeStatusEffect("fire");
 
             if (FireStacks > 0)
             {

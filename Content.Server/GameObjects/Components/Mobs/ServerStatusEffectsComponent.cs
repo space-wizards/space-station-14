@@ -47,51 +47,33 @@ namespace Content.Server.GameObjects.Components.Mobs
             return new StatusEffectComponentState(_statusEffects);
         }
 
-        public override void ChangeStatusEffectIcon(StatusEffect effect, string icon)
+        /// <inheritdoc />
+        public override void ChangeStatusEffectIcon(string statusEffectStateId, short? severity = null)
         {
-            if (_statusEffects.TryGetValue(effect, out var value) && value.Icon == icon)
+            if (_statusEffectStateManager.TryGetWithEncoded(statusEffectStateId, out var statusEffectState, out var encoded))
             {
-                return;
-            }
-
-            _statusEffects[effect] = new StatusEffectStatus()
-                {Icon = icon, Cooldown = value.Cooldown, StatusEffectStateEncoded = -1};
-            Dirty();
-        }
-
-        public void ChangeStatusEffectCooldown(StatusEffect effect, ValueTuple<TimeSpan, TimeSpan> cooldown)
-        {
-            if (_statusEffects.TryGetValue(effect, out var value)
-                && value.Cooldown == cooldown)
-            {
-                return;
-            }
-
-            _statusEffects[effect] = new StatusEffectStatus()
-            {
-                Icon = value.Icon, Cooldown = cooldown, StatusEffectStateEncoded = value.StatusEffectStateEncoded
-            };
-            Dirty();
-        }
-
-        public override void ChangeStatusEffect(StatusEffect effect, string icon, ValueTuple<TimeSpan, TimeSpan>? cooldown)
-        {
-            _statusEffects[effect] = new StatusEffectStatus()
-                {Icon = icon, Cooldown = cooldown, StatusEffectStateEncoded = -1};
-
-            Dirty();
-        }
-
-        public override void ChangeStatusEffect(string statusEffectStateId, (TimeSpan, TimeSpan)? cooldown = null)
-        {
-            if (_statusEffectStateManager.TryGet(statusEffectStateId, out var statusEffectState))
-            {
-                if (_statusEffectStateManager.TryEncode(statusEffectState, out var encoded))
+                if (_statusEffects.TryGetValue(statusEffectState.StatusEffect, out var value) && value.StatusEffectStateEncoded == encoded)
                 {
-                    _statusEffects[statusEffectState.StatusEffect] = new StatusEffectStatus()
-                        {Icon = null, Cooldown = cooldown, StatusEffectStateEncoded = encoded};
-                    Dirty();
+                    return;
                 }
+
+                _statusEffects[statusEffectState.StatusEffect] = new StatusEffectStatus()
+                    { Cooldown = value.Cooldown, StatusEffectStateEncoded = encoded, Severity = severity};
+                Dirty();
+            }
+
+            Logger.ErrorS("status", "Unable to set status effect state {0}, please ensure this is a valid statusEffectState",
+                statusEffectStateId);
+        }
+
+        /// <inheritdoc />
+        public override void ChangeStatusEffect(string statusEffectStateId, short? severity = null, (TimeSpan, TimeSpan)? cooldown = null)
+        {
+            if (_statusEffectStateManager.TryGetWithEncoded(statusEffectStateId, out var statusEffectState, out var encoded))
+            {
+                _statusEffects[statusEffectState.StatusEffect] = new StatusEffectStatus()
+                    {Cooldown = cooldown, StatusEffectStateEncoded = encoded, Severity = severity};
+                Dirty();
             }
             Logger.ErrorS("status", "Unable to set status effect state {0}, please ensure this is a valid statusEffectState",
                 statusEffectStateId);

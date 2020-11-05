@@ -16,6 +16,7 @@ namespace Content.Client.UserInterface
 
         private PanelContainer _panelContainer;
 
+
         public StatusEffectsUI()
         {
             _panelContainer = new PanelContainer

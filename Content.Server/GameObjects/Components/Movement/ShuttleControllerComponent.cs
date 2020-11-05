@@ -31,9 +31,9 @@ namespace Content.Server.GameObjects.Components.Movement
         private bool _movingRight;
 
         /// <summary>
-        ///     The icon to be displayed when piloting from this chair.
+        ///     ID of the alert to show when piloting
         /// </summary>
-        private string _pilotingIcon = default!;
+        private string _pilotingAlertId = default!;
 
         /// <summary>
         ///     The entity that's currently controlling this component.
@@ -145,7 +145,7 @@ namespace Content.Server.GameObjects.Components.Movement
             mind.Mind.Visit(Owner);
             _controller = entity;
 
-            status.ChangeStatusEffectIcon(StatusEffect.Piloting, _pilotingIcon);
+            status.ChangeStatusEffectIcon(_pilotingAlertId);
         }
 
         /// <summary>
@@ -211,7 +211,7 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(ref _pilotingIcon, "pilotingIcon", "/Textures/Interface/StatusEffects/Buckle/buckled.png");
+            serializer.DataField(ref _pilotingAlertId, "pilotingAlertId", "pilotingshuttle");
         }
 
         public override void Initialize()

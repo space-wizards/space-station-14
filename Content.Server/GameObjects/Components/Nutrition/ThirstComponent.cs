@@ -62,11 +62,11 @@ namespace Content.Server.GameObjects.Components.Nutrition
             {ThirstThreshold.Dead, 0.0f},
         };
 
-        public static readonly Dictionary<ThirstThreshold, string> ThirstThresholdImages = new Dictionary<ThirstThreshold, string>
+        public static readonly Dictionary<ThirstThreshold, string> ThirstThresholdAlertIds = new Dictionary<ThirstThreshold, string>
         {
-            {ThirstThreshold.OverHydrated, "/Textures/Interface/StatusEffects/Thirst/OverHydrated.png"},
-            {ThirstThreshold.Thirsty, "/Textures/Interface/StatusEffects/Thirst/Thirsty.png"},
-            {ThirstThreshold.Parched, "/Textures/Interface/StatusEffects/Thirst/Parched.png"},
+            {ThirstThreshold.OverHydrated, "overhydrated"},
+            {ThirstThreshold.Thirsty, "thirsty"},
+            {ThirstThreshold.Parched, "parched"},
         };
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -89,9 +89,9 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 // Update UI
                 Owner.TryGetComponent(out ServerStatusEffectsComponent statusEffectsComponent);
 
-                if (ThirstThresholdImages.TryGetValue(_currentThirstThreshold, out var statusTexture))
+                if (ThirstThresholdAlertIds.TryGetValue(_currentThirstThreshold, out var alertId))
                 {
-                    statusEffectsComponent?.ChangeStatusEffectIcon(StatusEffect.Thirst, statusTexture);
+                    statusEffectsComponent?.ChangeStatusEffectIcon(alertId);
                 }
                 else
                 {
