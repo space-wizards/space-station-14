@@ -1,4 +1,3 @@
-﻿#nullable enable
 using Content.Server.Interfaces;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.IoC;
