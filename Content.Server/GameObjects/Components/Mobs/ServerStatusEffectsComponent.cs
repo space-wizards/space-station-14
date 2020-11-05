@@ -61,9 +61,13 @@ namespace Content.Server.GameObjects.Components.Mobs
                     { Cooldown = value.Cooldown, StatusEffectStateEncoded = encoded, Severity = severity};
                 Dirty();
             }
+            else
+            {
+                Logger.ErrorS("status", "Unable to set status effect state {0}, please ensure this is a valid statusEffectState",
+                    statusEffectStateId);
+            }
 
-            Logger.ErrorS("status", "Unable to set status effect state {0}, please ensure this is a valid statusEffectState",
-                statusEffectStateId);
+
         }
 
         /// <inheritdoc />
@@ -75,8 +79,11 @@ namespace Content.Server.GameObjects.Components.Mobs
                     {Cooldown = cooldown, StatusEffectStateEncoded = encoded, Severity = severity};
                 Dirty();
             }
-            Logger.ErrorS("status", "Unable to set status effect state {0}, please ensure this is a valid statusEffectState",
-                statusEffectStateId);
+            else
+            {
+                Logger.ErrorS("status", "Unable to set status effect state {0}, please ensure this is a valid statusEffectState",
+                    statusEffectStateId);
+            }
         }
 
         public override void RemoveStatusEffect(StatusEffect effect)

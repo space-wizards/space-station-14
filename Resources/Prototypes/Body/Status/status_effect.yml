@@ -3,39 +3,39 @@
   statusEffect: enum.StatusEffect.Pressure
   icon: /Textures/Interface/StatusEffects/Pressure/lowpressure.png
   maxSeverity: 2
-  name: Low Pressure
-  description: The air around you is hazardously thin. A space suit would protect you.
+  name: "[color=red]Low Pressure[/color]"
+  description: "The air around you is [color=red]hazardously thin[/color]. A [color=green]space suit[/color] would protect you."
 
 - type: statusEffectState
   id: highpressure
   statusEffect: enum.StatusEffect.Pressure
   icon: /Textures/Interface/StatusEffects/Pressure/highpressure.png
   maxSeverity: 2
-  name: High Pressure
-  description: The air around you is hazardously thick. A fire suit would protect you.
+  name: "[color=red]High Pressure[/color]"
+  description: "The air around you is [color=red]hazardously thick[/color]. A [color=green]fire suit[/color] would protect you."
 
 - type: statusEffectState
   id: fire
   statusEffect: enum.StatusEffect.Fire
   icon: /Textures/Interface/StatusEffects/Fire/fire.png
-  name: On Fire
-  description: You're on fire. Stop, drop and roll to put the fire out or move to a vacuum area.
+  name: "[color=red]On Fire[/color]"
+  description: "You're [color=red]on fire[/color]. Stop, drop and roll to put the fire out or move to a vacuum area."
 
 - type: statusEffectState
   id: cold
   statusEffect: enum.StatusEffect.Temperature
   icon: /Textures/Interface/StatusEffects/Temperature/cold.png
   maxSeverity: 3
-  name: Too Cold
-  description: You're freezing cold! Get somewhere warmer and take off any insulating clothing like a space suit.
+  name: "[color=cyan]Too Cold[/color]"
+  description: "You're [color=cyan]freezing cold![/color] Get somewhere warmer and take off any insulating clothing like a space suit."
 
 - type: statusEffectState
   id: hot
   statusEffect: enum.StatusEffect.Temperature
   icon: /Textures/Interface/StatusEffects/Temperature/hot.png
   maxSeverity: 3
-  name: Too Hot
-  description: You're freezing cold! Get somewhere warmer and take off any insulating clothing like a space suit.
+  name: "[color=red]Too Hot[/color]"
+  description: "It's [color=red]too hot![/color] Flee to space or at least away from the flames. Standing on weeds will heal you."
 
 - type: statusEffectState
   id: weightless
@@ -52,29 +52,29 @@
   id: stun
   statusEffect: enum.StatusEffect.Stun
   icon: /Textures/Objects/Weapons/Melee/stunbaton.rsi/stunbaton_off.png
-  name: Stunned
-  description: You're stunned! Wait for it to wear off.
+  name: "[color=yellow]Stunned[/color]"
+  description: "You're [color=yellow]stunned[/color]! Wait for it to wear off."
 
 - type: statusEffectState
   id: handcuffed
   statusEffect: enum.StatusEffect.Cuffed
   icon: /Textures/Interface/StatusEffects/Handcuffed/Handcuffed.png
-  name: Handcuffed
-  description: You're handcuffed and can't act. If anyone drags you, you won't be able to move. Click the alert to free yourself.
+  name: "[color=yellow]Handcuffed[/color]"
+  description: "You're [color=yellow]handcuffed[/color] and can't act. If anyone drags you, you won't be able to move. Click the alert to free yourself."
 
 - type: statusEffectState
   id: buckled
   statusEffect: enum.StatusEffect.Buckled
   icon: /Textures/Interface/StatusEffects/Buckle/buckled.png
-  name: Buckled
-  description: You've been buckled to something. Click the alert to unbuckle unless you're handcuffed.
+  name: "[color=yellow]Buckled[/color]"
+  description: "You've been [color=yellow]buckled[/color] to something. Click the alert to unbuckle unless you're [color=yellow]handcuffed.[/color]"
 
 - type: statusEffectState
   id: humancrit
   statusEffect: enum.StatusEffect.Health
   icon: /Textures/Interface/StatusEffects/Human/humancrit-0.png
-  name: Critical Condition
-  description: You're severely injured and unconscious.
+  name: "[color=red]Critical Condition[/color]"
+  description: "You're severely injured and unconscious."
 
 - type: statusEffectState
   id: humandead
@@ -88,7 +88,7 @@
   statusEffect: enum.StatusEffect.Health
   icon: /Textures/Interface/StatusEffects/Human/human.png
   name: Health
-  description: Green good. Red bad.
+  description: "[color=green]Green[/color] good. [color=red]Red[/color] bad."
   minSeverity: 0
   maxSeverity: 6
 
@@ -103,42 +103,42 @@
   id: overfed
   statusEffect: enum.StatusEffect.Hunger
   icon: /Textures/Interface/StatusEffects/Hunger/Overfed.png
-  name: Overfed
+  name: "[color=yellow]Overfed[/color]"
   description: You ate too much food, lardass. Run around the station and lose some weight.
 
 - type: statusEffectState
   id: peckish
   statusEffect: enum.StatusEffect.Hunger
   icon: /Textures/Interface/StatusEffects/Hunger/Peckish.png
-  name: Peckish
+  name: "[color=yellow]Peckish[/color]"
   description: Some food would be good right about now.
 
 - type: statusEffectState
   id: starving
   statusEffect: enum.StatusEffect.Hunger
   icon: /Textures/Interface/StatusEffects/Hunger/Starving.png
-  name: Starving
+  name: "[color=red]Starving[/color]"
   description: You're severely malnourished. The hunger pains make moving around a chore.
 
 - type: statusEffectState
   id: overhydrated
   statusEffect: enum.StatusEffect.Thirst
   icon: /Textures/Interface/StatusEffects/Thirst/OverHydrated.png
-  name: Overhydrated
+  name: "[color=yellow]Overhydrated[/color]"
   description: You drank too much.
 
 - type: statusEffectState
   id: thirsty
   statusEffect: enum.StatusEffect.Thirst
   icon: /Textures/Interface/StatusEffects/Thirst/Thirsty.png
-  name: Thirsty
+  name: "[color=yellow]Thirsty[/color]"
   description: Something to drink would be good right about now.
 
 - type: statusEffectState
   id: parched
   statusEffect: enum.StatusEffect.Thirst
   icon: /Textures/Interface/StatusEffects/Thirst/Parched.png
-  name: Parched
+  name: "[color=red]Parched[/color]"
   description: You're severely thirsty. The thirst makes moving around a chore.
 
 - type: statusEffectState

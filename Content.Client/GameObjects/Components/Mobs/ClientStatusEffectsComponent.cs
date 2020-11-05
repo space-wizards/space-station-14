@@ -28,6 +28,8 @@ namespace Content.Client.GameObjects.Components.Mobs
     [ComponentReference(typeof(SharedStatusEffectsComponent))]
     public sealed class ClientStatusEffectsComponent : SharedStatusEffectsComponent
     {
+        private static readonly float TooltipTextMaxWidth = 265;
+
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
@@ -97,12 +99,22 @@ namespace Content.Client.GameObjects.Components.Mobs
                 Visible = false,
                 StyleClasses = { StyleNano.StyleClassTooltipPanel }
             };
-            var tooltipVBox = new VBoxContainer();
+            var tooltipVBox = new VBoxContainer
+            {
+                RectClipContent = true
+            };
             _tooltip.AddChild(tooltipVBox);
-            // TODO: Make slightly bigger
-            _stateName = new RichTextLabel();
+            _stateName = new RichTextLabel
+            {
+                MaxWidth = TooltipTextMaxWidth,
+                StyleClasses = { StyleNano.StyleClassTooltipAlertTitle }
+            };
             tooltipVBox.AddChild(_stateName);
-            _stateDescription = new RichTextLabel();
+            _stateDescription = new RichTextLabel
+            {
+                MaxWidth = TooltipTextMaxWidth,
+                StyleClasses = { StyleNano.StyleClassTooltipAlertDescription }
+            };
             tooltipVBox.AddChild(_stateDescription);
 
             _userInterfaceManager.PopupRoot.AddChild(_tooltip);
@@ -139,10 +151,10 @@ namespace Content.Client.GameObjects.Components.Mobs
                 // show custom tooltip for the status control
                 status.OnShowTooltip += (sender, args) =>
                 {
+                    _tooltip.Visible = true;
                     _stateName.SetMessage(statusEffectState.Name);
                     _stateDescription.SetMessage(statusEffectState.Description);
                     // TODO: Text display of cooldown
-                    _tooltip.Visible = true;
                     Tooltips.PositionTooltip(_tooltip);
                 };
                 status.OnHideTooltip += StatusOnOnHideTooltip;
@@ -219,10 +231,13 @@ namespace Content.Client.GameObjects.Components.Mobs
 
                 Dirty();
             }
+            else
+            {
+                Logger.ErrorS("status",
+                    "Unable to set status effect state {0}, please ensure this is a valid statusEffectState",
+                    statusEffectStateId);
+            }
 
-            Logger.ErrorS("status",
-                "Unable to set status effect state {0}, please ensure this is a valid statusEffectState",
-                statusEffectStateId);
         }
 
         /// <inheritdoc />
@@ -235,8 +250,11 @@ namespace Content.Client.GameObjects.Components.Mobs
                 Dirty();
 
             }
-            Logger.ErrorS("status", "Unable to set status effect state {0}, please ensure this is a valid statusEffectState",
-                statusEffectStateId);
+            else
+            {
+                Logger.ErrorS("status", "Unable to set status effect state {0}, please ensure this is a valid statusEffectState",
+                    statusEffectStateId);
+            }
         }
 
         public override void RemoveStatusEffect(StatusEffect effect)

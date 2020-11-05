@@ -135,7 +135,7 @@ namespace Content.Shared.Status
                                           " lowest valid severity level instead...", severity, _id, MinSeverity);
                 severity = MinSeverity;
             }
-            if (severity > MinSeverity)
+            if (severity > MaxSeverity)
             {
                 Logger.WarningS("status", "attempted to get icon path with severity level {0} for statusEffectState {1}," +
                                           " but the max severity level for this statusEffectState is {2}. Using" +

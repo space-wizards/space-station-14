@@ -14,7 +14,9 @@ namespace Content.Client.UserInterface.Stylesheets
     public sealed class StyleNano : StyleBase
     {
         public const string StyleClassBorderedWindowPanel = "BorderedWindowPanel";
-        public const string StyleClassTooltipPanel = "TooltipPanel";
+        public const string StyleClassTooltipPanel = "tooltipBox";
+        public const string StyleClassTooltipAlertTitle = "tooltipAlertTitle";
+        public const string StyleClassTooltipAlertDescription = "tooltipAlertDesc";
 
         public const string StyleClassSliderRed = "Red";
         public const string StyleClassSliderGreen = "Green";
@@ -480,13 +482,8 @@ namespace Content.Client.UserInterface.Stylesheets
                 {
                     new StyleProperty(PanelContainer.StylePropertyPanel, tooltipBox)
                 }),
-                // allows selecting tooltip style by style class instead of type
-                new StyleRule(new SelectorElement(typeof(PanelContainer), new [] { StyleClassTooltipPanel }, null, null), new[]
-                {
-                    new StyleProperty(PanelContainer.StylePropertyPanel, tooltipBox)
-                }),
 
-                new StyleRule(new SelectorElement(typeof(PanelContainer), new[] {"tooltipBox"}, null, null), new[]
+                new StyleRule(new SelectorElement(typeof(PanelContainer), new [] { StyleClassTooltipPanel }, null, null), new[]
                 {
                     new StyleProperty(PanelContainer.StylePropertyPanel, tooltipBox)
                 }),
@@ -502,6 +499,16 @@ namespace Content.Client.UserInterface.Stylesheets
                     new[]
                 {
                     new StyleProperty("font", notoSansItalic12),
+                }),
+
+                // alert tooltip
+                new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassTooltipAlertTitle}, null, null), new[]
+                {
+                    new StyleProperty("font", notoSansBold16)
+                }),
+                new StyleRule(new SelectorElement(typeof(RichTextLabel), new[] {StyleClassTooltipAlertDescription}, null, null), new[]
+                {
+                    new StyleProperty("font", notoSans12)
                 }),
 
                 // Entity tooltip
