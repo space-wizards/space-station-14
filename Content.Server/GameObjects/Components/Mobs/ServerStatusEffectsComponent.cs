@@ -52,7 +52,8 @@ namespace Content.Server.GameObjects.Components.Mobs
         {
             if (_statusEffectStateManager.TryGetWithEncoded(statusEffectStateId, out var statusEffectState, out var encoded))
             {
-                if (_statusEffects.TryGetValue(statusEffectState.StatusEffect, out var value) && value.StatusEffectStateEncoded == encoded)
+                if (_statusEffects.TryGetValue(statusEffectState.StatusEffect, out var value) && value.StatusEffectStateEncoded == encoded
+                    && value.Severity == severity)
                 {
                     return;
                 }
@@ -75,6 +76,12 @@ namespace Content.Server.GameObjects.Components.Mobs
         {
             if (_statusEffectStateManager.TryGetWithEncoded(statusEffectStateId, out var statusEffectState, out var encoded))
             {
+                if (_statusEffects.TryGetValue(statusEffectState.StatusEffect, out var value) && value.StatusEffectStateEncoded == encoded
+                    && value.Severity == severity && value.Cooldown == cooldown)
+                {
+                    return;
+                }
+
                 _statusEffects[statusEffectState.StatusEffect] = new StatusEffectStatus()
                     {Cooldown = cooldown, StatusEffectStateEncoded = encoded, Severity = severity};
                 Dirty();
