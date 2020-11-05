@@ -81,7 +81,6 @@ namespace Content.Shared.Status
             var serializer = YamlObjectSerializer.NewReader(mapping);
 
             serializer.DataField(ref _id, "id", string.Empty);
-            serializer.DataField(ref _statusEffect, "statusEffect", StatusEffect.Error);
             serializer.DataField(ref _icon, "icon", string.Empty);
             serializer.DataField(ref _maxSeverity, "maxSeverity", (short) -1);
             serializer.DataField(ref _minSeverity, "minSeverity", (short) 1);

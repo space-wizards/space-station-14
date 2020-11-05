@@ -84,7 +84,7 @@
   description: You're dead.
 
 - type: statusEffectState
-  id: health
+  id: humanhealth
   statusEffect: enum.StatusEffect.Health
   icon: /Textures/Interface/StatusEffects/Human/human.png
   name: Health

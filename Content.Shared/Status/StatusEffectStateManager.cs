@@ -26,6 +26,7 @@ namespace Content.Shared.Status
             _orderedStatusEffectStates =
                 _prototypeManager.EnumeratePrototypes<StatusEffectStatePrototype>()
                     .OrderBy(prototype => prototype.ID).ToArray();
+            _idToIndex = new Dictionary<string, int>();
 
             for (var i = 0; i < _orderedStatusEffectStates.Length; i++)
             {

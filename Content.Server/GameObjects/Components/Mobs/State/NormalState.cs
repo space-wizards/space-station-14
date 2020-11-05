@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Mobs.State
 
             if (!entity.TryGetComponent(out IDamageableComponent damageable))
             {
-                status.ChangeStatusEffectIcon("human", 0);
+                status.ChangeStatusEffectIcon("humanhealth", 0);
                 return;
             }
 
@@ -50,7 +50,7 @@ namespace Content.Server.GameObjects.Components.Mobs.State
 
                     var modifier = (short) (ruinable.TotalDamage / (threshold / 7f));
 
-                    status.ChangeStatusEffectIcon("human", modifier);
+                    status.ChangeStatusEffectIcon("humanhealth", modifier);
 
                     break;
                 }
@@ -63,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Mobs.State
 
                     var modifier = (short) (damageable.TotalDamage / (threshold / 7f));
 
-                    status.ChangeStatusEffectIcon("human", modifier);
+                    status.ChangeStatusEffectIcon("humanhealth", modifier);
                     break;
                 }
             }
