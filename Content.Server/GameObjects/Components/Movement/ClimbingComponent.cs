@@ -1,6 +1,9 @@
-﻿using Content.Shared.GameObjects.Components.Movement;
+﻿#nullable enable
+using Content.Shared.GameObjects.Components.Buckle;
+using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
 
 namespace Content.Server.GameObjects.Components.Movement
@@ -8,8 +11,8 @@ namespace Content.Server.GameObjects.Components.Movement
     [RegisterComponent]
     public class ClimbingComponent : SharedClimbingComponent
     {
-        private bool _isClimbing = false;
-        private ClimbController _climbController = default;
+        private bool _isClimbing;
+        private ClimbController? _climbController;
 
         public override bool IsClimbing
         {
@@ -26,6 +29,19 @@ namespace Content.Server.GameObjects.Components.Movement
 
                 _isClimbing = value;
                 Dirty();
+            }
+        }
+
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+            switch (message)
+            {
+                case BuckleMessage msg:
+                    if (msg.Buckled)
+                        IsClimbing = false;
+
+                    break;
             }
         }
 
