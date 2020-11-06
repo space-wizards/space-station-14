@@ -63,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Buckle
         private TimeSpan _buckleTime;
 
         /// <summary>
-        ///     The offset to apply to this entity when it is buckled.
+        ///     The position offset that is being applied to this entity if buckled.
         /// </summary>
         public Vector2 BuckleOffset { get; private set; }
 
