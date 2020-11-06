@@ -302,7 +302,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 human.Transform.LocalPosition += (100, 0);
             });
 
-            await WaitUntil(server, () => !buckle.Buckled, maxTicks: 10);
+            await WaitUntil(server, () => !buckle.Buckled, 10);
 
             Assert.False(buckle.Buckled);
 

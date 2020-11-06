@@ -15,21 +15,16 @@ using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Utility;
-using NFluidsynth;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystemMessages;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.ComponentDependencies;
-using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -39,8 +34,6 @@ namespace Content.Server.GameObjects.Components.Buckle
     [RegisterComponent]
     public class BuckleComponent : SharedBuckleComponent, IInteractHand
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         [ComponentDependency] public readonly AppearanceComponent? AppearanceComponent = null;
@@ -69,7 +62,10 @@ namespace Content.Server.GameObjects.Components.Buckle
         [ViewVariables]
         private TimeSpan _buckleTime;
 
-        public Vector2? BuckleOffset { get; private set; }
+        /// <summary>
+        ///     The position offset that is being applied to this entity if buckled.
+        /// </summary>
+        public Vector2 BuckleOffset { get; private set; }
 
         private StrapComponent? _buckledTo;
 
@@ -92,20 +88,6 @@ namespace Content.Server.GameObjects.Components.Buckle
         public override bool Buckled => BuckledTo != null;
 
         /// <summary>
-        ///     True if the entity was inserted or removed from a container
-        ///     before updating, false otherwise.
-        /// </summary>
-        [ViewVariables]
-        private bool ContainerChanged { get; set; }
-
-        /// <summary>
-        ///     True if the entity was forcefully moved while buckled and should
-        ///     unbuckle next update, false otherwise
-        /// </summary>
-        [ViewVariables]
-        private bool Moved { get; set; }
-
-        /// <summary>
         ///     The amount of space that this entity occupies in a
         ///     <see cref="StrapComponent"/>.
         /// </summary>
@@ -116,18 +98,20 @@ namespace Content.Server.GameObjects.Components.Buckle
         ///     Shows or hides the buckled status effect depending on if the
         ///     entity is buckled or not.
         /// </summary>
-        private void BuckleStatus()
+        private void UpdateBuckleStatus()
         {
-            if (_serverStatusEffectsComponent != null)
+            if (_serverStatusEffectsComponent == null)
             {
-                if (Buckled)
-                {
-                    _serverStatusEffectsComponent.ChangeStatusEffectIcon(StatusEffect.Buckled, BuckledTo!.BuckledIcon);
-                }
-                else
-                {
-                    _serverStatusEffectsComponent.RemoveStatusEffect(StatusEffect.Buckled);
-                }
+                return;
+            }
+
+            if (Buckled)
+            {
+                _serverStatusEffectsComponent.ChangeStatusEffectIcon(StatusEffect.Buckled, BuckledTo!.BuckledIcon);
+            }
+            else
+            {
+                _serverStatusEffectsComponent.RemoveStatusEffect(StatusEffect.Buckled);
             }
         }
 
@@ -135,7 +119,7 @@ namespace Content.Server.GameObjects.Components.Buckle
         ///     Reattaches this entity to the strap, modifying its position and rotation.
         /// </summary>
         /// <param name="strap">The strap to reattach to.</param>
-        private void ReAttach(StrapComponent strap)
+        public void ReAttach(StrapComponent strap)
         {
             var ownTransform = Owner.Transform;
             var strapTransform = strap.Owner.Transform;
@@ -161,7 +145,7 @@ namespace Content.Server.GameObjects.Components.Buckle
             if (strapTransform.WorldRotation.GetCardinalDir() == Direction.North)
             {
                 BuckleOffset = (0, 0.15f);
-                ownTransform.WorldPosition = strapTransform.WorldPosition + BuckleOffset!.Value;
+                ownTransform.WorldPosition = strapTransform.WorldPosition + BuckleOffset;
             }
             else
             {
@@ -266,8 +250,7 @@ namespace Content.Server.GameObjects.Components.Buckle
                 return false;
             }
 
-            _entitySystem.GetEntitySystem<AudioSystem>()
-                .PlayFromEntity(strap.BuckleSound, Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity(strap.BuckleSound, Owner);
 
             if (!strap.TryAdd(this))
             {
@@ -283,7 +266,7 @@ namespace Content.Server.GameObjects.Components.Buckle
             BuckledTo = strap;
 
             ReAttach(strap);
-            BuckleStatus();
+            UpdateBuckleStatus();
 
             SendMessage(new BuckleMessage(Owner, to));
 
@@ -312,12 +295,12 @@ namespace Content.Server.GameObjects.Components.Buckle
         /// </returns>
         public bool TryUnbuckle(IEntity user, bool force = false)
         {
-            if (!Buckled)
+            if (BuckledTo == null)
             {
                 return false;
             }
 
-            StrapComponent oldBuckledTo = BuckledTo!;
+            var oldBuckledTo = BuckledTo;
 
             if (!force)
             {
@@ -357,16 +340,12 @@ namespace Content.Server.GameObjects.Components.Buckle
                 EntitySystem.Get<StandingStateSystem>().Standing(Owner);
             }
 
-            if (_mobStateManagerComponent != null)
-            {
-                _mobStateManagerComponent.CurrentMobState.EnterState(Owner);
-            }
+            _mobStateManagerComponent?.CurrentMobState.EnterState(Owner);
 
-            BuckleStatus();
+            UpdateBuckleStatus();
 
             oldBuckledTo.Remove(this);
-            _entitySystem.GetEntitySystem<AudioSystem>()
-                .PlayFromEntity(oldBuckledTo.UnbuckleSound, Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity(oldBuckledTo.UnbuckleSound, Owner);
 
             SendMessage(new UnbuckleMessage(Owner, oldBuckledTo.Owner));
 
@@ -397,90 +376,6 @@ namespace Content.Server.GameObjects.Components.Buckle
             return TryBuckle(user, to);
         }
 
-        /// <summary>
-        ///     Checks if a buckled entity should be unbuckled from moving
-        ///     too far from its strap.
-        /// </summary>
-        /// <param name="moveEvent">The move event of a buckled entity.</param>
-        public void OnMoveEvent(MoveEvent moveEvent)
-        {
-            if (moveEvent.Sender != Owner)
-            {
-                return;
-            }
-
-            if (BuckledTo == null || !BuckleOffset.HasValue)
-            {
-                return;
-            }
-
-            var bucklePosition = BuckledTo.Owner.Transform.Coordinates.Offset(BuckleOffset.Value);
-
-            if (moveEvent.NewPosition.InRange(_entityManager, bucklePosition, 0.2f))
-            {
-                return;
-            }
-
-            Moved = true;
-        }
-
-        /// <summary>
-        ///     Called when the owner is inserted or removed from a container,
-        ///     to synchronize the state of buckling.
-        /// </summary>
-        /// <param name="message">The message received</param>
-        private void InsertIntoContainer(ContainerModifiedMessage message)
-        {
-            if (message.Entity != Owner)
-            {
-                return;
-            }
-
-            ContainerChanged = true;
-        }
-
-        /// <summary>
-        ///     Synchronizes the state of buckling depending on whether the entity
-        ///     was inserted or removed from a container, and whether or not
-        ///     its current strap (if there is one) has also been put into or removed
-        ///     from the same container as well.
-        /// </summary>
-        public void Update()
-        {
-            if (BuckledTo == null)
-            {
-                return;
-            }
-
-            if (Moved)
-            {
-                TryUnbuckle(Owner, true);
-                Moved = false;
-                return;
-            }
-
-            if (!ContainerChanged)
-            {
-                return;
-            }
-
-            var contained = ContainerHelpers.TryGetContainer(Owner, out var ownContainer);
-            var strapContained = ContainerHelpers.TryGetContainer(BuckledTo.Owner, out var strapContainer);
-
-            if (contained != strapContained || ownContainer != strapContainer)
-            {
-                TryUnbuckle(Owner, true);
-                return;
-            }
-
-            if (!contained && !strapContained)
-            {
-                ReAttach(BuckledTo);
-            }
-
-            ContainerChanged = false;
-        }
-
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -494,32 +389,21 @@ namespace Content.Server.GameObjects.Components.Buckle
             _unbuckleDelay = TimeSpan.FromSeconds(seconds);
         }
 
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            _entityManager.EventBus.SubscribeEvent<EntInsertedIntoContainerMessage>(EventSource.Local, this, InsertIntoContainer);
-            _entityManager.EventBus.SubscribeEvent<EntRemovedFromContainerMessage>(EventSource.Local, this, InsertIntoContainer);
-        }
-
         protected override void Startup()
         {
             base.Startup();
-            BuckleStatus();
+            UpdateBuckleStatus();
         }
 
         public override void OnRemove()
         {
             base.OnRemove();
 
-            _entityManager.EventBus.UnsubscribeEvents(this);
-
             BuckledTo?.Remove(this);
-
             TryUnbuckle(Owner, true);
 
             _buckleTime = default;
-            BuckleStatus();
+            UpdateBuckleStatus();
         }
 
         public override ComponentState GetComponentState()
