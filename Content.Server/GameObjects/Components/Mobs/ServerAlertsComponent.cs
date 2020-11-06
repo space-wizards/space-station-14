@@ -65,7 +65,6 @@ namespace Content.Server.GameObjects.Components.Mobs
                     }
 
                     // TODO: Implement clicking other status effects in the HUD
-
                     if (AlertManager.TryDecode(msg.EncodedAlert, out var alert))
                     {
                         if (Alerts.TryGetValue(alert.AlertKey, out var currentAlert) &&

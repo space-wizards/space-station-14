@@ -1,4 +1,22 @@
-﻿- type: alert
+﻿- type: alertOrder
+  # Defines ordering in alert tab, higher up = higher in tab.
+  # List below can contain alert id or category, if both are present the id will take precedence.
+  # If item is not in list it will go at the bottom (ties broken alphabetically by id)
+  order:
+    - health
+    - fire
+    - buckled
+    - pulling
+    - piloting
+    - pressure
+    - temperature
+    - handcuffed
+    - hunger
+    - thirst
+
+
+
+- type: alert
   id: lowpressure
   category: pressure
   icon: /Textures/Interface/StatusEffects/Pressure/lowpressure.png
@@ -18,7 +36,7 @@
   id: fire
   icon: /Textures/Interface/StatusEffects/Fire/fire.png
   name: "[color=red]On Fire[/color]"
-  description: "You're [color=red]on fire[/color]. Stop, drop and roll to put the fire out or move to a vacuum area."
+  description: "You're [color=red]on fire[/color]. Click the alert to stop, drop and roll to put the fire out or move to a vacuum area."
 
 - type: alert
   id: cold
@@ -56,7 +74,7 @@
   id: handcuffed
   icon: /Textures/Interface/StatusEffects/Handcuffed/Handcuffed.png
   name: "[color=yellow]Handcuffed[/color]"
-  description: "You're [color=yellow]handcuffed[/color] and can't act. If anyone drags you, you won't be able to move. Click the alert to free yourself."
+  description: "You're [color=yellow]handcuffed[/color] and can't act. If anyone drags you, you won't be able to move.."
 
 - type: alert
   id: buckled
@@ -92,7 +110,7 @@
   id: pilotingshuttle
   icon: /Textures/Interface/StatusEffects/Buckle/buckled.png
   name: Piloting Shuttle
-  description: You are piloting a shuttle.
+  description: You are piloting a shuttle. Click the alert to stop.
 
 - type: alert
   id: overfed
@@ -146,4 +164,4 @@
   id: pulling
   icon: /Textures/Interface/StatusEffects/Pull/pulling.png
   name: Pulling
-  description: You're pulling something.
+  description: You're pulling something. Click the alert to stop.

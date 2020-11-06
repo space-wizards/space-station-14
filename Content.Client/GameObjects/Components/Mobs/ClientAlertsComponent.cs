@@ -19,6 +19,7 @@ using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 using Robust.Shared.ViewVariables;
 using Serilog;
 
@@ -35,14 +36,14 @@ namespace Content.Client.GameObjects.Components.Mobs
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         private AlertsUI _ui;
         private PanelContainer _tooltip;
         private RichTextLabel _stateName;
         private RichTextLabel _stateDescription;
+        private AlertOrderPrototype _alertOrder;
 
-
-        // TODO: Put cooldowns in here
         [ViewVariables]
         private Dictionary<AlertKey, AlertControl> _alertControls
             = new Dictionary<AlertKey, AlertControl>();
@@ -106,6 +107,12 @@ namespace Content.Client.GameObjects.Components.Mobs
             if (!CurrentlyControlled || _ui != null)
             {
                 return;
+            }
+
+            _alertOrder = _prototypeManager.EnumeratePrototypes<AlertOrderPrototype>().FirstOrDefault();
+            if (_alertOrder == null)
+            {
+                Logger.ErrorS("alert", "no alertOrder prototype found, alerts will be in random order");
             }
             _ui = new AlertsUI();
             _userInterfaceManager.StateRoot.AddChild(_ui);
@@ -173,8 +180,6 @@ namespace Content.Client.GameObjects.Components.Mobs
                 control?.Dispose();
             }
 
-            // TODO: Sort based on a YML defined order list, minimal shuffling around of other alerts
-
             // now we know that alertControls contains alerts that should still exist but
             // may need to updated,
             // also there may be some new alerts we need to show.
@@ -187,30 +192,42 @@ namespace Content.Client.GameObjects.Components.Mobs
                     continue;
                 }
 
-                if (_alertControls.TryGetValue(alertKey, out var existingAlertControl))
+                if (_alertControls.TryGetValue(alertKey, out var existingAlertControl) &&
+                    existingAlertControl.Alert.ID == newAlert.ID)
                 {
-                    // already being shown for this key, but the actual alert id might change.
-                    if (existingAlertControl.Alert.ID != newAlert.ID)
-                    {
-                        // id is changing to a new alert, replace the control
-                        var newAlertControl = CreateAlertControl(newAlert, alertStatus);
-                        var idx = existingAlertControl.GetPositionInParent();
-                        existingAlertControl.Dispose();
-                        _ui.VBox.Children.Add(newAlertControl);
-                        newAlertControl.SetPositionInParent(idx);
-                        _alertControls[alertKey] = newAlertControl;
-                    }
-                    else
-                    {
-                        // id is the same, simply update the existing control severity
-                        existingAlertControl.SetSeverity(alertStatus.Severity);
-                    }
+                    // id is the same, simply update the existing control severity
+                    existingAlertControl.SetSeverity(alertStatus.Severity);
                 }
                 else
                 {
-                    // this is a new alert + alert key, create the control and add it
+                    // this is a new alert + alert key or just a different alert with the same
+                    // key, create the control and add it in the appropriate order
                     var newAlertControl = CreateAlertControl(newAlert, alertStatus);
-                    _ui.VBox.Children.Add(newAlertControl);
+                    if (_alertOrder != null)
+                    {
+                        var added = false;
+                        foreach (var alertControl in _ui.VBox.Children)
+                        {
+                            if (_alertOrder.Compare(newAlert, ((AlertControl) alertControl).Alert) < 0)
+                            {
+                                var idx = alertControl.GetPositionInParent();
+                                _ui.VBox.Children.Add(newAlertControl);
+                                newAlertControl.SetPositionInParent(idx);
+                                added = true;
+                                break;
+                            }
+                        }
+
+                        if (!added)
+                        {
+                            _ui.VBox.Children.Add(newAlertControl);
+                        }
+                    }
+                    else
+                    {
+                        _ui.VBox.Children.Add(newAlertControl);
+                    }
+
                     _alertControls[alertKey] = newAlertControl;
                 }
             }

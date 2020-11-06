@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Content.Shared.GameObjects.Components.Mobs;
-using Robust.Shared.Interfaces.Reflection;
-using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using Serilog;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.Alert
@@ -17,7 +11,7 @@ namespace Content.Shared.Alert
     /// <summary>
     /// An alert popup with associated icon, tooltip, and other data.
     /// </summary>
-    [NetSerializable, Serializable, Prototype("alert")]
+    [Prototype("alert")]
     public class AlertPrototype : IPrototype
     {
         private string _id;
