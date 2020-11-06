@@ -29,6 +29,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
@@ -139,7 +140,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
 
 
-            if (!entity.TryGetComponent(out IPhysicsComponent? physics) || 
+            if (!entity.TryGetComponent(out IPhysicsComponent? physics) ||
                 !physics.CanCollide)
             {
                 if (!(entity.TryGetComponent(out IDamageableComponent? damageState) && damageState.CurrentState == DamageState.Dead)) {
@@ -165,7 +166,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             _automaticEngageToken = new CancellationTokenSource();
 
-            Timer.Spawn(_automaticEngageTime, () =>
+            Owner.SpawnTimer(_automaticEngageTime, () =>
             {
                 if (!TryFlush())
                 {
@@ -260,7 +261,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             if (Engaged && CanFlush())
             {
-                Timer.Spawn(_flushDelay, () => TryFlush());
+                Owner.SpawnTimer(_flushDelay, () => TryFlush());
             }
         }
 
