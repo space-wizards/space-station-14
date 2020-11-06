@@ -287,9 +287,6 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             SendMessage(new BuckleMessage(Owner, to));
 
-            Owner.EntityManager.EventBus.SubscribeEvent<MoveEvent>(EventSource.Local, this, MoveEvent);
-
-
             if (Owner.TryGetComponent(out PullableComponent? pullableComponent))
             {
                 if (pullableComponent.Puller != null)
@@ -373,8 +370,6 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             SendMessage(new UnbuckleMessage(Owner, oldBuckledTo.Owner));
 
-            Owner.EntityManager.EventBus.UnsubscribeEvent<MoveEvent>(EventSource.Local, this);
-
             return true;
         }
 
@@ -407,7 +402,7 @@ namespace Content.Server.GameObjects.Components.Buckle
         ///     too far from its strap.
         /// </summary>
         /// <param name="moveEvent">The move event of a buckled entity.</param>
-        private void MoveEvent(MoveEvent moveEvent)
+        public void OnMoveEvent(MoveEvent moveEvent)
         {
             if (moveEvent.Sender != Owner)
             {
