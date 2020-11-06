@@ -40,12 +40,9 @@ namespace Content.Client.GameObjects.Components.Mobs
         private RichTextLabel _stateName;
         private RichTextLabel _stateDescription;
 
-        [ViewVariables]
-        private Dictionary<AlertSlot, AlertState> _alerts = new Dictionary<AlertSlot, AlertState>();
+
         [ViewVariables]
         private Dictionary<AlertSlot, CooldownGraphic> _cooldown = new Dictionary<AlertSlot, CooldownGraphic>();
-
-        public override IReadOnlyDictionary<AlertSlot, AlertState> Alerts => _alerts;
 
         /// <summary>
         /// Allows calculating if we need to act due to this component being controlled by the current mob
@@ -77,13 +74,13 @@ namespace Content.Client.GameObjects.Components.Mobs
         {
             base.HandleComponentState(curState, nextState);
 
-            if (!(curState is AlertsComponentState state) || _alerts == state.Alerts)
+            // TODO: Ensure this equals check actually works properly (value not ref)
+            if (!(curState is AlertsComponentState state) || Alerts == state.Alerts)
             {
                 return;
             }
 
-            _alerts = state.Alerts;
-            UpdateAlerts();
+            UpdateAlerts(state.Alerts);
         }
 
         private void PlayerAttached()
@@ -119,7 +116,7 @@ namespace Content.Client.GameObjects.Components.Mobs
 
             _userInterfaceManager.PopupRoot.AddChild(_tooltip);
 
-            UpdateAlerts();
+            UpdateAlerts(Alerts);
         }
 
         private void PlayerDetached()
@@ -129,7 +126,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             _cooldown.Clear();
         }
 
-        public void UpdateAlerts()
+        private void UpdateAlerts(IReadOnlyDictionary<AlertSlot, AlertState> newAlerts)
         {
             if (!CurrentlyControlled || _ui == null)
             {
@@ -140,7 +137,9 @@ namespace Content.Client.GameObjects.Components.Mobs
             _cooldown.Clear();
             _ui.VBox.DisposeAllChildren();
 
-            foreach (var (key, effect) in _alerts.OrderBy(x => (int) x.Key))
+            SetAlerts(newAlerts);
+
+            foreach (var (key, effect) in Alerts.OrderBy(x => (int) x.Key))
             {
                 if (!AlertManager.TryDecode(effect.AlertEncoded, out var alert))
                 {
@@ -193,7 +192,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         {
             foreach (var (effect, cooldownGraphic) in _cooldown)
             {
-                var alert = _alerts[effect];
+                var alert = Alerts[effect];
                 if (!alert.Cooldown.HasValue)
                 {
                     cooldownGraphic.Progress = 0;
@@ -213,39 +212,9 @@ namespace Content.Client.GameObjects.Components.Mobs
             }
         }
 
-        /// <inheritdoc />
-        public override void ShowAlert(string alertId, short? severity = null, (TimeSpan, TimeSpan)? cooldown = null)
+        protected override void AfterClearAlert(AlertSlot effect)
         {
-            if (AlertManager.TryGetWithEncoded(alertId, out var alert, out var encoded))
-            {
-                //TODO: All these duplicated modified checks should be refactored between this and ServerAlertsComponent
-                if (_alerts.TryGetValue(alert.AlertSlot, out var value) &&
-                    value.AlertEncoded == encoded &&
-                    value.Severity == severity && value.Cooldown == cooldown)
-                {
-                    return;
-                }
-                _alerts[alert.AlertSlot] = new AlertState()
-                    {Cooldown = cooldown, AlertEncoded = encoded, Severity = severity};
-                Dirty();
-
-            }
-            else
-            {
-                Logger.ErrorS("alert", "Unable to show alert {0}, please ensure this is a valid alertId",
-                    alertId);
-            }
-        }
-
-        public override void ClearAlert(AlertSlot effect)
-        {
-            if (!_alerts.Remove(effect))
-            {
-                return;
-            }
-
-            UpdateAlerts();
-            Dirty();
+            UpdateAlerts(Alerts);
         }
     }
 }

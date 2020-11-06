@@ -23,10 +23,6 @@ namespace Content.Server.GameObjects.Components.Mobs
     [ComponentReference(typeof(SharedAlertsComponent))]
     public sealed class ServerAlertsComponent : SharedAlertsComponent
     {
-        [ViewVariables]
-        private readonly Dictionary<AlertSlot, AlertState> _alerts = new Dictionary<AlertSlot, AlertState>();
-
-        public override IReadOnlyDictionary<AlertSlot, AlertState> Alerts => _alerts;
 
         protected override void Startup()
         {
@@ -44,39 +40,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         public override ComponentState GetComponentState()
         {
-            return new AlertsComponentState(_alerts);
-        }
-
-        /// <inheritdoc />
-        public override void ShowAlert(string alertId, short? severity = null, (TimeSpan, TimeSpan)? cooldown = null)
-        {
-            if (AlertManager.TryGetWithEncoded(alertId, out var alert, out var encoded))
-            {
-                if (_alerts.TryGetValue(alert.AlertSlot, out var value) && value.AlertEncoded == encoded
-                    && value.Severity == severity && value.Cooldown == cooldown)
-                {
-                    return;
-                }
-
-                _alerts[alert.AlertSlot] = new AlertState()
-                    {Cooldown = cooldown, AlertEncoded = encoded, Severity = severity};
-                Dirty();
-            }
-            else
-            {
-                Logger.ErrorS("alert", "Unable to set alert {0}, please ensure this is a valid alertId",
-                    alertId);
-            }
-        }
-
-        public override void ClearAlert(AlertSlot effect)
-        {
-            if (!_alerts.Remove(effect))
-            {
-                return;
-            }
-
-            Dirty();
+            return new AlertsComponentState(Alerts);
         }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession session = null)
