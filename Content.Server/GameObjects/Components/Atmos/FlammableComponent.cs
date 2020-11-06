@@ -93,15 +93,15 @@ namespace Content.Server.GameObjects.Components.Atmos
                 FireStacks = MathF.Min(0, FireStacks + 1);
             }
 
-            Owner.TryGetComponent(out ServerStatusEffectsComponent status);
+            Owner.TryGetComponent(out ServerAlertsComponent status);
 
             if (!OnFire)
             {
-                status?.RemoveStatusEffect(StatusEffect.Fire);
+                status?.ClearAlert(AlertSlot.Fire);
                 return;
             }
 
-            status.ChangeStatusEffect("fire");
+            status.ShowAlert("fire");
 
             if (FireStacks > 0)
             {

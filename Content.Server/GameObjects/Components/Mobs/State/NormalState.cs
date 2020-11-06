@@ -27,14 +27,14 @@ namespace Content.Server.GameObjects.Components.Mobs.State
 
         public override void UpdateState(IEntity entity)
         {
-            if (!entity.TryGetComponent(out ServerStatusEffectsComponent status))
+            if (!entity.TryGetComponent(out ServerAlertsComponent status))
             {
                 return;
             }
 
             if (!entity.TryGetComponent(out IDamageableComponent damageable))
             {
-                status.ChangeStatusEffectIcon("humanhealth", 0);
+                status.ShowAlert("humanhealth", 0);
                 return;
             }
 
@@ -50,7 +50,7 @@ namespace Content.Server.GameObjects.Components.Mobs.State
 
                     var modifier = (short) (ruinable.TotalDamage / (threshold / 7f));
 
-                    status.ChangeStatusEffectIcon("humanhealth", modifier);
+                    status.ShowAlert("humanhealth", modifier);
 
                     break;
                 }
@@ -63,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Mobs.State
 
                     var modifier = (short) (damageable.TotalDamage / (threshold / 7f));
 
-                    status.ChangeStatusEffectIcon("humanhealth", modifier);
+                    status.ShowAlert("humanhealth", modifier);
                     break;
                 }
             }

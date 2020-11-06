@@ -117,7 +117,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
             StunnedTimer = seconds;
             LastStun = _gameTiming.CurTime;
 
-            SetStatusEffect();
+            SetAlert();
             OnStun();
 
             Dirty();
@@ -144,7 +144,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
             KnockdownTimer = seconds;
             LastStun = _gameTiming.CurTime;
 
-            SetStatusEffect();
+            SetAlert();
             OnKnockdown();
 
             Dirty();
@@ -186,18 +186,18 @@ namespace Content.Shared.GameObjects.Components.Mobs
             if (Owner.TryGetComponent(out MovementSpeedModifierComponent movement))
                 movement.RefreshMovementSpeedModifiers();
 
-            SetStatusEffect();
+            SetAlert();
             Dirty();
         }
 
-        private void SetStatusEffect()
+        private void SetAlert()
         {
-            if (!Owner.TryGetComponent(out SharedStatusEffectsComponent status))
+            if (!Owner.TryGetComponent(out SharedAlertsComponent status))
             {
                 return;
             }
 
-            status.ChangeStatusEffect("stun", cooldown:
+            status.ShowAlert("stun", cooldown:
                 (StunStart == null || StunEnd == null) ? default : (StunStart.Value, StunEnd.Value));
             StatusRemoveCancellation.Cancel();
             StatusRemoveCancellation = new CancellationTokenSource();
@@ -230,7 +230,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
 
             KnockdownTimer -= _helpKnockdownRemove;
 
-            SetStatusEffect();
+            SetAlert();
             Dirty();
 
             return true;

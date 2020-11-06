@@ -204,27 +204,27 @@ namespace Content.Shared.GameObjects.Components.Pulling
 
         private void AddPullingStatuses(IEntity puller)
         {
-            if (Owner.TryGetComponent(out SharedStatusEffectsComponent? pulledStatus))
+            if (Owner.TryGetComponent(out SharedAlertsComponent? pulledStatus))
             {
-                pulledStatus.ChangeStatusEffectIcon("pulled");
+                pulledStatus.ShowAlert("pulled");
             }
 
-            if (puller.TryGetComponent(out SharedStatusEffectsComponent? ownerStatus))
+            if (puller.TryGetComponent(out SharedAlertsComponent? ownerStatus))
             {
-                ownerStatus.ChangeStatusEffectIcon("pulling");
+                ownerStatus.ShowAlert("pulling");
             }
         }
 
         private void RemovePullingStatuses(IEntity puller)
         {
-            if (Owner.TryGetComponent(out SharedStatusEffectsComponent? pulledStatus))
+            if (Owner.TryGetComponent(out SharedAlertsComponent? pulledStatus))
             {
-                pulledStatus.RemoveStatusEffect(StatusEffect.Pulled);
+                pulledStatus.ClearAlert(AlertSlot.Pulled);
             }
 
-            if (puller.TryGetComponent(out SharedStatusEffectsComponent? ownerStatus))
+            if (puller.TryGetComponent(out SharedAlertsComponent? ownerStatus))
             {
-                ownerStatus.RemoveStatusEffect(StatusEffect.Pulling);
+                ownerStatus.ClearAlert(AlertSlot.Pulling);
             }
         }
 

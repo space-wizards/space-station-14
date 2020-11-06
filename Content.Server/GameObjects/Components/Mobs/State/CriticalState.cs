@@ -17,9 +17,9 @@ namespace Content.Server.GameObjects.Components.Mobs.State
                 appearance.SetData(DamageStateVisuals.State, DamageState.Critical);
             }
 
-            if (entity.TryGetComponent(out ServerStatusEffectsComponent status))
+            if (entity.TryGetComponent(out ServerAlertsComponent status))
             {
-                status.ChangeStatusEffectIcon("humancrit"); //Todo: combine humancrit-0 and humancrit-1 into a gif and display it
+                status.ShowAlert("humancrit"); //Todo: combine humancrit-0 and humancrit-1 into a gif and display it
             }
 
             if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlay))

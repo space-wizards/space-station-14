@@ -19,7 +19,7 @@ namespace Content.Server.GameObjects.EntitySystems
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
 
-        private readonly Dictionary<GridId, List<ServerStatusEffectsComponent>> _statuses = new Dictionary<GridId, List<ServerStatusEffectsComponent>>();
+        private readonly Dictionary<GridId, List<ServerAlertsComponent>> _statuses = new Dictionary<GridId, List<ServerAlertsComponent>>();
 
         public override void Initialize()
         {
@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.EntitySystems
             _statuses.Clear();
         }
 
-        public void AddStatus(ServerStatusEffectsComponent status)
+        public void AddStatus(ServerAlertsComponent status)
         {
             var gridId = status.Owner.Transform.GridID;
             var statuses = _statuses.GetOrNew(gridId);
@@ -54,7 +54,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        public void RemoveStatus(ServerStatusEffectsComponent status)
+        public void RemoveStatus(ServerAlertsComponent status)
         {
             var grid = status.Owner.Transform.GridID;
             if (!_statuses.TryGetValue(grid, out var statuses))
@@ -88,19 +88,19 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        private void AddWeightless(ServerStatusEffectsComponent status)
+        private void AddWeightless(ServerAlertsComponent status)
         {
-            status.ChangeStatusEffect("weightless");
+            status.ShowAlert("weightless");
         }
 
-        private void RemoveWeightless(ServerStatusEffectsComponent status)
+        private void RemoveWeightless(ServerAlertsComponent status)
         {
-            status.RemoveStatusEffect(StatusEffect.Weightless);
+            status.ClearAlert(AlertSlot.Weightless);
         }
 
         private void EntParentChanged(EntParentChangedMessage ev)
         {
-            if (!ev.Entity.TryGetComponent(out ServerStatusEffectsComponent status))
+            if (!ev.Entity.TryGetComponent(out ServerAlertsComponent status))
             {
                 return;
             }

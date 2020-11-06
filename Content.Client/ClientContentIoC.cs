@@ -11,7 +11,7 @@ using Content.Client.UserInterface.AdminMenu;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.Interfaces;
-using Content.Shared.Status;
+using Content.Shared.Alert;
 using Robust.Shared.IoC;
 
 namespace Content.Client
@@ -36,7 +36,7 @@ namespace Content.Client
             IoCManager.Register<IClickMapManager, ClickMapManager>();
             IoCManager.Register<IStationEventManager, StationEventManager>();
             IoCManager.Register<IAdminMenuManager, AdminMenuManager>();
-            IoCManager.Register<StatusEffectStateManager, StatusEffectStateManager>();
+            IoCManager.Register<AlertManager, AlertManager>();
         }
     }
 }

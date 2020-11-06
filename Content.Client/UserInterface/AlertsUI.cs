@@ -10,14 +10,14 @@ namespace Content.Client.UserInterface
     /// <summary>
     ///     The status effects display on the right side of the screen.
     /// </summary>
-    public sealed class StatusEffectsUI : Control
+    public sealed class AlertsUI : Control
     {
         public VBoxContainer VBox { get; }
 
         private PanelContainer _panelContainer;
 
 
-        public StatusEffectsUI()
+        public AlertsUI()
         {
             _panelContainer = new PanelContainer
             {

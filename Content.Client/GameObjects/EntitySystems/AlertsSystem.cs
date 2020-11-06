@@ -5,7 +5,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Client.GameObjects.EntitySystems
 {
-    public class StatusEffectsSystem : EntitySystem
+    public class AlertsSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -16,9 +16,9 @@ namespace Content.Client.GameObjects.EntitySystems
             if (!_gameTiming.IsFirstTimePredicted)
                 return;
 
-            foreach (var clientStatusEffectsComponent in EntityManager.ComponentManager.EntityQuery<ClientStatusEffectsComponent>())
+            foreach (var clientAlertsComponent in EntityManager.ComponentManager.EntityQuery<ClientAlertsComponent>())
             {
-                clientStatusEffectsComponent.FrameUpdate(frameTime);
+                clientAlertsComponent.FrameUpdate(frameTime);
             }
         }
     }

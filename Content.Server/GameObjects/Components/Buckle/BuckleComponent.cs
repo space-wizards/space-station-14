@@ -44,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Buckle
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         [ComponentDependency] public readonly AppearanceComponent? AppearanceComponent = null;
-        [ComponentDependency] private readonly ServerStatusEffectsComponent? _serverStatusEffectsComponent = null;
+        [ComponentDependency] private readonly ServerAlertsComponent? _serverAlertsComponent = null;
         [ComponentDependency] private readonly StunnableComponent? _stunnableComponent = null;
         [ComponentDependency] private readonly MobStateManagerComponent? _mobStateManagerComponent = null;
 
@@ -118,15 +118,15 @@ namespace Content.Server.GameObjects.Components.Buckle
         /// </summary>
         private void BuckleStatus()
         {
-            if (_serverStatusEffectsComponent != null)
+            if (_serverAlertsComponent != null)
             {
                 if (Buckled)
                 {
-                    _serverStatusEffectsComponent.ChangeStatusEffectIcon(BuckledTo?.BuckledAlertId);
+                    _serverAlertsComponent.ShowAlert(BuckledTo?.BuckledAlertId);
                 }
                 else
                 {
-                    _serverStatusEffectsComponent.RemoveStatusEffect(StatusEffect.Buckled);
+                    _serverAlertsComponent.ClearAlert(AlertSlot.Buckled);
                 }
             }
         }

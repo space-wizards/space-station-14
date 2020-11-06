@@ -25,8 +25,8 @@ namespace Content.Client.GameObjects.Components.Mobs
 {
     /// <inheritdoc/>
     [RegisterComponent]
-    [ComponentReference(typeof(SharedStatusEffectsComponent))]
-    public sealed class ClientStatusEffectsComponent : SharedStatusEffectsComponent
+    [ComponentReference(typeof(SharedAlertsComponent))]
+    public sealed class ClientAlertsComponent : SharedAlertsComponent
     {
         private static readonly float TooltipTextMaxWidth = 265;
 
@@ -35,17 +35,17 @@ namespace Content.Client.GameObjects.Components.Mobs
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        private StatusEffectsUI _ui;
+        private AlertsUI _ui;
         private PanelContainer _tooltip;
         private RichTextLabel _stateName;
         private RichTextLabel _stateDescription;
 
         [ViewVariables]
-        private Dictionary<StatusEffect, StatusEffectStatus> _status = new Dictionary<StatusEffect, StatusEffectStatus>();
+        private Dictionary<AlertSlot, AlertState> _alerts = new Dictionary<AlertSlot, AlertState>();
         [ViewVariables]
-        private Dictionary<StatusEffect, CooldownGraphic> _cooldown = new Dictionary<StatusEffect, CooldownGraphic>();
+        private Dictionary<AlertSlot, CooldownGraphic> _cooldown = new Dictionary<AlertSlot, CooldownGraphic>();
 
-        public override IReadOnlyDictionary<StatusEffect, StatusEffectStatus> Statuses => _status;
+        public override IReadOnlyDictionary<AlertSlot, AlertState> Alerts => _alerts;
 
         /// <summary>
         /// Allows calculating if we need to act due to this component being controlled by the current mob
@@ -77,13 +77,13 @@ namespace Content.Client.GameObjects.Components.Mobs
         {
             base.HandleComponentState(curState, nextState);
 
-            if (!(curState is StatusEffectComponentState state) || _status == state.StatusEffects)
+            if (!(curState is AlertsComponentState state) || _alerts == state.Alerts)
             {
                 return;
             }
 
-            _status = state.StatusEffects;
-            UpdateStatusEffects();
+            _alerts = state.Alerts;
+            UpdateAlerts();
         }
 
         private void PlayerAttached()
@@ -92,7 +92,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             {
                 return;
             }
-            _ui = new StatusEffectsUI();
+            _ui = new AlertsUI();
             _userInterfaceManager.StateRoot.AddChild(_ui);
             _tooltip = new PanelContainer
             {
@@ -119,7 +119,7 @@ namespace Content.Client.GameObjects.Components.Mobs
 
             _userInterfaceManager.PopupRoot.AddChild(_tooltip);
 
-            UpdateStatusEffects();
+            UpdateAlerts();
         }
 
         private void PlayerDetached()
@@ -129,80 +129,80 @@ namespace Content.Client.GameObjects.Components.Mobs
             _cooldown.Clear();
         }
 
-        public void UpdateStatusEffects()
+        public void UpdateAlerts()
         {
             if (!CurrentlyControlled || _ui == null)
             {
                 return;
             }
-            // TODO: diff from our current statuses instead of the below, which
-            // causes tooltips to disappear any time any status is changed
+            // TODO: diff from our current alerts instead of the below, which
+            // causes tooltips to disappear any time any alert is changed
             _cooldown.Clear();
             _ui.VBox.DisposeAllChildren();
 
-            foreach (var (key, effect) in _status.OrderBy(x => (int) x.Key))
+            foreach (var (key, effect) in _alerts.OrderBy(x => (int) x.Key))
             {
-                if (!_statusEffectStateManager.TryDecode(effect.StatusEffectStateEncoded, out var statusEffectState))
+                if (!AlertManager.TryDecode(effect.AlertEncoded, out var alert))
                 {
-                    Logger.ErrorS("status", "Unable to decode status effect state {0}", effect.StatusEffectStateEncoded);
+                    Logger.ErrorS("alert", "Unable to decode alert {0}", effect.AlertEncoded);
                     continue;
                 }
 
-                var texture = _resourceCache.GetTexture(statusEffectState.GetIconPath(effect.Severity));
-                var status = new StatusControl(key, texture);
+                var texture = _resourceCache.GetTexture(alert.GetIconPath(effect.Severity));
+                var alertControl = new AlertControl(key, texture);
                 // show custom tooltip for the status control
-                status.OnShowTooltip += (sender, args) =>
+                alertControl.OnShowTooltip += (sender, args) =>
                 {
                     _tooltip.Visible = true;
-                    _stateName.SetMessage(statusEffectState.Name);
-                    _stateDescription.SetMessage(statusEffectState.Description);
+                    _stateName.SetMessage(alert.Name);
+                    _stateDescription.SetMessage(alert.Description);
                     // TODO: Text display of cooldown
                     Tooltips.PositionTooltip(_tooltip);
                 };
-                status.OnHideTooltip += StatusOnOnHideTooltip;
+                alertControl.OnHideTooltip += AlertOnOnHideTooltip;
 
                 if (effect.Cooldown.HasValue)
                 {
                     var cooldown = new CooldownGraphic();
-                    status.Children.Add(cooldown);
+                    alertControl.Children.Add(cooldown);
                     _cooldown[key] = cooldown;
                 }
 
-                status.OnPressed += args => StatusPressed(args, status);
+                alertControl.OnPressed += args => AlertPressed(args, alertControl);
 
-                _ui.VBox.AddChild(status);
+                _ui.VBox.AddChild(alertControl);
             }
         }
 
-        private void StatusOnOnHideTooltip(object? sender, EventArgs e)
+        private void AlertOnOnHideTooltip(object? sender, EventArgs e)
         {
             _tooltip.Visible = false;
         }
 
-        private void StatusPressed(BaseButton.ButtonEventArgs args, StatusControl status)
+        private void AlertPressed(BaseButton.ButtonEventArgs args, AlertControl alert)
         {
             if (args.Event.Function != EngineKeyFunctions.UIClick)
             {
                 return;
             }
 
-            SendNetworkMessage(new ClickStatusMessage(status.Effect));
+            SendNetworkMessage(new ClickAlertMessage(alert.Effect));
         }
 
         public void FrameUpdate(float frameTime)
         {
             foreach (var (effect, cooldownGraphic) in _cooldown)
             {
-                var status = _status[effect];
-                if (!status.Cooldown.HasValue)
+                var alert = _alerts[effect];
+                if (!alert.Cooldown.HasValue)
                 {
                     cooldownGraphic.Progress = 0;
                     cooldownGraphic.Visible = false;
                     continue;
                 }
 
-                var start = status.Cooldown.Value.Item1;
-                var end = status.Cooldown.Value.Item2;
+                var start = alert.Cooldown.Value.Item1;
+                var end = alert.Cooldown.Value.Item2;
 
                 var length = (end - start).TotalSeconds;
                 var progress = (_gameTiming.CurTime - start).TotalSeconds / length;
@@ -214,67 +214,37 @@ namespace Content.Client.GameObjects.Components.Mobs
         }
 
         /// <inheritdoc />
-        public override void ChangeStatusEffectIcon(string statusEffectStateId, short? severity = null)
+        public override void ShowAlert(string alertId, short? severity = null, (TimeSpan, TimeSpan)? cooldown = null)
         {
-            if (_statusEffectStateManager.TryGetWithEncoded(statusEffectStateId, out var statusEffectState,
-                out var encoded))
+            if (AlertManager.TryGetWithEncoded(alertId, out var alert, out var encoded))
             {
-                if (_status.TryGetValue(statusEffectState.StatusEffect, out var value) &&
-                    value.StatusEffectStateEncoded == encoded &&
-                    value.Severity == severity)
-                {
-                    return;
-                }
-                _status[statusEffectState.StatusEffect] = new StatusEffectStatus
-                {
-                    Cooldown = value.Cooldown,
-                    StatusEffectStateEncoded = encoded,
-                    Severity = severity
-                };
-
-                Dirty();
-            }
-            else
-            {
-                Logger.ErrorS("status",
-                    "Unable to set status effect state {0}, please ensure this is a valid statusEffectState",
-                    statusEffectStateId);
-            }
-
-        }
-
-        /// <inheritdoc />
-        public override void ChangeStatusEffect(string statusEffectStateId, short? severity = null, (TimeSpan, TimeSpan)? cooldown = null)
-        {
-            if (_statusEffectStateManager.TryGetWithEncoded(statusEffectStateId, out var statusEffectState, out var encoded))
-            {
-                //TODO: All these duplicated modified checks should be refactored between this and ServerStatusEffectsComponent
-                if (_status.TryGetValue(statusEffectState.StatusEffect, out var value) &&
-                    value.StatusEffectStateEncoded == encoded &&
+                //TODO: All these duplicated modified checks should be refactored between this and ServerAlertsComponent
+                if (_alerts.TryGetValue(alert.AlertSlot, out var value) &&
+                    value.AlertEncoded == encoded &&
                     value.Severity == severity && value.Cooldown == cooldown)
                 {
                     return;
                 }
-                _status[statusEffectState.StatusEffect] = new StatusEffectStatus()
-                    {Cooldown = cooldown, StatusEffectStateEncoded = encoded, Severity = severity};
+                _alerts[alert.AlertSlot] = new AlertState()
+                    {Cooldown = cooldown, AlertEncoded = encoded, Severity = severity};
                 Dirty();
 
             }
             else
             {
-                Logger.ErrorS("status", "Unable to set status effect state {0}, please ensure this is a valid statusEffectState",
-                    statusEffectStateId);
+                Logger.ErrorS("alert", "Unable to show alert {0}, please ensure this is a valid alertId",
+                    alertId);
             }
         }
 
-        public override void RemoveStatusEffect(StatusEffect effect)
+        public override void ClearAlert(AlertSlot effect)
         {
-            if (!_status.Remove(effect))
+            if (!_alerts.Remove(effect))
             {
                 return;
             }
 
-            UpdateStatusEffects();
+            UpdateAlerts();
             Dirty();
         }
     }

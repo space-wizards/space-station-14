@@ -5,11 +5,11 @@ using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.GameObjects.Components.Mobs
 {
-    public class StatusControl : BaseButton
+    public class AlertControl : BaseButton
     {
-        public readonly StatusEffect Effect;
+        public readonly AlertSlot Effect;
 
-        public StatusControl(StatusEffect effect, Texture? texture)
+        public AlertControl(AlertSlot effect, Texture? texture)
         {
             Effect = effect;
 

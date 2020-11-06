@@ -18,9 +18,9 @@ namespace Content.Server.GameObjects.Components.Mobs.State
                 appearance.SetData(DamageStateVisuals.State, DamageState.Dead);
             }
 
-            if (entity.TryGetComponent(out ServerStatusEffectsComponent status))
+            if (entity.TryGetComponent(out ServerAlertsComponent status))
             {
-                status.ChangeStatusEffectIcon("humandead");
+                status.ShowAlert("humandead");
             }
 
             if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlayComponent))

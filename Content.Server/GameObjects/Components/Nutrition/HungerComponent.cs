@@ -89,15 +89,15 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 }
 
                 // Update UI
-                Owner.TryGetComponent(out ServerStatusEffectsComponent statusEffectsComponent);
+                Owner.TryGetComponent(out ServerAlertsComponent alertsComponent);
 
                 if (HungerThresholdAlertIds.TryGetValue(_currentHungerThreshold, out var alertId))
                 {
-                    statusEffectsComponent?.ChangeStatusEffectIcon(alertId);
+                    alertsComponent?.ShowAlert(alertId);
                 }
                 else
                 {
-                    statusEffectsComponent?.RemoveStatusEffect(StatusEffect.Hunger);
+                    alertsComponent?.ClearAlert(AlertSlot.Hunger);
                 }
 
                 switch (_currentHungerThreshold)

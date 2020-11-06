@@ -22,7 +22,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         public void Update(float airPressure)
         {
             if (!Owner.TryGetComponent(out IDamageableComponent damageable)) return;
-            Owner.TryGetComponent(out ServerStatusEffectsComponent status);
+            Owner.TryGetComponent(out ServerAlertsComponent status);
 
             var highPressureMultiplier = 1f;
             var lowPressureMultiplier = 1f;
@@ -50,11 +50,11 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                     if (pressure <= Atmospherics.HazardLowPressure)
                     {
-                        status.ChangeStatusEffect("lowpressure", 2);
+                        status.ShowAlert("lowpressure", 2);
                         break;
                     }
 
-                    status.ChangeStatusEffect("lowpressure", 1);
+                    status.ShowAlert("lowpressure", 1);
                     break;
 
                 // High pressure.
@@ -72,16 +72,16 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                     if (pressure >= Atmospherics.HazardHighPressure)
                     {
-                        status.ChangeStatusEffect("highpressure", 2);
+                        status.ShowAlert("highpressure", 2);
                         break;
                     }
 
-                    status.ChangeStatusEffect("highpressure", 1);
+                    status.ShowAlert("highpressure", 1);
                     break;
 
                 // Normal pressure.
                 default:
-                    status?.RemoveStatusEffect(StatusEffect.Pressure);
+                    status?.ClearAlert(AlertSlot.Pressure);
                     break;
             }
 

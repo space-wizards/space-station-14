@@ -137,7 +137,7 @@ namespace Content.Server.GameObjects.Components.Movement
             if (_controller != null ||
                 !entity.TryGetComponent(out MindComponent? mind) ||
                 mind.Mind == null ||
-                !Owner.TryGetComponent(out ServerStatusEffectsComponent? status))
+                !Owner.TryGetComponent(out ServerAlertsComponent? status))
             {
                 return;
             }
@@ -145,7 +145,7 @@ namespace Content.Server.GameObjects.Components.Movement
             mind.Mind.Visit(Owner);
             _controller = entity;
 
-            status.ChangeStatusEffectIcon(_pilotingAlertId);
+            status.ShowAlert(_pilotingAlertId);
         }
 
         /// <summary>
@@ -177,9 +177,9 @@ namespace Content.Server.GameObjects.Components.Movement
         /// <param name="entity">The entity to update</param>
         private void UpdateRemovedEntity(IEntity entity)
         {
-            if (Owner.TryGetComponent(out ServerStatusEffectsComponent? status))
+            if (Owner.TryGetComponent(out ServerAlertsComponent? status))
             {
-                status.RemoveStatusEffect(StatusEffect.Piloting);
+                status.ClearAlert(AlertSlot.Piloting);
             }
 
             if (entity.TryGetComponent(out MindComponent? mind))
@@ -217,7 +217,7 @@ namespace Content.Server.GameObjects.Components.Movement
         public override void Initialize()
         {
             base.Initialize();
-            Owner.EnsureComponent<ServerStatusEffectsComponent>();
+            Owner.EnsureComponent<ServerAlertsComponent>();
         }
 
         /// <inheritdoc />

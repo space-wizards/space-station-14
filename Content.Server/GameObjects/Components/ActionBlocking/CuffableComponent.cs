@@ -115,7 +115,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             CanStillInteract = _hands.Hands.Count() > CuffedHandCount;
 
             OnCuffedStateChanged.Invoke();
-            UpdateStatusEffect();
+            UpdateAlert();
             UpdateHeldItems();
             Dirty();
         }
@@ -181,17 +181,17 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         /// <summary>
         /// Updates the status effect indicator on the HUD.
         /// </summary>
-        private void UpdateStatusEffect()
+        private void UpdateAlert()
         {
-            if (Owner.TryGetComponent(out ServerStatusEffectsComponent status))
+            if (Owner.TryGetComponent(out ServerAlertsComponent status))
             {
                 if (CanStillInteract)
                 {
-                    status.RemoveStatusEffect(StatusEffect.Cuffed);
+                    status.ClearAlert(AlertSlot.Cuffed);
                 }
                 else
                 {
-                    status.ChangeStatusEffectIcon("handcuffed");
+                    status.ShowAlert("handcuffed");
                 }
             }
         }
@@ -282,7 +282,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
 
                 CanStillInteract = _hands.Hands.Count() > CuffedHandCount;
                 OnCuffedStateChanged.Invoke();
-                UpdateStatusEffect();
+                UpdateAlert();
                 Dirty();
 
                 if (CuffedHandCount == 0)

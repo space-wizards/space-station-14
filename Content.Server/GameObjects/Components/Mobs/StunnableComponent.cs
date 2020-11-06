@@ -89,7 +89,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
 
             if (!StunStart.HasValue || !StunEnd.HasValue ||
-                !Owner.TryGetComponent(out ServerStatusEffectsComponent status))
+                !Owner.TryGetComponent(out ServerAlertsComponent status))
             {
                 return;
             }
@@ -102,7 +102,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
             if (progress >= length)
             {
-                Owner.SpawnTimer(250, () => status.RemoveStatusEffect(StatusEffect.Stun), StatusRemoveCancellation.Token);
+                Owner.SpawnTimer(250, () => status.ClearAlert(AlertSlot.Stun), StatusRemoveCancellation.Token);
                 LastStun = null;
             }
         }

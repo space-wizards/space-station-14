@@ -74,43 +74,43 @@ namespace Content.Server.GameObjects.Components.Temperature
                 damageType = DamageType.Cold;
             }
 
-            if (Owner.TryGetComponent(out ServerStatusEffectsComponent status))
+            if (Owner.TryGetComponent(out ServerAlertsComponent status))
             {
                 switch(CurrentTemperature)
                 {
                     // Cold strong.
                     case var t when t <= 260:
-                        status.ChangeStatusEffect("cold", 3);
+                        status.ShowAlert("cold", 3);
                         break;
 
                     // Cold mild.
                     case var t when t <= 280 && t > 260:
-                        status.ChangeStatusEffect("cold", 2);
+                        status.ShowAlert("cold", 2);
                         break;
 
                     // Cold weak.
                     case var t when t <= 292 && t > 280:
-                        status.ChangeStatusEffect("cold", 1);
+                        status.ShowAlert("cold", 1);
                         break;
 
                     // Safe.
                     case var t when t <= 327 && t > 292:
-                        status.RemoveStatusEffect(StatusEffect.Temperature);
+                        status.ClearAlert(AlertSlot.Temperature);
                         break;
 
                     // Heat weak.
                     case var t when t <= 335 && t > 327:
-                        status.ChangeStatusEffect("hot", 1);
+                        status.ShowAlert("hot", 1);
                         break;
 
                     // Heat mild.
                     case var t when t <= 345 && t > 335:
-                        status.ChangeStatusEffect("hot", 2);
+                        status.ShowAlert("hot", 2);
                         break;
 
                     // Heat strong.
                     case var t when t > 345:
-                        status.ChangeStatusEffect("hot", 3);
+                        status.ShowAlert("hot", 3);
                         break;
                 }
             }

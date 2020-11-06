@@ -8,7 +8,7 @@ using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Pulling;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
-using Content.Shared.Status;
+using Content.Shared.Alert;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Network;
@@ -20,13 +20,13 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Mobs
 {
     [RegisterComponent]
-    [ComponentReference(typeof(SharedStatusEffectsComponent))]
-    public sealed class ServerStatusEffectsComponent : SharedStatusEffectsComponent
+    [ComponentReference(typeof(SharedAlertsComponent))]
+    public sealed class ServerAlertsComponent : SharedAlertsComponent
     {
         [ViewVariables]
-        private readonly Dictionary<StatusEffect, StatusEffectStatus> _statusEffects = new Dictionary<StatusEffect, StatusEffectStatus>();
+        private readonly Dictionary<AlertSlot, AlertState> _alerts = new Dictionary<AlertSlot, AlertState>();
 
-        public override IReadOnlyDictionary<StatusEffect, StatusEffectStatus> Statuses => _statusEffects;
+        public override IReadOnlyDictionary<AlertSlot, AlertState> Alerts => _alerts;
 
         protected override void Startup()
         {
@@ -44,58 +44,34 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         public override ComponentState GetComponentState()
         {
-            return new StatusEffectComponentState(_statusEffects);
+            return new AlertsComponentState(_alerts);
         }
 
         /// <inheritdoc />
-        public override void ChangeStatusEffectIcon(string statusEffectStateId, short? severity = null)
+        public override void ShowAlert(string alertId, short? severity = null, (TimeSpan, TimeSpan)? cooldown = null)
         {
-            if (_statusEffectStateManager.TryGetWithEncoded(statusEffectStateId, out var statusEffectState, out var encoded))
+            if (AlertManager.TryGetWithEncoded(alertId, out var alert, out var encoded))
             {
-                if (_statusEffects.TryGetValue(statusEffectState.StatusEffect, out var value) && value.StatusEffectStateEncoded == encoded
-                    && value.Severity == severity)
-                {
-                    return;
-                }
-
-                _statusEffects[statusEffectState.StatusEffect] = new StatusEffectStatus()
-                    { Cooldown = value.Cooldown, StatusEffectStateEncoded = encoded, Severity = severity};
-                Dirty();
-            }
-            else
-            {
-                Logger.ErrorS("status", "Unable to set status effect state {0}, please ensure this is a valid statusEffectState",
-                    statusEffectStateId);
-            }
-
-
-        }
-
-        /// <inheritdoc />
-        public override void ChangeStatusEffect(string statusEffectStateId, short? severity = null, (TimeSpan, TimeSpan)? cooldown = null)
-        {
-            if (_statusEffectStateManager.TryGetWithEncoded(statusEffectStateId, out var statusEffectState, out var encoded))
-            {
-                if (_statusEffects.TryGetValue(statusEffectState.StatusEffect, out var value) && value.StatusEffectStateEncoded == encoded
+                if (_alerts.TryGetValue(alert.AlertSlot, out var value) && value.AlertEncoded == encoded
                     && value.Severity == severity && value.Cooldown == cooldown)
                 {
                     return;
                 }
 
-                _statusEffects[statusEffectState.StatusEffect] = new StatusEffectStatus()
-                    {Cooldown = cooldown, StatusEffectStateEncoded = encoded, Severity = severity};
+                _alerts[alert.AlertSlot] = new AlertState()
+                    {Cooldown = cooldown, AlertEncoded = encoded, Severity = severity};
                 Dirty();
             }
             else
             {
-                Logger.ErrorS("status", "Unable to set status effect state {0}, please ensure this is a valid statusEffectState",
-                    statusEffectStateId);
+                Logger.ErrorS("alert", "Unable to set alert {0}, please ensure this is a valid alertId",
+                    alertId);
             }
         }
 
-        public override void RemoveStatusEffect(StatusEffect effect)
+        public override void ClearAlert(AlertSlot effect)
         {
-            if (!_statusEffects.Remove(effect))
+            if (!_alerts.Remove(effect))
             {
                 return;
             }
@@ -114,7 +90,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
             switch (message)
             {
-                case ClickStatusMessage msg:
+                case ClickAlertMessage msg:
                 {
                     var player = session.AttachedEntity;
 
@@ -126,19 +102,19 @@ namespace Content.Server.GameObjects.Components.Mobs
                     // TODO: Implement clicking other status effects in the HUD
                     switch (msg.Effect)
                     {
-                        case StatusEffect.Buckled:
+                        case AlertSlot.Buckled:
                             if (!player.TryGetComponent(out BuckleComponent buckle))
                                 break;
 
                             buckle.TryUnbuckle(player);
                             break;
-                        case StatusEffect.Piloting:
+                        case AlertSlot.Piloting:
                             if (!player.TryGetComponent(out ShuttleControllerComponent controller))
                                 break;
 
                             controller.RemoveController();
                             break;
-                        case StatusEffect.Pulling:
+                        case AlertSlot.Pulling:
                             EntitySystem
                                 .Get<SharedPullingSystem>()
                                 .GetPulled(player)?
@@ -146,7 +122,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                                 .TryStopPull();
 
                             break;
-                        case StatusEffect.Fire:
+                        case AlertSlot.Fire:
                             if (!player.TryGetComponent(out FlammableComponent flammable))
                                 break;
 

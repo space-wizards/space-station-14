@@ -51,9 +51,9 @@ namespace Content.Server.GameObjects.Components.Mobs.State
             // TODO: Might want to add an OnRemove() to IMobState since those are where these components are being used
             base.OnRemove();
 
-            if (Owner.TryGetComponent(out ServerStatusEffectsComponent status))
+            if (Owner.TryGetComponent(out ServerAlertsComponent status))
             {
-                status.RemoveStatusEffect(StatusEffect.Health);
+                status.ClearAlert(AlertSlot.Health);
             }
 
             if (Owner.TryGetComponent(out ServerOverlayEffectsComponent overlay))
