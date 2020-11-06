@@ -6,6 +6,8 @@ using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Rotatable
 {
@@ -14,9 +16,21 @@ namespace Content.Server.GameObjects.Components.Rotatable
     {
         public override string Name => "Rotatable";
 
+        /// <summary>
+        ///     If true, this entity can be rotated even while anchored.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool RotateWhileAnchored { get; private set; }
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+            serializer.DataField(this, x => x.RotateWhileAnchored, "rotateWhileAnchored", false);
+        }
+
         private void TryRotate(IEntity user, Angle angle)
         {
-            if (Owner.TryGetComponent(out IPhysicsComponent physics))
+            if (!RotateWhileAnchored && Owner.TryGetComponent(out IPhysicsComponent physics))
             {
                 if (physics.Anchored)
                 {
@@ -33,7 +47,7 @@ namespace Content.Server.GameObjects.Components.Rotatable
         {
             protected override void GetData(IEntity user, RotatableComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!ActionBlockerSystem.CanInteract(user) || (!component.RotateWhileAnchored && component.Owner.TryGetComponent(out IPhysicsComponent physics) && physics.Anchored))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
@@ -55,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Rotatable
         {
             protected override void GetData(IEntity user, RotatableComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!ActionBlockerSystem.CanInteract(user) || (!component.RotateWhileAnchored && component.Owner.TryGetComponent(out IPhysicsComponent physics) && physics.Anchored))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
