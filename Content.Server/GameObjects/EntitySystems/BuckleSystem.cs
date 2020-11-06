@@ -17,14 +17,14 @@ namespace Content.Server.GameObjects.EntitySystems
 
             UpdatesAfter.Add(typeof(InteractionSystem));
             UpdatesAfter.Add(typeof(InputSystem));
-            EntityManager.EventBus.SubscribeEvent<MoveEvent>(EventSource.Local, this, MoveEvent);
+            SubscribeLocalEvent<MoveEvent>(MoveEvent);
         }
 
         public override void Shutdown()
         {
             base.Shutdown();
-            
-            EntityManager.EventBus.UnsubscribeEvent<MoveEvent>(EventSource.Local, this);
+
+            UnsubscribeLocalEvent<MoveEvent>();
         }
 
         private void MoveEvent(MoveEvent ev)
