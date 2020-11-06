@@ -2,7 +2,6 @@
 using Content.Server.GameObjects.Components.Buckle;
 using Content.Server.GameObjects.Components.Strap;
 using Content.Server.GameObjects.EntitySystems.Click;
-using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystemMessages;
 using Robust.Server.GameObjects.EntitySystems;
