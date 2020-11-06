@@ -299,6 +299,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                 _component = component;
                 _allBlockGamePieces = (BlockGamePieceType[]) Enum.GetValues(typeof(BlockGamePieceType));
                 _internalNextPiece = GetRandomBlockGamePiece(_component._random);
+                InitializeNewBlock();
             }
 
             private void SendHighscoreUpdate()
@@ -315,8 +316,6 @@ namespace Content.Server.GameObjects.Components.Arcade
 
             public void StartGame()
             {
-                InitializeNewBlock();
-
                 _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Game));
 
                 FullUpdate();
@@ -569,10 +568,10 @@ namespace Content.Server.GameObjects.Components.Arcade
                         break;
                     case BlockGamePlayerAction.Pause:
                         _running = false;
-                        _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Pause));
+                        _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Pause, _started));
                         break;
                     case BlockGamePlayerAction.Unpause:
-                        if (!_gameOver)
+                        if (!_gameOver && _started)
                         {
                             _running = true;
                             _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Game));
@@ -583,7 +582,7 @@ namespace Content.Server.GameObjects.Components.Arcade
                         break;
                     case BlockGamePlayerAction.ShowHighscores:
                         _running = false;
-                        _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Highscores));
+                        _component.UserInterface?.SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Highscores, _started));
                         break;
                 }
             }
@@ -654,6 +653,7 @@ namespace Content.Server.GameObjects.Components.Arcade
             }
 
             private bool IsGameOver => _field.Any(block => block.Position.Y == 0);
+
             private void InvokeGameover()
             {
                 _running = false;

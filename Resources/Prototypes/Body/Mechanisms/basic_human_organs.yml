@@ -11,7 +11,8 @@
     durability: 10
     size: 1
     compatibility: Biological
-  - type: Brain
+    behaviors:
+    - !type:BrainBehavior {}
 
 - type: entity
   id: EyesHuman
@@ -40,7 +41,8 @@
     durability: 10
     size: 1
     compatibility: Biological
-  - type: Heart
+    behaviors:
+    - !type:HeartBehavior {}
 
 - type: entity
   id: LungsHuman
@@ -55,7 +57,8 @@
     durability: 13
     size: 1
     compatibility: Biological
-  - type: Lung
+    behaviors:
+    - !type:LungBehavior {}
 
 - type: entity
   id: StomachHuman
@@ -70,7 +73,10 @@
     durability: 13
     size: 1
     compatibility: Biological
-  - type: Stomach
+    behaviors:
+    - !type:StomachBehavior
+      max_volume: 250
+      digestionDelay: 20
 
 - type: entity
   id: LiverHuman

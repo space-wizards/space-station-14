@@ -119,6 +119,7 @@
   - attachtogrid
   - attachtograndparent
   - inrangeunoccluded
+  - hungry
   CanViewVar: true
   CanAdminPlace: true
   CanAdminMenu: true
@@ -231,6 +232,7 @@
   - attachtogrid
   - attachtograndparent
   - inrangeunoccluded
+  - hungry
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true

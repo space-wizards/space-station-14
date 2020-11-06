@@ -23,6 +23,9 @@ namespace Content.Shared
          */
 
         public static readonly CVarDef<bool>
+            EventsEnabled = CVarDef.Create("events.enabled", false, CVar.ARCHIVE | CVar.SERVERONLY);
+
+        public static readonly CVarDef<bool>
             GameLobbyEnabled = CVarDef.Create("game.lobbyenabled", false, CVar.ARCHIVE);
 
         public static readonly CVarDef<int>
