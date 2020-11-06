@@ -60,6 +60,7 @@
   - spawn
   - delete
   - tp
+  - tpto
   - tpgrid
   - setgamepreset
   - forcepreset
@@ -109,6 +110,15 @@
   - deleteewi
   - hurt
   - toggledisallowlatejoin
+  - showcontainedcontext
+  - hidecontainedcontext
+  - showmechanisms
+  - hidemechanisms
+  - attachbodypart
+  - attachtoself
+  - attachtogrid
+  - attachtograndparent
+  - inrangeunoccluded
   CanViewVar: true
   CanAdminPlace: true
   CanAdminMenu: true
@@ -133,6 +143,7 @@
   - spawn
   - delete
   - tp
+  - tpto
   - tpgrid
   - setgamepreset
   - forcepreset
@@ -211,6 +222,15 @@
   - deleteewi
   - hurt
   - toggledisallowlatejoin
+  - showcontainedcontext
+  - hidecontainedcontext
+  - showmechanisms
+  - hidemechanisms
+  - attachbodypart
+  - attachtoself
+  - attachtogrid
+  - attachtograndparent
+  - inrangeunoccluded
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true

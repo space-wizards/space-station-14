@@ -1,0 +1,35 @@
+﻿- type: entity
+  abstract: true
+  id: ReagentDispenserBase
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    mass: 25
+    anchored: true
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.3,-0.4,0.3,0.4"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+  - type: SnapGrid
+    offset: Center
+  - type: ReagentDispenser
+  - type: PowerReceiver
+  - type: UserInterface
+    interfaces:
+    - key: enum.ReagentDispenserUiKey.Key
+      type: ReagentDispenserBoundUserInterface
+  - type: LoopingSound
+  - type: Anchorable
+  - type: Pullable

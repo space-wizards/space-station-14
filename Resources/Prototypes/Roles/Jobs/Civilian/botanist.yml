@@ -1,0 +1,22 @@
+- type: job
+  id: Botanist
+  name: "botanist"
+  positions: 2
+  spawnPositions: 2
+  startingGear: BotanistGear
+  department:
+  - Civilian
+  icon: "Botanist"
+  access:
+  - Service
+  - Hydroponics
+  - Maintenance
+
+- type: startingGear
+  id: BotanistGear
+  equipment:
+    innerclothing: UniformHydroponics
+    backpack: BackpackClothingFilled
+    shoes: ShoesBrown
+    idcard: BotanistPDA
+    ears: HeadsetService
