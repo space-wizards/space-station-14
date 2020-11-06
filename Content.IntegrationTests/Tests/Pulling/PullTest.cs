@@ -7,7 +7,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.IntegrationTests.Tests.Pulling
@@ -23,13 +22,12 @@ namespace Content.IntegrationTests.Tests.Pulling
         {
             var server = StartServerDummyTicker();
 
+            var mapManager = server.ResolveDependency<IMapManager>();
+            var entityManager = server.ResolveDependency<IEntityManager>();
+
             await server.WaitAssertion(() =>
             {
-                var mapManager = IoCManager.Resolve<IMapManager>();
-
                 mapManager.CreateNewMapEntity(MapId.Nullspace);
-
-                var entityManager = IoCManager.Resolve<IEntityManager>();
 
                 var human = entityManager.SpawnEntity("HumanMob_Content", MapCoordinates.Nullspace);
                 var chair = entityManager.SpawnEntity("ChairWood", MapCoordinates.Nullspace);
