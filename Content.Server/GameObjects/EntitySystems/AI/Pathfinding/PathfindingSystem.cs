@@ -328,9 +328,16 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
                 return;
             }
 
+            var newGridId = moveEvent.NewPosition.GetGridId(_entityManager);
+            if (newGridId == GridId.Invalid)
+            {
+                HandleEntityRemove(moveEvent.Sender);
+                return;
+            }
+
             // The pathfinding graph is tile-based so first we'll check if they're on a different tile and if we need to update.
             // If you get entities bigger than 1 tile wide you'll need some other system so god help you.
-            var newTile = _mapManager.GetGrid(moveEvent.NewPosition.GetGridId(_entityManager)).GetTileRef(moveEvent.NewPosition);
+            var newTile = _mapManager.GetGrid(newGridId).GetTileRef(moveEvent.NewPosition);
 
             if (oldNode == null || oldNode.TileRef == newTile)
             {
