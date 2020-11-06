@@ -236,11 +236,11 @@ namespace Content.Client.GameObjects.Components.Mobs
         private void AlertOnOnShowTooltip(object sender, EventArgs e)
         {
             var alertControl = (AlertControl) sender;
-            _tooltip.Visible = true;
             _stateName.SetMessage(alertControl.Alert.Name);
             _stateDescription.SetMessage(alertControl.Alert.Description);
             // TODO: Text display of cooldown
             Tooltips.PositionTooltip(_tooltip);
+            _tooltip.Visible = true;
         }
 
         private void AlertPressed(BaseButton.ButtonEventArgs args, AlertControl alert)

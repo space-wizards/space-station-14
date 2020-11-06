@@ -29,12 +29,12 @@ namespace Content.Server.GameObjects.Components.Mobs
         {
             base.Startup();
 
-            EntitySystem.Get<WeightlessSystem>().AddStatus(this);
+            EntitySystem.Get<WeightlessSystem>().AddAlert(this);
         }
 
         public override void OnRemove()
         {
-            EntitySystem.Get<WeightlessSystem>().RemoveStatus(this);
+            EntitySystem.Get<WeightlessSystem>().RemoveAlert(this);
 
             base.OnRemove();
         }
