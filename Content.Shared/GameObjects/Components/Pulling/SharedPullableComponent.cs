@@ -219,12 +219,12 @@ namespace Content.Shared.GameObjects.Components.Pulling
         {
             if (Owner.TryGetComponent(out SharedAlertsComponent? pulledStatus))
             {
-                pulledStatus.ClearAlert(AlertSlot.Pulled);
+                pulledStatus.ClearAlert("pulled");
             }
 
             if (puller.TryGetComponent(out SharedAlertsComponent? ownerStatus))
             {
-                ownerStatus.ClearAlert(AlertSlot.Pulling);
+                ownerStatus.ClearAlert("pulling");
             }
         }
 

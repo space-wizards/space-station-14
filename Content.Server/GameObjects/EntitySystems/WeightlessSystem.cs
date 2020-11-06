@@ -95,7 +95,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private void RemoveWeightless(ServerAlertsComponent status)
         {
-            status.ClearAlert(AlertSlot.Weightless);
+            status.ClearAlert("weightless");
         }
 
         private void EntParentChanged(EntParentChangedMessage ev)

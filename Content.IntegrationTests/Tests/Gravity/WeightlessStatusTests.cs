@@ -68,7 +68,7 @@ namespace Content.IntegrationTests.Tests.Gravity
             await server.WaitAssertion(() =>
             {
                 // No gravity without a gravity generator
-                Assert.True(alerts.Alerts.ContainsKey(AlertSlot.Weightless));
+                Assert.True(alerts.IsShowingAlertCategory("weightless"));
 
                 gravityGenerator = human.EnsureComponent<GravityGeneratorComponent>();
             });
@@ -78,7 +78,7 @@ namespace Content.IntegrationTests.Tests.Gravity
 
             await server.WaitAssertion(() =>
             {
-                Assert.False(alerts.Alerts.ContainsKey(AlertSlot.Weightless));
+                Assert.False(alerts.IsShowingAlertCategory("weightless"));
 
                 // Disable the gravity generator
                 var args = new BreakageEventArgs {Owner = human};
@@ -89,7 +89,7 @@ namespace Content.IntegrationTests.Tests.Gravity
 
             await server.WaitAssertion(() =>
             {
-                Assert.False(alerts.Alerts.ContainsKey(AlertSlot.Weightless));
+                Assert.False(alerts.IsShowingAlertCategory("weightless"));
             });
         }
     }

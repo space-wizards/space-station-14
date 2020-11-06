@@ -81,7 +81,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                 // Normal pressure.
                 default:
-                    status?.ClearAlert(AlertSlot.Pressure);
+                    status?.ClearAlertCategory("pressure");
                     break;
             }
 

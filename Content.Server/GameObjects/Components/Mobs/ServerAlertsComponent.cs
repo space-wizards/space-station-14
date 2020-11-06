@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.Buckle;
 using Content.Server.GameObjects.Components.Movement;
@@ -40,7 +41,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         public override ComponentState GetComponentState()
         {
-            return new AlertsComponentState(Alerts);
+            return new AlertsComponentState(Alerts.Values.ToArray());
         }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession session = null)
@@ -64,38 +65,54 @@ namespace Content.Server.GameObjects.Components.Mobs
                     }
 
                     // TODO: Implement clicking other status effects in the HUD
-                    switch (msg.Effect)
+
+                    if (AlertManager.TryDecode(msg.EncodedAlert, out var alert))
                     {
-                        case AlertSlot.Buckled:
-                            if (!player.TryGetComponent(out BuckleComponent buckle))
-                                break;
+                        if (Alerts.TryGetValue(alert.AlertKey, out var currentAlert) &&
+                            currentAlert.AlertEncoded == msg.EncodedAlert)
+                        {
+                            // TODO: Refactor to component based approach (callbacks? check do_after)
+                            switch (alert.ID)
+                            {
+                                case "buckled":
+                                    if (!player.TryGetComponent(out BuckleComponent buckle))
+                                        break;
 
-                            buckle.TryUnbuckle(player);
-                            break;
-                        case AlertSlot.Piloting:
-                            if (!player.TryGetComponent(out ShuttleControllerComponent controller))
-                                break;
+                                    buckle.TryUnbuckle(player);
+                                    break;
+                                case "pilotingshuttle":
+                                    if (!player.TryGetComponent(out ShuttleControllerComponent controller))
+                                        break;
 
-                            controller.RemoveController();
-                            break;
-                        case AlertSlot.Pulling:
-                            EntitySystem
-                                .Get<SharedPullingSystem>()
-                                .GetPulled(player)?
-                                .GetComponentOrNull<SharedPullableComponent>()?
-                                .TryStopPull();
+                                    controller.RemoveController();
+                                    break;
+                                case "pulling":
+                                    EntitySystem
+                                        .Get<SharedPullingSystem>()
+                                        .GetPulled(player)?
+                                        .GetComponentOrNull<SharedPullableComponent>()?
+                                        .TryStopPull();
 
-                            break;
-                        case AlertSlot.Fire:
-                            if (!player.TryGetComponent(out FlammableComponent flammable))
-                                break;
+                                    break;
+                                case "fire":
+                                    if (!player.TryGetComponent(out FlammableComponent flammable))
+                                        break;
 
-                            flammable.Resist();
-                            break;
-                        default:
-                            player.PopupMessage(msg.Effect.ToString());
-                            break;
+                                    flammable.Resist();
+                                    break;
+                                default:
+                                    player.PopupMessage(alert.ID);
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            Logger.DebugS("alert", "player {0} sent ClickAlertMessage for" +
+                                                   " alert {1}, but this alert isn't currently showing", player.Name,
+                                alert.ID);
+                        }
                     }
+
 
                     break;
                 }

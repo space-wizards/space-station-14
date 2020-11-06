@@ -97,7 +97,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             if (!OnFire)
             {
-                status?.ClearAlert(AlertSlot.Fire);
+                status?.ClearAlert("fire");
                 return;
             }
 

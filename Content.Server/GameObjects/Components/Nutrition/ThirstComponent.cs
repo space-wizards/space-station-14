@@ -95,7 +95,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 }
                 else
                 {
-                    alertsComponent?.ClearAlert(AlertSlot.Thirst);
+                    alertsComponent?.ClearAlertCategory("thirst");
                 }
 
                 switch (_currentThirstThreshold)

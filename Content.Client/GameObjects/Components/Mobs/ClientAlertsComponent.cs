@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Client.UserInterface;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
+using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.ResourceManagement;
@@ -41,8 +42,10 @@ namespace Content.Client.GameObjects.Components.Mobs
         private RichTextLabel _stateDescription;
 
 
+        // TODO: Put cooldowns in here
         [ViewVariables]
-        private Dictionary<AlertSlot, CooldownGraphic> _cooldown = new Dictionary<AlertSlot, CooldownGraphic>();
+        private Dictionary<AlertKey, AlertControl> _alertControls
+            = new Dictionary<AlertKey, AlertControl>();
 
         /// <summary>
         /// Allows calculating if we need to act due to this component being controlled by the current mob
@@ -74,13 +77,28 @@ namespace Content.Client.GameObjects.Components.Mobs
         {
             base.HandleComponentState(curState, nextState);
 
-            // TODO: Ensure this equals check actually works properly (value not ref)
-            if (!(curState is AlertsComponentState state) || Alerts == state.Alerts)
+            if (!(curState is AlertsComponentState state))
             {
                 return;
             }
 
-            UpdateAlerts(state.Alerts);
+            // update the dict of states based on the array we got in the message
+            var newAlerts = new Dictionary<AlertKey, AlertState>();
+            foreach (var alertState in state.Alerts)
+            {
+                if (AlertManager.TryDecode(alertState.AlertEncoded, out var alert))
+                {
+                    newAlerts[alert.AlertKey] = alertState;
+                }
+                else
+                {
+                    Logger.ErrorS("alert", "unrecognized encoded alert {0}", alertState.AlertEncoded);
+                }
+            }
+
+            Alerts = newAlerts;
+
+            UpdateAlertsControls();
         }
 
         private void PlayerAttached()
@@ -116,66 +134,113 @@ namespace Content.Client.GameObjects.Components.Mobs
 
             _userInterfaceManager.PopupRoot.AddChild(_tooltip);
 
-            UpdateAlerts(Alerts);
+            UpdateAlertsControls();
         }
 
         private void PlayerDetached()
         {
             _ui?.Dispose();
             _ui = null;
-            _cooldown.Clear();
+            _alertControls.Clear();
         }
 
-        private void UpdateAlerts(IReadOnlyDictionary<AlertSlot, AlertState> newAlerts)
+        /// <summary>
+        /// Updates the displayed alerts based on current state of Alerts, performing
+        /// a diff to ensure we only change what's changed (this avoids active tooltips disappearing any
+        /// time state changes)
+        /// </summary>
+        private void UpdateAlertsControls()
         {
             if (!CurrentlyControlled || _ui == null)
             {
                 return;
             }
-            // TODO: diff from our current alerts instead of the below, which
-            // causes tooltips to disappear any time any alert is changed
-            _cooldown.Clear();
-            _ui.VBox.DisposeAllChildren();
 
-            SetAlerts(newAlerts);
-
-            foreach (var (key, effect) in Alerts.OrderBy(x => (int) x.Key))
+            // remove any controls with keys no longer present
+            var toRemove = new List<AlertKey>();
+            foreach (var existingKey in _alertControls.Keys)
             {
-                if (!AlertManager.TryDecode(effect.AlertEncoded, out var alert))
+                if (!Alerts.ContainsKey(existingKey))
                 {
-                    Logger.ErrorS("alert", "Unable to decode alert {0}", effect.AlertEncoded);
+                    toRemove.Add(existingKey);
+                }
+            }
+
+            foreach (var alertKeyToRemove in toRemove)
+            {
+                // remove and dispose the control
+                _alertControls.Remove(alertKeyToRemove, out var control);
+                control?.Dispose();
+            }
+
+            // TODO: Sort based on a YML defined order list, minimal shuffling around of other alerts
+
+            // now we know that alertControls contains alerts that should still exist but
+            // may need to updated,
+            // also there may be some new alerts we need to show.
+            // further, we need to ensure they are ordered w.r.t their configured order
+            foreach (var (alertKey, alertStatus) in Alerts)
+            {
+                if (!AlertManager.TryDecode(alertStatus.AlertEncoded, out var newAlert))
+                {
+                    Logger.ErrorS("alert", "Unable to decode alert {0}", alertStatus.AlertEncoded);
                     continue;
                 }
 
-                var texture = _resourceCache.GetTexture(alert.GetIconPath(effect.Severity));
-                var alertControl = new AlertControl(key, texture);
-                // show custom tooltip for the status control
-                alertControl.OnShowTooltip += (sender, args) =>
+                if (_alertControls.TryGetValue(alertKey, out var existingAlertControl))
                 {
-                    _tooltip.Visible = true;
-                    _stateName.SetMessage(alert.Name);
-                    _stateDescription.SetMessage(alert.Description);
-                    // TODO: Text display of cooldown
-                    Tooltips.PositionTooltip(_tooltip);
-                };
-                alertControl.OnHideTooltip += AlertOnOnHideTooltip;
-
-                if (effect.Cooldown.HasValue)
-                {
-                    var cooldown = new CooldownGraphic();
-                    alertControl.Children.Add(cooldown);
-                    _cooldown[key] = cooldown;
+                    // already being shown for this key, but the actual alert id might change.
+                    if (existingAlertControl.Alert.ID != newAlert.ID)
+                    {
+                        // id is changing to a new alert, replace the control
+                        var newAlertControl = CreateAlertControl(newAlert, alertStatus);
+                        var idx = existingAlertControl.GetPositionInParent();
+                        existingAlertControl.Dispose();
+                        _ui.VBox.Children.Add(newAlertControl);
+                        newAlertControl.SetPositionInParent(idx);
+                        _alertControls[alertKey] = newAlertControl;
+                    }
+                    else
+                    {
+                        // id is the same, simply update the existing control severity
+                        existingAlertControl.SetSeverity(alertStatus.Severity);
+                    }
                 }
-
-                alertControl.OnPressed += args => AlertPressed(args, alertControl);
-
-                _ui.VBox.AddChild(alertControl);
+                else
+                {
+                    // this is a new alert + alert key, create the control and add it
+                    var newAlertControl = CreateAlertControl(newAlert, alertStatus);
+                    _ui.VBox.Children.Add(newAlertControl);
+                    _alertControls[alertKey] = newAlertControl;
+                }
             }
         }
 
-        private void AlertOnOnHideTooltip(object? sender, EventArgs e)
+        private AlertControl CreateAlertControl(AlertPrototype alert, AlertState alertState)
+        {
+
+            var alertControl = new AlertControl(alert, alertState.Severity, _resourceCache);
+            // show custom tooltip for the status control
+            alertControl.OnShowTooltip += AlertOnOnShowTooltip;
+            alertControl.OnHideTooltip += AlertOnOnHideTooltip;
+            alertControl.OnPressed += args => AlertPressed(args, alertControl);
+
+            return alertControl;
+        }
+
+        private void AlertOnOnHideTooltip(object sender, EventArgs e)
         {
             _tooltip.Visible = false;
+        }
+
+        private void AlertOnOnShowTooltip(object sender, EventArgs e)
+        {
+            var alertControl = (AlertControl) sender;
+            _tooltip.Visible = true;
+            _stateName.SetMessage(alertControl.Alert.Name);
+            _stateDescription.SetMessage(alertControl.Alert.Description);
+            // TODO: Text display of cooldown
+            Tooltips.PositionTooltip(_tooltip);
         }
 
         private void AlertPressed(BaseButton.ButtonEventArgs args, AlertControl alert)
@@ -185,36 +250,31 @@ namespace Content.Client.GameObjects.Components.Mobs
                 return;
             }
 
-            SendNetworkMessage(new ClickAlertMessage(alert.Effect));
+            if (AlertManager.TryEncode(alert.Alert, out var encoded))
+            {
+
+                SendNetworkMessage(new ClickAlertMessage(encoded));
+            }
+            else
+            {
+                Logger.ErrorS("alert", "unable to encode alert {0}", alert.Alert.ID);
+            }
+
         }
 
         public void FrameUpdate(float frameTime)
         {
-            foreach (var (effect, cooldownGraphic) in _cooldown)
+            foreach (var (alertKey, alertControl) in _alertControls)
             {
-                var alert = Alerts[effect];
-                if (!alert.Cooldown.HasValue)
-                {
-                    cooldownGraphic.Progress = 0;
-                    cooldownGraphic.Visible = false;
-                    continue;
-                }
-
-                var start = alert.Cooldown.Value.Item1;
-                var end = alert.Cooldown.Value.Item2;
-
-                var length = (end - start).TotalSeconds;
-                var progress = (_gameTiming.CurTime - start).TotalSeconds / length;
-                var ratio = (progress <= 1 ? (1 - progress) : (_gameTiming.CurTime - end).TotalSeconds * -5);
-
-                cooldownGraphic.Progress = MathHelper.Clamp((float)ratio, -1, 1);
-                cooldownGraphic.Visible = ratio > -1f;
+                // reconcile all alert controls with their current cooldowns
+                var alert = Alerts[alertKey];
+                alertControl.UpdateCooldown(alert.Cooldown, _gameTiming.CurTime);
             }
         }
 
-        protected override void AfterClearAlert(AlertSlot effect)
+        protected override void AfterClearAlert()
         {
-            UpdateAlerts(Alerts);
+            UpdateAlertsControls();
         }
     }
 }

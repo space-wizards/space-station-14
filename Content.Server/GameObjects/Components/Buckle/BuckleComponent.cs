@@ -126,7 +126,7 @@ namespace Content.Server.GameObjects.Components.Buckle
                 }
                 else
                 {
-                    _serverAlertsComponent.ClearAlert(AlertSlot.Buckled);
+                    _serverAlertsComponent.ClearAlertCategory("buckled");
                 }
             }
         }

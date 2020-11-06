@@ -179,7 +179,7 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             if (Owner.TryGetComponent(out ServerAlertsComponent? status))
             {
-                status.ClearAlert(AlertSlot.Piloting);
+                status.ClearAlert(_pilotingAlertId);
             }
 
             if (entity.TryGetComponent(out MindComponent? mind))

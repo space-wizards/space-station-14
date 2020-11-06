@@ -102,7 +102,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
             if (progress >= length)
             {
-                Owner.SpawnTimer(250, () => status.ClearAlert(AlertSlot.Stun), StatusRemoveCancellation.Token);
+                Owner.SpawnTimer(250, () => status.ClearAlert("stun"), StatusRemoveCancellation.Token);
                 LastStun = null;
             }
         }

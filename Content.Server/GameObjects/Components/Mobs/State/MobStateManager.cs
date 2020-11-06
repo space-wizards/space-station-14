@@ -53,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Mobs.State
 
             if (Owner.TryGetComponent(out ServerAlertsComponent status))
             {
-                status.ClearAlert(AlertSlot.Health);
+                status.ClearAlert("health");
             }
 
             if (Owner.TryGetComponent(out ServerOverlayEffectsComponent overlay))

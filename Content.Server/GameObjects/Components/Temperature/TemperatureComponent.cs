@@ -95,7 +95,7 @@ namespace Content.Server.GameObjects.Components.Temperature
 
                     // Safe.
                     case var t when t <= 327 && t > 292:
-                        status.ClearAlert(AlertSlot.Temperature);
+                        status.ClearAlertCategory("temperature");
                         break;
 
                     // Heat weak.

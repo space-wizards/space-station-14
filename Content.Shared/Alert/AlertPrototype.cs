@@ -9,6 +9,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
+using Serilog;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.Alert
@@ -19,13 +20,12 @@ namespace Content.Shared.Alert
     [NetSerializable, Serializable, Prototype("alert")]
     public class AlertPrototype : IPrototype
     {
-        private const string SerializationCache = "alert";
-
         private string _id;
         private string _icon;
-        private AlertSlot _alertSlot;
         private FormattedMessage _name;
         private FormattedMessage _description;
+        private string _category;
+        private AlertKey _alertKey;
         private short _maxSeverity;
         private short _minSeverity;
 
@@ -55,10 +55,19 @@ namespace Content.Shared.Alert
         public FormattedMessage Description => _description;
 
         /// <summary>
-        /// AlertSlot this is a state of.
+        /// Category the alert belongs to. Only one alert of a given category
+        /// can be shown at a time. If one is shown while another is already being shown,
+        /// it will be replaced. This can be useful for categories of alerts which should naturally
+        /// replace each other and are mutually exclusive, for example lowpressure / highpressure,
+        /// hot / cold. If left unspecified, the alert will not replace or be replaced by any other alerts.
         /// </summary>
-        [ViewVariables]
-        public AlertSlot AlertSlot => _alertSlot;
+        public string Category => _category;
+
+        /// <summary>
+        /// Key which is unique w.r.t category semantics (alerts with same category have equal keys,
+        /// alerts with no category have different keys).
+        /// </summary>
+        public AlertKey AlertKey => _alertKey;
 
         /// <summary>
         /// -1 (no effect) unless MaxSeverity is specified. Defaults to 1. Minimum severity level supported by this state.
@@ -84,30 +93,12 @@ namespace Content.Shared.Alert
             serializer.DataField(ref _icon, "icon", string.Empty);
             serializer.DataField(ref _maxSeverity, "maxSeverity", (short) -1);
             serializer.DataField(ref _minSeverity, "minSeverity", (short) 1);
+            serializer.DataField(ref _category, "category", null);
+            _alertKey = new AlertKey(_category, _id);
             serializer.DataReadFunction("name", string.Empty,
                 s => _name = FormattedMessage.FromMarkup(s));
             serializer.DataReadFunction("description", string.Empty,
                 s => _description = FormattedMessage.FromMarkup(s));
-
-            // TODO: kinda verbose and slightly duplicated in SharedStackComponent, refactor to a common method
-            if (serializer.TryReadDataFieldCached("statusEffect", out string raw))
-            {
-                var refl = IoCManager.Resolve<IReflectionManager>();
-                if (refl.TryParseEnumReference(raw, out var @enum))
-                {
-                    _alertSlot = (AlertSlot) @enum;
-                }
-                else
-                {
-                    Logger.WarningS("unable to parse StatusEffect in {0} from statusEffect: {1}", _id, raw);
-                    _alertSlot = AlertSlot.Error;
-                }
-            }
-            else
-            {
-                Logger.WarningS("no statusEffect defined for status effect state {0}", _id);
-                _alertSlot = AlertSlot.Error;
-            }
         }
 
         /// <param name="severity">severity level, if supported by this alert</param>
@@ -146,6 +137,49 @@ namespace Content.Shared.Alert
             // split and add the severity number to the path
             var ext = _icon.LastIndexOf('.');
             return _icon.Substring(0, ext) + severity + _icon.Substring(ext, _icon.Length - ext);
+        }
+    }
+
+    /// <summary>
+    /// Key for an alert which is unique (for equality and hashcode purposes) w.r.t category semantics.
+    /// I.e., the category, if a category was specified, otherwise
+    /// cat- + the id (prefixed to avoid accidental overlap between category and id).
+    /// </summary>
+    [Serializable]
+    public struct AlertKey
+    {
+        private readonly string _key;
+
+        public AlertKey(string category, string id) : this()
+        {
+            _key = category ?? "cat-" + id;
+        }
+
+        public bool Equals(AlertKey other)
+        {
+            return _key == other._key;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is AlertKey other && Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return (_key != null ? _key.GetHashCode() : 0);
+        }
+
+        /// <param name="category">alert category, must not be null</param>
+        /// <returns>An alert key for the provided alert category</returns>
+        public static AlertKey ForCategory(string category)
+        {
+            if (category == null)
+            {
+                Logger.ErrorS("alert", "tried to create AlertKey with null category, this is not allowed");
+                return new AlertKey();
+            }
+            return new AlertKey(category, null);
         }
     }
 }

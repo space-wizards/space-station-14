@@ -187,7 +187,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             {
                 if (CanStillInteract)
                 {
-                    status.ClearAlert(AlertSlot.Cuffed);
+                    status.ClearAlert("handcuffed");
                 }
                 else
                 {

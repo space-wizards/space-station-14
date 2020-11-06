@@ -23,14 +23,12 @@ namespace Content.Shared.GameObjects.Components.Mobs
         public override uint? NetID => ContentNetIDs.ALERTS;
 
         [ViewVariables]
-        private Dictionary<AlertSlot, AlertState> _alerts = new Dictionary<AlertSlot, AlertState>();
+        protected Dictionary<AlertKey, AlertState> Alerts = new Dictionary<AlertKey, AlertState>();
 
-        public IReadOnlyDictionary<AlertSlot, AlertState> Alerts => _alerts;
-
-        // TODO: Remove
-        protected void SetAlerts(IReadOnlyDictionary<AlertSlot, AlertState> newAlerts)
+        /// <returns>true iff an alert of the indicated alert category is currently showing</returns>
+        public bool IsShowingAlertCategory(string alertCategory)
         {
-            _alerts = new Dictionary<AlertSlot, AlertState>(newAlerts);
+            return Alerts.ContainsKey(AlertKey.ForCategory(alertCategory));
         }
 
         /// <summary>
@@ -46,14 +44,13 @@ namespace Content.Shared.GameObjects.Components.Mobs
         {
             if (AlertManager.TryGetWithEncoded(alertId, out var alert, out var encoded))
             {
-                //TODO: All these duplicated modified checks should be refactored between this and ServerAlertsComponent
-                if (_alerts.TryGetValue(alert.AlertSlot, out var value) &&
+                if (Alerts.TryGetValue(alert.AlertKey, out var value) &&
                     value.AlertEncoded == encoded &&
                     value.Severity == severity && value.Cooldown == cooldown)
                 {
                     return;
                 }
-                _alerts[alert.AlertSlot] = new AlertState()
+                Alerts[alert.AlertKey] = new AlertState()
                     {Cooldown = cooldown, AlertEncoded = encoded, Severity = severity};
                 Dirty();
 
@@ -65,32 +62,57 @@ namespace Content.Shared.GameObjects.Components.Mobs
             }
         }
 
-        // TODO: by category or by id
-        public void ClearAlert(AlertSlot effect)
+        /// <summary>
+        /// Clear the alert with the given category, if one is currently showing.
+        /// </summary>
+        public void ClearAlertCategory(string category)
         {
-            if (!_alerts.Remove(effect))
+            if (!Alerts.Remove(AlertKey.ForCategory(category)))
             {
                 return;
             }
 
-            AfterClearAlert(effect);
+            AfterClearAlert();
 
             Dirty();
         }
 
         /// <summary>
+        /// Clear the alert with the given id.
+        /// </summary>
+        /// <param name="alertId"></param>
+        public void ClearAlert(string alertId)
+        {
+            if (AlertManager.TryGet(alertId, out var alert))
+            {
+                if (!Alerts.Remove(alert.AlertKey))
+                {
+                    return;
+                }
+
+                AfterClearAlert();
+
+                Dirty();
+            }
+            else
+            {
+                Logger.ErrorS("alert", "unable to clear alert, unknown alert id {0}", alertId);
+            }
+
+        }
+
+        /// <summary>
         /// Invoked after clearing an alert prior to dirtying the control
         /// </summary>
-        protected virtual void AfterClearAlert(AlertSlot effect) { }
+        protected virtual void AfterClearAlert() { }
     }
 
     [Serializable, NetSerializable]
     public class AlertsComponentState : ComponentState
     {
-        // TODO: not sure a dict is really the best way to transmit this
-        public IReadOnlyDictionary<AlertSlot, AlertState> Alerts;
+        public AlertState[] Alerts;
 
-        public AlertsComponentState(IReadOnlyDictionary<AlertSlot, AlertState> alerts) : base(ContentNetIDs.ALERTS)
+        public AlertsComponentState(AlertState[] alerts) : base(ContentNetIDs.ALERTS)
         {
             Alerts = alerts;
         }
@@ -102,12 +124,12 @@ namespace Content.Shared.GameObjects.Components.Mobs
     [Serializable, NetSerializable]
     public class ClickAlertMessage : ComponentMessage
     {
-        public readonly AlertSlot Effect;
+        public readonly int EncodedAlert;
 
-        public ClickAlertMessage(AlertSlot effect)
+        public ClickAlertMessage(int encodedAlert)
         {
             Directed = true;
-            Effect = effect;
+            EncodedAlert = encodedAlert;
         }
     }
 
@@ -117,23 +139,5 @@ namespace Content.Shared.GameObjects.Components.Mobs
         public int AlertEncoded;
         public short? Severity;
         public ValueTuple<TimeSpan, TimeSpan>? Cooldown;
-    }
-
-    public enum AlertSlot
-    {
-        Health,
-        Hunger,
-        Thirst,
-        Pressure,
-        Fire,
-        Temperature,
-        Stun,
-        Cuffed,
-        Buckled,
-        Piloting,
-        Pulling,
-        Pulled,
-        Weightless,
-        Error
     }
 }
