@@ -36,7 +36,6 @@ namespace Content.Server.GameObjects.EntitySystems
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
-
         private AudioSystem _audioSystem = default!;
 
         private const float StepSoundMoveDistanceRunning = 2;

@@ -28,7 +28,6 @@ namespace Content.Server.GameObjects.EntitySystems
     internal sealed class HandsSystem : EntitySystem
     {
 
-
         private const float ThrowForce = 1.5f; // Throwing force of mobs in Newtons
 
         /// <inheritdoc />

@@ -25,7 +25,6 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
     {
         [Robust.Shared.IoC.Dependency] private readonly IGameTiming _gameTiming = default!;
         [Robust.Shared.IoC.Dependency] private readonly IPlayerManager _playerManager = default!;
-
         [Robust.Shared.IoC.Dependency] private readonly IMapManager _mapManager = default!;
         [Robust.Shared.IoC.Dependency] private readonly IConfigurationManager _configManager = default!;
 

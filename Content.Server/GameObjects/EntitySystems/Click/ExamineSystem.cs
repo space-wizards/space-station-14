@@ -12,7 +12,6 @@ namespace Content.Server.GameObjects.EntitySystems.Click
     public class ExamineSystem : ExamineSystemShared
     {
 
-
         private static readonly FormattedMessage _entityNotFoundMessage;
 
         static ExamineSystem()
@@ -20,6 +19,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             _entityNotFoundMessage = new FormattedMessage();
             _entityNotFoundMessage.AddText(Loc.GetString("That entity doesn't exist"));
         }
+
 
         public override void Initialize()
         {

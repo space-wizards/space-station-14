@@ -34,7 +34,6 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     internal class ConstructionSystem : SharedConstructionSystem
     {
-
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 

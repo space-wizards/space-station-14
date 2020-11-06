@@ -12,7 +12,6 @@ namespace Content.Server.GameObjects.EntitySystems
     : EntitySystem
     {
 
-
         private const float UpdateDelay = 1f;
         private float _lastUpdate;
 

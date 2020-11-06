@@ -17,7 +17,6 @@ namespace Content.Server.GameObjects.EntitySystems
 {
     public class VerbSystem : SharedVerbSystem, IResettingEntitySystem
     {
-
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
         private readonly HashSet<IPlayerSession> _seesThroughContainers = new HashSet<IPlayerSession>();

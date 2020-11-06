@@ -42,7 +42,6 @@ namespace Content.Server.GameObjects.EntitySystems.Click
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
 
-
         public override void Initialize()
         {
             SubscribeNetworkEvent<DragDropMessage>(HandleDragDropMessage);
