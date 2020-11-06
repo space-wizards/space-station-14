@@ -37,8 +37,6 @@ namespace Content.Server.GameObjects.Components.PDA
     public class PDAComponent : SharedPDAComponent, IInteractUsing, IActivate, IUse, IAccess
     {
         [Dependency] private readonly IPDAUplinkManager _uplinkManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-
         [ViewVariables] private Container _idSlot = default!;
         [ViewVariables] private bool _lightOn;
         [ViewVariables] private string _startingIdCard = default!;
@@ -74,7 +72,7 @@ namespace Content.Server.GameObjects.Components.PDA
                 UserInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
             }
 
-            var idCard = _entityManager.SpawnEntity(_startingIdCard, Owner.Transform.Coordinates);
+            var idCard = Owner.EntityManager.SpawnEntity(_startingIdCard, Owner.Transform.Coordinates);
             var idCardComponent = idCard.GetComponent<IdCardComponent>();
             _idSlot.Insert(idCardComponent.Owner);
             ContainedID = idCardComponent;

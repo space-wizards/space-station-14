@@ -32,8 +32,6 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
     public class PathfindingSystem : EntitySystem, IResettingEntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-
         public IReadOnlyDictionary<GridId, Dictionary<Vector2i, PathfindingChunk>> Graph => _graph;
         private readonly Dictionary<GridId, Dictionary<Vector2i, PathfindingChunk>> _graph = new Dictionary<GridId, Dictionary<Vector2i, PathfindingChunk>>();
 
@@ -330,7 +328,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 
             // The pathfinding graph is tile-based so first we'll check if they're on a different tile and if we need to update.
             // If you get entities bigger than 1 tile wide you'll need some other system so god help you.
-            var newTile = _mapManager.GetGrid(moveEvent.NewPosition.GetGridId(_entityManager)).GetTileRef(moveEvent.NewPosition);
+            var newTile = _mapManager.GetGrid(moveEvent.NewPosition.GetGridId(EntityManager)).GetTileRef(moveEvent.NewPosition);
 
             if (oldNode == null || oldNode.TileRef == newTile)
             {
@@ -354,7 +352,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         // Also look at increasing tile cost the more physics entities are on it
         public bool CanTraverse(IEntity entity, EntityCoordinates coordinates)
         {
-            var gridId = coordinates.GetGridId(_entityManager);
+            var gridId = coordinates.GetGridId(EntityManager);
             var tile = _mapManager.GetGrid(gridId).GetTileRef(coordinates);
             var node = GetNode(tile);
             return CanTraverse(entity, node);

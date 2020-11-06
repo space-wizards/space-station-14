@@ -39,7 +39,6 @@ namespace Content.Server.GameObjects.Components.Buckle
     [RegisterComponent]
     public class BuckleComponent : SharedBuckleComponent, IInteractHand
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -421,7 +420,7 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             var bucklePosition = BuckledTo.Owner.Transform.Coordinates.Offset(BuckleOffset.Value);
 
-            if (moveEvent.NewPosition.InRange(_entityManager, bucklePosition, 0.2f))
+            if (moveEvent.NewPosition.InRange(Owner.EntityManager, bucklePosition, 0.2f))
             {
                 return;
             }
@@ -503,8 +502,8 @@ namespace Content.Server.GameObjects.Components.Buckle
         {
             base.Initialize();
 
-            _entityManager.EventBus.SubscribeEvent<EntInsertedIntoContainerMessage>(EventSource.Local, this, InsertIntoContainer);
-            _entityManager.EventBus.SubscribeEvent<EntRemovedFromContainerMessage>(EventSource.Local, this, InsertIntoContainer);
+            Owner.EntityManager.EventBus.SubscribeEvent<EntInsertedIntoContainerMessage>(EventSource.Local, this, InsertIntoContainer);
+            Owner.EntityManager.EventBus.SubscribeEvent<EntRemovedFromContainerMessage>(EventSource.Local, this, InsertIntoContainer);
         }
 
         protected override void Startup()
@@ -517,7 +516,7 @@ namespace Content.Server.GameObjects.Components.Buckle
         {
             base.OnRemove();
 
-            _entityManager.EventBus.UnsubscribeEvents(this);
+            Owner.EntityManager.EventBus.UnsubscribeEvents(this);
 
             BuckledTo?.Remove(this);
 

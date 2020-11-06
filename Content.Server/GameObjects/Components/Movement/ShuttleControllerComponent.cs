@@ -23,7 +23,6 @@ namespace Content.Server.GameObjects.Components.Movement
     internal class ShuttleControllerComponent : Component, IMoverComponent
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private bool _movingUp;
         private bool _movingDown;
@@ -66,7 +65,7 @@ namespace Content.Server.GameObjects.Components.Movement
             var gridId = Owner.Transform.GridID;
 
             if (_mapManager.TryGetGrid(gridId, out var grid) &&
-                _entityManager.TryGetEntity(grid.GridEntityId, out var gridEntity))
+                Owner.EntityManager.TryGetEntity(grid.GridEntityId, out var gridEntity))
             {
                 //TODO: Switch to shuttle component
                 if (!gridEntity.TryGetComponent(out IPhysicsComponent? physics))

@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
     {
         [Robust.Shared.IoC.Dependency] private readonly IGameTiming _gameTiming = default!;
         [Robust.Shared.IoC.Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Robust.Shared.IoC.Dependency] private readonly IEntityManager _entityManager = default!;
+
         [Robust.Shared.IoC.Dependency] private readonly IMapManager _mapManager = default!;
         [Robust.Shared.IoC.Dependency] private readonly IConfigurationManager _configManager = default!;
 
@@ -115,7 +115,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
 
                 foreach (var grid in _mapManager.FindGridsIntersecting(entity.Transform.MapID, worldBounds))
                 {
-                    if (!_entityManager.TryGetEntity(grid.GridEntityId, out var gridEnt)) continue;
+                    if (!EntityManager.TryGetEntity(grid.GridEntityId, out var gridEnt)) continue;
 
                     if (!gridEnt.TryGetComponent<GridAtmosphereComponent>(out var gam)) continue;
 

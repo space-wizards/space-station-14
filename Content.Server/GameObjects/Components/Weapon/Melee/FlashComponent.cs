@@ -23,8 +23,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
     [RegisterComponent]
     public class FlashComponent : MeleeWeaponComponent, IUse, IExamine
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-
         public override string Name => "Flash";
 
         [ViewVariables(VVAccess.ReadWrite)] private int _flashDuration = 5000;
@@ -84,7 +82,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 return false;
             }
 
-            foreach (var entity in _entityManager.GetEntitiesInRange(Owner.Transform.Coordinates, _range))
+            foreach (var entity in Owner.EntityManager.GetEntitiesInRange(Owner.Transform.Coordinates, _range))
             {
                 Flash(entity, eventArgs.User, _aoeFlashDuration);
             }

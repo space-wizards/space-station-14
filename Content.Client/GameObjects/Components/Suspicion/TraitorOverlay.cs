@@ -33,7 +33,6 @@ namespace Content.Client.GameObjects.Components.Suspicion
             IEyeManager eyeManager)
             : base(nameof(TraitorOverlay))
         {
-            _entityManager = entityManager;
             _eyeManager = eyeManager;
 
             _font = new VectorFont(resourceCache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 10);

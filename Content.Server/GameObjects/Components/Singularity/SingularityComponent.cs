@@ -29,7 +29,6 @@ namespace Content.Server.GameObjects.Components.Singularity
     [RegisterComponent]
     public class SingularityComponent : Component, ICollideBehavior
     {
-        [Dependency] private IEntityManager _entityManager = null!;
         [Dependency] private IMapManager _mapManager = null!;
         [Dependency] private IRobustRandom _random = null!;
 
@@ -176,7 +175,7 @@ namespace Content.Server.GameObjects.Components.Singularity
             }
             _previousPulledEntites.Clear();
 
-            var entitiesToPull = _entityManager.GetEntitiesInRange(Owner.Transform.Coordinates, Level * 10);
+            var entitiesToPull = Owner.EntityManager.GetEntitiesInRange(Owner.Transform.Coordinates, Level * 10);
             foreach (var entity in entitiesToPull)
             {
                 if (!entity.TryGetComponent<PhysicsComponent>(out var collidableComponent)) continue;
