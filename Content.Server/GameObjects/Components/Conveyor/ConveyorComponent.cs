@@ -24,7 +24,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Conveyor
 {
     [RegisterComponent]
-    public class ConveyorComponent : Component, ISignalReceiver<TwoWayLeverSignal>
+    public class ConveyorComponent : Component, ISignalReceiver<TwoWayLeverSignal>, ISignalReceiver<bool>
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
@@ -171,8 +171,12 @@ namespace Content.Server.GameObjects.Components.Conveyor
                 TwoWayLeverSignal.Left => ConveyorState.Reversed,
                 TwoWayLeverSignal.Middle => ConveyorState.Off,
                 TwoWayLeverSignal.Right => ConveyorState.Forward,
-                _ => State
             };
+        }
+
+        public void TriggerSignal(bool signal)
+        {
+            State = signal ? ConveyorState.Forward : ConveyorState.Off;
         }
     }
 }
