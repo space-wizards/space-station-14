@@ -608,9 +608,10 @@
   id: SingularityToy
   description: Mass-produced by a sadistic corporate conglomerate!
   components:
-  - type: Sprite
+  - type: Icon
     sprite: Objects/Fun/toys.rsi
     state: singularitytoy
+  - type: SingularityShaderAura
 
   - type: Item
     size: 12

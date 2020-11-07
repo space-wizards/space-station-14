@@ -110,7 +110,8 @@ namespace Content.Client.GameObjects.Components.Mobs
             }
             foreach (var container in newOverlays)
             {
-                if (!ActiveOverlays.Contains(container))
+                var existingContainer = ActiveOverlays.Find(c => c.ID == container.ID);
+                if (existingContainer == null)
                     TryAddOverlayFromData(container);
                 else
                     UpdateOverlayConfiguration(_overlayManager.GetOverlay(container.ID), container.Parameters);

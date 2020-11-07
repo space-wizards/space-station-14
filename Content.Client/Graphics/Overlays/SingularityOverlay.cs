@@ -33,7 +33,7 @@ namespace Content.Client.Graphics.Overlays
         [Dependency] private readonly IClyde _displayManager = default!;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpaceFOVStencil;
-        public override OverlayPriority Priority => OverlayPriority.P4;
+        public override OverlayPriority Priority => OverlayPriority.P3;
         public override bool RequestScreenTexture => true;
 
         private readonly ShaderInstance _shader;

@@ -2,8 +2,8 @@
 
 uniform sampler2D SCREEN_TEXTURE;
 uniform highp vec2 positionInput = vec2(0,0);
-uniform highp float falloff = 4;
-uniform highp float intensity = 2.4;
+uniform highp float falloff = 5.1;
+uniform highp float intensity = 3.8;
 
 
 
@@ -12,16 +12,14 @@ void fragment() {
 
 	vec2 finalCoords = FRAGCOORD.xy - positionInput;
 	highp float deformation = (intensity*500) / pow(distanceToCenter, pow(falloff, 0.5));
-	finalCoords *= 1-deformation;
+	if(deformation > 0.005)
+		finalCoords *= 1-deformation;
 	finalCoords += positionInput;
 	
 	float darkenCircleSize = 600; //Calculate optional darkening effect (darker the closer we are to the center of the singularity)
 	float alph = (distanceToCenter-30)/(darkenCircleSize-30);
 	float darkening = 0.9-(alph*0.9);
-	darkening = 0; //Disables darkening effect
 		
-	COLOR = mix(texture(SCREEN_TEXTURE, finalCoords*SCREEN_PIXEL_SIZE), vec4(0.0, 0.0, 0.0, 1.0), darkening);
-	
-	COLOR = texture(SCREEN_TEXTURE, FRAGCOORD.xy*SCREEN_PIXEL_SIZE);
-	COLOR = texture(SCREEN_TEXTURE, FRAGCOORD.xy*SCREEN_PIXEL_SIZE);
+	//COLOR = mix(texture(SCREEN_TEXTURE, finalCoords*SCREEN_PIXEL_SIZE), vec4(0.0, 0.0, 0.0, 1.0), darkening);
+	COLOR = texture(SCREEN_TEXTURE, finalCoords*SCREEN_PIXEL_SIZE);
 }
