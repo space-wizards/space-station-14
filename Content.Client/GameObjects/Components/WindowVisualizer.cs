@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
@@ -28,15 +29,17 @@ namespace Content.Client.GameObjects.Components
                 var level = Math.Min(ContentHelpers.RoundToLevels(fraction, 1, 7), 5);
                 if (level == 0)
                 {
-                    foreach (WindowDamageLayers val in Enum.GetValues(typeof(WindowDamageLayers)))
+                    foreach (var val in Enum.GetValues(typeof(WindowDamageLayers)))
                     {
-                        sprite.LayerSetVisible(val, false);
+                        if (val == null) continue;
+                        sprite.LayerSetVisible((WindowDamageLayers) val, false);
                     }
                     return;
                 }
-                foreach (WindowDamageLayers val in Enum.GetValues(typeof(WindowDamageLayers)))
+                foreach (var val in Enum.GetValues(typeof(WindowDamageLayers)))
                 {
-                    sprite.LayerSetVisible(val, true);
+                    if (val == null) continue;
+                    sprite.LayerSetVisible((WindowDamageLayers) val, true);
                 }
 
                 sprite.LayerSetState(WindowDamageLayers.DamageNE, $"{(int) lowWall.LastCornerNE}_{level}");
