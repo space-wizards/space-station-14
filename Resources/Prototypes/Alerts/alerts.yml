@@ -109,6 +109,7 @@
 
 - type: alert
   id: pilotingshuttle
+  category: piloting
   icon: /Textures/Interface/StatusEffects/Buckle/buckled.png
   name: Piloting Shuttle
   description: You are piloting a shuttle. Click the alert to stop.
