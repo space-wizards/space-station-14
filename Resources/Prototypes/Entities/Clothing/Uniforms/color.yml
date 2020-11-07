@@ -469,7 +469,7 @@
   description: A multi-colored jumpsuit!
   components:
   - type: Sprite
-    state: rainbow
-    
+    sprite: Clothing/Uniforms/rainbow.rsi
+    state: icon
   - type: Clothing
-    HeldPrefix: rainbow
+    sprite: Clothing/Uniforms/rainbow.rsi
