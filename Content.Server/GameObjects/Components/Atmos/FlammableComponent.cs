@@ -101,7 +101,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 return;
             }
 
-            status.ShowAlert("fire");
+            status.ShowAlert("fire", onClickAlert: OnClickAlert);
 
             if (FireStacks > 0)
             {
@@ -150,6 +150,14 @@ namespace Content.Server.GameObjects.Components.Atmos
                 {
                     _collided.Remove(uid);
                 }
+            }
+        }
+
+        private void OnClickAlert(ClickAlertEventArgs args)
+        {
+            if (args.Player.TryGetComponent(out FlammableComponent flammable))
+            {
+                flammable.Resist();
             }
         }
 

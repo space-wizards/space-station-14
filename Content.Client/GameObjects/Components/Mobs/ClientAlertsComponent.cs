@@ -84,20 +84,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             }
 
             // update the dict of states based on the array we got in the message
-            var newAlerts = new Dictionary<AlertKey, AlertState>();
-            foreach (var alertState in state.Alerts)
-            {
-                if (AlertManager.TryDecode(alertState.AlertEncoded, out var alert))
-                {
-                    newAlerts[alert.AlertKey] = alertState;
-                }
-                else
-                {
-                    Logger.ErrorS("alert", "unrecognized encoded alert {0}", alertState.AlertEncoded);
-                }
-            }
-
-            Alerts = newAlerts;
+            SetAlerts(state.Alerts);
 
             UpdateAlertsControls();
         }
@@ -167,7 +154,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             var toRemove = new List<AlertKey>();
             foreach (var existingKey in _alertControls.Keys)
             {
-                if (!Alerts.ContainsKey(existingKey))
+                if (!IsShowingAlert(existingKey))
                 {
                     toRemove.Add(existingKey);
                 }
@@ -184,7 +171,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             // may need to updated,
             // also there may be some new alerts we need to show.
             // further, we need to ensure they are ordered w.r.t their configured order
-            foreach (var (alertKey, alertStatus) in Alerts)
+            foreach (var alertStatus in EnumerateAlertStates())
             {
                 if (!AlertManager.TryDecode(alertStatus.AlertEncoded, out var newAlert))
                 {
@@ -192,7 +179,7 @@ namespace Content.Client.GameObjects.Components.Mobs
                     continue;
                 }
 
-                if (_alertControls.TryGetValue(alertKey, out var existingAlertControl) &&
+                if (_alertControls.TryGetValue(newAlert.AlertKey, out var existingAlertControl) &&
                     existingAlertControl.Alert.ID == newAlert.ID)
                 {
                     // id is the same, simply update the existing control severity
@@ -200,6 +187,8 @@ namespace Content.Client.GameObjects.Components.Mobs
                 }
                 else
                 {
+                    existingAlertControl?.Dispose();
+
                     // this is a new alert + alert key or just a different alert with the same
                     // key, create the control and add it in the appropriate order
                     var newAlertControl = CreateAlertControl(newAlert, alertStatus);
@@ -228,7 +217,7 @@ namespace Content.Client.GameObjects.Components.Mobs
                         _ui.VBox.Children.Add(newAlertControl);
                     }
 
-                    _alertControls[alertKey] = newAlertControl;
+                    _alertControls[newAlert.AlertKey] = newAlertControl;
                 }
             }
         }
@@ -284,8 +273,17 @@ namespace Content.Client.GameObjects.Components.Mobs
             foreach (var (alertKey, alertControl) in _alertControls)
             {
                 // reconcile all alert controls with their current cooldowns
-                var alert = Alerts[alertKey];
-                alertControl.UpdateCooldown(alert.Cooldown, _gameTiming.CurTime);
+                if (TryGetAlertState(alertKey, out var alertState))
+                {
+                    alertControl.UpdateCooldown(alertState.Cooldown, _gameTiming.CurTime);
+                }
+                else
+                {
+                    Logger.WarningS("alert", "coding error - no alert state for alert {0} " +
+                                             "even though we had an AlertControl for it, this" +
+                                             " should never happen", alertControl.Alert.ID);
+                }
+
             }
         }
 

@@ -12,6 +12,7 @@ using Content.Shared.Interfaces;
 using Content.Shared.Alert;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -24,6 +25,8 @@ namespace Content.Server.GameObjects.Components.Mobs
     [ComponentReference(typeof(SharedAlertsComponent))]
     public sealed class ServerAlertsComponent : SharedAlertsComponent
     {
+
+        private Dictionary<AlertKey, OnClickAlert> _alertClickCallbacks = new Dictionary<AlertKey, OnClickAlert>();
 
         protected override void Startup()
         {
@@ -41,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         public override ComponentState GetComponentState()
         {
-            return new AlertsComponentState(Alerts.Values.ToArray());
+            return new AlertsComponentState(CreateAlertStatesArray());
         }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession session = null)
@@ -67,49 +70,11 @@ namespace Content.Server.GameObjects.Components.Mobs
                     // TODO: Implement clicking other status effects in the HUD
                     if (AlertManager.TryDecode(msg.EncodedAlert, out var alert))
                     {
-                        if (Alerts.TryGetValue(alert.AlertKey, out var currentAlert) &&
-                            currentAlert.AlertEncoded == msg.EncodedAlert)
-                        {
-                            // TODO: Refactor to component based approach (callbacks? check do_after)
-                            switch (alert.ID)
-                            {
-                                case "buckled":
-                                    if (!player.TryGetComponent(out BuckleComponent buckle))
-                                        break;
-
-                                    buckle.TryUnbuckle(player);
-                                    break;
-                                case "pilotingshuttle":
-                                    if (!player.TryGetComponent(out ShuttleControllerComponent controller))
-                                        break;
-
-                                    controller.RemoveController();
-                                    break;
-                                case "pulling":
-                                    EntitySystem
-                                        .Get<SharedPullingSystem>()
-                                        .GetPulled(player)?
-                                        .GetComponentOrNull<SharedPullableComponent>()?
-                                        .TryStopPull();
-
-                                    break;
-                                case "fire":
-                                    if (!player.TryGetComponent(out FlammableComponent flammable))
-                                        break;
-
-                                    flammable.Resist();
-                                    break;
-                                default:
-                                    player.PopupMessage(alert.ID);
-                                    break;
-                            }
-                        }
-                        else
-                        {
-                            Logger.DebugS("alert", "player {0} sent ClickAlertMessage for" +
-                                                   " alert {1}, but this alert isn't currently showing", player.Name,
-                                alert.ID);
-                        }
+                        PerformAlertClickCallback(alert, player);
+                    }
+                    else
+                    {
+                        Logger.WarningS("alert", "unrecognized encoded alert {0}", msg.EncodedAlert);
                     }
 
 
@@ -118,5 +83,4 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
         }
     }
-
 }

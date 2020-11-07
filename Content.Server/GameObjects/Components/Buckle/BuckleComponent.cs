@@ -122,7 +122,8 @@ namespace Content.Server.GameObjects.Components.Buckle
             {
                 if (Buckled)
                 {
-                    _serverAlertsComponent.ShowAlert(BuckledTo?.BuckledAlertId);
+                    _serverAlertsComponent.ShowAlert(BuckledTo?.BuckledAlertId,
+                        onClickAlert: OnClickAlert);
                 }
                 else
                 {
@@ -130,6 +131,15 @@ namespace Content.Server.GameObjects.Components.Buckle
                 }
             }
         }
+
+        private void OnClickAlert(ClickAlertEventArgs args)
+        {
+            if (args.Player.TryGetComponent(out BuckleComponent? buckle))
+            {
+                buckle.TryUnbuckle(args.Player);
+            }
+        }
+
 
         /// <summary>
         ///     Reattaches this entity to the strap, modifying its position and rotation.
