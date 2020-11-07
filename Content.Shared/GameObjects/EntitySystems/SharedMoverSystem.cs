@@ -65,7 +65,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
                 if (!touching)
                 {
-                    transform.LocalRotation = physics.LinearVelocity.GetDir().ToAngle();
+                    transform.LocalRotation = physics.TotalLinearVelocity.GetDir().ToAngle();
                     return;
                 }
             }
@@ -90,7 +90,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                         //controller.Push(combined, mover.CurrentPushSpeed);
                     }
 
-                    transform.LocalRotation = physics.LinearVelocity.GetDir().ToAngle();
+                    transform.LocalRotation = physics.TotalLinearVelocity.GetDir().ToAngle();
                     return;
                 }
 
