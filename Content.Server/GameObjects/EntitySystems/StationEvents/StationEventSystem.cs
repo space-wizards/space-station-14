@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using Content.Server.GameTicking;
@@ -115,8 +115,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
         /// <returns></returns>
         public string RunRandomEvent()
         {
-            var availableEvents = AvailableEvents(true);
-            var randomEvent = FindEvent(availableEvents);
+            var randomEvent = PickRandomEvent();
 
             if (randomEvent == null)
             {
@@ -128,6 +127,15 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
             CurrentEvent.Startup();
 
             return Loc.GetString("Running ") + randomEvent.Name;
+        }
+
+        /// <summary>
+        /// Randomly picks a valid event. Used by RunRandomEvent and FakeEvent.
+        /// </summary>
+        public StationEvent PickRandomEvent()
+        {
+            var availableEvents = AvailableEvents(true);
+            return FindEvent(availableEvents);
         }
 
         /// <summary>

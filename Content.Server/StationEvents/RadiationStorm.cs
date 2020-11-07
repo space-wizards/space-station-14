@@ -1,4 +1,4 @@
-using Content.Server.GameObjects.Components.Mobs;
+﻿using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.StationEvents;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.GameObjects.Components.Mobs;
@@ -27,7 +27,7 @@ namespace Content.Server.StationEvents
 
         public override string Name => "RadiationStorm";
 
-        protected override string StartAnnouncement => Loc.GetString(
+        public override string StartAnnouncement => Loc.GetString(
             "High levels of radiation detected near the station. Evacuate any areas containing abnormal green energy fields.");
 
         protected override string EndAnnouncement => Loc.GetString(

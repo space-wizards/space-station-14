@@ -21,7 +21,7 @@ namespace Content.Server.StationEvents
 
         public override int? MaxOccurrences => 2;
 
-        protected override string StartAnnouncement => Loc.GetString(
+        public override string StartAnnouncement => Loc.GetString(
             "Abnormal activity detected in the station's powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.");
 
         protected override string EndAnnouncement => Loc.GetString(

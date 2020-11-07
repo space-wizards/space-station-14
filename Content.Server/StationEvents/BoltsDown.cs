@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 using JetBrains.Annotations;
 using Content.Server.GameObjects.Components.Doors;
 using Content.Server.GameObjects.Components.GUI;
@@ -24,7 +24,7 @@ namespace Content.Server.StationEvents
         public override int? MaxOccurrences => 1;
         private float _elapsedTime;
         private int _eventDuration;
-        protected override string StartAnnouncement => Loc.GetString(
+        public override string StartAnnouncement => Loc.GetString(
             "The clover hat hackers turned the bolts of all the airlocks in the station down. We have dispatched high quality hacking equipment at every crewmember location so that this productive shift can continue");
         protected override string EndAnnouncement => Loc.GetString(
             "Our cybersecurity team has dealt with the problem and restarted all the airlocks bolts in the station. Have a nice shift.");

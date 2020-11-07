@@ -1,4 +1,4 @@
-using Content.Server.Interfaces.Chat;
+﻿using Content.Server.Interfaces.Chat;
 using Robust.Shared.IoC;
 
 namespace Content.Server.StationEvents
@@ -20,7 +20,7 @@ namespace Content.Server.StationEvents
         /// <summary>
         /// What should be said in chat when the event starts (if anything).
         /// </summary>
-        protected virtual string StartAnnouncement { get; } = null;
+        public virtual string StartAnnouncement { get; } = null;
 
         /// <summary>
         /// What should be said in chat when the event end (if anything).
