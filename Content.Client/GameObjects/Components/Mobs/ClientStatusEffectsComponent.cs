@@ -35,6 +35,8 @@ namespace Content.Client.GameObjects.Components.Mobs
         [ViewVariables]
         private Dictionary<StatusEffect, CooldownGraphic> _cooldown = new Dictionary<StatusEffect, CooldownGraphic>();
 
+        public override IReadOnlyDictionary<StatusEffect, StatusEffectStatus> Statuses => _status;
+
         /// <summary>
         /// Allows calculating if we need to act due to this component being controlled by the current mob
         /// </summary>
@@ -92,6 +94,23 @@ namespace Content.Client.GameObjects.Components.Mobs
             _cooldown.Clear();
         }
 
+        public override void ChangeStatusEffectIcon(StatusEffect effect, string icon)
+        {
+            if (_status.TryGetValue(effect, out var value) &&
+                value.Icon == icon)
+            {
+                return;
+            }
+
+            _status[effect] = new StatusEffectStatus
+            {
+                Icon = icon,
+                Cooldown = value.Cooldown
+            };
+
+            Dirty();
+        }
+
         public void UpdateStatusEffects()
         {
             if (!CurrentlyControlled || _ui == null)
@@ -132,10 +151,15 @@ namespace Content.Client.GameObjects.Components.Mobs
             SendNetworkMessage(new ClickStatusMessage(status.Effect));
         }
 
-        public void RemoveStatusEffect(StatusEffect name)
+        public override void RemoveStatusEffect(StatusEffect effect)
         {
-            _status.Remove(name);
+            if (!_status.Remove(effect))
+            {
+                return;
+            }
+
             UpdateStatusEffects();
+            Dirty();
         }
 
         public void FrameUpdate(float frameTime)

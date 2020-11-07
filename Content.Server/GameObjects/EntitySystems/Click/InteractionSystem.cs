@@ -2,8 +2,10 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
+using Content.Server.GameObjects.Components.Pulling;
 using Content.Server.GameObjects.Components.Timing;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Inventory;
@@ -74,10 +76,10 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             if (!interactionArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true)) return;
 
             // trigger dragdrops on the dropped entity
-            foreach (var dragDrop in dropped.GetAllComponents<IDragDrop>())
+            foreach (var dragDrop in dropped.GetAllComponents<IDraggable>())
             {
-                if (dragDrop.CanDragDrop(interactionArgs) &&
-                    dragDrop.DragDrop(interactionArgs))
+                if (dragDrop.CanDrop(interactionArgs) &&
+                    dragDrop.Drop(interactionArgs))
                 {
                     return;
                 }
@@ -154,7 +156,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         private bool HandleWideAttack(ICommonSession session, EntityCoordinates coords, EntityUid uid)
         {
             // client sanitization
-            if (!_mapManager.GridExists(coords.GetGridId(_entityManager)))
+            if (!coords.IsValid(_entityManager))
             {
                 Logger.InfoS("system.interaction", $"Invalid Coordinates: client={session}, coords={coords}");
                 return true;
@@ -209,7 +211,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         private bool HandleClientUseItemInHand(ICommonSession session, EntityCoordinates coords, EntityUid uid)
         {
             // client sanitization
-            if (!_mapManager.GridExists(coords.GetGridId(_entityManager)))
+            if (!coords.IsValid(_entityManager))
             {
                 Logger.InfoS("system.interaction", $"Invalid Coordinates: client={session}, coords={coords}");
                 return true;
@@ -240,7 +242,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         private bool HandleTryPullObject(ICommonSession session, EntityCoordinates coords, EntityUid uid)
         {
             // client sanitization
-            if (!_mapManager.GridExists(coords.GetGridId(_entityManager)))
+            if (!coords.IsValid(_entityManager))
             {
                 Logger.InfoS("system.interaction", $"Invalid Coordinates for pulling: client={session}, coords={coords}");
                 return false;
@@ -272,12 +274,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return false;
             }
 
-            if (!pulledObject.TryGetComponent<PullableComponent>(out var pull))
-            {
-                return false;
-            }
-
-            if (!player.TryGetComponent<HandsComponent>(out var hands))
+            if (!pulledObject.TryGetComponent(out PullableComponent pull))
             {
                 return false;
             }
@@ -288,24 +285,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return false;
             }
 
-            if (!pull.Owner.TryGetComponent(out ICollidableComponent collidable) ||
-                collidable.Anchored)
-            {
-                return false;
-            }
-
-            var controller = collidable.EnsureController<PullController>();
-
-            if (controller.GettingPulled)
-            {
-                hands.StopPull();
-            }
-            else
-            {
-                hands.StartPull(pull);
-            }
-
-            return false;
+            return pull.TogglePull(player);
         }
 
         private void UserInteraction(IEntity player, EntityCoordinates coordinates, EntityUid clickedUid)
@@ -323,7 +303,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             // Verify player is on the same map as the entity he clicked on
-            if (_mapManager.GetGrid(coordinates.GetGridId(EntityManager)).ParentMapId != playerTransform.MapID)
+            if (coordinates.GetMapId(_entityManager) != playerTransform.MapID)
             {
                 Logger.WarningS("system.interaction",
                     $"Player named {player.Name} clicked on a map he isn't located on");
@@ -855,6 +835,18 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                     {
                         if (wideAttack ? attackComponent.WideAttack(eventArgs) : attackComponent.ClickAttack(eventArgs))
                             return;
+                    }
+                }
+                else
+                {
+                    // We pick up items if our hand is empty, even if we're in combat mode.
+                    if(EntityManager.TryGetEntity(target, out var targetEnt))
+                    {
+                        if (targetEnt.HasComponent<ItemComponent>())
+                        {
+                            Interaction(player, targetEnt);
+                            return;
+                        }
                     }
                 }
             }

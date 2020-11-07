@@ -129,37 +129,28 @@ namespace Content.IntegrationTests
             return grid;
         }
 
-        protected async Task TryLoadEntities(IntegrationInstance instance, params string[] yamls)
-        {
-            await instance.WaitIdleAsync();
-
-            var prototypeManager = instance.ResolveDependency<IPrototypeManager>();
-
-            instance.Post(() =>
-            {
-                foreach (var yaml in yamls)
-                {
-                    using var reader = new StringReader(yaml);
-
-                    prototypeManager.LoadFromStream(reader);
-                }
-            });
-
-            await instance.WaitIdleAsync();
-        }
-
-        protected async Task WaitUntil(IntegrationInstance instance, Func<IntegrationInstance, bool> predicate, int tickStep = 10, int maxTicks = 600)
+        protected async Task WaitUntil(IntegrationInstance instance, Func<bool> func, int maxTicks = 600, int tickStep = 1)
         {
             var ticksAwaited = 0;
-
-            while (!predicate(instance) && ticksAwaited < maxTicks)
-            {
-                await instance.WaitIdleAsync();
-                instance.RunTicks(tickStep);
-                ticksAwaited += tickStep;
-            }
+            bool passed;
 
             await instance.WaitIdleAsync();
+
+            while (!(passed = func()) && ticksAwaited < maxTicks)
+            {
+                var ticksToRun = tickStep;
+
+                if (ticksAwaited + tickStep > maxTicks)
+                {
+                    ticksToRun = maxTicks - ticksAwaited;
+                }
+
+                await instance.WaitRunTicks(ticksToRun);
+
+                ticksAwaited += ticksToRun;
+            }
+
+            Assert.That(passed);
         }
 
         private static async Task StartConnectedPairShared(ClientIntegrationInstance client, ServerIntegrationInstance server)

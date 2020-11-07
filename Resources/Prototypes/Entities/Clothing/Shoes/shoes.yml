@@ -161,8 +161,8 @@
   description: Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle.
   components:
   - type: Sprite
-    sprite: Clothing/Shoes/magboots0.rsi
-
+    sprite: Clothing/Shoes/magboots.rsi
+    state: icon
   - type: Clothing
     sprite: Clothing/Shoes/magboots.rsi
 
@@ -278,7 +278,7 @@
   parent: ShoesBase
   id: ShoesWhite
   name: white shoes
-  description: Don't take them off at your office Christmas party
+  description: Don't take them off at your office Christmas party.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/white.rsi
@@ -326,7 +326,7 @@
   parent: ShoesBase
   id: ShoesBee
   name: bee socks
-  description: Make them loins buzz
+  description: Make them loins buzz!
   components:
   - type: Sprite
     sprite: Clothing/Shoes/beesocks.rsi
@@ -338,7 +338,7 @@
   parent: ShoesBase
   id: ShoesCoder
   name: coder socks
-  description: It's time to code sisters!!!1
+  description: It's time to code sisters!!11!
   components:
   - type: Sprite
     sprite: Clothing/Shoes/codersocks.rsi

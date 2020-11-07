@@ -16,6 +16,7 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -142,10 +143,10 @@ namespace Content.Server.GameObjects.Components.Atmos
                 }
 
                 var entity = _entityManager.GetEntity(uid);
-                var collidable = Owner.GetComponent<ICollidableComponent>();
-                var otherCollidable = entity.GetComponent<ICollidableComponent>();
+                var physics = Owner.GetComponent<IPhysicsComponent>();
+                var otherPhysics = entity.GetComponent<IPhysicsComponent>();
 
-                if (!collidable.WorldAABB.Intersects(otherCollidable.WorldAABB))
+                if (!physics.WorldAABB.Intersects(otherPhysics.WorldAABB))
                 {
                     _collided.Remove(uid);
                 }
@@ -205,7 +206,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             Owner.PopupMessage(Loc.GetString("You stop, drop, and roll!"));
             stunnable.Paralyze(2f);
 
-            Timer.Spawn(2000, () =>
+            Owner.SpawnTimer(2000, () =>
             {
                 _resisting = false;
                 FireStacks -= 2f;

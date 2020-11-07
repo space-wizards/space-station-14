@@ -1,7 +1,5 @@
 ﻿#nullable enable
 using System;
-using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
@@ -19,9 +17,11 @@ using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -75,12 +75,12 @@ namespace Content.Server.GameObjects.Components.Medical
                 HandleGhostReturn);
         }
 
-        public void Update(float frametime)
+        public void Update(float frameTime)
         {
             if (_bodyContainer.ContainedEntity != null &&
                 Powered)
             {
-                _cloningProgress += frametime;
+                _cloningProgress += frameTime;
                 _cloningProgress = MathHelper.Clamp(_cloningProgress, 0f, _cloningTime);
             }
 
@@ -121,7 +121,9 @@ namespace Content.Server.GameObjects.Components.Medical
 
         private CloningPodBoundUserInterfaceState GetUserInterfaceState()
         {
-            return new CloningPodBoundUserInterfaceState(CloningSystem.getIdToUser(), _cloningProgress,
+            var idToUser = EntitySystem.Get<CloningSystem>().GetIdToUser();
+
+            return new CloningPodBoundUserInterfaceState(idToUser, _cloningProgress,
                 (_status == CloningPodStatus.Cloning));
         }
 
@@ -144,34 +146,34 @@ namespace Content.Server.GameObjects.Components.Medical
             UserInterface?.Open(actor.playerSession);
         }
 
-        private async void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
+        private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
             if (!(obj.Message is CloningPodUiButtonPressedMessage message)) return;
 
             switch (message.Button)
             {
                 case UiButton.Clone:
-
                     if (message.ScanId == null) return;
 
+                    var cloningSystem = EntitySystem.Get<CloningSystem>();
+
                     if (_bodyContainer.ContainedEntity != null ||
-                        !CloningSystem.Minds.TryGetValue(message.ScanId.Value, out var mind))
+                        !cloningSystem.Minds.TryGetValue(message.ScanId.Value, out var mind))
                     {
                         return;
                     }
 
                     var dead =
                         mind.OwnedEntity.TryGetComponent<IDamageableComponent>(out var damageable) &&
-                        damageable.CurrentDamageState == DamageState.Dead;
+                        damageable.CurrentState == DamageState.Dead;
                     if (!dead) return;
 
 
                     var mob = _entityManager.SpawnEntity("HumanMob_Content", Owner.Transform.MapPosition);
-                    var client = _playerManager
-                        .GetPlayersBy(x => x.SessionId == mind.SessionId).First();
-                    mob.GetComponent<HumanoidAppearanceComponent>()
-                        .UpdateFromProfile(GetPlayerProfileAsync(client.Name).Result);
-                    mob.Name = GetPlayerProfileAsync(client.Name).Result.Name;
+                    var client = _playerManager.GetSessionByUserId(mind.UserId!.Value);
+                    var profile = GetPlayerProfileAsync(client.UserId);
+                    mob.GetComponent<HumanoidAppearanceComponent>().UpdateFromProfile(profile);
+                    mob.Name = profile.Name;
 
                     _bodyContainer.Insert(mob);
                     _capturedMind = mind;
@@ -209,10 +211,9 @@ namespace Content.Server.GameObjects.Components.Medical
         }
 
 
-        private async Task<HumanoidCharacterProfile> GetPlayerProfileAsync(string username)
+        private HumanoidCharacterProfile GetPlayerProfileAsync(NetUserId userId)
         {
-            return (HumanoidCharacterProfile) (await _prefsManager.GetPreferencesAsync(username))
-                .SelectedCharacter;
+            return (HumanoidCharacterProfile) _prefsManager.GetPreferences(userId).SelectedCharacter;
         }
 
         private void HandleGhostReturn(GhostComponent.GhostReturnMessage message)

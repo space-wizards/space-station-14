@@ -1,0 +1,93 @@
+- type: constructionGraph
+  id: window
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: phoronWindow
+          steps:
+            - material: Metal
+              amount: 2
+              doAfter: 2
+            - material: Glass
+              amount: 2
+            - material: Phoron
+              amount: 2
+              doAfter: 3
+
+        - to: reinforcedWindow
+          steps:
+            - material: Metal
+              amount: 2
+              doAfter: 2
+            - material: Glass
+              amount: 2
+              doAfter: 2
+
+        - to: window
+          steps:
+            - material: Glass
+              amount: 2
+              doAfter: 3
+
+    - node: window
+      entity: Window
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: GlassSheet1
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 1
+            - tool: Anchoring
+              doAfter: 2
+
+    - node: reinforcedWindow
+      entity: ReinforcedWindow
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: GlassSheet1
+              amount: 2
+            - !type:SpawnPrototype
+              prototype: MetalSheet1
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 1
+            - tool: Prying
+              doAfter: 2
+            - tool: Screwing
+              doAfter: 1
+            - tool: Anchoring
+              doAfter: 2
+
+    - node: phoronWindow
+      entity: PhoronWindow
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: GlassSheet1
+              amount: 2
+            - !type:SpawnPrototype
+              prototype: MetalSheet1
+              amount: 2
+            - !type:SpawnPrototype
+              prototype: PhoronSheet1
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 2
+            - tool: Prying
+              doAfter: 3
+            - tool: Screwing
+              doAfter: 2
+            - tool: Anchoring
+              doAfter: 3

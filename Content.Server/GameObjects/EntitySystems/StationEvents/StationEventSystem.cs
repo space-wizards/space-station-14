@@ -4,10 +4,13 @@ using System.Text;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.StationEvents;
+using Content.Shared;
+using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.Interfaces.Reflection;
@@ -20,8 +23,9 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
 {
     [UsedImplicitly]
     // Somewhat based off of TG's implementation of events
-    public sealed class StationEventSystem : EntitySystem
+    public sealed class StationEventSystem : EntitySystem, IResettingEntitySystem
     {
+        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IGameTicker _gameTicker = default!;
@@ -31,7 +35,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
 
         private List<StationEvent> _stationEvents = new List<StationEvent>();
 
-        private const float MinimumTimeUntilFirstEvent = 600;
+        private const float MinimumTimeUntilFirstEvent = 300;
 
         /// <summary>
         /// How long until the next check for an event runs
@@ -163,6 +167,9 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
                 _stationEvents.Add(stationEvent);
             }
 
+            // Can't just check debug / release for a default given mappers need to use release mode
+            // As such we'll always pause it by default.
+            _configurationManager.OnValueChanged(CCVars.EventsEnabled, value => Enabled = value, true);
             _netManager.RegisterNetMessage<MsgGetStationEvents>(nameof(MsgGetStationEvents), GetEventReceived);
         }
 
@@ -339,7 +346,13 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
             return true;
         }
 
-        public void ResettingCleanup()
+        public override void Shutdown()
+        {
+            base.Shutdown();
+            CurrentEvent?.Shutdown();
+        }
+
+        public void Reset()
         {
             if (CurrentEvent != null && CurrentEvent.Running)
             {
@@ -353,12 +366,6 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
             }
 
             _timeUntilNextEvent = MinimumTimeUntilFirstEvent;
-        }
-
-        public override void Shutdown()
-        {
-            base.Shutdown();
-            CurrentEvent?.Shutdown();
         }
     }
 }

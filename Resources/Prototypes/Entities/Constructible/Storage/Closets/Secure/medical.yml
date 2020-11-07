@@ -9,7 +9,10 @@
     visuals:
     - type: StorageVisualizer
       state: med
-
+  - type: Icon
+    state: med_icon
+  - type: AccessReader
+    access: [ [ "Medical" ] ]
 
 # Medical doctor
 - type: entity
@@ -21,7 +24,10 @@
     visuals:
     - type: StorageVisualizer
       state: med_secure
-
+  - type: Icon
+    state: med_secure_icon
+  - type: AccessReader
+    access: [ [ "Medical" ] ]
 
 # Chemical
 - type: entity
@@ -34,7 +40,10 @@
     - type: StorageVisualizer
       state: med
       state_closed: chemical_door
-
+  - type: Icon
+    state: chemical_icon
+  - type: AccessReader
+    access: [ [ "Medical" ] ]
 
 # CMO
 - type: entity
@@ -46,4 +55,7 @@
     visuals:
     - type: StorageVisualizer
       state: cmo
-
+  - type: Icon
+    state: cmo_icon
+  - type: AccessReader
+    access: [ [ "ChiefMedicalOfficer" ] ]

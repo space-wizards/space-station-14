@@ -55,8 +55,8 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             base.Initialize();
 
-            // This component requires a collidable component.
-            Owner.EnsureComponent<CollidableComponent>();
+            // This component requires a physics component.
+            Owner.EnsureComponent<PhysicsComponent>();
 
             EntitySystem.Get<AiSystem>().ProcessorInitialize(this);
         }

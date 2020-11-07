@@ -11,6 +11,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 
 namespace Content.Server.Atmos
 {
@@ -176,7 +177,7 @@ namespace Content.Server.Atmos
             }
 
             var gam = grid.GetComponent<GridAtmosphereComponent>();
-            var indices = new MapIndices(x, y);
+            var indices = new Vector2i(x, y);
             var tile = gam.GetTile(indices);
 
             if (tile == null)
@@ -300,7 +301,7 @@ namespace Content.Server.Atmos
             }
 
             var gam = grid.GetComponent<GridAtmosphereComponent>();
-            var indices = new MapIndices(x, y);
+            var indices = new Vector2i(x, y);
             var tile = gam.GetTile(indices);
 
             if (tile == null)
@@ -368,7 +369,7 @@ namespace Content.Server.Atmos
             }
 
             var gam = grid.GetComponent<GridAtmosphereComponent>();
-            var indices = new MapIndices(x, y);
+            var indices = new Vector2i(x, y);
             var tile = gam.GetTile(indices);
 
             if (tile == null)

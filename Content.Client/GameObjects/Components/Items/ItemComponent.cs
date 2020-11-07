@@ -1,7 +1,7 @@
 ﻿using Content.Client.GameObjects.Components.Disposal;
-using Content.Client.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Client.Graphics;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.ResourceManagement;
@@ -19,8 +19,10 @@ namespace Content.Client.GameObjects.Components.Items
 {
     [RegisterComponent]
     [ComponentReference(typeof(IItemComponent))]
-    public class ItemComponent : Component, IItemComponent, IClientDraggable
+    public class ItemComponent : Component, IItemComponent, IDraggable
     {
+        [Dependency] private IResourceCache _resourceCache = default!;
+
         public override string Name => "Item";
         public override uint? NetID => ContentNetIDs.ITEM;
 
@@ -72,8 +74,7 @@ namespace Content.Client.GameObjects.Components.Items
 
         protected RSI GetRSI()
         {
-            var resourceCache = IoCManager.Resolve<IResourceCache>();
-            return resourceCache.GetResource<RSIResource>(SharedSpriteComponent.TextureRoot / RsiPath).RSI;
+            return _resourceCache.GetResource<RSIResource>(SharedSpriteComponent.TextureRoot / RsiPath).RSI;
         }
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
@@ -85,14 +86,15 @@ namespace Content.Client.GameObjects.Components.Items
             EquippedPrefix = itemComponentState.EquippedPrefix;
         }
 
-        bool IClientDraggable.ClientCanDropOn(CanDropEventArgs eventArgs)
+        bool IDraggable.CanDrop(CanDropEventArgs args)
         {
-            return eventArgs.Target.HasComponent<DisposalUnitComponent>();
+            return args.Target.HasComponent<DisposalUnitComponent>();
         }
 
-        bool IClientDraggable.ClientCanDrag(CanDragEventArgs eventArgs)
+        public bool Drop(DragDropEventArgs args)
         {
-            return true;
+            // TODO: Shared item class
+            return false;
         }
     }
 }

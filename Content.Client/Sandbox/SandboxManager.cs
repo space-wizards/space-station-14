@@ -32,6 +32,7 @@ namespace Content.Client.Sandbox
         public Button ToggleSubfloorButton;
         public Button ShowMarkersButton; //Shows spawn points
         public Button ShowBbButton; //Shows bounding boxes
+        public Button MachineLinkingButton; // Enables/disables machine linking mode.
 
         public SandboxWindow()
         {
@@ -51,7 +52,7 @@ namespace Content.Client.Sandbox
             SpawnTilesButton = new Button { Text = Loc.GetString("Spawn Tiles") };
             vBox.AddChild(SpawnTilesButton);
 
-            GiveFullAccessButton = new Button { Text = Loc.GetString("Give AA Id") };
+            GiveFullAccessButton = new Button { Text = Loc.GetString("Grant Full Access") };
             vBox.AddChild(GiveFullAccessButton);
 
             GiveAghostButton = new Button { Text = Loc.GetString("Ghost") };
@@ -77,6 +78,9 @@ namespace Content.Client.Sandbox
 
             ShowBbButton = new Button { Text = Loc.GetString("Show Bb"), ToggleMode = true };
             vBox.AddChild(ShowBbButton);
+
+            MachineLinkingButton = new Button { Text = Loc.GetString("Link machines"), ToggleMode = true };
+            vBox.AddChild(MachineLinkingButton);
         }
     }
 
@@ -186,6 +190,7 @@ namespace Content.Client.Sandbox
             _window.ToggleSubfloorButton.OnPressed += OnToggleSubfloorButtonClicked;
             _window.ShowMarkersButton.OnPressed += OnShowMarkersButtonClicked;
             _window.ShowBbButton.OnPressed += OnShowBbButtonClicked;
+            _window.MachineLinkingButton.OnPressed += OnMachineLinkingButtonClicked;
 
             _window.OpenCentered();
         }
@@ -240,6 +245,10 @@ namespace Content.Client.Sandbox
         private void OnShowBbButtonClicked(BaseButton.ButtonEventArgs args)
         {
             ShowBb();
+        }
+        private void OnMachineLinkingButtonClicked(BaseButton.ButtonEventArgs args)
+        {
+            LinkMachines();
         }
 
         private void OnGiveAdminAccessButtonClicked(BaseButton.ButtonEventArgs args)
@@ -317,6 +326,11 @@ namespace Content.Client.Sandbox
         private void ShowBb()
         {
             _console.ProcessCommand("showbb");
+        }
+
+        private void LinkMachines()
+        {
+            _console.ProcessCommand("signallink");
         }
     }
 }

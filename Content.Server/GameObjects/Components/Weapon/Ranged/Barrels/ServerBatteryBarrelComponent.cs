@@ -147,7 +147,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             return ammo;
         }
 
-        public override IEntity TakeProjectile(EntityCoordinates spawnAtGrid, MapCoordinates spawnAtMap)
+        public override IEntity TakeProjectile(EntityCoordinates spawnAt)
         {
             var powerCellEntity = _powerCellContainer.ContainedEntity;
 
@@ -173,12 +173,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             {
                 entity = _ammoContainer.ContainedEntity;
                 _ammoContainer.Remove(entity);
+                entity.Transform.Coordinates = spawnAt;
             }
             else
             {
-                entity = Owner.Transform.GridID != GridId.Invalid ?
-                    Owner.EntityManager.SpawnEntity(_ammoPrototype, Owner.Transform.Coordinates)
-                    : Owner.EntityManager.SpawnEntity(_ammoPrototype, Owner.Transform.MapPosition);
+                entity = Owner.EntityManager.SpawnEntity(_ammoPrototype, spawnAt);
             }
 
             if (entity.TryGetComponent(out ProjectileComponent projectileComponent))

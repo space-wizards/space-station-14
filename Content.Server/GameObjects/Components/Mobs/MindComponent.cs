@@ -9,6 +9,7 @@ using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
@@ -83,7 +84,10 @@ namespace Content.Server.GameObjects.Components.Mobs
         private void OnUiAcceptCloningMessage(ServerBoundUserInterfaceMessage obj)
         {
             if (!(obj.Message is SharedAcceptCloningComponent.UiButtonPressedMessage message)) return;
-            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new GhostComponent.GhostReturnMessage(Mind));
+            if (Mind != null)
+            {
+                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new GhostComponent.GhostReturnMessage(Mind));
+            }
         }
 
         public override void OnRemove()
@@ -132,7 +136,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                 else
                 {
                     var spawnPosition = Owner.Transform.Coordinates;
-                    Timer.Spawn(0, () =>
+                    Owner.SpawnTimer(0, () =>
                     {
                         // Async this so that we don't throw if the grid we're on is being deleted.
                         var mapMan = IoCManager.Resolve<IMapManager>();
@@ -172,7 +176,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
             var dead =
                 Owner.TryGetComponent<IDamageableComponent>(out var damageable) &&
-                damageable.CurrentDamageState == DamageState.Dead;
+                damageable.CurrentState == DamageState.Dead;
 
             if (!HasMind)
             {

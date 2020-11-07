@@ -2,13 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components.Body;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Players;
 using Content.Server.Utility;
 using Content.Shared.Damage;
+using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Medical;
 using Content.Shared.GameObjects.EntitySystems;
@@ -20,7 +20,9 @@ using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
@@ -30,18 +32,24 @@ namespace Content.Server.GameObjects.Components.Medical
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class MedicalScannerComponent : SharedMedicalScannerComponent, IActivate, IDragDropOn
+    [ComponentReference(typeof(SharedMedicalScannerComponent))]
+    public class MedicalScannerComponent : SharedMedicalScannerComponent, IActivate, IDragDropOn, IDestroyAct
     {
-        private ContainerSlot _bodyContainer = default!;
-        private readonly Vector2 _ejectOffset = new Vector2(-0.5f, 0f);
-
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = null!;
-        public bool IsOccupied => _bodyContainer.ContainedEntity != null;
+
+        private static readonly TimeSpan InternalOpenAttemptDelay = TimeSpan.FromSeconds(0.5);
+        private TimeSpan _lastInternalOpenAttempt;
+
+        private ContainerSlot _bodyContainer = default!;
+        private readonly Vector2 _ejectOffset = new Vector2(0f, 0f);
 
         [ViewVariables]
         private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+        [ViewVariables]
+        private BoundUserInterface? UserInterface => Owner.GetUIOrNull(MedicalScannerUiKey.Key);
 
-        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(MedicalScannerUiKey.Key);
+        public bool IsOccupied => _bodyContainer.ContainedEntity != null;
 
         public override void Initialize()
         {
@@ -59,6 +67,31 @@ namespace Content.Server.GameObjects.Components.Medical
             UserInterface?.SetState(newState);
 
             UpdateUserInterface();
+        }
+
+        /// <inheritdoc />
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+
+            switch (message)
+            {
+                case RelayMovementEntityMessage msg:
+                {
+                    if (ActionBlockerSystem.CanInteract(msg.Entity))
+                    {
+                        if (_gameTiming.CurTime <
+                            _lastInternalOpenAttempt + InternalOpenAttemptDelay)
+                        {
+                            break;
+                        }
+
+                        _lastInternalOpenAttempt = _gameTiming.CurTime;
+                        EjectBody();
+                    }
+                    break;
+                }
+            }
         }
 
         private static readonly MedicalScannerBoundUserInterfaceState EmptyUIState =
@@ -94,9 +127,12 @@ namespace Content.Server.GameObjects.Components.Medical
                 return new MedicalScannerBoundUserInterfaceState(body.Uid, classes, types, true);
             }
 
+            var cloningSystem = EntitySystem.Get<CloningSystem>();
+            var scanned = _bodyContainer.ContainedEntity.TryGetComponent(out MindComponent? mindComponent) &&
+                         mindComponent.Mind != null &&
+                         cloningSystem.HasDnaScan(mindComponent.Mind);
 
-            return new MedicalScannerBoundUserInterfaceState(body.Uid, classes, types,
-                CloningSystem.HasDnaScan(_bodyContainer.ContainedEntity.GetComponent<MindComponent>().Mind));
+            return new MedicalScannerBoundUserInterfaceState(body.Uid, classes, types, scanned);
         }
 
         private void UpdateUserInterface()
@@ -128,7 +164,7 @@ namespace Content.Server.GameObjects.Components.Medical
                 var body = _bodyContainer.ContainedEntity;
                 return body == null
                     ? MedicalScannerStatus.Open
-                    : GetStatusFromDamageState(body.GetComponent<IDamageableComponent>().CurrentDamageState);
+                    : GetStatusFromDamageState(body.GetComponent<IDamageableComponent>().CurrentState);
             }
 
             return MedicalScannerStatus.Off;
@@ -229,7 +265,8 @@ namespace Content.Server.GameObjects.Components.Medical
                     if (_bodyContainer.ContainedEntity != null)
                     {
                         //TODO: Show a 'ERROR: Body is completely devoid of soul' if no Mind owns the entity.
-                        CloningSystem.AddToDnaScans(_playerManager
+                        var cloningSystem = EntitySystem.Get<CloningSystem>();
+                        cloningSystem.AddToDnaScans(_playerManager
                             .GetPlayersBy(playerSession =>
                             {
                                 var mindOwnedMob = playerSession.ContentData()?.Mind?.OwnedEntity;
@@ -249,13 +286,18 @@ namespace Content.Server.GameObjects.Components.Medical
 
         public bool CanDragDropOn(DragDropEventArgs eventArgs)
         {
-            return eventArgs.Dropped.HasComponent<BodyManagerComponent>();
+            return eventArgs.Dragged.HasComponent<IBody>();
         }
 
         public bool DragDropOn(DragDropEventArgs eventArgs)
         {
-            _bodyContainer.Insert(eventArgs.Dropped);
+            _bodyContainer.Insert(eventArgs.Dragged);
             return true;
+        }
+
+        void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
+        {
+            EjectBody();
         }
     }
 }

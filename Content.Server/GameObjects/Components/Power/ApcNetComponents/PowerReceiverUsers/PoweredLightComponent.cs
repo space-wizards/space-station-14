@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.MachineLinking;
+using Content.Server.GameObjects.Components.MachineLinking.Signals;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.Interfaces;
@@ -29,7 +29,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
     ///     Component that represents a wall light. It has a light bulb that can be replaced when broken.
     /// </summary>
     [RegisterComponent]
-    public class PoweredLightComponent : Component, IInteractHand, IInteractUsing, IMapInit, ISignalReceiver
+    public class PoweredLightComponent : Component, IInteractHand, IInteractUsing, IMapInit, ISignalReceiver<bool>, ISignalReceiver<ToggleSignal>
     {
         [Dependency] private IGameTiming _gameTiming = default!;
 
@@ -56,42 +56,11 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             }
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent component)
-        {
-            base.HandleMessage(message, component);
-
-            switch (message)
-            {
-                case BeginDeconstructCompMsg msg:
-                    if (!msg.BlockDeconstruct && !(_lightBulbContainer.ContainedEntity is null))
-                    {
-                        Owner.PopupMessage(msg.User, Loc.GetString("Remove the bulb."));
-                        msg.BlockDeconstruct = true;
-                    }
-                    break;
-            }
-        }
+        // TODO CONSTRUCTION make this use a construction graph
 
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             return InsertBulb(eventArgs.Using);
-        }
-
-        public void TriggerSignal(SignalState state)
-        {
-            switch (state)
-            {
-                case SignalState.On:
-                    _on = true;
-                    break;
-                case SignalState.Off:
-                    _on = false;
-                    break;
-                case SignalState.Toggle:
-                    _on = !_on;
-                    break;
-            }
-            UpdateLight();
         }
 
         public bool InteractHand(InteractHandEventArgs eventArgs)
@@ -266,6 +235,18 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
             var entity = Owner.EntityManager.SpawnEntity(prototype, Owner.Transform.Coordinates);
             _lightBulbContainer.Insert(entity);
+        }
+
+        public void TriggerSignal(bool signal)
+        {
+            _on = signal;
+            UpdateLight();
+        }
+
+        public void TriggerSignal(ToggleSignal signal)
+        {
+            _on = !_on;
+            UpdateLight();
         }
     }
 }

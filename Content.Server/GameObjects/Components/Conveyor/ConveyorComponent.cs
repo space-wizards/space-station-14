@@ -111,8 +111,8 @@ namespace Content.Server.GameObjects.Components.Conveyor
                 return false;
             }
 
-            if (!entity.TryGetComponent(out ICollidableComponent? collidable) ||
-                collidable.Anchored)
+            if (!entity.TryGetComponent(out IPhysicsComponent? physics) ||
+                physics.Anchored)
             {
                 return false;
             }
@@ -152,10 +152,10 @@ namespace Content.Server.GameObjects.Components.Conveyor
                     continue;
                 }
 
-                if (entity.TryGetComponent(out ICollidableComponent? collidable))
+                if (entity.TryGetComponent(out IPhysicsComponent? physics))
                 {
-                    var controller = collidable.EnsureController<ConveyedController>();
-                    controller.Move(direction, _speed * frameTime);
+                    var controller = physics.EnsureController<ConveyedController>();
+                    controller.Move(direction, _speed);
                 }
             }
         }

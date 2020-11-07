@@ -11,6 +11,7 @@ using Robust.Shared.Utility;
 using System;
 using Content.Shared.GameObjects.Components.Atmos;
 using YamlDotNet.RepresentationModel;
+using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Client.GameObjects.Components.Atmos
 {
@@ -37,23 +38,26 @@ namespace Content.Client.GameObjects.Components.Atmos
             }
         }
 
+        public override void InitializeEntity(IEntity entity)
+        {
+            base.InitializeEntity(entity);
+            if (!entity.TryGetComponent(out ISpriteComponent sprite)) return;
+            sprite.LayerMapReserveBlank(Layer.VentBase);
+            var pipeBaseLayer = sprite.LayerMapGet(Layer.VentBase);
+            sprite.LayerSetRSI(pipeBaseLayer, _ventRSI);
+            sprite.LayerSetVisible(pipeBaseLayer, true);
+        }
+
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent(out ISpriteComponent sprite))
-            {
-                return;
-            }
-            if (!component.TryGetData(VentVisuals.VisualState, out VentVisualState ventVisualState))
-            {
-                return;
-            }
+            if (!component.Owner.TryGetComponent(out ISpriteComponent sprite)) return;
+            if (!component.TryGetData(VentVisuals.VisualState, out VentVisualState ventVisualState)) return;
 
             var ventBaseState = "vent";
             ventBaseState += ventVisualState.VentEnabled ? "On" : "Off";
 
-            sprite.LayerMapReserveBlank(Layer.VentBase);
             var baseVentLayer = sprite.LayerMapGet(Layer.VentBase);
             sprite.LayerSetRSI(baseVentLayer, _ventRSI);
             sprite.LayerSetState(baseVentLayer, ventBaseState);

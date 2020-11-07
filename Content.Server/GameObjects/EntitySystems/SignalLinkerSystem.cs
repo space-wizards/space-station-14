@@ -16,16 +16,16 @@ namespace Content.Server.GameObjects.EntitySystems
 {
     public class SignalLinkerSystem : EntitySystem
     {
-        private Dictionary<NetSessionId, SignalTransmitterComponent> _transmitters;
+        private Dictionary<NetUserId, SignalTransmitterComponent> _transmitters;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            _transmitters = new Dictionary<NetSessionId, SignalTransmitterComponent>();
+            _transmitters = new Dictionary<NetUserId, SignalTransmitterComponent>();
         }
 
-        public void SignalLinkerKeybind(NetSessionId id, bool? enable)
+        public bool SignalLinkerKeybind(NetUserId id, bool? enable)
         {
             if (enable == null)
             {
@@ -36,7 +36,7 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 if (_transmitters.ContainsKey(id))
                 {
-                    return;
+                    return true;
                 }
 
                 if (_transmitters.Count == 0)
@@ -53,7 +53,7 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 if (!_transmitters.ContainsKey(id))
                 {
-                    return;
+                    return false;
                 }
 
                 _transmitters.Remove(id);
@@ -62,11 +62,12 @@ namespace Content.Server.GameObjects.EntitySystems
                     CommandBinds.Unregister<SignalLinkerSystem>();
                 }
             }
+            return enable == true;
         }
 
         private bool HandleUse(ICommonSession session, EntityCoordinates coords, EntityUid uid)
         {
-            if (!_transmitters.TryGetValue(session.SessionId, out var signalTransmitter))
+            if (!_transmitters.TryGetValue(session.UserId, out var signalTransmitter))
             {
                 return false;
             }
@@ -86,7 +87,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             if (entity.TryGetComponent<SignalTransmitterComponent>(out var transmitter))
             {
-                _transmitters[session.SessionId] = transmitter.GetSignal(session.AttachedEntity);
+                _transmitters[session.UserId] = transmitter.GetSignal(session.AttachedEntity);
 
                 return true;
             }
@@ -129,7 +130,8 @@ namespace Content.Server.GameObjects.EntitySystems
                 return;
             }
 
-            system.SignalLinkerKeybind(player.SessionId, enable);
+            var ret = system.SignalLinkerKeybind(player.UserId, enable);
+            shell.SendText(player, ret ? "Enabled" : "Disabled");
         }
     }
 }

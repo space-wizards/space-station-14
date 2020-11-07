@@ -22,7 +22,6 @@ namespace Content.Client.GameObjects.EntitySystems
     internal sealed class AtmosDebugOverlaySystem : SharedAtmosDebugOverlaySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IResourceCache _resourceCache = default!;
 
         private Dictionary<GridId, AtmosDebugOverlayMessage> _tileData =
             new Dictionary<GridId, AtmosDebugOverlayMessage>();
@@ -69,7 +68,7 @@ namespace Content.Client.GameObjects.EntitySystems
             return _tileData.ContainsKey(gridId);
         }
 
-        public AtmosDebugOverlayData? GetData(GridId gridIndex, MapIndices indices)
+        public AtmosDebugOverlayData? GetData(GridId gridIndex, Vector2i indices)
         {
             if (!_tileData.TryGetValue(gridIndex, out var srcMsg))
                 return null;

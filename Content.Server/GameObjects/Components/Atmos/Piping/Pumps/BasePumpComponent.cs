@@ -4,6 +4,8 @@ using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Shared.GameObjects.Components.Atmos;
 using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -28,7 +30,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
                 UpdateAppearance();
             }
         }
-        private bool _pumpEnabled = true;
+        private bool _pumpEnabled;
 
         /// <summary>
         ///     Needs to be same <see cref="PipeDirection"/> as that of a <see cref="Pipe"/> on this entity.
@@ -55,11 +57,50 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
             base.ExposeData(serializer);
             serializer.DataField(ref _inletDirection, "inletDirection", PipeDirection.None);
             serializer.DataField(ref _outletDirection, "outletDirection", PipeDirection.None);
+            serializer.DataField(ref _pumpEnabled, "pumpEnabled", false);
         }
 
         public override void Initialize()
         {
             base.Initialize();
+            UpdatePipes();
+            Owner.EntityManager.EventBus.SubscribeEvent<RotateEvent>(EventSource.Local, this, RotateEvent);
+            Owner.TryGetComponent(out _appearance);
+            UpdateAppearance();
+        }
+
+        public override void Update()
+        {
+            if (!PumpEnabled)
+                return;
+
+            PumpGas(_inletPipe.Air, _outletPipe.Air);
+        }
+
+        protected abstract void PumpGas(GasMixture inletGas, GasMixture outletGas);
+
+        private void RotateEvent(RotateEvent ev)
+        {
+            if (ev.Sender != Owner || ev.NewRotation == ev.OldRotation)
+                return;
+
+            var diff = ev.NewRotation - ev.OldRotation;
+            _inletDirection = _inletDirection.RotatePipeDirection(diff);
+            _outletDirection = _outletDirection.RotatePipeDirection(diff);
+            UpdatePipes();
+        }
+
+        private void UpdateAppearance()
+        {
+            if (_inletPipe == null || _outletPipe == null) return;
+            _appearance?.SetData(PumpVisuals.VisualState, new PumpVisualState(_inletDirection, _outletDirection, _inletPipe.ConduitLayer, _outletPipe.ConduitLayer, PumpEnabled));
+        }
+
+        private void UpdatePipes()
+        {
+            _inletPipe = null;
+            _outletPipe = null;
+
             if (!Owner.TryGetComponent<NodeContainerComponent>(out var container))
             {
                 JoinedGridAtmos?.RemovePipeNetDevice(this);
@@ -75,23 +116,6 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping.Pumps
                 Logger.Error($"{typeof(BasePumpComponent)} on entity {Owner.Uid} could not find compatible {nameof(PipeNode)}s on its {nameof(NodeContainerComponent)}.");
                 return;
             }
-            Owner.TryGetComponent(out _appearance);
-            UpdateAppearance();
-        }
-
-        public override void Update()
-        {
-            if (!PumpEnabled)
-                return;
-
-            PumpGas(_inletPipe.Air, _outletPipe.Air);
-        }
-
-        protected abstract void PumpGas(GasMixture inletGas, GasMixture outletGas);
-
-        private void UpdateAppearance()
-        {
-            _appearance?.SetData(PumpVisuals.VisualState, new PumpVisualState(_inletDirection, _outletDirection, _inletPipe.ConduitLayer, _outletPipe.ConduitLayer, PumpEnabled));
         }
     }
 }

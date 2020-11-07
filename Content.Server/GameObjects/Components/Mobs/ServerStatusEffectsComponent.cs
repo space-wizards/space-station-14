@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.Buckle;
-using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Movement;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Pulling;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
@@ -20,12 +23,28 @@ namespace Content.Server.GameObjects.Components.Mobs
         [ViewVariables]
         private readonly Dictionary<StatusEffect, StatusEffectStatus> _statusEffects = new Dictionary<StatusEffect, StatusEffectStatus>();
 
+        public override IReadOnlyDictionary<StatusEffect, StatusEffectStatus> Statuses => _statusEffects;
+
+        protected override void Startup()
+        {
+            base.Startup();
+
+            EntitySystem.Get<WeightlessSystem>().AddStatus(this);
+        }
+
+        public override void OnRemove()
+        {
+            EntitySystem.Get<WeightlessSystem>().RemoveStatus(this);
+
+            base.OnRemove();
+        }
+
         public override ComponentState GetComponentState()
         {
             return new StatusEffectComponentState(_statusEffects);
         }
 
-        public void ChangeStatusEffectIcon(StatusEffect effect, string icon)
+        public override void ChangeStatusEffectIcon(StatusEffect effect, string icon)
         {
             if (_statusEffects.TryGetValue(effect, out var value) && value.Icon == icon)
             {
@@ -60,7 +79,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             Dirty();
         }
 
-        public void RemoveStatusEffect(StatusEffect effect)
+        public override void RemoveStatusEffect(StatusEffect effect)
         {
             if (!_statusEffects.Remove(effect))
             {
@@ -106,19 +125,19 @@ namespace Content.Server.GameObjects.Components.Mobs
                             controller.RemoveController();
                             break;
                         case StatusEffect.Pulling:
-                            if (!player.TryGetComponent(out HandsComponent hands))
-                                break;
+                            EntitySystem
+                                .Get<SharedPullingSystem>()
+                                .GetPulled(player)?
+                                .GetComponentOrNull<SharedPullableComponent>()?
+                                .TryStopPull();
 
-                            hands.StopPull();
                             break;
-
                         case StatusEffect.Fire:
                             if (!player.TryGetComponent(out FlammableComponent flammable))
                                 break;
 
                             flammable.Resist();
                             break;
-
                         default:
                             player.PopupMessage(msg.Effect.ToString());
                             break;
