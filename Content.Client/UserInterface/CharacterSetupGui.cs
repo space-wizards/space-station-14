@@ -149,7 +149,7 @@ namespace Content.Client.UserInterface
                 PanelOverride = new StyleBoxFlat {BackgroundColor = StyleNano.NanoGold},
                 CustomMinimumSize = (2, 0)
             });
-            _humanoidProfileEditor = new HumanoidProfileEditor(preferencesManager, prototypeManager);
+            _humanoidProfileEditor = new HumanoidProfileEditor(preferencesManager, prototypeManager, entityManager);
             _humanoidProfileEditor.OnProfileChanged += newProfile => { UpdateUI(); };
             hBox.AddChild(_humanoidProfileEditor);
 
