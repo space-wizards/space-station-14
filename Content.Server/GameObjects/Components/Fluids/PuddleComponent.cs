@@ -14,6 +14,7 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
@@ -254,7 +255,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             _evaporationToken = new CancellationTokenSource();
 
             // KYS to evaporate
-            Timer.Spawn(TimeSpan.FromSeconds(_evaporateTime), Evaporate, _evaporationToken.Token);
+            Owner.SpawnTimer(TimeSpan.FromSeconds(_evaporateTime), Evaporate, _evaporationToken.Token);
         }
 
         private void UpdateSlip()

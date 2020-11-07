@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.EntitySystems
             _transmitters = new Dictionary<NetUserId, SignalTransmitterComponent>();
         }
 
-        public void SignalLinkerKeybind(NetUserId id, bool? enable)
+        public bool SignalLinkerKeybind(NetUserId id, bool? enable)
         {
             if (enable == null)
             {
@@ -36,7 +36,7 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 if (_transmitters.ContainsKey(id))
                 {
-                    return;
+                    return true;
                 }
 
                 if (_transmitters.Count == 0)
@@ -53,7 +53,7 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 if (!_transmitters.ContainsKey(id))
                 {
-                    return;
+                    return false;
                 }
 
                 _transmitters.Remove(id);
@@ -62,6 +62,7 @@ namespace Content.Server.GameObjects.EntitySystems
                     CommandBinds.Unregister<SignalLinkerSystem>();
                 }
             }
+            return enable == true;
         }
 
         private bool HandleUse(ICommonSession session, EntityCoordinates coords, EntityUid uid)
@@ -129,7 +130,8 @@ namespace Content.Server.GameObjects.EntitySystems
                 return;
             }
 
-            system.SignalLinkerKeybind(player.UserId, enable);
+            var ret = system.SignalLinkerKeybind(player.UserId, enable);
+            shell.SendText(player, ret ? "Enabled" : "Disabled");
         }
     }
 }

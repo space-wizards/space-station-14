@@ -22,7 +22,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
         public override string Name => "CursedEntityStorage";
 
-        public override void CloseStorage()
+        protected override void CloseStorage()
         {
             base.CloseStorage();
 
@@ -41,7 +41,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             var locker = lockerEnt.GetComponent<EntityStorageComponent>();
 
             if(locker.Open)
-                locker.CloseStorage();
+                locker.TryCloseStorage(Owner);
 
             foreach (var entity in Contents.ContainedEntities.ToArray())
             {

@@ -35,6 +35,8 @@ namespace Content.Client.GameObjects.Components.Mobs
         [ViewVariables]
         private Dictionary<StatusEffect, CooldownGraphic> _cooldown = new Dictionary<StatusEffect, CooldownGraphic>();
 
+        public override IReadOnlyDictionary<StatusEffect, StatusEffectStatus> Statuses => _status;
+
         /// <summary>
         /// Allows calculating if we need to act due to this component being controlled by the current mob
         /// </summary>

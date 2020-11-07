@@ -26,9 +26,9 @@ namespace Content.Server.GameObjects.Components.MachineLinking
             _transmitters = new List<SignalTransmitterComponent>();
         }
 
-        public void DistributeSignal(SignalState state)
+        public void DistributeSignal<T>(T state)
         {
-            foreach (var comp in Owner.GetAllComponents<ISignalReceiver>())
+            foreach (var comp in Owner.GetAllComponents<ISignalReceiver<T>>())
             {
                 comp.TriggerSignal(state);
             }

@@ -8,6 +8,7 @@ using Robust.Client.Interfaces.Graphics.Overlays;
 using Robust.Client.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.Timers;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -84,7 +85,7 @@ namespace Content.Client.GameObjects.Components.Weapons
             }
 
             _cancelToken = new CancellationTokenSource();
-            Timer.Spawn((int) duration * 1000, DisableOverlay, _cancelToken.Token);
+            Owner.SpawnTimer((int) duration * 1000, DisableOverlay, _cancelToken.Token);
         }
 
         private void DisableOverlay()

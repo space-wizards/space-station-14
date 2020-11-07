@@ -47,11 +47,15 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         [ViewVariables]
         private bool _isCollidableWhenOpen;
         [ViewVariables]
-        private IEntityQuery _entityQuery;
+        protected IEntityQuery EntityQuery;
+
         private bool _showContents;
         private bool _occludesLight;
         private bool _open;
+        private bool _canWeldShut;
         private bool _isWeldedShut;
+        private string _closeSound = "/Audio/Machines/closetclose.ogg";
+        private string _openSound = "/Audio/Machines/closetopen.ogg";
 
         [ViewVariables]
         protected Container Contents;
@@ -104,14 +108,24 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool CanWeldShut { get; set; }
+        public bool CanWeldShut {
+            get => _canWeldShut;
+            set
+            {
+                _canWeldShut = value;
+                if (Owner.TryGetComponent(out AppearanceComponent appearance))
+                {
+                    appearance.SetData(StorageVisuals.CanWeld, value);
+                }
+            }
+        }
 
         /// <inheritdoc />
         public override void Initialize()
         {
             base.Initialize();
             Contents = ContainerManagerComponent.Ensure<Container>(nameof(EntityStorageComponent), Owner);
-            _entityQuery = new IntersectingEntityQuery(Owner);
+            EntityQuery = new IntersectingEntityQuery(Owner);
 
             Contents.ShowContents = _showContents;
             Contents.OccludesLight = _occludesLight;
@@ -134,6 +148,8 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             serializer.DataField(ref _open, "open", false);
             serializer.DataField(this, a => a.IsWeldedShut, "IsWeldedShut", false);
             serializer.DataField(this, a => a.CanWeldShut, "CanWeldShut", true);
+            serializer.DataField(this, x => _closeSound, "closeSound", "/Audio/Machines/closetclose.ogg");
+            serializer.DataField(this, x => _openSound, "openSound", "/Audio/Machines/closetopen.ogg");
         }
 
         public virtual void Activate(ActivateEventArgs eventArgs)
@@ -141,17 +157,26 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             ToggleOpen(eventArgs.User);
         }
 
-        private void ToggleOpen(IEntity user)
+        public virtual bool CanOpen(IEntity user, bool silent = false)
         {
             if (IsWeldedShut)
             {
-                Owner.PopupMessage(user, Loc.GetString("It's welded completely shut!"));
-                return;
+                if(!silent) Owner.PopupMessage(user, Loc.GetString("It's welded completely shut!"));
+                return false;
             }
+            return true;
+        }
 
+        public virtual bool CanClose(IEntity user, bool silent = false)
+        {
+            return true;
+        }
+
+        private void ToggleOpen(IEntity user)
+        {
             if (Open)
             {
-                CloseStorage();
+                TryCloseStorage(user);
             }
             else
             {
@@ -159,10 +184,10 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             }
         }
 
-        public virtual void CloseStorage()
+        protected virtual void CloseStorage()
         {
             Open = false;
-            var entities = Owner.EntityManager.GetEntities(_entityQuery);
+            var entities = Owner.EntityManager.GetEntities(EntityQuery);
             var count = 0;
             foreach (var entity in entities)
             {
@@ -187,16 +212,16 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             }
 
             ModifyComponents();
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/closetclose.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity(_closeSound, Owner);
             _lastInternalOpenAttempt = default;
         }
 
-        private void OpenStorage()
+        protected virtual void OpenStorage()
         {
             Open = true;
             EmptyContents();
             ModifyComponents();
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/closetopen.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity(_openSound, Owner);
         }
 
         private void ModifyComponents()
@@ -224,8 +249,9 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             }
         }
 
-        private bool AddToContents(IEntity entity)
+        protected virtual bool AddToContents(IEntity entity)
         {
+            if (entity == Owner) return false;
             if (entity.TryGetComponent(out IPhysicsComponent entityPhysicsComponent))
             {
                 if(MaxSize < entityPhysicsComponent.WorldAABB.Size.X
@@ -247,12 +273,18 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             return false;
         }
 
+        public virtual Vector2 ContentsDumpPosition()
+        {
+            return Owner.Transform.WorldPosition;
+        }
+
         private void EmptyContents()
         {
             foreach (var contained in Contents.ContainedEntities.ToArray())
             {
                 if(Contents.Remove(contained))
                 {
+                    contained.Transform.WorldPosition = ContentsDumpPosition();
                     if (contained.TryGetComponent<IPhysicsComponent>(out var physics))
                     {
                         physics.CanCollide = true;
@@ -284,14 +316,18 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             }
         }
 
-        protected virtual void TryOpenStorage(IEntity user)
+        public virtual bool TryOpenStorage(IEntity user)
         {
-            if (IsWeldedShut)
-            {
-                Owner.PopupMessage(user, Loc.GetString("It's welded completely shut!"));
-                return;
-            }
+            if (!CanOpen(user)) return false;
             OpenStorage();
+            return true;
+        }
+
+        public virtual bool TryCloseStorage(IEntity user)
+        {
+            if (!CanClose(user)) return false;
+            CloseStorage();
+            return true;
         }
 
         /// <inheritdoc />

@@ -20,7 +20,7 @@ using Robust.Shared.Maths;
 namespace Content.IntegrationTests.Tests.Body
 {
     [TestFixture]
-    [TestOf(typeof(LungBehaviorComponent))]
+    [TestOf(typeof(LungBehavior))]
     public class LungTest : ContentIntegrationTest
     {
         [Test]
@@ -39,7 +39,7 @@ namespace Content.IntegrationTests.Tests.Body
                 var human = entityManager.SpawnEntity("HumanMob_Content", MapCoordinates.Nullspace);
 
                 Assert.That(human.TryGetComponent(out IBody body));
-                Assert.That(body.TryGetMechanismBehaviors(out List<LungBehaviorComponent> lungs));
+                Assert.That(body.TryGetMechanismBehaviors(out List<LungBehavior> lungs));
                 Assert.That(lungs.Count, Is.EqualTo(1));
                 Assert.That(human.TryGetComponent(out BloodstreamComponent bloodstream));
 
@@ -141,7 +141,7 @@ namespace Content.IntegrationTests.Tests.Body
                 human = entityManager.SpawnEntity("HumanMob_Content", coordinates);
 
                 Assert.True(human.TryGetComponent(out IBody body));
-                Assert.True(body.HasMechanismBehavior<LungBehaviorComponent>());
+                Assert.True(body.HasMechanismBehavior<LungBehavior>());
                 Assert.True(human.TryGetComponent(out metabolism));
                 Assert.False(metabolism.Suffocating);
             });

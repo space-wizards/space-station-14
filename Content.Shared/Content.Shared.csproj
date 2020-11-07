@@ -9,6 +9,7 @@
     <OutputPath>../bin/Content.Shared</OutputPath>
     <Configurations>Release;Debug</Configurations>
     <Platforms>AnyCPU</Platforms>
+    <WarningsAsErrors>CS8604;CS8765</WarningsAsErrors>
   </PropertyGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.DefineConstants.targets" />
   <ItemGroup>

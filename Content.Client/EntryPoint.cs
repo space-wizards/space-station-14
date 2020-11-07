@@ -101,8 +101,6 @@ namespace Content.Client
             {
                 IoCManager.Resolve<IMapManager>().CreateNewMapEntity(MapId.Nullspace);
             };
-
-             _configurationManager.RegisterCVar("outline.enabled", true);
         }
 
         /// <summary>

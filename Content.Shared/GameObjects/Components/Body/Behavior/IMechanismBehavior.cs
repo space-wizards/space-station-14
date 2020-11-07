@@ -2,10 +2,11 @@
 using Content.Shared.GameObjects.Components.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Body.Part;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Body.Behavior
 {
-    public interface IMechanismBehavior : IComponent
+    public interface IMechanismBehavior : IExposeData
     {
         IBody? Body { get; }
 
@@ -15,7 +16,20 @@ namespace Content.Shared.GameObjects.Components.Body.Behavior
         ///     Upward reference to the parent <see cref="IMechanism"/> that this
         ///     behavior is attached to.
         /// </summary>
-        IMechanism? Mechanism { get; }
+        IMechanism Parent { get; }
+
+        /// <summary>
+        ///     The entity that owns <see cref="Parent"/>.
+        ///     For the entity owning the body that this mechanism may be in,
+        ///     see <see cref="IBody.Owner"/>
+        /// </summary>
+        IEntity Owner { get; }
+
+        void Initialize(IMechanism parent);
+
+        void Startup();
+
+        void Update(float frameTime);
 
         /// <summary>
         ///     Called when the containing <see cref="IBodyPart"/> is attached to a
