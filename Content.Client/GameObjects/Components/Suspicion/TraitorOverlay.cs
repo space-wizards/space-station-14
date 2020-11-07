@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
@@ -6,6 +7,7 @@ using Robust.Client.Graphics.Overlays;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.ResourceManagement;
+using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
@@ -31,7 +33,7 @@ namespace Content.Client.GameObjects.Components.Suspicion
             IEntityManager entityManager,
             IResourceCache resourceCache,
             IEyeManager eyeManager)
-            : base(nameof(TraitorOverlay))
+            : base()
         {
             _entityManager = entityManager;
             _eyeManager = eyeManager;

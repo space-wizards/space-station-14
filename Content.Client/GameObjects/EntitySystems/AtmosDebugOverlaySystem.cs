@@ -37,8 +37,8 @@ namespace Content.Client.GameObjects.EntitySystems
             _atmosphereSystem = Get<AtmosphereSystem>();
 
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
-            if(!overlayManager.HasOverlay(nameof(AtmosDebugOverlay)))
-                overlayManager.AddOverlay(new AtmosDebugOverlay());
+            if(!overlayManager.HasOverlayOfClass(nameof(AtmosDebugOverlay)))
+                overlayManager.AddOverlay(Guid.NewGuid(), new AtmosDebugOverlay());
         }
 
         private void HandleAtmosDebugOverlayMessage(AtmosDebugOverlayMessage message)
@@ -51,8 +51,8 @@ namespace Content.Client.GameObjects.EntitySystems
             base.Shutdown();
             _mapManager.OnGridRemoved -= OnGridRemoved;
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
-            if(!overlayManager.HasOverlay(nameof(GasTileOverlay)))
-                overlayManager.RemoveOverlay(nameof(GasTileOverlay));
+            if(!overlayManager.HasOverlayOfClass(nameof(GasTileOverlay)))
+                overlayManager.RemoveOverlaysOfClass(nameof(GasTileOverlay));
         }
 
         private void OnGridRemoved(GridId gridId)

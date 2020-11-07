@@ -26,7 +26,7 @@ namespace Content.Server.GameObjects.Components.Mobs.State
 
             if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlayComponent))
             {
-                overlayComponent.AddOverlay(SharedOverlayID.CircleMaskOverlay);
+                overlayComponent.AddNewOverlay(OverlayType.CircleMaskOverlay);
             }
 
             if (entity.TryGetComponent(out StunnableComponent stun))
@@ -53,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Mobs.State
 
             if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlay))
             {
-                overlay.ClearOverlays();
+                overlay.ClearAllOverlays();
             }
         }
 

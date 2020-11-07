@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.EntitySystems
                     {
                         if (parameter.StartedAt + parameter.Length <= _gameTiming.CurTime.TotalMilliseconds)
                         {
-                            component.RemoveOverlay(overlay);
+                            component.TryRemoveOverlay(overlay.ID);
                         }
                     }
                 }

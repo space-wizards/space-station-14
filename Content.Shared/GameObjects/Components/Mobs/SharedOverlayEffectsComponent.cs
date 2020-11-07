@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -13,7 +14,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.GameObjects.Components.Mobs
 {
     /// <summary>
-    /// Full screen overlays; Blindness, death, flash, alcohol etc.
+    ///     Manages screen overlays: shader instances that create visual effects such as blindness, drunkenness, etc.
     /// </summary>
     public abstract class SharedOverlayEffectsComponent : Component
     {
@@ -22,25 +23,31 @@ namespace Content.Shared.GameObjects.Components.Mobs
         public sealed override uint? NetID => ContentNetIDs.OVERLAYEFFECTS;
     }
 
+
+
+
+    /// <summary>
+    ///     Data class representing a single, unique instance of an overlay and the parameters that are passed into it.
+    /// </summary>
     [Serializable, NetSerializable]
-    public class OverlayContainer : IEquatable<string>, IEquatable<OverlayContainer>
+    public class OverlayContainer
     {
         [ViewVariables(VVAccess.ReadOnly)]
-        public string ID { get; }
+        public readonly Guid ID;
+
+        [ViewVariables(VVAccess.ReadOnly)]
+        public OverlayType OverlayType { get; }
 
         [ViewVariables(VVAccess.ReadWrite)]
         public List<OverlayParameter> Parameters { get; } = new List<OverlayParameter>();
 
-        public OverlayContainer([NotNull] string id)
+        public OverlayContainer(Guid id, OverlayType type)
         {
             ID = id;
+            OverlayType = type;
         }
 
-        public OverlayContainer(SharedOverlayID id) : this(id.ToString())
-        {
-        }
-
-        public OverlayContainer(SharedOverlayID id, params OverlayParameter[] parameters) : this(id)
+        public OverlayContainer(Guid id, OverlayType type, params OverlayParameter[] parameters) : this(id, type)
         {
             Parameters.AddRange(parameters);
         }
@@ -57,30 +64,18 @@ namespace Content.Shared.GameObjects.Components.Mobs
             parameter = default;
             return false;
         }
-
-        public bool Equals(string other)
-        {
-            return ID == other;
-        }
-
-        public bool Equals(OverlayContainer other)
-        {
-            return ID == other?.ID;
-        }
-
-        public override int GetHashCode()
-        {
-            return ID != null ? ID.GetHashCode() : 0;
-        }
-
     }
 
+
+
+
+
     [Serializable, NetSerializable]
-    public class OverlayEffectComponentMessage : ComponentMessage
+    public class OverlayEffectsSyncMessage : ComponentMessage
     {
         public List<OverlayContainer> Overlays;
 
-        public OverlayEffectComponentMessage(List<OverlayContainer> overlays)
+        public OverlayEffectsSyncMessage(List<OverlayContainer> overlays)
         {
             Directed = true;
             Overlays = overlays;
@@ -88,70 +83,35 @@ namespace Content.Shared.GameObjects.Components.Mobs
     }
 
     [Serializable, NetSerializable]
-    public class ResendOverlaysMessage : ComponentMessage
+    public class OverlayEffectsUpdateMessage : ComponentMessage
     {
-    }
+        public Guid ID;
+        public OverlayParameter[] Parameters;
 
-    [Serializable, NetSerializable]
-    public abstract class OverlayParameter
-    {
-    }
-
-    [Serializable, NetSerializable]
-    public class TimedOverlayParameter : OverlayParameter
-    {
-        [ViewVariables(VVAccess.ReadOnly)]
-        public int Length { get; set; }
-
-        public double StartedAt { get; private set; }
-
-        public TimedOverlayParameter(int length)
+        public OverlayEffectsUpdateMessage(Guid id, OverlayParameter[] parameters)
         {
-            Length = length;
-            StartedAt = IoCManager.Resolve<IGameTiming>().CurTime.TotalMilliseconds;
+            Directed = true;
+            ID = id;
+            Parameters = parameters;
         }
     }
 
     [Serializable, NetSerializable]
-    public class TextureOverlayParameter : OverlayParameter
+    public class RequestOverlayEffectsSyncMessage : ComponentMessage
     {
-        [ViewVariables(VVAccess.ReadOnly)]
-
-        public string[] Names { get; set; }
-        public string[] RSIPaths { get; set; }
-        public string[] States { get; set; }
-
-
-        public TextureOverlayParameter(string[] names, string[] rsiPaths, string[] states)
-        {
-            Names = names;
-            RSIPaths = rsiPaths;
-            States = states;
-        }
-
-        public Dictionary<string, KeyValuePair<string, string>> ToDictionary()
-        {
-            if (Names.Length != RSIPaths.Length || Names.Length != States.Length) 
-                return null;
-            Dictionary<string, KeyValuePair<string, string>> toReturn = new Dictionary<string, KeyValuePair<string, string>>();
-            for (int i = 0; i < Names.Length; i++)
-            {
-                toReturn.Add(Names[i], new KeyValuePair<string, string>(RSIPaths[i], States[i]));
-            }
-            return toReturn;
-        }
-
     }
 
- 
+    // This enum is required for the server to be able to tell the client what overlay to draw, since the server doesn't have a reference to the overlay classes.
+    // Client takes the NAME of the enum, so OverlayType.GradientCircleMaskOverlay means that it will try to create an instance of the class GradientCircleMaskOverlay.
 
-    public enum SharedOverlayID
+    public enum OverlayType
     {
         GradientCircleMaskOverlay,
         ColoredScreenBorderOverlay,
         CircleMaskOverlay,
         FlashOverlay,
         RadiationPulseOverlay,
-        SingularityOverlay
+        SingularityOverlay,
+        TextureOverlay
     }
 }

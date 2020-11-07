@@ -1,4 +1,4 @@
-using Content.Server.GameObjects.Components.Mobs;
+﻿using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.StationEvents;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.GameObjects.Components.Mobs;
@@ -67,7 +67,7 @@ namespace Content.Server.StationEvents
 
             foreach (var overlay in componentManager.EntityQuery<ServerOverlayEffectsComponent>())
             {
-                overlay.AddOverlay(SharedOverlayID.RadiationPulseOverlay);
+                overlay.AddNewOverlay(OverlayType.RadiationPulseOverlay);
             }
         }
 
@@ -83,7 +83,7 @@ namespace Content.Server.StationEvents
 
             foreach (var overlay in componentManager.EntityQuery<ServerOverlayEffectsComponent>())
             {
-                overlay.RemoveOverlay(SharedOverlayID.RadiationPulseOverlay);
+                overlay.RemoveOverlaysOfType(OverlayType.RadiationPulseOverlay);
             }
         }
 

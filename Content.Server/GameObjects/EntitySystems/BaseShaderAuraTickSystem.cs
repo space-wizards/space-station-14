@@ -6,12 +6,12 @@ using Robust.Shared.GameObjects.Systems;
 namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    internal sealed class BaseAuraTickSystem : EntitySystem
+    internal sealed class BaseShaderAuraTickSystem : EntitySystem
     {
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
-            foreach (var shaderAura in ComponentManager.EntityQuery<BaseShaderAuraComponent>())
+            foreach (var shaderAura in ComponentManager.EntityQuery<SingularityShaderAuraComponent>())
             {
                 shaderAura.OnTick();
             }

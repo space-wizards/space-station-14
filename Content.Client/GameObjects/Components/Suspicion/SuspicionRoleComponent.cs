@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Content.Client.UserInterface;
 using Content.Client.UserInterface.Suspicion;
@@ -12,6 +13,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 
@@ -77,12 +79,13 @@ namespace Content.Client.GameObjects.Components.Suspicion
                 return false;
             }
 
-            if (!_overlayManager.TryGetOverlay<TraitorOverlay>(nameof(TraitorOverlay), out var overlay))
+            if (!_overlayManager.GetOverlaysOfClass<TraitorOverlay>(out var overlays))
             {
                 return false;
             }
-
-            return overlay.AddAlly(ally);
+            if(overlays.Count != 1)
+                Logger.Warning("There was more than one TraitorOverlay on EntityUid '{0}', is this intentional?", ally.ToString());
+            return overlays[0].AddAlly(ally);
         }
 
         private bool RemoveAlly(EntityUid ally)
@@ -92,28 +95,29 @@ namespace Content.Client.GameObjects.Components.Suspicion
                 return false;
             }
 
-            if (!_overlayManager.TryGetOverlay<TraitorOverlay>(nameof(TraitorOverlay), out var overlay))
+            if (!_overlayManager.GetOverlaysOfClass<TraitorOverlay>(out var overlays))
             {
                 return false;
             }
-
-            return overlay.RemoveAlly(ally);
+            if (overlays.Count != 1)
+                Logger.Warning("There was more than one TraitorOverlay on EntityUid '{0}', is this intentional?", ally.ToString());
+            return overlays[0].RemoveAlly(ally);
         }
 
         private void AddTraitorOverlay()
         {
-            if (_overlayManager.HasOverlay(nameof(TraitorOverlay)))
+            if (_overlayManager.HasOverlayOfClass(nameof(TraitorOverlay)))
             {
                 return;
             }
 
             var overlay = new TraitorOverlay(Owner, _entityManager, _resourceCache, _eyeManager);
-            _overlayManager.AddOverlay(overlay);
+            _overlayManager.AddOverlay(Guid.NewGuid(), overlay);
         }
 
         private void RemoveTraitorOverlay()
         {
-            _overlayManager.RemoveOverlay(nameof(TraitorOverlay));
+            _overlayManager.RemoveOverlaysOfClass(nameof(TraitorOverlay));
         }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)

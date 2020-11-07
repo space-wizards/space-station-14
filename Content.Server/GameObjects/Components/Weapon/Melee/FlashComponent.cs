@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
@@ -133,17 +134,18 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         {
             if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlayEffectsComponent))
             {
-                if (!overlayEffectsComponent.TryModifyOverlay(nameof(SharedOverlayID.FlashOverlay),
-                    overlay =>
-                    {
-                        if (overlay.TryGetOverlayParameter<TimedOverlayParameter>(out var timed))
-                        {
-                            timed.Length += flashDuration;
-                        }
-                    }))
-                {
-                    var container = new OverlayContainer(SharedOverlayID.FlashOverlay, new TimedOverlayParameter(flashDuration));
-                    overlayEffectsComponent.AddOverlay(container);
+                if (overlayEffectsComponent.TryGetOverlaysOfType(OverlayType.FlashOverlay, out List<Guid> flashIDs)) {
+                    foreach (Guid id in flashIDs) {
+                        overlayEffectsComponent.TryModifyOverlay(id, overlay => {
+                            if (overlay.TryGetOverlayParameter<TimedOverlayParameter>(out var timed))
+                            {
+                                timed.Length += flashDuration;
+                            }
+                        });
+                    }
+                }
+                else {
+                    overlayEffectsComponent.AddNewOverlay(OverlayType.FlashOverlay, new TimedOverlayParameter(flashDuration));
                 }
             }
 

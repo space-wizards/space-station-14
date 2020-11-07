@@ -3,7 +3,7 @@
 //If you ever edit this to have input variables, be sure to edit CriticalState.cs
 
 const highp vec4 borderColor = vec4(230.0, 0.0, 0.0, 1.0); 
-const highp float borderSize = 55; //Pixel size of border
+const highp float borderSize = 30; //Pixel size of border
 
 void fragment() {
 	highp vec2 pixelSize = vec2(1.0/SCREEN_PIXEL_SIZE.x, 1.0/SCREEN_PIXEL_SIZE.y);
@@ -18,6 +18,6 @@ void fragment() {
 		smallestLength = pixelSize.y-FRAGCOORD.y;
 	}
 	if(smallestLength <= borderSize){
-		COLOR = vec4(borderColor.r, borderColor.g, borderColor.b, abs((1.0-(smallestLength/borderSize))*sin(TIME)));
+		COLOR = vec4(borderColor.r, borderColor.g, borderColor.b, abs((1.0-(smallestLength/borderSize))*sin(TIME*1.4)));
 	}
 }

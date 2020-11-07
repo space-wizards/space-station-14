@@ -58,7 +58,7 @@ namespace Content.Server.GameObjects.Components.Mobs.State
 
             if (Owner.TryGetComponent(out ServerOverlayEffectsComponent overlay))
             {
-                overlay.ClearOverlays();
+                overlay.ClearAllOverlays();
             }
         }
 

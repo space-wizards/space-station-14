@@ -4,10 +4,12 @@ using Robust.Client.Graphics.Drawing;
 using Robust.Client.Graphics.Overlays;
 using Robust.Client.Interfaces.Graphics;
 using Robust.Client.Interfaces.Graphics.ClientEye;
+using Robust.Shared.Enums;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using System;
 
 namespace Content.Client.Atmos
 {
@@ -21,7 +23,7 @@ namespace Content.Client.Atmos
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
-        public GasTileOverlay() : base(nameof(GasTileOverlay))
+        public GasTileOverlay() : base()
         {
             IoCManager.InjectDependencies(this);
 

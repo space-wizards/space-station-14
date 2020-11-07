@@ -5,9 +5,11 @@ using Robust.Client.Graphics.Overlays;
 using Robust.Client.Graphics.Shaders;
 using Robust.Client.Interfaces.Graphics;
 using Robust.Client.Interfaces.Graphics.ClientEye;
+using Robust.Shared.Enums;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using System;
 
 namespace Content.Client.Parallax
 {
@@ -26,7 +28,7 @@ namespace Content.Client.Parallax
         public override OverlaySpace Space => OverlaySpace.ScreenSpaceBelowWorld;
         private readonly ShaderInstance _shader;
 
-        public ParallaxOverlay() : base(nameof(ParallaxOverlay))
+        public ParallaxOverlay() : base()
         {
             IoCManager.InjectDependencies(this);
             _shader = _prototypeManager.Index<ShaderPrototype>("unshaded").Instance();

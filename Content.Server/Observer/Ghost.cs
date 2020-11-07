@@ -1,4 +1,4 @@
-using Content.Server.GameObjects.Components.Mobs;
+﻿using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Players;
@@ -74,7 +74,7 @@ namespace Content.Server.Observer
 
             if (player.AttachedEntity.TryGetComponent(out ServerOverlayEffectsComponent overlayComponent))
             {
-                overlayComponent?.RemoveOverlay(SharedOverlayID.CircleMaskOverlay);
+                overlayComponent?.RemoveOverlaysOfType(OverlayType.CircleMaskOverlay); //Zoinks, this just assumes that the death overlay uses CircleMaskOverlay... but I'm not gonna fix it! :P
             }
 
             if (canReturn)

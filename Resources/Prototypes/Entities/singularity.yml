@@ -14,12 +14,10 @@
       - AllMask
     mass: 5
   - type: Singularity
+  - type: SingularityShaderAura
   - type: RadiationPulse
     range: 15
     decay: false
-  - type: Sprite
-    sprite: Effects/Singularity/singularity_1.rsi
-    state: singularity_1
   - type: Icon
     sprite: Effects/Singularity/singularity_1.rsi
     state: singularity_1
@@ -28,7 +26,7 @@
 - type: entity
   id: RadiationCollector
   name: Radiation Collector
-  description: A machine that collects Radiation and turns it into power.
+  description: A machine that collects radiation and turns it into power.
   placement:
     mode: SnapgridCenter
   components:
@@ -112,7 +110,7 @@
 
 - type: entity
   name: Gravitational Singularity Generator
-  description: An Odd Device which produces a Gravitational Singularity when set up.
+  description: An odd device capable of forming a Gravitational Singularity when set up.
   id: SinguloGenerator
   components:
     - type: Sprite

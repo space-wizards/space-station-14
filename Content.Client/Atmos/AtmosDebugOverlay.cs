@@ -10,6 +10,8 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Enums;
+using System;
 
 namespace Content.Client.Atmos
 {
@@ -23,7 +25,7 @@ namespace Content.Client.Atmos
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
-        public AtmosDebugOverlay() : base(nameof(AtmosDebugOverlay))
+        public AtmosDebugOverlay() : base()
         {
             IoCManager.InjectDependencies(this);
 

@@ -40,4 +40,5 @@
     baseWalkSpeed: 7
   - type: MovementIgnoreGravity
   - type: Grammar
+  - type: OverlayEffectsUI
     proper: true

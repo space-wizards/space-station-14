@@ -1,32 +1,27 @@
 //Gravitational lensing effect. Edited from https://unionassets.com/blog/the-effect-of-the-gravitational-lens-195 to be Clyde based (based on what)
 
 uniform sampler2D SCREEN_TEXTURE;
-uniform sampler2D singularityTexture;
-uniform highp vec2 positionInput = vec2((1280/2)-300, (720/2));
-uniform highp float distanceInput = 20;
-uniform highp float massInput = 20000;
-uniform highp float ratioInput = 1.0;
+uniform highp vec2 positionInput = vec2(0,0);
+uniform highp float falloff = 4;
+uniform highp float intensity = 2.4;
+
+
 
 void fragment() {
-
 	float distanceToCenter = length(FRAGCOORD.xy-positionInput);
-	if(distanceToCenter > 30){
-		vec2 offset = FRAGCOORD.xy - positionInput;
-		vec2 ratio = vec2(ratioInput, 1);
-		highp float rad = length(offset / ratio);
-		highp float deformation = 1 / pow(rad * pow(distanceInput, 0.5), 2) * massInput * 2;
+
+	vec2 finalCoords = FRAGCOORD.xy - positionInput;
+	highp float deformation = (intensity*500) / pow(distanceToCenter, pow(falloff, 0.5));
+	finalCoords *= 1-deformation;
+	finalCoords += positionInput;
+	
+	float darkenCircleSize = 600; //Calculate optional darkening effect (darker the closer we are to the center of the singularity)
+	float alph = (distanceToCenter-30)/(darkenCircleSize-30);
+	float darkening = 0.9-(alph*0.9);
+	darkening = 0; //Disables darkening effect
 		
-		offset *= 1-deformation;
-		offset += positionInput;
-			
-		float darkenCircleSize = 600;
-		float alph = (distanceToCenter-30)/(darkenCircleSize-30);
-		float darkening = 0.9-(alph*0.9);
-		darkening = 0;
-			
-		COLOR = mix(texture(SCREEN_TEXTURE, offset*SCREEN_PIXEL_SIZE), vec4(0.0, 0.0, 0.0, 1.0), darkening);
-	}
-	else {
-		COLOR = texture(SCREEN_TEXTURE, FRAGCOORD.xy*SCREEN_PIXEL_SIZE);
-	}
+	COLOR = mix(texture(SCREEN_TEXTURE, finalCoords*SCREEN_PIXEL_SIZE), vec4(0.0, 0.0, 0.0, 1.0), darkening);
+	
+	COLOR = texture(SCREEN_TEXTURE, FRAGCOORD.xy*SCREEN_PIXEL_SIZE);
+	COLOR = texture(SCREEN_TEXTURE, FRAGCOORD.xy*SCREEN_PIXEL_SIZE);
 }

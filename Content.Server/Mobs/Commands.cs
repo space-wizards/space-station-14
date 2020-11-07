@@ -1,7 +1,9 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Mobs.Roles;
 using Content.Server.Players;
+using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Roles;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
@@ -131,7 +133,10 @@ namespace Content.Server.Mobs
             {
                 if (player.AttachedEntity.TryGetComponent(out ServerOverlayEffectsComponent overlayEffectsComponent))
                 {
-                    overlayEffectsComponent.AddOverlay(args[0]);
+                    if(Enum.TryParse(args[0], out OverlayType overlayType))
+                       overlayEffectsComponent.AddNewOverlay(overlayType);
+                    else
+                        shell.SendText(player, "Overlay type does not exist!");
                 }
             }
         }
@@ -140,7 +145,7 @@ namespace Content.Server.Mobs
     public class RemoveOverlayCommand : IClientCommand
     {
         public string Command => "rmoverlay";
-        public string Description => "Removes an overlay by its ID";
+        public string Description => "Removes all overlays of a given type.";
         public string Help => "rmoverlay <id>";
 
         public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
@@ -155,7 +160,10 @@ namespace Content.Server.Mobs
             {
                 if (player.AttachedEntity.TryGetComponent(out ServerOverlayEffectsComponent overlayEffectsComponent))
                 {
-                    overlayEffectsComponent.RemoveOverlay(args[0]);
+                    if (Enum.TryParse(args[0], out OverlayType overlayType))
+                        overlayEffectsComponent.RemoveOverlaysOfType(overlayType);
+                    else
+                        shell.SendText(player, "Overlay type does not exist!");
                 }
             }
         }

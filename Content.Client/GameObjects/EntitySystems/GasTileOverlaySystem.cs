@@ -93,8 +93,8 @@ namespace Content.Client.GameObjects.EntitySystems
             }
 
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
-            if(!overlayManager.HasOverlay(nameof(GasTileOverlay)))
-                overlayManager.AddOverlay(new GasTileOverlay());
+            if(!overlayManager.HasOverlayOfClass(nameof(GasTileOverlay)))
+                overlayManager.AddOverlay(Guid.NewGuid(), new GasTileOverlay());
         }
 
         private void HandleGasOverlayMessage(GasOverlayMessage message)
@@ -131,8 +131,8 @@ namespace Content.Client.GameObjects.EntitySystems
             base.Shutdown();
             _mapManager.OnGridRemoved -= OnGridRemoved;
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
-            if(!overlayManager.HasOverlay(nameof(GasTileOverlay)))
-                overlayManager.RemoveOverlay(nameof(GasTileOverlay));
+            if(!overlayManager.HasOverlayOfClass(nameof(GasTileOverlay)))
+                overlayManager.RemoveOverlaysOfClass(nameof(GasTileOverlay));
         }
 
         private void OnGridRemoved(GridId gridId)

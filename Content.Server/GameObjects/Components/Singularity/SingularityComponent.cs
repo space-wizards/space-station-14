@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +23,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Timers;
+using Content.Server.GameObjects.Components.Effects;
 
 namespace Content.Server.GameObjects.Components.Singularity
 {
@@ -49,7 +50,6 @@ namespace Content.Server.GameObjects.Components.Singularity
                 if (_energy <= 0)
                 {
                     if(_singularityController != null) _singularityController.LinearVelocity = Vector2.Zero;
-                    _spriteComponent?.LayerSetVisible(0, false);
 
                     Owner.Delete();
                     return;
@@ -82,10 +82,9 @@ namespace Content.Server.GameObjects.Components.Singularity
 
                 if(_radiationPulseComponent != null) _radiationPulseComponent.RadsPerSecond = 10 * value;
 
-                _spriteComponent?.LayerSetRSI(0, "Effects/Singularity/singularity_" + _level + ".rsi");
-                _spriteComponent?.LayerSetState(0, "singularity_" + _level);
+                //_shaderComponent.
 
-                if(_collidableComponent != null && _collidableComponent.PhysicsShapes.Any() && _collidableComponent.PhysicsShapes[0] is PhysShapeCircle circle)
+                if (_collidableComponent != null && _collidableComponent.PhysicsShapes.Any() && _collidableComponent.PhysicsShapes[0] is PhysShapeCircle circle)
                 {
                     circle.Radius = _level - 0.5f;
                 }
@@ -107,7 +106,7 @@ namespace Content.Server.GameObjects.Components.Singularity
 
         private SingularityController? _singularityController;
         private PhysicsComponent? _collidableComponent;
-        private SpriteComponent? _spriteComponent;
+        private SingularityShaderAuraComponent? _shaderComponent;
         private RadiationPulseComponent? _radiationPulseComponent;
         private AudioSystem _audioSystem = null!;
         private AudioSystem.AudioSourceServer? _playingSound;
@@ -134,9 +133,9 @@ namespace Content.Server.GameObjects.Components.Singularity
                 _collidableComponent.Hard = false;
             }
 
-            if (!Owner.TryGetComponent(out _spriteComponent))
+            if (!Owner.TryGetComponent(out _shaderComponent))
             {
-                Logger.Error("SingularityComponent was spawned without SpriteComponent");
+                Logger.Error("SingularityComponent was spawned without SingularityShaderAuraComponent");
             }
 
             _singularityController = _collidableComponent?.EnsureController<SingularityController>();

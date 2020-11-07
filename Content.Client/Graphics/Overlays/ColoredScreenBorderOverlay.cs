@@ -3,9 +3,11 @@ using Robust.Client.Graphics.Drawing;
 using Robust.Client.Graphics.Overlays;
 using Robust.Client.Graphics.Shaders;
 using Robust.Client.Interfaces.Graphics.ClientEye;
+using Robust.Shared.Enums;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using System;
 
 namespace Content.Client.Graphics.Overlays
 {
@@ -15,9 +17,10 @@ namespace Content.Client.Graphics.Overlays
         [Dependency] private readonly IEyeManager _eyeManager = default!;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
+        public override OverlayPriority Priority => OverlayPriority.P7;
         private readonly ShaderInstance _shader;
 
-        public ColoredScreenBorderOverlay() : base(nameof(SharedOverlayID.ColoredScreenBorderOverlay))
+        public ColoredScreenBorderOverlay() : base()
         {
             IoCManager.InjectDependencies(this);
             _shader = _prototypeManager.Index<ShaderPrototype>("ColoredScreenBorder").Instance();

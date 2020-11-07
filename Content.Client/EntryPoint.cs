@@ -146,7 +146,7 @@ namespace Content.Client
             IoCManager.Resolve<IGameHud>().Initialize();
             IoCManager.Resolve<IClientNotifyManager>().Initialize();
             IoCManager.Resolve<IClientGameTicker>().Initialize();
-            IoCManager.Resolve<IOverlayManager>().AddOverlay(new ParallaxOverlay());
+            IoCManager.Resolve<IOverlayManager>().AddOverlay(new Guid(), new ParallaxOverlay());
             IoCManager.Resolve<IChatManager>().Initialize();
             IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();

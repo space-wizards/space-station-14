@@ -5,12 +5,14 @@ using Robust.Client.Graphics.Drawing;
 using Robust.Client.Graphics.Overlays;
 using Robust.Client.Graphics.Shaders;
 using Robust.Client.Interfaces.Graphics;
+using Robust.Shared.Enums;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
+using System;
 
 namespace Content.Client.Graphics.Overlays
 {
@@ -26,7 +28,7 @@ namespace Content.Client.Graphics.Overlays
         private int lastsFor = 5000;
         private Texture _screenshotTexture;
 
-        public FlashOverlay() : base(nameof(SharedOverlayID.FlashOverlay))
+        public FlashOverlay() : base()
         {
             IoCManager.InjectDependencies(this);
             _shader = _prototypeManager.Index<ShaderPrototype>("FlashedEffect").Instance().Duplicate();

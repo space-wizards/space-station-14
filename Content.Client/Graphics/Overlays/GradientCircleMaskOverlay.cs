@@ -3,9 +3,11 @@ using Robust.Client.Graphics.Drawing;
 using Robust.Client.Graphics.Overlays;
 using Robust.Client.Graphics.Shaders;
 using Robust.Client.Interfaces.Graphics.ClientEye;
+using Robust.Shared.Enums;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using System;
 
 namespace Content.Client.Graphics.Overlays
 {
@@ -17,7 +19,7 @@ namespace Content.Client.Graphics.Overlays
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
         private readonly ShaderInstance _shader;
 
-        public GradientCircleMaskOverlay() : base(nameof(SharedOverlayID.GradientCircleMaskOverlay))
+        public GradientCircleMaskOverlay() : base()
         {
             IoCManager.InjectDependencies(this);
             _shader = _prototypeManager.Index<ShaderPrototype>("GradientCircleMask").Instance();

@@ -1,0 +1,15 @@
+
+//Draws the given texture at the given screen coords. Useful in specific scenarios (i.e. this was made for drawing singularity sprites over the lensing effect but below FOV)
+
+uniform sampler2D tex;
+uniform highp vec2 positionInput = vec2(0,0);
+uniform highp float pixelSize = 32;
+
+void fragment() {
+	float pixelLength = pixelSize*2;
+	float halvedLength = pixelLength/2;
+	if(FRAGCOORD.x > positionInput.x - halvedLength && FRAGCOORD.x < positionInput.x + halvedLength && FRAGCOORD.y > positionInput.y - halvedLength && FRAGCOORD.y < positionInput.y + halvedLength){
+		vec2 finalCoords = (FRAGCOORD.xy-positionInput+(pixelLength/2))/pixelLength;
+		COLOR = texture(tex, finalCoords);
+	}
+}

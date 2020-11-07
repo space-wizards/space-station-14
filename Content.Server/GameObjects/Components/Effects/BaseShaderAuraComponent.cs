@@ -24,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Effects
     ///      OnExitRange on exit. Useful for permanent effects, like a singularity warping space around it.
     /// </summary>
     [RegisterComponent]
-    public class ServerShaderAuraComponent : Component
+    public class BaseShaderAuraComponent : Component
     {
         public override string Name => "ShaderAura";
 
@@ -43,7 +43,7 @@ namespace Content.Server.GameObjects.Components.Effects
                     if (player.AttachedEntityUid != null && EntityManager.TryGetEntity((EntityUid)player.AttachedEntityUid, out IEntity playerEntity) && playerEntity.TryGetComponent<ServerOverlayEffectsComponent>(out ServerOverlayEffectsComponent overlayEffects))
                     {
                         ActivatedPlayers.Add(player);
-                        OnEnterRange(overlayEffects);
+                        OnEnterRange(player, overlayEffects);
                     }
                 }
             }
@@ -56,15 +56,17 @@ namespace Content.Server.GameObjects.Components.Effects
                     i--;
                     if (player.AttachedEntityUid != null && EntityManager.TryGetEntity((EntityUid)player.AttachedEntityUid, out IEntity playerEntity) && playerEntity.TryGetComponent<ServerOverlayEffectsComponent>(out ServerOverlayEffectsComponent overlayEffects))
                     {
-                        OnExitRange(overlayEffects);
+                        OnExitRange(player, overlayEffects);
                     }
                 }
             }
+            TickBehavior();
         }
 
+        protected virtual void TickBehavior() { }
 
-        protected virtual void OnEnterRange(ServerOverlayEffectsComponent overlayEffects){ }
+        protected virtual void OnEnterRange(IPlayerSession session, ServerOverlayEffectsComponent overlayEffects){ }
 
-        protected virtual void OnExitRange(ServerOverlayEffectsComponent overlayEffects) { }
+        protected virtual void OnExitRange(IPlayerSession session, ServerOverlayEffectsComponent overlayEffects) { }
     }
 }

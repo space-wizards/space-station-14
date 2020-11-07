@@ -22,3 +22,8 @@
   id: Singularity
   kind: source
   path: "/Textures/Shaders/singularity.swsl"
+
+- type: shader
+  id: Texture
+  kind: source
+  path: "/Textures/Shaders/texture.swsl"

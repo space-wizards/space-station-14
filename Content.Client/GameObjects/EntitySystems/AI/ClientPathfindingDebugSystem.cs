@@ -8,6 +8,7 @@ using Robust.Client.Graphics.Shaders;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Interfaces.Graphics.Overlays;
 using Robust.Client.Player;
+using Robust.Shared.Enums;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -25,6 +26,7 @@ namespace Content.Client.GameObjects.EntitySystems.AI
         private PathfindingDebugMode _modes = PathfindingDebugMode.None;
         private float _routeDuration = 4.0f; // How long before we remove a route from the overlay
         private DebugPathfindingOverlay _overlay;
+        private Guid _overlayID;
 
         public override void Initialize()
         {
@@ -99,19 +101,20 @@ namespace Content.Client.GameObjects.EntitySystems.AI
 
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
             _overlay = new DebugPathfindingOverlay {Modes = _modes};
-            overlayManager.AddOverlay(_overlay);
+            _overlayID = Guid.NewGuid();
+            overlayManager.AddOverlay(_overlayID, _overlay);
         }
 
         private void DisableOverlay()
         {
-            if (_overlay == null)
+            if (_overlay == null || _overlayID == null)
             {
                 return;
             }
 
             _overlay.Modes = 0;
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
-            overlayManager.RemoveOverlay(_overlay.ID);
+            overlayManager.RemoveOverlay(_overlayID);
             _overlay = null;
         }
 
@@ -201,7 +204,7 @@ namespace Content.Client.GameObjects.EntitySystems.AI
         public readonly List<SharedAiDebug.AStarRouteMessage> AStarRoutes = new List<SharedAiDebug.AStarRouteMessage>();
         public readonly List<SharedAiDebug.JpsRouteMessage> JpsRoutes = new List<SharedAiDebug.JpsRouteMessage>();
 
-        public DebugPathfindingOverlay() : base(nameof(DebugPathfindingOverlay))
+        public DebugPathfindingOverlay() : base()
         {
             _shader = IoCManager.Resolve<IPrototypeManager>().Index<ShaderPrototype>("unshaded").Instance();
             _eyeManager = IoCManager.Resolve<IEyeManager>();

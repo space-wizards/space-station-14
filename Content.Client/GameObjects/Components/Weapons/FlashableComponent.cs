@@ -6,6 +6,7 @@ using Robust.Client.Graphics.Overlays;
 using Robust.Client.Interfaces.Graphics;
 using Robust.Client.Interfaces.Graphics.Overlays;
 using Robust.Client.Player;
+using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -21,7 +22,7 @@ namespace Content.Client.GameObjects.Components.Weapons
         private CancellationTokenSource _cancelToken;
         private TimeSpan _startTime;
         private double _duration;
-        private FlashOverlay _overlay;
+        private Guid? _overlayID;
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
@@ -69,17 +70,17 @@ namespace Content.Client.GameObjects.Components.Weapons
         private void EnableOverlay(double duration)
         {
             // If the timer gets reset
-            if (_overlay != null)
+            if (_overlayID != null && IoCManager.Resolve<IOverlayManager>().TryGetOverlay((Guid) _overlayID, out FlashOverlay overlay))
             {
-                _overlay.Duration = _duration;
-                _overlay.StartTime = _startTime;
+                overlay.Duration = _duration;
+                overlay.StartTime = _startTime;
                 _cancelToken.Cancel();
             }
             else
             {
                 var overlayManager = IoCManager.Resolve<IOverlayManager>();
-                _overlay = new FlashOverlay(_duration);
-                overlayManager.AddOverlay(_overlay);
+                _overlayID = Guid.NewGuid();
+                overlayManager.AddOverlay((Guid)_overlayID, new FlashOverlay(_duration));
             }
 
             _cancelToken = new CancellationTokenSource();
@@ -88,14 +89,14 @@ namespace Content.Client.GameObjects.Components.Weapons
 
         private void DisableOverlay()
         {
-            if (_overlay == null)
+            if (_overlayID == null)
             {
                 return;
             }
 
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
-            overlayManager.RemoveOverlay(_overlay.ID);
-            _overlay = null;
+            overlayManager.RemoveOverlay((Guid)_overlayID);
+            _overlayID = null;
             _cancelToken.Cancel();
             _cancelToken = null;
         }
@@ -108,7 +109,7 @@ namespace Content.Client.GameObjects.Components.Weapons
         private readonly IClyde _displayManager;
         public TimeSpan StartTime { get; set; }
         public double Duration { get; set; }
-        public FlashOverlay(double duration) : base(nameof(FlashOverlay))
+        public FlashOverlay(double duration) : base()
         {
             _timer = IoCManager.Resolve<IGameTiming>();
             _displayManager = IoCManager.Resolve<IClyde>();
