@@ -5,7 +5,6 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Client.GameObjects.Components
 {
@@ -17,9 +16,12 @@ namespace Content.Client.GameObjects.Components
             base.OnChangeData(component);
 
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
-            var snapGrid = component.Owner.GetComponent<SnapGridComponent>();
+            if (!component.Owner.TryGetComponent(out SnapGridComponent? snapGrid))
+                return;
+
             var lowWall = FindLowWall(snapGrid);
-            if (lowWall == null) return;
+            if (lowWall == null)
+                return;
 
             if (component.TryGetData(WindowVisuals.Damage, out float fraction))
             {
@@ -45,11 +47,11 @@ namespace Content.Client.GameObjects.Components
             }
         }
 
-        private static LowWallComponent FindLowWall(SnapGridComponent snapGrid)
+        private static LowWallComponent? FindLowWall(SnapGridComponent snapGrid)
         {
             foreach (var entity in snapGrid.GetLocal())
             {
-                if (entity.TryGetComponent(out LowWallComponent lowWall))
+                if (entity.TryGetComponent(out LowWallComponent? lowWall))
                 {
                     return lowWall;
                 }
