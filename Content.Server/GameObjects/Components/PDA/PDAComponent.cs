@@ -40,19 +40,19 @@ namespace Content.Server.GameObjects.Components.PDA
         [Dependency] private readonly IPDAUplinkManager _uplinkManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
-        [ViewVariables] private Container _idSlot = default!;
-        [ViewVariables] private Container _penSlot = default!;
+        [ViewVariables] private ContainerSlot _idSlot = default!;
+        [ViewVariables] private ContainerSlot _penSlot = default!;
 
         [ViewVariables] private bool _lightOn;
 
-        [ViewVariables] private string _startingIdCard = default!;
-        [ViewVariables] private string _startingPen = default!;
+        [ViewVariables] private string? _startingIdCard = default!;
+        [ViewVariables] private string? _startingPen = default!;
 
         [ViewVariables] public string? OwnerName { get; private set; }
 
         [ViewVariables] public IdCardComponent? ContainedID { get; private set; }
-        [ViewVariables] public bool IdSlotEmpty => _idSlot.ContainedEntities.Count < 1;
-        [ViewVariables] public bool PenSlotEmpty => _penSlot.ContainedEntities.Count < 1;
+        [ViewVariables] public bool IdSlotEmpty => _idSlot.ContainedEntity == null;
+        [ViewVariables] public bool PenSlotEmpty => _penSlot.ContainedEntity == null;
 
         [ViewVariables] private UplinkAccount? _syndicateUplinkAccount;
 
@@ -75,8 +75,8 @@ namespace Content.Server.GameObjects.Components.PDA
         public override void Initialize()
         {
             base.Initialize();
-            _idSlot = ContainerManagerComponent.Ensure<Container>("pda_entity_container", Owner);
-            _penSlot = ContainerManagerComponent.Ensure<Container>("pda_pen_slot", Owner);
+            _idSlot = ContainerManagerComponent.Ensure<ContainerSlot>("pda_entity_container", Owner);
+            _penSlot = ContainerManagerComponent.Ensure<ContainerSlot>("pda_pen_slot", Owner);
 
             if (UserInterface != null)
             {
@@ -193,12 +193,13 @@ namespace Content.Server.GameObjects.Components.PDA
                 return true;
             }
 
-            InsertIdCard(idCardComponent);
-
             if (swap != null)
             {
-                eventArgs.User.GetComponent<HandsComponent>().PutInHand(swap.GetComponent<ItemComponent>());
+                hands.PutInHand(swap.GetComponent<ItemComponent>());
             }
+
+            InsertIdCard(idCardComponent);
+
             UpdatePDAUserInterface();
             return true;
         }
@@ -227,14 +228,13 @@ namespace Content.Server.GameObjects.Components.PDA
                 return true;
             }
 
-            // Insert Pen
-            _penSlot.Insert(item);
-
             if (swap != null)
             {
-                eventArgs.User.GetComponent<HandsComponent>().PutInHand(swap.GetComponent<ItemComponent>());
+                hands.PutInHand(swap.GetComponent<ItemComponent>());
             }
-            //UpdatePDAUserInterface();
+
+            // Insert Pen
+            _penSlot.Insert(item);
             return true;
         }
 
