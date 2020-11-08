@@ -1,12 +1,9 @@
 ﻿#nullable enable
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Content.Server.GameObjects.Components.Effects;
+using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.Components.StationEvents;
 using Content.Shared.GameObjects;
-using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.Physics;
-using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -19,12 +16,12 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Timers;
-using Content.Server.GameObjects.Components.Effects;
-using Content.Server.GameObjects.Components.Observer;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Content.Server.GameObjects.Components.Singularity
 {
@@ -80,8 +77,6 @@ namespace Content.Server.GameObjects.Components.Singularity
                 if (value > 6) value = 6;
 
                 _level = value;
-                _level = 5;
-                value = 5;
 
                 if(_radiationPulseComponent != null) _radiationPulseComponent.RadsPerSecond = 10 * value;
                 if (_shaderComponent != null)
@@ -99,7 +94,7 @@ namespace Content.Server.GameObjects.Components.Singularity
                             _shaderComponent.SetEffectIntensity(14.4f, 7.0f);
                             break;
                         case 3:
-                            _shaderComponent.SetEffectIntensity(39.2f, 8.0f);
+                            _shaderComponent.SetEffectIntensity(47.2f, 8.0f);
                             break;
                         case 4:
                             _shaderComponent.SetEffectIntensity(180f, 10.0f);
@@ -108,11 +103,10 @@ namespace Content.Server.GameObjects.Components.Singularity
                             _shaderComponent.SetEffectIntensity(600f, 12.0f);
                             break;
                         case 6:
-                            _shaderComponent.SetEffectIntensity(600f, 12.0f);
+                            _shaderComponent.SetEffectIntensity(800f, 12.0f);
                             break;
                     }
                 }
-                //_shaderComponent.
 
                 if (_collidableComponent != null && _collidableComponent.PhysicsShapes.Any() && _collidableComponent.PhysicsShapes[0] is PhysShapeCircle circle)
                 {
@@ -179,6 +173,14 @@ namespace Content.Server.GameObjects.Components.Singularity
             Level = 1;
         }
 
+        public void FrameUpdate(float frameTime)
+        {
+            foreach (var key in _delayTiming.Keys.ToList())
+            {
+                _delayTiming[key] += frameTime;
+            }
+        }
+
         public void Update()
         {
             Energy -= EnergyDrain;
@@ -223,6 +225,7 @@ namespace Content.Server.GameObjects.Components.Singularity
             }
         }
 
+        private Dictionary<IEntity, float> _delayTiming = new Dictionary<IEntity, float>();
         void ICollideBehavior.CollideWith(IEntity entity)
         {
             
@@ -245,8 +248,20 @@ namespace Content.Server.GameObjects.Components.Singularity
 
             if (ContainerHelpers.IsInContainer(entity)) return;
 
-            entity.Delete();
-            Energy++;
+            if (_delayTiming.ContainsKey(entity))
+            {
+                if (_delayTiming[entity] > 0.1f)
+                {
+                    _delayTiming.Remove(entity);
+                    entity.Delete();
+                    Energy++;
+                }
+            }
+            else
+            {
+                _delayTiming.Add(entity, 0f);
+            }
+
         }
 
         public override void OnRemove()

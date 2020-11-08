@@ -14,6 +14,7 @@ namespace Content.Server.GameObjects.EntitySystems
             foreach (var singulo in singulos)
             {
                 singulo.PullUpdate();
+                singulo.FrameUpdate(frameTime);
             }
             if (curTimeSingulo >= 1f)
             {
