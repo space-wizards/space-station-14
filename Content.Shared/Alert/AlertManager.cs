@@ -78,14 +78,7 @@ namespace Content.Shared.Alert
         /// <returns>true if successful</returns>
         public bool TryEncode(AlertPrototype alert, out int encoded)
         {
-            if (_idToIndex.TryGetValue(alert.ID, out var idx))
-            {
-                encoded = idx;
-                return true;
-            }
-
-            encoded = -1;
-            return false;
+            return TryEncode(alert.ID, out encoded);
         }
 
         /// <summary>

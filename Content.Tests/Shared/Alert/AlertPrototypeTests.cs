@@ -13,6 +13,15 @@ namespace Content.Tests.Shared.Alert
     [TestFixture, TestOf(typeof(AlertPrototype))]
     public class AlertPrototypeTests : RobustUnitTest
     {
+        private const string PROTOTYPE = @"- type: alert
+  id: humanhealth
+  category: health
+  icon: /Textures/Interface/StatusEffects/Human/human.rsi/human.png
+  name: Health
+  description: ""[color=green]Green[/color] good. [color=red]Red[/color] bad.""
+  minSeverity: 0
+  maxSeverity: 6";
+
 
         [Test]
         public void TestAlertKey()
@@ -37,27 +46,17 @@ namespace Content.Tests.Shared.Alert
 
         private AlertPrototype GetTestPrototype()
         {
-            using (TextReader stream = new StringReader(YamlPrototype))
+            using (TextReader stream = new StringReader(PROTOTYPE))
             {
                 var yamlStream = new YamlStream();
                 yamlStream.Load(stream);
                 var document = yamlStream.Documents[0];
-                var rootNode = (YamlSequenceNode)document.RootNode;
-                var proto = (YamlMappingNode)rootNode[0];
+                var rootNode = (YamlSequenceNode) document.RootNode;
+                var proto = (YamlMappingNode) rootNode[0];
                 var newReagent = new AlertPrototype();
                 newReagent.LoadFrom(proto);
                 return newReagent;
             }
         }
-
-        private const string YamlPrototype = @"- type: alert
-  id: humanhealth
-  category: health
-  icon: /Textures/Interface/StatusEffects/Human/human.rsi/human.png
-  name: Health
-  description: ""[color=green]Green[/color] good. [color=red]Red[/color] bad.""
-  minSeverity: 0
-  maxSeverity: 6";
-
     }
 }
