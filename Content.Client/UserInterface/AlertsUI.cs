@@ -19,14 +19,13 @@ namespace Content.Client.UserInterface
         private PanelContainer _panelContainer;
         private IClyde _clyde;
 
-
         public AlertsUI(IClyde clyde)
         {
             _clyde = clyde;
             _panelContainer = new PanelContainer
             {
-                StyleClasses = {StyleNano.StyleClassBorderedWindowPanel},
-                SizeFlagsVertical = SizeFlags.FillExpand
+                StyleClasses = {StyleNano.StyleClassTransparentBorderedWindowPanel},
+                SizeFlagsVertical = SizeFlags.FillExpand,
             };
             AddChild(_panelContainer);
 
