@@ -21,6 +21,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using Serilog;
 
@@ -44,6 +45,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         private PanelContainer _tooltip;
         private RichTextLabel _stateName;
         private RichTextLabel _stateDescription;
+        private RichTextLabel _stateCooldown;
         private AlertOrderPrototype _alertOrder;
         private bool tooltipReady;
 
@@ -130,6 +132,12 @@ namespace Content.Client.GameObjects.Components.Mobs
                 StyleClasses = { StyleNano.StyleClassTooltipAlertDescription }
             };
             tooltipVBox.AddChild(_stateDescription);
+            _stateCooldown = new RichTextLabel
+            {
+                MaxWidth = TooltipTextMaxWidth,
+                StyleClasses = { StyleNano.StyleClassTooltipAlertCooldown }
+            };
+            tooltipVBox.AddChild(_stateCooldown);
 
             _userInterfaceManager.PopupRoot.AddChild(_tooltip);
 
@@ -250,6 +258,18 @@ namespace Content.Client.GameObjects.Components.Mobs
             var alertControl = (AlertControl) sender;
             _stateName.SetMessage(alertControl.Alert.Name);
             _stateDescription.SetMessage(alertControl.Alert.Description);
+            // check for a cooldown
+            if (alertControl.TotalDuration != null && alertControl.TotalDuration > 0)
+            {
+                _stateCooldown.SetMessage(FormattedMessage.FromMarkup("[color=#776a6a]" +
+                                                                      alertControl.TotalDuration +
+                                                                      " sec cooldown[/color]"));
+                _stateCooldown.Visible = true;
+            }
+            else
+            {
+                _stateCooldown.Visible = false;
+            }
             // TODO: Text display of cooldown
             Tooltips.PositionTooltip(_tooltip);
             // if we set it visible here the size of the previous tooltip will flicker for a frame,

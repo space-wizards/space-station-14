@@ -27,6 +27,7 @@ namespace Content.Client.UserInterface
         ///     Possible values range from 1 to -1, where 1 to 0 is a depleting circle animation and 0 to -1 is a blink animation.
         /// </summary>
         public float Progress { get; set; }
+
         private static readonly Color StartColor = new Color(0.8f, 0.0f, 0.2f); // red
         private static readonly Color EndColor = new Color(0.92f, 0.77f, 0.34f); // yellow
         private static readonly Color CompletedColor = new Color(0.0f, 0.8f, 0.27f); // green

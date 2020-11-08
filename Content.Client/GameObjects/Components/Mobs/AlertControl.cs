@@ -4,6 +4,7 @@ using Content.Client.UserInterface;
 using Content.Client.Utility;
 using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Mobs;
+using JetBrains.Annotations;
 using OpenToolkit.Mathematics;
 using Robust.Client.Graphics;
 using Robust.Client.Interfaces.ResourceManagement;
@@ -14,6 +15,11 @@ namespace Content.Client.GameObjects.Components.Mobs
     public class AlertControl : BaseButton
     {
         public AlertPrototype Alert { get; }
+
+        /// <summary>
+        /// Total duration of the cooldown in seconds. Null if no duration / cooldown.
+        /// </summary>
+        public int? TotalDuration { get; set; }
 
         private short? _severity;
         private readonly TextureRect _icon;
@@ -69,6 +75,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             {
                 _cooldownGraphic.Progress = 0;
                 _cooldownGraphic.Visible = false;
+                TotalDuration = null;
             }
             else
             {
@@ -80,6 +87,7 @@ namespace Content.Client.GameObjects.Components.Mobs
                 var progress = (curTime - start).TotalSeconds / length;
                 var ratio = (progress <= 1 ? (1 - progress) : (curTime - end).TotalSeconds * -5);
 
+                TotalDuration = (int?) Math.Round(length);
                 _cooldownGraphic.Progress = MathHelper.Clamp((float)ratio, -1, 1);
                 _cooldownGraphic.Visible = ratio > -1f;
             }
