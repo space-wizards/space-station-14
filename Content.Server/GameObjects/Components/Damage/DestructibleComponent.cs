@@ -11,7 +11,6 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -27,8 +26,14 @@ namespace Content.Server.GameObjects.Components.Damage
 
         private ActSystem _actSystem = default!;
 
-        /// <inheritdoc />
         public override string Name => "Destructible";
+
+        /// <summary>
+        ///     The amount of damage at which the behavior for this component
+        ///     will trigger.
+        /// </summary>
+        [ViewVariables]
+        private int Threshold { get; set; }
 
         /// <summary>
         /// Entities spawned on destruction plus the min and max amount spawned.
@@ -47,9 +52,87 @@ namespace Content.Server.GameObjects.Components.Damage
         [ViewVariables]
         private string DestroySoundCollection { get; set; } = string.Empty;
 
-        void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
+        public override void ExposeData(ObjectSerializer serializer)
         {
-            if (SpawnOnDestroy == null || !eventArgs.IsSpawnWreck) return;
+            base.ExposeData(serializer);
+
+            serializer.DataField(this, d => d.Threshold, "threshold", 0);
+            serializer.DataField(this, d => d.SpawnOnDestroy, "spawnOnDestroy", null);
+            serializer.DataField(this, ruinable => ruinable.DestroySound, "destroySound", string.Empty);
+            serializer.DataField(this, ruinable => ruinable.DestroySoundCollection, "destroySoundCollection", string.Empty);
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            _actSystem = EntitySystem.Get<ActSystem>();
+        }
+
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+
+            switch (message)
+            {
+                case DamageChangedMessage msg:
+                {
+                    if (msg.Damageable.Owner != Owner)
+                    {
+                        break;
+                    }
+
+                    if (msg.Damageable.TotalDamage >= Threshold)
+                    {
+                        Destroy();
+                    }
+
+                    break;
+                }
+            }
+        }
+
+        /// <summary>
+        ///     Destroys the Owner <see cref="IEntity"/>, playing a sound
+        ///     and optionally spawning entities.
+        /// </summary>
+        private void Destroy()
+        {
+            if (Owner.Deleted)
+            {
+                return;
+            }
+
+            _actSystem.HandleDestruction(Owner, true);
+        }
+
+        private void PlaySound()
+        {
+            var pos = Owner.Transform.Coordinates;
+            var sound = string.Empty;
+
+            if (DestroySoundCollection != string.Empty)
+            {
+                sound = AudioHelpers.GetRandomFileFromSoundCollection(DestroySoundCollection);
+            }
+            else if (DestroySound != string.Empty)
+            {
+                sound = DestroySound;
+            }
+
+            if (sound != string.Empty)
+            {
+                EntitySystem.Get<AudioSystem>().PlayAtCoords(sound, pos, AudioHelpers.WithVariation(0.125f));
+            }
+        }
+
+        private void DoSpawnOnDestroy(DestructionEventArgs eventArgs)
+        {
+            if (SpawnOnDestroy == null || !eventArgs.IsSpawnWreck)
+            {
+                return;
+            }
+
             foreach (var (key, value) in SpawnOnDestroy)
             {
                 var count = value.Min >= value.Max
@@ -76,69 +159,10 @@ namespace Content.Server.GameObjects.Components.Damage
             }
         }
 
-        public override void ExposeData(ObjectSerializer serializer)
+        void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
         {
-            base.ExposeData(serializer);
-
-            serializer.DataField(this, d => d.SpawnOnDestroy, "spawnOnDestroy", null);
-            serializer.DataField(this, ruinable => ruinable.DestroySound, "destroySound", string.Empty);
-            serializer.DataField(this, ruinable => ruinable.DestroySoundCollection, "destroySoundCollection", string.Empty);
-        }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-            _actSystem = EntitySystem.Get<ActSystem>();
-        }
-
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-
-            switch (message)
-            {
-                case DamageStateChangeMessage msg:
-                {
-                    if (msg.State == DamageState.Dead)
-                    {
-                        Destroy();
-                    }
-
-                    break;
-                }
-            }
-        }
-
-        /// <summary>
-        ///     Destroys the Owner <see cref="IEntity"/>, setting
-        ///     <see cref="IDamageableComponent.CurrentState"/> to
-        ///     <see cref="DamageState.Dead"/>
-        /// </summary>
-        private void Destroy()
-        {
-            if (Owner.Deleted)
-            {
-                return;
-            }
-
-            var pos = Owner.Transform.Coordinates;
-            var sound = string.Empty;
-            if (DestroySoundCollection != string.Empty)
-            {
-                sound = AudioHelpers.GetRandomFileFromSoundCollection(DestroySoundCollection);
-            }
-            else if (DestroySound != string.Empty)
-            {
-                sound = DestroySound;
-            }
-
-            if (sound != string.Empty)
-            {
-                Logger.Debug("Playing destruction sound");
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(sound, pos, AudioHelpers.WithVariation(0.125f));
-            }
-
-            _actSystem.HandleDestruction(Owner, true);
+            PlaySound();
+            DoSpawnOnDestroy(eventArgs);
         }
 
         public struct MinMax

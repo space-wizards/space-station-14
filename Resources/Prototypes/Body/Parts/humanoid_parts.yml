@@ -152,8 +152,6 @@
     state: "r_hand"
   - type: BodyPart
     partType: Hand
-    durability: 30
-    destroyThreshold: -60
     size: 3
     compatibility: Biological
     symmetry: Right
@@ -207,8 +205,6 @@
     state: "r_leg"
   - type: BodyPart
     partType: Leg
-    durability: 45
-    destroyThreshold: -90
     size: 6
     compatibility: Biological
     symmetry: Right
