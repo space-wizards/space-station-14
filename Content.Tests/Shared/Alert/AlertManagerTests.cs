@@ -17,19 +17,11 @@ namespace Content.Tests.Shared.Alert
         const string PROTOTYPES = @"
 - type: alert
   id: lowpressure
-  category: pressure
   icon: /Textures/Interface/StatusEffects/Pressure/lowpressure.png
-  maxSeverity: 2
-  name: Low Pressure
-  description: TestDesc
 
 - type: alert
   id: highpressure
-  category: pressure
   icon: /Textures/Interface/StatusEffects/Pressure/highpressure.png
-  maxSeverity: 2
-  name: High presure
-  description: test desc
 ";
 
         [Test]
