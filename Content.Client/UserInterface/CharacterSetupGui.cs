@@ -158,6 +158,15 @@ namespace Content.Client.UserInterface
             preferencesManager.OnServerDataLoaded += UpdateUI;
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            if (!disposing)
+                return;
+
+            _preferencesManager.OnServerDataLoaded -= UpdateUI;
+        }
+
         public void Save() => _humanoidProfileEditor.Save();
 
         private void UpdateUI()
@@ -283,7 +292,9 @@ namespace Content.Client.UserInterface
             protected override void Dispose(bool disposing)
             {
                 base.Dispose(disposing);
-                if (!disposing) return;
+                if (!disposing)
+                    return;
+
                 _previewDummy.Delete();
                 _previewDummy = null;
             }

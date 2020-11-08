@@ -496,6 +496,16 @@ namespace Content.Client.UserInterface
             IsDirty = false;
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            if (!disposing)
+                return;
+
+            _previewDummy.Delete();
+            _preferencesManager.OnServerDataLoaded -= LoadServerData;
+        }
+
         private void LoadServerData()
         {
             Profile = (HumanoidCharacterProfile) _preferencesManager.Preferences.SelectedCharacter;
