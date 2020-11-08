@@ -19,6 +19,6 @@
   - type: Anchorable
   - type: Pullable
   - type: Damageable
-    deadThreshold: 50
   - type: Destructible
+    threshold: 50
   - type: KitchenSpike

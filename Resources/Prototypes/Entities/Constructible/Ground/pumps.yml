@@ -10,9 +10,9 @@
   - type: SnapGrid
     offset: Center
   - type: Damageable
-    deadThreshold: 100
     resistances: metallicResistances
   - type: Destructible
+    threshold: 100
   - type: Sprite
     sprite: Constructible/Atmos/pump.rsi
   - type: Icon

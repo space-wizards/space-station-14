@@ -20,7 +20,7 @@
     offset: Center
   - type: Damageable
   - type: Destructible
-    deadThreshold: 50
+    threshold: 50
     resistances: metallicResistances
   - type: UserInterface
     interfaces:

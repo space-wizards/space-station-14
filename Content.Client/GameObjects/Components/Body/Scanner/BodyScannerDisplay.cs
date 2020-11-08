@@ -144,11 +144,10 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
         {
             BodyPartLabel.Text = $"{Loc.GetString(slotName)}: {Loc.GetString(part.Owner.Name)}";
 
-            // TODO BODY Make dead not be the destroy threshold for a body part
-            if (part.Owner.TryGetComponent(out IDamageableComponent? damageable) &&
-                damageable.TryHealth(DamageState.Critical, out var health))
+            // TODO BODY Part damage
+            if (part.Owner.TryGetComponent(out IDamageableComponent? damageable))
             {
-                BodyPartHealth.Text = $"{health.current} / {health.max}";
+                BodyPartHealth.Text = Loc.GetString("{0} damage", damageable.TotalDamage);
             }
 
             MechanismList.Clear();

@@ -1,8 +1,9 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Content.Server.AI.Utility.AiLogic;
 using Content.Server.GameObjects.Components.Movement;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.Components.Movement;
 using JetBrains.Annotations;
 using Robust.Server.AI;
@@ -36,6 +37,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI
         // To avoid modifying awakeAi while iterating over it.
         private readonly List<SleepAiMessage> _queuedSleepMessages = new List<SleepAiMessage>();
 
+        private readonly List<MobStateChangedMessage> _queuedMobStateMessages = new List<MobStateChangedMessage>();
+
         public bool IsAwake(AiLogicProcessor processor) => _awakeAi.Contains(processor);
 
         /// <inheritdoc />
@@ -44,8 +47,9 @@ namespace Content.Server.GameObjects.EntitySystems.AI
             base.Initialize();
             _configurationManager.RegisterCVar("ai.maxupdates", 64);
             SubscribeLocalEvent<SleepAiMessage>(HandleAiSleep);
+            SubscribeLocalEvent<MobStateChangedMessage>(MobStateChanged);
 
-            var processors = _reflectionManager.GetAllChildren<AiLogicProcessor>();
+            var processors = _reflectionManager.GetAllChildren<UtilityAi>();
             foreach (var processor in processors)
             {
                 var att = (AiLogicProcessorAttribute) Attribute.GetCustomAttribute(processor, typeof(AiLogicProcessorAttribute))!;
@@ -62,6 +66,18 @@ namespace Content.Server.GameObjects.EntitySystems.AI
             if (cvarMaxUpdates <= 0)
                 return;
 
+            foreach (var message in _queuedMobStateMessages)
+            {
+                if (!message.Entity.TryGetComponent(out AiControllerComponent? controller))
+                {
+                    continue;
+                }
+
+                controller.Processor?.MobStateChanged(message);
+            }
+
+            _queuedMobStateMessages.Clear();
+
             foreach (var message in _queuedSleepMessages)
             {
                 switch (message.Sleep)
@@ -75,7 +91,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI
                         break;
                     case false:
                         _awakeAi.Add(message.Processor);
-                        
+
                         if (_awakeAi.Count > cvarMaxUpdates)
                         {
                             Logger.Warning($"AI limit exceeded: {_awakeAi.Count} / {cvarMaxUpdates}");
@@ -101,7 +117,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI
                     toRemove.Add(processor);
                     continue;
                 }
-                
+
                 processor.Update(frameTime);
                 count++;
             }
@@ -115,6 +131,16 @@ namespace Content.Server.GameObjects.EntitySystems.AI
         private void HandleAiSleep(SleepAiMessage message)
         {
             _queuedSleepMessages.Add(message);
+        }
+
+        private void MobStateChanged(MobStateChangedMessage message)
+        {
+            if (!message.Entity.HasComponent<AiControllerComponent>())
+            {
+                return;
+            }
+
+            _queuedMobStateMessages.Add(message);
         }
 
         /// <summary>
@@ -131,11 +157,11 @@ namespace Content.Server.GameObjects.EntitySystems.AI
             _awakeAi.Add(controller.Processor);
         }
 
-        private AiLogicProcessor CreateProcessor(string name)
+        private UtilityAi CreateProcessor(string name)
         {
             if (_processorTypes.TryGetValue(name, out var type))
             {
-                return (AiLogicProcessor)_typeFactory.CreateInstance(type);
+                return (UtilityAi)_typeFactory.CreateInstance(type);
             }
 
             // processor needs to inherit AiLogicProcessor, and needs an AiLogicProcessorAttribute to define the YAML name

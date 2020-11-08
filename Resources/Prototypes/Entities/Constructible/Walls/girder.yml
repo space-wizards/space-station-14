@@ -29,9 +29,9 @@
       - SmallImpassable
   - type: Pullable
   - type: Damageable
-    deadThreshold: 50
     resistances: metallicResistances
   - type: Destructible
+    threshold: 50
     spawnOnDestroy:
       SteelSheet1:
         Min: 1

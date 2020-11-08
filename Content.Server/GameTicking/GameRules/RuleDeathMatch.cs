@@ -3,6 +3,7 @@ using System.Threading;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
@@ -62,13 +63,14 @@ namespace Content.Server.GameTicking.GameRules
             IPlayerSession winner = null;
             foreach (var playerSession in _playerManager.GetAllPlayers())
             {
-                if (playerSession.AttachedEntity == null
-                    || !playerSession.AttachedEntity.TryGetComponent(out IDamageableComponent damageable))
+                var playerEntity = playerSession.AttachedEntity;
+                if (playerEntity == null
+                    || !playerEntity.TryGetComponent(out SharedMobStateComponent mobState))
                 {
                     continue;
                 }
 
-                if (damageable.CurrentState != DamageState.Alive)
+                if (mobState.DamageState != DamageState.Alive)
                 {
                     continue;
                 }

@@ -29,9 +29,9 @@
   - type: SnapGrid
     offset: Center
   - type: Damageable
-    deadThreshold: 50
     resistances: metallicResistances
   - type: Breakable
+    threshold: 50
   - type: UserInterface
     interfaces:
     - key: enum.VendingMachineUiKey.Key

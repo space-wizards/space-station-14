@@ -20,9 +20,9 @@
       - VaultImpassable
       - SmallImpassable
   - type: Damageable
-    deadThreshold: 500
     resistances: metallicResistances
   - type: Destructible
+    threshold: 500
   - type: SnapGrid
     offset: Center
   - type: Anchorable

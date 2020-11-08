@@ -29,9 +29,9 @@
   - type: Anchorable
   - type: Pullable
   - type: Damageable
-    deadThreshold: 50
     resistances: metallicResistances
   - type: Destructible
+    threshold: 50
 
 - type: entity
   name: chair

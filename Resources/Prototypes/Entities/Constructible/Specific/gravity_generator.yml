@@ -30,9 +30,9 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Damageable
-    deadThreshold: 150
     resistances: metallicResistances
   - type: Breakable
+    threshold: 150
   - type: GravityGenerator
   - type: UserInterface
     interfaces:

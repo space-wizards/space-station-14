@@ -22,9 +22,9 @@
       - VaultImpassable
       - SmallImpassable
   - type: Damageable
-    deadThreshold: 500
     resistances: metallicResistances
   - type: Destructible
+    threshold: 500
     spawnOnDestroy:
       AMEPart:
         Min: 1

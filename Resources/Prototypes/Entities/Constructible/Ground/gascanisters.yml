@@ -11,8 +11,8 @@
     offset: Center
   - type: Sprite
   - type: Damageable
-    deadThreshold: 100
   - type: Destructible
+    threshold: 100
   - type: GasCanister
   - type: Anchorable
   - type: Pullable

@@ -15,9 +15,9 @@
     - !type:PhysShapeAabb
       layer: [MobMask]
   - type: Damageable
-    deadThreshold: 100
     resistances: metallicResistances
   - type: Destructible
+    threshold: 100
   - type: Occluder
     sizeX: 32
     sizeY: 32

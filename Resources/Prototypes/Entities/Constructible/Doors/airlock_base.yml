@@ -57,9 +57,9 @@
   - type: SnapGrid
     offset: Center
   - type: Damageable
-    deadThreshold: 500
     resistances: metallicResistances
   - type: Destructible
+    threshold: 500
   placement:
     mode: SnapgridCenter
 

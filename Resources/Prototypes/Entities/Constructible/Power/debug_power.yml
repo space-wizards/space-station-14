@@ -28,9 +28,9 @@
   - type: PowerConsumer
     drawRate: 50
   - type: Damageable
-    deadThreshold: 100
     resistances: metallicResistances
   - type: Breakable
+    threshold: 100
   - type: Anchorable
 
 - type: entity

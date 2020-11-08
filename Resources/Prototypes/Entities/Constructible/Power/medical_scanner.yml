@@ -31,9 +31,9 @@
     offset: Center
   - type: MedicalScanner
   - type: Damageable
-    deadThreshold: 100
     resistances: metallicResistances
   - type: Destructible
+    threshold: 100
   - type: Appearance
     visuals:
     - type: MedicalScannerVisualizer

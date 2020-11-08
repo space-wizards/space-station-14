@@ -9,9 +9,9 @@
     shapes:
     - !type:PhysShapeAabb
   - type: Damageable
-    deadThreshold: 5
     resistances: metallicResistances
   - type: Destructible
+    threshold: 5
   - type: Sprite
     drawdepth: WallTops
     sprite: Constructible/Misc/decals.rsi

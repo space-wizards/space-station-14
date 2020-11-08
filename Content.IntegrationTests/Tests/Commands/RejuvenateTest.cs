@@ -1,7 +1,9 @@
 ﻿using System.Threading.Tasks;
+using Content.Server.GameObjects.Components.Mobs.State;
 using Content.Server.GlobalVerbs;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using NUnit.Framework;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
@@ -31,19 +33,23 @@ namespace Content.IntegrationTests.Tests.Commands
 
                 // Sanity check
                 Assert.True(human.TryGetComponent(out IDamageableComponent damageable));
-                Assert.That(damageable.CurrentState, Is.EqualTo(DamageState.Alive));
+                Assert.True(human.TryGetComponent(out SharedMobStateComponent mobState));
+                Assert.That(mobState.DamageState, Is.EqualTo(DamageState.Alive));
+                Assert.That(mobState.MobState, Is.TypeOf<NormalState>());
 
                 // Kill the entity
                 damageable.ChangeDamage(DamageClass.Brute, 10000000, true);
 
                 // Check that it is dead
-                Assert.That(damageable.CurrentState, Is.EqualTo(DamageState.Dead));
+                Assert.That(mobState.DamageState, Is.EqualTo(DamageState.Dead));
+                Assert.That(mobState.MobState, Is.TypeOf<DeadState>());
 
                 // Rejuvenate them
                 RejuvenateVerb.PerformRejuvenate(human);
 
                 // Check that it is alive and with no damage
-                Assert.That(damageable.CurrentState, Is.EqualTo(DamageState.Alive));
+                Assert.That(mobState.DamageState, Is.EqualTo(DamageState.Alive));
+                Assert.That(mobState.MobState, Is.TypeOf<NormalState>());
                 Assert.That(damageable.TotalDamage, Is.Zero);
             });
         }

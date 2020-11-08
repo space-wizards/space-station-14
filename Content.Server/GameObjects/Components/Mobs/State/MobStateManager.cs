@@ -7,8 +7,8 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.GameObjects.Components.Mobs.State
 {
     [RegisterComponent]
-    [ComponentReference(typeof(SharedMobStateManagerComponent))]
-    public class MobStateManagerComponent : SharedMobStateManagerComponent
+    [ComponentReference(typeof(SharedMobStateComponent))]
+    public class MobStateComponent : SharedMobStateComponent
     {
         private readonly Dictionary<DamageState, IMobState> _behavior = new Dictionary<DamageState, IMobState>
         {
@@ -17,34 +17,9 @@ namespace Content.Server.GameObjects.Components.Mobs.State
             {DamageState.Dead, new DeadState()}
         };
 
-        private DamageState _currentDamageState;
-
         protected override IReadOnlyDictionary<DamageState, IMobState> Behavior => _behavior;
 
-        public override IMobState CurrentMobState { get; protected set; }
-
-        public override DamageState CurrentDamageState
-        {
-            get => _currentDamageState;
-            protected set
-            {
-                if (_currentDamageState == value)
-                {
-                    return;
-                }
-
-                if (_currentDamageState != DamageState.Invalid)
-                {
-                    CurrentMobState.ExitState(Owner);
-                }
-
-                _currentDamageState = value;
-                CurrentMobState = Behavior[CurrentDamageState];
-                CurrentMobState.EnterState(Owner);
-
-                Dirty();
-            }
-        }
+        public override IMobState MobState { get; protected set; }
 
         public override void OnRemove()
         {
@@ -60,11 +35,6 @@ namespace Content.Server.GameObjects.Components.Mobs.State
             {
                 overlay.ClearOverlays();
             }
-        }
-
-        public override ComponentState GetComponentState()
-        {
-            return new MobStateManagerComponentState(CurrentDamageState);
         }
     }
 }

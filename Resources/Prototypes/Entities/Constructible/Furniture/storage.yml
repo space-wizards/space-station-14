@@ -28,9 +28,9 @@
   - type: Pullable
   - type: Anchorable
   - type: Damageable
-    deadThreshold: 30
     resistances: metallicResistances
   - type: Destructible
+    threshold: 30
     destroySound: /Audio/Effects/metalbreak.ogg
     spawnOnDestroy:
       SteelSheet1:
@@ -67,9 +67,9 @@
   - type: Pullable
   - type: Anchorable
   - type: Damageable
-    deadThreshold: 30
     resistances: metallicResistances
   - type: Destructible
+    threshold: 30
     destroySound: /Audio/Effects/metalbreak.ogg
     spawnOnDestroy:
       SteelSheet1:

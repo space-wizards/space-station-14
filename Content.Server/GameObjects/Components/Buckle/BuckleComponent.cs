@@ -39,7 +39,7 @@ namespace Content.Server.GameObjects.Components.Buckle
         [ComponentDependency] public readonly AppearanceComponent? AppearanceComponent = null;
         [ComponentDependency] private readonly ServerStatusEffectsComponent? _serverStatusEffectsComponent = null;
         [ComponentDependency] private readonly StunnableComponent? _stunnableComponent = null;
-        [ComponentDependency] private readonly MobStateManagerComponent? _mobStateManagerComponent = null;
+        [ComponentDependency] private readonly MobStateComponent? _mobStateComponent = null;
 
         private int _size;
 
@@ -340,7 +340,7 @@ namespace Content.Server.GameObjects.Components.Buckle
                 EntitySystem.Get<StandingStateSystem>().Standing(Owner);
             }
 
-            _mobStateManagerComponent?.CurrentMobState.EnterState(Owner);
+            _mobStateComponent?.MobState.EnterState(Owner);
 
             UpdateBuckleStatus();
 

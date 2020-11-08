@@ -18,19 +18,6 @@ namespace Content.Shared.GameObjects.Components.Damage
         /// </summary>
         event Action<DamageChangedEventArgs> HealthChangedEvent;
 
-        Dictionary<DamageState, int> Thresholds { get; }
-
-        /// <summary>
-        ///     List of all <see cref="Damage.DamageState">DamageStates</see> that
-        ///     <see cref="CurrentState"/> can be.
-        /// </summary>
-        List<DamageState> SupportedDamageStates { get; }
-
-        /// <summary>
-        ///     The <see cref="Damage.DamageState"/> currently representing this component.
-        /// </summary>
-        DamageState CurrentState { get; set; }
-
         /// <summary>
         ///     Sum of all damages taken.
         /// </summary>
@@ -157,30 +144,5 @@ namespace Content.Shared.GameObjects.Components.Damage
         ///     Invokes the HealthChangedEvent with the current values of health.
         /// </summary>
         void ForceHealthChangedEvent();
-
-        /// <summary>
-        ///     Calculates the health of an entity until it enters
-        ///     <see cref="threshold"/>.
-        /// </summary>
-        /// <param name="threshold">The state to use as a threshold.</param>
-        /// <returns>
-        ///     The current and maximum health on this entity based on
-        ///     <see cref="threshold"/>, or null if the state is not supported.
-        /// </returns>
-        (int current, int max)? Health(DamageState threshold);
-
-        /// <summary>
-        ///     Calculates the health of an entity until it enters
-        ///     <see cref="threshold"/>.
-        /// </summary>
-        /// <param name="threshold">The state to use as a threshold.</param>
-        /// <param name="health">
-        ///     The current and maximum health on this entity based on
-        ///     <see cref="threshold"/>, or null if the state is not supported.
-        /// </param>
-        /// <returns>
-        ///     True if <see cref="threshold"/> is supported, false otherwise.
-        /// </returns>
-        bool TryHealth(DamageState threshold, [NotNullWhen(true)] out (int current, int max) health);
     }
 }

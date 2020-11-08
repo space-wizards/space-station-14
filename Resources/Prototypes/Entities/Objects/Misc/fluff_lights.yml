@@ -125,9 +125,9 @@
     energy: 5
   - type: Anchorable
   - type: Damageable
-    deadThreshold: 10
     resistances: metallicResistances
   - type: Destructible
+    threshold: 10
     spawnOnDestroy:
       FloodlightBroken:
         Min: 1
@@ -148,9 +148,9 @@
     state: floodlight_broken
   - type: Anchorable
   - type: Damageable
-    deadThreshold: 20
     resistances: metallicResistances
   - type: Destructible
+    threshold: 20
     spawnOnDestroy:
       SteelSheet1:
         Min: 1

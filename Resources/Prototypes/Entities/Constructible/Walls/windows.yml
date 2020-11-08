@@ -27,9 +27,9 @@
       - VaultImpassable
       - SmallImpassable
   - type: Damageable
-    deadThreshold: 15
     resistances: metallicResistances
   - type: Destructible
+    threshold: 15
     destroySoundCollection: WindowBreak
     spawnOnDestroy:
       ShardGlass:
@@ -40,6 +40,7 @@
   - type: Airtight
   - type: Window
     base: window
+    maxDamage: 15
   - type: Construction
     graph: window
     node: window
@@ -58,11 +59,12 @@
   - type: Icon
     sprite: Constructible/Structures/Windows/reinforced_window.rsi
   - type: Damageable
-    deadThreshold: 75
     resistances: metallicResistances
   - type: Destructible
+    threshold: 75
   - type: Window
     base: rwindow
+    maxDamage: 75
   - type: Construction
     graph: window
     node: reinforcedWindow
@@ -78,11 +80,12 @@
   - type: Icon
     sprite: Constructible/Structures/Windows/phoron_window.rsi
   - type: Damageable
-    deadThreshold: 100
     resistances: metallicResistances
   - type: Destructible
+    threshold: 100
   - type: Window
     base: pwindow
+    maxDamage: 100
   - type: Construction
     graph: window
     node: phoronWindow

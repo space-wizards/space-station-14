@@ -38,9 +38,10 @@
       - Opaque
       - MobImpassable
   - type: Damageable
-    criticalThreshold: 100
-    deadThreshold: 200
-  - type: MobStateManager
+  - type: MobState
+    thresholds:
+      Critical: 100
+      Dead: 200
   - type: HeatResistance
   - type: CombatMode
   - type: Teleportable

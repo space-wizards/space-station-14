@@ -4,56 +4,56 @@
   placement:
     mode: SnapgridCenter
   components:
-    - type: Clickable
-    - type: InteractionOutline
-    - type: Physics
-      mass: 25
-      anchored: true
-      hard: false
-      shapes:
-      - !type:PhysShapeAabb
-        bounds: "-0.5, -0.5, 0.1, 0.5"
-        mask:
-        - Impassable
-        - MobImpassable
-        - VaultImpassable
-        - SmallImpassable
-        layer:
-        - Opaque
-        - MobImpassable
-        - VaultImpassable
-        - SmallImpassable
-    - type: Damageable
-      deadThreshold: 50
-      resistances: metallicResistances
-    - type: Destructible
-    - type: Sprite
-      sprite: Constructible/Hydroponics/hydro_tools.rsi
-      state: soil
-    - type: PlantHolder
-      drawWarnings: false
-    - type: SolutionContainer
-      maxVol: 200
-      caps: AddTo, NoExamine
-    - type: Pourable
-    - type: SnapGrid
-      offset: Center
-    - type: Appearance
-      visuals:
-        - type: PlantHolderVisualizer
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    mass: 25
+    anchored: true
+    hard: false
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5, -0.5, 0.1, 0.5"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    threshold: 50
+  - type: Sprite
+    sprite: Constructible/Hydroponics/hydro_tools.rsi
+    state: soil
+  - type: PlantHolder
+    drawWarnings: false
+  - type: SolutionContainer
+    maxVol: 200
+    caps: AddTo, NoExamine
+  - type: Pourable
+  - type: SnapGrid
+    offset: Center
+  - type: Appearance
+    visuals:
+      - type: PlantHolderVisualizer
 
 - type: entity
   name: hydroponics tray
   parent: hydroponicsSoil
   id: hydroponicsTray
   components:
-    - type: Physics
-      mass: 25
-      hard: true
-    - type: Anchorable
-      snap: true
-    - type: Sprite
-      sprite: Constructible/Hydroponics/hydro_tools.rsi
-      state: hydrotray3
-    - type: PlantHolder
-      drawWarnings: true
+  - type: Physics
+    mass: 25
+    hard: true
+  - type: Anchorable
+    snap: true
+  - type: Sprite
+    sprite: Constructible/Hydroponics/hydro_tools.rsi
+    state: hydrotray3
+  - type: PlantHolder
+    drawWarnings: true

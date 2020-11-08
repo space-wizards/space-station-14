@@ -20,9 +20,9 @@
       - VaultImpassable
       - SmallImpassable
   - type: Damageable
-    deadThreshold: 30
     resistances: metallicResistances
   - type: Destructible
+    threshold: 30
     destroySound: /Audio/Effects/woodhit.ogg
     spawnOnDestroy:
       WoodPlank:

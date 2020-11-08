@@ -37,9 +37,9 @@
     bulb: Tube
   - type: PowerReceiver
   - type: Damageable
-    deadThreshold: 50
     resistances: metallicResistances
   - type: Destructible
+    threshold: 50
 
 - type: entity
   name: small light
@@ -62,23 +62,23 @@
     bulb: Bulb
   - type: PowerReceiver
   - type: Damageable
-    deadThreshold: 25
     resistances: metallicResistances
   - type: Destructible
+    threshold: 25
 
 - type: entity
   name: unpowered small light
   id: SmallLight
   parent: WallLight
   components:
-    - type: Sprite
-      sprite: Constructible/Lighting/light_small.rsi
-      state: on
-    - type: PointLight
-      energy: 1.0
-      enabled: true
-      offset: "-0.5, 0"
-    - type: Damageable
-      deadThreshold: 25
-      resistances: metallicResistances
-    - type: Destructible
+  - type: Sprite
+    sprite: Constructible/Lighting/light_small.rsi
+    state: on
+  - type: PointLight
+    energy: 1.0
+    enabled: true
+    offset: "-0.5, 0"
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    threshold: 25

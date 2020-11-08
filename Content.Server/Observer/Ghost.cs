@@ -5,6 +5,7 @@ using Content.Server.Players;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.GameObjects;
@@ -27,17 +28,18 @@ namespace Content.Server.Observer
                 return;
             }
 
-            var mind = player.ContentData().Mind;
+            var mind = player.ContentData()?.Mind;
             if (mind == null)
             {
                 shell.SendText(player, "You can't ghost here!");
                 return;
             }
 
-            var canReturn = player.AttachedEntity != null && CanReturn;
-            var name = player.AttachedEntity?.Name ?? player.Name;
+            var playerEntity = player.AttachedEntity;
+            var canReturn = playerEntity != null && CanReturn;
+            var name = playerEntity?.Name ?? player.Name;
 
-            if (player.AttachedEntity != null && player.AttachedEntity.HasComponent<GhostComponent>())
+            if (playerEntity != null && playerEntity.HasComponent<GhostComponent>())
                 return;
 
             if (mind.VisitingEntity != null)
@@ -46,18 +48,23 @@ namespace Content.Server.Observer
                 mind.VisitingEntity.Delete();
             }
 
-            var position = player.AttachedEntity?.Transform.Coordinates ?? IoCManager.Resolve<IGameTicker>().GetObserverSpawnPoint();
+            var position = playerEntity?.Transform.Coordinates ?? IoCManager.Resolve<IGameTicker>().GetObserverSpawnPoint();
 
-            if (canReturn && player.AttachedEntity.TryGetComponent(out IDamageableComponent damageable))
+            if (canReturn && playerEntity.TryGetComponent(out SharedMobStateComponent mobState))
             {
-                switch (damageable.CurrentState)
+                switch (mobState.DamageState)
                 {
                     case DamageState.Dead:
                         canReturn = true;
                         break;
                     case DamageState.Critical:
                         canReturn = true;
-                        damageable.ChangeDamage(DamageType.Asphyxiation, 100, true, null); //todo: what if they dont breathe lol
+
+                        if (playerEntity.TryGetComponent(out IDamageableComponent damageable))
+                        {
+                            //todo: what if they dont breathe lol
+                            damageable.ChangeDamage(DamageType.Asphyxiation, 100, true);
+                        }
                         break;
                     default:
                         canReturn = false;
@@ -72,9 +79,10 @@ namespace Content.Server.Observer
             var ghostComponent = ghost.GetComponent<GhostComponent>();
             ghostComponent.CanReturnToBody = canReturn;
 
-            if (player.AttachedEntity.TryGetComponent(out ServerOverlayEffectsComponent overlayComponent))
+            if (playerEntity != null &&
+                playerEntity.TryGetComponent(out ServerOverlayEffectsComponent overlayComponent))
             {
-                overlayComponent?.RemoveOverlay(SharedOverlayID.CircleMaskOverlay);
+                overlayComponent.RemoveOverlay(SharedOverlayID.CircleMaskOverlay);
             }
 
             if (canReturn)

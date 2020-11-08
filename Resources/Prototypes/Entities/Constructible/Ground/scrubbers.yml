@@ -20,9 +20,9 @@
     - type: SiphonVisualizer
       siphonRSI: Constructible/Atmos/scrubber.rsi
   - type: Damageable
-    deadThreshold: 100
     resistances: metallicResistances
   - type: Destructible
+    threshold: 100
 
 - type: entity
   parent: ScrubberBase

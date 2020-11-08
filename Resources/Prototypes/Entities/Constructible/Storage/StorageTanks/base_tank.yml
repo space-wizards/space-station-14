@@ -24,9 +24,9 @@
       - VaultImpassable
       - SmallImpassable
   - type: Damageable
-    deadThreshold: 10
     resistances: metallicResistances
   - type: Destructible
+    threshold: 10
   - type: SolutionContainer
     maxVol: 1500
     caps: RemoveFrom

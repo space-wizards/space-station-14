@@ -8,6 +8,7 @@ using Content.Shared.GameObjects.Components.Body.Part.Property;
 using Content.Shared.GameObjects.Components.Body.Preset;
 using Content.Shared.GameObjects.Components.Body.Template;
 using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Mobs.State;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
@@ -99,12 +100,11 @@ namespace Content.Shared.GameObjects.Components.Body
             }
 
             // creadth: immediately kill entity if last vital part removed
-            if (Owner.TryGetComponent(out IDamageableComponent? damageable))
+            if (Owner.TryGetComponent(out SharedMobStateComponent? mobState))
             {
                 if (part.IsVital && Parts.Count(x => x.Value.PartType == part.PartType) == 0)
                 {
-                    damageable.CurrentState = DamageState.Dead;
-                    damageable.ForceHealthChangedEvent();
+                    mobState.DamageState = DamageState.Dead;
                 }
             }
 

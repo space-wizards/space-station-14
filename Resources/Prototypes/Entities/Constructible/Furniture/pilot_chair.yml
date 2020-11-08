@@ -10,9 +10,9 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Damageable
-    deadThreshold: 100
     resistances: metallicResistances
   - type: Destructible
+    threshold: 100
   - type: ShuttleController
   - type: Strap
     position: Stand

@@ -32,9 +32,9 @@
     CanWeldShut: false
   - type: PlaceableSurface
   - type: Damageable
-    deadThreshold: 100
     resistances: metallicResistances
   - type: Destructible
+    threshold: 100
 
   - type: Appearance
     visuals:

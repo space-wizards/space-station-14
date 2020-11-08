@@ -28,8 +28,8 @@
     position: Down
     rotation: -90
   - type: Damageable
-    deadThreshold: 75
     resistances: metallicResistances
   - type: Destructible
+    threshold: 75
   placement:
     mode: SnapgridCenter

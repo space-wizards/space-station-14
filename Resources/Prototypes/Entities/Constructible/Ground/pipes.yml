@@ -12,8 +12,8 @@
   - type: SnapGrid
     offset: Center
   - type: Damageable
-    deadThreshold: 100
   - type: Destructible
+    threshold: 100
   - type: Sprite
   - type: Appearance
     visuals:

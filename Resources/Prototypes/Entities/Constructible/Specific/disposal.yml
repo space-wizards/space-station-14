@@ -14,9 +14,9 @@
     offset: Center
   - type: Anchorable
   - type: Damageable
-    deadThreshold: 100
     resistances: metallicResistances
   - type: Breakable
+    threshold: 100
   - type: Rotatable
   - type: Pullable
 
@@ -144,9 +144,9 @@
     offset: Center
   - type: Anchorable
   - type: Damageable
-    deadThreshold: 100
     resistances: metallicResistances
   - type: Destructible
+    threshold: 100
   - type: Appearance
     visuals:
     - type: DisposalUnitVisualizer
@@ -382,9 +382,9 @@
     offset: Center
   - type: Anchorable
   - type: Damageable
-    deadThreshold: 100
     resistances: metallicResistances
   - type: Destructible
+    threshold: 100
   - type: Appearance
     visuals:
     - type: DisposalUnitVisualizer
