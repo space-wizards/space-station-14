@@ -45,6 +45,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         private RichTextLabel _stateName;
         private RichTextLabel _stateDescription;
         private AlertOrderPrototype _alertOrder;
+        private bool tooltipReady;
 
         [ViewVariables]
         private Dictionary<AlertKey, AlertControl> _alertControls
@@ -240,6 +241,7 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         private void AlertOnOnHideTooltip(object sender, EventArgs e)
         {
+            tooltipReady = false;
             _tooltip.Visible = false;
         }
 
@@ -250,7 +252,9 @@ namespace Content.Client.GameObjects.Components.Mobs
             _stateDescription.SetMessage(alertControl.Alert.Description);
             // TODO: Text display of cooldown
             Tooltips.PositionTooltip(_tooltip);
-            _tooltip.Visible = true;
+            // if we set it visible here the size of the previous tooltip will flicker for a frame,
+            // so instead we wait until FrameUpdate to make it visible
+            tooltipReady = true;
         }
 
         private void AlertPressed(BaseButton.ButtonEventArgs args, AlertControl alert)
@@ -274,6 +278,11 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         public void FrameUpdate(float frameTime)
         {
+            if (tooltipReady)
+            {
+                tooltipReady = false;
+                _tooltip.Visible = true;
+            }
             foreach (var (alertKey, alertControl) in _alertControls)
             {
                 // reconcile all alert controls with their current cooldowns
