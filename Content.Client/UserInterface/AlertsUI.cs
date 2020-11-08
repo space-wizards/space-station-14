@@ -1,5 +1,7 @@
-﻿using Content.Client.UserInterface.Stylesheets;
+﻿using System;
+using Content.Client.UserInterface.Stylesheets;
 using Robust.Client.Graphics.Drawing;
+using Robust.Client.Interfaces.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -15,10 +17,12 @@ namespace Content.Client.UserInterface
         public GridContainer Grid { get; }
 
         private PanelContainer _panelContainer;
+        private IClyde _clyde;
 
 
-        public AlertsUI()
+        public AlertsUI(IClyde clyde)
         {
+            _clyde = clyde;
             _panelContainer = new PanelContainer
             {
                 StyleClasses = {StyleNano.StyleClassBorderedWindowPanel},
@@ -28,14 +32,34 @@ namespace Content.Client.UserInterface
 
             Grid = new GridContainer
             {
-                MaxHeight = 300,
+                MaxHeight = CalcMaxHeight(clyde.ScreenSize),
                 ExpandBackwards = true
             };
             _panelContainer.AddChild(Grid);
+            clyde.OnWindowResized += ClydeOnOnWindowResized;
 
             LayoutContainer.SetGrowHorizontal(this, LayoutContainer.GrowDirection.Begin);
             LayoutContainer.SetAnchorAndMarginPreset(this, LayoutContainer.LayoutPreset.TopRight, margin: 10);
             LayoutContainer.SetMarginTop(this, 250);
+        }
+
+        protected override void UIScaleChanged()
+        {
+            Grid.MaxHeight = CalcMaxHeight(_clyde.ScreenSize);
+            base.UIScaleChanged();
+        }
+
+        private void ClydeOnOnWindowResized(WindowResizedEventArgs obj)
+        {
+            // TODO: Can rework this once https://github.com/space-wizards/RobustToolbox/issues/1392 is done,
+            // this is here because there isn't currently a good way to allow the grid to adjust its height based
+            // on constraints, otherwise we would use anchors to lay it out
+            Grid.MaxHeight = CalcMaxHeight(obj.NewSize);;
+        }
+
+        private float CalcMaxHeight(Vector2i screenSize)
+        {
+            return Math.Max(((screenSize.Y) / UIScale) - 420, 1);
         }
     }
 }

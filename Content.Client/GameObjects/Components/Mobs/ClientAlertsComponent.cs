@@ -7,6 +7,7 @@ using Content.Client.Utility;
 using Content.Shared.Alert;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Client.GameObjects;
+using Robust.Client.Interfaces.Graphics;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Player;
@@ -37,6 +38,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IClyde _clyde = default!;
 
         private AlertsUI _ui;
         private PanelContainer _tooltip;
@@ -101,8 +103,10 @@ namespace Content.Client.GameObjects.Components.Mobs
             {
                 Logger.ErrorS("alert", "no alertOrder prototype found, alerts will be in random order");
             }
-            _ui = new AlertsUI();
+
+            _ui = new AlertsUI(_clyde);
             _userInterfaceManager.StateRoot.AddChild(_ui);
+
             _tooltip = new PanelContainer
             {
                 Visible = false,
