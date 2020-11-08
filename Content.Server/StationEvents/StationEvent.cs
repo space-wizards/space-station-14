@@ -1,4 +1,7 @@
-using Content.Server.Interfaces.Chat;
+﻿using Content.Server.Interfaces.Chat;
+using Robust.Shared.GameObjects.Systems;
+using Robust.Server.GameObjects.EntitySystems;
+using Robust.Shared.Audio;
 using Robust.Shared.IoC;
 
 namespace Content.Server.StationEvents
@@ -6,21 +9,24 @@ namespace Content.Server.StationEvents
     public abstract class StationEvent
     {
         /// <summary>
-        /// If the event has started and is currently running
+        /// If the event has started and is currently running.
         /// </summary>
         public bool Running { get; protected set; }
         
         /// <summary>
-        /// Human-readable name for the event
+        /// Human-readable name for the event.
         /// </summary>
         public abstract string Name { get; }
 
+        /// <summary>
+        /// The weight this event has in the random-selection process.
+        /// </summary>
         public virtual StationEventWeight Weight { get; } = StationEventWeight.Normal;
 
         /// <summary>
         /// What should be said in chat when the event starts (if anything).
         /// </summary>
-        protected virtual string StartAnnouncement { get; } = null;
+        public virtual string StartAnnouncement { get; } = null;
 
         /// <summary>
         /// What should be said in chat when the event end (if anything).
@@ -28,10 +34,45 @@ namespace Content.Server.StationEvents
         protected virtual string EndAnnouncement { get; } = null;
 
         /// <summary>
+        /// Starting audio of the event.
+        /// </summary>
+        protected virtual string StartAudio { get; } = "/Audio/Effects/alert.ogg";
+
+        /// <summary>
+        /// Ending audio of the event.
+        /// </summary>
+        protected virtual string EndAudio { get; } = null;
+
+        /// <summary>
+        /// Can the false alarm fake this event?
+        /// </summary>
+        public virtual bool Fakeable { get; } = true;
+
+        /// <summary>
         /// In minutes, when is the first time this event can start
         /// </summary>
-        /// <returns></returns>
         public virtual int EarliestStart { get; } = 5;
+
+        /// <summary>
+        /// When in the lifetime to call Start().
+        /// </summary>
+        protected virtual int StartWhen { get; } = 0;
+
+        /// <summary>
+        /// When in the lifetime to call Announce().
+        /// </summary>
+        /// this has a set for dynamic configuration.
+        protected virtual int AnnounceWhen { get; set; } = 0;
+
+        /// <summary>
+        /// When in the lifetime the event should end.
+        /// </summary>
+        protected virtual int EndWhen { get; set; } = 0;
+
+        /// <summary>
+        /// How long has the event existed. Do not change this.
+        /// </summary>
+        public virtual int ActiveFor { get; protected set; } = 0;
 
         /// <summary>
         /// How many players need to be present on station for the event to run
@@ -50,36 +91,98 @@ namespace Content.Server.StationEvents
         public virtual int? MaxOccurrences { get; } = null;
 
         /// <summary>
-        /// Called once when the station event starts
+        /// Called before Start(). Allows you to setup your events, such as randomly setting variables.
         /// </summary>
-        public virtual void Startup()
+        public virtual void Setup()
         {
             Running = true;
             Occurrences += 1;
+            return;
+        }
+
+        /// <summary>
+        /// Called when the tick is equal to the StartWhen variable.
+        /// </summary>
+        public abstract void Start();
+
+        /// <summary>
+        /// Called when the tick is qual to the AnnounceWhen variable.
+        /// </summary>
+        /// <param name="fake"></param>
+        public virtual void Announce(bool fake)
+        {
             if (StartAnnouncement != null)
             {
                 var chatManager = IoCManager.Resolve<IChatManager>();
                 chatManager.DispatchStationAnnouncement(StartAnnouncement);
             }
+            if (StartAudio != null)
+            {
+                EntitySystem.Get<AudioSystem>().PlayGlobal(StartAudio, AudioParams.Default.WithVolume(-10f));
+            }
+            return;
         }
-
-        /// <summary>
-        /// Called every tick when this event is active
-        /// </summary>
-        /// <param name="frameTime"></param>
-        public abstract void Update(float frameTime);
 
         /// <summary>
         /// Called once when the station event ends
         /// </summary>
-        public virtual void Shutdown()
+        public virtual void End()
         {
             if (EndAnnouncement != null)
             {
                 var chatManager = IoCManager.Resolve<IChatManager>();
                 chatManager.DispatchStationAnnouncement(EndAnnouncement);
             }
+            if (EndAudio != null)
+            {
+                EntitySystem.Get<AudioSystem>().PlayGlobal(EndAudio, AudioParams.Default.WithVolume(-10f));
+            }
+            Running = false;
         }
+
+        /// <summary>
+        /// Called every tick when this event is active
+        /// </summary>
+        /// <param name="frameTime"></param>
+        public virtual void Tick(float frameTime)
+        {
+            return;
+        }
+
+        /// <summary>
+        /// Called every tick when this event is running. Do not override me!
+        /// </summary>
+        /// <param name="frameTime"></param>
+        public virtual void Update(float frameTime)
+        {
+            if (!Running)
+            {
+                return;
+            }
+
+            if (ActiveFor == StartWhen)
+            {
+                Start();
+            }
+
+            if (ActiveFor == AnnounceWhen)
+            {
+                Announce(false);
+            }
+
+            if (StartWhen < ActiveFor && ActiveFor < EndWhen)
+            {
+                Tick(frameTime);
+            }
+
+            if (ActiveFor >= EndWhen && ActiveFor >= AnnounceWhen && ActiveFor >= StartWhen)
+            {
+                End();
+                return;
+            }
+            ActiveFor += 1;
+        }
+
     }
 
     public enum StationEventWeight

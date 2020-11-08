@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using Content.Server.GameTicking;
@@ -58,7 +58,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
                 }
 
                 _enabled = value;
-                CurrentEvent?.Shutdown();
+                CurrentEvent?.End();
                 CurrentEvent = null;
             }
         }
@@ -99,9 +99,9 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
                     continue;
                 }
 
-                CurrentEvent?.Shutdown();
+                CurrentEvent?.End();
                 CurrentEvent = stationEvent;
-                stationEvent.Startup();
+                stationEvent.Setup();
                 return Loc.GetString("Running event ") + stationEvent.Name;
             }
 
@@ -115,19 +115,27 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
         /// <returns></returns>
         public string RunRandomEvent()
         {
-            var availableEvents = AvailableEvents(true);
-            var randomEvent = FindEvent(availableEvents);
+            var randomEvent = PickRandomEvent();
 
             if (randomEvent == null)
             {
                 return Loc.GetString("No valid events available");
             }
 
-            CurrentEvent?.Shutdown();
+            CurrentEvent?.End();
             CurrentEvent = randomEvent;
-            CurrentEvent.Startup();
+            CurrentEvent.Setup();
 
             return Loc.GetString("Running ") + randomEvent.Name;
+        }
+
+        /// <summary>
+        /// Randomly picks a valid event. Used by RunRandomEvent and FalseAlarm.
+        /// </summary>
+        public StationEvent PickRandomEvent()
+        {
+            var availableEvents = AvailableEvents(true);
+            return FindEvent(availableEvents);
         }
 
         /// <summary>
@@ -145,7 +153,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
             else
             {
                 resultText = Loc.GetString("Stopped event ") + CurrentEvent.Name;
-                CurrentEvent.Shutdown();
+                CurrentEvent.End();
                 CurrentEvent = null;
             }
 
@@ -222,7 +230,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
                 // Shutdown the event and set the timer for the next event
                 if (!CurrentEvent.Running)
                 {
-                    CurrentEvent.Shutdown();
+                    CurrentEvent.End();
                     CurrentEvent = null;
                     ResetTimer();
                 }
@@ -245,7 +253,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
             else
             {
                 CurrentEvent = stationEvent;
-                CurrentEvent.Startup();
+                CurrentEvent.Setup();
             }
         }
 
@@ -349,14 +357,14 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
         public override void Shutdown()
         {
             base.Shutdown();
-            CurrentEvent?.Shutdown();
+            CurrentEvent?.End();
         }
 
         public void Reset()
         {
             if (CurrentEvent != null && CurrentEvent.Running)
             {
-                CurrentEvent.Shutdown();
+                CurrentEvent.End();
                 CurrentEvent = null;
             }
 

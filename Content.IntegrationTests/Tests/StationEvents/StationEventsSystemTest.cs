@@ -1,4 +1,4 @@
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Content.Server.GameObjects.EntitySystems.StationEvents;
 using NUnit.Framework;
 using Robust.Shared.GameObjects.Systems;
@@ -23,9 +23,9 @@ namespace Content.IntegrationTests.Tests.StationEvents
 
                 foreach (var stationEvent in stationEventsSystem.StationEvents)
                 {
-                    stationEvent.Startup();
+                    stationEvent.Setup();
                     stationEvent.Update(dummyFrameTime);
-                    stationEvent.Shutdown();
+                    stationEvent.End();
                     Assert.That(stationEvent.Occurrences == 1);
                 }
 

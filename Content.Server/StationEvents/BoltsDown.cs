@@ -1,14 +1,11 @@
-#nullable enable
+﻿#nullable enable
 using JetBrains.Annotations;
 using Content.Server.GameObjects.Components.Doors;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.Damage;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
-using Robust.Shared.Audio;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -22,18 +19,20 @@ namespace Content.Server.StationEvents
         public override string Name => "BoltsDown";
         public override StationEventWeight Weight => StationEventWeight.Low;
         public override int? MaxOccurrences => 1;
-        private float _elapsedTime;
-        private int _eventDuration;
-        protected override string StartAnnouncement => Loc.GetString(
+        public override string StartAnnouncement => Loc.GetString(
             "The clover hat hackers turned the bolts of all the airlocks in the station down. We have dispatched high quality hacking equipment at every crewmember location so that this productive shift can continue");
         protected override string EndAnnouncement => Loc.GetString(
             "Our cybersecurity team has dealt with the problem and restarted all the airlocks bolts in the station. Have a nice shift.");
-        public override void Startup()
-        {
-            base.Startup();
-            EntitySystem.Get<AudioSystem>().PlayGlobal("/Audio/Effects/alert.ogg", AudioParams.Default.WithVolume(-10f));
-            _eventDuration = IoCManager.Resolve<IRobustRandom>().Next(120, 180);
+        protected override string EndAudio => "/Audio/Effects/alert.ogg";
 
+        public override void Setup()
+        {
+            base.Setup();
+            EndWhen = IoCManager.Resolve<IRobustRandom>().Next(120, 180);
+        }
+
+        public override void Start()
+        {
             var componentManager = IoCManager.Resolve<IComponentManager>();
             foreach (var component in componentManager.EntityQuery<AirlockComponent>()) component.BoltsDown = true;
 
@@ -51,29 +50,11 @@ namespace Content.Server.StationEvents
                 entityManager.SpawnEntity("UtilityBeltClothingFilledEvent", playerPos);
             }
         }
-        public override void Shutdown()
+        public override void End()
         {
-            base.Shutdown();
-            EntitySystem.Get<AudioSystem>().PlayGlobal("/Audio/Effects/alert.ogg", AudioParams.Default.WithVolume(-10f));
-
             var componentManager = IoCManager.Resolve<IComponentManager>();
             foreach (var component in componentManager.EntityQuery<AirlockComponent>()) component.BoltsDown = false;
-        }
-        public override void Update(float frameTime)
-        {
-            if (!Running)
-            {
-                return;
-            }
-
-            _elapsedTime += frameTime;
-
-            if (_elapsedTime < _eventDuration)
-            {
-                return;
-            }
-
-            Running = false;
+            base.End();
         }
     }
 }
