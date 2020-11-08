@@ -3,10 +3,7 @@ using System;
 using Content.Client.UserInterface;
 using Content.Client.Utility;
 using Content.Shared.Alert;
-using Content.Shared.GameObjects.Components.Mobs;
-using JetBrains.Annotations;
 using OpenToolkit.Mathematics;
-using Robust.Client.Graphics;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 
