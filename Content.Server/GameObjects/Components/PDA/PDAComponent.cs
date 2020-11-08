@@ -104,20 +104,26 @@ namespace Content.Server.GameObjects.Components.PDA
         {
             switch (message.Message)
             {
-                case PDARequestUpdateInterfaceMessage msg:
+                case PDARequestUpdateInterfaceMessage _:
                 {
                     UpdatePDAUserInterface();
                     break;
                 }
-                case PDAToggleFlashlightMessage msg:
+                case PDAToggleFlashlightMessage _:
                 {
                     ToggleLight();
                     break;
                 }
 
-                case PDAEjectIDMessage msg:
+                case PDAEjectIDMessage _:
                 {
                     HandleIDEjection(message.Session.AttachedEntity!);
+                    break;
+                }
+
+                case PDAEjectPenMessage _:
+                {
+                    HandlePenEjection(message.Session.AttachedEntity!);
                     break;
                 }
 
@@ -150,11 +156,11 @@ namespace Content.Server.GameObjects.Components.PDA
                 var accData = new UplinkAccountData(_syndicateUplinkAccount.AccountHolder,
                     _syndicateUplinkAccount.Balance);
                 var listings = _uplinkManager.FetchListings.Values.ToArray();
-                UserInterface?.SetState(new PDAUpdateState(_lightOn, ownerInfo, accData, listings));
+                UserInterface?.SetState(new PDAUpdateState(_lightOn, !PenSlotEmpty, ownerInfo, accData, listings));
             }
             else
             {
-                UserInterface?.SetState(new PDAUpdateState(_lightOn, ownerInfo));
+                UserInterface?.SetState(new PDAUpdateState(_lightOn, !PenSlotEmpty, ownerInfo));
             }
 
             UpdatePDAAppearance();
@@ -235,6 +241,8 @@ namespace Content.Server.GameObjects.Components.PDA
 
             // Insert Pen
             _penSlot.Insert(item);
+
+            UpdatePDAUserInterface();
             return true;
         }
 
@@ -342,12 +350,17 @@ namespace Content.Server.GameObjects.Components.PDA
 
         private void HandlePenEjection(IEntity pdaUser)
         {
+            if (PenSlotEmpty)
+                return;
+
             var pen = _penSlot.ContainedEntities[0];
             _penSlot.Remove(pen);
 
             var hands = pdaUser.GetComponent<HandsComponent>();
             var itemComponent = pen.GetComponent<ItemComponent>();
             hands.PutInHandOrDrop(itemComponent);
+
+            UpdatePDAUserInterface();
         }
 
         [Verb]
