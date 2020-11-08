@@ -26,18 +26,21 @@ using Robust.Client.Interfaces.Graphics;
 
 namespace Content.Client.Graphics.Overlays
 {
-    public class SingularityOverlay : Overlay, IConfigurable<PositionOverlayParameter>
+    public class SingularityOverlay : Overlay, IConfigurable<KeyedVector2OverlayParameter>, IConfigurable<KeyedFloatOverlayParameter>
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IClyde _displayManager = default!;
 
-        public override OverlaySpace Space => OverlaySpace.WorldSpaceFOVStencil;
+        public override OverlaySpace Space => OverlaySpace.WorldSpace;
         public override OverlayPriority Priority => OverlayPriority.P3;
         public override bool RequestScreenTexture => true;
+        public override bool OverwriteTargetFrameBuffer => true;
 
         private readonly ShaderInstance _shader;
         private Vector2 _currentWorldCoords;
+        private float _intensity = 3.8f;
+        private float _falloff = 5.1f;
 
         public SingularityOverlay() : base()
         {
@@ -47,23 +50,33 @@ namespace Content.Client.Graphics.Overlays
 
         protected override void Draw(DrawingHandleBase handle, OverlaySpace currentSpace)
         {
+            
             handle.UseShader(_shader);
             var worldHandle = (DrawingHandleWorld)handle;
             var viewport = _eyeManager.GetWorldViewport();
+
+            var tempCoords = _eyeManager.WorldToScreen(_currentWorldCoords);
+            tempCoords.Y = _displayManager.ScreenSize.Y - tempCoords.Y;
+            _shader?.SetParameter("positionInput", tempCoords);
             if (ScreenTexture != null)
                 _shader?.SetParameter("SCREEN_TEXTURE", ScreenTexture);
-            var tempCoords = _eyeManager.WorldToScreen(_currentWorldCoords);
-            tempCoords.Y = Math.Abs(tempCoords.Y - _displayManager.ScreenSize.Y);
-            _shader?.SetParameter("positionInput", tempCoords);
+            _shader?.SetParameter("intensity", _intensity);
+            _shader?.SetParameter("falloff", _falloff);
             worldHandle.DrawRect(viewport, Color.White);
+
         }
 
-        public void Configure(PositionOverlayParameter parameters)
+        public void Configure(KeyedVector2OverlayParameter parameters)
         {
-            if (parameters.Positions.Length == 1)
-                _currentWorldCoords = parameters.Positions[0];
-            else
-                Logger.Error("Error: {0} instead of 1 position parameter was sent to SingularityOverlay!", parameters.Positions.Length);
+            var dict = parameters.Dict;
+            dict.TryGetValue("worldCoords", out _currentWorldCoords);
+        }
+
+        public void Configure(KeyedFloatOverlayParameter parameters)
+        {
+            var dict = parameters.Dict;
+            dict.TryGetValue("intensity", out _intensity);
+            dict.TryGetValue("falloff", out _falloff);
         }
     }
 }

@@ -1,27 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Content.Server.GameObjects.Components.Mobs;
+﻿using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.Interfaces;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.Network;
-using Robust.Shared.Interfaces.Reflection;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Maths;
-using Robust.Shared.Players;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
+using System;
+using System.Collections.Generic;
 
 namespace Content.Server.GameObjects.Components.Effects
 {
-   
+
     /// <summary>
     ///     Gravitational lensing shader application to all people who can see the singularity.
     /// </summary>
@@ -33,8 +23,56 @@ namespace Content.Server.GameObjects.Components.Effects
         protected override int Radius => 25;
         protected string CurrentActiveTexturePath = "Objects/Fun/toys.rsi";
         protected string CurrentActiveTextureState = "singularitytoy";
+        protected float CurrentIntensity = 3.8f;
+        protected float CurrentFalloff = 5.1f;
+
 
         private Dictionary<IPlayerSession, IDContainer> _sessionToOverlays = new Dictionary<IPlayerSession, IDContainer>();
+
+
+        public void SetSingularityTexture(string newPath, string newState)
+        {
+            CurrentActiveTexturePath = newPath;
+            CurrentActiveTextureState = newState;
+            foreach (var player in ActivatedPlayers)
+            {
+                if (player.AttachedEntityUid != null && EntityManager.TryGetEntity((EntityUid) player.AttachedEntityUid, out IEntity playerEntity) && playerEntity.TryGetComponent<ServerOverlayEffectsComponent>(out ServerOverlayEffectsComponent overlayEffects))
+                {
+                    if (_sessionToOverlays.TryGetValue(player, out IDContainer ids))
+                    {
+                        overlayEffects.TryModifyOverlay(ids.TextureOverlayID, overlay => {
+                            if (overlay.TryGetOverlayParameter<TextureOverlayParameter>(out var texture))
+                            {
+                                texture.RSIPaths[0] = CurrentActiveTexturePath;
+                                texture.States[0] = CurrentActiveTextureState;
+                            }
+                        });
+                    }
+                }
+            }
+        }
+
+        public void SetEffectIntensity(float newIntensity, float newFalloff)
+        {
+            CurrentIntensity = newIntensity;
+            CurrentFalloff = newFalloff;
+            foreach (var player in ActivatedPlayers)
+            {
+                if (player.AttachedEntityUid != null && EntityManager.TryGetEntity((EntityUid) player.AttachedEntityUid, out IEntity playerEntity) && playerEntity.TryGetComponent<ServerOverlayEffectsComponent>(out ServerOverlayEffectsComponent overlayEffects))
+                {
+                    if (_sessionToOverlays.TryGetValue(player, out IDContainer ids))
+                    {
+                        overlayEffects.TryModifyOverlay(ids.SingularityOverlayID, overlay => {
+                            if (overlay.TryGetOverlayParameter<KeyedFloatOverlayParameter>(out var floatParam))
+                            {
+                                floatParam.SetValues(new Dictionary<string, float>() { { "intensity", CurrentIntensity }, { "falloff", CurrentFalloff } });
+                            }
+                        });
+                    }
+                }
+            }
+        }
+
 
         protected override void OnEnterRange(IPlayerSession session, ServerOverlayEffectsComponent overlayEffects)
         {
@@ -42,14 +80,15 @@ namespace Content.Server.GameObjects.Components.Effects
                 Guid lensingOverlay, textureOverlay;
                 lensingOverlay = overlayEffects.AddNewOverlay(OverlayType.SingularityOverlay,
                     new OverlayParameter[] {
-                        new PositionOverlayParameter(transform.WorldPosition)
+                        new KeyedVector2OverlayParameter(new Dictionary<string, Vector2>() { { "worldCoords", transform.WorldPosition } }),
+                        new KeyedFloatOverlayParameter(new Dictionary<string, float>(){ { "intensity", CurrentIntensity }, { "falloff", CurrentFalloff } })
                     }
                 );
                 textureOverlay = overlayEffects.AddNewOverlay(OverlayType.TextureOverlay,
                     new OverlayParameter[] {
-                        new OverlaySpaceOverlayParameter(OverlaySpace.WorldSpaceFOVStencil),
-                        new PositionOverlayParameter(transform.WorldPosition),
-                        new TextureOverlayParameter(CurrentActiveTexturePath, CurrentActiveTextureState)
+                        new KeyedOverlaySpaceOverlayParameter(new Dictionary<string, OverlaySpace>() { { "overlaySpace", OverlaySpace.WorldSpaceFOVStencil } }),
+                        new KeyedVector2OverlayParameter(new Dictionary<string, Vector2>() { { "worldCoords", transform.WorldPosition } }),
+                        new TextureOverlayParameter(CurrentActiveTexturePath, CurrentActiveTextureState),
                     }
                 );
                 _sessionToOverlays.Add(session, new IDContainer(lensingOverlay, textureOverlay));
@@ -75,25 +114,20 @@ namespace Content.Server.GameObjects.Components.Effects
                     {
                         overlayEffects.TryModifyOverlay(ids.SingularityOverlayID, overlay =>
                         {
-                            if (overlay.TryGetOverlayParameter<PositionOverlayParameter>(out var pos))
+                            if (overlay.TryGetOverlayParameter<KeyedVector2OverlayParameter>(out var posParam))
                             {
-                                pos.Positions = new Vector2[] { transform.WorldPosition };
+                                posParam.SetValues(new Dictionary<string, Vector2>() { { "worldCoords", transform.WorldPosition } });
                             }
                         });
                         overlayEffects.TryModifyOverlay(ids.TextureOverlayID, overlay => {
-                            if (overlay.TryGetOverlayParameter<PositionOverlayParameter>(out var pos))
+                            if (overlay.TryGetOverlayParameter<KeyedVector2OverlayParameter>(out var posParam))
                             {
-                                pos.Positions = new Vector2[] { transform.WorldPosition };
+                                posParam.SetValues(new Dictionary<string, Vector2>() { { "worldCoords", transform.WorldPosition } });
                             }
                         });
                     }
                 }
             }
-        }
-
-        public void ChangeActiveSingularityTexture(string newPath)
-        {
-            CurrentActiveTexturePath = newPath;
         }
 
         private struct IDContainer

@@ -24,6 +24,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Timers;
 using Content.Server.GameObjects.Components.Effects;
+using Content.Server.GameObjects.Components.Observer;
 
 namespace Content.Server.GameObjects.Components.Singularity
 {
@@ -79,9 +80,38 @@ namespace Content.Server.GameObjects.Components.Singularity
                 if (value > 6) value = 6;
 
                 _level = value;
+                _level = 5;
+                value = 5;
 
                 if(_radiationPulseComponent != null) _radiationPulseComponent.RadsPerSecond = 10 * value;
-
+                if (_shaderComponent != null)
+                {
+                    _shaderComponent.SetSingularityTexture("Effects/Singularity/singularity_" + _level + ".rsi", "singularity_" + _level);
+                    switch (value)
+                    {
+                        case 0:
+                            _shaderComponent.SetEffectIntensity(0.0f, 100.0f);
+                            break;
+                        case 1:
+                            _shaderComponent.SetEffectIntensity(2.7f, 6.4f);
+                            break;
+                        case 2:
+                            _shaderComponent.SetEffectIntensity(14.4f, 7.0f);
+                            break;
+                        case 3:
+                            _shaderComponent.SetEffectIntensity(39.2f, 8.0f);
+                            break;
+                        case 4:
+                            _shaderComponent.SetEffectIntensity(180f, 10.0f);
+                            break;
+                        case 5:
+                            _shaderComponent.SetEffectIntensity(600f, 12.0f);
+                            break;
+                        case 6:
+                            _shaderComponent.SetEffectIntensity(600f, 12.0f);
+                            break;
+                    }
+                }
                 //_shaderComponent.
 
                 if (_collidableComponent != null && _collidableComponent.PhysicsShapes.Any() && _collidableComponent.PhysicsShapes[0] is PhysShapeCircle circle)
@@ -176,8 +206,10 @@ namespace Content.Server.GameObjects.Components.Singularity
             _previousPulledEntites.Clear();
 
             var entitiesToPull = _entityManager.GetEntitiesInRange(Owner.Transform.Coordinates, Level * 10);
+            
             foreach (var entity in entitiesToPull)
             {
+                if (entity.TryGetComponent<GhostComponent>(out var a)) continue; //Temporary fix for ghosts
                 if (!entity.TryGetComponent<PhysicsComponent>(out var collidableComponent)) continue;
                 var controller = collidableComponent.EnsureController<SingularityPullController>();
                 if(Owner.Transform.Coordinates.EntityId != entity.Transform.Coordinates.EntityId) continue;
@@ -193,6 +225,7 @@ namespace Content.Server.GameObjects.Components.Singularity
 
         void ICollideBehavior.CollideWith(IEntity entity)
         {
+            
             if (_collidableComponent == null) return; //how did it even collide then? :D
 
             if (entity.TryGetComponent<IMapGridComponent>(out var mapGridComponent))

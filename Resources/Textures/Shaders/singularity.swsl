@@ -2,8 +2,8 @@
 
 uniform sampler2D SCREEN_TEXTURE;
 uniform highp vec2 positionInput = vec2(0,0);
-uniform highp float falloff = 5.1;
-uniform highp float intensity = 3.8;
+uniform highp float falloff = 5.0;
+uniform highp float intensity = 5.0;
 
 
 
@@ -11,8 +11,10 @@ void fragment() {
 	float distanceToCenter = length(FRAGCOORD.xy-positionInput);
 
 	vec2 finalCoords = FRAGCOORD.xy - positionInput;
-	highp float deformation = (intensity*500) / pow(distanceToCenter, pow(falloff, 0.5));
-	if(deformation > 0.005)
+	highp float deformation = (pow(intensity, 2)*500) / pow(distanceToCenter, pow(falloff, 0.5));
+	if(deformation > 0.8)
+		deformation = pow(deformation, 0.3);
+	if(deformation > 0.001)
 		finalCoords *= 1-deformation;
 	finalCoords += positionInput;
 	
@@ -21,5 +23,11 @@ void fragment() {
 	float darkening = 0.9-(alph*0.9);
 		
 	//COLOR = mix(texture(SCREEN_TEXTURE, finalCoords*SCREEN_PIXEL_SIZE), vec4(0.0, 0.0, 0.0, 1.0), darkening);
-	COLOR = texture(SCREEN_TEXTURE, finalCoords*SCREEN_PIXEL_SIZE);
+	
+	vec4 color = texture(SCREEN_TEXTURE, finalCoords*SCREEN_PIXEL_SIZE);
+	if(color.a > 0.01)
+		COLOR = color;
+	else
+		COLOR = vec4(0.0, 0.0, 0.0, 0.0);
+	
 }

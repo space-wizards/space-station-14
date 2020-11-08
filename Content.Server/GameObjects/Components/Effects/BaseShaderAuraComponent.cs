@@ -34,6 +34,18 @@ namespace Content.Server.GameObjects.Components.Effects
         protected List<IPlayerSession> ActivatedPlayers = new List<IPlayerSession>();
         protected virtual int Radius => 20;
 
+        public override void OnRemove()
+        {
+            base.OnRemove();
+            foreach (var player in ActivatedPlayers)
+            {
+                if (player.AttachedEntityUid != null && EntityManager.TryGetEntity((EntityUid) player.AttachedEntityUid, out IEntity playerEntity) && playerEntity.TryGetComponent<ServerOverlayEffectsComponent>(out ServerOverlayEffectsComponent overlayEffects))
+                {
+                    OnExitRange(player, overlayEffects);
+                }
+            }
+        }
+
         public void OnTick()
         {
             List<IPlayerSession> players = PlayerManager.GetPlayersInRange(Owner.Transform.MapPosition, Radius);

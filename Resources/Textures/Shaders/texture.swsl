@@ -3,13 +3,20 @@
 
 uniform sampler2D tex;
 uniform highp vec2 positionInput = vec2(0,0);
-uniform highp float pixelSize = 32;
+uniform highp vec2 pixelSize = vec2(32, 32); //Todo: implement non square textures (are those ever gonna be a thing?)
+uniform highp float alphaCutoff = 0.0;
+uniform bool removeTransparency = false;
 
 void fragment() {
-	float pixelLength = pixelSize*2;
+	float pixelLength = pixelSize.x*2;
 	float halvedLength = pixelLength/2;
 	if(FRAGCOORD.x > positionInput.x - halvedLength && FRAGCOORD.x < positionInput.x + halvedLength && FRAGCOORD.y > positionInput.y - halvedLength && FRAGCOORD.y < positionInput.y + halvedLength){
 		vec2 finalCoords = (FRAGCOORD.xy-positionInput+(pixelLength/2))/pixelLength;
-		COLOR = texture(tex, finalCoords);
+		vec4 color = texture(tex, finalCoords);
+		if(color.a > alphaCutoff){
+			if(removeTransparency)
+				color.a = 1.0;
+			COLOR = color;
+		}
 	}
 }

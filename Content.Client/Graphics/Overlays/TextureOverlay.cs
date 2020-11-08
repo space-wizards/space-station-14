@@ -26,7 +26,7 @@ using Robust.Client.Interfaces.Graphics;
 
 namespace Content.Client.Graphics.Overlays
 {
-    public class TextureOverlay : Overlay, IConfigurable<OverlaySpaceOverlayParameter>, IConfigurable<TextureOverlayParameter>, IConfigurable<PositionOverlayParameter>
+    public class TextureOverlay : Overlay, IConfigurable<TextureOverlayParameter>, IConfigurable<KeyedOverlaySpaceOverlayParameter>, IConfigurable<KeyedVector2OverlayParameter>, IConfigurable<KeyedFloatOverlayParameter>, IConfigurable<KeyedBoolOverlayParameter>
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
@@ -43,11 +43,32 @@ namespace Content.Client.Graphics.Overlays
         private KeyValuePair<string, string> _cachedResourceLocation;
         private AnimState _animData;
         private double _lastFrame;
+        private float _cutoffTransparency = 0.0f;
+        private bool _disableTransparency = false;
 
         public TextureOverlay() : base()
         {
             IoCManager.InjectDependencies(this);
             _shader = _prototypeManager.Index<ShaderPrototype>("Texture").Instance().Duplicate();
+        }
+        protected override void Draw(DrawingHandleBase handle, OverlaySpace currentSpace)
+        {
+            handle.UseShader(_shader);
+            var worldHandle = (DrawingHandleWorld) handle;
+            var viewport = _eyeManager.GetWorldViewport();
+
+            _animData.FrameTime += ((float) _gameTiming.CurTime.TotalSeconds - (float) _lastFrame);
+            _lastFrame = _gameTiming.CurTime.TotalSeconds;
+            CalculateFrameState();
+
+            var tempCoords = _eyeManager.WorldToScreen(_currentWorldCoords);
+            tempCoords.Y = _displayManager.ScreenSize.Y - tempCoords.Y;
+            _shader?.SetParameter("positionInput", tempCoords);
+            _shader?.SetParameter("pixelSize", new Vector2(_textureData.Key[_animData.Frame].Width, _textureData.Key[_animData.Frame].Height));
+            _shader?.SetParameter("alphaCutoff", _cutoffTransparency);
+            _shader?.SetParameter("removeTransparency", _disableTransparency);
+            _shader?.SetParameter("tex", _textureData.Key[_animData.Frame]);
+            worldHandle.DrawRect(viewport, Color.White);
         }
 
         public void Configure(TextureOverlayParameter parameters)
@@ -84,46 +105,17 @@ namespace Content.Client.Graphics.Overlays
             }
         }
 
-        public void Configure(PositionOverlayParameter parameters){
-            if (parameters.Positions.Length == 1)
-                _currentWorldCoords = parameters.Positions[0];
-            else
-                Logger.Error("Error: {0} instead of 1 position parameter was sent to TextureOverlay!", parameters.Positions.Length);
-        }
-
-        public void Configure(OverlaySpaceOverlayParameter parameters)
-        {
-            _space = parameters.Space;
-        }
-
-        protected override void Draw(DrawingHandleBase handle, OverlaySpace currentSpace)
-        {
-            handle.UseShader(_shader);
-            var worldHandle = (DrawingHandleWorld) handle;
-            var viewport = _eyeManager.GetWorldViewport();
-
-            _animData.FrameTime += ((float)_gameTiming.CurTime.TotalSeconds - (float)_lastFrame);
-            _lastFrame = _gameTiming.CurTime.TotalSeconds;
-            CalculateFrameState();
-
-            var tempCoords = _eyeManager.WorldToScreen(_currentWorldCoords);
-            tempCoords.Y = Math.Abs(tempCoords.Y - _displayManager.ScreenSize.Y);
-            _shader?.SetParameter("positionInput", tempCoords);
-                
-            _shader?.SetParameter("tex", _textureData.Key[_animData.Frame]);
-            worldHandle.DrawRect(viewport, Color.White);
-        }
-
         private void CalculateFrameState()
         {
             float[] delays = _textureData.Value;
-            while(_animData.FrameTime > delays[_animData.Frame])
+            while (_animData.FrameTime > delays[_animData.Frame])
             {
-                if (_animData.Frame == delays.Count()-1) {
+                if (_animData.Frame == delays.Count() - 1)
+                {
                     _animData.FrameTime -= delays[_animData.Frame];
                     _animData.Frame = 0;
                 }
-                else 
+                else
                 {
                     _animData.FrameTime -= delays[_animData.Frame];
                     _animData.Frame++;
@@ -131,9 +123,35 @@ namespace Content.Client.Graphics.Overlays
             }
         }
 
-        private class AnimState {
+        private class AnimState
+        {
             public int Frame;
             public float FrameTime;
         }
+
+        public void Configure(KeyedVector2OverlayParameter parameters){
+            var dict = parameters.Dict;
+            dict.TryGetValue("worldCoords", out _currentWorldCoords);
+        }
+
+        public void Configure(KeyedOverlaySpaceOverlayParameter parameters)
+        {
+            var dict = parameters.Dict;
+            dict.TryGetValue("overlaySpace", out _space);
+        }
+
+        public void Configure(KeyedFloatOverlayParameter parameters)
+        {
+            var dict = parameters.Dict;
+            dict.TryGetValue("cutoffTransparency", out _cutoffTransparency);
+        }
+
+        public void Configure(KeyedBoolOverlayParameter parameters)
+        {
+            var dict = parameters.Dict;
+            dict.TryGetValue("disableTransparency", out _disableTransparency);
+        }
+
+
     }
 }

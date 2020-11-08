@@ -20,34 +20,6 @@ namespace Content.Shared.GameObjects.Components.Mobs
     {
     }
 
-    [Serializable, NetSerializable]
-    public class OverlaySpaceOverlayParameter : OverlayParameter
-    {
-        [ViewVariables(VVAccess.ReadOnly)]
-        public OverlaySpace Space { get; set; }
-
-        public OverlaySpaceOverlayParameter(OverlaySpace space)
-        {
-            Space = space;
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public class PositionOverlayParameter : OverlayParameter
-    {
-        [ViewVariables(VVAccess.ReadOnly)]
-        public Vector2[] Positions { get; set; }
-
-        public PositionOverlayParameter(Vector2 position)
-        {
-            Positions = new Vector2[] { position };
-        }
-
-        public PositionOverlayParameter(Vector2[] positions)
-        {
-            Positions = positions;
-        }
-    }
 
     [Serializable, NetSerializable]
     public class TimedOverlayParameter : OverlayParameter
@@ -82,6 +54,154 @@ namespace Content.Shared.GameObjects.Components.Mobs
         {
             RSIPaths = rsiPaths;
             States = states;
+        }
+    }
+
+
+    //Note: unfortunately these keyed parameters cannot use generics for these since I think NetSerializable classes are not allowed to use generics (it threw some kind of error)
+
+    [Serializable, NetSerializable]
+    public class KeyedFloatOverlayParameter : OverlayParameter
+    {
+        [ViewVariables(VVAccess.ReadOnly)]
+        private string[] _keys;
+
+        [ViewVariables(VVAccess.ReadOnly)]
+        private float[] _values;
+
+        public Dictionary<string, float> Dict
+        {
+            get
+            {
+                return _keys.Zip(_values, (first, second) => new { first, second }).ToDictionary(val => val.first, val => val.second);
+            }
+        }
+
+        public KeyedFloatOverlayParameter(Dictionary<string, float> dict)
+        {
+            SetValues(dict);
+        }
+
+        public void SetValues(Dictionary<string, float> dict)
+        {
+            _keys = dict.Keys.ToArray();
+            _values = dict.Values.ToArray();
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class KeyedBoolOverlayParameter : OverlayParameter
+    {
+        [ViewVariables(VVAccess.ReadOnly)]
+        private string[] _keys;
+
+        [ViewVariables(VVAccess.ReadOnly)]
+        private bool[] _values;
+
+        public Dictionary<string, bool> Dict
+        {
+            get
+            {
+                return _keys.Zip(_values, (first, second) => new { first, second }).ToDictionary(val => val.first, val => val.second);
+            }
+        }
+
+        public KeyedBoolOverlayParameter(Dictionary<string, bool> dict)
+        {
+            SetValues(dict);
+        }
+
+        public void SetValues(Dictionary<string, bool> dict)
+        {
+            _keys = dict.Keys.ToArray();
+            _values = dict.Values.ToArray();
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class KeyedStringOverlayParameter : OverlayParameter
+    {
+        [ViewVariables(VVAccess.ReadOnly)]
+        private string[] _keys;
+
+        [ViewVariables(VVAccess.ReadOnly)]
+        private string[] _values;
+
+        public Dictionary<string, string> Dict
+        {
+            get
+            {
+                return _keys.Zip(_values, (first, second) => new { first, second }).ToDictionary(val => val.first, val => val.second);
+            }
+        }
+
+        public KeyedStringOverlayParameter(Dictionary<string, string> dict)
+        {
+            SetValues(dict);
+        }
+
+        public void SetValues(Dictionary<string, string> dict)
+        {
+            _keys = dict.Keys.ToArray();
+            _values = dict.Values.ToArray();
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class KeyedVector2OverlayParameter : OverlayParameter
+    {
+        [ViewVariables(VVAccess.ReadOnly)]
+        private string[] _keys;
+
+        [ViewVariables(VVAccess.ReadOnly)]
+        private Vector2[] _values;
+
+        public Dictionary<string, Vector2> Dict
+        {
+            get
+            {
+                return _keys.Zip(_values, (first, second) => new { first, second }).ToDictionary(val => val.first, val => val.second);
+            }
+        }
+
+        public KeyedVector2OverlayParameter(Dictionary<string, Vector2> dict)
+        {
+            SetValues(dict);
+        }
+
+        public void SetValues(Dictionary<string, Vector2> dict)
+        {
+            _keys = dict.Keys.ToArray();
+            _values = dict.Values.ToArray();
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class KeyedOverlaySpaceOverlayParameter : OverlayParameter
+    {
+        [ViewVariables(VVAccess.ReadOnly)]
+        private string[] _keys;
+
+        [ViewVariables(VVAccess.ReadOnly)]
+        private OverlaySpace[] _values;
+
+        public Dictionary<string, OverlaySpace> Dict
+        {
+            get
+            {
+                return _keys.Zip(_values, (first, second) => new { first, second }).ToDictionary(val => val.first, val => val.second);
+            }
+        }
+
+        public KeyedOverlaySpaceOverlayParameter(Dictionary<string, OverlaySpace> dict)
+        {
+            SetValues(dict);
+        }
+
+        public void SetValues(Dictionary<string, OverlaySpace> dict)
+        {
+            _keys = dict.Keys.ToArray();
+            _values = dict.Values.ToArray();
         }
     }
 }
