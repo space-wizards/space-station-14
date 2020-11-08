@@ -12,7 +12,7 @@ namespace Content.Client.UserInterface
     /// </summary>
     public sealed class AlertsUI : Control
     {
-        public VBoxContainer VBox { get; }
+        public GridContainer Grid { get; }
 
         private PanelContainer _panelContainer;
 
@@ -26,8 +26,12 @@ namespace Content.Client.UserInterface
             };
             AddChild(_panelContainer);
 
-            VBox = new VBoxContainer();
-            _panelContainer.AddChild(VBox);
+            Grid = new GridContainer
+            {
+                MaxHeight = 300,
+                ExpandBackwards = true
+            };
+            _panelContainer.AddChild(Grid);
 
             LayoutContainer.SetGrowHorizontal(this, LayoutContainer.GrowDirection.Begin);
             LayoutContainer.SetAnchorAndMarginPreset(this, LayoutContainer.LayoutPreset.TopRight, margin: 10);

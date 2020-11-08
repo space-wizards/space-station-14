@@ -5,13 +5,13 @@
   order:
     - health
     - fire
+    - handcuffed
     - buckled
     - pulling
     - piloting
     - stun
     - pressure
     - temperature
-    - handcuffed
     - hunger
     - thirst
 
@@ -167,3 +167,39 @@
   icon: /Textures/Interface/StatusEffects/Pull/pulling.png
   name: Pulling
   description: You're pulling something. Click the alert to stop.
+
+- type: alert
+  id: debug1
+  icon: /Textures/Interface/StatusEffects/Human/human1.png
+  name: Debug
+  description: Debug
+
+- type: alert
+  id: debug2
+  icon: /Textures/Interface/StatusEffects/Human/human2.png
+  name: Debug
+  description: Debug
+
+- type: alert
+  id: debug3
+  icon: /Textures/Interface/StatusEffects/Human/human3.png
+  name: Debug
+  description: Debug
+
+- type: alert
+  id: debug4
+  icon: /Textures/Interface/StatusEffects/Human/human4.png
+  name: Debug
+  description: Debug
+
+- type: alert
+  id: debug5
+  icon: /Textures/Interface/StatusEffects/Human/human5.png
+  name: Debug
+  description: Debug
+
+- type: alert
+  id: debug6
+  icon: /Textures/Interface/StatusEffects/Human/human6.png
+  name: Debug
+  description: Debug

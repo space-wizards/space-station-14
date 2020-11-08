@@ -195,12 +195,12 @@ namespace Content.Client.GameObjects.Components.Mobs
                     if (_alertOrder != null)
                     {
                         var added = false;
-                        foreach (var alertControl in _ui.VBox.Children)
+                        foreach (var alertControl in _ui.Grid.Children)
                         {
                             if (_alertOrder.Compare(newAlert, ((AlertControl) alertControl).Alert) < 0)
                             {
                                 var idx = alertControl.GetPositionInParent();
-                                _ui.VBox.Children.Add(newAlertControl);
+                                _ui.Grid.Children.Add(newAlertControl);
                                 newAlertControl.SetPositionInParent(idx);
                                 added = true;
                                 break;
@@ -209,12 +209,12 @@ namespace Content.Client.GameObjects.Components.Mobs
 
                         if (!added)
                         {
-                            _ui.VBox.Children.Add(newAlertControl);
+                            _ui.Grid.Children.Add(newAlertControl);
                         }
                     }
                     else
                     {
-                        _ui.VBox.Children.Add(newAlertControl);
+                        _ui.Grid.Children.Add(newAlertControl);
                     }
 
                     _alertControls[newAlert.AlertKey] = newAlertControl;
