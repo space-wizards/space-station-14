@@ -63,8 +63,13 @@ namespace Content.Shared.GameObjects.EntitySystems
 
                 if (!touching)
                 {
+                    physics.Status = BodyStatus.InAir;
                     transform.LocalRotation = physics.LinearVelocity.GetDir().ToAngle();
                     return;
+                }
+                else
+                {
+                    physics.Status = BodyStatus.OnGround;
                 }
             }
 
@@ -95,7 +100,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                 {
                     if (physics.TryGetController(out MoverController controller))
                     {
-                        controller.Move(total, 20f);
+                        controller.Move(total, 1f);
                     }
                 }
 

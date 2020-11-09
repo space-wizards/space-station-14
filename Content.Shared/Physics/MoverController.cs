@@ -1,6 +1,8 @@
 ﻿#nullable enable
 using Content.Shared.GameObjects.Components.Movement;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.Interfaces.Timing;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
@@ -9,6 +11,8 @@ namespace Content.Shared.Physics
 {
     public class MoverController : VirtualController
     {
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+
         public override IPhysicsComponent? ControlledComponent { protected get; set; }
 
         /*
@@ -19,9 +23,17 @@ namespace Content.Shared.Physics
          */
         private byte _counterCounter = 0;
 
+        private Vector2? _stopVelocity;
+
+        private float _accumulatedStop;
+
         public void Move(Vector2 velocityDirection, float speed)
         {
+            if (_stopVelocity != null)
+                Logger.Debug($"StopVelocity was {_stopVelocity}");
+            _stopVelocity = null;
             _counterCounter = 0;
+            _accumulatedStop = 0f;
             if (ControlledComponent?.Owner.IsWeightless() ?? false)
             {
                 return;
@@ -40,12 +52,12 @@ namespace Content.Shared.Physics
              * we can apply to our existing velocity to get to that direction as well
              */
 
-            var difference = velocityDirection - existingVelocity;
+            var difference = velocityDirection * speed * 4.0f - existingVelocity;
 
             // Close enough
             if (difference.EqualsApprox(Vector2.Zero, 0.001)) return;
 
-            var velocity = difference * speed;
+            var velocity = difference;
 
             // TODO here and below: It's possible to overshoot the difference.
 
@@ -54,20 +66,26 @@ namespace Content.Shared.Physics
 
         public void StopMoving()
         {
-            if (ControlledComponent == null)
+            return;
+            if (ControlledComponent == null || ControlledComponent.InvMass == 0.0f)
                 return;
 
-            var difference = -ControlledComponent.LinearVelocity;
-            if (difference.EqualsApprox(Vector2.Zero, 0.1) || _counterCounter > 15)
+            if (_stopVelocity == null)
             {
-                _counterCounter = 16;
+                _stopVelocity = ControlledComponent.LinearVelocity;
+            }
+
+            if (ControlledComponent.LinearVelocity.Length < 0.1f || _counterCounter >= 30)
+            {
+                _counterCounter = 30;
                 return;
             }
 
             _counterCounter++;
 
-            var velocity = difference * 20f / 2;
+            var velocity = -_stopVelocity.Value / ControlledComponent.InvMass / 30;
             Impulse = velocity;
+            _accumulatedStop += velocity.Length;
         }
     }
 }
