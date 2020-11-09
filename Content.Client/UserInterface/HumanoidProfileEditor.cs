@@ -592,6 +592,9 @@ namespace Content.Client.UserInterface
 
         private void UpdatePreview()
         {
+            if (Profile is null)
+                return;
+
             _previewDummy.GetComponent<HumanoidAppearanceComponent>().UpdateFromProfile(Profile);
             LobbyCharacterPreviewPanel.GiveDummyJobClothes(_previewDummy, Profile);
         }
