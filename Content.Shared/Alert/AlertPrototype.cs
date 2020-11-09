@@ -144,6 +144,9 @@ namespace Content.Shared.Alert
     {
         private readonly string _key;
 
+        /// NOTE: if the alert has a category you must pass the category for this to work
+        /// properly as a key. I.e. if the alert has a category and you pass only the ID, and you
+        /// compare this to another AlertKey that has both the category and the same ID, it will not consider them equal.
         public AlertKey(string category, string id) : this()
         {
             _key = category ?? "cat-" + id;

@@ -35,6 +35,18 @@ namespace Content.Shared.GameObjects.Components.Mobs
             return IsShowingAlert(AlertKey.ForCategory(alertCategory));
         }
 
+        /// <returns>true iff an alert of the indicated id is currently showing</returns>
+        public bool IsShowingAlert(string alertID)
+        {
+            if (AlertManager.TryGet(alertID, out var alert))
+            {
+                return IsShowingAlert(alert.AlertKey);
+            }
+            Logger.DebugS("alert", "unknown alert id {0}", alertID);
+            return false;
+
+        }
+
         /// <returns>true iff an alert of the indicated key is currently showing</returns>
         protected bool IsShowingAlert(AlertKey alertKey)
         {
