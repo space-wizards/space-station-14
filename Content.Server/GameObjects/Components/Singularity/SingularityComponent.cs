@@ -211,7 +211,9 @@ namespace Content.Server.GameObjects.Components.Singularity
             
             foreach (var entity in entitiesToPull)
             {
-                if (entity.TryGetComponent<GhostComponent>(out var a)) continue; //Temporary fix for ghosts
+                if (entity.Deleted) continue;
+                if (entity.HasComponent<GhostComponent>()) continue; //Temporary fix for ghosts
+                if (entity.HasComponent<SingularityComponent>()) continue;
                 if (!entity.TryGetComponent<PhysicsComponent>(out var collidableComponent)) continue;
                 var controller = collidableComponent.EnsureController<SingularityPullController>();
                 if(Owner.Transform.Coordinates.EntityId != entity.Transform.Coordinates.EntityId) continue;
@@ -228,7 +230,9 @@ namespace Content.Server.GameObjects.Components.Singularity
         private Dictionary<IEntity, float> _delayTiming = new Dictionary<IEntity, float>();
         void ICollideBehavior.CollideWith(IEntity entity)
         {
-            
+            if (entity.Deleted)
+                return;
+
             if (_collidableComponent == null) return; //how did it even collide then? :D
 
             if (entity.TryGetComponent<IMapGridComponent>(out var mapGridComponent))
@@ -239,6 +243,19 @@ namespace Content.Server.GameObjects.Components.Singularity
                     Energy++;
                 }
                 return;
+            }
+            if (entity.TryGetComponent<SingularityComponent>(out var otherSingularity))
+            {
+                if (otherSingularity.Energy > Energy)
+                {
+                    return;
+                }
+                else
+                {
+                    Energy += otherSingularity.Energy;
+                    entity.Delete();
+                    return;
+                }
             }
 
             if (entity.HasComponent<ContainmentFieldComponent>() || (entity.TryGetComponent<ContainmentFieldGeneratorComponent>(out var component) && component.CanRepell(Owner)))
