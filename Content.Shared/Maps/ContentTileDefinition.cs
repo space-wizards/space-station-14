@@ -63,7 +63,7 @@ namespace Content.Shared.Maps
             }
             else
             {
-                Friction = 0;
+                Friction = 0.5f;
             }
 
             if (mapping.TryGetNode("thermalConductivity", out node))
