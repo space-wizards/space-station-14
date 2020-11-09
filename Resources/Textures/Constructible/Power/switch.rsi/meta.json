@@ -5,7 +5,7 @@
     "y": 32
   },
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from cev-eris at commit https://github.com/discordia-space/CEV-Eris/commit/15748b71a1e6d2c547588c653d7c42f18011f7c5",
+  "copyright": "Taken from CEV-Eris at commit 15748b71a1e6d2c547588c653d7c42f18011f7c5",
   "states": [
     {
       "name": "on",
