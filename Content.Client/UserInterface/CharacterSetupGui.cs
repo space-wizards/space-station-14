@@ -149,13 +149,22 @@ namespace Content.Client.UserInterface
                 PanelOverride = new StyleBoxFlat {BackgroundColor = StyleNano.NanoGold},
                 CustomMinimumSize = (2, 0)
             });
-            _humanoidProfileEditor = new HumanoidProfileEditor(preferencesManager, prototypeManager);
+            _humanoidProfileEditor = new HumanoidProfileEditor(preferencesManager, prototypeManager, entityManager);
             _humanoidProfileEditor.OnProfileChanged += newProfile => { UpdateUI(); };
             hBox.AddChild(_humanoidProfileEditor);
 
             UpdateUI();
 
             preferencesManager.OnServerDataLoaded += UpdateUI;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            if (!disposing)
+                return;
+
+            _preferencesManager.OnServerDataLoaded -= UpdateUI;
         }
 
         public void Save() => _humanoidProfileEditor.Save();
@@ -283,7 +292,9 @@ namespace Content.Client.UserInterface
             protected override void Dispose(bool disposing)
             {
                 base.Dispose(disposing);
-                if (!disposing) return;
+                if (!disposing)
+                    return;
+
                 _previewDummy.Delete();
                 _previewDummy = null;
             }
