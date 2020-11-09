@@ -188,10 +188,10 @@ namespace Content.Server.GameObjects.Components.Buckle
             }
 
             // If in a container
-            if (ContainerHelpers.TryGetContainer(Owner, out var ownerContainer))
+            if (Owner.TryGetContainer(out var ownerContainer))
             {
                 // And not in the same container as the strap
-                if (!ContainerHelpers.TryGetContainer(strap.Owner, out var strapContainer) ||
+                if (!strap.Owner.TryGetContainer(out var strapContainer) ||
                     ownerContainer != strapContainer)
                 {
                     return false;
@@ -325,7 +325,7 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             if (Owner.Transform.Parent == oldBuckledTo.Owner.Transform)
             {
-                ContainerHelpers.AttachParentToContainerOrGrid(Owner.Transform);
+                Owner.Transform.AttachParentToContainerOrGrid();
                 Owner.Transform.WorldRotation = oldBuckledTo.Owner.Transform.WorldRotation;
             }
 

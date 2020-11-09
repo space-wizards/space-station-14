@@ -277,7 +277,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 spriteComponent.RenderOrder = item.Owner.EntityManager.CurrentTick.Value;
             }
 
-            if (ContainerHelpers.TryGetContainer(Owner, out var container))
+            if (Owner.TryGetContainer(out var container))
             {
                 container.Insert(item.Owner);
             }

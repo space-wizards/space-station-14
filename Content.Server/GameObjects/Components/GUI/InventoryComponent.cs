@@ -296,7 +296,7 @@ namespace Content.Server.GameObjects.Components.GUI
             }
 
             // TODO: The item should be dropped to the container our owner is in, if any.
-            ContainerHelpers.AttachParentToContainerOrGrid(entity.Transform);
+            entity.Transform.AttachParentToContainerOrGrid();
 
             _entitySystemManager.GetEntitySystem<InteractionSystem>().UnequippedInteraction(Owner, entity, slot);
 
@@ -321,7 +321,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
             var itemTransform = entity.Transform;
 
-            ContainerHelpers.AttachParentToContainerOrGrid(itemTransform);
+            itemTransform.AttachParentToContainerOrGrid();
 
             _entitySystemManager.GetEntitySystem<InteractionSystem>().UnequippedInteraction(Owner, item.Owner, slot);
 
