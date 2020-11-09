@@ -155,7 +155,9 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         private bool HandleWideAttack(ICommonSession session, EntityCoordinates coords, EntityUid uid)
         {
             // client sanitization
-            if (!_mapManager.GridExists(coords.GetGridId(EntityManager)))
+
+            if (!coords.IsValid(_entityManager))
+
             {
                 Logger.InfoS("system.interaction", $"Invalid Coordinates: client={session}, coords={coords}");
                 return true;
@@ -210,7 +212,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         private bool HandleClientUseItemInHand(ICommonSession session, EntityCoordinates coords, EntityUid uid)
         {
             // client sanitization
-            if (!_mapManager.GridExists(coords.GetGridId(EntityManager)))
+            if (!coords.IsValid(_entityManager))
             {
                 Logger.InfoS("system.interaction", $"Invalid Coordinates: client={session}, coords={coords}");
                 return true;
@@ -241,7 +243,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         private bool HandleTryPullObject(ICommonSession session, EntityCoordinates coords, EntityUid uid)
         {
             // client sanitization
-            if (!_mapManager.GridExists(coords.GetGridId(EntityManager)))
+            if (!coords.IsValid(_entityManager))
             {
                 Logger.InfoS("system.interaction", $"Invalid Coordinates for pulling: client={session}, coords={coords}");
                 return false;
@@ -302,7 +304,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             // Verify player is on the same map as the entity he clicked on
-            if (_mapManager.GetGrid(coordinates.GetGridId(EntityManager)).ParentMapId != playerTransform.MapID)
+            if (coordinates.GetMapId(_entityManager) != playerTransform.MapID)
             {
                 Logger.WarningS("system.interaction",
                     $"Player named {player.Name} clicked on a map he isn't located on");

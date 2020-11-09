@@ -1676,8 +1676,7 @@ entities:
     pos: -17.5,-22.5
     rot: 3.141592653589793 rad
     type: Transform
-  - entryDelay: 0
-    type: DisposalUnit
+  - type: DisposalUnit
   - deadThreshold: 100
     type: Destructible
   - containers:
@@ -1775,8 +1774,7 @@ entities:
     pos: -29.5,11.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - entryDelay: 0
-    type: DisposalUnit
+  - type: DisposalUnit
   - deadThreshold: 100
     type: Destructible
   - containers:
@@ -1900,8 +1898,7 @@ entities:
     pos: -5.5,17.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - entryDelay: 0
-    type: DisposalUnit
+  - type: DisposalUnit
   - deadThreshold: 100
     type: Destructible
   - containers:
@@ -1967,8 +1964,7 @@ entities:
     pos: 6.5,11.5
     rot: 3.141592653589793 rad
     type: Transform
-  - entryDelay: 0
-    type: DisposalUnit
+  - type: DisposalUnit
   - deadThreshold: 100
     type: Destructible
   - containers:
@@ -2047,8 +2043,7 @@ entities:
     pos: 24.5,8.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - entryDelay: 0
-    type: DisposalUnit
+  - type: DisposalUnit
   - deadThreshold: 100
     type: Destructible
   - containers:
@@ -2221,8 +2216,7 @@ entities:
     pos: 34.5,-4.5
     rot: 3.141592653589793 rad
     type: Transform
-  - entryDelay: 0
-    type: DisposalUnit
+  - type: DisposalUnit
   - deadThreshold: 100
     type: Destructible
   - containers:
@@ -2379,8 +2373,7 @@ entities:
     pos: 37.5,6.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - entryDelay: 0
-    type: DisposalUnit
+  - type: DisposalUnit
   - deadThreshold: 100
     type: Destructible
   - containers:
@@ -2798,8 +2791,7 @@ entities:
     pos: -2.5,29.5
     rot: 3.141592653589793 rad
     type: Transform
-  - entryDelay: 0
-    type: DisposalUnit
+  - type: DisposalUnit
   - deadThreshold: 100
     type: Destructible
   - containers:
@@ -3111,8 +3103,7 @@ entities:
     pos: 11.5,-11.5
     rot: 3.141592653589793 rad
     type: Transform
-  - entryDelay: 0
-    type: DisposalUnit
+  - type: DisposalUnit
   - deadThreshold: 100
     type: Destructible
   - containers:
@@ -3190,8 +3181,7 @@ entities:
     pos: 12.5,-2.5
     rot: 3.141592653589793 rad
     type: Transform
-  - entryDelay: 0
-    type: DisposalUnit
+  - type: DisposalUnit
   - deadThreshold: 100
     type: Destructible
   - containers:
@@ -3608,8 +3598,7 @@ entities:
     pos: 0.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - entryDelay: 0
-    type: DisposalUnit
+  - type: DisposalUnit
   - deadThreshold: 100
     type: Destructible
   - containers:
@@ -3971,8 +3960,7 @@ entities:
     pos: -12.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - entryDelay: 0
-    type: DisposalUnit
+  - type: DisposalUnit
   - deadThreshold: 100
     type: Destructible
   - containers:
@@ -4103,8 +4091,7 @@ entities:
     pos: -22.5,6.5
     rot: 3.141592653589793 rad
     type: Transform
-  - entryDelay: 0
-    type: DisposalUnit
+  - type: DisposalUnit
   - deadThreshold: 100
     type: Destructible
   - containers:
@@ -4469,8 +4456,7 @@ entities:
     pos: -27.5,-8.5
     rot: 1.5707963267948966 rad
     type: Transform
-  - entryDelay: 0
-    type: DisposalUnit
+  - type: DisposalUnit
   - deadThreshold: 100
     type: Destructible
   - containers:
@@ -4523,8 +4509,7 @@ entities:
     pos: -10.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - entryDelay: 0
-    type: DisposalUnit
+  - type: DisposalUnit
   - deadThreshold: 100
     type: Destructible
   - containers:
@@ -8298,8 +8283,7 @@ entities:
     pos: -5.5,-14.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - entryDelay: 0
-    type: DisposalUnit
+  - type: DisposalUnit
   - deadThreshold: 100
     type: Destructible
   - containers:
@@ -21437,8 +21421,7 @@ entities:
   - parent: 855
     pos: 18.5,-0.5
     type: Transform
-  - entryDelay: 0
-    type: DisposalUnit
+  - type: DisposalUnit
   - deadThreshold: 100
     type: Destructible
   - containers:
