@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Content.Server.GameObjects.Components.MachineLinking;
+using Content.Server.GameObjects.EntitySystems.Click;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
@@ -42,7 +43,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 if (_transmitters.Count == 0)
                 {
                     CommandBinds.Builder
-                        .Bind(EngineKeyFunctions.Use, new PointerInputCmdHandler(HandleUse))
+                        .BindBefore(EngineKeyFunctions.Use, new PointerInputCmdHandler(HandleUse), typeof(InteractionSystem))
                         .Register<SignalLinkerSystem>();
                 }
 
