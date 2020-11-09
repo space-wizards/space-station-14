@@ -34,31 +34,31 @@ namespace Content.Tests.Shared.Alert
             var alertManager = IoCManager.Resolve<AlertManager>();
             alertManager.Initialize();
 
-            Assert.That(alertManager.TryGet("lowpressure", out var lowPressure), Is.True);
+            Assert.That(alertManager.TryGet("lowpressure", out var lowPressure));
             Assert.That(lowPressure.IconPath, Is.EqualTo("/Textures/Interface/StatusEffects/Pressure/lowpressure.png"));
-            Assert.That(alertManager.TryGet("highpressure", out var highPressure), Is.True);
+            Assert.That(alertManager.TryGet("highpressure", out var highPressure));
             Assert.That(highPressure.IconPath, Is.EqualTo("/Textures/Interface/StatusEffects/Pressure/highpressure.png"));
 
-            Assert.That(alertManager.TryGetWithEncoded("lowpressure", out lowPressure, out var encodedLowPressure), Is.True);
+            Assert.That(alertManager.TryGetWithEncoded("lowpressure", out lowPressure, out var encodedLowPressure));
             Assert.That(lowPressure.IconPath, Is.EqualTo("/Textures/Interface/StatusEffects/Pressure/lowpressure.png"));
-            Assert.That(alertManager.TryGetWithEncoded("highpressure", out highPressure, out var encodedHighPressure), Is.True);
+            Assert.That(alertManager.TryGetWithEncoded("highpressure", out highPressure, out var encodedHighPressure));
             Assert.That(highPressure.IconPath, Is.EqualTo("/Textures/Interface/StatusEffects/Pressure/highpressure.png"));
 
-            Assert.That(alertManager.TryEncode(lowPressure, out var encodedLowPressure2), Is.True);
+            Assert.That(alertManager.TryEncode(lowPressure, out var encodedLowPressure2));
             Assert.That(encodedLowPressure2, Is.EqualTo(encodedLowPressure));
-            Assert.That(alertManager.TryEncode(highPressure, out var encodedHighPressure2), Is.True);
+            Assert.That(alertManager.TryEncode(highPressure, out var encodedHighPressure2));
             Assert.That(encodedHighPressure2, Is.EqualTo(encodedHighPressure));
             Assert.That(encodedLowPressure, Is.Not.EqualTo(encodedHighPressure));
 
-            Assert.That(alertManager.TryDecode(encodedLowPressure, out var decodedLowPressure), Is.True);
+            Assert.That(alertManager.TryDecode(encodedLowPressure, out var decodedLowPressure));
             Assert.That(decodedLowPressure, Is.EqualTo(lowPressure));
-            Assert.That(alertManager.TryDecode(encodedHighPressure, out var decodedHighPressure), Is.True);
+            Assert.That(alertManager.TryDecode(encodedHighPressure, out var decodedHighPressure));
             Assert.That(decodedHighPressure, Is.EqualTo(highPressure));
 
-            Assert.That(alertManager.TryDecode(-1, out _), Is.False);
-            Assert.That(alertManager.TryDecode(999, out _), Is.False);
-            Assert.That(alertManager.TryEncode("lowpressurenonexistent", out _), Is.False);
-            Assert.That(alertManager.TryGetWithEncoded("lowpressurenonexistent", out _, out _), Is.False);
+            Assert.False(alertManager.TryDecode(-1, out _));
+            Assert.False(alertManager.TryDecode(999, out _));
+            Assert.False(alertManager.TryEncode("lowpressurenonexistent", out _));
+            Assert.False(alertManager.TryGetWithEncoded("lowpressurenonexistent", out _, out _));
 
         }
     }

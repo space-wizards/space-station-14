@@ -23,12 +23,26 @@ namespace Content.Server.GameObjects.Components.Mobs
         {
             base.Startup();
 
-            EntitySystem.Get<WeightlessSystem>().AddAlert(this);
+            if (EntitySystem.TryGet<WeightlessSystem>(out var weightlessSystem))
+            {
+                weightlessSystem.AddAlert(this);
+            }
+            else
+            {
+                Logger.WarningS("alert", "weightlesssystem not found");
+            }
         }
 
         public override void OnRemove()
         {
-            EntitySystem.Get<WeightlessSystem>().RemoveAlert(this);
+            if (EntitySystem.TryGet<WeightlessSystem>(out var weightlessSystem))
+            {
+                weightlessSystem.RemoveAlert(this);
+            }
+            else
+            {
+                Logger.WarningS("alert", "weightlesssystem not found");
+            }
 
             base.OnRemove();
         }

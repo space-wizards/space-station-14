@@ -27,7 +27,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         public override uint? NetID => ContentNetIDs.ALERTS;
 
         [ViewVariables]
-        private Dictionary<AlertKey, AlertStateCallback> _alerts = new Dictionary<AlertKey, AlertStateCallback>();
+        private Dictionary<AlertKey, ClickableAlertState> _alerts = new Dictionary<AlertKey, ClickableAlertState>();
 
         /// <returns>true iff an alert of the indicated alert category is currently showing</returns>
         public bool IsShowingAlertCategory(string alertCategory)
@@ -36,7 +36,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         }
 
         /// <returns>true iff an alert of the indicated key is currently showing</returns>
-        public bool IsShowingAlert(AlertKey alertKey)
+        protected bool IsShowingAlert(AlertKey alertKey)
         {
             return _alerts.ContainsKey(alertKey);
         }
@@ -100,12 +100,12 @@ namespace Content.Shared.GameObjects.Components.Mobs
         /// </summary>
         protected void SetAlerts(AlertState[] alerts)
         {
-            var newAlerts = new Dictionary<AlertKey, AlertStateCallback>();
+            var newAlerts = new Dictionary<AlertKey, ClickableAlertState>();
             foreach (var alertState in alerts)
             {
                 if (AlertManager.TryDecode(alertState.AlertEncoded, out var alert))
                 {
-                    newAlerts[alert.AlertKey] = new AlertStateCallback
+                    newAlerts[alert.AlertKey] = new ClickableAlertState
                     {
                         AlertState = alertState
                     };
@@ -142,7 +142,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
                     return;
                 }
 
-                _alerts[alert.AlertKey] = new AlertStateCallback
+                _alerts[alert.AlertKey] = new ClickableAlertState
                 {
                     AlertState = new AlertState
                         {Cooldown = cooldown, AlertEncoded = encoded, Severity = severity},
@@ -239,7 +239,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         public ValueTuple<TimeSpan, TimeSpan>? Cooldown;
     }
 
-    public struct AlertStateCallback
+    public struct ClickableAlertState
     {
         public AlertState AlertState;
         public OnClickAlert OnClickAlert;
