@@ -52,7 +52,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             base.Shutdown();
         }
 
-        protected void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, IPhysicsComponent physics, float frameTime)
+        protected void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, IPhysicsComponent physics)
         {
             physics.EnsureController<MoverController>();
 
@@ -77,7 +77,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             {
                 if (physics.TryGetController(out MoverController controller))
                 {
-                    controller.StopMoving(frameTime);
+                    controller.StopMoving();
                 }
             }
             else
@@ -86,29 +86,19 @@ namespace Content.Shared.GameObjects.EntitySystems
                 {
                     if (physics.TryGetController(out MoverController controller))
                     {
-                        //TODO: weightless movement
-                        //controller.Push(combined, mover.CurrentPushSpeed);
+                        controller.Push(combined, mover.CurrentPushSpeed);
                     }
 
-                    transform.LocalRotation = physics.TotalLinearVelocity.GetDir().ToAngle();
+                    transform.LocalRotation = physics.LinearVelocity.GetDir().ToAngle();
                     return;
                 }
 
                 var total = walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed;
-                // var drag_coeff = 25f;
-                // var thrust = (mover.CurrentWalkSpeed + mover.CurrentSprintSpeed) * drag_coeff;
-                // var force = (walkDir + sprintDir) * thrust;
-                // var drag = -physics.LinearVelocity * drag_coeff;
-                // force += drag;
-                // var acceleration = thrust / physics.Mass;
-                // physics.LinearVelocity += acceleration;
-
 
                 {
                     if (physics.TryGetController(out MoverController controller))
                     {
-                        //controller.Move(total, 1);
-                        controller.Move(total, frameTime);
+                        controller.Move(total, 1);
                     }
                 }
 
