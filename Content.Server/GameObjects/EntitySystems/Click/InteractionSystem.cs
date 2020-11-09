@@ -41,6 +41,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
     public sealed class InteractionSystem : SharedInteractionSystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public override void Initialize()
         {
