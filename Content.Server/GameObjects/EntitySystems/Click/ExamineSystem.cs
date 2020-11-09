@@ -11,7 +11,6 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 {
     public class ExamineSystem : ExamineSystemShared
     {
-
         private static readonly FormattedMessage _entityNotFoundMessage;
 
         static ExamineSystem()
