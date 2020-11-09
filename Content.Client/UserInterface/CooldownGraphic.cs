@@ -28,29 +28,22 @@ namespace Content.Client.UserInterface
         /// </summary>
         public float Progress { get; set; }
 
-        private static readonly Color StartColor = new Color(0.8f, 0.0f, 0.2f); // red
-        private static readonly Color EndColor = new Color(0.92f, 0.77f, 0.34f); // yellow
-        private static readonly Color CompletedColor = new Color(0.0f, 0.8f, 0.27f); // green
-
         protected override void Draw(DrawingHandleScreen handle)
         {
-            Span<float> x = stackalloc float[10];
+            Span<float> x = new float[10];
             Color color;
 
             var lerp = 1f - MathF.Abs(Progress); // for future bikeshedding purposes
 
             if (Progress >= 0f)
             {
-                color = new Color(
-                    EndColor.R + (StartColor.R - EndColor.R) * Progress,
-                    EndColor.G + (StartColor.G - EndColor.G) * Progress,
-                    EndColor.B + (StartColor.B - EndColor.B) * Progress,
-                    EndColor.A);
+                var hue = (5f / 18f) * lerp;
+                color = Color.FromHsv((hue, 0.75f, 0.75f, 0.50f));
             }
             else
             {
                 var alpha = MathHelper.Clamp(0.5f * lerp, 0f, 0.5f);
-                color = CompletedColor.WithAlpha(alpha);
+                color = new Color(1f, 1f, 1f, alpha);
             }
 
             _shader.SetParameter("progress", Progress);

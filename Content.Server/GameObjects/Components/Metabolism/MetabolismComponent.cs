@@ -192,7 +192,7 @@ namespace Content.Server.GameObjects.Components.Metabolism
                 return;
             }
 
-            var lungs = _body.GetMechanismBehaviors<LungBehaviorComponent>().ToArray();
+            var lungs = _body.GetMechanismBehaviors<LungBehavior>().ToArray();
 
             var needs = NeedsAndDeficit(frameTime);
             var used = 0f;

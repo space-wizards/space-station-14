@@ -44,12 +44,14 @@ namespace Content.Client.GameObjects.Components.Storage
 
             if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite)) return;
 
-            sprite.LayerSetState(
-                CrematoriumVisualLayers.Base,
-                component.GetData<bool>(MorgueVisuals.Open)
-                    ? _stateOpen
-                    : _stateClosed
-            );
+            if (component.TryGetData(MorgueVisuals.Open, out bool open))
+            {
+                sprite.LayerSetState(CrematoriumVisualLayers.Base, open ? _stateOpen : _stateClosed);
+            }
+            else
+            {
+                sprite.LayerSetState(CrematoriumVisualLayers.Base, _stateClosed);
+            }
 
             var lightState = "";
             if (component.TryGetData(MorgueVisuals.HasContents,  out bool hasContents) && hasContents) lightState = _lightContents;
